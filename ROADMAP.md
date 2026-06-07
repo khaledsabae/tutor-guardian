@@ -200,11 +200,11 @@ tutor-guardian هو الـ CORE backend لتطبيق موبايل (Android/iOS) 
 
 | Priority | المرحلة | المحتوى |
 |----------|---------|---------|
-| P0 | — | نسخ الخطة → ROADMAP.md + commit (baseline) |
-| P1 | معرفة | ingest_pdf موحّد → معالجة PDFs → سدّ الفجوات → rebuild index |
-| P2 | سرعة | classifier fast-path+cache+async → warm-up → retrieval tiers → UX |
-| P3 | تحصين | auth → إصلاح Ollama → Redis rate-limit → tests شاملة → observability |
-| P4 | بيتا | نشر → feedback loop |
+| P0 | — | نسخ الخطة → ROADMAP.md + commit (baseline) | ✅ |
+| P1 | معرفة | ingest_pdf موحّد → معالجة PDFs → سدّ الفجوات → rebuild index | ✅ |
+| P2 | سرعة | classifier fast-path+cache+async → warm-up → retrieval tiers → UX | ✅ |
+| P3 | تحصين | auth → إصلاح Ollama → Redis rate-limit → tests شاملة → observability | ✅ |
+| P4 | بيتا | نشر → feedback loop | ✅ 2026-06-07 |
 
 **سياسة git**: push مباشر على main، مفيش PRs. كل مرحلة commits صغيرة مستقلة.
 
