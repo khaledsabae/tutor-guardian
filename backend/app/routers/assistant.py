@@ -4,7 +4,7 @@ Flow: banned check → emergency check → classify_domains → multi_retrieval 
 """
 import logging
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, HTTPException, Request
 
 from app.models.api import ConversationTurn, UserMessage, AssistantReply
 from app.services.guardrails import apply_guardrails, is_emergency, emergency_reply
@@ -13,6 +13,7 @@ from app.services.llm_service import generate_reply
 from app.services.session_logger import log_session
 from app.services.intent_guard import check_banned_intent, check_emergency_keywords
 from app.services.domain_classifier import classify_domains
+from app.services import conversation_store as store
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assistant", tags=["assistant"])
@@ -22,12 +23,22 @@ router = APIRouter(prefix="/assistant", tags=["assistant"])
 async def draft_reply(request: Request, user_message: UserMessage):
     policies = request.app.state.guardrails_config
 
+    # ── Session: validate + persist the incoming user message ────────
+    session_id = user_message.session_id
+    if session_id:
+        if not store.session_exists(session_id):
+            raise HTTPException(status_code=404, detail="Session not found")
+        store.add_message(
+            session_id, "user",
+            user_message.message_text or user_message.behavior_type or "",
+        )
+
     # ── Step 0: Banned intent check ──────────────────────────────────
     query_input = user_message.message_text or user_message.behavior_type or ""
     is_banned, matched = check_banned_intent(query_input)
     if is_banned:
         logger.warning("Banned intent detected: %s", matched)
-        return AssistantReply(
+        reply = AssistantReply(
             reply_text="هذا الموضوع خارج نطاق ما يمكنني مساعدتك فيه. إذا كنت في حالة طارئة، يرجى التواصل مع الجهات المختصة فوراً.",
             domain="medical",
             severity="طارئ",
@@ -35,6 +46,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
             escalation_target="emergency_services",
             mode="banned",
         )
+        return _finalize(reply, session_id)
 
     # ── Step 0b: Emergency keyword check ─────────────────────────────
     if check_emergency_keywords(query_input):
@@ -44,7 +56,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
     # ── Step 1: Emergency severity check ─────────────────────────────
     if is_emergency(user_message):
         logger.info("Emergency severity — returning fallback immediately")
-        return emergency_reply(user_message, policies)
+        return _finalize(emergency_reply(user_message, policies), session_id)
 
     # ── Step 2: Build query text ──────────────────────────────────────
     query_text = (user_message.message_text or "").strip()
@@ -52,7 +64,11 @@ async def draft_reply(request: Request, user_message: UserMessage):
         query_text = f"{user_message.behavior_type} {user_message.age_group}"
 
     # ── Step 3: Auto-detect domains (من السؤال + history إن وجدت) ────
-    history = user_message.conversation_history or []
+    # Server owns history when a session is active; else trust the client's.
+    if session_id:
+        history = store.get_history(session_id, limit=6)
+    else:
+        history = user_message.conversation_history or []
     if history:
         last_user = next((t.content for t in reversed(history) if t.role == "user"), "")
         if last_user and last_user != query_text:
@@ -125,6 +141,18 @@ async def draft_reply(request: Request, user_message: UserMessage):
         flag="no_results" if not retrieved_units else "",
     )
 
+    return _finalize(reply, session_id)
+
+
+def _finalize(reply: AssistantReply, session_id: str | None) -> AssistantReply:
+    """Tag the reply with its session and persist it server-side (if any)."""
+    reply.session_id = session_id
+    if session_id:
+        store.add_message(
+            session_id, "assistant", reply.reply_text or "",
+            domain=reply.domain, severity=reply.severity, mode=reply.mode,
+            needs_human_review=reply.needs_human_review,
+        )
     return reply
 
 

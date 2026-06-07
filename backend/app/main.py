@@ -9,13 +9,15 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
 from app.config.guardrails_loader import load_guardrails_config
-from app.routers import health, assistant
+from app.db.init_db import init_db
+from app.routers import health, assistant, chat
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: load guardrails config
+    # Startup: load guardrails config + ensure conversation DB schema
     app.state.guardrails_config = load_guardrails_config()
+    init_db()
     yield
     # Shutdown: nothing to clean up for now
 
@@ -37,6 +39,7 @@ app.add_middleware(
 
 app.include_router(health.router)
 app.include_router(assistant.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
 
 app.mount("/ui", StaticFiles(directory="/home/khalednew/projects/tutor-guardian/frontend", html=True), name="static")
 
