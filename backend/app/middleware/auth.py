@@ -24,7 +24,7 @@ _PUBLIC_PATHS = {
 }
 
 # Protected prefixes
-_PROTECTED_PREFIXES = ("/api/assistant", "/api/chat")
+_PROTECTED_PREFIXES = ("/api/assistant", "/api/chat", "/api/feedback")
 
 
 class AuthMiddleware(BaseHTTPMiddleware):

@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: tg_backend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8091:8000"   # Nginx does the reverse proxy; don't expose to WAN
+    env_file: .env
+    environment:
+      PROJECT_ROOT: /app
+    volumes:
+      - tg_sessions:/app/ops          # sessions.db + feedback SQLite
+      - tg_chroma:/app/knowledge_base/chroma_db
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 30s
+      retries: 3
+      start_period: 90s   # extra time for ONNX warm-up + ChromaDB index load
+
+  # Optional Redis for distributed rate-limiting.
+  # Enable with: docker compose --profile with-redis up -d
+  redis:
+    image: redis:7-alpine
+    container_name: tg_redis
+    restart: unless-stopped
+    profiles: ["with-redis"]
+    volumes:
+      - tg_redis_data:/data
+
+volumes:
+  tg_sessions:
+  tg_chroma:
+  tg_redis_data:

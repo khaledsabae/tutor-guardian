@@ -1,0 +1,85 @@
+name: CI + Deploy (tutor-guardian)
+# Tests run on GitHub-hosted runner.
+# Deploy runs on the same VPS self-hosted runner as analytics-platform.
+# First-time setup: register the runner with this repo too on GitHub
+# → Settings → Actions → Runners → reuse or add the same runner.
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────
+  test:
+    name: KB integrity + tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: Knowledge-base integrity check
+        run: python ops/tools/check_kb_integrity.py
+
+      - name: Run tests
+        run: python -m pytest
+
+  # ─────────────────────────────────────────────────────────────────────
+  deploy:
+    name: Deploy to VPS
+    needs: test
+    if: github.event_name == 'push'     # skip deploy on PRs
+    runs-on: [self-hosted, Linux, production]
+    timeout-minutes: 15
+
+    steps:
+      - name: Sync code to latest
+        run: |
+          cd /home/khaled/tutor-guardian
+          git fetch origin
+          git reset --hard origin/master
+
+      - name: Ensure .env exists
+        run: |
+          cd /home/khaled/tutor-guardian
+          if [ ! -f .env ]; then
+            echo "❌ No .env found — create it on the VPS first"; exit 1
+          fi
+          echo "✅ .env ready"
+
+      - name: Build new image
+        run: |
+          cd /home/khaled/tutor-guardian
+          docker compose -f docker-compose.production.yml build
+
+      - name: Restart containers
+        run: |
+          cd /home/khaled/tutor-guardian
+          docker compose -f docker-compose.production.yml up -d --remove-orphans
+
+      - name: Wait for backend healthy
+        run: |
+          for i in $(seq 1 24); do
+            STATUS=$(docker inspect --format='{{.State.Health.Status}}' tg_backend 2>/dev/null || echo "missing")
+            echo "  [$i/24] backend: $STATUS"
+            [ "$STATUS" = "healthy" ] && break
+            sleep 5
+          done
+          [ "$STATUS" = "healthy" ] || { echo "❌ backend unhealthy"; exit 1; }
+
+      - name: Health check
+        run: |
+          curl -sf http://localhost:8091/health \
+            | python3 -c "import sys,json; d=json.load(sys.stdin); print('✅ healthy' if d.get('status')=='ok' else '❌ ' + str(d))"
+
+      - name: Clean up old Docker images
+        run: docker image prune -f

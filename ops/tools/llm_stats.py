@@ -19,6 +19,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_DB = PROJECT_ROOT / "ops" / "sessions.db"
+DEFAULT_CONV_DB = PROJECT_ROOT / "ops" / "conversations.db"
 
 
 def format_duration(seconds: float) -> str:
@@ -100,43 +101,101 @@ def load_stats(db_path: Path, days: int | None = None) -> dict:
         return {"error": str(e)}
 
 
+def load_feedback_stats(db_path: Path, days: int | None = None) -> dict:
+    """Load 👍/👎 feedback stats from conversations.db."""
+    if not db_path.exists():
+        return {"error": f"DB not found: {db_path}"}
+
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+
+    tables = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='user_feedback'"
+    ).fetchall()
+    if not tables:
+        conn.close()
+        return {"error": "No user_feedback table yet — no feedback submitted."}
+
+    try:
+        where = ""
+        if days:
+            cutoff = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
+            where = f"WHERE created_at >= '{cutoff}'"
+
+        total = conn.execute(f"SELECT COUNT(*) as c FROM user_feedback {where}").fetchone()["c"]
+        up = conn.execute(f"SELECT COUNT(*) as c FROM user_feedback {where} {'AND' if where else 'WHERE'} rating='up'").fetchone()["c"]
+        down = total - up
+        comments = conn.execute(
+            f"SELECT comment FROM user_feedback {where} {'AND' if where else 'WHERE'} comment IS NOT NULL AND comment != '' ORDER BY id DESC LIMIT 10"
+        ).fetchall()
+        conn.close()
+        return {
+            "total": total,
+            "up": up,
+            "down": down,
+            "satisfaction": f"{up / total * 100:.1f}%" if total > 0 else "N/A",
+            "recent_comments": [r["comment"] for r in comments],
+        }
+    except Exception as e:
+        conn.close()
+        return {"error": str(e)}
+
+
 def main():
     parser = argparse.ArgumentParser(description="LLM call stats from sessions.db")
     parser.add_argument("--db", default=str(DEFAULT_DB), help=f"Path to sessions.db (default: {DEFAULT_DB})")
+    parser.add_argument("--conv-db", default=str(DEFAULT_CONV_DB), help=f"Path to conversations.db for feedback (default: {DEFAULT_CONV_DB})")
     parser.add_argument("--days", type=int, help="Filter to last N days")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
     args = parser.parse_args()
 
     stats = load_stats(Path(args.db), args.days)
+    feedback = load_feedback_stats(Path(args.conv_db), args.days)
 
     if args.json:
-        print(json.dumps(stats, ensure_ascii=False, indent=2))
+        print(json.dumps({"llm": stats, "feedback": feedback}, ensure_ascii=False, indent=2))
         return
 
     if "error" in stats:
-        print(f"❌ {stats['error']}")
-        return
+        print(f"❌ LLM stats: {stats['error']}")
+    else:
+        print("=" * 60)
+        print(f"  📊  LLM Call Statistics{' (last ' + str(args.days) + ' days)' if args.days else ' (all time)'}")
+        print("=" * 60)
+        print(f"  Total calls : {stats['total_calls']}")
+        print(f"  ✅ Success  : {stats['ok']}  ({stats['success_rate']})")
+        print(f"  ❌ Failed   : {stats['failed']}  (fallback rate: {stats['fallback_rate']})")
+        print()
+        print(f"  ⏱  Latency (successful calls):")
+        print(f"      Average : {format_duration(stats['avg_latency_ms'] / 1000)}")
+        print(f"      P95     : {format_duration(stats['p95_latency_ms'] / 1000)}")
+        print(f"      Max     : {format_duration(stats['max_latency_ms'] / 1000)}")
+        print()
+        print(f"  🏷  Models used:")
+        for model, count in stats["models"].items():
+            print(f"      {model}: {count}")
+        print()
+        if stats["errors"]:
+            print(f"  ⚠️  Errors:")
+            for err, count in stats["errors"].items():
+                print(f"      {err}: {count}")
 
-    print("=" * 60)
-    print(f"  📊  LLM Call Statistics{' (last ' + str(args.days) + ' days)' if args.days else ' (all time)'}")
-    print("=" * 60)
-    print(f"  Total calls : {stats['total_calls']}")
-    print(f"  ✅ Success  : {stats['ok']}  ({stats['success_rate']})")
-    print(f"  ❌ Failed   : {stats['failed']}  (fallback rate: {stats['fallback_rate']})")
     print()
-    print(f"  ⏱  Latency (successful calls):")
-    print(f"      Average : {format_duration(stats['avg_latency_ms'] / 1000)}")
-    print(f"      P95     : {format_duration(stats['p95_latency_ms'] / 1000)}")
-    print(f"      Max     : {format_duration(stats['max_latency_ms'] / 1000)}")
-    print()
-    print(f"  🏷  Models used:")
-    for model, count in stats["models"].items():
-        print(f"      {model}: {count}")
-    print()
-    if stats["errors"]:
-        print(f"  ⚠️  Errors:")
-        for err, count in stats["errors"].items():
-            print(f"      {err}: {count}")
+    if "error" in feedback:
+        print(f"  💬 Feedback: {feedback['error']}")
+    else:
+        print("=" * 60)
+        print(f"  💬  User Feedback{' (last ' + str(args.days) + ' days)' if args.days else ' (all time)'}")
+        print("=" * 60)
+        print(f"  Total ratings : {feedback['total']}")
+        print(f"  👍 Up         : {feedback['up']}")
+        print(f"  👎 Down       : {feedback['down']}")
+        print(f"  Satisfaction  : {feedback['satisfaction']}")
+        if feedback["recent_comments"]:
+            print()
+            print("  Recent comments:")
+            for c in feedback["recent_comments"]:
+                print(f"    - {c}")
 
 
 if __name__ == "__main__":

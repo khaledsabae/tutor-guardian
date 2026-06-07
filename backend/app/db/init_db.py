@@ -1,7 +1,8 @@
 """
-SQLite app database — جلسات ورسائل المحادثة + tokens
-=====================================================
+SQLite app database — جلسات ورسائل المحادثة + tokens + feedback
+================================================================
 Migration v2: added api_tokens table for device authentication.
+Migration v3: added user_feedback table for 👍/👎 ratings.
 """
 import os
 import sqlite3
@@ -9,7 +10,7 @@ from pathlib import Path
 
 _DEFAULT = Path(__file__).resolve().parents[3] / "ops" / "conversations.db"
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 
 def db_path() -> Path:
@@ -71,6 +72,18 @@ def init_db() -> None:
 
         CREATE INDEX IF NOT EXISTS ix_api_tokens_device
             ON api_tokens (device_id);
+
+        -- Migration v3: user feedback (👍/👎) per session
+        CREATE TABLE IF NOT EXISTS user_feedback (
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id TEXT,
+            rating     TEXT NOT NULL,    -- 'up' | 'down'
+            comment    TEXT,
+            created_at TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+
+        CREATE INDEX IF NOT EXISTS ix_user_feedback_session
+            ON user_feedback (session_id);
         """
     )
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()

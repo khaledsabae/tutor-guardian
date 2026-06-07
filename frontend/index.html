@@ -146,6 +146,30 @@
       font-size: 0.75rem;
       margin-left: 4px;
     }
+    .feedback-bar {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .feedback-btn {
+      width: auto;
+      padding: 5px 16px;
+      font-size: 1.1rem;
+      margin-top: 0;
+      background: #f0f0f0;
+      color: #333;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .feedback-btn:hover:not(:disabled) { background: #e0e0e0; }
+    .feedback-btn:disabled { cursor: default; }
+    .feedback-btn.voted-up { background: #d4edda; border-color: #28a745; }
+    .feedback-btn.voted-down { background: #f8d7da; border-color: #dc3545; }
+    .feedback-label { font-size: 0.82rem; color: #888; }
   </style>
 </head>
 <body>
@@ -201,6 +225,12 @@
       <div id="alerts"></div>
       <div class="reply-text" id="replyText"></div>
       <div class="meta" id="meta"></div>
+      <div class="feedback-bar" id="feedbackBar" style="display:none">
+        <span class="feedback-label">هل كان الرد مفيداً؟</span>
+        <button class="feedback-btn" id="fbUp" onclick="submitFeedback('up')">👍</button>
+        <button class="feedback-btn" id="fbDown" onclick="submitFeedback('down')">👎</button>
+        <span id="feedbackStatus" style="font-size:0.82rem;color:#666"></span>
+      </div>
     </div>
   </div>
 
@@ -210,6 +240,24 @@
     // with each request. No server-side sessions — simpler and DB-free.
     const API_BASE = '/api';
     let turnCount = 0;
+    let sessionToken = null;
+    let currentSessionId = null;
+
+    // Auto-create a session on page load to get an auth token.
+    async function initSession() {
+      try {
+        const res = await fetch(`${API_BASE}/chat/sessions`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}',
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        sessionToken = data.token;
+        currentSessionId = data.session_id;
+      } catch (e) {
+        console.warn('Session init failed — auth token unavailable:', e.message);
+      }
+    }
+    initSession();
 
     // In-memory conversation history — last MAX_HISTORY turns only.
     const MAX_HISTORY = 5;
@@ -254,9 +302,21 @@
       let acc = '';
       let finalReply = '';
 
+      // Reset feedback bar for this new query
+      const feedbackBar = document.getElementById('feedbackBar');
+      feedbackBar.style.display = 'none';
+      document.getElementById('feedbackStatus').textContent = '';
+      ['fbUp', 'fbDown'].forEach(id => {
+        const b = document.getElementById(id);
+        b.disabled = false;
+        b.classList.remove('voted-up', 'voted-down');
+      });
+
       try {
+        const headers = { 'Content-Type': 'application/json' };
+        if (sessionToken) headers['Authorization'] = `Bearer ${sessionToken}`;
         const res = await fetch(`${API_BASE}/assistant/stream`, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          method: 'POST', headers,
           body: JSON.stringify(payload),
         });
         if (!res.ok || !res.body) throw new Error('HTTP ' + res.status);
@@ -307,6 +367,7 @@
               meta.innerHTML = `mode=${data.mode || '—'} | severity=${data.severity || '—'} ${domainLabel}${historyLabel}` +
                 `<span style="color:#1a5f7a;font-size:0.75rem"> | 💬 ${turnCount} أسئلة</span>`;
               document.getElementById('clearHistory').style.display = 'inline-block';
+              if (data.mode !== 'banned') feedbackBar.style.display = 'flex';
             } else if (ev === 'error') {
               alerts.innerHTML += '<div class="alert alert-red">❌ ' + (data.detail || 'خطأ') + '</div>';
             }
@@ -320,11 +381,31 @@
       }
     }
 
+    async function submitFeedback(rating) {
+      const upBtn = document.getElementById('fbUp');
+      const downBtn = document.getElementById('fbDown');
+      const statusEl = document.getElementById('feedbackStatus');
+      upBtn.disabled = true; downBtn.disabled = true;
+      upBtn.classList.remove('voted-up', 'voted-down');
+      downBtn.classList.remove('voted-up', 'voted-down');
+      (rating === 'up' ? upBtn : downBtn).classList.add(rating === 'up' ? 'voted-up' : 'voted-down');
+      try {
+        const headers = { 'Content-Type': 'application/json' };
+        if (sessionToken) headers['Authorization'] = `Bearer ${sessionToken}`;
+        const res = await fetch(`${API_BASE}/feedback`, {
+          method: 'POST', headers,
+          body: JSON.stringify({ session_id: currentSessionId, rating }),
+        });
+        statusEl.textContent = res.ok ? '✅ شكراً!' : '❌ تعذّر الحفظ';
+      } catch { statusEl.textContent = '❌ تعذّر الاتصال'; }
+    }
+
     function clearConversation() {
       conversationHistory = [];
       turnCount = 0;
       document.getElementById('clearHistory').style.display = 'none';
       document.getElementById('responseBox').classList.remove('show');
+      document.getElementById('feedbackBar').style.display = 'none';
     }
   </script>
 </body>

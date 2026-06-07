@@ -16,7 +16,7 @@ from app.config.guardrails_loader import load_guardrails_config
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
-from app.routers import health, assistant, chat
+from app.routers import health, assistant, chat, feedback
 
 logger = logging.getLogger(__name__)
 
@@ -100,6 +100,7 @@ app.add_middleware(RateLimitMiddleware)
 app.include_router(health.router)
 app.include_router(assistant.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
+app.include_router(feedback.router, prefix="/api")
 
 if FRONTEND_DIR.is_dir():
     app.mount("/ui", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="static")
