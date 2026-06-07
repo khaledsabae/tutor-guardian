@@ -3,7 +3,7 @@
   "domain": "medical",
   "age_group": "10-12",
   "behavior_type": "اضطراب_المزاج_التخريبي",
-  "intervention_type": "علاج ماركسي/إحالة طبيب",
+  "intervention_type": "إحالة_لطبيب",
   "severity": "شديد",
   "reference_type": "DSM-5",
   "reference_info": "Disruptive Mood Dysregulation Disorder — NIMH",

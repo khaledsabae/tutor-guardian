@@ -7,6 +7,7 @@ from pathlib import Path
 import chromadb
 from chromadb.utils import embedding_functions
 
+from app.core.taxonomy import canonical_domain
 from app.models.knowledge import KnowledgeUnit
 from app.services.knowledge_loader import load_default_knowledge_units
 
@@ -120,14 +121,9 @@ def retrieve_relevant_units(
     """
     collection = _get_collection()
 
-    # Map API domain names to DB domain names
-    _DOMAIN_MAP = {
-        "fiqh": "islamic_parenting",
-        "tarbiyah": "islamic_parenting",
-        "digital_safety": "cyber",  # merged into cyber
-        # keep cyber as-is after merge: cyber -> cyber
-    }
-    db_domain = _DOMAIN_MAP.get(domain, domain)
+    # Map API/classifier input domain → canonical storage domain.
+    # Single source of truth: app.core.taxonomy (keeps schema/code/data aligned).
+    db_domain = canonical_domain(domain)
 
     # ── Attempt 1: exact match + behavior_type ──────────────────────
     if behavior_type:

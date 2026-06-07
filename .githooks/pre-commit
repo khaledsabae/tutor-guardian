@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# pre-commit — يمنع commit فيه drift في قاعدة المعرفة.
+# تفعيل لمرة واحدة:  git config core.hooksPath .githooks
+#
+# يشغّل الفحص السريع فقط (schema/enum/taxonomy) عشان يفضل سريع.
+# فحص ChromaDB الكامل بيشتغل في الـ CI (وعبر ./check.sh --full).
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+PY="backend/.venv/bin/python"
+[ -x "$PY" ] || PY=".venv/bin/python"
+[ -x "$PY" ] || PY="python3"
+
+echo ""
+echo "🔍 [pre-commit] Knowledge-base integrity check..."
+if "$PY" ops/tools/check_kb_integrity.py; then
+    echo "✅ [pre-commit] KB in sync — committing."
+else
+    echo ""
+    echo "❌ [pre-commit] DRIFT DETECTED — commit blocked."
+    echo "   Fix: backend/.venv/bin/python ops/tools/normalize_units.py"
+    echo "        backend/.venv/bin/python ops/tools/build_vector_db.py"
+    echo "   Bypass (discouraged): git commit --no-verify"
+    echo ""
+    exit 1
+fi
