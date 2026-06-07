@@ -12,15 +12,12 @@ class ConversationTurn(BaseModel):
 class UserMessage(BaseModel):
     """Request from the parent describing a child's behaviour concern."""
 
-    age_group: str  # "0-3", "4-6", "7-9", "10-12", "13-15", "16-18"
-    domain: str | None = None  # auto-detected; clients should omit
+    age_group: str
+    domain: str | None = None
     behavior_type: str = ""
-    severity: str  # "خفيف", "متوسط", "شديد", "طارئ"
+    severity: str
     message_text: str = ""
-    # Session-based flow (mobile): server owns + persists history.
     session_id: str | None = None
-    # Stateless flow (web dev-client): client sends last N turns, server uses
-    # them for LLM context only — nothing is persisted.
     conversation_history: list[ConversationTurn] = []
 
 
@@ -33,18 +30,31 @@ class AssistantReply(BaseModel):
     needs_human_review: bool
     escalation_target: str | None = None
     metadata: dict | None = None
-    mode: str = "retrieval_only"  # "retrieval_only" | "llm_generated" | "banned" | "emergency"
+    mode: str = "retrieval_only"
     session_id: str | None = None
 
 
-# ── Chat session management (mobile-ready) ──────────────────────────────────
+# ── Auth & session management (mobile-ready) ─────────────────────────────────
 class SessionCreate(BaseModel):
+    """POST /api/chat/sessions — create a new session + auth token."""
     device_id: str | None = None
     metadata: dict | None = None
 
 
-class SessionResponse(BaseModel):
+class SessionCreateResponse(BaseModel):
+    """Response to session creation — includes auth token."""
     session_id: str
+    token: str
+
+
+class SessionResponse(BaseModel):
+    """GET /api/chat/sessions/{id} response."""
+    id: str
+    device_id: str | None = None
+    created_at: str
+    updated_at: str
+    metadata: dict
+    messages: list["ChatMessageOut"]
 
 
 class ChatMessageOut(BaseModel):
@@ -55,12 +65,3 @@ class ChatMessageOut(BaseModel):
     mode: str | None = None
     needs_human_review: bool = False
     created_at: str
-
-
-class SessionDetail(BaseModel):
-    id: str
-    device_id: str | None = None
-    created_at: str
-    updated_at: str
-    metadata: dict
-    messages: list[ChatMessageOut]

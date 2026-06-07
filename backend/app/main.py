@@ -15,6 +15,7 @@ from fastapi.responses import HTMLResponse
 from app.config.guardrails_loader import load_guardrails_config
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
+from app.middleware.auth import AuthMiddleware
 from app.routers import health, assistant, chat
 
 logger = logging.getLogger(__name__)
@@ -90,7 +91,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Lightweight per-IP rate limiting on the assistant endpoints (no extra deps).
+# Auth middleware — validates Bearer tokens on protected endpoints.
+app.add_middleware(AuthMiddleware)
+
+# Lightweight per-device rate limiting (falls back to per-IP if no token).
 app.add_middleware(RateLimitMiddleware)
 
 app.include_router(health.router)
