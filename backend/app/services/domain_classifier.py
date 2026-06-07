@@ -21,9 +21,18 @@ from typing import List, Optional, Tuple
 logger = logging.getLogger(__name__)
 
 # ── Configuration ──────────────────────────────────────────────────────────────
-_LOCAL_BASE = os.environ.get("OLLAMA_LOCAL_BASE_URL", "http://100.109.163.64:11434")
-OLLAMA_URL = f"{_LOCAL_BASE.rstrip('/')}/api/generate"
-CLASSIFIER_MODEL = os.environ.get("OLLAMA_LOCAL_FAST_MODEL", "qwen2.5:3b")
+# Resolution: OLLAMA_BASE_URL (Docker/general) first, then OLLAMA_LOCAL_BASE_URL (home-server overrides).
+# In Docker production, set OLLAMA_BASE_URL=http://ollama:11434 and everything works.
+# On home server, OLLAMA_LOCAL_BASE_URL takes precedence for local-only models.
+_OLLAMA_ENDPOINT = (
+    os.environ.get("OLLAMA_LOCAL_BASE_URL") or
+    os.environ.get("OLLAMA_BASE_URL", "http://100.109.163.64:11434")
+)
+OLLAMA_URL = f"{_OLLAMA_ENDPOINT.rstrip('/')}/api/generate"
+CLASSIFIER_MODEL = (
+    os.environ.get("OLLAMA_LOCAL_FAST_MODEL") or
+    os.environ.get("OLLAMA_FAST_MODEL", "qwen2.5:3b")
+)
 
 VALID_DOMAINS = {"fiqh", "medical", "cyber", "development"}
 

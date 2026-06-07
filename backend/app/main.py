@@ -55,7 +55,7 @@ async def lifespan(app: FastAPI):
 
     # ── Warm-up: pre-load Ollama models ──────────────────────────────────
     # Sends a tiny request to each model to get them into GPU memory.
-    _local_base = os.environ.get("OLLAMA_LOCAL_BASE_URL", "http://100.109.163.64:11434")
+    _local_base = os.environ.get("OLLAMA_LOCAL_BASE_URL") or os.environ.get("OLLAMA_BASE_URL", "http://100.109.163.64:11434")
     ollama_url = f"{_local_base.rstrip('/')}/api/generate"
     fast_model = os.environ.get("OLLAMA_LOCAL_FAST_MODEL", "qwen2.5:3b")
 
