@@ -43,7 +43,7 @@ def _get_collection() -> chromadb.Collection:
     global _collection
     if _collection is None:
         client = chromadb.PersistentClient(path=str(CHROMA_PERSIST_DIR))
-        existing = [c.name for c in client.list_collections()]
+        existing = list(client.list_collections())
         if COLLECTION_NAME in existing:
             _collection = client.get_collection(
                 COLLECTION_NAME,
