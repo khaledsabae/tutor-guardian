@@ -41,14 +41,15 @@ def is_emergency(user_message: UserMessage) -> bool:
 
 def emergency_reply(user_message: UserMessage, policies: dict) -> AssistantReply:
     """Build an immediate fallback reply for emergency cases — no LLM, no retrieval."""
+    domain = user_message.domain or "general"
     return AssistantReply(
         reply_text=_build_fallback_message(
-            user_message.domain,
+            domain,
             user_message.behavior_type,
             user_message.age_group,
             policies,
         ),
-        domain=user_message.domain,
+        domain=domain,
         severity=user_message.severity,
         needs_human_review=True,
         escalation_target=EMERGENCY_ESCALATE,
