@@ -1,0 +1,26 @@
+{
+  "id": "med-ac145c0b",
+  "domain": "medical",
+  "age_group": "4-6",
+  "behavior_type": "خوف الأطفال من الظلام",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — الخوف من الظلام عند الأطفال",
+  "text_original": "",
+  "text_simplified": " infants fear darkness, which can cause them stress and sleep problems. Parents should create a safe environment to help their children overcome this fear.",
+  "labels": [
+    "خوف",
+    "نوم",
+    "بيئة آمنة"
+  ],
+  "created_at": "2026-06-07T08:33:11Z",
+  "updated_at": "2026-06-07T08:33:11Z",
+  "version": "1.0.0",
+  "title": "الخوف من الظلام لدى الأطفال الصغار",
+  "language": "ar",
+  "source_meta": {
+    "source_title": "خوف الأطفال من الظلام",
+    "source_author": ""
+  }
+}

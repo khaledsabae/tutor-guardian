@@ -1,0 +1,26 @@
+{
+  "id": "med-6fd9c009",
+  "domain": "medical",
+  "age_group": "7-9",
+  "behavior_type": "قضم الأظافر",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — قضم الأظافر كسلوك عصبي",
+  "text_original": "",
+  "text_simplified": "قضم الأظافر هو سلوك شائع في الأطفال، قد يسبب تلفاً في الجلد ويؤدي إلى احمرار وانتفاخ. يجب مراقبة الطفل وإعطاءه أشياء آمنة للاستفادة منها.",
+  "labels": [
+    "سلوكيات طفولة",
+    "العناية بالجروح",
+    "الرعاية الصحية للأطفال"
+  ],
+  "created_at": "2026-06-07T08:32:42Z",
+  "updated_at": "2026-06-07T08:32:42Z",
+  "version": "1.0.0",
+  "title": "قضم الأظافر عند الأطفال",
+  "language": "ar",
+  "source_meta": {
+    "source_title": "قضم الأظافر عند الأطفال",
+    "source_author": ""
+  }
+}

@@ -1,10 +1,10 @@
 {
-  "total_units": 271,
-  "generated_at": "2026-06-07T08:21:42.499010+00:00",
+  "total_units": 292,
+  "generated_at": "2026-06-07T08:33:24.365909+00:00",
   "by_domain": {
-    "medical": 90,
+    "medical": 93,
     "cyber": 49,
-    "islamic_parenting": 93,
+    "islamic_parenting": 111,
     "development": 39
   },
   "units": [
@@ -2361,6 +2361,18 @@
       "size_chars": 600
     },
     {
+      "id": "isl-031fc474",
+      "domain": "islamic_parenting",
+      "title": "مناهج النبي في تربية الأطفال",
+      "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربيه الطفل",
+      "needs_ocr": false,
+      "size_chars": 1637
+    },
+    {
       "id": "isl-06fef96a",
       "domain": "islamic_parenting",
       "title": "",
@@ -2433,6 +2445,18 @@
       "size_chars": 1241
     },
     {
+      "id": "isl-24a45a01",
+      "domain": "islamic_parenting",
+      "title": "التدريس في تعليم القرآن",
+      "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تعليم",
+      "needs_ocr": false,
+      "size_chars": 368
+    },
+    {
       "id": "isl-24c765a6",
       "domain": "islamic_parenting",
       "title": "",
@@ -2481,6 +2505,42 @@
       "size_chars": 1401
     },
     {
+      "id": "isl-33e652bb",
+      "domain": "islamic_parenting",
+      "title": "السلوك السليم للأطفال في سن المراهقة",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 1400
+    },
+    {
+      "id": "isl-34fc82de",
+      "domain": "islamic_parenting",
+      "title": "توعية عن فرط الحركة لدى الأطفال في سن 4-6 سنوات",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 1606
+    },
+    {
+      "id": "isl-3703ac71",
+      "domain": "islamic_parenting",
+      "title": "تعزيز التواصل بين الأهل والأطفال الصغار",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "0-3",
+      "normalized_age_group": "0-3",
+      "behavior_type": "السلوك الاجتماعي",
+      "needs_ocr": false,
+      "size_chars": 1454
+    },
+    {
       "id": "isl-422bf31f",
       "domain": "islamic_parenting",
       "title": "",
@@ -2491,6 +2551,18 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1265
+    },
+    {
+      "id": "isl-440cdac2",
+      "domain": "islamic_parenting",
+      "title": "الرفق في تعاملنا مع أطفالنا",
+      "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 1217
     },
     {
       "id": "isl-4882913e",
@@ -2529,6 +2601,18 @@
       "size_chars": 1293
     },
     {
+      "id": "isl-597a1018",
+      "domain": "islamic_parenting",
+      "title": "أهمية اصطحاب الأطفال إلى المسجد لحضور الصلاة",
+      "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "السلوك العائلي",
+      "needs_ocr": false,
+      "size_chars": 1037
+    },
+    {
       "id": "isl-59d3915f",
       "domain": "islamic_parenting",
       "title": "",
@@ -2565,6 +2649,30 @@
       "size_chars": 1262
     },
     {
+      "id": "isl-6cecdb96",
+      "domain": "islamic_parenting",
+      "title": "أهمية السلام في التربية الإسلامية",
+      "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 528
+    },
+    {
+      "id": "isl-6e679939",
+      "domain": "islamic_parenting",
+      "title": "تعليم أطفال 10-12 سنة كيفية أداء زكاة المال",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "تعليم الزكاة للأبناء",
+      "needs_ocr": false,
+      "size_chars": 0
+    },
+    {
       "id": "isl-72259d18",
       "domain": "islamic_parenting",
       "title": "",
@@ -2599,6 +2707,18 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1262
+    },
+    {
+      "id": "isl-7bff5e2c",
+      "domain": "islamic_parenting",
+      "title": "تقنيات التحكم في انتباه الطفل المصاب بفرط الحركة",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 1367
     },
     {
       "id": "isl-8115fbf7",
@@ -2673,6 +2793,18 @@
       "size_chars": 1328
     },
     {
+      "id": "isl-946dd770",
+      "domain": "islamic_parenting",
+      "title": "استراتيجيات تحسين سلوكيات الأسرة وتحسين الاتصال بين الآباء و",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "سلوكيات الأسرة",
+      "needs_ocr": false,
+      "size_chars": 1274
+    },
+    {
       "id": "isl-990bc4e1",
       "domain": "islamic_parenting",
       "title": "",
@@ -2683,6 +2815,18 @@
       "behavior_type": "تربية الأولاد",
       "needs_ocr": false,
       "size_chars": 1346
+    },
+    {
+      "id": "isl-9baf6011",
+      "domain": "islamic_parenting",
+      "title": "الرفق بالطفل: نهج النبي صلى الله عليه وسلم",
+      "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "الرفق والحنان",
+      "needs_ocr": false,
+      "size_chars": 958
     },
     {
       "id": "isl-9e6b04ca",
@@ -2709,6 +2853,18 @@
       "size_chars": 497
     },
     {
+      "id": "isl-a4875a31",
+      "domain": "islamic_parenting",
+      "title": "مداعبة الأطفال وتأثيرها على الفتيان في المرحلة العمرية 4-6",
+      "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 657
+    },
+    {
       "id": "isl-a60d7af9",
       "domain": "islamic_parenting",
       "title": "",
@@ -2733,6 +2889,18 @@
       "size_chars": 535
     },
     {
+      "id": "isl-a9397134",
+      "domain": "islamic_parenting",
+      "title": "كيفية التعامل مع فرط الحركة لدى الأطفال في سن 4-6 سنوات",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 1470
+    },
+    {
       "id": "isl-b1e1577f",
       "domain": "islamic_parenting",
       "title": "",
@@ -2743,6 +2911,30 @@
       "behavior_type": "التفسير والتوضيح",
       "needs_ocr": false,
       "size_chars": 1265
+    },
+    {
+      "id": "isl-b1e6de34",
+      "domain": "islamic_parenting",
+      "title": "التعامل مع أعراض القلق لدى الأطفال الصغار",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "قلق",
+      "needs_ocr": false,
+      "size_chars": 1346
+    },
+    {
+      "id": "isl-bfbe3bbe",
+      "domain": "islamic_parenting",
+      "title": "السلوك الفرطي في المدرسة: الإرشادات الأولى",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 1358
     },
     {
       "id": "isl-c0a98146",
@@ -2853,6 +3045,30 @@
       "size_chars": 1262
     },
     {
+      "id": "isl-f6c0c64a",
+      "domain": "islamic_parenting",
+      "title": "患儿的过度活跃行为管理",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 1220
+    },
+    {
+      "id": "isl-fb6a8582",
+      "domain": "islamic_parenting",
+      "title": "توجيهات للتعامل مع فرط الحركة في الفئة العمرية 4-6",
+      "source_file": "Al_Hady_Al_Nabawi.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 1473
+    },
+    {
       "id": "med-00fa7863",
       "domain": "medical",
       "title": "الاضطراب العاطفي الشديد وانتكاساته الحادة في الأطفال والadol",
@@ -2961,6 +3177,18 @@
       "size_chars": 1362
     },
     {
+      "id": "med-6fd9c009",
+      "domain": "medical",
+      "title": "قضم الأظافر عند الأطفال",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "قضم الأظافر",
+      "needs_ocr": false,
+      "size_chars": 0
+    },
+    {
       "id": "med-72806e5e",
       "domain": "medical",
       "title": "القلق وال depression في الأطفال: ما هي العلامات والأعراض؟",
@@ -3055,6 +3283,18 @@
       "behavior_type": "قلق",
       "needs_ocr": false,
       "size_chars": 1660
+    },
+    {
+      "id": "med-ac145c0b",
+      "domain": "medical",
+      "title": "الخوف من الظلام لدى الأطفال الصغار",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "خوف الأطفال من الظلام",
+      "needs_ocr": false,
+      "size_chars": 0
     },
     {
       "id": "med-ac9f0f45",
@@ -3211,6 +3451,18 @@
       "behavior_type": " developmental milestones",
       "needs_ocr": false,
       "size_chars": 1516
+    },
+    {
+      "id": "med-db5760f5",
+      "domain": "medical",
+      "title": "تبطيل التبول عند الأطفال من سن 4-6 سنوات",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تبول لاإرادي",
+      "needs_ocr": false,
+      "size_chars": 0
     },
     {
       "id": "med-e64897f2",
