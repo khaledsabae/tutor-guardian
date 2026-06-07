@@ -78,15 +78,19 @@ SKIP_FILES = {
 # ── Helpers ──────────────────────────────────────────────────
 
 def extract_pdf_text(path: Path) -> str:
-    """Extract text from a PDF using pdfplumber."""
+    """Extract text from a PDF using pdfplumber. Returns empty string on failure."""
     import pdfplumber
-    with pdfplumber.open(path) as pdf:
-        pages = []
-        for page in pdf.pages:
-            text = page.extract_text()
-            if text:
-                pages.append(text)
-    return "\n".join(pages)
+    try:
+        with pdfplumber.open(path) as pdf:
+            pages = []
+            for page in pdf.pages:
+                text = page.extract_text()
+                if text:
+                    pages.append(text)
+        return "\n".join(pages)
+    except Exception as e:
+        print(f"  ⚠️  PDF parse error: {e}")
+        return "" 
 
 
 def extract_sidecar_text(pdf_path: Path) -> str | None:
@@ -97,19 +101,37 @@ def extract_sidecar_text(pdf_path: Path) -> str | None:
     return None
 
 
+def detect_is_arabic_doc(text: str) -> bool:
+    """Detect if a document is primarily Arabic (>20% Arabic chars across first 2000 chars)."""
+    sample = text[:2000]
+    arabic = sum(1 for c in sample if "\u0600" <= c <= "\u06FF")
+    return arabic > len(sample) * 0.20
+
+
 def clean_ocr_text(text: str) -> str:
-    """Remove OCR noise: short lines, low-Arabic-char lines."""
+    """Remove OCR noise: short lines, low-content lines.
+
+    For Arabic documents, filter lines with <30% Arabic chars.
+    For English documents, only remove very short lines and pure numbers.
+    """
+    is_arabic = detect_is_arabic_doc(text)
     lines = text.split("\n")
     cleaned = []
     for line in lines:
         line = line.strip()
         if not line:
             continue
-        if len(line) < 20:
+        if len(line) < 15:
             continue
-        arabic = sum(1 for c in line if "\u0600" <= c <= "\u06FF")
-        if arabic < len(line) * 0.3:
-            continue
+        if is_arabic:
+            arabic = sum(1 for c in line if "\u0600" <= c <= "\u06FF")
+            if arabic < len(line) * 0.3:
+                continue
+        else:
+            # For English: skip purely numeric/header lines
+            non_alpha = sum(1 for c in line if not c.isalpha() and not c.isspace())
+            if non_alpha > len(line) * 0.7:
+                continue
         cleaned.append(line)
     return "\n".join(cleaned)
 
@@ -277,7 +299,6 @@ def build_unit(
         "source_meta": {
             "source_title": Path(source_name).stem,
             "source_author": source_meta_author,
-            "source_year": source_meta_author or None,
         },
     }
 
