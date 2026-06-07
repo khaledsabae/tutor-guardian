@@ -13,8 +13,8 @@ class LLMConfig:
 
     # Primary (cloud) configuration
     base_url: str = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
-    primary_model: str = os.environ.get("OLLAMA_PRIMARY_MODEL", "kimi-k2.6:cloud")
-    fallback_model: str = os.environ.get("OLLAMA_FALLBACK_MODEL", "gemma4:31b-cloud")
+    primary_model: str = os.environ.get("OLLAMA_PRIMARY_MODEL", "qwen2.5:3b")
+    fallback_model: str = os.environ.get("OLLAMA_FALLBACK_MODEL", "gemma4:e4b")
 
     # Local LLM server (Home Server via Tailscale) configuration
     local_base_url: str = os.environ.get("OLLAMA_LOCAL_BASE_URL", "http://100.109.163.64:11434")

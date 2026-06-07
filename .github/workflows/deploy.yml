@@ -44,13 +44,13 @@ jobs:
     steps:
       - name: Sync code to latest
         run: |
-          cd /home/khaled/tutor-guardian
+          cd /root/tutor-guardian
           git fetch origin
-          git reset --hard origin/master
+          git reset --hard origin/main
 
       - name: Ensure .env exists
         run: |
-          cd /home/khaled/tutor-guardian
+          cd /root/tutor-guardian
           if [ ! -f .env ]; then
             echo "❌ No .env found — create it on the VPS first"; exit 1
           fi
@@ -58,12 +58,12 @@ jobs:
 
       - name: Build new image
         run: |
-          cd /home/khaled/tutor-guardian
+          cd /root/tutor-guardian
           docker compose -f docker-compose.production.yml build
 
       - name: Restart containers
         run: |
-          cd /home/khaled/tutor-guardian
+          cd /root/tutor-guardian
           docker compose -f docker-compose.production.yml up -d --remove-orphans
 
       - name: Wait for backend healthy
@@ -78,7 +78,7 @@ jobs:
 
       - name: Health check
         run: |
-          curl -sf http://localhost:8091/health \
+          docker exec tg_backend curl -sf http://localhost:8000/health \
             | python3 -c "import sys,json; d=json.load(sys.stdin); print('✅ healthy' if d.get('status')=='ok' else '❌ ' + str(d))"
 
       - name: Clean up old Docker images
