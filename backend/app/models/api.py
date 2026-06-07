@@ -13,13 +13,14 @@ class UserMessage(BaseModel):
     """Request from the parent describing a child's behaviour concern."""
 
     age_group: str  # "0-3", "4-6", "7-9", "10-12", "13-15", "16-18"
-    domain: str = ""  # auto-detected by classifier; can be empty
-    behavior_type: str = ""  # optional
+    domain: str | None = None  # auto-detected; clients should omit
+    behavior_type: str = ""
     severity: str  # "خفيف", "متوسط", "شديد", "طارئ"
-    message_text: str = ""  # الوصف الحر من الوالد/الوالدة
-    # When set, server loads/persists history for this session and ignores
-    # the client-sent conversation_history below (server owns the truth).
+    message_text: str = ""
+    # Session-based flow (mobile): server owns + persists history.
     session_id: str | None = None
+    # Stateless flow (web dev-client): client sends last N turns, server uses
+    # them for LLM context only — nothing is persisted.
     conversation_history: list[ConversationTurn] = []
 
 

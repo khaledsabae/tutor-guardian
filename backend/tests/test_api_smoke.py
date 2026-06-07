@@ -70,3 +70,30 @@ def test_unknown_session_404(client):
         "message_text": "x", "session_id": "does-not-exist",
     })
     assert r.status_code == 404
+
+
+def test_stateless_conversation_history(client):
+    """Client-sent conversation_history is accepted and doesn't break the endpoint."""
+    r = client.post("/api/assistant/query", json={
+        "age_group": "7-9", "severity": "متوسط",
+        "message_text": "ابني ما يصلي",
+        "conversation_history": [
+            {"role": "user", "content": "كيف أعلّم الصلاة؟"},
+            {"role": "assistant", "content": "ابدأ بالقدوة الحسنة."},
+        ],
+    })
+    assert r.status_code == 200
+    body = r.json()
+    assert body["mode"] in ("llm_generated", "retrieval_only")
+    assert body.get("session_id") is None  # stateless — no server session
+
+
+def test_domain_field_optional(client):
+    """Requests without a domain field are accepted (domain is auto-detected)."""
+    r = client.post("/api/assistant/query", json={
+        "age_group": "4-6", "severity": "خفيف",
+        "message_text": "ابنتي خجولة جداً",
+        # no domain field at all
+    })
+    assert r.status_code == 200
+    assert r.json().get("domain")  # auto-detected domain must be non-empty

@@ -30,13 +30,20 @@ class LLMConfig:
     def model(self) -> str:
         return self.primary_model
 
-    # Fallback chain order
     def fallback_chain(self) -> list[dict]:
-        """Returns ordered list of fallback configs to try after primary fails."""
+        """Ordered fallback list used by generate() after primary fails."""
         return [
             {"name": "cloud_fallback", "url": self.base_url, "model": self.fallback_model, "timeout": self.request_timeout},
             {"name": "local_quality", "url": self.local_base_url, "model": self.local_fallback_model, "timeout": 180},
             {"name": "local_fast", "url": self.local_base_url, "model": self.local_fast_model, "timeout": 60},
+        ]
+
+    def stream_chain(self) -> list[dict]:
+        """Ordered providers for stream() — starts with fast local for low latency."""
+        return [
+            {"name": "local_fast", "url": self.local_base_url, "model": self.local_fast_model, "timeout": 60},
+            {"name": "local_quality", "url": self.local_base_url, "model": self.local_fallback_model, "timeout": 180},
+            {"name": "cloud_fallback", "url": self.base_url, "model": self.fallback_model, "timeout": self.request_timeout},
         ]
 
     # Prompt template — ensures the model only uses retrieved knowledge

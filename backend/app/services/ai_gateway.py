@@ -227,40 +227,66 @@ class AIGateway:
                   streamed=False, ok=False)
         raise RuntimeError(f"LLM generation failed after all retries and fallbacks: {last_err}") from last_err
 
-    def stream(self, prompt: str, *, options: dict | None = None) -> Iterator[StreamChunk]:
-        """Streaming generation. Yields StreamChunk(delta=...) then a final
-        StreamChunk(done=True, result=LLMResult). No retry (can't un-send tokens)."""
-        opts = self._options(options)
+    def _stream_provider(self, provider: LLMProvider, prompt: str,
+                         opts: dict) -> Iterator[StreamChunk]:
+        """Stream from one provider. Raises on failure (caller decides to fall back)."""
         start = time.monotonic()
         text_parts: list[str] = []
         prompt_tokens = completion_tokens = None
         ok = False
-        try:
-            for obj in self.provider.stream(prompt, options=opts):
-                delta = obj.get("response", "")
-                if delta:
-                    text_parts.append(delta)
-                    yield StreamChunk(delta=delta, done=False)
-                if obj.get("done"):
-                    prompt_tokens = obj.get("prompt_eval_count")
-                    completion_tokens = obj.get("eval_count")
-                    ok = True
-            latency = int((time.monotonic() - start) * 1000)
-            result = LLMResult(
-                text="".join(text_parts).strip(),
-                model=self.provider.model,
-                latency_ms=latency,
-                prompt_tokens=prompt_tokens,
-                completion_tokens=completion_tokens,
-            )
-            _log_call(self.provider.name, result.model, latency,
-                      prompt_tokens, completion_tokens, streamed=True, ok=ok)
-            yield StreamChunk(delta="", done=True, result=result)
-        except Exception as e:
-            _log_call(self.provider.name, self.provider.model, 0, None, None,
-                      streamed=True, ok=False)
-            logger.warning("Gateway stream failed: %s", e)
-            raise
+        for obj in provider.stream(prompt, options=opts):
+            delta = obj.get("response", "")
+            if delta:
+                text_parts.append(delta)
+                yield StreamChunk(delta=delta, done=False)
+            if obj.get("done"):
+                prompt_tokens = obj.get("prompt_eval_count")
+                completion_tokens = obj.get("eval_count")
+                ok = True
+        latency = int((time.monotonic() - start) * 1000)
+        result = LLMResult(
+            text="".join(text_parts).strip(),
+            model=provider.model,
+            latency_ms=latency,
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
+        )
+        _log_call(provider.name, result.model, latency,
+                  prompt_tokens, completion_tokens, streamed=True, ok=ok)
+        yield StreamChunk(delta="", done=True, result=result)
+
+    def stream(self, prompt: str, *, options: dict | None = None) -> Iterator[StreamChunk]:
+        """Streaming generation with pre-flight fallback.
+
+        Uses stream_chain() (local-fast first) for low latency. Falls back
+        through each provider only if the previous one fails before emitting
+        any tokens (once tokens are flowing we cannot fall back — we raise).
+        """
+        opts = self._options(options)
+
+        candidates: list[tuple[str, OllamaProvider]] = [
+            (fb["name"], OllamaProvider(fb["url"], fb["model"], fb["timeout"]))
+            for fb in LLM.stream_chain()
+        ]
+
+        for label, provider in candidates:
+            tokens_sent = False
+            try:
+                for chunk in self._stream_provider(provider, prompt, opts):
+                    if not chunk.done:
+                        tokens_sent = True
+                    yield chunk
+                return  # success
+            except Exception as e:
+                _log_call(provider.name, provider.model, 0, None, None,
+                          streamed=True, ok=False)
+                if tokens_sent:
+                    # Can't undo sent tokens — propagate
+                    logger.warning("Stream failed mid-stream on %s: %s", label, e)
+                    raise
+                logger.warning("Stream pre-flight failed on %s, trying next: %s", label, e)
+
+        raise RuntimeError("All stream providers failed")
 
 
 # Singleton accessor
