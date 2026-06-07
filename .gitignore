@@ -32,9 +32,17 @@ knowledge_base/units_backup/
 knowledge_base/units_backup_*/
 knowledge_base/data/
 
-# ── Raw source PDFs (158MB — provenance only, not needed to run) ────────
-# NOTE: kept locally for re-deriving units. Consider git-lfs if versioning needed.
-knowledge_base/raw_sources/
+# ── Raw source binaries (heavy provenance — not needed to run) ─────────
+# Ignore the big binaries, but KEEP extracted/OCR'd .txt sidecars (the usable,
+# small derived text that the ingestion pipeline turns into units).
+knowledge_base/raw_sources/**/*.pdf
+knowledge_base/raw_sources/**/*.png
+knowledge_base/raw_sources/**/*.jpg
+knowledge_base/raw_sources/**/*.jpeg
+knowledge_base/raw_sources/**/*.tif
+knowledge_base/raw_sources/**/*.tiff
+knowledge_base/raw_sources/**/*.docx
+knowledge_base/raw_sources/**/*.epub
 
 # ── OS / editor ─────────────────────────────────────────────────────────
 .DS_Store
