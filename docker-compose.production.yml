@@ -5,14 +5,18 @@ services:
       dockerfile: backend/Dockerfile
     container_name: tg_backend
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:8091:8000"   # Nginx does the reverse proxy; don't expose to WAN
+    # No host-port binding needed — analytics_nginx reaches us via the shared network
+    expose:
+      - "8000"
     env_file: .env
     environment:
       PROJECT_ROOT: /app
     volumes:
       - tg_sessions:/app/ops          # sessions.db + feedback SQLite
       - tg_chroma:/app/knowledge_base/chroma_db
+    networks:
+      - internal
+      - analytics_net               # shared with analytics_nginx for direct name-based proxy
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
       interval: 30s
@@ -26,6 +30,8 @@ services:
     container_name: tg_redis
     restart: unless-stopped
     profiles: ["with-redis"]
+    networks:
+      - internal
     volumes:
       - tg_redis_data:/data
 
@@ -33,3 +39,10 @@ volumes:
   tg_sessions:
   tg_chroma:
   tg_redis_data:
+
+networks:
+  internal:
+    driver: bridge
+  analytics_net:
+    external: true
+    name: analytics-platform_production_network   # join analytics nginx network
