@@ -56,6 +56,39 @@ def emergency_reply(user_message: UserMessage, policies: dict) -> AssistantReply
     )
 
 
+def evaluate_guardrails(domain: str, severity: str, policies: dict) -> dict:
+    """Compute the guardrail decision for a (domain, severity) pair WITHOUT a
+    draft text. Lets the streaming endpoint decide — before sending any token —
+    whether it must force a fallback (which would replace the whole reply).
+
+    Returns: {needs_human_review: bool, escalate_to: str|None, force_fallback: bool}
+    """
+    domain_policies = policies.get("domains", {}).get(domain, {})
+    default_policy = domain_policies.get("default_policy", {})
+
+    severity_overrides = domain_policies.get("severity_overrides", {})
+    if severity in severity_overrides:
+        needs_human_review = severity_overrides[severity].get(
+            "require_human_review",
+            default_policy.get("require_human_review", False),
+        )
+        escalate_to = severity_overrides[severity].get("escalate_to")
+    else:
+        needs_human_review = default_policy.get("require_human_review", False)
+        escalate_to = None
+
+    intervention_overrides = domain_policies.get("intervention_overrides", {})
+    force_fallback = bool(
+        intervention_overrides.get(severity, {}).get("force_fallback_message")
+    )
+
+    return {
+        "needs_human_review": needs_human_review,
+        "escalate_to": escalate_to,
+        "force_fallback": force_fallback,
+    }
+
+
 def apply_guardrails(
     user_message: UserMessage,
     draft_reply: str,
@@ -75,36 +108,17 @@ def apply_guardrails(
     if severity == EMERGENCY_SEVERITY:
         return emergency_reply(user_message, policies)
 
-    # ---------- Look up domain policies from YAML ----------
-    domain_policies = policies.get("domains", {}).get(domain, {})
-    default_policy = domain_policies.get("default_policy", {})
-
-    # Determine if human review is required
-    severity_overrides = domain_policies.get("severity_overrides", {})
-    if severity in severity_overrides:
-        needs_human_review = severity_overrides[severity].get(
-            "require_human_review",
-            default_policy.get("require_human_review", False),
+    decision = evaluate_guardrails(domain, severity, policies)
+    if decision["force_fallback"]:
+        draft_reply = _build_fallback_message(
+            domain, user_message.behavior_type, user_message.age_group, policies
         )
-        escalate_to = severity_overrides[severity].get("escalate_to")
-    else:
-        needs_human_review = default_policy.get("require_human_review", False)
-        escalate_to = None
-
-    # Intervention overrides — e.g. force fallback message for إحالة_لطبيب
-    intervention_overrides = domain_policies.get("intervention_overrides", {})
-    if severity in intervention_overrides:
-        override = intervention_overrides[severity]
-        if override.get("force_fallback_message"):
-            draft_reply = _build_fallback_message(
-                domain, user_message.behavior_type, user_message.age_group, policies
-            )
 
     return AssistantReply(
         reply_text=draft_reply,
         domain=domain,
         severity=severity,
-        needs_human_review=needs_human_review,
-        escalation_target=escalate_to,
+        needs_human_review=decision["needs_human_review"],
+        escalation_target=decision["escalate_to"],
         mode=mode,
     )

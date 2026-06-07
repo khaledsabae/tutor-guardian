@@ -2,18 +2,31 @@
 Assistant router — Multi-domain ChromaDB retrieval + guardrails + LLM.
 Flow: banned check → emergency check → classify_domains → multi_retrieval → LLM → guardrails.
 """
+import json
 import logging
 
 from fastapi import APIRouter, HTTPException, Request
+from fastapi.responses import StreamingResponse
 
 from app.models.api import ConversationTurn, UserMessage, AssistantReply
-from app.services.guardrails import apply_guardrails, is_emergency, emergency_reply
+from app.services.guardrails import (
+    apply_guardrails, is_emergency, emergency_reply, evaluate_guardrails,
+    _build_fallback_message,
+)
 from app.services.retrieval import retrieve_multi_domain, _ensure_index
-from app.services.llm_service import generate_reply
+from app.services.llm_service import generate_reply, build_full_prompt
+from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
 from app.services.intent_guard import check_banned_intent, check_emergency_keywords
 from app.services.domain_classifier import classify_domains
 from app.services import conversation_store as store
+
+_SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
+
+
+def _sse(event: str, data: dict) -> str:
+    """Format one Server-Sent Event."""
+    return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assistant", tags=["assistant"])
@@ -160,6 +173,142 @@ def _finalize(reply: AssistantReply, session_id: str | None) -> AssistantReply:
 async def query_reply(request: Request, user_message: UserMessage):
     """Alias for /draft — used by external clients."""
     return await draft_reply(request, user_message)
+
+
+@router.post("/stream")
+def stream_reply(request: Request, user_message: UserMessage) -> StreamingResponse:
+    """
+    SSE streaming variant of /draft (mobile-ready).
+
+    Contract — every response is a stream of Server-Sent Events:
+        event: token   data: {"delta": "..."}      (0+ times, LLM tokens)
+        event: done    data: {<full AssistantReply>} (always, terminal)
+        event: error   data: {"detail": "..."}       (on failure)
+
+    Safety: all guardrail/banned/emergency decisions run BEFORE any token is
+    sent (you can't un-send a streamed token). Banned/emergency/no-context/
+    force-fallback replies are emitted as a single `done` event (not streamed).
+    """
+    policies = request.app.state.guardrails_config
+    session_id = user_message.session_id
+
+    # ── Session: validate + persist incoming user message ────────────
+    if session_id:
+        if not store.session_exists(session_id):
+            raise HTTPException(status_code=404, detail="Session not found")
+        store.add_message(
+            session_id, "user",
+            user_message.message_text or user_message.behavior_type or "",
+        )
+
+    def _single(reply: AssistantReply) -> StreamingResponse:
+        """Emit a non-streamed reply as one terminal `done` event."""
+        _finalize(reply, session_id)
+
+        def one():
+            yield _sse("done", reply.model_dump())
+        return StreamingResponse(one(), media_type="text/event-stream", headers=_SSE_HEADERS)
+
+    # ── Pre-flight safety (identical order to /draft) ────────────────
+    query_input = user_message.message_text or user_message.behavior_type or ""
+    is_banned, matched = check_banned_intent(query_input)
+    if is_banned:
+        logger.warning("Banned intent detected (stream): %s", matched)
+        return _single(AssistantReply(
+            reply_text="هذا الموضوع خارج نطاق ما يمكنني مساعدتك فيه. إذا كنت في حالة طارئة، يرجى التواصل مع الجهات المختصة فوراً.",
+            domain="medical", severity="طارئ", needs_human_review=True,
+            escalation_target="emergency_services", mode="banned",
+        ))
+
+    if check_emergency_keywords(query_input):
+        user_message = user_message.model_copy(update={"severity": "طارئ"})
+    if is_emergency(user_message):
+        return _single(emergency_reply(user_message, policies))
+
+    # ── Build query + history + retrieve ─────────────────────────────
+    query_text = (user_message.message_text or "").strip() or \
+        f"{user_message.behavior_type} {user_message.age_group}"
+    history = (
+        store.get_history(session_id, limit=6)
+        if session_id else (user_message.conversation_history or [])
+    )
+    if history:
+        last_user = next((t.content for t in reversed(history) if t.role == "user"), "")
+        if last_user and last_user != query_text:
+            query_text = f"{last_user} {query_text}"
+
+    detected_domains = classify_domains(query_text)
+    _ensure_index()
+    results = retrieve_multi_domain(
+        query_text=query_text, domains=detected_domains,
+        age_group=user_message.age_group or "unspecified",
+        top_k_per_domain=2, behavior_type=user_message.behavior_type or "",
+    )
+    retrieved_units = [r for r in results if r.get("distance", 1.0) < 1.0]
+    primary_domain = detected_domains[0] if detected_domains else "medical"
+    severity = user_message.severity or "خفيف"
+
+    # No context → non-streamed fallback
+    if not retrieved_units:
+        draft = f"لا توجد معلومات كافية حاليًا حول '{query_text}'. نوصي باستشارة مختص."
+        return _single(apply_guardrails(
+            user_message.model_copy(update={"domain": primary_domain}),
+            draft, policies, mode="retrieval_only",
+        ))
+
+    # Guardrails would replace the whole text → don't stream, send fallback
+    decision = evaluate_guardrails(primary_domain, severity, policies)
+    if decision["force_fallback"]:
+        draft = _build_fallback_message(
+            primary_domain, user_message.behavior_type or "",
+            user_message.age_group or "unspecified", policies,
+        )
+        return _single(AssistantReply(
+            reply_text=draft, domain=primary_domain, severity=severity,
+            needs_human_review=decision["needs_human_review"],
+            escalation_target=decision["escalate_to"], mode="llm_generated",
+        ))
+
+    # ── Stream the LLM generation token-by-token ─────────────────────
+    full_prompt, _source = build_full_prompt(
+        domain=primary_domain, behavior_type=user_message.behavior_type or "",
+        age_group=user_message.age_group or "unspecified", severity=severity,
+        retrieved_units=retrieved_units, question_text=query_text,
+        conversation_history=history,
+    )
+
+    def event_stream():
+        try:
+            for chunk in get_gateway().stream(full_prompt):
+                if chunk.done:
+                    final_text = (chunk.result.text if chunk.result else "").strip()
+                    reply = AssistantReply(
+                        reply_text=final_text, domain=primary_domain, severity=severity,
+                        needs_human_review=decision["needs_human_review"],
+                        escalation_target=decision["escalate_to"],
+                        mode="llm_generated", session_id=session_id,
+                    )
+                    if session_id:
+                        store.add_message(
+                            session_id, "assistant", final_text,
+                            domain=primary_domain, severity=severity,
+                            mode="llm_generated",
+                            needs_human_review=decision["needs_human_review"],
+                        )
+                    log_session(
+                        domain=primary_domain, behavior_type=user_message.behavior_type or "",
+                        age_group=user_message.age_group or "", severity=severity,
+                        mode="llm_generated", needs_human_review=decision["needs_human_review"],
+                        reply_length=len(final_text), retrieved_count=len(retrieved_units),
+                    )
+                    yield _sse("done", reply.model_dump())
+                elif chunk.delta:
+                    yield _sse("token", {"delta": chunk.delta})
+        except Exception as e:
+            logger.warning("Stream generation failed: %s", e)
+            yield _sse("error", {"detail": "تعذّر توليد الرد، يُرجى المحاولة لاحقاً."})
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream", headers=_SSE_HEADERS)
 
 
 def _merge_retrieved(
