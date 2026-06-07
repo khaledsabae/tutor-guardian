@@ -11,11 +11,33 @@ from dataclasses import dataclass
 class LLMConfig:
     """Immutable LLM configuration loaded from env or local defaults."""
 
+    # Primary (cloud) configuration
     base_url: str = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
-    model: str = os.environ.get("OLLAMA_MODEL", "qwen2.5:3b")  # qwen2.5:7b, mistral:7b...
+    primary_model: str = os.environ.get("OLLAMA_PRIMARY_MODEL", "kimi-k2.6:cloud")
+    fallback_model: str = os.environ.get("OLLAMA_FALLBACK_MODEL", "gemma4:31b-cloud")
+
+    # Local LLM server (Home Server via Tailscale) configuration
+    local_base_url: str = os.environ.get("OLLAMA_LOCAL_BASE_URL", "http://100.109.163.64:11434")
+    local_fallback_model: str = os.environ.get("OLLAMA_LOCAL_FALLBACK_MODEL", "gemma4:e4b")
+    local_fast_model: str = os.environ.get("OLLAMA_LOCAL_FAST_MODEL", "qwen2.5:3b")
+
     request_timeout: int = int(os.environ.get("OLLAMA_TIMEOUT", "120"))  # seconds
     max_retries: int = int(os.environ.get("OLLAMA_MAX_RETRIES", "3"))
     temperature: float = float(os.environ.get("OLLAMA_TEMPERATURE", "0.3"))  # low = stick to facts
+
+    # backward-compat shim: older code reads .model
+    @property
+    def model(self) -> str:
+        return self.primary_model
+
+    # Fallback chain order
+    def fallback_chain(self) -> list[dict]:
+        """Returns ordered list of fallback configs to try after primary fails."""
+        return [
+            {"name": "cloud_fallback", "url": self.base_url, "model": self.fallback_model, "timeout": self.request_timeout},
+            {"name": "local_quality", "url": self.local_base_url, "model": self.local_fallback_model, "timeout": 180},
+            {"name": "local_fast", "url": self.local_base_url, "model": self.local_fast_model, "timeout": 60},
+        ]
 
     # Prompt template — ensures the model only uses retrieved knowledge
     system_prompt: str = (

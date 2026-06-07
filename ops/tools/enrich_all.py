@@ -32,17 +32,29 @@ behavior_type: {unit.get('behavior_type', '')}
   "reference_info": "اسم المصدر الرسمي والسنة إن وجدت",
   "keywords": ["كلمة1", "كلمة2", "كلمة3"]
 }}"""
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={"model": "kimi-k2.6:cloud", "prompt": prompt, "stream": False},
-        timeout=240
-    )
-    raw = response.json().get("response", "")
-    if "```" in raw:
-        raw = raw.split("```")[1]
-        if raw.startswith("json"):
-            raw = raw[4:]
-    return json.loads(raw.strip())
+
+    models = ["kimi-k2.6:cloud", "gemma4:31b-cloud"]
+    last_err = None
+    for model in models:
+        try:
+            response = requests.post(
+                "http://localhost:11434/api/generate",
+                json={"model": model, "prompt": prompt, "stream": False},
+                timeout=240
+            )
+            response.raise_for_status()
+            raw = response.json().get("response", "")
+            if "```" in raw:
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            return json.loads(raw.strip())
+        except Exception as e:
+            last_err = e
+            if model == "kimi-k2.6:cloud":
+                print("  ⚠️ kimi unavailable, falling back to gemma4", flush=True)
+            continue
+    raise RuntimeError(f"All models failed. Last error: {last_err}")
 
 files = sorted(units_dir.glob("*.json"))
 processed = 0

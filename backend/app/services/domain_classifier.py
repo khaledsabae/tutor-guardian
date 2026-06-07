@@ -1,115 +1,92 @@
 """
-domain_classifier.py — v1.1
-يحدد المجالات ذات الصلة من نص السؤال تلقائياً
-إصلاحات v1.1:
-  - إضافة أشكال الأفعال (ينام، يغضب...) لمعالجة التصريف العربي
-  - إضافة الكلمات بـ"ال" التعريف كـ aliases
-  - إصلاح lambda في sorted (key=x[1])
-  - إصلاح classify_single_domain لتعيد str فعلاً
-"""
+domain_classifier.py — v2.1 (LLM-based, home-server aware)
 
-import re
+Classifies questions into domains using a small local LLM instead of keyword matching.
+This handles Arabic morphology, synonyms, and context naturally.
+Uses env-driven home-server URL (OLLAMA_LOCAL_BASE_URL / OLLAMA_LOCAL_FAST_MODEL).
+"""
+import json
+import logging
+import os
+import urllib.request
 from typing import List
 
+logger = logging.getLogger(__name__)
 
-DOMAIN_KEYWORDS: dict[str, List[str]] = {
-    "fiqh": [
-        "صلاة", "الصلاة", "صلوا", "يصلي", "يصلوا",
-        "صلاه", "الصلاه", "يصلاه", "صلاة",           # common misspellings: هاء instead of تاء مربوطة
-        "صيام", "الصيام", "يصوم", "رمضان", "الصوم",  # الصوم = common variant
-        "قرآن", "القرآن", "قرآني", "حفظ القرآن",
-        "القران", "قران", "حفظ القران",              # common misspellings: missing hamza
-        "إسلام", "إسلامية", "إسلامي", "مسلم",
-        "شرع", "شريعة", "شرعي", "فقه", "فقهي",
-        "حلال", "حرام", "مستحب", "مكروه", "واجب",
-        "عبادة", "العبادة", "دين", "الدين", "ديني",
-        "مسجد", "وضوء", "أذان", "ركعة", "تسبيح",
-        "دعاء", "الدعاء", "سنة", "نبوي", "النبي",
-        "أخلاق", "عقيدة", "توحيد", "زكاة", "زكاه", "حج",  # زكاه = common misspelling
-        "محرم", "محرمات", "ذكر", "استغفار",
-    ],
-    "medical": [
-        "غضب", "الغضب", "يغضب", "غاضب", "نوبة غضب",
-        "بكاء", "يبكي", "يبكي كثيراً",
-        "نفسي", "نفسية", "الصحة النفسية",
-        "قلق", "القلق", "يقلق", "قلقان",
-        "اكتئاب", "حزن", "يحزن",
-        "توحد", "أوتيزم", "طيف التوحد",
-        "تأخر", "تأخر كلامي", "تأخر في النطق",
-        "تركيز", "ضعف التركيز", "قلة التركيز",
-        "فرط حركة", "adhd", "فرط النشاط",
-        "طبيب", "علاج", "تشخيص", "معالج",
-        "سلوك", "سلوكي", "سلوكية", "عدواني",
-        "خوف", "يخاف", "رهاب", "فوبيا",
-        "انتباه", "ذاكرة", "صعوبات تعلم",
-        "نطق", "كلام", "يتكلم", "لا يتكلم",
-        "تبول", "تبول لاإرادي", "يتبول",
-        "ضغط نفسي", "صدمة", "صراخ", "يصرخ",
-        "يضرب", "ضرب", "عنف", "عنيف", "اعتداء",
-    ],
-    "cyber": [
-        "ألعاب", "الألعاب", "لعبة", "يلعب",
-        "إدمان ألعاب", "مدمن ألعاب", "مدمن",
-        "شاشة", "الشاشة", "وقت الشاشة",
-        "هاتف", "الهاتف", "جوال", "الجوال",
-        "تابلت", "آيباد", "جهاز",
-        "انترنت", "الإنترنت", "النت",
-        "يوتيوب", "تيك توك", "انستغرام",
-        "سوشيال ميديا", "تواصل اجتماعي",
-        "تنمر", "التنمر", "تنمر إلكتروني", "التنمر الإلكتروني",
-        "مجهول", "غريب", "خطر رقمي",
-        "تطبيق", "برنامج", "برامج",
-        "ألعاب عنيفة", "بث مباشر",
-        "محادثة", "مقاطع", "فيديو",
-        "هكر", "خصوصية", "كلمة سر", "اختراق",
-        "أمان رقمي", "حماية رقمية",
-    ],
-    "development": [
-        "نمو", "النمو", "ينمو",
-        "تطور", "التطور", "يتطور",
-        "مرحلة عمرية", "مراحل النمو", "مراحل الطفل",
-        "طبيعي", "غير طبيعي", "مناسب لعمره",
-        "مشي", "يمشي", "زحف", "يزحف",
-        "أسنان", "طول", "وزن طبيعي",
-        "مهارات", "مهارات حركية",
-        "إعاقة", "خاصة", "ذوي الاحتياجات",
-        "متلازمة", "داون",
-        "تنمية", "تنمية مبكرة", "تدخل مبكر",
-        "رياضة", "رياضيات", "الالعاب الرياضية", "ألعاب رياضية",
-        "جري", "يقفز", "توازن", "لياقة",
-        "تربية إيجابية", "روتين", "قصص", "العب مع", "عمره 4", "عمره 3",
-        "عمره 5", "سنوات الأولى", "طفل صغير", "ما قبل المدرسة",
-    ],
-}
+# ── Configuration ──────────────────────────────────────────────────────────────
+_LOCAL_BASE = os.environ.get("OLLAMA_LOCAL_BASE_URL", "http://100.109.163.64:11434")
+OLLAMA_URL = f"{_LOCAL_BASE.rstrip('/')}/api/generate"
+CLASSIFIER_MODEL = os.environ.get("OLLAMA_LOCAL_FAST_MODEL", "qwen2.5:3b")
 
-MATCH_THRESHOLD = 1
+VALID_DOMAINS = {"fiqh", "medical", "cyber", "development"}
+
+CLASSIFY_PROMPT = """صنّف سؤال الوالد/الوالدة في مجال واحد أو أكثر من القائمة التالية.
+اقرأ السؤال بعناية واختر المجال الأنسب للمحتوى الفعلي، وليس للكلمات المفتاحية فقط.
+
+- fiqh: أي سؤال عن التربية الإسلامية، أخلاق، قيم، دين، شريعة، القرآن، السنة النبوية، الصلاة، الصيام، تربية البنات أو الأولاد من منظور إسلامي، الحلال والحرام في التربية
+- medical: صحة نفسية، سلوكيات مقلقة، قلق، اكتئاب، توحد، فرط حركة، تأخر نمائي، استشارة طبيب أو أخصائي نفسي، علاج نفسي
+- cyber: شاشات، إدمان ألعاب فيديو إلكترونية، هاتف ذكي، إنترنت، يوتيوب، تيك توك، تنمر إلكتروني عبر الإنترنت، أمان رقمي، مواقع التواصل الاجتماعي
+- development: نمو جسدي، مراحل عمرية طبيعية، مشي، أسنان، مهارات حركية، إعاقة، تدخل مبكر، كلام وتطور اللغة
+
+السؤال: {question}
+
+أجب بـ JSON فقط، بدون أي نص خارج الأقواس:
+{{"domains": ["fiqh"]}}"""
+
+# ── Core ───────────────────────────────────────────────────────────────────────
+
+def _call_llm(question: str) -> List[str] | None:
+    """Call home-server Ollama for classification. Returns list of domains or None on failure."""
+    prompt = CLASSIFY_PROMPT.format(question=question)
+    payload = json.dumps({
+        "model": CLASSIFIER_MODEL,
+        "prompt": prompt,
+        "stream": False,
+        "options": {"temperature": 0.1, "num_predict": 60}
+    }).encode()
+
+    try:
+        req = urllib.request.Request(OLLAMA_URL, data=payload, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=45) as r:
+            d = json.loads(r.read().decode())
+        raw = d.get("response", "").strip()
+
+        # Extract JSON object from response (handles markdown fences, thinking tokens, etc.)
+        start = raw.find("{")
+        end = raw.rfind("}") + 1
+        if start >= 0 and end > start:
+            result = json.loads(raw[start:end])
+            domains = result.get("domains", [])
+            # Filter to valid domains only
+            filtered = [d for d in domains if d in VALID_DOMAINS]
+            if filtered:
+                logger.debug("LLM classified '%s...' as %s", question[:40], filtered)
+                return filtered
+
+        logger.warning("LLM returned invalid domain list: %s", raw[:200])
+        return None
+
+    except Exception as e:
+        logger.warning("LLM classification failed: %s", e)
+        return None
 
 
 def classify_domains(question: str) -> List[str]:
     """
-    يحلل نص السؤال ويعيد قائمة المجالات ذات الصلة.
-    يعيد على الأقل مجالاً واحداً دائماً.
+    Classify a question into relevant domains using LLM.
+    Falls back to 'medical' if LLM fails (safe default for child-related queries).
     """
-    question_lower = question.lower()
-    matched: dict[str, int] = {}
-
-    for domain, keywords in DOMAIN_KEYWORDS.items():
-        count = sum(1 for kw in keywords if kw in question_lower)
-        if count >= MATCH_THRESHOLD:
-            matched[domain] = count
-
-    if not matched:
+    if not question or not question.strip():
         return ["medical"]
 
-    # مُصلَح: الترتيب حسب عدد المطابقات (x[1]) وليس الاسم
-    sorted_domains = sorted(matched.items(), key=lambda x: x[1], reverse=True)
-    top_domains = [d for d, _ in sorted_domains[:3]]
-    return top_domains
+    llm_result = _call_llm(question)
+    if llm_result:
+        return llm_result
+
+    logger.info("LLM classifier failed for '%s...', falling back to medical", question[:40])
+    return ["medical"]
 
 
 def classify_single_domain(question: str) -> str:
-    """
-    للتوافق مع الكود القديم — يعيد المجال الأعلى تطابقاً فقط كـ str.
-    """
-    # مُصلَح: [0] لإعادة str وليس list
+    """Back-compat wrapper returning the single top domain as string."""
     return classify_domains(question)[0]

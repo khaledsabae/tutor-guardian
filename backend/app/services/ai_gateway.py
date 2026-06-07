@@ -136,8 +136,17 @@ def _log_call(provider: str, model: str, latency_ms: int,
 class AIGateway:
     def __init__(self, provider: LLMProvider | None = None) -> None:
         self.provider = provider or OllamaProvider(
-            base_url=LLM.base_url, model=LLM.model, timeout=LLM.request_timeout
+            base_url=LLM.base_url, model=LLM.primary_model, timeout=LLM.request_timeout
         )
+        self.primary_model = self._provider_model()
+        self.model = self.primary_model
+
+    def _provider_model(self) -> str:
+        """Safely read the provider runtime model."""
+        provider_model = getattr(self.provider, "model", None)
+        if isinstance(provider_model, str) and provider_model:
+            return provider_model
+        return LLM.primary_model
 
     def _options(self, overrides: dict | None) -> dict:
         opts = {"temperature": LLM.temperature}
@@ -145,22 +154,53 @@ class AIGateway:
             opts.update(overrides)
         return opts
 
+    async def _try_provider(self, prompt: str, opts: dict, base_url: str, model: str,
+                            timeout: int, label: str) -> LLMResult | None:
+        """Try a single provider/model combo. Returns result or None on failure."""
+        provider = OllamaProvider(base_url=base_url, model=model, timeout=timeout)
+        start = time.monotonic()
+        try:
+            data = await asyncio.to_thread(provider.generate, prompt, options=opts)
+            latency = int((time.monotonic() - start) * 1000)
+            text = (data.get("response") or "").strip()
+            if not text:
+                logger.warning("%s returned empty response", label)
+                return None
+            result = LLMResult(
+                text=text, model=model, latency_ms=latency,
+                prompt_tokens=data.get("prompt_eval_count"),
+                completion_tokens=data.get("eval_count"),
+            )
+            _log_call(provider.name, model, latency,
+                      result.prompt_tokens, result.completion_tokens,
+                      streamed=False, ok=True)
+            return result
+        except Exception as e:
+            _log_call(provider.name, model, 0, None, None, streamed=False, ok=False)
+            logger.warning("%s failed: %s", label, e)
+            return None
+
     async def generate(self, prompt: str, *, options: dict | None = None,
                        max_retries: int | None = None) -> LLMResult:
-        """Blocking generation with exponential backoff. Raises on total failure."""
+        """Blocking generation with primary + full fallback chain. Raises on total failure."""
         retries = max_retries if max_retries is not None else LLM.max_retries
         opts = self._options(options)
         last_err: Exception | None = None
 
+        # 1. Try primary model with retries
         for attempt in range(1, retries + 1):
             start = time.monotonic()
             try:
                 data = await asyncio.to_thread(self.provider.generate, prompt, options=opts)
                 latency = int((time.monotonic() - start) * 1000)
+                text = (data.get("response") or "").strip()
+                if not text:
+                    logger.warning("Primary returned empty response on attempt %d/%d", attempt, retries)
+                    if attempt < retries:
+                        await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
+                    continue
                 result = LLMResult(
-                    text=(data.get("response") or "").strip(),
-                    model=self.provider.model,
-                    latency_ms=latency,
+                    text=text, model=self._provider_model(), latency_ms=latency,
                     prompt_tokens=data.get("prompt_eval_count"),
                     completion_tokens=data.get("eval_count"),
                 )
@@ -170,13 +210,22 @@ class AIGateway:
                 return result
             except Exception as e:
                 last_err = e
-                logger.warning("Gateway attempt %d/%d failed: %s", attempt, retries, e)
+                logger.warning("Primary attempt %d/%d failed: %s", attempt, retries, e)
                 if attempt < retries:
-                    await asyncio.sleep(0.5 * (2 ** (attempt - 1)))  # 0.5s, 1s, 2s...
+                    await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
 
-        _log_call(self.provider.name, self.provider.model, 0, None, None,
+        # 2. Try fallback chain
+        for fb in LLM.fallback_chain():
+            logger.warning("⚠️ trying fallback: %s (%s@%s)", fb["name"], fb["model"], fb["url"])
+            result = await self._try_provider(
+                prompt, opts, fb["url"], fb["model"], fb["timeout"], fb["name"]
+            )
+            if result:
+                return result
+
+        _log_call(self.provider.name, self._provider_model(), 0, None, None,
                   streamed=False, ok=False)
-        raise RuntimeError(f"LLM generation failed after {retries} attempts: {last_err}") from last_err
+        raise RuntimeError(f"LLM generation failed after all retries and fallbacks: {last_err}") from last_err
 
     def stream(self, prompt: str, *, options: dict | None = None) -> Iterator[StreamChunk]:
         """Streaming generation. Yields StreamChunk(delta=...) then a final
