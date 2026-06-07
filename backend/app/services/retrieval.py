@@ -1,6 +1,6 @@
 """
 ChromaDB-based semantic retrieval for knowledge units.
-Uses ChromaDB's built-in ONNX embedding (no PyTorch/SentenceTransformer download needed).
+Uses multilingual sentence-transformers embeddings for Arabic support.
 
 Optimizations (v2):
   - Consolidated 4-tier fallback → 2-query max per domain
@@ -9,9 +9,11 @@ Optimizations (v2):
 """
 from functools import lru_cache
 from pathlib import Path
+from typing import Sequence, cast
 
 import chromadb
-from chromadb.utils import embedding_functions
+from chromadb import Documents, EmbeddingFunction, Embeddings
+from sentence_transformers import SentenceTransformer
 
 from app.core.taxonomy import canonical_domain
 from app.models.knowledge import KnowledgeUnit
@@ -23,18 +25,41 @@ CHROMA_PERSIST_DIR = (
 
 COLLECTION_NAME = "knowledge_units"
 
-# ONNX embedding — lightweight (~80MB), no PyTorch, runs on CPU, supports Arabic
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+# Multilingual embedding — supports Arabic out of the box (~250MB)
+EMBEDDING_MODEL = "intfloat/multilingual-e5-small"
 
 _collection: chromadb.Collection | None = None
 _embedder_instance = None
 
 
+class MultilingualEmbedding(EmbeddingFunction):
+    """Wraps sentence-transformers multilingual model for ChromaDB."""
+
+    def __init__(self, model_name: str = EMBEDDING_MODEL) -> None:
+        self._model = None
+        self._model_name = model_name
+
+    def _lazy_load(self) -> None:
+        if self._model is None:
+            self._model = SentenceTransformer(self._model_name)
+
+    def __call__(self, input: Documents) -> Embeddings:
+        self._lazy_load()
+        # multilingual-e5 models need "query: " prefix for queries,
+        # but for consistent ChromaDB usage we apply it on retrieval side.
+        emb = self._model.encode(
+            cast(Sequence[str], input),
+            normalize_embeddings=True,
+            show_progress_bar=False,
+        )
+        return emb.tolist()
+
+
 def _embedder():
-    """Lazily build the ONNX embedder (downloads ~80MB on first real use only)."""
+    """Lazily build the multilingual embedder (downloads ~250MB on first use)."""
     global _embedder_instance
     if _embedder_instance is None:
-        _embedder_instance = embedding_functions.ONNXMiniLM_L6_V2()
+        _embedder_instance = MultilingualEmbedding()
     return _embedder_instance
 
 
@@ -89,7 +114,8 @@ def index_knowledge_units(units: list[KnowledgeUnit] | None = None) -> None:
 
     # Batch insert — embedding happens automatically via the collection's EF
     ids = [unit.id for unit in units]
-    documents = [unit.text_simplified for unit in units]
+    # multilingual-e5 expects "passage: " prefix for indexed documents
+    documents = [f"passage: {unit.text_simplified}" for unit in units]
     metadatas = [_unit_metadata(unit) for unit in units]
 
     collection.add(
@@ -101,8 +127,10 @@ def index_knowledge_units(units: list[KnowledgeUnit] | None = None) -> None:
 
 def _query(collection, query_text: str, where_filter: dict, top_k: int) -> list[dict]:
     try:
+        # multilingual-e5 needs "query: " prefix at search time
+        prefixed_text = f"query: {query_text}"
         raw = collection.query(
-            query_texts=[query_text],
+            query_texts=[prefixed_text],
             n_results=top_k,
             where=where_filter,
             include=["documents", "metadatas", "distances"],
