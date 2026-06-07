@@ -1,0 +1,25 @@
+{
+  "id": "e9717a72-3836-4c57-9c93-9d9ba67f1ed9",
+  "domain": "cyber",
+  "age_group": "13-15",
+  "behavior_type": "التنمر_الإلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_سيبراني",
+  "reference_info": "Cyberbullying Guide — Internet Matters",
+  "text_original": "could be because they’re worried about what’s being said about  them. It may not be bullying, but it may be a sign your child needs a little extra support. The federal government’s  StopBullying.gov website suggests that parents be on the lookout for signs such as difficulty sleeping, frequent nightmares,  declining grades, not wanting to go to school, feelings of helplessness or decreased self-esteem.    4. What do I do if my child is cyberbullied?    Cyberbullying cases are as individual as the people involved. So the general advice that’s all over the Web – not to react or  retaliate, block",
+  "text_simplified": "التنمر الإلكتروني هو ممارسة غير قانونية تستخدم الإنترنت للإساءة إلى الأشخاص عبر التعليقات والرسائل الإلكترونية. يمكن أن يكون خفيفًا أو شديدًا، ويجب على الأشخاص الذين يتعرضون له الاتصال بالآباء أو المعلمين لمساعدتهم.",
+  "labels": [
+    "internet_matters",
+    "cyberbullying",
+    "english"
+  ],
+  "created_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "version": "1.0.0",
+  "keywords": [
+    "تنمر_الإلكتروني",
+    "رعب_الأطفال",
+    "حماية_الأطفال"
+  ]
+}

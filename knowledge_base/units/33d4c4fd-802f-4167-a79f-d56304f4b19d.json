@@ -1,0 +1,25 @@
+{
+  "id": "33d4c4fd-802f-4167-a79f-d56304f4b19d",
+  "domain": "medical",
+  "age_group": "10-12",
+  "behavior_type": "ضعف_التركيز",
+  "intervention_type": "الإرشادي",
+  "severity": "متوسط",
+  "reference_type": "DSM-5",
+  "reference_info": "Attention-deficit/hyperactivity disorder: What You Need to Know, National Institute of Mental Health (NIMH), 2024",
+  "text_original": "Attention-Deficit/\nHyperactivity Disorder: \nWhat You Need to Know \nWhat is ADHD?\nAttention-deficit/hyperactivity disorder (ADHD) is a developmental disorder marked by persistent \nsymptoms of inattention, hyperactivity, and impulsivity. Some people mostly have symptoms of \ninattention. Others mostly have symptoms of hyperactivity and impulsivity. Some people have both \ntypes of symptoms. \nSymptoms begin in childhood and can interfere with daily life, including social relationships and \nschool or work performance. ADHD is well-known among children and teens, but many adults also \nhave the disord",
+  "text_simplified": "الADD / ADS هو ش perkوسية ت出现在儿童身上，但也影响成年。症状包括注意力不集中、过度活跃和冲动行为。这些行为会影响孩子的社交关系和学习成绩。",
+  "labels": [
+    "nimh",
+    "adhd",
+    "english"
+  ],
+  "created_at": "2026-06-06T13:23:34.652306Z",
+  "updated_at": "2026-06-06T13:23:34.652306Z",
+  "version": "1.0.0",
+  "keywords": [
+    "ADD",
+    "ADS",
+    "注意力不集中"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "4c790c42-d81f-437c-b5e1-eab7f2a742b4",
+  "domain": "medical",
+  "age_group": "7-9",
+  "behavior_type": "الصحة_النفسية_للأطفال",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "Children and Mental Health — NIMH, 2021",
+  "text_original": "be hard. Consider seeking help if your child’s behavior or emotions last for weeks or longer, cause  distress for your child or your family, or interfere with your child’s functioning at school, at home, or with friends. If your  child’s behavior is unsafe, or if your child talks about wanting to hurt themselves or someone else, seek help immediately.  Learn more about warning signs at www.nimh.nih.gov/children.    When might children benefit from an evaluation? Get immediate help  If you, your child, or someone you know is struggling or having thoughts of suicide, call or text the 988 Suicide",
+  "text_simplified": "قد يكون استشارة الطبيب ضرورية إذا كانت سلوك أو مشاعر أطفالك مستمرة لأيام طويلة، تسبب قلقاً لك أو لعائلتك، أو تعاقب مع نموه في المدرسة والمنزل والأصدقاء. إذا كان السلوك خطرًا، أو إذا قال أطفالك إنهم يريدون أن يفعلوا ضرراً لنفسهم أو لأحد الآخرين، يجب الاستعانة بطبيب فوراً.",
+  "labels": [
+    "nimh",
+    "mental_health",
+    "english"
+  ],
+  "created_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "version": "1.0.0",
+  "keywords": [
+    "الصحة النفسية للأطفال",
+    "سلوك غير طبيعي",
+    "استشارة الطبيب"
+  ]
+}

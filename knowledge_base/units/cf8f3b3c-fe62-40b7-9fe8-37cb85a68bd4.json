@@ -1,0 +1,25 @@
+{
+  "id": "cf8f3b3c-fe62-40b7-9fe8-37cb85a68bd4",
+  "domain": "islamic_parenting",
+  "age_group": "13-15",
+  "behavior_type": "التربية_الأسرية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Tarbiyat al-Awlad fil Islam — Abdullah Nasih Ulwan",
+  "text_original": "Chapter One: The Ideal Marriage and its Relationship to\nEducation tna 1B\nA. Marriage as a Human Instinct . me 18\nB. Marriage as a Social Interest — 9\nC. Marriage as a Selection and Choice _.21",
+  "text_simplified": "في هذا الكتاب، يُركز عبد الله الناصح الوالي على أهمية التربية الإسلامية للأبناء في بيئة الأسرة. من المهم أن نحرص على إعداد جيل صالح قادر على مواجهة تحديات الحياة. هذه الدروس تعنى بتوجيه الآباء والأمهات نحو تربية أبنائهم بالقيم الإسلامية الصحيحة.",
+  "labels": [
+    "ulwan",
+    "islamic_parenting",
+    "english"
+  ],
+  "created_at": "2026-06-06T13:15:19.106412Z",
+  "updated_at": "2026-06-06T13:15:19.106412Z",
+  "version": "1.0.0",
+  "keywords": [
+    "الاباء",
+    "الأمهات",
+    "/values"
+  ]
+}

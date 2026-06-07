@@ -1,0 +1,25 @@
+{
+  "id": "8dc21832-df8b-4123-95a3-e0ec75ab9263",
+  "domain": "medical",
+  "age_group": "10-12",
+  "behavior_type": "ضعف_التركيز",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "DSM-5",
+  "reference_info": "ADHD — National Institute of Mental Health (NIMH) 2024",
+  "text_original": "ADHD is a common disorder in children that makes it hard to focus, sit still, and control behavior. Symptoms include forgetfulness, fidgeting, talking too much, difficulty waiting turns, and making careless mistakes.",
+  "text_simplified": "ADHD هي حالة تتعلق بضعف التركيز والنشاط، وهي مفهومة من قبل مؤسسة الصحة النفسية الوطنية. هذه الحالة قد تكون خفيفة أو متوسطة الخطورة ويحتاج بعض الأشخاص إلى التدخل الطبي أو العلاج.",
+  "labels": [
+    "translated_to_arabic",
+    "medical",
+    "ADHD_NIMH"
+  ],
+  "created_at": "2026-06-06T13:31:35.757597Z",
+  "updated_at": "2026-06-06T13:31:35.757597Z",
+  "version": "1.0.0",
+  "keywords": [
+    "ADHD",
+    "ضعف التركيز",
+    "النشاط"
+  ]
+}

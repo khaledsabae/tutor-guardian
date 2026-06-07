@@ -1,0 +1,25 @@
+{
+  "id": "a51a2419-0d91-41ac-96ca-3c0f7419e197",
+  "domain": "cyber",
+  "age_group": "13-15",
+  "behavior_type": "التنمر_الإلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_سيبراني",
+  "reference_info": "Cyberbullying Guide — Internet Matters",
+  "text_original": "others, get them to stop the bullying but try not to overreact.Talk with your child, get  all the facts and consider probing further in their devices and accounts. Look for underlying issues and problems that might be  affecting your child. While there should be consequences, solutions are more important than punishment.  CONNECTSAFELY.ORG | 2 CONNECTSAFELY.ORG | 3 Probably because there is no single  definition of cyberbullying, the numbers  are all over the map, but lower than we  often hear. And, contrary to some reports,  the numbers are not going up – if anything,  they’ve gone down a lit",
+  "text_simplified": "التنمر الإلكتروني هو استخدام الإنترنت والهاتف المحمول للتعنيف والتسيئات ضد شخص ما. يمكن أن يكون خفيفًا أو شديدًا، ويجب التعامل معه بمروحة من الاستراتيجيات الوقائية والإرشادية والعلاجية.",
+  "labels": [
+    "internet_matters",
+    "cyberbullying",
+    "english"
+  ],
+  "created_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "version": "1.0.0",
+  "keywords": [
+    "تنمر_الإلكتروني",
+    "تعنيف",
+    "هاتف_محمول"
+  ]
+}

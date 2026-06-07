@@ -1,0 +1,76 @@
+version: "1.0.0"
+description: >
+  سياسات مبدئية لحوكمة مخرجات المساعد التربوي الذكي، مبنية على الحقول:
+  domain, severity, intervention_type. الهدف هو الفصل بين الأدوار الطبية
+  والشرعية والتربوية والسيبرانية وتقليل النصائح الخطرة.
+
+global:
+  # أنواع الأسئلة أو النوايا المحظورة تمامًا (ستحتاج لاحقًا لاكتشافها بنماذج تصنيف أو قواعد).
+  banned_intents:
+    - self_harm
+    - suicide
+    - explicit_medication_dose
+    - illegal_activity
+
+  # رسالة افتراضية آمنة في الحالات عالية الخطورة.
+  high_risk_fallback_message: >
+    هذا المساعد لا يقدّم تشخيصًا طبيًا أو فتوى ملزِمة. في ضوء المعطيات
+    التي ذكرتها، من الضروري التواصل مباشرة مع مختص بشري (طبيب/مستشار/شيخ)
+    لعرض الحالة بالتفصيل واتخاذ القرار المناسب.
+
+domains:
+  medical:
+    description: "مجال سلوك ونفسية الأطفال والجوانب الطبية/النمائية."
+    default_policy:
+      allow_diagnosis: false
+      allow_medication_names: false
+      allow_lifestyle_advice: true
+      require_human_review: true
+    severity_overrides:
+      خفيف:
+        require_human_review: false
+      متوسط:
+        require_human_review: true
+      شديد:
+        require_human_review: true
+        escalate_to: "pediatrician"
+      طارئ:
+        require_human_review: true
+        escalate_to: "emergency_services"
+    intervention_overrides:
+      إحالة_لطبيب:
+        force_fallback_message: true
+
+  fiqh:
+    description: "فتاوى وضوابط شرعية عامة (لن تُستخدم لإصدار فتاوى شخصية ملزِمة)."
+    default_policy:
+      allow_strict_rulings: false
+      require_human_review: true
+    notes: >
+      "إجابات هذا المجال يجب أن تُصاغ على أنها (معلومات شرعية عامة) مع
+      تشجيع السائل على الرجوع لعالِم موثوق في النوازل المعقدة."
+
+  tarbiyah:
+    description: "توجيهات تربوية ونفسية عامة مبنية على النصوص الشرعية والخبرة التربوية."
+    default_policy:
+      allow_practical_tips: true
+      require_human_review: false
+
+  islamic_parenting:
+    description: "تربية الأطفال وفقاً للتعاليم الإسلامية والآداب الشرعية."
+    default_policy:
+      allow_strict_rulings: false
+      require_human_review: true
+    notes: >-
+      "إجابات هذا المجال تُعتبر معلومات شرعية عامة مأخوذة من كبار العلماء،
+      ويُشجع السائل على الرجوع لعالم موثوق في النوازل المعقدة."
+
+  cyber:
+    description: "حماية الطفل رقميًا وإدارة استخدام الأجهزة والألعاب."
+    default_policy:
+      allow_technical_instructions: true
+      require_human_review: false
+    severity_overrides:
+      شديد:
+        require_human_review: true
+        escalate_to: "cybersecurity_specialist"

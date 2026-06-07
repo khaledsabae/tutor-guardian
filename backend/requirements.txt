@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+jsonschema
+pyyaml
+httpx
+chromadb
+onnxruntime
+pdfplumber

@@ -1,0 +1,20 @@
+{
+  "id": "fda90146-a230-4111-96c9-5210463458e0",
+  "domain": "islamic_parenting",
+  "age_group": "unspecified",
+  "behavior_type": "Islamic_Child_Education",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_فقهي",
+  "reference_info": "Child Education in Islam — Abdullah Nasih Ulwan (English)",
+  "text_original": "All rights reserved. No part of this publication may be reproduced, stored in\na retrieval system, or transmitted in any form or by any means, electronic, Published by:\nDar Al-Salam\nfor Printing, Publishing, Distribution and Translation\nBookshop (1): 120 al-Azhar St.,Cairo Tel: (+ 202) 5932820\nBookshop (2): | Hassan ibn Ali St., from Ali Ameen St. Mustafa An-Nahhas\nextension, Naser City, Cairo (+ 202) 4054642\nOwned and administered by: Abdul-Kadder Mahmoud Al-Bakkar\n19 Omar Lotfy Street, Nasr City, Cairo\nEgypt\nTel: (+ 202) 2704280, 2741578\nFax: (+ 202) 2741750\nWebsite: www.dar-alsalam.com\nE-mai",
+  "text_simplified": "From Tarbiyat al-Awlad (English): All rights reserved. No part of this publication may be reproduced, stored in a retrieval system, or transmitted in any form or by any means, electronic, Published by: Dar Al-Salam for Printing, Publishing, Distribution and Translation Bookshop (1):...",
+  "labels": [
+    "english",
+    "islamic_parenting",
+    "ulwan"
+  ],
+  "created_at": "2026-06-06T18:15:20.517686Z",
+  "updated_at": "2026-06-06T18:15:20.517686Z",
+  "version": "1.0.0"
+}

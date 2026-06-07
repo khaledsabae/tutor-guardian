@@ -1,0 +1,25 @@
+{
+  "id": "f66f6ba1-d342-47a0-8184-6bfb848c47be",
+  "domain": "islamic_parenting",
+  "age_group": "0-3",
+  "behavior_type": "الرفق_بالأطفال",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Tarbiyat al-Awlad fil Islam — Abdullah Nasih Ulwan",
+  "text_original": "Chapter Two: Psychological Feelings Towards One’s Children _..26\nA. Parents are Disposed to Love their Children ...... 26",
+  "text_simplified": "الرفق بالطفل هو من أساس تعاليم الإسلام، فهو يحفظه ويحبسه ويحسن تعبيره. الرفق بالأطفال يساعد على بناء شخصياتهم الصغيرة بشكل إيجابي وعند الحاجة يمكن أن نراجع التعليمات أو نطلب المساعدة عند الطبيب.",
+  "labels": [
+    "ulwan",
+    "islamic_parenting",
+    "english"
+  ],
+  "created_at": "2026-06-06T13:15:19.106412Z",
+  "updated_at": "2026-06-06T13:15:19.106412Z",
+  "version": "1.0.0",
+  "keywords": [
+    "الرفق",
+    "طفل",
+    "تعاليم الإسلام"
+  ]
+}

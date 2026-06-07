@@ -1,0 +1,20 @@
+{
+  "id": "4fcec458-d52b-4e74-8f25-e5aaa3cd5c0a",
+  "domain": "islamic_parenting",
+  "age_group": "13-15",
+  "behavior_type": "التربية_الجنسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Tarbiyat al-Awlad fil Islam — Abdullah Nasih Ulwan",
+  "text_original": "1. The Manners of Asking Permission to Enter 2.0.0.0... 186\n2. The Manners of Looking at Woman ......... soumwenee 188\n3. Keeping Children Away from Sexual Arousal 198\n4. Teaching the Child the Legal Rulings Governing Puberty",
+  "text_simplified": "من كتاب Tarbiyat al-Awlad fil Islam — Abdullah Nasih Ulwan: 1. The Manners of Asking Permission to Enter 2.0.0.0... 186 2. The Manners of Looking at Woman ......... soumwenee 188 3. Keeping Children Away from Sexual Arousal 198 4. Teaching the Child the Legal...",
+  "labels": [
+    "ulwan",
+    "islamic_parenting",
+    "english"
+  ],
+  "created_at": "2026-06-06T13:15:19.106412Z",
+  "updated_at": "2026-06-06T13:15:19.106412Z",
+  "version": "1.0.0"
+}

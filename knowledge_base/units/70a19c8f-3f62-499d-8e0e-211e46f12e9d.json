@@ -1,0 +1,26 @@
+{
+  "id": "70a19c8f-3f62-499d-8e0e-211e46f12e9d",
+  "domain": "medical",
+  "age_group": "7-9",
+  "behavior_type": "الصحة_النفسية_للأطفال",
+  "intervention_type": "العلاجية",
+  "severity": "شديد/طارئ",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "Children and Mental Health — NIMH",
+  "text_original": "d and clarify your child’s emotions, behavior, and  current situation. Based on this information, the mental  health professional can decide if your child would benefit  from an intervention and what intervention might work best.  A comprehensive evaluation of a child’s mental health  usually involves:  ● A parent interview to discuss the child’s developmental  history, temperament, relationships with friends and  family, medical history, interests, abilities, and any  prior treatment ● Information gathering from the child’s school, such as  standardized test scores and reports on behavior,  c",
+  "text_simplified": "يجب التشدد في ت背景 ودعم الأطفال الذين يعانون من التوتر والاكتئاب والقلق لمنع حدوث اضطرابات نفسيه في الكبر.",
+  "labels": [
+    "nimh",
+    "mental_health",
+    "english"
+  ],
+  "created_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "version": "1.0.0",
+  "keywords": [
+    "اضطراب النوم",
+    "التوتر",
+    "الاكتئاب",
+    "القلق"
+  ]
+}

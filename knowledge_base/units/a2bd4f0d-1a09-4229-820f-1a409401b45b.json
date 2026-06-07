@@ -1,0 +1,25 @@
+{
+  "id": "a2bd4f0d-1a09-4229-820f-1a409401b45b",
+  "domain": "medical",
+  "age_group": "0-3",
+  "behavior_type": "اضطراب_المزاج_التخريبي",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "DSM-5",
+  "reference_info": "Disruptive Mood Dysregulation Disorder — NIMH",
+  "text_original": "apy teaches  coping skills for controlling anger and ways to identify  and relabel the distorted perceptions that contribute  to outbursts. Parent training teaches parents or caregivers more  effective ways to respond to irritable behavior, such  as anticipating events that might lead a child to temper  outbursts and working ahead to avert them. Training  also emphasizes the importance of predictable and  consistent responses to a child’s outbursts and  rewards for positive behavior. To learn more about psychotherapy, visit www.nimh. nih.gov/psychotherapies.  Medication  Currently, there are n",
+  "text_simplified": "اضطراب المزاج التخريبي هو اضطراب نفسي حاد ينتج عنه تهيج غير طبيعي وسرعة انفعال، ويُشخص لدى الصغار الذين يبلغون من العمر أربع سنوات فما فوق. قد يكون مصحوباً بالسكتة الدماغية والقلق والاكتئاب ويحتاج إلى إشراف طبي.",
+  "labels": [
+    "nimh",
+    "dmdd",
+    "english"
+  ],
+  "created_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "version": "1.0.0",
+  "keywords": [
+    "اضطراب_المزاج",
+    "تخريبي",
+    "صغار"
+  ]
+}

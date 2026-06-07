@@ -1,0 +1,45 @@
+# ── Python ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── Virtual environments (huge: ~1.75GB) ────────────────────────────────
+.venv/
+backend/.venv/
+venv/
+env/
+
+# ── Secrets / config ────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Generated vector indexes (rebuilt from knowledge_base/units/) ───────
+knowledge_base/chroma_db/
+ops/chroma_data/
+
+# ── Runtime databases (regenerated) ─────────────────────────────────────
+*.db
+*.sqlite3
+ops/sessions.db
+
+# ── Old backups & deprecated data ───────────────────────────────────────
+knowledge_base/units_backup/
+knowledge_base/units_backup_*/
+knowledge_base/data/
+
+# ── Raw source PDFs (158MB — provenance only, not needed to run) ────────
+# NOTE: kept locally for re-deriving units. Consider git-lfs if versioning needed.
+knowledge_base/raw_sources/
+
+# ── OS / editor ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*~

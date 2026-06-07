@@ -1,0 +1,25 @@
+{
+  "id": "7b2ded06-2736-4364-8980-1d70df17fa0c",
+  "domain": "islamic_parenting",
+  "age_group": "10-12",
+  "behavior_type": "نصائح_تربوية_عامة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Tarbiyat al-Awlad fil Islam — Abdullah Nasih Ulwan",
+  "text_original": "CM A By oa © tad Loos BS A i ela B)\n6 ade 7 ane og\nSy tps iy 2S Tt) ccli & As tot ee iS\nSd\n“Indeed, there has come to you from Allah a light ( ra\nMuhammad $5) and a plain Book (this Qur’an). Wherewith Allah\nguides all those who seek His Good Pleasure to ways of peace, and\nHe brings them out of darkness by His Will unto light and guides\nthem to a Straight Way (Islamic Monotheism).” (Al-Ma’idah, 15-16)\nOpponents testified to the growth and continuity of Islam. Enemies acknowledged its vitality and eternity. Western thinkers\nand philosophers testified to Islam such as Bernard Shaw, Elias Abu Shab",
+  "text_simplified": "في هذه الرسالة، يوصي القاضي عبد الحميد الناصح بنصائح تربوية للمدرسين لمساعدة الطلاب على تحقيق نجاحهم الأكاديمي وتطوير شخصياتهم بشكل إيجابي.",
+  "labels": [
+    "ulwan",
+    "islamic_parenting",
+    "english"
+  ],
+  "created_at": "2026-06-06T13:15:19.106412Z",
+  "updated_at": "2026-06-06T13:15:19.106412Z",
+  "version": "1.0.0",
+  "keywords": [
+    "أوصى",
+    "المدرسين",
+    "طلاب"
+  ]
+}

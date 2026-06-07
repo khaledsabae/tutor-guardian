@@ -1,0 +1,20 @@
+{
+  "id": "9282de4e-f0f4-4055-85d3-fd8605d45b6b",
+  "domain": "development",
+  "age_group": "13-15",
+  "behavior_type": "المراهقة_والتطور_العصبي",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "مقال_تنموي",
+  "reference_info": "The Adolescent Brain — UNICEF Guatemala",
+  "text_original": "eprivation, conflict  and crisis.  The articles in this compendium elaborate on some of the ideas shared at the  symposium. Together, they provide a broad view of the dynamic interactions among  physical, sexual and brain development that take place during adolescence. They  highlight some of the risks to optimal development – including toxic stress, which can  Foreword interfere with the formation of brain connections, and other vulnerabilities unique to  the onset of puberty and independence.  They also point to the opportunities for developing interventions that can build on  earlier invest",
+  "text_simplified": "من The Adolescent Brain — UNICEF Guatemala: eprivation, conflict  and crisis.  The articles in this compendium elaborate on some of the ideas shared at the  symposium. Together, they provide a broad view of the dynamic interactions among  physical, sexual and brain development that take place...",
+  "labels": [
+    "unicef",
+    "adolescent_brain",
+    "english"
+  ],
+  "created_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "version": "1.0.0"
+}

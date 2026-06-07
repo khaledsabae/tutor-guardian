@@ -1,0 +1,25 @@
+{
+  "id": "df840cb4-0720-4c57-9495-64dbf45e8e18",
+  "domain": "cyber",
+  "age_group": "13-15",
+  "behavior_type": "التنمر_الإلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_سيبراني",
+  "reference_info": "Cyberbullying Guide — Internet Matters",
+  "text_original": "?    For the most part, cyberbullying is bullying, only it happens online or on phones or other connected devices. As for what  bullying is, that depends on who you ask, but most experts agree that it involves repeated harassment and some type of power  imbalance – and, when young people are involved, it usually has something to do with what’s happening with peers at school.  It’s important to remember that not every mean comment or unpleasant interaction rises to the level of bullying. Sometimes it’s  just what kids call “drama.” We mention this because too many kinds of behavior are called “",
+  "text_simplified": "التنمر الإلكتروني هو نشر أخبار كاذبة أو الانتقادات دون رحمة على الإنترنت. يمكن أن يكون خفيفًا أو شديدًا ويتطلب حلولاً مختلفة. قد تتطلبه التوجيهات وتقديم المساعدة العلاجية في بعض الأحيان.",
+  "labels": [
+    "internet_matters",
+    "cyberbullying",
+    "english"
+  ],
+  "created_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "version": "1.0.0",
+  "keywords": [
+    "تنمر",
+    "الإنترنت",
+    "كاذب"
+  ]
+}

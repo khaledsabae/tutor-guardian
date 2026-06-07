@@ -1,0 +1,26 @@
+{
+  "id": "aedda350-cf2a-4d53-869a-2b07a694180d",
+  "domain": "islamic_parenting",
+  "age_group": "7-9",
+  "behavior_type": "أساليب_التربية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Tarbiyat al-Awlad fil Islam — Abdullah Nasih Ulwan",
+  "text_original": "1, Education by Setting a Good Example —.... mennoune 217\n2. Education by Establishing Beneficial Habits cnesennes 232",
+  "text_simplified": "في هذا الكتاب تناول المؤلف الأساليب الملائمة لتربية أبناء المسلمين، فكانت هذه المقالة مناسبة للقراء الذين تتراوح أعمارهم بين 7-9 سنوات، مع التركيز على أساليب التدريس الإرشادي. وقد يكون هذا الموضوع مفيداً لمن يبحث عن نصائح تربوية متوسطة المستوى.",
+  "labels": [
+    "ulwan",
+    "islamic_parenting",
+    "english"
+  ],
+  "created_at": "2026-06-06T13:15:19.106412Z",
+  "updated_at": "2026-06-06T13:15:19.106412Z",
+  "version": "1.0.0",
+  "keywords": [
+    "تربية",
+    "أبناء",
+    "مسلمون",
+    "أساليب"
+  ]
+}
