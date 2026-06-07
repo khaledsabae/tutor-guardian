@@ -1,0 +1,21 @@
+{
+  "id": "b6093b18-99fe-5f58-acad-d3f5ee47e43d",
+  "domain": "medical",
+  "age_group": "4-6",
+  "behavior_type": "التوحد",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "DSM-5",
+  "reference_info": "DSM-5 ASD criteria; CDC Act Early",
+  "text_original": "Persistent deficits in social communication plus restricted/repetitive behaviors present in early development and causing impairment warrant comprehensive evaluation by a developmental specialist (DSM-5).",
+  "text_simplified": "إذا لاحظت صعوبات مستمرة في التواصل الاجتماعي مع سلوكيات متكرّرة أو اهتمامات محدودة جداً تؤثر على حياة طفلك — اطلب تقييماً شاملاً من أخصائي نمو الطفل. التقييم لا يعني وصمة، بل خطة دعم. كلما كان أبكر كان أفضل لتطوّر الطفل.",
+  "labels": [
+    "autism",
+    "توحد",
+    "إحالة",
+    "dsm-5"
+  ],
+  "created_at": "2026-06-07T00:00:00Z",
+  "updated_at": "2026-06-07T00:00:00Z",
+  "version": "1.0.0"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "bd4afec4-d395-55f4-9953-22cc698564fd",
+  "domain": "cyber",
+  "age_group": "10-12",
+  "behavior_type": "إدمان_الألعاب",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_سيبراني",
+  "reference_info": "AAP Family Media Plan; WHO",
+  "text_original": "Preventive guidance: agree on a family media plan with consistent time limits, screen-free zones (meals, bedrooms, before sleep), and balance with sleep, physical activity, and offline relationships (AAP).",
+  "text_simplified": "للوقاية من الإفراط في الألعاب: اتفقوا كعائلة على خطة واضحة لوقت الشاشة، وحدّدوا أوقاتاً وأماكن خالية من الأجهزة (الطعام، غرفة النوم، قبل النوم). احرص على توازن الألعاب مع النوم الكافي والنشاط البدني والعلاقات الواقعية. كن قدوة في استخدامك أنت للأجهزة.",
+  "labels": [
+    "gaming",
+    "إدمان_ألعاب",
+    "aap",
+    "وقاية"
+  ],
+  "created_at": "2026-06-07T00:00:00Z",
+  "updated_at": "2026-06-07T00:00:00Z",
+  "version": "1.0.0"
+}

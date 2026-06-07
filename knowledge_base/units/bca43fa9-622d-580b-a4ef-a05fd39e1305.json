@@ -1,0 +1,21 @@
+{
+  "id": "bca43fa9-622d-580b-a4ef-a05fd39e1305",
+  "domain": "medical",
+  "age_group": "0-3",
+  "behavior_type": "التوحد",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "DSM-5",
+  "reference_info": "CDC Learn the Signs · Act Early; M-CHAT-R",
+  "text_original": "Early signs that may warrant developmental screening include limited eye contact, not responding to name by 12 months, lack of joint attention (pointing/showing), and loss of previously gained skills (CDC). The M-CHAT-R is a validated parent screening tool for 16–30 months.",
+  "text_simplified": "من العلامات المبكرة التي تستدعي المتابعة: قلّة التواصل بالعين، عدم الالتفات عند مناداته باسمه بعد عمر سنة، عدم الإشارة أو مشاركة الاهتمام، أو فقدان مهارات كان قد اكتسبها. هذه علامات للمتابعة وليست تشخيصاً. التدخّل المبكر مفيد جداً، فلا تنتظر — استشر مختص نمو الطفل عند القلق.",
+  "labels": [
+    "autism",
+    "توحد",
+    "cdc",
+    "علامات_مبكرة"
+  ],
+  "created_at": "2026-06-07T00:00:00Z",
+  "updated_at": "2026-06-07T00:00:00Z",
+  "version": "1.0.0"
+}

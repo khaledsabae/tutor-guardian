@@ -1,0 +1,21 @@
+{
+  "id": "d19a1efb-cb40-55fe-811c-9a139eb0b297",
+  "domain": "medical",
+  "age_group": "4-6",
+  "behavior_type": "التوحد",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "CDC; WHO Caregiver Skills Training",
+  "text_original": "Structured routines, visual schedules, clear simple language, and following the child's interests support communication and reduce anxiety in autistic children (WHO/CDC). Early intervention services improve long-term outcomes.",
+  "text_simplified": "الطفل على طيف التوحد يرتاح مع الروتين الثابت والجداول المصوّرة واللغة البسيطة الواضحة. ابنِ التواصل انطلاقاً من اهتماماته هو، وامنحه وقتاً للاستجابة. قلّل المثيرات الحسّية الزائدة (الضوضاء/الإضاءة). برامج التدخّل المبكر تُحسّن النتائج على المدى الطويل، فالتحق بها مبكراً.",
+  "labels": [
+    "autism",
+    "توحد",
+    "تدخل_مبكر",
+    "who"
+  ],
+  "created_at": "2026-06-07T00:00:00Z",
+  "updated_at": "2026-06-07T00:00:00Z",
+  "version": "1.0.0"
+}

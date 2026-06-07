@@ -1,0 +1,21 @@
+{
+  "id": "3af026ae-be62-5839-ac0b-26da6874e4c5",
+  "domain": "medical",
+  "age_group": "7-9",
+  "behavior_type": "فرط_الحركة_وتشتت_الانتباه",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "AAP Clinical Practice Guideline for ADHD; CDC",
+  "text_original": "Behavioral parent training and classroom supports are first-line for school-age children: consistent routines, clear and brief instructions, breaking tasks into steps, and immediate positive reinforcement for desired behavior (AAP).",
+  "text_simplified": "للأطفال في سن المدرسة تساعد الاستراتيجيات السلوكية كثيراً: نظام يومي ثابت، تعليمات قصيرة وواضحة، تقسيم المهمة إلى خطوات صغيرة، ومكافأة فورية على السلوك الجيد. قلّل المشتتات أثناء الواجب، واتفق مع المعلّم على خطة موحّدة بين البيت والمدرسة. تجنّب العقاب القاسي فهو يزيد المشكلة.",
+  "labels": [
+    "adhd",
+    "سلوكي",
+    "aap",
+    "مدرسة"
+  ],
+  "created_at": "2026-06-07T00:00:00Z",
+  "updated_at": "2026-06-07T00:00:00Z",
+  "version": "1.0.0"
+}

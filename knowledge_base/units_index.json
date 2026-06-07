@@ -1,9 +1,9 @@
 {
-  "total_units": 147,
-  "generated_at": "2026-06-07T01:37:07.391395+00:00",
+  "total_units": 156,
+  "generated_at": "2026-06-07T02:42:38.702560+00:00",
   "by_domain": {
-    "medical": 50,
-    "cyber": 23,
+    "medical": 56,
+    "cyber": 26,
     "islamic_parenting": 52,
     "development": 22
   },
@@ -103,6 +103,18 @@
       "behavior_type": "أسس_التربية_الإسلامية",
       "needs_ocr": false,
       "size_chars": 599
+    },
+    {
+      "id": "1a79f159-fcad-5a0e-8af3-1e1a8bc90bec",
+      "domain": "cyber",
+      "title": "",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "إدمان_الألعاب",
+      "needs_ocr": false,
+      "size_chars": 239
     },
     {
       "id": "1ad7b0db-b8cb-40cc-b752-f295119be45d",
@@ -381,6 +393,18 @@
       "size_chars": 34710
     },
     {
+      "id": "3af026ae-be62-5839-ac0b-26da6874e4c5",
+      "domain": "medical",
+      "title": "",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "فرط_الحركة_وتشتت_الانتباه",
+      "needs_ocr": false,
+      "size_chars": 232
+    },
+    {
       "id": "3cc4fbe0-25f9-4366-b9a6-3893795bec75",
       "domain": "medical",
       "title": "NIMH Social Processes Attachment Separation",
@@ -523,6 +547,18 @@
       "behavior_type": "الانحراف_السلوكي",
       "needs_ocr": false,
       "size_chars": 600
+    },
+    {
+      "id": "6765ccf5-a94c-5291-a561-9258dc0c475f",
+      "domain": "medical",
+      "title": "",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "فرط_الحركة_وتشتت_الانتباه",
+      "needs_ocr": false,
+      "size_chars": 258
     },
     {
       "id": "69723253-5e81-4602-8bfe-a073437589c2",
@@ -1209,6 +1245,18 @@
       "size_chars": 18984
     },
     {
+      "id": "b6093b18-99fe-5f58-acad-d3f5ee47e43d",
+      "domain": "medical",
+      "title": "",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "التوحد",
+      "needs_ocr": false,
+      "size_chars": 204
+    },
+    {
       "id": "b64ed3c8-59e3-4b79-a7ad-ed558212f087",
       "domain": "medical",
       "title": "",
@@ -1257,6 +1305,30 @@
       "size_chars": 600
     },
     {
+      "id": "bca43fa9-622d-580b-a4ef-a05fd39e1305",
+      "domain": "medical",
+      "title": "",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "0-3",
+      "normalized_age_group": "0-3",
+      "behavior_type": "التوحد",
+      "needs_ocr": false,
+      "size_chars": 274
+    },
+    {
+      "id": "bd4afec4-d395-55f4-9953-22cc698564fd",
+      "domain": "cyber",
+      "title": "",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "إدمان_الألعاب",
+      "needs_ocr": false,
+      "size_chars": 205
+    },
+    {
       "id": "be78455e-d4c6-42f6-8088-1400f7c2dff3",
       "domain": "islamic_parenting",
       "title": "",
@@ -1267,6 +1339,18 @@
       "behavior_type": "أسس_التربية_الإسلامية",
       "needs_ocr": false,
       "size_chars": 600
+    },
+    {
+      "id": "beb0e561-be2a-51dc-85ac-83c158c748ef",
+      "domain": "cyber",
+      "title": "",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "إدمان_الألعاب",
+      "needs_ocr": false,
+      "size_chars": 208
     },
     {
       "id": "c3437dc8-02bd-41b2-8137-028c681a24d5",
@@ -1375,6 +1459,18 @@
       "behavior_type": "التنمر_الإلكتروني",
       "needs_ocr": false,
       "size_chars": 16703
+    },
+    {
+      "id": "d19a1efb-cb40-55fe-811c-9a139eb0b297",
+      "domain": "medical",
+      "title": "",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "التوحد",
+      "needs_ocr": false,
+      "size_chars": 226
     },
     {
       "id": "d3b5e4e6-bc8e-4eca-b9b4-0541171ab326",
@@ -1531,6 +1627,18 @@
       "behavior_type": "الصحة_النفسية",
       "needs_ocr": false,
       "size_chars": 11344
+    },
+    {
+      "id": "e6e490f8-1e6e-5764-939e-e039beb4d7c9",
+      "domain": "medical",
+      "title": "",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط_الحركة_وتشتت_الانتباه",
+      "needs_ocr": false,
+      "size_chars": 334
     },
     {
       "id": "e88a271e-a530-438b-b8cd-24ae71b52083",

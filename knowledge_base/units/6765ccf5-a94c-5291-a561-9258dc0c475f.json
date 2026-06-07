@@ -1,0 +1,21 @@
+{
+  "id": "6765ccf5-a94c-5291-a561-9258dc0c475f",
+  "domain": "medical",
+  "age_group": "10-12",
+  "behavior_type": "فرط_الحركة_وتشتت_الانتباه",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "DSM-5",
+  "reference_info": "DSM-5 ADHD criteria; CDC diagnostic guidance",
+  "text_original": "Evaluation by a qualified clinician is warranted when symptoms persist for 6+ months, appear before age 12, occur in two or more settings, and clearly impair academic or social functioning (DSM-5). Diagnosis is made by professionals, not by checklists alone.",
+  "text_simplified": "إذا استمرت أعراض ضعف الانتباه أو فرط الحركة أكثر من ٦ أشهر، وتظهر في البيت والمدرسة معاً، وتؤثر بوضوح على الدراسة أو العلاقات — فهذا وقت استشارة طبيب أطفال أو أخصائي نفسي. التشخيص يقوم به المختص ولا يُؤخذ من قوائم الإنترنت. التقييم المبكر يفتح باب الدعم المناسب.",
+  "labels": [
+    "adhd",
+    "إحالة",
+    "تشخيص",
+    "dsm-5"
+  ],
+  "created_at": "2026-06-07T00:00:00Z",
+  "updated_at": "2026-06-07T00:00:00Z",
+  "version": "1.0.0"
+}
