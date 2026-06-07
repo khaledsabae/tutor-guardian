@@ -3,11 +3,8 @@ LLM service — calls Ollama to generate a final response from retrieved knowled
 Follows strict rules: no diagnosis, no fatwa, no invented info.
 """
 import logging
-import asyncio
 
-import requests
-
-from app.config.llm_config import LLM
+from app.services.ai_gateway import get_gateway
 from app.models.api import ConversationTurn
 
 logger = logging.getLogger(__name__)
@@ -106,32 +103,28 @@ async def generate_reply(
     user_prompt, source_line = _build_prompt(
         domain, behavior_type, age_group, severity, retrieved_units, question_text, conversation_history
     )
+    full_prompt = _compose_system_prompt(domain) + "\n\n" + user_prompt
 
-    payload = {
-        "model": LLM.model,
-        "prompt": _compose_system_prompt(domain) + "\n\n" + user_prompt,
-        "stream": False,
-    }
+    # All LLM calls go through the gateway (retry/backoff + telemetry, local-only).
+    result = await get_gateway().generate(full_prompt)
+    return result.text
 
-    url = f"{LLM.base_url}/api/generate"
 
-    last_error = None
-    for attempt in range(1, LLM.max_retries + 1):
-        try:
-            resp = await asyncio.to_thread(
-                requests.post, url, json=payload, timeout=LLM.request_timeout
-            )
-            resp.raise_for_status()
-            data = resp.json()
-            content: str = data.get("response", "")
-            return content.strip()
-        except requests.RequestException as e:
-            last_error = e
-            logger.warning("Ollama attempt %d/%d failed: %s", attempt, LLM.max_retries, e)
-        except Exception as e:
-            last_error = e
-            logger.warning("Ollama attempt %d/%d unexpected: %s", attempt, LLM.max_retries, e)
+def build_full_prompt(
+    domain: str,
+    behavior_type: str,
+    age_group: str,
+    severity: str,
+    retrieved_units: list[dict],
+    question_text: str = "",
+    conversation_history: list[ConversationTurn] | None = None,
+) -> tuple[str, str]:
+    """Expose the composed (system + user) prompt and source line for streaming.
 
-    raise RuntimeError(
-        f"LLM call failed after {LLM.max_retries} attempts: {last_error}"
-    ) from last_error
+    The streaming endpoint needs the same prompt this function builds but must
+    drive the gateway's stream() itself, so it can't reuse generate_reply().
+    """
+    user_prompt, source_line = _build_prompt(
+        domain, behavior_type, age_group, severity, retrieved_units, question_text, conversation_history
+    )
+    return _compose_system_prompt(domain) + "\n\n" + user_prompt, source_line
