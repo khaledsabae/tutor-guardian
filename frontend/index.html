@@ -8,405 +8,587 @@
   <meta http-equiv="Expires" content="0">
   <title>Tutor Guardian — مساعد تربوي ذكي</title>
   <style>
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
-      background: #f5f6f7;
-      margin: 0;
-      padding: 20px;
-      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #e8edf2;
+      height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .container {
-      max-width: 640px;
-      margin: 0 auto;
+    .app {
+      width: 100%;
+      max-width: 680px;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
       background: #fff;
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 0 20px rgba(0,0,0,0.12);
     }
-    h1 {
-      text-align: center;
-      color: #1a5f7a;
-      margin-bottom: 4px;
-      font-size: 1.5rem;
-    }
-    .subtitle {
-      text-align: center;
-      color: #777;
-      font-size: 0.85rem;
-      margin-bottom: 20px;
-    }
-    .form-group {
-      margin-bottom: 14px;
-    }
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 6px;
-      font-size: 0.9rem;
-      color: #444;
-    }
-    select, input, textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-family: inherit;
-      background: #fafafa;
-      transition: border-color 0.2s;
-    }
-    select:focus, input:focus, textarea:focus {
-      border-color: #1a5f7a;
-      outline: none;
-    }
-    textarea { min-height: 80px; resize: vertical; }
-    .row { display: flex; gap: 12px; }
-    .row .form-group { flex: 1; }
-    button {
-      width: 100%;
-      padding: 12px;
+
+    /* ── Header ── */
+    .header {
       background: #1a5f7a;
       color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 8px;
+      padding: 10px 16px 8px;
+      flex-shrink: 0;
     }
-    button:hover { background: #134a5e; }
-    button:disabled {
-      background: #aaa;
-      cursor: not-allowed;
-    }
-    #responseBox {
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 8px;
-      background: #f9f9f9;
-      border: 1px solid #e0e0e0;
-      display: none;
-    }
-    #responseBox.show { display: block; }
-    .alert {
-      padding: 10px 14px;
-      border-radius: 6px;
-      margin-bottom: 12px;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-    .alert-yellow {
-      background: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffeaa7;
-    }
-    .alert-red {
-      background: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }
-    .reply-text {
-      line-height: 1.8;
-      font-size: 0.95rem;
-      color: #333;
-      white-space: pre-wrap;
-    }
-    .meta {
-      margin-top: 12px;
-      font-size: 0.8rem;
-      color: #888;
-      border-top: 1px solid #eee;
-      padding-top: 8px;
-    }
-    .spinner {
+    .header h1 { font-size: 1.05rem; text-align: center; letter-spacing: 0.3px; }
+    .header .subtitle { text-align: center; font-size: 0.72rem; opacity: 0.8; margin-top: 2px; }
+    .dev-badge {
       text-align: center;
-      padding: 20px;
-      color: #1a5f7a;
-      display: none;
-    }
-    .spinner.show { display: block; }
-    .domain-badge {
-      display: inline-block;
-      background: #e8f4f8;
-      color: #1a5f7a;
-      border-radius: 12px;
-      padding: 2px 10px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      margin-left: 6px;
-    }
-    .history-badge {
-      display: inline-block;
-      background: #e8f0e8;
-      color: #2d6a2d;
-      border-radius: 12px;
+      font-size: 0.65rem;
+      background: rgba(255,255,255,0.15);
+      border-radius: 4px;
       padding: 2px 8px;
-      font-size: 0.75rem;
-      margin-left: 4px;
+      margin-top: 5px;
     }
-    .feedback-bar {
-      margin-top: 12px;
+
+    /* ── Settings bar ── */
+    .settings-bar {
+      padding: 7px 12px;
+      background: #f4f6f8;
+      border-bottom: 1px solid #dde2e8;
+      flex-shrink: 0;
+    }
+    .settings-row {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
       flex-wrap: wrap;
     }
-    .feedback-btn {
-      width: auto;
-      padding: 5px 16px;
-      font-size: 1.1rem;
-      margin-top: 0;
-      background: #f0f0f0;
-      color: #333;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s;
+    .settings-row label {
+      font-size: 0.72rem;
+      color: #666;
+      white-space: nowrap;
     }
-    .feedback-btn:hover:not(:disabled) { background: #e0e0e0; }
-    .feedback-btn:disabled { cursor: default; }
-    .feedback-btn.voted-up { background: #d4edda; border-color: #28a745; }
-    .feedback-btn.voted-down { background: #f8d7da; border-color: #dc3545; }
-    .feedback-label { font-size: 0.82rem; color: #888; }
+    .settings-row select,
+    .settings-row input[type="text"] {
+      font-size: 0.78rem;
+      padding: 3px 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fff;
+      color: #333;
+      flex: 1;
+      min-width: 70px;
+      font-family: inherit;
+    }
+    .settings-row input[type="text"] { min-width: 130px; }
+    .settings-row select:focus,
+    .settings-row input:focus { outline: none; border-color: #1a5f7a; }
+
+    /* ── Chat thread ── */
+    #chatThread {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 12px 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scroll-behavior: smooth;
+    }
+    #chatThread::-webkit-scrollbar { width: 5px; }
+    #chatThread::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+    .empty-state {
+      margin: auto;
+      text-align: center;
+      color: #bbb;
+    }
+    .empty-state .icon { font-size: 2.8rem; margin-bottom: 10px; }
+    .empty-state p { font-size: 0.88rem; line-height: 1.6; }
+
+    /* ── Message rows ── */
+    .msg-row { display: flex; width: 100%; }
+    /* RTL: flex-start = right side (user), flex-end = left side (assistant) */
+    .msg-row.user      { justify-content: flex-start; }
+    .msg-row.assistant { justify-content: flex-end; }
+
+    /* ── Bubbles ── */
+    .bubble {
+      max-width: 80%;
+      padding: 9px 13px;
+      border-radius: 12px;
+      font-size: 0.91rem;
+      line-height: 1.75;
+      word-break: break-word;
+    }
+    /* user = right side in RTL → tail at top-right corner */
+    .msg-row.user .bubble {
+      background: #1a5f7a;
+      color: #fff;
+      border-radius: 12px 2px 12px 12px;
+    }
+    /* assistant = left side in RTL → tail at top-left corner */
+    .msg-row.assistant .bubble {
+      background: #f1f3f5;
+      color: #222;
+      border-radius: 2px 12px 12px 12px;
+      border: 1px solid #e2e6ea;
+    }
+    .bubble-sender {
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      opacity: 0.75;
+    }
+    .msg-row.user .bubble-sender     { color: rgba(255,255,255,0.9); }
+    .msg-row.assistant .bubble-sender { color: #888; }
+
+    .bubble-body { line-height: 1.75; }
+    .bubble-body code {
+      background: rgba(0,0,0,0.07);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+
+    /* Alerts inside assistant bubble */
+    .bubble-alert {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 9px;
+      border-radius: 6px;
+      margin-bottom: 7px;
+    }
+    .bubble-alert.yellow { background: #fff3cd; color: #856404; }
+    .bubble-alert.red    { background: #f8d7da; color: #721c24; }
+
+    /* Metadata row under assistant reply */
+    .bubble-meta {
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid #dde2e8;
+      font-size: 0.7rem;
+      color: #aaa;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+    }
+    .domain-badge {
+      background: #dff0f7;
+      color: #1a5f7a;
+      border-radius: 10px;
+      padding: 1px 7px;
+      font-weight: 700;
+      font-size: 0.68rem;
+    }
+
+    /* Feedback inside assistant bubble */
+    .bubble-feedback {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 7px;
+    }
+    .bubble-feedback .fb-label { font-size: 0.72rem; color: #aaa; }
+    .fb-btn {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 2px 9px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .fb-btn:hover:not(:disabled) { background: #eee; }
+    .fb-btn:disabled { cursor: default; opacity: 0.7; }
+    .fb-btn.voted-up   { background: #d4edda; border-color: #28a745; }
+    .fb-btn.voted-down { background: #f8d7da; border-color: #dc3545; }
+    .fb-result { font-size: 0.72rem; color: #888; }
+
+    /* Typing indicator */
+    .typing {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 4px 2px;
+    }
+    .typing span {
+      width: 6px; height: 6px;
+      background: #aaa;
+      border-radius: 50%;
+      animation: tdot 1.2s infinite ease-in-out;
+    }
+    .typing span:nth-child(2) { animation-delay: 0.2s; }
+    .typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes tdot {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+      40%           { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* ── Input area ── */
+    .input-area {
+      background: #fff;
+      border-top: 1px solid #dde2e8;
+      padding: 8px 12px 10px;
+      flex-shrink: 0;
+    }
+    .input-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      min-height: 18px;
+    }
+    .turn-badge { font-size: 0.7rem; color: #bbb; }
+    .clear-btn {
+      font-size: 0.7rem;
+      color: #c0392b;
+      background: none;
+      border: 1px solid #f5c6cb;
+      border-radius: 5px;
+      padding: 2px 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .clear-btn:hover { background: #fde; }
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+    #message_text {
+      flex: 1;
+      padding: 9px 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      resize: none;
+      min-height: 42px;
+      max-height: 110px;
+      overflow-y: auto;
+      background: #fafafa;
+      direction: rtl;
+      transition: border-color 0.2s;
+      line-height: 1.5;
+    }
+    #message_text:focus { outline: none; border-color: #1a5f7a; background: #fff; }
+    .send-btn {
+      background: #1a5f7a;
+      border: none;
+      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+      flex-shrink: 0;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .send-btn:hover  { background: #145068; }
+    .send-btn:disabled { background: #aaa; cursor: not-allowed; }
   </style>
 </head>
 <body>
-  <div class="container">
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
     <h1>🛡️ Tutor Guardian</h1>
     <div class="subtitle">مساعد تربوي ذكي للأهل العرب المسلمين</div>
-    <div style="background:#fff3cd;border:1px solid #ffe69c;color:#856404;border-radius:8px;padding:8px 12px;font-size:0.78rem;text-align:center;margin-bottom:16px">
-      🧪 واجهة اختبار للمطوّرين (Dev/Test client) — المنتج النهائي تطبيق موبايل. هذه الصفحة لاختبار الـ API فقط.
-    </div>
+    <div class="dev-badge">🧪 واجهة اختبار للمطوّرين — المنتج النهائي تطبيق موبايل</div>
+  </div>
 
-    <div class="row">
-      <div class="form-group">
-        <label for="age_group">الفئة العمرية</label>
-        <select id="age_group">
-          <option value="0-3">0-3</option>
-          <option value="4-6" selected>4-6</option>
-          <option value="7-9">7-9</option>
-          <option value="10-12">10-12</option>
-          <option value="13-15">13-15</option>
-          <option value="16-18">16-18</option>
-          <option value="unspecified">غير محدد</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="severity">الشدة</label>
-        <select id="severity">
-          <option value="خفيف">خفيف</option>
-          <option value="متوسط" selected>متوسط</option>
-          <option value="شديد">شديد</option>
-          <option value="طارئ">طارئ</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="behavior_type">نوع السلوك <span style="font-weight:400;color:#999">(اختياري)</span></label>
-      <input type="text" id="behavior_type" placeholder="مثال: نوبات_الغضب، إدمان_الألعاب (أو اتركه فارغاً)">
-    </div>
-
-    <div class="form-group">
-      <label for="message_text">سؤالك</label>
-      <textarea id="message_text" placeholder="اكتب سؤالك مباشرة... مثال: كيف أتعامل مع ابني الذي يغضب كثيراً؟"></textarea>
-    </div>
-
-    <button id="sendBtn" onclick="sendQuery()">إرسال الاستفسار</button>
-    <button id="clearHistory" onclick="clearConversation()" style="display:none; background:#e74c3c; margin-top:6px; font-size:0.85rem; padding:8px;">
-      🔄 بدء محادثة جديدة
-    </button>
-
-    <div class="spinner" id="spinner">⏳ جاري المعالجة...</div>
-
-    <div id="responseBox">
-      <div id="alerts"></div>
-      <div class="reply-text" id="replyText"></div>
-      <div class="meta" id="meta"></div>
-      <div class="feedback-bar" id="feedbackBar" style="display:none">
-        <span class="feedback-label">هل كان الرد مفيداً؟</span>
-        <button class="feedback-btn" id="fbUp" onclick="submitFeedback('up')">👍</button>
-        <button class="feedback-btn" id="fbDown" onclick="submitFeedback('down')">👎</button>
-        <span id="feedbackStatus" style="font-size:0.82rem;color:#666"></span>
-      </div>
+  <!-- Settings bar -->
+  <div class="settings-bar">
+    <div class="settings-row">
+      <label>الفئة العمرية</label>
+      <select id="age_group">
+        <option value="0-3">0-3</option>
+        <option value="4-6" selected>4-6</option>
+        <option value="7-9">7-9</option>
+        <option value="10-12">10-12</option>
+        <option value="13-15">13-15</option>
+        <option value="16-18">16-18</option>
+        <option value="unspecified">غير محدد</option>
+      </select>
+      <label>الشدة</label>
+      <select id="severity">
+        <option value="خفيف">خفيف</option>
+        <option value="متوسط" selected>متوسط</option>
+        <option value="شديد">شديد</option>
+        <option value="طارئ">طارئ</option>
+      </select>
+      <input type="text" id="behavior_type" placeholder="نوع السلوك (اختياري)">
     </div>
   </div>
 
-  <script>
-    // ── Dev/Test client for the streaming API. NOT the final product. ──────
-    // Stateless mode: conversation history kept in memory (JS array), sent
-    // with each request. No server-side sessions — simpler and DB-free.
-    const API_BASE = '/api';
-    let turnCount = 0;
-    let sessionToken = null;
-    let currentSessionId = null;
+  <!-- Chat thread -->
+  <div id="chatThread">
+    <div class="empty-state" id="emptyState">
+      <div class="icon">🛡️</div>
+      <p>ابدأ بكتابة سؤالك التربوي<br>وسيرد عليك المساعد فور الإرسال</p>
+    </div>
+  </div>
 
-    // Auto-create a session on page load to get an auth token.
-    async function initSession() {
-      try {
-        const res = await fetch(`${API_BASE}/chat/sessions`, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}',
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        sessionToken = data.token;
-        currentSessionId = data.session_id;
-      } catch (e) {
-        console.warn('Session init failed — auth token unavailable:', e.message);
-      }
-    }
-    initSession();
+  <!-- Input area -->
+  <div class="input-area">
+    <div class="input-top">
+      <span class="turn-badge" id="turnBadge"></span>
+      <button class="clear-btn" id="clearBtn" onclick="clearConversation()" style="display:none">🔄 بدء محادثة جديدة</button>
+    </div>
+    <div class="input-row">
+      <textarea id="message_text"
+        placeholder="اكتب سؤالك هنا... (Enter للإرسال)"
+        rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendQuery();}"
+        oninput="autoResize(this)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendQuery()" title="إرسال">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
 
-    // In-memory conversation history — last MAX_HISTORY turns only.
-    const MAX_HISTORY = 5;
-    let conversationHistory = [];  // [{role: "user"|"assistant", content: "..."}]
+</div>
 
-    // tiny markdown: **bold**, *italic*, `code`, newlines
-    function md(t) {
-      return (t || '')
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.+?)\*/g, '<em>$1</em>')
-        .replace(/`(.+?)`/g, '<code>$1</code>')
-        .replace(/\n/g, '<br>');
-    }
+<script>
+  const API_BASE = '/api';
+  const MAX_HISTORY = 5;
+  let turnCount = 0;
+  let sessionToken = null;
+  let currentSessionId = null;
+  let conversationHistory = [];
 
-    async function sendQuery() {
-      const btn = document.getElementById('sendBtn');
-      const spinner = document.getElementById('spinner');
-      const box = document.getElementById('responseBox');
-      const alerts = document.getElementById('alerts');
-      const replyText = document.getElementById('replyText');
-      const meta = document.getElementById('meta');
-
-      const messageText = document.getElementById('message_text').value.trim();
-      if (!messageText) { alert('من فضلك اكتب سؤالك أولاً.'); return; }
-
-      // Send current question + last MAX_HISTORY turns as context
-      const payload = {
-        behavior_type: document.getElementById('behavior_type').value.trim() || '',
-        age_group: document.getElementById('age_group').value,
-        severity: document.getElementById('severity').value,
-        message_text: messageText,
-        conversation_history: conversationHistory.slice(-MAX_HISTORY),
-      };
-
-      btn.disabled = true;
-      spinner.classList.add('show');
-      box.classList.add('show');
-      alerts.innerHTML = '';
-      replyText.innerHTML = '';
-      meta.textContent = '';
-      let acc = '';
-      let finalReply = '';
-
-      // Reset feedback bar for this new query
-      const feedbackBar = document.getElementById('feedbackBar');
-      feedbackBar.style.display = 'none';
-      document.getElementById('feedbackStatus').textContent = '';
-      ['fbUp', 'fbDown'].forEach(id => {
-        const b = document.getElementById(id);
-        b.disabled = false;
-        b.classList.remove('voted-up', 'voted-down');
+  async function initSession() {
+    try {
+      const res = await fetch(`${API_BASE}/chat/sessions`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}',
       });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      sessionToken = data.token;
+      currentSessionId = data.session_id;
+    } catch (e) {
+      console.warn('Session init failed:', e.message);
+    }
+  }
+  initSession();
 
-      try {
-        const headers = { 'Content-Type': 'application/json' };
-        if (sessionToken) headers['Authorization'] = `Bearer ${sessionToken}`;
-        const res = await fetch(`${API_BASE}/assistant/stream`, {
-          method: 'POST', headers,
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok || !res.body) throw new Error('HTTP ' + res.status);
-        spinner.classList.remove('show');
+  // ── Helpers ───────────────────────────────────────────────────────────────
 
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buf = '';
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buf += decoder.decode(value, { stream: true });
-          // SSE frames are separated by a blank line
-          const frames = buf.split('\n\n');
-          buf = frames.pop();
-          for (const frame of frames) {
-            const ev = (frame.match(/event: (.*)/) || [])[1];
-            const dataLine = (frame.match(/data: (.*)/) || [])[1];
-            if (!dataLine) continue;
-            const data = JSON.parse(dataLine);
-            if (ev === 'token') {
-              acc += data.delta;
-              replyText.innerHTML = md(acc) + '<span style="opacity:.4">▌</span>';
-            } else if (ev === 'done') {
-              finalReply = data.reply_text || acc || '';
-              replyText.innerHTML = md(finalReply || 'لا يوجد رد.');
-              if (data.mode === 'banned')
-                alerts.innerHTML += '<div class="alert alert-red">⛔️ الطلب مرفوض — خارج نطاق المساعدة</div>';
-              if (data.escalation_target === 'emergency_services')
-                alerts.innerHTML += '<div class="alert alert-red">🚨 حالة طارئة — تواصل مع مختص فوراً</div>';
-              if (data.needs_human_review)
-                alerts.innerHTML += '<div class="alert alert-yellow">⚠️ يُنصح بمراجعة مختص</div>';
-              turnCount++;
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 110) + 'px';
+  }
 
-              // Save this turn to in-memory history
-              if (finalReply && data.mode !== 'banned') {
-                conversationHistory.push({ role: 'user', content: messageText });
-                conversationHistory.push({ role: 'assistant', content: finalReply });
-                // Keep only last MAX_HISTORY turns (each turn = 2 entries)
-                if (conversationHistory.length > MAX_HISTORY * 2) {
-                  conversationHistory = conversationHistory.slice(-MAX_HISTORY * 2);
-                }
-              }
+  function md(t) {
+    return (t || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/`(.+?)`/g, '<code>$1</code>')
+      .replace(/\n/g, '<br>');
+  }
 
-              const domainLabel = data.domain ? `<span class="domain-badge">📂 ${data.domain}</span>` : '';
-              const historyLabel = conversationHistory.length > 0
-                ? `<span class="history-badge">🧠 ${Math.floor(conversationHistory.length/2)} في السياق</span>` : '';
-              meta.innerHTML = `mode=${data.mode || '—'} | severity=${data.severity || '—'} ${domainLabel}${historyLabel}` +
-                `<span style="color:#1a5f7a;font-size:0.75rem"> | 💬 ${turnCount} أسئلة</span>`;
-              document.getElementById('clearHistory').style.display = 'inline-block';
-              if (data.mode !== 'banned') feedbackBar.style.display = 'flex';
-            } else if (ev === 'error') {
-              alerts.innerHTML += '<div class="alert alert-red">❌ ' + (data.detail || 'خطأ') + '</div>';
+  function scrollToBottom() {
+    const t = document.getElementById('chatThread');
+    t.scrollTop = t.scrollHeight;
+  }
+
+  // ── DOM builders ──────────────────────────────────────────────────────────
+
+  function appendUserBubble(text) {
+    document.getElementById('emptyState')?.remove();
+    const thread = document.getElementById('chatThread');
+    const row = document.createElement('div');
+    row.className = 'msg-row user';
+    row.innerHTML =
+      `<div class="bubble">` +
+        `<div class="bubble-sender">أنت</div>` +
+        `<div class="bubble-body">${md(text)}</div>` +
+      `</div>`;
+    thread.appendChild(row);
+    scrollToBottom();
+  }
+
+  function appendAssistantBubble() {
+    const thread = document.getElementById('chatThread');
+    const row = document.createElement('div');
+    row.className = 'msg-row assistant';
+    row.innerHTML =
+      `<div class="bubble">` +
+        `<div class="bubble-sender">🛡️ المساعد</div>` +
+        `<div class="bubble-body">` +
+          `<div class="typing"><span></span><span></span><span></span></div>` +
+        `</div>` +
+      `</div>`;
+    thread.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
+
+  function streamToken(row, accumulated) {
+    row.querySelector('.bubble-body').innerHTML =
+      md(accumulated) + '<span style="opacity:.35">▌</span>';
+    scrollToBottom();
+  }
+
+  function finaliseAssistantBubble(row, text, data) {
+    const fbId = 'fb' + Date.now();
+    let alertsHtml = '';
+    if (data.mode === 'banned')
+      alertsHtml += '<div class="bubble-alert red">⛔️ الطلب مرفوض — خارج نطاق المساعدة</div>';
+    if (data.escalation_target === 'emergency_services')
+      alertsHtml += '<div class="bubble-alert red">🚨 حالة طارئة — تواصل مع مختص فوراً</div>';
+    if (data.needs_human_review)
+      alertsHtml += '<div class="bubble-alert yellow">⚠️ يُنصح بمراجعة مختص</div>';
+
+    const domainBadge = data.domain
+      ? `<span class="domain-badge">📂 ${data.domain}</span>` : '';
+    const modeTxt  = data.mode     ? `<span>${data.mode}</span>` : '';
+    const sevTxt   = data.severity ? `<span>${data.severity}</span>` : '';
+
+    const feedbackHtml = data.mode !== 'banned' ? `
+      <div class="bubble-feedback">
+        <span class="fb-label">هل أفاد الرد؟</span>
+        <button class="fb-btn" id="${fbId}-up"   onclick="submitFeedback('up','${fbId}')">👍</button>
+        <button class="fb-btn" id="${fbId}-down" onclick="submitFeedback('down','${fbId}')">👎</button>
+        <span class="fb-result" id="${fbId}-res"></span>
+      </div>` : '';
+
+    row.querySelector('.bubble-body').innerHTML =
+      alertsHtml +
+      `<div>${md(text || 'لا يوجد رد.')}</div>` +
+      `<div class="bubble-meta">${domainBadge}${modeTxt}${sevTxt}</div>` +
+      feedbackHtml;
+
+    scrollToBottom();
+  }
+
+  // ── Main send ─────────────────────────────────────────────────────────────
+
+  async function sendQuery() {
+    const sendBtn = document.getElementById('sendBtn');
+    const msgEl   = document.getElementById('message_text');
+    const text    = msgEl.value.trim();
+    if (!text || sendBtn.disabled) return;
+
+    const payload = {
+      behavior_type:        document.getElementById('behavior_type').value.trim() || '',
+      age_group:            document.getElementById('age_group').value,
+      severity:             document.getElementById('severity').value,
+      message_text:         text,
+      conversation_history: conversationHistory.slice(-MAX_HISTORY * 2),
+    };
+
+    msgEl.value = '';
+    msgEl.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    appendUserBubble(text);
+    const assistantRow = appendAssistantBubble();
+    let acc = '';
+    let finalReply = '';
+
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (sessionToken) headers['Authorization'] = `Bearer ${sessionToken}`;
+
+      const res = await fetch(`${API_BASE}/assistant/stream`, {
+        method: 'POST', headers, body: JSON.stringify(payload),
+      });
+      if (!res.ok || !res.body) throw new Error('HTTP ' + res.status);
+
+      const reader  = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const frames = buf.split('\n\n');
+        buf = frames.pop();
+
+        for (const frame of frames) {
+          const ev       = (frame.match(/event: (.*)/) || [])[1];
+          const dataLine = (frame.match(/data: (.*)/)  || [])[1];
+          if (!dataLine) continue;
+          const data = JSON.parse(dataLine);
+
+          if (ev === 'token') {
+            acc += data.delta;
+            streamToken(assistantRow, acc);
+
+          } else if (ev === 'done') {
+            finalReply = data.reply_text || acc || '';
+            finaliseAssistantBubble(assistantRow, finalReply, data);
+            turnCount++;
+
+            if (finalReply && data.mode !== 'banned') {
+              conversationHistory.push({ role: 'user',      content: text });
+              conversationHistory.push({ role: 'assistant', content: finalReply });
+              if (conversationHistory.length > MAX_HISTORY * 2)
+                conversationHistory = conversationHistory.slice(-MAX_HISTORY * 2);
             }
+
+            document.getElementById('turnBadge').textContent =
+              turnCount > 0 ? `💬 ${turnCount} أسئلة` : '';
+            document.getElementById('clearBtn').style.display = 'inline-block';
+
+          } else if (ev === 'error') {
+            finaliseAssistantBubble(assistantRow,
+              '❌ ' + (data.detail || 'خطأ في الاتصال'), { mode: 'error' });
           }
         }
-      } catch (err) {
-        alerts.innerHTML = '<div class="alert alert-red">❌ خطأ في الاتصال بالخادم: ' + err.message + '</div>';
-      } finally {
-        btn.disabled = false;
-        spinner.classList.remove('show');
       }
+    } catch (err) {
+      finaliseAssistantBubble(assistantRow,
+        '❌ خطأ في الاتصال بالخادم: ' + err.message, { mode: 'error' });
+    } finally {
+      sendBtn.disabled = false;
+      msgEl.focus();
     }
+  }
 
-    async function submitFeedback(rating) {
-      const upBtn = document.getElementById('fbUp');
-      const downBtn = document.getElementById('fbDown');
-      const statusEl = document.getElementById('feedbackStatus');
-      upBtn.disabled = true; downBtn.disabled = true;
-      upBtn.classList.remove('voted-up', 'voted-down');
-      downBtn.classList.remove('voted-up', 'voted-down');
-      (rating === 'up' ? upBtn : downBtn).classList.add(rating === 'up' ? 'voted-up' : 'voted-down');
-      try {
-        const headers = { 'Content-Type': 'application/json' };
-        if (sessionToken) headers['Authorization'] = `Bearer ${sessionToken}`;
-        const res = await fetch(`${API_BASE}/feedback`, {
-          method: 'POST', headers,
-          body: JSON.stringify({ session_id: currentSessionId, rating }),
-        });
-        statusEl.textContent = res.ok ? '✅ شكراً!' : '❌ تعذّر الحفظ';
-      } catch { statusEl.textContent = '❌ تعذّر الاتصال'; }
-    }
+  // ── Feedback ──────────────────────────────────────────────────────────────
 
-    function clearConversation() {
-      conversationHistory = [];
-      turnCount = 0;
-      document.getElementById('clearHistory').style.display = 'none';
-      document.getElementById('responseBox').classList.remove('show');
-      document.getElementById('feedbackBar').style.display = 'none';
+  async function submitFeedback(rating, fbId) {
+    const upBtn  = document.getElementById(`${fbId}-up`);
+    const dnBtn  = document.getElementById(`${fbId}-down`);
+    const resEl  = document.getElementById(`${fbId}-res`);
+    if (!upBtn) return;
+    upBtn.disabled = true;
+    dnBtn.disabled = true;
+    (rating === 'up' ? upBtn : dnBtn).classList.add(rating === 'up' ? 'voted-up' : 'voted-down');
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (sessionToken) headers['Authorization'] = `Bearer ${sessionToken}`;
+      const res = await fetch(`${API_BASE}/feedback`, {
+        method: 'POST', headers,
+        body: JSON.stringify({ session_id: currentSessionId, rating }),
+      });
+      if (resEl) resEl.textContent = res.ok ? '✅ شكراً!' : '❌ تعذّر الحفظ';
+    } catch {
+      if (resEl) resEl.textContent = '❌ خطأ';
     }
-  </script>
+  }
+
+  // ── Clear conversation ────────────────────────────────────────────────────
+
+  function clearConversation() {
+    conversationHistory = [];
+    turnCount = 0;
+    document.getElementById('chatThread').innerHTML =
+      `<div class="empty-state" id="emptyState">` +
+        `<div class="icon">🛡️</div>` +
+        `<p>ابدأ بكتابة سؤالك التربوي<br>وسيرد عليك المساعد فور الإرسال</p>` +
+      `</div>`;
+    document.getElementById('clearBtn').style.display = 'none';
+    document.getElementById('turnBadge').textContent = '';
+    initSession();
+  }
+</script>
 </body>
 </html>

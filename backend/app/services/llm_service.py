@@ -45,7 +45,7 @@ def _build_prompt(
     source_line = " · ".join(sources[:3]) if sources else "مصدر غير مذكور"
     question_display = (question_text.strip() if question_text else "") or (behavior_type.strip() if behavior_type else "") or "سؤال تربوي"
 
-    # Build conversation context if history exists
+    # Build conversation history block (reference only)
     history_block = ""
     if conversation_history:
         history_parts = []
@@ -55,30 +55,31 @@ def _build_prompt(
         history_block = "\n".join(history_parts) + "\n\n"
 
     user_prompt = (
-        f"[CONTEXT]\n"
+        f"[سؤال الوالد/الوالدة الحالي — أجب على هذا فقط]\n"
+        f"{question_display}\n"
+        f"الفئة العمرية: {age_group} | شدة الحالة: {severity}\n\n"
+        f"[مصادر ومعلومات موثقة]\n"
         f"{joined}\n\n"
         f"[REFERENCE_INFO]\n{source_line}\n\n"
     )
     if history_block:
-        user_prompt += f"[محادثة_سابقة]\n{history_block}"
+        user_prompt += f"[سياق المحادثة — للمرجعية فقط، لا تعد الإجابة عن أسئلة سابقة]\n{history_block}"
     user_prompt += (
-        f"[سؤال الوالد/الوالدة]\n"
-        f"{question_display}\n"
-        f"الفئة العمرية: {age_group}\n"
-        f"شدة الحالة: {severity}\n\n"
         f"تعليمات الرد:\n"
-        f"- اقرأ [CONTEXT] جيداً ثم أجب بناءً عليه فقط.\n"
-        f"- الرد 3-5 جمل، بالعربية الفصحى الميسرة.\n"
-        f"- لا تكرر أفكاراً.\n"
+        f"- أجب على السؤال المذكور في [سؤال الوالد/الوالدة الحالي] فقط.\n"
+        f"- لا تكرر ولا تُجِب على أسئلة المحادثة السابقة.\n"
+        f"- استند إلى المصادر المذكورة في [مصادر ومعلومات موثقة] فقط.\n"
+        f"- الرد 4-6 جمل عملية، بالعربية الفصحى الميسرة.\n"
+        f"- لا تكرر الأفكار.\n"
         f"- اختم بـ: 📚 المصدر: {source_line}\n"
-        f"- إن كان السياق غير كافٍ: لا تتوفر لديّ معلومات موثقة — يُنصح بمراجعة متخصص\n"
+        f"- إن كان السياق غير كافٍ: «لا تتوفر لديّ معلومات موثقة حول هذا — يُنصح بمراجعة متخصص»\n"
     )
 
     return user_prompt, source_line
 
 
 def _compose_system_prompt(domain: str) -> str:
-    base = "أنت مساعد تربوي ذكي للأهل العرب المسلمين. تقدم إجابات عملية وآمنة بدون تشخيص طبي ملزم أو فتوى شخصية."
+    base = "أنت مساعد تربوي ذكي للأهل العرب المسلمين. تقدم إجابات عملية وآمنة بدون تشخيص طبي ملزم أو فتوى شخصية.\n\nأجب دائماً على آخر سؤال في المحادثة فقط. لا تعيد الإجابة على أسئلة سابقة."
     if domain in {"fiqh", "islamic_parenting"}:
         return (
             "أنت مساعد تربوي إسلامي. عند أي تعارض بين المصادر الطبية أو النفسية أو التنموية من جهة، "

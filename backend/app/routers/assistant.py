@@ -76,16 +76,12 @@ async def draft_reply(request: Request, user_message: UserMessage):
     if not query_text:
         query_text = f"{user_message.behavior_type} {user_message.age_group}"
 
-    # ── Step 3: Auto-detect domains (من السؤال + history إن وجدت) ────
+    # ── Step 3: Auto-detect domains (من السؤال فقط — بدون دمج history) ────
     # Server owns history when a session is active; else trust the client's.
     if session_id:
         history = store.get_history(session_id, limit=6)
     else:
         history = user_message.conversation_history or []
-    if history:
-        last_user = next((t.content for t in reversed(history) if t.role == "user"), "")
-        if last_user and last_user != query_text:
-            query_text = f"{last_user} {query_text}"
     detected_domains = classify_domains(query_text)
     logger.info("Auto-detected domains: %s", detected_domains)
 
@@ -99,7 +95,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
         behavior_type=user_message.behavior_type or "",
     )
 
-    retrieved_units = [r for r in results if r.get("distance", 1.0) < 1.0]
+    retrieved_units = [r for r in results if r.get("distance", 1.0) < 0.85]
     retrieved_texts = [r["document"] for r in retrieved_units]
 
     primary_domain = detected_domains[0] if detected_domains else "medical"
@@ -232,11 +228,6 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
         store.get_history(session_id, limit=6)
         if session_id else (user_message.conversation_history or [])
     )
-    if history:
-        last_user = next((t.content for t in reversed(history) if t.role == "user"), "")
-        if last_user and last_user != query_text:
-            query_text = f"{last_user} {query_text}"
-
     detected_domains = classify_domains(query_text)
     _ensure_index()
     results = retrieve_multi_domain(
@@ -244,7 +235,7 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
         age_group=user_message.age_group or "unspecified",
         top_k_per_domain=2, behavior_type=user_message.behavior_type or "",
     )
-    retrieved_units = [r for r in results if r.get("distance", 1.0) < 1.0]
+    retrieved_units = [r for r in results if r.get("distance", 1.0) < 0.85]
     primary_domain = detected_domains[0] if detected_domains else "medical"
     severity = user_message.severity or "خفيف"
 
