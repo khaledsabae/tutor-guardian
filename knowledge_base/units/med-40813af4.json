@@ -1,0 +1,29 @@
+{
+  "id": "med-40813af4",
+  "domain": "medical",
+  "source_file": "Children_Mental_Health.pdf",
+  "title": "العلاج النفسي للأطفال الذين يواجهون مشاكل سلوكية أو ا情绪ية",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "قلق, إدمان ألعاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "achieve the includes many different approaches such as structured best results. psychotherapies directed at specific conditions. For ● Family counseling, which includes family members to more information about types of psychotherapies, visit help them understand how a child’s challenges may affect www.nimh.nih.gov/psychotherapies. Effective relationships with parents and siblings. psychotherapy for children often incorporates: ● Support for parents, such as individual or group sessions ■ Parent involvement in the treatment that include training and the opportunity to talk with ■ Teaching the child skills to practice at home or school other parents. Parental support can provide new (between-session “homework assignments”) strategies for helping a child manage difficult emotions ■ Measures of progress (such as rating scales and and behavior in a positive way. The therapist can also improvements on “homework assignments”) that are coach parents on how to work with schools to receive tracked over time classroom accommodations. For information about treatment options for specific disorders, visit the NIMH website at www.nimh.nih.gov/health. How can the school support my child’s Children who have behavioral or emotional challenges that interfere with success in school may benefit from plans or accommodations provided under laws that prevent discrimination against children with disabilities. Your child’s health care providers can help you communicate with the school. A first step may be to ask the school whether accommodations such as an individualized education program (IEP) are appropriate for your child. Accommodations might include providing a child with a tape recorder for taking notes, allowing more time for tests,",
+  "text_simplified": "العلاج النفسي يشمل العديد من الطرق، بما في ذلك التوجيه إلى الحالات المحددة. العلاج العائلي للأسرة يساعد الأهل على فهم كيف تؤثر مشاكل الطفل على أفراد العائلة.",
+  "labels": [
+    "علاج نفسي",
+    "العوائل",
+    "المدرسة",
+    "السلوك",
+    "القلق"
+  ],
+  "created_at": "2026-06-07T08:17:56Z",
+  "updated_at": "2026-06-07T08:17:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Children_Mental_Health",
+    "source_author": ""
+  }
+}

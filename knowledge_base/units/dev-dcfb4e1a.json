@@ -1,0 +1,28 @@
+{
+  "id": "dev-dcfb4e1a",
+  "domain": "development",
+  "source_file": "Adolescent_Brain_UNICEF.pdf",
+  "title": "استخدام المعلومات في تعزيز نمو الشباب",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "قلق, إدمان ألعاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "is significantly exacerbated by growing up in environments of chronic stress, such as armed conflict, violence and extreme poverty. Organizations working in humanitarian and resource-poor settings desperately need science to provide answers regarding the most cost-effective interventions that can maximize the potential of adolescents and provide them with the opportunity to develop into healthy and successful young adults. Advances in technology and scientific methods, such as Magnetic Resonance Imaging (MRI), have gradually made it possible for scientists to better understand the nature of the changing adolescent brain and the underlying motivations for different behavioural outcomes during this pivotal period of development. These advances in knowledge have leapt from laboratories and academic journals, and can now be found in mainstream newspapers and magazines. Countless books have appeared on the topic, explaining why adolescents behave the way they do – some of them bestsellers. The wide interest is prompting a global community of researchers, practitioners, scientists, service deliverers and parents to ask the question: How can we use this information to enhance policy and programme responses that improve outcomes for adolescents? The commentaries in this compendium together summarize the state of adolescent neuroscience, reflecting on what is known about positive and negative impacts on brain development, including the effects of poverty, violence, stress, technology, but also socio-emotional learning, meditation, nutrition, counselling and positive relationships. They go beyond the science to discuss its application for maximizing the potential of adolescents. This compendium is designed to encourage further dialogue stimulated by new thinking grounded",
+  "text_simplified": "الشباب يتأثر سلباً ببيئات تعاني من التوتر المستمر، مثل النزاعات والعنف وحالة الفقر الشديد. يحتاج المنظمون إلى معرفة أفضل حول كيفية تقديم المساعدات الأكثر فعالية للشباب، لتعزيز فرص نموهم ونجاحاتهم في المستقبل.",
+  "labels": [
+    "الشباب",
+    "التنمية العقلية",
+    "العنف",
+    "الحاجة إلى معرفة أفضل"
+  ],
+  "created_at": "2026-06-07T07:55:25Z",
+  "updated_at": "2026-06-07T07:55:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Adolescent_Brain_UNICEF",
+    "source_author": ""
+  }
+}

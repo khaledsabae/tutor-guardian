@@ -1,0 +1,28 @@
+{
+  "id": "cyb-f4323218",
+  "domain": "cyber",
+  "source_file": "Gaming_Disorder_WHO.pdf",
+  "title": "الإدمان على الألعاب: خطورة وعلاج",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "إدمان ألعاب",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO/Common Sense Media",
+  "text_original": "Sharpening the focus on gaming disorder The definition of gaming disorder is an important first step in developing a public health response to a new problem. Gary Humphreys reports. Dr Susumu Higuchi has no doubt about Higuchi co-authored a recent lit- ing from addiction to on-line gambling the mental health risks posed by on-line erature review - Cross-sectional and to internet pornography. gaming. longitudinal epidemiological studies of He heads the Kurihama Medical internet gaming disorder – that found a and Addiction Centre in Kanagawa prevalence of internet gaming disorder “ Prefecture, Japan, which started the in the samples reviewed ranging from country’s first programme for internet 0.7% to 27.5%. gaming is harder to addiction in 2011. There are now 84 “The literature review revealed treat than addiction nationwide. Higuchi has watched the that geographical region made little to alcohol or drugs number of patients addicted to on-line difference to prevalence,” says Vladi- because the internet is gaming steadily grow. mir Poznyak, an expert on substance ” “Of the 269 patients we now see use and addictive behaviours at the for internet addiction, 241 have gaming World Health Organization (WHO), Susumu Higuchi disorder as their principal addiction”, he who points to several surveys showing says. “Of those, 215 are males.” internet gaming disorder prevalence Like Higuchi, Achab has seen a The patients Higuchi sees display between 1%-10% in Europe and North steady increase in on-line gaming dis- a range of symptoms, but are generally America. order patients, as well as an",
+  "text_simplified": "الإدمان على الألعاب أصبح مشكلة صحية جديدة، وقد أظهرت الدراسات أن الإصابة بهذا النوع من الإدمان قد تصل إلى نسبة高达27.5% في بعض المناطق.",
+  "labels": [
+    "إدمان",
+    "ألعاب",
+    "صحة",
+    "الغذاء والدواء"
+  ],
+  "created_at": "2026-06-07T08:02:25Z",
+  "updated_at": "2026-06-07T08:02:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Gaming_Disorder_WHO",
+    "source_author": ""
+  }
+}

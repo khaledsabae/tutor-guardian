@@ -1,0 +1,29 @@
+{
+  "id": "med-c974d9d8",
+  "domain": "medical",
+  "source_file": "ADHD_NIMH.pdf",
+  "title": "العلاج النفسي لمشكلات فرط الحركة ونقص الانتباه",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "فرط حركة ونقص الانتباه",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "daily challenges, gain confidence, or manage impulsive and risky Therapy is especially helpful if ADHD co-occurs with other mental disorders, such as anxiety, depression, conduct problems, or substance use disorders. You can learn about other mental disorders at www.nimh.nih.gov/health. Several psychosocial interventions have been shown to help manage symptoms and improve ► Behavioral therapy helps a person change their behavior. It might involve practical assistance, such as organizing tasks or completing schoolwork, learning social skills, or monitoring one’s behavior. ► Cognitive behavioral therapy helps a person become aware of attention and concentration challenges and work on skills to improve focus and organization and complete daily tasks (for instance, by breaking large tasks into smaller, more manageable steps). ► Family and marital therapy helps family members learn to handle disruptive behaviors, encourage behavior changes, and improve interactions with children and partners. Some people find it helpful to get support from a professional life coach or ADHD coach who can teach them skills to improve daily functioning. For more information on psychotherapy, including what to look for in a therapist and how to find one, visit www.nimh.nih.gov/psychotherapies. Parent education and support Therapy for children and teens requires parents to play an active role. Treatment sessions with the child alone are more likely to be effective for treating symptoms of anxiety or depression that may co-occur with ADHD than for managing core symptoms of the disorder. Mental health professionals can educate parents about the disorder and how it affects a family. They also",
+  "text_simplified": "يُساعد العلاج النفسي في تحسين الأعراض وتحسين السلوك، خاصة إذا كان اضطراب فرط الحركة ونقص الانتباه يشترك مع مشاكل نفسي أخرى مثل القلق والاكتئاب.",
+  "labels": [
+    "اضطراب فرط الحركة ونقص الانتباه",
+    "قلق",
+    "اكتئاب",
+    "السلوك العنيف",
+    "استخدام المخدرات"
+  ],
+  "created_at": "2026-06-07T08:11:09Z",
+  "updated_at": "2026-06-07T08:11:09Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ADHD_NIMH",
+    "source_author": ""
+  }
+}

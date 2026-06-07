@@ -1,0 +1,27 @@
+{
+  "id": "med-77626be2",
+  "domain": "medical",
+  "source_file": "Children_Mental_Health.pdf",
+  "title": "التعامل مع القلق في المراهقين",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "قلق",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "prior treatment ● Will there be “homework” between sessions? ● Information gathering from the child’s school, such as ● How will progress be evaluated? standardized test scores and reports on behavior, ● How soon can we expect to see progress? capabilities, and difficulties ● How long should treatment last? ● If needed, an interview with the child for testing and behavioral observations For more ideas on how to start a conversation with your child’s health care provider, visit www.nimh.nih.gov/talkingtips. How are childhood mental health disorders treated? The mental health professional will review the evaluation results ● Medications, which will depend on the diagnosis to help determine if a child’s emotions and behavior are related and may include antidepressants, stimulants, mood to changes or stresses at home or school or if they may stabilizers, or other medications. For information on specific classes of medications, visit www.nimh.nih.gov/ indicate a disorder for which they would recommend treatment. medications. Medications are often used in combination There are several treatment options the mental health with psychotherapy. If multiple health care providers or professional may recommend. specialists are involved, treatment information should be ● Psychotherapy (sometimes called talk therapy), which shared and coordinated between providers to achieve the includes many different approaches such as structured best results. psychotherapies directed at specific conditions. For ● Family counseling, which includes family members to more information about types of psychotherapies, visit help them understand how a child’s challenges may affect www.nimh.nih.gov/psychotherapies. Effective relationships with parents and siblings. psychotherapy for",
+  "text_simplified": "العلاج يشمل تقييمات من المدرسة وتحديد الأهداف، مع استخدام العقاقير إذا لزم الأمر، وقد يكون العلاج مزدوجًا بين العقاقير والتأهيل النفسي.",
+  "labels": [
+    "قلق",
+    "علاج نفسي",
+    "عقاقير"
+  ],
+  "created_at": "2026-06-07T08:17:32Z",
+  "updated_at": "2026-06-07T08:17:32Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Children_Mental_Health",
+    "source_author": ""
+  }
+}

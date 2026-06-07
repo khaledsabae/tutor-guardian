@@ -1,0 +1,27 @@
+{
+  "id": "dev-9d31767e",
+  "domain": "development",
+  "source_file": "Adolescent_Brain_UNICEF.pdf",
+  "title": "فرصة ثانية للطفل: كيف يمكن تحسين أدائه في المدرسة؟",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "التأخر الدراسي",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "critical period to build on early investments, offering a second chance for those who have not fared well in early childhood. Neuroscientific research in particular is integral to improving our understanding of the cerebral transformations that take place during this time and how they are influenced by interactions between the evolving adolescent brain and the environment in which it develops. In the field of early childhood development (ECD), neuroscientific evidence featured prominently in galvanizing positive change for children through changes in policy and programming and more of this type of evidence is needed to also provide answers regarding critical intervention junctures and approaches during adolescence. In this compendium, eight experts in adolescent neuroscience and development summarize scientific and programmatic evidence from their work, offering an insight into how to maximize the potential of adolescents during this period of opportunity, but also vulnerability. It builds on the discussions initiated at a one-day symposium entitled The Adolescent Brain: A second window of opportunity, held on 4 May 2016 at UNICEF headquarters in New York. The event brought together specialists to review the state of science related to the adolescent brain, specifically focusing on how to guide future responses to programming and policy and providing directions for research to further advance Experience from the early 1990s brought scientific thinking and biological evidence on ECD into the mainstream of programmes for young children (Shonkoff and Phillips, 2000) and catalysed a critical turning point in inter-sectoral programming approaches from the neonatal period through infancy into",
+  "text_simplified": "يقدم هذا النص فرصة ثانية للطفل الذي لم ي succeed في حياته الأولى، ويعزز فهم علم النفس العقلي لل transformations الدماغية التي تحدث خلال هذه الفترة وكيف تت influenced بواسطة البيئة المحيطة.",
+  "labels": [
+    "التأخر الدراسي",
+    "البيئة المحيطة",
+    "التطور العقلي"
+  ],
+  "created_at": "2026-06-07T07:54:51Z",
+  "updated_at": "2026-06-07T07:54:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Adolescent_Brain_UNICEF",
+    "source_author": ""
+  }
+}

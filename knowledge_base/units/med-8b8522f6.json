@@ -1,0 +1,27 @@
+{
+  "id": "med-8b8522f6",
+  "domain": "medical",
+  "source_file": "ADHD_NIMH.pdf",
+  "title": "ADHD: علامات وعلاجات",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "اضطراب نشاط وانتباه غير طبيعي",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "Attention-Deficit/ Hyperactivity Disorder: What You Need to Know Attention-deficit/hyperactivity disorder (ADHD) is a developmental disorder marked by persistent symptoms of inattention, hyperactivity, and impulsivity. Some people mostly have symptoms of inattention. Others mostly have symptoms of hyperactivity and impulsivity. Some people have both types of symptoms. Symptoms begin in childhood and can interfere with daily life, including social relationships and school or work performance. ADHD is well-known among children and teens, but many adults also have the disorder. Effective treatments are available to manage symptoms. What are the symptoms of ADHD? People with ADHD may experience an ongoing pattern of: ► Inattention: Difficulty paying attention ► Hyperactivity: Showing too much energy or moving and talking too much ► Impulsivity: Acting without thinking or having difficulty with self-control Signs of inattention can include frequent difficulty with: ► Paying attention to details, leading to careless mistakes at school, work, or during other activities ► Concentrating on tasks or activities, for instance, while having conversations, taking tests, completing assignments, or reading papers ► Listening when spoken to directly ► Following instructions or finishing tasks at school, work, or home ► Organizing tasks and activities, managing time, and meeting deadlines ► Completing tasks that require sustained attention, such as homework, large projects, and complicated forms ► Losing things, such as backpacks, books, keys, wallets, and phones ► Getting easily distracted by unrelated thoughts or stimuli ► Forgetting about daily activities, such as chores, errands, and events, or other important things, like assignments, appointments, and",
+  "text_simplified": "ADHD هو اضطراب نفسي يشمل علامات مثل الانتباه المتدني والنشاط الزائد والإرهاق. يمكن أن يؤثر على الأداء في المدرسة أو العمل وعلاقاتهم الاجتماعية.",
+  "labels": [
+    "اضطراب نشاط",
+    "اضطراب انتباه",
+    "النشاط الزائد"
+  ],
+  "created_at": "2026-06-07T08:08:20Z",
+  "updated_at": "2026-06-07T08:08:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ADHD_NIMH",
+    "source_author": ""
+  }
+}

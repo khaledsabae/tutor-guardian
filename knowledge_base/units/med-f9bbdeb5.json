@@ -1,0 +1,28 @@
+{
+  "id": "med-f9bbdeb5",
+  "domain": "medical",
+  "source_file": "DMDD.pdf",
+  "title": "استخدام الأدوية في علاج القلق والإدمان لدى الأطفال",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "قلق, إدمان ألعاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH",
+  "text_original": "to treat ADHD, and medications for treating irritability associated with research suggests that stimulant medications also autism, and they are sometimes used to treat may decrease irritability in youth with DMDD. DMDD. However, because these medications can cause unwanted side effects, they’re usually only • Antidepressants are sometimes used to treat tried when other approaches haven’t worked. irritability and mood problems that children with DMDD may experience. One small study suggests that citalopram (a serotonin reuptake inhibitor antidepressant), combined with the stimulant methylphenidate, may decrease irritability in youth with DMDD. Please note: Antidepressants may increase suicidal thoughts and behaviors in youth, who should be monitored closely by their health • Certain atypical antipsychotic medications are used to treat children with irritability, severe outbursts, or aggression. The FDA has approved these Tips for parents and caregivers Being a parent or caregiver for a child or Seek additional support and professional help. adolescent with DMDD can be stressful and Parents and caregivers may be able to find overwhelming. To help build a supportive resources and encouragement through their local environment for you and your child, you may want chapter of the National Alliance on Mental Illness to consider the following: (www.nami.org/findsupport), the National Federation of Families (www.ffcmh.org), Mental Learn as much as you can about the disorder. Health America (www.mhanational.org), and Talk to your child’s health care provider or mental other organizations. health professional. Ask questions about treatment options, including risks and benefits. Communicate regularly and effectively with your You can find",
+  "text_simplified": "يستخدم الأدوية المثبطة للنشاط في بعض الحالات لعلاج القلق، وقد أظهرت الدراسات أن هذه الأدوية قد تقلل من الإزعاج لدى الأطفال الذين يعانون من DMDD. ومع ذلك، يمكن أن يكون لهذه الأدوية آثار جانبية غير مرغوب فيها.",
+  "labels": [
+    "ADHD",
+    "DMDD",
+    "قلق",
+    "إدمان ألعاب"
+  ],
+  "created_at": "2026-06-07T08:20:43Z",
+  "updated_at": "2026-06-07T08:20:43Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "DMDD",
+    "source_author": ""
+  }
+}

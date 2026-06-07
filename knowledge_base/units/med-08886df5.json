@@ -1,0 +1,28 @@
+{
+  "id": "med-08886df5",
+  "domain": "medical",
+  "source_file": "DMDD.pdf",
+  "title": "اضطراب المزاج التحريضي: أعراض وعلاج",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "اضطراب المزاج التحريضي",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH",
+  "text_original": "Disruptive Mood Disorder: The Basics From the NATIONAL INSTITUTE of MENTAL HEALTH What is disruptive mood Youth with DMDD are diagnosed between the ages of 6 and 10. To be diagnosed with DMDD, a child must have dysregulation disorder? experienced symptoms steadily for 12 or more months. Disruptive mood dysregulation disorder (DMDD) is a Over time, as children grow and develop, the symptoms condition in which children or adolescents experience of DMDD may change. For example, an adolescent ongoing irritability, anger, and frequent, intense temper or young adult with DMDD may experience fewer outbursts. The symptoms of DMDD go beyond a “bad tantrums, but they may begin to exhibit symptoms of mood.” DMDD symptoms are severe. depression or anxiety. For this reason, treatment may change over time, too. Youth with DMDD experience significant problems at home, at school, and often with peers. They also tend Children with DMDD may have trouble in school and to require mental health care services, including difficulty maintaining healthy relationships with family doctor visits and sometimes hospitalization. or peers. They also may have a hard time in social Additionally, these children are at an increased risk of settings or participating in activities such as team developing anxiety and depression in the future. sports. If you think your child has DMDD, seeking a diagnosis and treatment is essential. DMDD can be treated. If you are concerned that your child may have DMDD, talk to your child’s pediatrician or health care provider. Did you know? What is",
+  "text_simplified": "يُشخص الأطفال الذين يعانون من اضطراب المزاج التحريضي بين سن 6 و10 سنوات، ويحتاجون إلى أعراض مستمرة لمدة 12 شهرًا على الأقل. هذا الاضطراب يتضمن أعراض مثل الإرهاق والغضب المتكرر والجفاف العصبي.",
+  "labels": [
+    "اضطراب مزاج",
+    "طيف اضطرابات المزاج",
+    "أعراض مستمرة",
+    "التنمر العصبي"
+  ],
+  "created_at": "2026-06-07T08:18:49Z",
+  "updated_at": "2026-06-07T08:18:49Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "DMDD",
+    "source_author": ""
+  }
+}

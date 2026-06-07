@@ -1,0 +1,27 @@
+{
+  "id": "med-c61d44e1",
+  "domain": "medical",
+  "source_file": "ADHD_NIMH.pdf",
+  "title": "استخدام العقاقير في علاج اضطراب القلق المزمن",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اضطراب القلق المزمن",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "treat ADHD, and research shows them to be highly effective. They work by increasing levels of brain chemicals involved in thinking and attention. Like all medications, stimulants can have side effects and must be prescribed and monitored by a health care provider. Tell the provider about other medications you or your child are taking. Medications for common health problems, such as diabetes, anxiety, and depression, can interact with stimulants, in which case, a provider can suggest other medication options. Health care providers sometimes prescribe nonstimulant medications like antidepressants to treat ADHD. However, the U.S. Food and Drug Administration (FDA) has not approved these medications specifically for ADHD. Sometimes, a person must try several different medications or dosages before finding the one that works for them. NIMH has information on stimulants and other mental health medications at www.nimh.nih.gov/ medications. You can learn more about specific medications, including the latest approvals, side effects, warnings, and patient information, on the FDA website at www.fda.gov/drugsatfda. Psychotherapy and behavioral interventions Psychological interventions for ADHD can take many forms and be combined with medication and other elements for parents, families, and teachers. Adding therapy to an ADHD treatment plan can help some people better cope with daily challenges, gain confidence, or manage impulsive and risky Therapy is especially helpful if ADHD co-occurs with other mental disorders, such as anxiety, depression, conduct problems, or substance use disorders. You can learn about other mental disorders at www.nimh.nih.gov/health. Several psychosocial interventions have been shown to help manage symptoms and",
+  "text_simplified": "العقاقير المثبطة تساعد في علاج اضطرابات القلق المزمن، وهي تعمل عن طريق زيادة مستويات الأعصاب التي تتحكم في التفكير والتركيز. يجب أن يتم إعطاؤها و监视ها من قبل الطبيب الصحي.",
+  "labels": [
+    "العلاج العقابيري",
+    "التأهيل النفسي",
+    "التدخل البيئي"
+  ],
+  "created_at": "2026-06-07T08:10:44Z",
+  "updated_at": "2026-06-07T08:10:44Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ADHD_NIMH",
+    "source_author": ""
+  }
+}

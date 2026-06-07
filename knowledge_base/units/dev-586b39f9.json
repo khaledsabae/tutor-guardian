@@ -1,0 +1,27 @@
+{
+  "id": "dev-586b39f9",
+  "domain": "development",
+  "source_file": "Adolescent_Brain_UNICEF.pdf",
+  "title": "الفن والذكاء: نمو الدماغ لدى المراهقين وتأثير الفقر",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "قلق, إدمان الألعاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "through my art.” Many of his works are inspired by the brain and its functioning and his interest in its power and Below the Clouds of Consciousness, 1989 Mixed media on paper Courtesy Ronald Feldman Fine Arts, New York Crossing the Primordial Bridges between Art Science Technology in Human Nervous Systems, Courtesy Ronald Feldman Fine Arts, New York What Are All the Dimensions of Consciousness? Courtesy Ronald Feldman Fine Arts, New York Humanature – A Turbulent Integration, 1991 Courtesy Ronald Feldman Fine Arts, New York Evolution of Abstract Realism, 2010-2011 Mixed media on paper Photo: Bill Orcutt Courtesy Ronald Feldman Fine Arts, New York Mind Icon No.7 (Metaphorming Conscience), 1991 Multi-colored serigraph on Arches 300gm paper Courtesy of Ronald Feldman Fine Arts, New York Metaphorming Civilizations, 1992-1993 Courtesy of Ronald Feldman Fine Arts, New York Metaphorming Humanature. Humankind’s Integration with Nature, 1989 Courtesy of Ronald Feldman Fine Arts, New York Envisioning a Cornucopia of All-purpose Nanomaterials (2014) Mixed media on synthetic canvas Courtesy of Ronald Feldman Fine Arts, New York Mind Icon No.8 (Questioning Our Evolution), 1991 Multi-colored serigraph on Arches 300gm paper Courtesy of Ronald Feldman Fine Arts, New York Adolescent Brain Development: Windows of opportunity 21 Ron Dahl and Ahna Suleiman Neuroimaging and the Adolescent Brain: A period of plasticity for vulnerabilities and opportunities 29 Situating the Adolescent Brain: The developing brain in its cultural contexts 39 Suparna Choudhury Poverty and the Adolescent Brain 49 Helping Teenagers Develop Resilience in the Face of Stress 57 Sonia J. Lupien",
+  "text_simplified": "النص يتحدث عن أعمال فنية تتعلق بالدماغ والذكاء، ويستعرض أبحاثًا في مجالات مثل نمو الدماغ لدى المراهقين وتأثير الفقر على صحة المراهقين.",
+  "labels": [
+    "فن",
+    "علوم الدماغ",
+    "صحة المراهقين"
+  ],
+  "created_at": "2026-06-07T07:53:49Z",
+  "updated_at": "2026-06-07T07:53:49Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Adolescent_Brain_UNICEF",
+    "source_author": ""
+  }
+}

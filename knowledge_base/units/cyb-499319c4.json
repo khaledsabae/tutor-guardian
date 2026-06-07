@@ -1,0 +1,29 @@
+{
+  "id": "cyb-499319c4",
+  "domain": "cyber",
+  "source_file": "Screen_Time_2025.pdf",
+  "title": "تأثير استخدام الأطفال للشاشة على الأطفال في الأعمار الصغيرة",
+  "language": "ar",
+  "age_group": "0-3",
+  "behavior_type": "استخدام الشاشة",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Common Sense Media",
+  "text_original": "TO EIGHT, 2025 FIGURE C. Screen use, by activity, 2020 vs. 2024 Among 0- to 8-year-olds, percentage of average daily screen time devoted to ... Consistent with 2020 and 2017, watching television and videos dominated the majority of 0- to 8-year-olds' screen time in 2024, followed by about a quarter (26%) of screen time Despite overall screen time remaining relatively stable since early 2020, how children use screen media has changed since our last Zero to Eight Census. Children are watching less live television and cable, and are spending more time watching short videos on apps like TikTok, Instagram Reels, or YouTube Shorts, with an average daily use of 14 minutes compared to one minute in early 2020. Average time spent gaming is up from 23 minutes to 38 minutes, and video-chatting increased from 1% daily use in 2020 and 2017 to 4% in 2024. THE COMMON SENSE CENSUS: MEDIA USE BY KIDS ZERO TO EIGHT, 2025 © COMMON SENSE MEDIA. ALL RIGHTS RESERVED. Gaming time jumps 65% in four years. TABLE B. Time spent gaming per day, by age, 2024 Total time spent playing games has increased noticeably since 0- to 2- to 5- to our last Zero to Eight Census survey in early 2020, moving 2-year-olds 4-year-olds 8-year-olds from 23 minutes of total time per day spent by children playing Console games :02a :02a :16b video games across all devices (consoles, handhelds, comput- Handheld games :00a :03a :08b ers, and smartphones or tablets) to 38 minutes in 2024.",
+  "text_simplified": "في عام 2024، استمرت نسبة الوقت الذي تقضيه الأطفال على الشاشات دون تغيير كبير مقارنة بالعام 2020، لكن هناك تغير في استخدامهم للشاشة. شهد الأطفال انخفاضاً في مشاهدة التلفزيون المباشر والقنوات الفضائية، مع زيادة كبيرة في وقت مشاهدتهم لمقاطع القصيرة على التطبيقات مثل TikTok وInstagram Reels وYouTube Shorts.",
+  "labels": [
+    "طفل",
+    "شاشة",
+    "مشاهدة",
+    "ألعاب",
+    "فيديو"
+  ],
+  "created_at": "2026-06-07T08:06:51Z",
+  "updated_at": "2026-06-07T08:06:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Screen_Time_2025",
+    "source_author": ""
+  }
+}

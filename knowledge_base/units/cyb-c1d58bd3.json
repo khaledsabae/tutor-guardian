@@ -1,0 +1,27 @@
+{
+  "id": "cyb-c1d58bd3",
+  "domain": "cyber",
+  "source_file": "Screen_Time_2025.pdf",
+  "title": "استخدام الأطفال للأجهزة: تحليل البيانات",
+  "language": "ar",
+  "age_group": "0-3",
+  "behavior_type": "فرط في استخدام الأجهزة",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Common Sense Media",
+  "text_original": "media. FIGURE A. Average daily screen use, by age, 2024 FIGURE B. Screen use, by activity, 2024 Among 0- to 8-year-olds, average daily amount of screen Among 0- to 8-year-olds, percentage of average daily screen media (hours:minutes) time devoted to ... In 2024, caregivers reported that children age 8 and younger spent roughly the same amount of time with screen media as they did in 2020 (2:27 vs. 2:24 daily). Screen time varies signifi- cantly by age: Children under 2 years old average one hour and three minutes daily, and 2- to 4-year-olds spend two hours and eight minutes. Those age 5 to 8 use screens for about three and a half hours daily (3:28). Boys spend over 30 minutes more on screen media each day than girls (2:38 vs. 2:07). This includes more time watching television and videos (1:36 vs. 1:19) and playing video games Screen use also differs by income and ethnicity. Children from households earning less than $50,000 per year spend twice as much time with screen media as those from households earning $100,000 or more per year (3:48 vs. 1:52). © COMMON SENSE MEDIA. ALL RIGHTS RESERVED. THE COMMON SENSE CENSUS: MEDIA USE BY KIDS ZERO TO EIGHT, 2025 FIGURE C. Screen use, by activity, 2020 vs. 2024 Among 0- to 8-year-olds, percentage of average daily screen time devoted to ... Consistent with 2020 and 2017, watching television and videos dominated the majority of 0- to 8-year-olds' screen time in 2024, followed by about a quarter",
+  "text_simplified": " babies spend a lot of time with screens. This includes watching TV and playing video games.",
+  "labels": [
+    "استخدام أجهزة",
+    " babies",
+    "الساعة والدقيقة"
+  ],
+  "created_at": "2026-06-07T08:06:24Z",
+  "updated_at": "2026-06-07T08:06:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Screen_Time_2025",
+    "source_author": ""
+  }
+}

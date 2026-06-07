@@ -1,0 +1,28 @@
+{
+  "id": "med-95b2e7e8",
+  "domain": "medical",
+  "source_file": "Children_Mental_Health.pdf",
+  "title": "العلامات وال behaviors المرتبطة بالقلق وفرط الحركة في الأطفال من عمر 4 إلى 6 سنوات",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "قلق وفرط حركة",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "your child talks about wanting to hurt themselves or someone else, seek help immediately. Learn more about warning signs at www.nimh.nih.gov/children. When might children benefit from an evaluation? Younger children Older children ● Have frequent tantrums or are irritable much of the time ● Have lost interest in things that they used to enjoy ● Often seem fearful or worried ● Have low energy ● Complain about frequent stomachaches or headaches ● Sleep too much or too little or seem sleepy throughout with no known medical cause the day ● Are in constant motion and cannot sit quietly (except ● Have periods of highly elevated energy and activity when they are engaged in an activity they enjoy, such and require much less sleep than usual as watching videos or playing video games) ● Spend more and more time alone and avoid social ● Sleep too much or too little, have frequent nightmares, activities with friends or family or seem sleepy during the day ● Diet or exercise excessively or fear gaining weight ● Are not interested in playing with other children or have ● Engage in self-harm behaviors (such as cutting or difficulty making friends burning their skin) ● Struggle academically or have experienced a recent ● Smoke, drink, or use drugs decline in grades ● Engage in risky or destructive behavior alone or with ● Repeat actions or check things many times (for friends example, repeatedly checking to make sure a door is ● Have thoughts of suicide locked)",
+  "text_simplified": "قد يتحدث الطفل عن رغبته في إلحاق الضرر بنفسه أو بغيره، يجب الحصول على المساعدة الفورية. تعرف أكثر على علامات التشخيص من خلال www.nimh.nih.gov/children.",
+  "labels": [
+    "قلق",
+    "فرط حركة",
+    "الإدمان",
+    "السلوك غير الطبيعي"
+  ],
+  "created_at": "2026-06-07T08:16:27Z",
+  "updated_at": "2026-06-07T08:16:27Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Children_Mental_Health",
+    "source_author": ""
+  }
+}

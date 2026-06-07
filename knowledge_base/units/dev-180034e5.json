@@ -1,0 +1,27 @@
+{
+  "id": "dev-180034e5",
+  "domain": "development",
+  "source_file": "Adolescent_Brain_UNICEF.pdf",
+  "title": "تعزيز إمكانات الشباب من خلال التعلم الاجتماعي والتأمل وتحسين الصحة العقلية",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "فرط حركة",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "impacts on brain development, including the effects of poverty, violence, stress, technology, but also socio-emotional learning, meditation, nutrition, counselling and positive relationships. They go beyond the science to discuss its application for maximizing the potential of adolescents. This compendium is designed to encourage further dialogue stimulated by new thinking grounded in adolescent neuroscience research and its application. It aims to challenge readers to bring science to bear on programme interventions and public policies for adolescents. An improved understanding from neuroscience is well-placed to strengthen behavioural evidence and provide a more complete picture of adolescent behaviour and development, while also stimulating fresh thinking and approaches that can be tested.1 1 For an in-depth discussion of how neuroscientific thinking could support public policies that address adolescents, see Steinberg, 2012; 2014. Key themes from expert commentaries The key themes summarized in the commentaries reflect many of the challenges and opportunities identified in the broader neuro- and social-science literature on adolescent development – or in the words of Dahl and Suleiman (see pages 19-23), the positive and negative ‘spirals’ that begin and continue through this period of rapid Unsurprisingly, the theme of transitions experienced during adolescence is strongly present in several of the commentaries. At the individual level, the adolescent is transitioning physiologically from child to adult and is subject not only to pubertal changes which lead to sexual maturity, but also to structural remodelling and neuronal reconfiguring of the brain, resulting in increased ability for adult-level reasoning. As these physical, sexual and cerebral",
+  "text_simplified": "الوحدة تركز على أهمية التعلم الاجتماعي والتأمل وتحسين الصحة العقلية لتطوير الدماغ، مع التركيز على كيفية تعزيز إمكانات الشباب.",
+  "labels": [
+    "التعلم الاجتماعي",
+    "تأمل",
+    "صحة عقلية"
+  ],
+  "created_at": "2026-06-07T07:55:38Z",
+  "updated_at": "2026-06-07T07:55:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Adolescent_Brain_UNICEF",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "med-b99c1ea8",
+  "domain": "medical",
+  "source_file": "ADHD_NIMH.pdf",
+  "title": "العلاج النفسي والتعليمي للاضطرابات المصاحبة للفرط في الحركة ونقص الانتباه",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "قلق, الاكتئاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "role. Treatment sessions with the child alone are more likely to be effective for treating symptoms of anxiety or depression that may co-occur with ADHD than for managing core symptoms of the disorder. Mental health professionals can educate parents about the disorder and how it affects a family. They also can help parents develop new skills, attitudes, and ways of relating to their child. Examples include parenting skills training, stress management techniques for parents, and support groups that help parents and families connect with others who have similar concerns. School-based programs Many children and teens with ADHD benefit from school-based behavioral interventions and academic accommodations. Interventions include behavior management plans or classroom-taught organizational and study skills. Accommodations include preferential seating in the classroom, reduced classwork, and extended time on tests and exams. Schools may provide accommodations through what is called a 504 Plan or, for children who qualify for special education services, an Individualized Education Plan (IEP). To learn more about special education services and the Individuals with Disabilities Education Act, visit https://idea.ed.gov. Cognitive training Cognitive training approaches involve repeatedly using a program or activity over several weeks to improve specific functions, such as memory or attention. Exercises are tailored to the person’s ongoing performance. Cognitive training is shown to modestly improve the tasks being practiced. For instance, research shows the training can help memory, attention, inhibition, planning, and cognitive flexibility in people with ADHD. However, these improvements don’t usually translate to changes in core ADHD symptoms of impulsivity and",
+  "text_simplified": "يجب علاج أعراض القلق أو الاكتئاب المرافقة مع اضطراب فرط الحركة ونقص الانتباه بالعلاجات المنزلية، بينما يجب التعامل مع الأعراض الأساسية من خلال برامج المدرسة. يمكن للأمهات تعلم كيفية التعامل مع هذه المشاكل والمساعدة في تطوير مهارات جديدة.",
+  "labels": [
+    "علاج نفسي",
+    "مهارات تعليمية",
+    " accommodations"
+  ],
+  "created_at": "2026-06-07T08:11:35Z",
+  "updated_at": "2026-06-07T08:11:35Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ADHD_NIMH",
+    "source_author": ""
+  }
+}

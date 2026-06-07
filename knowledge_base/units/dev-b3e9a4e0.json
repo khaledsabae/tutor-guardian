@@ -1,0 +1,28 @@
+{
+  "id": "dev-b3e9a4e0",
+  "domain": "development",
+  "source_file": "Positive_Parenting_9_11.pdf",
+  "title": "كيف نحمي أطفالنا من الحوادث؟",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "حوادث وقائية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "children at risk for injuries from falls and other accidents. Here are a few tips to help protect your child:  Protect your child in the car. The National Highway Traffic Safety Administration recommends that you keep your child in a booster seat until he is big enough to fit in a seat belt properly. Remember: your child should still ride in the back seat until he or she is 12 years of age because it’s safer there. Motor vehicle crashes are the most common cause of death from unintentional injury among children of this age.  Know where your child is and whether a responsible adult is present. Make plans with your child for when he will call you, where you can find him, and what time you expect him home.  Make sure your child wears a helmet when riding a bike or a skateboard or using inline skates; riding on a motorcycle, snowmobile, or all-terrain vehicle; or playing contact sports.  Many children get home from school before their parents get home from work. It is important to have clear rules and plans for your child when she is home alone.  Provide plenty of fruits and vegetables; limit foods high in solid fats, added sugars, or salt, and prepare healthier foods for family meals.  Keep television sets out of your child's bedroom. Limit screen time, including computers and video games, to no more than 1 to 2 hours.  Encourage your child to participate in",
+  "text_simplified": "يمكن أن يتعرض الأطفال للإصابات من سقوط وحوادث أخرى. اتبع هذه النصائح لحماية طفلك: حافظ على طفلك في كرسي مساند حتى يصبح أكبر قليلاً ليتناسب مع مقابس الأمان، وأطلب من طفلك أن يتصل بك عند الوصول إلى المنزل.",
+  "labels": [
+    "حماية الأطفال",
+    "الحوادث",
+    "النظام المنزلي",
+    "的习惯ية"
+  ],
+  "created_at": "2026-06-07T07:57:22Z",
+  "updated_at": "2026-06-07T07:57:22Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Positive_Parenting_9_11",
+    "source_author": ""
+  }
+}

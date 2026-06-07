@@ -1,0 +1,28 @@
+{
+  "id": "dev-77d7ab2f",
+  "domain": "development",
+  "source_file": "Adolescent_Brain_UNICEF.pdf",
+  "title": "الadolescents والقلق: فرصة للدعم",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "قلق",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "The Adolescent Brain: A second window The Office of Research – Innocenti is UNICEF’s dedicated research centre. It undertakes research on emerging and current issues in order to inform the strategic directions, policies and programmes of UNICEF and its partners, shape global debates on child rights and development, and inform the global research and policy agenda for all children, and particularly for the most vulnerable. Publications produced by the Office are contributions to a global debate on children and may not necessarily reflect UNICEF policies or approaches. The views expressed are those of the authors. The Office of Research – Innocenti receives financial support from the Government of Italy, while funding for specific projects is also provided by other governments, international institutions and private sources, including UNICEF National Committees. Any part of this publication may be freely reproduced using the following UNICEF Office of Research - Innocenti (2017). The Adolescent Brain: A second window of opportunity, UNICEF Office of Research - Innocenti, © 2017 United Nations Children’s Fund (UNICEF) UNICEF Office of Research – Innocenti Piazza SS. Annunziata, 12 50122 Florence, Italy Tel: (+39) 055 20 330 Fax: (+39) 055 2033 220 florence@unicef.org www.unicef-irc.org ISBN: 978 88 6522 048 1 Front cover: © Todd Siler Below the Clouds of Consciousness, 1989 Courtesy Ronald Feldman Fine Arts, New York ACKNOWLEDGEMENTS This compendium was edited by Nikola Balvin (Knowledge Management Specialist, Innocenti) and Prerna Banati (Chief, Programme and Planning, Innocenti). Production was overseen by Eve Leckey (Publications Assistant, Innocenti) and Sarah Marchant",
+  "text_simplified": "العديد من الأمور تحدث في دماغ الطفل الأكبر سناً، خاصة حول التحديات والفرص التي يواجهها. هذا البحث يقدم معلومات مهمة للقادة الذين يرغبون في تقديم الدعم للأطفال الأكبر سناً.",
+  "labels": [
+    "ال adolescents",
+    "القلق",
+    "التحديات",
+    "فرص"
+  ],
+  "created_at": "2026-06-07T07:53:24Z",
+  "updated_at": "2026-06-07T07:53:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Adolescent_Brain_UNICEF",
+    "source_author": ""
+  }
+}
