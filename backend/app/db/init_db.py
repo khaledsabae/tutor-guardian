@@ -17,14 +17,19 @@ import sqlite3
 from pathlib import Path
 
 _DEFAULT = Path(__file__).resolve().parents[3] / "ops" / "conversations.db"
-DB_PATH = Path(os.environ.get("CONVERSATIONS_DB", str(_DEFAULT)))
 
 SCHEMA_VERSION = 1
 
 
+def db_path() -> Path:
+    """Resolve the DB path at call time (so tests can override via env)."""
+    return Path(os.environ.get("CONVERSATIONS_DB", str(_DEFAULT)))
+
+
 def get_conn() -> sqlite3.Connection:
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
+    path = db_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(path)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
     return conn

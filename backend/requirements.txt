@@ -4,6 +4,10 @@ pydantic
 jsonschema
 pyyaml
 httpx
+requests
 chromadb
 onnxruntime
 pdfplumber
+
+# ── dev / test ──
+pytest

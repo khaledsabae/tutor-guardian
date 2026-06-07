@@ -19,9 +19,17 @@ COLLECTION_NAME = "knowledge_units"
 
 # ONNX embedding — lightweight (~80MB), no PyTorch, runs on CPU, supports Arabic
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-_embedder = embedding_functions.ONNXMiniLM_L6_V2()
 
 _collection: chromadb.Collection | None = None
+_embedder_instance = None
+
+
+def _embedder():
+    """Lazily build the ONNX embedder (downloads ~80MB on first real use only)."""
+    global _embedder_instance
+    if _embedder_instance is None:
+        _embedder_instance = embedding_functions.ONNXMiniLM_L6_V2()
+    return _embedder_instance
 
 
 def _get_collection() -> chromadb.Collection:
@@ -33,12 +41,12 @@ def _get_collection() -> chromadb.Collection:
         if COLLECTION_NAME in existing:
             _collection = client.get_collection(
                 COLLECTION_NAME,
-                embedding_function=_embedder,
+                embedding_function=_embedder(),
             )
         else:
             _collection = client.create_collection(
                 name=COLLECTION_NAME,
-                embedding_function=_embedder,
+                embedding_function=_embedder(),
                 metadata={"hnsw:space": "cosine"},
             )
     return _collection

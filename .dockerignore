@@ -1,0 +1,20 @@
+# Keep the build context tiny — never ship venvs / indexes / backups.
+.venv/
+backend/.venv/
+venv/
+**/__pycache__/
+*.py[cod]
+.git/
+.githooks/
+knowledge_base/chroma_db/
+ops/chroma_data/
+ops/*.db
+*.db
+*.sqlite3
+knowledge_base/units_backup/
+knowledge_base/units_backup_*/
+knowledge_base/data/
+knowledge_base/raw_sources/
+.env
+.pytest_cache/
+.mypy_cache/
