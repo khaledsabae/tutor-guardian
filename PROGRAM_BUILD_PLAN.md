@@ -620,7 +620,7 @@ MOBILE_API.md                          ← عقد API (مصدر الحقيقة)
 |---------|---------|--------|--------|
 | 2026-06-08 | الخطة | ✅ مكتوبة | `PROGRAM_BUILD_PLAN.md` أُنشئ |
 | 2026-06-08 | Phase R — الأبحاث | ✅ مكتملة | 4 مواضيع × 3 أبحاث في `docs/research/{01..04}/`. هيكلة كاملة: r1=primary, r2=secondary, r3=draft/extra. `.docx` اتحوّلت لـ `.md`. `docs/research/README.md` فيه الفهرس |
-| 2026-06-08 | Phase 0 — مكاسب سريعة | ✅ مكتملة | تنظيف 6 ملفات `.hermes-tmp.*`. `docs/privacy-policy.md` (عربي+EN). `backend/app/routers/privacy.py` يقدّمها على `GET /privacy-policy` (public, no /api prefix). Live test: 200/text-markdown. `check_kb_integrity.py`: 292 units in sync. |
+| 2026-06-08 | Phase 0 — مكاسب سريعة | ✅ مكتملة | تنظيف 6 ملفات `.hermes-tmp.*`. `docs/privacy-policy.md` (عربي+EN). `backend/app/routers/privacy.py` يقدّمها على `GET /privacy-policy` (public, no /api prefix). Live test: 200/text-markdown. `check_kb_integrity.py`: 292 units in sync. **Production fixed**: Dockerfile COPY docs/ + remove inline comment; tg-api.alsaba.cloud/privacy-policy → HTTP 200 + body 1107 bytes (verified post-deploy). |
 
 > **الوكيل:** حدّث هذا الجدول بعد إنجاز كل مرحلة.
 
