@@ -16,7 +16,7 @@ COPY backend/ ./backend/
 COPY knowledge_base/ ./knowledge_base/
 COPY ops/tools/ ./ops/tools/
 COPY frontend/ ./frontend/
-COPY docs/ ./docs/  # privacy-policy.md is served by /privacy-policy endpoint
+COPY docs/ ./docs/
 
 ENV PROJECT_ROOT=/app \
     PYTHONPATH=/app/backend \
