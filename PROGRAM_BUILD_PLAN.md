@@ -622,6 +622,7 @@ MOBILE_API.md                          ← عقد API (مصدر الحقيقة)
 | 2026-06-08 | Phase R — الأبحاث | ✅ مكتملة | 4 مواضيع × 3 أبحاث في `docs/research/{01..04}/`. هيكلة كاملة: r1=primary, r2=secondary, r3=draft/extra. `.docx` اتحوّلت لـ `.md`. `docs/research/README.md` فيه الفهرس |
 | 2026-06-08 | Phase 0 — مكاسب سريعة | ✅ مكتملة | تنظيف 6 ملفات `.hermes-tmp.*`. `docs/privacy-policy.md` (عربي+EN). `backend/app/routers/privacy.py` يقدّمها على `GET /privacy-policy` (public, no /api prefix). Live test: 200/text-markdown. `check_kb_integrity.py`: 292 units in sync. **Production fixed**: Dockerfile COPY docs/ + remove inline comment; tg-api.alsaba.cloud/privacy-policy → HTTP 200 + body 1107 bytes (verified post-deploy). |
 | 2026-06-08 | Phase 1 — حسم نموذج المحتوى | ✅ مكتملة | `knowledge_base/curriculum/`: 3 schemas (path/lesson/daily_tip) + schema.md. مثال: 1 path × 3 lessons × 7 daily_tips للمرحلة 4-6 (path_4-6_islamic_parenting_bond). All 11 data files validate (0 errors). Cross-ref check: 0 errors, 0 warnings. KB integrity: 292 units unchanged. |
+| 2026-06-08 | Phase 2 — Backend: طبقة المحتوى | ✅ مكتملة | `curriculum_loader.py` + `routers/program.py` بـ 4 endpoints (paths list/detail, lesson detail, daily-tip). DB v4: child_profiles + lesson_progress tables (idempotent). `test_program.py`: 19/19 pass. Full suite: 44/44 green. Endpoints public (read-only). Mutating endpoints (POST progress) deferred per user instruction. |
 
 > **الوكيل:** حدّث هذا الجدول بعد إنجاز كل مرحلة.
 
