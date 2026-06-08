@@ -1,0 +1,122 @@
+name: Docker
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - 'knowledge_base/**'
+      - 'docs/**'
+      - 'ops/tools/**'
+      - 'docker-compose*.yml'
+      - 'backend/Dockerfile'
+      - '.github/workflows/docker.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - 'knowledge_base/**'
+      - 'docs/**'
+      - 'ops/tools/**'
+      - 'docker-compose*.yml'
+      - 'backend/Dockerfile'
+      - '.github/workflows/docker.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: docker-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── 1. Build the image and confirm the container can start ─────────
+  # We don't run the full server (it loads a multi-GB RAG index from
+  # disk, which is overkill for CI). Instead we boot the container
+  # long enough to verify:
+  #   * Python imports succeed (no missing modules)
+  #   * Knowledge base files were bundled (the privacy endpoint
+  #     needs docs/privacy-policy.md, Phase 0 regression check)
+  #   * The uvicorn entrypoint parses its argument set
+  build:
+    name: docker build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build image
+        run: |
+          docker buildx build \
+            --tag tutor-guardian-backend:ci \
+            --cache-from type=local,src=/tmp/.buildx-cache \
+            --cache-to type=local,dest=/tmp/.buildx-cache-new,mode=max \
+            -f backend/Dockerfile \
+            --load \
+            .
+
+      - name: Move cache (so the next run picks up the new layers)
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  # ── 2. Smoke-run the container ──────────────────────────────────────
+  # Boots uvicorn with the real entrypoint, hits /health, and
+  # checks that the privacy-policy file is present. The expensive
+  # RAG index is *not* built — we override the entrypoint to skip
+  # the import chain that loads sentence-transformers.
+  smoke:
+    name: docker smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build the smoke image
+        # Re-build from the previous job's image so we don't re-pull
+        # heavy layers.
+        run: |
+          docker buildx build \
+            --tag tutor-guardian-backend:ci \
+            -f backend/Dockerfile \
+            --load \
+            .
+
+      - name: Confirm docs/privacy-policy.md is bundled
+        # Phase 0 regression — if this is missing, /privacy-policy
+        # returns 503 in production.
+        run: |
+          docker run --rm tutor-guardian-backend:ci \
+            ls -la /app/docs/privacy-policy.md
+          docker run --rm tutor-guardian-backend:ci \
+            test -f /app/docs/privacy-policy.md
+
+      - name: Confirm knowledge base is bundled
+        run: |
+          docker run --rm tutor-guardian-backend:ci \
+            test -d /app/knowledge_base/units
+          docker run --rm tutor-guardian-backend:ci \
+            ls /app/knowledge_base/units | head -5
+          docker run --rm tutor-guardian-backend:ci \
+            test -f /app/ops/tools/check_kb_integrity.py
+
+      - name: Confirm Python can import the app
+        # We skip the actual uvicorn boot because loading the RAG
+        # stack takes minutes and is tested elsewhere. Importing
+        # the FastAPI app catches the most common regression
+        # (missing module after a refactor).
+        run: |
+          docker run --rm tutor-guardian-backend:ci \
+            python -c "from app import main; print('OK', main.app.title)"

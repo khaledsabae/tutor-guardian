@@ -1,0 +1,74 @@
+name: Flutter
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/flutter.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/flutter.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: flutter-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── 1. Static analysis ────────────────────────────────────────────────
+  analyze:
+    name: flutter analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+          channel: stable
+          cache: true
+          cache-key: flutter-pub-${{ hashFiles('mobile/pubspec.lock') }}
+
+      - name: Install dependencies
+        working-directory: mobile
+        run: flutter pub get
+
+      - name: flutter analyze
+        working-directory: mobile
+        # --fatal-infos turns info-level lints into errors. We want
+        # the pipeline to fail on warnings AND on infos so that
+        # noise doesn't accumulate.
+        run: flutter analyze --fatal-infos --fatal-warnings
+
+  # ── 2. Unit + widget tests ────────────────────────────────────────────
+  test:
+    name: flutter test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+          channel: stable
+          cache: true
+          cache-key: flutter-pub-${{ hashFiles('mobile/pubspec.lock') }}
+
+      - name: Install dependencies
+        working-directory: mobile
+        run: flutter pub get
+
+      - name: Run tests
+        working-directory: mobile
+        # --reporter expanded gives a clear pass/fail per test
+        # --coverage enables coverage output for the report job
+        run: flutter test --reporter expanded --coverage
