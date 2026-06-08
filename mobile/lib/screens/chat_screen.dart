@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/enums.dart';
 import '../state/chat_notifier.dart';
+import '../state/connectivity_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/message_bubble.dart';
 
@@ -86,6 +87,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       }
     });
 
+    // Push the latest online/offline status into the notifier so its
+    // `sendMessage` can short-circuit with a friendly Arabic message.
+    final connectivity = ref.watch(connectivityProvider);
+    final isOnline = connectivity.maybeWhen(
+      data: (v) => v,
+      orElse: () => true,
+    );
+    // Update synchronously (the notifier just stores a boolean).
+    notifier.setOnline(isOnline);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('🛡️  المربي الذكي'),
@@ -146,15 +157,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       ),
       body: Column(
         children: [
+          if (!isOnline) const _OfflineBanner(),
           _SettingsBar(state: state, notifier: notifier),
           if (state.errorBanner != null) _ErrorBanner(
             message: state.errorBanner!,
             onRetry: notifier.retryLastTurn,
           ),
           Expanded(
-            child: state.messages.isEmpty
-                ? const _EmptyState()
-                : ListView.builder(
+            child: state.sessionId == null
+                ? const _BootSplash()
+                : state.messages.isEmpty
+                    ? const _EmptyState()
+                    : ListView.builder(
                     controller: _scroll,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     itemCount: state.messages.length,
@@ -308,6 +322,56 @@ class _ErrorBanner extends StatelessWidget {
             icon: const Icon(Icons.refresh, size: 16),
             label: const Text('إعادة المحاولة'),
             style: TextButton.styleFrom(foregroundColor: AppTheme.dangerFg),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BootSplash extends StatelessWidget {
+  const _BootSplash();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircularProgressIndicator(strokeWidth: 2),
+          SizedBox(height: 12),
+          Text(
+            'جاري تهيئة الجلسة…',
+            style: TextStyle(color: AppTheme.textMuted, fontSize: 13),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OfflineBanner extends StatelessWidget {
+  const _OfflineBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: AppTheme.warningBg,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: const Row(
+        children: [
+          Icon(Icons.wifi_off, color: AppTheme.warningFg, size: 18),
+          SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'غير متصل بالإنترنت',
+              style: TextStyle(
+                color: AppTheme.warningFg,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ],
       ),

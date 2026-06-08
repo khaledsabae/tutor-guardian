@@ -221,6 +221,22 @@ class ChatNotifier extends StateNotifier<ChatState> {
 
   // ── Sending a turn ──────────────────────────────────────────────────
 
+  /// Returns true if the device is currently online. The chat screen
+  /// uses this to short-circuit `sendMessage` and surface a friendlier
+  /// "غير متصل" banner instead of letting the HTTP layer fail.
+  bool isOnline() {
+    // We can't await a stream from inside the notifier synchronously,
+    // so callers pass the latest value in via [setOnline]. If no value
+    // has been seeded yet, default to true (the user just opened the
+    // app — let the request try).
+    return _isOnline ?? true;
+  }
+
+  bool? _isOnline;
+  void setOnline(bool value) {
+    _isOnline = value;
+  }
+
   /// Append the user's message and kick off streaming.
   Future<void> sendMessage(String text) async {
     final trimmed = text.trim();
@@ -228,6 +244,16 @@ class ChatNotifier extends StateNotifier<ChatState> {
     if (state.phase == ChatPhase.waiting ||
         state.phase == ChatPhase.streaming) {
       return; // ignore taps while a turn is in flight
+    }
+
+    // Short-circuit if the device is offline — better UX than waiting
+    // for a TCP timeout. (Phase 5: offline handling.)
+    if (!isOnline()) {
+      state = state.copyWith(
+        phase: ChatPhase.error,
+        errorBanner: 'غير متصل بالإنترنت. تحقّق من الاتصال وأعد المحاولة.',
+      );
+      return;
     }
 
     // Append user bubble immediately.

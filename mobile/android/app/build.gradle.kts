@@ -4,6 +4,19 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+import java.util.Properties
+
+// Read the local signing config if it exists. We never commit key.properties
+// (see android/.gitignore + repo .gitignore), so on a fresh clone the
+// `release` build falls back to the debug keystore — which is fine for
+// local smoke testing, but **production Play Store uploads MUST use the
+// real keystore**. Run `flutter build appbundle --release` after creating
+// android/app/key.properties + android/app/almorabbi-upload.jks.
+val keystoreProperties: Properties = Properties().apply {
+    val f = rootProject.file("app/key.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+
 android {
     namespace = "com.alsaba.almorabbi"
     compileSdk = flutter.compileSdkVersion
@@ -25,11 +38,32 @@ android {
         versionName = flutter.versionName
     }
 
+    // Production signing — only applies when app/key.properties exists.
+    signingConfigs {
+        create("release") {
+            if (keystoreProperties.getProperty("storeFile") != null) {
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Use the real upload keystore if key.properties is present;
+            // otherwise fall back to the debug key (still works for
+            // `flutter build appbundle --release` on a fresh machine).
+            signingConfig = if (keystoreProperties.getProperty("storeFile") != null) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
+            // Strip unused ABIs / split per ABI for smaller artefacts.
+            // (Re-enable if you want a fat AAB; not needed for Play.)
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }
