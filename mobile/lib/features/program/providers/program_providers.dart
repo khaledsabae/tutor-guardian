@@ -26,6 +26,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../api/tg_client.dart';
+import '../../../state/chat_notifier.dart';
 import '../data/models.dart';
 import '../data/program_repository.dart';
 
@@ -65,7 +66,6 @@ class PathsListNotifier
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() {
       final repo = ref.read(programRepositoryProvider);
-      final arg = arg;
       return repo.listPaths(ageGroup: arg.ageGroup, domain: arg.domain);
     });
   }
@@ -136,7 +136,6 @@ class DailyTipNotifier
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() {
       final repo = ref.read(programRepositoryProvider);
-      final arg = arg;
       return repo.getDailyTip(ageGroup: arg.ageGroup, timeOfDay: arg.timeOfDay);
     });
   }

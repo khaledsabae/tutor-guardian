@@ -36,7 +36,7 @@ class ActiveChildChip extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                profile?.avatarEmoji ?? '👶',
+                '👶',
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(width: 5),

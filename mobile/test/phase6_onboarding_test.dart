@@ -16,6 +16,7 @@ import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/features/onboarding/screens/avatar_picker_sheet.dart';
 import 'package:almorabbi/features/onboarding/screens/onboarding_screen.dart';
+import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
 import 'package:almorabbi/features/program/widgets/daily_tip_card.dart';
 import 'package:almorabbi/state/chat_notifier.dart';

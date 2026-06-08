@@ -14,6 +14,8 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../state/chat_notifier.dart';
+import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/progress_models.dart';
 import '../data/settings_repository.dart';
 import 'progress_providers.dart';

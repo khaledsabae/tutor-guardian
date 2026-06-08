@@ -143,9 +143,10 @@ class _Body extends ConsumerWidget {
             _LessonTile(
               lesson: lesson,
               status: asyncProgress?.maybeWhen(
-                data: (m) => m.statusFor(lesson.id),
-                orElse: () => ProgressStatus.notStarted,
-              ),
+                    data: (m) => m.statusFor(lesson.id),
+                    orElse: () => ProgressStatus.notStarted,
+                  ) ??
+                  ProgressStatus.notStarted,
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(

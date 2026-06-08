@@ -16,7 +16,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'data/onboarding_storage.dart';
+import '../data/onboarding_storage.dart';
 
 /// Async-loaded once at app start. All other providers wait on this
 /// via `ref.watch`.

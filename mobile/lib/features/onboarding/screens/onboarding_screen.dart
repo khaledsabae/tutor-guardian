@@ -197,7 +197,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   children: AgeGroup.values
                       .where((a) => a != AgeGroup.unspecified)
                       .map((a) => _AgeChip(
-                            label: a.arabicLabel,
+                            label: a.label,
                             selected: _ageGroup == a.wire,
                             onTap: () => setState(() => _ageGroup = a.wire),
                           ))

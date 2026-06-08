@@ -143,7 +143,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
                 children: AgeGroup.values
                     .where((a) => a != AgeGroup.unspecified)
                     .map((a) => ChoiceChip(
-                          label: Text(a.arabicLabel),
+                          label: Text(a.label),
                           selected: _ageGroup == a.wire,
                           selectedColor: AppTheme.primary,
                           labelStyle: TextStyle(

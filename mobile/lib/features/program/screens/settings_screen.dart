@@ -12,7 +12,8 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart' show launchUrl;
+import 'package:url_launcher/url_launcher.dart'
+    show launchUrl, canLaunchUrl, LaunchMode;
 
 import '../../../config/app_config.dart';
 import '../../../theme/app_theme.dart';

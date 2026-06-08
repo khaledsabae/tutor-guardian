@@ -13,23 +13,25 @@
 ///       │                                key: childId — re-fetches on
 ///       │                                invalidation after a PATCH)
 ///       │
-│       ├──► pathProgressMapProvider     (derived — exposes a Map<lessonId,
-│       │                                ProgressStatus> for the current
-│       │                                child, optionally filtered by path)
-│       │
-│       └──► markLessonProgressProvider  (AsyncNotifier — PATCH + invalidate
-│                                        childProgressProvider on success)
+///       ├──► pathProgressMapProvider     (derived — exposes a Map<lessonId,
+///       │                                ProgressStatus> for the current
+///       │                                child, optionally filtered by path)
+///       │
+///       └──► markLessonProgressProvider  (AsyncNotifier — PATCH + invalidate
+///                                        childProgressProvider on success)
 ///
 /// The `activeChildId` lives in-memory for now (Phase 5+ persists it).
 library;
 
 import 'package:flutter/foundation.dart' show visibleForTesting;
-import 'package:flutter/widgets.dart' show WidgetRef;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../api/tg_client.dart';
+import '../../../state/chat_notifier.dart';
+import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/progress_models.dart';
 import '../data/progress_repository.dart';
+import 'program_providers.dart';
 
 final progressRepositoryProvider = Provider<ProgressRepository>((ref) {
   final client = ref.watch(tgClientProvider);
@@ -198,11 +200,11 @@ class CreateChildNotifier
 /// Used by both CreateChild (POST) and SwitchActiveChild (local-only).
 @visibleForTesting
 Future<void> setActiveChildAndPersist(
-    WidgetRef ref, ChildProfile child) async {
+    Ref ref, ChildProfile child) async {
   await _setActiveAndPersist(ref, child);
 }
 
-Future<void> _setActiveAndPersist(WidgetRef ref, ChildProfile child) async {
+Future<void> _setActiveAndPersist(Ref ref, ChildProfile child) async {
   final storage = ref.read(onboardingStorageProvider);
   await storage.setActiveChild(
     id: child.id,

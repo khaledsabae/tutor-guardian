@@ -19,7 +19,7 @@ library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../onboarding/providers/onboarding_providers.dart';
-import 'data/reflection_storage.dart';
+import '../data/reflection_storage.dart';
 
 final reflectionStorageProvider = Provider<ReflectionStorage>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider).requireValue;

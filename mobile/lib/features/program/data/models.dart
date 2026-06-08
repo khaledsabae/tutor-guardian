@@ -9,7 +9,7 @@
 /// fields"). Numbers and durations are decoded conservatively.
 library;
 
-import '../../models/enums.dart';
+import '../../../models/enums.dart';
 
 /// A "journey" — 3-10 lessons over 1-30 days for a specific age+domain.
 class CurriculumPath {
@@ -70,7 +70,7 @@ class CurriculumPath {
   /// for the canonical enums; falls back to the raw wire value).
   String get ageLabel {
     final ag = AgeGroup.fromWire(ageGroup);
-    return ag == AgeGroup.unspecified ? ageGroup : ag.arabicLabel;
+    return ag == AgeGroup.unspecified ? ageGroup : ag.label;
   }
 
   /// Human-readable domain label.
