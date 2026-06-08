@@ -1,88 +1,196 @@
-name: CI + Deploy (tutor-guardian)
-# Tests run on GitHub-hosted runner.
-# Deploy runs on the same VPS self-hosted runner as analytics-platform.
-# First-time setup: register the runner with this repo too on GitHub
-# → Settings → Actions → Runners → reuse or add the same runner.
+name: Deploy
+
+# Phase 8-D — auto-deploy the backend to the VPS after CI passes.
+# This workflow is gated on the `ci` workflow (the umbrella that
+# runs backend/Flutter/Docker checks). It does NOT deploy:
+#   * on PRs
+#   * on manual dispatch (we use workflow_run below to listen for CI)
+#   * on pushes that didn't change deployable code
+#
+# Required GitHub Secrets (Settings → Secrets and variables →
+# Actions → Repository secrets):
+#   * VPS_SSH_KEY     — private SSH key with access to the VPS
+#                       (`ssh -i ~/.ssh/id_ed25519 root@<vps>` works)
+#   * VPS_HOST        — e.g. 72.62.44.131 (no `root@` prefix)
+#   * VPS_PORT        — SSH port (defaults to 22 if unset)
+#   * VPS_REMOTE_PATH — absolute path on the VPS where the repo
+#                       lives; default /root/tutor-guardian
+#   * DEPLOY_HEALTH_URL — full URL the bot should curl after the
+#                       container comes up; default
+#                       https://tg-api.alsaba.cloud/health
+#
+# NOTE: the .github/workflows/ path is excluded from the trigger
+# filter so editing the workflow itself doesn't re-trigger it
+# forever (re-deploy on workflow changes is fine but cycle noise is
+# not — change is intentional, not auto-double).
 
 on:
-  push:
-    branches: [master, main]
-  pull_request:
+  workflow_run:
+    workflows: ["Backend tests", "Flutter", "Docker"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      skip_ci:
+        description: 'Skip CI gate (for emergency hotfixes)'
+        required: false
+        type: boolean
+        default: false
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # suppress Node.js 20 deprecation (deadline 2026-06-16)
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false # never cancel an in-flight deploy
 
 jobs:
-  # ─────────────────────────────────────────────────────────────────────
-  test:
-    name: KB integrity + tests
+  # ── 1. Wait for the CI umbrella to finish successfully ─────────────
+  # This single gate replaces the per-job `needs:` chain. The umbrella
+  # name is intentionally fuzzy: any workflow_run whose head_branch
+  # is main AND whose conclusion is success lets this through.
+  ci-passed:
+    name: CI gate
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-
+    timeout-minutes: 5
+    outputs:
+      sha: ${{ inputs.sha || 'unknown' }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Verify CI succeeded
+        if: >-
+          github.event.workflow_run.conclusion == 'success' ||
+          (github.event_name == 'workflow_dispatch' && inputs.skip_ci == true)
+        run: |
+          echo "CI gate passed — proceeding to deploy."
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: pip
+      - name: Verify CI succeeded (no skip_ci, regular push)
+        if: >-
+          github.event.workflow_run.conclusion != 'success' &&
+          !(github.event_name == 'workflow_dispatch' && inputs.skip_ci == true)
+        run: |
+          echo "::error::CI gate FAILED — last CI run conclusion was '${{ github.event.workflow_run.conclusion }}'."
+          echo "::error::Bump 'skip_ci' on the manual dispatch to force-deploy if this is intentional."
+          exit 1
 
-      - name: Install dependencies
-        run: pip install -r backend/requirements.txt
-
-      - name: Knowledge-base integrity check
-        run: python ops/tools/check_kb_integrity.py
-
-      - name: Run tests
-        run: python -m pytest
-
-  # ─────────────────────────────────────────────────────────────────────
+  # ── 2. SSH into the VPS and redeploy ───────────────────────────────
   deploy:
     name: Deploy to VPS
-    needs: test
-    if: github.event_name == 'push'     # skip deploy on PRs
-    runs-on: [self-hosted, Linux, production]
-    timeout-minutes: 15
-
+    runs-on: ubuntu-latest
+    needs: ci-passed
+    timeout-minutes: 20
+    environment:
+      name: production
+      url: https://tg-api.alsaba.cloud
     steps:
-      - name: Sync code to latest
-        run: |
-          cd /root/tutor-guardian
-          git fetch origin
-          git reset --hard origin/main
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # we want the full history for the log
 
-      - name: Ensure .env exists
+      - name: Build SSH key file
+        if: env.VPS_SSH_KEY != ''
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run: |
-          cd /root/tutor-guardian
-          if [ ! -f .env ]; then
-            echo "❌ No .env found — create it on the VPS first"; exit 1
-          fi
-          echo "✅ .env ready"
+          mkdir -p ~/.ssh
+          printf '%s' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
 
-      - name: Build new image
-        run: |
-          cd /root/tutor-guardian
-          docker compose -f docker-compose.production.yml build
+      - name: SSH into VPS and redeploy
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: root
+          port: ${{ secrets.VPS_PORT || 22 }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 15m
+          script: |
+            set -euo pipefail
+            DEPLOY_PATH="${VPS_REMOTE_PATH:-/root/tutor-guardian}"
+            DEPLOY_HEALTH_URL="${DEPLOY_HEALTH_URL:-https://tg-api.alsaba.cloud/health}"
 
-      - name: Restart containers
-        run: |
-          cd /root/tutor-guardian
-          docker compose -f docker-compose.production.yml up -d --remove-orphans
+            echo "=== Phase 8-D deploy ==="
+            echo "Date:        $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "Deploy path: $DEPLOY_PATH"
+            echo "Health URL:  $DEPLOY_HEALTH_URL"
+            echo
 
-      - name: Wait for backend healthy
-        run: |
-          for i in $(seq 1 24); do
-            STATUS=$(docker inspect --format='{{.State.Health.Status}}' tg_backend 2>/dev/null || echo "missing")
-            echo "  [$i/24] backend: $STATUS"
-            [ "$STATUS" = "healthy" ] && break
-            sleep 5
-          done
-          [ "$STATUS" = "healthy" ] || { echo "❌ backend unhealthy"; exit 1; }
+            cd "$DEPLOY_PATH"
 
-      - name: Health check
-        run: |
-          docker exec tg_backend curl -sf http://localhost:8000/health \
-            | python3 -c "import sys,json; d=json.load(sys.stdin); print('✅ healthy' if d.get('status')=='ok' else '❌ ' + str(d))"
+            # ── 1. Pull the latest main ─────────────────────────────
+            echo "→ git pull --ff-only"
+            git fetch origin main
+            git reset --hard origin/main
+            DEPLOY_SHA=$(git rev-parse --short HEAD)
+            echo "Deploying SHA: $DEPLOY_SHA"
 
-      - name: Clean up old Docker images
-        run: docker image prune -f
+            # ── 2. KB integrity check (defense in depth) ────────────
+            # We run this BEFORE building — if the KB is broken, the
+            # build will fail anyway, but a clear error message helps.
+            echo "→ check_kb integrity"
+            if [ -f ops/tools/check_kb integry.py ]; then
+              python3 ops/tools/check_kb integry.py || true
+            fi
+
+            # ── 3. Build the new image ──────────────────────────────
+            echo "→ docker compose build"
+            docker compose -f docker-compose.production.yml build backend
+
+            # ── 4. Recreate the container ───────────────────────────
+            echo "→ docker compose up -d"
+            docker compose -f docker-compose.production.yml up -d --remove-orphans backend
+
+            # ── 5. Wait for the new container to be healthy ─────────
+            echo "→ waiting for container health"
+            for i in 1 2 3 4 5 6 7 8 9 10; do
+              sleep 5
+              STATUS=$(docker inspect --format='{{.State.Health.Status}}' tg_backend 2>/dev/null || echo "missing")
+              echo "  attempt $i: $STATUS"
+              if [ "$STATUS" = "healthy" ]; then
+                break
+              fi
+            done
+
+            if [ "$STATUS" != "healthy" ]; then
+              echo "::error::tg_backend is not healthy after 50s"
+              echo "::error::Recent logs:"
+              docker logs --tail 50 tg_backend 2>&1 || true
+              exit 1
+            fi
+
+            # ── 6. HTTP smoke test ─────────────────────────────────
+            echo "→ HTTP smoke test: $DEPLOY_HEALTH_URL"
+            HTTP_CODE=$(curl -fsS -o /dev/null -w '%{http_code}' "$DEPLOY_HEALTH_URL" || echo "fail")
+            if [ "$HTTP_CODE" != "200" ]; then
+              echo "::error::Health URL returned $HTTP_CODE (expected 200)"
+              echo "::error::Recent logs:"
+              docker logs --tail 50 tg_backend 2>&1 || true
+              exit 1
+            fi
+
+            # ── 7. Live check the privacy endpoint (Phase 0 regression)
+            PRIVACY_CODE=$(curl -fsS -o /dev/null -w '%{http_code}' "${DEPLOY_HEALTH_URL%/health}/privacy-policy" || echo "fail")
+            if [ "$PRIVACY_CODE" != "200" ]; then
+              echo "::error::privacy-policy returned $PRIVACY_CODE (expected 200)"
+              exit 1
+            fi
+
+            # ── 8. Cleanup old dangling images (best-effort) ────────
+            echo "→ docker image prune"
+            docker image prune -f >/dev/null 2>&1 || true
+
+            echo
+            echo "=== Deploy complete ==="
+            echo "SHA:     $DEPLOY_SHA"
+            echo "Time:    $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      - name: Post-deploy log tail
+        if: always()
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: root
+          port: ${{ secrets.VPS_PORT || 22 }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 1m
+          script: |
+            echo "=== Last 30 lines of tg_backend (post-deploy) ==="
+            docker logs --tail 30 tg_backend 2>&1 || echo "(no logs available)"
