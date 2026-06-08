@@ -358,6 +358,84 @@ class TgClient {
   /// Drop the current session (used by the "start a new conversation" button).
   Future<void> endSession() => _auth.clearSession();
 
+  // ── Curriculum program layer (Phase 4) ────────────────────────────────
+  //
+  // Read-only endpoints mounted under `/api/program/*`. Public per the
+  // backend auth middleware (no Bearer required for v1).
+  //
+  //   GET /api/program/paths?age_group=&domain=
+  //   GET /api/program/paths/{id}?include=lessons
+  //   GET /api/program/lessons/{id}
+  //   GET /api/program/daily-tip?age_group=&time_of_day=
+  //
+  // The repository layer is the only consumer of these; tests should
+  // mock [TgClient] rather than call them directly.
+
+  Future<Map<String, dynamic>> getPathsList({
+    String? ageGroup,
+    String? domain,
+  }) async {
+    final qs = <String, String>{};
+    if (ageGroup != null && ageGroup.isNotEmpty) qs['age_group'] = ageGroup;
+    if (domain != null && domain.isNotEmpty) qs['domain'] = domain;
+    final uri = Uri.parse(
+      '$_baseUrl/api/program/paths',
+    ).replace(queryParameters: qs.isEmpty ? null : qs);
+    final resp = await _http
+        .get(uri, headers: const {'Accept': 'application/json'})
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getPathDetail(
+    String pathId, {
+    bool includeLessons = false,
+  }) async {
+    final qs = includeLessons ? {'include': 'lessons'} : const <String, String>{};
+    final uri = Uri.parse(
+      '$_baseUrl/api/program/paths/$pathId',
+    ).replace(queryParameters: qs.isEmpty ? null : qs);
+    final resp = await _http
+        .get(uri, headers: const {'Accept': 'application/json'})
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getLesson(String lessonId) async {
+    final uri = Uri.parse('$_baseUrl/api/program/lessons/$lessonId');
+    final resp = await _http
+        .get(uri, headers: const {'Accept': 'application/json'})
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getDailyTip({
+    required String ageGroup,
+    String? timeOfDay,
+  }) async {
+    final qs = <String, String>{'age_group': ageGroup};
+    if (timeOfDay != null && timeOfDay.isNotEmpty) qs['time_of_day'] = timeOfDay;
+    final uri = Uri.parse(
+      '$_baseUrl/api/program/daily-tip',
+    ).replace(queryParameters: qs);
+    final resp = await _http
+        .get(uri, headers: const {'Accept': 'application/json'})
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   // ── Internals ────────────────────────────────────────────────────────
 
   Map<String, String> _authHeaders(String token) => {

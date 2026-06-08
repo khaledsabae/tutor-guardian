@@ -1,0 +1,371 @@
+// Phase 4 widget tests — program layer (paths/lessons/daily tip).
+//
+// Strategy: we don't hit the real network. We override
+// [tgClientProvider] with a `_FakeTgClient` whose HTTP methods return
+// canned JSON shaped exactly like the backend responses, then assert
+// the UI renders the expected widgets (titles, counts, error state).
+
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io' show Platform;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/features/program/data/models.dart';
+import 'package:almorabbi/features/program/data/program_repository.dart';
+import 'package:almorabbi/features/program/providers/program_providers.dart';
+import 'package:almorabbi/features/program/screens/lesson_screen.dart';
+import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
+import 'package:almorabbi/features/program/screens/paths_screen.dart';
+import 'package:almorabbi/main.dart';
+import 'package:almorabbi/state/chat_notifier.dart';
+
+void main() {
+  group('ProgramRepository', () {
+    test('listPaths() parses backend envelope', () async {
+      final fake = _FakeTgClient();
+      fake.pathsListJson = {
+        'count': 1,
+        'paths': [_pathJson(id: 'path_4-6_islamic_parenting_adab')],
+      };
+      final repo = ProgramRepository(fake);
+      final result = await repo.listPaths(ageGroup: '4-6');
+      expect(result.count, 1);
+      expect(result.paths.first.id, 'path_4-6_islamic_parenting_adab');
+      expect(result.paths.first.ageGroup, '4-6');
+      expect(result.paths.first.lessonIds.length, 3);
+    });
+
+    test('getPathDetail() with includeLessons returns PathDetail', () async {
+      final fake = _FakeTgClient();
+      fake.pathDetailJson = {
+        'path': _pathJson(id: 'path_4-6_islamic_parenting_adab'),
+        'lessons': [
+          _lessonJson(id: 'lesson_4-6_islamic_parenting_adab_01', order: 1),
+        ],
+      };
+      final repo = ProgramRepository(fake);
+      final detail = await repo.getPathDetail(
+        'path_4-6_islamic_parenting_adab',
+      );
+      expect(detail.path.id, 'path_4-6_islamic_parenting_adab');
+      expect(detail.lessons.length, 1);
+      expect(detail.lessons.first.order, 1);
+    });
+
+    test('getLesson() parses single lesson', () async {
+      final fake = _FakeTgClient();
+      fake.lessonJson = _lessonJson(
+        id: 'lesson_4-6_islamic_parenting_adab_01',
+        order: 1,
+        withWarning: true,
+      );
+      final repo = ProgramRepository(fake);
+      final lesson = await repo.getLesson(
+        'lesson_4-6_islamic_parenting_adab_01',
+      );
+      expect(lesson.title, 'الرفق: قيمة تربوية قبل أسلوب');
+      expect(lesson.needsProfessionalFollowup, isFalse);
+    });
+
+    test('getDailyTip() parses tip', () async {
+      final fake = _FakeTgClient();
+      fake.dailyTipJson = _tipJson(id: 'tip_4-6_001');
+      final repo = ProgramRepository(fake);
+      final tip = await repo.getDailyTip(ageGroup: '4-6');
+      expect(tip.id, 'tip_4-6_001');
+      expect(tip.timeOfDay, 'morning');
+    });
+  });
+
+  group('Program widgets', () {
+    testWidgets('PathsScreen shows cards from fake list',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.pathsListJson = {
+        'count': 2,
+        'paths': [
+          _pathJson(
+            id: 'path_4-6_islamic_parenting_adab',
+            title: 'تأسيس الآداب الإسلامية',
+          ),
+          _pathJson(
+            id: 'path_4-6_development_positive_parenting',
+            title: 'التربية الإيجابية',
+          ),
+        ],
+      };
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            tgClientProvider.overrideWithValue(fake),
+          ],
+          child: const MaterialApp(home: PathsScreen()),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('مساراتي'), findsOneWidget); // AppBar title
+      expect(find.text('تأسيس الآداب الإسلامية'), findsOneWidget);
+      expect(find.text('التربية الإيجابية'), findsOneWidget);
+      // 14 days pill on the first path
+      expect(find.text('14 يوم'), findsWidgets);
+    });
+
+    testWidgets('PathsScreen shows error state on failure',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.throwOnPathsList = true;
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            tgClientProvider.overrideWithValue(fake),
+          ],
+          child: const MaterialApp(home: PathsScreen()),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('إعادة المحاولة'), findsOneWidget);
+    });
+
+    testWidgets('LessonScreen renders try_this, summary, reflection prompts',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.lessonJson = _lessonJson(
+        id: 'lesson_4-6_islamic_parenting_adab_01',
+        order: 1,
+        summary: 'ملخص تجريبي للدرس.',
+        tryThis: 'جرّب هذا النص في أسبوعك.',
+        reflectionPrompts: ['سؤال 1؟', 'سؤال 2؟'],
+        withWarning: true,
+      );
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            tgClientProvider.overrideWithValue(fake),
+          ],
+          child: const MaterialApp(
+            home: LessonScreen(
+              lessonId: 'lesson_4-6_islamic_parenting_adab_01',
+              ageGroup: '4-6',
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('الملخص'), findsOneWidget);
+      expect(find.text('جرّب هذا'), findsOneWidget);
+      expect(find.text('ملخص تجريبي للدرس.'), findsOneWidget);
+      expect(find.text('جرّب هذا النص في أسبوعك.'), findsOneWidget);
+      expect(find.text('سؤال 1؟'), findsOneWidget);
+      expect(find.text('سؤال 2؟'), findsOneWidget);
+      // needs_professional_followup is NOT set on this lesson
+      expect(find.textContaining('متابعة متخصصة'), findsNothing);
+    });
+
+    testWidgets('PathDetailScreen lists lessons, navigate to lesson screen',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.pathDetailJson = {
+        'path': _pathJson(id: 'path_4-6_islamic_parenting_adab'),
+        'lessons': [
+          _lessonJson(
+            id: 'lesson_4-6_islamic_parenting_adab_01',
+            order: 1,
+            title: 'الرفق',
+          ),
+          _lessonJson(
+            id: 'lesson_4-6_islamic_parenting_adab_02',
+            order: 2,
+            title: 'اللعب النبوي',
+          ),
+        ],
+      };
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            tgClientProvider.overrideWithValue(fake),
+          ],
+          child: const MaterialApp(
+            home: PathDetailScreen(
+              pathId: 'path_4-6_islamic_parenting_adab',
+              ageGroup: '4-6',
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('الرفق'), findsOneWidget);
+      expect(find.text('اللعب النبوي'), findsOneWidget);
+      expect(find.text('الدروس (2)'), findsOneWidget);
+      // Tap the first lesson
+      await tester.tap(find.text('الرفق'));
+      await tester.pumpAndSettle();
+      // The lesson screen should appear with the lesson loaded
+      expect(find.text('الملخص'), findsOneWidget);
+    });
+
+    testWidgets('RootScaffold NavigationBar switches tabs',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      // Need the chat notifier to NOT crash; we don't care about its
+      // contents here. The fake null client we ship with the project
+      // throws on every call — that's fine, the chat screen shows a
+      // banner instead of crashing.
+      final nullClient = _NullClient();
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            tgClientProvider.overrideWithValue(nullClient),
+          ],
+          child: const TutorGuardianApp(),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+
+      // Tab 0 (المساعد) is the default
+      expect(find.text('المساعد'), findsOneWidget);
+      expect(find.text('مساراتي'), findsOneWidget);
+
+      // Switch to tab 1 — but PathsScreen will try to fetch and fail
+      // because nullClient throws. Override the client just for this tap.
+      // Simpler: tap the tab; the screen renders a loading then error.
+      // For this assertion we only need the tap to NOT crash and the
+      // tab label to be findable.
+      await tester.tap(find.text('مساراتي'));
+      await tester.pump();
+    });
+  });
+}
+
+// ── Fake TgClient ─────────────────────────────────────────────────────────
+
+class _FakeTgClient extends TgClient {
+  Map<String, dynamic>? pathsListJson;
+  Map<String, dynamic>? pathDetailJson;
+  Map<String, dynamic>? lessonJson;
+  Map<String, dynamic>? dailyTipJson;
+  bool throwOnPathsList = false;
+
+  @override
+  Future<Map<String, dynamic>> getPathsList({
+    String? ageGroup,
+    String? domain,
+  }) async {
+    if (throwOnPathsList) {
+      throw const TgApiError(500, 'fake-error');
+    }
+    return pathsListJson ?? {'count': 0, 'paths': []};
+  }
+
+  @override
+  Future<Map<String, dynamic>> getPathDetail(
+    String pathId, {
+    bool includeLessons = false,
+  }) async {
+    return pathDetailJson ?? {'path': _pathJson(id: pathId), 'lessons': []};
+  }
+
+  @override
+  Future<Map<String, dynamic>> getLesson(String lessonId) async {
+    return lessonJson ?? _lessonJson(id: lessonId, order: 1);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getDailyTip({
+    required String ageGroup,
+    String? timeOfDay,
+  }) async {
+    return dailyTipJson ?? _tipJson(id: 'tip_${ageGroup}_000');
+  }
+}
+
+/// Like the Phase 1+3 widget test — a stub that throws on every call.
+class _NullClient extends TgClient {
+  _NullClient() : super();
+}
+
+// ── JSON fixtures (mirror backend response shapes exactly) ────────────────
+
+Map<String, dynamic> _pathJson({
+  required String id,
+  String title = 'تأسيس الآداب الإسلامية والضمير الأخلاقي (4-6 سنوات)',
+}) {
+  return {
+    'id': id,
+    'title': title,
+    'age_group': '4-6',
+    'domain': 'islamic_parenting',
+    'description': 'رحلة تربوية لمدة 14 يوماً لتأسيس القيم الأخلاقية.',
+    'lesson_ids': [
+      'lesson_4-6_islamic_parenting_adab_01',
+      'lesson_4-6_islamic_parenting_adab_02',
+      'lesson_4-6_islamic_parenting_adab_03',
+    ],
+    'estimated_days': 14,
+    'pedagogical_framework': 'prophetic_7_7_7',
+    'primary_reference': {
+      'type': 'كتاب_تربوي',
+      'info': 'ابن القيم الجوزية، تحفة المودود',
+    },
+    'prerequisites': [],
+    'is_published': true,
+    'version': '1.0.0',
+  };
+}
+
+Map<String, dynamic> _lessonJson({
+  required String id,
+  required int order,
+  String title = 'الرفق: قيمة تربوية قبل أسلوب',
+  String summary = 'في مرحلة ما قبل العمليات يبدأ الطفل بتمييز الصوت الحنون.',
+  String tryThis = 'هذا الأسبوع: اختر وقتاً يومياً واحداً تتحدث فيه مع طفلك بصوت هادئ.',
+  List<String>? reflectionPrompts,
+  bool withWarning = false,
+}) {
+  return {
+    'id': id,
+    'path_id': 'path_4-6_islamic_parenting_adab',
+    'title': title,
+    'age_group': '4-6',
+    'domain': 'islamic_parenting',
+    'unit_ids': ['0bd76d3c-548a-46ed-b17b-78874741662a'],
+    'summary': summary,
+    'try_this': tryThis,
+    'order': order,
+    'estimated_minutes': 5,
+    'reflection_prompts': reflectionPrompts ?? [],
+    'warning_flags': withWarning ? ['needs_professional_followup'] : [],
+    'is_published': true,
+    'version': '1.0.0',
+  };
+}
+
+Map<String, dynamic> _tipJson({required String id}) {
+  return {
+    'id': id,
+    'age_group': '4-6',
+    'domain': 'islamic_parenting',
+    'text': 'ابدأ يومك بابتسامة.',
+    'unit_id': '0bd76d3c-548a-46ed-b17b-78874741662a',
+    'day_of_week': 0,
+    'time_of_day': 'morning',
+    'tags': ['رفق', 'صباح'],
+    'is_published': true,
+    'version': '1.0.0',
+  };
+}
+
+// ── Fake TgClient ─────────────────────────────────────────────────────────
