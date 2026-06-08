@@ -14,6 +14,7 @@ import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
 import '../data/models.dart';
 import '../providers/program_providers.dart';
+import '../widgets/active_child_chip.dart';
 import 'path_detail_screen.dart';
 import 'settings_screen.dart';
 
@@ -30,6 +31,11 @@ class PathsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('مساراتي'),
         actions: [
+          // Phase 8-B — active child chip (tap to switch).
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+            child: Center(child: ActiveChildChip()),
+          ),
           // Phase 7 — settings is a push route, not a tab.
           IconButton(
             tooltip: 'الإعدادات',

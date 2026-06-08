@@ -19,6 +19,7 @@ import '../../../theme/app_theme.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
+import 'children_list_screen.dart';
 import 'edit_child_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -54,6 +55,21 @@ class SettingsScreen extends ConsumerWidget {
               children: [
                 _ChildHeader(child: activeChild),
                 const SizedBox(height: 24),
+                _SettingsRow(
+                  icon: Icons.swap_horiz,
+                  title: 'تبديل الطفل النشط',
+                  subtitle: 'لديك ${envelope.count} من أصل ${ChildrenListScreen.kMaxChildren} أطفال',
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const ChildrenListScreen(),
+                      ),
+                    );
+                    if (context.mounted) {
+                      ref.invalidate(childrenListProvider);
+                    }
+                  },
+                ),
                 _SettingsRow(
                   icon: Icons.edit_outlined,
                   title: 'تعديل معلومات الطفل',
