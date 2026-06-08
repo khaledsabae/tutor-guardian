@@ -1,7 +1,7 @@
 # Tutor Guardian — local-first stack (backend + Ollama).
 # First run, pull the model once:
 #   docker compose up -d ollama
-#   docker compose exec ollama ollama pull qwen2.5:3b
+#   docker compose exec ollama ollama pull gemma4:e4b-it-qat
 #   docker compose up -d backend
 #
 # API:  http://localhost:8000  ·  test client: http://localhost:8000/ui/
@@ -31,7 +31,7 @@ services:
       - ollama
     environment:
       OLLAMA_BASE_URL: http://ollama:11434
-      OLLAMA_PRIMARY_MODEL: ${OLLAMA_PRIMARY_MODEL:-gemma4:e4b}
+      OLLAMA_PRIMARY_MODEL: ${OLLAMA_PRIMARY_MODEL:-gemma4:e4b-it-qat}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
       RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-30}
     ports:
