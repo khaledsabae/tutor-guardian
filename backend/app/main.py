@@ -16,7 +16,7 @@ from app.config.guardrails_loader import load_guardrails_config
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
-from app.routers import health, assistant, chat, feedback
+from app.routers import health, assistant, chat, feedback, privacy
 
 logger = logging.getLogger(__name__)
 
@@ -101,6 +101,7 @@ app.include_router(health.router)
 app.include_router(assistant.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
 app.include_router(feedback.router, prefix="/api")
+app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
 
 if FRONTEND_DIR.is_dir():
     app.mount("/ui", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="static")
