@@ -2,7 +2,10 @@
 /// list of lessons, then a "start" or "resume" button.
 ///
 /// Reads [pathDetailProvider] (with `?include=lessons`). Each lesson
-/// is rendered as a card that navigates to [LessonScreen].
+/// is rendered as a card that navigates to [LessonScreen]. Phase 5
+/// added a [LinearProgressIndicator] that reflects the active child's
+/// completion ratio on this path (consumed via
+/// [pathProgressMapProvider]).
 library;
 
 import 'package:flutter/material.dart';
@@ -10,7 +13,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
 import '../data/models.dart';
+import '../data/progress_models.dart';
 import '../providers/program_providers.dart';
+import '../providers/progress_providers.dart';
 import 'lesson_screen.dart';
 
 class PathDetailScreen extends ConsumerWidget {
@@ -40,7 +45,11 @@ class PathDetailScreen extends ConsumerWidget {
         ),
       ),
       body: asyncDetail.when(
-        data: (detail) => _Body(detail: detail, ageGroup: ageGroup),
+        data: (detail) => _Body(
+          detail: detail,
+          ageGroup: ageGroup,
+          childId: ref.watch(activeChildIdProvider),
+        ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(
           child: Padding(
@@ -68,18 +77,39 @@ class PathDetailScreen extends ConsumerWidget {
   }
 }
 
-class _Body extends StatelessWidget {
-  const _Body({required this.detail, required this.ageGroup});
+class _Body extends ConsumerWidget {
+  const _Body({
+    required this.detail,
+    required this.ageGroup,
+    required this.childId,
+  });
   final PathDetail detail;
   final String ageGroup;
+  final int? childId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final path = detail.path;
+    final total = detail.lessons.length;
+    // Drive the progress map from the active child.
+    final progressArgs = childId == null
+        ? null
+        : PathProgressArgs(
+            childId: childId!,
+            pathId: path.id,
+            totalLessonsInPath: total,
+          );
+    final asyncProgress = progressArgs == null
+        ? null
+        : ref.watch(pathProgressMapProvider(progressArgs));
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       children: [
         _Header(path: path),
+        if (asyncProgress != null) ...[
+          const SizedBox(height: 12),
+          _ProgressStrip(asyncProgress: asyncProgress),
+        ],
         const SizedBox(height: 20),
         if (path.primaryReference != null) ...[
           _ReferenceCard(ref: path.primaryReference!),
@@ -110,11 +140,18 @@ class _Body extends StatelessWidget {
           for (final lesson in detail.lessons) ...[
             _LessonTile(
               lesson: lesson,
+              status: asyncProgress?.maybeWhen(
+                data: (m) => m.statusFor(lesson.id),
+                orElse: () => ProgressStatus.notStarted,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (_) =>
-                        LessonScreen(lessonId: lesson.id, ageGroup: ageGroup),
+                    builder: (_) => LessonScreen(
+                      lessonId: lesson.id,
+                      ageGroup: ageGroup,
+                      childId: childId,
+                    ),
                   ),
                 );
               },
@@ -131,6 +168,7 @@ class _Body extends StatelessWidget {
                       builder: (_) => LessonScreen(
                         lessonId: detail.lessons.first.id,
                         ageGroup: ageGroup,
+                        childId: childId,
                       ),
                     ),
                   );
@@ -142,6 +180,85 @@ class _Body extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ProgressStrip extends StatelessWidget {
+  const _ProgressStrip({required this.asyncProgress});
+  final AsyncValue<PathProgressMap> asyncProgress;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceAlt,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
+      ),
+      child: asyncProgress.when(
+        data: (m) {
+          final percent = (m.fraction * 100).round();
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.bar_chart,
+                      size: 16, color: AppTheme.textSecondary),
+                  const SizedBox(width: 6),
+                  Text(
+                    'تقدّم المسار',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(color: AppTheme.textSecondary),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '${m.completedCount} / ${m.totalLessonsInPath} ($percent%)',
+                    style: const TextStyle(
+                      color: AppTheme.textSecondary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: m.fraction,
+                  minHeight: 8,
+                  backgroundColor: const Color(0xFFE5E7EB),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppTheme.primary,
+                  ),
+                ),
+              ),
+              if (m.inProgressCount > 0) ...[
+                const SizedBox(height: 6),
+                Text(
+                  '${m.inProgressCount} درس قيد التنفيذ',
+                  style: const TextStyle(
+                    color: AppTheme.textSecondary,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ],
+          );
+        },
+        loading: () => const SizedBox(
+          height: 8,
+          child: LinearProgressIndicator(),
+        ),
+        error: (_, __) => const Text(
+          'تعذّر تحميل التقدّم.',
+          style: TextStyle(color: AppTheme.dangerFg, fontSize: 12),
+        ),
+      ),
     );
   }
 }
@@ -302,9 +419,36 @@ class _ReferenceCard extends StatelessWidget {
 }
 
 class _LessonTile extends StatelessWidget {
-  const _LessonTile({required this.lesson, required this.onTap});
+  const _LessonTile({
+    required this.lesson,
+    required this.status,
+    required this.onTap,
+  });
   final CurriculumLesson lesson;
+  final ProgressStatus status;
   final VoidCallback onTap;
+
+  IconData get _statusIcon {
+    switch (status) {
+      case ProgressStatus.completed:
+        return Icons.check_circle;
+      case ProgressStatus.inProgress:
+        return Icons.play_circle_outline;
+      case ProgressStatus.notStarted:
+        return Icons.circle_outlined;
+    }
+  }
+
+  Color get _statusColor {
+    switch (status) {
+      case ProgressStatus.completed:
+        return AppTheme.success;
+      case ProgressStatus.inProgress:
+        return AppTheme.primary;
+      case ProgressStatus.notStarted:
+        return AppTheme.textMuted;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -326,16 +470,10 @@ class _LessonTile extends StatelessWidget {
                 height: 36,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: AppTheme.primary.withValues(alpha: 0.10),
+                  color: _statusColor.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text(
-                  '${lesson.order}',
-                  style: const TextStyle(
-                    color: AppTheme.primary,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                child: Icon(_statusIcon, color: _statusColor, size: 22),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -359,6 +497,17 @@ class _LessonTile extends StatelessWidget {
                               .bodySmall
                               ?.copyWith(color: AppTheme.textSecondary),
                         ),
+                        if (status != ProgressStatus.notStarted) ...[
+                          const SizedBox(width: 8),
+                          Text(
+                            progressStatusLabel(status),
+                            style: TextStyle(
+                              color: _statusColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                         const SizedBox(width: 8),
                         if (lesson.needsProfessionalFollowup)
                           const _FlagChip(

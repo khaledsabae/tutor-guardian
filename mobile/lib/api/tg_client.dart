@@ -436,6 +436,88 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  // ── Children + progress (Phase 5) ──────────────────────────────────────
+  //
+  // All three require a Bearer token (set by [_AuthHeaders] on the
+  // POST/PATCH, the GET is also auth-protected). The token is
+  // pulled from `_auth.readSession()` exactly like the chat endpoints.
+
+  Future<SessionResponse> _ensureSessionForProgress() async {
+    return ensureSession();
+  }
+
+  Future<Map<String, dynamic>> createChild({
+    required String name,
+    required String ageGroup,
+    String? gender,
+    String? avatarEmoji,
+  }) async {
+    final (_, token) = await _auth.readSession();
+    if (token == null) {
+      throw const TgApiError(401, 'مطلوب جلسة لإنشاء ملف طفل.');
+    }
+    final body = <String, dynamic>{
+      'name': name,
+      'age_group': ageGroup,
+      if (gender != null) 'gender': gender,
+      if (avatarEmoji != null) 'avatar_emoji': avatarEmoji,
+    };
+    final resp = await _http
+        .post(
+          Uri.parse('$_baseUrl/api/children'),
+          headers: _authHeaders(token),
+          body: jsonEncode(body),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 201) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getChildProgress(
+    int childId, {
+    String? pathId,
+  }) async {
+    final (_, token) = await _auth.readSession();
+    if (token == null) {
+      throw const TgApiError(401, 'مطلوب جلسة لقراءة التقدّم.');
+    }
+    final qs = <String, String>{};
+    if (pathId != null) qs['path_id'] = pathId;
+    final uri = Uri.parse(
+      '$_baseUrl/api/children/$childId/progress',
+    ).replace(queryParameters: qs.isEmpty ? null : qs);
+    final resp = await _http
+        .get(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> patchLessonProgress({
+    required String lessonId,
+    required String status, // "not_started" | "in_progress" | "completed"
+  }) async {
+    final (_, token) = await _auth.readSession();
+    if (token == null) {
+      throw const TgApiError(401, 'مطلوب جلسة لتسجيل التقدّم.');
+    }
+    final resp = await _http
+        .patch(
+          Uri.parse('$_baseUrl/api/program/lessons/$lessonId/progress'),
+          headers: _authHeaders(token),
+          body: jsonEncode({'status': status}),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   // ── Internals ────────────────────────────────────────────────────────
 
   Map<String, String> _authHeaders(String token) => {

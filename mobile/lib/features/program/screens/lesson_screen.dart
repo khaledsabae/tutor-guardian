@@ -1,11 +1,16 @@
 /// Lesson screen — reads a single lesson, renders:
 ///
 ///   1. Hero (title + estimated minutes + warning chips)
-///   2. Summary (long-form description)
-///   3. Try-this (the actionable bit)
-///   4. Reflection prompts (numbered list)
-///   5. Reference list (from the lesson's `unit_ids` — we render
+///   2. Status chip (Phase 5 — driven by [activeChildIdProvider] +
+///      [childProgressProvider])
+///   3. Summary (long-form description)
+///   4. Try-this (the actionable bit)
+///   5. Reflection prompts (numbered list)
+///   6. Reference list (from the lesson's `unit_ids` — we render
 ///      a placeholder card; the real KB RAG preview is Phase 5+)
+///   7. "Mark complete" button (Phase 5 — PATCHes
+///      `/api/program/lessons/{id}/progress` and invalidates the
+///      active child's progress bundle so [PathDetailScreen] refreshes)
 ///
 /// Phase 4 intentionally does NOT chat-with-RAG. The lesson is
 /// read-only. The "Ask the assistant" button in the AppBar opens the
@@ -17,21 +22,70 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
 import '../data/models.dart';
+import '../data/progress_models.dart';
 import '../providers/program_providers.dart';
+import '../providers/progress_providers.dart';
 
-class LessonScreen extends ConsumerWidget {
+class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({
     super.key,
     required this.lessonId,
     required this.ageGroup,
+    this.childId,
   });
 
   final String lessonId;
   final String ageGroup;
+  final int? childId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final asyncLesson = ref.watch(lessonProvider(lessonId));
+  ConsumerState<LessonScreen> createState() => _LessonScreenState();
+}
+
+class _LessonScreenState extends ConsumerState<LessonScreen> {
+  bool _marking = false;
+
+  Future<void> _markComplete() async {
+    if (widget.childId == null) return;
+    setState(() => _marking = true);
+    try {
+      await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
+          .markProgress(ProgressStatus.completed, childId: widget.childId);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('تم تسجيل إكمال الدرس. ما شاء الله!'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('تعذّر تسجيل الإكمال: $e'),
+            backgroundColor: AppTheme.dangerFg,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _marking = false);
+    }
+  }
+
+  Future<void> _markInProgress() async {
+    if (widget.childId == null) return;
+    try {
+      await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
+          .markProgress(ProgressStatus.inProgress, childId: widget.childId);
+    } catch (_) {
+      // Silent — the in_progress marker is best-effort.
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final asyncLesson = ref.watch(lessonProvider(widget.lessonId));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -44,7 +98,18 @@ class LessonScreen extends ConsumerWidget {
         ),
       ),
       body: asyncLesson.when(
-        data: (lesson) => _Body(lesson: lesson, ageGroup: ageGroup),
+        data: (lesson) {
+          // Fire-and-forget "in progress" the first time the user
+          // opens this lesson (best-effort — silent on failure).
+          if (widget.childId != null) _markInProgress();
+          return _Body(
+            lesson: lesson,
+            ageGroup: widget.ageGroup,
+            childId: widget.childId,
+            marking: _marking,
+            onMarkComplete: widget.childId == null ? null : _markComplete,
+          );
+        },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(
           child: Padding(
@@ -59,7 +124,8 @@ class LessonScreen extends ConsumerWidget {
                     textAlign: TextAlign.center),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
-                  onPressed: () => ref.invalidate(lessonProvider(lessonId)),
+                  onPressed: () =>
+                      ref.invalidate(lessonProvider(widget.lessonId)),
                   icon: const Icon(Icons.refresh),
                   label: const Text('إعادة المحاولة'),
                 ),
@@ -72,17 +138,40 @@ class LessonScreen extends ConsumerWidget {
   }
 }
 
-class _Body extends StatelessWidget {
-  const _Body({required this.lesson, required this.ageGroup});
+class _Body extends ConsumerWidget {
+  const _Body({
+    required this.lesson,
+    required this.ageGroup,
+    required this.childId,
+    required this.marking,
+    required this.onMarkComplete,
+  });
   final CurriculumLesson lesson;
   final String ageGroup;
+  final int? childId;
+  final bool marking;
+  final VoidCallback? onMarkComplete;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Re-derive the status from the active child.
+    final asyncBundle =
+        childId == null ? null : ref.watch(childProgressProvider(childId!));
+    final status = asyncBundle?.maybeWhen(
+          data: (b) => b.forLesson(lesson.id)?.status ??
+              ProgressStatus.notStarted,
+          orElse: () => ProgressStatus.notStarted,
+        ) ??
+        ProgressStatus.notStarted;
+
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       children: [
         _Hero(lesson: lesson, ageGroup: ageGroup),
+        if (childId != null) ...[
+          const SizedBox(height: 12),
+          _StatusChip(status: status),
+        ],
         const SizedBox(height: 16),
         _Section(
           icon: Icons.short_text,
@@ -109,7 +198,89 @@ class _Body extends StatelessWidget {
                 'لا تتردد في استشارة طبيب أو أخصائي تنموي إذا شعرت بالحاجة.',
           ),
         ],
+        if (onMarkComplete != null) ...[
+          const SizedBox(height: 20),
+          ElevatedButton.icon(
+            onPressed: (status == ProgressStatus.completed || marking)
+                ? null
+                : onMarkComplete,
+            icon: status == ProgressStatus.completed
+                ? const Icon(Icons.check)
+                : (marking
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Icon(Icons.check_circle_outline)),
+            label: Text(
+              status == ProgressStatus.completed
+                  ? 'مكتمل'
+                  : 'أتممت هذا الدرس',
+            ),
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size.fromHeight(50),
+              backgroundColor: status == ProgressStatus.completed
+                  ? AppTheme.success
+                  : null,
+            ),
+          ),
+        ],
       ],
+    );
+  }
+}
+
+class _StatusChip extends StatelessWidget {
+  const _StatusChip({required this.status});
+  final ProgressStatus status;
+
+  @override
+  Widget build(BuildContext context) {
+    final (icon, label, color, bg) = switch (status) {
+      ProgressStatus.completed => (
+          Icons.check_circle,
+          'مكتمل',
+          AppTheme.success,
+          const Color(0xFFD4EDDA),
+        ),
+      ProgressStatus.inProgress => (
+          Icons.play_circle_outline,
+          'قيد التنفيذ',
+          AppTheme.primary,
+          AppTheme.surfaceAlt,
+        ),
+      ProgressStatus.notStarted => (
+          Icons.circle_outlined,
+          'لم يبدأ بعد',
+          AppTheme.textSecondary,
+          AppTheme.surfaceAlt,
+        ),
+    };
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 16, color: color),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

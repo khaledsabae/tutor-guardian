@@ -7,6 +7,10 @@ Migration v4: added child_profiles + lesson_progress tables for the
               program layer (Phase 2). Endpoints that mutate these
               (POST /api/program/progress, POST /api/program/children)
               are not yet implemented — they land in a later phase.
+Migration v5: added avatar_emoji column to child_profiles (Phase 5
+              Flutter UI requirement). Endpoints that mutate
+              child_profiles + lesson_progress are implemented in
+              routers/children.py and routers/program.py.
 """
 import os
 import sqlite3
@@ -14,7 +18,7 @@ from pathlib import Path
 
 _DEFAULT = Path(__file__).resolve().parents[3] / "ops" / "conversations.db"
 
-SCHEMA_VERSION = 4
+SCHEMA_VERSION = 5
 
 
 def db_path() -> Path:
@@ -128,6 +132,16 @@ def init_db() -> None:
             ON lesson_progress (device_id, path_id);
         """
     )
+
+    # ── Idempotent column-level migrations (added in later versions) ─────
+    # Migration v5: avatar_emoji on child_profiles.
+    _ensure_column(
+        conn,
+        table="child_profiles",
+        column="avatar_emoji",
+        ddl="ALTER TABLE child_profiles ADD COLUMN avatar_emoji TEXT",
+    )
+
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
         conn.execute("INSERT INTO schema_version (version) VALUES (?)", (SCHEMA_VERSION,))
@@ -144,3 +158,23 @@ def current_version() -> int:
         return row["version"] if row else 0
     finally:
         conn.close()
+
+
+def _ensure_column(
+    conn: sqlite3.Connection,
+    *,
+    table: str,
+    column: str,
+    ddl: str,
+) -> None:
+    """Run an ALTER TABLE ADD COLUMN only when the column is missing.
+
+    SQLite has no `ADD COLUMN IF NOT EXISTS` (and `IF NOT EXISTS` on
+    ALTER is rejected), so we look up the schema via `pragma_table_info`
+    which is a cheap, in-memory metadata read.
+    """
+    cur = conn.execute(f"PRAGMA table_info({table})")
+    names = {row[1] for row in cur.fetchall()}
+    if column in names:
+        return
+    conn.execute(ddl)

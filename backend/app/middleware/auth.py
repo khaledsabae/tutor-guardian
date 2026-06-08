@@ -24,10 +24,26 @@ _PUBLIC_PATHS = {
 }
 
 # Protected prefixes
-_PROTECTED_PREFIXES = ("/api/assistant", "/api/chat", "/api/feedback")
-# /api/program is read-only curriculum (public, like /api/chat/sessions for
-# session creation). Mutating endpoints (POST progress) — when they land —
-# must be added to _PROTECTED_PREFIXES.
+_PROTECTED_PREFIXES = (
+    "/api/assistant",
+    "/api/chat",
+    "/api/feedback",
+    "/api/children",
+)
+# Progress PATCH is the only mutating verb under /api/program — we
+# match on the exact path suffix so the read-only GETs remain public.
+_PROTECTED_PROGRAM_PROGRESS = "/api/program/lessons/"
+
+
+def _is_protected(path: str, method: str) -> bool:
+    if path in _PUBLIC_PATHS:
+        return False
+    for prefix in _PROTECTED_PREFIXES:
+        if path.startswith(prefix):
+            return True
+    if method == "PATCH" and path.startswith(_PROTECTED_PROGRAM_PROGRESS):
+        return path.endswith("/progress")
+    return False
 
 
 class AuthMiddleware(BaseHTTPMiddleware):
@@ -37,7 +53,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
         path = request.url.path
 
         # Skip public paths
-        if path in _PUBLIC_PATHS or not path.startswith(_PROTECTED_PREFIXES):
+        if not _is_protected(path, request.method):
             return await call_next(request)
 
         # GET /api/chat/sessions/{id} is protected (requires auth)

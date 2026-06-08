@@ -1,35 +1,33 @@
 """
-Program router — Curriculum content layer (Phase 2).
+Program router — Curriculum content layer (Phase 2) + progress (Phase 5).
 
-Endpoints (read-only; no auth required for now — same model as
-/api/chat/sessions which is public per the existing auth middleware):
+Read-only endpoints (public per AuthMiddleware):
 
   GET /api/program/paths?age_group=&domain=
-      → list of published paths, optionally filtered.
-
-  GET /api/program/paths/{id}
-      → single path detail. If `?include=lessons` is set, the response
-        also includes the ordered list of lessons for the path.
-
+  GET /api/program/paths/{id}?include=lessons
   GET /api/program/lessons/{id}
-      → single lesson detail.
+  GET /api/program/daily-tip?age_group=&time_of_day=&id=<tip_id>
 
-  GET /api/program/daily-tip?age_group=&time_of_day=
-      → one tip, chosen deterministically from the age_group pool using
-        a day-of-week seed so the same client sees the same tip on the
-        same day. ?id=<tip_id> is also supported to fetch a specific tip.
+Mutating endpoint (requires Bearer auth — see AuthMiddleware):
 
-Progress-tracking endpoints (POST /api/program/progress,
-POST /api/program/children) are NOT yet implemented — see Phase 5+ plan.
+  PATCH /api/program/lessons/{id}/progress
+      Body: {status: "in_progress" | "completed"}
+      Idempotent: a second PATCH with the same status is a no-op.
+
+The children CRUD (POST /api/children, GET /api/children/{id}/progress)
+lives in `routers/children.py` to keep `/api/program/*` focused on
+curriculum content.
 """
 import datetime as dt
 import hashlib
 import logging
-from typing import Optional
+from typing import Literal, Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request
+from pydantic import BaseModel, Field
 
 from app import curriculum_loader as cl
+from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +37,7 @@ router = APIRouter(prefix="/program", tags=["program"])
 _VALID_AGE_GROUPS = {"0-3", "4-6", "7-9", "10-12", "13-15", "16-18"}
 _VALID_DOMAINS = {"medical", "cyber", "islamic_parenting", "development"}
 _VALID_TIME_OF_DAY = {"morning", "evening", "bedtime", "anytime"}
+_VALID_PROGRESS_STATUS = {"not_started", "in_progress", "completed"}
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────
@@ -152,3 +151,114 @@ async def get_daily_tip(
         return tip
 
     return _pick_tip_for_today(age_group, time_of_day)
+
+
+# ── Progress tracking (Phase 5) ──────────────────────────────────────────
+
+class ProgressPatch(BaseModel):
+    status: Literal["not_started", "in_progress", "completed"]
+
+
+class ProgressResponse(BaseModel):
+    lesson_id: str
+    path_id: str
+    status: str
+    started_at: Optional[str]
+    completed_at: Optional[str]
+    updated_at: str
+
+
+@router.patch(
+    "/lessons/{lesson_id}/progress",
+    response_model=ProgressResponse,
+    summary="Upsert the (device_id, lesson_id) progress row. Idempotent.",
+)
+def patch_lesson_progress(
+    lesson_id: str,
+    payload: ProgressPatch,
+    request: Request,
+) -> ProgressResponse:
+    """Mark a lesson as `in_progress` (the user opened it) or `completed`.
+
+    The auth middleware guarantees we have a valid `device_id`; we
+    never trust client-supplied identity for progress rows. `path_id`
+    is resolved from the curriculum loader so the client cannot
+    attribute progress to a different path.
+    """
+    device_id = getattr(request.state, "device_id", None)
+    if not device_id:
+        raise HTTPException(status_code=401, detail="مطلوب توثيق.")
+
+    lesson = cl.get_lesson(lesson_id)
+    if lesson is None:
+        raise HTTPException(status_code=404, detail=f"الدرس '{lesson_id}' غير موجود")
+    path_id = lesson["path_id"]
+
+    now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    conn = get_conn()
+    try:
+        # Idempotent upsert. We re-read the existing row to preserve
+        # `started_at` when the client transitions to `completed`.
+        existing = conn.execute(
+            "SELECT * FROM lesson_progress WHERE device_id = ? AND lesson_id = ?",
+            (device_id, lesson_id),
+        ).fetchone()
+
+        if existing is None:
+            started_at = now if payload.status != "not_started" else None
+            completed_at = now if payload.status == "completed" else None
+            conn.execute(
+                """
+                INSERT INTO lesson_progress
+                    (device_id, lesson_id, path_id, status, started_at, completed_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    device_id,
+                    lesson_id,
+                    path_id,
+                    payload.status,
+                    started_at,
+                    completed_at,
+                    now,
+                ),
+            )
+        else:
+            started_at = existing["started_at"]
+            if payload.status != "not_started" and not started_at:
+                started_at = now
+            completed_at = existing["completed_at"]
+            if payload.status == "completed":
+                completed_at = now
+            # `not_started` is a "reset" — wipe timestamps so the UI
+            # can re-enable the lesson.
+            if payload.status == "not_started":
+                started_at = None
+                completed_at = None
+            conn.execute(
+                """
+                UPDATE lesson_progress
+                   SET path_id = ?, status = ?, started_at = ?, completed_at = ?, updated_at = ?
+                 WHERE device_id = ? AND lesson_id = ?
+                """,
+                (
+                    path_id,
+                    payload.status,
+                    started_at,
+                    completed_at,
+                    now,
+                    device_id,
+                    lesson_id,
+                ),
+            )
+        conn.commit()
+        return ProgressResponse(
+            lesson_id=lesson_id,
+            path_id=path_id,
+            status=payload.status,
+            started_at=started_at,
+            completed_at=completed_at,
+            updated_at=now,
+        )
+    finally:
+        conn.close()
