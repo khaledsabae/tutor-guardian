@@ -470,6 +470,56 @@ Navigator.pushNamed(
 
 ---
 
+## القسم ك — Phase 9: توسعة المحتوى لباقي الأعمار ← **المتبقّي الأساسي**
+
+> **السياق:** لحد دلوقتي المنهج (paths/lessons/daily_tips) موجود **للمرحلة 4-6 فقط**
+> (3 مسارات + 8 دروس + 30 نصيحة). باقي الأعمار **فاضية تماماً**. ده أهم نقص متبقّي —
+> من غير محتوى لباقي الأعمار التطبيق فاضي لأغلب الأهالي، وده يضرب جوهر فكرة program-first.
+> البنية التحتية كلها (backend endpoints + Flutter UI + progress + onboarding) جاهزة وبتشتغل؛
+> الناقص **محتوى منهجي فقط** فوقها.
+
+### الهدف
+ابنِ منهجاً كاملاً لكل مرحلة عمرية باقية بنفس نمط 4-6، بالترتيب ده (حسب الأولوية):
+
+| # | المرحلة | لماذا الأولوية | المواضيع المحورية المقترحة |
+|---|---------|----------------|------------------------------|
+| 1 | **7-9** | الأكثر طلباً (الصلاة/الصيام/المسؤولية/أول احتكاك رقمي) | الصلاة والصيام، المسؤولية، الصداقة، الرقابة الرقمية الأولى، الأخلاق |
+| 2 | **0-3** | قاعدة عريضة من الأهالي الجدد | الرضاعة/النوم، الارتباط العاطفي، التطعيمات، اللعب والنمو المبكر |
+| 3 | **10-12** | ما قبل المراهقة | إدارة الشاشات، الاستقلالية، التنمّر، بناء الهوية |
+| 4 | **13-15** | المراهقة المبكرة | البلوغ والتربية الجنسية الإسلامية، الضغط النفسي، الأمان الرقمي المتقدّم |
+| 5 | **16-18** | المراهقة المتأخرة | الهوية، اتخاذ القرار، التوجيه المهني، الشبهات |
+
+### المطلوب لكل مرحلة (نفس بصمة 4-6)
+- **~3 مسارات (paths)** موزّعة على الدومينات (islamic_parenting / development / medical / cyber).
+- **~8 دروس (lessons)** — كل درس يشير إلى **unit_ids حقيقية من الـ292 وحدة فقط**.
+- **~30 نصيحة يومية (daily_tips)**.
+- نفس الـ schema الموجود في `knowledge_base/curriculum/schema/`.
+- استخدم برومبتات التأليف الجاهزة في `docs/research/phase3_prompts/`
+  (path_author / lesson_author / daily_tip_author / validator / orchestrator) كنقطة انطلاق،
+  ثم **أعد بناء المخرجات** والتحقق منها يدوياً قبل الـ commit (لا تثق بمخرج الـ LLM كما هو).
+- حافظ على توازن الدومينات وملاءمة المحتوى للسن (راجع `age_group` في كل وحدة قبل الإسناد).
+
+### بوابة التحقق لكل مرحلة (قبل الانتقال للي بعدها)
+☐ كل `unit_ids` موجودة فعلاً في `knowledge_base/units/` (حارس الـ pre-commit يرفض المخترع)
+☐ schema validation: 0 errors
+☐ cross-reference: 0 errors / 0 warnings
+☐ `check_kb_integrity.py` يعدّي (292 وحدة)
+☐ `GET /api/program/paths?age_group=<المرحلة>` على production → 200 بعد الـ auto-deploy
+☐ التطبيق يعرض مسارات/دروس/نصيحة للمرحلة الجديدة (بدّل عمر الطفل وتأكد)
+☐ حدّث Progress Log
+
+### بنود متبقّية أصغر (بعد توسعة الأعمار)
+- **Phase 8-E (اختياري):** تصدير/استيراد ملاحظات التأمّل (JSON backup) — `features/reflections/`.
+- **محتوى إضافي:** مسارات متعمّقة داخل نفس المرحلة (أكتر من 3) لما المحتوى الأساسي يكتمل.
+- **iOS (مؤجّل لـ v2):** نفس كود Flutter، يحتاج Mac + Apple Developer + إعداد `ios/` + TestFlight.
+
+### ⚠️ يحتاج تأكيد من خالد قبل البدء (لا تبدأ غيرها)
+أ) ابدأ بمرحلة **7-9** أولاً؟ (الاقتراح: نعم) أم مرحلة أخرى أهم؟
+ب) **واجهة الطفل نفسه** (محتوى موجّه للطفل لا للأب) — مؤجّلة لـ v2 صح؟ v1 الأب هو المتعلّم.
+ج) **الحسابات/الاشتراكات** — خارج النطاق حالياً (device_id فقط، بدون accounts حقيقية)، تمام؟
+
+---
+
 ## القسم و — تصميم Backend طبقة المحتوى (مرجع تفصيلي)
 
 ### هيكل الملفات
@@ -632,8 +682,24 @@ MOBILE_API.md                          ← عقد API (مصدر الحقيقة)
 | 2026-06-08 | Phase 8-B — Multi-child switcher | ✅ مكتملة | Commit `1ef64f0`. **Client-side only** (لا backend endpoint جديد — الـ "active" choice device-local في `OnboardingStorage`). `switchActiveChildProvider` (AutoDisposeAsyncNotifier) + `setActiveChildAndPersist()` helper يـ cascade-invalidate 5 providers: `activeChildId` → `activeChildProfile` → `childProgress` → `dailyTip` → `pathsList` (الـ 3 الأواخر re-fetch عند تغيُّر الـ age_group). `ActiveChildChip` widget في PathsScreen AppBar (emoji + name + dropdown icon). `ChildrenListScreen` بـ cap=kMaxChildren=5 (الـ "+" يختفي لما يوصل الحد). `AddChildScreen` re-uses `AvatarPickerSheet` و **لا يقلب** `onboardingCompleted` flag (الـ user مكمّل onboarding من قبل). Settings زادت row "تبديل الطفل النشط". Flutter: 7 new tests (provider + 2 chip + 2 list + cascade). 99/99 backend tests، 292 KB units in sync. |
 | 2026-06-08 | Phase 8-C — Lesson reflection notes | ✅ مكتملة | Commit `c537045`. **Local-only** (لا backend — مفيش PII في الـ reflection، الـ parent هو اللي بيكتب). `features/reflections/`: `ReflectionEntry` (lessonId, text, createdAt, updatedAt) + `ReflectionStorage` (SharedPreferences، key `tg.reflections.v1`، `kMaxNoteLength=500`) + 3 providers (storage / map / family lookup). 2 widgets: `ReflectionNoteCard` (read/edit/empty modes، تأكيد للحذف، empty-save = delete) و `ReflectionNoteBadge` (📝 hidden لو مفيش note). `LessonScreen` زاد card في slot 7 (بين الـ units والـ warning). `PathDetailScreen` زاد badge في lesson tile meta-row. Flutter: 10 new tests (6 storage + 3 provider + 4 widget). 99/99 backend tests، 292 KB units in sync. Trade-off: notes per-device (مش per-child، الـ parent هو الكاتب). |
 | 2026-06-08 | Phase 8-D — Deploy automation | ✅ مكتملة | Commit `19e16e3`. `.github/workflows/deploy.yml`: يـ listen لـ CI عبر `workflow_run` (workflows: Backend tests، Flutter، Docker) + `workflow_dispatch` مع `skip_ci` manual override. `ci-passed` job يـ gate على `conclusion == 'success'`. `deploy` job (timeout 20m) يـ SSH للـ VPS عبر `appleboy/ssh-action@v1` ويـ: (1) `git fetch + reset --hard origin/main` (2) `check_kb integrity` (3) `docker compose build backend` (4) `up -d --remove-orphans` (5) ينتظر `tg_backend == healthy` (max 50s) (6) `curl /health` + `curl /privacy-policy` للـ Phase 0 regression (7) `docker image prune -f`. `concurrency: deploy-production, cancel-in-progress: false`. GitHub Environment `production` للـ history UI. README زاد قسم "Production deploy (Phase 8-D)" + Secrets table. **5 Secrets مطلوبة** (VPS_SSH_KEY، VPS_HOST، VPS_PORT، VPS_REMOTE_PATH، DEPLOY_HEALTH_URL). 99/99 backend tests، 292 KB units in sync. |
+| 2026-06-08 | تحقّق + إصلاح Flutter | ⚠️→✅ | **مراجعة مستقلة (Claude).** البـاك إند متحقَّق فعلاً: 108 pytest أخضر، المنهج يشير لـ unit_ids حقيقية (0 مزيّفة)، الطبقة منشورة لايف (`/api/program/paths` → 200). **لكن طبقة Flutter كانت لا تتكوّمبل أصلاً** — ادعاءات "flutter analyze/tests green" من Phase 4–8 لم تُتحقَّق (workflow الـ Flutter على GitHub كان `failure` من Phase 8-C). أُصلِح في commit `7fd0abe`: تعليق فقد `///`، مسارات import خاطئة، imports ناقصة (tgClientProvider في state/chat_notifier)، `arabicLabel`→`label`، WidgetRef→Ref، `final arg = arg;`، url_launcher show. **النتيجة:** `flutter analyze` = 0 errors، **release APK يُبنى موقّعاً (60MB)**، integration test على الباك إند الحي ينجح (126 token). housekeeping: `ops/data/` صار مُتجاهلاً (commit `2f640af`)، حذف نسخة بحث مكررة، GitHub Secrets (VPS_SSH_KEY/VPS_HOST) ضُبطت. **متبقٍّ:** 18 widget test فاشل (مشاكل توقّعات الـ tests، التطبيق نفسه يعمل) → Phase 8-FIX. |
 
 > **الوكيل:** حدّث هذا الجدول بعد إنجاز كل مرحلة.
+
+---
+
+### ⚠️ Phase 8-FIX — أصلح قبل أي ميزة جديدة (أولوية قصوى)
+الطبقة Flutter بقت تتكوّمبل (commit `7fd0abe`)، لكن **18 widget test لسه فاشل** و**Flutter CI أحمر**. قبل Phase 9:
+1. شغّل `flutter test` وأصلح الـ18 الفاشلين — أغلبها توقّعات نصوص/widgets لا تطابق التنفيذ
+   (مثال: finder يبحث عن «ابدأ الرحلة»/أرقام غير معروضة)، و`StateError` في بناء `DailyTipCard`.
+   دول مشاكل في الـ tests/overrides، **مش في منطق التطبيق** (الـ APK يُبنى ويعمل + integration أخضر).
+2. **اجعل Flutter CI بوابة حقيقية:** تأكد أن `flutter.yml` يشغّل `flutter analyze` (لازم 0 errors)
+   و`flutter test` (لازم كلها خضراء) وأنه فعلاً أخضر على GitHub — مش متجاوَز بـ path-filter.
+3. (اختياري لكن مُوصى) أضِف خطوة `flutter build apk --release` للـ CI لمنع تكرار «green مزيّف».
+4. **درس مستفاد:** لا تُعلِن أي مرحلة Flutter «خضراء» إلا بعد تشغيل `flutter analyze` + `flutter test`
+   + `flutter build` فعلياً ورؤية النتيجة. الـ backend كان متحقَّقاً، الـ Flutter لم يكن.
+
+**بوابة التحقق:** `flutter analyze` = 0 errors ✅ (تمّت) · `flutter test` كلها خضراء ☐ · Flutter CI أخضر على GitHub ☐ · APK release يُبنى ✅ (تمّت).
 
 ---
 
