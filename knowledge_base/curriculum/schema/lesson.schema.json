@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tutor-guardian.local/schemas/curriculum/lesson.schema.json",
+  "title": "Curriculum Lesson",
+  "description": "درس واحد داخل مسار تربوي. الدرس يجمع عدة knowledge units من knowledge_base/units/ ويقدّمها للوالد في قصة مترابطة مع try_this عملي. ملاحظة: قيم enum تطابق backend/app/core/taxonomy.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "path_id",
+    "title",
+    "age_group",
+    "domain",
+    "unit_ids",
+    "summary",
+    "try_this",
+    "order"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^lesson_[a-z0-9_\\-]{3,80}$",
+      "description": "معرّف الدرس الفريد. النمط: lesson_<path_slug>_<order>. مثال: lesson_4-6_islamic_parenting_bond_01."
+    },
+    "path_id": {
+      "type": "string",
+      "pattern": "^path_[a-z0-9_\\-]{3,80}$",
+      "description": "المسار الأب. يجب أن يطابق ملف path.json موجود في knowledge_base/curriculum/paths/."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 120,
+      "description": "عنوان الدرس بالعربية الفصحى."
+    },
+    "age_group": {
+      "type": "string",
+      "enum": ["0-3", "4-6", "7-9", "10-12", "13-15", "16-18"],
+      "description": "الفئة العمرية. يجب أن يطابق المسار الأب."
+    },
+    "domain": {
+      "type": "string",
+      "enum": ["medical", "cyber", "islamic_parenting", "development"],
+      "description": "المجال. يجب أن يطابق المسار الأب."
+    },
+    "unit_ids": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "description": "قائمة معرّفات knowledge units (من knowledge_base/units/*.json). كل unit يُحقق من unit.age_group/unit.domain موافق للدرس. حد أقصى 10 وحدات للقراءة في ≤ 5 دقائق."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 30,
+      "maxLength": 800,
+      "description": "ملخص الدرس من 3-6 جمل يشرح الفكرة الرئيسية ولماذا تهم هذه الفئة العمرية."
+    },
+    "try_this": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 600,
+      "description": "إجراء عملي قابل للتطبيق هذا الأسبوع، مثال: 'اجلس مع طفلك 5 دقائق قبل النوم واسأله: ما أجمل شيء حدث اليوم؟'."
+    },
+    "order": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 30,
+      "description": "ترتيب الدرس داخل المسار (1 = أول درس). يجب أن يكون فريداً داخل المسار."
+    },
+    "estimated_minutes": {
+      "type": "integer",
+      "minimum": 3,
+      "maximum": 15,
+      "default": 5,
+      "description": "الوقت الإرشادي لإكمال الدرس بالدقائق. تنبيه: ≤ 15 دقيقة لاحترام وقت الوالد (مبدأ الزهد في الطول)."
+    },
+    "reflection_prompts": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 200
+      },
+      "default": [],
+      "description": "أسئلة تأملية قصيرة (≤ 3) يطرحها الـ app على الوالد بعد الدرس، مثل: 'ما الذي فاجأك في رد فعل طفلك؟'."
+    },
+    "warning_flags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["needs_professional_followup", "regional_fiqh_variation", "developmental_red_flag"]
+      },
+      "default": [],
+      "description": "تنبيهات خاصة. needs_professional_followup = يتطلب مختصاً. regional_fiqh_variation = يختلف حسب المذهب. developmental_red_flag = علامة تستدعي تقييماً متخصصاً."
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
