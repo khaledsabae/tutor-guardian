@@ -31,7 +31,7 @@ logger = logging.getLogger("process_q")
 import requests as http_requests
 
 
-def call_ollama(prompt: str, model: str, base_url: str, timeout: int = 240) -> str:
+def call_ollama(prompt: str, model: str, base_url: str, timeout: int = 600) -> str:
     resp = http_requests.post(
         f"{base_url}/api/generate",
         json={"model": model, "prompt": prompt, "stream": False, "options": {"temperature": 0.5}},
@@ -139,7 +139,7 @@ def main():
     parser.add_argument("--output", default=str(PROJECT_ROOT / "ops" / "data" / "qa_collected.jsonl"))
     parser.add_argument("--checkpoint", default=str(PROJECT_ROOT / "ops" / "data" / "qa_collected_checkpoint.json"))
     parser.add_argument("--ollama-url", default="http://100.109.163.64:11434")
-    parser.add_argument("--model", default="gemma4:e4b")
+    parser.add_argument("--model", default="qwen2.5:3b")
     parser.add_argument("--skip-low-quality", action="store_true",
                         help="Skip questions without real source_url (template-generated)")
     args = parser.parse_args()

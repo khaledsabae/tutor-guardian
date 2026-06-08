@@ -37,7 +37,7 @@ import requests as http_requests
 
 
 def _call_ollama(prompt: str, model: str, base_url: str = "http://localhost:11434",
-                 timeout: int = 180) -> str:
+                 timeout: int = 600) -> str:
     """Call Ollama /api/generate and return the response text."""
     resp = http_requests.post(
         f"{base_url}/api/generate",
@@ -145,7 +145,7 @@ def generate_answer_for_question(question: str, unit: dict, model: str,
 
 def main():
     parser = argparse.ArgumentParser(description="Generate QA dataset from KB units")
-    parser.add_argument("--model", default="gemma4:e4b",
+    parser.add_argument("--model", default="qwen2.5:3b",
                         help="Ollama model for generation")
     parser.add_argument("--questions-per-unit", type=int, default=3,
                         help="Number of questions per unit (default: 3)")
@@ -228,6 +228,7 @@ def main():
                 "age_group": unit["age_group"],
                 "behavior_type": unit.get("behavior_type", ""),
                 "reference": unit.get("reference_info", "مصدر غير مذكور"),
+                "unit_id": unit["id"],
             }
             with open(output_path, "a", encoding="utf-8") as f:
                 f.write(json.dumps(record, ensure_ascii=False) + "\n")
