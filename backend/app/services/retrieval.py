@@ -69,7 +69,8 @@ def _get_collection() -> chromadb.Collection:
     if _collection is None:
         client = chromadb.PersistentClient(path=str(CHROMA_PERSIST_DIR))
         raw = client.list_collections()
-        existing = [c.name if hasattr(c, "name") else c for c in raw]
+        # 0.6.x returns CollectionName (str subclass); 1.5.9+ returns CollectionModel with .name
+        existing = [c if isinstance(c, str) else c.name for c in raw]
         if COLLECTION_NAME in existing:
             _collection = client.get_collection(
                 COLLECTION_NAME,
