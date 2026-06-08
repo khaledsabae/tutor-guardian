@@ -20,7 +20,26 @@ router = APIRouter()
 
 # Project root (…/tutor-guardian), overridable for containers.
 PROJECT_ROOT = Path(os.environ.get("PROJECT_ROOT", Path(__file__).resolve().parents[3]))
-PRIVACY_POLICY_PATH = PROJECT_ROOT / "docs" / "privacy-policy.md"
+_PRIVACY_CANDIDATES = [
+    PROJECT_ROOT / "docs" / "privacy-policy.md",
+    Path(__file__).resolve().parents[2] / "docs" / "privacy-policy.md",  # /app/docs/ inside container
+    Path(__file__).resolve().parents[3] / "docs" / "privacy-policy.md",
+]
+
+
+def _resolve_privacy_policy_path() -> Path:
+    """Find privacy-policy.md across the candidate locations.
+
+    The container image has docs/ at /app/docs/, while dev mode puts it at
+    PROJECT_ROOT/docs/. We try the env-driven path first, then fall back.
+    """
+    for candidate in _PRIVACY_CANDIDATES:
+        if candidate.is_file():
+            return candidate
+    return _PRIVACY_CANDIDATES[0]  # default; endpoint will return 503
+
+
+PRIVACY_POLICY_PATH = _resolve_privacy_policy_path()
 
 
 @router.get("/privacy-policy", include_in_schema=False)
