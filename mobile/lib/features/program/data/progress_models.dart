@@ -113,12 +113,19 @@ class ChildProgressBundle {
   final String? deviceId;
   final List<LessonProgress> lessons;
   final String? fetchedAt;
+  /// Phase 6 — number of consecutive UTC days (ending today or
+  /// yesterday) on which the user completed at least one lesson.
+  final int streakDays;
+  /// Phase 6 — ISO 8601 timestamp of the most recent completion.
+  final String? lastCompletedAt;
 
   const ChildProgressBundle({
     required this.childId,
     this.deviceId,
     required this.lessons,
     this.fetchedAt,
+    this.streakDays = 0,
+    this.lastCompletedAt,
   });
 
   factory ChildProgressBundle.fromJson(Map<String, dynamic> json) {
@@ -129,6 +136,8 @@ class ChildProgressBundle {
           .map((e) => LessonProgress.fromJson(e as Map<String, dynamic>))
           .toList(),
       fetchedAt: json['fetched_at'] as String?,
+      streakDays: (json['streak_days'] as num?)?.toInt() ?? 0,
+      lastCompletedAt: json['last_completed_at'] as String?,
     );
   }
 

@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/program/widgets/daily_tip_card.dart';
 import '../models/enums.dart';
 import '../state/chat_notifier.dart';
 import '../state/connectivity_provider.dart';
@@ -158,6 +159,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       body: Column(
         children: [
           if (!isOnline) const _OfflineBanner(),
+          const DailyTipCard(),
           _SettingsBar(state: state, notifier: notifier),
           if (state.errorBanner != null) _ErrorBanner(
             message: state.errorBanner!,

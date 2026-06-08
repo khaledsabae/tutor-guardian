@@ -3,6 +3,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/app_config.dart';
+import 'features/onboarding/providers/onboarding_providers.dart';
+import 'features/onboarding/screens/onboarding_screen.dart';
+import 'features/program/providers/progress_providers.dart';
 import 'features/program/screens/paths_screen.dart';
 import 'screens/chat_screen.dart';
 import 'theme/app_theme.dart';
@@ -14,14 +17,15 @@ void main() {
 /// Root widget.
 ///
 /// MaterialApp is configured for Arabic + RTL out of the box. The
-/// home surface lives behind a [RootScaffold] (a 2-tab NavigationBar)
-/// that hosts:
-///   * tab 0: [ChatScreen]    — the live assistant
-///   * tab 1: [PathsScreen]   — the curriculum program layer (Phase 4)
+/// home surface is decided at first frame:
 ///
-/// The chat notifier bootstraps the session on first frame of tab 0
-/// (creating one if none exists). The "مساراتي" tab is a *fresh* fetch
-/// each time it's opened (Riverpod's `autoDispose` family providers).
+///   * If `SharedPreferences` is not yet loaded (cold boot) → splash.
+///   * If onboarding is not completed → [OnboardingScreen].
+///   * Otherwise → [RootScaffold] (ChatScreen + PathsScreen).
+///
+/// Phase 6 wired up the onboarding gate. The active child id is
+/// re-hydrated from [OnboardingStorage] in `bootProvider` so the
+/// rest of the app can treat `activeChildIdProvider` as the truth.
 class TutorGuardianApp extends StatelessWidget {
   const TutorGuardianApp({super.key});
 
@@ -47,7 +51,76 @@ class TutorGuardianApp extends StatelessWidget {
           child: child ?? const SizedBox.shrink(),
         );
       },
-      home: const RootScaffold(),
+      home: const _AppBootstrapper(),
+    );
+  }
+}
+
+/// Resolves the cold-boot async chain: prefs → onboarding flag →
+/// active child re-hydration → push the right screen.
+class _AppBootstrapper extends ConsumerWidget {
+  const _AppBootstrapper();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncPrefs = ref.watch(sharedPreferencesProvider);
+    return asyncPrefs.when(
+      data: (_) {
+        // First, sync the onboardingCompletedProvider from disk.
+        final completed = ref.watch(onboardingCompletedProvider);
+        if (!completed) {
+          return const OnboardingScreen();
+        }
+        // Re-hydrate active child id from disk so all the existing
+        // `ref.watch(activeChildIdProvider)` consumers pick it up.
+        final profile = ref.watch(activeChildProfileProvider);
+        if (profile != null) {
+          // Push the id into the runtime provider used everywhere.
+          ref.read(activeChildIdProvider.notifier).state = profile.id;
+        }
+        return const RootScaffold();
+      },
+      loading: () => const _SplashScreen(),
+      error: (e, _) => _BootErrorScreen(error: '$e'),
+    );
+  }
+}
+
+class _SplashScreen extends StatelessWidget {
+  const _SplashScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
+    );
+  }
+}
+
+class _BootErrorScreen extends StatelessWidget {
+  const _BootErrorScreen({required this.error});
+  final String error;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.error_outline,
+                  size: 56, color: AppTheme.dangerFg),
+              const SizedBox(height: 12),
+              Text(
+                'تعذّر تشغيل التطبيق.\n$error',
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

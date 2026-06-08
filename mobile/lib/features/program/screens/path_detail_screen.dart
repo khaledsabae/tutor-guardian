@@ -5,7 +5,8 @@
 /// is rendered as a card that navigates to [LessonScreen]. Phase 5
 /// added a [LinearProgressIndicator] that reflects the active child's
 /// completion ratio on this path (consumed via
-/// [pathProgressMapProvider]).
+/// [pathProgressMapProvider]). Phase 6 added a [StreakChip] in the
+/// header — the device's consecutive-day completion streak.
 library;
 
 import 'package:flutter/material.dart';
@@ -105,7 +106,7 @@ class _Body extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       children: [
-        _Header(path: path),
+        _Header(path: path, childId: childId),
         if (asyncProgress != null) ...[
           const SizedBox(height: 12),
           _ProgressStrip(asyncProgress: asyncProgress),
@@ -263,12 +264,20 @@ class _ProgressStrip extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header({required this.path});
+class _Header extends ConsumerWidget {
+  const _Header({required this.path, required this.childId});
   final CurriculumPath path;
+  final int? childId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncBundle =
+        childId == null ? null : ref.watch(childProgressProvider(childId!));
+    final streak = asyncBundle?.maybeWhen(
+          data: (b) => b.streakDays,
+          orElse: () => 0,
+        ) ??
+        0;
     return Card(
       elevation: 0,
       color: AppTheme.primary,
@@ -311,6 +320,9 @@ class _Header extends StatelessWidget {
                     ),
                   ),
                 ),
+                const Spacer(),
+                if (childId != null)
+                  StreakChip(streakDays: streak, dark: true),
               ],
             ),
             const SizedBox(height: 12),
@@ -354,6 +366,81 @@ class _Header extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Streak chip — "🔥 X يوم متتالي" — surfaces the device's
+/// consecutive-day completion streak. When [dark] is true the chip
+/// is meant to be placed on a coloured background (header card).
+class StreakChip extends StatelessWidget {
+  const StreakChip({
+    super.key,
+    required this.streakDays,
+    this.dark = false,
+  });
+  final int streakDays;
+  final bool dark;
+
+  @override
+  Widget build(BuildContext context) {
+    if (streakDays <= 0) {
+      // Empty state — don't show a "0-day streak" chip (it would
+      // feel punitive). A short nudge is friendlier.
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: dark
+              ? Colors.white.withValues(alpha: 0.18)
+              : AppTheme.surfaceAlt,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              dark ? '🔥 ابدأ سلسلتك اليوم' : '🔥 ابدأ سلسلتك اليوم',
+              style: TextStyle(
+                color: dark ? Colors.white : AppTheme.textSecondary,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: dark
+            ? Colors.white.withValues(alpha: 0.20)
+            : const Color(0xFFFFE9C7),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('🔥', style: TextStyle(fontSize: 14)),
+          const SizedBox(width: 4),
+          Text(
+            '$streakDays ${_daysLabel(streakDays)}',
+            style: TextStyle(
+              color: dark ? Colors.white : const Color(0xFF8A5A0F),
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static String _daysLabel(int n) {
+    // Arabic grammatical agreement for "يوم" (day).
+    if (n == 1) return 'يوم متتالي';
+    if (n == 2) return 'يومان متتاليان';
+    if (n >= 3 && n <= 10) return 'أيام متتالية';
+    return 'يوم متتالٍ';
   }
 }
 

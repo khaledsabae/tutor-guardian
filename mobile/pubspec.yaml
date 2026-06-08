@@ -31,6 +31,9 @@ dependencies:
   # Offline detection
   connectivity_plus: ^6.0.5
 
+  # Persistent on-device flags (onboarding completion, last active child).
+  shared_preferences: ^2.3.2
+
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
