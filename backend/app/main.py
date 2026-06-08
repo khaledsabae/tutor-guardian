@@ -16,7 +16,8 @@ from app.config.guardrails_loader import load_guardrails_config
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
-from app.routers import health, assistant, chat, feedback, privacy
+from app.routers import health, assistant, chat, feedback, privacy, program
+from app import curriculum_loader as curriculum
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +38,7 @@ async def lifespan(app: FastAPI):
     # ── Base startup ─────────────────────────────────────────────────────
     app.state.guardrails_config = load_guardrails_config()
     init_db()
+    curriculum.load_curriculum()
 
     # ── Warm-up: eager-load embeddings + ChromaDB index ──────────────────
     # Eliminates the 30-60s cold load on the first user request.
@@ -101,6 +103,7 @@ app.include_router(health.router)
 app.include_router(assistant.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
 app.include_router(feedback.router, prefix="/api")
+app.include_router(program.router, prefix="/api")  # curriculum: paths/lessons/daily-tip
 app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
 
 if FRONTEND_DIR.is_dir():

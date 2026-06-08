@@ -25,6 +25,9 @@ _PUBLIC_PATHS = {
 
 # Protected prefixes
 _PROTECTED_PREFIXES = ("/api/assistant", "/api/chat", "/api/feedback")
+# /api/program is read-only curriculum (public, like /api/chat/sessions for
+# session creation). Mutating endpoints (POST progress) — when they land —
+# must be added to _PROTECTED_PREFIXES.
 
 
 class AuthMiddleware(BaseHTTPMiddleware):

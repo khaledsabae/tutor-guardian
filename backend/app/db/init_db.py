@@ -3,6 +3,10 @@ SQLite app database — جلسات ورسائل المحادثة + tokens + feed
 ================================================================
 Migration v2: added api_tokens table for device authentication.
 Migration v3: added user_feedback table for 👍/👎 ratings.
+Migration v4: added child_profiles + lesson_progress tables for the
+              program layer (Phase 2). Endpoints that mutate these
+              (POST /api/program/progress, POST /api/program/children)
+              are not yet implemented — they land in a later phase.
 """
 import os
 import sqlite3
@@ -10,7 +14,7 @@ from pathlib import Path
 
 _DEFAULT = Path(__file__).resolve().parents[3] / "ops" / "conversations.db"
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 
 
 def db_path() -> Path:
@@ -84,6 +88,44 @@ def init_db() -> None:
 
         CREATE INDEX IF NOT EXISTS ix_user_feedback_session
             ON user_feedback (session_id);
+
+        -- Migration v4: program layer (curriculum tracking)
+        -- child_profiles: one or more per device; tagged with the canonical
+        -- age_group so the curriculum can filter paths/lessons/tips.
+        CREATE TABLE IF NOT EXISTS child_profiles (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            device_id   TEXT NOT NULL,
+            name        TEXT NOT NULL,
+            age_group   TEXT NOT NULL,  -- enum from CANONICAL_AGE_GROUPS
+            gender      TEXT,
+            created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+            updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+
+        CREATE INDEX IF NOT EXISTS ix_child_profiles_device
+            ON child_profiles (device_id);
+
+        -- lesson_progress: a row per (device_id, lesson_id) — idempotent
+        -- upserts. status flows not_started → in_progress → completed.
+        -- completed_at drives streak calculation in Phase 6.
+        CREATE TABLE IF NOT EXISTS lesson_progress (
+            id           INTEGER PRIMARY KEY AUTOINCREMENT,
+            device_id    TEXT NOT NULL,
+            lesson_id    TEXT NOT NULL,
+            path_id      TEXT NOT NULL,
+            status       TEXT NOT NULL DEFAULT 'not_started',
+                                      -- not_started | in_progress | completed
+            started_at   TEXT,
+            completed_at TEXT,
+            updated_at   TEXT NOT NULL DEFAULT (datetime('now')),
+            UNIQUE (device_id, lesson_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS ix_lesson_progress_device
+            ON lesson_progress (device_id);
+
+        CREATE INDEX IF NOT EXISTS ix_lesson_progress_path_device
+            ON lesson_progress (device_id, path_id);
         """
     )
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
