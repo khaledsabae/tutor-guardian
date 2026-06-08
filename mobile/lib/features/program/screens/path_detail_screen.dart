@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../reflections/widgets/reflection_note_badge.dart';
 import '../data/models.dart';
 import '../data/progress_models.dart';
 import '../providers/program_providers.dart';
@@ -602,6 +603,10 @@ class _LessonTile extends StatelessWidget {
                             color: AppTheme.dangerFg,
                             bg: AppTheme.dangerBg,
                           ),
+                        // Phase 8-C — shows a "ملاحظة" badge if the
+                        // user has a reflection on this lesson.
+                        const SizedBox(width: 8),
+                        ReflectionNoteBadge(lessonId: lesson.id),
                       ],
                     ),
                   ],

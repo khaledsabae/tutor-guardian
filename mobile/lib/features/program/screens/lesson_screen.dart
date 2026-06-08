@@ -8,7 +8,8 @@
 ///   5. Reflection prompts (numbered list)
 ///   6. Reference list (from the lesson's `unit_ids` — we render
 ///      a placeholder card; the real KB RAG preview is Phase 5+)
-///   7. "Mark complete" button (Phase 5 — PATCHes
+///   7. "ملاحظاتي" card (Phase 8-C — local-only reflection notes)
+///   8. "Mark complete" button (Phase 5 — PATCHes
 ///      `/api/program/lessons/{id}/progress` and invalidates the
 ///      active child's progress bundle so [PathDetailScreen] refreshes)
 ///
@@ -21,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../reflections/widgets/reflection_note_card.dart';
 import '../data/models.dart';
 import '../data/progress_models.dart';
 import '../providers/program_providers.dart';
@@ -191,6 +193,8 @@ class _Body extends ConsumerWidget {
         ],
         const SizedBox(height: 16),
         _UnitIdsCard(lesson: lesson),
+        const SizedBox(height: 16),
+        ReflectionNoteCard(lessonId: lesson.id),
         if (lesson.needsProfessionalFollowup) ...[
           const SizedBox(height: 16),
           _WarningCard(
