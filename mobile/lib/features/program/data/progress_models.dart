@@ -153,3 +153,27 @@ class ChildProgressBundle {
   int get completedCount =>
       lessons.where((l) => l.status == ProgressStatus.completed).length;
 }
+
+/// Phase 7 — envelope for `GET /api/children`.
+class ChildListEnvelope {
+  final String? deviceId;
+  final int count;
+  final List<ChildProfile> children;
+
+  const ChildListEnvelope({
+    this.deviceId,
+    required this.count,
+    required this.children,
+  });
+
+  factory ChildListEnvelope.fromJson(Map<String, dynamic> json) {
+    final list = ((json['children'] as List?) ?? const [])
+        .map((e) => ChildProfile.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return ChildListEnvelope(
+      deviceId: json['device_id'] as String?,
+      count: (json['count'] as num?)?.toInt() ?? list.length,
+      children: list,
+    );
+  }
+}

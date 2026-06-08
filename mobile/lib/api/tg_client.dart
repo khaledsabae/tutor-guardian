@@ -518,6 +518,71 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  // ── Phase 7 — list / update / reset ───────────────────────────────────
+
+  Future<Map<String, dynamic>> listChildren() async {
+    final (_, token) = await _auth.readSession();
+    if (token == null) {
+      throw const TgApiError(401, 'مطلوب جلسة لعرض الأطفال.');
+    }
+    final resp = await _http
+        .get(
+          Uri.parse('$_baseUrl/api/children'),
+          headers: _authHeaders(token),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateChild({
+    required int childId,
+    String? name,
+    String? ageGroup,
+    String? gender,
+    String? avatarEmoji,
+  }) async {
+    final (_, token) = await _auth.readSession();
+    if (token == null) {
+      throw const TgApiError(401, 'مطلوب جلسة لتعديل ملف الطفل.');
+    }
+    final body = <String, dynamic>{};
+    if (name != null) body['name'] = name;
+    if (ageGroup != null) body['age_group'] = ageGroup;
+    if (gender != null) body['gender'] = gender;
+    if (avatarEmoji != null) body['avatar_emoji'] = avatarEmoji;
+    final resp = await _http
+        .patch(
+          Uri.parse('$_baseUrl/api/children/$childId'),
+          headers: _authHeaders(token),
+          body: jsonEncode(body),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> resetChildProgress(int childId) async {
+    final (_, token) = await _auth.readSession();
+    if (token == null) {
+      throw const TgApiError(401, 'مطلوب جلسة لإعادة التعيين.');
+    }
+    final resp = await _http
+        .delete(
+          Uri.parse('$_baseUrl/api/children/$childId/progress'),
+          headers: _authHeaders(token),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   // ── Internals ────────────────────────────────────────────────────────
 
   Map<String, String> _authHeaders(String token) => {

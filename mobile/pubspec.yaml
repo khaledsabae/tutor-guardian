@@ -34,6 +34,9 @@ dependencies:
   # Persistent on-device flags (onboarding completion, last active child).
   shared_preferences: ^2.3.2
 
+  # Open the privacy policy from the Settings screen.
+  url_launcher: ^6.3.0
+
   cupertino_icons: ^1.0.8
 
 dev_dependencies:

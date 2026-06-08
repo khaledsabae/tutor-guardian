@@ -190,3 +190,7 @@ class CreateChildNotifier
 
 final createChildProvider = AsyncNotifierProvider.autoDispose<
     CreateChildNotifier, ChildProfile?>(CreateChildNotifier.new);
+
+// Phase 7 settings providers live in `settings_providers.dart` (in
+// the same directory). They re-use [progressRepositoryProvider] and
+// [tgClientProvider] defined above.

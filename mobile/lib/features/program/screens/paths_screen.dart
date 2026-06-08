@@ -10,11 +10,12 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../theme/app_theme.dart';
+import '../../../models/enums.dart';
+import '../../../theme/app_theme.dart';
 import '../data/models.dart';
 import '../providers/program_providers.dart';
 import 'path_detail_screen.dart';
+import 'settings_screen.dart';
 
 class PathsScreen extends ConsumerWidget {
   const PathsScreen({super.key});
@@ -29,6 +30,18 @@ class PathsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('مساراتي'),
         actions: [
+          // Phase 7 — settings is a push route, not a tab.
+          IconButton(
+            tooltip: 'الإعدادات',
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const SettingsScreen(),
+                ),
+              );
+            },
+          ),
           IconButton(
             tooltip: 'تحديث',
             onPressed: () =>

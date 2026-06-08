@@ -77,6 +77,53 @@ class ChildCreateRequest(BaseModel):
         return v
 
 
+class ChildUpdateRequest(BaseModel):
+    """Phase 7 — all fields optional; the client only sends what
+    it wants to change. Empty payload is a 422 (we require at least
+    one field) so the client doesn't silently no-op."""
+
+    name: Optional[str] = Field(default=None, min_length=1, max_length=80)
+    age_group: Optional[str] = Field(default=None, max_length=10)
+    gender: Optional[str] = Field(default=None, max_length=20)
+    avatar_emoji: Optional[str] = Field(default=None, max_length=8)
+
+    @field_validator("age_group")
+    @classmethod
+    def _validate_age_group(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return v
+        if v not in CANONICAL_AGE_GROUPS:
+            raise ValueError(
+                f"age_group غير صالح. القيم المسموحة: {sorted(CANONICAL_AGE_GROUPS)}"
+            )
+        return v
+
+    @field_validator("name")
+    @classmethod
+    def _strip_name(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return v
+        v = v.strip()
+        if not v:
+            raise ValueError("name لا يمكن أن يكون فارغاً")
+        return v
+
+    @field_validator("avatar_emoji")
+    @classmethod
+    def _validate_emoji(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return v
+        if not re.match(r"^[\U0001F000-\U0010FFFF\U00002600-\U000027BF\U0001F300-\U0001FAFF\u2600-\u27BF]+$", v):
+            raise ValueError("avatar_emoji يجب أن يكون إيموجي واحد أو أكثر")
+        return v
+
+    def has_any_field(self) -> bool:
+        return any(
+            getattr(self, f) is not None
+            for f in ("name", "age_group", "gender", "avatar_emoji")
+        )
+
+
 class ChildResponse(BaseModel):
     id: int
     name: str
@@ -109,6 +156,23 @@ def _require_device_id(request: Request) -> str:
         # Should be unreachable on protected routes, but defensive.
         raise HTTPException(status_code=401, detail="مطلوب توثيق.")
     return device_id
+
+
+def _load_owned_child(
+    conn: sqlite3.Connection, child_id: int, device_id: str
+) -> sqlite3.Row:
+    """Load a child by id AND verify device ownership.
+
+    Returns the row on success. Raises HTTPException(404) otherwise —
+    we never leak the existence of a child belonging to another
+    device.
+    """
+    row = conn.execute(
+        "SELECT * FROM child_profiles WHERE id = ?", (child_id,)
+    ).fetchone()
+    if row is None or row["device_id"] != device_id:
+        raise HTTPException(status_code=404, detail="طفل غير موجود.")
+    return row
 
 
 # ── Streak calculation (Phase 6) ────────────────────────────────────────
@@ -229,12 +293,7 @@ def get_child_progress(
     device_id = _require_device_id(request)
     conn = get_conn()
     try:
-        child_row = conn.execute(
-            "SELECT * FROM child_profiles WHERE id = ?", (child_id,)
-        ).fetchone()
-        # Cross-device access: 404 (do not leak existence).
-        if child_row is None or child_row["device_id"] != device_id:
-            raise HTTPException(status_code=404, detail="طفل غير موجود.")
+        _load_owned_child(conn, child_id, device_id)
 
         sql = (
             "SELECT lesson_id, path_id, status, started_at, completed_at, updated_at "
@@ -287,6 +346,116 @@ def get_child_progress(
             "streak_days": streak_days,
             "last_completed_at": last_completed_at,
             "fetched_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        }
+    finally:
+        conn.close()
+
+
+# ── Phase 7 — list / update / reset ──────────────────────────────────────
+
+
+@router.get(
+    "/children",
+    summary="List the children profiles owned by the current device",
+)
+def list_children(request: Request):
+    """Phase 7 — supports multi-child UIs in the future. Phase 6's
+    onboarding still creates a single child, but the settings screen
+    and child-switcher will read from this list."""
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        rows = conn.execute(
+            "SELECT * FROM child_profiles WHERE device_id = ? "
+            "ORDER BY created_at ASC",
+            (device_id,),
+        ).fetchall()
+        return {
+            "device_id": device_id,
+            "count": len(rows),
+            "children": [_row_to_child(r) for r in rows],
+        }
+    finally:
+        conn.close()
+
+
+@router.patch(
+    "/children/{child_id}",
+    response_model=ChildResponse,
+    summary="Update name / age_group / gender / avatar_emoji of a child",
+)
+def update_child(
+    child_id: int,
+    payload: ChildUpdateRequest,
+    request: Request,
+) -> ChildResponse:
+    """Phase 7 settings screen. Empty payloads are rejected (422) so
+    the client can't accidentally no-op."""
+    if not payload.has_any_field():
+        raise HTTPException(
+            status_code=422,
+            detail="يجب إرسال حقل واحد على الأقل للتعديل.",
+        )
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        sets: list[str] = []
+        params: list = []
+        for field in ("name", "age_group", "gender", "avatar_emoji"):
+            v = getattr(payload, field)
+            if v is not None:
+                sets.append(f"{field} = ?")
+                params.append(v)
+        sets.append("updated_at = datetime('now')")
+        params.append(child_id)
+        conn.execute(
+            f"UPDATE child_profiles SET {', '.join(sets)} WHERE id = ?",
+            params,
+        )
+        conn.commit()
+        row = conn.execute(
+            "SELECT * FROM child_profiles WHERE id = ?", (child_id,)
+        ).fetchone()
+        return _row_to_child(row)
+    finally:
+        conn.close()
+
+
+@router.delete(
+    "/children/{child_id}/progress",
+    summary="Reset all lesson_progress rows for the given child",
+)
+def reset_child_progress(child_id: int, request: Request):
+    """Phase 7 — the "reset streak" affordance. Wipes every
+    `lesson_progress` row whose `device_id` matches the requester's
+    AND whose `lesson_id` is in the same set the GET endpoint would
+    return (i.e. all device progress, not path-scoped).
+
+    The child profile itself (name, age_group, avatar_emoji) is
+    untouched. After the call:
+      * GET /api/children/{id}/progress → streak_days = 0
+      * PathDetailScreen's ProgressIndicator → 0 / N
+      * PathDetailScreen's StreakChip → "🔥 ابدأ سلسلتك اليوم"
+
+    Idempotent: a second call on an already-reset child returns
+    `deleted: 0` (still 200) — no error needed.
+    """
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        cur = conn.execute(
+            "DELETE FROM lesson_progress WHERE device_id = ?",
+            (device_id,),
+        )
+        deleted = cur.rowcount
+        conn.commit()
+        return {
+            "child_id": child_id,
+            "device_id": device_id,
+            "deleted": deleted,
+            "reset_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
         }
     finally:
         conn.close()
