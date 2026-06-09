@@ -1,0 +1,1048 @@
+{
+  "10-12_cyberbullying": {
+    "age": "10-12",
+    "topic": "cyberbullying",
+    "source_id": "5fb6588e-d31a-4cca-8e0c-052b364a72ac",
+    "artifacts": [
+      {
+        "id": "1c03d06a-5b04-4b9b-b7ec-715262dc6af3",
+        "type": "Flashcards",
+        "title": "Cyberbullying Flashcards",
+        "filename": null
+      },
+      {
+        "id": "bbb70814-375f-4f34-9347-e24a3e9f7686",
+        "type": "Report",
+        "title": "Empowering Digital Citizens: Navigating Cyberbullying and \"Cybullrelgy\" (Ages 10-12)",
+        "filename": null
+      },
+      {
+        "id": "6f20a810-fa1a-4f5d-aae9-d7fb3d5ff03a",
+        "type": "Quiz",
+        "title": "Cyberbullying Quiz",
+        "filename": null
+      },
+      {
+        "id": "b69571f1-f4c1-446e-b726-b7d4f0b67ce1",
+        "type": "Data Table",
+        "title": "Types of Cyberbullying and Handling Strategies for Children 10-12",
+        "filename": null
+      },
+      {
+        "id": "f0748db9-0ca6-4f09-bb7f-db60a557c38d",
+        "type": "Infographic",
+        "title": "Stop Cyberbullying Action Guide",
+        "filename": null
+      },
+      {
+        "id": "b122c29e-8629-4b94-ba2f-ed4b00be376e",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "aeca8305-44f0-401a-a658-d42a515f1886",
+        "type": "Report",
+        "title": "Lesson Summary: Prayer and Islamic Identity (Ages 10-12)",
+        "filename": null
+      },
+      {
+        "id": "977e0812-cf37-489e-853f-6c376fa10928",
+        "type": "Quiz",
+        "title": "Parenting Quiz",
+        "filename": null
+      },
+      {
+        "id": "c6b2e1ed-b965-4be3-b78f-3cf6bd4773f1",
+        "type": "Data Table",
+        "title": "Prayer Times and Rulings for Children (10-12 Years)",
+        "filename": null
+      }
+    ]
+  },
+  "10-12_prayer": {
+    "age": "10-12",
+    "topic": "prayer",
+    "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
+    "artifacts": [
+      {
+        "id": "f2ec998e-6f10-4583-bf12-19b012fba90e",
+        "type": "Infographic",
+        "title": "Building Foundations Through Prayer",
+        "filename": null
+      }
+    ]
+  },
+  "10-12_quran": {
+    "age": "10-12",
+    "topic": "quran",
+    "source_id": "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951",
+    "artifacts": [
+      {
+        "id": "14207caf-1a32-46e3-bd01-b01a87f34c40",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      }
+    ]
+  },
+  "10-12_ethics": {
+    "age": "10-12",
+    "topic": "ethics",
+    "source_id": "bc41f39f-97ae-4af2-80dd-b070907a80e4",
+    "artifacts": [
+      {
+        "id": "4c45094b-495a-44b8-8320-4713fa0131ea",
+        "type": "Report",
+        "title": "The Quran: My Constitution and Life Compass",
+        "filename": null
+      }
+    ]
+  },
+  "10-12_self_confidence": {
+    "age": "10-12",
+    "topic": "self_confidence",
+    "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
+    "artifacts": [
+      {
+        "id": "41e192a4-b172-4dfe-a1d2-ff7e98c7ee27",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      }
+    ]
+  },
+  "10-12_mental_health": {
+    "age": "10-12",
+    "topic": "mental_health",
+    "source_id": "42bc52b6-7d36-486f-aa79-e98ea5dcb4c9",
+    "artifacts": [
+      {
+        "id": "00db382d-4d83-477f-b60e-5ae5284653c1",
+        "type": "Data Table",
+        "title": "Quranic Surahs and Lessons for Children Aged 10-12",
+        "filename": null
+      }
+    ]
+  },
+  "10-12_healthy_habits": {
+    "age": "10-12",
+    "topic": "healthy_habits",
+    "source_id": "20e00eef-fa60-4165-9364-ef869223c0f6",
+    "artifacts": [
+      {
+        "id": "5f9cb911-64c1-480c-b1cf-31e72f2095a5",
+        "type": "Infographic",
+        "title": "Quranic Compass for Life",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_cyberbullying": {
+    "age": "13-15",
+    "topic": "cyberbullying",
+    "source_id": "5fb6588e-d31a-4cca-8e0c-052b364a72ac",
+    "artifacts": [
+      {
+        "id": "ed8da987-59e3-4dbf-9ab7-09f6b4914b23",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "9f15cd6c-e7ae-462e-86df-397d5a1443ce",
+        "type": "Report",
+        "title": "Character Building Report: Honesty, Truthfulness, and Righteousness (Ages 10-12)",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_critical_thinking": {
+    "age": "13-15",
+    "topic": "critical_thinking",
+    "source_id": "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e",
+    "artifacts": [
+      {
+        "id": "702d4a72-f008-4409-9cdb-9fe61b7f63dd",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "12406306-3c94-42e8-b745-7a311992f323",
+        "type": "Data Table",
+        "title": "Ethical Values and Practical Life Examples for Ages 10-12",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_prayer": {
+    "age": "13-15",
+    "topic": "prayer",
+    "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
+    "artifacts": [
+      {
+        "id": "39d90aa7-bfcb-41c7-afba-04cbacc00702",
+        "type": "Infographic",
+        "title": "Pillars of Character Development",
+        "filename": null
+      },
+      {
+        "id": "4207858d-cc94-4966-b685-52cf5c67d10b",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_quran": {
+    "age": "13-15",
+    "topic": "quran",
+    "source_id": "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951",
+    "artifacts": [
+      {
+        "id": "8c341602-c149-4800-9815-738ea4696c75",
+        "type": "Report",
+        "title": "Self-Confidence and My Islamic Identity: A Guide for Ages 10-12",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_ethics": {
+    "age": "13-15",
+    "topic": "ethics",
+    "source_id": "bc41f39f-97ae-4af2-80dd-b070907a80e4",
+    "artifacts": [
+      {
+        "id": "ba22bdcf-9cf5-43bd-b6d6-29a1017ab259",
+        "type": "Quiz",
+        "title": "Parenting Quiz",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_self_confidence": {
+    "age": "13-15",
+    "topic": "self_confidence",
+    "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
+    "artifacts": [
+      {
+        "id": "7671318f-8c51-41f2-bd7d-4754dd8d80d0",
+        "type": "Data Table",
+        "title": "Self-Confidence Building Steps and Practical Activities for Children 10-12",
+        "filename": null
+      },
+      {
+        "id": "a6a6c05e-4194-4a3e-9752-60f79850ea16",
+        "type": "Infographic",
+        "title": "Supporting Pre-Teen Faith and Confidence",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_mental_health_1": {
+    "age": "13-15",
+    "topic": "mental_health_1",
+    "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
+    "artifacts": [
+      {
+        "id": "b0dbdeed-a6e0-40d3-ac52-6f3fa4eda545",
+        "type": "Flashcards",
+        "title": "Psychology Flashcards",
+        "filename": null
+      },
+      {
+        "id": "4d73fc73-5f31-44de-8c4b-ac4db4eebaaf",
+        "type": "Report",
+        "title": "Educational Report: Navigating Anxiety, Depression, and Mental Wellbeing (Ages 10-12)",
+        "filename": null
+      },
+      {
+        "id": "28aef9b5-35fe-46ed-9577-2691f3de6d52",
+        "type": "Quiz",
+        "title": "Psychology Quiz",
+        "filename": null
+      },
+      {
+        "id": "3aee3dc5-e020-4472-bd30-7666d99c2c0d",
+        "type": "Data Table",
+        "title": "Anxiety and Depression Support Guide for Children 10-12",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_mental_health_anxiety": {
+    "age": "13-15",
+    "topic": "mental_health_anxiety",
+    "source_id": "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951",
+    "artifacts": [
+      {
+        "id": "2f58f121-0e74-49af-b323-b2c36a3c7981",
+        "type": "Infographic",
+        "title": "Pre-Teen Mental Health Guide",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_mental_health_2": {
+    "age": "13-15",
+    "topic": "mental_health_2",
+    "source_id": "bc41f39f-97ae-4af2-80dd-b070907a80e4",
+    "artifacts": [
+      {
+        "id": "b0941c5a-3193-4288-801a-5ca7fcdc9290",
+        "type": "Flashcards",
+        "title": "Development Flashcards",
+        "filename": null
+      },
+      {
+        "id": "840485b1-6616-4a91-94e1-842aecadb260",
+        "type": "Report",
+        "title": "Educational Summary: Healthy Habits and Well-being for the Pre-Teen Years (Ages 10-12)",
+        "filename": null
+      }
+    ]
+  },
+  "13-15_psychological_identity": {
+    "age": "13-15",
+    "topic": "psychological_identity",
+    "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
+    "artifacts": [
+      {
+        "id": "e44031cb-0227-4043-9ead-5b6ba2b5897a",
+        "type": "Quiz",
+        "title": "Parenting Quiz",
+        "filename": null
+      }
+    ]
+  },
+  "16-18_cyberbullying": {
+    "age": "16-18",
+    "topic": "cyberbullying",
+    "source_id": "5fb6588e-d31a-4cca-8e0c-052b364a72ac",
+    "artifacts": [
+      {
+        "id": "f39c34b5-4646-4167-a4db-848e6de76139",
+        "type": "Data Table",
+        "title": "Healthy Daily Routine for Children Aged 10-12 Years",
+        "filename": null
+      }
+    ]
+  },
+  "16-18_critical_thinking": {
+    "age": "16-18",
+    "topic": "critical_thinking",
+    "source_id": "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e",
+    "artifacts": [
+      {
+        "id": "3008837d-2d22-4220-81c3-5ce2b47e4e7e",
+        "type": "Infographic",
+        "title": "Powering the Developing Brain",
+        "filename": null
+      }
+    ]
+  },
+  "16-18_maturity": {
+    "age": "16-18",
+    "topic": "maturity",
+    "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
+    "artifacts": [
+      {
+        "id": "975defa9-1f55-482d-a0a1-38c347102ec0",
+        "type": "Flashcards",
+        "title": "Cyberbullying Flashcards",
+        "filename": null
+      },
+      {
+        "id": "131990dc-571e-4c43-9509-898a56127efd",
+        "type": "Flashcards",
+        "title": "Cybersecurity Flashcards",
+        "filename": null
+      },
+      {
+        "id": "e88bd2de-7339-4c4b-a0d6-ac52a8137d59",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "35f87495-daf1-463e-86fd-7ed54ae0f3b7",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "c48699c0-e5d3-4ac0-890a-9cbdf501d739",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "60c9396c-c0d2-438f-85d8-5e8b72454e4e",
+        "type": "Flashcards",
+        "title": "Parenting Flashcards",
+        "filename": null
+      },
+      {
+        "id": "ca1d5729-9f83-4a0c-aebc-3b445cdf9f39",
+        "type": "Flashcards",
+        "title": "Cybersafety Flashcards",
+        "filename": null
+      }
+    ]
+  },
+  "16-18_quran": {
+    "age": "16-18",
+    "topic": "quran",
+    "source_id": "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951",
+    "artifacts": [
+      {
+        "id": "3a231a17-a5e8-4615-9ff7-e234418d15c3",
+        "type": "Flashcards",
+        "title": "Cyberbullying Flashcards",
+        "filename": null
+      },
+      {
+        "id": "e87e0bff-effc-425e-81ab-62b61faff669",
+        "type": "Report",
+        "title": "Cyberbullying and Digital Safety: A Comprehensive Guide for Teens (Ages 13-15)",
+        "filename": null
+      },
+      {
+        "id": "0a88eef9-2105-4528-95ee-ec8b7019bf78",
+        "type": "Quiz",
+        "title": "Cyberbullying Quiz",
+        "filename": null
+      },
+      {
+        "id": "d186c3b7-a51e-4e7f-a631-7e35b38044a5",
+        "type": "Data Table",
+        "title": "Types of Cyberbullying and Management Strategies for Teens 13-15",
+        "filename": null
+      },
+      {
+        "id": "3d6de30b-37c5-46cc-9263-2d7753fa69ca",
+        "type": "Infographic",
+        "title": "Stopping Cyberbullying Awareness Guide",
+        "filename": null
+      }
+    ]
+  },
+  "4-6_parenting": {
+    "age": "4-6",
+    "topic": "parenting",
+    "source_id": "bc41f39f-97ae-4af2-80dd-b070907a80e4",
+    "artifacts": [
+      {
+        "id": "8dda3050-1ce6-4156-b688-c4f22823b545",
+        "type": "Flashcards",
+        "title": "Citizenship Flashcards",
+        "filename": null
+      },
+      {
+        "id": "d4021015-ba5f-458d-bad7-475ec1e21a7a",
+        "type": "Report",
+        "title": "Educational Summary: Critical Thinking and Digital Citizenship for Adolescents",
+        "filename": null
+      },
+      {
+        "id": "b1432429-b82c-4581-9084-65b1ea073f7c",
+        "type": "Quiz",
+        "title": "Digital Quiz",
+        "filename": null
+      },
+      {
+        "id": "69d0dbf1-ed90-400a-89f8-8e90d35d0178",
+        "type": "Data Table",
+        "title": "Critical Thinking Skills for Adolescents (13-15)",
+        "filename": null
+      },
+      {
+        "id": "d695e236-e9da-4a18-a92e-1abba6d75dd7",
+        "type": "Infographic",
+        "title": "Thinking Critically Online Guide",
+        "filename": null
+      }
+    ]
+  },
+  "4-6_self_confidence": {
+    "age": "4-6",
+    "topic": "self_confidence",
+    "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
+    "artifacts": [
+      {
+        "id": "671daf25-7539-4185-9bdd-2896efb90d03",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "4076c756-252c-47e1-87f1-72ecead5de3f",
+        "type": "Report",
+        "title": "Foundations of Prayer: Building Identity and Connection (Ages 13-15)",
+        "filename": null
+      },
+      {
+        "id": "99740429-3263-4955-9845-8a2a5ad1da52",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "bc076f85-94e0-4d72-85bb-4a77e5713fe9",
+        "type": "Data Table",
+        "title": "Daily Prayer and Worship Tracker for Teens (13-15)",
+        "filename": null
+      },
+      {
+        "id": "41e78475-ee1f-4c71-aa02-c718adcc2484",
+        "type": "Infographic",
+        "title": "Building Character for Teens",
+        "filename": null
+      }
+    ]
+  },
+  "4-6_adab": {
+    "age": "4-6",
+    "topic": "adab",
+    "source_id": "5fb6588e-d31a-4cca-8e0c-052b364a72ac",
+    "artifacts": [
+      {
+        "id": "59e6111c-5de9-469d-86b7-4bee63d335c2",
+        "type": "Flashcards",
+        "title": "Parenting Flashcards",
+        "filename": null
+      },
+      {
+        "id": "0dd6dba4-b4e1-48ba-8a9a-fae8c840ef0e",
+        "type": "Report",
+        "title": "Guided Curriculum Summary: The Quran as a Life Compass for Teens",
+        "filename": null
+      },
+      {
+        "id": "ed59163b-9363-46eb-9044-f0b211b0686f",
+        "type": "Quiz",
+        "title": "Quran Quiz",
+        "filename": null
+      },
+      {
+        "id": "3c5fb4c4-c4e6-4ecf-9ead-0d9414d650bc",
+        "type": "Data Table",
+        "title": "Quranic Surahs for Teenagers (Ages 13-15)",
+        "filename": null
+      },
+      {
+        "id": "be4f5fc4-b4e8-4301-a89c-44dabf21c017",
+        "type": "Infographic",
+        "title": "Quranic Life Compass Infographic",
+        "filename": null
+      }
+    ]
+  },
+  "4-6_critical_thinking": {
+    "age": "4-6",
+    "topic": "critical_thinking",
+    "source_id": "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e",
+    "artifacts": [
+      {
+        "id": "0222edab-e821-421b-921e-b0bad2cbbc34",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "0d08e799-761b-4836-bd70-f00a7a61d766",
+        "type": "Report",
+        "title": "Lesson Summary: Ethics in Interaction and Islamic Identity (Ages 13-15)",
+        "filename": null
+      },
+      {
+        "id": "1f263f41-7905-4a4c-811f-fc2caaf6abeb",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "86c13c8f-af2a-421c-9fb8-d210c8fe4281",
+        "type": "Data Table",
+        "title": "Ethical Conduct and Social Manners for Adolescents (Ages 13-15)",
+        "filename": null
+      },
+      {
+        "id": "64684e13-9c73-4005-92ff-78c44d2dbed9",
+        "type": "Infographic",
+        "title": "Teen's Guide to Islamic Ethics",
+        "filename": null
+      },
+      {
+        "id": "6c615470-4241-4c62-aab8-a7ffc081f7b9",
+        "type": "Flashcards",
+        "title": "Parenting Flashcards",
+        "filename": null
+      },
+      {
+        "id": "228b57b2-9d32-4ef3-a736-6648a55d3928",
+        "type": "Report",
+        "title": "Report: Cultivating Self-Confidence through Islamic Identity for Pre-teens (Ages 10-12)",
+        "filename": null
+      },
+      {
+        "id": "dad16c0a-cc87-4b16-8948-f41f2cf226e9",
+        "type": "Quiz",
+        "title": "Parenting Quiz",
+        "filename": null
+      },
+      {
+        "id": "a0f54cce-5dd1-46ac-99f1-e212a9a36b2d",
+        "type": "Data Table",
+        "title": "Self-Confidence and Identity Building for Young Adolescents",
+        "filename": null
+      },
+      {
+        "id": "07a3234a-7e53-4c7a-80a6-ca03db6167f3",
+        "type": "Infographic",
+        "title": "Islamic Teenage Self-Confidence Guide",
+        "filename": null
+      },
+      {
+        "id": "708d0fbb-c8b6-4254-acc3-484828da39d4",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "050cbbc5-7538-4b1a-a58a-f4aa7fd9c943",
+        "type": "Report",
+        "title": "Adolescent Mental Well-being: Foundations of Islamic Identity and Self-Regulation",
+        "filename": null
+      },
+      {
+        "id": "9a696c5a-4226-4c6c-910b-6d7f8191786d",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "6c1abfab-6268-4201-acbf-faa8c714d4e4",
+        "type": "Data Table",
+        "title": "Mental Health for Adolescents Aged 13-15",
+        "filename": null
+      },
+      {
+        "id": "feb89afc-126b-4a10-b365-aa5531783dcd",
+        "type": "Infographic",
+        "title": "Teen Mental Wellbeing Islamic Guide",
+        "filename": null
+      },
+      {
+        "id": "785ee902-bc5a-4060-aae7-ffb83063e496",
+        "type": "Report",
+        "title": "Educational Summary: Building Spiritual Resilience and Identity (Ages 13-15)",
+        "filename": null
+      },
+      {
+        "id": "17f3c214-6895-4136-b2d2-ab68ade58527",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "206139c8-8ed7-4416-b99c-0921854ec273",
+        "type": "Data Table",
+        "title": "Anxiety and Depression Among Adolescents Aged 13-15",
+        "filename": null
+      },
+      {
+        "id": "b0218183-642a-413a-898b-ae719a5c94db",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "607a9bf5-29f1-4e66-ac6b-3dfdcf418a14",
+        "type": "Report",
+        "title": "Lesson Summary: Mental Well-being and Character Development (Level 2)",
+        "filename": null
+      },
+      {
+        "id": "fa7ca5b9-70a7-49df-8125-4ddaf9387374",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "f24aae6b-8a53-4dd0-91a1-b16ff784a988",
+        "type": "Data Table",
+        "title": "Mental Health and Wellbeing for Adolescents Aged 13-15",
+        "filename": null
+      },
+      {
+        "id": "c397346d-e335-47c0-96f8-0770ab63d854",
+        "type": "Flashcards",
+        "title": "Parenting Flashcards",
+        "filename": null
+      },
+      {
+        "id": "dfb91914-825a-4680-a344-af4dc0d3650e",
+        "type": "Report",
+        "title": "Educational Summary: Psychological Identity and Self-Confidence in Early Adolescence",
+        "filename": null
+      },
+      {
+        "id": "b03d4605-9b61-4af5-967f-1a19061d39a9",
+        "type": "Quiz",
+        "title": "Parenting Quiz",
+        "filename": null
+      },
+      {
+        "id": "deb1e296-d4a8-4ed5-9884-32ea9d1fc38a",
+        "type": "Data Table",
+        "title": "Psychological Identity Factors in Early Adolescents (13-15 Years)",
+        "filename": null
+      }
+    ]
+  },
+  "4-6_bond": {
+    "age": "4-6",
+    "topic": "bond",
+    "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
+    "artifacts": [
+      {
+        "id": "baf0b61d-bffc-47f0-9569-9dc8d8e16088",
+        "type": "Flashcards",
+        "title": "Cyberbullying Flashcards",
+        "filename": null
+      },
+      {
+        "id": "72ca91c4-6ebd-44ec-a907-aa5edadf72f9",
+        "type": "Report",
+        "title": "Digital Citizenship and Cyber Safety: A Strategic Summary for Young Adults",
+        "filename": null
+      },
+      {
+        "id": "8ece2b5a-801b-4451-b38d-86ecc25036a0",
+        "type": "Quiz",
+        "title": "Cyberbullying Quiz",
+        "filename": null
+      },
+      {
+        "id": "85a5a686-acc7-4607-9a9b-c99e5b6734ea",
+        "type": "Data Table",
+        "title": "Digital Citizenship Indicators for Adolescents (Ages 16-18)",
+        "filename": null
+      },
+      {
+        "id": "f9c3c2f6-2168-470e-831c-f97dd2afe028",
+        "type": "Flashcards",
+        "title": "Cyberbullying Flashcards",
+        "filename": null
+      },
+      {
+        "id": "3908c473-fc9c-48e1-9dfb-61f73c1963b9",
+        "type": "Report",
+        "title": "Advanced Critical Thinking and Digital Citizenship: A Lesson Summary for Ages 16-18",
+        "filename": null
+      },
+      {
+        "id": "641152d0-0553-45d5-a776-7345530b92db",
+        "type": "Quiz",
+        "title": "Digital Literacy Quiz",
+        "filename": null
+      },
+      {
+        "id": "a5894bb4-702a-4951-b29f-673f9025ba87",
+        "type": "Data Table",
+        "title": "Critical Thinking and Digital Safety for Adolescents (16-18)",
+        "filename": null
+      },
+      {
+        "id": "afc1c2a1-913a-4a1c-89c6-e370d7171cb5",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "8ac9c785-372b-4639-b477-39bfc6c0019e",
+        "type": "Report",
+        "title": "Transitioning to Maturity: Islamic Identity and Spiritual Foundation (Ages 16-18)",
+        "filename": null
+      },
+      {
+        "id": "15e6bc0f-639d-4850-ae66-11ec9ce7255d",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "8da9e07d-3ad5-4555-a005-d2aebe52b31a",
+        "type": "Flashcards",
+        "title": "Quranic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "7613847a-cb58-4ba5-8131-0bb2241caaca",
+        "type": "Report",
+        "title": "The Quran and Maturity: A Strategic Framework for Young Adults (16-18)",
+        "filename": null
+      },
+      {
+        "id": "42a33db4-cd62-438e-8684-abebe6ac612c",
+        "type": "Quiz",
+        "title": "Parenting Quiz",
+        "filename": null
+      },
+      {
+        "id": "5efbd4b2-14af-4c0c-8a59-1763ab9e8ce3",
+        "type": "Flashcards",
+        "title": "Parenting Flashcards",
+        "filename": null
+      },
+      {
+        "id": "4c566a4c-3414-4f7a-9a7f-3638fa6fd184",
+        "type": "Report",
+        "title": "Comprehensive Lesson Summary: Foundations of Positive Islamic Parenting",
+        "filename": null
+      },
+      {
+        "id": "bdde5c73-10fb-4837-ae9e-ba6fb14ffa44",
+        "type": "Quiz",
+        "title": "Education Quiz",
+        "filename": null
+      },
+      {
+        "id": "bf1d1fc9-e898-45cf-a376-f902884743e9",
+        "type": "Flashcards",
+        "title": "Parenting Flashcards",
+        "filename": null
+      },
+      {
+        "id": "d1107bb0-5c7d-45e6-9db8-d81301c0d77e",
+        "type": "Report",
+        "title": "Educational Summary: Building Islamic Identity in Pre-adolescence (Ages 10-12)",
+        "filename": null
+      },
+      {
+        "id": "624efdfb-d62b-49b7-ab72-4fcdb51765a5",
+        "type": "Quiz",
+        "title": "Parenting Quiz",
+        "filename": null
+      },
+      {
+        "id": "737282c3-868f-4a8b-845e-ae409bb4a46d",
+        "type": "Flashcards",
+        "title": "Cyberbullying Flashcards",
+        "filename": null
+      },
+      {
+        "id": "9ffe5451-b846-4cbd-8ba3-9b4d3d668474",
+        "type": "Report",
+        "title": "Lesson Summary: Digital Etiquette and Online Kindness for Young Children",
+        "filename": null
+      },
+      {
+        "id": "dea9aa3b-c520-4407-8d77-1cd5289938e7",
+        "type": "Quiz",
+        "title": "Cyberbullying Quiz",
+        "filename": null
+      },
+      {
+        "id": "378b81bb-c8bd-4752-9805-4abf5b716de4",
+        "type": "Flashcards",
+        "title": "Cyberbullying Flashcards",
+        "filename": null
+      },
+      {
+        "id": "82d1ec21-e763-42ff-899c-2de073243af6",
+        "type": "Report",
+        "title": "Lesson Summary: Critical Thinking and Digital Citizenship",
+        "filename": null
+      },
+      {
+        "id": "07d45b2d-3573-4d92-8f40-a1a11ba5ba04",
+        "type": "Quiz",
+        "title": "Cybersafety Quiz",
+        "filename": null
+      },
+      {
+        "id": "40be55eb-e519-4b6c-ad2d-f5893b9e3e17",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "fb227993-03cb-4572-8fff-47cde0c8f89d",
+        "type": "Report",
+        "title": "Lesson Summary: Strengthening Family Bonding (Ages 4-6)",
+        "filename": null
+      },
+      {
+        "id": "aa1ab9f0-6185-4f57-9e9d-55dd9bcc875b",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "faf85595-b666-4e11-a942-4a17db92dbe2",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "d12932e5-3c6c-45f4-b9ec-d575dfe110ac",
+        "type": "Report",
+        "title": "Lesson Summary: Divine Love and Prayer for Young Hearts (Ages 4-6)",
+        "filename": null
+      },
+      {
+        "id": "85973143-da8d-4806-80b4-04130998989c",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "9d455f15-c955-4721-b333-8a2903c8b1fe",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "432a41fc-8de1-45e2-a350-6aab057e51c4",
+        "type": "Report",
+        "title": "Lesson Summary: The Quran and Our Values (Ages 4-6)",
+        "filename": null
+      },
+      {
+        "id": "203ef81e-a330-4ea8-8e4e-54cc51054979",
+        "type": "Quiz",
+        "title": "Education Quiz",
+        "filename": null
+      },
+      {
+        "id": "a4532b44-2cc9-415e-92c1-34cf6931d089",
+        "type": "Flashcards",
+        "title": "Parenting Flashcards",
+        "filename": null
+      },
+      {
+        "id": "ffb71240-b7e8-4741-b46a-94cdcbb5792e",
+        "type": "Report",
+        "title": "Lesson Summary: Digital Wellbeing and Islamic Identity for Children (Ages 10–12)",
+        "filename": null
+      },
+      {
+        "id": "d3450ae1-8e55-45b6-ab5c-e063ba9b7cfe",
+        "type": "Quiz",
+        "title": "Parenting Quiz",
+        "filename": null
+      },
+      {
+        "id": "b5782abc-28b3-40d8-ab44-12421330e157",
+        "type": "Flashcards",
+        "title": "Cyberbullying Flashcards",
+        "filename": null
+      },
+      {
+        "id": "95d9b71e-698b-484a-b6a8-f17f332cb44b",
+        "type": "Report",
+        "title": "Digital Citizenship and Online Safety: My Guide to Being a Great Online Friend 🌐",
+        "filename": null
+      },
+      {
+        "id": "1adf60d7-01e4-425b-909f-e2171308ce2f",
+        "type": "Quiz",
+        "title": "Cyberbullying Quiz",
+        "filename": null
+      },
+      {
+        "id": "1a9c55c5-1f5a-4523-b144-f1eb74cd0bb4",
+        "type": "Flashcards",
+        "title": "Cybersecurity Flashcards",
+        "filename": null
+      },
+      {
+        "id": "cfc03bdc-0000-4414-8461-7198e23db395",
+        "type": "Report",
+        "title": "Educational Summary: Digital Citizenship and Critical Thinking for Children",
+        "filename": null
+      },
+      {
+        "id": "08d8362f-db2d-4f2f-849f-cefd15f57052",
+        "type": "Quiz",
+        "title": "Cyberbullying Quiz",
+        "filename": null
+      },
+      {
+        "id": "54019a95-9d1b-41dd-89cc-fbb9b50b8f3c",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "eb171069-a6a8-45e3-b28a-5d3cf1a21061",
+        "type": "Report",
+        "title": "Educational Report: Prayer as the Pillar of Religion and Identity for Children",
+        "filename": null
+      },
+      {
+        "id": "7befdd06-ea53-4ae2-b154-eecbe389eeae",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "66aa1ed5-fdf1-463e-a406-dacaba739f32",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "898ee24d-533b-402b-b1aa-90a0cd540db7",
+        "type": "Report",
+        "title": "Quran Lesson Summary: My Life’s Compass (Ages 7-9)",
+        "filename": null
+      },
+      {
+        "id": "903b8d50-0521-486f-8be0-8dd4a2fc9d42",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "940f1871-d68d-4817-a9f8-ecd6ccce2d06",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "c77f00a9-6e69-4ee1-8249-af3ac5a3a8dc",
+        "type": "Report",
+        "title": "Lesson Summary: Foundations of Islamic Identity and Ethical Character Development",
+        "filename": null
+      },
+      {
+        "id": "478bd769-a727-4ad3-ac5f-112c4860f2d1",
+        "type": "Quiz",
+        "title": "Islamic Quiz",
+        "filename": null
+      },
+      {
+        "id": "f8b2eaf2-bd53-44d5-9c35-3194d482d2d1",
+        "type": "Flashcards",
+        "title": "Islamic Flashcards",
+        "filename": null
+      },
+      {
+        "id": "59741896-c8c8-44d5-81aa-8cea7f0e6128",
+        "type": "Report",
+        "title": "Confidence and Identity: You are His Child and Allah Sees You",
+        "filename": null
+      },
+      {
+        "id": "05d6d0a5-8ef3-4283-8c99-8a9d481b4852",
+        "type": "Quiz",
+        "title": "Parenting Quiz",
+        "filename": null
+      }
+    ]
+  }
+}

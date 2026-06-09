@@ -1,0 +1,1524 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2026-06-09",
+    "total_lessons": 44,
+    "notebook_id": "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287",
+    "total_source_pdfs": 44,
+    "coverage": {
+      "flashcards": "6/44",
+      "quizzes": "6/44",
+      "reports": "23/44",
+      "data_tables": "17/44",
+      "infographics": "10/44"
+    },
+    "lessons_by_age": {
+      "10-12": 10,
+      "13-15": 14,
+      "16-18": 5,
+      "4-6": 8,
+      "7-9": 7
+    }
+  },
+  "lessons": [
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "age_group": "10-12",
+      "topic_path": "cyber_digital_citizenship",
+      "source_id": "4086896f-0dd6-4a28-bade-c8032b18e9d1",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "f8b2eaf2-bd53-44d5-9c35-3194d482d2d1",
+            "file": "docs/lesson_assets/flashcards/f8b2eaf2-bd53-44d5-9c35-3194d482d2d1_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "66aa1ed5-fdf1-463e-a406-dacaba739f32",
+            "file": "docs/lesson_assets/flashcards/66aa1ed5-fdf1-463e-a406-dacaba739f32_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "40be55eb-e519-4b6c-ad2d-f5893b9e3e17",
+            "file": "docs/lesson_assets/flashcards/40be55eb-e519-4b6c-ad2d-f5893b9e3e17_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "708d0fbb-c8b6-4254-acc3-484828da39d4",
+            "file": "docs/lesson_assets/flashcards/708d0fbb-c8b6-4254-acc3-484828da39d4_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "35f87495-daf1-463e-86fd-7ed54ae0f3b7",
+            "file": "docs/lesson_assets/flashcards/35f87495-daf1-463e-86fd-7ed54ae0f3b7_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "4207858d-cc94-4966-b685-52cf5c67d10b",
+            "file": "docs/lesson_assets/flashcards/4207858d-cc94-4966-b685-52cf5c67d10b_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "b122c29e-8629-4b94-ba2f-ed4b00be376e",
+            "file": "docs/lesson_assets/flashcards/b122c29e-8629-4b94-ba2f-ed4b00be376e_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "5efbd4b2-14af-4c0c-8a59-1763ab9e8ce3",
+            "file": "docs/lesson_assets/flashcards/5efbd4b2-14af-4c0c-8a59-1763ab9e8ce3_Parenting_Flashcards.json",
+            "title": "Parenting Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "59e6111c-5de9-469d-86b7-4bee63d335c2",
+            "file": "docs/lesson_assets/flashcards/59e6111c-5de9-469d-86b7-4bee63d335c2_Parenting_Flashcards.json",
+            "title": "Parenting Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "8da9e07d-3ad5-4555-a005-d2aebe52b31a",
+            "file": "docs/lesson_assets/flashcards/8da9e07d-3ad5-4555-a005-d2aebe52b31a_Quranic_Flashcards.json",
+            "title": "Quranic Flashcards",
+            "item_count": 24
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "903b8d50-0521-486f-8be0-8dd4a2fc9d42",
+            "file": "docs/lesson_assets/quizzes/903b8d50-0521-486f-8be0-8dd4a2fc9d42_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "aa1ab9f0-6185-4f57-9e9d-55dd9bcc875b",
+            "file": "docs/lesson_assets/quizzes/aa1ab9f0-6185-4f57-9e9d-55dd9bcc875b_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "1f263f41-7905-4a4c-811f-fc2caaf6abeb",
+            "file": "docs/lesson_assets/quizzes/1f263f41-7905-4a4c-811f-fc2caaf6abeb_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "99740429-3263-4955-9845-8a2a5ad1da52",
+            "file": "docs/lesson_assets/quizzes/99740429-3263-4955-9845-8a2a5ad1da52_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "05d6d0a5-8ef3-4283-8c99-8a9d481b4852",
+            "file": "docs/lesson_assets/quizzes/05d6d0a5-8ef3-4283-8c99-8a9d481b4852_Parenting_Quiz.json",
+            "title": "Parenting Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "42a33db4-cd62-438e-8684-abebe6ac612c",
+            "file": "docs/lesson_assets/quizzes/42a33db4-cd62-438e-8684-abebe6ac612c_Parenting_Quiz.json",
+            "title": "Parenting Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "e44031cb-0227-4043-9ead-5b6ba2b5897a",
+            "file": "docs/lesson_assets/quizzes/e44031cb-0227-4043-9ead-5b6ba2b5897a_Parenting_Quiz.json",
+            "title": "Parenting Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "ed59163b-9363-46eb-9044-f0b211b0686f",
+            "file": "docs/lesson_assets/quizzes/ed59163b-9363-46eb-9044-f0b211b0686f_Quran_Quiz.json",
+            "title": "Quran Quiz",
+            "item_count": 10
+          }
+        ],
+        "reports": [
+          {
+            "id": "4c566a4c-3414-4f7a-9a7f-3638fa6fd184",
+            "file": "docs/lesson_assets/reports/4c566a4c-3414-4f7a-9a7f-3638fa6fd184_Comprehensive_Lesson_Summary__Foundations_of_Posit.md",
+            "title": "Comprehensive Lesson Summary: Foundations of Positive Islamic Parenting",
+            "item_count": 0
+          },
+          {
+            "id": "8ac9c785-372b-4639-b477-39bfc6c0019e",
+            "file": "docs/lesson_assets/reports/8ac9c785-372b-4639-b477-39bfc6c0019e_Transitioning_to_Maturity__Islamic_Identity_and_Sp.md",
+            "title": "Transitioning to Maturity: Islamic Identity and Spiritual Foundation (Ages 16-18)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "b69571f1-f4c1-446e-b726-b7d4f0b67ce1",
+            "file": "docs/lesson_assets/data_tables/b69571f1-f4c1-446e-b726-b7d4f0b67ce1_Types_of_Cyberbullying_and_Handling_Strategies_for.csv",
+            "title": "Types of Cyberbullying and Handling Strategies for Children 10-12",
+            "item_count": 0
+          }
+        ],
+        "infographics": [
+          {
+            "id": "f2ec998e-6f10-4583-bf12-19b012fba90e",
+            "file": "docs/lesson_assets/infographics/f2ec998e-6f10-4583-bf12-19b012fba90e_Building_Foundations_Through_Prayer.png",
+            "title": "Building Foundations Through Prayer",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_01_podcast.mp3",
+            "size_bytes": 37871384
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_02",
+      "age_group": "10-12",
+      "topic_path": "cyber_digital_citizenship",
+      "source_id": "5fb6588e-d31a-4cca-8e0c-052b364a72ac",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "940f1871-d68d-4817-a9f8-ecd6ccce2d06",
+            "file": "docs/lesson_assets/flashcards/940f1871-d68d-4817-a9f8-ecd6ccce2d06_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "9d455f15-c955-4721-b333-8a2903c8b1fe",
+            "file": "docs/lesson_assets/flashcards/9d455f15-c955-4721-b333-8a2903c8b1fe_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "afc1c2a1-913a-4a1c-89c6-e370d7171cb5",
+            "file": "docs/lesson_assets/flashcards/afc1c2a1-913a-4a1c-89c6-e370d7171cb5_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "0222edab-e821-421b-921e-b0bad2cbbc34",
+            "file": "docs/lesson_assets/flashcards/0222edab-e821-421b-921e-b0bad2cbbc34_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "c48699c0-e5d3-4ac0-890a-9cbdf501d739",
+            "file": "docs/lesson_assets/flashcards/c48699c0-e5d3-4ac0-890a-9cbdf501d739_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "ed8da987-59e3-4dbf-9ab7-09f6b4914b23",
+            "file": "docs/lesson_assets/flashcards/ed8da987-59e3-4dbf-9ab7-09f6b4914b23_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "a4532b44-2cc9-415e-92c1-34cf6931d089",
+            "file": "docs/lesson_assets/flashcards/a4532b44-2cc9-415e-92c1-34cf6931d089_Parenting_Flashcards.json",
+            "title": "Parenting Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "c397346d-e335-47c0-96f8-0770ab63d854",
+            "file": "docs/lesson_assets/flashcards/c397346d-e335-47c0-96f8-0770ab63d854_Parenting_Flashcards.json",
+            "title": "Parenting Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "60c9396c-c0d2-438f-85d8-5e8b72454e4e",
+            "file": "docs/lesson_assets/flashcards/60c9396c-c0d2-438f-85d8-5e8b72454e4e_Parenting_Flashcards.json",
+            "title": "Parenting Flashcards",
+            "item_count": 24
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "7befdd06-ea53-4ae2-b154-eecbe389eeae",
+            "file": "docs/lesson_assets/quizzes/7befdd06-ea53-4ae2-b154-eecbe389eeae_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "15e6bc0f-639d-4850-ae66-11ec9ce7255d",
+            "file": "docs/lesson_assets/quizzes/15e6bc0f-639d-4850-ae66-11ec9ce7255d_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "fa7ca5b9-70a7-49df-8125-4ddaf9387374",
+            "file": "docs/lesson_assets/quizzes/fa7ca5b9-70a7-49df-8125-4ddaf9387374_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "702d4a72-f008-4409-9cdb-9fe61b7f63dd",
+            "file": "docs/lesson_assets/quizzes/702d4a72-f008-4409-9cdb-9fe61b7f63dd_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "d3450ae1-8e55-45b6-ab5c-e063ba9b7cfe",
+            "file": "docs/lesson_assets/quizzes/d3450ae1-8e55-45b6-ab5c-e063ba9b7cfe_Parenting_Quiz.json",
+            "title": "Parenting Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "b03d4605-9b61-4af5-967f-1a19061d39a9",
+            "file": "docs/lesson_assets/quizzes/b03d4605-9b61-4af5-967f-1a19061d39a9_Parenting_Quiz.json",
+            "title": "Parenting Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "ba22bdcf-9cf5-43bd-b6d6-29a1017ab259",
+            "file": "docs/lesson_assets/quizzes/ba22bdcf-9cf5-43bd-b6d6-29a1017ab259_Parenting_Quiz.json",
+            "title": "Parenting Quiz",
+            "item_count": 10
+          }
+        ],
+        "reports": [
+          {
+            "id": "eb171069-a6a8-45e3-b28a-5d3cf1a21061",
+            "file": "docs/lesson_assets/reports/eb171069-a6a8-45e3-b28a-5d3cf1a21061_Educational_Report__Prayer_as_the_Pillar_of_Religi.md",
+            "title": "Educational Report: Prayer as the Pillar of Religion and Identity for Children",
+            "item_count": 0
+          },
+          {
+            "id": "bbb70814-375f-4f34-9347-e24a3e9f7686",
+            "file": "docs/lesson_assets/reports/bbb70814-375f-4f34-9347-e24a3e9f7686_Empowering_Digital_Citizens__Navigating_Cyberbully.md",
+            "title": "Empowering Digital Citizens: Navigating Cyberbullying and \"Cybullrelgy\" (Ages 10-12)",
+            "item_count": 0
+          },
+          {
+            "id": "ffb71240-b7e8-4741-b46a-94cdcbb5792e",
+            "file": "docs/lesson_assets/reports/ffb71240-b7e8-4741-b46a-94cdcbb5792e_Lesson_Summary__Digital_Wellbeing_and_Islamic_Iden.md",
+            "title": "Lesson Summary: Digital Wellbeing and Islamic Identity for Children (Ages 10–12)",
+            "item_count": 0
+          },
+          {
+            "id": "4c45094b-495a-44b8-8320-4713fa0131ea",
+            "file": "docs/lesson_assets/reports/4c45094b-495a-44b8-8320-4713fa0131ea_The_Quran__My_Constitution_and_Life_Compass.md",
+            "title": "The Quran: My Constitution and Life Compass",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [],
+        "infographics": [
+          {
+            "id": "5f9cb911-64c1-480c-b1cf-31e72f2095a5",
+            "file": "docs/lesson_assets/infographics/5f9cb911-64c1-480c-b1cf-31e72f2095a5_Quranic_Compass_for_Life.png",
+            "title": "Quranic Compass for Life",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_03",
+      "age_group": "10-12",
+      "topic_path": "cyber_digital_citizenship",
+      "source_id": "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "54019a95-9d1b-41dd-89cc-fbb9b50b8f3c",
+            "file": "docs/lesson_assets/flashcards/54019a95-9d1b-41dd-89cc-fbb9b50b8f3c_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "faf85595-b666-4e11-a942-4a17db92dbe2",
+            "file": "docs/lesson_assets/flashcards/faf85595-b666-4e11-a942-4a17db92dbe2_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "b0218183-642a-413a-898b-ae719a5c94db",
+            "file": "docs/lesson_assets/flashcards/b0218183-642a-413a-898b-ae719a5c94db_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "671daf25-7539-4185-9bdd-2896efb90d03",
+            "file": "docs/lesson_assets/flashcards/671daf25-7539-4185-9bdd-2896efb90d03_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "e88bd2de-7339-4c4b-a0d6-ac52a8137d59",
+            "file": "docs/lesson_assets/flashcards/e88bd2de-7339-4c4b-a0d6-ac52a8137d59_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "14207caf-1a32-46e3-bd01-b01a87f34c40",
+            "file": "docs/lesson_assets/flashcards/14207caf-1a32-46e3-bd01-b01a87f34c40_Islamic_Flashcards.json",
+            "title": "Islamic Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "bf1d1fc9-e898-45cf-a376-f902884743e9",
+            "file": "docs/lesson_assets/flashcards/bf1d1fc9-e898-45cf-a376-f902884743e9_Parenting_Flashcards.json",
+            "title": "Parenting Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "6c615470-4241-4c62-aab8-a7ffc081f7b9",
+            "file": "docs/lesson_assets/flashcards/6c615470-4241-4c62-aab8-a7ffc081f7b9_Parenting_Flashcards.json",
+            "title": "Parenting Flashcards",
+            "item_count": 24
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "478bd769-a727-4ad3-ac5f-112c4860f2d1",
+            "file": "docs/lesson_assets/quizzes/478bd769-a727-4ad3-ac5f-112c4860f2d1_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "85973143-da8d-4806-80b4-04130998989c",
+            "file": "docs/lesson_assets/quizzes/85973143-da8d-4806-80b4-04130998989c_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "17f3c214-6895-4136-b2d2-ab68ade58527",
+            "file": "docs/lesson_assets/quizzes/17f3c214-6895-4136-b2d2-ab68ade58527_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "9a696c5a-4226-4c6c-910b-6d7f8191786d",
+            "file": "docs/lesson_assets/quizzes/9a696c5a-4226-4c6c-910b-6d7f8191786d_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "41e192a4-b172-4dfe-a1d2-ff7e98c7ee27",
+            "file": "docs/lesson_assets/quizzes/41e192a4-b172-4dfe-a1d2-ff7e98c7ee27_Islamic_Quiz.json",
+            "title": "Islamic Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "624efdfb-d62b-49b7-ab72-4fcdb51765a5",
+            "file": "docs/lesson_assets/quizzes/624efdfb-d62b-49b7-ab72-4fcdb51765a5_Parenting_Quiz.json",
+            "title": "Parenting Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "dad16c0a-cc87-4b16-8948-f41f2cf226e9",
+            "file": "docs/lesson_assets/quizzes/dad16c0a-cc87-4b16-8948-f41f2cf226e9_Parenting_Quiz.json",
+            "title": "Parenting Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "977e0812-cf37-489e-853f-6c376fa10928",
+            "file": "docs/lesson_assets/quizzes/977e0812-cf37-489e-853f-6c376fa10928_Parenting_Quiz.json",
+            "title": "Parenting Quiz",
+            "item_count": 10
+          }
+        ],
+        "reports": [
+          {
+            "id": "d12932e5-3c6c-45f4-b9ec-d575dfe110ac",
+            "file": "docs/lesson_assets/reports/d12932e5-3c6c-45f4-b9ec-d575dfe110ac_Lesson_Summary__Divine_Love_and_Prayer_for_Young_H.md",
+            "title": "Lesson Summary: Divine Love and Prayer for Young Hearts (Ages 4-6)",
+            "item_count": 0
+          },
+          {
+            "id": "c77f00a9-6e69-4ee1-8249-af3ac5a3a8dc",
+            "file": "docs/lesson_assets/reports/c77f00a9-6e69-4ee1-8249-af3ac5a3a8dc_Lesson_Summary__Foundations_of_Islamic_Identity_an.md",
+            "title": "Lesson Summary: Foundations of Islamic Identity and Ethical Character Development",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [],
+        "infographics": [
+          {
+            "id": "be4f5fc4-b4e8-4301-a89c-44dabf21c017",
+            "file": "docs/lesson_assets/infographics/be4f5fc4-b4e8-4301-a89c-44dabf21c017_Quranic_Life_Compass_Infographic.png",
+            "title": "Quranic Life Compass Infographic",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_01",
+      "age_group": "10-12",
+      "topic_path": "islamic_parenting_identity",
+      "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "9f15cd6c-e7ae-462e-86df-397d5a1443ce",
+            "file": "docs/lesson_assets/reports/9f15cd6c-e7ae-462e-86df-397d5a1443ce_Character_Building_Report__Honesty,_Truthfulness,_.md",
+            "title": "Character Building Report: Honesty, Truthfulness, and Righteousness (Ages 10-12)",
+            "item_count": 0
+          },
+          {
+            "id": "8c341602-c149-4800-9815-738ea4696c75",
+            "file": "docs/lesson_assets/reports/8c341602-c149-4800-9815-738ea4696c75_Self-Confidence_and_My_Islamic_Identity__A_Guide_f.md",
+            "title": "Self-Confidence and My Islamic Identity: A Guide for Ages 10-12",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "12406306-3c94-42e8-b745-7a311992f323",
+            "file": "docs/lesson_assets/data_tables/12406306-3c94-42e8-b745-7a311992f323_Ethical_Values_and_Practical_Life_Examples_for_Age.csv",
+            "title": "Ethical Values and Practical Life Examples for Ages 10-12",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_02",
+      "age_group": "10-12",
+      "topic_path": "islamic_parenting_identity",
+      "source_id": "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "d1107bb0-5c7d-45e6-9db8-d81301c0d77e",
+            "file": "docs/lesson_assets/reports/d1107bb0-5c7d-45e6-9db8-d81301c0d77e_Educational_Summary__Building_Islamic_Identity_in_.md",
+            "title": "Educational Summary: Building Islamic Identity in Pre-adolescence (Ages 10-12)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "c6b2e1ed-b965-4be3-b78f-3cf6bd4773f1",
+            "file": "docs/lesson_assets/data_tables/c6b2e1ed-b965-4be3-b78f-3cf6bd4773f1_Prayer_Times_and_Rulings_for_Children_(10-12_Years.csv",
+            "title": "Prayer Times and Rulings for Children (10-12 Years)",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_03",
+      "age_group": "10-12",
+      "topic_path": "islamic_parenting_identity",
+      "source_id": "bc41f39f-97ae-4af2-80dd-b070907a80e4",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "aeca8305-44f0-401a-a658-d42a515f1886",
+            "file": "docs/lesson_assets/reports/aeca8305-44f0-401a-a658-d42a515f1886_Lesson_Summary__Prayer_and_Islamic_Identity_(Ages_.md",
+            "title": "Lesson Summary: Prayer and Islamic Identity (Ages 10-12)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "00db382d-4d83-477f-b60e-5ae5284653c1",
+            "file": "docs/lesson_assets/data_tables/00db382d-4d83-477f-b60e-5ae5284653c1_Quranic_Surahs_and_Lessons_for_Children_Aged_10-12.csv",
+            "title": "Quranic Surahs and Lessons for Children Aged 10-12",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_04",
+      "age_group": "10-12",
+      "topic_path": "islamic_parenting_identity",
+      "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "228b57b2-9d32-4ef3-a736-6648a55d3928",
+            "file": "docs/lesson_assets/reports/228b57b2-9d32-4ef3-a736-6648a55d3928_Report__Cultivating_Self-Confidence_through_Islami.md",
+            "title": "Report: Cultivating Self-Confidence through Islamic Identity for Pre-teens (Ages 10-12)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "7671318f-8c51-41f2-bd7d-4754dd8d80d0",
+            "file": "docs/lesson_assets/data_tables/7671318f-8c51-41f2-bd7d-4754dd8d80d0_Self-Confidence_Building_Steps_and_Practical_Activ.csv",
+            "title": "Self-Confidence Building Steps and Practical Activities for Children 10-12",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_01",
+      "age_group": "10-12",
+      "topic_path": "medical_puberty_wellbeing",
+      "source_id": "c48f34fc-f1a1-4150-a55c-bef14c4051f8",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "4d73fc73-5f31-44de-8c4b-ac4db4eebaaf",
+            "file": "docs/lesson_assets/reports/4d73fc73-5f31-44de-8c4b-ac4db4eebaaf_Educational_Report__Navigating_Anxiety,_Depression.md",
+            "title": "Educational Report: Navigating Anxiety, Depression, and Mental Wellbeing (Ages 10-12)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "3aee3dc5-e020-4472-bd30-7666d99c2c0d",
+            "file": "docs/lesson_assets/data_tables/3aee3dc5-e020-4472-bd30-7666d99c2c0d_Anxiety_and_Depression_Support_Guide_for_Children_.csv",
+            "title": "Anxiety and Depression Support Guide for Children 10-12",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_02",
+      "age_group": "10-12",
+      "topic_path": "medical_puberty_wellbeing",
+      "source_id": "42bc52b6-7d36-486f-aa79-e98ea5dcb4c9",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "840485b1-6616-4a91-94e1-842aecadb260",
+            "file": "docs/lesson_assets/reports/840485b1-6616-4a91-94e1-842aecadb260_Educational_Summary__Healthy_Habits_and_Well-being.md",
+            "title": "Educational Summary: Healthy Habits and Well-being for the Pre-Teen Years (Ages 10-12)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "f39c34b5-4646-4167-a4db-848e6de76139",
+            "file": "docs/lesson_assets/data_tables/f39c34b5-4646-4167-a4db-848e6de76139_Healthy_Daily_Routine_for_Children_Aged_10-12_Year.csv",
+            "title": "Healthy Daily Routine for Children Aged 10-12 Years",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "age_group": "10-12",
+      "topic_path": "medical_puberty_wellbeing",
+      "source_id": "20e00eef-fa60-4165-9364-ef869223c0f6",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [
+          {
+            "id": "2f58f121-0e74-49af-b323-b2c36a3c7981",
+            "file": "docs/lesson_assets/infographics/2f58f121-0e74-49af-b323-b2c36a3c7981_Pre-Teen_Mental_Health_Guide.png",
+            "title": "Pre-Teen Mental Health Guide",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_cyber_01",
+      "age_group": "13-15",
+      "topic_path": "cyber_digital_maturity",
+      "source_id": "b607c436-be69-4a32-839b-af09cae03dc4",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "378b81bb-c8bd-4752-9805-4abf5b716de4",
+            "file": "docs/lesson_assets/flashcards/378b81bb-c8bd-4752-9805-4abf5b716de4_Cyberbullying_Flashcards.json",
+            "title": "Cyberbullying Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "f9c3c2f6-2168-470e-831c-f97dd2afe028",
+            "file": "docs/lesson_assets/flashcards/f9c3c2f6-2168-470e-831c-f97dd2afe028_Cyberbullying_Flashcards.json",
+            "title": "Cyberbullying Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "975defa9-1f55-482d-a0a1-38c347102ec0",
+            "file": "docs/lesson_assets/flashcards/975defa9-1f55-482d-a0a1-38c347102ec0_Cyberbullying_Flashcards.json",
+            "title": "Cyberbullying Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "1a9c55c5-1f5a-4523-b144-f1eb74cd0bb4",
+            "file": "docs/lesson_assets/flashcards/1a9c55c5-1f5a-4523-b144-f1eb74cd0bb4_Cybersecurity_Flashcards.json",
+            "title": "Cybersecurity Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "b0dbdeed-a6e0-40d3-ac52-6f3fa4eda545",
+            "file": "docs/lesson_assets/flashcards/b0dbdeed-a6e0-40d3-ac52-6f3fa4eda545_Psychology_Flashcards.json",
+            "title": "Psychology Flashcards",
+            "item_count": 24
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "dea9aa3b-c520-4407-8d77-1cd5289938e7",
+            "file": "docs/lesson_assets/quizzes/dea9aa3b-c520-4407-8d77-1cd5289938e7_Cyberbullying_Quiz.json",
+            "title": "Cyberbullying Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "6f20a810-fa1a-4f5d-aae9-d7fb3d5ff03a",
+            "file": "docs/lesson_assets/quizzes/6f20a810-fa1a-4f5d-aae9-d7fb3d5ff03a_Cyberbullying_Quiz.json",
+            "title": "Cyberbullying Quiz",
+            "item_count": 10
+          }
+        ],
+        "reports": [
+          {
+            "id": "e87e0bff-effc-425e-81ab-62b61faff669",
+            "file": "docs/lesson_assets/reports/e87e0bff-effc-425e-81ab-62b61faff669_Cyberbullying_and_Digital_Safety__A_Comprehensive_.md",
+            "title": "Cyberbullying and Digital Safety: A Comprehensive Guide for Teens (Ages 13-15)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "69d0dbf1-ed90-400a-89f8-8e90d35d0178",
+            "file": "docs/lesson_assets/data_tables/69d0dbf1-ed90-400a-89f8-8e90d35d0178_Critical_Thinking_Skills_for_Adolescents_(13-15).csv",
+            "title": "Critical Thinking Skills for Adolescents (13-15)",
+            "item_count": 0
+          }
+        ],
+        "infographics": [
+          {
+            "id": "3d6de30b-37c5-46cc-9263-2d7753fa69ca",
+            "file": "docs/lesson_assets/infographics/3d6de30b-37c5-46cc-9263-2d7753fa69ca_Stopping_Cyberbullying_Awareness_Guide.png",
+            "title": "Stopping Cyberbullying Awareness Guide",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_cyber_02",
+      "age_group": "13-15",
+      "topic_path": "cyber_digital_maturity",
+      "source_id": "78567565-5847-4d61-bcd2-aac115428388",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "b5782abc-28b3-40d8-ab44-12421330e157",
+            "file": "docs/lesson_assets/flashcards/b5782abc-28b3-40d8-ab44-12421330e157_Cyberbullying_Flashcards.json",
+            "title": "Cyberbullying Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "baf0b61d-bffc-47f0-9569-9dc8d8e16088",
+            "file": "docs/lesson_assets/flashcards/baf0b61d-bffc-47f0-9569-9dc8d8e16088_Cyberbullying_Flashcards.json",
+            "title": "Cyberbullying Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "1c03d06a-5b04-4b9b-b7ec-715262dc6af3",
+            "file": "docs/lesson_assets/flashcards/1c03d06a-5b04-4b9b-b7ec-715262dc6af3_Cyberbullying_Flashcards.json",
+            "title": "Cyberbullying Flashcards",
+            "item_count": 50
+          },
+          {
+            "id": "131990dc-571e-4c43-9509-898a56127efd",
+            "file": "docs/lesson_assets/flashcards/131990dc-571e-4c43-9509-898a56127efd_Cybersecurity_Flashcards.json",
+            "title": "Cybersecurity Flashcards",
+            "item_count": 24
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "08d8362f-db2d-4f2f-849f-cefd15f57052",
+            "file": "docs/lesson_assets/quizzes/08d8362f-db2d-4f2f-849f-cefd15f57052_Cyberbullying_Quiz.json",
+            "title": "Cyberbullying Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "8ece2b5a-801b-4451-b38d-86ecc25036a0",
+            "file": "docs/lesson_assets/quizzes/8ece2b5a-801b-4451-b38d-86ecc25036a0_Cyberbullying_Quiz.json",
+            "title": "Cyberbullying Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "07d45b2d-3573-4d92-8f40-a1a11ba5ba04",
+            "file": "docs/lesson_assets/quizzes/07d45b2d-3573-4d92-8f40-a1a11ba5ba04_Cybersafety_Quiz.json",
+            "title": "Cybersafety Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "28aef9b5-35fe-46ed-9577-2691f3de6d52",
+            "file": "docs/lesson_assets/quizzes/28aef9b5-35fe-46ed-9577-2691f3de6d52_Psychology_Quiz.json",
+            "title": "Psychology Quiz",
+            "item_count": 10
+          }
+        ],
+        "reports": [
+          {
+            "id": "d4021015-ba5f-458d-bad7-475ec1e21a7a",
+            "file": "docs/lesson_assets/reports/d4021015-ba5f-458d-bad7-475ec1e21a7a_Educational_Summary__Critical_Thinking_and_Digital.md",
+            "title": "Educational Summary: Critical Thinking and Digital Citizenship for Adolescents",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "a5894bb4-702a-4951-b29f-673f9025ba87",
+            "file": "docs/lesson_assets/data_tables/a5894bb4-702a-4951-b29f-673f9025ba87_Critical_Thinking_and_Digital_Safety_for_Adolescen.csv",
+            "title": "Critical Thinking and Digital Safety for Adolescents (16-18)",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_cyber_03",
+      "age_group": "13-15",
+      "topic_path": "cyber_digital_maturity",
+      "source_id": "ca2ad154-cbd0-496f-aa24-9c2194997c7d",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "737282c3-868f-4a8b-845e-ae409bb4a46d",
+            "file": "docs/lesson_assets/flashcards/737282c3-868f-4a8b-845e-ae409bb4a46d_Cyberbullying_Flashcards.json",
+            "title": "Cyberbullying Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "3a231a17-a5e8-4615-9ff7-e234418d15c3",
+            "file": "docs/lesson_assets/flashcards/3a231a17-a5e8-4615-9ff7-e234418d15c3_Cyberbullying_Flashcards.json",
+            "title": "Cyberbullying Flashcards",
+            "item_count": 24
+          },
+          {
+            "id": "ca1d5729-9f83-4a0c-aebc-3b445cdf9f39",
+            "file": "docs/lesson_assets/flashcards/ca1d5729-9f83-4a0c-aebc-3b445cdf9f39_Cybersafety_Flashcards.json",
+            "title": "Cybersafety Flashcards",
+            "item_count": 24
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "1adf60d7-01e4-425b-909f-e2171308ce2f",
+            "file": "docs/lesson_assets/quizzes/1adf60d7-01e4-425b-909f-e2171308ce2f_Cyberbullying_Quiz.json",
+            "title": "Cyberbullying Quiz",
+            "item_count": 10
+          },
+          {
+            "id": "0a88eef9-2105-4528-95ee-ec8b7019bf78",
+            "file": "docs/lesson_assets/quizzes/0a88eef9-2105-4528-95ee-ec8b7019bf78_Cyberbullying_Quiz.json",
+            "title": "Cyberbullying Quiz",
+            "item_count": 10
+          }
+        ],
+        "reports": [
+          {
+            "id": "607a9bf5-29f1-4e66-ac6b-3dfdcf418a14",
+            "file": "docs/lesson_assets/reports/607a9bf5-29f1-4e66-ac6b-3dfdcf418a14_Lesson_Summary__Mental_Well-being_and_Character_De.md",
+            "title": "Lesson Summary: Mental Well-being and Character Development (Level 2)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "d186c3b7-a51e-4e7f-a631-7e35b38044a5",
+            "file": "docs/lesson_assets/data_tables/d186c3b7-a51e-4e7f-a631-7e35b38044a5_Types_of_Cyberbullying_and_Management_Strategies_f.csv",
+            "title": "Types of Cyberbullying and Management Strategies for Teens 13-15",
+            "item_count": 0
+          }
+        ],
+        "infographics": [
+          {
+            "id": "f0748db9-0ca6-4f09-bb7f-db60a557c38d",
+            "file": "docs/lesson_assets/infographics/f0748db9-0ca6-4f09-bb7f-db60a557c38d_Stop_Cyberbullying_Action_Guide.png",
+            "title": "Stop Cyberbullying Action Guide",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "age_group": "13-15",
+      "topic_path": "development_brain_identity",
+      "source_id": "46ed02d0-0eb1-4f2f-b5c1-6546eafdcc3b",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_development_02",
+      "age_group": "13-15",
+      "topic_path": "development_brain_identity",
+      "source_id": "8b1d28ae-c4de-4aac-b591-8fbb3f61ddd9",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_development_03",
+      "age_group": "13-15",
+      "topic_path": "development_brain_identity",
+      "source_id": "baaf13a7-971f-47e3-b5a5-2f89238e0ded",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_islamic_01",
+      "age_group": "13-15",
+      "topic_path": "islamic_parenting_teen_identity",
+      "source_id": "73b68643-08f5-4dbf-b705-daef9bc54304",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "785ee902-bc5a-4060-aae7-ffb83063e496",
+            "file": "docs/lesson_assets/reports/785ee902-bc5a-4060-aae7-ffb83063e496_Educational_Summary__Building_Spiritual_Resilience.md",
+            "title": "Educational Summary: Building Spiritual Resilience and Identity (Ages 13-15)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "bc076f85-94e0-4d72-85bb-4a77e5713fe9",
+            "file": "docs/lesson_assets/data_tables/bc076f85-94e0-4d72-85bb-4a77e5713fe9_Daily_Prayer_and_Worship_Tracker_for_Teens_(13-15).csv",
+            "title": "Daily Prayer and Worship Tracker for Teens (13-15)",
+            "item_count": 0
+          },
+          {
+            "id": "a0f54cce-5dd1-46ac-99f1-e212a9a36b2d",
+            "file": "docs/lesson_assets/data_tables/a0f54cce-5dd1-46ac-99f1-e212a9a36b2d_Self-Confidence_and_Identity_Building_for_Young_Ad.csv",
+            "title": "Self-Confidence and Identity Building for Young Adolescents",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_islamic_02",
+      "age_group": "13-15",
+      "topic_path": "islamic_parenting_teen_identity",
+      "source_id": "6b437e64-40c5-483d-9abc-bd3bbc94d008",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "4076c756-252c-47e1-87f1-72ecead5de3f",
+            "file": "docs/lesson_assets/reports/4076c756-252c-47e1-87f1-72ecead5de3f_Foundations_of_Prayer__Building_Identity_and_Conne.md",
+            "title": "Foundations of Prayer: Building Identity and Connection (Ages 13-15)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "86c13c8f-af2a-421c-9fb8-d210c8fe4281",
+            "file": "docs/lesson_assets/data_tables/86c13c8f-af2a-421c-9fb8-d210c8fe4281_Ethical_Conduct_and_Social_Manners_for_Adolescents.csv",
+            "title": "Ethical Conduct and Social Manners for Adolescents (Ages 13-15)",
+            "item_count": 0
+          }
+        ],
+        "infographics": [
+          {
+            "id": "41e78475-ee1f-4c71-aa02-c718adcc2484",
+            "file": "docs/lesson_assets/infographics/41e78475-ee1f-4c71-aa02-c718adcc2484_Building_Character_for_Teens.png",
+            "title": "Building Character for Teens",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_islamic_03",
+      "age_group": "13-15",
+      "topic_path": "islamic_parenting_teen_identity",
+      "source_id": "38cfebd5-0b85-477b-a4d7-6e36ed98af79",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "0dd6dba4-b4e1-48ba-8a9a-fae8c840ef0e",
+            "file": "docs/lesson_assets/reports/0dd6dba4-b4e1-48ba-8a9a-fae8c840ef0e_Guided_Curriculum_Summary__The_Quran_as_a_Life_Com.md",
+            "title": "Guided Curriculum Summary: The Quran as a Life Compass for Teens",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "deb1e296-d4a8-4ed5-9884-32ea9d1fc38a",
+            "file": "docs/lesson_assets/data_tables/deb1e296-d4a8-4ed5-9884-32ea9d1fc38a_Psychological_Identity_Factors_in_Early_Adolescent.csv",
+            "title": "Psychological Identity Factors in Early Adolescents (13-15 Years)",
+            "item_count": 0
+          }
+        ],
+        "infographics": [
+          {
+            "id": "07a3234a-7e53-4c7a-80a6-ca03db6167f3",
+            "file": "docs/lesson_assets/infographics/07a3234a-7e53-4c7a-80a6-ca03db6167f3_Islamic_Teenage_Self-Confidence_Guide.png",
+            "title": "Islamic Teenage Self-Confidence Guide",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_islamic_04",
+      "age_group": "13-15",
+      "topic_path": "islamic_parenting_teen_identity",
+      "source_id": "9c1ff105-66fa-47c3-94a7-17809a24a052",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "0d08e799-761b-4836-bd70-f00a7a61d766",
+            "file": "docs/lesson_assets/reports/0d08e799-761b-4836-bd70-f00a7a61d766_Lesson_Summary__Ethics_in_Interaction_and_Islamic_.md",
+            "title": "Lesson Summary: Ethics in Interaction and Islamic Identity (Ages 13-15)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "3c5fb4c4-c4e6-4ecf-9ead-0d9414d650bc",
+            "file": "docs/lesson_assets/data_tables/3c5fb4c4-c4e6-4ecf-9ead-0d9414d650bc_Quranic_Surahs_for_Teenagers_(Ages_13-15).csv",
+            "title": "Quranic Surahs for Teenagers (Ages 13-15)",
+            "item_count": 0
+          }
+        ],
+        "infographics": [
+          {
+            "id": "64684e13-9c73-4005-92ff-78c44d2dbed9",
+            "file": "docs/lesson_assets/infographics/64684e13-9c73-4005-92ff-78c44d2dbed9_Teen's_Guide_to_Islamic_Ethics.png",
+            "title": "Teen's Guide to Islamic Ethics",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_medical_01",
+      "age_group": "13-15",
+      "topic_path": "medical_mental_health",
+      "source_id": "cb9959f3-12d6-46e3-a592-8c6d61c30522",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "050cbbc5-7538-4b1a-a58a-f4aa7fd9c943",
+            "file": "docs/lesson_assets/reports/050cbbc5-7538-4b1a-a58a-f4aa7fd9c943_Adolescent_Mental_Well-being__Foundations_of_Islam.md",
+            "title": "Adolescent Mental Well-being: Foundations of Islamic Identity and Self-Regulation",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "206139c8-8ed7-4416-b99c-0921854ec273",
+            "file": "docs/lesson_assets/data_tables/206139c8-8ed7-4416-b99c-0921854ec273_Anxiety_and_Depression_Among_Adolescents_Aged_13-1.csv",
+            "title": "Anxiety and Depression Among Adolescents Aged 13-15",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_medical_02",
+      "age_group": "13-15",
+      "topic_path": "medical_mental_health",
+      "source_id": "b9d49f00-f489-4922-bab6-c2a052f30baf",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [
+          {
+            "id": "f24aae6b-8a53-4dd0-91a1-b16ff784a988",
+            "file": "docs/lesson_assets/data_tables/f24aae6b-8a53-4dd0-91a1-b16ff784a988_Mental_Health_and_Wellbeing_for_Adolescents_Aged_1.csv",
+            "title": "Mental Health and Wellbeing for Adolescents Aged 13-15",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_medical_03",
+      "age_group": "13-15",
+      "topic_path": "medical_mental_health",
+      "source_id": "a2737f57-c687-49b6-beb6-748e966f7a76",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [
+          {
+            "id": "6c1abfab-6268-4201-acbf-faa8c714d4e4",
+            "file": "docs/lesson_assets/data_tables/6c1abfab-6268-4201-acbf-faa8c714d4e4_Mental_Health_for_Adolescents_Aged_13-15.csv",
+            "title": "Mental Health for Adolescents Aged 13-15",
+            "item_count": 0
+          }
+        ],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_medical_04",
+      "age_group": "13-15",
+      "topic_path": "medical_mental_health",
+      "source_id": "0e79b612-e0fa-4455-a120-59938e7110bc",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [
+          {
+            "id": "feb89afc-126b-4a10-b365-aa5531783dcd",
+            "file": "docs/lesson_assets/infographics/feb89afc-126b-4a10-b365-aa5531783dcd_Teen_Mental_Wellbeing_Islamic_Guide.png",
+            "title": "Teen Mental Wellbeing Islamic Guide",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_cyber_01",
+      "age_group": "16-18",
+      "topic_path": "cyber_digital_professional",
+      "source_id": "358f4c4e-9742-45f0-b9ee-037b09ca078d",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "3908c473-fc9c-48e1-9dfb-61f73c1963b9",
+            "file": "docs/lesson_assets/reports/3908c473-fc9c-48e1-9dfb-61f73c1963b9_Advanced_Critical_Thinking_and_Digital_Citizenship.md",
+            "title": "Advanced Critical Thinking and Digital Citizenship: A Lesson Summary for Ages 16-18",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_cyber_02",
+      "age_group": "16-18",
+      "topic_path": "cyber_digital_professional",
+      "source_id": "5f6d098c-f8a8-4f5a-a9f6-79b2cc8c053e",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "72ca91c4-6ebd-44ec-a907-aa5edadf72f9",
+            "file": "docs/lesson_assets/reports/72ca91c4-6ebd-44ec-a907-aa5edadf72f9_Digital_Citizenship_and_Cyber_Safety__A_Strategic_.md",
+            "title": "Digital Citizenship and Cyber Safety: A Strategic Summary for Young Adults",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_medical_01",
+      "age_group": "16-18",
+      "topic_path": "medical_adult_transition",
+      "source_id": "f9989ce3-a6e7-48dc-a627-87fee569c42d",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "7613847a-cb58-4ba5-8131-0bb2241caaca",
+            "file": "docs/lesson_assets/reports/7613847a-cb58-4ba5-8131-0bb2241caaca_The_Quran_and_Maturity__A_Strategic_Framework_for_.md",
+            "title": "The Quran and Maturity: A Strategic Framework for Young Adults (16-18)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_medical_02",
+      "age_group": "16-18",
+      "topic_path": "medical_adult_transition",
+      "source_id": "91cd3b56-aba3-40fe-ac12-3f69ac2d0623",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_medical_03",
+      "age_group": "16-18",
+      "topic_path": "medical_adult_transition",
+      "source_id": "e265bfe0-2602-4493-adb4-233c72505d9c",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_development_01",
+      "age_group": "4-6",
+      "topic_path": "development_positive_parenting",
+      "source_id": "e99a9c41-32ca-41e4-b4ed-f61af795642d",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "fb227993-03cb-4572-8fff-47cde0c8f89d",
+            "file": "docs/lesson_assets/reports/fb227993-03cb-4572-8fff-47cde0c8f89d_Lesson_Summary__Strengthening_Family_Bonding_(Ages.md",
+            "title": "Lesson Summary: Strengthening Family Bonding (Ages 4-6)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_development_02",
+      "age_group": "4-6",
+      "topic_path": "development_positive_parenting",
+      "source_id": "85a964f7-0222-46b5-bb0b-044087826f29",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_adab_01",
+      "age_group": "4-6",
+      "topic_path": "islamic_parenting_adab",
+      "source_id": "cc3b004a-dff2-44e4-92c2-2ad56cb8ffe9",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_adab_02",
+      "age_group": "4-6",
+      "topic_path": "islamic_parenting_adab",
+      "source_id": "1ef101c8-a442-4139-89dc-7942bc2cea82",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_adab_03",
+      "age_group": "4-6",
+      "topic_path": "islamic_parenting_adab",
+      "source_id": "ef52b00c-a493-48d2-8f8c-a94fae2e7835",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_bond_01",
+      "age_group": "4-6",
+      "topic_path": "islamic_parenting_bond",
+      "source_id": "3de4e313-6f2f-4c77-a368-c6682bc43afd",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "432a41fc-8de1-45e2-a350-6aab057e51c4",
+            "file": "docs/lesson_assets/reports/432a41fc-8de1-45e2-a350-6aab057e51c4_Lesson_Summary__The_Quran_and_Our_Values_(Ages_4-6.md",
+            "title": "Lesson Summary: The Quran and Our Values (Ages 4-6)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_bond_02",
+      "age_group": "4-6",
+      "topic_path": "islamic_parenting_bond",
+      "source_id": "cda01e43-ade6-4c2a-b389-e73f03d179f5",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_bond_03",
+      "age_group": "4-6",
+      "topic_path": "islamic_parenting_bond",
+      "source_id": "cc0c9f78-495b-443b-8b4d-ece8d57dbfd5",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_development_01",
+      "age_group": "7-9",
+      "topic_path": "development_digital_wellbeing",
+      "source_id": "37393ebc-4bf7-4cc8-ac6e-b15b4fad2b10",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_development_02",
+      "age_group": "7-9",
+      "topic_path": "development_digital_wellbeing",
+      "source_id": "370aecdc-3b9f-4d93-805a-517973baba60",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_worship_01",
+      "age_group": "7-9",
+      "topic_path": "islamic_parenting_worship",
+      "source_id": "7ce48001-258f-45f1-b561-556ee5b4fe82",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [
+          {
+            "id": "898ee24d-533b-402b-b1aa-90a0cd540db7",
+            "file": "docs/lesson_assets/reports/898ee24d-533b-402b-b1aa-90a0cd540db7_Quran_Lesson_Summary__My_Life’s_Compass_(Ages_7-9).md",
+            "title": "Quran Lesson Summary: My Life’s Compass (Ages 7-9)",
+            "item_count": 0
+          }
+        ],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_worship_02",
+      "age_group": "7-9",
+      "topic_path": "islamic_parenting_worship",
+      "source_id": "d029eaaa-7796-494c-a397-330e7342944c",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_worship_03",
+      "age_group": "7-9",
+      "topic_path": "islamic_parenting_worship",
+      "source_id": "17ff034d-1fb5-4f76-a9d4-2ed77bf1aefb",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_medical_01",
+      "age_group": "7-9",
+      "topic_path": "medical_emotional_health",
+      "source_id": "1e9b6c6c-a3e9-4bc3-b8bb-3111cc7cc474",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_medical_02",
+      "age_group": "7-9",
+      "topic_path": "medical_emotional_health",
+      "source_id": "954f1301-4611-41f2-b796-6486fd8ac9d5",
+      "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    }
+  ]
+}
