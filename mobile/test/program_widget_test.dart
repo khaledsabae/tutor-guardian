@@ -83,11 +83,10 @@ void main() {
       expect(tip.id, 'tip_4-6_001');
       expect(tip.timeOfDay, 'morning');
     });
-  });
+    });
 
-  group('Program widgets', () {
-    testWidgets('PathsScreen shows cards from fake list',
-        (WidgetTester tester) async {
+    group('Program widgets', () {
+    testWidgets('PathsScreen shows cards from fake list', (WidgetTester tester) async {
       final fake = _FakeTgClient();
       fake.pathsListJson = {
         'count': 2,
@@ -103,11 +102,29 @@ void main() {
         ],
       };
 
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 1;
+      addTearDown(container.dispose);
+
+      // Set a larger viewport to avoid AppBar overflow
+      tester.view.physicalSize = const Size(400, 800);
+      tester.view.devicePixelRatio = 1.0;
+
       await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            tgClientProvider.overrideWithValue(fake),
-          ],
+        UncontrolledProviderScope(
+          container: container,
           child: const MaterialApp(home: PathsScreen()),
         ),
       );
@@ -118,18 +135,36 @@ void main() {
       expect(find.text('التربية الإيجابية'), findsOneWidget);
       // 14 days pill on the first path
       expect(find.text('14 يوم'), findsWidgets);
+      expect(find.text('14 يوم'), findsWidgets);
     });
 
-    testWidgets('PathsScreen shows error state on failure',
-        (WidgetTester tester) async {
+    testWidgets('PathsScreen shows error state on failure', (WidgetTester tester) async {
       final fake = _FakeTgClient();
       fake.throwOnPathsList = true;
 
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 1;
+      addTearDown(container.dispose);
+
+      // Set a larger viewport
+      tester.view.physicalSize = const Size(400, 800);
+      tester.view.devicePixelRatio = 1.0;
+
       await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            tgClientProvider.overrideWithValue(fake),
-          ],
+        UncontrolledProviderScope(
+          container: container,
           child: const MaterialApp(home: PathsScreen()),
         ),
       );
@@ -150,15 +185,30 @@ void main() {
         withWarning: true,
       );
 
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 1;
+      addTearDown(container.dispose);
+
       await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            tgClientProvider.overrideWithValue(fake),
-          ],
+        UncontrolledProviderScope(
+          container: container,
           child: const MaterialApp(
             home: LessonScreen(
               lessonId: 'lesson_4-6_islamic_parenting_adab_01',
               ageGroup: '4-6',
+              childId: 1,
             ),
           ),
         ),
@@ -228,7 +278,7 @@ void main() {
       expect(find.text('الرفق'), findsOneWidget);
       expect(find.text('اللعب النبوي'), findsOneWidget);
       expect(find.text('الدروس (2)'), findsOneWidget);
-      // Tap the first lesson
+      // Tap the first lesson - set lessonJson BEFORE tapping so the navigation gets the data
       fake.lessonJson = _lessonJson(
         id: 'lesson_4-6_islamic_parenting_adab_01',
         order: 1,
@@ -240,37 +290,61 @@ void main() {
       expect(find.text('الملخص'), findsOneWidget);
     });
 
-    testWidgets('RootScaffold NavigationBar switches tabs',
-        (WidgetTester tester) async {
+    testWidgets('RootScaffold NavigationBar switches tabs', (WidgetTester tester) async {
+      // Use a fake that works for paths list but throws elsewhere
       final fake = _FakeTgClient();
-      // Need the chat notifier to NOT crash; we don't care about its
-      // contents here. The fake null client we ship with the project
-      // throws on every call — that's fine, the chat screen shows a
-      // banner instead of crashing.
-      final nullClient = _NullClient();
+      fake.pathsListJson = {
+        'count': 2,
+        'paths': [
+          _pathJson(
+            id: 'path_4-6_islamic_parenting_adab',
+            title: 'تأسيس الآداب الإسلامية',
+          ),
+          _pathJson(
+            id: 'path_4-6_development_positive_parenting',
+            title: 'التربية الإيجابية',
+          ),
+        ],
+      };
+
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      addTearDown(container.dispose);
 
       await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            tgClientProvider.overrideWithValue(nullClient),
-          ],
+        UncontrolledProviderScope(
+          container: container,
           child: const TutorGuardianApp(),
         ),
       );
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 50));
+      // Pump multiple times to let the boot sequence complete
+      for (int i = 0; i < 10; i++) {
+        await tester.pump(const Duration(milliseconds: 300));
+      }
+      await tester.pumpAndSettle();
 
       // Tab 0 (المساعد) is the default
       expect(find.text('المساعد'), findsOneWidget);
       expect(find.text('مساراتي'), findsOneWidget);
 
-      // Switch to tab 1 — but PathsScreen will try to fetch and fail
-      // because nullClient throws. Override the client just for this tap.
-      // Simpler: tap the tab; the screen renders a loading then error.
-      // For this assertion we only need the tap to NOT crash and the
-      // tab label to be findable.
+      // Switch to tab 1 (مساراتي)
       await tester.tap(find.text('مساراتي'));
-      await tester.pump();
+      await tester.pumpAndSettle();
+
+      // Should now show the PathsScreen content
+      expect(find.text('مساراتي'), findsOneWidget); // AppBar title
+      expect(find.text('تأسيس الآداب الإسلامية'), findsOneWidget);
     });
   });
 }

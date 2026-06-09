@@ -167,24 +167,22 @@ class _PathCard extends StatelessWidget {
                     ?.copyWith(color: AppTheme.textSecondary),
               ),
               const SizedBox(height: 12),
-              Row(
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
                 children: [
                   _Pill(
                     icon: Icons.timelapse,
                     label: '${path.estimatedDays} يوم',
                   ),
-                  const SizedBox(width: 8),
                   _Pill(
                     icon: Icons.menu_book_outlined,
                     label: '${path.lessonIds.length} دروس',
                   ),
                   if (path.pedagogicalFramework != null) ...[
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: _Pill(
-                        icon: Icons.psychology_outlined,
-                        label: _frameworkLabel(path.pedagogicalFramework!),
-                      ),
+                    _Pill(
+                      icon: Icons.psychology_outlined,
+                      label: _frameworkLabel(path.pedagogicalFramework!),
                     ),
                   ],
                 ],
