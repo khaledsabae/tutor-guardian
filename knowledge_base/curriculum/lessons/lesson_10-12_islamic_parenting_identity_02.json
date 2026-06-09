@@ -1,0 +1,25 @@
+{
+  "id": "lesson_10-12_islamic_parenting_identity_02",
+  "path_id": "path_10-12_islamic_parenting_identity",
+  "title": "القرآن: دستور الحياة وبوصلة المراهق",
+  "age_group": "10-12",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "7b2ded06-2736-4364-8980-1d70df17fa0c",
+    "8b869dfa-053f-4c5e-abe2-159eed4d599a",
+    "968f42b5-5184-4f4a-97d9-b854f507dbe6",
+    "99515fe1-7bec-4a39-af86-bf1922262170"
+  ],
+  "summary": "في هذا العمر يبدأ التفكير المجرد. القرآن ليس للحفظ فقط بل للتدبر والعمل. شجع طفلك: \"اختر آية، فهم معناها، طبقها أسبوعاً\".",
+  "try_this": "اختروا سورة قصيرة (العلق، القدر، العاديات) — حفظ آية يومياً + تدبر معنى كلمة واحدة. ناقشوا: كيف نطبقها؟",
+  "order": 2,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "أي آية لامست قلب طفلك؟",
+    "هل لاحظت تغييراً في كلامه/سلوكه؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "lesson_10-12_islamic_parenting_identity_04",
+  "path_id": "path_10-12_islamic_parenting_identity",
+  "title": "الثقة بالنفس والهوية: أنت ابنه والله يراك",
+  "age_group": "10-12",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "8451bbb0-4617-4252-a206-e442c533fac3",
+    "99515fe1-7bec-4a39-af86-bf1922262170",
+    "acb36cc3-318d-4866-bfa2-530c03dcc422",
+    "ef7cfad0-4999-42ba-bdf4-1c1d65d3b29f"
+  ],
+  "summary": "مرحلة التشكيك الذاتي. علّمه: قيمتك عند الله بعملك لا بملابسك/مل Friends/Marks. ابنِ ثقته: امدح الجهد لا النتيجة، وفرّغ له مساحة قرار، وادعُ له بالثبات.",
+  "try_this": "اصنعا معاً \"صندوق الإنجازات\": ورقة صغيرة يومياً يكتب فيها شيئاً أحس به فخراً (صلاة، صدق، مساعدة). افتحاه آخر الشهر.",
+  "order": 4,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "ماذا كتب في صندوق الإنجازات؟",
+    "هل لاحظت تغييراً في كلامه عن نفسه؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0"
+}
