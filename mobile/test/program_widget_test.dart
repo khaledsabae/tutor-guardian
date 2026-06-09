@@ -271,9 +271,11 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('الرفق'), findsOneWidget);
       expect(find.text('اللعب النبوي'), findsOneWidget);
@@ -285,7 +287,8 @@ void main() {
         title: 'الرفق',
       );
       await tester.tap(find.text('الرفق'));
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
       // The lesson screen should appear with the lesson loaded
       expect(find.text('الملخص'), findsOneWidget);
     });
@@ -332,7 +335,10 @@ void main() {
       for (int i = 0; i < 10; i++) {
         await tester.pump(const Duration(milliseconds: 300));
       }
-      await tester.pumpAndSettle();
+      // await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 500));
 
       // Tab 0 (المساعد) is the default
       expect(find.text('المساعد'), findsOneWidget);

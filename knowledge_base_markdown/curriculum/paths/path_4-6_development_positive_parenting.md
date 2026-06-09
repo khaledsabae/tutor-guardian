@@ -1,0 +1,58 @@
+# path_4-6_development_positive_parenting
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 4-6 |
+| **Created At** | 2026-06-08T19:00:00 |
+| **Domain** | development |
+| **Estimated Days** | 14 |
+| **Is Published** | Yes |
+| **Lesson Ids** | `lesson_4-6_development_positive_parenting_01`, `lesson_4-6_development_positive_parenting_02` |
+| **Pedagogical Framework** | zpd_scaffolded |
+| **Prerequisites** |  |
+| **Updated At** | 2026-06-08T19:00:00 |
+| **Version** | 1.0.0 |
+
+## Description
+
+> رحلة تربوية لمدة 14 يوماً لبناء ثقة الطفل بنفسه وأمانه الجسدي والنفسي عبر أدوات التربية الإيجابية المعتمدة من CDC، ومنهج 'جولة الأمان' اليومي للوقاية من الحوادث، ومهارة المدح النوعي المحدد. يستند المسار إلى نظريات Erikson (Industry vs Inferiority) وVygotsky (ZPD) لتنمية الكفاءة الذاتية دون مقارنة، مع التركيز على الجانب العملي القابل للقياس.
+
+## Primary Reference
+
+| Field | Value |
+| --- | --- |
+| **Info** | CDC, Positive Parenting Tips for Preschoolers (3-5 years) |
+| **Type** | مقال_تنموي |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "path_4-6_development_positive_parenting",
+  "title": "التربية الإيجابية والأمان: بناء ثقة الطفل (4-6 سنوات)",
+  "age_group": "4-6",
+  "domain": "development",
+  "description": "رحلة تربوية لمدة 14 يوماً لبناء ثقة الطفل بنفسه وأمانه الجسدي والنفسي عبر أدوات التربية الإيجابية المعتمدة من CDC، ومنهج 'جولة الأمان' اليومي للوقاية من الحوادث، ومهارة المدح النوعي المحدد. يستند المسار إلى نظريات Erikson (Industry vs Inferiority) وVygotsky (ZPD) لتنمية الكفاءة الذاتية دون مقارنة، مع التركيز على الجانب العملي القابل للقياس.",
+  "lesson_ids": [
+    "lesson_4-6_development_positive_parenting_01",
+    "lesson_4-6_development_positive_parenting_02"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "zpd_scaffolded",
+  "primary_reference": {
+    "type": "مقال_تنموي",
+    "info": "CDC, Positive Parenting Tips for Preschoolers (3-5 years)"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T19:00:00",
+  "updated_at": "2026-06-08T19:00:00"
+}
+```
+</details>

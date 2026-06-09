@@ -1,0 +1,73 @@
+# med-a7b437b7
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 4-6 |
+| **Behavior Type** | قلق |
+| **Created At** | 2026-06-07T08:17:11Z |
+| **Domain** | medical |
+| **Intervention Type** | إرشادي |
+| **Labels** | `قلق`, `طفل`, `رعاية صحية نفسي` |
+| **Language** | ar |
+| **Reference Type** | تقرير_طبي |
+| **Severity** | متوسط |
+| **Source File** | Children_Mental_Health.pdf |
+| **Updated At** | 2026-06-07T08:17:11Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> medical
+
+## Text Original
+
+> have observed and learned from talking with others. You can also ask the health care provider for a referral to a mental health professional with experience and expertise in evaluating and treating children. Get information about finding a health care provider or accessing treatment at www.nimh.nih.gov/findhelp. How is children’s mental health assessed? An evaluation by a mental health professional can help Asking questions and providing information to your child’s understand and clarify your child’s emotions, behavior, and health care provider can improve your child’s care. Talking current situation. Based on this information, the mental with the health care provider builds trust and leads to better health professional can decide if your child would benefit results, quality, safety, and satisfaction with care. from an intervention and what intervention might work best. Here are some questions you can ask when meeting with A comprehensive evaluation of a child’s mental health prospective treatment providers. usually involves: ● Do you use treatment approaches that are supported ● A parent interview to discuss the child’s developmental by research? history, temperament, relationships with friends and ● Do you involve parents in the treatment? If so, how are family, medical history, interests, abilities, and any parents involved? prior treatment ● Will there be “homework” between sessions? ● Information gathering from the child’s school, such as ● How will progress be evaluated? standardized test scores and reports on behavior, ● How soon can we expect to see progress? capabilities, and difficulties ● How long should treatment last? ●
+
+## Text Simplified
+
+> يمكنك التواصل مع مختص الصحة النفسية إذا لزم الأمر، للحصول على الرعاية المناسبة. يساعد هذا في فهم مشاعر وbehaviors طفلك.
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | Children_Mental_Health |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "med-a7b437b7",
+  "domain": "medical",
+  "source_file": "Children_Mental_Health.pdf",
+  "title": "تقييم الصحة النفسية للأطفال وتقديم العلاج الإرشادي",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "قلق",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "have observed and learned from talking with others. You can also ask the health care provider for a referral to a mental health professional with experience and expertise in evaluating and treating children. Get information about finding a health care provider or accessing treatment at www.nimh.nih.gov/findhelp. How is children’s mental health assessed? An evaluation by a mental health professional can help Asking questions and providing information to your child’s understand and clarify your child’s emotions, behavior, and health care provider can improve your child’s care. Talking current situation. Based on this information, the mental with the health care provider builds trust and leads to better health professional can decide if your child would benefit results, quality, safety, and satisfaction with care. from an intervention and what intervention might work best. Here are some questions you can ask when meeting with A comprehensive evaluation of a child’s mental health prospective treatment providers. usually involves: ● Do you use treatment approaches that are supported ● A parent interview to discuss the child’s developmental by research? history, temperament, relationships with friends and ● Do you involve parents in the treatment? If so, how are family, medical history, interests, abilities, and any parents involved? prior treatment ● Will there be “homework” between sessions? ● Information gathering from the child’s school, such as ● How will progress be evaluated? standardized test scores and reports on behavior, ● How soon can we expect to see progress? capabilities, and difficulties ● How long should treatment last? ●",
+  "text_simplified": "يمكنك التواصل مع مختص الصحة النفسية إذا لزم الأمر، للحصول على الرعاية المناسبة. يساعد هذا في فهم مشاعر وbehaviors طفلك.",
+  "labels": [
+    "قلق",
+    "طفل",
+    "رعاية صحية نفسي"
+  ],
+  "created_at": "2026-06-07T08:17:11Z",
+  "updated_at": "2026-06-07T08:17:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Children_Mental_Health",
+    "source_author": ""
+  }
+}
+```
+</details>

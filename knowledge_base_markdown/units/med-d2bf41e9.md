@@ -1,0 +1,73 @@
+# med-d2bf41e9
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 4-6 |
+| **Behavior Type** | 发展中 |
+| **Created At** | 2026-06-07T08:15:21Z |
+| **Domain** | medical |
+| **Intervention Type** | إرشادي |
+| **Labels** | `نمو طفلك`, ` milestones`, `طفل عمر 6 أشهر` |
+| **Language** | ar |
+| **Reference Type** | تقرير_طبي |
+| **Severity** | خفيف |
+| **Source File** | Autism_CDC.pdf |
+| **Updated At** | 2026-06-07T08:15:21Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> medical
+
+## Text Original
+
+> move her arms and legs up and down. To see more tips and activities download CDC’s Milestone Tracker app. This milestone checklist is not a substitute for a standardized, validated developmental screening tool. These developmental milestones show what most children (75% or more) can do by each age. Subject matter experts selected these milestones based on available data and expert consensus. www.cdc.gov/ActEarly | 1-800-CDC-INFO (1-800-232-4636) Learn the Signs. Act Early. Your baby at 6 months Baby’s Name Baby’s Age Today’s Date Milestones matter! How your baby plays, learns, speaks, acts, and moves offers important clues about his or her development. Check the milestones your baby has reached by 6 months. Take this with you and talk with your baby’s doctor at every well-child visit about the milestones your baby has reached and what to expect next. What most babies do by this age: Social/Emotional Milestones Cognitive Milestones (learning, thinking, problem-solving) ◦ Knows familiar people ◦ Likes to look at himself in a mirror ◦ Puts things in her mouth to explore them ◦ Laughs ◦ Reaches to grab a toy he wants ◦ Closes lips to show she doesn’t want more food Language/Communication Milestones Movement/Physical Development ◦ Takes turns making sounds with you ◦ Blows “raspberries” (sticks tongue out and blows) Milestones ◦ Makes squealing noises ◦ Rolls from tummy to back ◦ Pushes up with straight arms when on tummy ◦ Leans on hands to support himself when sitting Other important things to share with the doctor… • What
+
+## Text Simplified
+
+> يجب مراقبة أطفالك في الأعمار المختلفة لتحديد إذا كانوا ينموون بشكل طبيعي. تحميل تطبيق Milestone Tracker من CDC يمكن أن يكون مفيدًا.
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | Autism_CDC |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "med-d2bf41e9",
+  "domain": "medical",
+  "source_file": "Autism_CDC.pdf",
+  "title": "مراقبة نمو طفلك في الأعمار المختلفة",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "发展中",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "move her arms and legs up and down. To see more tips and activities download CDC’s Milestone Tracker app. This milestone checklist is not a substitute for a standardized, validated developmental screening tool. These developmental milestones show what most children (75% or more) can do by each age. Subject matter experts selected these milestones based on available data and expert consensus. www.cdc.gov/ActEarly | 1-800-CDC-INFO (1-800-232-4636) Learn the Signs. Act Early. Your baby at 6 months Baby’s Name Baby’s Age Today’s Date Milestones matter! How your baby plays, learns, speaks, acts, and moves offers important clues about his or her development. Check the milestones your baby has reached by 6 months. Take this with you and talk with your baby’s doctor at every well-child visit about the milestones your baby has reached and what to expect next. What most babies do by this age: Social/Emotional Milestones Cognitive Milestones (learning, thinking, problem-solving) ◦ Knows familiar people ◦ Likes to look at himself in a mirror ◦ Puts things in her mouth to explore them ◦ Laughs ◦ Reaches to grab a toy he wants ◦ Closes lips to show she doesn’t want more food Language/Communication Milestones Movement/Physical Development ◦ Takes turns making sounds with you ◦ Blows “raspberries” (sticks tongue out and blows) Milestones ◦ Makes squealing noises ◦ Rolls from tummy to back ◦ Pushes up with straight arms when on tummy ◦ Leans on hands to support himself when sitting Other important things to share with the doctor… • What",
+  "text_simplified": "يجب مراقبة أطفالك في الأعمار المختلفة لتحديد إذا كانوا ينموون بشكل طبيعي. تحميل تطبيق Milestone Tracker من CDC يمكن أن يكون مفيدًا.",
+  "labels": [
+    "نمو طفلك",
+    " milestones",
+    "طفل عمر 6 أشهر"
+  ],
+  "created_at": "2026-06-07T08:15:21Z",
+  "updated_at": "2026-06-07T08:15:21Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Autism_CDC",
+    "source_author": ""
+  }
+}
+```
+</details>

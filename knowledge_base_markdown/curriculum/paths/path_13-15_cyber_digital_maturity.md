@@ -1,0 +1,55 @@
+# path_13-15_cyber_digital_maturity
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 13-15 |
+| **Domain** | cyber |
+| **Estimated Days** | 21 |
+| **Is Published** | Yes |
+| **Lesson Ids** | `lesson_13-15_cyber_digital_maturity_01`, `lesson_13-15_cyber_digital_maturity_02`, `lesson_13-15_cyber_digital_maturity_03` |
+| **Pedagogical Framework** | zpd_scaffolded |
+| **Prerequisites** |  |
+| **Version** | 1.0.0 |
+
+## Description
+
+> مسار يساعد المراهق على بناء بصمة رقمية مسؤولة: فهم الخوارزميات، التعامل مع الذكاء الاصطناعي، موازنة الألعاب، وحماية السمعة الرقمية للمستقبل.
+
+## Primary Reference
+
+| Field | Value |
+| --- | --- |
+| **Info** | منظمة الصحة العالمية: إرشادات إدمان الألعاب + اليونسكو: مواطنة رقمية |
+| **Type** | دليل_تربوي |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "path_13-15_cyber_digital_maturity",
+  "title": "النضج الرقمي: أثر قدمك، قرارك (13-15 سنة)",
+  "age_group": "13-15",
+  "domain": "cyber",
+  "description": "مسار يساعد المراهق على بناء بصمة رقمية مسؤولة: فهم الخوارزميات، التعامل مع الذكاء الاصطناعي، موازنة الألعاب، وحماية السمعة الرقمية للمستقبل.",
+  "lesson_ids": [
+    "lesson_13-15_cyber_digital_maturity_01",
+    "lesson_13-15_cyber_digital_maturity_02",
+    "lesson_13-15_cyber_digital_maturity_03"
+  ],
+  "estimated_days": 21,
+  "pedagogical_framework": "zpd_scaffolded",
+  "primary_reference": {
+    "type": "دليل_تربوي",
+    "info": "منظمة الصحة العالمية: إرشادات إدمان الألعاب + اليونسكو: مواطنة رقمية"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}
+```
+</details>

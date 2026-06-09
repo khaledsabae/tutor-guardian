@@ -1,0 +1,59 @@
+# lesson_10-12_islamic_parenting_identity_03
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 10-12 |
+| **Domain** | islamic_parenting |
+| **Estimated Minutes** | 7 |
+| **Is Published** | Yes |
+| **Needs Professional Followup** | No |
+| **Order** | 3 |
+| **Path Id** | path_10-12_islamic_parenting_identity |
+| **Reflection Prompts** | `ما أصعب موقف واجه طفلك فيه اختبار الأمانة؟`, `كيف أثرت الصحبة على سلوكه؟` |
+| **Unit Ids** | `7b2ded06-2736-4364-8980-1d70df17fa0c`, `8b869dfa-053f-4c5e-abe2-159eed4d599a`, `99515fe1-7bec-4a39-af86-bf1922262170`, `a9219a05-46a1-4ece-8961-686d0d27f960` |
+| **Version** | 1.0.0 |
+| **Warning Flags** |  |
+
+## Summary
+
+> في ما قبل المراهقة يُختبر الخلق. الأمانة سراً وعلانية، الصدق في المواقف الصعبة، بر الوالدين عملياً. الوالدان: كونوا المرآة، والصحبة الصالحة درع.
+
+## Try This
+
+> هذا الأسبوع: تحدوا معاً "أسبوع الأمانة" — كل فرد يسجل موقفاً صعباً اختار فيه الأمانة. ناقشوا النتائج.
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "lesson_10-12_islamic_parenting_identity_03",
+  "path_id": "path_10-12_islamic_parenting_identity",
+  "title": "الأخلاق بالتعامل: الأمانة، الصدق، والبر",
+  "age_group": "10-12",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "7b2ded06-2736-4364-8980-1d70df17fa0c",
+    "8b869dfa-053f-4c5e-abe2-159eed4d599a",
+    "99515fe1-7bec-4a39-af86-bf1922262170",
+    "a9219a05-46a1-4ece-8961-686d0d27f960"
+  ],
+  "summary": "في ما قبل المراهقة يُختبر الخلق. الأمانة سراً وعلانية، الصدق في المواقف الصعبة، بر الوالدين عملياً. الوالدان: كونوا المرآة، والصحبة الصالحة درع.",
+  "try_this": "هذا الأسبوع: تحدوا معاً \"أسبوع الأمانة\" — كل فرد يسجل موقفاً صعباً اختار فيه الأمانة. ناقشوا النتائج.",
+  "order": 3,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "ما أصعب موقف واجه طفلك فيه اختبار الأمانة؟",
+    "كيف أثرت الصحبة على سلوكه؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0"
+}
+```
+</details>

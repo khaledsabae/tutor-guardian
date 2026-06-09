@@ -1,0 +1,59 @@
+# path_4-6_islamic_parenting_adab
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 4-6 |
+| **Created At** | 2026-06-08T19:00:00 |
+| **Domain** | islamic_parenting |
+| **Estimated Days** | 14 |
+| **Is Published** | Yes |
+| **Lesson Ids** | `lesson_4-6_islamic_parenting_adab_01`, `lesson_4-6_islamic_parenting_adab_02`, `lesson_4-6_islamic_parenting_adab_03` |
+| **Pedagogical Framework** | prophetic_7_7_7 |
+| **Prerequisites** |  |
+| **Updated At** | 2026-06-08T19:00:00 |
+| **Version** | 1.0.0 |
+
+## Description
+
+> رحلة تربوية لمدة 14 يوماً لتأسيس القيم الأخلاقية الإسلامية الأساسية (الصدق، الأمانة، الرحمة، الاحترام) في مرحلة ما قبل العمليات (Piaget preoperational). تركز على تحويل المفاهيم من معارف نظرية إلى عادات سلوكية قلبية، عبر النمذجة الوالدية الرحيمة، والقصص النبوية، والحوار اليومي. مع تجنب أساليب الإكراه، والاستناد إلى مبدأ التدرج النبوي والقدوة (qudwah) كأداة بناء أخلاقي في هذه المرحلة الحساسة.
+
+## Primary Reference
+
+| Field | Value |
+| --- | --- |
+| **Info** | ابن القيم الجوزية، تحفة المودود بأحكام المولود، فصل في تأديب الأولاد وتهذيب أخلاقهم |
+| **Type** | كتاب_تربوي |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "path_4-6_islamic_parenting_adab",
+  "title": "تأسيس الآداب الإسلامية والضمير الأخلاقي (4-6 سنوات)",
+  "age_group": "4-6",
+  "domain": "islamic_parenting",
+  "description": "رحلة تربوية لمدة 14 يوماً لتأسيس القيم الأخلاقية الإسلامية الأساسية (الصدق، الأمانة، الرحمة، الاحترام) في مرحلة ما قبل العمليات (Piaget preoperational). تركز على تحويل المفاهيم من معارف نظرية إلى عادات سلوكية قلبية، عبر النمذجة الوالدية الرحيمة، والقصص النبوية، والحوار اليومي. مع تجنب أساليب الإكراه، والاستناد إلى مبدأ التدرج النبوي والقدوة (qudwah) كأداة بناء أخلاقي في هذه المرحلة الحساسة.",
+  "lesson_ids": [
+    "lesson_4-6_islamic_parenting_adab_01",
+    "lesson_4-6_islamic_parenting_adab_02",
+    "lesson_4-6_islamic_parenting_adab_03"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "كتاب_تربوي",
+    "info": "ابن القيم الجوزية، تحفة المودود بأحكام المولود، فصل في تأديب الأولاد وتهذيب أخلاقهم"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T19:00:00",
+  "updated_at": "2026-06-08T19:00:00"
+}
+```
+</details>

@@ -1,0 +1,73 @@
+# cyb-30a93e6a
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | unspecified |
+| **Behavior Type** | الإيصال غير المتكافئ |
+| **Created At** | 2026-06-07T08:01:23Z |
+| **Domain** | cyber |
+| **Intervention Type** | إرشادي |
+| **Labels** | `الكراهية الرقمية`, `السلوك العدواني`, `التعليم عن التهديدات الإلكترونية` |
+| **Language** | ar |
+| **Reference Type** | كتاب_تربوي |
+| **Severity** | متوسط |
+| **Source File** | Cyberbullying_Guide.pdf |
+| **Updated At** | 2026-06-07T08:01:23Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> WHO/Common Sense Media
+
+## Text Original
+
+> their devices and accounts. Look for underlying issues and problems that might be affecting your child. While there should be consequences, solutions are more important than punishment. CONNECTSAFELY.ORG | 2 PUTTING NUMBERS INTO PERSPECTIVE & SOME Probably because there is no single definition of cyberbullying, the numbers are all over the map, but lower than we often hear. And, contrary to some reports, the numbers are not going up – if anything, they’ve gone down a little. The National Center for Educational Statistics reported that 15.6% of students in grades 6-12 were “electronically bullied” in 2015, down from 16.2% in 2011. When it comes to high school students (grades 9 to 12), the Centers for Disease Control and Prevention Youth Risk Behavior Survey found that 14.5% of high school students were electronically bullied in 2017, compared to 19% who had been bullied in school, during the 12 months prior to the survey. That’s actually lower than it was in 2011 and 2015. It does appear that bullying tapers off with age. CDC reported that, in n. 2015, 24% of middle school students were nti cyberbullied and 45% were bullied on Pr school property. n d After a review of multiple studies, the C o Cyberbullying Research Center, in 2016, as estimated that, on average, about 24% of Dis pioneering bullying researcher Dan Olweus C reported that, among 440,000 US students surveyed (grades 3-12), 4.5% had been In-person bullying is also on the decline. A 2017 study published in Journal of
+
+## Text Simplified
+
+> الكثير من الطلاب في المرحلة الدراسية العليا يواجهون التهجم الإلكتروني، لكن هذه النسبة تراجعت مقارنة بعام 2015. يجب النظر إلى الأسباب وراء هذا التغير.
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | Cyberbullying_Guide |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "cyb-30a93e6a",
+  "domain": "cyber",
+  "source_file": "Cyberbullying_Guide.pdf",
+  "title": "فهم وتقييم التهجم الإلكتروني بين الطلاب",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "الإيصال غير المتكافئ",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO/Common Sense Media",
+  "text_original": "their devices and accounts. Look for underlying issues and problems that might be affecting your child. While there should be consequences, solutions are more important than punishment. CONNECTSAFELY.ORG | 2 PUTTING NUMBERS INTO PERSPECTIVE & SOME Probably because there is no single definition of cyberbullying, the numbers are all over the map, but lower than we often hear. And, contrary to some reports, the numbers are not going up – if anything, they’ve gone down a little. The National Center for Educational Statistics reported that 15.6% of students in grades 6-12 were “electronically bullied” in 2015, down from 16.2% in 2011. When it comes to high school students (grades 9 to 12), the Centers for Disease Control and Prevention Youth Risk Behavior Survey found that 14.5% of high school students were electronically bullied in 2017, compared to 19% who had been bullied in school, during the 12 months prior to the survey. That’s actually lower than it was in 2011 and 2015. It does appear that bullying tapers off with age. CDC reported that, in n. 2015, 24% of middle school students were nti cyberbullied and 45% were bullied on Pr school property. n d After a review of multiple studies, the C o Cyberbullying Research Center, in 2016, as estimated that, on average, about 24% of Dis pioneering bullying researcher Dan Olweus C reported that, among 440,000 US students surveyed (grades 3-12), 4.5% had been In-person bullying is also on the decline. A 2017 study published in Journal of",
+  "text_simplified": "الكثير من الطلاب في المرحلة الدراسية العليا يواجهون التهجم الإلكتروني، لكن هذه النسبة تراجعت مقارنة بعام 2015. يجب النظر إلى الأسباب وراء هذا التغير.",
+  "labels": [
+    "الكراهية الرقمية",
+    "السلوك العدواني",
+    "التعليم عن التهديدات الإلكترونية"
+  ],
+  "created_at": "2026-06-07T08:01:23Z",
+  "updated_at": "2026-06-07T08:01:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Cyberbullying_Guide",
+    "source_author": ""
+  }
+}
+```
+</details>

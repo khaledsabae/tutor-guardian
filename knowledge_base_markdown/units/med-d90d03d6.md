@@ -1,0 +1,73 @@
+# med-d90d03d6
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 4-6 |
+| **Behavior Type** |  developmental milestones |
+| **Created At** | 2026-06-07T08:13:52Z |
+| **Domain** | medical |
+| **Intervention Type** | إرشادي |
+| **Labels** | `تطور طفلك`, `ملاحظات تطور`, `تطبيق` |
+| **Language** | ar |
+| **Reference Type** | تقرير_طبي |
+| **Severity** | خفيف |
+| **Source File** | Autism_CDC.pdf |
+| **Updated At** | 2026-06-07T08:13:52Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> medical
+
+## Text Original
+
+> to expect. To see more tips and activities download CDC’s Milestone Tracker app. This milestone checklist is not a substitute for a standardized, validated developmental screening tool. These developmental milestones show what most children (75% or more) can do by each age. Subject matter experts selected these milestones based on available data and expert consensus. www.cdc.gov/ActEarly | 1-800-CDC-INFO (1-800-232-4636) Learn the Signs. Act Early. Your baby at 4 months Baby’s Name Baby’s Age Today’s Date Milestones matter! How your baby plays, learns, speaks, acts, and moves offers important clues about his or her development. Check the milestones your baby has reached by 4 months. Take this with you and talk with your baby’s doctor at every well-child visit about the milestones your baby has reached and what to expect next. What most babies do by this age: Social/Emotional Milestones Cognitive Milestones (learning, thinking, problem-solving) ◦ Smiles on his own to get your attention ◦ Chuckles (not yet a full laugh) when you try to make ◦ If hungry, opens mouth when she sees breast or bottle her laugh ◦ Looks at his hands with interest ◦ Looks at you, moves, or makes sounds to get or keep your attention Movement/Physical Development Language/Communication Milestones ◦ Holds head steady without support when you are ◦ Makes sounds like “oooo”, “aahh” (cooing) ◦ Makes sounds back when you talk to him ◦ Holds a toy when you put it in his hand ◦ Turns head towards the sound of your voice ◦ Uses
+
+## Text Simplified
+
+> يجب متابعة تطور طفلك من خلال التطبيق Milestone Tracker للCDC. يظهر هذه المراحل التنموية ما يمكن معظم الأطفال (75% على الأقل) أن يقومون به في كل عمر.
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | Autism_CDC |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "med-d90d03d6",
+  "domain": "medical",
+  "source_file": "Autism_CDC.pdf",
+  "title": "متابعة تطور طفلك من خلال التطبيق Milestone Tracker للCDC",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": " developmental milestones",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "to expect. To see more tips and activities download CDC’s Milestone Tracker app. This milestone checklist is not a substitute for a standardized, validated developmental screening tool. These developmental milestones show what most children (75% or more) can do by each age. Subject matter experts selected these milestones based on available data and expert consensus. www.cdc.gov/ActEarly | 1-800-CDC-INFO (1-800-232-4636) Learn the Signs. Act Early. Your baby at 4 months Baby’s Name Baby’s Age Today’s Date Milestones matter! How your baby plays, learns, speaks, acts, and moves offers important clues about his or her development. Check the milestones your baby has reached by 4 months. Take this with you and talk with your baby’s doctor at every well-child visit about the milestones your baby has reached and what to expect next. What most babies do by this age: Social/Emotional Milestones Cognitive Milestones (learning, thinking, problem-solving) ◦ Smiles on his own to get your attention ◦ Chuckles (not yet a full laugh) when you try to make ◦ If hungry, opens mouth when she sees breast or bottle her laugh ◦ Looks at his hands with interest ◦ Looks at you, moves, or makes sounds to get or keep your attention Movement/Physical Development Language/Communication Milestones ◦ Holds head steady without support when you are ◦ Makes sounds like “oooo”, “aahh” (cooing) ◦ Makes sounds back when you talk to him ◦ Holds a toy when you put it in his hand ◦ Turns head towards the sound of your voice ◦ Uses",
+  "text_simplified": "يجب متابعة تطور طفلك من خلال التطبيق Milestone Tracker للCDC. يظهر هذه المراحل التنموية ما يمكن معظم الأطفال (75% على الأقل) أن يقومون به في كل عمر.",
+  "labels": [
+    "تطور طفلك",
+    "ملاحظات تطور",
+    "تطبيق"
+  ],
+  "created_at": "2026-06-07T08:13:52Z",
+  "updated_at": "2026-06-07T08:13:52Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Autism_CDC",
+    "source_author": ""
+  }
+}
+```
+</details>

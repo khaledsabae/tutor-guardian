@@ -1,0 +1,74 @@
+# cyb-db2bb48f
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 16-18 |
+| **Behavior Type** | إدمان ألعاب |
+| **Created At** | 2026-06-07T08:02:47Z |
+| **Domain** | cyber |
+| **Intervention Type** | إرشادي |
+| **Labels** | `إدمان`, `ألعاب الكترونية`, `قلق`, `الدراسة` |
+| **Language** | ar |
+| **Reference Type** | كتاب_تربوي |
+| **Severity** | متوسط |
+| **Source File** | Gaming_Disorder_WHO.pdf |
+| **Updated At** | 2026-06-07T08:02:47Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> WHO/Common Sense Media
+
+## Text Original
+
+> several surveys showing says. “Of those, 215 are males.” internet gaming disorder prevalence Like Higuchi, Achab has seen a The patients Higuchi sees display between 1%-10% in Europe and North steady increase in on-line gaming dis- a range of symptoms, but are generally America. order patients, as well as an increasing unable to limit the time they spend gam- “Because of differences in survey proportion of younger, male patients. ing and continue to play despite negative quality and comparability, the exact size “Today, 43 of our 110 patients with in- consequences, such as dropping out of and nature of that problem is yet to be ternet addiction are primarily addicted school (almost three quarters of the defined,” he says, “but it is clear there is to gaming, 40 of them boys and young patients are students) or losing a job. a problem.” men, and just three girls,” she says. No national survey of gaming dis- In Switzerland, a report commis- Among the people that have left order has been undertaken in Japan. sioned by the Federal Office of Pub- the deepest impression on Achab, was However, a recent national survey of lic Health published in 2018 found that a 22-year-old man who was brought the broader category of “internet addic- around 1% of the population (approxi- in by his mother. “He had dropped out tion” reported that approximately 1.82 mately 70 000 people) are “problematic” of school two years earlier and refused million males 20 years of age and older,
+
+## Text Simplified
+
+> يظهر أن حوالي 215 من المشاركين هم ذكور. ارتفع معدل الإدمان على الألعاب الالكترونية بشكل مستمر في أوروبا وأمريكا الشمالية، مع ظهور مجموعة متنوعة من الأعراض.
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | Gaming_Disorder_WHO |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "cyb-db2bb48f",
+  "domain": "cyber",
+  "source_file": "Gaming_Disorder_WHO.pdf",
+  "title": "إدمان ألعاب الكترونية بين الشباب",
+  "language": "ar",
+  "age_group": "16-18",
+  "behavior_type": "إدمان ألعاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO/Common Sense Media",
+  "text_original": "several surveys showing says. “Of those, 215 are males.” internet gaming disorder prevalence Like Higuchi, Achab has seen a The patients Higuchi sees display between 1%-10% in Europe and North steady increase in on-line gaming dis- a range of symptoms, but are generally America. order patients, as well as an increasing unable to limit the time they spend gam- “Because of differences in survey proportion of younger, male patients. ing and continue to play despite negative quality and comparability, the exact size “Today, 43 of our 110 patients with in- consequences, such as dropping out of and nature of that problem is yet to be ternet addiction are primarily addicted school (almost three quarters of the defined,” he says, “but it is clear there is to gaming, 40 of them boys and young patients are students) or losing a job. a problem.” men, and just three girls,” she says. No national survey of gaming dis- In Switzerland, a report commis- Among the people that have left order has been undertaken in Japan. sioned by the Federal Office of Pub- the deepest impression on Achab, was However, a recent national survey of lic Health published in 2018 found that a 22-year-old man who was brought the broader category of “internet addic- around 1% of the population (approxi- in by his mother. “He had dropped out tion” reported that approximately 1.82 mately 70 000 people) are “problematic” of school two years earlier and refused million males 20 years of age and older,",
+  "text_simplified": "يظهر أن حوالي 215 من المشاركين هم ذكور. ارتفع معدل الإدمان على الألعاب الالكترونية بشكل مستمر في أوروبا وأمريكا الشمالية، مع ظهور مجموعة متنوعة من الأعراض.",
+  "labels": [
+    "إدمان",
+    "ألعاب الكترونية",
+    "قلق",
+    "الدراسة"
+  ],
+  "created_at": "2026-06-07T08:02:47Z",
+  "updated_at": "2026-06-07T08:02:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Gaming_Disorder_WHO",
+    "source_author": ""
+  }
+}
+```
+</details>

@@ -1,0 +1,74 @@
+# dev-0a5739fc
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 13-15 |
+| **Behavior Type** | قلق |
+| **Created At** | 2026-06-07T07:53:36Z |
+| **Domain** | development |
+| **Intervention Type** | إرشادي |
+| **Labels** | `القلق`, `الصحة العقلية`, `الأهل`, `الفن التعبيري` |
+| **Language** | ar |
+| **Reference Type** | كتاب_تربوي |
+| **Severity** | متوسط |
+| **Source File** | Adolescent_Brain_UNICEF.pdf |
+| **Updated At** | 2026-06-07T07:53:36Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> UNICEF
+
+## Text Original
+
+> Front cover: © Todd Siler Below the Clouds of Consciousness, 1989 Courtesy Ronald Feldman Fine Arts, New York ACKNOWLEDGEMENTS This compendium was edited by Nikola Balvin (Knowledge Management Specialist, Innocenti) and Prerna Banati (Chief, Programme and Planning, Innocenti). Production was overseen by Eve Leckey (Publications Assistant, Innocenti) and Sarah Marchant (Editorial Assistant, Innocenti). Graphic design was by Mannocchi Design, Rome. UNICEF is most grateful to the authors for their contributions to this innovative project. Sarah Cook, Director of the Office of Research - Innocenti, and Ted Chaiban, Programme Director, New York, provided helpful comments and inputs. Thanks go to Judith Diers, Chief of the Adolescent Development and Participation Section, UNICEF New York, who spearheaded the consultation from which these contributions are drawn. UNICEF is most grateful to Todd Siler and to Ronald Feldman Fine Arts, New York for the rights to use the works of art reproduced in this publication. Todd Siler, PhD, is an American multimedia artist, author, educator, and inventor, equally well known for his art and for his work in creativity research. He describes his philosophy as “Realizing human potential. That’s my life’s work. Those three words sum up everything I live for and aspire to accomplish through my art.” Many of his works are inspired by the brain and its functioning and his interest in its power and Below the Clouds of Consciousness, 1989 Mixed media on paper Courtesy Ronald Feldman Fine Arts, New York Crossing the Primordial Bridges between Art Science Technology in Human Nervous
+
+## Text Simplified
+
+> هذا الكتاب يحتوي على أعمال فنية تتعلق بالدماغ والسلوك البشري، ويقدم معلومات قيمة للأهل.
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | Adolescent_Brain_UNICEF |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "dev-0a5739fc",
+  "domain": "development",
+  "source_file": "Adolescent_Brain_UNICEF.pdf",
+  "title": "فهم القلق من خلال الفن التعبيري",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "قلق",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "Front cover: © Todd Siler Below the Clouds of Consciousness, 1989 Courtesy Ronald Feldman Fine Arts, New York ACKNOWLEDGEMENTS This compendium was edited by Nikola Balvin (Knowledge Management Specialist, Innocenti) and Prerna Banati (Chief, Programme and Planning, Innocenti). Production was overseen by Eve Leckey (Publications Assistant, Innocenti) and Sarah Marchant (Editorial Assistant, Innocenti). Graphic design was by Mannocchi Design, Rome. UNICEF is most grateful to the authors for their contributions to this innovative project. Sarah Cook, Director of the Office of Research - Innocenti, and Ted Chaiban, Programme Director, New York, provided helpful comments and inputs. Thanks go to Judith Diers, Chief of the Adolescent Development and Participation Section, UNICEF New York, who spearheaded the consultation from which these contributions are drawn. UNICEF is most grateful to Todd Siler and to Ronald Feldman Fine Arts, New York for the rights to use the works of art reproduced in this publication. Todd Siler, PhD, is an American multimedia artist, author, educator, and inventor, equally well known for his art and for his work in creativity research. He describes his philosophy as “Realizing human potential. That’s my life’s work. Those three words sum up everything I live for and aspire to accomplish through my art.” Many of his works are inspired by the brain and its functioning and his interest in its power and Below the Clouds of Consciousness, 1989 Mixed media on paper Courtesy Ronald Feldman Fine Arts, New York Crossing the Primordial Bridges between Art Science Technology in Human Nervous",
+  "text_simplified": "هذا الكتاب يحتوي على أعمال فنية تتعلق بالدماغ والسلوك البشري، ويقدم معلومات قيمة للأهل.",
+  "labels": [
+    "القلق",
+    "الصحة العقلية",
+    "الأهل",
+    "الفن التعبيري"
+  ],
+  "created_at": "2026-06-07T07:53:36Z",
+  "updated_at": "2026-06-07T07:53:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Adolescent_Brain_UNICEF",
+    "source_author": ""
+  }
+}
+```
+</details>

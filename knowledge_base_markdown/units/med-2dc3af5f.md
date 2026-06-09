@@ -1,0 +1,74 @@
+# med-2dc3af5f
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 0-3 |
+| **Behavior Type** | قلق, فرط حركة |
+| **Created At** | 2026-06-07T08:13:31Z |
+| **Domain** | medical |
+| **Intervention Type** | إرشادي |
+| **Labels** | `نوم`, `غذاء`, `القلق`, `فرط حركة` |
+| **Language** | ar |
+| **Reference Type** | تقرير_طبي |
+| **Severity** | شديد |
+| **Source File** | Autism_CDC.pdf |
+| **Updated At** | 2026-06-07T08:13:31Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> medical
+
+## Text Original
+
+> his head up. Do not leave your baby alone. If he seems sleepy, place him on his back in a safe sleep area (firm mattress with no blankets, pillows, bumper pads, or toys). • Feed only breast milk or formula to your baby. Babies are not ready for other foods, water or other drinks for about the first 6 months of life. • Learn when your baby is hungry by looking for signs. Watch for signs of hunger, such as putting hands to mouth, turning head toward breast/bottle, or smacking/licking lips. • Look for signs your baby is full, such as closing her mouth or turning her head away from the breast/bottle. If your baby is not hungry, it’s ok to stop feeding. • Do not shake your baby or allow anyone else to—ever! You can damage his brain or even cause his death. Put your baby in a safe place and walk away if you’re getting upset when he is crying. Check on him every 5–10 minutes. Infant crying is often worse in the first few months of life, but it gets better! • Have routines for sleeping and feeding. This will help your baby begin to learn what to expect. To see more tips and activities download CDC’s Milestone Tracker app. This milestone checklist is not a substitute for a standardized, validated developmental screening tool. These developmental milestones show what most children (75% or more) can do by each age. Subject matter experts selected these milestones based on
+
+## Text Simplified
+
+> احرص على وضع طفلك على ظهره أثناء النوم وتجنب喂食其他食物或饮料直到6个月大。注意宝宝饥饿和饱足的迹象。
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | Autism_CDC |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "med-2dc3af5f",
+  "domain": "medical",
+  "source_file": "Autism_CDC.pdf",
+  "title": "كيفية رعاة طفلك في الأشهر الأولى من العمر",
+  "language": "ar",
+  "age_group": "0-3",
+  "behavior_type": "قلق, فرط حركة",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "his head up. Do not leave your baby alone. If he seems sleepy, place him on his back in a safe sleep area (firm mattress with no blankets, pillows, bumper pads, or toys). • Feed only breast milk or formula to your baby. Babies are not ready for other foods, water or other drinks for about the first 6 months of life. • Learn when your baby is hungry by looking for signs. Watch for signs of hunger, such as putting hands to mouth, turning head toward breast/bottle, or smacking/licking lips. • Look for signs your baby is full, such as closing her mouth or turning her head away from the breast/bottle. If your baby is not hungry, it’s ok to stop feeding. • Do not shake your baby or allow anyone else to—ever! You can damage his brain or even cause his death. Put your baby in a safe place and walk away if you’re getting upset when he is crying. Check on him every 5–10 minutes. Infant crying is often worse in the first few months of life, but it gets better! • Have routines for sleeping and feeding. This will help your baby begin to learn what to expect. To see more tips and activities download CDC’s Milestone Tracker app. This milestone checklist is not a substitute for a standardized, validated developmental screening tool. These developmental milestones show what most children (75% or more) can do by each age. Subject matter experts selected these milestones based on",
+  "text_simplified": "احرص على وضع طفلك على ظهره أثناء النوم وتجنب喂食其他食物或饮料直到6个月大。注意宝宝饥饿和饱足的迹象。",
+  "labels": [
+    "نوم",
+    "غذاء",
+    "القلق",
+    "فرط حركة"
+  ],
+  "created_at": "2026-06-07T08:13:31Z",
+  "updated_at": "2026-06-07T08:13:31Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Autism_CDC",
+    "source_author": ""
+  }
+}
+```
+</details>

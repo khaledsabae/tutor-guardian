@@ -1,0 +1,73 @@
+# med-ec6f874a
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 10-12 |
+| **Behavior Type** | اضطراب فرط الحركة ونقص الانتباه |
+| **Created At** | 2026-06-07T08:12:00Z |
+| **Domain** | medical |
+| **Intervention Type** | إرشادي |
+| **Labels** | ` ADHD`, `تدريب عقلي`, `تقنية إشارات غير مكلفة` |
+| **Language** | ar |
+| **Reference Type** | تقرير_طبي |
+| **Severity** | متوسط |
+| **Source File** | ADHD_NIMH.pdf |
+| **Updated At** | 2026-06-07T08:12:00Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> medical
+
+## Text Original
+
+> to the person’s ongoing performance. Cognitive training is shown to modestly improve the tasks being practiced. For instance, research shows the training can help memory, attention, inhibition, planning, and cognitive flexibility in people with ADHD. However, these improvements don’t usually translate to changes in core ADHD symptoms of impulsivity and hyperactivity. Neurofeedback is a noninvasive technique in which an electronic device monitors and records a person’s brain activity, providing them with immediate feedback to support self-regulation. The device measures brain activity through such means as EEG or fMRI scans and feeds the information back to the person, usually in the form of a computer screen or visual cue. Through this feedback, people learn to self-regulate their brain activity to directly alter the associated behavior. The assumption is that, with repeated, real-time information, people can change their internal brain activity, with observable effects on behavior and cognition. For people with ADHD, neurofeedback is used to train and improve specific cognitive functions. Although it is shown to help reduce some ADHD symptoms, the effects of neurofeedback remain lower than those seen from medication and psychotherapy. Additional research is needed to refine the treatment and determine for whom it works and under what conditions. Complementary health approaches Some people may explore complementary health approaches to manage symptoms of ADHD. These can include natural products, vitamins and supplements, diet changes, and acupuncture. Others find it helpful to make lifestyle changes, like adding more physical exercise to their daily schedule. Unlike psychotherapy and medication that
+
+## Text Simplified
+
+> التدريب العقلي يحسن الأداء، بينما تستخدم تقنية التدريب على الإشارات غير المكلفة معدات إلكترونية لتعزيز تنظيم الدماغ. يمكن أن يكون هذا مفيدًا للأشخاص الذين يعانون من اضطراب فرط الحركة ونقص الانتباه.
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | ADHD_NIMH |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "med-ec6f874a",
+  "domain": "medical",
+  "source_file": "ADHD_NIMH.pdf",
+  "title": "التدريب العقلي وتقنية الإشارات غير المكلفة في معالجة اضطراب فرط الحركة ونقص الانتباه",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "اضطراب فرط الحركة ونقص الانتباه",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "to the person’s ongoing performance. Cognitive training is shown to modestly improve the tasks being practiced. For instance, research shows the training can help memory, attention, inhibition, planning, and cognitive flexibility in people with ADHD. However, these improvements don’t usually translate to changes in core ADHD symptoms of impulsivity and hyperactivity. Neurofeedback is a noninvasive technique in which an electronic device monitors and records a person’s brain activity, providing them with immediate feedback to support self-regulation. The device measures brain activity through such means as EEG or fMRI scans and feeds the information back to the person, usually in the form of a computer screen or visual cue. Through this feedback, people learn to self-regulate their brain activity to directly alter the associated behavior. The assumption is that, with repeated, real-time information, people can change their internal brain activity, with observable effects on behavior and cognition. For people with ADHD, neurofeedback is used to train and improve specific cognitive functions. Although it is shown to help reduce some ADHD symptoms, the effects of neurofeedback remain lower than those seen from medication and psychotherapy. Additional research is needed to refine the treatment and determine for whom it works and under what conditions. Complementary health approaches Some people may explore complementary health approaches to manage symptoms of ADHD. These can include natural products, vitamins and supplements, diet changes, and acupuncture. Others find it helpful to make lifestyle changes, like adding more physical exercise to their daily schedule. Unlike psychotherapy and medication that",
+  "text_simplified": "التدريب العقلي يحسن الأداء، بينما تستخدم تقنية التدريب على الإشارات غير المكلفة معدات إلكترونية لتعزيز تنظيم الدماغ. يمكن أن يكون هذا مفيدًا للأشخاص الذين يعانون من اضطراب فرط الحركة ونقص الانتباه.",
+  "labels": [
+    " ADHD",
+    "تدريب عقلي",
+    "تقنية إشارات غير مكلفة"
+  ],
+  "created_at": "2026-06-07T08:12:00Z",
+  "updated_at": "2026-06-07T08:12:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ADHD_NIMH",
+    "source_author": ""
+  }
+}
+```
+</details>

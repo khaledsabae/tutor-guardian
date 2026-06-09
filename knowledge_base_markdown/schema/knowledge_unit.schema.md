@@ -1,0 +1,229 @@
+# Knowledge Unit
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **$Id** | https://tutor-guardian.local/schemas/knowledge_unit.schema.json |
+| **$Schema** | https://json-schema.org/draft/2020-12/schema |
+| **Additionalproperties** | No |
+| **Required** | `id`, `domain`, `age_group`, `behavior_type`, `intervention_type`, `severity`, `reference_info`, `text_original`, `text_simplified`, `created_at` |
+| **Type** | object |
+
+## Description
+
+> وحدة معرفة واحدة في المستودع (طبي / تربية إسلامية / تطوري / سيبراني) لاستخدامها في نظام RAG. ملاحظة: قيم enum هنا يجب أن تطابق backend/app/core/taxonomy.py — يتحقق من ذلك check_kb_integrity.py.
+
+## Properties
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | {"type": "string", "description": "الفئة العمرية المستهدفة. 'unspecified' للوحدات العامة غير المرتبطة بعمر محدد.", "enum": ["0-3", "4-6", "7-9", "10-12", "13-15", "16-18", "unspecified"]} |
+| **Behavior Type** | {"type": "string", "description": "نوع السلوك أو المشكلة الأساسية (مثل: فرط حركة، عناد، قلق، اكتئاب، إدمان ألعاب...)."} |
+| **Created At** | {"type": "string", "format": "date-time", "description": "تاريخ ووقت إنشاء وحدة المعرفة بتنسيق ISO 8601."} |
+| **Domain** | {"type": "string", "description": "المجال العلمي للوحدة (القيمة المخزّنة — القانونية).", "enum": ["medical", "cyber", "islamic_parenting", "development"]} |
+| **Id** | {"type": "string", "description": "معرّف فريد لوحدة المعرفة (يمكن أن يكون UUID)."} |
+| **Intervention Type** | {"type": "string", "description": "نوع التدخل المقترح.", "enum": ["وقائي", "إرشادي", "علاجي", "إحالة_لطبيب"]} |
+| **Jurisdiction** | {"type": "string", "description": "اختياري: يحدد المذهب أو البلد أو إطار الإفتاء إن لزم.", "nullable": true} |
+| **Keywords** | {"type": "array", "description": "اختياري: كلمات مفتاحية مستخرجة من المصدر لتعزيز البحث.", "items": {"type": "string"}} |
+| **Labels** | {"type": "array", "description": "وسوم إضافية لتسهيل البحث (tags).", "items": {"type": "string"}, "default": []} |
+| **Language** | {"type": "string", "description": "اختياري: لغة النص (ar / en / mixed)."} |
+| **Needs Ocr** | {"type": "boolean", "description": "اختياري: علامة داخلية تشير إلى أن المصدر يحتاج OCR."} |
+| **Reference Info** | {"type": "string", "description": "معلومة مرجعية مختصرة (اسم الكتاب، المؤلف، رقم الصفحة أو الباب، أو اسم الجهة المصدِرة للتقرير...)."} |
+| **Reference Type** | {"type": "string", "description": "اختياري: نوع المرجع العلمي أو الشرعي.", "enum": ["DSM-5", "كتاب_فقهي", "حديث", "كتاب_تربوي", "تقرير_سيبراني", "إرشاد_مهني", "مقال_تنموي", "تقرير_طبي", "مقال_تربوي"]} |
+| **Severity** | {"type": "string", "description": "تقدير شدة الحالة.", "enum": ["خفيف", "متوسط", "شديد", "طارئ"]} |
+| **Source File** | {"type": "string", "description": "اختياري: اسم ملف المصدر الذي اشتُقّت منه الوحدة."} |
+| **Source Meta** | {"type": "object", "description": "بيانات اختيارية إضافية عن المصدر.", "additionalProperties": false, "properties": {"source_title": {"type": "string", "description": "عنوان المصدر (كتاب، مقال، دليل...)."}, "source_author": {"type": "string", "description": "اسم المؤلف أو الجهة."}, "source_year": {"type": "integer", "description": "سنة النشر إن وُجدت."}, "source_url": {"type": "string", "format": "uri", "description": "رابط إلكتروني للمصدر إن توفر."}}} |
+| **Source Url** | {"type": "string", "description": "اختياري: رابط المصدر إن توفر."} |
+| **Text Original** | {"type": "string", "description": "النص الأصلي المقتبس من المرجع كما هو أو مع أقل قدر من التعديل."} |
+| **Text Simplified** | {"type": "string", "description": "صياغة مبسطة موجهة للأهل بلغة سهلة، تلخص الفكرة أو التوصية."} |
+| **Title** | {"type": "string", "description": "اختياري: عنوان مختصر للوحدة (غالباً من ملف المصدر)."} |
+| **Updated At** | {"type": "string", "format": "date-time", "description": "اختياري: تاريخ ووقت آخر تعديل."} |
+| **Version** | {"type": "string", "description": "اختياري: رقم إصدار هذه الوحدة (مثال: 1.0.0)."} |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tutor-guardian.local/schemas/knowledge_unit.schema.json",
+  "title": "Knowledge Unit",
+  "description": "وحدة معرفة واحدة في المستودع (طبي / تربية إسلامية / تطوري / سيبراني) لاستخدامها في نظام RAG. ملاحظة: قيم enum هنا يجب أن تطابق backend/app/core/taxonomy.py — يتحقق من ذلك check_kb_integrity.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "domain",
+    "age_group",
+    "behavior_type",
+    "intervention_type",
+    "severity",
+    "reference_info",
+    "text_original",
+    "text_simplified",
+    "created_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "معرّف فريد لوحدة المعرفة (يمكن أن يكون UUID)."
+    },
+    "domain": {
+      "type": "string",
+      "description": "المجال العلمي للوحدة (القيمة المخزّنة — القانونية).",
+      "enum": [
+        "medical",
+        "cyber",
+        "islamic_parenting",
+        "development"
+      ]
+    },
+    "age_group": {
+      "type": "string",
+      "description": "الفئة العمرية المستهدفة. 'unspecified' للوحدات العامة غير المرتبطة بعمر محدد.",
+      "enum": [
+        "0-3",
+        "4-6",
+        "7-9",
+        "10-12",
+        "13-15",
+        "16-18",
+        "unspecified"
+      ]
+    },
+    "behavior_type": {
+      "type": "string",
+      "description": "نوع السلوك أو المشكلة الأساسية (مثل: فرط حركة، عناد، قلق، اكتئاب، إدمان ألعاب...)."
+    },
+    "intervention_type": {
+      "type": "string",
+      "description": "نوع التدخل المقترح.",
+      "enum": [
+        "وقائي",
+        "إرشادي",
+        "علاجي",
+        "إحالة_لطبيب"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "description": "تقدير شدة الحالة.",
+      "enum": [
+        "خفيف",
+        "متوسط",
+        "شديد",
+        "طارئ"
+      ]
+    },
+    "reference_type": {
+      "type": "string",
+      "description": "اختياري: نوع المرجع العلمي أو الشرعي.",
+      "enum": [
+        "DSM-5",
+        "كتاب_فقهي",
+        "حديث",
+        "كتاب_تربوي",
+        "تقرير_سيبراني",
+        "إرشاد_مهني",
+        "مقال_تنموي",
+        "تقرير_طبي",
+        "مقال_تربوي"
+      ]
+    },
+    "reference_info": {
+      "type": "string",
+      "description": "معلومة مرجعية مختصرة (اسم الكتاب، المؤلف، رقم الصفحة أو الباب، أو اسم الجهة المصدِرة للتقرير...)."
+    },
+    "jurisdiction": {
+      "type": "string",
+      "description": "اختياري: يحدد المذهب أو البلد أو إطار الإفتاء إن لزم.",
+      "nullable": true
+    },
+    "text_original": {
+      "type": "string",
+      "description": "النص الأصلي المقتبس من المرجع كما هو أو مع أقل قدر من التعديل."
+    },
+    "text_simplified": {
+      "type": "string",
+      "description": "صياغة مبسطة موجهة للأهل بلغة سهلة، تلخص الفكرة أو التوصية."
+    },
+    "labels": {
+      "type": "array",
+      "description": "وسوم إضافية لتسهيل البحث (tags).",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "keywords": {
+      "type": "array",
+      "description": "اختياري: كلمات مفتاحية مستخرجة من المصدر لتعزيز البحث.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "تاريخ ووقت إنشاء وحدة المعرفة بتنسيق ISO 8601."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "اختياري: تاريخ ووقت آخر تعديل."
+    },
+    "version": {
+      "type": "string",
+      "description": "اختياري: رقم إصدار هذه الوحدة (مثال: 1.0.0)."
+    },
+    "title": {
+      "type": "string",
+      "description": "اختياري: عنوان مختصر للوحدة (غالباً من ملف المصدر)."
+    },
+    "language": {
+      "type": "string",
+      "description": "اختياري: لغة النص (ar / en / mixed)."
+    },
+    "source_file": {
+      "type": "string",
+      "description": "اختياري: اسم ملف المصدر الذي اشتُقّت منه الوحدة."
+    },
+    "source_url": {
+      "type": "string",
+      "description": "اختياري: رابط المصدر إن توفر."
+    },
+    "needs_ocr": {
+      "type": "boolean",
+      "description": "اختياري: علامة داخلية تشير إلى أن المصدر يحتاج OCR."
+    },
+    "source_meta": {
+      "type": "object",
+      "description": "بيانات اختيارية إضافية عن المصدر.",
+      "additionalProperties": false,
+      "properties": {
+        "source_title": {
+          "type": "string",
+          "description": "عنوان المصدر (كتاب، مقال، دليل...)."
+        },
+        "source_author": {
+          "type": "string",
+          "description": "اسم المؤلف أو الجهة."
+        },
+        "source_year": {
+          "type": "integer",
+          "description": "سنة النشر إن وُجدت."
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "رابط إلكتروني للمصدر إن توفر."
+        }
+      }
+    }
+  }
+}
+```
+</details>

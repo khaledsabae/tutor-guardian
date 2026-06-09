@@ -1,0 +1,75 @@
+# med-6de3365b
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 0-3 |
+| **Behavior Type** | فرط حركة |
+| **Created At** | 2026-06-07T08:15:01Z |
+| **Domain** | medical |
+| **Intervention Type** | إرشادي |
+| **Labels** | `تنمية طفولة`, `الغذاء الصحي`, `اللعب والأنشطة`, `النوم`, `الحركة` |
+| **Language** | ar |
+| **Reference Type** | تقرير_طبي |
+| **Severity** | خفيف |
+| **Source File** | Autism_CDC.pdf |
+| **Updated At** | 2026-06-07T08:15:01Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> medical
+
+## Text Original
+
+> • Talk, read, and sing to your baby. This will help her learn to speak and understand words later. • Limit screen time (TV, phones, tablets, etc.) to video calling with loved ones. Screen time is not recommended for children younger than 2 years of age. Babies learn by talking, playing, and interacting • Feed only breast milk or formula to your baby. Babies are not ready for other foods, water or other drinks for about the first 6 months of life. • Give your baby safe toys to play with that are easy to hold, like rattles or cloth books with colorful pictures • Let your baby have time to move and interact with people and objects throughout the day. Try not to keep your baby in swings, strollers, or bouncy seats for too long. • Set steady routines for sleeping and feeding. • Lay your baby on her back and show her a bright-colored toy. Move the toy slowly from left to right and up and down to see if she watches how the toy moves. • Sing and talk to your baby as you help her “exercise” (move her body) for a few minutes. Gently bend and move her arms and legs up and down. To see more tips and activities download CDC’s Milestone Tracker app. This milestone checklist is not a substitute for a standardized, validated developmental screening tool. These developmental milestones show what most children (75% or more) can do by each age. Subject matter
+
+## Text Simplified
+
+> تحدث مع طفلك، قرئ له، وغنِّ له للمساعدة في تعلمه اللغة والكلمات. حدد وقتًا محددًا لمشاهدة الشاشات للأطفال الأصغر من سنتين، حيث يتعلم الأطفال من خلال التحدث واللعب والاستكشاف.
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | Autism_CDC |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "med-6de3365b",
+  "domain": "medical",
+  "source_file": "Autism_CDC.pdf",
+  "title": "نصائح للحفاظ على نمو طفلك بشكل صحي وفعال في الأشهر الأولى من حياته",
+  "language": "ar",
+  "age_group": "0-3",
+  "behavior_type": "فرط حركة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "• Talk, read, and sing to your baby. This will help her learn to speak and understand words later. • Limit screen time (TV, phones, tablets, etc.) to video calling with loved ones. Screen time is not recommended for children younger than 2 years of age. Babies learn by talking, playing, and interacting • Feed only breast milk or formula to your baby. Babies are not ready for other foods, water or other drinks for about the first 6 months of life. • Give your baby safe toys to play with that are easy to hold, like rattles or cloth books with colorful pictures • Let your baby have time to move and interact with people and objects throughout the day. Try not to keep your baby in swings, strollers, or bouncy seats for too long. • Set steady routines for sleeping and feeding. • Lay your baby on her back and show her a bright-colored toy. Move the toy slowly from left to right and up and down to see if she watches how the toy moves. • Sing and talk to your baby as you help her “exercise” (move her body) for a few minutes. Gently bend and move her arms and legs up and down. To see more tips and activities download CDC’s Milestone Tracker app. This milestone checklist is not a substitute for a standardized, validated developmental screening tool. These developmental milestones show what most children (75% or more) can do by each age. Subject matter",
+  "text_simplified": "تحدث مع طفلك، قرئ له، وغنِّ له للمساعدة في تعلمه اللغة والكلمات. حدد وقتًا محددًا لمشاهدة الشاشات للأطفال الأصغر من سنتين، حيث يتعلم الأطفال من خلال التحدث واللعب والاستكشاف.",
+  "labels": [
+    "تنمية طفولة",
+    "الغذاء الصحي",
+    "اللعب والأنشطة",
+    "النوم",
+    "الحركة"
+  ],
+  "created_at": "2026-06-07T08:15:01Z",
+  "updated_at": "2026-06-07T08:15:01Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Autism_CDC",
+    "source_author": ""
+  }
+}
+```
+</details>

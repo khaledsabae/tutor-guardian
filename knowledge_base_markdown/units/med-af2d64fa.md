@@ -1,0 +1,73 @@
+# med-af2d64fa
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 10-12 |
+| **Behavior Type** | قلق وسلوك خطير |
+| **Created At** | 2026-06-07T08:16:52Z |
+| **Domain** | medical |
+| **Intervention Type** | إرشادي |
+| **Labels** | `قلق`, `سلوك الخطير`, `انتحار` |
+| **Language** | ar |
+| **Reference Type** | تقرير_طبي |
+| **Severity** | شديد |
+| **Source File** | Children_Mental_Health.pdf |
+| **Updated At** | 2026-06-07T08:16:52Z |
+| **Version** | 1.0.0 |
+
+## Reference Info
+
+> medical
+
+## Text Original
+
+> academically or have experienced a recent ● Smoke, drink, or use drugs decline in grades ● Engage in risky or destructive behavior alone or with ● Repeat actions or check things many times (for friends example, repeatedly checking to make sure a door is ● Have thoughts of suicide locked) out of fear that something bad may happen ● Say that they think someone is trying to control their mind or that they hear things that other people cannot hear Get immediate help If you, your child, or someone you know is struggling or having thoughts of suicide, call or text the 988 Suicide & Crisis Lifeline at 988 or chat at 988lifeline.org. In life-threatening situations, call 911. Where should I start if I’m concerned about my child’s mental health? Being proactive and aware of your child’s mental health is an important first step. If you have concerns about your child’s mental health, start by talking with others who frequently interact with your child. For example, ask their teacher about your child’s behavior in school, at daycare, or on the playground. You can talk with your child’s pediatrician or health care provider and describe your child’s behavior and what you have observed and learned from talking with others. You can also ask the health care provider for a referral to a mental health professional with experience and expertise in evaluating and treating children. Get information about finding a health care provider or accessing treatment at www.nimh.nih.gov/findhelp. How is children’s mental
+
+## Text Simplified
+
+> يواجه بعض الأطفال تراجعاً في الأداء الدراسى، ويقومون بسلوك خطير ومرهق بمفردهم أو مع الآخرين، ويكررون أفعالهم أو يتحققون من الأمور كثيراً. قد يكون لديهم أفكار عن الانتحار أو يعتقدون أن شخصاً ما يحاول السيطرة على ذهنهم.
+
+## Source Meta
+
+| Field | Value |
+| --- | --- |
+| **Source Author** |  |
+| **Source Title** | Children_Mental_Health |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "med-af2d64fa",
+  "domain": "medical",
+  "source_file": "Children_Mental_Health.pdf",
+  "title": "التعامل مع القلق والسلوك الخطير عند الأطفال في المرحلة العمرية 10-12",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "قلق وسلوك خطير",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "medical",
+  "text_original": "academically or have experienced a recent ● Smoke, drink, or use drugs decline in grades ● Engage in risky or destructive behavior alone or with ● Repeat actions or check things many times (for friends example, repeatedly checking to make sure a door is ● Have thoughts of suicide locked) out of fear that something bad may happen ● Say that they think someone is trying to control their mind or that they hear things that other people cannot hear Get immediate help If you, your child, or someone you know is struggling or having thoughts of suicide, call or text the 988 Suicide & Crisis Lifeline at 988 or chat at 988lifeline.org. In life-threatening situations, call 911. Where should I start if I’m concerned about my child’s mental health? Being proactive and aware of your child’s mental health is an important first step. If you have concerns about your child’s mental health, start by talking with others who frequently interact with your child. For example, ask their teacher about your child’s behavior in school, at daycare, or on the playground. You can talk with your child’s pediatrician or health care provider and describe your child’s behavior and what you have observed and learned from talking with others. You can also ask the health care provider for a referral to a mental health professional with experience and expertise in evaluating and treating children. Get information about finding a health care provider or accessing treatment at www.nimh.nih.gov/findhelp. How is children’s mental",
+  "text_simplified": "يواجه بعض الأطفال تراجعاً في الأداء الدراسى، ويقومون بسلوك خطير ومرهق بمفردهم أو مع الآخرين، ويكررون أفعالهم أو يتحققون من الأمور كثيراً. قد يكون لديهم أفكار عن الانتحار أو يعتقدون أن شخصاً ما يحاول السيطرة على ذهنهم.",
+  "labels": [
+    "قلق",
+    "سلوك الخطير",
+    "انتحار"
+  ],
+  "created_at": "2026-06-07T08:16:52Z",
+  "updated_at": "2026-06-07T08:16:52Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Children_Mental_Health",
+    "source_author": ""
+  }
+}
+```
+</details>

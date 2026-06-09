@@ -1,0 +1,59 @@
+# lesson_10-12_cyber_digital_citizenship_01
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 10-12 |
+| **Domain** | cyber |
+| **Estimated Minutes** | 7 |
+| **Is Published** | Yes |
+| **Needs Professional Followup** | No |
+| **Order** | 1 |
+| **Path Id** | path_10-12_cyber_digital_citizenship |
+| **Reflection Prompts** | `ما التطبيقات التي راجعتم إعداداتها؟`, `هل فهم طفلك مفهوم "الأثر الرقمي"؟` |
+| **Unit Ids** | `40f84fca-81b0-4533-8c7c-a0dbbf8a4598`, `7e94871d-1929-4ea4-9bed-8841e09938af`, `bd4afec4-d395-55f4-9953-22cc698564fd`, `cyb-36b8ad48` |
+| **Version** | 1.0.0 |
+| **Warning Flags** |  |
+
+## Summary
+
+> كل صورة، تعليق، لايك يترك أثراً رقمياً دائماً. علّم طفلك: "قبل أن تنشر، اسأل: هل أرضى أن يراه جدّي/معلّمي بعد 10 سنوات؟" – الخصوصية حق، والحماية واجب.
+
+## Try This
+
+> راجعوا معاً إعدادات الخصوصية في تطبيق واحد يستخدمه. فعلوا: حساب خاص، لا مشاركة موقع، موافقة قبل التاج.
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "lesson_10-12_cyber_digital_citizenship_01",
+  "path_id": "path_10-12_cyber_digital_citizenship",
+  "title": "الخصوصية الرقمية: أثر قدمك لا يُمحى",
+  "age_group": "10-12",
+  "domain": "cyber",
+  "unit_ids": [
+    "40f84fca-81b0-4533-8c7c-a0dbbf8a4598",
+    "7e94871d-1929-4ea4-9bed-8841e09938af",
+    "bd4afec4-d395-55f4-9953-22cc698564fd",
+    "cyb-36b8ad48"
+  ],
+  "summary": "كل صورة، تعليق، لايك يترك أثراً رقمياً دائماً. علّم طفلك: \"قبل أن تنشر، اسأل: هل أرضى أن يراه جدّي/معلّمي بعد 10 سنوات؟\" – الخصوصية حق، والحماية واجب.",
+  "try_this": "راجعوا معاً إعدادات الخصوصية في تطبيق واحد يستخدمه. فعلوا: حساب خاص، لا مشاركة موقع، موافقة قبل التاج.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "ما التطبيقات التي راجعتم إعداداتها؟",
+    "هل فهم طفلك مفهوم \"الأثر الرقمي\"؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0"
+}
+```
+</details>

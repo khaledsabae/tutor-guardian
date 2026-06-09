@@ -1,0 +1,772 @@
+# download_report
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Failed 404 403** | 32 |
+| **Files** | `{'filename': 'ADHD_What_You_Need_to_Know.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 584.4}`, `{'filename': 'Autism_Milestones_Checklist.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 7234.6}`, `{'filename': 'CDC_ADHD_Prevalence_Co_occurring_2022.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 2508.0}`, `{'filename': 'CDC_FragileX_Autism_Co_occurrence_Guide.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 221.7}`, `{'filename': 'CDC_NCHS_Prevalence_Learning_Difficulties.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 1950.1}`, `{'filename': 'Children_Mental_Health_Anxiety.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 189.1}`, `{'filename': 'Disruptive_Mood_Dysregulation_Basics.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 206.7}`, `{'filename': 'Global_Report_Developmental_Disabilities.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 718.9}`, `{'filename': 'NIMH_ADHD_Guide_2024.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 584.4}`, `{'filename': 'NIMH_DMDD_Temper_Outbursts_Basics.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 206.7}`, `{'filename': 'NIMH_Depression_Age_Manifestations.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 3333.6}`, `{'filename': 'NIMH_Social_Processes_Attachment_Separation.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 350.9}`, `{'filename': 'NIMH_Stress_vs_Anxiety_Coping.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 155.5}`, `{'filename': 'NIMH_Teen_Depression_Parents_Guide.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 87.8}`, `{'filename': 'Speech_Language_Delay_Screening.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 568.3}`, `{'filename': 'WHO_Sleep_Physical_Activity_Under5.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 1430.9}`, `{'filename': 'anxiety-guide-parents-children.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 697.3}`, `{'filename': 'cdc-adhd-behavior-therapy-young-children.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 330.1}`, `{'filename': 'cdc-adhd-fact-sheet.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 253.4}`, `{'filename': 'cdc-autism-spectrum-disorders-rainbow.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 143.0}`, `{'filename': 'cdc-data-child-mental-disorders.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 127.9}`, `{'filename': 'early-social-communication-vocabulary-measures.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 569.6}`, `{'filename': 'odd-home-family-strategies.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 270.8}`, `{'filename': 'parents-guide-learning-disabilities.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 2260.8}`, `{'filename': 'sleep-problems-young-children-parents.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 814.5}`, `{'filename': 'who-child-youth-mental-health-europe.pdf', 'url': '', 'domain': 'medical', 'status': 'success', 'http_code': 200, 'size_kb': 1594.2}`, `{'filename': 'AABU_Equality_In_Gifts_Between_Children.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 342.2}`, `{'filename': 'Alukah_Al_Rahma_Bi_Al_Atfal.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 1793.9}`, `{'filename': 'Alwan_Tarbiyat_Al_Awlad_Fi_Al_Islam_Arabic.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 1435.0}`, `{'filename': 'Child_Education_In_Islam_Alwan_English.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 24808.4}`, `{'filename': 'Noor_Book_Maalim_Al_Manhaj_Al_Nabawi_Tarbiyah.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 269.7}`, `{'filename': 'Saaid_Quranic_Tarbiyyah_Spiritual_Growth.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 8359.4}`, `{'filename': 'Tarbiya_Al_Awlad_Alwan.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 16326.6}`, `{'filename': 'Tarbiya_Al_Banat_Lamaat.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 348.8}`, `{'filename': 'Tarbiyat_Al_Tifl_Fi_Al_Islam_Archive.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 1004.5}`, `{'filename': 'kayfa-turabbi-waladak.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'success', 'http_code': 200, 'size_kb': 531.6}`, `{'filename': 'AI_Child_Safety_Guide.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 473.3}`, `{'filename': 'Adolescent_Social_Media_Gaming_Europe.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 1455.9}`, `{'filename': 'Cyberbullying_Prevention_Guide.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 377.7}`, `{'filename': 'Gaming_Disorder_Focus_WHO.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 8302.0}`, `{'filename': 'Media_Use_Kids_Census_2025.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 8921.5}`, `{'filename': 'WHO_EMRO_Video_Games_Aggression_Study.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 305.7}`, `{'filename': 'WHO_ICD_11_Gaming_Disorder.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 690.9}`, `{'filename': 'a-safer-digital-environment-for-children-un.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 2545.2}`, `{'filename': 'child-online-safety-safeonline.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 6190.9}`, `{'filename': 'common-sense-media-use-kids-0-8-2017.pdf', 'url': '', 'domain': 'digital_safety', 'status': 'success', 'http_code': 200, 'size_kb': 1561.7}`, `{'filename': 'CDC_Milestones_12_Months_Checklist.pdf', 'url': '', 'domain': 'development', 'status': 'success', 'http_code': 200, 'size_kb': 1200.3}`, `{'filename': 'CDC_Milestones_2_Years_Checklist.pdf', 'url': '', 'domain': 'development', 'status': 'success', 'http_code': 200, 'size_kb': 1151.7}`, `{'filename': 'CDC_Washington_Group_Disability_Interviewer_Guidelines.pdf', 'url': '', 'domain': 'development', 'status': 'success', 'http_code': 200, 'size_kb': 71.1}`, `{'filename': 'unicef-early-moments-matter.pdf', 'url': '', 'domain': 'development', 'status': 'success', 'http_code': 200, 'size_kb': 3871.7}`, `{'filename': 'AAP_Disruptive_Behavior_ODD_CD.pdf', 'url': 'https://publications.aap.org/book/chapter-pdf/770794/aap_9781581105698-part01-disruptive_behavior.pdf', 'domain': 'medical', 'status': 'subscription_required', 'http_code': 403, 'size_kb': 0, 'needs_subscription': True}`, `{'filename': 'AAP_DSM5_ODD_Diagnostic_Criteria.pdf', 'url': 'https://publications.aap.org/book/chapter-pdf/1338051/aap_9781610020473-part07-ch302.pdf', 'domain': 'medical', 'status': 'subscription_required', 'http_code': 403, 'size_kb': 0, 'needs_subscription': True}`, `{'filename': 'ODD_Diagnostic_Criteria_AAP.pdf', 'url': 'https://publications.aap.org/books/chapter-pdf/1350447/aap_9781610021128-oppositional.pdf', 'domain': 'medical', 'status': 'subscription_required', 'http_code': 403, 'size_kb': 0, 'needs_subscription': True}`, `{'filename': 'AAP_Sibling_Rivalry_Clinical_Epidemiology.pdf', 'url': 'https://publications.aap.org/book/chapter-pdf/1464333/ch47.pdf', 'domain': 'development', 'status': 'subscription_required', 'http_code': 403, 'size_kb': 0, 'needs_subscription': True}`, `{'filename': 'AAP_Pediatric_Review_Gifted_Children_Characteristics.pdf', 'url': 'https://publications.aap.org/pediatricsinreview/article-pdf/838491/pedsinreview_20170088.pdf', 'domain': 'development', 'status': 'subscription_required', 'http_code': 403, 'size_kb': 0, 'needs_subscription': True}`, `{'filename': 'AAP_Pediatricians_Guide_Gifted_Children_Development.pdf', 'url': 'https://publications.aap.org/books/chapter-pdf/789415/aap_9781610023917-part03-ch035.pdf', 'domain': 'development', 'status': 'subscription_required', 'http_code': 403, 'size_kb': 0, 'needs_subscription': True}`, `{'filename': 'Teen_Depression_More_Than_Moodiness.pdf', 'url': '', 'domain': 'medical', 'status': 'failed', 'http_code': 'N/A', 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'AlAsadiah_Raising_Daughters_Osama_Hammoud.pdf', 'url': '', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 'N/A', 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'special_educational_needs_and_disability_guide_for_parents.pdf', 'url': '', 'domain': 'development', 'status': 'failed', 'http_code': 'N/A', 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'NIMH_Generalized_Anxiety_Disorder_Guide.pdf', 'url': 'https://infocenter.nimh.nih.gov/sites/default/files/2022-02/generalized-anxiety-disorder-when-worry-gets-out-of-control.pdf', 'domain': 'medical', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Rakaiz_Tarbiya_Abnaa.pdf', 'url': 'https://d1.islamhouse.com/data/ar/ih_books/single/ar_Rakaiz_fi_Tarbiat_Al_Abnaa.pdf', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 404, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Al_Minhaj_Al_Nabawi_Children.pdf', 'url': 'https://d1.islamhouse.com/data/ar/ih_books/single/ar_Al_Minhaj_Al_Nabawi_fi_Tarbiat_Al_Atfal.pdf', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 404, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Tawid_Al_Awlad_Salah.pdf', 'url': 'https://d1.islamhouse.com/data/ar/ih_books/single/ar_Tajarib_Abnaa_Salah.pdf', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 404, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Prophetic_Pedagogy_Error_Correction_Madinah.pdf', 'url': 'https://archive.org/download/20210312_20210312_2022/...pdf', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 404, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Dorar_Tarbiyah_Hadith_API.json', 'url': 'https://dorar.net/dorar_api.json?skey=تربية', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Diyala_Justice_And_Equality_Among_Children.pdf', 'url': 'https://islamic.uodiyala.edu.iq/wp-content/uploads/2023/01/...pdf', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 'ERR', 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Tuhfat_Al_Mawdud.pdf', 'url': 'https://waqfeya.net/books/00/01/14.pdf', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Adl_Bayn_Al_Abnaa_Fatawa.pdf', 'url': 'https://waqfeya.net/books/04/45/4504.pdf', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'tarbiyat-al-awlad-fil-islam-waqfeya.pdf', 'url': 'https://waqfeya.net/books/...', 'domain': 'islamic_parenting', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Child_Online_Protection_Digital_Learning.pdf', 'url': 'https://www.unicef.org/eca/media/22501/file/...pdf', 'domain': 'digital_safety', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'InternetMatters-Cyberbullying-Guide.pdf', 'url': 'https://www.internetmatters.org/wp-content/uploads/2019/04/Internet-Matters-Guide-Cyberbullying-v4.pdf', 'domain': 'digital_safety', 'status': 'failed', 'http_code': 404, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Digital_Literacy_Children_Framework.pdf', 'url': 'https://www.unicef.org/innocenti/media/1216/file/...pdf', 'domain': 'digital_safety', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'UNICEF_Safeguarding_Children_In_Digital_Age.pdf', 'url': 'https://www.unicef.org/pakistan/media/5556/file/...pdf', 'domain': 'digital_safety', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'UNICEF_Digital_Ecosystems_Child_Protection.pdf', 'url': 'https://www.unicef.org/digitalimpact/media/1491/file/...pdf', 'domain': 'digital_safety', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'UNICEF_Egypt_Cyberbullying_Parents_Guide.pdf', 'url': 'https://www.unicef.org/egypt/media/806/file/...pdf', 'domain': 'digital_safety', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'UNICEF_Egypt_Social_Media_Teen_Isolation.pdf', 'url': 'https://www.unicef.org/egypt/media/2881/file/...pdf', 'domain': 'digital_safety', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'UNICEF_LAC_Secondary_School_Cyberbullying_Report.pdf', 'url': 'https://www.unicef.org/easterncaribbean/media/2146/file/...pdf', 'domain': 'digital_safety', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Early_Learning_Development_Standards.pdf', 'url': 'https://www.unicef.org/northmacedonia/media/1781/file/...pdf', 'domain': 'development', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'zero-to-three-early-learning-guidelines.pdf', 'url': 'https://www.dcyf.wa.gov/sites/default/files/pdf/esit/ZerotoThree_guidelines.pdf', 'domain': 'development', 'status': 'failed', 'http_code': 'ERR', 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'cdc-child-development-milestones-parents.pdf', 'url': 'https://www.cdc.gov/ncbddd/actearly/pdf/...pdf', 'domain': 'development', 'status': 'failed', 'http_code': 404, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Positive_Parenting_Preschoolers.pdf', 'url': 'https://stacks.cdc.gov/view/cdc/155270/cdc_155270_DS1.pdf', 'domain': 'development', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Positive_Parenting_Middle_Childhood.pdf', 'url': 'https://stacks.cdc.gov/view/cdc/155269/cdc_155269_DS1.pdf', 'domain': 'development', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Adolescent_Brain_Opportunity.pdf', 'url': 'https://www.unicef.org/guatemala/media/381/file/...pdf', 'domain': 'development', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'Parenting_of_Adolescents_UNICEF.pdf', 'url': 'https://www.unicef.org/media/116526/file/...pdf', 'domain': 'development', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'ECD_Kit_Activity_Guide.pdf', 'url': 'https://www.unicef.org/supply/media/631/file/...pdf', 'domain': 'development', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'UNICEF_Guidance_Parenting_Of_Adolescents.pdf', 'url': 'https://www.unicef.org/lac/media/29786/file/...pdf', 'domain': 'development', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'UNICEF_Belize_The_Art_of_Parenting_Self_Esteem.pdf', 'url': 'https://www.unicef.org/lac/media/27656/file/...pdf', 'domain': 'development', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}`, `{'filename': 'CDC_Tourette_Syndrome_Tics_Factsheet.pdf', 'url': 'https://stacks.cdc.gov/view/cdc/48565/cdc_48565_DS1.pdf', 'domain': 'development', 'status': 'failed', 'http_code': 403, 'size_kb': 0, 'needs_subscription': False}` |
+| **Requires Subscription** | 6 |
+| **Success** | 50 |
+| **Timestamp** | 2026-06-05T21:29:07.959838Z |
+| **Total Attempted** | 88 |
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "total_attempted": 88,
+  "success": 50,
+  "failed_404_403": 32,
+  "requires_subscription": 6,
+  "timestamp": "2026-06-05T21:29:07.959838Z",
+  "files": [
+    {
+      "filename": "ADHD_What_You_Need_to_Know.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 584.4
+    },
+    {
+      "filename": "Autism_Milestones_Checklist.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 7234.6
+    },
+    {
+      "filename": "CDC_ADHD_Prevalence_Co_occurring_2022.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 2508.0
+    },
+    {
+      "filename": "CDC_FragileX_Autism_Co_occurrence_Guide.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 221.7
+    },
+    {
+      "filename": "CDC_NCHS_Prevalence_Learning_Difficulties.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1950.1
+    },
+    {
+      "filename": "Children_Mental_Health_Anxiety.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 189.1
+    },
+    {
+      "filename": "Disruptive_Mood_Dysregulation_Basics.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 206.7
+    },
+    {
+      "filename": "Global_Report_Developmental_Disabilities.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 718.9
+    },
+    {
+      "filename": "NIMH_ADHD_Guide_2024.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 584.4
+    },
+    {
+      "filename": "NIMH_DMDD_Temper_Outbursts_Basics.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 206.7
+    },
+    {
+      "filename": "NIMH_Depression_Age_Manifestations.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 3333.6
+    },
+    {
+      "filename": "NIMH_Social_Processes_Attachment_Separation.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 350.9
+    },
+    {
+      "filename": "NIMH_Stress_vs_Anxiety_Coping.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 155.5
+    },
+    {
+      "filename": "NIMH_Teen_Depression_Parents_Guide.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 87.8
+    },
+    {
+      "filename": "Speech_Language_Delay_Screening.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 568.3
+    },
+    {
+      "filename": "WHO_Sleep_Physical_Activity_Under5.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1430.9
+    },
+    {
+      "filename": "anxiety-guide-parents-children.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 697.3
+    },
+    {
+      "filename": "cdc-adhd-behavior-therapy-young-children.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 330.1
+    },
+    {
+      "filename": "cdc-adhd-fact-sheet.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 253.4
+    },
+    {
+      "filename": "cdc-autism-spectrum-disorders-rainbow.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 143.0
+    },
+    {
+      "filename": "cdc-data-child-mental-disorders.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 127.9
+    },
+    {
+      "filename": "early-social-communication-vocabulary-measures.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 569.6
+    },
+    {
+      "filename": "odd-home-family-strategies.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 270.8
+    },
+    {
+      "filename": "parents-guide-learning-disabilities.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 2260.8
+    },
+    {
+      "filename": "sleep-problems-young-children-parents.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 814.5
+    },
+    {
+      "filename": "who-child-youth-mental-health-europe.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1594.2
+    },
+    {
+      "filename": "AABU_Equality_In_Gifts_Between_Children.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 342.2
+    },
+    {
+      "filename": "Alukah_Al_Rahma_Bi_Al_Atfal.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1793.9
+    },
+    {
+      "filename": "Alwan_Tarbiyat_Al_Awlad_Fi_Al_Islam_Arabic.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1435.0
+    },
+    {
+      "filename": "Child_Education_In_Islam_Alwan_English.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 24808.4
+    },
+    {
+      "filename": "Noor_Book_Maalim_Al_Manhaj_Al_Nabawi_Tarbiyah.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 269.7
+    },
+    {
+      "filename": "Saaid_Quranic_Tarbiyyah_Spiritual_Growth.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 8359.4
+    },
+    {
+      "filename": "Tarbiya_Al_Awlad_Alwan.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 16326.6
+    },
+    {
+      "filename": "Tarbiya_Al_Banat_Lamaat.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 348.8
+    },
+    {
+      "filename": "Tarbiyat_Al_Tifl_Fi_Al_Islam_Archive.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1004.5
+    },
+    {
+      "filename": "kayfa-turabbi-waladak.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 531.6
+    },
+    {
+      "filename": "AI_Child_Safety_Guide.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 473.3
+    },
+    {
+      "filename": "Adolescent_Social_Media_Gaming_Europe.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1455.9
+    },
+    {
+      "filename": "Cyberbullying_Prevention_Guide.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 377.7
+    },
+    {
+      "filename": "Gaming_Disorder_Focus_WHO.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 8302.0
+    },
+    {
+      "filename": "Media_Use_Kids_Census_2025.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 8921.5
+    },
+    {
+      "filename": "WHO_EMRO_Video_Games_Aggression_Study.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 305.7
+    },
+    {
+      "filename": "WHO_ICD_11_Gaming_Disorder.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 690.9
+    },
+    {
+      "filename": "a-safer-digital-environment-for-children-un.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 2545.2
+    },
+    {
+      "filename": "child-online-safety-safeonline.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 6190.9
+    },
+    {
+      "filename": "common-sense-media-use-kids-0-8-2017.pdf",
+      "url": "",
+      "domain": "digital_safety",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1561.7
+    },
+    {
+      "filename": "CDC_Milestones_12_Months_Checklist.pdf",
+      "url": "",
+      "domain": "development",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1200.3
+    },
+    {
+      "filename": "CDC_Milestones_2_Years_Checklist.pdf",
+      "url": "",
+      "domain": "development",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 1151.7
+    },
+    {
+      "filename": "CDC_Washington_Group_Disability_Interviewer_Guidelines.pdf",
+      "url": "",
+      "domain": "development",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 71.1
+    },
+    {
+      "filename": "unicef-early-moments-matter.pdf",
+      "url": "",
+      "domain": "development",
+      "status": "success",
+      "http_code": 200,
+      "size_kb": 3871.7
+    },
+    {
+      "filename": "AAP_Disruptive_Behavior_ODD_CD.pdf",
+      "url": "https://publications.aap.org/book/chapter-pdf/770794/aap_9781581105698-part01-disruptive_behavior.pdf",
+      "domain": "medical",
+      "status": "subscription_required",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": true
+    },
+    {
+      "filename": "AAP_DSM5_ODD_Diagnostic_Criteria.pdf",
+      "url": "https://publications.aap.org/book/chapter-pdf/1338051/aap_9781610020473-part07-ch302.pdf",
+      "domain": "medical",
+      "status": "subscription_required",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": true
+    },
+    {
+      "filename": "ODD_Diagnostic_Criteria_AAP.pdf",
+      "url": "https://publications.aap.org/books/chapter-pdf/1350447/aap_9781610021128-oppositional.pdf",
+      "domain": "medical",
+      "status": "subscription_required",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": true
+    },
+    {
+      "filename": "AAP_Sibling_Rivalry_Clinical_Epidemiology.pdf",
+      "url": "https://publications.aap.org/book/chapter-pdf/1464333/ch47.pdf",
+      "domain": "development",
+      "status": "subscription_required",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": true
+    },
+    {
+      "filename": "AAP_Pediatric_Review_Gifted_Children_Characteristics.pdf",
+      "url": "https://publications.aap.org/pediatricsinreview/article-pdf/838491/pedsinreview_20170088.pdf",
+      "domain": "development",
+      "status": "subscription_required",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": true
+    },
+    {
+      "filename": "AAP_Pediatricians_Guide_Gifted_Children_Development.pdf",
+      "url": "https://publications.aap.org/books/chapter-pdf/789415/aap_9781610023917-part03-ch035.pdf",
+      "domain": "development",
+      "status": "subscription_required",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": true
+    },
+    {
+      "filename": "Teen_Depression_More_Than_Moodiness.pdf",
+      "url": "",
+      "domain": "medical",
+      "status": "failed",
+      "http_code": "N/A",
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "AlAsadiah_Raising_Daughters_Osama_Hammoud.pdf",
+      "url": "",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": "N/A",
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "special_educational_needs_and_disability_guide_for_parents.pdf",
+      "url": "",
+      "domain": "development",
+      "status": "failed",
+      "http_code": "N/A",
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "NIMH_Generalized_Anxiety_Disorder_Guide.pdf",
+      "url": "https://infocenter.nimh.nih.gov/sites/default/files/2022-02/generalized-anxiety-disorder-when-worry-gets-out-of-control.pdf",
+      "domain": "medical",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Rakaiz_Tarbiya_Abnaa.pdf",
+      "url": "https://d1.islamhouse.com/data/ar/ih_books/single/ar_Rakaiz_fi_Tarbiat_Al_Abnaa.pdf",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": 404,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Al_Minhaj_Al_Nabawi_Children.pdf",
+      "url": "https://d1.islamhouse.com/data/ar/ih_books/single/ar_Al_Minhaj_Al_Nabawi_fi_Tarbiat_Al_Atfal.pdf",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": 404,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Tawid_Al_Awlad_Salah.pdf",
+      "url": "https://d1.islamhouse.com/data/ar/ih_books/single/ar_Tajarib_Abnaa_Salah.pdf",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": 404,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Prophetic_Pedagogy_Error_Correction_Madinah.pdf",
+      "url": "https://archive.org/download/20210312_20210312_2022/...pdf",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": 404,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Dorar_Tarbiyah_Hadith_API.json",
+      "url": "https://dorar.net/dorar_api.json?skey=تربية",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Diyala_Justice_And_Equality_Among_Children.pdf",
+      "url": "https://islamic.uodiyala.edu.iq/wp-content/uploads/2023/01/...pdf",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": "ERR",
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Tuhfat_Al_Mawdud.pdf",
+      "url": "https://waqfeya.net/books/00/01/14.pdf",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Adl_Bayn_Al_Abnaa_Fatawa.pdf",
+      "url": "https://waqfeya.net/books/04/45/4504.pdf",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "tarbiyat-al-awlad-fil-islam-waqfeya.pdf",
+      "url": "https://waqfeya.net/books/...",
+      "domain": "islamic_parenting",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Child_Online_Protection_Digital_Learning.pdf",
+      "url": "https://www.unicef.org/eca/media/22501/file/...pdf",
+      "domain": "digital_safety",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "InternetMatters-Cyberbullying-Guide.pdf",
+      "url": "https://www.internetmatters.org/wp-content/uploads/2019/04/Internet-Matters-Guide-Cyberbullying-v4.pdf",
+      "domain": "digital_safety",
+      "status": "failed",
+      "http_code": 404,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Digital_Literacy_Children_Framework.pdf",
+      "url": "https://www.unicef.org/innocenti/media/1216/file/...pdf",
+      "domain": "digital_safety",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "UNICEF_Safeguarding_Children_In_Digital_Age.pdf",
+      "url": "https://www.unicef.org/pakistan/media/5556/file/...pdf",
+      "domain": "digital_safety",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "UNICEF_Digital_Ecosystems_Child_Protection.pdf",
+      "url": "https://www.unicef.org/digitalimpact/media/1491/file/...pdf",
+      "domain": "digital_safety",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "UNICEF_Egypt_Cyberbullying_Parents_Guide.pdf",
+      "url": "https://www.unicef.org/egypt/media/806/file/...pdf",
+      "domain": "digital_safety",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "UNICEF_Egypt_Social_Media_Teen_Isolation.pdf",
+      "url": "https://www.unicef.org/egypt/media/2881/file/...pdf",
+      "domain": "digital_safety",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "UNICEF_LAC_Secondary_School_Cyberbullying_Report.pdf",
+      "url": "https://www.unicef.org/easterncaribbean/media/2146/file/...pdf",
+      "domain": "digital_safety",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Early_Learning_Development_Standards.pdf",
+      "url": "https://www.unicef.org/northmacedonia/media/1781/file/...pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "zero-to-three-early-learning-guidelines.pdf",
+      "url": "https://www.dcyf.wa.gov/sites/default/files/pdf/esit/ZerotoThree_guidelines.pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": "ERR",
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "cdc-child-development-milestones-parents.pdf",
+      "url": "https://www.cdc.gov/ncbddd/actearly/pdf/...pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 404,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Positive_Parenting_Preschoolers.pdf",
+      "url": "https://stacks.cdc.gov/view/cdc/155270/cdc_155270_DS1.pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Positive_Parenting_Middle_Childhood.pdf",
+      "url": "https://stacks.cdc.gov/view/cdc/155269/cdc_155269_DS1.pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Adolescent_Brain_Opportunity.pdf",
+      "url": "https://www.unicef.org/guatemala/media/381/file/...pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "Parenting_of_Adolescents_UNICEF.pdf",
+      "url": "https://www.unicef.org/media/116526/file/...pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "ECD_Kit_Activity_Guide.pdf",
+      "url": "https://www.unicef.org/supply/media/631/file/...pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "UNICEF_Guidance_Parenting_Of_Adolescents.pdf",
+      "url": "https://www.unicef.org/lac/media/29786/file/...pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "UNICEF_Belize_The_Art_of_Parenting_Self_Esteem.pdf",
+      "url": "https://www.unicef.org/lac/media/27656/file/...pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    },
+    {
+      "filename": "CDC_Tourette_Syndrome_Tics_Factsheet.pdf",
+      "url": "https://stacks.cdc.gov/view/cdc/48565/cdc_48565_DS1.pdf",
+      "domain": "development",
+      "status": "failed",
+      "http_code": 403,
+      "size_kb": 0,
+      "needs_subscription": false
+    }
+  ]
+}
+```
+</details>
