@@ -109,8 +109,8 @@ void main() {
       await tester.pumpWidget(const MaterialApp(
         home: Scaffold(body: StreakChip(streakDays: 5)),
       ));
-      expect(find.text('5'), findsOneWidget);
-      expect(find.textContaining('متتالية'), findsOneWidget);
+      // The streak text is one widget: "5 أيام متتالية"
+      expect(find.text('5 أيام متتالية'), findsOneWidget);
       expect(find.text('🔥'), findsOneWidget);
     });
 
@@ -118,7 +118,7 @@ void main() {
       await tester.pumpWidget(const MaterialApp(
         home: Scaffold(body: StreakChip(streakDays: 0)),
       ));
-      expect(find.textContaining('ابدأ سلسلتك'), findsOneWidget);
+      expect(find.text('🔥 ابدأ سلسلتك اليوم'), findsOneWidget);
       // Day count should NOT be rendered when streak is zero.
       expect(find.text('0'), findsNothing);
     });
@@ -127,8 +127,8 @@ void main() {
       await tester.pumpWidget(const MaterialApp(
         home: Scaffold(body: StreakChip(streakDays: 1)),
       ));
-      expect(find.text('1'), findsOneWidget);
-      expect(find.textContaining('يوم متتالي'), findsOneWidget);
+      // Singular: "1 يوم متتالي"
+      expect(find.text('1 يوم متتالي'), findsOneWidget);
       // (no "متتالية" because singular)
       expect(find.textContaining('متتالية'), findsNothing);
     });
@@ -137,6 +137,22 @@ void main() {
   // ── Onboarding screen render ───────────────────────────────────────────
 
   group('OnboardingScreen', () {
+    // Helper to scroll the onboarding ListView to reveal an off-screen widget
+    Future<void> _scrollToFind(WidgetTester tester, String text) async {
+      // Find a widget that IS visible (gender chip "ولد")
+      final visibleChip = find.text('ولد');
+      if (visibleChip.evaluate().isNotEmpty) {
+        // Drag from the visible chip area upwards
+        await tester.drag(find.byType(ListView), const Offset(0, -500));
+        await tester.pumpAndSettle();
+      }
+      // If still not found, try manual drag on the ListView
+      if (find.text(text).evaluate().isEmpty) {
+        await tester.drag(find.byType(ListView), const Offset(0, -500));
+        await tester.pumpAndSettle();
+      }
+    }
+
     testWidgets('renders all required fields', (tester) async {
       // Override the client with a fake that returns a child.
       final fake = _FakeTgClient();
@@ -162,7 +178,10 @@ void main() {
           child: const MaterialApp(home: OnboardingScreen()),
         ),
       );
-      await tester.pump();
+      await tester.pumpAndSettle();
+
+      // Scroll to reveal off-screen fields at the top of the form
+      await _scrollToFind(tester, 'اسم');
 
       expect(find.text('اسم طفلك'), findsOneWidget);
       expect(find.text('المرحلة العمرية'), findsOneWidget);
@@ -187,11 +206,14 @@ void main() {
           child: const MaterialApp(home: OnboardingScreen()),
         ),
       );
-      await tester.pump();
+      await tester.pumpAndSettle();
+
+      // Scroll to reveal the submit button
+      await _scrollToFind(tester, 'ابدأ');
 
       // Tap submit without entering name or age group
       await tester.tap(find.text('ابدأ الرحلة'));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Form validation error
       expect(find.text('الاسم مطلوب'), findsOneWidget);
@@ -237,12 +259,22 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     final fake = _FakeTgClient();
 
+    // Build the widget tree inside a container so we can await the
+    // sharedPreferencesProvider future before the widget builds.
+    final container = ProviderContainer(
+      overrides: [
+        tgClientProvider.overrideWithValue(fake),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    // Wait for SharedPreferences to load BEFORE building the widget tree.
+    await container.read(sharedPreferencesProvider.future);
+
     await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          tgClientProvider.overrideWithValue(fake),
-          sharedPreferencesProvider.overrideWith((_) async => prefs),
-        ],
+      UncontrolledProviderScope(
+        container: container,
         child: const MaterialApp(
           home: Scaffold(body: DailyTipCard()),
         ),
@@ -301,7 +333,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Streak chip shows "7 أيام متتالية"
-    expect(find.text('7'), findsOneWidget);
+    expect(find.text('7 أيام متتالية'), findsOneWidget);
     expect(find.textContaining('متتالية'), findsOneWidget);
   });
 }

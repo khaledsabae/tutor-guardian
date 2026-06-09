@@ -8,8 +8,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
+import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/features/program/data/progress_models.dart';
 import 'package:almorabbi/features/program/data/progress_repository.dart';
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
@@ -112,6 +115,19 @@ void main() {
   });
 
   group('Progress widgets', () {
+    // Helper to scroll to a widget in a ListView
+    Future<void> _scrollToFind(WidgetTester tester, String text) async {
+      final visibleChip = find.text('ولد');
+      if (visibleChip.evaluate().isNotEmpty) {
+        await tester.drag(find.byType(ListView), const Offset(0, -500));
+        await tester.pumpAndSettle();
+      }
+      if (find.text(text).evaluate().isEmpty) {
+        await tester.drag(find.byType(ListView), const Offset(0, -500));
+        await tester.pumpAndSettle();
+      }
+    }
+
     testWidgets('PathDetailScreen shows progress bar when child active',
         (WidgetTester tester) async {
       final fake = _FakeTgClient();
@@ -136,9 +152,19 @@ void main() {
         ],
       };
 
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
       final container = ProviderContainer(
-        overrides: [tgClientProvider.overrideWithValue(fake)],
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
       );
+      await container.read(sharedPreferencesProvider.future);
       container.read(activeChildIdProvider.notifier).state = 1;
       addTearDown(container.dispose);
 
@@ -175,9 +201,19 @@ void main() {
         'lessons': [],
       };
 
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
       final container = ProviderContainer(
-        overrides: [tgClientProvider.overrideWithValue(fake)],
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
       );
+      await container.read(sharedPreferencesProvider.future);
       container.read(activeChildIdProvider.notifier).state = 1;
       addTearDown(container.dispose);
 
@@ -188,14 +224,21 @@ void main() {
             home: LessonScreen(
               lessonId: 'lesson_4-6_islamic_parenting_adab_01',
               ageGroup: '4-6',
+              childId: 1,
             ),
           ),
         ),
       );
       await tester.pumpAndSettle();
 
-      // Status chip "لم يبدأ بعد"
+      await tester.pumpAndSettle();
+
+      // Check status chip "لم يبدأ بعد" BEFORE scrolling
       expect(find.text('لم يبدأ بعد'), findsOneWidget);
+
+      // Scroll to reveal the mark-complete button at the bottom
+      await _scrollToFind(tester, 'أتممت');
+
       // Mark complete button present
       expect(find.text('أتممت هذا الدرس'), findsOneWidget);
     });

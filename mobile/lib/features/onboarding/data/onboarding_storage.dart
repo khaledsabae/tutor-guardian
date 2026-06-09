@@ -15,36 +15,43 @@ class OnboardingStorage {
   static const _kActiveChildId = 'tg.active_child_id';
   static const _kActiveChildName = 'tg.active_child_name';
   static const _kActiveChildAgeGroup = 'tg.active_child_age_group';
+  static const _kActiveChildAvatar = 'tg.active_child_avatar';
 
-  final SharedPreferences _prefs;
+    final SharedPreferences _prefs;
 
-  /// Has the user finished the onboarding flow at least once?
-  bool get onboardingCompleted =>
-      _prefs.getBool(_kOnboardingCompleted) ?? false;
+    /// Has the user finished the onboarding flow at least once?
+    bool get onboardingCompleted =>
+        _prefs.getBool(_kOnboardingCompleted) ?? false;
 
-  Future<void> markOnboardingCompleted() async {
-    await _prefs.setBool(_kOnboardingCompleted, true);
-  }
+    Future<void> markOnboardingCompleted() async {
+      await _prefs.setBool(_kOnboardingCompleted, true);
+    }
 
-  Future<void> resetOnboarding() async {
-    await _prefs.setBool(_kOnboardingCompleted, false);
-  }
+    Future<void> resetOnboarding() async {
+      await _prefs.setBool(_kOnboardingCompleted, false);
+    }
 
-  int? get activeChildId => _prefs.getInt(_kActiveChildId);
+    int? get activeChildId => _prefs.getInt(_kActiveChildId);
 
-  String? get activeChildName => _prefs.getString(_kActiveChildName);
+    String? get activeChildName => _prefs.getString(_kActiveChildName);
 
-  String? get activeChildAgeGroup => _prefs.getString(_kActiveChildAgeGroup);
+    String? get activeChildAgeGroup => _prefs.getString(_kActiveChildAgeGroup);
 
-  Future<void> setActiveChild({
-    required int id,
-    required String name,
-    required String ageGroup,
-  }) async {
-    await _prefs.setInt(_kActiveChildId, id);
-    await _prefs.setString(_kActiveChildName, name);
-    await _prefs.setString(_kActiveChildAgeGroup, ageGroup);
-  }
+    String? get activeChildAvatar => _prefs.getString(_kActiveChildAvatar);
+
+    Future<void> setActiveChild({
+      required int id,
+      required String name,
+      required String ageGroup,
+      String? avatarEmoji,
+    }) async {
+      await _prefs.setInt(_kActiveChildId, id);
+      await _prefs.setString(_kActiveChildName, name);
+      await _prefs.setString(_kActiveChildAgeGroup, ageGroup);
+      if (avatarEmoji != null) {
+        await _prefs.setString(_kActiveChildAvatar, avatarEmoji);
+      }
+    }
 
   Future<void> clearActiveChild() async {
     await _prefs.remove(_kActiveChildId);

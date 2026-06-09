@@ -53,10 +53,12 @@ class ActiveChildProfile {
   final int id;
   final String name;
   final String ageGroup;
+  final String? avatarEmoji;
   const ActiveChildProfile({
     required this.id,
     required this.name,
     required this.ageGroup,
+    this.avatarEmoji,
   });
 }
 
@@ -65,6 +67,7 @@ final activeChildProfileProvider = Provider<ActiveChildProfile?>((ref) {
   final id = storage.activeChildId;
   final name = storage.activeChildName;
   final age = storage.activeChildAgeGroup;
+  final avatar = storage.activeChildAvatar;
   if (id == null || name == null || age == null) return null;
-  return ActiveChildProfile(id: id, name: name, ageGroup: age);
+  return ActiveChildProfile(id: id, name: name, ageGroup: age, avatarEmoji: avatar);
 });

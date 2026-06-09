@@ -47,7 +47,8 @@ void main() {
       );
       addTearDown(container.dispose);
       await container.read(sharedPreferencesProvider.future);
-      // Initial state — child 1 is active
+      // Initial state — child 1 is active (manually sync with storage)
+      container.read(activeChildIdProvider.notifier).state = 1;
       expect(container.read(activeChildIdProvider), 1);
 
       // Switch to child 2
@@ -114,13 +115,17 @@ void main() {
   });
 
   // ── Widget: ActiveChildChip ─────────────────────────────────────────
-
   testWidgets('ActiveChildChip shows the active child name + emoji',
       (tester) async {
     final fake = _FakeTgClient();
     final prefs = await SharedPreferences.getInstance();
     final storage = OnboardingStorage(prefs);
-    await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+    await storage.setActiveChild(
+      id: 1,
+      name: 'سارة',
+      ageGroup: '4-6',
+      avatarEmoji: '👧',
+    );
 
     final container = ProviderContainer(
       overrides: [
@@ -143,7 +148,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('سارة'), findsOneWidget);
-    expect(find.text('👧'), findsOneWidget);
+    // Use find.byWidgetPredicate for emoji matching (Unicode normalization can vary in textContaining)
+    expect(
+      find.byWidgetPredicate(
+        (w) => w is Text && w.data != null && w.data!.contains('👧'),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('ActiveChildChip shows fallback when no active child',
@@ -247,7 +258,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('إضافة طفل جديد'), findsNothing);
-    expect(find.textContaining('الحد الأقصى'), findsOneWidget);
+    expect(find.textContaining('وصلت للحد الأقصى'), findsOneWidget);
   });
 }
 

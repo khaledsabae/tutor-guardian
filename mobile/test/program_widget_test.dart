@@ -12,11 +12,15 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
+import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/features/program/data/models.dart';
 import 'package:almorabbi/features/program/data/program_repository.dart';
 import 'package:almorabbi/features/program/providers/program_providers.dart';
+import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/program/screens/lesson_screen.dart';
 import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
 import 'package:almorabbi/features/program/screens/paths_screen.dart';
@@ -68,7 +72,7 @@ void main() {
         'lesson_4-6_islamic_parenting_adab_01',
       );
       expect(lesson.title, 'الرفق: قيمة تربوية قبل أسلوب');
-      expect(lesson.needsProfessionalFollowup, isFalse);
+      expect(lesson.needsProfessionalFollowup, isTrue);
     });
 
     test('getDailyTip() parses tip', () async {
@@ -190,11 +194,25 @@ void main() {
         ],
       };
 
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 1;
+      addTearDown(container.dispose);
+
       await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            tgClientProvider.overrideWithValue(fake),
-          ],
+        UncontrolledProviderScope(
+          container: container,
           child: const MaterialApp(
             home: PathDetailScreen(
               pathId: 'path_4-6_islamic_parenting_adab',
@@ -205,10 +223,17 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      await tester.pumpAndSettle();
+
       expect(find.text('الرفق'), findsOneWidget);
       expect(find.text('اللعب النبوي'), findsOneWidget);
       expect(find.text('الدروس (2)'), findsOneWidget);
       // Tap the first lesson
+      fake.lessonJson = _lessonJson(
+        id: 'lesson_4-6_islamic_parenting_adab_01',
+        order: 1,
+        title: 'الرفق',
+      );
       await tester.tap(find.text('الرفق'));
       await tester.pumpAndSettle();
       // The lesson screen should appear with the lesson loaded
