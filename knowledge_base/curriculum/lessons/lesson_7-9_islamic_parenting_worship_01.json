@@ -1,0 +1,24 @@
+{
+  "id": "lesson_7-9_islamic_parenting_worship_01",
+  "path_id": "path_7-9_islamic_parenting_worship",
+  "title": "الصلاة: حب لا واجب",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "6730e1c6-ddca-4ff4-8343-b07df6fa6abb",
+    "8e884b98-41a4-4c29-92c5-aa71e62d7d51",
+    "b1bd26fc-3144-4928-9bb4-ce2b30f95876"
+  ],
+  "summary": "في سن 7-9 سنوات يبدأ الطفل يفهم معنى الصلاة لكن قد يراها ثقيلة. المفتاح: القدوة الصالحة، التشجيع لا الإكراه، وربط قلبه بالله عبر القصص والحب.",
+  "try_this": "هذا الأسبوع: صلّ صلاة واحدة يومياً مع طفلك بصوت مسموع، واجعله يعدّ الركعات، وامتدحه على كل تحسين.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "كيف كان رد فعل طفلك عندما صليت معه؟",
+    "ما القصة التي أثرت בו أكثر؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0"
+}

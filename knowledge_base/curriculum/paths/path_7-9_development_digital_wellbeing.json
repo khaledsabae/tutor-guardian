@@ -1,0 +1,21 @@
+{
+  "id": "path_7-9_development_digital_wellbeing",
+  "title": "الصحة الرقمية والنمو المتوازن (7-9 سنوات)",
+  "age_group": "7-9",
+  "domain": "development",
+  "description": "مسار يساعد الوالدين على إدارة وقت الشاشة، بناء صداقات صحية، والاستعداد للتغيرات الجسدية مع تجنب مخاطر الألعاب العنيفة.",
+  "lesson_ids": [
+    "lesson_7-9_development_digital_wellbeing_01",
+    "lesson_7-9_development_digital_wellbeing_02",
+    "lesson_7-9_development_digital_wellbeing_03"
+  ],
+  "estimated_days": 21,
+  "pedagogical_framework": "zpd_scaffolded",
+  "primary_reference": {
+    "type": "دليل_تربوي",
+    "info": "إرشادات الأكاديمية الأمريكية لطب الأطفال (AAP) لإدارة الوسائط الرقمية"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}

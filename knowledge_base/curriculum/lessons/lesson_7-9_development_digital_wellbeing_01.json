@@ -1,0 +1,22 @@
+{
+  "id": "lesson_7-9_development_digital_wellbeing_01",
+  "path_id": "path_7-9_development_digital_wellbeing",
+  "title": "إدارة وقت الشاشة: عقد عائلي",
+  "age_group": "7-9",
+  "domain": "development",
+  "unit_ids": [
+    "dev-aa62cbec"
+  ],
+  "summary": "في سن 7-9 سنوات يطلب الطفل الاستقلالية الرقمية. الحل: اصنعوا \"عقد وقت الشاشة\" معاً — وقت محدد، مناطق خالية من الشاشات (غرفة النوم، مائدة الطعام)، وبدائل حقيقية.",
+  "try_this": "هذا الأسبوع: اجلسوا معاً واكتبوا عقد الشاشة (ساعتين يومياً، لا شاشات قبل النوم بساعة). وقّعوا معاً وعلّقوه.",
+  "order": 1,
+  "estimated_minutes": 5,
+  "reflection_prompts": [
+    "كم يوماً التزم طفلك بالعقد؟",
+    "ما البديل الذي استمتع به أكثر؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0"
+}

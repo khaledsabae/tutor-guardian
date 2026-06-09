@@ -1,0 +1,20 @@
+{
+  "id": "path_7-9_medical_emotional_health",
+  "title": "الصحة النفسية والعاطفية (7-9 سنوات)",
+  "age_group": "7-9",
+  "domain": "medical",
+  "description": "مسار يزود الوالدين بأدوات لفهم مشاعر أطفالهم، التعامل مع الغضب والقلق، تنظيم النوم، ومعرفة متى يطلبون المساعدة المتخصصة.",
+  "lesson_ids": [
+    "lesson_7-9_medical_emotional_health_01",
+    "lesson_7-9_medical_emotional_health_02"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "attachment_rahma",
+  "primary_reference": {
+    "type": "دليل_طبي",
+    "info": "دليل الأكاديمية الأمريكية لطب الأطفال (AAP) للصحة النفسية للأطفال"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}
