@@ -12,6 +12,7 @@ __pycache__/
 backend/.venv/
 venv/
 env/
+notebooklm_env/
 
 # ── Secrets / config ────────────────────────────────────────────────────
 .env

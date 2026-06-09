@@ -5,10 +5,6 @@
 // canned JSON shaped exactly like the backend responses, then assert
 // the UI renders the expected widgets (titles, counts, error state).
 
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io' show Platform;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,9 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
-import 'package:almorabbi/features/program/data/models.dart';
 import 'package:almorabbi/features/program/data/program_repository.dart';
-import 'package:almorabbi/features/program/providers/program_providers.dart';
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/program/screens/lesson_screen.dart';
 import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
@@ -225,6 +219,112 @@ void main() {
       expect(find.textContaining('متابعة متخصصة'), findsNothing);
     });
 
+    testWidgets('LessonScreen shows interactive content section when assets are present',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.lessonJson = _lessonJson(
+        id: 'lesson_4-6_islamic_parenting_adab_01',
+        order: 1,
+      );
+      fake.lessonAssetsJson = {
+        'podcast_mp3': 'docs/lesson_01_podcast.mp3',
+        'video_mp4': 'docs/lesson_videos/video.mp4',
+        'flashcards': [
+          {'id': 'fc-1', 'item_count': 10}
+        ],
+        'quizzes': [
+          {'id': 'qz-1', 'item_count': 5}
+        ]
+      };
+
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 1;
+      addTearDown(container.dispose);
+      tester.view.physicalSize = const Size(800, 1200);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            home: LessonScreen(
+              lessonId: 'lesson_4-6_islamic_parenting_adab_01',
+              ageGroup: '4-6',
+              childId: 1,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('محتوى تفاعلي'), findsOneWidget);
+      expect(find.textContaining('استمع للبودكاست'), findsOneWidget);
+      expect(find.textContaining('شاهد الفيديو'), findsOneWidget);
+      expect(find.textContaining('فلاش كاردز (10 بطاقة)'), findsOneWidget);
+      expect(find.textContaining('اختبر نفسك (5 سؤال)'), findsOneWidget);
+
+      // Tap on podcast and verify placeholder opens
+      await tester.tap(find.textContaining('استمع للبودكاست'));
+      await tester.pumpAndSettle();
+      expect(find.text('شاشة مؤقتة لـ البودكاست'), findsOneWidget);
+    });
+
+    testWidgets('LessonScreen does not show interactive content when no assets are present',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.lessonJson = _lessonJson(
+        id: 'lesson_4-6_islamic_parenting_adab_01',
+        order: 1,
+      );
+      fake.lessonAssetsJson = null; // will throw 404/error
+
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 1;
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            home: LessonScreen(
+              lessonId: 'lesson_4-6_islamic_parenting_adab_01',
+              ageGroup: '4-6',
+              childId: 1,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('محتوى تفاعلي'), findsNothing);
+    });
+
     testWidgets('PathDetailScreen lists lessons, navigate to lesson screen',
         (WidgetTester tester) async {
       final fake = _FakeTgClient();
@@ -371,6 +471,7 @@ class _FakeTgClient extends TgClient {
   Map<String, dynamic>? pathDetailJson;
   Map<String, dynamic>? lessonJson;
   Map<String, dynamic>? dailyTipJson;
+  Map<String, dynamic>? lessonAssetsJson;
   bool throwOnPathsList = false;
 
   @override
@@ -395,6 +496,12 @@ class _FakeTgClient extends TgClient {
   @override
   Future<Map<String, dynamic>> getLesson(String lessonId) async {
     return lessonJson ?? _lessonJson(id: lessonId, order: 1);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getLessonAssets(String lessonId) async {
+    if (lessonAssetsJson != null) return lessonAssetsJson!;
+    throw const TgApiError(404, 'not-found');
   }
 
   @override

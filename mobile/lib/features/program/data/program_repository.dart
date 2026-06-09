@@ -11,6 +11,7 @@
 library;
 
 import '../../../api/tg_client.dart';
+import '../models/lesson_assets.dart';
 import 'models.dart';
 
 class ProgramRepository {
@@ -58,6 +59,16 @@ class ProgramRepository {
   Future<CurriculumLesson> getLesson(String lessonId) async {
     final json = await _client.getLesson(lessonId);
     return CurriculumLesson.fromJson(json);
+  }
+
+  /// `GET /api/program/lesson-assets/{id}`
+  Future<LessonAssets?> getLessonAssets(String lessonId) async {
+    try {
+      final json = await _client.getLessonAssets(lessonId);
+      return LessonAssets.fromJson(json);
+    } catch (_) {
+      return null;
+    }
   }
 
   /// `GET /api/program/daily-tip?age_group=&time_of_day=`

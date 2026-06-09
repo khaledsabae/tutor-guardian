@@ -25,6 +25,8 @@ import '../../../theme/app_theme.dart';
 import '../../reflections/widgets/reflection_note_card.dart';
 import '../data/models.dart';
 import '../data/progress_models.dart';
+import '../models/lesson_assets.dart';
+import '../providers/lesson_assets_provider.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
 
@@ -193,6 +195,7 @@ class _Body extends ConsumerWidget {
         ],
         const SizedBox(height: 16),
         _UnitIdsCard(lesson: lesson),
+        _InteractiveAssetsSection(lessonId: lesson.id),
         const SizedBox(height: 16),
         ReflectionNoteCard(lessonId: lesson.id),
         if (lesson.needsProfessionalFollowup) ...[
@@ -535,3 +538,184 @@ class _WarningCard extends StatelessWidget {
     );
   }
 }
+
+class _InteractiveAssetsSection extends ConsumerWidget {
+  final String lessonId;
+  const _InteractiveAssetsSection({required this.lessonId});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final assetsAsync = ref.watch(lessonAssetsProvider(lessonId));
+
+    return assetsAsync.when(
+      data: (LessonAssets? assets) {
+        if (assets == null) return const SizedBox.shrink();
+
+        final buttons = <Widget>[];
+
+        if (assets.podcastMp3 != null) {
+          buttons.add(
+            _AssetButton(
+              icon: Icons.headset,
+              label: '🎧 استمع للبودكاست',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AssetPlaceholderScreen(
+                      title: 'البودكاست',
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        }
+
+        if (assets.videoMp4 != null) {
+          buttons.add(
+            _AssetButton(
+              icon: Icons.play_circle_outline,
+              label: '🎥 شاهد الفيديو',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AssetPlaceholderScreen(
+                      title: 'الفيديو',
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        }
+
+        final flashcardsCount = assets.flashcards.fold<int>(
+          0,
+          (sum, item) {
+            final map = item as Map<String, dynamic>?;
+            return sum + ((map?['item_count'] as num?)?.toInt() ?? 0);
+          },
+        );
+        if (flashcardsCount > 0) {
+          buttons.add(
+            _AssetButton(
+              icon: Icons.style,
+              label: '🃏 فلاش كاردز ($flashcardsCount بطاقة)',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AssetPlaceholderScreen(
+                      title: 'فلاش كاردز',
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        }
+
+        final quizzesCount = assets.quizzes.fold<int>(
+          0,
+          (sum, item) {
+            final map = item as Map<String, dynamic>?;
+            return sum + ((map?['item_count'] as num?)?.toInt() ?? 0);
+          },
+        );
+        if (quizzesCount > 0) {
+          buttons.add(
+            _AssetButton(
+              icon: Icons.quiz,
+              label: '❓ اختبر نفسك ($quizzesCount سؤال)',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AssetPlaceholderScreen(
+                      title: 'اختبار',
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        }
+
+        if (buttons.isEmpty) return const SizedBox.shrink();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 16),
+            Text(
+              'محتوى تفاعلي',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            ...buttons.map((btn) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: btn,
+                )),
+          ],
+        );
+      },
+      loading: () => const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        child: Center(child: CircularProgressIndicator()),
+      ),
+      error: (_, __) => const SizedBox.shrink(),
+    );
+  }
+}
+
+class _AssetButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+
+  const _AssetButton({
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      key: Key('btn_${label.split(" ").last}'),
+      onPressed: onPressed,
+      icon: Icon(icon, size: 20),
+      label: Text(label),
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size.fromHeight(48),
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+      ),
+    );
+  }
+}
+
+class AssetPlaceholderScreen extends StatelessWidget {
+  final String title;
+  const AssetPlaceholderScreen({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Center(
+        child: Text(
+          'شاشة مؤقتة لـ $title',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+      ),
+    );
+  }
+}
+

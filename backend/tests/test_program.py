@@ -222,3 +222,23 @@ def test_endpoints_are_public_no_token_required(client):
     for r in (r1, r2, r3, r4):
         assert r.status_code != 401
         assert r.status_code != 403
+
+
+# ── 6. Lesson Assets ────────────────────────────────────────────────────
+
+def test_get_lesson_assets_success(client):
+    # This lesson has assets in docs/lesson_index.json
+    r = client.get("/api/program/lesson-assets/lesson_10-12_cyber_digital_citizenship_01")
+    assert r.status_code == 200
+    body = r.json()
+    assert "podcast_mp3" in body
+    assert "video_mp4" in body
+    assert "flashcards" in body
+    assert "quizzes" in body
+    # Specifically, it has podcast
+    assert body["podcast_mp3"] == "docs/lesson_01_podcast.mp3"
+
+
+def test_get_lesson_assets_not_found(client):
+    r = client.get("/api/program/lesson-assets/nonexistent_lesson")
+    assert r.status_code == 404

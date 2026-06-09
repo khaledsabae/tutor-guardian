@@ -126,6 +126,15 @@ async def get_lesson_detail(lesson_id: str):
     return lesson
 
 
+@router.get("/lesson-assets/{lesson_id}")
+async def get_lesson_assets(lesson_id: str):
+    """استرجاع أصول الدرس التفاعلية (البودكاست، الفلاش كاردز، الاختبارات، إلخ)."""
+    assets = cl.get_lesson_assets(lesson_id)
+    if assets is None:
+        raise HTTPException(status_code=404, detail=f"لا توجد أصول للدرس '{lesson_id}'")
+    return assets
+
+
 @router.get("/daily-tip")
 async def get_daily_tip(
     age_group: str = Query(..., description="إلزامي: العمر لتحديد الـ pool"),

@@ -32,6 +32,7 @@ TIPS_DIR = BASE_DIR / "daily_tips"
 _paths_cache: dict[str, dict] = {}
 _lessons_cache: dict[str, dict] = {}
 _tips_cache: list[dict] = []
+_assets_cache: dict[str, dict] = {}
 
 
 def _load_json(path: Path) -> Optional[dict]:
@@ -50,7 +51,7 @@ def _is_published(obj: dict) -> bool:
 
 def load_curriculum() -> None:
     """Eager-load all curriculum JSON. Call once at app startup."""
-    global _paths_cache, _lessons_cache, _tips_cache
+    global _paths_cache, _lessons_cache, _tips_cache, _assets_cache
 
     # ── Paths ──
     paths: dict[str, dict] = {}
@@ -76,9 +77,47 @@ def load_curriculum() -> None:
             tips.append(d)
     _tips_cache = tips
 
+    # ── Lesson Assets ──
+    assets: dict[str, dict] = {}
+    index_file = Path(__file__).resolve().parents[2] / "docs" / "lesson_index.json"
+    if index_file.exists():
+        try:
+            with index_file.open("r", encoding="utf-8") as f:
+                index_data = json.load(f)
+                for lesson_entry in index_data.get("lessons", []):
+                    short_id = lesson_entry.get("lesson_id")
+                    age = lesson_entry.get("age_group")
+                    topic = lesson_entry.get("topic_path")
+                    if short_id and age and topic:
+                        # Extract order, e.g., lesson_10-12_cyber_01 -> 01
+                        order = short_id.split("_")[-1]
+                        long_id = f"lesson_{age}_{topic}_{order}"
+                        raw_assets = lesson_entry.get("assets", {})
+                        
+                        podcasts = raw_assets.get("podcasts", [])
+                        videos = raw_assets.get("videos", [])
+                        
+                        podcast_mp3 = podcasts[0].get("file") if podcasts else None
+                        video_mp4 = videos[0].get("file") if videos else None
+                        
+                        asset_data = {
+                            "podcast_mp3": podcast_mp3,
+                            "video_mp4": video_mp4,
+                            "flashcards": raw_assets.get("flashcards", []),
+                            "quizzes": raw_assets.get("quizzes", [])
+                        }
+                        # Cache by both short and long IDs
+                        assets[short_id] = asset_data
+                        assets[long_id] = asset_data
+        except Exception as e:
+            logger.warning("[curriculum] failed to load index file: %s", e)
+    else:
+        logger.warning("[curriculum] docs/lesson_index.json not found")
+    _assets_cache = assets
+
     logger.info(
-        "[curriculum] loaded %d paths, %d lessons, %d tips",
-        len(_paths_cache), len(_lessons_cache), len(_tips_cache),
+        "[curriculum] loaded %d paths, %d lessons, %d tips, %d assets",
+        len(_paths_cache), len(_lessons_cache), len(_tips_cache), len(_assets_cache),
     )
 
 
@@ -88,6 +127,7 @@ def curriculum_stats() -> dict:
         "paths": len(_paths_cache),
         "lessons": len(_lessons_cache),
         "tips": len(_tips_cache),
+        "assets": len(_assets_cache),
     }
 
 
@@ -118,6 +158,10 @@ def get_lessons_for_path(path_id: str) -> list[dict]:
 
 def get_lesson(lesson_id: str) -> Optional[dict]:
     return _lessons_cache.get(lesson_id)
+
+
+def get_lesson_assets(lesson_id: str) -> Optional[dict]:
+    return _assets_cache.get(lesson_id)
 
 
 def get_daily_tips(age_group: str, time_of_day: Optional[str] = None) -> list[dict]:

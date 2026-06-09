@@ -1,0 +1,57 @@
+# lesson_7-9_islamic_parenting_worship_02
+
+## Metadata
+
+| Field | Value |
+| --- | --- |
+| **Age Group** | 7-9 |
+| **Domain** | islamic_parenting |
+| **Estimated Minutes** | 5 |
+| **Is Published** | Yes |
+| **Needs Professional Followup** | No |
+| **Order** | 2 |
+| **Path Id** | path_7-9_islamic_parenting_worship |
+| **Reflection Prompts** | `كيف تصرف طفلك عند شعوره بالجوع؟`, `ما السؤال الذي سأله عن الصيام؟` |
+| **Unit Ids** | `aedda350-cf2a-4d53-869a-2b07a694180d`, `d0cb16b5-21cc-457f-8b87-2d74f18eea4f` |
+| **Version** | 1.0.0 |
+| **Warning Flags** |  |
+
+## Summary
+
+> في سن 7-9 سنوات يمكن للطفل تجربة الصيام الجزئي. نركز على فهم معنى الصيام (الصبر، مراقبة الله، الإحساس بالفقراء) لا على مجرد الإمساك عن الطعام.
+
+## Try This
+
+> في رمضان القادم: اجعله يصوم حتى الظهر (نصف يوم)، وافطر معه، وناقشوا: ماذا شعرتَ بالجوع؟
+
+## Raw JSON
+
+<details>
+<summary>Click to view raw JSON</summary>
+
+```json
+{
+  "id": "lesson_7-9_islamic_parenting_worship_02",
+  "path_id": "path_7-9_islamic_parenting_worship",
+  "title": "الصيام: تدريب على الصبر والتقوى",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "aedda350-cf2a-4d53-869a-2b07a694180d",
+    "d0cb16b5-21cc-457f-8b87-2d74f18eea4f"
+  ],
+  "summary": "في سن 7-9 سنوات يمكن للطفل تجربة الصيام الجزئي. نركز على فهم معنى الصيام (الصبر، مراقبة الله، الإحساس بالفقراء) لا على مجرد الإمساك عن الطعام.",
+  "try_this": "في رمضان القادم: اجعله يصوم حتى الظهر (نصف يوم)، وافطر معه، وناقشوا: ماذا شعرتَ بالجوع؟",
+  "order": 2,
+  "estimated_minutes": 5,
+  "reflection_prompts": [
+    "كيف تصرف طفلك عند شعوره بالجوع؟",
+    "ما السؤال الذي سأله عن الصيام؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0"
+}
+```
+</details>

@@ -2,7 +2,7 @@
   "metadata": {
     "version": "1.0",
     "generated_at": "2026-06-09",
-    "total_lessons": 44,
+    "total_lessons": 45,
     "notebook_id": "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287",
     "total_source_pdfs": 44,
     "coverage": {
@@ -17,7 +17,7 @@
       "13-15": 14,
       "16-18": 5,
       "4-6": 8,
-      "7-9": 7
+      "7-9": 8
     },
     "total_videos": 9,
     "video_languages": [
@@ -1651,6 +1651,21 @@
       "topic_path": "medical_emotional_health",
       "source_id": "954f1301-4611-41f2-b796-6486fd8ac9d5",
       "title_ar": "",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_development_03",
+      "age_group": "7-9",
+      "topic_path": "development_digital_wellbeing",
+      "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
+      "title_ar": "الألعاب العنيفة: تأثير خفي على السلوك",
       "assets": {
         "flashcards": [],
         "quizzes": [],
