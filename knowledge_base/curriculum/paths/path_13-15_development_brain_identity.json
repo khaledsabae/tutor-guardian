@@ -1,0 +1,21 @@
+{
+  "id": "path_13-15_development_brain_identity",
+  "title": "دماغ المراهق: فرصة ثانية للنمو (13-15 سنة)",
+  "age_group": "13-15",
+  "domain": "development",
+  "description": "مسار علمي/تربوي يشرح التغيرات الدماغية للمراهق (تقليم المشابك، ميالين، قشرة أمامية)، وكيف يحول الوالدان المخاطر (مخاطرة، اندفاع) لفرص: قرار، مسؤولية، تخطيط مستقبل.",
+  "lesson_ids": [
+    "lesson_13-15_development_brain_identity_01",
+    "lesson_13-15_development_brain_identity_02",
+    "lesson_13-15_development_brain_identity_03"
+  ],
+  "estimated_days": 21,
+  "pedagogical_framework": "zpd_scaffolded",
+  "primary_reference": {
+    "type": "بحث_علمي",
+    "info": "The Adolescent Brain: A Second Window of Opportunity — UNICEF Innocenti"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}
