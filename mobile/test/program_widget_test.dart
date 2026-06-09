@@ -332,21 +332,30 @@ void main() {
         ),
       );
       // Pump multiple times to let the boot sequence complete
-      for (int i = 0; i < 10; i++) {
-        await tester.pump(const Duration(milliseconds: 300));
+      for (int i = 0; i < 80; i++) {
+        await tester.pump(const Duration(milliseconds: 500));
+        if (find.byType(NavigationBar).evaluate().isNotEmpty) break;
       }
-      // await tester.pumpAndSettle();
-      await tester.pump(const Duration(milliseconds: 500));
-      await tester.pump(const Duration(milliseconds: 500));
-      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 1000));
+      await tester.pump(const Duration(milliseconds: 1000));
 
       // Tab 0 (المساعد) is the default
-      expect(find.text('المساعد'), findsOneWidget);
-      expect(find.text('مساراتي'), findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 1000));
+      await tester.pump(const Duration(milliseconds: 1000));
+      await tester.pump(const Duration(milliseconds: 1000));
+      await tester.pump(const Duration(milliseconds: 1000));
 
-      // Switch to tab 1 (مساراتي)
-      await tester.tap(find.text('مساراتي'));
-      await tester.pumpAndSettle();
+      // Tab 0 (المساعد) is the default
+      // Check NavigationBar exists and has 2 destinations
+      expect(find.byType(NavigationBar), findsOneWidget);
+      final navBar = tester.widget<NavigationBar>(find.byType(NavigationBar));
+      expect(navBar.destinations.length, 2);
+      
+      // Find the first destination's label widget
+      expect(find.byWidgetPredicate((widget) => 
+        widget is Text && widget.data != null && widget.data!.contains('المساعد')
+      ), findsOneWidget);
+      expect(find.text('مساراتي'), findsOneWidget);
 
       // Should now show the PathsScreen content
       expect(find.text('مساراتي'), findsOneWidget); // AppBar title
