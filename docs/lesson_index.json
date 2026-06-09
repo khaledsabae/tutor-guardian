@@ -18,7 +18,12 @@
       "16-18": 5,
       "4-6": 8,
       "7-9": 7
-    }
+    },
+    "total_videos": 9,
+    "video_languages": [
+      "en"
+    ],
+    "last_updated": "2026-06-09T20:10:00"
   },
   "lessons": [
     {
@@ -322,7 +327,30 @@
             "resolution": "2752x1536"
           }
         ],
-        "podcasts": []
+        "podcasts": [],
+        "videos": [
+          {
+            "file": "docs/lesson_videos/9a511818_Cyberbullying_Pre-Teens.mp4",
+            "size_mb": 31.3,
+            "language": "en",
+            "description": "Cyberbullying awareness for pre-teens",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          },
+          {
+            "file": "docs/lesson_videos/9a511818_Cyberbullying_Pre-Teens.mp4",
+            "size_mb": 31.3,
+            "language": "en",
+            "description": "Cyberbullying awareness for pre-teens",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          },
+          {
+            "file": "docs/lesson_videos/82b4b434_Online_Safety.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Online safety for pre-teens",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          }
+        ]
       }
     },
     {
@@ -456,7 +484,23 @@
             "resolution": "2752x1536"
           }
         ],
-        "podcasts": []
+        "podcasts": [],
+        "videos": [
+          {
+            "file": "docs/lesson_videos/c45e22b4_Digital_Detectives.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Critical thinking and digital literacy",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          },
+          {
+            "file": "docs/lesson_videos/c45e22b4_Digital_Detectives.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Critical thinking and digital literacy",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          }
+        ]
       }
     },
     {
@@ -491,7 +535,23 @@
           }
         ],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [],
+        "videos": [
+          {
+            "file": "docs/lesson_videos/6ca7b391_Islamic_Parenting_Tweens.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Islamic parenting for tweens",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          },
+          {
+            "file": "docs/lesson_videos/6ca7b391_Islamic_Parenting_Tweens.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Islamic parenting for tweens",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          }
+        ]
       }
     },
     {
@@ -578,7 +638,23 @@
           }
         ],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [],
+        "videos": [
+          {
+            "file": "docs/lesson_videos/189647f0_Self-Confidence_&_Identity.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Self-confidence and identity building",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          },
+          {
+            "file": "docs/lesson_videos/189647f0_Self-Confidence_&_Identity.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Self-confidence and identity building",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          }
+        ]
       }
     },
     {
@@ -659,7 +735,23 @@
             "resolution": "2752x1536"
           }
         ],
-        "podcasts": []
+        "podcasts": [],
+        "videos": [
+          {
+            "file": "docs/lesson_videos/f0060e8d_Adolescence_Safely.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Safe adolescence - healthy habits",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          },
+          {
+            "file": "docs/lesson_videos/f0060e8d_Adolescence_Safely.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Safe adolescence - healthy habits",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          }
+        ]
       }
     },
     {
@@ -740,7 +832,23 @@
             "resolution": "2752x1536"
           }
         ],
-        "podcasts": []
+        "podcasts": [],
+        "videos": [
+          {
+            "file": "docs/lesson_videos/c2491bd6_Digital_Footprint.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Digital footprint and privacy",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          },
+          {
+            "file": "docs/lesson_videos/c2491bd6_Digital_Footprint.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Digital footprint and privacy",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          }
+        ]
       }
     },
     {
@@ -1108,7 +1216,23 @@
           }
         ],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [],
+        "videos": [
+          {
+            "file": "docs/lesson_videos/186dd5fa_Teen_Mental_Health.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Teen mental health awareness",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          },
+          {
+            "file": "docs/lesson_videos/186dd5fa_Teen_Mental_Health.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Teen mental health awareness",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          }
+        ]
       }
     },
     {
@@ -1241,7 +1365,23 @@
         ],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [],
+        "videos": [
+          {
+            "file": "docs/lesson_videos/823e565d_Adulthood_Mental_Health.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Adulthood transition and mental health",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          },
+          {
+            "file": "docs/lesson_videos/823e565d_Adulthood_Mental_Health.mp4",
+            "size_mb": 31.5,
+            "language": "en",
+            "description": "Adulthood transition and mental health",
+            "note": "English-language version. Arabic version to be generated with explicit language prompts."
+          }
+        ]
       }
     },
     {

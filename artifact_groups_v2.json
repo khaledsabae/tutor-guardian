@@ -1,0 +1,572 @@
+{
+  "13-15_mental_health": {
+    "data-table": {
+      "index": 78,
+      "id": "6c1abfab-6268-4201-acbf-faa8c714d4e4",
+      "title": "Mental Health for Adolescents Aged 13-15",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:35:08"
+    },
+    "infographic": {
+      "index": 58,
+      "id": "feb89afc-126b-4a10-b365-aa5531783dcd",
+      "title": "Teen Mental Wellbeing Islamic Guide",
+      "type": "Infographic",
+      "type_id": "infographic",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:35:11"
+    },
+    "report": {
+      "index": 114,
+      "id": "840485b1-6616-4a91-94e1-842aecadb260",
+      "title": "Educational Summary: Healthy Habits and Well-being for the Pre-Teen Years (Ages 10-12)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:13:45"
+    }
+  },
+  "10-12_mental_health": {
+    "data-table": {
+      "index": 117,
+      "id": "3aee3dc5-e020-4472-bd30-7666d99c2c0d",
+      "title": "Anxiety and Depression Support Guide for Children 10-12",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:12:08"
+    },
+    "report": {
+      "index": 18,
+      "id": "ffb71240-b7e8-4741-b46a-94cdcbb5792e",
+      "title": "Lesson Summary: Digital Wellbeing and Islamic Identity for Children (Ages 10–12)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:46:21"
+    }
+  },
+  "unknown_general": {
+    "data-table": {
+      "index": 111,
+      "id": "f39c34b5-4646-4167-a4db-848e6de76139",
+      "title": "Healthy Daily Routine for Children Aged 10-12 Years",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:15:47"
+    },
+    "flashcards": {
+      "index": 140,
+      "id": "b122c29e-8629-4b94-ba2f-ed4b00be376e",
+      "title": "Islamic Flashcards",
+      "type": "Flashcards",
+      "type_id": "flashcards",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T17:47:16"
+    },
+    "infographic": {
+      "index": 90,
+      "id": "d695e236-e9da-4a18-a92e-1abba6d75dd7",
+      "title": "Thinking Critically Online Guide",
+      "type": "Infographic",
+      "type_id": "infographic",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:25:56"
+    },
+    "quiz": {
+      "index": 132,
+      "id": "41e192a4-b172-4dfe-a1d2-ff7e98c7ee27",
+      "title": "Islamic Quiz",
+      "type": "Quiz",
+      "type_id": "quiz",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:02:00"
+    },
+    "report": {
+      "index": 35,
+      "id": "9ffe5451-b846-4cbd-8ba3-9b4d3d668474",
+      "title": "Lesson Summary: Digital Etiquette and Online Kindness for Young Children",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:45:06"
+    }
+  },
+  "13-15_digital_safety": {
+    "data-table": {
+      "index": 56,
+      "id": "85a5a686-acc7-4607-9a9b-c99e5b6734ea",
+      "title": "Digital Citizenship Indicators for Adolescents (Ages 16-18)",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:43:50"
+    },
+    "report": {
+      "index": 96,
+      "id": "d4021015-ba5f-458d-bad7-475ec1e21a7a",
+      "title": "Educational Summary: Critical Thinking and Digital Citizenship for Adolescents",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:25:49"
+    }
+  },
+  "13-15_prayer": {
+    "data-table": {
+      "index": 83,
+      "id": "bc076f85-94e0-4d72-85bb-4a77e5713fe9",
+      "title": "Daily Prayer and Worship Tracker for Teens (13-15)",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:26:55"
+    }
+  },
+  "unknown_ethics": {
+    "data-table": {
+      "index": 126,
+      "id": "12406306-3c94-42e8-b745-7a311992f323",
+      "title": "Ethical Values and Practical Life Examples for Ages 10-12",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:06:17"
+    },
+    "infographic": {
+      "index": 123,
+      "id": "39d90aa7-bfcb-41c7-afba-04cbacc00702",
+      "title": "Pillars of Character Development",
+      "type": "Infographic",
+      "type_id": "infographic",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:06:55"
+    },
+    "report": {
+      "index": 128,
+      "id": "9f15cd6c-e7ae-462e-86df-397d5a1443ce",
+      "title": "Character Building Report: Honesty, Truthfulness, and Righteousness (Ages 10-12)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:05:12"
+    }
+  },
+  "10-12_prayer": {
+    "data-table": {
+      "index": 138,
+      "id": "c6b2e1ed-b965-4be3-b78f-3cf6bd4773f1",
+      "title": "Prayer Times and Rulings for Children (10-12 Years)",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T17:48:31"
+    },
+    "report": {
+      "index": 12,
+      "id": "eb171069-a6a8-45e3-b28a-5d3cf1a21061",
+      "title": "Educational Report: Prayer as the Pillar of Religion and Identity for Children",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:47:03"
+    }
+  },
+  "13-15_self_confidence": {
+    "data-table": {
+      "index": 81,
+      "id": "a0f54cce-5dd1-46ac-99f1-e212a9a36b2d",
+      "title": "Self-Confidence and Identity Building for Young Adolescents",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:34:53"
+    },
+    "infographic": {
+      "index": 120,
+      "id": "a6a6c05e-4194-4a3e-9752-60f79850ea16",
+      "title": "Supporting Pre-Teen Faith and Confidence",
+      "type": "Infographic",
+      "type_id": "infographic",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:09:31"
+    },
+    "report": {
+      "index": 73,
+      "id": "228b57b2-9d32-4ef3-a736-6648a55d3928",
+      "title": "Report: Cultivating Self-Confidence through Islamic Identity for Pre-teens (Ages 10-12)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:34:47"
+    }
+  },
+  "10-12_quran": {
+    "data-table": {
+      "index": 131,
+      "id": "00db382d-4d83-477f-b60e-5ae5284653c1",
+      "title": "Quranic Surahs and Lessons for Children Aged 10-12",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:02:53"
+    }
+  },
+  "13-15_quran": {
+    "data-table": {
+      "index": 88,
+      "id": "3c5fb4c4-c4e6-4ecf-9ead-0d9414d650bc",
+      "title": "Quranic Surahs for Teenagers (Ages 13-15)",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:28:35"
+    },
+    "report": {
+      "index": 86,
+      "id": "0dd6dba4-b4e1-48ba-8a9a-fae8c840ef0e",
+      "title": "Guided Curriculum Summary: The Quran as a Life Compass for Teens",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:28:30"
+    }
+  },
+  "10-12_self_confidence": {
+    "data-table": {
+      "index": 121,
+      "id": "7671318f-8c51-41f2-bd7d-4754dd8d80d0",
+      "title": "Self-Confidence Building Steps and Practical Activities for Children 10-12",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:09:08"
+    }
+  },
+  "10-12_cyberbullying": {
+    "data-table": {
+      "index": 141,
+      "id": "b69571f1-f4c1-446e-b726-b7d4f0b67ce1",
+      "title": "Types of Cyberbullying and Handling Strategies for Children 10-12",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T17:46:24"
+    }
+  },
+  "13-15_cyberbullying": {
+    "data-table": {
+      "index": 102,
+      "id": "d186c3b7-a51e-4e7f-a631-7e35b38044a5",
+      "title": "Types of Cyberbullying and Management Strategies for Teens 13-15",
+      "type": "Data Table",
+      "type_id": "data_table",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:24:37"
+    },
+    "report": {
+      "index": 99,
+      "id": "e87e0bff-effc-425e-81ab-62b61faff669",
+      "title": "Cyberbullying and Digital Safety: A Comprehensive Guide for Teens (Ages 13-15)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:24:31"
+    }
+  },
+  "10-12_digital_safety": {
+    "flashcards": {
+      "index": 91,
+      "id": "8dda3050-1ce6-4156-b688-c4f22823b545",
+      "title": "Citizenship Flashcards",
+      "type": "Flashcards",
+      "type_id": "flashcards",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:25:46"
+    },
+    "report": {
+      "index": 32,
+      "id": "82d1ec21-e763-42ff-899c-2de073243af6",
+      "title": "Lesson Summary: Critical Thinking and Digital Citizenship",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:45:21"
+    }
+  },
+  "unknown_cyberbullying": {
+    "flashcards": {
+      "index": 106,
+      "id": "131990dc-571e-4c43-9509-898a56127efd",
+      "title": "Cybersecurity Flashcards",
+      "type": "Flashcards",
+      "type_id": "flashcards",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:18:30"
+    },
+    "infographic": {
+      "index": 97,
+      "id": "3d6de30b-37c5-46cc-9263-2d7753fa69ca",
+      "title": "Stopping Cyberbullying Awareness Guide",
+      "type": "Infographic",
+      "type_id": "infographic",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:24:39"
+    },
+    "quiz": {
+      "index": 31,
+      "id": "07d45b2d-3573-4d92-8f40-a1a11ba5ba04",
+      "title": "Cybersafety Quiz",
+      "type": "Quiz",
+      "type_id": "quiz",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:45:24"
+    },
+    "report": {
+      "index": 142,
+      "id": "bbb70814-375f-4f34-9347-e24a3e9f7686",
+      "title": "Empowering Digital Citizens: Navigating Cyberbullying and \"Cybullrelgy\" (Ages 10-12)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T17:45:44"
+    }
+  },
+  "unknown_parenting": {
+    "flashcards": {
+      "index": 104,
+      "id": "60c9396c-c0d2-438f-85d8-5e8b72454e4e",
+      "title": "Parenting Flashcards",
+      "type": "Flashcards",
+      "type_id": "flashcards",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:18:40"
+    },
+    "quiz": {
+      "index": 136,
+      "id": "977e0812-cf37-489e-853f-6c376fa10928",
+      "title": "Parenting Quiz",
+      "type": "Quiz",
+      "type_id": "quiz",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T17:48:07"
+    },
+    "report": {
+      "index": 27,
+      "id": "fb227993-03cb-4572-8fff-47cde0c8f89d",
+      "title": "Lesson Summary: Strengthening Family Bonding (Ages 4-6)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:45:35"
+    }
+  },
+  "unknown_mental_health": {
+    "flashcards": {
+      "index": 119,
+      "id": "b0dbdeed-a6e0-40d3-ac52-6f3fa4eda545",
+      "title": "Psychology Flashcards",
+      "type": "Flashcards",
+      "type_id": "flashcards",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:10:58"
+    },
+    "quiz": {
+      "index": 116,
+      "id": "28aef9b5-35fe-46ed-9577-2691f3de6d52",
+      "title": "Psychology Quiz",
+      "type": "Quiz",
+      "type_id": "quiz",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:11:48"
+    },
+    "report": {
+      "index": 62,
+      "id": "607a9bf5-29f1-4e66-ac6b-3dfdcf418a14",
+      "title": "Lesson Summary: Mental Well-being and Character Development (Level 2)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:35:33"
+    }
+  },
+  "unknown_quran": {
+    "flashcards": {
+      "index": 47,
+      "id": "8da9e07d-3ad5-4555-a005-d2aebe52b31a",
+      "title": "Quranic Flashcards",
+      "type": "Flashcards",
+      "type_id": "flashcards",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:44:22"
+    },
+    "infographic": {
+      "index": 84,
+      "id": "be4f5fc4-b4e8-4301-a89c-44dabf21c017",
+      "title": "Quranic Life Compass Infographic",
+      "type": "Infographic",
+      "type_id": "infographic",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:28:37"
+    },
+    "quiz": {
+      "index": 87,
+      "id": "ed59163b-9363-46eb-9044-f0b211b0686f",
+      "title": "Quran Quiz",
+      "type": "Quiz",
+      "type_id": "quiz",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:28:32"
+    },
+    "report": {
+      "index": 133,
+      "id": "4c45094b-495a-44b8-8320-4713fa0131ea",
+      "title": "The Quran: My Constitution and Life Compass",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:01:12"
+    }
+  },
+  "13-15_ethics": {
+    "infographic": {
+      "index": 61,
+      "id": "64684e13-9c73-4005-92ff-78c44d2dbed9",
+      "title": "Teen's Guide to Islamic Ethics",
+      "type": "Infographic",
+      "type_id": "infographic",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:34:41"
+    }
+  },
+  "unknown_prayer": {
+    "infographic": {
+      "index": 135,
+      "id": "f2ec998e-6f10-4583-bf12-19b012fba90e",
+      "title": "Building Foundations Through Prayer",
+      "type": "Infographic",
+      "type_id": "infographic",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T17:49:03"
+    },
+    "report": {
+      "index": 139,
+      "id": "aeca8305-44f0-401a-a658-d42a515f1886",
+      "title": "Lesson Summary: Prayer and Islamic Identity (Ages 10-12)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T17:47:41"
+    }
+  },
+  "unknown_self_confidence": {
+    "report": {
+      "index": 46,
+      "id": "8ac9c785-372b-4639-b477-39bfc6c0019e",
+      "title": "Transitioning to Maturity: Islamic Identity and Spiritual Foundation (Ages 16-18)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:44:12"
+    }
+  },
+  "16-18_cyberbullying": {
+    "report": {
+      "index": 51,
+      "id": "72ca91c4-6ebd-44ec-a907-aa5edadf72f9",
+      "title": "Digital Citizenship and Cyber Safety: A Strategic Summary for Young Adults",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:43:45"
+    }
+  },
+  "4-6_prayer": {
+    "report": {
+      "index": 26,
+      "id": "d12932e5-3c6c-45f4-b9ec-d575dfe110ac",
+      "title": "Lesson Summary: Divine Love and Prayer for Young Hearts (Ages 4-6)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:45:52"
+    }
+  },
+  "7-9_quran": {
+    "report": {
+      "index": 8,
+      "id": "898ee24d-533b-402b-b1aa-90a0cd540db7",
+      "title": "Quran Lesson Summary: My Life’s Compass (Ages 7-9)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:47:17"
+    }
+  },
+  "16-18_quran": {
+    "report": {
+      "index": 44,
+      "id": "7613847a-cb58-4ba5-8131-0bb2241caaca",
+      "title": "The Quran and Maturity: A Strategic Framework for Young Adults (16-18)",
+      "type": "Report",
+      "type_id": "report",
+      "status": "completed",
+      "status_id": 3,
+      "created_at": "2026-06-09T18:44:25"
+    }
+  }
+}
