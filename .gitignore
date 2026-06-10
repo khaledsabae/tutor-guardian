@@ -69,3 +69,8 @@ ops/data/qa_collected_checkpoint.json
 docs/*.mp3
 docs/lesson_videos/
 docs/lesson_assets/infographics/
+
+# ── Kaggle training artifacts (9.4GB output incl. GGUF — never in git) ──
+kaggle_logs*.txt
+ops/data/kaggle_output/
+ops/data/kaggle_upload/

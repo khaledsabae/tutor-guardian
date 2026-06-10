@@ -211,52 +211,53 @@
 
 سيتم تحديث هذا الجدول تلقائياً مع تقدم عملية الإنتاج.
 
-| اسم الدرس | معرف المصدر (Source ID) | حالة التوليد النصي | حالة البودكاست | حالة التحليل إلى JSON | ملاحظات |
-|------------|--------------------------|----------------------|------------------|------------------------|----------|
-| age_10_12 - lesson_10-12_cyber_digital_citizenship_02 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_10_12 - lesson_10-12_cyber_digital_citizenship_01 | 4086896f-0dd6-4a28-bade-c8032b18e9d1 | ✅ ناجح | ✅ ناجح | ✅ ناجح | الأصول النصية جاهزة، البودكاست تم تنزيله بعنوان "روشتة أمان ولادنا في عالم الشاشات" (23.44 MB)، JSON جاهز (2 فلاش كاردز، 4 سلايدات) |
-| age_10_12 - lesson_10-12_islamic_parenting_identity_01 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_10_12 - lesson_10-12_islamic_parenting_identity_02 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_10_12 - lesson_10-12_islamic_parenting_identity_03 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_10_12 - lesson_10-12_islamic_parenting_identity_04 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
+| اسم الدرس | `معرف المصدر (Source ID)` | حالة التوليد النصي | حالة البودكاست | حالة التحليل إلى JSON | ملاحظات |
+
+------------|--------------------------|----------------------|------------------|------------------------|----------|
+| age_10_12 - lesson_10-12_cyber_digital_citizenship_02 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_10_12 - lesson_10-12_cyber_digital_citizenship_01 | `4086896f-0dd6-4a28-bade-c8032b18e9d1` | ✅ ناجح | ✅ ناجح | ✅ ناجح | الأصول النصية جاهزة، البودكاست تم تنزيله بعنوان "روشتة أمان ولادنا في عالم الشاشات" (23.44 MB)، JSON جاهز (2 فلاش كاردز، 4 سلايدات) |
+| age_10_12 - lesson_10-12_islamic_parenting_identity_01 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_10_12 - lesson_10-12_islamic_parenting_identity_02 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_10_12 - lesson_10-12_islamic_parenting_identity_03 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_10_12 - lesson_10-12_islamic_parenting_identity_04 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
 | age_10_12 - lesson_10-12_medical_puberty_wellbeing_01 | `c48f34fc-f1a1-4150-a55c-bef14c4051f8` | ✅ ناجح (Demo) | ✅ ناجح (Demo) | ✅ ناجح (Demo) | درس تجريبي |
-| age_10_12 - lesson_10-12_medical_puberty_wellbeing_02 | `42bc52b6-7d36-486f-aa79-e98ea5dcb4c9` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_10_12 - lesson_10-12_medical_puberty_wellbeing_03 | `20e00eef-fa60-4165-9364-ef869223c0f6` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
+| age_10_12 - lesson_10-12_medical_puberty_wellbeing_02 | `42bc52b6-7d36-486f-aa79-e98ea5dcb4c9` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_10_12 - lesson_10-12_medical_puberty_wellbeing_03 | `20e00eef-fa60-4165-9364-ef869223c0f6` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
 | age_13_15 - lesson_13-15_cyber_digital_maturity_01 | `4086896f-0dd6-4a28-bade-c8032b18e9d1` | ✅ ناجح | ✅ ناجح | ✅ ناجح | Lesson 01 |
-| age_13_15 - lesson_13-15_cyber_digital_maturity_02 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_cyber_digital_maturity_03 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_development_brain_identity_01 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_development_brain_identity_02 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_development_brain_identity_03 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_islamic_parenting_teen_identity_01 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_islamic_parenting_teen_identity_02 | `4086896f-0dd6-4a28-bade-c8032b18e9d1` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_islamic_parenting_teen_identity_03 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_islamic_parenting_teen_identity_04 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_medical_mental_health_01 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_medical_mental_health_02 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_medical_mental_health_03 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_13_15 - lesson_13-15_medical_mental_health_04 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
+| age_13_15 - lesson_13-15_cyber_digital_maturity_02 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_cyber_digital_maturity_03 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_development_brain_identity_01 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_development_brain_identity_02 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_development_brain_identity_03 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_islamic_parenting_teen_identity_01 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_islamic_parenting_teen_identity_02 | `4086896f-0dd6-4a28-bade-c8032b18e9d1` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_islamic_parenting_teen_identity_03 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_islamic_parenting_teen_identity_04 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_medical_mental_health_01 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_medical_mental_health_02 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_medical_mental_health_03 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_13_15 - lesson_13-15_medical_mental_health_04 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
 | age_10_12 - lesson_10-12_cyber_digital_citizenship_01 | 4086896f-0dd6-4a28-bade-c8032b18e9d1 | ✅ ناجح | ✅ ناجح | ✅ ناجح | الأصول النصية جاهزة، البودكاست تم تنزيله بعنوان "روشتة أمان ولادنا في عالم الشاشات" (23.44 MB)، JSON جاهز (2 فلاش كاردز، 4 سلايدات) |
-| age_16_18 - lesson_16-18_cyber_digital_professional_02 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_16_18 - lesson_16-18_medical_adult_transition_01 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_16_18 - lesson_16-18_medical_adult_transition_02 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_16_18 - lesson_16-18_medical_adult_transition_03 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_4_6 - lesson_4-6_development_positive_parenting_01 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_4_6 - lesson_4-6_development_positive_parenting_02 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
+| age_16_18 - lesson_16-18_cyber_digital_professional_02 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_16_18 - lesson_16-18_medical_adult_transition_01 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_16_18 - lesson_16-18_medical_adult_transition_02 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_16_18 - lesson_16-18_medical_adult_transition_03 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_4_6 - lesson_4-6_development_positive_parenting_01 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_4_6 - lesson_4-6_development_positive_parenting_02 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
 | age_10_12 - lesson_10-12_cyber_digital_citizenship_01 | 4086896f-0dd6-4a28-bade-c8032b18e9d1 | ✅ ناجح | ✅ ناجح | ✅ ناجح | الأصول النصية جاهزة، البودكاست تم تنزيله بعنوان "روشتة أمان ولادنا في عالم الشاشات" (23.44 MB)، JSON جاهز (2 فلاش كاردز، 4 سلايدات) |
-| age_4_6 - lesson_4-6_islamic_parenting_adab_02 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_4_6 - lesson_4-6_islamic_parenting_adab_03 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_4_6 - lesson_4-6_islamic_parenting_bond_01 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_4_6 - lesson_4-6_islamic_parenting_bond_02 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_4_6 - lesson_4-6_islamic_parenting_bond_03 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_7_9 - lesson_7-9_development_digital_wellbeing_01 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
+| age_4_6 - lesson_4-6_islamic_parenting_adab_02 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_4_6 - lesson_4-6_islamic_parenting_adab_03 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_4_6 - lesson_4-6_islamic_parenting_bond_01 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_4_6 - lesson_4-6_islamic_parenting_bond_02 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_4_6 - lesson_4-6_islamic_parenting_bond_03 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_7_9 - lesson_7-9_development_digital_wellbeing_01 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
 | age_10_12 - lesson_10-12_cyber_digital_citizenship_01 | 4086896f-0dd6-4a28-bade-c8032b18e9d1 | ✅ ناجح | ✅ ناجح | ✅ ناجح | الأصول النصية جاهزة، البودكاست تم تنزيله بعنوان "روشتة أمان ولادنا في عالم الشاشات" (23.44 MB)، JSON جاهز (2 فلاش كاردز، 4 سلايدات) |
-| age_7_9 - lesson_7-9_development_digital_wellbeing_03 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_7_9 - lesson_7-9_islamic_parenting_worship_01 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_7_9 - lesson_7-9_islamic_parenting_worship_02 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_7_9 - lesson_7-9_islamic_parenting_worship_03 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_7_9 - lesson_7-9_medical_emotional_health_01 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
-| age_7_9 - lesson_7-9_medical_emotional_health_02 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ⏳ لم يبدأ | ⏳ لم يبدأ | ⏳ لم يبدأ | |
+| age_7_9 - lesson_7-9_development_digital_wellbeing_03 | `5fb6588e-d31a-4cca-8e0c-052b364a72ac` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_7_9 - lesson_7-9_islamic_parenting_worship_01 | `f7e6f02d-39fb-4888-ae4a-9e0644e75f5e` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_7_9 - lesson_7-9_islamic_parenting_worship_02 | `440183bc-479c-49c1-bb07-fe35fa62295f` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_7_9 - lesson_7-9_islamic_parenting_worship_03 | `55fb8fb3-2eed-4eb2-9940-0a1e07d3e951` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_7_9 - lesson_7-9_medical_emotional_health_01 | `bc41f39f-97ae-4af2-80dd-b070907a80e4` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
+| age_7_9 - lesson_7-9_medical_emotional_health_02 | `dab0fff1-8180-4a3f-99ae-6791b243d690` | ✅ ناجح | ⏳ لم يبدأ | ✅ ناجح | الأصول النصية والـ JSON جاهزة، البودكاست قيد الانتظار (Rate Limit) |
 
 ---
 
