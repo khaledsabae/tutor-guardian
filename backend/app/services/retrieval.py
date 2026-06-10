@@ -179,7 +179,14 @@ def retrieve_relevant_units(
     db_domain = canonical_domain(domain)
 
     # ── Query 1: domain + age_group (broad, higher top_k) ────────────────
-    where = {"$and": [{"domain": {"$eq": db_domain}}, {"age_group": {"$eq": age_group}}]}
+    # "unspecified" units hold general principles that apply to every age,
+    # so they compete alongside age-matched units instead of being invisible.
+    where = {
+        "$and": [
+            {"domain": {"$eq": db_domain}},
+            {"age_group": {"$in": [age_group, "unspecified"]}},
+        ]
+    }
     results = _query(collection, query_text, where, top_k)
 
     # ── Query 2: domain only (catch-all) ────────────────────────────────
