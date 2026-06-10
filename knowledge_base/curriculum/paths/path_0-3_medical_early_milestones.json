@@ -1,0 +1,24 @@
+{
+  "id": "path_0-3_medical_early_milestones",
+  "title": "المراحل النمائية الأولى: من الولادة إلى 3 سنوات",
+  "age_group": "0-3",
+  "domain": "medical",
+  "description": "مسار تربوي طبي لمدة 14 يوماً يغطي أهم المراحل النمائية للأطفال من الولادة حتى 3 سنوات: التواصل البصري والابتسام في الشهرين، الرعاية الصحية في الأشهر الستة الأولى، علامات التنبيه المبكر (التوحد، تأخر الكلام، الانحدار النمائي)، ومتى وكيف تطلب المساعدة الطبية. يعتمد على إرشادات CDC Act Early وأكاديمية طب الأطفال الأمريكية.",
+  "lesson_ids": [
+    "lesson_0-3_medical_early_milestones_01",
+    "lesson_0-3_medical_early_milestones_02",
+    "lesson_0-3_medical_early_milestones_03",
+    "lesson_0-3_medical_early_milestones_04"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "attachment_rahma",
+  "primary_reference": {
+    "type": "تقرير_طبي",
+    "info": "CDC Act Early 2025 — Developmental Milestones + WHO Guidelines on infant care"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T14:00:00",
+  "updated_at": "2026-06-10T14:00:00"
+}

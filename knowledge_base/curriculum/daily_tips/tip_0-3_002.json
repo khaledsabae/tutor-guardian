@@ -1,0 +1,13 @@
+{
+  "id": "tip_0-3_002",
+  "age_group": "0-3",
+  "domain": "medical",
+  "text": "النوم على الظهر دائماً — في القيلولة والليل — يقلل خطر الموت المفاجئ للرضع (SIDS) بنسبة 50%. تجنب الوسائد والبطانيات الثقيلة في السرير.",
+  "unit_id": "med-2dc3af5f",
+  "day_of_week": 1,
+  "time_of_day": "bedtime",
+  "tags": ["نوم آمن", "SIDS", "ظهر"],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T14:00:00"
+}
