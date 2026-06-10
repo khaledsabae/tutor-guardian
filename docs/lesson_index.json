@@ -1529,8 +1529,22 @@
       "source_id": "37393ebc-4bf7-4cc8-ac6e-b15b4fad2b10",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_development_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_01_fc.json",
+            "title": "إدارة وقت الشاشة: عقد عائلي — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_development_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_01_qz.json",
+            "title": "إدارة وقت الشاشة: عقد عائلي — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -1544,8 +1558,22 @@
       "source_id": "370aecdc-3b9f-4d93-805a-517973baba60",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_development_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_02_fc.json",
+            "title": "الصداقة وضغط الأقران — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_development_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_02_qz.json",
+            "title": "الصداقة وضغط الأقران — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -1559,8 +1587,22 @@
       "source_id": "7ce48001-258f-45f1-b561-556ee5b4fe82",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_worship_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_worship_01_fc.json",
+            "title": "الصلاة: حب لا واجب — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_worship_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_worship_01_qz.json",
+            "title": "الصلاة: حب لا واجب — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "898ee24d-533b-402b-b1aa-90a0cd540db7",
@@ -1581,8 +1623,22 @@
       "source_id": "d029eaaa-7796-494c-a397-330e7342944c",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_worship_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_worship_02_fc.json",
+            "title": "الصيام: تدريب على الصبر — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_worship_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_worship_02_qz.json",
+            "title": "الصيام: تدريب على الصبر — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -1596,8 +1652,22 @@
       "source_id": "17ff034d-1fb5-4f76-a9d4-2ed77bf1aefb",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_worship_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_worship_03_fc.json",
+            "title": "القرآن: رفيق الحياة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_worship_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_worship_03_qz.json",
+            "title": "القرآن: رفيق الحياة — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -1611,8 +1681,22 @@
       "source_id": "1e9b6c6c-a3e9-4bc3-b8bb-3111cc7cc474",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_medical_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_01_fc.json",
+            "title": "الغضب والقلق: أدوات عملية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_medical_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_01_qz.json",
+            "title": "الغضب والقلق: أدوات عملية — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -1626,8 +1710,22 @@
       "source_id": "954f1301-4611-41f2-b796-6486fd8ac9d5",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_medical_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_02_fc.json",
+            "title": "النوم والتركيز — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_medical_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_02_qz.json",
+            "title": "النوم والتركيز — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -1641,8 +1739,22 @@
       "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
       "title_ar": "الألعاب العنيفة: تأثير خفي على السلوك",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_development_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_03_fc.json",
+            "title": "الألعاب العنيفة: أثر خفي — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_development_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_03_qz.json",
+            "title": "الألعاب العنيفة: أثر خفي — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
