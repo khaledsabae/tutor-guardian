@@ -29,6 +29,8 @@ import '../models/lesson_assets.dart';
 import '../providers/lesson_assets_provider.dart';
 import 'flashcards_screen.dart';
 import 'quiz_screen.dart';
+import 'podcast_player_screen.dart';
+import '../../../config/app_config.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
 
@@ -556,6 +558,16 @@ class _InteractiveAssetsSection extends ConsumerWidget {
         final buttons = <Widget>[];
 
         if (assets.podcastMp3 != null) {
+          // The backend returns either a full URL or a relative path
+          // (e.g. "docs/lesson_01_podcast.mp3" — pre-R2 era). We accept
+          // both: full URLs pass through, relative paths are joined
+          // against [AppConfig.apiBaseUrl]. Until the R2 migration
+          // lands, the relative path will 404 in production and the
+          // player shows a friendly "not yet available" message.
+          final raw = assets.podcastMp3!;
+          final url = raw.startsWith('http://') || raw.startsWith('https://')
+              ? raw
+              : '${AppConfig.apiBaseUrl}/$raw';
           buttons.add(
             _AssetButton(
               icon: Icons.headset,
@@ -564,8 +576,9 @@ class _InteractiveAssetsSection extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AssetPlaceholderScreen(
-                      title: 'البودكاست',
+                    builder: (context) => PodcastPlayerScreen(
+                      url: url,
+                      title: '🎧 البودكاست',
                     ),
                   ),
                 );

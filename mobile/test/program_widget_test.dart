@@ -277,10 +277,17 @@ void main() {
       expect(find.textContaining('فلاش كاردز (10 بطاقة)'), findsOneWidget);
       expect(find.textContaining('اختبر نفسك (5 سؤال)'), findsOneWidget);
 
-      // Tap on podcast and verify placeholder opens
+      // Tap on podcast and verify the real player screen opens
+      // (replaces the Phase-4 "شاشة مؤقتة" placeholder).
       await tester.tap(find.textContaining('استمع للبودكاست'));
-      await tester.pumpAndSettle();
-      expect(find.text('شاشة مؤقتة لـ البودكاست'), findsOneWidget);
+      // Pump a few frames so the navigator can finish pushing the
+      // new route. We don't pumpAndSettle because just_audio's
+      // MethodChannel never resolves in the host VM.
+      for (var i = 0; i < 5; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      // The player screen's AppBar shows the title.
+      expect(find.text('🎧 البودكاست'), findsOneWidget);
     });
 
     testWidgets('LessonScreen does not show interactive content when no assets are present',
