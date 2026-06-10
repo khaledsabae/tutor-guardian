@@ -756,8 +756,22 @@
       "source_id": "46ed02d0-0eb1-4f2f-b5c1-6546eafdcc3b",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_development_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_01_fc.json",
+            "title": "دماغ المراهق: فرصة ثانية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_development_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_01_qz.json",
+            "title": "دماغ المراهق: فرصة ثانية — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -771,8 +785,22 @@
       "source_id": "8b1d28ae-c4de-4aac-b591-8fbb3f61ddd9",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_development_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_02_fc.json",
+            "title": "المخاطرة والاندفاع: قرار واعٍ — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_development_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_02_qz.json",
+            "title": "المخاطرة والاندفاع: قرار واعٍ — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -786,8 +814,22 @@
       "source_id": "baaf13a7-971f-47e3-b5a5-2f89238e0ded",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_development_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_03_fc.json",
+            "title": "هوية المستقبل: تخطيط ومسؤولية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_development_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_03_qz.json",
+            "title": "هوية المستقبل: تخطيط ومسؤولية — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -1171,8 +1213,22 @@
       "source_id": "358f4c4e-9742-45f0-b9ee-037b09ca078d",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_cyber_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_01_fc.json",
+            "title": "الهوية الرقمية المهنية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_cyber_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_01_qz.json",
+            "title": "الهوية الرقمية المهنية — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "3908c473-fc9c-48e1-9dfb-61f73c1963b9",
@@ -1193,8 +1249,22 @@
       "source_id": "5f6d098c-f8a8-4f5a-a9f6-79b2cc8c053e",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_cyber_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_02_fc.json",
+            "title": "أخلاقيات AI وأمان المعلومات — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_cyber_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_02_qz.json",
+            "title": "أخلاقيات AI وأمان المعلومات — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "72ca91c4-6ebd-44ec-a907-aa5edadf72f9",
@@ -1215,8 +1285,22 @@
       "source_id": "f9989ce3-a6e7-48dc-a627-87fee569c42d",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_medical_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_01_fc.json",
+            "title": "الصحة النفسية في الجامعة/العمل — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_medical_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_01_qz.json",
+            "title": "الصحة النفسية في الجامعة/العمل — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "7613847a-cb58-4ba5-8131-0bb2241caaca",
@@ -1253,8 +1337,22 @@
       "source_id": "91cd3b56-aba3-40fe-ac12-3f69ac2d0623",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_medical_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_02_fc.json",
+            "title": "العلاقات والحدود الصحية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_medical_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_02_qz.json",
+            "title": "العلاقات والحدود الصحية — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
@@ -1268,8 +1366,22 @@
       "source_id": "e265bfe0-2602-4493-adb4-233c72505d9c",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_medical_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_03_fc.json",
+            "title": "حياة نفسية مستدامة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_medical_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_03_qz.json",
+            "title": "حياة نفسية مستدامة — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [],
