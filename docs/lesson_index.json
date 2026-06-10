@@ -311,8 +311,22 @@
       "source_id": "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_islamic_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_02_fc.json",
+            "title": "القرآن: دستور الحياة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_islamic_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_02_qz.json",
+            "title": "القرآن: دستور الحياة — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "d1107bb0-5c7d-45e6-9db8-d81301c0d77e",
@@ -340,8 +354,22 @@
       "source_id": "bc41f39f-97ae-4af2-80dd-b070907a80e4",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_islamic_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_03_fc.json",
+            "title": "الأخلاق في التعامل — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_islamic_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_03_qz.json",
+            "title": "الأخلاق في التعامل — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "aeca8305-44f0-401a-a658-d42a515f1886",
@@ -369,8 +397,22 @@
       "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_islamic_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_04_fc.json",
+            "title": "الثقة بالنفس والهوية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_islamic_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_04_qz.json",
+            "title": "الثقة بالنفس والهوية — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "228b57b2-9d32-4ef3-a736-6648a55d3928",
@@ -414,8 +456,22 @@
       "source_id": "c48f34fc-f1a1-4150-a55c-bef14c4051f8",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_medical_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_01_fc.json",
+            "title": "البلوغ: حوار مفتوح — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_medical_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_01_qz.json",
+            "title": "البلوغ: حوار مفتوح — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "4d73fc73-5f31-44de-8c4b-ac4db4eebaaf",
@@ -443,8 +499,22 @@
       "source_id": "42bc52b6-7d36-486f-aa79-e98ea5dcb4c9",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_medical_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_02_fc.json",
+            "title": "القلق والضغط المدرسي — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_medical_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_02_qz.json",
+            "title": "القلق والضغط المدرسي — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "840485b1-6616-4a91-94e1-842aecadb260",
@@ -472,8 +542,22 @@
       "source_id": "20e00eef-fa60-4165-9364-ef869223c0f6",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_medical_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_03_fc.json",
+            "title": "عادات صحية للحياة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_medical_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_03_qz.json",
+            "title": "عادات صحية للحياة — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [
