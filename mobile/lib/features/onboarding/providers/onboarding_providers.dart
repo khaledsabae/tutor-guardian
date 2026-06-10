@@ -32,8 +32,7 @@ final onboardingStorageProvider = Provider<OnboardingStorage>((ref) {
 /// "Has the user completed onboarding at least once?" Boot value is
 /// derived from disk; flipped to `true` only when the form succeeds.
 class OnboardingCompletedNotifier extends StateNotifier<bool> {
-  OnboardingCompletedNotifier(this._read) : super(_read());
-  final bool Function() _read;
+  OnboardingCompletedNotifier(bool Function() read) : super(read());
 
   Future<void> markCompleted() async {
     state = true;

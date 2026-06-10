@@ -520,11 +520,6 @@ class _FakeTgClient extends TgClient {
   }
 }
 
-/// Like the Phase 1+3 widget test — a stub that throws on every call.
-class _NullClient extends TgClient {
-  _NullClient() : super();
-}
-
 // ── JSON fixtures (mirror backend response shapes exactly) ────────────────
 
 Map<String, dynamic> _pathJson({

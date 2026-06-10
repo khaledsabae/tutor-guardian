@@ -138,7 +138,7 @@ void main() {
 
   group('OnboardingScreen', () {
     // Helper to scroll the onboarding ListView to reveal an off-screen widget
-    Future<void> _scrollToFind(WidgetTester tester, String text) async {
+    Future<void> scrollToFind(WidgetTester tester, String text) async {
       // Find a widget that IS visible (gender chip "ولد")
       final visibleChip = find.text('ولد');
       if (visibleChip.evaluate().isNotEmpty) {
@@ -181,7 +181,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Scroll to reveal off-screen fields at the top of the form
-      await _scrollToFind(tester, 'اسم');
+      await scrollToFind(tester, 'اسم');
 
       expect(find.text('اسم طفلك'), findsOneWidget);
       expect(find.text('المرحلة العمرية'), findsOneWidget);
@@ -209,7 +209,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Scroll to reveal the submit button
-      await _scrollToFind(tester, 'ابدأ');
+      await scrollToFind(tester, 'ابدأ');
 
       // Tap submit without entering name or age group
       await tester.tap(find.text('ابدأ الرحلة'));

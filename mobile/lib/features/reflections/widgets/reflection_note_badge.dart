@@ -6,7 +6,6 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../theme/app_theme.dart';
 import '../providers/reflections_providers.dart';
 
 class ReflectionNoteBadge extends ConsumerWidget {
@@ -25,9 +24,9 @@ class ReflectionNoteBadge extends ConsumerWidget {
         color: const Color(0xFFFFE9C7),
         borderRadius: BorderRadius.circular(6),
       ),
-      child: Row(
+      child: const Row(
         mainAxisSize: MainAxisSize.min,
-        children: const [
+        children: [
           Icon(Icons.edit_note,
               size: 12, color: Color(0xFF8A5A0F)),
           SizedBox(width: 2),

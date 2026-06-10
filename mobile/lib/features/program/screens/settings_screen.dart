@@ -108,7 +108,7 @@ class SettingsScreen extends ConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 24),
-                Center(
+                const Center(
                   child: Text(
                     'الإصدار 0.1.0 — المرحلة 7',
                     style: TextStyle(

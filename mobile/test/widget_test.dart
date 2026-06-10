@@ -58,7 +58,6 @@ class _NullClient extends TgClient {
   Future<SessionResponse> createSession({Map<String, dynamic>? metadata}) async =>
       throw const TgApiError(500, 'fake-error');
 
-  @override
   Future<void> deleteSession(String sessionId) async =>
       throw const TgApiError(500, 'fake-error');
 

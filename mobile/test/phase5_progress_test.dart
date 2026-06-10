@@ -116,7 +116,7 @@ void main() {
 
   group('Progress widgets', () {
     // Helper to scroll to a widget in a ListView
-    Future<void> _scrollToFind(WidgetTester tester, String text) async {
+    Future<void> scrollToFind(WidgetTester tester, String text) async {
       final visibleChip = find.text('ولد');
       if (visibleChip.evaluate().isNotEmpty) {
         await tester.drag(find.byType(ListView), const Offset(0, -500));
@@ -237,7 +237,7 @@ void main() {
       expect(find.text('لم يبدأ بعد'), findsOneWidget);
 
       // Scroll to reveal the mark-complete button at the bottom
-      await _scrollToFind(tester, 'أتممت');
+      await scrollToFind(tester, 'أتممت');
 
       // Mark complete button present
       expect(find.text('أتممت هذا الدرس'), findsOneWidget);

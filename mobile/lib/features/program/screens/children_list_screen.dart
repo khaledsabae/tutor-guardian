@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
-import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/progress_models.dart';
 import '../providers/progress_providers.dart';
 import '../providers/settings_providers.dart';
@@ -81,11 +80,11 @@ class ChildrenListScreen extends ConsumerWidget {
                       color: AppTheme.surfaceAlt,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
-                        const Icon(Icons.info_outline,
+                        Icon(Icons.info_outline,
                             size: 18, color: AppTheme.textMuted),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             'وصلت للحد الأقصى ($kMaxChildren أطفال). احذف طفلاً لإضافة طفل جديد.',
@@ -158,7 +157,7 @@ class _ChildCount extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       child: Text(
         'لديك $count من أصل $max أطفال',
-        style: TextStyle(
+        style: const TextStyle(
           color: AppTheme.textSecondary,
           fontSize: 12,
           fontWeight: FontWeight.w600,
@@ -228,7 +227,7 @@ class _ChildTile extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       _ageLabel(child.ageGroup),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         color: AppTheme.textSecondary,
                       ),

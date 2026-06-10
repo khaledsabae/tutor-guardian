@@ -52,7 +52,7 @@ void main() {
       expect(container.read(activeChildIdProvider), 1);
 
       // Switch to child 2
-      final newChild = ChildProfile(
+      const newChild = ChildProfile(
         id: 2,
         name: 'أحمد',
         ageGroup: '7-9',
@@ -84,7 +84,7 @@ void main() {
       addTearDown(container.dispose);
       await container.read(sharedPreferencesProvider.future);
 
-      final sameChild = ChildProfile(id: 1, name: 'سارة', ageGroup: '4-6');
+      const sameChild = ChildProfile(id: 1, name: 'سارة', ageGroup: '4-6');
       final result =
           await container.read(switchActiveChildProvider.notifier).call(sameChild);
       expect(result.id, 1);
@@ -107,7 +107,7 @@ void main() {
       // We can trigger an error by making storage.setActiveChild throw
       // — but it doesn't, so we use a different approach: corrupt prefs.
       // Easier: just call with no error and assert it succeeds.
-      final child = ChildProfile(id: 99, name: 'Z', ageGroup: '4-6');
+      const child = ChildProfile(id: 99, name: 'Z', ageGroup: '4-6');
       final result =
           await container.read(switchActiveChildProvider.notifier).call(child);
       expect(result.id, 99);

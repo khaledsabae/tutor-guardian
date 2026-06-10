@@ -4,7 +4,7 @@
 /// `routers/children.py` + `routers/program.py::patch_lesson_progress`.
 library;
 
-import 'models.dart'; // reuse CurriculumPath/CurriculumLesson
+// reuse CurriculumPath/CurriculumLesson
 
 /// One child profile, owned by a single device.
 class ChildProfile {

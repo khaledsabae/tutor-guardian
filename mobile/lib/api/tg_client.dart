@@ -453,10 +453,6 @@ class TgClient {
   // POST/PATCH, the GET is also auth-protected). The token is
   // pulled from `_auth.readSession()` exactly like the chat endpoints.
 
-  Future<SessionResponse> _ensureSessionForProgress() async {
-    return ensureSession();
-  }
-
   Future<Map<String, dynamic>> createChild({
     required String name,
     required String ageGroup,

@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
-import '../../onboarding/providers/onboarding_providers.dart';
 import '../../onboarding/screens/avatar_picker_sheet.dart';
 import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
@@ -85,7 +84,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
         actions: [
           TextButton(
             onPressed: busy ? null : _submit,
-            child: Text(
+            child: const Text(
               'حفظ',
               style: TextStyle(
                 color: Colors.white,

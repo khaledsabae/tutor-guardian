@@ -20,7 +20,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
-import '../../program/data/progress_models.dart';
 import '../../program/providers/progress_providers.dart';
 import '../data/onboarding_storage.dart';
 import '../providers/onboarding_providers.dart';

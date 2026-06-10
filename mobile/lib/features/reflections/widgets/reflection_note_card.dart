@@ -156,7 +156,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
                 if (hasNote && !_editing)
                   Text(
                     _formatDate(entry.updatedAt),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppTheme.textMuted,
                       fontSize: 11,
                     ),
@@ -236,7 +236,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
               ),
             ] else ...[
               // Empty state
-              Text(
+              const Text(
                 'احفظ ملاحظة شخصية على هذا الدرس. ستظهر لك هنا وفي صفحة المسار.',
                 style: TextStyle(
                   color: AppTheme.textSecondary,

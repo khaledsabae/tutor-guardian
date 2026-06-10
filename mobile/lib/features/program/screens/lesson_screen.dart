@@ -200,7 +200,7 @@ class _Body extends ConsumerWidget {
         ReflectionNoteCard(lessonId: lesson.id),
         if (lesson.needsProfessionalFollowup) ...[
           const SizedBox(height: 16),
-          _WarningCard(
+          const _WarningCard(
             text: 'هذا الدرس يحتوي على توجيهات تستحق المتابعة مع متخصص. '
                 'لا تتردد في استشارة طبيب أو أخصائي تنموي إذا شعرت بالحاجة.',
           ),
@@ -427,8 +427,8 @@ class _ReflectionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: const [
+          const Row(
+            children: [
               Icon(Icons.psychology_alt_outlined,
                   color: AppTheme.warningFg, size: 18),
               SizedBox(width: 6),

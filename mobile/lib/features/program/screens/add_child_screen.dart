@@ -91,7 +91,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
         actions: [
           TextButton(
             onPressed: busy ? null : _submit,
-            child: Text(
+            child: const Text(
               'إضافة',
               style: TextStyle(
                 color: Colors.white,
