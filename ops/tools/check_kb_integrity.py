@@ -47,7 +47,8 @@ SCHEMA_PATH = ROOT / "knowledge_base" / "schema" / "knowledge_unit.schema.json"
 INDEX_JSON = ROOT / "knowledge_base" / "units_index.json"
 
 # CJK regex (Chinese/Japanese/Korean unified ideographs + hiragana/katakana + hangul)
-CJK_RE = re.compile(r"[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]")
+# CJK (Chinese/Japanese/Korean) + Cyrillic — scripts that never belong in our Arabic/English content
+CJK_RE = re.compile(r"[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af\u0400-\u04ff]")
 
 # schema-property → canonical taxonomy set (the meta-check)
 ENUM_FIELDS = {
