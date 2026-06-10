@@ -8,18 +8,19 @@
   "reference_type": "DSM-5",
   "reference_info": "Disruptive Mood Dysregulation Disorder — NIMH",
   "text_original": "that your  child may have DMDD, talk to your child’s pediatrician  or health care provider. What are the signs and symptoms of DMDD?  Children or adolescents with DMDD experience:  • Severe temper outbursts (verbal or behavioral), on  average, 3 or more times per week  • Outbursts and tantrums that have been happening  regularly for at least 12 months  • Chronically irritable or angry mood most of the day,  nearly every day  • Trouble functioning due to irritability in more than  one place, such as at home, at school, or with peers Youth with DMDD are diagnosed between the ages of  6 and 10. T",
-  "text_simplified": "قد يكون لدي فتاة صغيرة لديك أعراض طيفي من الشغف، احرص على التواصل مع الطبيب المختص للاستفسار وتقدير الأعراض والتعامل معها.",
+  "text_simplified": "إذا شككت أن طفلك لديه أعراض اضطراب خلل المزاج التخريبي (DMDD) — نوبات غضب شديدة متكررة لا تتناسب مع الموقف، مع مزاج غاضب شبه يومي — فتحدث مع طبيب الأطفال أو مقدم الرعاية الصحية لتقييم الأعراض والتعامل معها مبكراً.",
   "labels": [
     "nimh",
     "dmdd",
     "english"
   ],
   "created_at": "2026-06-06T14:35:15.742607Z",
-  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-10T17:00:00Z",
   "version": "1.0.0",
   "keywords": [
     "اضطراب المزاج التخريبي",
     "شغف الطفل",
     "التواصل مع الطبيب"
-  ]
+  ],
+  "title": "اضطراب خلل المزاج التخريبي (DMDD): متى تتحدث مع الطبيب"
 }
