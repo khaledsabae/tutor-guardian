@@ -30,6 +30,7 @@ Usage:
 """
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -41,8 +42,12 @@ sys.path.insert(0, str(ROOT / "backend"))
 from app.core import taxonomy  # noqa: E402
 
 UNITS_DIR = ROOT / "knowledge_base" / "units"
+CURRICULUM_DIR = ROOT / "knowledge_base" / "curriculum"
 SCHEMA_PATH = ROOT / "knowledge_base" / "schema" / "knowledge_unit.schema.json"
 INDEX_JSON = ROOT / "knowledge_base" / "units_index.json"
+
+# CJK regex (Chinese/Japanese/Korean unified ideographs + hiragana/katakana + hangul)
+CJK_RE = re.compile(r"[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]")
 
 # schema-property → canonical taxonomy set (the meta-check)
 ENUM_FIELDS = {
@@ -159,10 +164,47 @@ def main() -> int:
         except Exception as e:
             errors.append(f"INDEX: ChromaDB check failed: {e}")
 
-    # ── report ─────────────────────────────────────────────────────────────
-    print(f"  Units scanned : {len(files)}")
-    print(f"  Schema        : {SCHEMA_PATH.name}")
+    # ── CJK GATE: no Chinese/Japanese/Korean characters in content ───────────
     print("=" * 67)
+    print("  CJK PURITY CHECK — فحص نقاء النصوص من الحروف الصينية/اليابانية/الكورية")
+    print("=" * 67)
+
+    cjk_errors: list[str] = []      # curriculum = blocking
+    cjk_warnings: list[str] = []    # units = non-blocking (legacy)
+
+    # Scan curriculum files (paths, lessons, daily_tips) — BLOCKING
+    for fp in CURRICULUM_DIR.rglob("*.json"):
+        try:
+            content = fp.read_text(encoding="utf-8")
+            matches = CJK_RE.findall(content)
+            if matches:
+                cjk_errors.append(f"{fp.relative_to(ROOT)}: {len(matches)} CJK chars (e.g., {matches[0]!r})")
+        except Exception as e:
+            warnings.append(f"CJK: could not read {fp}: {e}")
+
+    # Also scan units for safety (they're the source of truth) — WARNING only (legacy cleanup)
+    for fp in UNITS_DIR.glob("*.json"):
+        try:
+            content = fp.read_text(encoding="utf-8")
+            matches = CJK_RE.findall(content)
+            if matches:
+                cjk_warnings.append(f"{fp.relative_to(ROOT)}: {len(matches)} CJK chars (e.g., {matches[0]!r})")
+        except Exception as e:
+            warnings.append(f"CJK: could not read {fp}: {e}")
+
+    if cjk_errors:
+        print(f"\n🔴  CJK VIOLATIONS IN CURRICULUM ({len(cjk_errors)}):")
+        for v in cjk_errors:
+            print(f"     ✗ {v}")
+        errors.append(f"CJK GATE FAILED: {len(cjk_errors)} curriculum file(s) contain CJK characters — remove them before committing")
+    else:
+        print(f"  ✅  CJK PURITY OK (curriculum) — 0 files with CJK characters")
+
+    if cjk_warnings:
+        print(f"\n🟡  CJK IN UNITS (legacy, non-blocking) ({len(cjk_warnings)}):")
+        for v in cjk_warnings:
+            print(f"     ⚠ {v}")
+        print(f"     → Tracked for legacy cleanup; not blocking commit.")
 
     if warnings:
         print(f"\n🟡  WARNINGS ({len(warnings)}):")

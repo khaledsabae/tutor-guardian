@@ -503,7 +503,7 @@ Navigator.pushNamed(
 ☐ كل `unit_ids` موجودة فعلاً في `knowledge_base/units/` (حارس الـ pre-commit يرفض المخترع)
 ☐ schema validation: 0 errors
 ☐ cross-reference: 0 errors / 0 warnings
-☐ `check_kb_integrity.py` يعدّي (292 وحدة)
+☐ `check_kb_integrity.py` يعدّي (292 وحدة) — **يتضمن الآن CJK PURITY GATE**: المنهج نظيف 100% من الحروف الصينية/اليابانية/الكورية (error blocking)، الوحدات يُراقب فيها (warning non-blocking للـlegacy cleanup)
 ☐ `GET /api/program/paths?age_group=<المرحلة>` على production → 200 بعد الـ auto-deploy
 ☐ التطبيق يعرض مسارات/دروس/نصيحة للمرحلة الجديدة (بدّل عمر الطفل وتأكد)
 ☐ حدّث Progress Log
@@ -630,8 +630,10 @@ docker-compose up -d
 # Tests
 cd backend && pytest
 
-# KB Integrity
-python check_kb_integrity.py
+# KB Integrity (يتضمن CJK PURITY GATE)
+python ops/tools/check_kb_integrity.py
+# Curriculum only CJK check (fast):
+python -c "import re; from pathlib import Path; c=re.compile(r'[\\u4e00-\\u9fff\\u3040-\\u30ff\\uac00-\\ud7af]'); [print(f) for f in Path('knowledge_base/curriculum').rglob('*.json') if c.search(f.read_text(encoding='utf-8'))]"
 
 # Flutter Debug
 cd mobile && flutter run
