@@ -193,7 +193,9 @@ def test_progress_endpoint_returns_streak_days_zero_when_empty(client):
 
 def test_progress_endpoint_returns_streak_days(client, tmp_db):
     child_id = _create_child(client)
-    today = date(2026, 6, 8)
+    # Relative to the real "today" — the endpoint computes streak against the
+    # server's current date, so seeding a fixed date makes this time-dependent.
+    today = date.today()
     _seed_completion(tmp_db, "test-device-001", "lesson_a", f"{today}T10:00:00Z")
     _seed_completion(
         tmp_db, "test-device-001", "lesson_b", f"{today - timedelta(days=1)}T10:00:00Z"
@@ -221,7 +223,7 @@ def test_progress_endpoint_last_completed_at(client, tmp_db):
 def test_progress_endpoint_streak_ignores_path_filter(client, tmp_db):
     """The path filter on GET progress doesn't affect the streak."""
     child_id = _create_child(client)
-    today = date(2026, 6, 8)
+    today = date.today()  # relative to real now (endpoint uses server date)
     # Seed completions on two different paths
     _seed_completion(
         tmp_db, "test-device-001", "lesson_a", f"{today}T10:00:00Z", path_id="path_1"

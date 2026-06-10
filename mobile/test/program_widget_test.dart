@@ -457,8 +457,15 @@ void main() {
       ), findsOneWidget);
       expect(find.text('مساراتي'), findsOneWidget);
 
+      // Actually switch to the مساراتي (paths) tab. IndexedStack keeps the
+      // non-active tab offstage, so its content isn't findable until selected.
+      await tester.tap(find.text('مساراتي'));
+      for (int i = 0; i < 12; i++) {
+        await tester.pump(const Duration(milliseconds: 300));
+        if (find.text('تأسيس الآداب الإسلامية').evaluate().isNotEmpty) break;
+      }
+
       // Should now show the PathsScreen content
-      expect(find.text('مساراتي'), findsOneWidget); // AppBar title
       expect(find.text('تأسيس الآداب الإسلامية'), findsOneWidget);
     });
   });

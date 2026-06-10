@@ -76,7 +76,13 @@ class _AppBootstrapper extends ConsumerWidget {
         final profile = ref.watch(activeChildProfileProvider);
         if (profile != null) {
           // Push the id into the runtime provider used everywhere.
-          ref.read(activeChildIdProvider.notifier).state = profile.id;
+          // Deferred out of build(): Riverpod forbids modifying a provider
+          // during the build phase. The guard prevents a rebuild loop.
+          Future(() {
+            if (ref.read(activeChildIdProvider) != profile.id) {
+              ref.read(activeChildIdProvider.notifier).state = profile.id;
+            }
+          });
         }
         return const RootScaffold();
       },
