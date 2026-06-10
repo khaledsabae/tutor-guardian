@@ -33,118 +33,8 @@
       "source_id": "4086896f-0dd6-4a28-bade-c8032b18e9d1",
       "title_ar": "",
       "assets": {
-        "flashcards": [
-          {
-            "id": "f8b2eaf2-bd53-44d5-9c35-3194d482d2d1",
-            "file": "docs/lesson_assets/flashcards/f8b2eaf2-bd53-44d5-9c35-3194d482d2d1_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "66aa1ed5-fdf1-463e-a406-dacaba739f32",
-            "file": "docs/lesson_assets/flashcards/66aa1ed5-fdf1-463e-a406-dacaba739f32_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "40be55eb-e519-4b6c-ad2d-f5893b9e3e17",
-            "file": "docs/lesson_assets/flashcards/40be55eb-e519-4b6c-ad2d-f5893b9e3e17_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "708d0fbb-c8b6-4254-acc3-484828da39d4",
-            "file": "docs/lesson_assets/flashcards/708d0fbb-c8b6-4254-acc3-484828da39d4_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "35f87495-daf1-463e-86fd-7ed54ae0f3b7",
-            "file": "docs/lesson_assets/flashcards/35f87495-daf1-463e-86fd-7ed54ae0f3b7_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "4207858d-cc94-4966-b685-52cf5c67d10b",
-            "file": "docs/lesson_assets/flashcards/4207858d-cc94-4966-b685-52cf5c67d10b_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "b122c29e-8629-4b94-ba2f-ed4b00be376e",
-            "file": "docs/lesson_assets/flashcards/b122c29e-8629-4b94-ba2f-ed4b00be376e_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "5efbd4b2-14af-4c0c-8a59-1763ab9e8ce3",
-            "file": "docs/lesson_assets/flashcards/5efbd4b2-14af-4c0c-8a59-1763ab9e8ce3_Parenting_Flashcards.json",
-            "title": "Parenting Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "59e6111c-5de9-469d-86b7-4bee63d335c2",
-            "file": "docs/lesson_assets/flashcards/59e6111c-5de9-469d-86b7-4bee63d335c2_Parenting_Flashcards.json",
-            "title": "Parenting Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "8da9e07d-3ad5-4555-a005-d2aebe52b31a",
-            "file": "docs/lesson_assets/flashcards/8da9e07d-3ad5-4555-a005-d2aebe52b31a_Quranic_Flashcards.json",
-            "title": "Quranic Flashcards",
-            "item_count": 24
-          }
-        ],
-        "quizzes": [
-          {
-            "id": "903b8d50-0521-486f-8be0-8dd4a2fc9d42",
-            "file": "docs/lesson_assets/quizzes/903b8d50-0521-486f-8be0-8dd4a2fc9d42_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "aa1ab9f0-6185-4f57-9e9d-55dd9bcc875b",
-            "file": "docs/lesson_assets/quizzes/aa1ab9f0-6185-4f57-9e9d-55dd9bcc875b_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "1f263f41-7905-4a4c-811f-fc2caaf6abeb",
-            "file": "docs/lesson_assets/quizzes/1f263f41-7905-4a4c-811f-fc2caaf6abeb_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "99740429-3263-4955-9845-8a2a5ad1da52",
-            "file": "docs/lesson_assets/quizzes/99740429-3263-4955-9845-8a2a5ad1da52_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "05d6d0a5-8ef3-4283-8c99-8a9d481b4852",
-            "file": "docs/lesson_assets/quizzes/05d6d0a5-8ef3-4283-8c99-8a9d481b4852_Parenting_Quiz.json",
-            "title": "Parenting Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "42a33db4-cd62-438e-8684-abebe6ac612c",
-            "file": "docs/lesson_assets/quizzes/42a33db4-cd62-438e-8684-abebe6ac612c_Parenting_Quiz.json",
-            "title": "Parenting Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "e44031cb-0227-4043-9ead-5b6ba2b5897a",
-            "file": "docs/lesson_assets/quizzes/e44031cb-0227-4043-9ead-5b6ba2b5897a_Parenting_Quiz.json",
-            "title": "Parenting Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "ed59163b-9363-46eb-9044-f0b211b0686f",
-            "file": "docs/lesson_assets/quizzes/ed59163b-9363-46eb-9044-f0b211b0686f_Quran_Quiz.json",
-            "title": "Quran Quiz",
-            "item_count": 10
-          }
-        ],
+        "flashcards": [],
+        "quizzes": [],
         "reports": [
           {
             "id": "4c566a4c-3414-4f7a-9a7f-3638fa6fd184",
@@ -191,106 +81,8 @@
       "source_id": "5fb6588e-d31a-4cca-8e0c-052b364a72ac",
       "title_ar": "",
       "assets": {
-        "flashcards": [
-          {
-            "id": "940f1871-d68d-4817-a9f8-ecd6ccce2d06",
-            "file": "docs/lesson_assets/flashcards/940f1871-d68d-4817-a9f8-ecd6ccce2d06_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "9d455f15-c955-4721-b333-8a2903c8b1fe",
-            "file": "docs/lesson_assets/flashcards/9d455f15-c955-4721-b333-8a2903c8b1fe_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "afc1c2a1-913a-4a1c-89c6-e370d7171cb5",
-            "file": "docs/lesson_assets/flashcards/afc1c2a1-913a-4a1c-89c6-e370d7171cb5_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "0222edab-e821-421b-921e-b0bad2cbbc34",
-            "file": "docs/lesson_assets/flashcards/0222edab-e821-421b-921e-b0bad2cbbc34_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "c48699c0-e5d3-4ac0-890a-9cbdf501d739",
-            "file": "docs/lesson_assets/flashcards/c48699c0-e5d3-4ac0-890a-9cbdf501d739_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "ed8da987-59e3-4dbf-9ab7-09f6b4914b23",
-            "file": "docs/lesson_assets/flashcards/ed8da987-59e3-4dbf-9ab7-09f6b4914b23_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "a4532b44-2cc9-415e-92c1-34cf6931d089",
-            "file": "docs/lesson_assets/flashcards/a4532b44-2cc9-415e-92c1-34cf6931d089_Parenting_Flashcards.json",
-            "title": "Parenting Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "c397346d-e335-47c0-96f8-0770ab63d854",
-            "file": "docs/lesson_assets/flashcards/c397346d-e335-47c0-96f8-0770ab63d854_Parenting_Flashcards.json",
-            "title": "Parenting Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "60c9396c-c0d2-438f-85d8-5e8b72454e4e",
-            "file": "docs/lesson_assets/flashcards/60c9396c-c0d2-438f-85d8-5e8b72454e4e_Parenting_Flashcards.json",
-            "title": "Parenting Flashcards",
-            "item_count": 24
-          }
-        ],
-        "quizzes": [
-          {
-            "id": "7befdd06-ea53-4ae2-b154-eecbe389eeae",
-            "file": "docs/lesson_assets/quizzes/7befdd06-ea53-4ae2-b154-eecbe389eeae_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "15e6bc0f-639d-4850-ae66-11ec9ce7255d",
-            "file": "docs/lesson_assets/quizzes/15e6bc0f-639d-4850-ae66-11ec9ce7255d_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "fa7ca5b9-70a7-49df-8125-4ddaf9387374",
-            "file": "docs/lesson_assets/quizzes/fa7ca5b9-70a7-49df-8125-4ddaf9387374_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "702d4a72-f008-4409-9cdb-9fe61b7f63dd",
-            "file": "docs/lesson_assets/quizzes/702d4a72-f008-4409-9cdb-9fe61b7f63dd_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "d3450ae1-8e55-45b6-ab5c-e063ba9b7cfe",
-            "file": "docs/lesson_assets/quizzes/d3450ae1-8e55-45b6-ab5c-e063ba9b7cfe_Parenting_Quiz.json",
-            "title": "Parenting Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "b03d4605-9b61-4af5-967f-1a19061d39a9",
-            "file": "docs/lesson_assets/quizzes/b03d4605-9b61-4af5-967f-1a19061d39a9_Parenting_Quiz.json",
-            "title": "Parenting Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "ba22bdcf-9cf5-43bd-b6d6-29a1017ab259",
-            "file": "docs/lesson_assets/quizzes/ba22bdcf-9cf5-43bd-b6d6-29a1017ab259_Parenting_Quiz.json",
-            "title": "Parenting Quiz",
-            "item_count": 10
-          }
-        ],
+        "flashcards": [],
+        "quizzes": [],
         "reports": [
           {
             "id": "eb171069-a6a8-45e3-b28a-5d3cf1a21061",
@@ -360,106 +152,8 @@
       "source_id": "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e",
       "title_ar": "",
       "assets": {
-        "flashcards": [
-          {
-            "id": "54019a95-9d1b-41dd-89cc-fbb9b50b8f3c",
-            "file": "docs/lesson_assets/flashcards/54019a95-9d1b-41dd-89cc-fbb9b50b8f3c_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "faf85595-b666-4e11-a942-4a17db92dbe2",
-            "file": "docs/lesson_assets/flashcards/faf85595-b666-4e11-a942-4a17db92dbe2_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "b0218183-642a-413a-898b-ae719a5c94db",
-            "file": "docs/lesson_assets/flashcards/b0218183-642a-413a-898b-ae719a5c94db_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "671daf25-7539-4185-9bdd-2896efb90d03",
-            "file": "docs/lesson_assets/flashcards/671daf25-7539-4185-9bdd-2896efb90d03_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "e88bd2de-7339-4c4b-a0d6-ac52a8137d59",
-            "file": "docs/lesson_assets/flashcards/e88bd2de-7339-4c4b-a0d6-ac52a8137d59_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "14207caf-1a32-46e3-bd01-b01a87f34c40",
-            "file": "docs/lesson_assets/flashcards/14207caf-1a32-46e3-bd01-b01a87f34c40_Islamic_Flashcards.json",
-            "title": "Islamic Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "bf1d1fc9-e898-45cf-a376-f902884743e9",
-            "file": "docs/lesson_assets/flashcards/bf1d1fc9-e898-45cf-a376-f902884743e9_Parenting_Flashcards.json",
-            "title": "Parenting Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "6c615470-4241-4c62-aab8-a7ffc081f7b9",
-            "file": "docs/lesson_assets/flashcards/6c615470-4241-4c62-aab8-a7ffc081f7b9_Parenting_Flashcards.json",
-            "title": "Parenting Flashcards",
-            "item_count": 24
-          }
-        ],
-        "quizzes": [
-          {
-            "id": "478bd769-a727-4ad3-ac5f-112c4860f2d1",
-            "file": "docs/lesson_assets/quizzes/478bd769-a727-4ad3-ac5f-112c4860f2d1_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "85973143-da8d-4806-80b4-04130998989c",
-            "file": "docs/lesson_assets/quizzes/85973143-da8d-4806-80b4-04130998989c_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "17f3c214-6895-4136-b2d2-ab68ade58527",
-            "file": "docs/lesson_assets/quizzes/17f3c214-6895-4136-b2d2-ab68ade58527_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "9a696c5a-4226-4c6c-910b-6d7f8191786d",
-            "file": "docs/lesson_assets/quizzes/9a696c5a-4226-4c6c-910b-6d7f8191786d_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "41e192a4-b172-4dfe-a1d2-ff7e98c7ee27",
-            "file": "docs/lesson_assets/quizzes/41e192a4-b172-4dfe-a1d2-ff7e98c7ee27_Islamic_Quiz.json",
-            "title": "Islamic Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "624efdfb-d62b-49b7-ab72-4fcdb51765a5",
-            "file": "docs/lesson_assets/quizzes/624efdfb-d62b-49b7-ab72-4fcdb51765a5_Parenting_Quiz.json",
-            "title": "Parenting Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "dad16c0a-cc87-4b16-8948-f41f2cf226e9",
-            "file": "docs/lesson_assets/quizzes/dad16c0a-cc87-4b16-8948-f41f2cf226e9_Parenting_Quiz.json",
-            "title": "Parenting Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "977e0812-cf37-489e-853f-6c376fa10928",
-            "file": "docs/lesson_assets/quizzes/977e0812-cf37-489e-853f-6c376fa10928_Parenting_Quiz.json",
-            "title": "Parenting Quiz",
-            "item_count": 10
-          }
-        ],
+        "flashcards": [],
+        "quizzes": [],
         "reports": [
           {
             "id": "d12932e5-3c6c-45f4-b9ec-d575dfe110ac",
@@ -761,52 +455,8 @@
       "source_id": "b607c436-be69-4a32-839b-af09cae03dc4",
       "title_ar": "",
       "assets": {
-        "flashcards": [
-          {
-            "id": "378b81bb-c8bd-4752-9805-4abf5b716de4",
-            "file": "docs/lesson_assets/flashcards/378b81bb-c8bd-4752-9805-4abf5b716de4_Cyberbullying_Flashcards.json",
-            "title": "Cyberbullying Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "f9c3c2f6-2168-470e-831c-f97dd2afe028",
-            "file": "docs/lesson_assets/flashcards/f9c3c2f6-2168-470e-831c-f97dd2afe028_Cyberbullying_Flashcards.json",
-            "title": "Cyberbullying Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "975defa9-1f55-482d-a0a1-38c347102ec0",
-            "file": "docs/lesson_assets/flashcards/975defa9-1f55-482d-a0a1-38c347102ec0_Cyberbullying_Flashcards.json",
-            "title": "Cyberbullying Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "1a9c55c5-1f5a-4523-b144-f1eb74cd0bb4",
-            "file": "docs/lesson_assets/flashcards/1a9c55c5-1f5a-4523-b144-f1eb74cd0bb4_Cybersecurity_Flashcards.json",
-            "title": "Cybersecurity Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "b0dbdeed-a6e0-40d3-ac52-6f3fa4eda545",
-            "file": "docs/lesson_assets/flashcards/b0dbdeed-a6e0-40d3-ac52-6f3fa4eda545_Psychology_Flashcards.json",
-            "title": "Psychology Flashcards",
-            "item_count": 24
-          }
-        ],
-        "quizzes": [
-          {
-            "id": "dea9aa3b-c520-4407-8d77-1cd5289938e7",
-            "file": "docs/lesson_assets/quizzes/dea9aa3b-c520-4407-8d77-1cd5289938e7_Cyberbullying_Quiz.json",
-            "title": "Cyberbullying Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "6f20a810-fa1a-4f5d-aae9-d7fb3d5ff03a",
-            "file": "docs/lesson_assets/quizzes/6f20a810-fa1a-4f5d-aae9-d7fb3d5ff03a_Cyberbullying_Quiz.json",
-            "title": "Cyberbullying Quiz",
-            "item_count": 10
-          }
-        ],
+        "flashcards": [],
+        "quizzes": [],
         "reports": [
           {
             "id": "e87e0bff-effc-425e-81ab-62b61faff669",
@@ -858,58 +508,8 @@
       "source_id": "78567565-5847-4d61-bcd2-aac115428388",
       "title_ar": "",
       "assets": {
-        "flashcards": [
-          {
-            "id": "b5782abc-28b3-40d8-ab44-12421330e157",
-            "file": "docs/lesson_assets/flashcards/b5782abc-28b3-40d8-ab44-12421330e157_Cyberbullying_Flashcards.json",
-            "title": "Cyberbullying Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "baf0b61d-bffc-47f0-9569-9dc8d8e16088",
-            "file": "docs/lesson_assets/flashcards/baf0b61d-bffc-47f0-9569-9dc8d8e16088_Cyberbullying_Flashcards.json",
-            "title": "Cyberbullying Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "1c03d06a-5b04-4b9b-b7ec-715262dc6af3",
-            "file": "docs/lesson_assets/flashcards/1c03d06a-5b04-4b9b-b7ec-715262dc6af3_Cyberbullying_Flashcards.json",
-            "title": "Cyberbullying Flashcards",
-            "item_count": 50
-          },
-          {
-            "id": "131990dc-571e-4c43-9509-898a56127efd",
-            "file": "docs/lesson_assets/flashcards/131990dc-571e-4c43-9509-898a56127efd_Cybersecurity_Flashcards.json",
-            "title": "Cybersecurity Flashcards",
-            "item_count": 24
-          }
-        ],
-        "quizzes": [
-          {
-            "id": "08d8362f-db2d-4f2f-849f-cefd15f57052",
-            "file": "docs/lesson_assets/quizzes/08d8362f-db2d-4f2f-849f-cefd15f57052_Cyberbullying_Quiz.json",
-            "title": "Cyberbullying Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "8ece2b5a-801b-4451-b38d-86ecc25036a0",
-            "file": "docs/lesson_assets/quizzes/8ece2b5a-801b-4451-b38d-86ecc25036a0_Cyberbullying_Quiz.json",
-            "title": "Cyberbullying Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "07d45b2d-3573-4d92-8f40-a1a11ba5ba04",
-            "file": "docs/lesson_assets/quizzes/07d45b2d-3573-4d92-8f40-a1a11ba5ba04_Cybersafety_Quiz.json",
-            "title": "Cybersafety Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "28aef9b5-35fe-46ed-9577-2691f3de6d52",
-            "file": "docs/lesson_assets/quizzes/28aef9b5-35fe-46ed-9577-2691f3de6d52_Psychology_Quiz.json",
-            "title": "Psychology Quiz",
-            "item_count": 10
-          }
-        ],
+        "flashcards": [],
+        "quizzes": [],
         "reports": [
           {
             "id": "d4021015-ba5f-458d-bad7-475ec1e21a7a",
@@ -937,40 +537,8 @@
       "source_id": "ca2ad154-cbd0-496f-aa24-9c2194997c7d",
       "title_ar": "",
       "assets": {
-        "flashcards": [
-          {
-            "id": "737282c3-868f-4a8b-845e-ae409bb4a46d",
-            "file": "docs/lesson_assets/flashcards/737282c3-868f-4a8b-845e-ae409bb4a46d_Cyberbullying_Flashcards.json",
-            "title": "Cyberbullying Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "3a231a17-a5e8-4615-9ff7-e234418d15c3",
-            "file": "docs/lesson_assets/flashcards/3a231a17-a5e8-4615-9ff7-e234418d15c3_Cyberbullying_Flashcards.json",
-            "title": "Cyberbullying Flashcards",
-            "item_count": 24
-          },
-          {
-            "id": "ca1d5729-9f83-4a0c-aebc-3b445cdf9f39",
-            "file": "docs/lesson_assets/flashcards/ca1d5729-9f83-4a0c-aebc-3b445cdf9f39_Cybersafety_Flashcards.json",
-            "title": "Cybersafety Flashcards",
-            "item_count": 24
-          }
-        ],
-        "quizzes": [
-          {
-            "id": "1adf60d7-01e4-425b-909f-e2171308ce2f",
-            "file": "docs/lesson_assets/quizzes/1adf60d7-01e4-425b-909f-e2171308ce2f_Cyberbullying_Quiz.json",
-            "title": "Cyberbullying Quiz",
-            "item_count": 10
-          },
-          {
-            "id": "0a88eef9-2105-4528-95ee-ec8b7019bf78",
-            "file": "docs/lesson_assets/quizzes/0a88eef9-2105-4528-95ee-ec8b7019bf78_Cyberbullying_Quiz.json",
-            "title": "Cyberbullying Quiz",
-            "item_count": 10
-          }
-        ],
+        "flashcards": [],
+        "quizzes": [],
         "reports": [
           {
             "id": "607a9bf5-29f1-4e66-ac6b-3dfdcf418a14",
