@@ -429,6 +429,17 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  Future<Map<String, dynamic>> getAssetContent(String assetId) async {
+    final uri = Uri.parse('$_baseUrl/api/program/asset-content/$assetId');
+    final resp = await _http
+        .get(uri, headers: const {'Accept': 'application/json'})
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   Future<Map<String, dynamic>> getDailyTip({
     required String ageGroup,
     String? timeOfDay,

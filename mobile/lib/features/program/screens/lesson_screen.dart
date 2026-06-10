@@ -27,6 +27,7 @@ import '../data/models.dart';
 import '../data/progress_models.dart';
 import '../models/lesson_assets.dart';
 import '../providers/lesson_assets_provider.dart';
+import 'flashcards_screen.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
 
@@ -599,6 +600,10 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           },
         );
         if (flashcardsCount > 0) {
+          final deckIds = assets.flashcards
+              .map((item) => (item as Map<String, dynamic>?)?['id'] as String?)
+              .whereType<String>()
+              .toList();
           buttons.add(
             _AssetButton(
               icon: Icons.style,
@@ -607,9 +612,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AssetPlaceholderScreen(
-                      title: 'فلاش كاردز',
-                    ),
+                    builder: (context) => FlashcardsScreen(deckIds: deckIds),
                   ),
                 );
               },

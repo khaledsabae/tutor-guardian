@@ -164,6 +164,39 @@ def get_lesson_assets(lesson_id: str) -> Optional[dict]:
     return _assets_cache.get(lesson_id)
 
 
+_ASSETS_ROOT = Path(__file__).resolve().parents[2] / "docs" / "lesson_assets"
+_asset_content_cache: dict[str, dict] = {}
+
+
+def get_asset_content(asset_id: str) -> Optional[dict]:
+    """Resolve an asset id (flashcards/quizzes entry) to its JSON content.
+
+    Looks up the id across all lessons' asset lists, reads the referenced
+    file from docs/lesson_assets/ only (path-traversal safe), and caches it.
+    """
+    if asset_id in _asset_content_cache:
+        return _asset_content_cache[asset_id]
+
+    repo_root = Path(__file__).resolve().parents[2]
+    for bundle in _assets_cache.values():
+        for kind in ("flashcards", "quizzes"):
+            for entry in bundle.get(kind, []) or []:
+                if entry.get("id") != asset_id:
+                    continue
+                rel = entry.get("file") or ""
+                fp = (repo_root / rel).resolve()
+                if not fp.is_relative_to(_ASSETS_ROOT) or fp.suffix != ".json":
+                    logger.warning("[curriculum] asset %s path rejected: %s", asset_id, rel)
+                    return None
+                content = _load_json(fp)
+                if content is None:
+                    return None
+                result = {"id": asset_id, "kind": kind, **content}
+                _asset_content_cache[asset_id] = result
+                return result
+    return None
+
+
 def get_daily_tips(age_group: str, time_of_day: Optional[str] = None) -> list[dict]:
     """Return published tips for an age_group, optionally filtered by time_of_day."""
     out = [t for t in _tips_cache if t.get("age_group") == age_group]

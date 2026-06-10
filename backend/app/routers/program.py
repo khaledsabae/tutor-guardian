@@ -135,6 +135,15 @@ async def get_lesson_assets(lesson_id: str):
     return assets
 
 
+@router.get("/asset-content/{asset_id}")
+async def get_asset_content(asset_id: str):
+    """محتوى أصل تفاعلي (فلاش كاردز / اختبار) بالكامل — additive v1 endpoint."""
+    content = cl.get_asset_content(asset_id)
+    if content is None:
+        raise HTTPException(status_code=404, detail=f"الأصل '{asset_id}' غير موجود")
+    return content
+
+
 @router.get("/daily-tip")
 async def get_daily_tip(
     age_group: str = Query(..., description="إلزامي: العمر لتحديد الـ pool"),

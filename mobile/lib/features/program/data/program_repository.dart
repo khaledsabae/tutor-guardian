@@ -11,6 +11,7 @@
 library;
 
 import '../../../api/tg_client.dart';
+import '../models/flashcard_deck.dart';
 import '../models/lesson_assets.dart';
 import 'models.dart';
 
@@ -66,6 +67,16 @@ class ProgramRepository {
     try {
       final json = await _client.getLessonAssets(lessonId);
       return LessonAssets.fromJson(json);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// `GET /api/program/asset-content/{id}` — full flashcard deck content.
+  Future<FlashcardDeck?> getFlashcardDeck(String assetId) async {
+    try {
+      final json = await _client.getAssetContent(assetId);
+      return FlashcardDeck.fromJson(json);
     } catch (_) {
       return null;
     }
