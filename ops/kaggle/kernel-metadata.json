@@ -1,5 +1,5 @@
 {
-  "id": "khaledsabae/tutor-guardian-finetune",
+  "id": "khaledsabae/tutor-guardian-arabic-parenting-llm-fine-tune",
   "title": "Tutor Guardian — Arabic Parenting LLM Fine-Tune",
   "code_file": "finetune_tg_kaggle.ipynb",
   "language": "python",
@@ -8,7 +8,7 @@
   "enable_gpu": true,
   "enable_tpu": false,
   "enable_internet": true,
-  "dataset_sources": [],
+  "dataset_sources": ["khaledsabae/tg-qa-dataset"],
   "competition_sources": [],
   "kernel_sources": []
 }
