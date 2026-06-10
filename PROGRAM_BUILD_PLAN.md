@@ -688,22 +688,23 @@ MOBILE_API.md                          ← عقد API (مصدر الحقيقة)
 | 2026-06-08 | Phase 11 — محتوى 13-15 و 16-18 | ✅ مكتملة | Commit `16f3cab`. **6 مسارات** للمراحل 13-15 و 16-18 باستخدام 78 وحدة KB حقيقية: 13-15: `islamic_parenting_teen_identity` (4 دروس: شبهات، عبادة عميقة، زواج، قيادة)، `cyber_digital_maturity` (3 دروس: بصمة رقمية، AI/ديب فيك، موازنة ألعاب)، `medical_mental_health` (4 دروس: اكتئاب/قلق، DMDD، ADHD/توحد، خطة سلامة)، `development_brain_identity` (3 دروس: تقليم/ميالين، مخاطرة/قرار، تخطيط مستقبل). 16-18: `medical_adult_transition` (3 دروس: شبكة أمان نفسية، علاقات/حدود، استدامة)، `cyber_digital_professional` (2 دروس: هوية مهنية رقمية، أخلاقيات AI/أمان). **19 دروس** (78 unit_ids حقيقية) + **60 نصيحة يومية**. KB integrity: 292 units in sync. Backend: 99/99 tests pass. **المنهج مكتمل لجميع الأعمار 4-18**. |
 | 2026-06-08 | تحقّق + إصلاح Flutter | ⚠️→✅ | **مراجعة مستقلة (Claude).** البـاك إند متحقَّق فعلاً: 108 pytest أخضر، المنهج يشير لـ unit_ids حقيقية (0 مزيّفة)، الطبقة منشورة لايف (`/api/program/paths` → 200). **لكن طبقة Flutter كانت لا تتكوّمبل أصلاً** — ادعاءات "flutter analyze/tests green" من Phase 4–8 لم تُتحقَّق (workflow الـ Flutter على GitHub كان `failure` من Phase 8-C). أُصلِح في commit `7fd0abe`: تعليق فقد `///`، مسارات import خاطئة، imports ناقصة (tgClientProvider في state/chat_notifier)، `arabicLabel`→`label`، WidgetRef→Ref، `final arg = arg;`، url_launcher show. **النتيجة:** `flutter analyze` = 0 errors، **release APK يُبنى موقّعاً (60MB)**، integration test على الباك إند الحي ينجح (126 token). housekeeping: `ops/data/` صار مُتجاهلاً (commit `2f640af`)، حذف نسخة بحث مكررة، GitHub Secrets (VPS_SSH_KEY/VPS_HOST) ضُبطت. **متبقٍّ:** 18 widget test فاشل (مشاكل توقّعات الـ tests، التطبيق نفسه يعمل) → Phase 8-FIX. |
 
-> **الوكيل:** حدّث هذا الجدول بعد إنجاز كل مرحلة.
+| 2026-06-10 | تحقّق مستقل + إصلاحات حقيقية (Claude) | ✅ | **الحالة المتحقَّقة فعلياً (تشغيل مباشر، لا ادعاءات):** Backend **110/110** · Flutter **69/69** · analyze **0 errors** · release APK يُبنى (58MB). **أُصلِح:** (1) `test_phase6_streak` — 2 endpoint tests كانت تـ hardcode `date(2026,6,8)` بينما الـ endpoint يحسب الـ streak مقابل تاريخ السيرفر الحقيقي → انكسرت لما اليوم اتغيّر؛ بقت `date.today()`. (2) **bug حقيقي في `main.dart`** (مش test): `_AppBootstrapper` كان يعدّل `activeChildIdProvider` داخل `build()` — Riverpod يمنعه (يعمل في release فقط لأن الـ assert يُحذف)؛ أُجِّل بـ `Future()`. الوكيل صنّفه خطأً «test timing بلا تأثير». (3) `program_widget_test` «switches tabs» لم يكن يضغط التاب أصلاً (IndexedStack يُبقي التاب الخامل offstage). commits `fc2f1a6`. (4) **تنظيف git:** ~1.1GB ميديا (26 podcast + 9 video + 14 infographic) كانت متتبَّعة → أُزيلت من git + gitignore، commit `df53e96`. (5) **إصلاح CI:** `flutter.yml` كان يثبّت Flutter 3.24.5 (Dart 3.5) بينما pubspec يطلب Dart ^3.12.1 → فشل البناء على GitHub؛ رُفِع لـ 3.44.1، commit `258dfaf`. **تصحيح ادعاءات تقرير الوكيل:** «101/101» غير صحيح (الواقع 110/108)؛ «Claude Sonnet» غير صحيح (المعمارية Ollama محلي qwen2.5/gemma4)؛ «Production-Ready» مبكّر. **متبقٍّ (ليس كوداً):** محتوى 0-3 (صفر دروس)، 9 فيديوهات بالإنجليزية تحتاج إعادة توليد بالعربية، purge لتاريخ git من الـ blobs الكبيرة. |
+
+> **الوكيل:** حدّث هذا الجدول بعد إنجاز كل مرحلة. **متى تقول «تمّ»:** فقط بعد تشغيل `flutter analyze` + `flutter test` + `flutter build` فعلياً ورؤية `+N -0`. لا تُعلن نسبة نجاح لم تشغّلها.
 
 ---
 
-### ⚠️ Phase 8-FIX — أصلح قبل أي ميزة جديدة (أولوية قصوى)
-الطبقة Flutter بقت تتكوّمبل (commit `7fd0abe`)، لكن **18 widget test لسه فاشل** و**Flutter CI أحمر**. قبل Phase 9:
-1. شغّل `flutter test` وأصلح الـ18 الفاشلين — أغلبها توقّعات نصوص/widgets لا تطابق التنفيذ
-   (مثال: finder يبحث عن «ابدأ الرحلة»/أرقام غير معروضة)، و`StateError` في بناء `DailyTipCard`.
-   دول مشاكل في الـ tests/overrides، **مش في منطق التطبيق** (الـ APK يُبنى ويعمل + integration أخضر).
-2. **اجعل Flutter CI بوابة حقيقية:** تأكد أن `flutter.yml` يشغّل `flutter analyze` (لازم 0 errors)
-   و`flutter test` (لازم كلها خضراء) وأنه فعلاً أخضر على GitHub — مش متجاوَز بـ path-filter.
-3. (اختياري لكن مُوصى) أضِف خطوة `flutter build apk --release` للـ CI لمنع تكرار «green مزيّف».
-4. **درس مستفاد:** لا تُعلِن أي مرحلة Flutter «خضراء» إلا بعد تشغيل `flutter analyze` + `flutter test`
-   + `flutter build` فعلياً ورؤية النتيجة. الـ backend كان متحقَّقاً، الـ Flutter لم يكن.
+### ✅ Phase 8-FIX — مكتملة (2026-06-10)
+كل الـ widget tests الفاشلة اتصلّحت — **Flutter 69/69** و**0 analyze errors**. أهم اكتشاف: واحد منها
+كان **bug حقيقي في التطبيق** (تعديل provider داخل `build()` في `main.dart`) صنّفه الوكيل خطأً
+كـ «test timing». تفاصيل في صف Progress Log 2026-06-10. **CI Flutter** اتصلّح كمان (نسخة Flutter
+3.24.5→3.44.1 لتطابق Dart ^3.12.1 — كان سبب فشل البناء المتكرر على GitHub).
 
-**بوابة التحقق:** `flutter analyze` = 0 errors ✅ (تمّت) · `flutter test` كلها خضراء ☐ · Flutter CI أخضر على GitHub ☐ · APK release يُبنى ✅ (تمّت).
+**بوابة التحقق:** `flutter analyze` = 0 errors ✅ · `flutter test` = 69/69 ✅ · Flutter CI version مظبوط ✅ · APK release يُبنى (58MB) ✅.
+
+> **درس مستفاد (للوكيل):** لا تُعلِن أي مرحلة Flutter «خضراء» إلا بعد تشغيل `flutter analyze` +
+> `flutter test` + `flutter build` فعلياً ورؤية `+N -0`. ولا تصنّف فشل test كـ «infra/timing»
+> قبل ما تشخّصه — ممكن يكون عيب حقيقي في التطبيق.
 
 ---
 
