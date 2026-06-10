@@ -1,0 +1,23 @@
+{
+  "id": "path_0-3_development_early_moments",
+  "title": "لحظات مبكرة مهمة: أسس التطور والنمو للطفل 0-3",
+  "age_group": "0-3",
+  "domain": "development",
+  "description": "مسار تنموي لمدة 10 أيام يغطي أهم مبادئ التطور المبكر: الحساسيات الحسية والحركية، نظرية الارتباط، مراحل بياجيه الحسية الحركية، وأهمية الاستجابة الوالدية في بناء الأسس المعرفية والعاطفية. مستند لتقرير اليونيسف 'Early Moments Matter' وإرشادات CDC Act Early.",
+  "lesson_ids": [
+    "lesson_0-3_development_early_moments_01",
+    "lesson_0-3_development_early_moments_02",
+    "lesson_0-3_development_early_moments_03"
+  ],
+  "estimated_days": 10,
+  "pedagogical_framework": "zpd_scaffolded",
+  "primary_reference": {
+    "type": "مقال_تنموي",
+    "info": "UNICEF Early Moments Matter (2017) + CDC Developmental Milestones + Vygotsky ZPD + Piaget Sensorimotor Stage"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T20:00:00",
+  "updated_at": "2026-06-10T20:00:00"
+}
