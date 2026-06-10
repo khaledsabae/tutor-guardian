@@ -81,8 +81,22 @@
       "source_id": "5fb6588e-d31a-4cca-8e0c-052b364a72ac",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_cyber_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_02_fc.json",
+            "title": "التنمر الإلكتروني — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_cyber_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_02_qz.json",
+            "title": "التنمر الإلكتروني — اختبار",
+            "item_count": 4
+          }
+        ],
         "reports": [
           {
             "id": "eb171069-a6a8-45e3-b28a-5d3cf1a21061",
@@ -204,8 +218,22 @@
       "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_islamic_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_01_fc.json",
+            "title": "الصلاة: عمود الدين — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_islamic_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_01_qz.json",
+            "title": "الصلاة: عمود الدين — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "9f15cd6c-e7ae-462e-86df-397d5a1443ce",
@@ -765,8 +793,22 @@
       "source_id": "cb9959f3-12d6-46e3-a592-8c6d61c30522",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_medical_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_01_fc.json",
+            "title": "الاكتئاب والقلق عند المراهقين — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_medical_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_01_qz.json",
+            "title": "الاكتئاب والقلق عند المراهقين — اختبار",
+            "item_count": 4
+          }
+        ],
         "reports": [
           {
             "id": "050cbbc5-7538-4b1a-a58a-f4aa7fd9c943",
