@@ -33,8 +33,22 @@
       "source_id": "4086896f-0dd6-4a28-bade-c8032b18e9d1",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_cyber_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_01_fc.json",
+            "title": "الخصوصية الرقمية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_cyber_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_01_qz.json",
+            "title": "الخصوصية الرقمية — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "4c566a4c-3414-4f7a-9a7f-3638fa6fd184",
@@ -166,8 +180,22 @@
       "source_id": "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_cyber_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_03_fc.json",
+            "title": "التفكير النقدي على الإنترنت — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_cyber_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_03_qz.json",
+            "title": "التفكير النقدي على الإنترنت — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "d12932e5-3c6c-45f4-b9ec-d575dfe110ac",
@@ -483,8 +511,22 @@
       "source_id": "b607c436-be69-4a32-839b-af09cae03dc4",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_cyber_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_01_fc.json",
+            "title": "البصمة الرقمية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_cyber_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_01_qz.json",
+            "title": "البصمة الرقمية — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "e87e0bff-effc-425e-81ab-62b61faff669",
@@ -536,8 +578,22 @@
       "source_id": "78567565-5847-4d61-bcd2-aac115428388",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_cyber_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_02_fc.json",
+            "title": "الذكاء الاصطناعي والمحتوى المزيف — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_cyber_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_02_qz.json",
+            "title": "الذكاء الاصطناعي والمحتوى المزيف — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "d4021015-ba5f-458d-bad7-475ec1e21a7a",
@@ -565,8 +621,22 @@
       "source_id": "ca2ad154-cbd0-496f-aa24-9c2194997c7d",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_cyber_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_03_fc.json",
+            "title": "موازنة الألعاب — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_cyber_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_03_qz.json",
+            "title": "موازنة الألعاب — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "607a9bf5-29f1-4e66-ac6b-3dfdcf418a14",
