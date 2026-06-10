@@ -801,8 +801,22 @@
       "source_id": "73b68643-08f5-4dbf-b705-daef9bc54304",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_islamic_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_01_fc.json",
+            "title": "الشبهات الدينية: كيف يجيب الوالدان — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_islamic_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_01_qz.json",
+            "title": "الشبهات الدينية: كيف يجيب الوالدان — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "785ee902-bc5a-4060-aae7-ffb83063e496",
@@ -836,8 +850,22 @@
       "source_id": "6b437e64-40c5-483d-9abc-bd3bbc94d008",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_islamic_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_02_fc.json",
+            "title": "العبادة بعمق: الخشوع والتدبر — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_islamic_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_02_qz.json",
+            "title": "العبادة بعمق: الخشوع والتدبر — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "4076c756-252c-47e1-87f1-72ecead5de3f",
@@ -873,8 +901,22 @@
       "source_id": "38cfebd5-0b85-477b-a4d7-6e36ed98af79",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_islamic_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_03_fc.json",
+            "title": "الزواج المستقبلي: معايير وحقوق — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_islamic_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_03_qz.json",
+            "title": "الزواج المستقبلي: معايير وحقوق — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "0dd6dba4-b4e1-48ba-8a9a-fae8c840ef0e",
@@ -910,8 +952,22 @@
       "source_id": "9c1ff105-66fa-47c3-94a7-17809a24a052",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_islamic_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_04_fc.json",
+            "title": "القيادة وتبني القضية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_islamic_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_04_qz.json",
+            "title": "القيادة وتبني القضية — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [
           {
             "id": "0d08e799-761b-4836-bd70-f00a7a61d766",
@@ -1006,8 +1062,22 @@
       "source_id": "b9d49f00-f489-4922-bab6-c2a052f30baf",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_medical_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_02_fc.json",
+            "title": "اضطراب المزاج التخريبي (DMDD) — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_medical_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_02_qz.json",
+            "title": "اضطراب المزاج التخريبي (DMDD) — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [
           {
@@ -1028,8 +1098,22 @@
       "source_id": "a2737f57-c687-49b6-beb6-748e966f7a76",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_medical_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_03_fc.json",
+            "title": "ADHD والتوحد: اختلاف لا نقص — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_medical_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_03_qz.json",
+            "title": "ADHD والتوحد: اختلاف لا نقص — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [
           {
@@ -1050,8 +1134,22 @@
       "source_id": "0e79b612-e0fa-4455-a120-59938e7110bc",
       "title_ar": "",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_medical_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_04_fc.json",
+            "title": "مقياس المزاج وخطة السلامة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_medical_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_04_qz.json",
+            "title": "مقياس المزاج وخطة السلامة — اختبار",
+            "item_count": 3
+          }
+        ],
         "reports": [],
         "data_tables": [],
         "infographics": [
