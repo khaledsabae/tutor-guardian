@@ -64,3 +64,8 @@ ops/data/qa_*.log
 ops/data/qa_*.pid
 ops/data/qa_checkpoint.json
 ops/data/qa_collected_checkpoint.json
+
+# ── Generated lesson media (AI-generated, ~1.1GB — host on CDN/MinIO, not git) ──
+docs/*.mp3
+docs/lesson_videos/
+docs/lesson_assets/infographics/
