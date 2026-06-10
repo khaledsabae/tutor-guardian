@@ -55,6 +55,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
+      - name: Free disk space (runner has ~14GB; the ML image — torch+triton —
+          needs more, otherwise the build fails with "no space left on device")
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android \
+            /opt/hostedtoolcache/CodeQL /usr/local/share/boost \
+            "${AGENT_TOOLSDIRECTORY:-/opt/hostedtoolcache}" || true
+          sudo docker image prune --all --force || true
+          df -h /
+
       - name: Build image
         run: |
           docker buildx build \
