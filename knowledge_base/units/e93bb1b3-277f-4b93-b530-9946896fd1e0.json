@@ -8,18 +8,19 @@
   "reference_type": "DSM-5",
   "reference_info": "Disruptive Mood Dysregulation Disorder — NIMH",
   "text_original": "From the NATIONAL INSTITUTE of  MENTAL HEALTH  What is disruptive mood  dysregulation disorder? Disruptive mood dysregulation disorder (DMDD) is a  condition in which children or adolescents experience  ongoing irritability, anger, and frequent, intense temper  outbursts. The symptoms of DMDD go beyond a “bad  mood.” DMDD symptoms are severe.  Youth with DMDD experience significant problems at  home, at school, and often with peers. They also tend  to require mental health care services, including  doctor visits and sometimes hospitalization.  Additionally, these children are at an increased r",
-  "text_simplified": "اضطراب المزاج التخريبي هو حالة طبية نفسي تتميز بالreakivity الشديدة والانفعال، غالبًا ما يتم تشخيصها في الأطفال وadolescents. يمكن أن يتطلب هذا النوع من الاضطرابات رعاية مكثفة وعلاج طويل الأجل.",
+  "text_simplified": "اضطراب خلل المزاج التخريبي حالة نفسية تتميز بالانفعال الشديد وسرعة التهيج، وغالباً ما تُشخَّص لدى الأطفال والمراهقين. قد يتطلب علاجاً نفسياً متخصصاً ومتابعة مستمرة.",
   "labels": [
     "nimh",
     "dmdd",
     "english"
   ],
   "created_at": "2026-06-06T14:35:15.742607Z",
-  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-10T19:30:00Z",
   "version": "1.0.0",
   "keywords": [
     "اضطراب_المزاج_التخريبي",
     "reakivity",
     "الانفعال"
-  ]
+  ],
+  "title": "تشخيص اضطراب خلل المزاج التخريبي عند المراهقين"
 }

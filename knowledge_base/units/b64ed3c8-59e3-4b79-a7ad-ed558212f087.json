@@ -8,18 +8,19 @@
   "reference_type": "تقرير_طبي",
   "reference_info": "Children and Mental Health — NIMH",
   "text_original": "observations Asking questions and providing information to your child’s  health care provider can improve your child’s care. Talking  with the health care provider builds trust and leads to better  results, quality, safety, and satisfaction with care.  Here are some questions you can ask when meeting with  prospective treatment providers.  ● Do you use treatment approaches that are supported by research?  ● Do you involve parents in the treatment? If so, how are  parents involved?  ● Will there be “homework” between sessions?  ● How will progress be evaluated?  ● How soon can we expect to see",
-  "text_simplified": "الأطفال البالغين من عمر 4-6 سنوات هم قسم مهم في الصحة النفسية. يحتاجون إلى مساعدة مؤمنة ومراعاة خاصة لمواجهة التحديات والمشاعر الصعبة التي يواجهونها. يجب تشجيعهم على أخذ الوقت للتعبير عن مشاعرهم وإعادة بناء الثقة بالنفس.",
+  "text_simplified": "يحتاج الأطفال في سن 4-6 سنوات إلى دعم نفسي آمن ورعاية خاصة لمواجهة التحديات والمشاعر الصعبة التي يمرون بها، مع تشجيعهم باستمرار على التعبير عن مشاعرهم.",
   "labels": [
     "nimh",
     "mental_health",
     "english"
   ],
   "created_at": "2026-06-06T14:35:15.742607Z",
-  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-10T19:30:00Z",
   "version": "1.0.0",
   "keywords": [
     "أطفال",
     "صحة_نفسية",
     "ترابط"
-  ]
+  ],
+  "title": "الاحتياجات النفسية للطفل من 4 إلى 6 سنوات"
 }

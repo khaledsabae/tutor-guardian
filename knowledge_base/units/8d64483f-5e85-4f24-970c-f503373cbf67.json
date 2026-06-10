@@ -8,18 +8,19 @@
   "reference_type": "تقرير_طبي",
   "reference_info": "Children and Mental Health — NIMH",
   "text_original": "child’s  health care provider, visit www.nimh.nih.gov/talkingtips.  How are childhood mental health disorders treated?  The mental health professional will review the evaluation results  to help determine if a child’s emotions and behavior are related  to changes or stresses at home or school or if they may  indicate a disorder for which they would recommend treatment.  There are several treatment options the mental health  professional may recommend.  ● Psychotherapy (sometimes called talk therapy), which  includes many different approaches such as structured  psychotherapies directed at spec",
-  "text_simplified": "تؤثر الصحة النفسية للأطفال على تطورهم البدني والعقلي ويجدر بالآباء والأمهات مراقبة أطفالهم بشكل منتظم ل detection أي مشاكل صحية نفسيه، وقد يحتاج الأطفال إلى خدمات الدعم النفسي في حال ظهور علامات واضحة للإصابة بمشاكل عصبية.",
+  "text_simplified": "تؤثر الصحة النفسية للأطفال على تطورهم البدني والعقلي، وينبغي للوالدين مراقبة أطفالهم بانتظام لاكتشاف أي مشكلات نفسية مبكراً، وقد يحتاج بعض الأطفال إلى خدمات دعم متخصصة.",
   "labels": [
     "nimh",
     "mental_health",
     "english"
   ],
   "created_at": "2026-06-06T14:35:15.742607Z",
-  "updated_at": "2026-06-06T14:35:15.742607Z",
+  "updated_at": "2026-06-10T19:30:00Z",
   "version": "1.0.0",
   "keywords": [
     "صحة_نفسية",
     "أطفال",
     "الأباء"
-  ]
+  ],
+  "title": "مراقبة الصحة النفسية لطفلك: متى تطلب المساعدة"
 }
