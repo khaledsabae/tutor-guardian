@@ -169,8 +169,7 @@ def main() -> int:
     print("  CJK PURITY CHECK — فحص نقاء النصوص من الحروف الصينية/اليابانية/الكورية")
     print("=" * 67)
 
-    cjk_errors: list[str] = []      # curriculum = blocking
-    cjk_warnings: list[str] = []    # units = non-blocking (legacy)
+    cjk_errors: list[str] = []      # curriculum + units = blocking (KB fully cleaned 2026-06-10)
 
     # Scan curriculum files (paths, lessons, daily_tips) — BLOCKING
     for fp in CURRICULUM_DIR.rglob("*.json"):
@@ -182,29 +181,23 @@ def main() -> int:
         except Exception as e:
             warnings.append(f"CJK: could not read {fp}: {e}")
 
-    # Also scan units for safety (they're the source of truth) — WARNING only (legacy cleanup)
+    # Units (source of truth) — BLOCKING since full cleanup on 2026-06-10
     for fp in UNITS_DIR.glob("*.json"):
         try:
             content = fp.read_text(encoding="utf-8")
             matches = CJK_RE.findall(content)
             if matches:
-                cjk_warnings.append(f"{fp.relative_to(ROOT)}: {len(matches)} CJK chars (e.g., {matches[0]!r})")
+                cjk_errors.append(f"{fp.relative_to(ROOT)}: {len(matches)} CJK chars (e.g., {matches[0]!r})")
         except Exception as e:
             warnings.append(f"CJK: could not read {fp}: {e}")
 
     if cjk_errors:
-        print(f"\n🔴  CJK VIOLATIONS IN CURRICULUM ({len(cjk_errors)}):")
+        print(f"\n🔴  CJK VIOLATIONS ({len(cjk_errors)}):")
         for v in cjk_errors:
             print(f"     ✗ {v}")
-        errors.append(f"CJK GATE FAILED: {len(cjk_errors)} curriculum file(s) contain CJK characters — remove them before committing")
+        errors.append(f"CJK GATE FAILED: {len(cjk_errors)} file(s) contain CJK characters — remove them before committing")
     else:
-        print(f"  ✅  CJK PURITY OK (curriculum) — 0 files with CJK characters")
-
-    if cjk_warnings:
-        print(f"\n🟡  CJK IN UNITS (legacy, non-blocking) ({len(cjk_warnings)}):")
-        for v in cjk_warnings:
-            print(f"     ⚠ {v}")
-        print(f"     → Tracked for legacy cleanup; not blocking commit.")
+        print(f"  ✅  CJK PURITY OK — 0 files with CJK characters (curriculum + all 292 units)")
 
     if warnings:
         print(f"\n🟡  WARNINGS ({len(warnings)}):")

@@ -11,14 +11,14 @@
   "reference_type": "كتاب_تربوي",
   "reference_info": "Common Sense Media",
   "text_original": "Eight Census survey in early 2020, moving 2-year-olds 4-year-olds 8-year-olds from 23 minutes of total time per day spent by children playing Console games :02a :02a :16b video games across all devices (consoles, handhelds, comput- Handheld games :00a :03a :08b ers, and smartphones or tablets) to 38 minutes in 2024. This Computer games :00a :02 :06b represents a 65% increase in average time spent gaming. TABLE A. Time spent gaming per day, 2011 to 2024 Total gaming :03 :21 1:04 2011 2013 2017 2020 2024 Note: Items with different superscripts differ significantly (p < .05). Console games :14 :10 :05 :07 :13 Console games :10 :06 :05* n/a :08 Handheld games :04 :04 :01* n/a :05 Computer games :08 :05 :03 :03 :04 Total gaming :25 :23 :25* :23* :38 Note: An asterisk indicates the item differs significantly (p < .05) from 2024. The years 2011 and 2013 are presented for historical reference only and were not tested against 2024 totals. While total gaming time has increased for all age groups of children since 2020, children age 4 and under show relatively modest jumps. Those under age 2 went from two to three minutes of total video game play per day. Also, 2- to 4-year- olds saw an increase in total video game play from 16 minutes to 21 minutes, and we found a large (24-minute) jump from 40 minutes to an hour and four minutes of video game play for 5- to 8-year-olds. This age difference is especially notable",
-  "text_simplified": "منذ عام 2011، ارتفع الوقت الذي يقضيه الأطفال في玩游从每天23分钟增至2024年的38分钟，增幅达65%。这反映了所有年龄段儿童玩电子游戏时间的增加。",
+  "text_simplified": "منذ عام 2011 ارتفع متوسط الوقت الذي يقضيه الأطفال في الألعاب الإلكترونية من 23 دقيقة يومياً إلى 38 دقيقة عام 2024 — بزيادة نحو 65%. وتشمل الزيادة مختلف الأعمار وكل الأجهزة: المنصات المنزلية والأجهزة المحمولة والحواسيب.",
   "labels": [
     "الألعاب الإلكترونية",
     " babies",
     "زيادة الوقت"
   ],
   "created_at": "2026-06-07T08:07:16Z",
-  "updated_at": "2026-06-07T08:07:16Z",
+  "updated_at": "2026-06-10T18:30:00Z",
   "version": "1.0.0",
   "source_meta": {
     "source_title": "Screen_Time_2025",
