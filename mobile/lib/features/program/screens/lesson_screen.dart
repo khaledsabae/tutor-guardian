@@ -28,6 +28,7 @@ import '../data/progress_models.dart';
 import '../models/lesson_assets.dart';
 import '../providers/lesson_assets_provider.dart';
 import 'flashcards_screen.dart';
+import 'quiz_screen.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
 
@@ -628,6 +629,10 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           },
         );
         if (quizzesCount > 0) {
+          final quizIds = assets.quizzes
+              .map((item) => (item as Map<String, dynamic>?)?['id'] as String?)
+              .whereType<String>()
+              .toList();
           buttons.add(
             _AssetButton(
               icon: Icons.quiz,
@@ -636,9 +641,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AssetPlaceholderScreen(
-                      title: 'اختبار',
-                    ),
+                    builder: (context) => QuizScreen(quizIds: quizIds),
                   ),
                 );
               },

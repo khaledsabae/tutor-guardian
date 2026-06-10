@@ -13,6 +13,7 @@ library;
 import '../../../api/tg_client.dart';
 import '../models/flashcard_deck.dart';
 import '../models/lesson_assets.dart';
+import '../models/quiz_deck.dart';
 import 'models.dart';
 
 class ProgramRepository {
@@ -77,6 +78,20 @@ class ProgramRepository {
     try {
       final json = await _client.getAssetContent(assetId);
       return FlashcardDeck.fromJson(json);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// `GET /api/program/asset-content/{id}` — full quiz deck content.
+  ///
+  /// The backend serves both flashcards and quizzes through the same
+  /// endpoint, differentiated by the `kind` field that comes via
+  /// `getLessonAssets`. We just parse the response as a [QuizDeck] here.
+  Future<QuizDeck?> getQuizDeck(String assetId) async {
+    try {
+      final json = await _client.getAssetContent(assetId);
+      return QuizDeck.fromAssetContent(json);
     } catch (_) {
       return null;
     }
