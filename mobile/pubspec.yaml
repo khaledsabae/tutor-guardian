@@ -46,6 +46,11 @@ dependencies:
   cupertino_icons: ^1.0.8
   just_audio: ^0.10.5
 
+  # Firebase
+  firebase_core: ^3.13.0
+  firebase_crashlytics: ^4.3.0
+  firebase_analytics: ^11.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

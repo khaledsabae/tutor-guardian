@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "620240456244",
+    "project_id": "almorabbi",
+    "storage_bucket": "almorabbi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620240456244:android:68d74a2b062c14e4751861",
+        "android_client_info": {
+          "package_name": "com.alsaba.almorabbi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkRIIv6s_k4UlDfJSncO2WJk_goDkTnt0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
