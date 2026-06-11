@@ -4,7 +4,6 @@
 /// Riverpod to consume favorites state reactively.
 library;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:almorabbi/features/program/data/favorites_storage.dart';

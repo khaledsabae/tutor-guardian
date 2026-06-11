@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
-import '../data/models.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/program_providers.dart';
 import 'lesson_screen.dart';
@@ -365,19 +364,19 @@ class _ErrorCard extends StatelessWidget {
       color: AppTheme.dangerBg,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: AppTheme.dangerFg),
+        side: const BorderSide(color: AppTheme.dangerFg),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
+      child: const Padding(
+        padding: EdgeInsets.all(12),
         child: Row(
           children: [
-            const Icon(Icons.error_outline, color: AppTheme.dangerFg),
-            const SizedBox(width: 12),
+            Icon(Icons.error_outline, color: AppTheme.dangerFg),
+            SizedBox(width: 12),
             Expanded(
               child: Text(
                 'تعذّر تحميل هذا العنصر المحفوظ',
                 style:
-                    const TextStyle(color: AppTheme.dangerFg, fontSize: 12),
+                    TextStyle(color: AppTheme.dangerFg, fontSize: 12),
               ),
             ),
           ],

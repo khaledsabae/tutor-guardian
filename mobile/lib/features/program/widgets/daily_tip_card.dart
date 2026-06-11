@@ -93,7 +93,7 @@ class _Card extends ConsumerWidget {
                       },
                       icon: Icon(
                         isFav ? Icons.favorite : Icons.favorite_border,
-                        color: isFav ? Colors.redAccent : Color(0xFF8A5A0F),
+                        color: isFav ? Colors.redAccent : const Color(0xFF8A5A0F),
                         size: 20,
                       ),
                       tooltip: isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة',
