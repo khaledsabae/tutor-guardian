@@ -19,7 +19,10 @@ val keystoreProperties: Properties = Properties().apply {
 
 android {
     namespace = "com.alsaba.almorabbi"
-    compileSdk = flutter.compileSdkVersion
+    // Pinned to 35: newer P1 plugins (share_plus / file_picker →
+    // flutter_plugin_android_lifecycle) require a compileSdk above the
+    // Flutter default. Bumped from flutter.compileSdkVersion in the P1 build.
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
