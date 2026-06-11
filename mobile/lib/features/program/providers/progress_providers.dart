@@ -142,13 +142,14 @@ class MarkLessonProgressNotifier
       lessonId: arg,
       status: status,
     );
-    // Invalidate the affected child bundle so any PathProgressMap
-    // re-derives with the new status. The chat screen continues to
-    // work — autoDispose handles re-subscription on the next watch.
+    // Invalidate the child progress bundle so the progress bar re-derives
+    // with the new status. We also directly invalidate pathProgressMapProvider
+    // (the whole family) to force a refresh regardless of autoDispose state.
     final targetChild = childId ?? ref.read(activeChildIdProvider);
     if (targetChild != null) {
       ref.invalidate(childProgressProvider(targetChild));
     }
+    ref.invalidate(pathProgressMapProvider);
     state = AsyncValue.data(updated);
     return updated;
   }

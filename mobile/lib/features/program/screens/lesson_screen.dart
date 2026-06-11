@@ -67,6 +67,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             duration: Duration(seconds: 2),
           ),
         );
+        // Return to path detail so the progress bar refreshes immediately.
+        await Future.delayed(const Duration(milliseconds: 1200));
+        if (mounted) Navigator.of(context).pop();
       }
     } catch (e) {
       if (mounted) {
