@@ -91,7 +91,7 @@ class BackupService {
       // Validate version
       final version = decoded['version'] as int?;
       if (version == null) {
-        return ImportResult(
+        return const ImportResult(
           success: false,
           importedReflectionsCount: 0,
           importedFavoritesCount: 0,
@@ -107,7 +107,6 @@ class BackupService {
         );
       }
 
-      final favoritesStorage = FavoritesStorage(_prefs);
       final reflectionsStorage = ReflectionStorage(_prefs);
 
       // Import reflections

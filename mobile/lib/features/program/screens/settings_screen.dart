@@ -216,7 +216,9 @@ class SettingsScreen extends ConsumerWidget {
       final file = pickerResult.files.first;
       final bytes = file.bytes ?? await File(file.path!).readAsBytes();
       final jsonString = utf8.decode(bytes);
-      
+
+      if (!context.mounted) return;
+
       // Show confirmation dialog
       final confirmed = await showDialog<bool>(
         context: context,

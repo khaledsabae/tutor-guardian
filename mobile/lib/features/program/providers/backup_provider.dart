@@ -4,7 +4,6 @@
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:almorabbi/features/program/data/backup_service.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
