@@ -10,16 +10,22 @@
 ///   * Version footer
 library;
 
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart'
     show launchUrl, canLaunchUrl, LaunchMode;
+import 'package:file_picker/file_picker.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../config/app_config.dart';
 import '../../../theme/app_theme.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
+import '../providers/backup_provider.dart';
 import 'children_list_screen.dart';
 import 'edit_child_screen.dart';
 import 'favorites_screen.dart';
@@ -120,6 +126,18 @@ class SettingsScreen extends ConsumerWidget {
                     );
                   },
                 ),
+                _SettingsRow(
+                  icon: Icons.file_download_outlined,
+                  title: 'تصدير بياناتي',
+                  subtitle: 'تصدير المفضلة والملاحظات كملف JSON',
+                  onTap: () => _exportData(context, ref),
+                ),
+                _SettingsRow(
+                  icon: Icons.file_upload_outlined,
+                  title: 'استيراد بياناتي',
+                  subtitle: 'استيراد النسخة الاحتياطية من ملف JSON',
+                  onTap: () => _importData(context, ref),
+                ),
                 const SizedBox(height: 24),
                 const Center(
                   child: Text(
@@ -136,6 +154,132 @@ class SettingsScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  /// Export user data to JSON file and share it.
+  Future<void> _exportData(BuildContext context, WidgetRef ref) async {
+    final backupService = ref.read(backupServiceProvider);
+    
+    // Show loading indicator
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.showSnackBar(
+      const SnackBar(content: Text('جاري تجهيز النسخة الاحتياطية...')),
+    );
+
+    try {
+      final jsonString = await backupService.exportToJson();
+      final filename = backupService.generateBackupFilename();
+      
+      // Save to temporary file
+      final tempDir = await Directory.systemTemp.createTemp('tg_backup_');
+      final file = File('${tempDir.path}/$filename');
+      await file.writeAsString(jsonString);
+      
+      // Share the file
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        text: 'نسخة احتياطية من بيانات المربي الذكي',
+        subject: 'نسخة احتياطية - المربي الذكي',
+      );
+      
+      if (context.mounted) {
+        scaffoldMessenger.showSnackBar(
+          const SnackBar(content: Text('تم تصدير البيانات بنجاح')),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        scaffoldMessenger.showSnackBar(
+          SnackBar(
+            content: Text('تعذّر التصدير: $e'),
+            backgroundColor: AppTheme.dangerFg,
+          ),
+        );
+      }
+    }
+  }
+
+  /// Import user data from JSON file.
+  Future<void> _importData(BuildContext context, WidgetRef ref) async {
+    final backupService = ref.read(backupServiceProvider);
+    
+    try {
+      // Pick a file
+      final pickerResult = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+        dialogTitle: 'اختر ملف النسخة الاحتياطية',
+      );
+
+      if (pickerResult == null || pickerResult.files.isEmpty) return;
+
+      final file = pickerResult.files.first;
+      final bytes = file.bytes ?? await File(file.path!).readAsBytes();
+      final jsonString = utf8.decode(bytes);
+      
+      // Show confirmation dialog
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('استيراد البيانات؟'),
+          content: const Text(
+            'سيتم دمج البيانات المستوردة مع بياناتك الحالية. '
+            'هذا الإجراء لا يمكن التراجع عنه بسهولة.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: const Text('إلغاء'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              style: TextButton.styleFrom(foregroundColor: AppTheme.primary),
+              child: const Text('استيراد'),
+            ),
+          ],
+        ),
+      );
+
+      if (confirmed != true) return;
+
+      // Perform import
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('جاري استيراد البيانات...')),
+        );
+      }
+
+      final importResult = await backupService.importFromJson(jsonString);
+
+      if (context.mounted) {
+        if (importResult.success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'تم الاستيراد بنجاح: ${importResult.importedReflectionsCount} ملاحظة، ${importResult.importedFavoritesCount} مفضلة',
+              ),
+              backgroundColor: AppTheme.success,
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('تعذّر الاستيراد: ${importResult.errorMessage}'),
+              backgroundColor: AppTheme.dangerFg,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('تعذّر الاستيراد: $e'),
+            backgroundColor: AppTheme.dangerFg,
+          ),
+        );
+      }
+    }
   }
 
   Future<void> _confirmReset(

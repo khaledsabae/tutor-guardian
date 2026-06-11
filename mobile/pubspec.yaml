@@ -40,6 +40,8 @@ dependencies:
   # Share + screenshot for share cards
   share_plus: ^10.0.0
   screenshot: ^3.0.0
+  # File picker for backup import/export
+  file_picker: ^8.0.0
 
   cupertino_icons: ^1.0.8
   just_audio: ^0.10.5
