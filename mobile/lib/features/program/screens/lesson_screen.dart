@@ -53,6 +53,7 @@ class LessonScreen extends ConsumerStatefulWidget {
 
 class _LessonScreenState extends ConsumerState<LessonScreen> {
   bool _marking = false;
+  bool _markedInProgress = false; // guard against re-firing on every rebuild
 
   Future<void> _markComplete() async {
     if (widget.childId == null) return;
@@ -111,9 +112,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
       ),
       body: asyncLesson.when(
         data: (lesson) {
-          // Fire-and-forget "in progress" the first time the user
-          // opens this lesson (best-effort — silent on failure).
-          if (widget.childId != null) _markInProgress();
+          // Fire-and-forget "in progress" exactly once when the lesson
+          // data first loads. Guard prevents re-firing on subsequent rebuilds.
+          if (widget.childId != null && !_markedInProgress) {
+            _markedInProgress = true;
+            _markInProgress();
+          }
           return _Body(
             lesson: lesson,
             ageGroup: widget.ageGroup,
