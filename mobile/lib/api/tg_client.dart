@@ -484,10 +484,8 @@ class TgClient {
     String? gender,
     String? avatarEmoji,
   }) async {
-    final (_, token) = await _auth.readSession();
-    if (token == null) {
-      throw const TgApiError(401, 'مطلوب جلسة لإنشاء ملف طفل.');
-    }
+    final session = await ensureSession();
+    final token = session.token;
     final body = <String, dynamic>{
       'name': name,
       'age_group': ageGroup,
@@ -511,10 +509,8 @@ class TgClient {
     int childId, {
     String? pathId,
   }) async {
-    final (_, token) = await _auth.readSession();
-    if (token == null) {
-      throw const TgApiError(401, 'مطلوب جلسة لقراءة التقدّم.');
-    }
+    final session = await ensureSession();
+    final token = session.token;
     final qs = <String, String>{};
     if (pathId != null) qs['path_id'] = pathId;
     final uri = Uri.parse(
@@ -533,10 +529,8 @@ class TgClient {
     required String lessonId,
     required String status, // "not_started" | "in_progress" | "completed"
   }) async {
-    final (_, token) = await _auth.readSession();
-    if (token == null) {
-      throw const TgApiError(401, 'مطلوب جلسة لتسجيل التقدّم.');
-    }
+    final session = await ensureSession();
+    final token = session.token;
     final resp = await _http
         .patch(
           Uri.parse('$_baseUrl/api/program/lessons/$lessonId/progress'),
@@ -553,10 +547,8 @@ class TgClient {
   // ── Phase 7 — list / update / reset ───────────────────────────────────
 
   Future<Map<String, dynamic>> listChildren() async {
-    final (_, token) = await _auth.readSession();
-    if (token == null) {
-      throw const TgApiError(401, 'مطلوب جلسة لعرض الأطفال.');
-    }
+    final session = await ensureSession();
+    final token = session.token;
     final resp = await _http
         .get(
           Uri.parse('$_baseUrl/api/children'),
@@ -576,10 +568,8 @@ class TgClient {
     String? gender,
     String? avatarEmoji,
   }) async {
-    final (_, token) = await _auth.readSession();
-    if (token == null) {
-      throw const TgApiError(401, 'مطلوب جلسة لتعديل ملف الطفل.');
-    }
+    final session = await ensureSession();
+    final token = session.token;
     final body = <String, dynamic>{};
     if (name != null) body['name'] = name;
     if (ageGroup != null) body['age_group'] = ageGroup;
@@ -599,10 +589,8 @@ class TgClient {
   }
 
   Future<Map<String, dynamic>> resetChildProgress(int childId) async {
-    final (_, token) = await _auth.readSession();
-    if (token == null) {
-      throw const TgApiError(401, 'مطلوب جلسة لإعادة التعيين.');
-    }
+    final session = await ensureSession();
+    final token = session.token;
     final resp = await _http
         .delete(
           Uri.parse('$_baseUrl/api/children/$childId/progress'),
