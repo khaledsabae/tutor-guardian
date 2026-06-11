@@ -144,6 +144,16 @@ async def get_asset_content(asset_id: str):
     return content
 
 
+@router.get("/search")
+async def search_curriculum(
+    q: str = Query(..., min_length=2, description="نص البحث (حرفان على الأقل)"),
+    limit: int = Query(20, ge=1, le=50),
+):
+    """بحث نصّي في الدروس والمسارات والنصائح — additive v1 endpoint."""
+    results = cl.search(q, limit=limit)
+    return {"query": q, "count": len(results), "results": results}
+
+
 @router.get("/daily-tip")
 async def get_daily_tip(
     age_group: str = Query(..., description="إلزامي: العمر لتحديد الـ pool"),

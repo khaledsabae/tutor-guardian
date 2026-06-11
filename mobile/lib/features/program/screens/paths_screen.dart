@@ -15,6 +15,7 @@ import '../data/models.dart';
 import '../providers/program_providers.dart';
 import '../widgets/active_child_chip.dart';
 import 'path_detail_screen.dart';
+import 'search_screen.dart';
 import 'settings_screen.dart';
 
 class PathsScreen extends ConsumerWidget {
@@ -34,6 +35,15 @@ class PathsScreen extends ConsumerWidget {
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
             child: Center(child: ActiveChildChip()),
+          ),
+          IconButton(
+            tooltip: 'بحث',
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const SearchScreen()),
+              );
+            },
           ),
           // Phase 7 — settings is a push route, not a tab.
           IconButton(

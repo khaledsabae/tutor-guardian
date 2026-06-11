@@ -160,6 +160,62 @@ def get_lesson(lesson_id: str) -> Optional[dict]:
     return _lessons_cache.get(lesson_id)
 
 
+def search(query: str, limit: int = 20) -> list[dict]:
+    """Substring search across published lessons, daily tips, and paths.
+
+    Returns a flat list of lightweight result dicts:
+      {type: lesson|tip|path, id, title, snippet, age_group, domain, path_id?}
+    Title matches rank above body-only matches; results are capped at `limit`.
+    """
+    q = (query or "").strip().lower()
+    if len(q) < 2:
+        return []
+
+    scored: list[tuple[int, dict]] = []
+
+    def _snippet(text: str) -> str:
+        text = " ".join((text or "").split())
+        idx = text.lower().find(q)
+        if idx < 0:
+            return text[:120]
+        start = max(0, idx - 40)
+        return ("…" if start else "") + text[start:start + 120]
+
+    for lesson in _lessons_cache.values():
+        title = lesson.get("title", "")
+        summary = lesson.get("summary", "")
+        in_title = q in title.lower()
+        if in_title or q in summary.lower():
+            scored.append((0 if in_title else 1, {
+                "type": "lesson", "id": lesson["id"], "title": title,
+                "snippet": _snippet(summary), "age_group": lesson.get("age_group"),
+                "domain": lesson.get("domain"), "path_id": lesson.get("path_id"),
+            }))
+
+    for path in _paths_cache.values():
+        title = path.get("title", "")
+        desc = path.get("description", "")
+        in_title = q in title.lower()
+        if in_title or q in desc.lower():
+            scored.append((0 if in_title else 1, {
+                "type": "path", "id": path["id"], "title": title,
+                "snippet": _snippet(desc), "age_group": path.get("age_group"),
+                "domain": path.get("domain"),
+            }))
+
+    for tip in _tips_cache:
+        text = tip.get("text", "")
+        if q in text.lower():
+            scored.append((2, {
+                "type": "tip", "id": tip["id"], "title": _snippet(text),
+                "snippet": "", "age_group": tip.get("age_group"),
+                "domain": tip.get("domain"),
+            }))
+
+    scored.sort(key=lambda s: (s[0], s[1]["title"]))
+    return [r for _, r in scored[:limit]]
+
+
 def get_lesson_assets(lesson_id: str) -> Optional[dict]:
     return _assets_cache.get(lesson_id)
 

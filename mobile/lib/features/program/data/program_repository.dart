@@ -14,6 +14,7 @@ import '../../../api/tg_client.dart';
 import '../models/flashcard_deck.dart';
 import '../models/lesson_assets.dart';
 import '../models/quiz_deck.dart';
+import '../models/search_result.dart';
 import 'models.dart';
 
 class ProgramRepository {
@@ -95,6 +96,16 @@ class ProgramRepository {
     } catch (_) {
       return null;
     }
+  }
+
+  /// `GET /api/program/search?q=` — curriculum-wide text search.
+  Future<List<SearchResult>> search(String query, {int limit = 20}) async {
+    final json = await _client.searchCurriculum(query, limit: limit);
+    final raw = (json['results'] as List?) ?? const [];
+    return raw
+        .whereType<Map<String, dynamic>>()
+        .map(SearchResult.fromJson)
+        .toList();
   }
 
   /// `GET /api/program/daily-tip?age_group=&time_of_day=`
