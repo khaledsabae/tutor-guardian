@@ -27,6 +27,7 @@ import '../data/models.dart';
 import '../data/progress_models.dart';
 import '../models/lesson_assets.dart';
 import '../providers/lesson_assets_provider.dart';
+import '../providers/favorites_provider.dart';
 import 'flashcards_screen.dart';
 import 'quiz_screen.dart';
 import 'podcast_player_screen.dart';
@@ -296,13 +297,15 @@ class _StatusChip extends StatelessWidget {
   }
 }
 
-class _Hero extends StatelessWidget {
+class _Hero extends ConsumerWidget {
   const _Hero({required this.lesson, required this.ageGroup});
   final CurriculumLesson lesson;
   final String ageGroup;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isFav = ref.watch(favoritesProvider)['lessons']
+            ?.contains(lesson.id) ?? false;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -344,6 +347,18 @@ class _Hero extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {
+                  ref.read(favoritesProvider.notifier).toggleLesson(lesson.id);
+                },
+                icon: Icon(
+                  isFav ? Icons.favorite : Icons.favorite_border,
+                  color: isFav ? Colors.redAccent : Colors.white,
+                  size: 22,
+                ),
+                tooltip: isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة',
               ),
             ],
           ),

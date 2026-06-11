@@ -14,6 +14,7 @@ import '../../../theme/app_theme.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/models.dart';
 import '../providers/program_providers.dart';
+import '../providers/favorites_provider.dart';
 
 class DailyTipCard extends ConsumerWidget {
   const DailyTipCard({super.key});
@@ -37,13 +38,15 @@ class DailyTipCard extends ConsumerWidget {
   }
 }
 
-class _Card extends StatelessWidget {
+class _Card extends ConsumerWidget {
   const _Card({required this.tip, required this.childName});
   final DailyTip tip;
   final String childName;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isFav = ref.watch(favoritesProvider)['tips']
+            ?.contains(tip.id) ?? false;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -84,6 +87,19 @@ class _Card extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        ref.read(favoritesProvider.notifier).toggleTip(tip.id);
+                      },
+                      icon: Icon(
+                        isFav ? Icons.favorite : Icons.favorite_border,
+                        color: isFav ? Colors.redAccent : Color(0xFF8A5A0F),
+                        size: 20,
+                      ),
+                      tooltip: isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة',
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 6,

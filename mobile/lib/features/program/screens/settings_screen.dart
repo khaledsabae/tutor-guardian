@@ -22,6 +22,7 @@ import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
 import 'children_list_screen.dart';
 import 'edit_child_screen.dart';
+import 'favorites_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -105,6 +106,18 @@ class SettingsScreen extends ConsumerWidget {
                       await launchUrl(uri,
                           mode: LaunchMode.externalApplication);
                     }
+                  },
+                ),
+                _SettingsRow(
+                  icon: Icons.favorite_outline,
+                  title: 'المفضلة',
+                  subtitle: 'الدروس والنصائح التي حفظتها',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const FavoritesScreen(),
+                      ),
+                    );
                   },
                 ),
                 const SizedBox(height: 24),
