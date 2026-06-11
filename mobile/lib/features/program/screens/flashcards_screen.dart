@@ -21,7 +21,7 @@ class FlashcardsScreen extends ConsumerWidget {
     final decksAsync = ref.watch(flashcardDecksProvider(deckIds.join(',')));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('🃏 فلاش كاردز')),
+      appBar: AppBar(title: const Text('📇 فلاش كاردز')),
       body: decksAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => _ErrorState(

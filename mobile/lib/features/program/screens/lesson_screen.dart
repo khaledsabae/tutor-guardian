@@ -636,7 +636,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           buttons.add(
             _AssetButton(
               icon: Icons.style,
-              label: '🃏 فلاش كاردز ($flashcardsCount بطاقة)',
+              label: '📇 فلاش كاردز ($flashcardsCount بطاقة)',
               onPressed: () {
                 Navigator.push(
                   context,
