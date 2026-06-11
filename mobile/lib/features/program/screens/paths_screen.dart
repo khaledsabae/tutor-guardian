@@ -40,9 +40,9 @@ class PathsScreen extends ConsumerWidget {
             tooltip: 'بحث',
             icon: const Icon(Icons.search),
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const SearchScreen()),
-              );
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
             },
           ),
           // Phase 7 — settings is a push route, not a tab.
@@ -50,11 +50,9 @@ class PathsScreen extends ConsumerWidget {
             tooltip: 'الإعدادات',
             icon: const Icon(Icons.settings_outlined),
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const SettingsScreen(),
-                ),
-              );
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
             },
           ),
           IconButton(
@@ -88,8 +86,7 @@ class PathsScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => _ErrorState(
           message: 'تعذّر تحميل المسارات.\n$err',
-          onRetry: () =>
-              ref.read(pathsListProvider(args).notifier).refresh(),
+          onRetry: () => ref.read(pathsListProvider(args).notifier).refresh(),
         ),
       ),
     );
@@ -101,102 +98,102 @@ class _PathCard extends StatelessWidget {
   final CurriculumPath path;
   final String ageGroup;
 
+  void _open(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => PathDetailScreen(pathId: path.id, ageGroup: ageGroup),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-        side: const BorderSide(color: Color(0xFFE5E7EB)),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(14),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => PathDetailScreen(
-                pathId: path.id,
-                ageGroup: ageGroup,
-              ),
-            ),
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: AppTheme.primary.withValues(alpha: 0.10),
-                      borderRadius: BorderRadius.circular(12),
+    // One coherent button node for screen readers (title + description),
+    // with the inner visual tree's own semantics excluded to avoid
+    // fragmented announcements.
+    return Semantics(
+      button: true,
+      label: 'مسار: ${path.title}. ${path.description}',
+      onTap: () => _open(context),
+      excludeSemantics: true,
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: const BorderSide(color: Color(0xFFE5E7EB)),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: () => _open(context),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: AppTheme.primary.withValues(alpha: 0.10),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(Icons.route, color: AppTheme.primary),
                     ),
-                    child: const Icon(
-                      Icons.route,
-                      color: AppTheme.primary,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          path.title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w700),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${path.ageLabel} · ${path.domainLabel}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(color: AppTheme.textSecondary),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                path.description,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: AppTheme.textSecondary),
-              ),
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  _Pill(
-                    icon: Icons.timelapse,
-                    label: '${path.estimatedDays} يوم',
-                  ),
-                  _Pill(
-                    icon: Icons.menu_book_outlined,
-                    label: '${path.lessonIds.length} دروس',
-                  ),
-                  if (path.pedagogicalFramework != null) ...[
-                    _Pill(
-                      icon: Icons.psychology_outlined,
-                      label: _frameworkLabel(path.pedagogicalFramework!),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            path.title,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(fontWeight: FontWeight.w700),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            '${path.ageLabel} · ${path.domainLabel}',
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(color: AppTheme.textSecondary),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  path.description,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppTheme.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    _Pill(
+                      icon: Icons.timelapse,
+                      label: '${path.estimatedDays} يوم',
+                    ),
+                    _Pill(
+                      icon: Icons.menu_book_outlined,
+                      label: '${path.lessonIds.length} دروس',
+                    ),
+                    if (path.pedagogicalFramework != null) ...[
+                      _Pill(
+                        icon: Icons.psychology_outlined,
+                        label: _frameworkLabel(path.pedagogicalFramework!),
+                      ),
+                    ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -239,10 +236,9 @@ class _Pill extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             label,
-            style: Theme.of(context)
-                .textTheme
-                .labelSmall
-                ?.copyWith(color: AppTheme.textSecondary),
+            style: Theme.of(
+              context,
+            ).textTheme.labelSmall?.copyWith(color: AppTheme.textSecondary),
           ),
         ],
       ),
@@ -271,10 +267,9 @@ class _EmptyState extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(color: AppTheme.textSecondary),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: AppTheme.textSecondary),
             ),
           ],
         ),
@@ -296,11 +291,7 @@ class _ErrorState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
-              Icons.error_outline,
-              size: 56,
-              color: AppTheme.dangerFg,
-            ),
+            const Icon(Icons.error_outline, size: 56, color: AppTheme.dangerFg),
             const SizedBox(height: 12),
             Text(
               message,

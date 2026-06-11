@@ -130,6 +130,12 @@ void main() {
       // 14 days pill on the first path
       expect(find.text('14 يوم'), findsWidgets);
       expect(find.text('14 يوم'), findsWidgets);
+      // Accessibility (P1 #5): each path card exposes one coherent button
+      // semantics node labelled with its title for screen readers.
+      expect(
+        find.bySemanticsLabel(RegExp('مسار: تأسيس الآداب الإسلامية')),
+        findsOneWidget,
+      );
     });
 
     testWidgets('PathsScreen shows error state on failure', (WidgetTester tester) async {
