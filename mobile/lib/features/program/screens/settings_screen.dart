@@ -28,6 +28,7 @@ import '../providers/settings_providers.dart';
 import '../providers/backup_provider.dart';
 import 'children_list_screen.dart';
 import 'edit_child_screen.dart';
+import 'badges_screen.dart';
 import 'favorites_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -122,6 +123,18 @@ class SettingsScreen extends ConsumerWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => const FavoritesScreen(),
+                      ),
+                    );
+                  },
+                ),
+                _SettingsRow(
+                  icon: Icons.emoji_events_outlined,
+                  title: 'إنجازاتي',
+                  subtitle: 'الشارات التي حصلت عليها',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const BadgesScreen(),
                       ),
                     );
                   },
