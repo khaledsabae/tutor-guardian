@@ -1872,6 +1872,412 @@
         "infographics": [],
         "podcasts": []
       }
+    },
+    {
+      "lesson_id": "lesson_0-3_cyber_screen_foundations_01",
+      "age_group": "0-3",
+      "topic_path": "cyber_screen_foundations",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_cyber_screen_foundations_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_01_fc.json",
+            "title": "صفر شاشات تحت السنتين — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_cyber_screen_foundations_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_01_qz.json",
+            "title": "صفر شاشات تحت السنتين — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_cyber_screen_foundations_02",
+      "age_group": "0-3",
+      "topic_path": "cyber_screen_foundations",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_cyber_screen_foundations_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_02_fc.json",
+            "title": "اللعب الحقيقي بديل الشاشة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_cyber_screen_foundations_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_02_qz.json",
+            "title": "اللعب الحقيقي بديل الشاشة — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_cyber_screen_foundations_03",
+      "age_group": "0-3",
+      "topic_path": "cyber_screen_foundations",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_cyber_screen_foundations_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_03_fc.json",
+            "title": "حماية النوم والحدود الرقمية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_cyber_screen_foundations_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_03_qz.json",
+            "title": "حماية النوم والحدود الرقمية — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_development_early_moments_01",
+      "age_group": "0-3",
+      "topic_path": "development_early_moments",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_development_early_moments_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_01_fc.json",
+            "title": "المرحلة الحسية الحركية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_development_early_moments_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_01_qz.json",
+            "title": "المرحلة الحسية الحركية — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_development_early_moments_02",
+      "age_group": "0-3",
+      "topic_path": "development_early_moments",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_development_early_moments_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_02_fc.json",
+            "title": "الارتباط الآمن — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_development_early_moments_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_02_qz.json",
+            "title": "الارتباط الآمن — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_development_early_moments_03",
+      "age_group": "0-3",
+      "topic_path": "development_early_moments",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_development_early_moments_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_03_fc.json",
+            "title": "منطقة التطور القريب — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_development_early_moments_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_03_qz.json",
+            "title": "منطقة التطور القريب — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_islamic_parenting_attachment_01",
+      "age_group": "0-3",
+      "topic_path": "islamic_parenting_attachment",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_attachment_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_01_fc.json",
+            "title": "استقبال المولود: سنن الميلاد — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_attachment_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_01_qz.json",
+            "title": "استقبال المولود: سنن الميلاد — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_islamic_parenting_attachment_02",
+      "age_group": "0-3",
+      "topic_path": "islamic_parenting_attachment",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_attachment_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_02_fc.json",
+            "title": "الرفق والرحمة بالرضيع — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_attachment_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_02_qz.json",
+            "title": "الرفق والرحمة بالرضيع — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_islamic_parenting_attachment_03",
+      "age_group": "0-3",
+      "topic_path": "islamic_parenting_attachment",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_attachment_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_03_fc.json",
+            "title": "التواصل الفعّال مع الرضيع — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_attachment_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_03_qz.json",
+            "title": "التواصل الفعّال مع الرضيع — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_islamic_parenting_attachment_04",
+      "age_group": "0-3",
+      "topic_path": "islamic_parenting_attachment",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_attachment_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_04_fc.json",
+            "title": "بذر الإيمان في القلب الصغير — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_attachment_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_04_qz.json",
+            "title": "بذر الإيمان في القلب الصغير — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_medical_early_milestones_01",
+      "age_group": "0-3",
+      "topic_path": "medical_early_milestones",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_medical_early_milestones_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_01_fc.json",
+            "title": "الشهران الأولان: التواصل المبكر — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_medical_early_milestones_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_01_qz.json",
+            "title": "الشهران الأولان: التواصل المبكر — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_medical_early_milestones_02",
+      "age_group": "0-3",
+      "topic_path": "medical_early_milestones",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_medical_early_milestones_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_02_fc.json",
+            "title": "الأشهر الستة الأولى: نوم وتغذية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_medical_early_milestones_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_02_qz.json",
+            "title": "الأشهر الستة الأولى: نوم وتغذية — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_medical_early_milestones_03",
+      "age_group": "0-3",
+      "topic_path": "medical_early_milestones",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_medical_early_milestones_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_03_fc.json",
+            "title": "علامات التنبيه المبكر — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_medical_early_milestones_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_03_qz.json",
+            "title": "علامات التنبيه المبكر — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_medical_early_milestones_04",
+      "age_group": "0-3",
+      "topic_path": "medical_early_milestones",
+      "source_id": null,
+      "title_ar": "",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_medical_early_milestones_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_04_fc.json",
+            "title": "طلب المساعدة والتدخل المبكر — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_medical_early_milestones_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_04_qz.json",
+            "title": "طلب المساعدة والتدخل المبكر — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": []
+      }
     }
   ]
 }
