@@ -76,8 +76,6 @@ class _CardState extends ConsumerState<_Card> {
         pixelRatio: 2.0, // High-res capture (2160x2160)
       );
 
-      if (image == null) throw Exception('Failed to capture image');
-
       // Save to temporary file
       final tempDir = await Directory.systemTemp.createTemp('tg_share_');
       final file = File('${tempDir.path}/tip_${widget.tip.id}.png');
