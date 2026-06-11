@@ -7,14 +7,18 @@
 /// that competes with the chat for attention.
 library;
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../theme/app_theme.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/models.dart';
 import '../providers/program_providers.dart';
 import '../providers/favorites_provider.dart';
+import '../widgets/shareable_tip_card.dart';
 
 class DailyTipCard extends ConsumerWidget {
   const DailyTipCard({super.key});
@@ -38,15 +42,71 @@ class DailyTipCard extends ConsumerWidget {
   }
 }
 
-class _Card extends ConsumerWidget {
+class _Card extends ConsumerStatefulWidget {
   const _Card({required this.tip, required this.childName});
   final DailyTip tip;
   final String childName;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_Card> createState() => _CardState();
+}
+
+class _CardState extends ConsumerState<_Card> {
+  final ScreenshotController _screenshotController = ScreenshotController();
+  bool _isSharing = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<void> _shareTip() async {
+    if (_isSharing) return;
+    setState(() => _isSharing = true);
+
+    try {
+      // Capture the shareable tip card as PNG
+      final shareableCard = ShareableTipCard(
+        tip: widget.tip,
+        childName: widget.childName,
+      );
+
+      final image = await _screenshotController.captureFromWidget(
+        shareableCard,
+        pixelRatio: 2.0, // High-res capture (2160x2160)
+      );
+
+      if (image == null) throw Exception('Failed to capture image');
+
+      // Save to temporary file
+      final tempDir = await Directory.systemTemp.createTemp('tg_share_');
+      final file = File('${tempDir.path}/tip_${widget.tip.id}.png');
+      await file.writeAsBytes(image);
+
+      // Share the image
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        text: 'نصيحة اليوم من المربي الذكي: ${widget.tip.text}',
+        subject: 'نصيحة اليوم - المربي الذكي',
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('تعذّر مشاركة النصيحة: $e'),
+            backgroundColor: AppTheme.dangerFg,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isSharing = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isFav = ref.watch(favoritesProvider)['tips']
-            ?.contains(tip.id) ?? false;
+            ?.contains(widget.tip.id) ?? false;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -79,7 +139,7 @@ class _Card extends ConsumerWidget {
                 Row(
                   children: [
                     Text(
-                      'نصيحة اليوم لـ $childName',
+                      'نصيحة اليوم لـ ${widget.childName}',
                       style: const TextStyle(
                         color: Color(0xFF8A5A0F),
                         fontWeight: FontWeight.w700,
@@ -89,7 +149,9 @@ class _Card extends ConsumerWidget {
                     const Spacer(),
                     IconButton(
                       onPressed: () {
-                        ref.read(favoritesProvider.notifier).toggleTip(tip.id);
+                        ref
+                            .read(favoritesProvider.notifier)
+                            .toggleTip(widget.tip.id);
                       },
                       icon: Icon(
                         isFav ? Icons.favorite : Icons.favorite_border,
@@ -97,6 +159,27 @@ class _Card extends ConsumerWidget {
                         size: 20,
                       ),
                       tooltip: isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة',
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                    const SizedBox(width: 4),
+                    IconButton(
+                      onPressed: _isSharing ? null : _shareTip,
+                      icon: _isSharing
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Color(0xFF8A5A0F),
+                              ),
+                            )
+                          : const Icon(
+                              Icons.share_outlined,
+                              color: Color(0xFF8A5A0F),
+                              size: 20,
+                            ),
+                      tooltip: 'مشاركة النصيحة',
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -110,7 +193,7 @@ class _Card extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        tip.timeOfDayLabel,
+                        widget.tip.timeOfDayLabel,
                         style: const TextStyle(
                           color: Color(0xFF8A5A0F),
                           fontSize: 10,
@@ -122,7 +205,7 @@ class _Card extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  tip.text,
+                  widget.tip.text,
                   style: const TextStyle(
                     color: AppTheme.textPrimary,
                     fontSize: 13,

@@ -37,6 +37,10 @@ dependencies:
   # Open the privacy policy from the Settings screen.
   url_launcher: ^6.3.0
 
+  # Share + screenshot for share cards
+  share_plus: ^10.0.0
+  screenshot: ^3.0.0
+
   cupertino_icons: ^1.0.8
   just_audio: ^0.10.5
 
