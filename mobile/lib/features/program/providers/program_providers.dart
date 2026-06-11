@@ -27,6 +27,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../api/tg_client.dart';
 import '../../../state/chat_notifier.dart';
+import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/models.dart';
 import '../data/program_repository.dart';
 
@@ -148,8 +149,11 @@ final dailyTipProvider = AsyncNotifierProvider.autoDispose.family<
 
 /// A user-visible "selected age group" preference.
 ///
-/// Defaults to `4-6` because the Phase 3 seed content lives there. This
-/// is *not* persisted yet — that lands in Phase 5 alongside the
-/// `child_profiles` table. For now it's a session-only provider so the
-/// daily-tip / paths screens can show the most relevant content.
-final selectedAgeGroupProvider = StateProvider<String>((_) => '4-6');
+/// Derived from the active child's profile (falls back to `4-6` before
+/// onboarding completes). Watching [activeChildProfileProvider] means a
+/// create/switch-child automatically resets this to the new child's age
+/// group — paths and daily tips follow the right child on cold boot too.
+final selectedAgeGroupProvider = StateProvider<String>((ref) {
+  final child = ref.watch(activeChildProfileProvider);
+  return child?.ageGroup ?? '4-6';
+});
