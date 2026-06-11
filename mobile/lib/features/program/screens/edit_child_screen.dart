@@ -238,11 +238,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
                     selected: _gender == 'female',
                     onTap: () => setState(() => _gender = 'female'),
                   ),
-                  _GenderPill(
-                    label: 'أخرى',
-                    selected: _gender == 'other',
-                    onTap: () => setState(() => _gender = 'other'),
-                  ),
+
                   if (_gender != null)
                     _GenderPill(
                       label: 'مسح',

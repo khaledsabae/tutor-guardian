@@ -284,12 +284,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       selected: _gender == 'female',
                       onTap: () => setState(() => _gender = 'female'),
                     ),
-                    _Pill(
-                      label: 'أخرى',
-                      icon: Icons.transgender,
-                      selected: _gender == 'other',
-                      onTap: () => setState(() => _gender = 'other'),
-                    ),
+
                     if (_gender != null)
                       _Pill(
                         label: 'مسح',
