@@ -37,8 +37,8 @@ class ProgramRepository {
   /// `GET /api/program/paths/{id}` (no lessons) or
   /// `GET /api/program/paths/{id}?include=lessons` (bundled).
   ///
-  /// The backend returns `{ "path": {...}, "lessons": [...] }` when
-  /// `?include=lessons` is set, and `{ "path": {...} }` otherwise.
+  /// The backend returns the path fields at the root level (flat), with an
+  /// optional `lessons` array when `?include=lessons` is set.
   Future<PathDetail> getPathDetail(
     String pathId, {
     bool includeLessons = true,
@@ -47,7 +47,8 @@ class ProgramRepository {
       pathId,
       includeLessons: includeLessons,
     );
-    final path = CurriculumPath.fromJson(json['path'] as Map<String, dynamic>);
+    // API returns path fields at root level — no "path" wrapper key.
+    final path = CurriculumPath.fromJson(json);
     final lessons = includeLessons
         ? ((json['lessons'] as List?) ?? const [])
             .map(
