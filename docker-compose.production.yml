@@ -14,6 +14,10 @@ services:
     volumes:
       - tg_sessions:/app/ops          # sessions.db + feedback SQLite
       - tg_chroma:/app/knowledge_base/chroma_db
+      # Lesson media (podcasts/videos, ~2GB) lives on the host — too big
+      # to bake into the image. rsynced from the dev machine; the image's
+      # COPY docs/ is shadowed by this read-only mount.
+      - ./docs:/app/docs:ro
     networks:
       - internal
       - analytics_net               # shared with analytics_nginx for direct name-based proxy
