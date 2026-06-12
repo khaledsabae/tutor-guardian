@@ -79,3 +79,5 @@ ops/data/kaggle_upload/
 ops/eval/runs/
 ops/eval/_eval_*.db
 ops/eval/golden_candidates.jsonl
+ops/data/qa_dataset_v2.jsonl
+ops/data/qa_dataset_v2.ckpt.json
