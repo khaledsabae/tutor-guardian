@@ -81,10 +81,21 @@ def choose_tier(
         return ("cloud_quality", "multi_domain")
     if len(query_text) > 200 or history_len >= 4:
         return ("cloud_quality", "long_or_deep_context")
-    distances = [
-        u.get("distance") for u in retrieved_units
-        if isinstance(u.get("distance"), (int, float))
+    # Weak retrieval → the local 3B can't compensate for thin context.
+    # Prefer the cross-encoder signal when present (Phase 2); fall back
+    # to raw vector distance otherwise.
+    rerank_scores = [
+        u.get("rerank_score") for u in retrieved_units
+        if isinstance(u.get("rerank_score"), (int, float))
     ]
-    if distances and min(distances) > 0.70:
-        return ("cloud_quality", "weak_retrieval")
+    if rerank_scores:
+        if max(rerank_scores) < -4.5:
+            return ("cloud_quality", "weak_retrieval")
+    else:
+        distances = [
+            u.get("distance") for u in retrieved_units
+            if isinstance(u.get("distance"), (int, float))
+        ]
+        if distances and min(distances) > 0.70:
+            return ("cloud_quality", "weak_retrieval")
     return ("local_fast", "default")

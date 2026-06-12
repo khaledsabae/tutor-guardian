@@ -156,3 +156,12 @@ def classify_domains(question: str) -> List[str]:
 def classify_single_domain(question: str) -> str:
     """Back-compat wrapper returning the single top domain as string."""
     return classify_domains(question)[0]
+
+
+def matched_fast_path(question: str) -> bool:
+    """True when the keyword fast-path alone classifies the question —
+    i.e. it already uses KB-aligned vocabulary (query rewriting can be
+    skipped without losing recall)."""
+    if not question or not question.strip():
+        return False
+    return bool(_keyword_fast_path(question))

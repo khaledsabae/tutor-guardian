@@ -16,15 +16,19 @@ def _auth_headers(token: str) -> dict:
 
 @pytest.fixture
 def client(monkeypatch):
-    # mock retrieval → one canned unit; skip index build
+    # mock retrieval → one canned unit; skip index build + query rewrite
     monkeypatch.setattr("app.routers.assistant._ensure_index", lambda: None)
     monkeypatch.setattr(
-        "app.routers.assistant.retrieve_multi_domain",
+        "app.routers.assistant.rewrite_query", lambda *a, **kw: ""
+    )
+    monkeypatch.setattr(
+        "app.routers.assistant.retrieve_hybrid",
         lambda **kw: [{
             "unit_id": "test-1",
             "document": "نص إرشادي تجريبي للأهل.",
             "metadata": {"reference_info": "مرجع تجريبي"},
             "distance": 0.2,
+            "rerank_score": 1.0,
         }],
     )
 

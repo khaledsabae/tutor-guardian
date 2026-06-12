@@ -248,3 +248,110 @@ def retrieve_multi_domain(
     merged.sort(key=lambda x: x.get("distance", 1.0))
 
     return merged
+
+
+# ── Retrieval telemetry (non-fatal, mirrors ai_gateway._log_call) ───────────
+
+_TELEMETRY_DB = Path(__file__).resolve().parents[3] / "ops" / "sessions.db"
+
+
+def log_retrieval(query_text: str, domains: list[str],
+                  rewritten_query: str, final_units: list[dict]) -> None:
+    """Record what retrieval produced so eval runs can diagnose recall."""
+    try:
+        import json as _json
+        import sqlite3 as _sqlite3
+
+        conn = _sqlite3.connect(_TELEMETRY_DB)
+        conn.execute(
+            """CREATE TABLE IF NOT EXISTS retrieval_log (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ts TEXT DEFAULT (datetime('now')),
+                question TEXT, domains TEXT, rewritten_query TEXT,
+                final_ids TEXT, distances TEXT, rerank_scores TEXT
+            )"""
+        )
+        conn.execute(
+            "INSERT INTO retrieval_log (question, domains, rewritten_query,"
+            " final_ids, distances, rerank_scores) VALUES (?,?,?,?,?,?)",
+            (
+                query_text[:300],
+                ",".join(domains),
+                rewritten_query[:120],
+                _json.dumps([u.get("unit_id") for u in final_units]),
+                _json.dumps([round(u["distance"], 3) for u in final_units
+                             if isinstance(u.get("distance"), float)]),
+                _json.dumps([round(u["rerank_score"], 3) for u in final_units
+                             if isinstance(u.get("rerank_score"), float)]),
+            ),
+        )
+        conn.commit()
+        conn.close()
+    except Exception:  # noqa: BLE001 — telemetry must never break a request
+        pass
+
+
+# ── Hybrid retrieval (vector + BM25 → RRF → cross-encoder rerank) ───────────
+
+_RRF_K = 60
+
+
+def _rrf_merge(*ranked_lists: list[dict]) -> list[dict]:
+    """Reciprocal Rank Fusion across candidate lists, deduped by unit_id.
+    The fused candidate keeps the metadata of its first appearance and
+    accumulates `rrf_score`; vector `distance` is preserved when known."""
+    fused: dict[str, dict] = {}
+    for ranked in ranked_lists:
+        for rank, cand in enumerate(ranked):
+            uid = cand.get("unit_id", "")
+            if not uid:
+                continue
+            entry = fused.setdefault(uid, {**cand, "rrf_score": 0.0})
+            entry["rrf_score"] += 1.0 / (_RRF_K + rank + 1)
+            # keep the best (smallest) vector distance seen for telemetry
+            if "distance" in cand:
+                entry["distance"] = min(
+                    entry.get("distance", cand["distance"]), cand["distance"]
+                )
+    return sorted(fused.values(), key=lambda c: -c["rrf_score"])
+
+
+def retrieve_hybrid(
+    query_text: str,
+    domains: list[str],
+    age_group: str,
+    rewritten_query: str = "",
+    top_n: int = 4,
+    candidates_per_leg: int = 8,
+) -> list[dict]:
+    """The quality-first retrieval path.
+
+    Per domain: vector top-k + BM25 top-k (+ both again for the rewritten
+    query when provided) → RRF fusion → cross-encoder rerank → top_n.
+    Falls back to fusion order if the reranker is unavailable (see
+    reranker.rerank — it never raises).
+    """
+    from app.services.bm25_index import get_bm25
+    from app.services.reranker import rerank
+
+    bm25 = get_bm25()
+    legs: list[list[dict]] = []
+    queries = [q for q in (query_text, rewritten_query) if q]
+
+    for domain in domains:
+        db_domain = canonical_domain(domain)
+        for q in queries:
+            vec = retrieve_relevant_units(
+                query_text=q, domain=domain, age_group=age_group,
+                top_k=candidates_per_leg,
+            )
+            for r in vec:
+                r.setdefault("source_domain", domain)
+            legs.append(vec)
+            lex = bm25.search(q, domain=db_domain, top_k=candidates_per_leg)
+            for r in lex:
+                r.setdefault("source_domain", domain)
+            legs.append(lex)
+
+    candidates = _rrf_merge(*legs)
+    return rerank(query_text, candidates, top_n=top_n)

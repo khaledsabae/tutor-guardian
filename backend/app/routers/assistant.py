@@ -13,12 +13,13 @@ from app.services.guardrails import (
     apply_guardrails, is_emergency, emergency_reply, evaluate_guardrails,
     _build_fallback_message,
 )
-from app.services.retrieval import retrieve_multi_domain, _ensure_index
+from app.services.retrieval import retrieve_hybrid, _ensure_index, log_retrieval
+from app.services.query_rewriter import rewrite_query
 from app.services.llm_service import generate_reply, build_full_prompt
 from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
 from app.services.intent_guard import check_banned_intent, check_emergency_keywords
-from app.services.domain_classifier import classify_domains
+from app.services.domain_classifier import classify_domains, matched_fast_path
 from app.services.tier_router import choose_tier
 from app.services.privacy import redact_for_cloud
 from app.services import conversation_store as store
@@ -87,18 +88,18 @@ async def draft_reply(request: Request, user_message: UserMessage):
     detected_domains = classify_domains(query_text)
     logger.info("Auto-detected domains: %s", detected_domains)
 
-    # ── Step 4: Multi-domain retrieval ───────────────────────────────
+    # ── Step 4: Hybrid retrieval (vector + BM25 → RRF → rerank) ──────
     _ensure_index()
-    results = retrieve_multi_domain(
+    rewritten = rewrite_query(
+        query_text, classifier_fast_path=matched_fast_path(query_text)
+    )
+    retrieved_units = retrieve_hybrid(
         query_text=query_text,
         domains=detected_domains,
         age_group=user_message.age_group or "unspecified",
-        top_k_per_domain=2,
-        behavior_type=user_message.behavior_type or "",
+        rewritten_query=rewritten,
     )
-
-    retrieved_units = [r for r in results if r.get("distance", 1.0) < 0.85]
-    retrieved_texts = [r["document"] for r in retrieved_units]
+    log_retrieval(query_text, detected_domains, rewritten, retrieved_units)
 
     primary_domain = detected_domains[0] if detected_domains else "medical"
 
@@ -249,12 +250,15 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
     )
     detected_domains = classify_domains(query_text)
     _ensure_index()
-    results = retrieve_multi_domain(
+    rewritten = rewrite_query(
+        query_text, classifier_fast_path=matched_fast_path(query_text)
+    )
+    retrieved_units = retrieve_hybrid(
         query_text=query_text, domains=detected_domains,
         age_group=user_message.age_group or "unspecified",
-        top_k_per_domain=2, behavior_type=user_message.behavior_type or "",
+        rewritten_query=rewritten,
     )
-    retrieved_units = [r for r in results if r.get("distance", 1.0) < 0.85]
+    log_retrieval(query_text, detected_domains, rewritten, retrieved_units)
     primary_domain = detected_domains[0] if detected_domains else "medical"
     severity = user_message.severity or "خفيف"
 
@@ -298,7 +302,7 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
         domain=primary_domain, behavior_type=user_message.behavior_type or "",
         age_group=user_message.age_group or "unspecified", severity=severity,
         retrieved_units=retrieved_units, question_text=stream_question,
-        conversation_history=stream_history,
+        conversation_history=stream_history, tier=tier,
     )
 
     def event_stream():
