@@ -74,3 +74,8 @@ docs/lesson_assets/infographics/
 kaggle_logs*.txt
 ops/data/kaggle_output/
 ops/data/kaggle_upload/
+
+# Eval harness artifacts
+ops/eval/runs/
+ops/eval/_eval_*.db
+ops/eval/golden_candidates.jsonl

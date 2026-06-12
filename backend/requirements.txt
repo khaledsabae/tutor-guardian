@@ -22,3 +22,5 @@ pdfplumber>=0.11
 # ── Dev / Test ──
 pytest>=8.0
 pytest-anyio>=0.0.0
+openai>=1.40          # cloud quality tier (Azure OpenAI-compatible)
+rank-bm25>=0.2.2      # hybrid retrieval (Phase 2)

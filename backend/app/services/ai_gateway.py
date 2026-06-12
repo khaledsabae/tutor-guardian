@@ -100,12 +100,142 @@ class OllamaProvider:
                     yield json.loads(line)
 
 
+class _ThinkFilter:
+    """Strips DeepSeek-R1-style <think>…</think> reasoning from a token
+    stream. Buffers partial tag fragments that span chunk boundaries.
+    No-op overhead for non-reasoning deployments (V3/V4-Flash)."""
+
+    _OPEN, _CLOSE = "<think>", "</think>"
+
+    def __init__(self) -> None:
+        self._in_think = False
+        self._pending = ""
+
+    def feed(self, delta: str) -> str:
+        text = self._pending + delta
+        self._pending = ""
+        out: list[str] = []
+        while text:
+            if self._in_think:
+                idx = text.find(self._CLOSE)
+                if idx == -1:
+                    # keep a tail in case </think> is split across chunks
+                    self._pending = text[-(len(self._CLOSE) - 1):]
+                    return "".join(out)
+                text = text[idx + len(self._CLOSE):]
+                self._in_think = False
+            else:
+                idx = text.find(self._OPEN)
+                if idx == -1:
+                    # emit all but a possible partial "<think" tail
+                    for tail in range(min(len(self._OPEN) - 1, len(text)), 0, -1):
+                        if self._OPEN.startswith(text[-tail:]):
+                            self._pending = text[-tail:]
+                            text = text[:-tail]
+                            break
+                    out.append(text)
+                    return "".join(out)
+                out.append(text[:idx])
+                text = text[idx + len(self._OPEN):]
+                self._in_think = True
+        return "".join(out)
+
+
+class OpenAICompatProvider:
+    """Azure OpenAI-compatible chat provider (cloud quality tier).
+
+    Emits the SAME dict shape as Ollama's NDJSON ({"response", "done",
+    "prompt_eval_count", "eval_count"}) so the gateway's stream/generate
+    plumbing works unchanged. Reports outcomes to the tier router's
+    circuit breaker.
+    """
+
+    name = "azure_deepseek"
+
+    def __init__(self, endpoint: str, api_key: str, api_version: str,
+                 model: str, timeout: int) -> None:
+        from openai import AzureOpenAI  # lazy import — optional dependency
+
+        self.model = model
+        self.timeout = timeout
+        self._client = AzureOpenAI(
+            api_key=api_key, azure_endpoint=endpoint,
+            api_version=api_version, timeout=timeout,
+        )
+
+    def _report(self, ok: bool) -> None:
+        try:
+            from app.services.tier_router import record_cloud_result
+            record_cloud_result(ok)
+        except Exception:  # noqa: BLE001 — breaker is best-effort
+            pass
+
+    def generate(self, prompt: str, *, options: dict) -> dict:
+        try:
+            r = self._client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=options.get("temperature", 0.3),
+                max_tokens=options.get("num_predict", 1024),
+            )
+        except Exception:
+            self._report(False)
+            raise
+        self._report(True)
+        text = r.choices[0].message.content or ""
+        flt = _ThinkFilter()
+        text = flt.feed(text)
+        usage = getattr(r, "usage", None)
+        return {
+            "response": text, "done": True,
+            "prompt_eval_count": getattr(usage, "prompt_tokens", None),
+            "eval_count": getattr(usage, "completion_tokens", None),
+        }
+
+    def stream(self, prompt: str, *, options: dict) -> Iterator[dict]:
+        try:
+            stream = self._client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=options.get("temperature", 0.3),
+                max_tokens=options.get("num_predict", 1024),
+                stream=True,
+            )
+        except Exception:
+            self._report(False)
+            raise
+        flt = _ThinkFilter()
+        prompt_tokens = completion_tokens = None
+        try:
+            for chunk in stream:
+                usage = getattr(chunk, "usage", None)
+                if usage:
+                    prompt_tokens = getattr(usage, "prompt_tokens", None)
+                    completion_tokens = getattr(usage, "completion_tokens", None)
+                if not chunk.choices:
+                    continue
+                delta = chunk.choices[0].delta.content or ""
+                delta = flt.feed(delta)
+                if delta:
+                    yield {"response": delta, "done": False}
+        except Exception:
+            self._report(False)
+            raise
+        self._report(True)
+        yield {
+            "response": "", "done": True,
+            "prompt_eval_count": prompt_tokens,
+            "eval_count": completion_tokens,
+        }
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Telemetry (non-fatal)
 # ─────────────────────────────────────────────────────────────────────────────
 def _log_call(provider: str, model: str, latency_ms: int,
               prompt_tokens: int | None, completion_tokens: int | None,
-              streamed: bool, ok: bool) -> None:
+              streamed: bool, ok: bool,
+              tier: str | None = None, route_reason: str | None = None) -> None:
     try:
         _TELEMETRY_DB.parent.mkdir(parents=True, exist_ok=True)
         conn = sqlite3.connect(_TELEMETRY_DB)
@@ -118,11 +248,16 @@ def _log_call(provider: str, model: str, latency_ms: int,
                 streamed INTEGER, ok INTEGER
             )"""
         )
+        for col in ("tier TEXT", "route_reason TEXT"):
+            try:
+                conn.execute(f"ALTER TABLE llm_calls ADD COLUMN {col}")
+            except sqlite3.OperationalError:
+                pass  # column already exists
         conn.execute(
             "INSERT INTO llm_calls (provider,model,latency_ms,prompt_tokens,"
-            "completion_tokens,streamed,ok) VALUES (?,?,?,?,?,?,?)",
+            "completion_tokens,streamed,ok,tier,route_reason) VALUES (?,?,?,?,?,?,?,?,?)",
             (provider, model, latency_ms, prompt_tokens, completion_tokens,
-             int(streamed), int(ok)),
+             int(streamed), int(ok), tier, route_reason),
         )
         conn.commit()
         conn.close()
@@ -180,12 +315,55 @@ class AIGateway:
             logger.warning("%s failed: %s", label, e)
             return None
 
+    def _cloud_provider(self) -> "OpenAICompatProvider | None":
+        """Build the Azure quality-tier provider if fully configured."""
+        if not (LLM.cloud_tier_enabled and LLM.azure_endpoint and LLM.azure_api_key):
+            return None
+        try:
+            return OpenAICompatProvider(
+                endpoint=LLM.azure_endpoint, api_key=LLM.azure_api_key,
+                api_version=LLM.azure_api_version, model=LLM.azure_model,
+                timeout=LLM.cloud_tier_timeout,
+            )
+        except Exception as e:  # missing openai package etc. — degrade to local
+            logger.warning("cloud tier unavailable: %s", e)
+            return None
+
     async def generate(self, prompt: str, *, options: dict | None = None,
-                       max_retries: int | None = None) -> LLMResult:
+                       max_retries: int | None = None,
+                       tier: str = "local_fast",
+                       route_reason: str | None = None) -> LLMResult:
         """Blocking generation with primary + full fallback chain. Raises on total failure."""
         retries = max_retries if max_retries is not None else LLM.max_retries
         opts = self._options(options)
         last_err: Exception | None = None
+
+        # Cloud quality tier first when routed there; local chain remains
+        # the fallback so a cloud failure is invisible to the caller.
+        if tier == "cloud_quality":
+            cloud = self._cloud_provider()
+            if cloud is not None:
+                start = time.monotonic()
+                try:
+                    data = await asyncio.to_thread(cloud.generate, prompt, options=opts)
+                    latency = int((time.monotonic() - start) * 1000)
+                    text = (data.get("response") or "").strip()
+                    if text:
+                        result = LLMResult(
+                            text=text, model=cloud.model, latency_ms=latency,
+                            prompt_tokens=data.get("prompt_eval_count"),
+                            completion_tokens=data.get("eval_count"),
+                        )
+                        _log_call(cloud.name, cloud.model, latency,
+                                  result.prompt_tokens, result.completion_tokens,
+                                  streamed=False, ok=True,
+                                  tier=tier, route_reason=route_reason)
+                        return result
+                except Exception as e:
+                    _log_call(cloud.name, cloud.model, 0, None, None,
+                              streamed=False, ok=False,
+                              tier=tier, route_reason=route_reason)
+                    logger.warning("cloud quality tier failed, using local: %s", e)
 
         # 1. Try primary model with retries
         for attempt in range(1, retries + 1):
@@ -228,7 +406,8 @@ class AIGateway:
         raise RuntimeError(f"LLM generation failed after all retries and fallbacks: {last_err}") from last_err
 
     def _stream_provider(self, provider: LLMProvider, prompt: str,
-                         opts: dict) -> Iterator[StreamChunk]:
+                         opts: dict, tier: str | None = None,
+                         route_reason: str | None = None) -> Iterator[StreamChunk]:
         """Stream from one provider. Raises on failure (caller decides to fall back)."""
         start = time.monotonic()
         text_parts: list[str] = []
@@ -252,34 +431,47 @@ class AIGateway:
             completion_tokens=completion_tokens,
         )
         _log_call(provider.name, result.model, latency,
-                  prompt_tokens, completion_tokens, streamed=True, ok=ok)
+                  prompt_tokens, completion_tokens, streamed=True, ok=ok,
+                  tier=tier, route_reason=route_reason)
         yield StreamChunk(delta="", done=True, result=result)
 
-    def stream(self, prompt: str, *, options: dict | None = None) -> Iterator[StreamChunk]:
+    def stream(self, prompt: str, *, options: dict | None = None,
+               tier: str = "local_fast",
+               route_reason: str | None = None) -> Iterator[StreamChunk]:
         """Streaming generation with pre-flight fallback.
 
         Uses stream_chain() (local-fast first) for low latency. Falls back
         through each provider only if the previous one fails before emitting
         any tokens (once tokens are flowing we cannot fall back — we raise).
+        When routed to the cloud quality tier, the Azure provider is tried
+        first and the local chain stays behind it — a cloud pre-flight
+        failure is invisible to the SSE consumer.
         """
         opts = self._options(options)
 
-        candidates: list[tuple[str, OllamaProvider]] = [
+        candidates: list[tuple[str, LLMProvider]] = [
             (fb["name"], OllamaProvider(fb["url"], fb["model"], fb["timeout"]))
             for fb in LLM.stream_chain()
         ]
+        if tier == "cloud_quality":
+            cloud = self._cloud_provider()
+            if cloud is not None:
+                candidates.insert(0, ("cloud_quality", cloud))
 
         for label, provider in candidates:
             tokens_sent = False
             try:
-                for chunk in self._stream_provider(provider, prompt, opts):
+                for chunk in self._stream_provider(
+                    provider, prompt, opts, tier=tier, route_reason=route_reason
+                ):
                     if not chunk.done:
                         tokens_sent = True
                     yield chunk
                 return  # success
             except Exception as e:
                 _log_call(provider.name, provider.model, 0, None, None,
-                          streamed=True, ok=False)
+                          streamed=True, ok=False,
+                          tier=tier, route_reason=route_reason)
                 if tokens_sent:
                     # Can't undo sent tokens — propagate
                     logger.warning("Stream failed mid-stream on %s: %s", label, e)

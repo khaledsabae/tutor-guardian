@@ -98,16 +98,21 @@ async def generate_reply(
     retrieved_units: list[dict],
     question_text: str = "",
     conversation_history: list[ConversationTurn] | None = None,
+    tier: str = "local_fast",
+    route_reason: str | None = None,
 ) -> str:
-    """Call Ollama /api/generate. Returns generated text or raises on failure."""
+    """Generate via the gateway. Returns generated text or raises on failure."""
 
     user_prompt, source_line = _build_prompt(
         domain, behavior_type, age_group, severity, retrieved_units, question_text, conversation_history
     )
     full_prompt = _compose_system_prompt(domain) + "\n\n" + user_prompt
 
-    # All LLM calls go through the gateway (retry/backoff + telemetry, local-only).
-    result = await get_gateway().generate(full_prompt)
+    # All LLM calls go through the gateway (retry/backoff + telemetry).
+    # tier="cloud_quality" tries the Azure provider first, local as fallback.
+    result = await get_gateway().generate(
+        full_prompt, tier=tier, route_reason=route_reason
+    )
     return result.text
 
 

@@ -25,6 +25,26 @@ class LLMConfig:
     max_retries: int = int(os.environ.get("OLLAMA_MAX_RETRIES", "3"))
     temperature: float = float(os.environ.get("OLLAMA_TEMPERATURE", "0.3"))  # low = stick to facts
 
+    # ── Cloud quality tier (Azure OpenAI-compatible, free deployment) ──────
+    # Disabled by default: with the flag off, behavior is byte-identical to
+    # the local-only gateway. AZURE_DEEPSEEK_* take precedence; the
+    # AZURE_OPENAI_* names match the analytics-platform .env convention.
+    cloud_tier_enabled: bool = os.environ.get("CLOUD_TIER_ENABLED", "false").lower() in ("1", "true", "yes")
+    azure_endpoint: str = os.environ.get(
+        "AZURE_DEEPSEEK_ENDPOINT", os.environ.get("AZURE_OPENAI_ENDPOINT", "")
+    )
+    azure_api_key: str = os.environ.get(
+        "AZURE_DEEPSEEK_API_KEY", os.environ.get("AZURE_OPENAI_API_KEY", "")
+    )
+    azure_api_version: str = os.environ.get(
+        "AZURE_DEEPSEEK_API_VERSION",
+        os.environ.get("AZURE_OPENAI_API_VERSION", "2024-12-01-preview"),
+    )
+    azure_model: str = os.environ.get(
+        "AZURE_DEEPSEEK_MODEL", os.environ.get("AZURE_OPENAI_DEPLOYMENT", "DeepSeek-V4-Flash")
+    )
+    cloud_tier_timeout: int = int(os.environ.get("CLOUD_TIER_TIMEOUT", "60"))
+
     # backward-compat shim: older code reads .model
     @property
     def model(self) -> str:

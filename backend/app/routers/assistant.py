@@ -19,6 +19,8 @@ from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
 from app.services.intent_guard import check_banned_intent, check_emergency_keywords
 from app.services.domain_classifier import classify_domains
+from app.services.tier_router import choose_tier
+from app.services.privacy import redact_for_cloud
 from app.services import conversation_store as store
 
 _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
@@ -105,6 +107,21 @@ async def draft_reply(request: Request, user_message: UserMessage):
     draft = ""
 
     if retrieved_units:
+        # Quality-tier routing: hard/high-stakes questions go to the cloud
+        # quality model (flag-gated, $0 tier); the question and history are
+        # PII-redacted before leaving the machine. Local chain is always
+        # the fallback, so cloud failure is invisible here.
+        tier, route_reason = choose_tier(
+            query_text, detected_domains, user_message.severity or "خفيف",
+            retrieved_units, history_len=len(history),
+        )
+        gen_question, gen_history = query_text, history
+        if tier == "cloud_quality":
+            gen_question = redact_for_cloud(query_text)
+            gen_history = [
+                t.model_copy(update={"content": redact_for_cloud(t.content)})
+                for t in history
+            ]
         try:
             generated = await generate_reply(
                 domain=primary_domain,
@@ -112,8 +129,10 @@ async def draft_reply(request: Request, user_message: UserMessage):
                 age_group=user_message.age_group or "unspecified",
                 severity=user_message.severity or "خفيف",
                 retrieved_units=retrieved_units,
-                question_text=query_text,
-                conversation_history=history,
+                question_text=gen_question,
+                conversation_history=gen_history,
+                tier=tier,
+                route_reason=route_reason,
             )
             if generated and generated.strip():
                 mode = "llm_generated"
@@ -261,16 +280,32 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
         ))
 
     # ── Stream the LLM generation token-by-token ─────────────────────
+    # Quality-tier routing (flag-gated). The cloud provider is tried
+    # pre-flight only — if it fails before the first token, the local
+    # chain takes over and the SSE consumer never notices.
+    tier, route_reason = choose_tier(
+        query_text, detected_domains, severity,
+        retrieved_units, history_len=len(history),
+    )
+    stream_question, stream_history = query_text, history
+    if tier == "cloud_quality":
+        stream_question = redact_for_cloud(query_text)
+        stream_history = [
+            t.model_copy(update={"content": redact_for_cloud(t.content)})
+            for t in history
+        ]
     full_prompt, _source = build_full_prompt(
         domain=primary_domain, behavior_type=user_message.behavior_type or "",
         age_group=user_message.age_group or "unspecified", severity=severity,
-        retrieved_units=retrieved_units, question_text=query_text,
-        conversation_history=history,
+        retrieved_units=retrieved_units, question_text=stream_question,
+        conversation_history=stream_history,
     )
 
     def event_stream():
         try:
-            for chunk in get_gateway().stream(full_prompt):
+            for chunk in get_gateway().stream(
+                full_prompt, tier=tier, route_reason=route_reason
+            ):
                 if chunk.done:
                     final_text = (chunk.result.text if chunk.result else "").strip()
                     reply = AssistantReply(
