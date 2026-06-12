@@ -1,17 +1,22 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/animated_progress_bar.dart';
+import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/skeleton.dart';
 import '../models/flashcard_deck.dart';
 import '../providers/lesson_assets_provider.dart';
 
 /// Interactive flashcards viewer — replaces the Phase-4 placeholder.
 ///
 /// Loads one or more decks (their ids come from the lesson-assets
-/// metadata), merges the cards, and presents them as tappable flip
-/// cards with progress and prev/next navigation.
+/// metadata), merges the cards, and presents them as a swipeable card
+/// deck (neighbors peek + scale) with tappable 3-D flip.
 class FlashcardsScreen extends ConsumerWidget {
   final List<String> deckIds;
   const FlashcardsScreen({super.key, required this.deckIds});
@@ -23,42 +28,27 @@ class FlashcardsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('📇 فلاش كاردز')),
       body: decksAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => _ErrorState(
-          onRetry: () => ref.invalidate(flashcardDecksProvider(deckIds.join(','))),
+        loading: () => const SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: SkeletonList(count: 2, itemHeight: 260),
+        ),
+        error: (e, _) => EmptyState(
+          emoji: '📡',
+          title: 'تعذّر تحميل البطاقات',
+          actionLabel: 'إعادة المحاولة',
+          onAction: () =>
+              ref.invalidate(flashcardDecksProvider(deckIds.join(','))),
         ),
         data: (decks) {
           final cards = decks.expand((d) => d.cards).toList();
           if (cards.isEmpty) {
-            return const Center(
-              child: Text('لا توجد بطاقات متاحة لهذا الدرس حالياً'),
+            return const EmptyState(
+              emoji: '📇',
+              title: 'لا توجد بطاقات متاحة لهذا الدرس حالياً',
             );
           }
           return _FlashcardPager(cards: cards);
         },
-      ),
-    );
-  }
-}
-
-class _ErrorState extends StatelessWidget {
-  final VoidCallback onRetry;
-  const _ErrorState({required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('تعذّر تحميل البطاقات'),
-          const SizedBox(height: 12),
-          FilledButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh),
-            label: const Text('إعادة المحاولة'),
-          ),
-        ],
       ),
     );
   }
@@ -73,8 +63,11 @@ class _FlashcardPager extends StatefulWidget {
 }
 
 class _FlashcardPagerState extends State<_FlashcardPager> {
-  final _controller = PageController();
+  // Deck feel: current card dominates, neighbors peek from the sides.
+  final _controller = PageController(viewportFraction: 0.88);
   int _index = 0;
+
+  bool get _isLast => _index == widget.cards.length - 1;
 
   @override
   void dispose() {
@@ -102,32 +95,65 @@ class _FlashcardPagerState extends State<_FlashcardPager> {
             'البطاقة ${_index + 1} من $total',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppTheme.textSecondary,
+                  fontWeight: FontWeight.w700,
                 ),
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: LinearProgressIndicator(
-              value: (_index + 1) / total,
-              minHeight: 5,
-              backgroundColor: AppTheme.surfaceAlt,
-            ),
-          ),
+          child: AnimatedProgressBar(value: (_index + 1) / total, height: 12),
         ),
         Expanded(
           child: PageView.builder(
             controller: _controller,
             itemCount: total,
             onPageChanged: (i) => setState(() => _index = i),
-            itemBuilder: (context, i) => Padding(
-              padding: const EdgeInsets.all(20),
-              child: FlipCard(card: widget.cards[i]),
+            itemBuilder: (context, i) => AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                // Neighbors shrink slightly for a stacked-deck feel.
+                double scale = 1;
+                if (_controller.position.haveDimensions) {
+                  final page = _controller.page ?? _index.toDouble();
+                  scale = (1 - ((page - i).abs() * .08)).clamp(.85, 1.0);
+                }
+                return Transform.scale(scale: scale, child: child);
+              },
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+                child: FlipCard(card: widget.cards[i]),
+              ),
             ),
           ),
         ),
+        if (_isLast)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFF4E0),
+                borderRadius: BorderRadius.circular(Dt.rChip),
+              ),
+              child: const Text(
+                'أنهيت البطاقات! 🎉',
+                style: TextStyle(
+                  color: Dt.accentDeep,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            )
+                .animate()
+                .scale(
+                  begin: const Offset(.6, .6),
+                  duration: Dt.base,
+                  curve: Curves.easeOutBack,
+                )
+                .fadeIn(),
+          ),
         Padding(
           padding: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
           child: Row(
@@ -139,7 +165,7 @@ class _FlashcardPagerState extends State<_FlashcardPager> {
                 tooltip: 'السابقة',
               ),
               Text(
-                'اضغط البطاقة لقلبها',
+                'اضغط للقلب · اسحب للتالي',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppTheme.textMuted,
                     ),
@@ -171,7 +197,7 @@ class _FlipCardState extends State<FlipCard>
     with SingleTickerProviderStateMixin {
   late final AnimationController _anim = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 350),
+    duration: const Duration(milliseconds: 450),
   );
 
   @override
@@ -198,8 +224,10 @@ class _FlipCardState extends State<FlipCard>
       child: AnimatedBuilder(
         animation: _anim,
         builder: (context, _) {
-          final angle = _anim.value * math.pi;
-          final showBack = _anim.value >= 0.5;
+          final curved =
+              Curves.easeInOutBack.transform(_anim.value.clamp(0.0, 1.0));
+          final angle = curved * math.pi;
+          final showBack = curved >= 0.5;
           return Transform(
             alignment: Alignment.center,
             transform: Matrix4.identity()
@@ -232,16 +260,12 @@ class _CardFace extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: isFront ? AppTheme.primary : Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
-        border: isFront ? null : Border.all(color: AppTheme.surfaceAlt),
+        gradient: isFront ? Dt.primaryGradient : null,
+        color: isFront ? null : Colors.white,
+        borderRadius: BorderRadius.circular(Dt.rSheet),
+        boxShadow: isFront
+            ? Dt.softShadow(Dt.primary)
+            : Dt.cardShadow,
       ),
       padding: const EdgeInsets.all(24),
       child: isFront
@@ -250,14 +274,14 @@ class _CardFace extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.help_outline,
-                        color: Colors.white70, size: 32),
+                    const Text('🤔', style: TextStyle(fontSize: 44)),
                     const SizedBox(height: 16),
                     Text(
                       card.front,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: Colors.white,
+                        fontWeight: FontWeight.w700,
                         height: 1.7,
                       ),
                     ),
@@ -271,14 +295,13 @@ class _CardFace extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.lightbulb_outline,
-                          color: AppTheme.primary, size: 22),
+                      const Text('💡', style: TextStyle(fontSize: 22)),
                       const SizedBox(width: 8),
                       Text(
                         'الإجابة',
                         style: theme.textTheme.titleSmall?.copyWith(
                           color: AppTheme.primary,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                     ],

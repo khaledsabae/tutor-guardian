@@ -23,39 +23,39 @@ def main():
 
     # Map video filename -> (age, topic) based on golden lessons order
     video_lessons = {
-        '9a511818_Cyberbullying_Pre-Teens.mp4': {
+        '9a511818_Cyberbullying_Pre-Teens_ar.mp4': {
             'age': '10-12', 'topic': 'cyber_digital_citizenship', 'lesson_idx': 2,
             'description': 'Cyberbullying awareness for pre-teens'
         },
-        '6ca7b391_Islamic_Parenting_Tweens.mp4': {
+        '6ca7b391_Islamic_Parenting_Tweens_ar.mp4': {
             'age': '10-12', 'topic': 'islamic_parenting_identity', 'lesson_idx': 1,
             'description': 'Islamic parenting for tweens'
         },
-        'c45e22b4_Digital_Detectives.mp4': {
+        'c45e22b4_Digital_Detectives_ar.mp4': {
             'age': '10-12', 'topic': 'cyber_digital_citizenship', 'lesson_idx': 3,
             'description': 'Critical thinking and digital literacy'
         },
-        '186dd5fa_Teen_Mental_Health.mp4': {
+        '186dd5fa_Teen_Mental_Health_ar.mp4': {
             'age': '13-15', 'topic': 'medical_mental_health', 'lesson_idx': 1,
             'description': 'Teen mental health awareness'
         },
-        '189647f0_Self-Confidence_&_Identity.mp4': {
+        '189647f0_Self-Confidence_&_Identity_ar.mp4': {
             'age': '10-12', 'topic': 'islamic_parenting_identity', 'lesson_idx': 4,
             'description': 'Self-confidence and identity building'
         },
-        'c2491bd6_Digital_Footprint.mp4': {
+        'c2491bd6_Digital_Footprint_ar.mp4': {
             'age': '13-15', 'topic': 'cyber_digital_maturity', 'lesson_idx': 1,
             'description': 'Digital footprint and privacy'
         },
-        'f0060e8d_Adolescence_Safely.mp4': {
+        'f0060e8d_Adolescence_Safely_ar.mp4': {
             'age': '10-12', 'topic': 'medical_puberty_wellbeing', 'lesson_idx': 3,
             'description': 'Safe adolescence - healthy habits'
         },
-        '823e565d_Adulthood_Mental_Health.mp4': {
+        '823e565d_Adulthood_Mental_Health_ar.mp4': {
             'age': '16-18', 'topic': 'medical_adult_transition', 'lesson_idx': 1,
             'description': 'Adulthood transition and mental health'
         },
-        '82b4b434_Online_Safety.mp4': {
+        '82b4b434_Online_Safety_ar.mp4': {
             'age': '10-12', 'topic': 'cyber_digital_citizenship', 'lesson_idx': 2,
             'description': 'Online safety for pre-teens'
         },
@@ -88,16 +88,16 @@ def main():
         target_lesson['assets']['videos'].append({
             'file': f'docs/lesson_videos/{fname}',
             'size_mb': round(size_mb, 1),
-            'language': 'en',  # Will be 'ar' when regenerated
+            'language': 'ar',
             'description': info['description'],
-            'note': 'English-language version. Arabic version to be generated with explicit language prompts.'
+            'note': 'Arabic-language version.'
         })
         video_count += 1
 
     # Update metadata
     index['metadata']['total_videos'] = video_count
-    index['metadata']['video_languages'] = ['en']
-    index['metadata']['last_updated'] = '2026-06-09T20:10:00'
+    index['metadata']['video_languages'] = ['ar']
+    index['metadata']['last_updated'] = '2026-06-12T11:00:00'
 
     # Save updated index
     with open(INDEX_PATH, 'w', encoding='utf-8') as f:
@@ -109,26 +109,27 @@ def main():
     video_index = {
         'metadata': {
             'version': '1.0',
-            'created_at': '2026-06-09',
+            'created_at': '2026-06-12',
             'total_videos': video_count,
-            'total_size_mb': round(sum(f.stat().st_size for f in VIDEOS_DIR.glob('*.mp4')) / 1024 / 1024, 1),
-            'language': 'en',
-            'note': 'Initial batch — English-language. Arabic version to be regenerated with explicit language=ar prompts.'
+            'total_size_mb': round(sum(f.stat().st_size for f in VIDEOS_DIR.glob('*_ar.mp4')) / 1024 / 1024, 1),
+            'language': 'ar',
+            'note': 'Regenerated batch — Arabic-language.'
         },
         'videos': []
     }
 
-    for fname in sorted(VIDEOS_DIR.glob('*.mp4')):
+    for fname in sorted(VIDEOS_DIR.glob('*_ar.mp4')):
         video_index['videos'].append({
             'file': f'docs/lesson_videos/{fname.name}',
             'size_mb': round(fname.stat().st_size / 1024 / 1024, 1),
-            'created_at': '2026-06-09',
+            'created_at': '2026-06-12',
             'duration_estimate': '~5 minutes',
             'format': 'MP4'
         })
 
     with open(VIDEOS_DIR / 'index.json', 'w', encoding='utf-8') as f:
         json.dump(video_index, f, ensure_ascii=False, indent=2)
+
 
     # Create README for videos
     readme = f"""# Lesson Videos — Premium Visual Content

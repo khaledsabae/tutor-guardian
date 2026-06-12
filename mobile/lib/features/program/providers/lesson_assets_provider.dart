@@ -1,13 +1,38 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../onboarding/providers/onboarding_providers.dart';
 import '../models/flashcard_deck.dart';
 import '../models/lesson_assets.dart';
 import '../models/quiz_deck.dart';
 import 'program_providers.dart';
 
+class ContentLanguageNotifier extends StateNotifier<String> {
+  final SharedPreferences? _prefs;
+  ContentLanguageNotifier(this._prefs) : super(_prefs?.getString('content_language') ?? 'ar');
+
+  Future<void> setLanguage(String lang) async {
+    state = lang;
+    if (_prefs != null) {
+      await _prefs.setString('content_language', lang);
+    }
+  }
+}
+
+final contentLanguageProvider =
+    StateNotifierProvider<ContentLanguageNotifier, String>((ref) {
+  final prefsAsync = ref.watch(sharedPreferencesProvider);
+  final prefs = prefsAsync.maybeWhen(
+    data: (p) => p,
+    orElse: () => null,
+  );
+  return ContentLanguageNotifier(prefs);
+});
+
 final lessonAssetsProvider = FutureProvider.autoDispose
     .family<LessonAssets?, String>((ref, lessonId) {
   final repo = ref.watch(programRepositoryProvider);
-  return repo.getLessonAssets(lessonId);
+  final lang = ref.watch(contentLanguageProvider);
+  return repo.getLessonAssets(lessonId, lang: lang);
 });
 
 /// Loads every flashcard deck for a lesson and keeps the successful ones.

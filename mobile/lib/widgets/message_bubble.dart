@@ -1,6 +1,7 @@
-/// One chat bubble. User bubbles are teal (right in RTL); assistant
-/// bubbles are light grey (left in RTL). Assistant messages render their
-/// content as Markdown (light subset) and show streaming/typing states.
+/// One chat bubble. User bubbles are a teal gradient (right in RTL);
+/// assistant bubbles are white cards with a leading avatar (left in
+/// RTL). Assistant messages render their content as Markdown (light
+/// subset) and show streaming/typing states.
 library;
 
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import '../models/api_models.dart';
 import '../state/chat_notifier.dart';
 import '../theme/app_theme.dart';
+import '../theme/design_tokens.dart';
 import 'safety_banner.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -32,39 +34,33 @@ class MessageBubble extends StatelessWidget {
     final isUser = message.role == 'user';
     final align =
         isUser ? Alignment.centerRight : Alignment.centerLeft;
-    final bubbleColor =
-        isUser ? AppTheme.primary : AppTheme.surfaceAlt;
-    final textColor =
-        isUser ? Colors.white : AppTheme.textPrimary;
 
     final radius = BorderRadius.only(
-      topLeft: const Radius.circular(16),
-      topRight: const Radius.circular(16),
-      bottomLeft: Radius.circular(isUser || isLastInGroup ? 16 : 4),
-      bottomRight: Radius.circular(!isUser || isLastInGroup ? 16 : 4),
+      topLeft: const Radius.circular(20),
+      topRight: const Radius.circular(20),
+      bottomLeft: Radius.circular(isUser || isLastInGroup ? 20 : 6),
+      bottomRight: Radius.circular(!isUser || isLastInGroup ? 20 : 6),
     );
 
-    final body = Container(
+    final bubble = Container(
       constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width * 0.84,
+        maxWidth: MediaQuery.of(context).size.width * 0.78,
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: bubbleColor,
+        gradient: isUser ? Dt.primaryGradient : null,
+        color: isUser ? null : Colors.white,
         borderRadius: radius,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: isUser
+            ? Dt.softShadow(Dt.primary, alpha: .18)
+            : Dt.cardShadow,
       ),
       child: isUser
           ? Text(
               message.content,
-              style: TextStyle(color: textColor, fontSize: 15, height: 1.5),
+              style: const TextStyle(
+                  color: Colors.white, fontSize: 15, height: 1.5),
             )
           : _AssistantBody(
               message: message,
@@ -72,24 +68,46 @@ class MessageBubble extends StatelessWidget {
             ),
     );
 
+    // Assistant rows get a leading avatar (only on the first bubble of
+    // a group); subsequent bubbles keep the indent so text aligns.
+    final body = isUser
+        ? Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: bubble,
+          )
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (isFirstInGroup)
+                  Container(
+                    width: 34,
+                    height: 34,
+                    margin: const EdgeInsetsDirectional.only(
+                        end: 8, top: 4),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppTheme.primary.withValues(alpha: .12),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Text('🧑‍🏫',
+                        style: TextStyle(fontSize: 18)),
+                  )
+                else
+                  const SizedBox(width: 42),
+                Flexible(child: bubble),
+              ],
+            ),
+          );
+
     return Align(
       alignment: align,
       child: Column(
         crossAxisAlignment:
             isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          if (isFirstInGroup) ...[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              child: Text(
-                isUser ? '👤 أنت' : '🛡️  المربي',
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: AppTheme.textMuted,
-                ),
-              ),
-            ),
-          ],
           body,
           if (message.error != null)
             Padding(

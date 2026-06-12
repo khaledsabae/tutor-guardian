@@ -22,6 +22,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/bouncy_button.dart';
+import '../../../widgets/ui/celebration_overlay.dart';
+import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/skeleton.dart';
 import '../../reflections/widgets/reflection_note_card.dart';
 import '../data/models.dart';
 import '../data/progress_models.dart';
@@ -62,14 +67,15 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
       await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
           .markProgress(ProgressStatus.completed, childId: widget.childId);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('تم تسجيل إكمال الدرس. ما شاء الله!'),
-            duration: Duration(seconds: 2),
-          ),
+        // Confetti celebration, then return to path detail so the
+        // progress bar refreshes immediately (same auto-pop contract
+        // the snackbar+delay version had).
+        await showCelebration(
+          context,
+          emoji: '🎉',
+          title: 'ما شاء الله!',
+          message: 'تم تسجيل إكمال الدرس',
         );
-        // Return to path detail so the progress bar refreshes immediately.
-        await Future.delayed(const Duration(milliseconds: 1200));
         if (mounted) Navigator.of(context).pop();
       }
     } catch (e) {
@@ -96,9 +102,21 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     }
   }
 
+  ProgressStatus _statusOf(String lessonId) {
+    if (widget.childId == null) return ProgressStatus.notStarted;
+    final asyncBundle = ref.watch(childProgressProvider(widget.childId!));
+    return asyncBundle.maybeWhen(
+          data: (b) => b.forLesson(lessonId)?.status,
+          orElse: () => null,
+        ) ??
+        ProgressStatus.notStarted;
+  }
+
   @override
   Widget build(BuildContext context) {
     final asyncLesson = ref.watch(lessonProvider(widget.lessonId));
+    final status = _statusOf(widget.lessonId);
+    final showCta = widget.childId != null && asyncLesson.hasValue;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -110,44 +128,67 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           overflow: TextOverflow.ellipsis,
         ),
       ),
+      // Sticky CTA — always reachable without scrolling to the bottom.
+      bottomNavigationBar: !showCta
+          ? null
+          : SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                child: BouncyButton(
+                  label: status == ProgressStatus.completed
+                      ? 'مكتمل ✓'
+                      : (_marking ? 'جارٍ التسجيل…' : 'أتممت هذا الدرس'),
+                  color: status == ProgressStatus.completed
+                      ? AppTheme.success
+                      : Dt.accent,
+                  icon: _marking
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : null,
+                  onTap: (status == ProgressStatus.completed || _marking)
+                      ? null
+                      : _markComplete,
+                ),
+              ),
+            ),
       body: asyncLesson.when(
         data: (lesson) {
           // Fire-and-forget "in progress" exactly once when the lesson
-          // data first loads. Guard prevents re-firing on subsequent rebuilds.
-          if (widget.childId != null && !_markedInProgress) {
+          // data first loads. Guard prevents re-firing on subsequent
+          // rebuilds. We wait for the progress bundle so a re-opened
+          // COMPLETED lesson is never downgraded back to in_progress
+          // (that was silently zeroing the path progress on the server).
+          final bundleReady = widget.childId == null ||
+              ref.watch(childProgressProvider(widget.childId!)).hasValue;
+          if (widget.childId != null && !_markedInProgress && bundleReady) {
             _markedInProgress = true;
-            _markInProgress();
+            if (status != ProgressStatus.completed) {
+              _markInProgress();
+            }
           }
           return _Body(
             lesson: lesson,
             ageGroup: widget.ageGroup,
             childId: widget.childId,
-            marking: _marking,
-            onMarkComplete: widget.childId == null ? null : _markComplete,
+            status: status,
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, _) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.error_outline,
-                    size: 56, color: AppTheme.dangerFg),
-                const SizedBox(height: 12),
-                Text('تعذّر تحميل الدرس.\n$err',
-                    textAlign: TextAlign.center),
-                const SizedBox(height: 16),
-                ElevatedButton.icon(
-                  onPressed: () =>
-                      ref.invalidate(lessonProvider(widget.lessonId)),
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('إعادة المحاولة'),
-                ),
-              ],
-            ),
-          ),
+        loading: () => const SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: SkeletonList(count: 4, itemHeight: 130),
+        ),
+        error: (err, _) => EmptyState(
+          emoji: '📡',
+          title: 'تعذّر تحميل الدرس',
+          subtitle: '$err',
+          actionLabel: 'إعادة المحاولة',
+          onAction: () => ref.invalidate(lessonProvider(widget.lessonId)),
         ),
       ),
     );
@@ -159,47 +200,37 @@ class _Body extends ConsumerWidget {
     required this.lesson,
     required this.ageGroup,
     required this.childId,
-    required this.marking,
-    required this.onMarkComplete,
+    required this.status,
   });
   final CurriculumLesson lesson;
   final String ageGroup;
   final int? childId;
-  final bool marking;
-  final VoidCallback? onMarkComplete;
+  final ProgressStatus status;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Re-derive the status from the active child.
-    final asyncBundle =
-        childId == null ? null : ref.watch(childProgressProvider(childId!));
-    final status = asyncBundle?.maybeWhen(
-          data: (b) => b.forLesson(lesson.id)?.status ??
-              ProgressStatus.notStarted,
-          orElse: () => ProgressStatus.notStarted,
-        ) ??
-        ProgressStatus.notStarted;
-
+    final style = styleFor(lesson.domain);
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       children: [
-        _Hero(lesson: lesson, ageGroup: ageGroup),
+        _Hero(lesson: lesson, ageGroup: ageGroup, style: style),
         if (childId != null) ...[
           const SizedBox(height: 12),
           _StatusChip(status: status),
         ],
         const SizedBox(height: 16),
         _Section(
-          icon: Icons.short_text,
+          emoji: '📝',
           title: 'الملخص',
           body: lesson.summary,
         ),
         const SizedBox(height: 16),
         _Section(
-          icon: Icons.lightbulb_outline,
+          emoji: '💡',
           title: 'جرّب هذا',
           body: lesson.tryThis,
-          accent: AppTheme.primary,
+          accent: Dt.accentDeep,
+          background: const Color(0xFFFFF4E0),
         ),
         if (lesson.reflectionPrompts.isNotEmpty) ...[
           const SizedBox(height: 16),
@@ -215,37 +246,6 @@ class _Body extends ConsumerWidget {
           const _WarningCard(
             text: 'هذا الدرس يحتوي على توجيهات تستحق المتابعة مع متخصص. '
                 'لا تتردد في استشارة طبيب أو أخصائي تنموي إذا شعرت بالحاجة.',
-          ),
-        ],
-        if (onMarkComplete != null) ...[
-          const SizedBox(height: 20),
-          ElevatedButton.icon(
-            onPressed: (status == ProgressStatus.completed || marking)
-                ? null
-                : onMarkComplete,
-            icon: status == ProgressStatus.completed
-                ? const Icon(Icons.check)
-                : (marking
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                    : const Icon(Icons.check_circle_outline)),
-            label: Text(
-              status == ProgressStatus.completed
-                  ? 'مكتمل'
-                  : 'أتممت هذا الدرس',
-            ),
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size.fromHeight(50),
-              backgroundColor: status == ProgressStatus.completed
-                  ? AppTheme.success
-                  : null,
-            ),
           ),
         ],
       ],
@@ -305,81 +305,105 @@ class _StatusChip extends StatelessWidget {
 }
 
 class _Hero extends ConsumerWidget {
-  const _Hero({required this.lesson, required this.ageGroup});
+  const _Hero({
+    required this.lesson,
+    required this.ageGroup,
+    required this.style,
+  });
   final CurriculumLesson lesson;
   final String ageGroup;
+  final DomainStyle style;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isFav = ref.watch(favoritesProvider)['lessons']
             ?.contains(lesson.id) ?? false;
     return Container(
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.primary,
-        borderRadius: BorderRadius.circular(14),
+        gradient: style.gradient,
+        borderRadius: BorderRadius.circular(Dt.rCard),
+        boxShadow: Dt.softShadow(style.base),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.18),
-                  borderRadius: BorderRadius.circular(8),
-                ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(Dt.rCard),
+        child: Stack(
+          children: [
+            PositionedDirectional(
+              start: -12,
+              bottom: -20,
+              child: Opacity(
+                opacity: .15,
                 child: Text(
-                  'الدرس ${lesson.order}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style.emoji,
+                  style: const TextStyle(fontSize: 100),
                 ),
               ),
-              const SizedBox(width: 8),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.18),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  '${lesson.estimatedMinutes} دقائق',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: () {
-                  ref.read(favoritesProvider.notifier).toggleLesson(lesson.id);
-                },
-                icon: Icon(
-                  isFav ? Icons.favorite : Icons.favorite_border,
-                  color: isFav ? Colors.redAccent : Colors.white,
-                  size: 22,
-                ),
-                tooltip: isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة',
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            lesson.title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-              height: 1.4,
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      _HeroBadge(text: 'الدرس ${lesson.order}'),
+                      const SizedBox(width: 8),
+                      _HeroBadge(text: '⏱️ ${lesson.estimatedMinutes} دقائق'),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          ref
+                              .read(favoritesProvider.notifier)
+                              .toggleLesson(lesson.id);
+                        },
+                        icon: Icon(
+                          isFav ? Icons.favorite : Icons.favorite_border,
+                          color: isFav ? Colors.redAccent : Colors.white,
+                          size: 22,
+                        ),
+                        tooltip: isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    lesson.title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                      height: 1.4,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HeroBadge extends StatelessWidget {
+  const _HeroBadge({required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(Dt.rChip),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w700,
+          fontSize: 12,
+        ),
       ),
     );
   }
@@ -387,39 +411,41 @@ class _Hero extends ConsumerWidget {
 
 class _Section extends StatelessWidget {
   const _Section({
-    required this.icon,
+    required this.emoji,
     required this.title,
     required this.body,
     this.accent = AppTheme.textPrimary,
+    this.background = AppTheme.surface,
   });
-  final IconData icon;
+  final String emoji;
   final String title;
   final String body;
   final Color accent;
+  final Color background;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        color: background,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: background == AppTheme.surface ? Dt.cardShadow : null,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, color: accent, size: 18),
-              const SizedBox(width: 6),
+              Text(emoji, style: const TextStyle(fontSize: 20)),
+              const SizedBox(width: 8),
               Text(
                 title,
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
-                    ?.copyWith(fontWeight: FontWeight.w700, color: accent),
+                    ?.copyWith(fontWeight: FontWeight.w800, color: accent),
               ),
             ],
           ),
@@ -443,26 +469,26 @@ class _ReflectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const violet = Color(0xFF6D28D9);
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.warningBg,
-        borderRadius: BorderRadius.circular(12),
+        color: const Color(0xFFF3EEFE),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Row(
             children: [
-              Icon(Icons.psychology_alt_outlined,
-                  color: AppTheme.warningFg, size: 18),
-              SizedBox(width: 6),
+              Text('🧠', style: TextStyle(fontSize: 20)),
+              SizedBox(width: 8),
               Text(
                 'أسئلة للتأمل',
                 style: TextStyle(
-                  color: AppTheme.warningFg,
-                  fontWeight: FontWeight.w700,
+                  color: violet,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ],
@@ -474,19 +500,29 @@ class _ReflectionCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${i + 1}.',
-                    style: const TextStyle(
-                      color: AppTheme.warningFg,
-                      fontWeight: FontWeight.w700,
+                  Container(
+                    width: 22,
+                    height: 22,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: violet,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      '${i + 1}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 6),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       prompts[i],
                       style: const TextStyle(
-                        color: AppTheme.warningFg,
+                        color: Color(0xFF44337A),
                         height: 1.55,
                       ),
                     ),
@@ -726,15 +762,35 @@ class _AssetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
+    // Key format kept stable — emulator drive-through scripts and
+    // widget tests look these up by label suffix.
+    return BouncyTap(
       key: Key('btn_${label.split(" ").last}'),
-      onPressed: onPressed,
-      icon: Icon(icon, size: 20),
-      label: Text(label),
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(48),
-        alignment: Alignment.centerRight,
+      onTap: onPressed,
+      child: Container(
+        height: 56,
         padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          color: AppTheme.surface,
+          borderRadius: BorderRadius.circular(Dt.rButton),
+          boxShadow: Dt.cardShadow,
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 22, color: Dt.primary),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            const Icon(Icons.chevron_left, color: AppTheme.textMuted),
+          ],
+        ),
       ),
     );
   }

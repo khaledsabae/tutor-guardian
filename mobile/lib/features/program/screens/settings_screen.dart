@@ -22,6 +22,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../config/app_config.dart';
 import '../../../theme/app_theme.dart';
+import '../../../theme/design_tokens.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
@@ -30,14 +31,32 @@ import 'children_list_screen.dart';
 import 'edit_child_screen.dart';
 import 'badges_screen.dart';
 import 'favorites_screen.dart';
+import '../providers/lesson_assets_provider.dart';
+import '../../adhkar/services/notification_service.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
+
+  void _toggleLanguage(BuildContext context, WidgetRef ref, String current) {
+    final newLang = current == 'ar' ? 'en' : 'ar';
+    ref.read(contentLanguageProvider.notifier).setLanguage(newLang);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          newLang == 'ar'
+              ? 'تم تغيير لغة الوسائط إلى العربية'
+              : 'Media language changed to English',
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncList = ref.watch(childrenListProvider);
     final profile = ref.watch(activeChildProfileProvider);
+    final currentLanguage = ref.watch(contentLanguageProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('الإعدادات')),
@@ -103,6 +122,17 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 24),
                 _SettingsRow(
+                  icon: Icons.language,
+                  title: 'لغة الوسائط التعليمية',
+                  subtitle: currentLanguage == 'ar'
+                      ? 'العربية (بودكاست وفيديو عربي)'
+                      : 'English (English audio/video)',
+                  onTap: () => _toggleLanguage(context, ref, currentLanguage),
+                ),
+                const SizedBox(height: 24),
+                const _AdhkarSettingsRow(),
+                const SizedBox(height: 24),
+                _SettingsRow(
                   icon: Icons.shield_outlined,
                   title: 'سياسة الخصوصية',
                   subtitle: 'كيف نتعامل مع بياناتك',
@@ -154,7 +184,7 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 const Center(
                   child: Text(
-                    'الإصدار 0.1.0 — المرحلة 7',
+                    'الإصدار ${AppConfig.appVersion}',
                     style: TextStyle(
                       color: AppTheme.textMuted,
                       fontSize: 12,
@@ -357,12 +387,11 @@ class _ChildHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: AppTheme.surface,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-        side: const BorderSide(color: Color(0xFFE4E7EC)),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: Dt.cardShadow,
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -499,16 +528,15 @@ class _SettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
+    return Container(
       margin: const EdgeInsets.only(bottom: 8),
-      color: AppTheme.surface,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(color: Color(0xFFE4E7EC)),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: Dt.cardShadow,
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(14),
@@ -586,6 +614,77 @@ class _ErrorView extends StatelessWidget {
               label: const Text('إعادة المحاولة'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AdhkarSettingsRow extends StatefulWidget {
+  const _AdhkarSettingsRow();
+
+  @override
+  State<_AdhkarSettingsRow> createState() => _AdhkarSettingsRowState();
+}
+
+class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
+  bool _enabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadState();
+  }
+
+  Future<void> _loadState() async {
+    final enabled = await NotificationService.instance.isEnabled();
+    if (mounted) {
+      setState(() => _enabled = enabled);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Shadow on the outer box; color on a Material so the
+    // SwitchListTile's ink renders correctly (framework assertion).
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: Dt.cardShadow,
+      ),
+      child: Material(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(18),
+        clipBehavior: Clip.antiAlias,
+        child: SwitchListTile(
+        title: const Text(
+          'إشعارات أذكار الأسرة',
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+        ),
+        subtitle: const Text(
+          'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)',
+          style: TextStyle(fontSize: 12, color: AppTheme.textSecondary),
+        ),
+        value: _enabled,
+        onChanged: (val) async {
+          setState(() => _enabled = val);
+          await NotificationService.instance.setEnabled(val);
+        },
+        secondary: Container(
+          width: 36,
+          height: 36,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: const Color(0xFFE65100).withValues(alpha: 0.10),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Icon(
+            Icons.notifications_active_outlined,
+            size: 18,
+            color: Color(0xFFE65100),
+          ),
+        ),
         ),
       ),
     );

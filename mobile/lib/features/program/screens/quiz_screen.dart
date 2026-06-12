@@ -6,10 +6,20 @@
 /// score with the option to retry.
 library;
 
+import 'dart:math' as math;
+
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/animated_progress_bar.dart';
+import '../../../widgets/ui/count_up_text.dart';
+import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/progress_ring.dart';
+import '../../../widgets/ui/skeleton.dart';
 import '../models/quiz_deck.dart';
 import '../providers/lesson_assets_provider.dart';
 
@@ -25,43 +35,27 @@ class QuizScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('❓ اختبر نفسك')),
       body: decksAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => _ErrorState(
-          onRetry: () =>
+        loading: () => const SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: SkeletonList(count: 5, itemHeight: 90),
+        ),
+        error: (e, _) => EmptyState(
+          emoji: '📡',
+          title: 'تعذّر تحميل الاختبار',
+          actionLabel: 'إعادة المحاولة',
+          onAction: () =>
               ref.invalidate(quizDecksProvider(quizIds.join(','))),
         ),
         data: (decks) {
           final questions = decks.expand((d) => d.questions).toList();
           if (questions.isEmpty) {
-            return const Center(
-              child: Text('لا توجد أسئلة متاحة لهذا الدرس حالياً'),
+            return const EmptyState(
+              emoji: '❓',
+              title: 'لا توجد أسئلة متاحة لهذا الدرس حالياً',
             );
           }
           return _QuizRunner(questions: questions);
         },
-      ),
-    );
-  }
-}
-
-class _ErrorState extends StatelessWidget {
-  final VoidCallback onRetry;
-  const _ErrorState({required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('تعذّر تحميل الاختبار'),
-          const SizedBox(height: 12),
-          FilledButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh),
-            label: const Text('إعادة المحاولة'),
-          ),
-        ],
       ),
     );
   }
@@ -187,14 +181,7 @@ class _QuestionView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: LinearProgressIndicator(
-                  value: progress,
-                  minHeight: 6,
-                  backgroundColor: AppTheme.surfaceAlt,
-                ),
-              ),
+              AnimatedProgressBar(value: progress, height: 12),
             ],
           ),
         ),
@@ -323,40 +310,48 @@ class _OptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color borderColor = const Color(0xFFE5E7EB);
+    // Duolingo-style option: white pill with a darker bottom edge.
+    Color edgeColor = const Color(0xFFE3DCCE);
     Color bgColor = AppTheme.surface;
+    Color letterBg = AppTheme.surfaceAlt;
+    Color letterFg = AppTheme.textPrimary;
     IconData? trailingIcon;
     Color? trailingColor;
+    final isCorrectFeedback = showFeedback && option.isCorrect;
+    final isWrongFeedback = showFeedback && selected && !option.isCorrect;
 
-    if (showFeedback) {
-      if (option.isCorrect) {
-        borderColor = AppTheme.success;
-        bgColor = const Color(0xFFD4EDDA);
-        trailingIcon = Icons.check_circle;
-        trailingColor = AppTheme.success;
-      } else if (selected) {
-        borderColor = AppTheme.dangerFg;
-        bgColor = AppTheme.dangerBg;
-        trailingIcon = Icons.cancel;
-        trailingColor = AppTheme.dangerFg;
-      }
+    if (isCorrectFeedback) {
+      edgeColor = const Color(0xFF15803D);
+      bgColor = AppTheme.success;
+      letterBg = Colors.white.withValues(alpha: .25);
+      letterFg = Colors.white;
+      trailingIcon = Icons.check_circle;
+      trailingColor = Colors.white;
+    } else if (isWrongFeedback) {
+      edgeColor = const Color(0xFF9F1239);
+      bgColor = const Color(0xFFFB7185);
+      letterBg = Colors.white.withValues(alpha: .25);
+      letterFg = Colors.white;
+      trailingIcon = Icons.cancel;
+      trailingColor = Colors.white;
     } else if (selected) {
-      borderColor = AppTheme.primary;
+      edgeColor = AppTheme.primary;
     }
 
+    final onColored = isCorrectFeedback || isWrongFeedback;
     final letter = String.fromCharCode('أ'.codeUnitAt(0) + index);
 
-    return Material(
+    Widget tile = Material(
       color: bgColor,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(Dt.rButton),
       child: InkWell(
         onTap: showFeedback ? null : onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(Dt.rButton),
         child: Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            border: Border.all(color: borderColor, width: 1.5),
-            borderRadius: BorderRadius.circular(12),
+            border: Border(bottom: BorderSide(color: edgeColor, width: 4)),
+            borderRadius: BorderRadius.circular(Dt.rButton),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -365,20 +360,29 @@ class _OptionTile extends StatelessWidget {
                 width: 28,
                 height: 28,
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: AppTheme.surfaceAlt,
+                decoration: BoxDecoration(
+                  color: letterBg,
                   shape: BoxShape.circle,
                 ),
                 child: Text(
                   letter,
-                  style: const TextStyle(fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: letterFg,
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
                   option.text,
-                  style: const TextStyle(height: 1.5, fontSize: 15),
+                  style: TextStyle(
+                    height: 1.5,
+                    fontSize: 15,
+                    color: onColored ? Colors.white : AppTheme.textPrimary,
+                    fontWeight:
+                        onColored ? FontWeight.w700 : FontWeight.w500,
+                  ),
                 ),
               ),
               if (trailingIcon != null) ...[
@@ -390,6 +394,22 @@ class _OptionTile extends StatelessWidget {
         ),
       ),
     );
+
+    if (isCorrectFeedback) {
+      tile = tile.animate().scale(
+            begin: const Offset(1, 1),
+            end: const Offset(1.03, 1.03),
+            duration: 180.ms,
+            curve: Curves.easeOutBack,
+          ).then().scale(
+            begin: const Offset(1.03, 1.03),
+            end: const Offset(1, 1),
+            duration: 180.ms,
+          );
+    } else if (isWrongFeedback) {
+      tile = tile.animate().shake(hz: 5, offset: const Offset(4, 0));
+    }
+    return tile;
   }
 }
 
@@ -440,7 +460,7 @@ class _AnswerIcon extends StatelessWidget {
   }
 }
 
-class _Summary extends StatelessWidget {
+class _Summary extends StatefulWidget {
   final int total;
   final int correct;
   final VoidCallback onRetry;
@@ -452,68 +472,141 @@ class _Summary extends StatelessWidget {
   });
 
   @override
+  State<_Summary> createState() => _SummaryState();
+}
+
+class _SummaryState extends State<_Summary> {
+  late final ConfettiController _confetti =
+      ConfettiController(duration: const Duration(milliseconds: 1500));
+
+  int get _pct => widget.total == 0
+      ? 0
+      : (widget.correct * 100 / widget.total).round();
+
+  @override
+  void initState() {
+    super.initState();
+    if (_pct >= 80) _confetti.play();
+  }
+
+  @override
+  void dispose() {
+    _confetti.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final pct = total == 0 ? 0 : (correct * 100 / total).round();
+    final pct = _pct;
     final color = pct >= 80
         ? AppTheme.success
         : pct >= 50
-            ? AppTheme.warningFg
+            ? Dt.accentDeep
             : AppTheme.dangerFg;
+    final emoji = pct >= 80
+        ? '🏆'
+        : pct >= 50
+            ? '🌟'
+            : '💪';
     final verdict = pct >= 80
         ? 'ما شاء الله! أداء ممتاز.'
         : pct >= 50
             ? 'جيد. راجع الدروس التي أخطأت فيها.'
             : 'لا بأس — المراجعة خير من الندم. اقرأ الدرس مرة أخرى.';
 
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.emoji_events, color: color, size: 80),
-            const SizedBox(height: 16),
-            Text(
-              'نتيجتك',
-              style: Theme.of(context).textTheme.titleLarge,
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(emoji, style: const TextStyle(fontSize: 80))
+                    .animate()
+                    .scale(
+                      begin: const Offset(.3, .3),
+                      duration: Dt.slow,
+                      curve: Curves.easeOutBack,
+                    ),
+                const SizedBox(height: 16),
+                Text(
+                  'نتيجتك',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 16),
+                ProgressRing(
+                  value: widget.total == 0
+                      ? 0
+                      : widget.correct / widget.total,
+                  size: 130,
+                  strokeWidth: 12,
+                  color: color,
+                  center: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CountUpText(
+                        widget.correct,
+                        suffix: ' / ${widget.total}',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w800,
+                          color: color,
+                        ),
+                      ),
+                      Text(
+                        '$pct%',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: color,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  verdict,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    height: 1.55,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                FilledButton.icon(
+                  key: const Key('quiz_retry_button'),
+                  onPressed: widget.onRetry,
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('أعد المحاولة'),
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size(180, 48),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            Text(
-              '$correct / $total',
-              style: TextStyle(
-                fontSize: 56,
-                fontWeight: FontWeight.w800,
-                color: color,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '$pct%',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: color,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              verdict,
-              textAlign: TextAlign.center,
-              style: const TextStyle(height: 1.55),
-            ),
-            const SizedBox(height: 24),
-            FilledButton.icon(
-              key: const Key('quiz_retry_button'),
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh),
-              label: const Text('أعد المحاولة'),
-              style: FilledButton.styleFrom(
-                minimumSize: const Size(180, 48),
-              ),
-            ),
+          ),
+        ),
+        ConfettiWidget(
+          confettiController: _confetti,
+          blastDirectionality: BlastDirectionality.explosive,
+          blastDirection: math.pi / 2,
+          emissionFrequency: 0.6,
+          numberOfParticles: 30,
+          maxBlastForce: 18,
+          minBlastForce: 6,
+          gravity: .3,
+          colors: const [
+            Dt.primary,
+            Dt.accent,
+            Color(0xFF8B5CF6),
+            Color(0xFFFB7185),
+            Dt.success,
           ],
         ),
-      ),
+      ],
     );
   }
 }

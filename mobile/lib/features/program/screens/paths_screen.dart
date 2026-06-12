@@ -9,8 +9,14 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../theme/app_theme.dart';
+
+import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/bouncy_button.dart';
+import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/emoji_hero.dart';
+import '../../../widgets/ui/skeleton.dart';
 import '../data/models.dart';
 import '../providers/program_providers.dart';
 import '../widgets/active_child_chip.dart';
@@ -29,7 +35,7 @@ class PathsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('مساراتي'),
+        title: const Text('مساراتي 🛤️'),
         actions: [
           // Phase 8-B — active child chip (tap to switch).
           const Padding(
@@ -66,8 +72,10 @@ class PathsScreen extends ConsumerWidget {
       body: asyncPaths.when(
         data: (envelope) {
           if (envelope.paths.isEmpty) {
-            return const _EmptyState(
-              message: 'لا توجد مسارات لهذه المرحلة العمرية بعد.',
+            return const EmptyState(
+              emoji: '🧭',
+              title: 'لا توجد مسارات بعد',
+              subtitle: 'لا توجد مسارات لهذه المرحلة العمرية حالياً.',
             );
           }
           return RefreshIndicator(
@@ -77,16 +85,31 @@ class PathsScreen extends ConsumerWidget {
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
               itemCount: envelope.paths.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
-              itemBuilder: (context, i) =>
-                  _PathCard(path: envelope.paths[i], ageGroup: ageGroup),
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              itemBuilder: (context, i) {
+                final card =
+                    _PathCard(path: envelope.paths[i], ageGroup: ageGroup);
+                // Stagger only the first screenful; later items appear
+                // instantly (they're below the fold anyway).
+                if (i >= Dt.maxStaggeredItems) return card;
+                return card
+                    .animate(delay: Dt.stagger * i)
+                    .fadeIn(duration: Dt.base)
+                    .slideY(begin: .08, curve: Curves.easeOutCubic);
+              },
             ),
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, _) => _ErrorState(
-          message: 'تعذّر تحميل المسارات.\n$err',
-          onRetry: () => ref.read(pathsListProvider(args).notifier).refresh(),
+        loading: () => const SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: SkeletonList(count: 4, itemHeight: 170),
+        ),
+        error: (err, _) => EmptyState(
+          emoji: '📡',
+          title: 'تعذّر تحميل المسارات',
+          subtitle: '$err',
+          actionLabel: 'إعادة المحاولة',
+          onAction: () => ref.read(pathsListProvider(args).notifier).refresh(),
         ),
       ),
     );
@@ -108,6 +131,7 @@ class _PathCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = styleFor(path.domain);
     // One coherent button node for screen readers (title + description),
     // with the inner visual tree's own semantics excluded to avoid
     // fragmented announcements.
@@ -116,83 +140,80 @@ class _PathCard extends StatelessWidget {
       label: 'مسار: ${path.title}. ${path.description}',
       onTap: () => _open(context),
       excludeSemantics: true,
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-          side: const BorderSide(color: Color(0xFFE5E7EB)),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(14),
-          onTap: () => _open(context),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: AppTheme.primary.withValues(alpha: 0.10),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Icon(Icons.route, color: AppTheme.primary),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            path.title,
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w700),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            '${path.ageLabel} · ${path.domainLabel}',
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(color: AppTheme.textSecondary),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  path.description,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppTheme.textSecondary,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    _Pill(
-                      icon: Icons.timelapse,
-                      label: '${path.estimatedDays} يوم',
-                    ),
-                    _Pill(
-                      icon: Icons.menu_book_outlined,
-                      label: '${path.lessonIds.length} دروس',
-                    ),
-                    if (path.pedagogicalFramework != null) ...[
-                      _Pill(
-                        icon: Icons.psychology_outlined,
-                        label: _frameworkLabel(path.pedagogicalFramework!),
+      child: BouncyTap(
+        onTap: () => _open(context),
+        child: Hero(
+          tag: 'path-${path.id}',
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: style.gradient,
+              borderRadius: BorderRadius.circular(Dt.rCard),
+              boxShadow: Dt.softShadow(style.base),
+            ),
+            padding: const EdgeInsets.all(20),
+            child: DefaultTextStyle(
+              style: const TextStyle(color: Colors.white),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      EmojiHero(emoji: style.emoji, size: 56),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              path.title,
+                              style: const TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                                height: 1.3,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${path.ageLabel} · ${path.domainLabel}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white.withValues(alpha: .85),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    path.description,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 13,
+                      height: 1.5,
+                      color: Colors.white.withValues(alpha: .92),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      _Pill(label: '⏱️ ${path.estimatedDays} يوم'),
+                      _Pill(label: '📚 ${path.lessonIds.length} دروس'),
+                      if (path.pedagogicalFramework != null)
+                        _Pill(
+                          label:
+                              '🧠 ${_frameworkLabel(path.pedagogicalFramework!)}',
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -217,94 +238,23 @@ class _PathCard extends StatelessWidget {
 }
 
 class _Pill extends StatelessWidget {
-  const _Pill({required this.icon, required this.label});
-  final IconData icon;
+  const _Pill({required this.label});
   final String label;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceAlt,
-        borderRadius: BorderRadius.circular(8),
+        color: Colors.white.withValues(alpha: .18),
+        borderRadius: BorderRadius.circular(Dt.rChip),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: AppTheme.textSecondary),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: Theme.of(
-              context,
-            ).textTheme.labelSmall?.copyWith(color: AppTheme.textSecondary),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.message});
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.travel_explore,
-              size: 56,
-              color: AppTheme.textMuted.withValues(alpha: 0.6),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(color: AppTheme.textSecondary),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ErrorState extends StatelessWidget {
-  const _ErrorState({required this.message, required this.onRetry});
-  final String message;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.error_outline, size: 56, color: AppTheme.dangerFg),
-            const SizedBox(height: 12),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh),
-              label: const Text('إعادة المحاولة'),
-            ),
-          ],
+      child: Text(
+        label,
+        style: const TextStyle(
+          fontSize: 11.5,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
         ),
       ),
     );

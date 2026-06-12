@@ -97,12 +97,31 @@ def load_curriculum() -> None:
                         podcasts = raw_assets.get("podcasts", [])
                         videos = raw_assets.get("videos", [])
                         
-                        podcast_mp3 = podcasts[0].get("file") if podcasts else None
-                        video_mp4 = videos[0].get("file") if videos else None
+                        normalized_podcasts = []
+                        for p in podcasts:
+                            lang = p.get("language")
+                            if not lang:
+                                fname = p.get("file", "")
+                                if "_ar" in fname or "lesson_0-3" in fname:
+                                    lang = "ar"
+                                else:
+                                    lang = "en"
+                            normalized_podcasts.append({**p, "language": lang})
+
+                        normalized_videos = []
+                        for v in videos:
+                            lang = v.get("language")
+                            if not lang:
+                                fname = v.get("file", "")
+                                if "_ar" in fname:
+                                    lang = "ar"
+                                else:
+                                    lang = "en"
+                            normalized_videos.append({**v, "language": lang})
                         
                         asset_data = {
-                            "podcast_mp3": podcast_mp3,
-                            "video_mp4": video_mp4,
+                            "podcasts": normalized_podcasts,
+                            "videos": normalized_videos,
                             "flashcards": raw_assets.get("flashcards", []),
                             "quizzes": raw_assets.get("quizzes", [])
                         }

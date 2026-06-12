@@ -39,8 +39,10 @@ void main() {
 
     test('getPathDetail() with includeLessons returns PathDetail', () async {
       final fake = _FakeTgClient();
+      // API returns path fields at the ROOT level (flat) with a
+      // `lessons` array — no "path" wrapper key (see commit 7d056fc).
       fake.pathDetailJson = {
-        'path': _pathJson(id: 'path_4-6_islamic_parenting_adab'),
+        ..._pathJson(id: 'path_4-6_islamic_parenting_adab'),
         'lessons': [
           _lessonJson(id: 'lesson_4-6_islamic_parenting_adab_01', order: 1),
         ],
@@ -124,12 +126,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('مساراتي'), findsOneWidget); // AppBar title
+      expect(find.textContaining('مساراتي'), findsWidgets); // AppBar title
       expect(find.text('تأسيس الآداب الإسلامية'), findsOneWidget);
       expect(find.text('التربية الإيجابية'), findsOneWidget);
-      // 14 days pill on the first path
-      expect(find.text('14 يوم'), findsWidgets);
-      expect(find.text('14 يوم'), findsWidgets);
+      // Days pill on the path cards (emoji-prefixed in the redesign)
+      expect(find.textContaining('14 يوم'), findsWidgets);
       // Accessibility (P1 #5): each path card exposes one coherent button
       // semantics node labelled with its title for screen readers.
       expect(
@@ -342,7 +343,7 @@ void main() {
         (WidgetTester tester) async {
       final fake = _FakeTgClient();
       fake.pathDetailJson = {
-        'path': _pathJson(id: 'path_4-6_islamic_parenting_adab'),
+        ..._pathJson(id: 'path_4-6_islamic_parenting_adab'),
         'lessons': [
           _lessonJson(
             id: 'lesson_4-6_islamic_parenting_adab_01',
@@ -458,16 +459,16 @@ void main() {
       await tester.pump(const Duration(milliseconds: 1000));
       await tester.pump(const Duration(milliseconds: 1000));
 
-      // Tab 0 (المساعد) is the default
-      // Check NavigationBar exists and has 2 destinations
+      // Check NavigationBar exists and has 3 destinations
+      // (اليوم / مساراتي / المساعد — tab 0 "اليوم" is the default)
       expect(find.byType(NavigationBar), findsOneWidget);
       final navBar = tester.widget<NavigationBar>(find.byType(NavigationBar));
-      expect(navBar.destinations.length, 2);
-      
-      // Find the first destination's label widget
-      expect(find.byWidgetPredicate((widget) => 
+      expect(navBar.destinations.length, 3);
+
+      // Destination labels render
+      expect(find.byWidgetPredicate((widget) =>
         widget is Text && widget.data != null && widget.data!.contains('المساعد')
-      ), findsOneWidget);
+      ), findsWidgets);
       expect(find.text('مساراتي'), findsOneWidget);
 
       // Actually switch to the مساراتي (paths) tab. IndexedStack keeps the
@@ -510,7 +511,8 @@ class _FakeTgClient extends TgClient {
     String pathId, {
     bool includeLessons = false,
   }) async {
-    return pathDetailJson ?? {'path': _pathJson(id: pathId), 'lessons': []};
+    // Flat shape — path fields at root + lessons array (commit 7d056fc).
+    return pathDetailJson ?? {..._pathJson(id: pathId), 'lessons': []};
   }
 
   @override
@@ -519,7 +521,7 @@ class _FakeTgClient extends TgClient {
   }
 
   @override
-  Future<Map<String, dynamic>> getLessonAssets(String lessonId) async {
+  Future<Map<String, dynamic>> getLessonAssets(String lessonId, {String? lang}) async {
     if (lessonAssetsJson != null) return lessonAssetsJson!;
     throw const TgApiError(404, 'not-found');
   }

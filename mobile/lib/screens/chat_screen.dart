@@ -12,13 +12,14 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../features/program/widgets/daily_tip_card.dart';
 import '../models/enums.dart';
 import '../state/chat_notifier.dart';
 import '../state/connectivity_provider.dart';
 import '../theme/app_theme.dart';
+import '../theme/design_tokens.dart';
 import '../widgets/message_bubble.dart';
 
 final chatNotifierProvider =
@@ -108,18 +109,19 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               child: Center(
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
+                    horizontal: 10,
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(20),
+                    color: AppTheme.primary.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(Dt.rChip),
                   ),
                   child: Text(
                     '${state.turnCount} سؤال',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppTheme.primary,
                       fontSize: 12,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -159,7 +161,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       body: Column(
         children: [
           if (!isOnline) const _OfflineBanner(),
-          const DailyTipCard(),
+          // Daily tip moved to the Home tab (اليوم) — chat is now a
+          // pure conversation surface.
           _SettingsBar(state: state, notifier: notifier),
           if (state.errorBanner != null) _ErrorBanner(
             message: state.errorBanner!,
@@ -169,7 +172,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             child: state.sessionId == null
                 ? const _BootSplash()
                 : state.messages.isEmpty
-                    ? const _EmptyState()
+                    ? _EmptyState(
+                        onSuggest: (q) {
+                          _input.text = q;
+                          _inputFocus.requestFocus();
+                        },
+                      )
                     : ListView.builder(
                     controller: _scroll,
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -180,13 +188,25 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       final next = i + 1 < state.messages.length
                           ? state.messages[i + 1]
                           : null;
-                      return MessageBubble(
-                        message: m,
-                        isFirstInGroup: prev == null || prev.role != m.role,
-                        isLastInGroup: next == null || next.role != m.role,
-                        onFeedback: (rating) {
-                          notifier.submitFeedback(m.id, rating);
-                        },
+                      // Keyed by message id so the entrance animation
+                      // plays exactly once per message — token-by-token
+                      // rebuilds of the streaming bubble keep the same
+                      // element (and its finished animation state).
+                      return KeyedSubtree(
+                        key: ValueKey(m.id),
+                        child: MessageBubble(
+                          message: m,
+                          isFirstInGroup:
+                              prev == null || prev.role != m.role,
+                          isLastInGroup:
+                              next == null || next.role != m.role,
+                          onFeedback: (rating) {
+                            notifier.submitFeedback(m.id, rating);
+                          },
+                        )
+                            .animate()
+                            .fadeIn(duration: 250.ms)
+                            .slideY(begin: .06, curve: Curves.easeOutCubic),
                       );
                     },
                   ),
@@ -382,7 +402,14 @@ class _OfflineBanner extends StatelessWidget {
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState();
+  final ValueChanged<String> onSuggest;
+  const _EmptyState({required this.onSuggest});
+
+  static const _suggestions = [
+    'كيف أتعامل مع نوبات الغضب؟',
+    'طفلي لا يحب المذاكرة',
+    'كيف أعلّم طفلي الصلاة؟',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -392,14 +419,19 @@ class _EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.shield_outlined,
-                size: 72, color: AppTheme.primary.withValues(alpha: 0.7)),
+            const Text('💬', style: TextStyle(fontSize: 64))
+                .animate()
+                .scale(
+                  begin: const Offset(.6, .6),
+                  duration: Dt.slow,
+                  curve: Curves.easeOutBack,
+                ),
             const SizedBox(height: 12),
             const Text(
               'مرحباً — اسأل عن أي تحدٍّ تربوي يواجهك',
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w800,
                 color: AppTheme.textPrimary,
               ),
               textAlign: TextAlign.center,
@@ -409,6 +441,33 @@ class _EmptyState extends StatelessWidget {
               'اختر الفئة العمرية والشدة من الشريط أعلاه، ثم اكتب سؤالك.',
               style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
               textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              alignment: WrapAlignment.center,
+              children: [
+                for (var i = 0; i < _suggestions.length; i++)
+                  ActionChip(
+                    label: Text(_suggestions[i]),
+                    labelStyle: const TextStyle(
+                      color: AppTheme.primary,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13,
+                    ),
+                    backgroundColor:
+                        AppTheme.primary.withValues(alpha: .08),
+                    side: BorderSide(
+                      color: AppTheme.primary.withValues(alpha: .3),
+                    ),
+                    shape: const StadiumBorder(),
+                    onPressed: () => onSuggest(_suggestions[i]),
+                  )
+                      .animate(delay: (100 * i).ms)
+                      .fadeIn(duration: Dt.base)
+                      .slideY(begin: .2, curve: Curves.easeOutCubic),
+              ],
             ),
           ],
         ),
@@ -433,41 +492,63 @@ class _Composer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
-        decoration: const BoxDecoration(
-          color: AppTheme.surface,
-          border: Border(
-            top: BorderSide(color: AppTheme.surfaceAlt, width: 1),
-          ),
-        ),
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              child: TextField(
-                controller: controller,
-                focusNode: focusNode,
-                enabled: enabled,
-                minLines: 1,
-                maxLines: 5,
-                textInputAction: TextInputAction.send,
-                onSubmitted: enabled ? (_) => onSend() : null,
-                decoration: const InputDecoration(
-                  hintText: 'اكتب سؤالك…',
-                  border: OutlineInputBorder(),
-                  isDense: true,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppTheme.surface,
+                  borderRadius: BorderRadius.circular(Dt.rSheet),
+                  boxShadow: Dt.cardShadow,
                 ),
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(2000),
-                ],
+                child: TextField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  enabled: enabled,
+                  minLines: 1,
+                  maxLines: 5,
+                  textInputAction: TextInputAction.send,
+                  onSubmitted: enabled ? (_) => onSend() : null,
+                  decoration: const InputDecoration(
+                    hintText: 'اكتب سؤالك…',
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                    isDense: true,
+                  ),
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(2000),
+                  ],
+                ),
               ),
             ),
             const SizedBox(width: 8),
-            IconButton.filled(
-              onPressed: enabled ? onSend : null,
-              icon: const Icon(Icons.send),
-              tooltip: 'إرسال',
+            GestureDetector(
+              onTap: enabled ? onSend : null,
+              child: Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  gradient: enabled ? Dt.primaryGradient : null,
+                  color: enabled ? null : Dt.track,
+                  shape: BoxShape.circle,
+                  boxShadow: enabled
+                      ? Dt.softShadow(Dt.primary, alpha: .3)
+                      : null,
+                ),
+                // Icons.send auto-mirrors under RTL Directionality.
+                child: Icon(
+                  Icons.send,
+                  color: enabled ? Colors.white : Dt.inkSoft,
+                  size: 22,
+                ),
+              ),
             ),
           ],
         ),

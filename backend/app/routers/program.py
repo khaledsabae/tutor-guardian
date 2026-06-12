@@ -127,12 +127,68 @@ async def get_lesson_detail(lesson_id: str):
 
 
 @router.get("/lesson-assets/{lesson_id}")
-async def get_lesson_assets(lesson_id: str):
+async def get_lesson_assets(
+    lesson_id: str,
+    request: Request,
+    lang: Optional[str] = Query(None, description="Preferred language for media (ar/en)")
+):
     """استرجاع أصول الدرس التفاعلية (البودكاست، الفلاش كاردز، الاختبارات، إلخ)."""
     assets = cl.get_lesson_assets(lesson_id)
     if assets is None:
         raise HTTPException(status_code=404, detail=f"لا توجد أصول للدرس '{lesson_id}'")
-    return assets
+    
+    # Determine user language preference:
+    # 1. Query parameter
+    # 2. Accept-Language header
+    # 3. Default to "ar" (Arabic-first application)
+    preferred_lang = lang
+    if not preferred_lang:
+        accept_lang = request.headers.get("accept-language", "")
+        if "en" in accept_lang.lower() and not accept_lang.lower().startswith("ar"):
+            preferred_lang = "en"
+        else:
+            preferred_lang = "ar"
+
+    # Resolve podcast MP3
+    podcasts = assets.get("podcasts", [])
+    podcast_mp3 = None
+    if podcasts:
+        for p in podcasts:
+            if p.get("language") == preferred_lang:
+                podcast_mp3 = p.get("file")
+                break
+        if not podcast_mp3:
+            # Fallback to Arabic secondary, then to first available
+            for p in podcasts:
+                if p.get("language") == "ar":
+                    podcast_mp3 = p.get("file")
+                    break
+            if not podcast_mp3:
+                podcast_mp3 = podcasts[0].get("file")
+
+    # Resolve video MP4
+    videos = assets.get("videos", [])
+    video_mp4 = None
+    if videos:
+        for v in videos:
+            if v.get("language") == preferred_lang:
+                video_mp4 = v.get("file")
+                break
+        if not video_mp4:
+            # Fallback to Arabic secondary, then to first available
+            for v in videos:
+                if v.get("language") == "ar":
+                    video_mp4 = v.get("file")
+                    break
+            if not video_mp4:
+                video_mp4 = videos[0].get("file")
+
+    return {
+        "podcast_mp3": podcast_mp3,
+        "video_mp4": video_mp4,
+        "flashcards": assets.get("flashcards", []),
+        "quizzes": assets.get("quizzes", [])
+    }
 
 
 @router.get("/asset-content/{asset_id}")
@@ -290,3 +346,17 @@ def patch_lesson_progress(
         )
     finally:
         conn.close()
+
+
+# ── Quiz ───────────────────────────────────────────────────────────────
+
+@router.get("/quiz")
+def get_quiz(
+    domain: Optional[str] = Query(None, description="Filter by domain"),
+    count: int = Query(10, ge=1, le=30, description="Number of questions"),
+):
+    """Return random quiz questions, optionally filtered by domain."""
+    from app.quiz_data import get_quiz_questions
+
+    questions = get_quiz_questions(domain=domain, count=count)
+    return {"count": len(questions), "questions": questions}

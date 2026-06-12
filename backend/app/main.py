@@ -107,5 +107,9 @@ app.include_router(program.router, prefix="/api")  # curriculum: paths/lessons/d
 app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
 app.include_router(children.router, prefix="/api")  # child profiles + progress (auth)
 
+DOCS_DIR = PROJECT_ROOT / "docs"
+if DOCS_DIR.is_dir():
+    app.mount("/docs", StaticFiles(directory=str(DOCS_DIR)), name="docs")
+
 if FRONTEND_DIR.is_dir():
     app.mount("/ui", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="static")

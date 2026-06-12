@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:flutter_animate/flutter_animate.dart';
+
 import 'config/app_config.dart';
 import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
@@ -12,7 +14,10 @@ import 'features/program/providers/progress_providers.dart';
 import 'features/program/screens/paths_screen.dart';
 import 'firebase_options.dart';
 import 'screens/chat_screen.dart';
+import 'features/adhkar/services/notification_service.dart';
+import 'screens/home_screen.dart';
 import 'theme/app_theme.dart';
+import 'theme/design_tokens.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +30,9 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+
+  // Initialize daily Adhkar local notifications
+  await NotificationService.instance.init();
 
   runApp(const ProviderScope(child: TutorGuardianApp()));
 }
@@ -112,8 +120,30 @@ class _SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('🛡️', style: TextStyle(fontSize: 64))
+                .animate()
+                .scale(
+                  begin: const Offset(.6, .6),
+                  duration: Dt.slow,
+                  curve: Curves.easeOutBack,
+                ),
+            const SizedBox(height: 12),
+            const Text(
+              AppConfig.appName,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+                color: AppTheme.primary,
+              ),
+            ).animate(delay: 150.ms).fadeIn(duration: Dt.base),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -146,11 +176,11 @@ class _BootErrorScreen extends StatelessWidget {
   }
 }
 
-/// The 2-tab bottom navigation shell.
+/// The 3-tab bottom navigation shell: اليوم / مساراتي / المساعد.
 ///
 /// Note: each tab keeps its own state via the [IndexedStack] so that
-/// switching between the chat and the program lists does not lose
-/// scroll position or in-flight streaming tokens.
+/// switching between tabs does not lose scroll position or in-flight
+/// streaming tokens.
 class RootScaffold extends StatefulWidget {
   const RootScaffold({super.key});
 
@@ -166,9 +196,10 @@ class _RootScaffoldState extends State<RootScaffold> {
     return Scaffold(
       body: IndexedStack(
         index: _index,
-        children: const [
-          ChatScreen(),
-          PathsScreen(),
+        children: [
+          HomeScreen(onGoToTab: (i) => setState(() => _index = i)),
+          const PathsScreen(),
+          const ChatScreen(),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -176,14 +207,19 @@ class _RootScaffoldState extends State<RootScaffold> {
         onDestinationSelected: (i) => setState(() => _index = i),
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline),
-            selectedIcon: Icon(Icons.chat_bubble),
-            label: 'المساعد',
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home_rounded),
+            label: 'اليوم',
           ),
           NavigationDestination(
             icon: Icon(Icons.route_outlined),
             selectedIcon: Icon(Icons.route),
             label: 'مساراتي',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.chat_bubble_outline),
+            selectedIcon: Icon(Icons.chat_bubble),
+            label: 'المساعد',
           ),
         ],
       ),

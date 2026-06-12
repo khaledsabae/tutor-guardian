@@ -1,18 +1,22 @@
-/// Path detail screen — shows the full path description + ordered
-/// list of lessons, then a "start" or "resume" button.
+/// Path detail screen — shows the full path description + the lessons
+/// rendered as a Duolingo-style zigzag trail, then a "start" button.
 ///
 /// Reads [pathDetailProvider] (with `?include=lessons`). Each lesson
-/// is rendered as a card that navigates to [LessonScreen]. Phase 5
-/// added a [LinearProgressIndicator] that reflects the active child's
-/// completion ratio on this path (consumed via
-/// [pathProgressMapProvider]). Phase 6 added a [StreakChip] in the
-/// header — the device's consecutive-day completion streak.
+/// is a tappable trail node that navigates to [LessonScreen]. The
+/// active child's completion ratio (via [pathProgressMapProvider])
+/// drives both the header progress bar and the node states.
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/animated_progress_bar.dart';
+import '../../../widgets/ui/bouncy_button.dart';
+import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/skeleton.dart';
 import '../../reflections/widgets/reflection_note_badge.dart';
 import '../data/models.dart';
 import '../data/progress_models.dart';
@@ -52,27 +56,16 @@ class PathDetailScreen extends ConsumerWidget {
           ageGroup: ageGroup,
           childId: ref.watch(activeChildIdProvider),
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, _) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.error_outline,
-                    size: 56, color: AppTheme.dangerFg),
-                const SizedBox(height: 12),
-                Text('تعذّر تحميل المسار.\n$err',
-                    textAlign: TextAlign.center),
-                const SizedBox(height: 16),
-                ElevatedButton.icon(
-                  onPressed: () => ref.invalidate(pathDetailProvider(args)),
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('إعادة المحاولة'),
-                ),
-              ],
-            ),
-          ),
+        loading: () => const SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: SkeletonList(count: 3, itemHeight: 160),
+        ),
+        error: (err, _) => EmptyState(
+          emoji: '📡',
+          title: 'تعذّر تحميل المسار',
+          subtitle: '$err',
+          actionLabel: 'إعادة المحاولة',
+          onAction: () => ref.invalidate(pathDetailProvider(args)),
         ),
       ),
     );
@@ -104,14 +97,33 @@ class _Body extends ConsumerWidget {
     final asyncProgress = progressArgs == null
         ? null
         : ref.watch(pathProgressMapProvider(progressArgs));
+    final progressMap = asyncProgress?.maybeWhen(
+      data: (m) => m,
+      orElse: () => null,
+    );
+    final style = styleFor(path.domain);
+
+    void openLesson(String lessonId) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => LessonScreen(
+            lessonId: lessonId,
+            ageGroup: ageGroup,
+            childId: childId,
+          ),
+        ),
+      );
+    }
+
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       children: [
-        _Header(path: path, childId: childId),
-        if (asyncProgress != null) ...[
-          const SizedBox(height: 12),
-          _ProgressStrip(asyncProgress: asyncProgress),
-        ],
+        _Header(
+          path: path,
+          childId: childId,
+          style: style,
+          progress: progressMap,
+        ),
         const SizedBox(height: 20),
         if (path.primaryReference != null) ...[
           _ReferenceCard(ref: path.primaryReference!),
@@ -122,154 +134,56 @@ class _Body extends ConsumerWidget {
           style: Theme.of(context)
               .textTheme
               .titleMedium
-              ?.copyWith(fontWeight: FontWeight.w700),
+              ?.copyWith(fontWeight: FontWeight.w800),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
         if (detail.lessons.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24),
-            child: Center(
-              child: Text(
-                'لا توجد دروس في هذا المسار بعد.',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: AppTheme.textSecondary),
-              ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 24),
+            child: EmptyState(
+              emoji: '📭',
+              title: 'لا توجد دروس في هذا المسار بعد',
             ),
           )
         else
-          for (final lesson in detail.lessons) ...[
-            _LessonTile(
-              lesson: lesson,
-              status: asyncProgress?.maybeWhen(
-                    data: (m) => m.statusFor(lesson.id),
-                    orElse: () => ProgressStatus.notStarted,
-                  ) ??
+          for (var i = 0; i < detail.lessons.length; i++)
+            _TrailRow(
+              index: i,
+              lesson: detail.lessons[i],
+              style: style,
+              status: progressMap?.statusFor(detail.lessons[i].id) ??
                   ProgressStatus.notStarted,
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => LessonScreen(
-                      lessonId: lesson.id,
-                      ageGroup: ageGroup,
-                      childId: childId,
-                    ),
-                  ),
-                );
-              },
+              prevStatus: i == 0
+                  ? null
+                  : progressMap?.statusFor(detail.lessons[i - 1].id) ??
+                      ProgressStatus.notStarted,
+              onTap: () => openLesson(detail.lessons[i].id),
             ),
-            const SizedBox(height: 8),
-          ],
         const SizedBox(height: 16),
-        ElevatedButton.icon(
-          onPressed: detail.lessons.isEmpty
+        BouncyButton(
+          label: 'ابدأ المسار',
+          color: style.base,
+          icon: const Icon(Icons.play_arrow, color: Colors.white),
+          onTap: detail.lessons.isEmpty
               ? null
-              : () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => LessonScreen(
-                        lessonId: detail.lessons.first.id,
-                        ageGroup: ageGroup,
-                        childId: childId,
-                      ),
-                    ),
-                  );
-                },
-          icon: const Icon(Icons.play_arrow),
-          label: const Text('ابدأ المسار'),
-          style: ElevatedButton.styleFrom(
-            minimumSize: const Size.fromHeight(50),
-          ),
+              : () => openLesson(detail.lessons.first.id),
         ),
       ],
     );
   }
 }
 
-class _ProgressStrip extends StatelessWidget {
-  const _ProgressStrip({required this.asyncProgress});
-  final AsyncValue<PathProgressMap> asyncProgress;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceAlt,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
-      ),
-      child: asyncProgress.when(
-        data: (m) {
-          final percent = (m.fraction * 100).round();
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Icon(Icons.bar_chart,
-                      size: 16, color: AppTheme.textSecondary),
-                  const SizedBox(width: 6),
-                  Text(
-                    'تقدّم المسار',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(color: AppTheme.textSecondary),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '${m.completedCount} / ${m.totalLessonsInPath} ($percent%)',
-                    style: const TextStyle(
-                      color: AppTheme.textSecondary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: m.fraction,
-                  minHeight: 8,
-                  backgroundColor: const Color(0xFFE5E7EB),
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    AppTheme.primary,
-                  ),
-                ),
-              ),
-              if (m.inProgressCount > 0) ...[
-                const SizedBox(height: 6),
-                Text(
-                  '${m.inProgressCount} درس قيد التنفيذ',
-                  style: const TextStyle(
-                    color: AppTheme.textSecondary,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ],
-          );
-        },
-        loading: () => const SizedBox(
-          height: 8,
-          child: LinearProgressIndicator(),
-        ),
-        error: (_, __) => const Text(
-          'تعذّر تحميل التقدّم.',
-          style: TextStyle(color: AppTheme.dangerFg, fontSize: 12),
-        ),
-      ),
-    );
-  }
-}
-
 class _Header extends ConsumerWidget {
-  const _Header({required this.path, required this.childId});
+  const _Header({
+    required this.path,
+    required this.childId,
+    required this.style,
+    required this.progress,
+  });
   final CurriculumPath path;
   final int? childId;
+  final DomainStyle style;
+  final PathProgressMap? progress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -280,91 +194,126 @@ class _Header extends ConsumerWidget {
           orElse: () => 0,
         ) ??
         0;
-    return Card(
-      elevation: 0,
-      color: AppTheme.primary,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+    final percent = progress == null ? null : (progress!.fraction * 100).round();
+    return Hero(
+      tag: 'path-${path.id}',
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: style.gradient,
+          borderRadius: BorderRadius.circular(Dt.rCard),
+          boxShadow: Dt.softShadow(style.base),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(Dt.rCard),
+          child: Stack(
+            children: [
+              // Big translucent emoji watermark.
+              PositionedDirectional(
+                start: -16,
+                bottom: -24,
+                child: Opacity(
+                  opacity: .15,
                   child: Text(
-                    path.ageLabel,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style.emoji,
+                    style: const TextStyle(fontSize: 130),
                   ),
                 ),
-                const SizedBox(width: 8),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    path.domainLabel,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                if (childId != null)
-                  StreakChip(streakDays: streak, dark: true),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Text(
-              path.title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              path.description,
-              style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.9),
-                height: 1.55,
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        _Badge(text: path.ageLabel),
+                        const SizedBox(width: 8),
+                        _Badge(text: path.domainLabel),
+                        const Spacer(),
+                        if (childId != null)
+                          StreakChip(streakDays: streak, dark: true),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    Text(
+                      path.title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        height: 1.3,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      path.description,
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.92),
+                        height: 1.55,
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    Row(
+                      children: [
+                        _Badge(text: '⏱️ ${path.estimatedDays} يوم'),
+                        const SizedBox(width: 8),
+                        _Badge(text: '📚 ${path.lessonIds.length} دروس'),
+                      ],
+                    ),
+                    if (progress != null && percent != null) ...[
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: AnimatedProgressBar(
+                              value: progress!.fraction,
+                              color: Colors.white,
+                              trackColor:
+                                  Colors.white.withValues(alpha: .25),
+                              height: 12,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            '${progress!.completedCount}/${progress!.totalLessonsInPath} ($percent%)',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                const Icon(Icons.timelapse,
-                    size: 16, color: Colors.white70),
-                const SizedBox(width: 4),
-                Text(
-                  '${path.estimatedDays} يوم',
-                  style: const TextStyle(color: Colors.white70),
-                ),
-                const SizedBox(width: 16),
-                const Icon(Icons.menu_book_outlined,
-                    size: 16, color: Colors.white70),
-                const SizedBox(width: 4),
-                Text(
-                  '${path.lessonIds.length} دروس',
-                  style: const TextStyle(color: Colors.white70),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Badge extends StatelessWidget {
+  const _Badge({required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(Dt.rChip),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );
@@ -389,25 +338,20 @@ class StreakChip extends StatelessWidget {
       // Empty state — don't show a "0-day streak" chip (it would
       // feel punitive). A short nudge is friendlier.
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
           color: dark
               ? Colors.white.withValues(alpha: 0.18)
               : AppTheme.surfaceAlt,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(Dt.rChip),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              dark ? '🔥 ابدأ سلسلتك اليوم' : '🔥 ابدأ سلسلتك اليوم',
-              style: TextStyle(
-                color: dark ? Colors.white : AppTheme.textSecondary,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
+        child: Text(
+          '🔥 ابدأ سلسلتك اليوم',
+          style: TextStyle(
+            color: dark ? Colors.white : AppTheme.textSecondary,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       );
     }
@@ -417,7 +361,7 @@ class StreakChip extends StatelessWidget {
         color: dark
             ? Colors.white.withValues(alpha: 0.20)
             : const Color(0xFFFFE9C7),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(Dt.rChip),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -452,41 +396,40 @@ class _ReferenceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: AppTheme.warningBg,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(Icons.menu_book, color: AppTheme.warningFg, size: 20),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _refTypeLabel(ref.type),
-                    style: const TextStyle(
-                      color: AppTheme.warningFg,
-                      fontWeight: FontWeight.w700,
-                    ),
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppTheme.warningBg,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('📖', style: TextStyle(fontSize: 22)),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _refTypeLabel(ref.type),
+                  style: const TextStyle(
+                    color: AppTheme.warningFg,
+                    fontWeight: FontWeight.w800,
                   ),
-                  const SizedBox(height: 2),
-                  Text(
-                    ref.info,
-                    style: const TextStyle(
-                      color: AppTheme.warningFg,
-                      height: 1.5,
-                    ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  ref.info,
+                  style: const TextStyle(
+                    color: AppTheme.warningFg,
+                    height: 1.5,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -507,119 +450,289 @@ class _ReferenceCard extends StatelessWidget {
   }
 }
 
-class _LessonTile extends StatelessWidget {
-  const _LessonTile({
+// ── Duolingo-style zigzag trail ──────────────────────────────────────────
+
+const double _kTrailRowHeight = 120;
+const double _kNodeSize = 72;
+const double _kNodeInset = 36; // node-center distance from row edge
+
+class _TrailRow extends StatelessWidget {
+  const _TrailRow({
+    required this.index,
     required this.lesson,
     required this.status,
+    required this.prevStatus,
+    required this.style,
     required this.onTap,
   });
+
+  final int index;
   final CurriculumLesson lesson;
   final ProgressStatus status;
+  final ProgressStatus? prevStatus; // null for the first row
+  final DomainStyle style;
   final VoidCallback onTap;
-
-  IconData get _statusIcon {
-    switch (status) {
-      case ProgressStatus.completed:
-        return Icons.check_circle;
-      case ProgressStatus.inProgress:
-        return Icons.play_circle_outline;
-      case ProgressStatus.notStarted:
-        return Icons.circle_outlined;
-    }
-  }
-
-  Color get _statusColor {
-    switch (status) {
-      case ProgressStatus.completed:
-        return AppTheme.success;
-      case ProgressStatus.inProgress:
-        return AppTheme.primary;
-      case ProgressStatus.notStarted:
-        return AppTheme.textMuted;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(color: Color(0xFFE5E7EB)),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Row(
-            children: [
-              Container(
-                width: 36,
-                height: 36,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: _statusColor.withValues(alpha: 0.10),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(_statusIcon, color: _statusColor, size: 22),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      lesson.title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Text(
-                          '${lesson.estimatedMinutes} د',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(color: AppTheme.textSecondary),
-                        ),
-                        if (status != ProgressStatus.notStarted) ...[
-                          const SizedBox(width: 8),
-                          Text(
-                            progressStatusLabel(status),
-                            style: TextStyle(
-                              color: _statusColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                        const SizedBox(width: 8),
-                        if (lesson.needsProfessionalFollowup)
-                          const _FlagChip(
-                            text: 'متابعة متخصصة',
-                            color: AppTheme.dangerFg,
-                            bg: AppTheme.dangerBg,
-                          ),
-                        // Phase 8-C — shows a "ملاحظة" badge if the
-                        // user has a reflection on this lesson.
-                        const SizedBox(width: 8),
-                        ReflectionNoteBadge(lessonId: lesson.id),
-                      ],
-                    ),
-                  ],
+    final alignEnd = index.isOdd; // zigzag
+    final node = _LessonNode(
+      lesson: lesson,
+      status: status,
+      style: style,
+      order: index + 1,
+      alignEnd: alignEnd,
+      onTap: onTap,
+    );
+    return Semantics(
+      button: true,
+      label:
+          'الدرس ${index + 1}: ${lesson.title}. ${progressStatusLabel(status)}',
+      onTap: onTap,
+      excludeSemantics: true,
+      child: SizedBox(
+        height: _kTrailRowHeight,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            if (index > 0)
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: _ConnectorPainter(
+                    fromEnd: (index - 1).isOdd,
+                    toEnd: alignEnd,
+                    color: prevStatus == ProgressStatus.completed
+                        ? style.base
+                        : const Color(0xFFD8D0C2),
+                    dashed: prevStatus != ProgressStatus.completed,
+                    textDirection: Directionality.of(context),
+                  ),
                 ),
               ),
-              const Icon(Icons.chevron_left, color: AppTheme.textMuted),
-            ],
-          ),
+            Align(
+              alignment: alignEnd
+                  ? AlignmentDirectional.centerEnd
+                  : AlignmentDirectional.centerStart,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 12, end: 12),
+                child: node,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+}
+
+class _LessonNode extends StatelessWidget {
+  const _LessonNode({
+    required this.lesson,
+    required this.status,
+    required this.style,
+    required this.order,
+    required this.alignEnd,
+    required this.onTap,
+  });
+
+  final CurriculumLesson lesson;
+  final ProgressStatus status;
+  final DomainStyle style;
+  final int order;
+  final bool alignEnd; // circle must hug the row edge for the connector
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget circle;
+    switch (status) {
+      case ProgressStatus.completed:
+        circle = Container(
+          width: _kNodeSize,
+          height: _kNodeSize,
+          decoration: BoxDecoration(
+            gradient: style.gradient,
+            shape: BoxShape.circle,
+            boxShadow: Dt.softShadow(style.base),
+          ),
+          child: const Icon(Icons.check_rounded,
+              color: Colors.white, size: 36),
+        );
+      case ProgressStatus.inProgress:
+        // Gentle two-pulse on appear, then static (performance budget).
+        circle = Container(
+          width: _kNodeSize,
+          height: _kNodeSize,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            border: Border.all(color: style.base, width: 4),
+            boxShadow: Dt.softShadow(style.base, alpha: .2),
+          ),
+          child: Icon(Icons.play_arrow_rounded, color: style.base, size: 36),
+        )
+            .animate(onPlay: (c) => c.repeat(count: 2))
+            .scale(
+              begin: const Offset(1, 1),
+              end: const Offset(1.06, 1.06),
+              duration: 600.ms,
+              curve: Curves.easeInOut,
+            )
+            .then()
+            .scale(
+              begin: const Offset(1.06, 1.06),
+              end: const Offset(1, 1),
+              duration: 600.ms,
+              curve: Curves.easeInOut,
+            );
+      case ProgressStatus.notStarted:
+        circle = Container(
+          width: _kNodeSize,
+          height: _kNodeSize,
+          decoration: const BoxDecoration(
+            color: Color(0xFFEBE5DA),
+            shape: BoxShape.circle,
+          ),
+          child: const Center(
+            child: Text('📖', style: TextStyle(fontSize: 28)),
+          ),
+        );
+    }
+
+    final info = Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment:
+            alignEnd ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Text(
+            lesson.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: alignEnd ? TextAlign.end : TextAlign.start,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              height: 1.35,
+            ),
+          ),
+          const SizedBox(height: 3),
+          Wrap(
+            spacing: 6,
+            runSpacing: 4,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                '⏱️ ${lesson.estimatedMinutes} د',
+                style: const TextStyle(
+                  fontSize: 11,
+                  color: AppTheme.textMuted,
+                ),
+              ),
+              if (lesson.needsProfessionalFollowup)
+                const _FlagChip(
+                  text: 'متابعة متخصصة',
+                  color: AppTheme.dangerFg,
+                  bg: AppTheme.dangerBg,
+                ),
+              // Phase 8-C — "ملاحظة" badge if the user has a
+              // reflection on this lesson.
+              ReflectionNoteBadge(lessonId: lesson.id),
+            ],
+          ),
+        ],
+      ),
+    );
+
+    // The circle hugs the row edge so the connector painter's
+    // node-center math holds for both zigzag sides.
+    return BouncyTap(
+      onTap: onTap,
+      child: SizedBox(
+        width: 200,
+        child: Row(
+          children: alignEnd
+              ? [info, const SizedBox(width: 10), circle]
+              : [circle, const SizedBox(width: 10), info],
+        ),
+      ),
+    );
+  }
+}
+
+/// Curved connector between two consecutive trail nodes. Solid in the
+/// domain color when the previous lesson is completed; dashed grey
+/// otherwise. Mirrors correctly under RTL via [textDirection].
+class _ConnectorPainter extends CustomPainter {
+  final bool fromEnd;
+  final bool toEnd;
+  final Color color;
+  final bool dashed;
+  final TextDirection textDirection;
+
+  _ConnectorPainter({
+    required this.fromEnd,
+    required this.toEnd,
+    required this.color,
+    required this.dashed,
+    required this.textDirection,
+  });
+
+  double _x(bool end, double width) {
+    // "start"/"end" are directional; resolve to pixels.
+    final logicalEnd = textDirection == TextDirection.rtl ? !end : end;
+    const inset = 12 + _kNodeInset;
+    return logicalEnd ? width - inset : inset;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final xFrom = _x(fromEnd, size.width);
+    final xTo = _x(toEnd, size.width);
+    final yCenter = size.height / 2;
+    // From just below the previous node to just above this node.
+    final from = Offset(xFrom, yCenter - _kTrailRowHeight + _kNodeSize / 2 + 6);
+    final to = Offset(xTo, yCenter - _kNodeSize / 2 - 6);
+
+    final path = Path()
+      ..moveTo(from.dx, from.dy)
+      ..cubicTo(
+        from.dx,
+        from.dy + (to.dy - from.dy) * .7,
+        to.dx,
+        to.dy - (to.dy - from.dy) * .7,
+        to.dx,
+        to.dy,
+      );
+
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4
+      ..strokeCap = StrokeCap.round
+      ..color = color;
+
+    if (!dashed) {
+      canvas.drawPath(path, paint);
+      return;
+    }
+    // Dashed: walk the path metrics in 8px-on / 7px-off segments.
+    for (final metric in path.computeMetrics()) {
+      var distance = 0.0;
+      while (distance < metric.length) {
+        final next = (distance + 8).clamp(0.0, metric.length);
+        canvas.drawPath(metric.extractPath(distance, next), paint);
+        distance = next + 7;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_ConnectorPainter old) =>
+      old.color != color ||
+      old.dashed != dashed ||
+      old.fromEnd != fromEnd ||
+      old.toEnd != toEnd ||
+      old.textDirection != textDirection;
 }
 
 class _FlagChip extends StatelessWidget {
@@ -638,7 +751,8 @@ class _FlagChip extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w600),
+        style:
+            TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w600),
       ),
     );
   }

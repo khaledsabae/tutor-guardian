@@ -131,8 +131,9 @@ void main() {
     testWidgets('PathDetailScreen shows progress bar when child active',
         (WidgetTester tester) async {
       final fake = _FakeTgClient();
+      // Flat shape — path fields at root + lessons array (commit 7d056fc).
       fake.pathDetailJson = {
-        'path': _pathJson(),
+        ..._pathJson(),
         'lessons': [
           _lessonJson(id: 'lesson_4-6_islamic_parenting_adab_01', order: 1),
           _lessonJson(id: 'lesson_4-6_islamic_parenting_adab_02', order: 2),
@@ -181,12 +182,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Progress strip present
-      expect(find.text('تقدّم المسار'), findsOneWidget);
-      // 1 / 2 (50%)
-      expect(find.textContaining('1 / 2'), findsOneWidget);
-      // First lesson tile shows "مكتمل" label
-      expect(find.text('مكتمل'), findsWidgets);
+      // Progress now lives in the gradient header: "1/2 (50%)"
+      expect(find.textContaining('1/2'), findsOneWidget);
+      // Completed trail node renders a check icon
+      expect(find.byIcon(Icons.check_rounded), findsOneWidget);
     });
 
     testWidgets('LessonScreen shows mark-complete button + status chip',
@@ -290,7 +289,7 @@ class _FakeTgClient extends TgClient {
     String pathId, {
     bool includeLessons = false,
   }) async =>
-      pathDetailJson ?? {'path': _pathJson(id: pathId), 'lessons': []};
+      pathDetailJson ?? {..._pathJson(id: pathId), 'lessons': []};
 
   @override
   Future<Map<String, dynamic>> getLesson(String lessonId) async =>

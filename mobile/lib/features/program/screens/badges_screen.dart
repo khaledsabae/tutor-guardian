@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/empty_state.dart';
+import '../../../widgets/ui/skeleton.dart';
 import '../data/badges.dart';
 import '../providers/progress_providers.dart';
 
@@ -16,10 +20,16 @@ class BadgesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('إنجازاتي')),
       body: childId == null
-          ? const _Hint(text: 'اختر طفلاً أولاً لعرض الإنجازات.')
+          ? const EmptyState(
+              emoji: '🏅',
+              title: 'اختر طفلاً أولاً',
+              subtitle: 'اختر طفلاً لعرض إنجازاته.',
+            )
           : ref.watch(childProgressProvider(childId)).when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
+                loading: () => const SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
+                  child: SkeletonList(count: 3, itemHeight: 150),
+                ),
                 // Badges are encouragement — on error just show them all locked.
                 error: (_, __) => _BadgesGrid(badges: computeBadges(null)),
                 data: (bundle) =>
@@ -58,7 +68,18 @@ class _BadgesGrid extends StatelessWidget {
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
             childAspectRatio: 0.95,
-            children: [for (final b in badges) _BadgeTile(badge: b)],
+            children: [
+              for (var i = 0; i < badges.length; i++)
+                // "Unlock pop" — earned badges spring in, staggered.
+                _BadgeTile(badge: badges[i])
+                    .animate(delay: (80 * (i % Dt.maxStaggeredItems)).ms)
+                    .scale(
+                      begin: const Offset(.5, .5),
+                      duration: Dt.base,
+                      curve: Curves.easeOutBack,
+                    )
+                    .fadeIn(duration: Dt.fast),
+            ],
           ),
         ),
       ],
@@ -76,68 +97,48 @@ class _BadgeTile extends StatelessWidget {
     return Semantics(
       label: '${badge.title}. ${badge.description}. '
           '${earned ? "تم الحصول عليه" : "لم يُفتح بعد"}',
-      child: Opacity(
-        opacity: earned ? 1.0 : 0.45,
-        child: Container(
-          decoration: BoxDecoration(
-            color: earned ? Colors.white : AppTheme.surfaceAlt,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: earned ? AppTheme.primary : Colors.transparent,
-              width: earned ? 1.5 : 0,
-            ),
-            boxShadow: earned
-                ? [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ]
-                : null,
-          ),
-          padding: const EdgeInsets.all(14),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(earned ? badge.emoji : '🔒',
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: earned ? Dt.accentGradient : null,
+          color: earned ? null : AppTheme.surfaceAlt,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: earned ? Dt.softShadow(Dt.accent) : null,
+        ),
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Opacity(
+              opacity: earned ? 1.0 : 0.4,
+              child: Text(earned ? badge.emoji : '🔒',
                   style: const TextStyle(fontSize: 40)),
-              const SizedBox(height: 10),
-              Text(
-                badge.title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              badge.title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                color: earned ? Colors.white : AppTheme.textSecondary,
               ),
-              const SizedBox(height: 4),
-              Text(
-                badge.description,
-                textAlign: TextAlign.center,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 12, color: AppTheme.textSecondary),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              badge.description,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 12,
+                color: earned
+                    ? Colors.white.withValues(alpha: .9)
+                    : AppTheme.textMuted,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _Hint extends StatelessWidget {
-  final String text;
-  const _Hint({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Text(text,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: AppTheme.textMuted)),
-      ),
-    );
-  }
-}

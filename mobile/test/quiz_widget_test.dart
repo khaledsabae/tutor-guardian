@@ -177,7 +177,10 @@ void main() {
       await tester.tap(find.text('صحيح').first);
       await tester.pumpAndSettle();
       await tester.tap(find.text('عرض النتيجة'));
-      await tester.pumpAndSettle();
+      // ≥80% plays confetti, whose particle ticker never "settles" —
+      // use bounded pumps instead of pumpAndSettle.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 2));
 
       expect(find.text('نتيجتك'), findsOneWidget);
       expect(find.text('1 / 1'), findsOneWidget);
@@ -214,7 +217,8 @@ void main() {
       await tester.tap(find.text('أ').first);
       await tester.pumpAndSettle();
       await tester.tap(find.text('عرض النتيجة'));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 2));
 
       // Now retry.
       await tester.tap(find.byKey(const Key('quiz_retry_button')));

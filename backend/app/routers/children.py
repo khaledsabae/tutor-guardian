@@ -72,7 +72,7 @@ class ChildCreateRequest(BaseModel):
         # A simple sanity check: 1-6 grapheme-ish chars; not perfect but
         # rejects multi-line / control-character input. Surrogate-pair
         # emojis (4-byte) take 2 chars in UTF-16 / 1 codepoint.
-        if not re.match(r"^[\U0001F000-\U0010FFFF\U00002600-\U000027BF\U0001F300-\U0001FAFF\u2600-\u27BF]+$", v):
+        if not re.match(r"^[\U0001F000-\U0010FFFF\U00002600-\U000027BF\U0001F300-\U0001FAFF\u2600-\u27BF\u200D\uFE0F]+$", v):
             raise ValueError("avatar_emoji يجب أن يكون إيموجي واحد أو أكثر")
         return v
 
@@ -113,7 +113,7 @@ class ChildUpdateRequest(BaseModel):
     def _validate_emoji(cls, v: Optional[str]) -> Optional[str]:
         if v is None:
             return v
-        if not re.match(r"^[\U0001F000-\U0010FFFF\U00002600-\U000027BF\U0001F300-\U0001FAFF\u2600-\u27BF]+$", v):
+        if not re.match(r"^[\U0001F000-\U0010FFFF\U00002600-\U000027BF\U0001F300-\U0001FAFF\u2600-\u27BF\u200D\uFE0F]+$", v):
             raise ValueError("avatar_emoji يجب أن يكون إيموجي واحد أو أكثر")
         return v
 

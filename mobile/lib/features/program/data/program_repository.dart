@@ -66,9 +66,9 @@ class ProgramRepository {
   }
 
   /// `GET /api/program/lesson-assets/{id}`
-  Future<LessonAssets?> getLessonAssets(String lessonId) async {
+  Future<LessonAssets?> getLessonAssets(String lessonId, {String? lang}) async {
     try {
-      final json = await _client.getLessonAssets(lessonId);
+      final json = await _client.getLessonAssets(lessonId, lang: lang);
       return LessonAssets.fromJson(json);
     } catch (_) {
       return null;

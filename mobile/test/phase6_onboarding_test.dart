@@ -137,18 +137,12 @@ void main() {
   // ── Onboarding screen render ───────────────────────────────────────────
 
   group('OnboardingScreen', () {
-    // Helper to scroll the onboarding ListView to reveal an off-screen widget
-    Future<void> scrollToFind(WidgetTester tester, String text) async {
-      // Find a widget that IS visible (gender chip "ولد")
-      final visibleChip = find.text('ولد');
-      if (visibleChip.evaluate().isNotEmpty) {
-        // Drag from the visible chip area upwards
-        await tester.drag(find.byType(ListView), const Offset(0, -500));
-        await tester.pumpAndSettle();
-      }
-      // If still not found, try manual drag on the ListView
-      if (find.text(text).evaluate().isEmpty) {
-        await tester.drag(find.byType(ListView), const Offset(0, -500));
+    // The redesigned onboarding is a 3-page PageView (welcome → features →
+    // child form). Advance to the form page by tapping "التالي" twice.
+    Future<void> goToFormPage(WidgetTester tester) async {
+      for (var i = 0; i < 2; i++) {
+        if (find.text('التالي').evaluate().isEmpty) break;
+        await tester.tap(find.text('التالي'));
         await tester.pumpAndSettle();
       }
     }
@@ -180,8 +174,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Scroll to reveal off-screen fields at the top of the form
-      await scrollToFind(tester, 'اسم');
+      // Advance the PageView to the child form (page 3).
+      await goToFormPage(tester);
 
       expect(find.text('اسم طفلك'), findsOneWidget);
       expect(find.text('المرحلة العمرية'), findsOneWidget);
@@ -208,8 +202,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Scroll to reveal the submit button
-      await scrollToFind(tester, 'ابدأ');
+      // Advance the PageView to the child form (page 3).
+      await goToFormPage(tester);
 
       // Tap submit without entering name or age group
       await tester.tap(find.text('ابدأ الرحلة'));
@@ -290,8 +284,9 @@ void main() {
   testWidgets('PathDetailScreen header shows streak chip when bundle has streak',
       (tester) async {
     final fake = _FakeTgClient();
+    // Flat shape — path fields at root + lessons array (commit 7d056fc).
     fake.pathDetailJson = {
-      'path': _pathJson(),
+      ..._pathJson(),
       'lessons': [
         _lessonJson(id: 'lesson_4-6_islamic_parenting_adab_01', order: 1),
       ],
@@ -368,7 +363,7 @@ class _FakeTgClient extends TgClient {
     String pathId, {
     bool includeLessons = false,
   }) async =>
-      pathDetailJson ?? {'path': _pathJson(id: pathId), 'lessons': []};
+      pathDetailJson ?? {..._pathJson(id: pathId), 'lessons': []};
 
   @override
   Future<Map<String, dynamic>> getDailyTip({
