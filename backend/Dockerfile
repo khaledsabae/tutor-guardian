@@ -11,6 +11,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY backend/requirements.txt ./backend/requirements.txt
 RUN pip install --no-cache-dir -r backend/requirements.txt
 
+# Pre-download the embedding + reranker models into the image so cold
+# start needs no Hugging Face network access (e5 ~250MB, reranker ~470MB).
+RUN python -c "from sentence_transformers import SentenceTransformer, CrossEncoder; \
+    SentenceTransformer('intfloat/multilingual-e5-small'); \
+    CrossEncoder('cross-encoder/mmarco-mMiniLMv2-L12-H384-v1', max_length=256)"
+
 # App code + knowledge base + tools (units are needed to build the vector index)
 COPY backend/ ./backend/
 COPY knowledge_base/ ./knowledge_base/
