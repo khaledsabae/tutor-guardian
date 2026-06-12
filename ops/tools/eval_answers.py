@@ -68,6 +68,33 @@ def _azure_client():
     )
 
 
+# Judge backend: "ollama" (default — fully local, nothing leaves the
+# machines) or "azure" (requires AZURE_OPENAI_* env + explicit opt-in).
+JUDGE_BACKEND = os.environ.get("JUDGE_BACKEND", "ollama")
+JUDGE_OLLAMA_MODEL = os.environ.get("JUDGE_OLLAMA_MODEL", "gemma4:e4b")
+
+
+def _judge_ollama(item_prompt: str, retries: int = 3) -> str:
+    import requests
+
+    base = os.environ.get("OLLAMA_LOCAL_BASE_URL", "http://100.109.163.64:11434")
+    for attempt in range(retries):
+        try:
+            r = requests.post(
+                f"{base}/api/generate",
+                json={"model": JUDGE_OLLAMA_MODEL, "prompt": item_prompt,
+                      "stream": False,
+                      "options": {"temperature": 0.0, "num_predict": 300}},
+                timeout=300,
+            )
+            r.raise_for_status()
+            return r.json().get("response", "")
+        except Exception as exc:  # noqa: BLE001
+            print(f"  local judge error ({exc.__class__.__name__}), retry", file=sys.stderr)
+            time.sleep(5 * (attempt + 1))
+    return ""
+
+
 def _judge(client, item: dict, retries: int = 4) -> dict:
     context = "\n\n".join(
         f"[{i+1}] {c}" for i, c in enumerate(item.get("retrieved_chunks") or [])
@@ -79,6 +106,15 @@ def _judge(client, item: dict, retries: int = 4) -> dict:
         context=context[:6000],
         answer=item["reply_text"][:4000],
     )
+
+    if JUDGE_BACKEND == "ollama":
+        text = _judge_ollama(prompt)
+        try:
+            start, end = text.find("{"), text.rfind("}")
+            return json.loads(text[start : end + 1])
+        except Exception:  # noqa: BLE001
+            return {"judge_error": True}
+
     model = os.environ.get("AZURE_OPENAI_DEPLOYMENT", "DeepSeek-V4-Flash")
     for attempt in range(retries):
         try:
@@ -164,7 +200,7 @@ def run_pipeline(items: list[dict], label: str) -> list[dict]:
 
 
 def judge_all(results: list[dict]) -> None:
-    client = _azure_client()
+    client = _azure_client() if JUDGE_BACKEND == "azure" else None
     for i, row in enumerate(results, 1):
         if row.get("error"):
             continue
@@ -246,9 +282,14 @@ def main() -> None:
             items = items[: args.limit]
         print(f"running {len(items)} golden items (label={args.label})…")
         results = run_pipeline(items, args.label)
+        out = RUNS_DIR / f"{args.label}_{ts}.jsonl"
+        # Crash-safe: persist raw pipeline output BEFORE the judge phase
+        # so a killed run can be re-judged via --judge-only.
+        with out.open("w") as f:
+            for r in results:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
         if not args.skip_judge:
             judge_all(results)
-        out = RUNS_DIR / f"{args.label}_{ts}.jsonl"
 
     with out.open("w") as f:
         for r in results:
