@@ -21,6 +21,7 @@ curriculum content.
 import datetime as dt
 import hashlib
 import logging
+import re
 from typing import Literal, Optional
 
 from fastapi import APIRouter, HTTPException, Query, Request
@@ -365,3 +366,75 @@ def get_quiz(
 
     questions = get_quiz_questions(domain=domain, count=count)
     return {"count": len(questions), "questions": questions}
+
+
+# ── Personalized story generation (a coins redeemable) ──────────────────────
+
+# Fixed catalogue of values a story can teach — keeps generation on-rails
+# and safe (no free-text theme that could be abused).
+STORY_THEMES: dict[str, str] = {
+    "honesty": "الصدق والأمانة",
+    "courage": "الشجاعة ومواجهة الخوف",
+    "mercy": "الرحمة والرفق بالآخرين",
+    "parents": "بر الوالدين وطاعتهما",
+    "sharing": "مشاركة الألعاب والكرم",
+    "patience": "الصبر عند الغضب",
+    "cleanliness": "النظافة والاهتمام بالنفس",
+    "gratitude": "الشكر والقناعة",
+    "prayer": "حب الصلاة والعبادة",
+}
+
+
+class StoryRequest(BaseModel):
+    child_name: str = Field(min_length=1, max_length=40)
+    age_group: str
+    theme: str  # key from STORY_THEMES
+
+
+@router.post("/story")
+async def generate_story(req: StoryRequest):
+    """Generate a short, safe, value-teaching Arabic children's story
+    starring the child. Runs entirely on the local model (no cloud)."""
+    from app.services.ai_gateway import get_gateway
+
+    if req.theme not in STORY_THEMES:
+        raise HTTPException(
+            status_code=422,
+            detail=f"قيمة غير صالحة. المتاح: {sorted(STORY_THEMES)}",
+        )
+    if req.age_group not in _VALID_AGE_GROUPS:
+        raise HTTPException(status_code=422, detail="age_group غير صالح.")
+
+    # Sanitize the name to letters/spaces only (defense-in-depth — the name
+    # is interpolated into the prompt).
+    safe_name = re.sub(r"[^\w؀-ۿ ]", "", req.child_name).strip()[:40]
+    if not safe_name:
+        safe_name = "بطلنا الصغير"
+    value = STORY_THEMES[req.theme]
+
+    prompt = (
+        "أنت كاتب قصص أطفال عربي. اكتب قصة قصيرة (٣ إلى ٥ فقرات) بالعربية "
+        "الفصحى الميسرة، آمنة تماماً ومناسبة للأطفال، خالية من العنف أو الخوف "
+        "المبالغ فيه، ومنسجمة مع القيم الإسلامية.\n"
+        f"بطل القصة طفل اسمه «{safe_name}». القصة تعلّم قيمة: {value}.\n"
+        "اجعل لها عنواناً جذاباً في أول سطر، ثم القصة، واختمها بدرس مستفاد "
+        "في جملة واحدة تبدأ بـ «الدرس المستفاد:». لا تكتب أي شيء خارج القصة."
+    )
+    try:
+        result = await get_gateway().generate(prompt, options={"temperature": 0.8})
+        story = (result.text or "").strip()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("story generation failed: %s", exc)
+        raise HTTPException(
+            status_code=503,
+            detail="تعذّر توليد القصة حالياً، حاول مرة أخرى.",
+        )
+    if not story:
+        raise HTTPException(status_code=503, detail="تعذّر توليد القصة حالياً.")
+    return {"theme": req.theme, "value": value, "story": story}
+
+
+@router.get("/story-themes")
+def story_themes():
+    """The catalogue of story values (key → Arabic label) for the UI."""
+    return {"themes": [{"key": k, "label": v} for k, v in STORY_THEMES.items()]}

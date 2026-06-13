@@ -29,8 +29,29 @@ class CoinsNotifier extends StateNotifier<CoinsState> {
     state = await CoinsService.instance.read();
   }
 
+  /// Spend coins (e.g. to generate a story). Returns true on success.
+  Future<bool> spend(int amount) async {
+    final ok = await CoinsService.instance.spend(amount);
+    if (ok) state = await CoinsService.instance.read();
+    return ok;
+  }
+
+  /// Buy an exclusive cosmetic badge. Returns true if purchased.
+  Future<bool> buyBadge(String badgeId, int cost) async {
+    final ok = await CoinsService.instance.buyBadge(badgeId, cost);
+    if (ok) state = await CoinsService.instance.read();
+    return ok;
+  }
+
   Future<void> refresh() async => _load();
 }
 
 final coinsProvider =
     StateNotifierProvider<CoinsNotifier, CoinsState>((ref) => CoinsNotifier());
+
+/// The set of exclusive badge ids the user has purchased.
+final ownedBadgesProvider = FutureProvider<Set<String>>((ref) async {
+  // re-reads whenever the balance changes (a purchase mutates both)
+  ref.watch(coinsProvider);
+  return CoinsService.instance.ownedBadges();
+});

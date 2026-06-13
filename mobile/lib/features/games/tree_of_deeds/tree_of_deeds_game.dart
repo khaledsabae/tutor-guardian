@@ -5,6 +5,8 @@ import 'package:flame/game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flutter/material.dart';
 
+import '../emoji_sprite.dart';
+
 class TreeOfDeedsGame extends FlameGame with HasCollisionDetection {
   late TreeComponent tree;
   late TextComponent scoreText;
@@ -98,13 +100,7 @@ class TreeComponent extends PositionComponent with CollisionCallbacks {
 
   @override
   void render(Canvas canvas) {
-    // Trunk
-    final trunkPaint = Paint()..color = const Color(0xFF78350F);
-    canvas.drawRect(Rect.fromLTWH(size.x / 2 - 10, size.y / 2, 20, size.y / 2), trunkPaint);
-    
-    // Leaves
-    final leafPaint = Paint()..color = const Color(0xFF16A34A);
-    canvas.drawCircle(Offset(size.x / 2, size.y / 2), size.x / 2, leafPaint);
+    paintEmoji(canvas, '🌳', size.toSize());
   }
 }
 
@@ -127,15 +123,8 @@ class DeedItem extends PositionComponent with CollisionCallbacks, TapCallbacks {
 
   @override
   void render(Canvas canvas) {
-    if (isGood) {
-      // Good deed (Heart or star)
-      final paint = Paint()..color = const Color(0xFF10B981); // Emerald
-      canvas.drawCircle(Offset(size.x / 2, size.y / 2), size.x / 2, paint);
-    } else {
-      // Bad deed (Black cloud)
-      final paint = Paint()..color = const Color(0xFF1F2937); // Dark gray
-      canvas.drawRRect(RRect.fromRectAndRadius(size.toRect(), const Radius.circular(10)), paint);
-    }
+    // good deed = a falling good-deed token; bad deed = a dark cloud to pop
+    paintEmoji(canvas, isGood ? '⭐' : '☁️', size.toSize());
   }
 
   @override

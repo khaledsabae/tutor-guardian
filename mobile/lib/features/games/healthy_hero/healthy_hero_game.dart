@@ -5,6 +5,8 @@ import 'package:flame/game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flutter/material.dart';
 
+import '../emoji_sprite.dart';
+
 class HealthyHeroGame extends FlameGame with HasCollisionDetection, TapCallbacks {
   late HeroPlayer player;
   late TextComponent scoreText;
@@ -66,16 +68,18 @@ class HealthyHeroGame extends FlameGame with HasCollisionDetection, TapCallbacks
     }
   }
 
+  // Healthy foods to collect vs unhealthy things to jump over.
+  static const _good = ['🍎', '🥦', '🥕', '💧', '🍌', '🥛'];
+  static const _bad = ['🍬', '🍭', '🍔', '🥤', '😈'];
+
   void _spawnObstacle() {
-    final isGood = _random.nextDouble() > 0.5; // 50% chance for healthy vs bad
-    // Good items (apple/water) are floating slightly higher or on ground
-    // Bad items (monster/sugar) are on ground
-    final height = isGood ? (_random.nextBool() ? 150.0 : 220.0) : 150.0;
-    
+    final isGood = _random.nextDouble() > 0.45;
+    final height = isGood ? (_random.nextBool() ? 150.0 : 230.0) : 150.0;
     add(ObstacleItem(
       isGood: isGood,
+      emoji: (isGood ? _good : _bad)[_random.nextInt(isGood ? _good.length : _bad.length)],
       position: Vector2(size.x, size.y - height),
-      size: Vector2(40, 40),
+      size: Vector2(44, 44),
     ));
   }
 
@@ -97,7 +101,6 @@ class HealthyHeroGame extends FlameGame with HasCollisionDetection, TapCallbacks
 }
 
 class HeroPlayer extends PositionComponent with CollisionCallbacks {
-  final _paint = Paint()..color = Colors.white; 
   double yVelocity = 0;
   final double gravity = 1500;
   final double jumpForce = -650;
@@ -133,22 +136,21 @@ class HeroPlayer extends PositionComponent with CollisionCallbacks {
 
   @override
   void render(Canvas canvas) {
-    // Draw Hero (White square with a cape)
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(size.toRect(), const Radius.circular(8)),
-      _paint,
-    );
-    // Cape
-    final capePaint = Paint()..color = const Color(0xFFEF4444);
-    canvas.drawRect(const Rect.fromLTWH(-10, 10, 10, 30), capePaint);
+    paintEmoji(canvas, '🦸', size.toSize());
   }
 }
 
 class ObstacleItem extends PositionComponent with CollisionCallbacks {
   final bool isGood;
+  final String emoji;
   final double speed = 250;
 
-  ObstacleItem({required this.isGood, super.position, super.size}) {
+  ObstacleItem({
+    required this.isGood,
+    required this.emoji,
+    super.position,
+    super.size,
+  }) {
     add(RectangleHitbox());
   }
 
@@ -163,21 +165,7 @@ class ObstacleItem extends PositionComponent with CollisionCallbacks {
 
   @override
   void render(Canvas canvas) {
-    if (isGood) {
-      // Draw Apple (Healthy)
-      final paint = Paint()..color = const Color(0xFFDC2626); // Apple red
-      canvas.drawCircle(Offset(size.x / 2, size.y / 2), size.x / 2, paint);
-      final leaf = Paint()..color = const Color(0xFF16A34A);
-      canvas.drawOval(Rect.fromLTWH(size.x / 2 - 5, -5, 10, 10), leaf);
-    } else {
-      // Draw Sugar/Monster (Unhealthy)
-      final paint = Paint()..color = const Color(0xFF9333EA); // Purple monster
-      canvas.drawRect(size.toRect(), paint);
-      // Spikes
-      final spikes = Paint()..color = Colors.white;
-      canvas.drawCircle(const Offset(10, 10), 4, spikes);
-      canvas.drawCircle(Offset(size.x - 10, 10), 4, spikes);
-    }
+    paintEmoji(canvas, emoji, size.toSize());
   }
 
   @override

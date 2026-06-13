@@ -300,6 +300,32 @@ class TgClient {
     );
   }
 
+  /// Generate a personalized children's story (a coins redeemable).
+  /// Public endpoint — runs on the local model server-side.
+  Future<String> generateStory({
+    required String childName,
+    required String ageGroup,
+    required String theme,
+  }) async {
+    final resp = await _http
+        .post(
+          Uri.parse('$_baseUrl/api/program/story'),
+          headers: const {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'child_name': childName,
+            'age_group': ageGroup,
+            'theme': theme,
+          }),
+        )
+        // stories are slower (full LLM generation) — allow the SSE-style budget
+        .timeout(AppConfig.streamTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    final data = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return (data['story'] as String?) ?? '';
+  }
+
   /// List the device's past conversations (for the history drawer).
   /// Returns [] when there is no active session yet.
   Future<List<ChatSessionSummary>> listSessions() async {

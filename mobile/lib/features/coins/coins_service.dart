@@ -30,10 +30,12 @@ class CoinsService {
   static const _kLastClaim = 'coins.last_claim_date'; // yyyy-MM-dd
   static const _kStreak = 'coins.daily_streak';
   static const _kCreditedBadges = 'coins.credited_badges';
+  static const _kOwnedBadges = 'coins.owned_exclusive_badges';
 
   static const dailyBase = 10;
   static const streakBonusCap = 20; // +2/day up to +20
   static const badgeReward = 50;
+  static const storyCost = 50;
 
   String _today() {
     final n = DateTime.now();
@@ -101,12 +103,30 @@ class CoinsService {
     return balance;
   }
 
-  /// Deduct coins for a future redeemable. Returns true on success.
+  /// Deduct coins for a redeemable. Returns true on success.
   Future<bool> spend(int amount) async {
     final p = await SharedPreferences.getInstance();
     final balance = p.getInt(_kBalance) ?? 0;
     if (amount <= 0 || balance < amount) return false;
     await p.setInt(_kBalance, balance - amount);
+    return true;
+  }
+
+  /// Exclusive (purchasable) cosmetic badges the user owns.
+  Future<Set<String>> ownedBadges() async {
+    final p = await SharedPreferences.getInstance();
+    return (p.getStringList(_kOwnedBadges) ?? const <String>[]).toSet();
+  }
+
+  /// Buy an exclusive badge for [cost] coins. Returns true if purchased
+  /// (sufficient balance and not already owned).
+  Future<bool> buyBadge(String badgeId, int cost) async {
+    final p = await SharedPreferences.getInstance();
+    final owned = (p.getStringList(_kOwnedBadges) ?? <String>[]).toSet();
+    if (owned.contains(badgeId)) return false;
+    if (!await spend(cost)) return false;
+    owned.add(badgeId);
+    await p.setStringList(_kOwnedBadges, owned.toList());
     return true;
   }
 }

@@ -659,10 +659,8 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               ? raw
               : '${AppConfig.apiBaseUrl}/$raw';
           buttons.add(
-            _AssetButton(
-              icon: Icons.play_circle_outline,
-              label: '🎥 شاهد الفيديو',
-              onPressed: () {
+            _VideoCard(
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -817,6 +815,61 @@ class _InteractiveAssetsSection extends ConsumerWidget {
         child: Center(child: CircularProgressIndicator()),
       ),
       error: (_, __) => const SizedBox.shrink(),
+    );
+  }
+}
+
+/// Prominent video launcher — a tall card with a big play button so the
+/// lesson video is impossible to miss (unlike the slim asset rows).
+class _VideoCard extends StatelessWidget {
+  const _VideoCard({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return BouncyTap(
+      onTap: onTap,
+      child: Container(
+        height: 120,
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: AlignmentDirectional.topStart,
+            end: AlignmentDirectional.bottomEnd,
+            colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+          ),
+          borderRadius: BorderRadius.circular(Dt.rCard),
+          boxShadow: Dt.cardShadow,
+        ),
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: AppTheme.primary,
+                  shape: BoxShape.circle,
+                  boxShadow: Dt.softShadow(AppTheme.primary),
+                ),
+                child: const Icon(Icons.play_arrow,
+                    color: Colors.white, size: 38),
+              ),
+            ),
+            const PositionedDirectional(
+              start: 16,
+              bottom: 12,
+              child: Text(
+                '🎥 شاهد الفيديو التعليمي',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

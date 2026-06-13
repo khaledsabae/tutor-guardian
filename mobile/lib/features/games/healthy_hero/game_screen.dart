@@ -15,6 +15,7 @@ class HealthyHeroGameScreen extends StatefulWidget {
 class _HealthyHeroGameScreenState extends State<HealthyHeroGameScreen> {
   HealthyHeroGame? _game;
   bool _isGameOver = false;
+  bool _started = false;
   int _finalScore = 0;
 
   @override
@@ -26,6 +27,7 @@ class _HealthyHeroGameScreenState extends State<HealthyHeroGameScreen> {
   void _initGame() {
     setState(() {
       _isGameOver = false;
+      _started = false;
       _finalScore = 0;
       _game = HealthyHeroGame(
         onGameOver: (score) {
@@ -36,6 +38,8 @@ class _HealthyHeroGameScreenState extends State<HealthyHeroGameScreen> {
         },
       );
     });
+    // Hold the simulation on the intro until the player taps "ابدأ".
+    WidgetsBinding.instance.addPostFrameCallback((_) => _game?.pauseEngine());
   }
 
   @override
@@ -49,11 +53,17 @@ class _HealthyHeroGameScreenState extends State<HealthyHeroGameScreen> {
       ),
       body: Stack(
         children: [
-          if (_game != null)
-            GameWidget(
-              game: _game!,
+          if (_game != null) GameWidget(game: _game!),
+
+          // How-to-play / learning goal overlay.
+          if (!_started && !_isGameOver)
+            _IntroOverlay(
+              onStart: () {
+                _game?.resumeEngine();
+                setState(() => _started = true);
+              },
             ),
-          
+
           if (_isGameOver)
             Container(
               color: Colors.black54,
@@ -118,6 +128,49 @@ class _HealthyHeroGameScreenState extends State<HealthyHeroGameScreen> {
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+class _IntroOverlay extends StatelessWidget {
+  const _IntroOverlay({required this.onStart});
+  final VoidCallback onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.black54,
+      child: Center(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(Dt.rCard),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('🦸🍎', style: TextStyle(fontSize: 44)),
+              const SizedBox(height: 12),
+              const Text(
+                'رحلة البطل الصحي',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'اضغط على الشاشة ليقفز البطل!\n'
+                'اجمع 🍎🥦🥕💧 الطعام الصحي،\n'
+                'واقفز فوق 🍬🍔🥤 الحلويات والوجبات السريعة.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15, height: 1.7),
+              ),
+              const SizedBox(height: 20),
+              BouncyButton(label: 'ابدأ اللعب 🎮', onTap: onStart),
+            ],
+          ),
+        ),
       ),
     );
   }

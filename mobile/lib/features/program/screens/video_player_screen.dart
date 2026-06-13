@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import '../../../theme/app_theme.dart';
 
@@ -22,7 +23,24 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   bool _ready = false;
   String? _errorMessage;
   bool _showControls = true;
+  bool _landscape = false;
   Timer? _controlsTimer;
+
+  Future<void> _toggleOrientation() async {
+    _landscape = !_landscape;
+    if (_landscape) {
+      await SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight],
+      );
+      await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    } else {
+      await SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp],
+      );
+      await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    }
+    if (mounted) setState(() {});
+  }
 
   @override
   void initState() {
@@ -88,6 +106,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     _controlsTimer?.cancel();
     _controller?.removeListener(_onControllerUpdate);
     _controller?.dispose();
+    // Always restore portrait + system UI when leaving the player.
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     super.dispose();
   }
 
@@ -112,17 +133,27 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: Text(
-          widget.title,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
+      appBar: _landscape
+          ? null
+          : AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              iconTheme: const IconThemeData(color: Colors.white),
+              title: Text(
+                widget.title,
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              actions: [
+                IconButton(
+                  tooltip: 'تدوير الشاشة',
+                  icon: const Icon(Icons.screen_rotation, color: Colors.white),
+                  onPressed: _controller != null ? _toggleOrientation : null,
+                ),
+              ],
+            ),
       body: !_ready
           ? const Center(child: CircularProgressIndicator(color: Colors.white))
           : _errorMessage != null
@@ -153,17 +184,49 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 color: Colors.black.withValues(alpha: 0.5),
                               ),
                               
-                              // Play/Pause Center Button
+                              // Play/Pause Center Button — large, with a
+                              // solid circular backdrop so it's clearly visible.
                               Center(
-                                child: IconButton(
-                                  iconSize: 72,
-                                  icon: Icon(
-                                    _controller != null && _controller!.value.isPlaying
-                                        ? Icons.pause_circle_filled
-                                        : Icons.play_circle_filled,
-                                    color: Colors.white,
+                                child: GestureDetector(
+                                  onTap: _togglePlay,
+                                  child: Container(
+                                    width: 96,
+                                    height: 96,
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.primary
+                                          .withValues(alpha: 0.92),
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color:
+                                              Colors.black.withValues(alpha: .4),
+                                          blurRadius: 16,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Icon(
+                                      _controller != null &&
+                                              _controller!.value.isPlaying
+                                          ? Icons.pause
+                                          : Icons.play_arrow,
+                                      color: Colors.white,
+                                      size: 56,
+                                    ),
                                   ),
-                                  onPressed: _togglePlay,
+                                ),
+                              ),
+                              // Rotate button (top-right of the video area —
+                              // works in both portrait and landscape).
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: IconButton(
+                                  tooltip: 'تدوير الشاشة',
+                                  icon: const Icon(Icons.screen_rotation,
+                                      color: Colors.white, size: 28),
+                                  onPressed: _controller != null
+                                      ? _toggleOrientation
+                                      : null,
                                 ),
                               ),
 

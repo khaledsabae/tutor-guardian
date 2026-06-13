@@ -5,6 +5,8 @@ import 'package:flame/game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flutter/material.dart';
 
+import '../emoji_sprite.dart';
+
 class DataDefenderGame extends FlameGame with HasCollisionDetection, TapCallbacks {
   late Player player;
   late TextComponent scoreText;
@@ -93,7 +95,6 @@ class DataDefenderGame extends FlameGame with HasCollisionDetection, TapCallback
 }
 
 class Player extends PositionComponent with CollisionCallbacks {
-  final _paint = Paint()..color = const Color(0xFF38BDF8); // Light blue robot
 
   Player() {
     add(RectangleHitbox());
@@ -101,15 +102,7 @@ class Player extends PositionComponent with CollisionCallbacks {
 
   @override
   void render(Canvas canvas) {
-    // Draw a simple robot shape
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(size.toRect(), const Radius.circular(8)),
-      _paint,
-    );
-    // Eyes
-    final eyePaint = Paint()..color = Colors.white;
-    canvas.drawCircle(const Offset(15, 15), 5, eyePaint);
-    canvas.drawCircle(Offset(size.x - 15, 15), 5, eyePaint);
+    paintEmoji(canvas, '🤖', size.toSize());
   }
 }
 
@@ -132,21 +125,8 @@ class FallingItem extends PositionComponent with CollisionCallbacks {
 
   @override
   void render(Canvas canvas) {
-    if (isGood) {
-      // Draw Shield
-      final paint = Paint()..color = const Color(0xFF4ADE80); // Green
-      canvas.drawCircle(Offset(size.x / 2, size.y / 2), size.x / 2, paint);
-    } else {
-      // Draw Virus
-      final paint = Paint()..color = const Color(0xFFEF4444); // Red
-      canvas.drawRect(size.toRect(), paint);
-      // X mark
-      final xPaint = Paint()
-        ..color = Colors.white
-        ..strokeWidth = 3;
-      canvas.drawLine(const Offset(10, 10), Offset(size.x - 10, size.y - 10), xPaint);
-      canvas.drawLine(Offset(size.x - 10, 10), Offset(10, size.y - 10), xPaint);
-    }
+    // good = safe data (🔒), bad = virus/threat (🦠)
+    paintEmoji(canvas, isGood ? '🔒' : '🦠', size.toSize());
   }
 
   @override

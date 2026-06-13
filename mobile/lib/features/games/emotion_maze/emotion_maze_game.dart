@@ -3,6 +3,8 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flutter/material.dart';
+
+import '../emoji_sprite.dart';
 import 'dart:math';
 
 class EmotionMazeGame extends FlameGame with HasCollisionDetection {
@@ -102,28 +104,16 @@ class ChoiceDoor extends PositionComponent with CollisionCallbacks, TapCallbacks
 
   @override
   void render(Canvas canvas) {
-    // Door background
-    final doorPaint = Paint()..color = const Color(0xFF64748B); // Slate
-    canvas.drawRect(size.toRect(), doorPaint);
-
-    // Door knob
-    final knobPaint = Paint()..color = const Color(0xFFFBBF24); // Amber
-    canvas.drawCircle(Offset(size.x - 15, size.y / 2), 6, knobPaint);
-
-    // Symbol indicating choice (in real game, this would be text/icons)
-    final symbolPaint = Paint()..color = isGood ? const Color(0xFF10B981) : const Color(0xFFEF4444);
-    if (isGood) {
-      // Circle for good choice (Breathe)
-      canvas.drawCircle(Offset(size.x / 2, size.y / 3), 15, symbolPaint);
-    } else {
-      // Triangle for bad choice (Scream/Break)
-      final path = Path()
-        ..moveTo(size.x / 2, size.y / 3 - 15)
-        ..lineTo(size.x / 2 - 15, size.y / 3 + 15)
-        ..lineTo(size.x / 2 + 15, size.y / 3 + 15)
-        ..close();
-      canvas.drawPath(path, symbolPaint);
-    }
+    // good choice = calm/breathe (😌), bad choice = anger/scream (😡)
+    final box = Size(size.x, size.y);
+    final bg = Paint()
+      ..color = (isGood ? const Color(0xFF10B981) : const Color(0xFFEF4444))
+          .withValues(alpha: 0.18);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(size.toRect(), const Radius.circular(14)),
+      bg,
+    );
+    paintEmoji(canvas, isGood ? '😌' : '😡', box);
   }
 
   @override
