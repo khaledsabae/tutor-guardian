@@ -638,12 +638,16 @@ class _LessonNode extends StatelessWidget {
               curve: Curves.easeInOut,
             );
       case ProgressStatus.notStarted:
+        // Available (not locked): white circle with the domain-colored ring
+        // so every lesson reads as openable, not a greyed-out locked step.
         circle = Container(
           width: _kNodeSize,
           height: _kNodeSize,
-          decoration: const BoxDecoration(
-            color: Color(0xFFEBE5DA),
+          decoration: BoxDecoration(
+            color: Colors.white,
             shape: BoxShape.circle,
+            border: Border.all(color: style.base.withValues(alpha: .55), width: 3),
+            boxShadow: Dt.softShadow(style.base, alpha: .15),
           ),
           child: const Center(
             child: Text('📖', style: TextStyle(fontSize: 28)),
