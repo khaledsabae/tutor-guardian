@@ -24,6 +24,7 @@ import '../features/program/screens/badges_screen.dart';
 import '../features/program/screens/path_detail_screen.dart';
 import '../features/program/screens/search_screen.dart';
 import '../features/program/screens/settings_screen.dart';
+import '../features/feedback/feedback_screen.dart';
 import '../features/program/widgets/active_child_chip.dart';
 import '../features/program/widgets/daily_tip_card.dart';
 import '../features/coins/coins_providers.dart';
@@ -112,6 +113,13 @@ class HomeScreen extends ConsumerWidget {
             child: Center(child: ActiveChildChip()),
           ),
           IconButton(
+            tooltip: 'شاركنا رأيك',
+            icon: const Icon(Icons.feedback, color: Dt.accent),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const FeedbackScreen()),
+            ),
+          ),
+          IconButton(
             tooltip: 'بحث',
             icon: const Icon(Icons.search),
             onPressed: () => Navigator.of(context).push(
@@ -141,6 +149,34 @@ class HomeScreen extends ConsumerWidget {
           ).animate().fadeIn(duration: Dt.base),
           const SizedBox(height: 16),
           _StatsRow(bundle: bundle),
+          const SizedBox(height: 14),
+          // Feedback nudge — extra-visible during the testing phase.
+          Material(
+            color: Dt.accent.withValues(alpha: .12),
+            borderRadius: BorderRadius.circular(Dt.rCard),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(Dt.rCard),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const FeedbackScreen()),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                child: Row(
+                  children: [
+                    const Text('💬', style: TextStyle(fontSize: 22)),
+                    const SizedBox(width: 10),
+                    const Expanded(
+                      child: Text(
+                        'رأيك يهمنا! شاركنا أي ملاحظة أو مشكلة — كتابةً أو صوتاً.',
+                        style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Icon(Icons.arrow_back_ios_new, size: 14, color: Dt.accent),
+                  ],
+                ),
+              ),
+            ),
+          ),
           const SizedBox(height: 20),
           _ContinueJourneyCard(
             bundle: bundle,

@@ -53,7 +53,10 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
         _snack('يلزم إذن الميكروفون لتسجيل ملاحظة صوتية.');
         return;
       }
-      final dir = await getTemporaryDirectory();
+      // App's private docs dir — always writable (the cache/temp dir can be
+      // read-only on some devices, which surfaced as "errno = 30").
+      final dir = await getApplicationDocumentsDirectory();
+      await dir.create(recursive: true);
       final path =
           '${dir.path}/feedback_${DateTime.now().millisecondsSinceEpoch}.m4a';
       await _rec.start(const RecordConfig(encoder: AudioEncoder.aacLc),
@@ -61,7 +64,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       setState(() => _recording = true);
     } catch (e) {
       setState(() => _recording = false);
-      _snack('تعذّر التسجيل: $e');
+      _snack('تعذّر التسجيل الصوتي على هذا الجهاز — يمكنك الكتابة بدلاً منه.');
     }
   }
 
