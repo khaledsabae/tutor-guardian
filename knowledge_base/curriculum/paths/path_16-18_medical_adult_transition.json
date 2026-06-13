@@ -7,7 +7,8 @@
   "lesson_ids": [
     "lesson_16-18_medical_adult_transition_01",
     "lesson_16-18_medical_adult_transition_02",
-    "lesson_16-18_medical_adult_transition_03"
+    "lesson_16-18_medical_adult_transition_03",
+    "lesson_16-18_medical_adult_transition_b04"
   ],
   "estimated_days": 21,
   "pedagogical_framework": "attachment_rahma",
@@ -17,5 +18,6 @@
   },
   "prerequisites": [],
   "is_published": true,
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "updated_at": "2026-06-13T00:00:00"
 }

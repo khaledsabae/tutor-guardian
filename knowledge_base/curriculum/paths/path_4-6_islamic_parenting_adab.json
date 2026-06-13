@@ -7,7 +7,8 @@
   "lesson_ids": [
     "lesson_4-6_islamic_parenting_adab_01",
     "lesson_4-6_islamic_parenting_adab_02",
-    "lesson_4-6_islamic_parenting_adab_03"
+    "lesson_4-6_islamic_parenting_adab_03",
+    "lesson_4-6_islamic_parenting_adab_b04"
   ],
   "estimated_days": 14,
   "pedagogical_framework": "prophetic_7_7_7",
@@ -19,5 +20,5 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-08T19:00:00",
-  "updated_at": "2026-06-08T19:00:00"
+  "updated_at": "2026-06-13T00:00:00"
 }

@@ -97,7 +97,7 @@ def test_get_path_detail(client):
     assert body["id"] == "path_4-6_islamic_parenting_bond"
     assert body["age_group"] == "4-6"
     assert body["domain"] == "islamic_parenting"
-    assert len(body["lesson_ids"]) == 3
+    assert len(body["lesson_ids"]) == 4
     # Default: no lessons included
     assert "lessons" not in body
 
@@ -110,7 +110,7 @@ def test_get_path_detail_with_lessons(client):
     assert r.status_code == 200
     body = r.json()
     assert "lessons" in body
-    assert body["lessons_count"] == 3
+    assert body["lessons_count"] == 4
     # Lessons must be ordered by `order` ascending (1, 2, 3)
     orders = [l["order"] for l in body["lessons"]]
     assert orders == sorted(orders)

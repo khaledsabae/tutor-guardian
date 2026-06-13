@@ -7,7 +7,8 @@
   "lesson_ids": [
     "lesson_0-3_cyber_screen_foundations_01",
     "lesson_0-3_cyber_screen_foundations_02",
-    "lesson_0-3_cyber_screen_foundations_03"
+    "lesson_0-3_cyber_screen_foundations_03",
+    "lesson_0-3_cyber_screen_foundations_b04"
   ],
   "estimated_days": 10,
   "pedagogical_framework": "attachment_rahma",
@@ -19,5 +20,5 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-10T18:00:00",
-  "updated_at": "2026-06-10T18:00:00"
+  "updated_at": "2026-06-13T00:00:00"
 }

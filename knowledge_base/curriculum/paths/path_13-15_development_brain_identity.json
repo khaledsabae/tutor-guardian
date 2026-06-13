@@ -7,7 +7,8 @@
   "lesson_ids": [
     "lesson_13-15_development_brain_identity_01",
     "lesson_13-15_development_brain_identity_02",
-    "lesson_13-15_development_brain_identity_03"
+    "lesson_13-15_development_brain_identity_03",
+    "lesson_13-15_development_brain_identity_b04"
   ],
   "estimated_days": 21,
   "pedagogical_framework": "zpd_scaffolded",
@@ -17,5 +18,6 @@
   },
   "prerequisites": [],
   "is_published": true,
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "updated_at": "2026-06-13T00:00:00"
 }

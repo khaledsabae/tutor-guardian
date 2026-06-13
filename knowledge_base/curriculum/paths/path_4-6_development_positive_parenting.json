@@ -5,6 +5,8 @@
   "domain": "development",
   "description": "رحلة تربوية لمدة 14 يوماً لبناء ثقة الطفل بنفسه وأمانه الجسدي والنفسي عبر أدوات التربية الإيجابية المعتمدة من CDC، ومنهج 'جولة الأمان' اليومي للوقاية من الحوادث، ومهارة المدح النوعي المحدد. يستند المسار إلى نظريات Erikson (Industry vs Inferiority) وVygotsky (ZPD) لتنمية الكفاءة الذاتية دون مقارنة، مع التركيز على الجانب العملي القابل للقياس.",
   "lesson_ids": [
+    "lesson_4-6_development_positive_parenting_b01",
+    "lesson_4-6_development_positive_parenting_b02",
     "lesson_4-6_development_positive_parenting_01",
     "lesson_4-6_development_positive_parenting_02"
   ],
@@ -18,5 +20,5 @@
   "is_published": true,
   "version": "1.0.0",
   "created_at": "2026-06-08T19:00:00",
-  "updated_at": "2026-06-08T19:00:00"
+  "updated_at": "2026-06-13T00:00:00"
 }

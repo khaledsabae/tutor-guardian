@@ -7,7 +7,8 @@
   "lesson_ids": [
     "lesson_10-12_medical_puberty_wellbeing_01",
     "lesson_10-12_medical_puberty_wellbeing_02",
-    "lesson_10-12_medical_puberty_wellbeing_03"
+    "lesson_10-12_medical_puberty_wellbeing_03",
+    "lesson_10-12_medical_puberty_wellbeing_b04"
   ],
   "estimated_days": 21,
   "pedagogical_framework": "attachment_rahma",
@@ -17,5 +18,6 @@
   },
   "prerequisites": [],
   "is_published": true,
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "updated_at": "2026-06-13T00:00:00"
 }
