@@ -1,0 +1,21 @@
+{
+  "id": "path_2-3_cyber_routine",
+  "title": "الروتين الصحي والشاشات (2-3 سنوات)",
+  "age_group": "2-3",
+  "domain": "cyber",
+  "description": "تنظيم نوم الطفل والتعامل الصحي مع الشاشات وفق إرشادات منظمة الصحة العالمية لمن هم دون الخامسة.",
+  "lesson_ids": [
+    "lesson_2-3_cyber_routine_02"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "zpd_scaffolded",
+  "primary_reference": {
+    "type": "تقرير_طبي",
+    "info": "WHO Guidelines, Under 5"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T10:00:00",
+  "updated_at": "2026-06-13T10:00:00"
+}

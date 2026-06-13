@@ -1,0 +1,22 @@
+{
+  "id": "path_2-3_development_growth",
+  "title": "نمو الطفل واستقلاله (2-3 سنوات)",
+  "age_group": "2-3",
+  "domain": "development",
+  "description": "رحلة لدعم استقلال الطفل بين عامين وثلاثة: التدريب على الحمّام بالتدرّج، وتنمية اللغة والإدراك عبر اللعب التخيّلي، استناداً إلى مراجع تربوية وتنموية موثوقة.",
+  "lesson_ids": [
+    "lesson_2-3_development_independence_01",
+    "lesson_2-3_development_language_03"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "zpd_scaffolded",
+  "primary_reference": {
+    "type": "مقال_تنموي",
+    "info": "Early Social Communication in Toddlers"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T10:00:00",
+  "updated_at": "2026-06-13T10:00:00"
+}

@@ -26,6 +26,8 @@ import '../features/program/screens/search_screen.dart';
 import '../features/program/screens/settings_screen.dart';
 import '../features/program/widgets/active_child_chip.dart';
 import '../features/program/widgets/daily_tip_card.dart';
+import '../features/coins/coins_providers.dart';
+import '../features/coins/coins_screen.dart';
 import '../features/program/screens/quiz_game_screen.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
@@ -54,10 +56,57 @@ class HomeScreen extends ConsumerWidget {
       orElse: () => null,
     );
 
+    // One-shot per build pass: claim the daily login reward + credit any
+    // newly-unlocked badges. Both are idempotent (once/day, once/badge).
+    final earnedBadgeIds = computeBadges(bundle)
+        .where((b) => b.earned)
+        .map((b) => b.id)
+        .toList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(coinsProvider.notifier).claimDaily();
+      if (earnedBadgeIds.isNotEmpty) {
+        ref.read(coinsProvider.notifier).creditBadges(earnedBadgeIds);
+      }
+    });
+    final coins = ref.watch(coinsProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('اليوم ☀️'),
         actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+            child: Center(
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const CoinsScreen()),
+                ),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: Dt.accent.withValues(alpha: .15),
+                    borderRadius: BorderRadius.circular(Dt.rChip),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('🪙', style: TextStyle(fontSize: 15)),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${coins.balance}',
+                        style: const TextStyle(
+                          color: Dt.accentDeep,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
             child: Center(child: ActiveChildChip()),
