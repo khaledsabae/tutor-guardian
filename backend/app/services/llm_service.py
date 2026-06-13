@@ -35,6 +35,42 @@ import os as _os
 PROMPT_VARIANT_LOCAL = _os.environ.get("PROMPT_VARIANT_LOCAL", "compact")
 
 
+def build_pivot_prompt(question_text: str, age_group: str) -> str:
+    """Full prompt for a general/off-topic question (e.g. a recipe): answer
+    briefly from general knowledge, then pivot it into a parenting activity.
+    No retrieved sources, no citations — keeps the app on its parenting
+    mission without refusing the user."""
+    age = age_group or "unspecified"
+    q = (question_text or "").strip() or "سؤال عام"
+    return (
+        "أنت مساعد تربوي ذكي للأهل العرب المسلمين، ودود ومختصر.\n\n"
+        f"[سؤال عام من الوالد/الوالدة — ليس له علاقة مباشرة بالتربية]\n{q}\n"
+        f"الفئة العمرية للطفل: {age}\n\n"
+        "تعليمات الرد (التزم بها):\n"
+        "1. أجب عن السؤال بإيجاز شديد (سطر أو سطرين) من معرفتك العامة.\n"
+        "2. ثم اربطه بنشاط ممتع يمكن للوالد أن يفعله مع طفله، ووضّح باختصار "
+        "ما الذي ينمّيه فيه (مهارة أو قيمة أو رابطة عاطفية).\n"
+        "3. لا تذكر أي مصادر أو اقتباسات أو أرقام مراجع، ولا تقل «بناءً على "
+        "النص المرجعي».\n"
+        "4. بالعربية الفصحى الميسّرة، وبنبرة دافئة مشجّعة.\n"
+    )
+
+
+async def generate_general_pivot(
+    question_text: str,
+    age_group: str,
+    tier: str = "local_fast",
+    route_reason: str = "off_topic_pivot",
+) -> str:
+    """Generate a brief general answer pivoted to a parenting activity.
+    Routed local-only by default (low-stakes, keeps the question on-device)."""
+    prompt = build_pivot_prompt(question_text, age_group)
+    result = await get_gateway().generate(
+        prompt, tier=tier, route_reason=route_reason
+    )
+    return result.text
+
+
 def _build_prompt(
     domain: str,
     behavior_type: str,

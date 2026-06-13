@@ -14,8 +14,11 @@ from app.services.guardrails import (
     _build_fallback_message,
 )
 from app.services.retrieval import retrieve_hybrid, _ensure_index, log_retrieval
+from app.services.reranker import RERANK_MIN_SCORE
 from app.services.query_rewriter import rewrite_query
-from app.services.llm_service import generate_reply, build_full_prompt
+from app.services.llm_service import (
+    generate_reply, build_full_prompt, generate_general_pivot, build_pivot_prompt,
+)
 from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
 from app.services.intent_guard import check_banned_intent, check_emergency_keywords
@@ -30,6 +33,29 @@ _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
 def _sse(event: str, data: dict) -> str:
     """Format one Server-Sent Event."""
     return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
+
+
+# Fallback used when the off-topic pivot generation fails or returns empty.
+_PIVOT_FALLBACK = (
+    "هذا سؤال عام خارج مجال التربية، لكن يمكنك تحويله إلى لحظة جميلة مع طفلك: "
+    "اجعله نشاطاً تستكشفانه معاً، فالمشاركة في أي نشاط يومي تقوّي الرابطة بينكما "
+    "وتنمّي فضوله ومهاراته."
+)
+
+
+def _off_topic(units: list[dict]) -> tuple[bool, float | None]:
+    """A question is off-topic when even the best reranked unit falls below
+    the reranker's calibrated relevance floor (RERANK_MIN_SCORE). The reranker
+    returns the single best unit even when everything is below the floor (so it
+    never returns nothing), so we re-check the floor here to catch those."""
+    scores = [
+        u["rerank_score"] for u in units
+        if isinstance(u.get("rerank_score"), (int, float))
+    ]
+    if not scores:
+        return False, None
+    top = max(scores)
+    return top < RERANK_MIN_SCORE, top
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assistant", tags=["assistant"])
@@ -107,7 +133,22 @@ async def draft_reply(request: Request, user_message: UserMessage):
     mode: str = "retrieval_only"
     draft = ""
 
-    if retrieved_units:
+    off_topic, top_rerank = _off_topic(retrieved_units)
+
+    if off_topic:
+        # General/off-topic question (e.g. a recipe). Don't ground on the
+        # irrelevant KB units — answer briefly then pivot to a parenting
+        # activity. Local-only, no citations.
+        mode = "general_pivot"
+        try:
+            generated = await generate_general_pivot(
+                query_text, user_message.age_group or "unspecified"
+            )
+            draft = generated if (generated and generated.strip()) else _PIVOT_FALLBACK
+        except Exception as e:
+            logger.warning("Pivot generation failed: %s — using fallback", e)
+            draft = _PIVOT_FALLBACK
+    elif retrieved_units:
         # Quality-tier routing: hard/high-stakes questions go to the cloud
         # quality model (flag-gated, $0 tier); the question and history are
         # PII-redacted before leaving the machine. Local chain is always
@@ -157,6 +198,11 @@ async def draft_reply(request: Request, user_message: UserMessage):
         update={"domain": primary_domain}
     )
     reply = apply_guardrails(user_message_for_guardrails, draft, policies, mode=mode)
+    reply.metadata = {
+        **(reply.metadata or {}),
+        "top_rerank": round(top_rerank, 2) if top_rerank is not None else None,
+        "off_topic": off_topic,
+    }
 
     log_session(
         domain=primary_domain,
@@ -270,40 +316,53 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
             draft, policies, mode="retrieval_only",
         ))
 
-    # Guardrails would replace the whole text → don't stream, send fallback
-    decision = evaluate_guardrails(primary_domain, severity, policies)
-    if decision["force_fallback"]:
-        draft = _build_fallback_message(
-            primary_domain, user_message.behavior_type or "",
-            user_message.age_group or "unspecified", policies,
-        )
-        return _single(AssistantReply(
-            reply_text=draft, domain=primary_domain, severity=severity,
-            needs_human_review=decision["needs_human_review"],
-            escalation_target=decision["escalate_to"], mode="llm_generated",
-        ))
+    off_topic, _top_rerank = _off_topic(retrieved_units)
 
-    # ── Stream the LLM generation token-by-token ─────────────────────
-    # Quality-tier routing (flag-gated). The cloud provider is tried
-    # pre-flight only — if it fails before the first token, the local
-    # chain takes over and the SSE consumer never notices.
-    tier, route_reason = choose_tier(
-        query_text, detected_domains, severity,
-        retrieved_units, history_len=len(history),
-    )
-    stream_question, stream_history = query_text, history
-    if tier == "cloud_quality":
-        stream_question = redact_for_cloud(query_text)
-        stream_history = [
-            t.model_copy(update={"content": redact_for_cloud(t.content)})
-            for t in history
-        ]
-    full_prompt, _source = build_full_prompt(
-        domain=primary_domain, behavior_type=user_message.behavior_type or "",
-        age_group=user_message.age_group or "unspecified", severity=severity,
-        retrieved_units=retrieved_units, question_text=stream_question,
-        conversation_history=stream_history, tier=tier,
-    )
+    if off_topic:
+        # General/off-topic question → stream a brief answer pivoted to a
+        # parenting activity. No grounding, no citations, local-only.
+        decision = {"needs_human_review": False, "escalate_to": None}
+        tier, route_reason = "local_fast", "off_topic_pivot"
+        stream_mode = "general_pivot"
+        full_prompt = build_pivot_prompt(
+            query_text, user_message.age_group or "unspecified"
+        )
+    else:
+        # Guardrails would replace the whole text → don't stream, send fallback
+        decision = evaluate_guardrails(primary_domain, severity, policies)
+        if decision["force_fallback"]:
+            draft = _build_fallback_message(
+                primary_domain, user_message.behavior_type or "",
+                user_message.age_group or "unspecified", policies,
+            )
+            return _single(AssistantReply(
+                reply_text=draft, domain=primary_domain, severity=severity,
+                needs_human_review=decision["needs_human_review"],
+                escalation_target=decision["escalate_to"], mode="llm_generated",
+            ))
+
+        # ── Stream the LLM generation token-by-token ─────────────────────
+        # Quality-tier routing (flag-gated). The cloud provider is tried
+        # pre-flight only — if it fails before the first token, the local
+        # chain takes over and the SSE consumer never notices.
+        stream_mode = "llm_generated"
+        tier, route_reason = choose_tier(
+            query_text, detected_domains, severity,
+            retrieved_units, history_len=len(history),
+        )
+        stream_question, stream_history = query_text, history
+        if tier == "cloud_quality":
+            stream_question = redact_for_cloud(query_text)
+            stream_history = [
+                t.model_copy(update={"content": redact_for_cloud(t.content)})
+                for t in history
+            ]
+        full_prompt, _source = build_full_prompt(
+            domain=primary_domain, behavior_type=user_message.behavior_type or "",
+            age_group=user_message.age_group or "unspecified", severity=severity,
+            retrieved_units=retrieved_units, question_text=stream_question,
+            conversation_history=stream_history, tier=tier,
+        )
 
     def event_stream():
         try:
@@ -316,19 +375,19 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
                         reply_text=final_text, domain=primary_domain, severity=severity,
                         needs_human_review=decision["needs_human_review"],
                         escalation_target=decision["escalate_to"],
-                        mode="llm_generated", session_id=session_id,
+                        mode=stream_mode, session_id=session_id,
                     )
                     if session_id:
                         store.add_message(
                             session_id, "assistant", final_text,
                             domain=primary_domain, severity=severity,
-                            mode="llm_generated",
+                            mode=stream_mode,
                             needs_human_review=decision["needs_human_review"],
                         )
                     log_session(
                         domain=primary_domain, behavior_type=user_message.behavior_type or "",
                         age_group=user_message.age_group or "", severity=severity,
-                        mode="llm_generated", needs_human_review=decision["needs_human_review"],
+                        mode=stream_mode, needs_human_review=decision["needs_human_review"],
                         reply_length=len(final_text), retrieved_count=len(retrieved_units),
                     )
                     yield _sse("done", reply.model_dump())
