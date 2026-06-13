@@ -20,6 +20,8 @@ import logging
 from pathlib import Path
 from typing import Optional
 
+from app.core.taxonomy import age_equivalents
+
 logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parents[2] / "knowledge_base" / "curriculum"
@@ -150,22 +152,36 @@ def curriculum_stats() -> dict:
     }
 
 
-# ── Accessors ─────────────────────────────────────────────────────────────
+def _add_path_video(path: dict) -> dict:
+    path_id = path.get("id")
+    if not path_id:
+        return path
+    out = dict(path)
+    video_relative_path = f"docs/path_videos/{path_id}_ar_eg.mp4"
+    video_file = Path(__file__).resolve().parents[2] / video_relative_path
+    if video_file.exists():
+        out["video_mp4"] = video_relative_path
+    return out
+
 
 def get_paths(age_group: Optional[str] = None, domain: Optional[str] = None) -> list[dict]:
     """Return published paths, optionally filtered by age_group and/or domain."""
     out = list(_paths_cache.values())
     if age_group:
-        out = [p for p in out if p.get("age_group") == age_group]
+        ages = set(age_equivalents(age_group))  # 0-3 ≡ prenatal-1
+        out = [p for p in out if p.get("age_group") in ages]
     if domain:
         out = [p for p in out if p.get("domain") == domain]
     # Stable order: by age_group, then domain, then id
     out.sort(key=lambda p: (p.get("age_group", ""), p.get("domain", ""), p.get("id", "")))
-    return out
+    return [_add_path_video(p) for p in out]
 
 
 def get_path(path_id: str) -> Optional[dict]:
-    return _paths_cache.get(path_id)
+    path = _paths_cache.get(path_id)
+    if path:
+        return _add_path_video(path)
+    return None
 
 
 def get_lessons_for_path(path_id: str) -> list[dict]:
@@ -274,7 +290,8 @@ def get_asset_content(asset_id: str) -> Optional[dict]:
 
 def get_daily_tips(age_group: str, time_of_day: Optional[str] = None) -> list[dict]:
     """Return published tips for an age_group, optionally filtered by time_of_day."""
-    out = [t for t in _tips_cache if t.get("age_group") == age_group]
+    ages = set(age_equivalents(age_group))  # 0-3 ≡ prenatal-1
+    out = [t for t in _tips_cache if t.get("age_group") in ages]
     if time_of_day:
         # "anytime" matches everything; otherwise exact match
         if time_of_day != "anytime":

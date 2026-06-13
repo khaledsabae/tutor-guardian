@@ -36,7 +36,14 @@ DOMAIN_ALIASES: dict[str, str] = {
 
 # ── Age groups (kept in sync with age_normalization) ────────────────────────
 CANONICAL_AGE_GROUPS: set[str] = {
-    "0-3", "4-6", "7-9", "10-12", "13-15", "16-18", "unspecified",
+    "prenatal-1", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18", "unspecified",
+}
+
+# The 0-3 band was split into "prenatal-1" (pregnancy→1yr) + "2-3". Existing
+# children/units created before the split still carry "0-3" — alias it onto
+# the new canonical band so they keep resolving instead of being orphaned.
+AGE_ALIASES: dict[str, str] = {
+    "0-3": "prenatal-1",
 }
 
 # ── Severity levels ─────────────────────────────────────────────────────────
@@ -68,3 +75,33 @@ def canonical_domain(value: str) -> str:
         return value
     key = value.strip()
     return DOMAIN_ALIASES.get(key, key)
+
+
+def canonical_age_group(value: str) -> str:
+    """Map a legacy/alias age group (e.g. "0-3") to its canonical band.
+
+    Unknown values pass through unchanged.
+    """
+    if not value:
+        return value
+    key = value.strip()
+    return AGE_ALIASES.get(key, key)
+
+
+# Reverse alias map (canonical → legacy labels) so equivalence is bidirectional.
+_REVERSE_AGE_ALIASES: dict[str, list[str]] = {}
+for _legacy, _canon in AGE_ALIASES.items():
+    _REVERSE_AGE_ALIASES.setdefault(_canon, []).append(_legacy)
+
+
+def age_equivalents(value: str) -> list[str]:
+    """All age-group labels equivalent to `value` (itself + its alias both
+    ways). Lets content stored under the legacy "0-3" label keep matching
+    after the split to "prenatal-1" without renaming every curriculum file.
+    """
+    if not value:
+        return [value]
+    key = value.strip()
+    out = {key, canonical_age_group(key)}
+    out.update(_REVERSE_AGE_ALIASES.get(canonical_age_group(key), []))
+    return list(out)

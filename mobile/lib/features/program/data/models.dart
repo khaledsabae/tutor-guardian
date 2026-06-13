@@ -25,6 +25,7 @@ class CurriculumPath {
   final List<String> prerequisites;
   final bool isPublished;
   final String? version;
+  final String? videoMp4;
 
   const CurriculumPath({
     required this.id,
@@ -39,6 +40,7 @@ class CurriculumPath {
     this.prerequisites = const [],
     this.isPublished = true,
     this.version,
+    this.videoMp4,
   });
 
   factory CurriculumPath.fromJson(Map<String, dynamic> json) {
@@ -63,6 +65,7 @@ class CurriculumPath {
           .toList(),
       isPublished: json['is_published'] as bool? ?? true,
       version: json['version'] as String?,
+      videoMp4: json['video_mp4'] as String?,
     );
   }
 

@@ -12,9 +12,11 @@
 library;
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/tg_client.dart';
 import '../models/api_models.dart';
@@ -142,6 +144,13 @@ class ChatNotifier extends StateNotifier<ChatState> {
   final TgClient _client;
   int _localId = 0;
 
+  // Active stream handle — lets the user stop/interrupt generation.
+  StreamSubscription<TgStreamEvent>? _sub;
+  Completer<void>? _streamCompleter;
+  String? _streamingAssistantId;
+
+  static const _kSnapshotKey = 'tg.chat_snapshot';
+
   String _nextId() => 'm${++_localId}';
 
   // ── Settings (Phase 3 settings bar) ──────────────────────────────────
@@ -168,13 +177,19 @@ class ChatNotifier extends StateNotifier<ChatState> {
         // cleared the local copy and we fall back to a new session.
         try {
           final hist = await _client.getHistory(existing);
-          final msgs = hist.messages
+          var msgs = hist.messages
               .map((m) => ChatMessageUI(
                     id: _nextId(),
                     role: m.role,
                     content: m.content,
                   ))
               .toList();
+          // Prefer the local snapshot when it carries more (e.g. a partial
+          // answer the user left mid-stream that the server never stored).
+          final local = await _loadLocal(existing);
+          if (local != null && local.length > msgs.length) {
+            msgs = local;
+          }
           state = state.copyWith(
             messages: msgs,
             turnCount: msgs.where((m) => m.role == 'user').length,
@@ -241,9 +256,12 @@ class ChatNotifier extends StateNotifier<ChatState> {
   Future<void> sendMessage(String text) async {
     final trimmed = text.trim();
     if (trimmed.isEmpty) return;
-    if (state.phase == ChatPhase.waiting ||
-        state.phase == ChatPhase.streaming) {
-      return; // ignore taps while a turn is in flight
+    // If a turn is still streaming, interrupt it (keeping the partial)
+    // so the user can ask a new question without waiting.
+    if (state.phase == ChatPhase.streaming) {
+      stopStreaming();
+    } else if (state.phase == ChatPhase.waiting) {
+      return; // a request is in flight but not yet streaming — let it land
     }
 
     // Short-circuit if the device is offline — better UX than waiting
@@ -325,35 +343,87 @@ class ChatNotifier extends StateNotifier<ChatState> {
   }
 
   Future<void> _stream(AssistantQuery query, String assistantId) async {
-    final events = _client.streamQuery(query);
-    await for (final ev in events) {
-      switch (ev) {
-        case TgTokenEvent(:final delta):
-          _updateAssistant(assistantId, (m) {
-            m.content = m.content + delta;
-          });
-        case TgDoneEvent(:final reply):
-          _updateAssistant(assistantId, (m) {
-            m
-              ..content = reply.replyText
-              ..reply = reply
-              ..isStreaming = false
-              ..error = null;
-          });
-          state = state.copyWith(
-            phase: ChatPhase.idle,
-            turnCount: state.turnCount + 1,
-          );
-          return;
-        case TgStreamError(:final detail):
-          _failLastTurn(detail, assistantId: assistantId);
-          return;
-      }
+    // Listen explicitly (instead of `await for`) so the user can cancel
+    // mid-stream via [stopStreaming]. The returned future resolves when
+    // the stream terminates OR is stopped, and rethrows TgApiError so the
+    // 401/404 retry path in sendMessage still works.
+    final completer = Completer<void>();
+    _streamCompleter = completer;
+    _streamingAssistantId = assistantId;
+
+    _sub = _client.streamQuery(query).listen(
+      (ev) {
+        switch (ev) {
+          case TgTokenEvent(:final delta):
+            _updateAssistant(assistantId, (m) {
+              m.content = m.content + delta;
+            });
+          case TgDoneEvent(:final reply):
+            _updateAssistant(assistantId, (m) {
+              m
+                ..content = reply.replyText
+                ..reply = reply
+                ..isStreaming = false
+                ..error = null;
+            });
+            state = state.copyWith(
+              phase: ChatPhase.idle,
+              turnCount: state.turnCount + 1,
+            );
+            _finishStream();
+            unawaited(_persistLocal());
+            if (!completer.isCompleted) completer.complete();
+          case TgStreamError(:final detail):
+            _failLastTurn(detail, assistantId: assistantId);
+            _finishStream();
+            if (!completer.isCompleted) completer.complete();
+        }
+      },
+      onError: (Object e) {
+        _finishStream();
+        if (!completer.isCompleted) completer.completeError(e);
+      },
+      onDone: () {
+        // Stream closed without a terminal event → connection drop.
+        if (state.phase == ChatPhase.streaming) {
+          _failLastTurn('انقطع الاتصال قبل اكتمال الرد.',
+              assistantId: assistantId);
+        }
+        _finishStream();
+        if (!completer.isCompleted) completer.complete();
+      },
+    );
+
+    return completer.future;
+  }
+
+  void _finishStream() {
+    _sub?.cancel();
+    _sub = null;
+    _streamCompleter = null;
+    _streamingAssistantId = null;
+  }
+
+  /// Stop the current generation, keeping whatever was streamed so far.
+  void stopStreaming() {
+    final id = _streamingAssistantId;
+    final completer = _streamCompleter;
+    _sub?.cancel();
+    _sub = null;
+    _streamCompleter = null;
+    _streamingAssistantId = null;
+    if (id != null) {
+      _updateAssistant(id, (m) {
+        m
+          ..isStreaming = false
+          ..content = m.content.isEmpty ? '⏹️ تم إيقاف الرد.' : m.content
+          ..error = null;
+      });
     }
-    // Stream ended without a terminal event: treat as stream error.
-    if (state.phase == ChatPhase.streaming) {
-      _failLastTurn('انقطع الاتصال قبل اكتمال الرد.', assistantId: assistantId);
-    }
+    state = state.copyWith(phase: ChatPhase.idle);
+    unawaited(_persistLocal());
+    // Unblock sendMessage's awaiting future without throwing.
+    if (completer != null && !completer.isCompleted) completer.complete();
   }
 
   void _updateAssistant(
@@ -413,5 +483,106 @@ class ChatNotifier extends StateNotifier<ChatState> {
     final truncated = state.messages.sublist(0, lastUserIdx + 1);
     state = state.copyWith(messages: truncated);
     await sendMessage(text);
+  }
+
+  // ── History drawer ───────────────────────────────────────────────────
+
+  /// The device's past conversations for the history drawer.
+  Future<List<ChatSessionSummary>> loadSessionList() async {
+    try {
+      return await _client.listSessions();
+    } catch (_) {
+      return const [];
+    }
+  }
+
+  /// Open a past conversation in place of the current one.
+  Future<void> switchToSession(String sessionId) async {
+    if (sessionId == state.sessionId) return;
+    if (state.phase == ChatPhase.streaming) stopStreaming();
+    state = state.copyWith(
+      sessionId: sessionId,
+      messages: const [],
+      phase: ChatPhase.idle,
+      clearBanner: true,
+    );
+    try {
+      final hist = await _client.getHistory(sessionId);
+      final msgs = hist.messages
+          .map((m) => ChatMessageUI(
+                id: _nextId(),
+                role: m.role,
+                content: m.content,
+              ))
+          .toList();
+      state = state.copyWith(
+        messages: msgs,
+        turnCount: msgs.where((m) => m.role == 'user').length,
+      );
+      await _persistLocal();
+    } on TgApiError catch (e) {
+      state = state.copyWith(
+        phase: ChatPhase.error,
+        errorBanner: 'تعذّر فتح المحادثة: ${e.message}',
+      );
+    }
+  }
+
+  // ── Local snapshot (survives backgrounding / kill mid-answer) ─────────
+
+  /// Write the current conversation to disk. The server only persists an
+  /// assistant turn on `done`, so a partial answer would otherwise be lost
+  /// when the user leaves the app mid-generation.
+  Future<void> _persistLocal() async {
+    final sid = state.sessionId;
+    if (sid == null) return;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(
+        _kSnapshotKey,
+        jsonEncode({
+          'session_id': sid,
+          'messages': state.messages
+              .map((m) => {
+                    'role': m.role,
+                    'content': m.content,
+                    'feedback': m.feedback,
+                  })
+              .toList(),
+        }),
+      );
+    } catch (_) {
+      // best-effort — never block the UI on persistence
+    }
+  }
+
+  /// Called by the screen's lifecycle observer when the app is paused.
+  /// Finalizes any in-flight stream and saves the conversation.
+  void onAppPaused() {
+    if (state.phase == ChatPhase.streaming) {
+      stopStreaming(); // keeps the partial answer, persists it
+    } else {
+      unawaited(_persistLocal());
+    }
+  }
+
+  Future<List<ChatMessageUI>?> _loadLocal(String sid) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_kSnapshotKey);
+      if (raw == null) return null;
+      final data = jsonDecode(raw) as Map<String, dynamic>;
+      if (data['session_id'] != sid) return null;
+      return (data['messages'] as List)
+          .map((m) => ChatMessageUI(
+                id: _nextId(),
+                role: m['role'] as String,
+                content: m['content'] as String,
+                feedback: m['feedback'] as String?,
+              ))
+          .toList();
+    } catch (_) {
+      return null;
+    }
   }
 }

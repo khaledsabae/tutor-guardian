@@ -36,6 +36,11 @@ import '../providers/favorites_provider.dart';
 import 'flashcards_screen.dart';
 import 'quiz_screen.dart';
 import 'podcast_player_screen.dart';
+import 'video_player_screen.dart';
+import '../../games/data_defender/game_screen.dart';
+import '../../games/healthy_hero/game_screen.dart';
+import '../../games/tree_of_deeds/game_screen.dart';
+import '../../games/emotion_maze/game_screen.dart';
 import '../../../config/app_config.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
@@ -218,6 +223,9 @@ class _Body extends ConsumerWidget {
           const SizedBox(height: 12),
           _StatusChip(status: status),
         ],
+        // Interactive content first — users were hunting for the
+        // podcast/flashcards/quiz buried below the reading material.
+        _InteractiveAssetsSection(lessonId: lesson.id, domain: lesson.domain),
         const SizedBox(height: 16),
         _Section(
           emoji: '📝',
@@ -237,10 +245,9 @@ class _Body extends ConsumerWidget {
           _ReflectionCard(prompts: lesson.reflectionPrompts),
         ],
         const SizedBox(height: 16),
-        _UnitIdsCard(lesson: lesson),
-        _InteractiveAssetsSection(lessonId: lesson.id),
-        const SizedBox(height: 16),
         ReflectionNoteCard(lessonId: lesson.id),
+        const SizedBox(height: 16),
+        _UnitIdsCard(lesson: lesson),
         if (lesson.needsProfessionalFollowup) ...[
           const SizedBox(height: 16),
           const _WarningCard(
@@ -603,7 +610,8 @@ class _WarningCard extends StatelessWidget {
 
 class _InteractiveAssetsSection extends ConsumerWidget {
   final String lessonId;
-  const _InteractiveAssetsSection({required this.lessonId});
+  final String domain;
+  const _InteractiveAssetsSection({required this.lessonId, required this.domain});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -646,6 +654,10 @@ class _InteractiveAssetsSection extends ConsumerWidget {
         }
 
         if (assets.videoMp4 != null) {
+          final raw = assets.videoMp4!;
+          final url = raw.startsWith('http')
+              ? raw
+              : '${AppConfig.apiBaseUrl}/$raw';
           buttons.add(
             _AssetButton(
               icon: Icons.play_circle_outline,
@@ -654,8 +666,9 @@ class _InteractiveAssetsSection extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AssetPlaceholderScreen(
-                      title: 'الفيديو',
+                    builder: (context) => VideoPlayerScreen(
+                      url: url,
+                      title: '🎥 الفيديو التعليمي',
                     ),
                   ),
                 );
@@ -720,19 +733,78 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           );
         }
 
+        if (domain == 'cyber') {
+          buttons.add(
+            _AssetButton(
+              icon: Icons.videogame_asset,
+              label: '🎮 العب وتعلم (حارس البيانات)',
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DataDefenderGameScreen()),
+              ),
+            ),
+          );
+        } else if (domain == 'medical') {
+          buttons.add(
+            _AssetButton(
+              icon: Icons.monitor_heart,
+              label: '🎮 العب وتعلم (رحلة البطل الصحي)',
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HealthyHeroGameScreen()),
+              ),
+            ),
+          );
+        } else if (domain == 'islamic_parenting' || domain == 'islamic') {
+          buttons.add(
+            _AssetButton(
+              icon: Icons.nature_people,
+              label: '🎮 العب وتعلم (شجرة الأخلاق)',
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TreeOfDeedsGameScreen()),
+              ),
+            ),
+          );
+        } else if (domain == 'development') {
+          buttons.add(
+            _AssetButton(
+              icon: Icons.psychology,
+              label: '🎮 العب وتعلم (متاهة المشاعر)',
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EmotionMazeGameScreen()),
+              ),
+            ),
+          );
+        }
+
         if (buttons.isEmpty) return const SizedBox.shrink();
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 16),
+            Row(
+              children: [
+                const Text('🎬', style: TextStyle(fontSize: 20)),
+                const SizedBox(width: 8),
+                Text(
+                  'ابدأ بالمحتوى التفاعلي',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
             Text(
-              'محتوى تفاعلي',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+              'استمع، شاهد، والعب — ثم اقرأ الملخص بالأسفل',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppTheme.textMuted,
                   ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             ...buttons.map((btn) => Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: btn,
@@ -741,7 +813,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
         );
       },
       loading: () => const Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0),
+        padding: EdgeInsets.symmetric(vertical: 24.0),
         child: Center(child: CircularProgressIndicator()),
       ),
       error: (_, __) => const SizedBox.shrink(),

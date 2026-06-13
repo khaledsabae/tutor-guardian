@@ -300,6 +300,28 @@ class TgClient {
     );
   }
 
+  /// List the device's past conversations (for the history drawer).
+  /// Returns [] when there is no active session yet.
+  Future<List<ChatSessionSummary>> listSessions() async {
+    final (sid, tok) = await _auth.readSession();
+    if (tok == null) return const [];
+    final resp = await _http
+        .get(
+          Uri.parse('$_baseUrl/api/chat/sessions'),
+          headers: _authHeaders(tok),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    final data = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    final raw = (data['sessions'] as List?) ?? const [];
+    return raw
+        .whereType<Map<String, dynamic>>()
+        .map(ChatSessionSummary.fromJson)
+        .toList();
+  }
+
   /// Submit 👍/👎 for the current turn.
   Future<void> sendFeedback({
     required String rating, // "up" | "down"

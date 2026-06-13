@@ -157,6 +157,32 @@ class SessionHistory {
   }
 }
 
+/// One row in the chat-history drawer.
+class ChatSessionSummary {
+  final String id;
+  final String title;
+  final int messageCount;
+  final DateTime? updatedAt;
+
+  const ChatSessionSummary({
+    required this.id,
+    required this.title,
+    required this.messageCount,
+    this.updatedAt,
+  });
+
+  factory ChatSessionSummary.fromJson(Map<String, dynamic> json) {
+    return ChatSessionSummary(
+      id: json['id'] as String,
+      title: (json['title'] as String?) ?? 'محادثة',
+      messageCount: (json['message_count'] as num?)?.toInt() ?? 0,
+      updatedAt: json['updated_at'] is String
+          ? DateTime.tryParse(json['updated_at'] as String)
+          : null,
+    );
+  }
+}
+
 /// Request body for `/api/assistant/{query,stream}`.
 class AssistantQuery {
   final AgeGroup ageGroup;

@@ -24,7 +24,9 @@ def test_aliases_map_into_canonical_set():
 
 
 def test_age_normalization():
-    assert normalize_age_group("infant") == "0-3"
+    # The 0-3 band was split into prenatal-1 (pregnancy→1yr) + 2-3.
+    assert normalize_age_group("infant") == "prenatal-1"
+    assert normalize_age_group("0-3") == "prenatal-1"  # legacy alias
     assert normalize_age_group("13-15") == "13-15"
     assert normalize_age_group(None) == "unspecified"
     assert normalize_age_group("nonsense") == "unspecified"

@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../models/api_models.dart';
 import '../models/enums.dart';
 import '../state/chat_notifier.dart';
 import '../state/connectivity_provider.dart';
@@ -35,14 +36,18 @@ class ChatScreen extends ConsumerStatefulWidget {
   ConsumerState<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends ConsumerState<ChatScreen> {
+class _ChatScreenState extends ConsumerState<ChatScreen>
+    with WidgetsBindingObserver {
   final TextEditingController _input = TextEditingController();
   final FocusNode _inputFocus = FocusNode();
   final ScrollController _scroll = ScrollController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  Future<List<ChatSessionSummary>>? _historyFuture;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // Bootstrap the session once the widget is mounted.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(chatNotifierProvider.notifier).bootstrap();
@@ -50,7 +55,17 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Leaving the app mid-answer must not lose the partial reply.
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      ref.read(chatNotifierProvider.notifier).onAppPaused();
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _input.dispose();
     _inputFocus.dispose();
     _scroll.dispose();
@@ -100,7 +115,31 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     notifier.setOnline(isOnline);
 
     return Scaffold(
+      key: _scaffoldKey,
+      onDrawerChanged: (open) {
+        if (open) {
+          setState(() => _historyFuture = notifier.loadSessionList());
+        }
+      },
+      drawer: _HistoryDrawer(
+        future: _historyFuture,
+        currentSessionId: state.sessionId,
+        onSelect: (id) async {
+          Navigator.of(context).pop(); // close drawer
+          await notifier.switchToSession(id);
+          _scrollToBottom();
+        },
+        onNewConversation: () async {
+          Navigator.of(context).pop();
+          await notifier.startNewConversation();
+        },
+      ),
       appBar: AppBar(
+        leading: IconButton(
+          tooltip: 'المحادثات السابقة',
+          icon: const Icon(Icons.menu),
+          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+        ),
         title: const Text('🛡️  المربي الذكي'),
         actions: [
           if (state.turnCount > 0)
@@ -214,8 +253,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           _Composer(
             controller: _input,
             focusNode: _inputFocus,
-            enabled: state.phase != ChatPhase.streaming,
+            // Always typable now — the user can queue/interrupt while the
+            // assistant is still answering.
+            enabled: true,
+            isStreaming: state.phase == ChatPhase.streaming,
             onSend: _onSend,
+            onStop: () =>
+                ref.read(chatNotifierProvider.notifier).stopStreaming(),
           ),
         ],
       ),
@@ -476,16 +520,126 @@ class _EmptyState extends StatelessWidget {
   }
 }
 
+/// Left drawer listing the device's past conversations so they don't
+/// pile up in one endless thread.
+class _HistoryDrawer extends StatelessWidget {
+  final Future<List<ChatSessionSummary>>? future;
+  final String? currentSessionId;
+  final ValueChanged<String> onSelect;
+  final VoidCallback onNewConversation;
+
+  const _HistoryDrawer({
+    required this.future,
+    required this.currentSessionId,
+    required this.onSelect,
+    required this.onNewConversation,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+              child: Text(
+                '💬 محادثاتي',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w800),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: ListTile(
+                leading: const Icon(Icons.add_circle_outline,
+                    color: AppTheme.primary),
+                title: const Text(
+                  'محادثة جديدة',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: AppTheme.primary,
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                onTap: onNewConversation,
+              ),
+            ),
+            const Divider(height: 16),
+            Expanded(
+              child: FutureBuilder<List<ChatSessionSummary>>(
+                future: future,
+                builder: (context, snap) {
+                  if (snap.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  final sessions = snap.data ?? const [];
+                  if (sessions.isEmpty) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(24),
+                        child: Text(
+                          'لا توجد محادثات سابقة بعد',
+                          style: TextStyle(color: AppTheme.textMuted),
+                        ),
+                      ),
+                    );
+                  }
+                  return ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    itemCount: sessions.length,
+                    itemBuilder: (context, i) {
+                      final s = sessions[i];
+                      final active = s.id == currentSessionId;
+                      return ListTile(
+                        selected: active,
+                        selectedTileColor:
+                            AppTheme.primary.withValues(alpha: .08),
+                        leading:
+                            const Icon(Icons.chat_bubble_outline, size: 20),
+                        title: Text(
+                          s.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        subtitle: Text('${s.messageCount} رسالة'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        onTap: () => onSelect(s.id),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _Composer extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final bool enabled;
+  final bool isStreaming;
   final VoidCallback onSend;
+  final VoidCallback onStop;
   const _Composer({
     required this.controller,
     required this.focusNode,
     required this.enabled,
+    required this.isStreaming,
     required this.onSend,
+    required this.onStop,
   });
 
   @override
@@ -529,23 +683,25 @@ class _Composer extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
+            // While streaming → red stop button; otherwise → send.
             GestureDetector(
-              onTap: enabled ? onSend : null,
+              onTap: isStreaming ? onStop : (enabled ? onSend : null),
               child: Container(
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  gradient: enabled ? Dt.primaryGradient : null,
-                  color: enabled ? null : Dt.track,
+                  gradient: isStreaming ? null : Dt.primaryGradient,
+                  color: isStreaming ? AppTheme.dangerFg : null,
                   shape: BoxShape.circle,
-                  boxShadow: enabled
-                      ? Dt.softShadow(Dt.primary, alpha: .3)
-                      : null,
+                  boxShadow: Dt.softShadow(
+                    isStreaming ? AppTheme.dangerFg : Dt.primary,
+                    alpha: .3,
+                  ),
                 ),
-                // Icons.send auto-mirrors under RTL Directionality.
                 child: Icon(
-                  Icons.send,
-                  color: enabled ? Colors.white : Dt.inkSoft,
+                  // Icons.send auto-mirrors under RTL Directionality.
+                  isStreaming ? Icons.stop_rounded : Icons.send,
+                  color: Colors.white,
                   size: 22,
                 ),
               ),

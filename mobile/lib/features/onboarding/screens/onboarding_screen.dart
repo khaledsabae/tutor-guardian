@@ -17,6 +17,8 @@
 ///   * Pop the route — the root scaffold takes over.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -85,12 +87,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       return;
     }
     try {
-      final child = await ref.read(createChildProvider.notifier).create(
+      final child = await ref
+          .read(createChildProvider.notifier)
+          .create(
             name: _nameController.text.trim(),
             ageGroup: ageGroup,
             gender: _gender,
             avatarEmoji: _avatarEmoji,
-          );
+          )
+          // Guard against a hung backend — surface a clear error instead
+          // of leaving the user on a blank/loading screen indefinitely.
+          .timeout(const Duration(seconds: 45));
       // Persist locally and flip the gate.
       final storage = ref.read(onboardingStorageProvider);
       await storage.setActiveChild(
@@ -102,6 +109,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       await ref.read(onboardingCompletedProvider.notifier).markCompleted();
       if (mounted) {
         Navigator.of(context).pop(true);
+      }
+    } on TimeoutException {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'الخادم يستغرق وقتاً أطول من المعتاد. تأكد من الاتصال وحاول مرة أخرى.',
+            ),
+            backgroundColor: AppTheme.dangerFg,
+          ),
+        );
       }
     } catch (e) {
       if (mounted) {
@@ -123,7 +141,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
     return PopScope(
       canPop: false, // onboarding is mandatory
-      child: Scaffold(
+      child: Stack(
+        children: [
+          Scaffold(
         body: SafeArea(
           child: Column(
             children: [
@@ -207,6 +227,44 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ],
           ),
         ),
+          ),
+          // Full-screen loading overlay — keeps the wait from ever
+          // looking like a frozen/black screen (child creation can be
+          // slow on first cold backend hit).
+          if (busy)
+            Positioned.fill(
+              child: AbsorbPointer(
+                child: ColoredBox(
+                  color: Colors.black.withValues(alpha: 0.55),
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(28),
+                      decoration: BoxDecoration(
+                        color: AppTheme.surface,
+                        borderRadius: BorderRadius.circular(Dt.rSheet),
+                      ),
+                      child: const Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('👶', style: TextStyle(fontSize: 44)),
+                          SizedBox(height: 16),
+                          CircularProgressIndicator(),
+                          SizedBox(height: 16),
+                          Text(
+                            'جاري تجهيز ملف طفلك…',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.textPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

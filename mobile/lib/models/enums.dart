@@ -5,7 +5,8 @@ library;
 
 /// Age bands accepted by `/api/assistant/*`.
 enum AgeGroup {
-  zeroThree('0-3'),
+  prenatalOne('prenatal-1'),
+  twoThree('2-3'),
   fourSix('4-6'),
   sevenNine('7-9'),
   tenTwelve('10-12'),
@@ -20,7 +21,8 @@ enum AgeGroup {
   /// Human label for the dropdown (Arabic UI).
   String get label {
     switch (this) {
-      case AgeGroup.zeroThree: return '0–3 سنوات';
+      case AgeGroup.prenatalOne: return 'فترة الحمل وحتى عام';
+      case AgeGroup.twoThree: return '2–3 سنوات';
       case AgeGroup.fourSix: return '4–6 سنوات';
       case AgeGroup.sevenNine: return '7–9 سنوات';
       case AgeGroup.tenTwelve: return '10–12 سنة';

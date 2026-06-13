@@ -449,8 +449,10 @@ class _ChildHeader extends StatelessWidget {
 
   String _ageLabel(String wire) {
     switch (wire) {
-      case '0-3':
-        return '0–3 سنوات';
+      case 'prenatal-1':
+        return 'فترة الحمل وحتى عام';
+      case '2-3':
+        return '2–3 سنوات';
       case '4-6':
         return '4–6 سنوات';
       case '7-9':

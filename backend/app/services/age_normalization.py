@@ -5,17 +5,21 @@ used by the KnowledgeUnit schema.
 """
 
 # mapping: raw -> canonical
+# The 0-3 band was split into "prenatal-1" (pregnancy→1yr) + "2-3"; infant /
+# legacy "0-3" raw metadata normalizes onto "prenatal-1".
 _AGE_MAP: dict[str, str] = {
     "adolescent":      "13-15",
     "all":             "unspecified",
-    "infant":          "0-3",
-    "toddler":         "4-6",
+    "infant":          "prenatal-1",
+    "toddler":         "2-3",
     "preschool":       "4-6",
     "school_age":      "7-9",
     "middle_childhood":"7-9",
     "late_childhood":  "10-12",
     # canonical values pass through unchanged
-    "0-3":             "0-3",
+    "prenatal-1":      "prenatal-1",
+    "0-3":             "prenatal-1",  # legacy alias
+    "2-3":             "2-3",
     "4-6":             "4-6",
     "7-9":             "7-9",
     "10-12":           "10-12",
@@ -27,7 +31,7 @@ _AGE_MAP: dict[str, str] = {
 
 # The canonical enum values we accept after normalisation
 CANONICAL_AGE_GROUPS: set[str] = {
-    "0-3", "4-6", "7-9", "10-12", "13-15", "16-18", "unspecified",
+    "prenatal-1", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18", "unspecified",
 }
 
 

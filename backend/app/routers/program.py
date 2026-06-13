@@ -34,7 +34,10 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/program", tags=["program"])
 
 # ── Constants ────────────────────────────────────────────────────────────
-_VALID_AGE_GROUPS = {"0-3", "4-6", "7-9", "10-12", "13-15", "16-18"}
+# Accept every canonical band + the legacy "0-3" alias (pre-split children).
+_VALID_AGE_GROUPS = {
+    "prenatal-1", "0-3", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18",
+}
 _VALID_DOMAINS = {"medical", "cyber", "islamic_parenting", "development"}
 _VALID_TIME_OF_DAY = {"morning", "evening", "bedtime", "anytime"}
 _VALID_PROGRESS_STATUS = {"not_started", "in_progress", "completed"}
@@ -50,6 +53,8 @@ def _validate_age_group(age_group: Optional[str]) -> Optional[str]:
             status_code=422,
             detail=f"age_group غير صالح. القيم المتاحة: {sorted(_VALID_AGE_GROUPS)}",
         )
+    # Pass through unchanged — content lookups use age_equivalents() so the
+    # legacy "0-3" and canonical "prenatal-1" resolve to each other.
     return age_group
 
 

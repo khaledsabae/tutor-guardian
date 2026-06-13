@@ -278,7 +278,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('محتوى تفاعلي'), findsOneWidget);
+      expect(find.textContaining('المحتوى التفاعلي'), findsOneWidget);
       expect(find.textContaining('استمع للبودكاست'), findsOneWidget);
       expect(find.textContaining('شاهد الفيديو'), findsOneWidget);
       expect(find.textContaining('فلاش كاردز (10 بطاقة)'), findsOneWidget);
@@ -463,7 +463,7 @@ void main() {
       // (اليوم / مساراتي / المساعد — tab 0 "اليوم" is the default)
       expect(find.byType(NavigationBar), findsOneWidget);
       final navBar = tester.widget<NavigationBar>(find.byType(NavigationBar));
-      expect(navBar.destinations.length, 3);
+      expect(navBar.destinations.length, 4); // اليوم / مساراتي / الورد / المساعد
 
       // Destination labels render
       expect(find.byWidgetPredicate((widget) =>

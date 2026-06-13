@@ -183,7 +183,9 @@ void main() {
       expect(find.text('ابدأ الرحلة'), findsOneWidget);
       // Age chips render
       expect(find.text('4–6 سنوات'), findsOneWidget);
-      expect(find.text('0–3 سنوات'), findsOneWidget);
+      // 0-3 band was split → "فترة الحمل وحتى عام" + "2–3 سنوات".
+      expect(find.text('فترة الحمل وحتى عام'), findsOneWidget);
+      expect(find.text('2–3 سنوات'), findsOneWidget);
     });
 
     testWidgets('shows validation error when name is empty', (tester) async {

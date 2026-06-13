@@ -70,8 +70,11 @@ def _azure_client():
 
 # Judge backend: "ollama" (default — fully local, nothing leaves the
 # machines) or "azure" (requires AZURE_OPENAI_* env + explicit opt-in).
+# gemma4 variants on the home server return empty output — qwen2.5:7b
+# is the working local judge (chat endpoint; generate works too but
+# chat is safer across templates).
 JUDGE_BACKEND = os.environ.get("JUDGE_BACKEND", "ollama")
-JUDGE_OLLAMA_MODEL = os.environ.get("JUDGE_OLLAMA_MODEL", "gemma4:e4b")
+JUDGE_OLLAMA_MODEL = os.environ.get("JUDGE_OLLAMA_MODEL", "qwen2.5:7b")
 
 
 def _judge_ollama(item_prompt: str, retries: int = 3) -> str:
@@ -81,17 +84,21 @@ def _judge_ollama(item_prompt: str, retries: int = 3) -> str:
     for attempt in range(retries):
         try:
             r = requests.post(
-                f"{base}/api/generate",
-                json={"model": JUDGE_OLLAMA_MODEL, "prompt": item_prompt,
+                f"{base}/api/chat",
+                json={"model": JUDGE_OLLAMA_MODEL,
+                      "messages": [{"role": "user", "content": item_prompt}],
                       "stream": False,
-                      "options": {"temperature": 0.0, "num_predict": 300}},
-                timeout=300,
+                      "options": {"temperature": 0.0, "num_predict": 400}},
+                timeout=600,
             )
             r.raise_for_status()
-            return r.json().get("response", "")
+            text = r.json().get("message", {}).get("content", "")
+            if text.strip():
+                return text
+            print("  local judge returned empty, retry", file=sys.stderr)
         except Exception as exc:  # noqa: BLE001
             print(f"  local judge error ({exc.__class__.__name__}), retry", file=sys.stderr)
-            time.sleep(5 * (attempt + 1))
+        time.sleep(5 * (attempt + 1))
     return ""
 
 

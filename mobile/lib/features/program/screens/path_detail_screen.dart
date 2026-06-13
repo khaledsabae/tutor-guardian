@@ -23,6 +23,8 @@ import '../data/progress_models.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
 import 'lesson_screen.dart';
+import 'video_player_screen.dart';
+import '../../../config/app_config.dart';
 
 class PathDetailScreen extends ConsumerWidget {
   const PathDetailScreen({
@@ -258,6 +260,27 @@ class _Header extends ConsumerWidget {
                         _Badge(text: '⏱️ ${path.estimatedDays} يوم'),
                         const SizedBox(width: 8),
                         _Badge(text: '📚 ${path.lessonIds.length} دروس'),
+                        if (path.videoMp4 != null) ...[
+                          const SizedBox(width: 8),
+                          _ClickableBadge(
+                            text: '🎥 فيديو تعريفي',
+                            onTap: () {
+                              final raw = path.videoMp4!;
+                              final url = raw.startsWith('http')
+                                  ? raw
+                                  : '${AppConfig.apiBaseUrl}/$raw';
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => VideoPlayerScreen(
+                                    url: url,
+                                    title: '🎥 فيديو تعريفي لـ ${path.title}',
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ],
                     ),
                     if (progress != null && percent != null) ...[
@@ -314,6 +337,35 @@ class _Badge extends StatelessWidget {
           color: Colors.white,
           fontSize: 12,
           fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+}
+
+class _ClickableBadge extends StatelessWidget {
+  const _ClickableBadge({required this.text, required this.onTap});
+  final String text;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white.withValues(alpha: 0.18),
+      borderRadius: BorderRadius.circular(Dt.rChip),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Dt.rChip),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ),
       ),
     );

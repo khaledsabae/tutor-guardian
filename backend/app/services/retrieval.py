@@ -15,7 +15,7 @@ import chromadb
 from chromadb import Documents, EmbeddingFunction, Embeddings
 from sentence_transformers import SentenceTransformer
 
-from app.core.taxonomy import canonical_domain
+from app.core.taxonomy import canonical_domain, age_equivalents
 from app.models.knowledge import KnowledgeUnit
 from app.services.knowledge_loader import load_default_knowledge_units
 
@@ -181,10 +181,13 @@ def retrieve_relevant_units(
     # ── Query 1: domain + age_group (broad, higher top_k) ────────────────
     # "unspecified" units hold general principles that apply to every age,
     # so they compete alongside age-matched units instead of being invisible.
+    # age_equivalents() matches the legacy "0-3" and canonical "prenatal-1"
+    # to each other so a pre-split child or unit still resolves.
+    age_candidates = set(age_equivalents(age_group)) | {"unspecified"}
     where = {
         "$and": [
             {"domain": {"$eq": db_domain}},
-            {"age_group": {"$in": [age_group, "unspecified"]}},
+            {"age_group": {"$in": list(age_candidates)}},
         ]
     }
     results = _query(collection, query_text, where, top_k)

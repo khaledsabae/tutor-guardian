@@ -38,7 +38,8 @@ import '../widgets/ui/stat_chip.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key, required this.onGoToTab});
 
-  /// Switches the root scaffold tab (1 = paths, 2 = chat).
+  /// Switches the root scaffold tab.
+  /// Indices: 0 = اليوم, 1 = مساراتي, 2 = الورد (Quran), 3 = المساعد (chat).
   final ValueChanged<int> onGoToTab;
 
   @override
@@ -102,7 +103,7 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           _QuizCard(),
           const SizedBox(height: 20),
-          _AskAssistantCard(onTap: () => onGoToTab(2)),
+          _AskAssistantCard(onTap: () => onGoToTab(3)),
         ],
       ),
     );

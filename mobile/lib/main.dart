@@ -16,6 +16,7 @@ import 'firebase_options.dart';
 import 'screens/chat_screen.dart';
 import 'features/adhkar/services/notification_service.dart';
 import 'screens/home_screen.dart';
+import 'features/quran/screens/quran_screen.dart';
 import 'theme/app_theme.dart';
 import 'theme/design_tokens.dart';
 
@@ -199,6 +200,7 @@ class _RootScaffoldState extends State<RootScaffold> {
         children: [
           HomeScreen(onGoToTab: (i) => setState(() => _index = i)),
           const PathsScreen(),
+          const QuranScreen(),
           const ChatScreen(),
         ],
       ),
@@ -215,6 +217,11 @@ class _RootScaffoldState extends State<RootScaffold> {
             icon: Icon(Icons.route_outlined),
             selectedIcon: Icon(Icons.route),
             label: 'مساراتي',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.menu_book_outlined),
+            selectedIcon: Icon(Icons.menu_book),
+            label: 'الورد',
           ),
           NavigationDestination(
             icon: Icon(Icons.chat_bubble_outline),

@@ -172,3 +172,41 @@ def get_session(session_id: str) -> dict | None:
             for m in msgs
         ],
     }
+
+
+def list_sessions(device_id: str, limit: int = 50) -> list[dict]:
+    """Sessions belonging to a device, newest first, each with a title
+    (its first user message) and a message count. Empty sessions are
+    skipped so the history list only shows real conversations."""
+    conn = get_conn()
+    try:
+        rows = conn.execute(
+            """
+            SELECT s.id AS id,
+                   s.updated_at AS updated_at,
+                   (SELECT content FROM chat_messages
+                     WHERE session_id = s.id AND role = 'user'
+                     ORDER BY id ASC LIMIT 1) AS first_user,
+                   (SELECT COUNT(*) FROM chat_messages
+                     WHERE session_id = s.id) AS msg_count
+            FROM chat_sessions s
+            WHERE s.device_id = ?
+            ORDER BY s.updated_at DESC
+            LIMIT ?
+            """,
+            (device_id, limit),
+        ).fetchall()
+    finally:
+        conn.close()
+    out = []
+    for r in rows:
+        if not r["first_user"]:
+            continue  # no real conversation yet
+        title = r["first_user"].strip().replace("\n", " ")
+        out.append({
+            "id": r["id"],
+            "title": title[:80],
+            "message_count": r["msg_count"],
+            "updated_at": r["updated_at"],
+        })
+    return out

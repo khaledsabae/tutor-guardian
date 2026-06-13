@@ -27,6 +27,15 @@ def create_session(body: SessionCreate | None = None) -> SessionCreateResponse:
     return SessionCreateResponse(session_id=sid, token=token)
 
 
+@router.get("/sessions")
+def list_sessions(request: Request, limit: int = 50) -> dict:
+    """List the authenticated device's past conversations (newest first),
+    each with a title + message count — powers the chat history drawer."""
+    device_id = request.state.device_id
+    sessions = store.list_sessions(device_id, limit=limit)
+    return {"sessions": sessions}
+
+
 @router.get("/sessions/{session_id}", response_model=SessionResponse)
 def get_session(session_id: str, request: Request) -> SessionResponse:
     """Get full session with message history. Requires auth token.

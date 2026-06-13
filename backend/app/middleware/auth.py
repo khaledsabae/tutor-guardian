@@ -36,6 +36,10 @@ _PROTECTED_PROGRAM_PROGRESS = "/api/program/lessons/"
 
 
 def _is_protected(path: str, method: str) -> bool:
+    # Only POST /api/chat/sessions (session creation) is public; the GET
+    # on the same path lists the device's history and needs auth.
+    if path == "/api/chat/sessions":
+        return method != "POST"
     if path in _PUBLIC_PATHS:
         return False
     for prefix in _PROTECTED_PREFIXES:
