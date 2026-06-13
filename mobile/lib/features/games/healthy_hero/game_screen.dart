@@ -1,123 +1,261 @@
-import 'package:flame/game.dart';
+/// Healthy Hero Game Screen — P1.4 Improved (رحلة البطل الصحي 🩺).
+library;
+
 import 'package:flutter/material.dart';
+import 'package:flame/game.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import 'healthy_hero_game.dart';
+import '../shared/game_utils.dart'
 
-class HealthyHeroGameScreen extends StatefulWidget {
+class HealthyHeroGameScreen extends ConsumerStatefulWidget {
   const HealthyHeroGameScreen({super.key});
 
   @override
-  State<HealthyHeroGameScreen> createState() => _HealthyHeroGameScreenState();
+  ConsumerState<HealthyHeroGameScreen> createState() => _HealthyHeroGameScreenState();
 }
 
-class _HealthyHeroGameScreenState extends State<HealthyHeroGameScreen> {
-  HealthyHeroGame? _game;
+class _HealthyHeroGameScreenState extends ConsumerState<HealthyHeroGameScreen> {
+  GameProgress? _progress;
+  int _selectedLevel = 1;
   bool _isGameOver = false;
-  bool _started = false;
   int _finalScore = 0;
+  bool _levelCompleted = false;
 
   @override
   void initState() {
     super.initState();
-    _initGame();
+    _loadProgress();
   }
 
-  void _initGame() {
+  Future<void> _loadProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    final json = prefs.getString('game_progress_healthy_hero');
+    if (json != null) {
+      setState(() => _progress = GameProgress.fromJson(Map<String, dynamic>.from(
+        Map<String, dynamic>.from(json as Map),
+      )));
+      _selectedLevel = _progress!.highestLevel;
+    }
+  }
+
+  Future<void> _saveProgress() async {
+    if (_progress != null) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('game_progress_healthy_hero',
+        _progress!.toJson().toString());
+    }
+  }
+
+  void _initGame(int level) {
+    final gameConfig = HealthyHeroConfig.forLevel(level);
     setState(() {
       _isGameOver = false;
-      _started = false;
       _finalScore = 0;
-      _game = HealthyHeroGame(
-        onGameOver: (score) {
-          setState(() {
-            _isGameOver = true;
-            _finalScore = score;
-          });
-        },
-      );
+      _levelCompleted = false;
+      _selectedLevel = level;
     });
-    // Hold the simulation on the intro until the player taps "ابدأ".
-    WidgetsBinding.instance.addPostFrameCallback((_) => _game?.pauseEngine());
+
+    _game = HealthyHeroGame(
+      gameConfig: gameConfig,
+      onGameComplete: (score, completed, playedLevel) {
+        _handleGameComplete(score, completed, level);
+      },
+    );
+  }
+
+  HealthyHeroGame? _game;
+
+  void _handleGameComplete(int score, bool completed, int level) {
+    setState(() {
+      _isGameOver = true;
+      _finalScore = score;
+      _levelCompleted = completed;
+    });
+
+    _progress ??= GameProgress(gameId: 3);
+    _progress!.recordGame(level, score, completed);
+    _saveProgress();
+
+    if (completed && level < 10) {
+      _showLevelCompleteDialog(score, level);
+    } else {
+      _showGameOverDialog(score, completed, level);
+    }
+  }
+
+  void _showGameOverDialog(int score, bool completed, int level) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF052E16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dt.rCard)),
+        title: Row(
+          children: [
+            Icon(completed ? Icons.check_circle : Icons.close,
+                color: completed ? AppTheme.success : AppTheme.dangerFg, size: 28),
+            const SizedBox(width: 8),
+            Text(
+              completed ? 'تم إكمال المستوى!' : 'انتهت اللعبة',
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              completed
+                  ? 'مستوى $level مكتمل! أنت تتعلم العادات الصحية.'
+                  : 'انتهت المحاولات. تذكر: الأكل الصحي والنوم المبكر = طاقة!',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.white70, fontSize: 16, height: 1.5),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF22C55E).withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFF22C55E).withValues(alpha: 0.3)),
+              ),
+              child: Column(
+                children: [
+                  Text('النقاط: $score',
+                      style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
+                  Text('المستوى: $level / 10',
+                      style: TextStyle(fontSize: 14, color: Colors.grey[400])),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          if (completed && level < 10)
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+                _initGame(level + 1);
+              },
+              child: const Text('المستوى التالي ▶', style: TextStyle(fontSize: 16, color: Color(0xFF22C55E))),
+            ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              _initGame(level);
+            },
+            child: const Text('إعادة اللعب', style: TextStyle(fontSize: 16)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              setState(() => _isGameOver = false);
+            },
+            child: const Text('العودة', style: TextStyle(fontSize: 16)),
+          ),
+        ],
+      ),
+    );
+    var ctx = context;
+  }
+
+  void _showLevelCompleteDialog(int score, int level) {
+    _showGameOverDialog(score, true, level);
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = GameTheme.healthyHero;
+
+    if (_isGameOver) {
+      return Stack(
+        children: [
+          if (_game != null)
+            GameWidget(game: _game!),
+        ],
+      );
+    }
+
     return Scaffold(
-      backgroundColor: const Color(0xFF38BDF8),
+      backgroundColor: theme.backgroundColor,
       appBar: AppBar(
-        title: const Text('رحلة البطل الصحي 🩺', style: TextStyle(color: Colors.white)),
+        title: Text(theme.name, style: const TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF0369A1),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Stack(
-        children: [
-          if (_game != null) GameWidget(game: _game!),
-
-          // How-to-play / learning goal overlay.
-          if (!_started && !_isGameOver)
-            _IntroOverlay(
-              onStart: () {
-                _game?.resumeEngine();
-                setState(() => _started = true);
-              },
-            ),
-
-          if (_isGameOver)
-            Container(
-              color: Colors.black54,
-              child: Center(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(Dt.rCard),
-                  ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Card(
+                color: const Color(0xFF052E16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Dt.rCard),
+                  side: BorderSide(color: theme.accentColor.withValues(alpha: 0.3)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'احذر! 👾',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.dangerFg,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      const Text(
-                        'لقد اصطدمت بوحش السكريات والسهر!\nتذكر أن الأكل الصحي والنوم المبكر يمنحاك طاقة للقفز عالياً.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16, height: 1.5),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'النتيجة: $_finalScore',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.primary,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Expanded(
-                            child: BouncyButton(
-                              label: 'العودة',
-                              color: AppTheme.surfaceAlt,
-                              onTap: () => Navigator.of(context).pop(),
-                            ),
-                          ),
+                          const Text('🦸', style: TextStyle(fontSize: 32)),
                           const SizedBox(width: 12),
                           Expanded(
-                            child: BouncyButton(
-                              label: 'إعادة اللعب',
-                              color: AppTheme.primary,
-                              onTap: _initGame,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(theme.name,
+                                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'ساعد البطل الصحي بجمع الأطعمة المفيدة (🍎🥦🥕) وتجنب الوجبات الضارة (🍔🍬🥤). '
+                                  'اضغط للقفز! مفتاح المسافة أو السهم لأعلى.',
+                                  style: const TextStyle(color: Colors.white70, height: 1.5),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF22C55E).withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('🍎🥦🥕 ', style: TextStyle(fontSize: 14)),
+                                Text('صحي - اجمع', style: TextStyle(fontSize: 14, color: Color(0xFF22C55E), fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFEF4444).withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('🍔🍬🥤 ', style: TextStyle(fontSize: 14)),
+                                Text('ضار - تجنب', style: TextStyle(fontSize: 14, color: Color(0xFFEF4444), fontWeight: FontWeight.w600)),
+                              ],
                             ),
                           ),
                         ],
@@ -126,48 +264,178 @@ class _HealthyHeroGameScreenState extends State<HealthyHeroGameScreen> {
                   ),
                 ),
               ),
-            ),
-        ],
+
+              const SizedBox(height: 24),
+
+              if (_progress != null) ...[
+                Text('تقدمك', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ProgressStat(
+                        label: 'أعلى مستوى',
+                        value: '${_progress!.highestLevel} / 10',
+                        color: theme.accentColor,
+                        icon: Icons.star,
+                      ),
+                    ),
+                    Expanded(
+                      child: _ProgressStat(
+                        label: 'إجمالي النقاط',
+                        value: _progress!.totalScore.toString(),
+                        color: const Color(0xFF22C55E),
+                        icon: Icons.score,
+                      ),
+                    ),
+                    Expanded(
+                      child: _ProgressStat(
+                        label: 'المحاور المكتملة',
+                        value: '${_progress!.gamesPlayed}',
+                        color: const Color(0xFF10B981),
+                        icon: Icons.check_circle,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+              ],
+
+              Text('اختر المستوى', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+              const SizedBox(height: 12),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                  childAspectRatio: 1.0,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                ),
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  final level = index + 1;
+                  final unlocked = _progress == null ? level == 1 : level <= _progress!.highestLevel;
+                  final completed = _progress?.levelBestScores.containsKey(level) ?? false;
+                  final bestScore = _progress?.levelBestScores[level] ?? 0;
+
+                  return _LevelCard(
+                    level: level,
+                    unlocked: unlocked,
+                    completed: completed,
+                    bestScore: bestScore,
+                    onTap: unlocked ? () => _initGame(level) : null,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-class _IntroOverlay extends StatelessWidget {
-  const _IntroOverlay({required this.onStart});
-  final VoidCallback onStart;
+class _ProgressStat extends StatelessWidget {
+  final String label;
+  final String value;
+  final Color color;
+  final IconData icon;
+
+  const _ProgressStat({
+    required this.label,
+    required this.value,
+    required this.color,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black54,
-      child: Center(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24),
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(Dt.rCard),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+    return Card(
+      color: const Color(0xFF052E16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Dt.rCard),
+        side: BorderSide(color: color.withValues(alpha: 0.3)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Icon(icon, color: color, size: 24),
+            const SizedBox(height: 8),
+            Text(value, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color)),
+            Text(label, style: const TextStyle(fontSize: 12, color: Colors.white60)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LevelCard extends StatelessWidget {
+  final int level;
+  final bool unlocked;
+  final bool completed;
+  final int bestScore;
+  final VoidCallback? onTap;
+
+  const _LevelCard({
+    required this.level,
+    required this.unlocked,
+    required this.completed,
+    required this.bestScore,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BouncyTap(
+      onTap: onTap,
+      child: Card(
+        color: unlocked ? const Color(0xFF052E16) : const Color(0xFF052E16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Dt.rCard),
+          side: BorderSide(
+            color: unlocked
+                ? (completed ? const Color(0xFF10B981) : const Color(0xFF22C55E)).withValues(alpha: 0.5)
+                : const Color(0xFF14532D),
+            width: 2),
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(Dt.rCard),
+          child: Stack(
             children: [
-              const Text('🦸🍎', style: TextStyle(fontSize: 44)),
-              const SizedBox(height: 12),
-              const Text(
-                'رحلة البطل الصحي',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('$level', style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: unlocked ? Colors.white : Colors.grey[600],
+                    )),
+                    const SizedBox(height: 4),
+                    if (unlocked) ...[
+                      Text('أفضل: $bestScore',
+                          style: TextStyle(fontSize: 11, color: Colors.grey[400])),
+                    ],
+                  ],
+                ),
               ),
-              const SizedBox(height: 10),
-              const Text(
-                'اضغط على الشاشة ليقفز البطل!\n'
-                'اجمع 🍎🥦🥕💧 الطعام الصحي،\n'
-                'واقفز فوق 🍬🍔🥤 الحلويات والوجبات السريعة.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15, height: 1.7),
-              ),
-              const SizedBox(height: 20),
-              BouncyButton(label: 'ابدأ اللعب 🎮', onTap: onStart),
+              if (completed)
+                const Positioned(
+                  top: 4,
+                  right: 4,
+                  child: Icon(Icons.check_circle, color: Color(0xFF10B981), size: 20),
+                ),
+              if (!unlocked)
+                const Positioned(
+                  top: 4,
+                  right: 4,
+                  child: Icon(Icons.lock, color: Color(0xFF64748B), size: 20),
+                ),
             ],
           ),
         ),
