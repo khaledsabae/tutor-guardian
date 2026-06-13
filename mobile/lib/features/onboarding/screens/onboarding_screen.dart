@@ -106,9 +106,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         ageGroup: child.ageGroup,
       );
       await ref.read(onboardingStorageProvider).markOnboardingCompleted();
-      await ref.read(onboardingCompletedProvider.notifier).markCompleted();
-      if (mounted) {
+      // Flip the gate LAST: main.dart rebuilds and swaps OnboardingScreen →
+      // RootScaffold. Only pop if this screen was actually pushed onto a
+      // navigator; popping the ROOT route (first-run onboarding) leaves a
+      // black frame until the rebuild settles — the cause of the first-run
+      // black screen on real devices.
+      if (mounted && Navigator.of(context).canPop()) {
         Navigator.of(context).pop(true);
+      }
+      if (mounted) {
+        await ref.read(onboardingCompletedProvider.notifier).markCompleted();
       }
     } on TimeoutException {
       if (mounted) {
