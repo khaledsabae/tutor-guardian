@@ -1,11 +1,11 @@
 {
-  "total_units": 292,
-  "generated_at": "2026-06-07T08:33:24.365909+00:00",
+  "total_units": 305,
+  "generated_at": "2026-06-13T13:59:21.040994+00:00",
   "by_domain": {
-    "medical": 93,
-    "cyber": 49,
+    "medical": 101,
+    "cyber": 51,
     "islamic_parenting": 111,
-    "development": 39
+    "development": 42
   },
   "units": [
     {
@@ -35,7 +35,7 @@
     {
       "id": "0b93e8de-3f9a-4823-8994-68a35e51207e",
       "domain": "cyber",
-      "title": "",
+      "title": "كيف تدعم طفلاً تعرض لهجوم إلكتروني",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -59,7 +59,7 @@
     {
       "id": "0daffcde-b219-4329-9f34-7425e54b6599",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الأدوار التربوية للنبي ﷺ في تربية الناشئة",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -83,7 +83,7 @@
     {
       "id": "0f0b0373-517a-42b4-a306-c295bc84e578",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التربية الإسلامية للبنات: جمال القلوب وصلاح النفوس",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -95,7 +95,7 @@
     {
       "id": "0f8e1ff3-7aa9-4a2c-9a6d-c0c2475c2152",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "وجّه طفلك إلى الله في كل موقف",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -107,7 +107,7 @@
     {
       "id": "1a79f159-fcad-5a0e-8af3-1e1a8bc90bec",
       "domain": "cyber",
-      "title": "",
+      "title": "علامات الاستخدام المُشكِل للألعاب حسب منظمة الصحة العالمية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -119,7 +119,7 @@
     {
       "id": "1ad7b0db-b8cb-40cc-b752-f295119be45d",
       "domain": "cyber",
-      "title": "",
+      "title": "ألم التنمر الرقمي ودور الأهل في الملاحظة المبكرة",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -131,7 +131,7 @@
     {
       "id": "1af6f4d4-49af-440e-ae91-55ce73b4cee3",
       "domain": "cyber",
-      "title": "",
+      "title": "حين تتحول الألعاب الإلكترونية إلى إدمان",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -143,7 +143,7 @@
     {
       "id": "1c519127-2129-447d-bff6-6937524da1f8",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "اختيار الزوجة الصالحة: أول لبنة في تربية الأبناء",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -167,7 +167,7 @@
     {
       "id": "1d4413cf-55ae-4ec3-9247-3f813349b26d",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "تعليم العبادات والأخلاق: أسس التربية الإسلامية",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -179,7 +179,7 @@
     {
       "id": "1de46b81-772d-40dd-8ce6-a12adde573e7",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "مسؤولية الوالدين المباشرة عن تعليم الأبناء",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -203,7 +203,7 @@
     {
       "id": "23f40364-6a52-4b4b-86af-29a1e3d54f8b",
       "domain": "development",
-      "title": "",
+      "title": "دماغ المراهق: الانتقال الفسيولوجي من الطفولة إلى الرشد",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -215,11 +215,11 @@
     {
       "id": "24e75eee-6a98-4d35-a300-02c01499c525",
       "domain": "medical",
-      "title": "Home and Family Strategies: Oppositional Defiant Disorder",
+      "title": "اضطراب العناد الشارد: استراتيجيات المنزل والأسرة",
       "source_file": "odd-home-family-strategies.pdf",
       "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
       "behavior_type": "الانضباط_السلوكي",
       "needs_ocr": false,
       "size_chars": 8438
@@ -227,7 +227,7 @@
     {
       "id": "28f8975f-f1f4-48c4-8c60-3755c63ecced",
       "domain": "medical",
-      "title": "",
+      "title": "الاضطرابات النفسية التي قد تصيب الأطفال: أهمية التعرف المبكر",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -239,7 +239,7 @@
     {
       "id": "29896a42-3c9a-4c22-bbf0-8e4d2e4da0e4",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "علّم طفلك التطلع إلى الأهداف النبيلة",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -251,11 +251,11 @@
     {
       "id": "29932bc2-ac51-4b79-b7c7-2d226004dfa6",
       "domain": "medical",
-      "title": "",
+      "title": "مراحل النمو المبكرة ومؤشرات الكشف المبكر عن التوحد",
       "source_file": "",
       "language": "",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "التوحد",
       "needs_ocr": false,
       "size_chars": 225
@@ -263,7 +263,7 @@
     {
       "id": "2aeb1bdb-f2b0-40d4-8371-1f8cd6f03921",
       "domain": "cyber",
-      "title": "",
+      "title": "أثر التنمر على أداء طفلك المدرسي ومتى تتواصل مع المدرسة",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -278,8 +278,8 @@
       "title": "Your child at 2 years*",
       "source_file": "CDC_Milestones_2_Years_Checklist.pdf",
       "language": "en",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "التطور_الطبيعي",
       "needs_ocr": false,
       "size_chars": 5645
@@ -287,7 +287,7 @@
     {
       "id": "2b7f3d08-8ecd-457b-b1e5-e4c4cc34c95e",
       "domain": "development",
-      "title": "",
+      "title": "تحولات دماغ المراهق وتأثرها بالبيئة المحيطة",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -299,7 +299,7 @@
     {
       "id": "2d4ecd6c-510f-4451-ac2e-1e1c3fec6058",
       "domain": "development",
-      "title": "",
+      "title": "علم دماغ المراهق: توجيه البرامج والسياسات المستقبلية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -323,7 +323,7 @@
     {
       "id": "2fbf8f72-8699-4a25-9779-5929b7847b4c",
       "domain": "cyber",
-      "title": "",
+      "title": "انتشار التنمر الإلكتروني بين طلاب المدارس: الأرقام",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -335,7 +335,7 @@
     {
       "id": "33d4c4fd-802f-4167-a79f-d56304f4b19d",
       "domain": "medical",
-      "title": "",
+      "title": "اضطراب فرط الحركة ونقص الانتباه (ADHD): ما تحتاج معرفته",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -395,7 +395,7 @@
     {
       "id": "3af026ae-be62-5839-ac0b-26da6874e4c5",
       "domain": "medical",
-      "title": "",
+      "title": "استراتيجيات سلوكية لطفل فرط الحركة في سن المدرسة",
       "source_file": "",
       "language": "",
       "original_age_group": "7-9",
@@ -419,7 +419,7 @@
     {
       "id": "401f39d6-0276-4c41-87e6-de883c9236d6",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "أحكام المولود الجديد عند علوان (فهرس إنجليزي)",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -446,8 +446,8 @@
       "title": "ﻣﻦ ﻣﻌﺎﱂ ﺍﳌﻨﻬﺞ ﺍﻟﻨﺒﻮﻱ ﰲ ﺗﺮﺑﻴﺔ ﺍﻷﺑﻨﺎﺀ ٥",
       "source_file": "Noor_Book_Maalim_Al_Manhaj_Al_Nabawi_Tarbiyah.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "العقيدة_والصلاة",
       "needs_ocr": false,
       "size_chars": 15893
@@ -467,7 +467,7 @@
     {
       "id": "4c790c42-d81f-437c-b5e1-eab7f2a742b4",
       "domain": "medical",
-      "title": "",
+      "title": "متى تستشير الطبيب بشأن سلوك طفلك ومشاعره؟",
       "source_file": "",
       "language": "",
       "original_age_group": "7-9",
@@ -479,7 +479,7 @@
     {
       "id": "4d35e38d-bcad-4e68-9dd3-a363d5791ab1",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التعامل الحكيم مع إحباط الأبناء وتشتتهم",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -491,7 +491,7 @@
     {
       "id": "4fcec458-d52b-4e74-8f25-e5aaa3cd5c0a",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "آداب الاستئذان والنظر في تربية المراهقين",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -503,7 +503,7 @@
     {
       "id": "635f8863-5aab-4df5-94ad-7ac78ffc1137",
       "domain": "cyber",
-      "title": "",
+      "title": "هل الإعلام يضخّم التنمر الإلكتروني؟ قراءة متوازنة",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -515,7 +515,7 @@
     {
       "id": "64a0f3d7-9f0b-4aac-a753-7e2e896f3785",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التعليم وظيفة الأنبياء: مكانة المعلم في الإسلام",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -527,7 +527,7 @@
     {
       "id": "66e01a58-d37f-431a-a128-c2484792a65b",
       "domain": "medical",
-      "title": "",
+      "title": "اضطراب خلل المزاج التخريبي (DMDD): متى تتحدث مع الطبيب",
       "source_file": "",
       "language": "",
       "original_age_group": "7-9",
@@ -539,7 +539,7 @@
     {
       "id": "6730e1c6-ddca-4ff4-8343-b07df6fa6abb",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "فهم السلوك غير السوي عند الطفل وتعديله",
       "source_file": "",
       "language": "",
       "original_age_group": "7-9",
@@ -551,7 +551,7 @@
     {
       "id": "6765ccf5-a94c-5291-a561-9258dc0c475f",
       "domain": "medical",
-      "title": "",
+      "title": "متى يستدعي فرط الحركة وضعف الانتباه تقييماً طبياً؟",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -563,7 +563,7 @@
     {
       "id": "69723253-5e81-4602-8bfe-a073437589c2",
       "domain": "medical",
-      "title": "",
+      "title": "اضطراب خلل المزاج التخريبي: كيف تتغير الأعراض مع النمو",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -575,7 +575,7 @@
     {
       "id": "6b583203-184a-42c1-8f9a-597e90df5cee",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التوازن بين العناية الروحية والعلمية في تربية الأبناء",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -587,7 +587,7 @@
     {
       "id": "6b71ada0-c189-4d5e-89f2-cce19272f4b8",
       "domain": "development",
-      "title": "",
+      "title": "ملحق فني من تقرير دماغ المراهق (UNICEF)",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -602,8 +602,8 @@
       "title": "Measures of Early Social Communication and Vocabulary",
       "source_file": "early-social-communication-vocabulary-measures.pdf",
       "language": "en",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "التأخر_الكلامي",
       "needs_ocr": false,
       "size_chars": 99940
@@ -611,7 +611,7 @@
     {
       "id": "6ce0dab4-4a0f-459c-9190-b6d3dfa8cee7",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "القيم والأخلاق: جوهر التربية الإسلامية",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -623,7 +623,7 @@
     {
       "id": "70a19c8f-3f62-499d-8e0e-211e46f12e9d",
       "domain": "medical",
-      "title": "",
+      "title": "دور الأخصائي النفسي في تقييم حالة طفلك",
       "source_file": "",
       "language": "",
       "original_age_group": "7-9",
@@ -635,11 +635,11 @@
     {
       "id": "70ef8432-d97f-490a-acab-8df9e57f8652",
       "domain": "medical",
-      "title": "",
+      "title": "مؤشرات نمو طفلك في عمر الشهرين (CDC)",
       "source_file": "",
       "language": "",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "التوحد",
       "needs_ocr": false,
       "size_chars": 599
@@ -647,7 +647,7 @@
     {
       "id": "723a3b98-bf3c-4607-8a02-9e774d1da69c",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التربية الإسلامية وتعزيز الانتماء للأسرة والمجتمع",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -659,7 +659,7 @@
     {
       "id": "72cea396-0533-4b24-8d2b-8ef82412b221",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التأديب في الإسلام: تعليم لا عقاب",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -683,7 +683,7 @@
     {
       "id": "78ab2258-6301-4bc6-a566-d60d3ca1c1b9",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الهدي النبوي في تربية الأولاد الصغار",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -695,7 +695,7 @@
     {
       "id": "7998d4f6-358e-4375-9160-d2e35639ea23",
       "domain": "medical",
-      "title": "",
+      "title": "دعم الصحة النفسية لطفلك في المنزل",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -707,7 +707,7 @@
     {
       "id": "7b2ded06-2736-4364-8980-1d70df17fa0c",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "وصايا تربوية للمعلمين: بناء النجاح الأكاديمي والشخصية",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -719,7 +719,7 @@
     {
       "id": "7c036b77-bd8a-4952-80f6-a1325b14d475",
       "domain": "development",
-      "title": "",
+      "title": "التربية الإيجابية 9-11 سنة: استقلالية أكبر وقواعد واضحة",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -743,7 +743,7 @@
     {
       "id": "7eb24d4f-e1d0-4bfa-a5ed-6b215e3fa1a1",
       "domain": "medical",
-      "title": "",
+      "title": "اضطراب خلل المزاج التخريبي: خيارات العلاج النفسي والأسري",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -755,7 +755,7 @@
     {
       "id": "7f487a00-8c7e-4f90-bb16-7b8badf6078f",
       "domain": "development",
-      "title": "",
+      "title": "التصوير العصبي لدماغ المراهق: نافذة المرونة الثانية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -767,7 +767,7 @@
     {
       "id": "808d5a15-b04c-48d3-97e1-2ed87fae9b71",
       "domain": "development",
-      "title": "",
+      "title": "سنوات المراهقة: حيث يتشكل الدماغ الذي سيعيش به ابنك",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -803,7 +803,7 @@
     {
       "id": "8451bbb0-4617-4252-a206-e442c533fac3",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التوازن بين التحفيز والرقابة في تربية الأبناء",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -827,7 +827,7 @@
     {
       "id": "890bf34f-b3b5-4b8f-91e4-71b58102a728",
       "domain": "development",
-      "title": "",
+      "title": "تطبيق علم الأعصاب الحديث في برامج رعاية المراهقين",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -839,7 +839,7 @@
     {
       "id": "8b869dfa-053f-4c5e-abe2-159eed4d599a",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التهذيب والعناية الروحية في التربية الإسلامية",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -851,7 +851,7 @@
     {
       "id": "8d64483f-5e85-4f24-970c-f503373cbf67",
       "domain": "medical",
-      "title": "",
+      "title": "مراقبة الصحة النفسية لطفلك: متى تطلب المساعدة",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -863,7 +863,7 @@
     {
       "id": "8dc21832-df8b-4123-95a3-e0ec75ab9263",
       "domain": "medical",
-      "title": "",
+      "title": "فهم اضطراب فرط الحركة ونقص الانتباه: الدرجات والتدخل",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -899,7 +899,7 @@
     {
       "id": "9282de4e-f0f4-4055-85d3-fd8605d45b6b",
       "domain": "development",
-      "title": "",
+      "title": "دماغ المراهق تحت الحرمان والأزمات: رؤى علمية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -923,7 +923,7 @@
     {
       "id": "93088170-21d3-4095-91a2-b86c44afa56b",
       "domain": "medical",
-      "title": "An official website of the United States government Here's h",
+      "title": "فهم تحديات التركيز: عوامل الخطورة لاضطراب فرط الحركة (ADHD)",
       "source_file": "CDC_ADHD_Prevalence_Co_occurring_2022.pdf",
       "language": "en",
       "original_age_group": "7-9",
@@ -935,7 +935,7 @@
     {
       "id": "9537a6a8-1794-48c0-8155-f742fa03fed9",
       "domain": "development",
-      "title": "",
+      "title": "من المختبر إلى الواقع: علم أعصاب المراهقة للتطبيق",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -947,7 +947,7 @@
     {
       "id": "95e7a228-ce19-494e-99c0-18e4f6402566",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "مداعبة النبي ﷺ للأطفال: الاحتواء بالحب",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -971,7 +971,7 @@
     {
       "id": "9816082f-6564-42fd-a37b-5b38083a94a8",
       "domain": "medical",
-      "title": "",
+      "title": "اضطراب خلل المزاج التخريبي عند المراهقين: متى يكون شديداً",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -983,7 +983,7 @@
     {
       "id": "99515fe1-7bec-4a39-af86-bf1922262170",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "مسؤولية التربية الاجتماعية في الإسلام — من كتاب تربية الأولا",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -995,7 +995,7 @@
     {
       "id": "9a303bc1-092c-4868-9600-0da3532b7077",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "مراحل التربية حسب الأعمار في الفكر الإسلامي",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -1019,7 +1019,7 @@
     {
       "id": "a1d7697e-c8d5-45c3-89b8-6c89954ce9b0",
       "domain": "development",
-      "title": "",
+      "title": "التربية الإيجابية لطفل ما قبل المدرسة: حزم مع حب",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -1031,11 +1031,11 @@
     {
       "id": "a2bd4f0d-1a09-4229-820f-1a409401b45b",
       "domain": "medical",
-      "title": "",
+      "title": "اضطراب خلل المزاج التخريبي عند الصغار: سن التشخيص",
       "source_file": "",
       "language": "",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
       "behavior_type": "اضطراب_المزاج_التخريبي",
       "needs_ocr": false,
       "size_chars": 600
@@ -1043,7 +1043,7 @@
     {
       "id": "a510bf5d-0a66-4888-8556-01bc46ba97ff",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "تعويد الأبناء على الصلاة واصطحابهم للمسجد",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -1055,7 +1055,7 @@
     {
       "id": "a51a2419-0d91-41ac-96ca-3c0f7419e197",
       "domain": "cyber",
-      "title": "",
+      "title": "التنمر الإلكتروني: تعريفه ودرجاته واستراتيجيات الوقاية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1067,7 +1067,7 @@
     {
       "id": "a77834fd-ec17-4e0f-b98d-048e87c44bdb",
       "domain": "medical",
-      "title": "",
+      "title": "نوبات الغضب الشديدة في اضطراب خلل المزاج التخريبي",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1079,7 +1079,7 @@
     {
       "id": "a85a51d4-3b5c-4979-a212-4a598a470d9b",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "مسؤولية التربية العقلية عند علوان (فهرس إنجليزي)",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -1091,7 +1091,7 @@
     {
       "id": "a9219a05-46a1-4ece-8961-686d0d27f960",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "العلم والأخلاق: ركيزتا بناء شخصية الأبناء",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -1103,7 +1103,7 @@
     {
       "id": "aa540ac5-be92-4d96-8615-13cda8aef1d1",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التربية القيمية والأخلاقية في ضوء القرآن",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1115,7 +1115,7 @@
     {
       "id": "aa7d21bc-045a-4d6f-8e7c-3e2d7defaf2c",
       "domain": "cyber",
-      "title": "",
+      "title": "حماية الصغار من التنمر الإلكتروني: البداية المبكرة",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -1139,7 +1139,7 @@
     {
       "id": "ae449033-324c-46ec-ba6d-43617e53baa1",
       "domain": "development",
-      "title": "",
+      "title": "تعريف بتقرير دماغ المراهق — مكتب أبحاث اليونيسف",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1151,7 +1151,7 @@
     {
       "id": "aedda350-cf2a-4d53-869a-2b07a694180d",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "أساليب تربية الأبناء المناسبة لسن 7-9 سنوات",
       "source_file": "",
       "language": "",
       "original_age_group": "7-9",
@@ -1163,7 +1163,7 @@
     {
       "id": "b12c6a7d-2f9f-4769-916b-1cc005069652",
       "domain": "development",
-      "title": "",
+      "title": "نصائح CDC للتربية الإيجابية في الطفولة الوسطى (9-11)",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -1175,7 +1175,7 @@
     {
       "id": "b173f42a-157f-4929-89a9-b67d12828f3d",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التربية البدنية للناشئة في المنهج الإسلامي",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -1199,7 +1199,7 @@
     {
       "id": "b25fcddc-6765-4e00-9d40-1ac90f97f3b4",
       "domain": "medical",
-      "title": "",
+      "title": "القلق والاكتئاب عند الأطفال: دور التواصل واللعب",
       "source_file": "",
       "language": "",
       "original_age_group": "7-9",
@@ -1247,7 +1247,7 @@
     {
       "id": "b6093b18-99fe-5f58-acad-d3f5ee47e43d",
       "domain": "medical",
-      "title": "",
+      "title": "متى تطلب تقييم التوحد الشامل لطفلك",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -1259,7 +1259,7 @@
     {
       "id": "b64ed3c8-59e3-4b79-a7ad-ed558212f087",
       "domain": "medical",
-      "title": "",
+      "title": "الاحتياجات النفسية للطفل من 4 إلى 6 سنوات",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -1271,7 +1271,7 @@
     {
       "id": "b7bd9ca3-382c-40b2-8829-8175379be248",
       "domain": "medical",
-      "title": "",
+      "title": "حين تحتاج اضطرابات المزاج رعاية فورية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1295,7 +1295,7 @@
     {
       "id": "b93653de-7273-4f0c-a6cb-46a9c2b5c42f",
       "domain": "development",
-      "title": "",
+      "title": "المراهقة: نافذة فرصة ثانية ومخاطر صحية يجب الانتباه لها",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1307,11 +1307,11 @@
     {
       "id": "bca43fa9-622d-580b-a4ef-a05fd39e1305",
       "domain": "medical",
-      "title": "",
+      "title": "العلامات المبكرة للتوحد التي تستدعي المتابعة",
       "source_file": "",
       "language": "",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "التوحد",
       "needs_ocr": false,
       "size_chars": 274
@@ -1319,7 +1319,7 @@
     {
       "id": "bd4afec4-d395-55f4-9953-22cc698564fd",
       "domain": "cyber",
-      "title": "",
+      "title": "خطة عائلية للوقاية من الإفراط في الألعاب",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -1331,7 +1331,7 @@
     {
       "id": "be78455e-d4c6-42f6-8088-1400f7c2dff3",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الفقه واللغة والأخلاق في تكوين شخصية الابن",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -1343,7 +1343,7 @@
     {
       "id": "beb0e561-be2a-51dc-85ac-83c158c748ef",
       "domain": "cyber",
-      "title": "",
+      "title": "متى يحتاج إدمان الألعاب تدخلاً نفسياً متخصصاً",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1355,7 +1355,7 @@
     {
       "id": "c3437dc8-02bd-41b2-8137-028c681a24d5",
       "domain": "cyber",
-      "title": "",
+      "title": "صور التنمر الإلكتروني وأثرها على صحة المراهق",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1367,7 +1367,7 @@
     {
       "id": "c59870c1-0083-4c48-84d8-60da0b6cf1b0",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "رسالة نبوية إلى من يضربون الأطفال",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -1382,8 +1382,8 @@
       "title": "Your baby at 2 months",
       "source_file": "Autism_Milestones_Checklist.pdf",
       "language": "en",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "الصحة_النفسية",
       "needs_ocr": false,
       "size_chars": 63871
@@ -1391,7 +1391,7 @@
     {
       "id": "ca67a271-881f-419a-825a-5cbd7e219227",
       "domain": "medical",
-      "title": "",
+      "title": "أثر اضطراب خلل المزاج التخريبي على الحياة اليومية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1415,7 +1415,7 @@
     {
       "id": "cf8f3b3c-fe62-40b7-9fe8-37cb85a68bd4",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "إعداد جيل صالح: التربية الإسلامية في بيئة الأسرة",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1427,12 +1427,12 @@
     {
       "id": "cyb-236a4b5e",
       "domain": "cyber",
-      "title": "التأثيرات الاجتماعية للسجادة التكنولوجية على الأطفال في سن ا",
+      "title": "اندماج التكنولوجيا في الطفولة المبكرة: وقت الشاشة جزء من الر",
       "source_file": "Screen_Time_2025.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "وقت_الشاشة",
       "needs_ocr": false,
       "size_chars": 1557
     },
@@ -1475,12 +1475,12 @@
     {
       "id": "cyb-3f81bd4b",
       "domain": "cyber",
-      "title": "الإدمان الرقمي: الوقاية من الإهتمام بالإنترنت",
+      "title": "التنمر الإلكتروني: أذى متكرر يتضاعف بالنشر المجهول",
       "source_file": "Cyberbullying_Guide.pdf",
       "language": "ar",
       "original_age_group": "10-12",
       "normalized_age_group": "10-12",
-      "behavior_type": "الإدمان الرقمي",
+      "behavior_type": "التنمر_الإلكتروني",
       "needs_ocr": false,
       "size_chars": 1516
     },
@@ -1494,7 +1494,7 @@
       "normalized_age_group": "13-15",
       "behavior_type": "الإدمان الرقمي",
       "needs_ocr": false,
-      "size_chars": 1462
+      "size_chars": 1407
     },
     {
       "id": "cyb-499319c4",
@@ -1502,8 +1502,8 @@
       "title": "تأثير استخدام الأطفال للشاشة على الأطفال في الأعمار الصغيرة",
       "source_file": "Screen_Time_2025.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "استخدام الشاشة",
       "needs_ocr": false,
       "size_chars": 1460
@@ -1586,8 +1586,8 @@
       "title": "زيادة وقت الأطفال في الألعاب الإلكترونية منذ عام 2011",
       "source_file": "Screen_Time_2025.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "إدمان ألعاب",
       "needs_ocr": false,
       "size_chars": 1425
@@ -1634,8 +1634,8 @@
       "title": "استخدام الأطفال للأجهزة: تحليل البيانات",
       "source_file": "Screen_Time_2025.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "فرط في استخدام الأجهزة",
       "needs_ocr": false,
       "size_chars": 1457
@@ -1658,8 +1658,8 @@
       "title": "تأثير وسائل الإعلام والتقنية على الأطفال من سن الولادة حتى ث",
       "source_file": "Screen_Time_2025.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "قلق, إدمان ألعاب",
       "needs_ocr": false,
       "size_chars": 1590
@@ -1694,8 +1694,8 @@
       "title": "الكبار والطفل الصغير: استخدام وسائل الإعلام وفرط الحركة",
       "source_file": "Screen_Time_2025.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "فرط حركة",
       "needs_ocr": false,
       "size_chars": 824
@@ -1703,7 +1703,7 @@
     {
       "id": "d0cb16b5-21cc-457f-8b87-2d74f18eea4f",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الصحة النفسية للطلاب في فكر علوان: الاستماع للأطفال",
       "source_file": "",
       "language": "",
       "original_age_group": "7-9",
@@ -1739,7 +1739,7 @@
     {
       "id": "d19a1efb-cb40-55fe-811c-9a139eb0b297",
       "domain": "medical",
-      "title": "",
+      "title": "التواصل مع طفل طيف التوحد: الروتين واللغة البسيطة",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -1751,7 +1751,7 @@
     {
       "id": "d3b5e4e6-bc8e-4eca-b9b4-0541171ab326",
       "domain": "development",
-      "title": "",
+      "title": "نصائح CDC للتربية الإيجابية لمرحلة ما قبل المدرسة (3-5)",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -1763,7 +1763,7 @@
     {
       "id": "d428eb33-23ec-46e2-a859-3cc81d4c35d8",
       "domain": "cyber",
-      "title": "",
+      "title": "التنمر الإلكتروني وأثره النفسي والجسدي",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -1775,7 +1775,7 @@
     {
       "id": "d6644c40-e60f-49c7-97e6-8b54d2c0872b",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "منهج النبي ﷺ في تربية الطفل: تعريف بالبحث",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -1787,7 +1787,7 @@
     {
       "id": "d93c4c32-789e-4844-87ca-76c66651fe61",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "هدي النبي ﷺ في الاستئذان: قصة كلدة بن حنبل",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -1814,8 +1814,8 @@
       "title": "Early Moments Matter for every child",
       "source_file": "unicef-early-moments-matter.pdf",
       "language": "en",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "التنمية_المبكرة",
       "needs_ocr": false,
       "size_chars": 145394
@@ -1852,7 +1852,7 @@
       "language": "ar",
       "original_age_group": "10-12",
       "normalized_age_group": "10-12",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "التطور_الطبيعي",
       "needs_ocr": false,
       "size_chars": 1435
     },
@@ -1886,8 +1886,8 @@
       "title": "نصائح لرعاية أطفال الصغار في مرحلة الفرط الحركة",
       "source_file": "Positive_Parenting_3_5.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "فرط حركة",
       "needs_ocr": false,
       "size_chars": 1366
@@ -1895,7 +1895,7 @@
     {
       "id": "dev-97d2f1d2",
       "domain": "development",
-      "title": "نصائح الأمهات لتنمية طفولتها الصحية",
+      "title": "نصائح تربوية إيجابية لنمو صحي في سن ما قبل المدرسة",
       "source_file": "Positive_Parenting_3_5.pdf",
       "language": "ar",
       "original_age_group": "4-6",
@@ -2020,14 +2020,14 @@
       "language": "ar",
       "original_age_group": "10-12",
       "normalized_age_group": "10-12",
-      "behavior_type": "发展中",
+      "behavior_type": "التنمية_المبكرة",
       "needs_ocr": false,
       "size_chars": 1660
     },
     {
       "id": "df2bbc86-7340-4b26-9b96-0d3295c9a1b6",
       "domain": "development",
-      "title": "",
+      "title": "اكتشافات دماغ المراهق: من المعامل إلى حياة أبنائنا",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2039,7 +2039,7 @@
     {
       "id": "df840cb4-0720-4c57-9495-64dbf45e8e18",
       "domain": "cyber",
-      "title": "",
+      "title": "نشر الشائعات والنقد الجارح: وجه آخر للتنمر الإلكتروني",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2075,7 +2075,7 @@
     {
       "id": "e313c48b-f705-4cdd-a7e6-0e585f6ab69f",
       "domain": "development",
-      "title": "",
+      "title": "شكر وتقدير — تقرير دماغ المراهق (UNICEF)",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2111,7 +2111,7 @@
     {
       "id": "e6e490f8-1e6e-5764-939e-e039beb4d7c9",
       "domain": "medical",
-      "title": "",
+      "title": "الحركة الزائدة في سن 4-6: متى تكون طبيعية ومتى تقلق",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -2126,8 +2126,8 @@
       "title": "GUIDELINES ON",
       "source_file": "WHO_Sleep_Physical_Activity_Under5.pdf",
       "language": "en",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "الصحة_النفسية",
       "needs_ocr": false,
       "size_chars": 91665
@@ -2135,11 +2135,11 @@
     {
       "id": "e8b61bc9-d973-4199-8cc9-f27a20b23917",
       "domain": "medical",
-      "title": "",
+      "title": "أساس الصحة النفسية يبدأ من المهد: مناخ أسري آمن",
       "source_file": "",
       "language": "",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "الصحة_النفسية_للأطفال",
       "needs_ocr": false,
       "size_chars": 600
@@ -2147,7 +2147,7 @@
     {
       "id": "e93bb1b3-277f-4b93-b530-9946896fd1e0",
       "domain": "medical",
-      "title": "",
+      "title": "تشخيص اضطراب خلل المزاج التخريبي عند المراهقين",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2159,7 +2159,7 @@
     {
       "id": "e9717a72-3836-4c57-9c93-9d9ba67f1ed9",
       "domain": "cyber",
-      "title": "",
+      "title": "التنمر الإلكتروني سلوك مؤذٍ: حقوق الضحية وخطوات التصرف",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2183,7 +2183,7 @@
     {
       "id": "ef7cfad0-4999-42ba-bdf4-1c1d65d3b29f",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "القرآن والعقيدة والأخلاق: أسس يغرسها المربي",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -2195,7 +2195,7 @@
     {
       "id": "f047bd8f-ef57-43d1-8ff3-18b949445d88",
       "domain": "development",
-      "title": "",
+      "title": "دماغ المراهق: نافذة الفرصة الثانية (مقدمة التقرير)",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2207,7 +2207,7 @@
     {
       "id": "f1fdea9c-ac21-4cfb-a42f-612269b4e66a",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "رحمة النبي ﷺ بالحسن والحسين: درس في عطف الآباء",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2219,7 +2219,7 @@
     {
       "id": "f37ace62-b2eb-4cc0-8eb5-c34484407199",
       "domain": "medical",
-      "title": "",
+      "title": "العوامل المؤثرة في الصحة النفسية لطفلك",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -2231,7 +2231,7 @@
     {
       "id": "f3ac7a66-f423-405e-afb2-b18a5c6c0426",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "بناء العقلية الإسلامية للشباب: مفاهيم وحلول",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -2255,7 +2255,7 @@
     {
       "id": "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
       "domain": "medical",
-      "title": "",
+      "title": "اضطراب خلل المزاج التخريبي في سن الرشد المبكر",
       "source_file": "",
       "language": "",
       "original_age_group": "16-18",
@@ -2267,7 +2267,7 @@
     {
       "id": "f5fe6883-0fbe-4e55-947d-4d7653c91169",
       "domain": "medical",
-      "title": "",
+      "title": "مصادر الضغوط النفسية عند الأطفال وكيفية دعمهم",
       "source_file": "",
       "language": "",
       "original_age_group": "4-6",
@@ -2279,11 +2279,11 @@
     {
       "id": "f66f6ba1-d342-47a0-8184-6bfb848c47be",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الرفق بالطفل أساس البناء الإيجابي لشخصيته",
       "source_file": "",
       "language": "",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "الرفق_بالأطفال",
       "needs_ocr": false,
       "size_chars": 121
@@ -2291,7 +2291,7 @@
     {
       "id": "f69ebfd7-8cec-4eca-b7f9-3c2ac0f38996",
       "domain": "cyber",
-      "title": "",
+      "title": "التهجم الإلكتروني على الأصدقاء: خطر يجب علاجه سريعاً",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2327,7 +2327,7 @@
     {
       "id": "f8e824ab-4654-4ed4-927f-5d4e272005e5",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "تربية الأولاد في الإسلام: مرجع علوان الشامل",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2339,11 +2339,11 @@
     {
       "id": "fa6e2d20-4ddc-401f-be85-f3e1e24c1091",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "أحكام استقبال المولود: الولادة والتسمية والعقيقة",
       "source_file": "",
       "language": "",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "رعاية_المولود",
       "needs_ocr": false,
       "size_chars": 225
@@ -2351,7 +2351,7 @@
     {
       "id": "fda90146-a230-4111-96c9-5210463458e0",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "بيانات نشر كتاب تربية الأولاد (صفحة الحقوق)",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2375,7 +2375,7 @@
     {
       "id": "isl-06fef96a",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "كيف صنع النبي ﷺ أصحابه: التثقيف بالقدوة والعمل",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2387,7 +2387,7 @@
     {
       "id": "isl-08604ca9",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "مقترحات علوان التربوية: تشويق الولد إلى المعالي",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -2399,7 +2399,7 @@
     {
       "id": "isl-17332318",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الداعية والمربي: ثقة بالله بلا خوف من أحد",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2411,7 +2411,7 @@
     {
       "id": "isl-1812a28d",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الالتزام بالشعائر وعزة المسلم",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2423,7 +2423,7 @@
     {
       "id": "isl-199c7aaf",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "العبادة والقرب من الله في بناء الإنسان",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2435,7 +2435,7 @@
     {
       "id": "isl-1a31e08b",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التأمل في الخلق: منهج الإسلام في بناء العقل",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2459,7 +2459,7 @@
     {
       "id": "isl-24c765a6",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "سمت الأنبياء والصالحين: قيام الليل والصدق مع الله",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2471,7 +2471,7 @@
     {
       "id": "isl-2ac57f6a",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "رسائل إلى المربين وقادة المجتمع في التبليغ",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2483,7 +2483,7 @@
     {
       "id": "isl-2b610808",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "خطورة إهمال التربية الإسلامية للأبناء",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -2495,7 +2495,7 @@
     {
       "id": "isl-303f1e46",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الإسلام منهج حياة: التطبيق في تربية الأجيال",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2519,12 +2519,12 @@
     {
       "id": "isl-34fc82de",
       "domain": "islamic_parenting",
-      "title": "توعية عن فرط الحركة لدى الأطفال في سن 4-6 سنوات",
+      "title": "التربية في الإسلام: مفهومها ومكانتها وصفات المربي",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "أصول_التربية",
       "needs_ocr": false,
       "size_chars": 1606
     },
@@ -2534,8 +2534,8 @@
       "title": "تعزيز التواصل بين الأهل والأطفال الصغار",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "السلوك الاجتماعي",
       "needs_ocr": false,
       "size_chars": 1454
@@ -2543,7 +2543,7 @@
     {
       "id": "isl-422bf31f",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "نصائح تربوية مختارة لإعداد الأبناء للحياة",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2567,7 +2567,7 @@
     {
       "id": "isl-4882913e",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "عبدالله علوان: عَلَم من أعلام التربية الإسلامية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2579,7 +2579,7 @@
     {
       "id": "isl-50943526",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "العبودية لله: غاية التربية الإسلامية",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2591,7 +2591,7 @@
     {
       "id": "isl-55ec7f83",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التربية طريق الإصلاح الاجتماعي وبناء المجتمع الفاضل",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2615,7 +2615,7 @@
     {
       "id": "isl-59d3915f",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "مرجع شامل لتربية الطفل من الولادة إلى التكليف",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2627,7 +2627,7 @@
     {
       "id": "isl-5d4a3253",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "مكانة التوحيد والهدى في تربية الأبناء",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2639,7 +2639,7 @@
     {
       "id": "isl-5e44f35e",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "رسالة الإسلام: سلام وعلم رغم التحديات",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2675,7 +2675,7 @@
     {
       "id": "isl-72259d18",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الإخاء والتآخي: دروس من حوارات السلف",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2687,7 +2687,7 @@
     {
       "id": "isl-7365e833",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الزواج فطرة: نظرة الإسلام إلى تكوين الأسرة",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2699,7 +2699,7 @@
     {
       "id": "isl-775cf0fc",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "شهادات الغرب في تعاليم الإسلام",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2723,7 +2723,7 @@
     {
       "id": "isl-8115fbf7",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "العمل والنشاط في خدمة المجتمع: منهج قرآني",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2735,7 +2735,7 @@
     {
       "id": "isl-83d7099a",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التربية الجنسية والستر: أدلة وضوابط شرعية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2747,7 +2747,7 @@
     {
       "id": "isl-898aaacc",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "مسؤولية التربية الجنسية قبل البلوغ: نصائح للمربين",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -2759,7 +2759,7 @@
     {
       "id": "isl-8b35ad26",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "إعداد الطفل روحياً وعقلياً وجسدياً: قواعد أساسية",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2771,11 +2771,11 @@
     {
       "id": "isl-8f891c3d",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "تسمية المولود والعقيقة: أولى خطوات التربية",
       "source_file": "",
       "language": "",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "تربية الأطفال",
       "needs_ocr": false,
       "size_chars": 467
@@ -2783,7 +2783,7 @@
     {
       "id": "isl-91162ead",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "تكوين الجيل القرآني: الأثر العقلي والروحي للإسلام",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2807,7 +2807,7 @@
     {
       "id": "isl-990bc4e1",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التشريع الإسلامي الشامل في تربية الأطفال",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -2831,7 +2831,7 @@
     {
       "id": "isl-9e6b04ca",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "أسباب الانحراف عن منهج الإصلاح التربوي",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2843,7 +2843,7 @@
     {
       "id": "isl-9fb4e310",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الزواج والتربية: أثرهما النفسي في الأبناء",
       "source_file": "",
       "language": "",
       "original_age_group": "10-12",
@@ -2867,7 +2867,7 @@
     {
       "id": "isl-a60d7af9",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "حيوية الإسلام الحضارية ومبادئه الشاملة",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2879,7 +2879,7 @@
     {
       "id": "isl-a7424eea",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الإسلام دين السعادة والأمان: الحاجة لمكتبة تربوية",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2891,19 +2891,19 @@
     {
       "id": "isl-a9397134",
       "domain": "islamic_parenting",
-      "title": "كيفية التعامل مع فرط الحركة لدى الأطفال في سن 4-6 سنوات",
+      "title": "مقدمة في منهج تربية الأطفال — ليلى بنت عبدالرحمن الجريبة",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "أصول_التربية",
       "needs_ocr": false,
       "size_chars": 1470
     },
     {
       "id": "isl-b1e1577f",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "النبي محمد ﷺ نموذج الإسلام الحي: قراءة سيد قطب",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2915,31 +2915,31 @@
     {
       "id": "isl-b1e6de34",
       "domain": "islamic_parenting",
-      "title": "التعامل مع أعراض القلق لدى الأطفال الصغار",
+      "title": "فضل تربية البنات وصفات المربي الناجح",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "قلق",
+      "behavior_type": "تربية_البنات",
       "needs_ocr": false,
       "size_chars": 1346
     },
     {
       "id": "isl-bfbe3bbe",
       "domain": "islamic_parenting",
-      "title": "السلوك الفرطي في المدرسة: الإرشادات الأولى",
+      "title": "وحدة القيادة في الأسرة وأثرها في انضباط الأولاد",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "الانضباط_الأسري",
       "needs_ocr": false,
       "size_chars": 1358
     },
     {
       "id": "isl-c0a98146",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "العلماء والمصلحون: قيادة المجتمع نحو البناء",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2951,7 +2951,7 @@
     {
       "id": "isl-c1f0ce4d",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التوحيد والعلم والهدى في إصلاح المجتمع",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2963,7 +2963,7 @@
     {
       "id": "isl-c68e6b95",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "الرعيل الأول: حين تحوّل القرآن إلى واقع معاش",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2975,7 +2975,7 @@
     {
       "id": "isl-c8cae71a",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "صدق الأنبياء والصالحين مع الله: قدوة للمربين",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -2987,7 +2987,7 @@
     {
       "id": "isl-cc4ee988",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "العبادات والالتزام: طريق عزة المسلم",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -2999,7 +2999,7 @@
     {
       "id": "isl-d7872363",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "التأسي بأصحاب النبي ﷺ في الإخاء والحب",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -3011,7 +3011,7 @@
     {
       "id": "isl-ddf22d9e",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "ضياع الإنسان بلا غاية: لماذا التربية الإيمانية؟",
       "source_file": "",
       "language": "",
       "original_age_group": "13-15",
@@ -3023,7 +3023,7 @@
     {
       "id": "isl-e34c25ab",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "تربية الأبناء على الأسس الإسلامية: مقدمة الكتاب",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -3035,7 +3035,7 @@
     {
       "id": "isl-e851d730",
       "domain": "islamic_parenting",
-      "title": "",
+      "title": "إسهام الإسلام في العلوم والثقافة: رسالة تسامح",
       "source_file": "",
       "language": "",
       "original_age_group": "unspecified",
@@ -3047,24 +3047,24 @@
     {
       "id": "isl-f6c0c64a",
       "domain": "islamic_parenting",
-      "title": "患儿的过度活跃行为管理",
+      "title": "«ما نحل والدٌ ولداً أفضل من أدب حسن» — فضل تأديب الأبناء",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "تأديب_الأبناء",
       "needs_ocr": false,
       "size_chars": 1220
     },
     {
       "id": "isl-fb6a8582",
       "domain": "islamic_parenting",
-      "title": "توجيهات للتعامل مع فرط الحركة في الفئة العمرية 4-6",
+      "title": "العدل بين الأولاد: متى يُقبل تمييز المعاملة وكيف يُشرح",
       "source_file": "Al_Hady_Al_Nabawi.pdf",
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "العدل_بين_الأولاد",
       "needs_ocr": false,
       "size_chars": 1473
     },
@@ -3110,8 +3110,8 @@
       "title": "تنمية مهارات التواصل والرفق بالطفل في الأشهر الأولى من الحيا",
       "source_file": "Autism_CDC.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "السلوك العاطفي والاجتماعي",
       "needs_ocr": false,
       "size_chars": 1305
@@ -3119,11 +3119,11 @@
     {
       "id": "med-2dc3af5f",
       "domain": "medical",
-      "title": "كيفية رعاة طفلك في الأشهر الأولى من العمر",
+      "title": "رعاية طفلك في الأشهر الأولى: نوم آمن وتغذية سليمة",
       "source_file": "Autism_CDC.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "قلق, فرط حركة",
       "needs_ocr": false,
       "size_chars": 1383
@@ -3131,7 +3131,7 @@
     {
       "id": "med-40813af4",
       "domain": "medical",
-      "title": "العلاج النفسي للأطفال الذين يواجهون مشاكل سلوكية أو ا情绪ية",
+      "title": "العلاج النفسي للأطفال الذين يواجهون مشاكل سلوكية أو انفعالية",
       "source_file": "Children_Mental_Health.pdf",
       "language": "ar",
       "original_age_group": "10-12",
@@ -3170,8 +3170,8 @@
       "title": "نصائح للحفاظ على نمو طفلك بشكل صحي وفعال في الأشهر الأولى من",
       "source_file": "Autism_CDC.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "فرط حركة",
       "needs_ocr": false,
       "size_chars": 1362
@@ -3218,8 +3218,8 @@
       "title": "كيف تتعامل مع القلق حول طفلك الصغير؟",
       "source_file": "Autism_CDC.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "قلق",
       "needs_ocr": false,
       "size_chars": 1388
@@ -3374,8 +3374,8 @@
       "title": " milestones for babies at 2 months",
       "source_file": "Autism_CDC.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "فرط حركة",
       "needs_ocr": false,
       "size_chars": 1380
@@ -3436,7 +3436,7 @@
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "发展中",
+      "behavior_type": "التطور_الطبيعي",
       "needs_ocr": false,
       "size_chars": 1545
     },
@@ -3482,8 +3482,8 @@
       "title": "كيف أستطيع مساعدة طفلي الصغير؟",
       "source_file": "Autism_CDC.pdf",
       "language": "ar",
-      "original_age_group": "0-3",
-      "normalized_age_group": "0-3",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "الفرط الحركة",
       "needs_ocr": false,
       "size_chars": 1370
@@ -3511,6 +3511,162 @@
       "behavior_type": "قلق, إدمان ألعاب",
       "needs_ocr": false,
       "size_chars": 1755
+    },
+    {
+      "id": "seed-bedwet-46",
+      "domain": "medical",
+      "title": "التبول اللاإرادي الليلي في عمر أربعة إلى ستة",
+      "source_file": "curated/AAP - HealthyChildren.org / NHS",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "التبول اللاإرادي",
+      "needs_ocr": false,
+      "size_chars": 492
+    },
+    {
+      "id": "seed-bedwet-79",
+      "domain": "medical",
+      "title": "استمرار التبول اللاإرادي في عمر سبعة إلى تسعة",
+      "source_file": "curated/NHS - Bedwetting / AAP",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "التبول اللاإرادي",
+      "needs_ocr": false,
+      "size_chars": 476
+    },
+    {
+      "id": "seed-picky-23",
+      "domain": "development",
+      "title": "رفض الطعام والانتقائية في عمر سنتين إلى ثلاث",
+      "source_file": "curated/AAP - HealthyChildren.org",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "رفض الطعام",
+      "needs_ocr": false,
+      "size_chars": 387
+    },
+    {
+      "id": "seed-picky-46",
+      "domain": "development",
+      "title": "تعامل مع رفض الطفل للخضار في عمر أربعة إلى ستة",
+      "source_file": "curated/CDC - Nutrition for Children / AAP",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "رفض الطعام",
+      "needs_ocr": false,
+      "size_chars": 436
+    },
+    {
+      "id": "seed-picky-79",
+      "domain": "development",
+      "title": "الأكل الانتقائي لدى الطفل في عمر سبعة إلى تسعة",
+      "source_file": "curated/NHS - Fussy eaters / AAP",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "رفض الطعام",
+      "needs_ocr": false,
+      "size_chars": 442
+    },
+    {
+      "id": "seed-screen-46",
+      "domain": "cyber",
+      "title": "تنظيم وقت الشاشة للطفل في عمر أربعة إلى ستة",
+      "source_file": "curated/WHO / AAP - Media use guidelines",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "إدمان الشاشات",
+      "needs_ocr": false,
+      "size_chars": 469
+    },
+    {
+      "id": "seed-screen-79",
+      "domain": "cyber",
+      "title": "إدارة الشاشات والأجهزة في عمر سبعة إلى تسعة",
+      "source_file": "curated/AAP - Family Media Plan",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "إدمان الشاشات",
+      "needs_ocr": false,
+      "size_chars": 497
+    },
+    {
+      "id": "seed-shy-46",
+      "domain": "medical",
+      "title": "الخجل وصعوبة الاختلاط في عمر أربعة إلى ستة",
+      "source_file": "curated/AAP - HealthyChildren.org",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "الخجل",
+      "needs_ocr": false,
+      "size_chars": 497
+    },
+    {
+      "id": "seed-shy-79",
+      "domain": "medical",
+      "title": "دعم الطفل الخجول في عمر سبعة إلى تسعة",
+      "source_file": "curated/AAP / Child Mind Institute",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الخجل",
+      "needs_ocr": false,
+      "size_chars": 504
+    },
+    {
+      "id": "seed-sleep-23",
+      "domain": "medical",
+      "title": "مشاكل النوم ومقاومة وقت النوم في عمر سنتين إلى ثلاث",
+      "source_file": "curated/AAP - HealthyChildren.org Sleep",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "مشاكل النوم",
+      "needs_ocr": false,
+      "size_chars": 412
+    },
+    {
+      "id": "seed-sleep-46",
+      "domain": "medical",
+      "title": "صعوبات النوم في عمر أربعة إلى ستة",
+      "source_file": "curated/AAP / NHS - Children's sleep",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "مشاكل النوم",
+      "needs_ocr": false,
+      "size_chars": 436
+    },
+    {
+      "id": "seed-tantrum-23",
+      "domain": "medical",
+      "title": "إدارة نوبات الغضب لدى الطفل في عمر سنتين إلى ثلاث",
+      "source_file": "curated/CDC - Positive Parenting / AAP",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "نوبات الغضب",
+      "needs_ocr": false,
+      "size_chars": 408
+    },
+    {
+      "id": "seed-tantrum-46",
+      "domain": "medical",
+      "title": "التعامل مع نوبات الغضب في عمر أربعة إلى ستة",
+      "source_file": "curated/CDC - Positive Parenting Tips / AAP",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "نوبات الغضب",
+      "needs_ocr": false,
+      "size_chars": 425
     }
   ]
 }
