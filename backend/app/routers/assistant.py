@@ -18,6 +18,7 @@ from app.services.reranker import RERANK_MIN_SCORE
 from app.services.query_rewriter import rewrite_query
 from app.services.llm_service import (
     generate_reply, build_full_prompt, generate_general_pivot, build_pivot_prompt,
+    strip_pivot_citation,
 )
 from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
@@ -383,6 +384,8 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
             ):
                 if chunk.done:
                     final_text = (chunk.result.text if chunk.result else "").strip()
+                    if stream_mode == "general_pivot":
+                        final_text = strip_pivot_citation(final_text)
                     reply = AssistantReply(
                         reply_text=final_text, domain=primary_domain, severity=severity,
                         needs_human_review=decision["needs_human_review"],

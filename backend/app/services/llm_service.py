@@ -3,11 +3,15 @@ LLM service — calls Ollama to generate a final response from retrieved knowled
 Follows strict rules: no diagnosis, no fatwa, no invented info.
 """
 import logging
+import re
 
 from app.services.ai_gateway import get_gateway
 from app.models.api import ConversationTurn
 
 logger = logging.getLogger(__name__)
+
+# Matches a trailing citation line (📚 …) or a bare "المصدر/المصادر: …" line.
+_PIVOT_CITATION_RE = re.compile(r"\n*\s*(?:📚|المصدر[\s:：]|المصادر[\s:：]).*$", re.S)
 
 
 _DOMAIN_LABELS = {
@@ -56,6 +60,15 @@ def build_pivot_prompt(question_text: str, age_group: str) -> str:
     )
 
 
+def strip_pivot_citation(text: str) -> str:
+    """Weak local models ignore the 'no sources' instruction and still append
+    a (hallucinated) 📚 citation line to pivot answers. Strip it deterministically
+    so off-topic answers never carry a fabricated source."""
+    if not text:
+        return text
+    return _PIVOT_CITATION_RE.sub("", text).strip()
+
+
 async def generate_general_pivot(
     question_text: str,
     age_group: str,
@@ -68,7 +81,7 @@ async def generate_general_pivot(
     result = await get_gateway().generate(
         prompt, tier=tier, route_reason=route_reason
     )
-    return result.text
+    return strip_pivot_citation(result.text)
 
 
 def _build_prompt(
