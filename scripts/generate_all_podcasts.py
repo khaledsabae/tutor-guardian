@@ -71,9 +71,14 @@ async def main():
         age = target["age_group"]
         
         match = re.search(r'_(\d+)$', lesson_id)
-        num = match.group(1) if match else "01"
-        filename = f"docs/lesson_{age}_{topic}_{num}_podcast.mp3"
-        
+        if match:
+            num = match.group(1)
+            filename = f"docs/lesson_{age}_{topic}_{num}_podcast.mp3"
+        else:
+            # Non-digit suffix (e.g. the new _bNN lessons) — use the full,
+            # already-unique lesson_id so filenames never collide.
+            filename = f"docs/{lesson_id}_podcast.mp3"
+
         if os.path.exists(filename) and os.path.getsize(filename) > 1024 * 1024:
             # Check if index already points to it
             existing_podcasts = lessons_dict[lesson_id].get("assets", {}).get("podcasts", [])
