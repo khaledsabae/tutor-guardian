@@ -1,15 +1,10 @@
-/// In-app feedback — the parent sends Khaled a written note and/or a voice
-/// note. Posts to `/api/feedback/app` (public). Voice is optional and degrades
-/// gracefully if the mic permission is denied.
+/// In-app feedback — the parent sends Khaled a written note. Posts to
+/// `/api/feedback/app` (public). (Voice notes are a planned follow-up; the
+/// backend already accepts an optional base64 audio field.)
 library;
-
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:record/record.dart';
 
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../../theme/app_theme.dart';
@@ -25,63 +20,26 @@ class FeedbackScreen extends ConsumerStatefulWidget {
 class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
   final _message = TextEditingController();
   final _contact = TextEditingController();
-  final _rec = AudioRecorder();
-
-  bool _recording = false;
-  String? _audioPath; // recorded file ready to send
   bool _sending = false;
 
   @override
   void dispose() {
     _message.dispose();
     _contact.dispose();
-    _rec.dispose();
     super.dispose();
-  }
-
-  Future<void> _toggleRecord() async {
-    try {
-      if (_recording) {
-        final path = await _rec.stop();
-        setState(() {
-          _recording = false;
-          _audioPath = path;
-        });
-        return;
-      }
-      if (!await _rec.hasPermission()) {
-        _snack('يلزم إذن الميكروفون لتسجيل ملاحظة صوتية.');
-        return;
-      }
-      final dir = await getTemporaryDirectory();
-      final path =
-          '${dir.path}/feedback_${DateTime.now().millisecondsSinceEpoch}.m4a';
-      await _rec.start(const RecordConfig(encoder: AudioEncoder.aacLc),
-          path: path);
-      setState(() => _recording = true);
-    } catch (e) {
-      setState(() => _recording = false);
-      _snack('تعذّر التسجيل: $e');
-    }
   }
 
   Future<void> _send() async {
     final msg = _message.text.trim();
-    if (msg.isEmpty && _audioPath == null) {
-      _snack('اكتب ملاحظتك أو سجّل رسالة صوتية أولاً.');
+    if (msg.isEmpty) {
+      _snack('اكتب ملاحظتك أولاً.');
       return;
     }
     setState(() => _sending = true);
     try {
-      String? audioB64;
-      if (_audioPath != null) {
-        final bytes = await File(_audioPath!).readAsBytes();
-        audioB64 = base64Encode(bytes);
-      }
       await ref.read(tgClientProvider).sendAppFeedback(
             message: msg,
             contact: _contact.text.trim(),
-            audioBase64: audioB64,
           );
       if (!mounted) return;
       _snack('وصلت ملاحظتك، شكراً لك! 🌿', ok: true);
@@ -109,60 +67,23 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
         padding: const EdgeInsets.all(20),
         children: [
           const Text(
-            'رأيك يهمنا ويصل مباشرةً لفريق المربي الذكي. اكتب ملاحظتك أو سجّلها صوتياً.',
+            'رأيك يهمنا ويصل مباشرةً لفريق المربي الذكي. اكتب اقتراحك أو المشكلة التي واجهتك.',
             style: TextStyle(fontSize: 15, height: 1.5),
           ),
           const SizedBox(height: 20),
           TextField(
             controller: _message,
-            maxLines: 6,
+            maxLines: 7,
             maxLength: 1000,
             textInputAction: TextInputAction.newline,
             decoration: const InputDecoration(
               labelText: 'ملاحظتك',
-              hintText: 'اكتب اقتراحك أو المشكلة التي واجهتك…',
+              hintText: 'اكتب هنا…',
               border: OutlineInputBorder(),
               alignLabelWithHint: true,
             ),
           ),
-          const SizedBox(height: 8),
-          // Voice note recorder.
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: AppTheme.surfaceAlt,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                IconButton.filled(
-                  onPressed: _sending ? null : _toggleRecord,
-                  icon: Icon(_recording ? Icons.stop : Icons.mic),
-                  style: IconButton.styleFrom(
-                    backgroundColor:
-                        _recording ? AppTheme.dangerFg : AppTheme.primary,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    _recording
-                        ? 'جارٍ التسجيل… اضغط للإيقاف'
-                        : _audioPath != null
-                            ? 'تم تسجيل ملاحظة صوتية ✓'
-                            : 'سجّل ملاحظة صوتية (اختياري)',
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                ),
-                if (_audioPath != null && !_recording)
-                  IconButton(
-                    onPressed: () => setState(() => _audioPath = null),
-                    icon: const Icon(Icons.delete_outline),
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           TextField(
             controller: _contact,
             decoration: const InputDecoration(

@@ -157,7 +157,10 @@ class _DataDefenderGameScreenState extends ConsumerState<DataDefenderGameScreen>
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
-              setState(() => _isGameOver = false);
+              setState(() {
+                _isGameOver = false;
+                _game = null;
+              });
             },
             child: const Text('العودة', style: TextStyle(fontSize: 16)),
           ),
@@ -175,14 +178,12 @@ class _DataDefenderGameScreenState extends ConsumerState<DataDefenderGameScreen>
   Widget build(BuildContext context) {
     final theme = GameTheme.dataDefender;
 
-    if (_isGameOver) {
-      // Show the game with overlay
-      return Stack(
-        children: [
-          if (_game != null)
-            GameWidget(game: _game!),
-          // Dialog will be shown via showDialog
-        ],
+    // Show the running game as soon as a level is picked; the level grid
+    // only renders when no game is active.
+    if (_game != null) {
+      return Scaffold(
+        backgroundColor: theme.backgroundColor,
+        body: GameWidget(game: _game!),
       );
     }
 

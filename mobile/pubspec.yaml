@@ -45,8 +45,6 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   just_audio: ^0.10.5
-  record: ^5.1.2
-  path_provider: ^2.1.4
   scrollable_positioned_list: ^0.3.8
   video_player: ^2.8.2
 

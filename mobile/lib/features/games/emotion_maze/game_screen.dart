@@ -156,7 +156,10 @@ class _EmotionMazeGameScreenState extends ConsumerState<EmotionMazeGameScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
-              setState(() => _isGameOver = false);
+              setState(() {
+                _isGameOver = false;
+                _game = null; // back to the level grid
+              });
             },
             child: const Text('العودة', style: TextStyle(fontSize: 16)),
           ),
@@ -174,12 +177,12 @@ class _EmotionMazeGameScreenState extends ConsumerState<EmotionMazeGameScreen> {
   Widget build(BuildContext context) {
     final theme = GameTheme.emotionMaze;
 
-    if (_isGameOver) {
-      return Stack(
-        children: [
-          if (_game != null)
-            GameWidget(game: _game!),
-        ],
+    // A game is active as soon as a level is picked — show it. (The level
+    // grid only shows when no game is running.)
+    if (_game != null) {
+      return Scaffold(
+        backgroundColor: theme.backgroundColor,
+        body: GameWidget(game: _game!),
       );
     }
 

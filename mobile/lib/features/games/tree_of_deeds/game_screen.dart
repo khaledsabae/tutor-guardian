@@ -154,7 +154,10 @@ class _TreeOfDeedsGameScreenState extends ConsumerState<TreeOfDeedsGameScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
-              setState(() => _isGameOver = false);
+              setState(() {
+                _isGameOver = false;
+                _game = null;
+              });
             },
             child: const Text('العودة', style: TextStyle(fontSize: 16)),
           ),
@@ -171,12 +174,12 @@ class _TreeOfDeedsGameScreenState extends ConsumerState<TreeOfDeedsGameScreen> {
   Widget build(BuildContext context) {
     final theme = GameTheme.treeOfDeeds;
 
-    if (_isGameOver) {
-      return Stack(
-        children: [
-          if (_game != null)
-            GameWidget(game: _game!),
-        ],
+    // Show the running game as soon as a level is picked; the level grid
+    // only renders when no game is active.
+    if (_game != null) {
+      return Scaffold(
+        backgroundColor: theme.backgroundColor,
+        body: GameWidget(game: _game!),
       );
     }
 
