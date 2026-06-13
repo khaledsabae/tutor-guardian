@@ -20,12 +20,20 @@ _CJK_RE = re.compile(
     r"가-힯＀-￯]+"
 )
 
+# Latin letters glued directly to an Arabic letter (no space), e.g. "بness".
+# Conservative: only strips Latin runs touching Arabic, so standalone source
+# names like "CDC" or "AAP" (which are space-separated) are preserved.
+_GLUED_LATIN_RE = re.compile(
+    r"(?<=[؀-ۿ])[A-Za-z]+|[A-Za-z]+(?=[؀-ۿ])"
+)
+
 
 def clean_model_output(text: str) -> str:
-    """Remove leaked CJK characters and tidy the artifacts they leave behind."""
+    """Remove leaked CJK / glued-Latin characters and tidy the artifacts."""
     if not text:
         return text
     t = _CJK_RE.sub("", text)
+    t = _GLUED_LATIN_RE.sub("", t)
     t = re.sub(r"[ \t]{2,}", " ", t)
     t = re.sub(r" *\n", "\n", t)
     t = re.sub(r"\n{3,}", "\n\n", t)
