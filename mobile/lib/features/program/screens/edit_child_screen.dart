@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/ui/bouncy_button.dart';
 import '../../onboarding/screens/avatar_picker_sheet.dart';
 import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
@@ -84,16 +85,36 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
         actions: [
           TextButton(
             onPressed: busy ? null : _submit,
-            child: const Text(
+            child: Text(
               'حفظ',
               style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
+                // AppBar background is the light cream — primary, not white.
+                color: busy ? AppTheme.textMuted : AppTheme.primary,
+                fontWeight: FontWeight.w800,
                 fontSize: 16,
               ),
             ),
           ),
         ],
+      ),
+      // Prominent, always-visible save CTA (the AppBar action alone was
+      // easy to miss).
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          child: BouncyButton(
+            label: busy ? 'جارٍ الحفظ…' : 'حفظ التغييرات',
+            icon: busy
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 2, color: Colors.white),
+                  )
+                : const Icon(Icons.check, color: Colors.white),
+            onTap: busy ? null : _submit,
+          ),
+        ),
       ),
       body: SafeArea(
         child: Form(

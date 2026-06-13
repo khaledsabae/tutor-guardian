@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/ui/bouncy_button.dart';
 import '../../onboarding/screens/avatar_picker_sheet.dart';
 import '../providers/progress_providers.dart';
 
@@ -91,16 +92,33 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
         actions: [
           TextButton(
             onPressed: busy ? null : _submit,
-            child: const Text(
+            child: Text(
               'إضافة',
               style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
+                color: busy ? AppTheme.textMuted : AppTheme.primary,
+                fontWeight: FontWeight.w800,
                 fontSize: 16,
               ),
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          child: BouncyButton(
+            label: busy ? 'جارٍ الإضافة…' : 'إضافة الطفل',
+            icon: busy
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 2, color: Colors.white),
+                  )
+                : const Icon(Icons.person_add, color: Colors.white),
+            onTap: busy ? null : _submit,
+          ),
+        ),
       ),
       body: SafeArea(
         child: Form(
