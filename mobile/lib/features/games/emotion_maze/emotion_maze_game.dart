@@ -35,7 +35,7 @@ class EmotionMazeConfig {
     required this.scorePerDoor,
   });
 
-  static  level1 = EmotionMazeConfig(
+  static final EmotionMazeConfig level1 = EmotionMazeConfig(
     config: GameConfig.defaultConfig,
     doorSpeed: 80,
     goodDoorRatio: 0.5,
@@ -353,7 +353,7 @@ class ChoiceDoor extends PositionComponent with CollisionCallbacks, TapCallbacks
   @override
   void update(double dt) {
     super.update(dt);
-    if (isGameOver || _tapped) return;
+    if (_tapped) return;
 
     _pulseTimer += dt;
     _scale = 1.0 + 0.05 * sin(_pulseTimer * 3);
@@ -412,7 +412,7 @@ class ChoiceDoor extends PositionComponent with CollisionCallbacks, TapCallbacks
 
   @override
   void onTapDown(TapDownEvent event) {
-    if (isGameOver || _tapped) return;
+    if (_tapped) return;
     _tapped = true;
 
     final game = findParent<EmotionMazeGame>();

@@ -37,7 +37,7 @@ class TreeOfDeedsConfig {
     required this.growthPerDeed,
   });
 
-  static  level1 = TreeOfDeedsConfig(
+  static final TreeOfDeedsConfig level1 = TreeOfDeedsConfig(
     config: GameConfig.defaultConfig,
     deedSpeed: 130,
     goodDeedRatio: 0.7,
@@ -255,12 +255,7 @@ class TreeOfDeedsGame extends FlameGame with HasCollisionDetection, TapCallbacks
   }
 
   void _screenShake() {
-    score += points;
-    if (_mounted) {
-      scoreText.text = 'الحسنات: $score';
-      tree.grow(gameConfig.growthPerDeed);
-    }
-    checkLevelComplete();
+    // Brief visual feedback when a life is lost (kept intentionally minimal).
   }
 
   void triggerGameOver() {
@@ -293,6 +288,7 @@ class TreeComponent extends PositionComponent with CollisionCallbacks {
   double _growthStage = 0.0;
   double _swayTimer = 0;
   double _swayOffset = 0;
+  double? _baseX;
 
   TreeComponent() {
     add(RectangleHitbox());
@@ -307,9 +303,10 @@ class TreeComponent extends PositionComponent with CollisionCallbacks {
   @override
   void update(double dt) {
     super.update(dt);
+    _baseX ??= position.x;
     _swayTimer += dt;
     _swayOffset = sin(_swayTimer * 0.8) * 3;
-    position.x = position.x + _swayOffset - tree?.position.x ?? 0; // Gentle sway
+    position.x = _baseX! + _swayOffset; // Gentle sway around the base position
   }
 
   @override

@@ -10,7 +10,7 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import 'healthy_hero_game.dart';
-import '../shared/game_utils.dart'
+import '../shared/game_utils.dart';
 
 class HealthyHeroGameScreen extends ConsumerStatefulWidget {
   const HealthyHeroGameScreen({super.key});

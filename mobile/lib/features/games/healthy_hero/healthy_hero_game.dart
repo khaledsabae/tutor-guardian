@@ -10,6 +10,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/collisions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../shared/game_utils.dart';
 import '../emoji_sprite.dart';
@@ -253,11 +254,11 @@ class HealthyHeroGame extends FlameGame with HasCollisionDetection, TapCallbacks
 
   void loseLife() {
     if (!_mounted) return;
-    gameConfig.lives--;
+    lives--;
     if (_mounted) {
-      findComponent<livesText>()?.text = '❤️ ${gameConfig.lives}';
+      livesText.text = '❤️ $lives';
     }
-    if (gameConfig.lives <= 0) {
+    if (lives <= 0) {
       triggerGameOver();
     } else {
       player.flashInvincible();
@@ -267,8 +268,9 @@ class HealthyHeroGame extends FlameGame with HasCollisionDetection, TapCallbacks
   void increaseScore(int points) {
     score += points;
     if (_mounted) {
-      findComponent<scoreText>()?.text = 'النقاط: $score';
+      scoreText.text = 'النقاط: $score';
     }
+    checkLevelComplete();
   }
 
   void triggerGameOver() {

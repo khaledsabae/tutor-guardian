@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../theme/app_theme.dart';
-import '../../../theme/design_tokens.dart'
+import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import 'tree_of_deeds_game.dart';
 import '../shared/game_utils.dart';
@@ -161,7 +161,6 @@ class _TreeOfDeedsGameScreenState extends ConsumerState<TreeOfDeedsGameScreen> {
         ],
       ),
     );
-    var ctx = context;
   }
 
   void _showLevelCompleteDialog(int score, int level) {
@@ -184,7 +183,7 @@ class _TreeOfDeedsGameScreenState extends ConsumerState<TreeOfDeedsGameScreen> {
     return Scaffold(
       backgroundColor: theme.backgroundColor,
       appBar: AppBar(
-        title: Text(theme.name, style: const TextStyle(color: theme.textColor)),
+        title: Text(theme.name, style: TextStyle(color: theme.textColor)),
         backgroundColor: const Color(0xFFD97706),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -214,7 +213,7 @@ class _TreeOfDeedsGameScreenState extends ConsumerState<TreeOfDeedsGameScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(theme.name,
-                                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: theme.textColor)),
+                                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: theme.textColor)),
                                 const SizedBox(height: 4),
                                 Text(
                                   'نمّ شجرتك بالأعمال الصالحة! اسقط النجوم والأعمال الصالحة على الشجرة لتنميها. '
@@ -269,7 +268,7 @@ class _TreeOfDeedsGameScreenState extends ConsumerState<TreeOfDeedsGameScreen> {
               const SizedBox(height: 24),
 
               if (_progress != null) ...[
-                Text('تقدمك', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.textColor)),
+                Text('تقدمك', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.textColor)),
                 const SizedBox(height: 12),
                 Row(
                   children: [
@@ -302,7 +301,7 @@ class _TreeOfDeedsGameScreenState extends ConsumerState<TreeOfDeedsGameScreen> {
                 const SizedBox(height: 24),
               ],
 
-              Text('اختر المستوى', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.textColor)),
+              Text('اختر المستوى', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.textColor)),
               const SizedBox(height: 12),
               GridView.builder(
                 shrinkWrap: true,
