@@ -13,9 +13,12 @@ Mix (approved plan):
 
 Checkpointed per task — safe to kill and rerun (resumes where it left).
 
+Backends:
+  --backend ollama (default) — fully local via the home server
+    (qwen2.5:7b); nothing leaves the machines.
+  --backend azure — requires AZURE_OPENAI_* env (explicit opt-in only).
+
 Usage:
-  export AZURE_OPENAI_API_KEY=... AZURE_OPENAI_ENDPOINT=... \
-         AZURE_OPENAI_API_VERSION=... AZURE_OPENAI_DEPLOYMENT=...
   python ops/tools/generate_dataset_v2.py --output ops/data/qa_dataset_v2.jsonl
 """
 from __future__ import annotations
@@ -57,7 +60,35 @@ def azure_client():
     ), os.environ.get("AZURE_OPENAI_DEPLOYMENT", "DeepSeek-V4-Flash")
 
 
+BACKEND = "ollama"  # set by main() from --backend
+OLLAMA_BASE = None
+OLLAMA_MODEL = "qwen2.5:7b"
+
+
 def chat(client, model, prompt: str, max_tokens: int = 4000, retries: int = 5) -> str:
+    if BACKEND == "ollama":
+        import requests
+        for attempt in range(retries):
+            try:
+                r = requests.post(
+                    f"{OLLAMA_BASE}/api/chat",
+                    json={"model": OLLAMA_MODEL,
+                          "messages": [{"role": "user", "content": prompt}],
+                          "stream": False,
+                          "options": {"temperature": 0.7,
+                                      "num_predict": max_tokens}},
+                    timeout=1800,
+                )
+                r.raise_for_status()
+                text = r.json().get("message", {}).get("content", "")
+                if text.strip():
+                    return text
+                logger.warning("ollama returned empty — retry")
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("ollama error %s — retry", exc.__class__.__name__)
+            time.sleep(10 * (attempt + 1))
+        raise RuntimeError("ollama failed after retries")
+
     for attempt in range(retries):
         try:
             r = client.chat.completions.create(
@@ -180,7 +211,15 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--output", default=str(PROJECT_ROOT / "ops/data/qa_dataset_v2.jsonl"))
     ap.add_argument("--limit-calls", type=int, default=0, help="stop after N API calls (smoke)")
+    ap.add_argument("--backend", choices=["ollama", "azure"], default="ollama")
+    ap.add_argument("--ollama-url", default="http://100.109.163.64:11434")
+    ap.add_argument("--ollama-model", default="qwen2.5:7b")
     args = ap.parse_args()
+
+    global BACKEND, OLLAMA_BASE, OLLAMA_MODEL
+    BACKEND = args.backend
+    OLLAMA_BASE = args.ollama_url
+    OLLAMA_MODEL = args.ollama_model
 
     out_path = Path(args.output)
     ckpt_path = out_path.with_suffix(".ckpt.json")
@@ -196,7 +235,9 @@ def main() -> None:
     for u in units:
         by_domain.setdefault(u["domain"], []).append(u)
 
-    client, model = azure_client()
+    client = model = None
+    if BACKEND == "azure":
+        client, model = azure_client()
     calls = 0
     written = 0
 
