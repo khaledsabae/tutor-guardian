@@ -1,17 +1,23 @@
+/// Video Player Screen — improved with better controls visibility and thumbnail support
+library;
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
+
 import '../../../theme/app_theme.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String? url;
   final String title;
+  final String? thumbnailUrl; // Optional thumbnail for preview
 
   const VideoPlayerScreen({
     super.key,
     required this.url,
     required this.title,
+    this.thumbnailUrl,
   });
 
   @override
@@ -25,8 +31,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   bool _showControls = true;
   bool _landscape = false;
   Timer? _controlsTimer;
+  bool _isDisposed = false;
 
   Future<void> _toggleOrientation() async {
+    if (!mounted) return;
     _landscape = !_landscape;
     if (_landscape) {
       await SystemChrome.setPreferredOrientations(
@@ -51,10 +59,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   Future<void> _init() async {
     final url = widget.url;
     if (url == null || url.isEmpty) {
-      setState(() {
-        _errorMessage = 'الفيديو غير متاح حالياً. سيتاح قريباً بإذن الله.';
-        _ready = true;
-      });
+      if (mounted) {
+        setState(() {
+          _errorMessage = 'الفيديو غير متاح حالياً. سيتاح قريباً بإذن الله.';
+          _ready = true;
+        });
+      }
       return;
     }
 
@@ -62,21 +72,28 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       final uri = Uri.parse(url);
       _controller = VideoPlayerController.networkUrl(uri);
       await _controller!.initialize();
-      _controller!.addListener(_onControllerUpdate);
-      setState(() {
-        _ready = true;
-      });
-      _startControlsTimer();
+      if (!_isDisposed && mounted) {
+        _controller!.addListener(_onControllerUpdate);
+        setState(() {
+          _ready = true;
+        });
+        _startControlsTimer();
+      } else {
+        _controller?.dispose();
+        _controller = null;
+      }
     } catch (e) {
-      setState(() {
-        _errorMessage = 'تعذّر تحميل الفيديو. تأكد من اتصالك بالإنترنت.';
-        _ready = true;
-      });
+      if (mounted) {
+        setState(() {
+          _errorMessage = 'تعذّر تحميل الفيديو. تأكد من اتصالك بالإنترنت.';
+          _ready = true;
+        });
+      }
     }
   }
 
   void _onControllerUpdate() {
-    if (mounted) {
+    if (mounted && !_isDisposed) {
       setState(() {});
     }
   }
@@ -84,7 +101,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void _startControlsTimer() {
     _controlsTimer?.cancel();
     _controlsTimer = Timer(const Duration(seconds: 4), () {
-      if (mounted && (_controller?.value.isPlaying ?? false)) {
+      if (mounted && !_isDisposed && (_controller?.value.isPlaying ?? false)) {
         setState(() {
           _showControls = false;
         });
@@ -93,6 +110,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
   void _toggleControls() {
+    if (!mounted) return;
     setState(() {
       _showControls = !_showControls;
     });
@@ -103,6 +121,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   void dispose() {
+    _isDisposed = true;
     _controlsTimer?.cancel();
     _controller?.removeListener(_onControllerUpdate);
     _controller?.dispose();
@@ -120,7 +139,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       _controller!.play();
     }
     _startControlsTimer();
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   String _formatDuration(Duration d) {
@@ -142,11 +161,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               title: Text(
                 widget.title,
                 style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
+                  color: Colors.white, fontWeight: FontWeight.bold),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               actions: [
+                if (widget.thumbnailUrl != null)
+                  IconButton(
+                    tooltip: 'تصغير',
+                    icon: const Icon(Icons.fullscreen_exit, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
                 IconButton(
                   tooltip: 'تدوير الشاشة',
                   icon: const Icon(Icons.screen_rotation, color: Colors.white),
@@ -163,14 +188,58 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      if (_controller != null && _controller!.value.isInitialized)
-                        Center(
-                          child: AspectRatio(
-                            aspectRatio: _controller!.value.aspectRatio,
-                            child: VideoPlayer(_controller!),
+                      // Video area with container box
+                      Center(
+                        child: Container(
+                          constraints: BoxConstraints(
+                            maxWidth: _landscape ? double.infinity : MediaQuery.of(context).size.width - 32,
+                            maxHeight: _landscape ? double.infinity : MediaQuery.of(context).size.height * 0.7,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.5),
+                                blurRadius: 24,
+                                offset: const Offset(0, 8),
+                              ),
+                            ],
+                            border: Border.all(
+                              color: AppTheme.primary.withValues(alpha: 0.5),
+                              width: 2,
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: AspectRatio(
+                              aspectRatio: _controller?.value.aspectRatio ?? 16/9,
+                              child: _controller != null && _controller!.value.isInitialized
+                                  ? VideoPlayer(_controller!)
+                                  : const Center(child: CircularProgressIndicator(color: Colors.white)),
+                            ),
                           ),
                         ),
-                      
+                      ),
+
+                      // Thumbnail overlay when video is paused/not started
+                      if (_controller != null && 
+                          !_controller!.value.isPlaying && 
+                          _controller!.value.position == Duration.zero &&
+                          widget.thumbnailUrl != null)
+                        Positioned.fill(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              widget.thumbnailUrl!,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Container(
+                                color: Colors.black,
+                                child: const Center(child: Icon(Icons.videocam, size: 64, color: Colors.white54)),
+                              ),
+                            ),
+                          ),
+                        ),
+
                       // Controls Overlay
                       AnimatedOpacity(
                         opacity: _showControls ? 1.0 : 0.0,
@@ -183,7 +252,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               Container(
                                 color: Colors.black.withValues(alpha: 0.5),
                               ),
-                              
+
                               // Play/Pause Center Button — large, with a
                               // solid circular backdrop so it's clearly visible.
                               Center(
@@ -215,22 +284,64 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   ),
                                 ),
                               ),
-                              // Rotate button (top-right of the video area —
-                              // works in both portrait and landscape).
+
+                              // Top controls bar
                               Positioned(
-                                top: 8,
-                                right: 8,
-                                child: IconButton(
-                                  tooltip: 'تدوير الشاشة',
-                                  icon: const Icon(Icons.screen_rotation,
-                                      color: Colors.white, size: 28),
-                                  onPressed: _controller != null
-                                      ? _toggleOrientation
-                                      : null,
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                child: SafeArea(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        // Title
+                                        Flexible(
+                                          child: Text(
+                                            widget.title,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              shadows: [
+                                                Shadow(
+                                                  color: Colors.black87,
+                                                  blurRadius: 4,
+                                                  offset: Offset(0, 2),
+                                                ),
+                                              ],
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        // Rotate + Close buttons
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              tooltip: 'تدوير الشاشة',
+                                              icon: const Icon(Icons.screen_rotation,
+                                                  color: Colors.white, size: 28),
+                                              onPressed: _controller != null
+                                                  ? _toggleOrientation
+                                                  : null,
+                                            ),
+                                            IconButton(
+                                              tooltip: 'إغلاق',
+                                              icon: const Icon(Icons.close,
+                                                  color: Colors.white, size: 28),
+                                              onPressed: () => Navigator.pop(context),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
 
-                              // Bottom bar controls
+                              // Bottom controls bar
                               Positioned(
                                 bottom: 0,
                                 left: 0,
@@ -243,7 +354,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                       end: Alignment.bottomCenter,
                                       colors: [
                                         Colors.transparent,
-                                        Colors.black.withValues(alpha: 0.8),
+                                        Colors.black.withValues(alpha: 0.9),
                                       ],
                                     ),
                                   ),
@@ -257,9 +368,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             activeTrackColor: AppTheme.primary,
                                             inactiveTrackColor: Colors.white.withValues(alpha: 0.3),
                                             thumbColor: AppTheme.primary,
-                                            trackHeight: 4.0,
-                                            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8.0),
-                                            overlayShape: const RoundSliderOverlayShape(overlayRadius: 16.0),
+                                            trackHeight: 6.0,
+                                            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                                            overlayShape: const RoundSliderOverlayShape(overlayRadius: 20.0),
+                                            valueIndicatorColor: AppTheme.primary,
+                                            valueIndicatorTextStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                           child: Slider(
                                             min: 0.0,
@@ -277,25 +394,30 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                           ),
                                         ),
                                       const SizedBox(height: 8),
-                                      // Time indicators
+                                      // Time indicators + Fullscreen button
                                       if (_controller != null)
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               _formatDuration(_controller!.value.position),
-                                              style: const TextStyle(color: Colors.white, fontSize: 13),
+                                              style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
+                                            ),
+                                            IconButton(
+                                              tooltip: 'ملء الشاشة',
+                                              icon: const Icon(Icons.fullscreen, color: Colors.white, size: 24),
+                                              onPressed: _controller != null ? _toggleOrientation : null,
                                             ),
                                             Text(
                                               _formatDuration(_controller!.value.duration),
-                                              style: const TextStyle(color: Colors.white, fontSize: 13),
+                                              style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
                                             ),
                                           ],
                                         ),
                                     ],
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
