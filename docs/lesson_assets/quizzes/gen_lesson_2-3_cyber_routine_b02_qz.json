@@ -1,0 +1,68 @@
+{
+  "title": "الشاشة المشتركة بدل الشاشة الصامتة — اختبار",
+  "questions": [
+    {
+      "question": "الأفضل عند مشاهدة طفلك للشاشة؟",
+      "answerOptions": [
+        {
+          "text": "أن تجلس معه وتعلّق وتربط بما في بيتكم",
+          "isCorrect": true,
+          "rationale": "تتحوّل لجسر لغوي."
+        },
+        {
+          "text": "أن يشاهد وحده",
+          "isCorrect": false,
+          "rationale": "بثّ سلبي بلا تفاعل."
+        },
+        {
+          "text": "أن يشاهد محتوى سريعاً مثيراً",
+          "isCorrect": false,
+          "rationale": "يربك دماغه."
+        }
+      ],
+      "hint": "مشاهدة مشتركة."
+    },
+    {
+      "question": "ما الذي يقلّل ضرر الشاشة ويزيد فائدتها؟",
+      "answerOptions": [
+        {
+          "text": "تعليقك وتسميتك لما يراه (مشاهدة مشتركة)",
+          "isCorrect": true,
+          "rationale": "تفاعل لغوي حقيقي."
+        },
+        {
+          "text": "زيادة المدة",
+          "isCorrect": false,
+          "rationale": "العكس يضرّ."
+        },
+        {
+          "text": "محتوى بلغة لا يفهمها",
+          "isCorrect": false,
+          "rationale": "بلا فائدة لغوية."
+        }
+      ],
+      "hint": "صوتك يصنع الفرق."
+    },
+    {
+      "question": "محتوى الشاشة المناسب لطفل 2-3؟",
+      "answerOptions": [
+        {
+          "text": "بطيء هادئ بلا إعلانات يناسب عمره",
+          "isCorrect": true,
+          "rationale": "السريع المثير يربكه."
+        },
+        {
+          "text": "سريع ومثير",
+          "isCorrect": false,
+          "rationale": "يربك دماغه."
+        },
+        {
+          "text": "بلغة لا يفهمها",
+          "isCorrect": false,
+          "rationale": "بلا فائدة."
+        }
+      ],
+      "hint": "هادئ وبطيء."
+    }
+  ]
+}

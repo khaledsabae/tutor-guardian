@@ -37,7 +37,7 @@
           {
             "id": "gen_lesson_10-12_cyber_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_01_fc.json",
-            "title": "\u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629 \u0627\u0644\u0631\u0642\u0645\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الخصوصية الرقمية — بطاقات",
             "item_count": 5
           }
         ],
@@ -45,7 +45,7 @@
           {
             "id": "gen_lesson_10-12_cyber_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_01_qz.json",
-            "title": "\u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629 \u0627\u0644\u0631\u0642\u0645\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الخصوصية الرقمية — اختبار",
             "item_count": 3
           }
         ],
@@ -107,7 +107,7 @@
           {
             "id": "gen_lesson_10-12_cyber_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_02_fc.json",
-            "title": "\u0627\u0644\u062a\u0646\u0645\u0631 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "التنمر الإلكتروني — بطاقات",
             "item_count": 5
           }
         ],
@@ -115,7 +115,7 @@
           {
             "id": "gen_lesson_10-12_cyber_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_02_qz.json",
-            "title": "\u0627\u0644\u062a\u0646\u0645\u0631 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "التنمر الإلكتروني — اختبار",
             "item_count": 4
           }
         ],
@@ -135,7 +135,7 @@
           {
             "id": "ffb71240-b7e8-4741-b46a-94cdcbb5792e",
             "file": "docs/lesson_assets/reports/ffb71240-b7e8-4741-b46a-94cdcbb5792e_Lesson_Summary__Digital_Wellbeing_and_Islamic_Iden.md",
-            "title": "Lesson Summary: Digital Wellbeing and Islamic Identity for Children (Ages 10\u201312)",
+            "title": "Lesson Summary: Digital Wellbeing and Islamic Identity for Children (Ages 10–12)",
             "item_count": 0
           },
           {
@@ -219,7 +219,7 @@
           {
             "id": "gen_lesson_10-12_cyber_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_03_fc.json",
-            "title": "\u0627\u0644\u062a\u0641\u0643\u064a\u0631 \u0627\u0644\u0646\u0642\u062f\u064a \u0639\u0644\u0649 \u0627\u0644\u0625\u0646\u062a\u0631\u0646\u062a \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "التفكير النقدي على الإنترنت — بطاقات",
             "item_count": 5
           }
         ],
@@ -227,7 +227,7 @@
           {
             "id": "gen_lesson_10-12_cyber_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_03_qz.json",
-            "title": "\u0627\u0644\u062a\u0641\u0643\u064a\u0631 \u0627\u0644\u0646\u0642\u062f\u064a \u0639\u0644\u0649 \u0627\u0644\u0625\u0646\u062a\u0631\u0646\u062a \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "التفكير النقدي على الإنترنت — اختبار",
             "item_count": 3
           }
         ],
@@ -305,7 +305,7 @@
           {
             "id": "gen_lesson_10-12_islamic_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_01_fc.json",
-            "title": "\u0627\u0644\u0635\u0644\u0627\u0629: \u0639\u0645\u0648\u062f \u0627\u0644\u062f\u064a\u0646 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الصلاة: عمود الدين — بطاقات",
             "item_count": 5
           }
         ],
@@ -313,7 +313,7 @@
           {
             "id": "gen_lesson_10-12_islamic_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_01_qz.json",
-            "title": "\u0627\u0644\u0635\u0644\u0627\u0629: \u0639\u0645\u0648\u062f \u0627\u0644\u062f\u064a\u0646 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الصلاة: عمود الدين — اختبار",
             "item_count": 3
           }
         ],
@@ -390,7 +390,7 @@
           {
             "id": "gen_lesson_10-12_islamic_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_02_fc.json",
-            "title": "\u0627\u0644\u0642\u0631\u0622\u0646: \u062f\u0633\u062a\u0648\u0631 \u0627\u0644\u062d\u064a\u0627\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "القرآن: دستور الحياة — بطاقات",
             "item_count": 5
           }
         ],
@@ -398,7 +398,7 @@
           {
             "id": "gen_lesson_10-12_islamic_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_02_qz.json",
-            "title": "\u0627\u0644\u0642\u0631\u0622\u0646: \u062f\u0633\u062a\u0648\u0631 \u0627\u0644\u062d\u064a\u0627\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "القرآن: دستور الحياة — اختبار",
             "item_count": 3
           }
         ],
@@ -439,7 +439,7 @@
           {
             "id": "gen_lesson_10-12_islamic_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_03_fc.json",
-            "title": "\u0627\u0644\u0623\u062e\u0644\u0627\u0642 \u0641\u064a \u0627\u0644\u062a\u0639\u0627\u0645\u0644 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الأخلاق في التعامل — بطاقات",
             "item_count": 5
           }
         ],
@@ -447,7 +447,7 @@
           {
             "id": "gen_lesson_10-12_islamic_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_03_qz.json",
-            "title": "\u0627\u0644\u0623\u062e\u0644\u0627\u0642 \u0641\u064a \u0627\u0644\u062a\u0639\u0627\u0645\u0644 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الأخلاق في التعامل — اختبار",
             "item_count": 3
           }
         ],
@@ -488,7 +488,7 @@
           {
             "id": "gen_lesson_10-12_islamic_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_04_fc.json",
-            "title": "\u0627\u0644\u062b\u0642\u0629 \u0628\u0627\u0644\u0646\u0641\u0633 \u0648\u0627\u0644\u0647\u0648\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الثقة بالنفس والهوية — بطاقات",
             "item_count": 5
           }
         ],
@@ -496,7 +496,7 @@
           {
             "id": "gen_lesson_10-12_islamic_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_04_qz.json",
-            "title": "\u0627\u0644\u062b\u0642\u0629 \u0628\u0627\u0644\u0646\u0641\u0633 \u0648\u0627\u0644\u0647\u0648\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الثقة بالنفس والهوية — اختبار",
             "item_count": 3
           }
         ],
@@ -567,7 +567,7 @@
           {
             "id": "gen_lesson_10-12_medical_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_01_fc.json",
-            "title": "\u0627\u0644\u0628\u0644\u0648\u063a: \u062d\u0648\u0627\u0631 \u0645\u0641\u062a\u0648\u062d \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "البلوغ: حوار مفتوح — بطاقات",
             "item_count": 5
           }
         ],
@@ -575,7 +575,7 @@
           {
             "id": "gen_lesson_10-12_medical_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_01_qz.json",
-            "title": "\u0627\u0644\u0628\u0644\u0648\u063a: \u062d\u0648\u0627\u0631 \u0645\u0641\u062a\u0648\u062d \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "البلوغ: حوار مفتوح — اختبار",
             "item_count": 3
           }
         ],
@@ -616,7 +616,7 @@
           {
             "id": "gen_lesson_10-12_medical_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_02_fc.json",
-            "title": "\u0627\u0644\u0642\u0644\u0642 \u0648\u0627\u0644\u0636\u063a\u0637 \u0627\u0644\u0645\u062f\u0631\u0633\u064a \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "القلق والضغط المدرسي — بطاقات",
             "item_count": 5
           }
         ],
@@ -624,7 +624,7 @@
           {
             "id": "gen_lesson_10-12_medical_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_02_qz.json",
-            "title": "\u0627\u0644\u0642\u0644\u0642 \u0648\u0627\u0644\u0636\u063a\u0637 \u0627\u0644\u0645\u062f\u0631\u0633\u064a \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "القلق والضغط المدرسي — اختبار",
             "item_count": 3
           }
         ],
@@ -665,7 +665,7 @@
           {
             "id": "gen_lesson_10-12_medical_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_03_fc.json",
-            "title": "\u0639\u0627\u062f\u0627\u062a \u0635\u062d\u064a\u0629 \u0644\u0644\u062d\u064a\u0627\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "عادات صحية للحياة — بطاقات",
             "item_count": 5
           }
         ],
@@ -673,7 +673,7 @@
           {
             "id": "gen_lesson_10-12_medical_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_03_qz.json",
-            "title": "\u0639\u0627\u062f\u0627\u062a \u0635\u062d\u064a\u0629 \u0644\u0644\u062d\u064a\u0627\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "عادات صحية للحياة — اختبار",
             "item_count": 3
           }
         ],
@@ -738,7 +738,7 @@
           {
             "id": "gen_lesson_13-15_cyber_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_01_fc.json",
-            "title": "\u0627\u0644\u0628\u0635\u0645\u0629 \u0627\u0644\u0631\u0642\u0645\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "البصمة الرقمية — بطاقات",
             "item_count": 5
           }
         ],
@@ -746,7 +746,7 @@
           {
             "id": "gen_lesson_13-15_cyber_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_01_qz.json",
-            "title": "\u0627\u0644\u0628\u0635\u0645\u0629 \u0627\u0644\u0631\u0642\u0645\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "البصمة الرقمية — اختبار",
             "item_count": 3
           }
         ],
@@ -825,7 +825,7 @@
           {
             "id": "gen_lesson_13-15_cyber_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_02_fc.json",
-            "title": "\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0648\u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0627\u0644\u0645\u0632\u064a\u0641 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الذكاء الاصطناعي والمحتوى المزيف — بطاقات",
             "item_count": 5
           }
         ],
@@ -833,7 +833,7 @@
           {
             "id": "gen_lesson_13-15_cyber_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_02_qz.json",
-            "title": "\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0648\u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0627\u0644\u0645\u0632\u064a\u0641 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الذكاء الاصطناعي والمحتوى المزيف — اختبار",
             "item_count": 3
           }
         ],
@@ -874,7 +874,7 @@
           {
             "id": "gen_lesson_13-15_cyber_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_03_fc.json",
-            "title": "\u0645\u0648\u0627\u0632\u0646\u0629 \u0627\u0644\u0623\u0644\u0639\u0627\u0628 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "موازنة الألعاب — بطاقات",
             "item_count": 5
           }
         ],
@@ -882,7 +882,7 @@
           {
             "id": "gen_lesson_13-15_cyber_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_03_qz.json",
-            "title": "\u0645\u0648\u0627\u0632\u0646\u0629 \u0627\u0644\u0623\u0644\u0639\u0627\u0628 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "موازنة الألعاب — اختبار",
             "item_count": 3
           }
         ],
@@ -931,7 +931,7 @@
           {
             "id": "gen_lesson_13-15_development_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_01_fc.json",
-            "title": "\u062f\u0645\u0627\u063a \u0627\u0644\u0645\u0631\u0627\u0647\u0642: \u0641\u0631\u0635\u0629 \u062b\u0627\u0646\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "دماغ المراهق: فرصة ثانية — بطاقات",
             "item_count": 5
           }
         ],
@@ -939,7 +939,7 @@
           {
             "id": "gen_lesson_13-15_development_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_01_qz.json",
-            "title": "\u062f\u0645\u0627\u063a \u0627\u0644\u0645\u0631\u0627\u0647\u0642: \u0641\u0631\u0635\u0629 \u062b\u0627\u0646\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "دماغ المراهق: فرصة ثانية — اختبار",
             "item_count": 3
           }
         ],
@@ -966,7 +966,7 @@
           {
             "id": "gen_lesson_13-15_development_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_02_fc.json",
-            "title": "\u0627\u0644\u0645\u062e\u0627\u0637\u0631\u0629 \u0648\u0627\u0644\u0627\u0646\u062f\u0641\u0627\u0639: \u0642\u0631\u0627\u0631 \u0648\u0627\u0639\u064d \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "المخاطرة والاندفاع: قرار واعٍ — بطاقات",
             "item_count": 5
           }
         ],
@@ -974,7 +974,7 @@
           {
             "id": "gen_lesson_13-15_development_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_02_qz.json",
-            "title": "\u0627\u0644\u0645\u062e\u0627\u0637\u0631\u0629 \u0648\u0627\u0644\u0627\u0646\u062f\u0641\u0627\u0639: \u0642\u0631\u0627\u0631 \u0648\u0627\u0639\u064d \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "المخاطرة والاندفاع: قرار واعٍ — اختبار",
             "item_count": 3
           }
         ],
@@ -1001,7 +1001,7 @@
           {
             "id": "gen_lesson_13-15_development_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_03_fc.json",
-            "title": "\u0647\u0648\u064a\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644: \u062a\u062e\u0637\u064a\u0637 \u0648\u0645\u0633\u0624\u0648\u0644\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "هوية المستقبل: تخطيط ومسؤولية — بطاقات",
             "item_count": 5
           }
         ],
@@ -1009,7 +1009,7 @@
           {
             "id": "gen_lesson_13-15_development_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_03_qz.json",
-            "title": "\u0647\u0648\u064a\u0629 \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644: \u062a\u062e\u0637\u064a\u0637 \u0648\u0645\u0633\u0624\u0648\u0644\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "هوية المستقبل: تخطيط ومسؤولية — اختبار",
             "item_count": 3
           }
         ],
@@ -1036,7 +1036,7 @@
           {
             "id": "gen_lesson_13-15_islamic_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_01_fc.json",
-            "title": "\u0627\u0644\u0634\u0628\u0647\u0627\u062a \u0627\u0644\u062f\u064a\u0646\u064a\u0629: \u0643\u064a\u0641 \u064a\u062c\u064a\u0628 \u0627\u0644\u0648\u0627\u0644\u062f\u0627\u0646 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الشبهات الدينية: كيف يجيب الوالدان — بطاقات",
             "item_count": 5
           }
         ],
@@ -1044,7 +1044,7 @@
           {
             "id": "gen_lesson_13-15_islamic_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_01_qz.json",
-            "title": "\u0627\u0644\u0634\u0628\u0647\u0627\u062a \u0627\u0644\u062f\u064a\u0646\u064a\u0629: \u0643\u064a\u0641 \u064a\u062c\u064a\u0628 \u0627\u0644\u0648\u0627\u0644\u062f\u0627\u0646 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الشبهات الدينية: كيف يجيب الوالدان — اختبار",
             "item_count": 3
           }
         ],
@@ -1091,7 +1091,7 @@
           {
             "id": "gen_lesson_13-15_islamic_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_02_fc.json",
-            "title": "\u0627\u0644\u0639\u0628\u0627\u062f\u0629 \u0628\u0639\u0645\u0642: \u0627\u0644\u062e\u0634\u0648\u0639 \u0648\u0627\u0644\u062a\u062f\u0628\u0631 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "العبادة بعمق: الخشوع والتدبر — بطاقات",
             "item_count": 5
           }
         ],
@@ -1099,7 +1099,7 @@
           {
             "id": "gen_lesson_13-15_islamic_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_02_qz.json",
-            "title": "\u0627\u0644\u0639\u0628\u0627\u062f\u0629 \u0628\u0639\u0645\u0642: \u0627\u0644\u062e\u0634\u0648\u0639 \u0648\u0627\u0644\u062a\u062f\u0628\u0631 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "العبادة بعمق: الخشوع والتدبر — اختبار",
             "item_count": 3
           }
         ],
@@ -1148,7 +1148,7 @@
           {
             "id": "gen_lesson_13-15_islamic_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_03_fc.json",
-            "title": "\u0627\u0644\u0632\u0648\u0627\u062c \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644\u064a: \u0645\u0639\u0627\u064a\u064a\u0631 \u0648\u062d\u0642\u0648\u0642 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الزواج المستقبلي: معايير وحقوق — بطاقات",
             "item_count": 5
           }
         ],
@@ -1156,7 +1156,7 @@
           {
             "id": "gen_lesson_13-15_islamic_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_03_qz.json",
-            "title": "\u0627\u0644\u0632\u0648\u0627\u062c \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644\u064a: \u0645\u0639\u0627\u064a\u064a\u0631 \u0648\u062d\u0642\u0648\u0642 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الزواج المستقبلي: معايير وحقوق — اختبار",
             "item_count": 3
           }
         ],
@@ -1205,7 +1205,7 @@
           {
             "id": "gen_lesson_13-15_islamic_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_04_fc.json",
-            "title": "\u0627\u0644\u0642\u064a\u0627\u062f\u0629 \u0648\u062a\u0628\u0646\u064a \u0627\u0644\u0642\u0636\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "القيادة وتبني القضية — بطاقات",
             "item_count": 5
           }
         ],
@@ -1213,7 +1213,7 @@
           {
             "id": "gen_lesson_13-15_islamic_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_04_qz.json",
-            "title": "\u0627\u0644\u0642\u064a\u0627\u062f\u0629 \u0648\u062a\u0628\u0646\u064a \u0627\u0644\u0642\u0636\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "القيادة وتبني القضية — اختبار",
             "item_count": 3
           }
         ],
@@ -1262,7 +1262,7 @@
           {
             "id": "gen_lesson_13-15_medical_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_01_fc.json",
-            "title": "\u0627\u0644\u0627\u0643\u062a\u0626\u0627\u0628 \u0648\u0627\u0644\u0642\u0644\u0642 \u0639\u0646\u062f \u0627\u0644\u0645\u0631\u0627\u0647\u0642\u064a\u0646 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الاكتئاب والقلق عند المراهقين — بطاقات",
             "item_count": 5
           }
         ],
@@ -1270,7 +1270,7 @@
           {
             "id": "gen_lesson_13-15_medical_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_01_qz.json",
-            "title": "\u0627\u0644\u0627\u0643\u062a\u0626\u0627\u0628 \u0648\u0627\u0644\u0642\u0644\u0642 \u0639\u0646\u062f \u0627\u0644\u0645\u0631\u0627\u0647\u0642\u064a\u0646 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الاكتئاب والقلق عند المراهقين — اختبار",
             "item_count": 4
           }
         ],
@@ -1341,7 +1341,7 @@
           {
             "id": "gen_lesson_13-15_medical_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_02_fc.json",
-            "title": "\u0627\u0636\u0637\u0631\u0627\u0628 \u0627\u0644\u0645\u0632\u0627\u062c \u0627\u0644\u062a\u062e\u0631\u064a\u0628\u064a (DMDD) \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "اضطراب المزاج التخريبي (DMDD) — بطاقات",
             "item_count": 5
           }
         ],
@@ -1349,7 +1349,7 @@
           {
             "id": "gen_lesson_13-15_medical_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_02_qz.json",
-            "title": "\u0627\u0636\u0637\u0631\u0627\u0628 \u0627\u0644\u0645\u0632\u0627\u062c \u0627\u0644\u062a\u062e\u0631\u064a\u0628\u064a (DMDD) \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "اضطراب المزاج التخريبي (DMDD) — اختبار",
             "item_count": 3
           }
         ],
@@ -1377,7 +1377,7 @@
           {
             "id": "gen_lesson_13-15_medical_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_03_fc.json",
-            "title": "ADHD \u0648\u0627\u0644\u062a\u0648\u062d\u062f: \u0627\u062e\u062a\u0644\u0627\u0641 \u0644\u0627 \u0646\u0642\u0635 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "ADHD والتوحد: اختلاف لا نقص — بطاقات",
             "item_count": 5
           }
         ],
@@ -1385,7 +1385,7 @@
           {
             "id": "gen_lesson_13-15_medical_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_03_qz.json",
-            "title": "ADHD \u0648\u0627\u0644\u062a\u0648\u062d\u062f: \u0627\u062e\u062a\u0644\u0627\u0641 \u0644\u0627 \u0646\u0642\u0635 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "ADHD والتوحد: اختلاف لا نقص — اختبار",
             "item_count": 3
           }
         ],
@@ -1413,7 +1413,7 @@
           {
             "id": "gen_lesson_13-15_medical_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_04_fc.json",
-            "title": "\u0645\u0642\u064a\u0627\u0633 \u0627\u0644\u0645\u0632\u0627\u062c \u0648\u062e\u0637\u0629 \u0627\u0644\u0633\u0644\u0627\u0645\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "مقياس المزاج وخطة السلامة — بطاقات",
             "item_count": 5
           }
         ],
@@ -1421,7 +1421,7 @@
           {
             "id": "gen_lesson_13-15_medical_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_04_qz.json",
-            "title": "\u0645\u0642\u064a\u0627\u0633 \u0627\u0644\u0645\u0632\u0627\u062c \u0648\u062e\u0637\u0629 \u0627\u0644\u0633\u0644\u0627\u0645\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "مقياس المزاج وخطة السلامة — اختبار",
             "item_count": 3
           }
         ],
@@ -1450,7 +1450,7 @@
           {
             "id": "gen_lesson_16-18_cyber_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_01_fc.json",
-            "title": "\u0627\u0644\u0647\u0648\u064a\u0629 \u0627\u0644\u0631\u0642\u0645\u064a\u0629 \u0627\u0644\u0645\u0647\u0646\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الهوية الرقمية المهنية — بطاقات",
             "item_count": 5
           }
         ],
@@ -1458,7 +1458,7 @@
           {
             "id": "gen_lesson_16-18_cyber_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_01_qz.json",
-            "title": "\u0627\u0644\u0647\u0648\u064a\u0629 \u0627\u0644\u0631\u0642\u0645\u064a\u0629 \u0627\u0644\u0645\u0647\u0646\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الهوية الرقمية المهنية — اختبار",
             "item_count": 3
           }
         ],
@@ -1486,7 +1486,7 @@
           {
             "id": "gen_lesson_16-18_cyber_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_02_fc.json",
-            "title": "\u0623\u062e\u0644\u0627\u0642\u064a\u0627\u062a AI \u0648\u0623\u0645\u0627\u0646 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "أخلاقيات AI وأمان المعلومات — بطاقات",
             "item_count": 5
           }
         ],
@@ -1494,7 +1494,7 @@
           {
             "id": "gen_lesson_16-18_cyber_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_02_qz.json",
-            "title": "\u0623\u062e\u0644\u0627\u0642\u064a\u0627\u062a AI \u0648\u0623\u0645\u0627\u0646 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "أخلاقيات AI وأمان المعلومات — اختبار",
             "item_count": 3
           }
         ],
@@ -1522,7 +1522,7 @@
           {
             "id": "gen_lesson_16-18_medical_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_01_fc.json",
-            "title": "\u0627\u0644\u0635\u062d\u0629 \u0627\u0644\u0646\u0641\u0633\u064a\u0629 \u0641\u064a \u0627\u0644\u062c\u0627\u0645\u0639\u0629/\u0627\u0644\u0639\u0645\u0644 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الصحة النفسية في الجامعة/العمل — بطاقات",
             "item_count": 5
           }
         ],
@@ -1530,7 +1530,7 @@
           {
             "id": "gen_lesson_16-18_medical_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_01_qz.json",
-            "title": "\u0627\u0644\u0635\u062d\u0629 \u0627\u0644\u0646\u0641\u0633\u064a\u0629 \u0641\u064a \u0627\u0644\u062c\u0627\u0645\u0639\u0629/\u0627\u0644\u0639\u0645\u0644 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الصحة النفسية في الجامعة/العمل — اختبار",
             "item_count": 3
           }
         ],
@@ -1588,7 +1588,7 @@
           {
             "id": "gen_lesson_16-18_medical_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_02_fc.json",
-            "title": "\u0627\u0644\u0639\u0644\u0627\u0642\u0627\u062a \u0648\u0627\u0644\u062d\u062f\u0648\u062f \u0627\u0644\u0635\u062d\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "العلاقات والحدود الصحية — بطاقات",
             "item_count": 5
           }
         ],
@@ -1596,7 +1596,7 @@
           {
             "id": "gen_lesson_16-18_medical_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_02_qz.json",
-            "title": "\u0627\u0644\u0639\u0644\u0627\u0642\u0627\u062a \u0648\u0627\u0644\u062d\u062f\u0648\u062f \u0627\u0644\u0635\u062d\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "العلاقات والحدود الصحية — اختبار",
             "item_count": 3
           }
         ],
@@ -1617,7 +1617,7 @@
           {
             "id": "gen_lesson_16-18_medical_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_03_fc.json",
-            "title": "\u062d\u064a\u0627\u0629 \u0646\u0641\u0633\u064a\u0629 \u0645\u0633\u062a\u062f\u0627\u0645\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "حياة نفسية مستدامة — بطاقات",
             "item_count": 5
           }
         ],
@@ -1625,7 +1625,7 @@
           {
             "id": "gen_lesson_16-18_medical_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_03_qz.json",
-            "title": "\u062d\u064a\u0627\u0629 \u0646\u0641\u0633\u064a\u0629 \u0645\u0633\u062a\u062f\u0627\u0645\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "حياة نفسية مستدامة — اختبار",
             "item_count": 3
           }
         ],
@@ -1646,7 +1646,7 @@
           {
             "id": "gen_lesson_4-6_development_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_development_01_fc.json",
-            "title": "\u0627\u0644\u0645\u062f\u062d \u0627\u0644\u0646\u0648\u0639\u064a: \u0628\u0646\u0627\u0621 \u0627\u0644\u062b\u0642\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "المدح النوعي: بناء الثقة — بطاقات",
             "item_count": 5
           }
         ],
@@ -1654,7 +1654,7 @@
           {
             "id": "gen_lesson_4-6_development_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_development_01_qz.json",
-            "title": "\u0627\u0644\u0645\u062f\u062d \u0627\u0644\u0646\u0648\u0639\u064a: \u0628\u0646\u0627\u0621 \u0627\u0644\u062b\u0642\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "المدح النوعي: بناء الثقة — اختبار",
             "item_count": 3
           }
         ],
@@ -1682,7 +1682,7 @@
           {
             "id": "gen_lesson_4-6_development_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_development_02_fc.json",
-            "title": "\u0627\u0644\u0623\u0645\u0627\u0646 \u0627\u0644\u062c\u0633\u062f\u064a \u0648\u0627\u0644\u0646\u0641\u0633\u064a \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الأمان الجسدي والنفسي — بطاقات",
             "item_count": 5
           }
         ],
@@ -1690,7 +1690,7 @@
           {
             "id": "gen_lesson_4-6_development_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_development_02_qz.json",
-            "title": "\u0627\u0644\u0623\u0645\u0627\u0646 \u0627\u0644\u062c\u0633\u062f\u064a \u0648\u0627\u0644\u0646\u0641\u0633\u064a \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الأمان الجسدي والنفسي — اختبار",
             "item_count": 3
           }
         ],
@@ -1711,7 +1711,7 @@
           {
             "id": "gen_lesson_4-6_adab_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_adab_01_fc.json",
-            "title": "\u0627\u0644\u0631\u0641\u0642: \u0642\u064a\u0645\u0629 \u062a\u0631\u0628\u0648\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الرفق: قيمة تربوية — بطاقات",
             "item_count": 5
           }
         ],
@@ -1719,7 +1719,7 @@
           {
             "id": "gen_lesson_4-6_adab_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_adab_01_qz.json",
-            "title": "\u0627\u0644\u0631\u0641\u0642: \u0642\u064a\u0645\u0629 \u062a\u0631\u0628\u0648\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الرفق: قيمة تربوية — اختبار",
             "item_count": 3
           }
         ],
@@ -1740,7 +1740,7 @@
           {
             "id": "gen_lesson_4-6_adab_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_adab_02_fc.json",
-            "title": "\u0627\u0644\u0644\u0639\u0628 \u0627\u0644\u0646\u0628\u0648\u064a: \u062d\u0636\u0646 \u0642\u0628\u0644 \u062a\u0648\u062c\u064a\u0647 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "اللعب النبوي: حضن قبل توجيه — بطاقات",
             "item_count": 5
           }
         ],
@@ -1748,7 +1748,7 @@
           {
             "id": "gen_lesson_4-6_adab_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_adab_02_qz.json",
-            "title": "\u0627\u0644\u0644\u0639\u0628 \u0627\u0644\u0646\u0628\u0648\u064a: \u062d\u0636\u0646 \u0642\u0628\u0644 \u062a\u0648\u062c\u064a\u0647 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "اللعب النبوي: حضن قبل توجيه — اختبار",
             "item_count": 3
           }
         ],
@@ -1769,7 +1769,7 @@
           {
             "id": "gen_lesson_4-6_adab_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_adab_03_fc.json",
-            "title": "\u0627\u0644\u0642\u0648\u0627\u0639\u062f \u0648\u0627\u0644\u062a\u0639\u0627\u0648\u0646: \u0628\u0646\u0627\u0621 \u0627\u0644\u0636\u0645\u064a\u0631 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "القواعد والتعاون: بناء الضمير — بطاقات",
             "item_count": 5
           }
         ],
@@ -1777,7 +1777,7 @@
           {
             "id": "gen_lesson_4-6_adab_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_adab_03_qz.json",
-            "title": "\u0627\u0644\u0642\u0648\u0627\u0639\u062f \u0648\u0627\u0644\u062a\u0639\u0627\u0648\u0646: \u0628\u0646\u0627\u0621 \u0627\u0644\u0636\u0645\u064a\u0631 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "القواعد والتعاون: بناء الضمير — اختبار",
             "item_count": 3
           }
         ],
@@ -1798,7 +1798,7 @@
           {
             "id": "gen_lesson_4-6_bond_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_bond_01_fc.json",
-            "title": "\u0627\u0644\u0631\u0641\u0642: \u0645\u0641\u062a\u0627\u062d \u0627\u0644\u0631\u0627\u0628\u0637\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الرفق: مفتاح الرابطة — بطاقات",
             "item_count": 5
           }
         ],
@@ -1806,7 +1806,7 @@
           {
             "id": "gen_lesson_4-6_bond_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_bond_01_qz.json",
-            "title": "\u0627\u0644\u0631\u0641\u0642: \u0645\u0641\u062a\u0627\u062d \u0627\u0644\u0631\u0627\u0628\u0637\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الرفق: مفتاح الرابطة — اختبار",
             "item_count": 3
           }
         ],
@@ -1834,7 +1834,7 @@
           {
             "id": "gen_lesson_4-6_bond_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_bond_02_fc.json",
-            "title": "\u0627\u0644\u0644\u0639\u0628 \u0627\u0644\u0646\u0628\u0648\u064a: \u0631\u0627\u0628\u0637\u0629 \u0628\u0627\u0644\u0644\u0639\u0628 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "اللعب النبوي: رابطة باللعب — بطاقات",
             "item_count": 5
           }
         ],
@@ -1842,7 +1842,7 @@
           {
             "id": "gen_lesson_4-6_bond_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_bond_02_qz.json",
-            "title": "\u0627\u0644\u0644\u0639\u0628 \u0627\u0644\u0646\u0628\u0648\u064a: \u0631\u0627\u0628\u0637\u0629 \u0628\u0627\u0644\u0644\u0639\u0628 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "اللعب النبوي: رابطة باللعب — اختبار",
             "item_count": 3
           }
         ],
@@ -1863,7 +1863,7 @@
           {
             "id": "gen_lesson_4-6_bond_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_bond_03_fc.json",
-            "title": "\u0627\u0644\u062d\u0648\u0627\u0631 \u0627\u0644\u064a\u0648\u0645\u064a: \u0627\u0644\u0633\u0624\u0627\u0644 \u0642\u0628\u0644 \u0627\u0644\u0623\u0645\u0631 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الحوار اليومي: السؤال قبل الأمر — بطاقات",
             "item_count": 5
           }
         ],
@@ -1871,7 +1871,7 @@
           {
             "id": "gen_lesson_4-6_bond_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_bond_03_qz.json",
-            "title": "\u0627\u0644\u062d\u0648\u0627\u0631 \u0627\u0644\u064a\u0648\u0645\u064a: \u0627\u0644\u0633\u0624\u0627\u0644 \u0642\u0628\u0644 \u0627\u0644\u0623\u0645\u0631 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الحوار اليومي: السؤال قبل الأمر — اختبار",
             "item_count": 3
           }
         ],
@@ -1892,7 +1892,7 @@
           {
             "id": "gen_lesson_7-9_development_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_01_fc.json",
-            "title": "\u0625\u062f\u0627\u0631\u0629 \u0648\u0642\u062a \u0627\u0644\u0634\u0627\u0634\u0629: \u0639\u0642\u062f \u0639\u0627\u0626\u0644\u064a \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "إدارة وقت الشاشة: عقد عائلي — بطاقات",
             "item_count": 5
           }
         ],
@@ -1900,7 +1900,7 @@
           {
             "id": "gen_lesson_7-9_development_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_01_qz.json",
-            "title": "\u0625\u062f\u0627\u0631\u0629 \u0648\u0642\u062a \u0627\u0644\u0634\u0627\u0634\u0629: \u0639\u0642\u062f \u0639\u0627\u0626\u0644\u064a \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "إدارة وقت الشاشة: عقد عائلي — اختبار",
             "item_count": 3
           }
         ],
@@ -1921,7 +1921,7 @@
           {
             "id": "gen_lesson_7-9_development_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_02_fc.json",
-            "title": "\u0627\u0644\u0635\u062f\u0627\u0642\u0629 \u0648\u0636\u063a\u0637 \u0627\u0644\u0623\u0642\u0631\u0627\u0646 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الصداقة وضغط الأقران — بطاقات",
             "item_count": 5
           }
         ],
@@ -1929,7 +1929,7 @@
           {
             "id": "gen_lesson_7-9_development_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_02_qz.json",
-            "title": "\u0627\u0644\u0635\u062f\u0627\u0642\u0629 \u0648\u0636\u063a\u0637 \u0627\u0644\u0623\u0642\u0631\u0627\u0646 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الصداقة وضغط الأقران — اختبار",
             "item_count": 3
           }
         ],
@@ -1950,7 +1950,7 @@
           {
             "id": "gen_lesson_7-9_worship_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_worship_01_fc.json",
-            "title": "\u0627\u0644\u0635\u0644\u0627\u0629: \u062d\u0628 \u0644\u0627 \u0648\u0627\u062c\u0628 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الصلاة: حب لا واجب — بطاقات",
             "item_count": 5
           }
         ],
@@ -1958,15 +1958,15 @@
           {
             "id": "gen_lesson_7-9_worship_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_worship_01_qz.json",
-            "title": "\u0627\u0644\u0635\u0644\u0627\u0629: \u062d\u0628 \u0644\u0627 \u0648\u0627\u062c\u0628 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الصلاة: حب لا واجب — اختبار",
             "item_count": 3
           }
         ],
         "reports": [
           {
             "id": "898ee24d-533b-402b-b1aa-90a0cd540db7",
-            "file": "docs/lesson_assets/reports/898ee24d-533b-402b-b1aa-90a0cd540db7_Quran_Lesson_Summary__My_Life\u2019s_Compass_(Ages_7-9).md",
-            "title": "Quran Lesson Summary: My Life\u2019s Compass (Ages 7-9)",
+            "file": "docs/lesson_assets/reports/898ee24d-533b-402b-b1aa-90a0cd540db7_Quran_Lesson_Summary__My_Life’s_Compass_(Ages_7-9).md",
+            "title": "Quran Lesson Summary: My Life’s Compass (Ages 7-9)",
             "item_count": 0
           }
         ],
@@ -1986,7 +1986,7 @@
           {
             "id": "gen_lesson_7-9_worship_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_worship_02_fc.json",
-            "title": "\u0627\u0644\u0635\u064a\u0627\u0645: \u062a\u062f\u0631\u064a\u0628 \u0639\u0644\u0649 \u0627\u0644\u0635\u0628\u0631 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الصيام: تدريب على الصبر — بطاقات",
             "item_count": 5
           }
         ],
@@ -1994,7 +1994,7 @@
           {
             "id": "gen_lesson_7-9_worship_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_worship_02_qz.json",
-            "title": "\u0627\u0644\u0635\u064a\u0627\u0645: \u062a\u062f\u0631\u064a\u0628 \u0639\u0644\u0649 \u0627\u0644\u0635\u0628\u0631 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الصيام: تدريب على الصبر — اختبار",
             "item_count": 3
           }
         ],
@@ -2015,7 +2015,7 @@
           {
             "id": "gen_lesson_7-9_worship_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_worship_03_fc.json",
-            "title": "\u0627\u0644\u0642\u0631\u0622\u0646: \u0631\u0641\u064a\u0642 \u0627\u0644\u062d\u064a\u0627\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "القرآن: رفيق الحياة — بطاقات",
             "item_count": 5
           }
         ],
@@ -2023,7 +2023,7 @@
           {
             "id": "gen_lesson_7-9_worship_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_worship_03_qz.json",
-            "title": "\u0627\u0644\u0642\u0631\u0622\u0646: \u0631\u0641\u064a\u0642 \u0627\u0644\u062d\u064a\u0627\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "القرآن: رفيق الحياة — اختبار",
             "item_count": 3
           }
         ],
@@ -2044,7 +2044,7 @@
           {
             "id": "gen_lesson_7-9_medical_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_01_fc.json",
-            "title": "\u0627\u0644\u063a\u0636\u0628 \u0648\u0627\u0644\u0642\u0644\u0642: \u0623\u062f\u0648\u0627\u062a \u0639\u0645\u0644\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الغضب والقلق: أدوات عملية — بطاقات",
             "item_count": 5
           }
         ],
@@ -2052,7 +2052,7 @@
           {
             "id": "gen_lesson_7-9_medical_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_01_qz.json",
-            "title": "\u0627\u0644\u063a\u0636\u0628 \u0648\u0627\u0644\u0642\u0644\u0642: \u0623\u062f\u0648\u0627\u062a \u0639\u0645\u0644\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الغضب والقلق: أدوات عملية — اختبار",
             "item_count": 3
           }
         ],
@@ -2073,7 +2073,7 @@
           {
             "id": "gen_lesson_7-9_medical_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_02_fc.json",
-            "title": "\u0627\u0644\u0646\u0648\u0645 \u0648\u0627\u0644\u062a\u0631\u0643\u064a\u0632 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "النوم والتركيز — بطاقات",
             "item_count": 5
           }
         ],
@@ -2081,7 +2081,7 @@
           {
             "id": "gen_lesson_7-9_medical_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_02_qz.json",
-            "title": "\u0627\u0644\u0646\u0648\u0645 \u0648\u0627\u0644\u062a\u0631\u0643\u064a\u0632 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "النوم والتركيز — اختبار",
             "item_count": 3
           }
         ],
@@ -2096,13 +2096,13 @@
       "age_group": "7-9",
       "topic_path": "development_digital_wellbeing",
       "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
-      "title_ar": "\u0627\u0644\u0623\u0644\u0639\u0627\u0628 \u0627\u0644\u0639\u0646\u064a\u0641\u0629: \u062a\u0623\u062b\u064a\u0631 \u062e\u0641\u064a \u0639\u0644\u0649 \u0627\u0644\u0633\u0644\u0648\u0643",
+      "title_ar": "الألعاب العنيفة: تأثير خفي على السلوك",
       "assets": {
         "flashcards": [
           {
             "id": "gen_lesson_7-9_development_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_03_fc.json",
-            "title": "\u0627\u0644\u0623\u0644\u0639\u0627\u0628 \u0627\u0644\u0639\u0646\u064a\u0641\u0629: \u0623\u062b\u0631 \u062e\u0641\u064a \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الألعاب العنيفة: أثر خفي — بطاقات",
             "item_count": 5
           }
         ],
@@ -2110,7 +2110,7 @@
           {
             "id": "gen_lesson_7-9_development_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_03_qz.json",
-            "title": "\u0627\u0644\u0623\u0644\u0639\u0627\u0628 \u0627\u0644\u0639\u0646\u064a\u0641\u0629: \u0623\u062b\u0631 \u062e\u0641\u064a \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الألعاب العنيفة: أثر خفي — اختبار",
             "item_count": 3
           }
         ],
@@ -2131,7 +2131,7 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_01_fc.json",
-            "title": "\u0635\u0641\u0631 \u0634\u0627\u0634\u0627\u062a \u062a\u062d\u062a \u0627\u0644\u0633\u0646\u062a\u064a\u0646 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "صفر شاشات تحت السنتين — بطاقات",
             "item_count": 5
           }
         ],
@@ -2139,7 +2139,7 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_01_qz.json",
-            "title": "\u0635\u0641\u0631 \u0634\u0627\u0634\u0627\u062a \u062a\u062d\u062a \u0627\u0644\u0633\u0646\u062a\u064a\u0646 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "صفر شاشات تحت السنتين — اختبار",
             "item_count": 3
           }
         ],
@@ -2166,7 +2166,7 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_02_fc.json",
-            "title": "\u0627\u0644\u0644\u0639\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a \u0628\u062f\u064a\u0644 \u0627\u0644\u0634\u0627\u0634\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "اللعب الحقيقي بديل الشاشة — بطاقات",
             "item_count": 5
           }
         ],
@@ -2174,7 +2174,7 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_02_qz.json",
-            "title": "\u0627\u0644\u0644\u0639\u0628 \u0627\u0644\u062d\u0642\u064a\u0642\u064a \u0628\u062f\u064a\u0644 \u0627\u0644\u0634\u0627\u0634\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "اللعب الحقيقي بديل الشاشة — اختبار",
             "item_count": 3
           }
         ],
@@ -2201,7 +2201,7 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_03_fc.json",
-            "title": "\u062d\u0645\u0627\u064a\u0629 \u0627\u0644\u0646\u0648\u0645 \u0648\u0627\u0644\u062d\u062f\u0648\u062f \u0627\u0644\u0631\u0642\u0645\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "حماية النوم والحدود الرقمية — بطاقات",
             "item_count": 5
           }
         ],
@@ -2209,7 +2209,7 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_03_qz.json",
-            "title": "\u062d\u0645\u0627\u064a\u0629 \u0627\u0644\u0646\u0648\u0645 \u0648\u0627\u0644\u062d\u062f\u0648\u062f \u0627\u0644\u0631\u0642\u0645\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "حماية النوم والحدود الرقمية — اختبار",
             "item_count": 3
           }
         ],
@@ -2236,7 +2236,7 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_01_fc.json",
-            "title": "\u0627\u0644\u0645\u0631\u062d\u0644\u0629 \u0627\u0644\u062d\u0633\u064a\u0629 \u0627\u0644\u062d\u0631\u0643\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "المرحلة الحسية الحركية — بطاقات",
             "item_count": 5
           }
         ],
@@ -2244,7 +2244,7 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_01_qz.json",
-            "title": "\u0627\u0644\u0645\u0631\u062d\u0644\u0629 \u0627\u0644\u062d\u0633\u064a\u0629 \u0627\u0644\u062d\u0631\u0643\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "المرحلة الحسية الحركية — اختبار",
             "item_count": 3
           }
         ],
@@ -2271,7 +2271,7 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_02_fc.json",
-            "title": "\u0627\u0644\u0627\u0631\u062a\u0628\u0627\u0637 \u0627\u0644\u0622\u0645\u0646 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الارتباط الآمن — بطاقات",
             "item_count": 5
           }
         ],
@@ -2279,7 +2279,7 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_02_qz.json",
-            "title": "\u0627\u0644\u0627\u0631\u062a\u0628\u0627\u0637 \u0627\u0644\u0622\u0645\u0646 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الارتباط الآمن — اختبار",
             "item_count": 3
           }
         ],
@@ -2306,7 +2306,7 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_03_fc.json",
-            "title": "\u0645\u0646\u0637\u0642\u0629 \u0627\u0644\u062a\u0637\u0648\u0631 \u0627\u0644\u0642\u0631\u064a\u0628 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "منطقة التطور القريب — بطاقات",
             "item_count": 5
           }
         ],
@@ -2314,7 +2314,7 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_03_qz.json",
-            "title": "\u0645\u0646\u0637\u0642\u0629 \u0627\u0644\u062a\u0637\u0648\u0631 \u0627\u0644\u0642\u0631\u064a\u0628 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "منطقة التطور القريب — اختبار",
             "item_count": 3
           }
         ],
@@ -2341,7 +2341,7 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_01_fc.json",
-            "title": "\u0627\u0633\u062a\u0642\u0628\u0627\u0644 \u0627\u0644\u0645\u0648\u0644\u0648\u062f: \u0633\u0646\u0646 \u0627\u0644\u0645\u064a\u0644\u0627\u062f \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "استقبال المولود: سنن الميلاد — بطاقات",
             "item_count": 5
           }
         ],
@@ -2349,7 +2349,7 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_01_qz.json",
-            "title": "\u0627\u0633\u062a\u0642\u0628\u0627\u0644 \u0627\u0644\u0645\u0648\u0644\u0648\u062f: \u0633\u0646\u0646 \u0627\u0644\u0645\u064a\u0644\u0627\u062f \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "استقبال المولود: سنن الميلاد — اختبار",
             "item_count": 3
           }
         ],
@@ -2376,7 +2376,7 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_02_fc.json",
-            "title": "\u0627\u0644\u0631\u0641\u0642 \u0648\u0627\u0644\u0631\u062d\u0645\u0629 \u0628\u0627\u0644\u0631\u0636\u064a\u0639 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الرفق والرحمة بالرضيع — بطاقات",
             "item_count": 5
           }
         ],
@@ -2384,7 +2384,7 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_02_qz.json",
-            "title": "\u0627\u0644\u0631\u0641\u0642 \u0648\u0627\u0644\u0631\u062d\u0645\u0629 \u0628\u0627\u0644\u0631\u0636\u064a\u0639 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الرفق والرحمة بالرضيع — اختبار",
             "item_count": 3
           }
         ],
@@ -2411,7 +2411,7 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_03_fc.json",
-            "title": "\u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0627\u0644\u0641\u0639\u0651\u0627\u0644 \u0645\u0639 \u0627\u0644\u0631\u0636\u064a\u0639 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "التواصل الفعّال مع الرضيع — بطاقات",
             "item_count": 5
           }
         ],
@@ -2419,7 +2419,7 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_03_qz.json",
-            "title": "\u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0627\u0644\u0641\u0639\u0651\u0627\u0644 \u0645\u0639 \u0627\u0644\u0631\u0636\u064a\u0639 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "التواصل الفعّال مع الرضيع — اختبار",
             "item_count": 3
           }
         ],
@@ -2446,7 +2446,7 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_04_fc.json",
-            "title": "\u0628\u0630\u0631 \u0627\u0644\u0625\u064a\u0645\u0627\u0646 \u0641\u064a \u0627\u0644\u0642\u0644\u0628 \u0627\u0644\u0635\u063a\u064a\u0631 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "بذر الإيمان في القلب الصغير — بطاقات",
             "item_count": 5
           }
         ],
@@ -2454,7 +2454,7 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_04_qz.json",
-            "title": "\u0628\u0630\u0631 \u0627\u0644\u0625\u064a\u0645\u0627\u0646 \u0641\u064a \u0627\u0644\u0642\u0644\u0628 \u0627\u0644\u0635\u063a\u064a\u0631 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "بذر الإيمان في القلب الصغير — اختبار",
             "item_count": 3
           }
         ],
@@ -2481,7 +2481,7 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_01_fc.json",
-            "title": "\u0627\u0644\u0634\u0647\u0631\u0627\u0646 \u0627\u0644\u0623\u0648\u0644\u0627\u0646: \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0627\u0644\u0645\u0628\u0643\u0631 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الشهران الأولان: التواصل المبكر — بطاقات",
             "item_count": 5
           }
         ],
@@ -2489,7 +2489,7 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_01_qz.json",
-            "title": "\u0627\u0644\u0634\u0647\u0631\u0627\u0646 \u0627\u0644\u0623\u0648\u0644\u0627\u0646: \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0627\u0644\u0645\u0628\u0643\u0631 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الشهران الأولان: التواصل المبكر — اختبار",
             "item_count": 3
           }
         ],
@@ -2516,7 +2516,7 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_02_fc.json",
-            "title": "\u0627\u0644\u0623\u0634\u0647\u0631 \u0627\u0644\u0633\u062a\u0629 \u0627\u0644\u0623\u0648\u0644\u0649: \u0646\u0648\u0645 \u0648\u062a\u063a\u0630\u064a\u0629 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الأشهر الستة الأولى: نوم وتغذية — بطاقات",
             "item_count": 5
           }
         ],
@@ -2524,7 +2524,7 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_02_qz.json",
-            "title": "\u0627\u0644\u0623\u0634\u0647\u0631 \u0627\u0644\u0633\u062a\u0629 \u0627\u0644\u0623\u0648\u0644\u0649: \u0646\u0648\u0645 \u0648\u062a\u063a\u0630\u064a\u0629 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الأشهر الستة الأولى: نوم وتغذية — اختبار",
             "item_count": 3
           }
         ],
@@ -2551,7 +2551,7 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_03_fc.json",
-            "title": "\u0639\u0644\u0627\u0645\u0627\u062a \u0627\u0644\u062a\u0646\u0628\u064a\u0647 \u0627\u0644\u0645\u0628\u0643\u0631 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "علامات التنبيه المبكر — بطاقات",
             "item_count": 5
           }
         ],
@@ -2559,7 +2559,7 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_03_qz.json",
-            "title": "\u0639\u0644\u0627\u0645\u0627\u062a \u0627\u0644\u062a\u0646\u0628\u064a\u0647 \u0627\u0644\u0645\u0628\u0643\u0631 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "علامات التنبيه المبكر — اختبار",
             "item_count": 3
           }
         ],
@@ -2586,7 +2586,7 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_04_fc.json",
-            "title": "\u0637\u0644\u0628 \u0627\u0644\u0645\u0633\u0627\u0639\u062f\u0629 \u0648\u0627\u0644\u062a\u062f\u062e\u0644 \u0627\u0644\u0645\u0628\u0643\u0631 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "طلب المساعدة والتدخل المبكر — بطاقات",
             "item_count": 5
           }
         ],
@@ -2594,7 +2594,7 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_04_qz.json",
-            "title": "\u0637\u0644\u0628 \u0627\u0644\u0645\u0633\u0627\u0639\u062f\u0629 \u0648\u0627\u0644\u062a\u062f\u062e\u0644 \u0627\u0644\u0645\u0628\u0643\u0631 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "طلب المساعدة والتدخل المبكر — اختبار",
             "item_count": 3
           }
         ],
@@ -2615,13 +2615,13 @@
       "age_group": "2-3",
       "topic_path": "development_early_moments",
       "source_id": "7f442885-f7b8-4c8d-bd1f-c0c19a9332bf",
-      "title_ar": "\u0627\u0644\u062a\u062f\u0631\u064a\u0628 \u0639\u0644\u0649 \u0627\u0633\u062a\u062e\u062f\u0627\u0645 \u0627\u0644\u0645\u0631\u062d\u0627\u0636 \u0648\u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f \u0639\u0644\u0649 \u0627\u0644\u0646\u0641\u0633",
+      "title_ar": "التدريب على استخدام المرحاض والاعتماد على النفس",
       "assets": {
         "flashcards": [
           {
             "id": "gen_lesson_2-3_development_independence_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_development_independence_01_fc.json",
-            "title": "\u0627\u0644\u062a\u062f\u0631\u064a\u0628 \u0639\u0644\u0649 \u0627\u0633\u062a\u062e\u062f\u0627\u0645 \u0627\u0644\u0645\u0631\u062d\u0627\u0636 \u0648\u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f \u0639\u0644\u0649 \u0627\u0644\u0646\u0641\u0633 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "التدريب على استخدام المرحاض والاعتماد على النفس — بطاقات",
             "item_count": 5
           }
         ],
@@ -2629,7 +2629,7 @@
           {
             "id": "gen_lesson_2-3_development_independence_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_independence_01_qz.json",
-            "title": "\u0627\u0644\u062a\u062f\u0631\u064a\u0628 \u0639\u0644\u0649 \u0627\u0633\u062a\u062e\u062f\u0627\u0645 \u0627\u0644\u0645\u0631\u062d\u0627\u0636 \u0648\u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f \u0639\u0644\u0649 \u0627\u0644\u0646\u0641\u0633 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "التدريب على استخدام المرحاض والاعتماد على النفس — اختبار",
             "item_count": 3
           }
         ],
@@ -2644,13 +2644,13 @@
       "age_group": "2-3",
       "topic_path": "cyber_screen_foundations",
       "source_id": "77faf382-1cf8-4100-b6c8-52b86cc741d4",
-      "title_ar": "\u062a\u0646\u0638\u064a\u0645 \u0627\u0644\u0646\u0648\u0645 \u0648\u0627\u0644\u062a\u0639\u0627\u0645\u0644 \u0627\u0644\u0635\u062d\u064a \u0645\u0639 \u0627\u0644\u0634\u0627\u0634\u0627\u062a",
+      "title_ar": "تنظيم النوم والتعامل الصحي مع الشاشات",
       "assets": {
         "flashcards": [
           {
             "id": "gen_lesson_2-3_cyber_routine_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_cyber_routine_02_fc.json",
-            "title": "\u062a\u0646\u0638\u064a\u0645 \u0627\u0644\u0646\u0648\u0645 \u0648\u0627\u0644\u062a\u0639\u0627\u0645\u0644 \u0627\u0644\u0635\u062d\u064a \u0645\u0639 \u0627\u0644\u0634\u0627\u0634\u0627\u062a \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "تنظيم النوم والتعامل الصحي مع الشاشات — بطاقات",
             "item_count": 5
           }
         ],
@@ -2658,7 +2658,7 @@
           {
             "id": "gen_lesson_2-3_cyber_routine_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_02_qz.json",
-            "title": "\u062a\u0646\u0638\u064a\u0645 \u0627\u0644\u0646\u0648\u0645 \u0648\u0627\u0644\u062a\u0639\u0627\u0645\u0644 \u0627\u0644\u0635\u062d\u064a \u0645\u0639 \u0627\u0644\u0634\u0627\u0634\u0627\u062a \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "تنظيم النوم والتعامل الصحي مع الشاشات — اختبار",
             "item_count": 3
           }
         ],
@@ -2673,13 +2673,13 @@
       "age_group": "2-3",
       "topic_path": "development_early_moments",
       "source_id": "fd6d2b2e-eebb-424a-84eb-c22501a24d5e",
-      "title_ar": "\u0627\u0644\u062a\u0637\u0648\u0631 \u0627\u0644\u0644\u063a\u0648\u064a \u0648\u0627\u0644\u0645\u0639\u0631\u0641\u064a \u0645\u0646 \u062e\u0644\u0627\u0644 \u0627\u0644\u0644\u0639\u0628 \u0627\u0644\u062a\u062e\u064a\u0644\u064a",
+      "title_ar": "التطور اللغوي والمعرفي من خلال اللعب التخيلي",
       "assets": {
         "flashcards": [
           {
             "id": "gen_lesson_2-3_development_language_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_development_language_03_fc.json",
-            "title": "\u0627\u0644\u062a\u0637\u0648\u0631 \u0627\u0644\u0644\u063a\u0648\u064a \u0648\u0627\u0644\u0645\u0639\u0631\u0641\u064a \u0645\u0646 \u062e\u0644\u0627\u0644 \u0627\u0644\u0644\u0639\u0628 \u0627\u0644\u062a\u062e\u064a\u0644\u064a \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "التطور اللغوي والمعرفي من خلال اللعب التخيلي — بطاقات",
             "item_count": 5
           }
         ],
@@ -2687,7 +2687,7 @@
           {
             "id": "gen_lesson_2-3_development_language_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_language_03_qz.json",
-            "title": "\u0627\u0644\u062a\u0637\u0648\u0631 \u0627\u0644\u0644\u063a\u0648\u064a \u0648\u0627\u0644\u0645\u0639\u0631\u0641\u064a \u0645\u0646 \u062e\u0644\u0627\u0644 \u0627\u0644\u0644\u0639\u0628 \u0627\u0644\u062a\u062e\u064a\u0644\u064a \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "التطور اللغوي والمعرفي من خلال اللعب التخيلي — اختبار",
             "item_count": 3
           }
         ],
@@ -2702,13 +2702,13 @@
       "age_group": "2-3",
       "topic_path": "islamic_parenting_attachment",
       "source_id": "050f2c4a-85df-4d6d-8cc7-e32049d5bf1c",
-      "title_ar": "\u0627\u0644\u0631\u0627\u0628\u0637\u0629 \u0627\u0644\u0622\u0645\u0646\u0629 \u0648\u0627\u0644\u062a\u0639\u0627\u0645\u0644 \u0645\u0639 \u0646\u0648\u0628\u0627\u062a \u0627\u0644\u063a\u0636\u0628 \u0628\u0631\u0641\u0642",
+      "title_ar": "الرابطة الآمنة والتعامل مع نوبات الغضب برفق",
       "assets": {
         "flashcards": [
           {
             "id": "gen_lesson_2-3_islamic_tantrums_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_tantrums_04_fc.json",
-            "title": "\u0627\u0644\u0631\u0627\u0628\u0637\u0629 \u0627\u0644\u0622\u0645\u0646\u0629 \u0648\u0627\u0644\u062a\u0639\u0627\u0645\u0644 \u0645\u0639 \u0646\u0648\u0628\u0627\u062a \u0627\u0644\u063a\u0636\u0628 \u0628\u0631\u0641\u0642 \u2014 \u0628\u0637\u0627\u0642\u0627\u062a",
+            "title": "الرابطة الآمنة والتعامل مع نوبات الغضب برفق — بطاقات",
             "item_count": 5
           }
         ],
@@ -2716,7 +2716,7 @@
           {
             "id": "gen_lesson_2-3_islamic_tantrums_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_tantrums_04_qz.json",
-            "title": "\u0627\u0644\u0631\u0627\u0628\u0637\u0629 \u0627\u0644\u0622\u0645\u0646\u0629 \u0648\u0627\u0644\u062a\u0639\u0627\u0645\u0644 \u0645\u0639 \u0646\u0648\u0628\u0627\u062a \u0627\u0644\u063a\u0636\u0628 \u0628\u0631\u0641\u0642 \u2014 \u0627\u062e\u062a\u0628\u0627\u0631",
+            "title": "الرابطة الآمنة والتعامل مع نوبات الغضب برفق — اختبار",
             "item_count": 3
           }
         ],
@@ -2730,151 +2730,576 @@
       "lesson_id": "lesson_0-3_cyber_screen_foundations_b04",
       "age_group": "0-3",
       "topic_path": "cyber_screen_foundations",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_cyber_screen_foundations_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_b04_fc.json",
+            "title": "مكالمة الفيديو: الاستثناء الوحيد المسموح — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_cyber_screen_foundations_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_b04_qz.json",
+            "title": "مكالمة الفيديو: الاستثناء الوحيد المسموح — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_0-3_development_early_moments_b04",
       "age_group": "0-3",
       "topic_path": "development_early_moments",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_development_early_moments_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_b04_fc.json",
+            "title": "القراءة المشتركة: أول جسر نحو اللغة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_development_early_moments_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_b04_qz.json",
+            "title": "القراءة المشتركة: أول جسر نحو اللغة — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_10-12_cyber_digital_citizenship_b04",
       "age_group": "10-12",
       "topic_path": "cyber_digital_citizenship",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_cyber_digital_citizenship_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_digital_citizenship_b04_fc.json",
+            "title": "كلمات السر والأمان: حارس الباب الرقمي — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_cyber_digital_citizenship_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_digital_citizenship_b04_qz.json",
+            "title": "كلمات السر والأمان: حارس الباب الرقمي — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_10-12_medical_puberty_wellbeing_b04",
       "age_group": "10-12",
       "topic_path": "medical_puberty_wellbeing",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_medical_puberty_wellbeing_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_puberty_wellbeing_b04_fc.json",
+            "title": "صورة الجسد والثقة: قبل عاصفة المراهقة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_medical_puberty_wellbeing_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_puberty_wellbeing_b04_qz.json",
+            "title": "صورة الجسد والثقة: قبل عاصفة المراهقة — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_13-15_cyber_digital_maturity_b04",
       "age_group": "13-15",
       "topic_path": "cyber_digital_maturity",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_cyber_digital_maturity_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_digital_maturity_b04_fc.json",
+            "title": "ضغط الأقران الرقمي والتنمّر: الشجاعة أن تقف — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_cyber_digital_maturity_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_digital_maturity_b04_qz.json",
+            "title": "ضغط الأقران الرقمي والتنمّر: الشجاعة أن تقف — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_13-15_development_brain_identity_b04",
       "age_group": "13-15",
       "topic_path": "development_brain_identity",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_development_brain_identity_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_brain_identity_b04_fc.json",
+            "title": "الاستقلال المتدرّج: من التحكم إلى الإشراف — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_development_brain_identity_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_brain_identity_b04_qz.json",
+            "title": "الاستقلال المتدرّج: من التحكم إلى الإشراف — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_16-18_cyber_digital_professional_b03",
       "age_group": "16-18",
       "topic_path": "cyber_digital_professional",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_cyber_digital_professional_b03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_digital_professional_b03_fc.json",
+            "title": "البصمة الرقمية والقبول الجامعي والوظيفي — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_cyber_digital_professional_b03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_digital_professional_b03_qz.json",
+            "title": "البصمة الرقمية والقبول الجامعي والوظيفي — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_16-18_cyber_digital_professional_b04",
       "age_group": "16-18",
       "topic_path": "cyber_digital_professional",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_cyber_digital_professional_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_digital_professional_b04_fc.json",
+            "title": "إدمان الشاشة وإدارة الوقت قبل الاستقلال — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_cyber_digital_professional_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_digital_professional_b04_qz.json",
+            "title": "إدمان الشاشة وإدارة الوقت قبل الاستقلال — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_16-18_medical_adult_transition_b04",
       "age_group": "16-18",
       "topic_path": "medical_adult_transition",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_medical_adult_transition_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_adult_transition_b04_fc.json",
+            "title": "طلب المساعدة النفسية: مهارة لا ضعف — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_medical_adult_transition_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_adult_transition_b04_qz.json",
+            "title": "طلب المساعدة النفسية: مهارة لا ضعف — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_2-3_cyber_routine_b01",
       "age_group": "2-3",
       "topic_path": "cyber_routine",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_cyber_routine_b01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_cyber_routine_b01_fc.json",
+            "title": "حدّ الساعة: قاعدة الشاشة في عمر السنتين — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_cyber_routine_b01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_b01_qz.json",
+            "title": "حدّ الساعة: قاعدة الشاشة في عمر السنتين — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_2-3_cyber_routine_b02",
       "age_group": "2-3",
       "topic_path": "cyber_routine",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_cyber_routine_b02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_cyber_routine_b02_fc.json",
+            "title": "الشاشة المشتركة بدل الشاشة الصامتة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_cyber_routine_b02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_b02_qz.json",
+            "title": "الشاشة المشتركة بدل الشاشة الصامتة — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_2-3_cyber_routine_b04",
       "age_group": "2-3",
       "topic_path": "cyber_routine",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_cyber_routine_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_cyber_routine_b04_fc.json",
+            "title": "نوم بلا شاشات: حماية ساعة ما قبل النوم — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_cyber_routine_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_b04_qz.json",
+            "title": "نوم بلا شاشات: حماية ساعة ما قبل النوم — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_2-3_development_growth_b03",
       "age_group": "2-3",
       "topic_path": "development_growth",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_development_growth_b03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_development_growth_b03_fc.json",
+            "title": "نوبات الغضب: عقل صغير بلا كلمات كافية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_development_growth_b03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_growth_b03_qz.json",
+            "title": "نوبات الغضب: عقل صغير بلا كلمات كافية — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_2-3_development_growth_b04",
       "age_group": "2-3",
       "topic_path": "development_growth",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_development_growth_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_development_growth_b04_fc.json",
+            "title": "المشاعر الأولى: تسمية ما يشعر به طفلك — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_development_growth_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_growth_b04_qz.json",
+            "title": "المشاعر الأولى: تسمية ما يشعر به طفلك — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_2-3_islamic_attachment_b01",
       "age_group": "2-3",
       "topic_path": "islamic_attachment",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_islamic_attachment_b01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_attachment_b01_fc.json",
+            "title": "غرس حب الله بلغة الحب لا الخوف — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_islamic_attachment_b01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_attachment_b01_qz.json",
+            "title": "غرس حب الله بلغة الحب لا الخوف — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_2-3_islamic_attachment_b02",
       "age_group": "2-3",
       "topic_path": "islamic_attachment",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_islamic_attachment_b02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_attachment_b02_fc.json",
+            "title": "القدوة الصامتة: طفلك يقلّد ما يراك تفعله — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_islamic_attachment_b02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_attachment_b02_qz.json",
+            "title": "القدوة الصامتة: طفلك يقلّد ما يراك تفعله — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_2-3_islamic_attachment_b03",
       "age_group": "2-3",
       "topic_path": "islamic_attachment",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_islamic_attachment_b03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_attachment_b03_fc.json",
+            "title": "الرفق عند الخطأ: تأديب يبني لا يكسر — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_islamic_attachment_b03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_attachment_b03_qz.json",
+            "title": "الرفق عند الخطأ: تأديب يبني لا يكسر — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_4-6_development_positive_parenting_b01",
       "age_group": "4-6",
       "topic_path": "development_positive_parenting",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_development_positive_parenting_b01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_development_positive_parenting_b01_fc.json",
+            "title": "الروتين والحدود: الأمان الذي يحب الطفل — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_development_positive_parenting_b01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_development_positive_parenting_b01_qz.json",
+            "title": "الروتين والحدود: الأمان الذي يحب الطفل — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_4-6_development_positive_parenting_b02",
       "age_group": "4-6",
       "topic_path": "development_positive_parenting",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_development_positive_parenting_b02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_development_positive_parenting_b02_fc.json",
+            "title": "اللعب التخيّلي: مدرسة الطفل الخفية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_development_positive_parenting_b02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_development_positive_parenting_b02_qz.json",
+            "title": "اللعب التخيّلي: مدرسة الطفل الخفية — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_4-6_islamic_parenting_adab_b04",
       "age_group": "4-6",
       "topic_path": "islamic_parenting_adab",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_islamic_parenting_adab_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_islamic_parenting_adab_b04_fc.json",
+            "title": "آداب الكلام: الصدق والكلمة الطيبة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_islamic_parenting_adab_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_islamic_parenting_adab_b04_qz.json",
+            "title": "آداب الكلام: الصدق والكلمة الطيبة — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_4-6_islamic_parenting_bond_b04",
       "age_group": "4-6",
       "topic_path": "islamic_parenting_bond",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_islamic_parenting_bond_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_islamic_parenting_bond_b04_fc.json",
+            "title": "الدعاء معاً: تعليم القلب أن يتعلّق بالله — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_islamic_parenting_bond_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_islamic_parenting_bond_b04_qz.json",
+            "title": "الدعاء معاً: تعليم القلب أن يتعلّق بالله — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_7-9_development_digital_wellbeing_b04",
       "age_group": "7-9",
       "topic_path": "development_digital_wellbeing",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_development_digital_wellbeing_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_digital_wellbeing_b04_fc.json",
+            "title": "المصروف والمسؤولية: أول دروس إدارة الذات — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_development_digital_wellbeing_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_digital_wellbeing_b04_qz.json",
+            "title": "المصروف والمسؤولية: أول دروس إدارة الذات — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_7-9_islamic_parenting_worship_b04",
       "age_group": "7-9",
       "topic_path": "islamic_parenting_worship",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_worship_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_islamic_parenting_worship_b04_fc.json",
+            "title": "الأخلاق في التعامل: الأمانة وبر الوالدين — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_worship_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_islamic_parenting_worship_b04_qz.json",
+            "title": "الأخلاق في التعامل: الأمانة وبر الوالدين — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_7-9_medical_emotional_health_b03",
       "age_group": "7-9",
       "topic_path": "medical_emotional_health",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_medical_emotional_health_b03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_emotional_health_b03_fc.json",
+            "title": "الخوف والقلق: من الوحوش إلى قلق الواقع — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_medical_emotional_health_b03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_emotional_health_b03_qz.json",
+            "title": "الخوف والقلق: من الوحوش إلى قلق الواقع — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     },
     {
       "lesson_id": "lesson_7-9_medical_emotional_health_b04",
       "age_group": "7-9",
       "topic_path": "medical_emotional_health",
-      "assets": {}
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_medical_emotional_health_b04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_emotional_health_b04_fc.json",
+            "title": "تنظيم الانفعال: تعليم الطفل أن يهدّئ نفسه — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_medical_emotional_health_b04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_emotional_health_b04_qz.json",
+            "title": "تنظيم الانفعال: تعليم الطفل أن يهدّئ نفسه — اختبار",
+            "item_count": 3
+          }
+        ]
+      }
     }
   ]
 }
