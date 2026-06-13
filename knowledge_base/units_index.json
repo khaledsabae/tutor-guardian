@@ -1,11 +1,11 @@
 {
-  "total_units": 305,
-  "generated_at": "2026-06-13T13:59:21.040994+00:00",
+  "total_units": 315,
+  "generated_at": "2026-06-13T14:39:51.631071+00:00",
   "by_domain": {
-    "medical": 101,
+    "medical": 105,
     "cyber": 51,
-    "islamic_parenting": 111,
-    "development": 42
+    "islamic_parenting": 115,
+    "development": 44
   },
   "units": [
     {
@@ -3513,6 +3513,30 @@
       "size_chars": 1755
     },
     {
+      "id": "seed-aggression-23",
+      "domain": "medical",
+      "title": "الضرب والعض لدى الطفل في عمر سنتين إلى ثلاث",
+      "source_file": "curated/AAP - HealthyChildren.org",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "العدوان",
+      "needs_ocr": false,
+      "size_chars": 491
+    },
+    {
+      "id": "seed-aggression-46",
+      "domain": "medical",
+      "title": "السلوك العدواني لدى الطفل في عمر أربعة إلى ستة",
+      "source_file": "curated/CDC / AAP - Positive Parenting",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "العدوان",
+      "needs_ocr": false,
+      "size_chars": 520
+    },
+    {
       "id": "seed-bedwet-46",
       "domain": "medical",
       "title": "التبول اللاإرادي الليلي في عمر أربعة إلى ستة",
@@ -3535,6 +3559,102 @@
       "behavior_type": "التبول اللاإرادي",
       "needs_ocr": false,
       "size_chars": 476
+    },
+    {
+      "id": "seed-defiance-23",
+      "domain": "islamic_parenting",
+      "title": "التعامل مع عناد الطفل في عمر سنتين إلى ثلاث",
+      "source_file": "curated/CDC - Positive Parenting / إرشاد تربوي",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "العناد",
+      "needs_ocr": false,
+      "size_chars": 461
+    },
+    {
+      "id": "seed-defiance-46",
+      "domain": "islamic_parenting",
+      "title": "عناد الطفل ورفضه للأوامر في عمر أربعة إلى ستة",
+      "source_file": "curated/CDC - Positive Parenting Tips / إرشاد تربوي",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "العناد",
+      "needs_ocr": false,
+      "size_chars": 473
+    },
+    {
+      "id": "seed-fear-46",
+      "domain": "medical",
+      "title": "مخاوف الطفل في عمر أربعة إلى ستة",
+      "source_file": "curated/AAP - HealthyChildren.org",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "الخوف",
+      "needs_ocr": false,
+      "size_chars": 500
+    },
+    {
+      "id": "seed-fear-79",
+      "domain": "medical",
+      "title": "التعامل مع قلق ومخاوف الطفل في عمر سبعة إلى تسعة",
+      "source_file": "curated/AAP / Child Mind Institute",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الخوف",
+      "needs_ocr": false,
+      "size_chars": 519
+    },
+    {
+      "id": "seed-jealousy-23",
+      "domain": "development",
+      "title": "غيرة الطفل من المولود الجديد في عمر سنتين إلى ثلاث",
+      "source_file": "curated/AAP - HealthyChildren.org / New baby & siblings",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "الغيرة",
+      "needs_ocr": false,
+      "size_chars": 463
+    },
+    {
+      "id": "seed-jealousy-46",
+      "domain": "development",
+      "title": "غيرة الطفل من أخيه الجديد في عمر أربعة إلى ستة",
+      "source_file": "curated/AAP / UNICEF - Siblings",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "الغيرة",
+      "needs_ocr": false,
+      "size_chars": 493
+    },
+    {
+      "id": "seed-lying-46",
+      "domain": "islamic_parenting",
+      "title": "تعامل مع كذب الطفل في عمر أربعة إلى ستة",
+      "source_file": "curated/AAP - HealthyChildren.org / إرشاد تربوي إسلامي",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "الكذب",
+      "needs_ocr": false,
+      "size_chars": 460
+    },
+    {
+      "id": "seed-lying-79",
+      "domain": "islamic_parenting",
+      "title": "معالجة الكذب لدى الطفل في عمر سبعة إلى تسعة",
+      "source_file": "curated/إرشاد تربوي إسلامي / AAP",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الكذب",
+      "needs_ocr": false,
+      "size_chars": 503
     },
     {
       "id": "seed-picky-23",
