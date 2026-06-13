@@ -18,7 +18,7 @@ from app.services.reranker import RERANK_MIN_SCORE
 from app.services.query_rewriter import rewrite_query
 from app.services.llm_service import (
     generate_reply, build_full_prompt, generate_general_pivot, build_pivot_prompt,
-    strip_pivot_citation,
+    strip_pivot_citation, clean_model_output, _CJK_RE,
 )
 from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
@@ -386,6 +386,7 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
                     final_text = (chunk.result.text if chunk.result else "").strip()
                     if stream_mode == "general_pivot":
                         final_text = strip_pivot_citation(final_text)
+                    final_text = clean_model_output(final_text)
                     reply = AssistantReply(
                         reply_text=final_text, domain=primary_domain, severity=severity,
                         needs_human_review=decision["needs_human_review"],
@@ -407,7 +408,8 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
                     )
                     yield _sse("done", reply.model_dump())
                 elif chunk.delta:
-                    yield _sse("token", {"delta": chunk.delta})
+                    # Filter leaked CJK tokens from the live stream too.
+                    yield _sse("token", {"delta": _CJK_RE.sub("", chunk.delta)})
         except Exception as e:
             logger.warning("Stream generation failed: %s", e)
             yield _sse("error", {"detail": "تعذّر توليد الرد، يُرجى المحاولة لاحقاً."})

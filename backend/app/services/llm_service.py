@@ -13,6 +13,24 @@ logger = logging.getLogger(__name__)
 # Matches a trailing citation line (📚 …) or a bare "المصدر/المصادر: …" line.
 _PIVOT_CITATION_RE = re.compile(r"\n*\s*(?:📚|المصدر[\s:：]|المصادر[\s:：]).*$", re.S)
 
+# CJK / Japanese / Korean / fullwidth ranges. The local qwen model occasionally
+# leaks Chinese tokens mid-answer ("首先要认识到，…"); strip them deterministically.
+_CJK_RE = re.compile(
+    r"[　-〿぀-ヿㇰ-ㇿ㐀-䶿一-鿿"
+    r"가-힯＀-￯]+"
+)
+
+
+def clean_model_output(text: str) -> str:
+    """Remove leaked CJK characters and tidy the artifacts they leave behind."""
+    if not text:
+        return text
+    t = _CJK_RE.sub("", text)
+    t = re.sub(r"[ \t]{2,}", " ", t)
+    t = re.sub(r" *\n", "\n", t)
+    t = re.sub(r"\n{3,}", "\n\n", t)
+    return t.strip()
+
 
 _DOMAIN_LABELS = {
     "fiqh": "🕌 شرعي/تربوي",
@@ -81,7 +99,7 @@ async def generate_general_pivot(
     result = await get_gateway().generate(
         prompt, tier=tier, route_reason=route_reason
     )
-    return strip_pivot_citation(result.text)
+    return clean_model_output(strip_pivot_citation(result.text))
 
 
 def _build_prompt(
@@ -225,7 +243,7 @@ async def generate_reply(
     result = await get_gateway().generate(
         full_prompt, tier=tier, route_reason=route_reason
     )
-    return result.text
+    return clean_model_output(result.text)
 
 
 def build_full_prompt(
