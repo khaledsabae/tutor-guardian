@@ -112,20 +112,26 @@ async def draft_reply(request: Request, user_message: UserMessage):
     else:
         history = user_message.conversation_history or []
     detected_domains = classify_domains(query_text)
+    is_general = detected_domains == ["general"]
     logger.info("Auto-detected domains: %s", detected_domains)
 
     # ── Step 4: Hybrid retrieval (vector + BM25 → RRF → rerank) ──────
+    # A general/off-topic question has no parenting KB to ground on, so skip
+    # retrieval entirely and go straight to the pivot.
     _ensure_index()
-    rewritten = rewrite_query(
-        query_text, classifier_fast_path=matched_fast_path(query_text)
-    )
-    retrieved_units = retrieve_hybrid(
-        query_text=query_text,
-        domains=detected_domains,
-        age_group=user_message.age_group or "unspecified",
-        rewritten_query=rewritten,
-    )
-    log_retrieval(query_text, detected_domains, rewritten, retrieved_units)
+    if is_general:
+        retrieved_units: list[dict] = []
+    else:
+        rewritten = rewrite_query(
+            query_text, classifier_fast_path=matched_fast_path(query_text)
+        )
+        retrieved_units = retrieve_hybrid(
+            query_text=query_text,
+            domains=detected_domains,
+            age_group=user_message.age_group or "unspecified",
+            rewritten_query=rewritten,
+        )
+        log_retrieval(query_text, detected_domains, rewritten, retrieved_units)
 
     primary_domain = detected_domains[0] if detected_domains else "medical"
 
@@ -133,7 +139,8 @@ async def draft_reply(request: Request, user_message: UserMessage):
     mode: str = "retrieval_only"
     draft = ""
 
-    off_topic, top_rerank = _off_topic(retrieved_units)
+    score_off_topic, top_rerank = _off_topic(retrieved_units)
+    off_topic = is_general or score_off_topic
 
     if off_topic:
         # General/off-topic question (e.g. a recipe). Don't ground on the
@@ -295,28 +302,33 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
         if session_id else (user_message.conversation_history or [])
     )
     detected_domains = classify_domains(query_text)
+    is_general = detected_domains == ["general"]
     _ensure_index()
-    rewritten = rewrite_query(
-        query_text, classifier_fast_path=matched_fast_path(query_text)
-    )
-    retrieved_units = retrieve_hybrid(
-        query_text=query_text, domains=detected_domains,
-        age_group=user_message.age_group or "unspecified",
-        rewritten_query=rewritten,
-    )
-    log_retrieval(query_text, detected_domains, rewritten, retrieved_units)
+    if is_general:
+        retrieved_units: list[dict] = []
+    else:
+        rewritten = rewrite_query(
+            query_text, classifier_fast_path=matched_fast_path(query_text)
+        )
+        retrieved_units = retrieve_hybrid(
+            query_text=query_text, domains=detected_domains,
+            age_group=user_message.age_group or "unspecified",
+            rewritten_query=rewritten,
+        )
+        log_retrieval(query_text, detected_domains, rewritten, retrieved_units)
     primary_domain = detected_domains[0] if detected_domains else "medical"
     severity = user_message.severity or "خفيف"
 
-    # No context → non-streamed fallback
-    if not retrieved_units:
+    score_off_topic, _top_rerank = _off_topic(retrieved_units)
+    off_topic = is_general or score_off_topic
+
+    # No relevant KB and not an off-topic pivot → non-streamed fallback
+    if not retrieved_units and not off_topic:
         draft = f"لا توجد معلومات كافية حاليًا حول '{query_text}'. نوصي باستشارة مختص."
         return _single(apply_guardrails(
             user_message.model_copy(update={"domain": primary_domain}),
             draft, policies, mode="retrieval_only",
         ))
-
-    off_topic, _top_rerank = _off_topic(retrieved_units)
 
     if off_topic:
         # General/off-topic question → stream a brief answer pivoted to a

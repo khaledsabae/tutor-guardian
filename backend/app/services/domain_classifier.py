@@ -62,6 +62,7 @@ CLASSIFY_PROMPT = """صنّف سؤال الوالد/الوالدة في مجال
 - medical: صحة نفسية، سلوكيات مقلقة، قلق، اكتئاب، توحد، فرط حركة، تأخر نمائي، استشارة طبيب أو أخصائي نفسي، علاج نفسي
 - cyber: شاشات، إدمان ألعاب فيديو إلكترونية، هاتف ذكي، إنترنت، يوتيوب، تيك توك، تنمر إلكتروني عبر الإنترنت، أمان رقمي، مواقع التواصل الاجتماعي
 - development: نمو جسدي، مراحل عمرية طبيعية، مشي، أسنان، مهارات حركية، إعاقة، تدخل مبكر، كلام وتطور اللغة
+- general: أي سؤال عام لا علاقة له بالتربية أو الأطفال (مثل وصفة طعام، رياضة، طقس، أخبار، معلومة عامة، برمجة). استخدمه فقط عندما لا ينطبق أي مجال تربوي.
 
 السؤال: {question}
 
@@ -108,10 +109,15 @@ def _call_llm(question: str) -> Optional[List[str]]:
         if start >= 0 and end > start:
             result = json.loads(raw[start:end])
             domains = result.get("domains", [])
+            # A real parenting domain always wins over "general"; only fall
+            # back to off-topic when the model found no parenting domain at all.
             filtered = [d for d in domains if d in VALID_DOMAINS]
             if filtered:
                 logger.debug("LLM classified '%s...' as %s", question[:40], filtered)
                 return filtered
+            if any(d == "general" for d in domains):
+                logger.debug("LLM classified '%s...' as general (off-topic)", question[:40])
+                return ["general"]
 
         logger.warning("LLM returned invalid domain list: %s", raw[:200])
         return None
