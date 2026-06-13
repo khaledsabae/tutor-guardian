@@ -619,11 +619,12 @@ class _InteractiveAssetsSection extends ConsumerWidget {
 
     return assetsAsync.when(
       data: (LessonAssets? assets) {
-        if (assets == null) return const SizedBox.shrink();
-
         final buttons = <Widget>[];
 
-        if (assets.podcastMp3 != null) {
+        // Media buttons only when the lesson actually has assets; the game
+        // button below is domain-based and shows even without any assets.
+        if (assets != null) {
+          if (assets.podcastMp3 != null) {
           // The backend returns either a full URL or a relative path
           // (e.g. "docs/lesson_01_podcast.mp3" — pre-R2 era). We accept
           // both: full URLs pass through, relative paths are joined
@@ -731,6 +732,9 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           );
         }
 
+        } // end assets != null
+
+        // ── Game button — domain-based, ALWAYS available (even with no assets) ──
         if (domain == 'cyber') {
           buttons.add(
             _AssetButton(
