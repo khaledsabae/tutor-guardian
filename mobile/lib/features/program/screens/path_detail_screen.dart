@@ -127,6 +127,29 @@ class _Body extends ConsumerWidget {
           progress: progressMap,
         ),
         const SizedBox(height: 20),
+        // Prominent video preview for the whole unit (the path's intro video).
+        if (path.videoMp4 != null) ...[
+          _PathVideoCard(
+            title: path.title,
+            style: style,
+            onTap: () {
+              final raw = path.videoMp4!;
+              final url = raw.startsWith('http')
+                  ? raw
+                  : '${AppConfig.apiBaseUrl}/$raw';
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => VideoPlayerScreen(
+                    url: url,
+                    title: '🎥 فيديو الوحدة: ${path.title}',
+                  ),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 20),
+        ],
         if (path.primaryReference != null) ...[
           _ReferenceCard(ref: path.primaryReference!),
           const SizedBox(height: 20),
@@ -809,6 +832,76 @@ class _FlagChip extends StatelessWidget {
         text,
         style:
             TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w600),
+      ),
+    );
+  }
+}
+
+/// Prominent, tappable video preview shown at the top of a unit (path).
+class _PathVideoCard extends StatelessWidget {
+  const _PathVideoCard({
+    required this.title,
+    required this.style,
+    required this.onTap,
+  });
+
+  final String title;
+  final DomainStyle style;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return BouncyTap(
+      onTap: onTap,
+      child: Container(
+        height: 150,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: style.gradient,
+          borderRadius: BorderRadius.circular(Dt.rCard),
+          boxShadow: Dt.softShadow(style.base),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              right: -8,
+              bottom: -18,
+              child: Text(
+                '🎬',
+                style: TextStyle(
+                  fontSize: 120,
+                  color: Colors.white.withValues(alpha: .12),
+                ),
+              ),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: .94),
+                    shape: BoxShape.circle,
+                    boxShadow: Dt.softShadow(Colors.black, alpha: .15),
+                  ),
+                  child: Icon(Icons.play_arrow_rounded,
+                      size: 46, color: style.base),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  '🎥 شاهد فيديو الوحدة',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
