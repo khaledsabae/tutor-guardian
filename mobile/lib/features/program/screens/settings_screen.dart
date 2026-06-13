@@ -33,6 +33,7 @@ import 'badges_screen.dart';
 import 'favorites_screen.dart';
 import '../providers/lesson_assets_provider.dart';
 import '../../adhkar/services/notification_service.dart';
+import '../../feedback/feedback_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -112,6 +113,14 @@ class SettingsScreen extends ConsumerWidget {
                       ref.invalidate(childrenListProvider);
                     }
                   },
+                ),
+                _SettingsRow(
+                  icon: Icons.feedback_outlined,
+                  title: 'شاركنا رأيك',
+                  subtitle: 'اقتراح أو مشكلة — كتابةً أو صوتاً، يصل لنا مباشرة',
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const FeedbackScreen()),
+                  ),
                 ),
                 _SettingsRow(
                   icon: Icons.restart_alt,

@@ -326,6 +326,31 @@ class TgClient {
     return (data['story'] as String?) ?? '';
   }
 
+  /// Send general in-app feedback (text and/or a base64 voice note) to Khaled.
+  Future<void> sendAppFeedback({
+    String message = '',
+    String? contact,
+    String? audioBase64,
+    String? deviceId,
+  }) async {
+    final resp = await _http
+        .post(
+          Uri.parse('$_baseUrl/api/feedback/app'),
+          headers: const {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'message': message,
+            if (contact != null && contact.isNotEmpty) 'contact': contact,
+            if (audioBase64 != null) 'audio_base64': audioBase64,
+            if (deviceId != null) 'device_id': deviceId,
+            'app_version': AppConfig.appVersion,
+          }),
+        )
+        .timeout(AppConfig.streamTimeout);
+    if (resp.statusCode != 201 && resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+  }
+
   /// List the device's past conversations (for the history drawer).
   /// Returns [] when there is no active session yet.
   Future<List<ChatSessionSummary>> listSessions() async {

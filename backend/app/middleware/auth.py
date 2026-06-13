@@ -40,6 +40,10 @@ def _is_protected(path: str, method: str) -> bool:
     # on the same path lists the device's history and needs auth.
     if path == "/api/chat/sessions":
         return method != "POST"
+    # In-app feedback: POST is public (anyone can send); GET is admin-gated
+    # inside the route via a header key.
+    if path == "/api/feedback/app":
+        return False
     if path in _PUBLIC_PATHS:
         return False
     for prefix in _PROTECTED_PREFIXES:
