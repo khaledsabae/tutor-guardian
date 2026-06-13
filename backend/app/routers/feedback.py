@@ -39,6 +39,12 @@ def _ensure_app_feedback_table(con) -> None:
         )
         """
     )
+    # Voice notes are stored in the DB (the docs/ volume is mounted read-only
+    # in production, so we can't write audio files there). Add the column on
+    # the fly for older DBs.
+    cols = {r[1] for r in con.execute("PRAGMA table_info(app_feedback)")}
+    if "audio_b64" not in cols:
+        con.execute("ALTER TABLE app_feedback ADD COLUMN audio_b64 TEXT")
 
 
 class AppFeedbackIn(BaseModel):
@@ -57,29 +63,28 @@ def submit_app_feedback(body: AppFeedbackIn) -> dict:
         raise HTTPException(status_code=400, detail="empty feedback")
 
     fid = uuid.uuid4().hex
-    audio_file = None
+    audio_b64 = None
     if body.audio_base64:
+        # Validate it decodes and isn't oversized; store the base64 in the DB
+        # (docs/ is read-only in prod, so no file write).
         try:
             raw = base64.b64decode(body.audio_base64)
-            if len(raw) > 8 * 1024 * 1024:  # 8 MB cap
-                raise HTTPException(status_code=413, detail="audio too large")
-            _FEEDBACK_AUDIO_DIR.mkdir(parents=True, exist_ok=True)
-            audio_file = f"docs/feedback/{fid}.m4a"
-            (_FEEDBACK_AUDIO_DIR / f"{fid}.m4a").write_bytes(raw)
-        except HTTPException:
-            raise
         except Exception as exc:  # noqa: BLE001
             raise HTTPException(status_code=400, detail=f"bad audio: {exc}") from exc
+        if len(raw) > 8 * 1024 * 1024:  # 8 MB cap
+            raise HTTPException(status_code=413, detail="audio too large")
+        audio_b64 = body.audio_base64
 
     try:
         con = get_conn()
         _ensure_app_feedback_table(con)
         con.execute(
             "INSERT INTO app_feedback (id, message, contact, audio_file, "
-            "device_id, app_version, created_at) VALUES (?,?,?,?,?,?,?)",
-            (fid, body.message.strip(), body.contact, audio_file,
+            "device_id, app_version, created_at, audio_b64) "
+            "VALUES (?,?,?,?,?,?,?,?)",
+            (fid, body.message.strip(), body.contact, None,
              body.device_id, body.app_version,
-             datetime.now(timezone.utc).isoformat()),
+             datetime.now(timezone.utc).isoformat(), audio_b64),
         )
         con.commit()
         con.close()
@@ -91,19 +96,42 @@ def submit_app_feedback(body: AppFeedbackIn) -> dict:
 
 @router.get("/app")
 def list_app_feedback(x_admin_key: str = Header(default="")) -> dict:
-    """Khaled-only: list submitted feedback (audio at /<audio_file>)."""
+    """Khaled-only: list submitted feedback. Voice notes (has_audio=true) are
+    fetched separately at GET /api/feedback/app/{id}/audio."""
     if x_admin_key != _ADMIN_KEY:
         raise HTTPException(status_code=403, detail="forbidden")
     con = get_conn()
     _ensure_app_feedback_table(con)
     rows = con.execute(
-        "SELECT id, message, contact, audio_file, device_id, app_version, "
-        "created_at FROM app_feedback ORDER BY created_at DESC LIMIT 500"
+        "SELECT id, message, contact, device_id, app_version, created_at, "
+        "(audio_b64 IS NOT NULL) FROM app_feedback "
+        "ORDER BY created_at DESC LIMIT 500"
     ).fetchall()
     con.close()
-    cols = ["id", "message", "contact", "audio_file", "device_id",
-            "app_version", "created_at"]
-    return {"count": len(rows), "items": [dict(zip(cols, r)) for r in rows]}
+    cols = ["id", "message", "contact", "device_id", "app_version",
+            "created_at", "has_audio"]
+    items = [dict(zip(cols, r)) for r in rows]
+    for it in items:
+        it["has_audio"] = bool(it["has_audio"])
+    return {"count": len(rows), "items": items}
+
+
+@router.get("/app/{feedback_id}/audio")
+def get_app_feedback_audio(feedback_id: str, x_admin_key: str = Header(default="")):
+    """Khaled-only: download a feedback voice note as audio/mp4."""
+    from fastapi.responses import Response
+
+    if x_admin_key != _ADMIN_KEY:
+        raise HTTPException(status_code=403, detail="forbidden")
+    con = get_conn()
+    _ensure_app_feedback_table(con)
+    row = con.execute(
+        "SELECT audio_b64 FROM app_feedback WHERE id = ?", (feedback_id,)
+    ).fetchone()
+    con.close()
+    if not row or not row[0]:
+        raise HTTPException(status_code=404, detail="no audio")
+    return Response(content=base64.b64decode(row[0]), media_type="audio/mp4")
 
 
 class FeedbackIn(BaseModel):

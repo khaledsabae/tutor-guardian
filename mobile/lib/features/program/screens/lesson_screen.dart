@@ -228,8 +228,8 @@ class _Body extends ConsumerWidget {
         _InteractiveAssetsSection(lessonId: lesson.id, domain: lesson.domain),
         const SizedBox(height: 16),
         _Section(
-          emoji: '📝',
-          title: 'الملخص',
+          emoji: '📖',
+          title: 'محتوى الدرس',
           body: lesson.summary,
         ),
         const SizedBox(height: 16),
