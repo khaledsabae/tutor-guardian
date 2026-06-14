@@ -68,7 +68,7 @@ def load_index():
 
 async def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--map", default="/tmp/regen_map.json")
+    ap.add_argument("--map", default="scripts/podcast_source_map.json")
     ap.add_argument("--only", default="")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
