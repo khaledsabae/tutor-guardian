@@ -2746,6 +2746,20 @@
             "title": "مكالمة الفيديو: الاستثناء الوحيد المسموح — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_0-3_cyber_screen_foundations_b04_podcast.mp3",
+            "size_bytes": 531936,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_cyber_screen_foundations_b04_video.mp4",
+            "size_bytes": 1471650,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2768,6 +2782,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_b04_qz.json",
             "title": "القراءة المشتركة: أول جسر نحو اللغة — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_0-3_development_early_moments_b04_podcast.mp3",
+            "size_bytes": 496512,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_development_early_moments_b04_video.mp4",
+            "size_bytes": 1325053,
+            "language": "ar"
           }
         ]
       }
@@ -2792,6 +2820,20 @@
             "title": "كلمات السر والأمان: حارس الباب الرقمي — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_10-12_cyber_digital_citizenship_b04_podcast.mp3",
+            "size_bytes": 500544,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_10-12_cyber_digital_citizenship_b04_video.mp4",
+            "size_bytes": 1364347,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2814,6 +2856,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_puberty_wellbeing_b04_qz.json",
             "title": "صورة الجسد والثقة: قبل عاصفة المراهقة — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_10-12_medical_puberty_wellbeing_b04_podcast.mp3",
+            "size_bytes": 522000,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_10-12_medical_puberty_wellbeing_b04_video.mp4",
+            "size_bytes": 1361558,
+            "language": "ar"
           }
         ]
       }
@@ -2838,6 +2894,20 @@
             "title": "ضغط الأقران الرقمي والتنمّر: الشجاعة أن تقف — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_13-15_cyber_digital_maturity_b04_podcast.mp3",
+            "size_bytes": 527328,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_cyber_digital_maturity_b04_video.mp4",
+            "size_bytes": 1463800,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2860,6 +2930,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_brain_identity_b04_qz.json",
             "title": "الاستقلال المتدرّج: من التحكم إلى الإشراف — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_13-15_development_brain_identity_b04_podcast.mp3",
+            "size_bytes": 527040,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_development_brain_identity_b04_video.mp4",
+            "size_bytes": 1412265,
+            "language": "ar"
           }
         ]
       }
@@ -2884,6 +2968,20 @@
             "title": "البصمة الرقمية والقبول الجامعي والوظيفي — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_16-18_cyber_digital_professional_b03_podcast.mp3",
+            "size_bytes": 496512,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_16-18_cyber_digital_professional_b03_video.mp4",
+            "size_bytes": 1382954,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2906,6 +3004,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_digital_professional_b04_qz.json",
             "title": "إدمان الشاشة وإدارة الوقت قبل الاستقلال — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_16-18_cyber_digital_professional_b04_podcast.mp3",
+            "size_bytes": 503568,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_16-18_cyber_digital_professional_b04_video.mp4",
+            "size_bytes": 1414725,
+            "language": "ar"
           }
         ]
       }
@@ -2930,6 +3042,20 @@
             "title": "طلب المساعدة النفسية: مهارة لا ضعف — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_16-18_medical_adult_transition_b04_podcast.mp3",
+            "size_bytes": 510912,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_16-18_medical_adult_transition_b04_video.mp4",
+            "size_bytes": 1312402,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2952,6 +3078,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_b01_qz.json",
             "title": "حدّ الساعة: قاعدة الشاشة في عمر السنتين — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_cyber_routine_b01_podcast.mp3",
+            "size_bytes": 539424,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_cyber_routine_b01_video.mp4",
+            "size_bytes": 1490605,
+            "language": "ar"
           }
         ]
       }
@@ -2976,6 +3116,20 @@
             "title": "الشاشة المشتركة بدل الشاشة الصامتة — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_cyber_routine_b02_podcast.mp3",
+            "size_bytes": 495792,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_cyber_routine_b02_video.mp4",
+            "size_bytes": 1337011,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2998,6 +3152,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_b04_qz.json",
             "title": "نوم بلا شاشات: حماية ساعة ما قبل النوم — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_cyber_routine_b04_podcast.mp3",
+            "size_bytes": 517968,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_cyber_routine_b04_video.mp4",
+            "size_bytes": 1411780,
+            "language": "ar"
           }
         ]
       }
@@ -3022,6 +3190,20 @@
             "title": "نوبات الغضب: عقل صغير بلا كلمات كافية — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_development_growth_b03_podcast.mp3",
+            "size_bytes": 523728,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_development_growth_b03_video.mp4",
+            "size_bytes": 1369047,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -3044,6 +3226,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_growth_b04_qz.json",
             "title": "المشاعر الأولى: تسمية ما يشعر به طفلك — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_development_growth_b04_podcast.mp3",
+            "size_bytes": 498384,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_development_growth_b04_video.mp4",
+            "size_bytes": 1362185,
+            "language": "ar"
           }
         ]
       }
@@ -3068,6 +3264,20 @@
             "title": "غرس حب الله بلغة الحب لا الخوف — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_islamic_attachment_b01_podcast.mp3",
+            "size_bytes": 476208,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_islamic_attachment_b01_video.mp4",
+            "size_bytes": 1237018,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -3090,6 +3300,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_attachment_b02_qz.json",
             "title": "القدوة الصامتة: طفلك يقلّد ما يراك تفعله — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_islamic_attachment_b02_podcast.mp3",
+            "size_bytes": 484560,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_islamic_attachment_b02_video.mp4",
+            "size_bytes": 1270311,
+            "language": "ar"
           }
         ]
       }
@@ -3114,6 +3338,20 @@
             "title": "الرفق عند الخطأ: تأديب يبني لا يكسر — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_islamic_attachment_b03_podcast.mp3",
+            "size_bytes": 493056,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_islamic_attachment_b03_video.mp4",
+            "size_bytes": 1276662,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -3136,6 +3374,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_development_positive_parenting_b01_qz.json",
             "title": "الروتين والحدود: الأمان الذي يحب الطفل — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_development_positive_parenting_b01_podcast.mp3",
+            "size_bytes": 534672,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_development_positive_parenting_b01_video.mp4",
+            "size_bytes": 1430731,
+            "language": "ar"
           }
         ]
       }
@@ -3160,6 +3412,20 @@
             "title": "اللعب التخيّلي: مدرسة الطفل الخفية — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_development_positive_parenting_b02_podcast.mp3",
+            "size_bytes": 519696,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_development_positive_parenting_b02_video.mp4",
+            "size_bytes": 1369944,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -3182,6 +3448,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_islamic_parenting_adab_b04_qz.json",
             "title": "آداب الكلام: الصدق والكلمة الطيبة — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_islamic_parenting_adab_b04_podcast.mp3",
+            "size_bytes": 519984,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_islamic_parenting_adab_b04_video.mp4",
+            "size_bytes": 1379442,
+            "language": "ar"
           }
         ]
       }
@@ -3206,6 +3486,20 @@
             "title": "الدعاء معاً: تعليم القلب أن يتعلّق بالله — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_islamic_parenting_bond_b04_podcast.mp3",
+            "size_bytes": 25200,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_islamic_parenting_bond_b04_video.mp4",
+            "size_bytes": 80973,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -3228,6 +3522,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_digital_wellbeing_b04_qz.json",
             "title": "المصروف والمسؤولية: أول دروس إدارة الذات — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_development_digital_wellbeing_b04_podcast.mp3",
+            "size_bytes": 549216,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_development_digital_wellbeing_b04_video.mp4",
+            "size_bytes": 1502276,
+            "language": "ar"
           }
         ]
       }
@@ -3252,6 +3560,20 @@
             "title": "الأخلاق في التعامل: الأمانة وبر الوالدين — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_islamic_parenting_worship_b04_podcast.mp3",
+            "size_bytes": 521280,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_islamic_parenting_worship_b04_video.mp4",
+            "size_bytes": 1380881,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -3275,6 +3597,20 @@
             "title": "الخوف والقلق: من الوحوش إلى قلق الواقع — اختبار",
             "item_count": 3
           }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_medical_emotional_health_b03_podcast.mp3",
+            "size_bytes": 537696,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_medical_emotional_health_b03_video.mp4",
+            "size_bytes": 1473620,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -3297,6 +3633,20 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_emotional_health_b04_qz.json",
             "title": "تنظيم الانفعال: تعليم الطفل أن يهدّئ نفسه — اختبار",
             "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_medical_emotional_health_b04_podcast.mp3",
+            "size_bytes": 527040,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_medical_emotional_health_b04_video.mp4",
+            "size_bytes": 1395136,
+            "language": "ar"
           }
         ]
       }
