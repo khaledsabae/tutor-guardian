@@ -1,7 +1,16 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Required for HTTP/SSE calls to the Tutor Guardian backend. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- No ads: strip the advertising-ID permission that firebase_analytics
+         merges in by default, so the app never accesses the advertising ID
+         (Play Data Safety "uses advertising ID" = No). -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID"
+        tools:node="remove" />
 
     <!-- Local Notifications. NOTE: no SCHEDULE_EXACT_ALARM/USE_EXACT_ALARM —
          we schedule with inexactAllowWhileIdle, and USE_EXACT_ALARM is
