@@ -93,6 +93,13 @@
             "file": "docs/lesson_demo_podcast.mp3",
             "size_bytes": 34197666
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_10-12_cyber_01_video.mp4",
+            "size_bytes": 24145036,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -425,6 +432,13 @@
             "size_bytes": 33909194,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_10-12_islamic_02_video.mp4",
+            "size_bytes": 21616663,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -472,6 +486,13 @@
           {
             "file": "docs/lesson_10-12_islamic_parenting_identity_03_podcast.mp3",
             "size_bytes": 46272607,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_10-12_islamic_03_video.mp4",
+            "size_bytes": 29766792,
             "language": "ar"
           }
         ]
@@ -602,6 +623,13 @@
             "size_bytes": 28996422,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_10-12_medical_01_video.mp4",
+            "size_bytes": 17983351,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -649,6 +677,13 @@
           {
             "file": "docs/lesson_10-12_medical_puberty_wellbeing_02_podcast.mp3",
             "size_bytes": 47102168,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_10-12_medical_02_video.mp4",
+            "size_bytes": 30365551,
             "language": "ar"
           }
         ]
@@ -860,6 +895,13 @@
             "size_bytes": 24982570,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_cyber_02_video.mp4",
+            "size_bytes": 17048983,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -917,6 +959,13 @@
             "size_bytes": 29915628,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_cyber_03_video.mp4",
+            "size_bytes": 19607549,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -950,6 +999,13 @@
           {
             "file": "docs/lesson_13-15_development_brain_identity_01_podcast.mp3",
             "size_bytes": 38928161,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_development_01_video.mp4",
+            "size_bytes": 25945718,
             "language": "ar"
           }
         ]
@@ -987,6 +1043,13 @@
             "size_bytes": 45693536,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_development_02_video.mp4",
+            "size_bytes": 30180779,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -1020,6 +1083,13 @@
           {
             "file": "docs/lesson_13-15_development_brain_identity_03_podcast.mp3",
             "size_bytes": 39305531,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_development_03_video.mp4",
+            "size_bytes": 25054660,
             "language": "ar"
           }
         ]
@@ -1075,6 +1145,13 @@
           {
             "file": "docs/lesson_13-15_islamic_parenting_teen_identity_01_podcast.mp3",
             "size_bytes": 27797708,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_islamic_01_video.mp4",
+            "size_bytes": 17838252,
             "language": "ar"
           }
         ]
@@ -1134,6 +1211,13 @@
             "size_bytes": 32972806,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_islamic_02_video.mp4",
+            "size_bytes": 20814446,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -1191,6 +1275,13 @@
             "size_bytes": 30188297,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_islamic_03_video.mp4",
+            "size_bytes": 19728330,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -1246,6 +1337,13 @@
           {
             "file": "docs/lesson_13-15_islamic_parenting_teen_identity_04_podcast.mp3",
             "size_bytes": 43027059,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_islamic_04_video.mp4",
+            "size_bytes": 27615940,
             "language": "ar"
           }
         ]
@@ -1363,7 +1461,20 @@
           }
         ],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_13-15_medical_02_podcast.mp3",
+            "size_bytes": 437328,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_medical_02_video.mp4",
+            "size_bytes": 1212561,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1399,7 +1510,20 @@
           }
         ],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_13-15_medical_03_podcast.mp3",
+            "size_bytes": 454752,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_medical_03_video.mp4",
+            "size_bytes": 1186245,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1436,7 +1560,20 @@
             "resolution": "2752x1536"
           }
         ],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_13-15_medical_04_podcast.mp3",
+            "size_bytes": 512208,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_13-15_medical_04_video.mp4",
+            "size_bytes": 1387649,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1472,7 +1609,20 @@
         ],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_16-18_cyber_01_podcast.mp3",
+            "size_bytes": 523008,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_16-18_cyber_01_video.mp4",
+            "size_bytes": 1420196,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1508,7 +1658,20 @@
         ],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_16-18_cyber_02_podcast.mp3",
+            "size_bytes": 569664,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_16-18_cyber_02_video.mp4",
+            "size_bytes": 1663987,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1544,7 +1707,13 @@
         ],
         "data_tables": [],
         "infographics": [],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "file": "docs/lesson_16-18_medical_01_podcast.mp3",
+            "size_bytes": 539712,
+            "language": "ar"
+          }
+        ],
         "videos": [
           {
             "file": "docs/lesson_videos/823e565d_Adulthood_Mental_Health.mp4",
@@ -1603,7 +1772,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_16-18_medical_02_podcast.mp3",
+            "size_bytes": 528624,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_16-18_medical_02_video.mp4",
+            "size_bytes": 1349985,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1632,7 +1814,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_16-18_medical_03_podcast.mp3",
+            "size_bytes": 502848,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_16-18_medical_03_video.mp4",
+            "size_bytes": 1305963,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1668,7 +1863,20 @@
         ],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_development_01_podcast.mp3",
+            "size_bytes": 580464,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_development_01_video.mp4",
+            "size_bytes": 1570861,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1697,7 +1905,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_development_02_podcast.mp3",
+            "size_bytes": 607824,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_development_02_video.mp4",
+            "size_bytes": 1613521,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1726,7 +1947,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_adab_01_podcast.mp3",
+            "size_bytes": 553536,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_adab_01_video.mp4",
+            "size_bytes": 1477057,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1755,7 +1989,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_adab_02_podcast.mp3",
+            "size_bytes": 567936,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_adab_02_video.mp4",
+            "size_bytes": 1529651,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1784,7 +2031,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_adab_03_podcast.mp3",
+            "size_bytes": 583776,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_adab_03_video.mp4",
+            "size_bytes": 1548618,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1820,7 +2080,20 @@
         ],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_bond_01_podcast.mp3",
+            "size_bytes": 430704,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_bond_01_video.mp4",
+            "size_bytes": 1126766,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1849,7 +2122,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_bond_02_podcast.mp3",
+            "size_bytes": 474192,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_bond_02_video.mp4",
+            "size_bytes": 1270898,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1878,7 +2164,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_4-6_bond_03_podcast.mp3",
+            "size_bytes": 571536,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_4-6_bond_03_video.mp4",
+            "size_bytes": 1495290,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1907,7 +2206,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_development_01_podcast.mp3",
+            "size_bytes": 283392,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_development_01_video.mp4",
+            "size_bytes": 701213,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1936,7 +2248,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_development_02_podcast.mp3",
+            "size_bytes": 286272,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_development_02_video.mp4",
+            "size_bytes": 743491,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -1972,7 +2297,20 @@
         ],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_worship_01_podcast.mp3",
+            "size_bytes": 260640,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_worship_01_video.mp4",
+            "size_bytes": 634903,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -2001,7 +2339,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_worship_02_podcast.mp3",
+            "size_bytes": 265392,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_worship_02_video.mp4",
+            "size_bytes": 672492,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -2030,7 +2381,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_worship_03_podcast.mp3",
+            "size_bytes": 261936,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_worship_03_video.mp4",
+            "size_bytes": 645719,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -2059,7 +2423,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_medical_01_podcast.mp3",
+            "size_bytes": 311904,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_medical_01_video.mp4",
+            "size_bytes": 804532,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -2088,7 +2465,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_medical_02_podcast.mp3",
+            "size_bytes": 355680,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_medical_02_video.mp4",
+            "size_bytes": 906698,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -2117,7 +2507,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_7-9_development_03_podcast.mp3",
+            "size_bytes": 284400,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_7-9_development_03_video.mp4",
+            "size_bytes": 752358,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -2150,6 +2553,13 @@
           {
             "file": "docs/lesson_0-3_cyber_screen_foundations_01_podcast.mp3",
             "size_bytes": 42651183,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_cyber_screen_foundations_01_video.mp4",
+            "size_bytes": 28770761,
             "language": "ar"
           }
         ]
@@ -2187,6 +2597,13 @@
             "size_bytes": 44537404,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_cyber_screen_foundations_02_video.mp4",
+            "size_bytes": 29992008,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2220,6 +2637,13 @@
           {
             "file": "docs/lesson_0-3_cyber_screen_foundations_03_podcast.mp3",
             "size_bytes": 32014008,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_cyber_screen_foundations_03_video.mp4",
+            "size_bytes": 21816814,
             "language": "ar"
           }
         ]
@@ -2257,6 +2681,13 @@
             "size_bytes": 30415512,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_development_early_moments_01_video.mp4",
+            "size_bytes": 20772144,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2290,6 +2721,13 @@
           {
             "file": "docs/lesson_0-3_development_early_moments_02_podcast.mp3",
             "size_bytes": 30451370,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_development_early_moments_02_video.mp4",
+            "size_bytes": 20100539,
             "language": "ar"
           }
         ]
@@ -2327,6 +2765,13 @@
             "size_bytes": 31863853,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_development_early_moments_03_video.mp4",
+            "size_bytes": 21564381,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2360,6 +2805,13 @@
           {
             "file": "docs/lesson_0-3_islamic_parenting_attachment_01_podcast.mp3",
             "size_bytes": 27982343,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_attachment_01_video.mp4",
+            "size_bytes": 18396423,
             "language": "ar"
           }
         ]
@@ -2397,6 +2849,13 @@
             "size_bytes": 45566424,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_attachment_02_video.mp4",
+            "size_bytes": 29844361,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2430,6 +2889,13 @@
           {
             "file": "docs/lesson_0-3_islamic_parenting_attachment_03_podcast.mp3",
             "size_bytes": 38763696,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_attachment_03_video.mp4",
+            "size_bytes": 26615525,
             "language": "ar"
           }
         ]
@@ -2467,6 +2933,13 @@
             "size_bytes": 24718750,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_attachment_04_video.mp4",
+            "size_bytes": 16657316,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2500,6 +2973,13 @@
           {
             "file": "docs/lesson_0-3_medical_early_milestones_01_podcast.mp3",
             "size_bytes": 29993320,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_medical_early_milestones_01_video.mp4",
+            "size_bytes": 19159281,
             "language": "ar"
           }
         ]
@@ -2537,6 +3017,13 @@
             "size_bytes": 40957066,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_medical_early_milestones_02_video.mp4",
+            "size_bytes": 25861649,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2570,6 +3057,13 @@
           {
             "file": "docs/lesson_0-3_medical_early_milestones_03_podcast.mp3",
             "size_bytes": 21275983,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_medical_early_milestones_03_video.mp4",
+            "size_bytes": 13310304,
             "language": "ar"
           }
         ]
@@ -2607,6 +3101,13 @@
             "size_bytes": 41941264,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_0-3_medical_early_milestones_04_video.mp4",
+            "size_bytes": 8417116,
+            "language": "ar"
+          }
         ]
       }
     },
@@ -2636,7 +3137,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_development_independence_01_podcast.mp3",
+            "size_bytes": 542448,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_development_independence_01_video.mp4",
+            "size_bytes": 1553595,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -2665,7 +3179,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_cyber_routine_02_podcast.mp3",
+            "size_bytes": 727200,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_cyber_routine_02_video.mp4",
+            "size_bytes": 2034558,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -2694,7 +3221,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_development_language_03_podcast.mp3",
+            "size_bytes": 595152,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_development_language_03_video.mp4",
+            "size_bytes": 1692005,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
@@ -2723,7 +3263,20 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": []
+        "podcasts": [
+          {
+            "file": "docs/lesson_2-3_islamic_tantrums_04_podcast.mp3",
+            "size_bytes": 691200,
+            "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/lesson_2-3_islamic_tantrums_04_video.mp4",
+            "size_bytes": 1876961,
+            "language": "ar"
+          }
+        ]
       }
     },
     {
