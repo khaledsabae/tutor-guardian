@@ -18,3 +18,11 @@ knowledge_base/raw_sources/
 .env
 .pytest_cache/
 .mypy_cache/
+
+# Media (~2.4GB) is volume-mounted read-only in prod (./docs:/app/docs:ro),
+# which shadows the baked COPY docs/. Baking it in just bloats the image and
+# fills the VPS disk. Keep the small json/md in docs/ as a dev fallback.
+docs/*.mp3
+docs/*.mp4
+docs/path_videos/
+docs/lesson_assets/
