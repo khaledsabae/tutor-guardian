@@ -40,6 +40,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
   final AudioPlayer _player = AudioPlayer();
   StreamSubscription<PlayerState>? _stateSub;
   int? _playingVerse; // 1-based verse currently reciting; null when stopped
+  int _playToken = 0; // guards against stale async plays (rapid taps)
 
   late int _currentChapter;
   int _currentVerse = 1; // 1-based; the top-most visible verse
@@ -121,15 +122,19 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
 
   Future<void> _playFrom(int verse) async {
     if (verse < 1 || verse > _verses.length) return;
+    final token = ++_playToken;
     setState(() {
       _playingVerse = verse;
     });
     _scrollToPlaying(verse);
     try {
+      // Stable streaming source (everyayah CDN). Kept on the non-experimental
+      // just_audio API on purpose — correctness/reliability first for Quran.
       await _player.setUrl(_ayahUrl(_currentChapter, verse));
+      if (token != _playToken || !mounted) return; // superseded by a newer tap
       await _player.play();
     } catch (_) {
-      if (mounted) {
+      if (mounted && token == _playToken) {
         setState(() {
           _playingVerse = null;
         });
@@ -154,6 +159,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
   }
 
   void _stopAudio() {
+    _playToken++; // invalidate any in-flight play
     _player.stop();
     setState(() => _playingVerse = null);
   }
