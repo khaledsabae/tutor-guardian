@@ -7,6 +7,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../theme/app_theme.dart';
+import '../models/reciters.dart';
 import '../models/surah_names.dart';
 import '../providers/quran_providers.dart';
 
@@ -35,8 +36,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
 
   // ── Audio (recitation) ────────────────────────────────────────────────────
   // Per-ayah recitation streamed from everyayah.com (no API key, stable CDN).
-  // Mishary Rashid Alafasy — clear, widely-loved Modern Standard recitation.
-  static const String _reciter = 'Alafasy_128kbps';
+  // Reciter is user-selectable via reciterProvider (defaults to Husary).
   final AudioPlayer _player = AudioPlayer();
   StreamSubscription<PlayerState>? _stateSub;
   int? _playingVerse; // 1-based verse currently reciting; null when stopped
@@ -115,9 +115,65 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
 
   // ── Audio controls ──────────────────────────────────────────────────────
   String _ayahUrl(int surah, int ayah) {
+    final reciter = ref.read(reciterProvider);
     final s = surah.toString().padLeft(3, '0');
     final a = ayah.toString().padLeft(3, '0');
-    return 'https://everyayah.com/data/$_reciter/$s$a.mp3';
+    return 'https://everyayah.com/data/${reciter.id}/$s$a.mp3';
+  }
+
+  void _pickReciter() {
+    final current = ref.read(reciterProvider);
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: Text(
+                'اختر القارئ',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textPrimary,
+                ),
+              ),
+            ),
+            for (final r in kReciters)
+              ListTile(
+                title: Text(
+                  r.name,
+                  style: GoogleFonts.amiriQuran(
+                    fontSize: 22,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                trailing: r.id == current.id
+                    ? const Icon(Icons.check_circle, color: AppTheme.primary)
+                    : null,
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _onReciterSelected(r);
+                },
+              ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _onReciterSelected(Reciter reciter) {
+    ref.read(reciterProvider.notifier).select(reciter);
+    setState(() {});
+    // If a recitation is in progress, restart the current ayah in the new voice.
+    final cur = _playingVerse;
+    if (cur != null) _playFrom(cur);
   }
 
   Future<void> _playFrom(int verse) async {
@@ -221,6 +277,13 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
         centerTitle: true,
         iconTheme: const IconThemeData(color: AppTheme.textPrimary),
         actions: [
+          // Choose the reciter (Husary / Minshawy / Maher / Ghamdi).
+          IconButton(
+            key: const Key('quran_reciter_button'),
+            tooltip: 'القارئ',
+            icon: const Icon(Icons.record_voice_over, color: AppTheme.primary),
+            onPressed: _pickReciter,
+          ),
           // Listen / pause the whole surah, ayah by ayah.
           IconButton(
             key: const Key('quran_listen_button'),

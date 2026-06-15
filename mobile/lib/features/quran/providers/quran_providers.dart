@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/reciters.dart';
+
 // Provides the entire Quran JSON loaded from assets.
 // Key is chapter number as string (e.g. "1"), value is list of verses.
 final quranDataProvider = FutureProvider<Map<String, List<dynamic>>>((ref) async {
@@ -58,3 +60,34 @@ class LastReadNotifier extends StateNotifier<AsyncValue<LastReadState?>> {
 final lastReadProvider = StateNotifierProvider<LastReadNotifier, AsyncValue<LastReadState?>>((ref) {
   return LastReadNotifier();
 });
+
+/// The reciter chosen for the listen feature, persisted across sessions.
+/// Defaults to Husary.
+class ReciterNotifier extends StateNotifier<Reciter> {
+  static const _key = 'quran_reciter_id';
+
+  ReciterNotifier() : super(kDefaultReciter) {
+    _load();
+  }
+
+  Future<void> _load() async {
+    final prefs = await SharedPreferences.getInstance();
+    final id = prefs.getString(_key);
+    if (id != null) {
+      state = kReciters.firstWhere(
+        (r) => r.id == id,
+        orElse: () => kDefaultReciter,
+      );
+    }
+  }
+
+  Future<void> select(Reciter reciter) async {
+    state = reciter;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_key, reciter.id);
+  }
+}
+
+final reciterProvider = StateNotifierProvider<ReciterNotifier, Reciter>(
+  (ref) => ReciterNotifier(),
+);
