@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../theme/app_theme.dart';
@@ -32,6 +33,14 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
   final ItemScrollController _itemScroll = ItemScrollController();
   final ItemPositionsListener _positions = ItemPositionsListener.create();
 
+  // ── Audio (recitation) ────────────────────────────────────────────────────
+  // Per-ayah recitation streamed from everyayah.com (no API key, stable CDN).
+  // Mishary Rashid Alafasy — clear, widely-loved Modern Standard recitation.
+  static const String _reciter = 'Alafasy_128kbps';
+  final AudioPlayer _player = AudioPlayer();
+  StreamSubscription<PlayerState>? _stateSub;
+  int? _playingVerse; // 1-based verse currently reciting; null when stopped
+
   late int _currentChapter;
   int _currentVerse = 1; // 1-based; the top-most visible verse
   late int _wirdStart; // verse the daily wird began at this session
@@ -44,6 +53,19 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
     _currentVerse = widget.initialVerse.clamp(1, 1 << 20);
     _wirdStart = _currentVerse;
     _positions.itemPositions.addListener(_onScroll);
+
+    // Auto-advance the recitation ayah-by-ayah down the surah.
+    _stateSub = _player.playerStateStream.listen((state) {
+      if (state.processingState == ProcessingState.completed) {
+        final cur = _playingVerse;
+        if (cur != null && cur < _verses.length) {
+          _playFrom(cur + 1);
+        } else {
+          if (mounted) setState(() => _playingVerse = null);
+        }
+      }
+      if (mounted) setState(() {}); // refresh play/pause icon
+    });
 
     // Jump to the saved verse once the list is laid out, then persist.
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -80,6 +102,8 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
   @override
   void dispose() {
     _saveDebounce?.cancel();
+    _stateSub?.cancel();
+    _player.dispose();
     _positions.itemPositions.removeListener(_onScroll);
     _persist(); // final save on exit
     super.dispose();
@@ -88,7 +112,64 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
   List<dynamic> get _verses =>
       widget.quranData[_currentChapter.toString()] ?? const [];
 
+  // ── Audio controls ──────────────────────────────────────────────────────
+  String _ayahUrl(int surah, int ayah) {
+    final s = surah.toString().padLeft(3, '0');
+    final a = ayah.toString().padLeft(3, '0');
+    return 'https://everyayah.com/data/$_reciter/$s$a.mp3';
+  }
+
+  Future<void> _playFrom(int verse) async {
+    if (verse < 1 || verse > _verses.length) return;
+    setState(() {
+      _playingVerse = verse;
+    });
+    _scrollToPlaying(verse);
+    try {
+      await _player.setUrl(_ayahUrl(_currentChapter, verse));
+      await _player.play();
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _playingVerse = null;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('تعذّر تشغيل التلاوة. تأكد من اتصالك بالإنترنت.'),
+          ),
+        );
+      }
+    }
+  }
+
+  void _toggleAudio() {
+    if (_player.playing) {
+      _player.pause();
+    } else if (_playingVerse != null &&
+        _player.processingState != ProcessingState.completed) {
+      _player.play(); // resume current ayah
+    } else {
+      _playFrom(_currentVerse); // start from the verse at the top of the screen
+    }
+  }
+
+  void _stopAudio() {
+    _player.stop();
+    setState(() => _playingVerse = null);
+  }
+
+  void _scrollToPlaying(int verse) {
+    if (_itemScroll.isAttached) {
+      _itemScroll.scrollTo(
+        index: verse - 1,
+        duration: const Duration(milliseconds: 400),
+        alignment: 0.35,
+      );
+    }
+  }
+
   void _goToSurah(int chapter) {
+    _stopAudio();
     setState(() {
       _currentChapter = chapter.clamp(1, 114);
       _currentVerse = 1;
@@ -116,6 +197,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
     final wirdProgress =
         ((_currentVerse - _wirdStart).clamp(0, kDailyWirdVerses)) /
             kDailyWirdVerses;
+    final isPlaying = _player.playing;
 
     return Scaffold(
       backgroundColor: const Color(0xFFFDFBF7),
@@ -132,6 +214,21 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(color: AppTheme.textPrimary),
+        actions: [
+          // Listen / pause the whole surah, ayah by ayah.
+          IconButton(
+            key: const Key('quran_listen_button'),
+            tooltip: isPlaying ? 'إيقاف التلاوة' : 'استماع',
+            icon: Icon(
+              isPlaying
+                  ? Icons.pause_circle_filled
+                  : Icons.play_circle_fill,
+              color: AppTheme.primary,
+              size: 30,
+            ),
+            onPressed: _toggleAudio,
+          ),
+        ],
       ),
       body: verses.isEmpty
           ? const Center(child: Text('جاري التحميل...'))
@@ -208,28 +305,42 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                         text = text.replaceFirst(
                             'بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ', '');
                       }
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        child: RichText(
-                          textAlign: TextAlign.justify,
-                          textDirection: TextDirection.rtl,
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: '$text ',
-                              style: GoogleFonts.amiriQuran(
-                                fontSize: 26,
-                                color: AppTheme.textPrimary,
-                                height: 2.2,
+                      final isActive = verseNum == _playingVerse;
+                      return GestureDetector(
+                        // Tap a verse to start the recitation from it.
+                        onTap: () => _playFrom(verseNum),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 250),
+                          margin: const EdgeInsets.only(bottom: 6),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: isActive
+                                ? AppTheme.primary.withValues(alpha: .10)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: RichText(
+                            textAlign: TextAlign.justify,
+                            textDirection: TextDirection.rtl,
+                            text: TextSpan(children: [
+                              TextSpan(
+                                text: '$text ',
+                                style: GoogleFonts.amiriQuran(
+                                  fontSize: 26,
+                                  color: isActive
+                                      ? AppTheme.primary
+                                      : AppTheme.textPrimary,
+                                  height: 2.2,
+                                ),
                               ),
-                            ),
-                            TextSpan(
-                              text: ' ﴿${_arabicNum(verseNum)}﴾ ',
-                              style: const TextStyle(
-                                  fontSize: 20, color: AppTheme.primary),
-                            ),
-                          ]),
+                              TextSpan(
+                                text: ' ﴿${_arabicNum(verseNum)}﴾ ',
+                                style: const TextStyle(
+                                    fontSize: 20, color: AppTheme.primary),
+                              ),
+                            ]),
+                          ),
                         ),
                       );
                     },
@@ -257,6 +368,21 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                               : null,
                           icon: const Icon(Icons.arrow_back_ios, size: 16),
                           label: const Text('السورة التالية'),
+                        ),
+                        // Central listen pill mirrors the AppBar control so the
+                        // "قراءة + استماع" action is reachable at the bottom too.
+                        TextButton.icon(
+                          key: const Key('quran_listen_pill'),
+                          onPressed: _toggleAudio,
+                          icon: Icon(
+                            isPlaying ? Icons.pause : Icons.headphones,
+                            size: 18,
+                            color: AppTheme.primary,
+                          ),
+                          label: Text(
+                            isPlaying ? 'إيقاف' : 'استماع',
+                            style: const TextStyle(color: AppTheme.primary),
+                          ),
                         ),
                         TextButton.icon(
                           onPressed: _currentChapter > 1
