@@ -424,7 +424,7 @@ def _merge_retrieved(
 ) -> str:
     if not units:
         return "لا توجد معلومات كافية حاليًا. نوصي باستشارة مختص."
-    domains_ar = {"fiqh": "الفقه", "medical": "الطب النفسي",
+    domains_ar = {"fiqh": "الفقه", "medical": "الصحة والنمو",
                   "cyber": "الأمان الرقمي", "development": "تطور الطفل",
                   "tarbiyah": "التربية"}
     domains_str = " + ".join(domains_ar.get(d, d) for d in (domains or []))

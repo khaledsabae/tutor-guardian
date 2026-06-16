@@ -85,3 +85,19 @@ Real podcasts are 18–46 MB / several minutes; bad ones are 4–120s, ~24–710
 - [ ] `lesson_7-9_worship_01_podcast.mp3`  — 43s, 254KB
 - [ ] `lesson_7-9_worship_02_podcast.mp3`  — 44s, 259KB
 - [ ] `lesson_7-9_worship_03_podcast.mp3`  — 44s, 255KB
+
+## 2026-06-16 — broken-audio found via estimated_minutes audit (UX critique follow-up)
+These podcasts are placeholders/corrupt (real duration <10min or >70min) and were NOT relabeled.
+Regenerate from NotebookLM, then update `estimated_minutes` from real length:
+
+- lesson_2-3_cyber_routine_02 (2.0 min — placeholder)
+- lesson_2-3_cyber_routine_b04 (101.4 min — CORRUPT)
+- lesson_2-3_development_independence_01 (1.5 min — placeholder)
+- lesson_2-3_development_language_03 (1.7 min — placeholder)
+- lesson_2-3_islamic_tantrums_04 (1.9 min — placeholder)
+- lesson_4-6_islamic_parenting_adab_b04 (1.4 min — placeholder)
+- lesson_4-6_islamic_parenting_bond_b04 (0.1 min — EMPTY)
+- lesson_7-9_development_digital_wellbeing_b04 (1.5 min — placeholder)
+- lesson_7-9_islamic_parenting_worship_b04 (1.4 min — placeholder)
+- lesson_7-9_medical_emotional_health_b03 (1.5 min — placeholder)
+- lesson_7-9_medical_emotional_health_b04 (1.5 min — placeholder)
