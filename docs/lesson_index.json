@@ -8,7 +8,7 @@
     "coverage": {
       "flashcards": "88/88",
       "quizzes": "88/88",
-      "reports": "23/88",
+      "reports": "24/88",
       "data_tables": "17/88",
       "infographics": "10/88"
     },
@@ -23,7 +23,8 @@
     "video_languages": [
       "ar"
     ],
-    "last_updated": "2026-06-17T10:36:45.998689"
+    "last_updated": "2026-06-17T10:36:45.998689",
+    "updated_at": "2026-06-17T07:47:15.626793Z"
   },
   "lessons": [
     {
@@ -677,7 +678,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "5ef06874-f0f7-427c-a0de-9519433eb532",
+            "file": "docs/lesson_assets/reports/5ef06874-f0f7-427c-a0de-9519433eb532_medical_puberty_wellbeing_lesson_10-12_medical_03.md",
+            "title": "تقرير medical_puberty_wellbeing (10-12)",
+            "item_count": 57
+          }
+        ],
         "data_tables": [],
         "infographics": [
           {
