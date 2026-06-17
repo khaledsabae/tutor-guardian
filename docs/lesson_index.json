@@ -8,7 +8,7 @@
     "coverage": {
       "flashcards": "88/88",
       "quizzes": "88/88",
-      "reports": "69/88",
+      "reports": "87/88",
       "data_tables": "17/88",
       "infographics": "10/88"
     },
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-17T08:33:44.029833Z"
+    "updated_at": "2026-06-17T08:49:24.150036Z"
   },
   "lessons": [
     {
@@ -2381,7 +2381,7 @@
       "lesson_id": "lesson_7-9_development_03",
       "age_group": "7-9",
       "topic_path": "development_digital_wellbeing",
-      "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
+      "source_id": "a40ffd21-a118-4494-bc29-ca1ecb385c7a",
       "title_ar": "الألعاب العنيفة: تأثير خفي على السلوك",
       "assets": {
         "flashcards": [
@@ -2435,7 +2435,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "62d58fc9-78aa-4047-a8cd-9caf75cac2d7",
+            "file": "docs/lesson_assets/reports/62d58fc9-78aa-4047-a8cd-9caf75cac2d7_report_lesson_0-3_cyber_screen_foundations_01.md",
+            "title": "تقرير cyber_screen_foundations (prenatal-1)",
+            "item_count": 60
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2470,7 +2477,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "c47c8a92-8ca1-45a8-bf10-589efd2afb2c",
+            "file": "docs/lesson_assets/reports/c47c8a92-8ca1-45a8-bf10-589efd2afb2c_report_lesson_0-3_cyber_screen_foundations_02.md",
+            "title": "تقرير cyber_screen_foundations (prenatal-1)",
+            "item_count": 53
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2505,7 +2519,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "2a38e722-e794-4ab4-9d4b-c34a06648478",
+            "file": "docs/lesson_assets/reports/2a38e722-e794-4ab4-9d4b-c34a06648478_report_lesson_0-3_cyber_screen_foundations_03.md",
+            "title": "تقرير cyber_screen_foundations (prenatal-1)",
+            "item_count": 50
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2540,7 +2561,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "2813c2ef-ab50-4d41-8946-21f45b1a43c4",
+            "file": "docs/lesson_assets/reports/2813c2ef-ab50-4d41-8946-21f45b1a43c4_report_lesson_0-3_development_early_moments_01.md",
+            "title": "تقرير development_early_moments (prenatal-1)",
+            "item_count": 50
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2575,7 +2603,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "a99b9373-2384-4709-b8ff-3345589ff784",
+            "file": "docs/lesson_assets/reports/a99b9373-2384-4709-b8ff-3345589ff784_report_lesson_0-3_development_early_moments_02.md",
+            "title": "تقرير development_early_moments (prenatal-1)",
+            "item_count": 57
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2610,7 +2645,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "9c350c88-9534-4b92-87a4-cd2fecee6448",
+            "file": "docs/lesson_assets/reports/9c350c88-9534-4b92-87a4-cd2fecee6448_report_lesson_0-3_development_early_moments_03.md",
+            "title": "تقرير development_early_moments (prenatal-1)",
+            "item_count": 57
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2645,7 +2687,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "2f342f47-8521-47f6-af2f-937b81f12c97",
+            "file": "docs/lesson_assets/reports/2f342f47-8521-47f6-af2f-937b81f12c97_report_lesson_0-3_islamic_parenting_attachment_01.md",
+            "title": "تقرير islamic_parenting_attachment (prenatal-1)",
+            "item_count": 57
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2680,7 +2729,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "919e0ba5-9a32-4ea7-a0ef-5e8342d47db8",
+            "file": "docs/lesson_assets/reports/919e0ba5-9a32-4ea7-a0ef-5e8342d47db8_report_lesson_0-3_islamic_parenting_attachment_02.md",
+            "title": "تقرير islamic_parenting_attachment (prenatal-1)",
+            "item_count": 54
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2715,7 +2771,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "339d4e89-2651-411c-8bf8-f2767469576f",
+            "file": "docs/lesson_assets/reports/339d4e89-2651-411c-8bf8-f2767469576f_report_lesson_0-3_islamic_parenting_attachment_03.md",
+            "title": "تقرير islamic_parenting_attachment (prenatal-1)",
+            "item_count": 56
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2750,7 +2813,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "705e1f08-e37e-4743-85a4-690ecfc5f6a1",
+            "file": "docs/lesson_assets/reports/705e1f08-e37e-4743-85a4-690ecfc5f6a1_report_lesson_0-3_islamic_parenting_attachment_04.md",
+            "title": "تقرير islamic_parenting_attachment (prenatal-1)",
+            "item_count": 53
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2785,7 +2855,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "70978903-7ffc-4093-ad57-cea8b7c48232",
+            "file": "docs/lesson_assets/reports/70978903-7ffc-4093-ad57-cea8b7c48232_report_lesson_0-3_medical_early_milestones_01.md",
+            "title": "تقرير medical_early_milestones (prenatal-1)",
+            "item_count": 57
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2820,7 +2897,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "f2c746ad-c009-42bd-a23f-caef1028ae70",
+            "file": "docs/lesson_assets/reports/f2c746ad-c009-42bd-a23f-caef1028ae70_report_lesson_0-3_medical_early_milestones_02.md",
+            "title": "تقرير medical_early_milestones (prenatal-1)",
+            "item_count": 55
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2855,7 +2939,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "fdbdcc5c-aeb5-4f7d-9f6e-d5339aaf2613",
+            "file": "docs/lesson_assets/reports/fdbdcc5c-aeb5-4f7d-9f6e-d5339aaf2613_report_lesson_0-3_medical_early_milestones_03.md",
+            "title": "تقرير medical_early_milestones (prenatal-1)",
+            "item_count": 51
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2890,7 +2981,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "52b3cf83-dd5e-4529-84db-69af81c81a64",
+            "file": "docs/lesson_assets/reports/52b3cf83-dd5e-4529-84db-69af81c81a64_report_lesson_0-3_medical_early_milestones_04.md",
+            "title": "تقرير medical_early_milestones (prenatal-1)",
+            "item_count": 53
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2925,7 +3023,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "ffb4e746-7289-4ea0-841a-efe102604699",
+            "file": "docs/lesson_assets/reports/ffb4e746-7289-4ea0-841a-efe102604699_report_lesson_2-3_development_independence_01.md",
+            "title": "تقرير development_early_moments (2-3)",
+            "item_count": 56
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2960,7 +3065,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "3329c141-4e7e-421f-98ba-3dc4ac49c70b",
+            "file": "docs/lesson_assets/reports/3329c141-4e7e-421f-98ba-3dc4ac49c70b_report_lesson_2-3_cyber_routine_02.md",
+            "title": "تقرير cyber_screen_foundations (2-3)",
+            "item_count": 51
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2995,7 +3107,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "0bdcce8d-9dd2-4055-b388-f11fb24b09dc",
+            "file": "docs/lesson_assets/reports/0bdcce8d-9dd2-4055-b388-f11fb24b09dc_report_lesson_2-3_development_language_03.md",
+            "title": "تقرير development_early_moments (2-3)",
+            "item_count": 54
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -3030,7 +3149,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "e23fb592-f18c-4b7d-bf5a-06f296a69c31",
+            "file": "docs/lesson_assets/reports/e23fb592-f18c-4b7d-bf5a-06f296a69c31_report_lesson_2-3_islamic_tantrums_04.md",
+            "title": "تقرير islamic_parenting_attachment (2-3)",
+            "item_count": 50
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
