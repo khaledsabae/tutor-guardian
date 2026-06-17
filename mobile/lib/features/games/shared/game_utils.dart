@@ -342,7 +342,7 @@ class LevelCompleteOverlay extends PositionComponent {
       _drawStar(canvas, Offset(starX, starY), 30, opacity);
     }
 
-    final scoreText = TextPaint(style: TextStyle(
+    final scoreText = TextPaint(style: const TextStyle(
       color: Colors.white,
       fontSize: 28,
       fontWeight: FontWeight.bold,
@@ -381,8 +381,11 @@ class LevelCompleteOverlay extends PositionComponent {
       final angle = -pi / 2 + i * 2 * pi / 5;
       final x = center.dx + radius * cos(angle);
       final y = center.dy + radius * sin(angle);
-      if (i == 0) path.moveTo(x, y);
-      else path.lineTo(x, y);
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
     }
     path.close();
     canvas.drawPath(path, paint);
