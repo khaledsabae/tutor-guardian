@@ -2003,7 +2003,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "e99a9c41-32ca-41e4-b4ed-f61af795642d",
+            "file": "docs/lesson_assets/infographics/77_lesson_4-6_development_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_development_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_4-6_development_01_podcast.mp3",
@@ -2052,7 +2059,14 @@
             "item_count": 7
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "85a964f7-0222-46b5-bb0b-044087826f29",
+            "file": "docs/lesson_assets/infographics/78_lesson_4-6_development_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_development_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_4-6_development_02_podcast.mp3",
@@ -3669,7 +3683,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "02a935ab-8fe5-4d04-a77b-0faaf59c6553",
+            "file": "docs/lesson_assets/infographics/71_lesson_2-3_development_independence_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_development_independence_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_2-3_development_independence_01_podcast.mp3",
@@ -3774,7 +3795,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "407b5539-eee6-4574-ad06-78245cdb791a",
+            "file": "docs/lesson_assets/infographics/72_lesson_2-3_development_language_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_development_language_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_2-3_development_language_03_podcast.mp3",
@@ -3823,7 +3851,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "8d5b520e-e613-4bb8-af0c-fb5c4800a678",
+            "file": "docs/lesson_assets/infographics/76_lesson_2-3_islamic_tantrums_04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_islamic_tantrums_04"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_2-3_islamic_tantrums_04_podcast.mp3",
@@ -3876,6 +3911,14 @@
             "title": "جدول بيانات cyber_screen_foundations (0-3)",
             "item_count": 6
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "3f7ba915-aaf3-4d46-847f-12f720e2be23",
+            "file": "docs/lesson_assets/infographics/65_lesson_0-3_cyber_screen_foundations_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_cyber_screen_foundations_b04"
+          }
         ]
       }
     },
@@ -3921,6 +3964,14 @@
             "file": "docs/lesson_assets/data_tables/fb13118f-f89e-4c57-8b1c-30a11d0efb19_data_table_lesson_0-3_development_early_moments_b04.csv",
             "title": "جدول بيانات development_early_moments (0-3)",
             "item_count": 6
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "0b63d581-1579-45e9-8568-159cdc806fe0",
+            "file": "docs/lesson_assets/infographics/66_lesson_0-3_development_early_moments_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_development_early_moments_b04"
           }
         ]
       }
@@ -4400,6 +4451,14 @@
             "title": "جدول بيانات cyber_routine (2-3)",
             "item_count": 5
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "2874d536-7db2-4654-97ad-cb5a4186cf41",
+            "file": "docs/lesson_assets/infographics/67_lesson_2-3_cyber_routine_b02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_cyber_routine_b02"
+          }
         ]
       }
     },
@@ -4445,6 +4504,14 @@
             "file": "docs/lesson_assets/data_tables/ea08c06f-6187-4f89-8576-3dd74c187d88_data_table_lesson_2-3_cyber_routine_b04.csv",
             "title": "جدول بيانات cyber_routine (2-3)",
             "item_count": 6
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "46a47df3-5fc2-46c4-9e71-26af29ae9fd0",
+            "file": "docs/lesson_assets/infographics/68_lesson_2-3_cyber_routine_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_cyber_routine_b04"
           }
         ]
       }
@@ -4492,6 +4559,14 @@
             "title": "جدول بيانات development_growth (2-3)",
             "item_count": 6
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "7fb32028-a422-41f1-bc3e-f1287f03cd0e",
+            "file": "docs/lesson_assets/infographics/69_lesson_2-3_development_growth_b03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_development_growth_b03"
+          }
         ]
       }
     },
@@ -4537,6 +4612,14 @@
             "file": "docs/lesson_assets/data_tables/b8f4c0f3-538d-4312-9b01-24265098a665_data_table_lesson_2-3_development_growth_b04.csv",
             "title": "جدول بيانات development_growth (2-3)",
             "item_count": 6
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "74a6cb19-97b2-4406-a9a0-b30fa3defd96",
+            "file": "docs/lesson_assets/infographics/70_lesson_2-3_development_growth_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_development_growth_b04"
           }
         ]
       }
@@ -4584,6 +4667,14 @@
             "title": "جدول بيانات islamic_attachment (2-3)",
             "item_count": 5
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "8429769a-26e2-4efa-86fe-c03ff3f7d21c",
+            "file": "docs/lesson_assets/infographics/73_lesson_2-3_islamic_attachment_b01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_islamic_attachment_b01"
+          }
         ]
       }
     },
@@ -4630,6 +4721,14 @@
             "title": "جدول بيانات islamic_attachment (2-3)",
             "item_count": 5
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "b745f863-e9cf-4ff8-adb8-e19c08b765a1",
+            "file": "docs/lesson_assets/infographics/74_lesson_2-3_islamic_attachment_b02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_islamic_attachment_b02"
+          }
         ]
       }
     },
@@ -4675,6 +4774,14 @@
             "file": "docs/lesson_assets/data_tables/a187e2bb-72d0-42bf-bf9f-202b673eba49_data_table_lesson_2-3_islamic_attachment_b03.csv",
             "title": "جدول بيانات islamic_attachment (2-3)",
             "item_count": 6
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "e5cf0f41-3675-4e77-8b03-4813628043f7",
+            "file": "docs/lesson_assets/infographics/75_lesson_2-3_islamic_attachment_b03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_islamic_attachment_b03"
           }
         ]
       }
