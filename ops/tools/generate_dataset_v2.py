@@ -111,7 +111,8 @@ def parse_pairs(raw: str) -> list[dict]:
     try:
         rows = json.loads(raw[start:end + 1])
         return [r for r in rows if isinstance(r, dict)
-                and r.get("question") and r.get("answer")]
+                and isinstance(r.get("question"), str) and r["question"].strip()
+                and isinstance(r.get("answer"), str) and r["answer"].strip()]
     except Exception:  # noqa: BLE001
         return []
 
