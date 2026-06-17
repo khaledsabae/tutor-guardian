@@ -125,7 +125,10 @@ def load_curriculum() -> None:
                             "podcasts": normalized_podcasts,
                             "videos": normalized_videos,
                             "flashcards": raw_assets.get("flashcards", []),
-                            "quizzes": raw_assets.get("quizzes", [])
+                            "quizzes": raw_assets.get("quizzes", []),
+                            "infographics": raw_assets.get("infographics", []),
+                            "reports": raw_assets.get("reports", []),
+                            "data_tables": raw_assets.get("data_tables", []),
                         }
                         # Cache by both short and long IDs
                         assets[short_id] = asset_data

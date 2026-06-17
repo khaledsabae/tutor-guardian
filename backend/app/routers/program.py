@@ -189,9 +189,17 @@ async def get_lesson_assets(
             if not video_mp4:
                 video_mp4 = videos[0].get("file")
 
+    # Single-file visual assets (one per lesson): infographic image, report
+    # markdown, data-table CSV. Each is served statically from /docs/.
+    def _first_file(items):
+        return items[0].get("file") if items else None
+
     return {
         "podcast_mp3": podcast_mp3,
         "video_mp4": video_mp4,
+        "infographic": _first_file(assets.get("infographics", [])),
+        "report": _first_file(assets.get("reports", [])),
+        "data_table": _first_file(assets.get("data_tables", [])),
         "flashcards": assets.get("flashcards", []),
         "quizzes": assets.get("quizzes", [])
     }

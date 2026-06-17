@@ -37,6 +37,9 @@ import 'flashcards_screen.dart';
 import 'quiz_screen.dart';
 import 'podcast_player_screen.dart';
 import 'video_player_screen.dart';
+import 'infographic_screen.dart';
+import 'report_screen.dart';
+import 'data_table_screen.dart';
 import '../../games/data_defender/game_screen.dart';
 import '../../games/healthy_hero/game_screen.dart';
 import '../../games/tree_of_deeds/game_screen.dart';
@@ -730,6 +733,49 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               },
             ),
           );
+        }
+
+        // ── Visual assets: infographic / report / data-table ──
+        if (assets.infographic != null) {
+          final raw = assets.infographic!;
+          final url =
+              raw.startsWith('http') ? raw : '${AppConfig.apiBaseUrl}/$raw';
+          buttons.add(_AssetButton(
+            icon: Icons.image,
+            label: '📊 إنفوجرافيك الدرس',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => InfographicScreen(url: url)),
+            ),
+          ));
+        }
+
+        if (assets.report != null) {
+          final raw = assets.report!;
+          final url =
+              raw.startsWith('http') ? raw : '${AppConfig.apiBaseUrl}/$raw';
+          buttons.add(_AssetButton(
+            icon: Icons.description,
+            label: '📄 تقرير الدرس',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => ReportScreen(url: url)),
+            ),
+          ));
+        }
+
+        if (assets.dataTable != null) {
+          final raw = assets.dataTable!;
+          final url =
+              raw.startsWith('http') ? raw : '${AppConfig.apiBaseUrl}/$raw';
+          buttons.add(_AssetButton(
+            icon: Icons.table_chart,
+            label: '📋 جدول البيانات',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => DataTableScreen(url: url)),
+            ),
+          ));
         }
 
         } // end assets != null
