@@ -8,7 +8,7 @@
     "coverage": {
       "flashcards": "88/88",
       "quizzes": "88/88",
-      "reports": "24/88",
+      "reports": "69/88",
       "data_tables": "17/88",
       "infographics": "10/88"
     },
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-17T07:47:15.626793Z"
+    "updated_at": "2026-06-17T08:33:44.029833Z"
   },
   "lessons": [
     {
@@ -680,10 +680,10 @@
         ],
         "reports": [
           {
-            "id": "5ef06874-f0f7-427c-a0de-9519433eb532",
-            "file": "docs/lesson_assets/reports/5ef06874-f0f7-427c-a0de-9519433eb532_medical_puberty_wellbeing_lesson_10-12_medical_03.md",
+            "id": "dda05252-0785-4246-bf45-df3f5e4bd3b9",
+            "file": "docs/lesson_assets/reports/dda05252-0785-4246-bf45-df3f5e4bd3b9_report_lesson_10-12_medical_03.md",
             "title": "تقرير medical_puberty_wellbeing (10-12)",
-            "item_count": 57
+            "item_count": 60
           }
         ],
         "data_tables": [],
@@ -951,7 +951,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "0cb8c11b-2bc6-4a81-9221-49e79513dd74",
+            "file": "docs/lesson_assets/reports/0cb8c11b-2bc6-4a81-9221-49e79513dd74_report_lesson_13-15_development_01.md",
+            "title": "تقرير development_brain_identity (13-15)",
+            "item_count": 52
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -986,7 +993,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "55f9ac5e-16d0-4817-ab55-eb78771198b8",
+            "file": "docs/lesson_assets/reports/55f9ac5e-16d0-4817-ab55-eb78771198b8_report_lesson_13-15_development_02.md",
+            "title": "تقرير development_brain_identity (13-15)",
+            "item_count": 50
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -1021,7 +1035,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "9619eaf4-dcec-4907-b4cf-ebebffbb999e",
+            "file": "docs/lesson_assets/reports/9619eaf4-dcec-4907-b4cf-ebebffbb999e_report_lesson_13-15_development_03.md",
+            "title": "تقرير development_brain_identity (13-15)",
+            "item_count": 59
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -1361,7 +1382,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "242dc52e-18ae-4733-9435-5c49ba8d5f63",
+            "file": "docs/lesson_assets/reports/242dc52e-18ae-4733-9435-5c49ba8d5f63_report_lesson_13-15_medical_02.md",
+            "title": "تقرير medical_mental_health (13-15)",
+            "item_count": 55
+          }
+        ],
         "data_tables": [
           {
             "id": "f24aae6b-8a53-4dd0-91a1-b16ff784a988_Mental_Health_and_Wellbeing_for_Adolescents_Aged_1",
@@ -1403,7 +1431,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "0313ab97-33c3-4100-a416-e5c36b92e668",
+            "file": "docs/lesson_assets/reports/0313ab97-33c3-4100-a416-e5c36b92e668_report_lesson_13-15_medical_03.md",
+            "title": "تقرير medical_mental_health (13-15)",
+            "item_count": 62
+          }
+        ],
         "data_tables": [
           {
             "id": "6c1abfab-6268-4201-acbf-faa8c714d4e4_Mental_Health_for_Adolescents_Aged_13-15",
@@ -1445,7 +1480,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "11da9a63-bdf0-4dc7-96b8-af41a180185d",
+            "file": "docs/lesson_assets/reports/11da9a63-bdf0-4dc7-96b8-af41a180185d_report_lesson_13-15_medical_04.md",
+            "title": "تقرير medical_mental_health (13-15)",
+            "item_count": 57
+          }
+        ],
         "data_tables": [],
         "infographics": [
           {
@@ -1644,7 +1686,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "0bee8ed3-6a57-4df6-aa17-088a9f723b41",
+            "file": "docs/lesson_assets/reports/0bee8ed3-6a57-4df6-aa17-088a9f723b41_report_lesson_16-18_medical_02.md",
+            "title": "تقرير medical_adult_transition (16-18)",
+            "item_count": 58
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -1679,7 +1728,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "e638c02c-1131-4423-92e3-a49acb5a7411",
+            "file": "docs/lesson_assets/reports/e638c02c-1131-4423-92e3-a49acb5a7411_report_lesson_16-18_medical_03.md",
+            "title": "تقرير medical_adult_transition (16-18)",
+            "item_count": 55
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -1756,7 +1812,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "89a806ac-601a-467f-949a-3e4da1f0fcf8",
+            "file": "docs/lesson_assets/reports/89a806ac-601a-467f-949a-3e4da1f0fcf8_report_lesson_4-6_development_02.md",
+            "title": "تقرير development_positive_parenting (4-6)",
+            "item_count": 57
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -1791,7 +1854,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "1dbf6b54-8f01-48c9-8736-f0b24afdbfcc",
+            "file": "docs/lesson_assets/reports/1dbf6b54-8f01-48c9-8736-f0b24afdbfcc_report_lesson_4-6_adab_01.md",
+            "title": "تقرير islamic_parenting_adab (4-6)",
+            "item_count": 51
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -1826,7 +1896,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "71b93c25-5794-425b-8130-544ded7e4fc9",
+            "file": "docs/lesson_assets/reports/71b93c25-5794-425b-8130-544ded7e4fc9_report_lesson_4-6_adab_02.md",
+            "title": "تقرير islamic_parenting_adab (4-6)",
+            "item_count": 56
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -1861,7 +1938,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "89e227dc-823b-486b-a20a-fa53c74c8992",
+            "file": "docs/lesson_assets/reports/89e227dc-823b-486b-a20a-fa53c74c8992_report_lesson_4-6_adab_03.md",
+            "title": "تقرير islamic_parenting_adab (4-6)",
+            "item_count": 52
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -1938,7 +2022,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "4e6749d9-45b1-4b75-b9f8-b0e4599ecdd6",
+            "file": "docs/lesson_assets/reports/4e6749d9-45b1-4b75-b9f8-b0e4599ecdd6_report_lesson_4-6_bond_02.md",
+            "title": "تقرير islamic_parenting_bond (4-6)",
+            "item_count": 57
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -1973,7 +2064,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "ac312318-253c-4eb0-b21b-39f7784b8e81",
+            "file": "docs/lesson_assets/reports/ac312318-253c-4eb0-b21b-39f7784b8e81_report_lesson_4-6_bond_03.md",
+            "title": "تقرير islamic_parenting_bond (4-6)",
+            "item_count": 54
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2008,7 +2106,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "d2db37f4-82b0-4a40-9399-becee5a62d46",
+            "file": "docs/lesson_assets/reports/d2db37f4-82b0-4a40-9399-becee5a62d46_report_lesson_7-9_development_01.md",
+            "title": "تقرير development_digital_wellbeing (7-9)",
+            "item_count": 52
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2043,7 +2148,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "468e2a7e-961d-4700-8c2d-7a5816e85bde",
+            "file": "docs/lesson_assets/reports/468e2a7e-961d-4700-8c2d-7a5816e85bde_report_lesson_7-9_development_02.md",
+            "title": "تقرير development_digital_wellbeing (7-9)",
+            "item_count": 58
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2120,7 +2232,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "0beb8b9a-f962-4dfd-8ff4-09cd8ef530c6",
+            "file": "docs/lesson_assets/reports/0beb8b9a-f962-4dfd-8ff4-09cd8ef530c6_report_lesson_7-9_worship_02.md",
+            "title": "تقرير islamic_parenting_worship (7-9)",
+            "item_count": 48
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2155,7 +2274,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "d6fa3326-ebad-4ddb-b01b-08c7bf094734",
+            "file": "docs/lesson_assets/reports/d6fa3326-ebad-4ddb-b01b-08c7bf094734_report_lesson_7-9_worship_03.md",
+            "title": "تقرير islamic_parenting_worship (7-9)",
+            "item_count": 53
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2190,7 +2316,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "b850fad5-1156-472e-b785-34a73288500b",
+            "file": "docs/lesson_assets/reports/b850fad5-1156-472e-b785-34a73288500b_report_lesson_7-9_medical_01.md",
+            "title": "تقرير medical_emotional_health (7-9)",
+            "item_count": 61
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2225,7 +2358,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "2a5276ce-127e-4bfc-be94-d655290877fe",
+            "file": "docs/lesson_assets/reports/2a5276ce-127e-4bfc-be94-d655290877fe_report_lesson_7-9_medical_02.md",
+            "title": "تقرير medical_emotional_health (7-9)",
+            "item_count": 63
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
@@ -2929,6 +3069,14 @@
             "size_bytes": 43103373,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "c7033758-a5a8-488e-93b4-af45aa2ea91e",
+            "file": "docs/lesson_assets/reports/c7033758-a5a8-488e-93b4-af45aa2ea91e_report_lesson_0-3_cyber_screen_foundations_b04.md",
+            "title": "تقرير cyber_screen_foundations (0-3)",
+            "item_count": 55
+          }
         ]
       }
     },
@@ -2958,6 +3106,14 @@
             "file": "docs/lesson_0-3_development_early_moments_b04_podcast.mp3",
             "size_bytes": 28561414,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "54b7a957-9026-4a8c-9e7d-3c61074d83fe",
+            "file": "docs/lesson_assets/reports/54b7a957-9026-4a8c-9e7d-3c61074d83fe_report_lesson_0-3_development_early_moments_b04.md",
+            "title": "تقرير development_early_moments (0-3)",
+            "item_count": 55
           }
         ]
       }
@@ -2989,6 +3145,14 @@
             "size_bytes": 46315305,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "013334da-cbe1-4cce-911d-06a2ab198986",
+            "file": "docs/lesson_assets/reports/013334da-cbe1-4cce-911d-06a2ab198986_report_lesson_10-12_cyber_digital_citizenship_b04.md",
+            "title": "تقرير cyber_digital_citizenship (10-12)",
+            "item_count": 57
+          }
         ]
       }
     },
@@ -3018,6 +3182,14 @@
             "file": "docs/lesson_10-12_medical_puberty_wellbeing_b04_podcast.mp3",
             "size_bytes": 40773179,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "828919ca-27f7-446b-8c9c-83074e8d16d2",
+            "file": "docs/lesson_assets/reports/828919ca-27f7-446b-8c9c-83074e8d16d2_report_lesson_10-12_medical_puberty_wellbeing_b04.md",
+            "title": "تقرير medical_puberty_wellbeing (10-12)",
+            "item_count": 49
           }
         ]
       }
@@ -3049,6 +3221,14 @@
             "size_bytes": 36547915,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "2183ea6a-5e68-42dc-899f-35103e794683",
+            "file": "docs/lesson_assets/reports/2183ea6a-5e68-42dc-899f-35103e794683_report_lesson_13-15_cyber_digital_maturity_b04.md",
+            "title": "تقرير cyber_digital_maturity (13-15)",
+            "item_count": 59
+          }
         ]
       }
     },
@@ -3078,6 +3258,14 @@
             "file": "docs/lesson_13-15_development_brain_identity_b04_podcast.mp3",
             "size_bytes": 43994075,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "05a0e4fe-cd34-4bd0-b1b5-5d07ddd86925",
+            "file": "docs/lesson_assets/reports/05a0e4fe-cd34-4bd0-b1b5-5d07ddd86925_report_lesson_13-15_development_brain_identity_b04.md",
+            "title": "تقرير development_brain_identity (13-15)",
+            "item_count": 57
           }
         ]
       }
@@ -3109,6 +3297,14 @@
             "size_bytes": 21799026,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "a2dee0f5-6bb9-4623-99b1-e68a606807b7",
+            "file": "docs/lesson_assets/reports/a2dee0f5-6bb9-4623-99b1-e68a606807b7_report_lesson_16-18_cyber_digital_professional_b03.md",
+            "title": "تقرير cyber_digital_professional (16-18)",
+            "item_count": 53
+          }
         ]
       }
     },
@@ -3138,6 +3334,14 @@
             "file": "docs/lesson_16-18_cyber_digital_professional_b04_podcast.mp3",
             "size_bytes": 40149169,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "da230371-61e0-4758-b0ad-9dd4e1e8b0c5",
+            "file": "docs/lesson_assets/reports/da230371-61e0-4758-b0ad-9dd4e1e8b0c5_report_lesson_16-18_cyber_digital_professional_b04.md",
+            "title": "تقرير cyber_digital_professional (16-18)",
+            "item_count": 55
           }
         ]
       }
@@ -3169,6 +3373,14 @@
             "size_bytes": 42493557,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "6ac1d9c0-efa4-4639-9933-aa96341a840d",
+            "file": "docs/lesson_assets/reports/6ac1d9c0-efa4-4639-9933-aa96341a840d_report_lesson_16-18_medical_adult_transition_b04.md",
+            "title": "تقرير medical_adult_transition (16-18)",
+            "item_count": 53
+          }
         ]
       }
     },
@@ -3198,6 +3410,14 @@
             "file": "docs/lesson_2-3_cyber_routine_b01_podcast.mp3",
             "size_bytes": 44656930,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "bc48f6ad-ce6d-4333-8821-110c29bde1a3",
+            "file": "docs/lesson_assets/reports/bc48f6ad-ce6d-4333-8821-110c29bde1a3_report_lesson_2-3_cyber_routine_b01.md",
+            "title": "تقرير cyber_routine (2-3)",
+            "item_count": 56
           }
         ]
       }
@@ -3229,6 +3449,14 @@
             "size_bytes": 29640601,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "0d621a28-c40c-4037-a1a4-a4e50d58fb31",
+            "file": "docs/lesson_assets/reports/0d621a28-c40c-4037-a1a4-a4e50d58fb31_report_lesson_2-3_cyber_routine_b02.md",
+            "title": "تقرير cyber_routine (2-3)",
+            "item_count": 59
+          }
         ]
       }
     },
@@ -3258,6 +3486,14 @@
             "file": "docs/lesson_2-3_cyber_routine_b04_podcast.mp3",
             "size_bytes": 30577736,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "cbfcfd4e-21e6-49f5-a0d9-5b3d05bc75ab",
+            "file": "docs/lesson_assets/reports/cbfcfd4e-21e6-49f5-a0d9-5b3d05bc75ab_report_lesson_2-3_cyber_routine_b04.md",
+            "title": "تقرير cyber_routine (2-3)",
+            "item_count": 49
           }
         ]
       }
@@ -3289,6 +3525,14 @@
             "size_bytes": 29970161,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "7e9c5ba3-2b71-4175-b937-20500ce88898",
+            "file": "docs/lesson_assets/reports/7e9c5ba3-2b71-4175-b937-20500ce88898_report_lesson_2-3_development_growth_b03.md",
+            "title": "تقرير development_growth (2-3)",
+            "item_count": 54
+          }
         ]
       }
     },
@@ -3318,6 +3562,14 @@
             "file": "docs/lesson_2-3_development_growth_b04_podcast.mp3",
             "size_bytes": 41123656,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "dfa478f1-61b1-4c76-a532-1d2f8090672c",
+            "file": "docs/lesson_assets/reports/dfa478f1-61b1-4c76-a532-1d2f8090672c_report_lesson_2-3_development_growth_b04.md",
+            "title": "تقرير development_growth (2-3)",
+            "item_count": 58
           }
         ]
       }
@@ -3349,6 +3601,14 @@
             "size_bytes": 39572340,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "38b47b07-8aea-49d1-86b1-9bb204f2f992",
+            "file": "docs/lesson_assets/reports/38b47b07-8aea-49d1-86b1-9bb204f2f992_report_lesson_2-3_islamic_attachment_b01.md",
+            "title": "تقرير islamic_attachment (2-3)",
+            "item_count": 53
+          }
         ]
       }
     },
@@ -3378,6 +3638,14 @@
             "file": "docs/lesson_2-3_islamic_attachment_b02_podcast.mp3",
             "size_bytes": 46190433,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "9b74fd4b-929a-4d59-a8ce-7e1ea4bbabcb",
+            "file": "docs/lesson_assets/reports/9b74fd4b-929a-4d59-a8ce-7e1ea4bbabcb_report_lesson_2-3_islamic_attachment_b02.md",
+            "title": "تقرير islamic_attachment (2-3)",
+            "item_count": 55
           }
         ]
       }
@@ -3409,6 +3677,14 @@
             "size_bytes": 18727653,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "75df8137-75cb-449f-96ce-794922e78ff2",
+            "file": "docs/lesson_assets/reports/75df8137-75cb-449f-96ce-794922e78ff2_report_lesson_2-3_islamic_attachment_b03.md",
+            "title": "تقرير islamic_attachment (2-3)",
+            "item_count": 54
+          }
         ]
       }
     },
@@ -3438,6 +3714,14 @@
             "file": "docs/lesson_4-6_development_positive_parenting_b01_podcast.mp3",
             "size_bytes": 36597966,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "b0bc05ea-48a4-4679-bfcc-0cfcb4446b2f",
+            "file": "docs/lesson_assets/reports/b0bc05ea-48a4-4679-bfcc-0cfcb4446b2f_report_lesson_4-6_development_positive_parenting_b01.md",
+            "title": "تقرير development_positive_parenting (4-6)",
+            "item_count": 57
           }
         ]
       }
@@ -3469,6 +3753,14 @@
             "size_bytes": 48486895,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "452290d0-3c40-4bb8-a0ce-f04e74fb5e8c",
+            "file": "docs/lesson_assets/reports/452290d0-3c40-4bb8-a0ce-f04e74fb5e8c_report_lesson_4-6_development_positive_parenting_b02.md",
+            "title": "تقرير development_positive_parenting (4-6)",
+            "item_count": 53
+          }
         ]
       }
     },
@@ -3498,6 +3790,14 @@
             "file": "docs/lesson_4-6_islamic_parenting_adab_b04_podcast.mp3",
             "size_bytes": 519984,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "42817f05-fe38-4e13-8016-dc08e46dff42",
+            "file": "docs/lesson_assets/reports/42817f05-fe38-4e13-8016-dc08e46dff42_report_lesson_4-6_islamic_parenting_adab_b04.md",
+            "title": "تقرير islamic_parenting_adab (4-6)",
+            "item_count": 57
           }
         ]
       }
@@ -3529,6 +3829,14 @@
             "size_bytes": 25200,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "208bac8f-dcfd-4bab-be88-5dd0c0e98eda",
+            "file": "docs/lesson_assets/reports/208bac8f-dcfd-4bab-be88-5dd0c0e98eda_report_lesson_4-6_islamic_parenting_bond_b04.md",
+            "title": "تقرير islamic_parenting_bond (4-6)",
+            "item_count": 59
+          }
         ]
       }
     },
@@ -3558,6 +3866,14 @@
             "file": "docs/lesson_7-9_development_digital_wellbeing_b04_podcast.mp3",
             "size_bytes": 549216,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "d4790665-c179-4347-aa22-638459c15649",
+            "file": "docs/lesson_assets/reports/d4790665-c179-4347-aa22-638459c15649_report_lesson_7-9_development_digital_wellbeing_b04.md",
+            "title": "تقرير development_digital_wellbeing (7-9)",
+            "item_count": 57
           }
         ]
       }
@@ -3589,6 +3905,14 @@
             "size_bytes": 521280,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "5dd299c5-63cb-4a39-bdb6-4b7307f6b0ef",
+            "file": "docs/lesson_assets/reports/5dd299c5-63cb-4a39-bdb6-4b7307f6b0ef_report_lesson_7-9_islamic_parenting_worship_b04.md",
+            "title": "تقرير islamic_parenting_worship (7-9)",
+            "item_count": 56
+          }
         ]
       }
     },
@@ -3619,6 +3943,14 @@
             "size_bytes": 537696,
             "language": "ar"
           }
+        ],
+        "reports": [
+          {
+            "id": "424ec540-da25-4017-9a9a-357b1b6ea940",
+            "file": "docs/lesson_assets/reports/424ec540-da25-4017-9a9a-357b1b6ea940_report_lesson_7-9_medical_emotional_health_b03.md",
+            "title": "تقرير medical_emotional_health (7-9)",
+            "item_count": 53
+          }
         ]
       }
     },
@@ -3648,6 +3980,14 @@
             "file": "docs/lesson_7-9_medical_emotional_health_b04_podcast.mp3",
             "size_bytes": 527040,
             "language": "ar"
+          }
+        ],
+        "reports": [
+          {
+            "id": "5f8207e6-62a2-45b1-8147-7823b2480687",
+            "file": "docs/lesson_assets/reports/5f8207e6-62a2-45b1-8147-7823b2480687_report_lesson_7-9_medical_emotional_health_b04.md",
+            "title": "تقرير medical_emotional_health (7-9)",
+            "item_count": 60
           }
         ]
       }
