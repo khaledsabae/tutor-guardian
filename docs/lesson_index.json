@@ -8,7 +8,7 @@
     "coverage": {
       "flashcards": "88/88",
       "quizzes": "88/88",
-      "reports": "87/88",
+      "reports": "88/88",
       "data_tables": "17/88",
       "infographics": "10/88"
     },
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-17T08:49:24.150036Z"
+    "updated_at": "2026-06-17T08:50:26.776617Z"
   },
   "lessons": [
     {
@@ -2400,7 +2400,14 @@
             "item_count": 0
           }
         ],
-        "reports": [],
+        "reports": [
+          {
+            "id": "01c16c7f-cdbe-45f5-a067-e71cc8f5f18d",
+            "file": "docs/lesson_assets/reports/01c16c7f-cdbe-45f5-a067-e71cc8f5f18d_report_lesson_7-9_development_03.md",
+            "title": "تقرير development_digital_wellbeing (7-9)",
+            "item_count": 48
+          }
+        ],
         "data_tables": [],
         "infographics": [],
         "podcasts": [
