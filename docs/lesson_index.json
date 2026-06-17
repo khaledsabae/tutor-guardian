@@ -94,6 +94,15 @@
             "file": "docs/lesson_demo_podcast.mp3",
             "size_bytes": 34197666
           }
+        ],
+        "videos": [
+          {
+            "source_id": "4086896f-0dd6-4a28-bade-c8032b18e9d1",
+            "file": "docs/path_videos/path_10-12_cyber_digital_citizenship_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_cyber_digital_citizenship"
+          }
         ]
       }
     },
@@ -212,6 +221,13 @@
             "language": "ar",
             "description": "Online safety for pre-teens",
             "note": "Arabic-language version."
+          },
+          {
+            "source_id": "5fb6588e-d31a-4cca-8e0c-052b364a72ac",
+            "file": "docs/path_videos/path_10-12_cyber_digital_citizenship_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_cyber_digital_citizenship"
           }
         ]
       }
@@ -305,6 +321,13 @@
             "language": "ar",
             "description": "Critical thinking and digital literacy",
             "note": "Arabic-language version."
+          },
+          {
+            "source_id": "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e",
+            "file": "docs/path_videos/path_10-12_cyber_digital_citizenship_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_cyber_digital_citizenship"
           }
         ]
       }
@@ -397,6 +420,13 @@
             "language": "ar",
             "description": "Islamic parenting for tweens",
             "note": "Arabic-language version."
+          },
+          {
+            "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
+            "file": "docs/path_videos/path_10-12_islamic_parenting_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_islamic_parenting_identity"
           }
         ]
       }
@@ -454,6 +484,15 @@
             "size_bytes": 33909194,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951",
+            "file": "docs/path_videos/path_10-12_islamic_parenting_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_islamic_parenting_identity"
+          }
         ]
       }
     },
@@ -509,6 +548,15 @@
             "file": "docs/lesson_10-12_islamic_parenting_identity_03_podcast.mp3",
             "size_bytes": 46272607,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "bc41f39f-97ae-4af2-80dd-b070907a80e4",
+            "file": "docs/path_videos/path_10-12_islamic_parenting_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_islamic_parenting_identity"
           }
         ]
       }
@@ -595,6 +643,13 @@
             "language": "ar",
             "description": "Self-confidence and identity building",
             "note": "Arabic-language version."
+          },
+          {
+            "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
+            "file": "docs/path_videos/path_10-12_islamic_parenting_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_islamic_parenting_identity"
           }
         ]
       }
@@ -652,6 +707,15 @@
             "size_bytes": 28996422,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "c48f34fc-f1a1-4150-a55c-bef14c4051f8",
+            "file": "docs/path_videos/path_10-12_medical_puberty_wellbeing_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_medical_puberty_wellbeing"
+          }
         ]
       }
     },
@@ -707,6 +771,15 @@
             "file": "docs/lesson_10-12_medical_puberty_wellbeing_02_podcast.mp3",
             "size_bytes": 47102168,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "42bc52b6-7d36-486f-aa79-e98ea5dcb4c9",
+            "file": "docs/path_videos/path_10-12_medical_puberty_wellbeing_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_medical_puberty_wellbeing"
           }
         ]
       }
@@ -794,6 +867,13 @@
             "language": "ar",
             "description": "Safe adolescence - healthy habits",
             "note": "Arabic-language version."
+          },
+          {
+            "source_id": "20e00eef-fa60-4165-9364-ef869223c0f6",
+            "file": "docs/path_videos/path_10-12_medical_puberty_wellbeing_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_medical_puberty_wellbeing"
           }
         ]
       }
@@ -881,6 +961,13 @@
             "language": "ar",
             "description": "Digital footprint and privacy",
             "note": "Arabic-language version."
+          },
+          {
+            "source_id": "b607c436-be69-4a32-839b-af09cae03dc4",
+            "file": "docs/path_videos/path_13-15_cyber_digital_maturity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_cyber_digital_maturity"
           }
         ]
       }
@@ -937,6 +1024,15 @@
             "file": "docs/lesson_13-15_cyber_digital_maturity_02_podcast.mp3",
             "size_bytes": 24982570,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "78567565-5847-4d61-bcd2-aac115428388",
+            "file": "docs/path_videos/path_13-15_cyber_digital_maturity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_cyber_digital_maturity"
           }
         ]
       }
@@ -995,6 +1091,15 @@
             "size_bytes": 29915628,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "ca2ad154-cbd0-496f-aa24-9c2194997c7d",
+            "file": "docs/path_videos/path_13-15_cyber_digital_maturity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_cyber_digital_maturity"
+          }
         ]
       }
     },
@@ -1050,6 +1155,15 @@
             "file": "docs/lesson_13-15_development_brain_identity_01_podcast.mp3",
             "size_bytes": 38928161,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "46ed02d0-0eb1-4f2f-b5c1-6546eafdcc3b",
+            "file": "docs/path_videos/path_13-15_development_brain_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_development_brain_identity"
           }
         ]
       }
@@ -1107,6 +1221,15 @@
             "size_bytes": 45693536,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "8b1d28ae-c4de-4aac-b591-8fbb3f61ddd9",
+            "file": "docs/path_videos/path_13-15_development_brain_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_development_brain_identity"
+          }
         ]
       }
     },
@@ -1162,6 +1285,15 @@
             "file": "docs/lesson_13-15_development_brain_identity_03_podcast.mp3",
             "size_bytes": 39305531,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "baaf13a7-971f-47e3-b5a5-2f89238e0ded",
+            "file": "docs/path_videos/path_13-15_development_brain_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_development_brain_identity"
           }
         ]
       }
@@ -1225,6 +1357,15 @@
             "size_bytes": 27797708,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "73b68643-08f5-4dbf-b705-daef9bc54304",
+            "file": "docs/path_videos/path_13-15_islamic_parenting_teen_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_islamic_parenting_teen_identity"
+          }
         ]
       }
     },
@@ -1281,6 +1422,15 @@
             "file": "docs/lesson_13-15_islamic_parenting_teen_identity_02_podcast.mp3",
             "size_bytes": 32972806,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "6b437e64-40c5-483d-9abc-bd3bbc94d008",
+            "file": "docs/path_videos/path_13-15_islamic_parenting_teen_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_islamic_parenting_teen_identity"
           }
         ]
       }
@@ -1339,6 +1489,15 @@
             "size_bytes": 30188297,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "38cfebd5-0b85-477b-a4d7-6e36ed98af79",
+            "file": "docs/path_videos/path_13-15_islamic_parenting_teen_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_islamic_parenting_teen_identity"
+          }
         ]
       }
     },
@@ -1395,6 +1554,15 @@
             "file": "docs/lesson_13-15_islamic_parenting_teen_identity_04_podcast.mp3",
             "size_bytes": 43027059,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "9c1ff105-66fa-47c3-94a7-17809a24a052",
+            "file": "docs/path_videos/path_13-15_islamic_parenting_teen_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_islamic_parenting_teen_identity"
           }
         ]
       }
@@ -1481,6 +1649,13 @@
             "language": "ar",
             "description": "Teen mental health awareness",
             "note": "Arabic-language version."
+          },
+          {
+            "source_id": "cb9959f3-12d6-46e3-a592-8c6d61c30522",
+            "file": "docs/path_videos/path_13-15_medical_mental_health_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_medical_mental_health"
           }
         ]
       }
@@ -1538,6 +1713,15 @@
             "size_bytes": 437328,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "b9d49f00-f489-4922-bab6-c2a052f30baf",
+            "file": "docs/path_videos/path_13-15_medical_mental_health_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_medical_mental_health"
+          }
         ]
       }
     },
@@ -1593,6 +1777,15 @@
             "file": "docs/lesson_13-15_medical_03_podcast.mp3",
             "size_bytes": 454752,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "a2737f57-c687-49b6-beb6-748e966f7a76",
+            "file": "docs/path_videos/path_13-15_medical_mental_health_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_medical_mental_health"
           }
         ]
       }
@@ -1651,6 +1844,15 @@
             "size_bytes": 512208,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "0e79b612-e0fa-4455-a120-59938e7110bc",
+            "file": "docs/path_videos/path_13-15_medical_mental_health_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_medical_mental_health"
+          }
         ]
       }
     },
@@ -1707,6 +1909,15 @@
             "size_bytes": 523008,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "358f4c4e-9742-45f0-b9ee-037b09ca078d",
+            "file": "docs/path_videos/path_16-18_cyber_digital_professional_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_16-18_cyber_digital_professional"
+          }
         ]
       }
     },
@@ -1762,6 +1973,15 @@
             "file": "docs/lesson_16-18_cyber_02_podcast.mp3",
             "size_bytes": 569664,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "5f6d098c-f8a8-4f5a-a9f6-79b2cc8c053e",
+            "file": "docs/path_videos/path_16-18_cyber_digital_professional_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_16-18_cyber_digital_professional"
           }
         ]
       }
@@ -1848,6 +2068,13 @@
             "language": "ar",
             "description": "Adulthood transition and mental health",
             "note": "Arabic-language version."
+          },
+          {
+            "source_id": "f9989ce3-a6e7-48dc-a627-87fee569c42d",
+            "file": "docs/path_videos/path_16-18_medical_adult_transition_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_16-18_medical_adult_transition"
           }
         ]
       }
@@ -1905,6 +2132,15 @@
             "size_bytes": 528624,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "91cd3b56-aba3-40fe-ac12-3f69ac2d0623",
+            "file": "docs/path_videos/path_16-18_medical_adult_transition_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_16-18_medical_adult_transition"
+          }
         ]
       }
     },
@@ -1960,6 +2196,15 @@
             "file": "docs/lesson_16-18_medical_03_podcast.mp3",
             "size_bytes": 502848,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "e265bfe0-2602-4493-adb4-233c72505d9c",
+            "file": "docs/path_videos/path_16-18_medical_adult_transition_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_16-18_medical_adult_transition"
           }
         ]
       }
@@ -2017,6 +2262,15 @@
             "size_bytes": 580464,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "e99a9c41-32ca-41e4-b4ed-f61af795642d",
+            "file": "docs/path_videos/path_4-6_development_positive_parenting_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_development_positive_parenting"
+          }
         ]
       }
     },
@@ -2072,6 +2326,15 @@
             "file": "docs/lesson_4-6_development_02_podcast.mp3",
             "size_bytes": 607824,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "85a964f7-0222-46b5-bb0b-044087826f29",
+            "file": "docs/path_videos/path_4-6_development_positive_parenting_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_development_positive_parenting"
           }
         ]
       }
@@ -2129,6 +2392,15 @@
             "size_bytes": 553536,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "cc3b004a-dff2-44e4-92c2-2ad56cb8ffe9",
+            "file": "docs/path_videos/path_4-6_islamic_parenting_adab_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_islamic_parenting_adab"
+          }
         ]
       }
     },
@@ -2184,6 +2456,15 @@
             "file": "docs/lesson_4-6_adab_02_podcast.mp3",
             "size_bytes": 567936,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "1ef101c8-a442-4139-89dc-7942bc2cea82",
+            "file": "docs/path_videos/path_4-6_islamic_parenting_adab_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_islamic_parenting_adab"
           }
         ]
       }
@@ -2241,6 +2522,15 @@
             "size_bytes": 583776,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "ef52b00c-a493-48d2-8f8c-a94fae2e7835",
+            "file": "docs/path_videos/path_4-6_islamic_parenting_adab_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_islamic_parenting_adab"
+          }
         ]
       }
     },
@@ -2296,6 +2586,15 @@
             "file": "docs/lesson_4-6_bond_01_podcast.mp3",
             "size_bytes": 430704,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "3de4e313-6f2f-4c77-a368-c6682bc43afd",
+            "file": "docs/path_videos/path_4-6_islamic_parenting_bond_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_islamic_parenting_bond"
           }
         ]
       }
@@ -2353,6 +2652,15 @@
             "size_bytes": 474192,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "cda01e43-ade6-4c2a-b389-e73f03d179f5",
+            "file": "docs/path_videos/path_4-6_islamic_parenting_bond_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_islamic_parenting_bond"
+          }
         ]
       }
     },
@@ -2408,6 +2716,15 @@
             "file": "docs/lesson_4-6_bond_03_podcast.mp3",
             "size_bytes": 571536,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "cc0c9f78-495b-443b-8b4d-ece8d57dbfd5",
+            "file": "docs/path_videos/path_4-6_islamic_parenting_bond_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_islamic_parenting_bond"
           }
         ]
       }
@@ -2465,6 +2782,15 @@
             "size_bytes": 283392,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "37393ebc-4bf7-4cc8-ac6e-b15b4fad2b10",
+            "file": "docs/path_videos/path_7-9_development_digital_wellbeing_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_development_digital_wellbeing"
+          }
         ]
       }
     },
@@ -2520,6 +2846,15 @@
             "file": "docs/lesson_7-9_development_02_podcast.mp3",
             "size_bytes": 286272,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "370aecdc-3b9f-4d93-805a-517973baba60",
+            "file": "docs/path_videos/path_7-9_development_digital_wellbeing_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_development_digital_wellbeing"
           }
         ]
       }
@@ -2577,6 +2912,15 @@
             "size_bytes": 260640,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "7ce48001-258f-45f1-b561-556ee5b4fe82",
+            "file": "docs/path_videos/path_7-9_islamic_parenting_worship_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_islamic_parenting_worship"
+          }
         ]
       }
     },
@@ -2632,6 +2976,15 @@
             "file": "docs/lesson_7-9_worship_02_podcast.mp3",
             "size_bytes": 265392,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "d029eaaa-7796-494c-a397-330e7342944c",
+            "file": "docs/path_videos/path_7-9_islamic_parenting_worship_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_islamic_parenting_worship"
           }
         ]
       }
@@ -2689,6 +3042,15 @@
             "size_bytes": 261936,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "17ff034d-1fb5-4f76-a9d4-2ed77bf1aefb",
+            "file": "docs/path_videos/path_7-9_islamic_parenting_worship_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_islamic_parenting_worship"
+          }
         ]
       }
     },
@@ -2744,6 +3106,15 @@
             "file": "docs/lesson_7-9_medical_01_podcast.mp3",
             "size_bytes": 311904,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "1e9b6c6c-a3e9-4bc3-b8bb-3111cc7cc474",
+            "file": "docs/path_videos/path_7-9_medical_emotional_health_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_medical_emotional_health"
           }
         ]
       }
@@ -2801,6 +3172,15 @@
             "size_bytes": 355680,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "954f1301-4611-41f2-b796-6486fd8ac9d5",
+            "file": "docs/path_videos/path_7-9_medical_emotional_health_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_medical_emotional_health"
+          }
         ]
       }
     },
@@ -2856,6 +3236,15 @@
             "file": "docs/lesson_7-9_development_03_podcast.mp3",
             "size_bytes": 284400,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "a40ffd21-a118-4494-bc29-ca1ecb385c7a",
+            "file": "docs/path_videos/path_7-9_development_digital_wellbeing_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_development_digital_wellbeing"
           }
         ]
       }
@@ -2913,6 +3302,15 @@
             "size_bytes": 42651183,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "3b1bc4d0-0bbc-4e6b-bf5b-56d88cf5591a",
+            "file": "docs/path_videos/path_prenatal-1_cyber_screen_foundations_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_cyber_screen_foundations"
+          }
         ]
       }
     },
@@ -2968,6 +3366,15 @@
             "file": "docs/lesson_0-3_cyber_screen_foundations_02_podcast.mp3",
             "size_bytes": 44537404,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "688a3b81-7e0f-4245-9427-724219cb9aac",
+            "file": "docs/path_videos/path_prenatal-1_cyber_screen_foundations_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_cyber_screen_foundations"
           }
         ]
       }
@@ -3025,6 +3432,15 @@
             "size_bytes": 32014008,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "424206c3-c35b-4e26-834b-90ce2cde12bc",
+            "file": "docs/path_videos/path_prenatal-1_cyber_screen_foundations_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_cyber_screen_foundations"
+          }
         ]
       }
     },
@@ -3080,6 +3496,15 @@
             "file": "docs/lesson_0-3_development_early_moments_01_podcast.mp3",
             "size_bytes": 30415512,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "d54a286a-dbd0-4047-8cfb-016026f26020",
+            "file": "docs/path_videos/path_prenatal-1_development_early_moments_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_development_early_moments"
           }
         ]
       }
@@ -3137,6 +3562,15 @@
             "size_bytes": 30451370,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "f31a7e1b-b4b9-423e-b362-03138496c2bf",
+            "file": "docs/path_videos/path_prenatal-1_development_early_moments_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_development_early_moments"
+          }
         ]
       }
     },
@@ -3192,6 +3626,15 @@
             "file": "docs/lesson_0-3_development_early_moments_03_podcast.mp3",
             "size_bytes": 31863853,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "6e81f215-6501-4e8d-aec6-e54b720532eb",
+            "file": "docs/path_videos/path_prenatal-1_development_early_moments_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_development_early_moments"
           }
         ]
       }
@@ -3249,6 +3692,15 @@
             "size_bytes": 27982343,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "b9bc7171-c5ed-4663-bb13-48d9d227dd2e",
+            "file": "docs/path_videos/path_prenatal-1_islamic_parenting_attachment_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_islamic_parenting_attachment"
+          }
         ]
       }
     },
@@ -3304,6 +3756,15 @@
             "file": "docs/lesson_0-3_islamic_parenting_attachment_02_podcast.mp3",
             "size_bytes": 45566424,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "145fc9e8-bc71-4fdb-95f7-87dccb24a345",
+            "file": "docs/path_videos/path_prenatal-1_islamic_parenting_attachment_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_islamic_parenting_attachment"
           }
         ]
       }
@@ -3361,6 +3822,15 @@
             "size_bytes": 38763696,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "4812d67a-00e6-4fa2-a04f-cbfd17123b49",
+            "file": "docs/path_videos/path_prenatal-1_islamic_parenting_attachment_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_islamic_parenting_attachment"
+          }
         ]
       }
     },
@@ -3416,6 +3886,15 @@
             "file": "docs/lesson_0-3_islamic_parenting_attachment_04_podcast.mp3",
             "size_bytes": 24718750,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "9810e949-9163-4386-9cdd-37cf11bbc055",
+            "file": "docs/path_videos/path_prenatal-1_islamic_parenting_attachment_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_islamic_parenting_attachment"
           }
         ]
       }
@@ -3473,6 +3952,15 @@
             "size_bytes": 29993320,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "69bfedda-8b9a-4bc8-9b5a-aca294ac78f0",
+            "file": "docs/path_videos/path_prenatal-1_medical_early_milestones_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_medical_early_milestones"
+          }
         ]
       }
     },
@@ -3528,6 +4016,15 @@
             "file": "docs/lesson_0-3_medical_early_milestones_02_podcast.mp3",
             "size_bytes": 40957066,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "628dc078-3da1-4c1a-a3bc-450b00249b91",
+            "file": "docs/path_videos/path_prenatal-1_medical_early_milestones_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_medical_early_milestones"
           }
         ]
       }
@@ -3585,6 +4082,15 @@
             "size_bytes": 21275983,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "5fa352a9-d762-43cc-874c-0ac6e7dcaa0f",
+            "file": "docs/path_videos/path_prenatal-1_medical_early_milestones_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_medical_early_milestones"
+          }
         ]
       }
     },
@@ -3640,6 +4146,15 @@
             "file": "docs/lesson_0-3_medical_early_milestones_04_podcast.mp3",
             "size_bytes": 41941264,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "39974153-9cac-4f6e-ae0c-89670bbfa93e",
+            "file": "docs/path_videos/path_prenatal-1_medical_early_milestones_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_prenatal-1_medical_early_milestones"
           }
         ]
       }
@@ -3697,6 +4212,15 @@
             "size_bytes": 542448,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "02a935ab-8fe5-4d04-a77b-0faaf59c6553",
+            "file": "docs/path_videos/path_2-3_development_early_moments_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_development_early_moments"
+          }
         ]
       }
     },
@@ -3752,6 +4276,15 @@
             "file": "docs/lesson_2-3_cyber_routine_02_podcast.mp3",
             "size_bytes": 727200,
             "language": "ar"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "939414c0-68d3-40f4-8a91-31c9f2f2f4f6",
+            "file": "docs/path_videos/path_2-3_cyber_screen_foundations_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_cyber_screen_foundations"
           }
         ]
       }
@@ -3809,6 +4342,15 @@
             "size_bytes": 595152,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "407b5539-eee6-4574-ad06-78245cdb791a",
+            "file": "docs/path_videos/path_2-3_development_early_moments_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_development_early_moments"
+          }
         ]
       }
     },
@@ -3865,6 +4407,15 @@
             "size_bytes": 691200,
             "language": "ar"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "8d5b520e-e613-4bb8-af0c-fb5c4800a678",
+            "file": "docs/path_videos/path_2-3_islamic_parenting_attachment_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_islamic_parenting_attachment"
+          }
         ]
       }
     },
@@ -3918,6 +4469,15 @@
             "file": "docs/lesson_assets/infographics/65_lesson_0-3_cyber_screen_foundations_b04.png",
             "type": "image/png",
             "description": "Infographic for lesson_0-3_cyber_screen_foundations_b04"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "3f7ba915-aaf3-4d46-847f-12f720e2be23",
+            "file": "docs/path_videos/path_0-3_cyber_screen_foundations_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_0-3_cyber_screen_foundations"
           }
         ]
       }
@@ -3973,6 +4533,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_development_early_moments_b04"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "0b63d581-1579-45e9-8568-159cdc806fe0",
+            "file": "docs/path_videos/path_0-3_development_early_moments_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_0-3_development_early_moments"
+          }
         ]
       }
     },
@@ -4026,6 +4595,15 @@
             "file": "docs/lesson_assets/infographics/39_lesson_10-12_cyber_digital_citizenship_b04.png",
             "type": "image/png",
             "description": "Infographic for lesson_10-12_cyber_digital_citizenship_b04"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "757de79a-e9ad-4229-b19b-e22989eee258",
+            "file": "docs/path_videos/path_10-12_cyber_digital_citizenship_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_cyber_digital_citizenship"
           }
         ]
       }
@@ -4081,6 +4659,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_10-12_medical_puberty_wellbeing_b04"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "79ef3ff1-8878-40a7-b34f-045db4494cb0",
+            "file": "docs/path_videos/path_10-12_medical_puberty_wellbeing_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_10-12_medical_puberty_wellbeing"
+          }
         ]
       }
     },
@@ -4134,6 +4721,15 @@
             "file": "docs/lesson_assets/infographics/48_lesson_13-15_cyber_digital_maturity_b04.png",
             "type": "image/png",
             "description": "Infographic for lesson_13-15_cyber_digital_maturity_b04"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "e48b1cdf-4322-40a4-bf85-37c9d33f61ae",
+            "file": "docs/path_videos/path_13-15_cyber_digital_maturity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_cyber_digital_maturity"
           }
         ]
       }
@@ -4189,6 +4785,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_13-15_development_brain_identity_b04"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "069c2dc6-3067-4131-8d44-d155467a595e",
+            "file": "docs/path_videos/path_13-15_development_brain_identity_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_13-15_development_brain_identity"
+          }
         ]
       }
     },
@@ -4242,6 +4847,15 @@
             "file": "docs/lesson_assets/infographics/59_lesson_16-18_cyber_digital_professional_b03.png",
             "type": "image/png",
             "description": "Infographic for lesson_16-18_cyber_digital_professional_b03"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "d37ac22d-d7db-4044-937d-bb073785bc5e",
+            "file": "docs/path_videos/path_16-18_cyber_digital_professional_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_16-18_cyber_digital_professional"
           }
         ]
       }
@@ -4297,6 +4911,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_16-18_cyber_digital_professional_b04"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "fab34fe5-6223-43d4-8fdf-cb5c45b46db3",
+            "file": "docs/path_videos/path_16-18_cyber_digital_professional_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_16-18_cyber_digital_professional"
+          }
         ]
       }
     },
@@ -4350,6 +4973,15 @@
             "file": "docs/lesson_assets/infographics/64_lesson_16-18_medical_adult_transition_b04.png",
             "type": "image/png",
             "description": "Infographic for lesson_16-18_medical_adult_transition_b04"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "39a16fbb-e308-4f72-8115-42ca5f32251c",
+            "file": "docs/path_videos/path_16-18_medical_adult_transition_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_16-18_medical_adult_transition"
           }
         ]
       }
@@ -4405,6 +5037,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_cyber_routine_b01"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "739d0a15-3498-4f55-b67c-dd941d740c04",
+            "file": "docs/path_videos/path_2-3_cyber_routine_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_cyber_routine"
+          }
         ]
       }
     },
@@ -4458,6 +5099,15 @@
             "file": "docs/lesson_assets/infographics/67_lesson_2-3_cyber_routine_b02.png",
             "type": "image/png",
             "description": "Infographic for lesson_2-3_cyber_routine_b02"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "2874d536-7db2-4654-97ad-cb5a4186cf41",
+            "file": "docs/path_videos/path_2-3_cyber_routine_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_cyber_routine"
           }
         ]
       }
@@ -4513,6 +5163,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_cyber_routine_b04"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "46a47df3-5fc2-46c4-9e71-26af29ae9fd0",
+            "file": "docs/path_videos/path_2-3_cyber_routine_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_cyber_routine"
+          }
         ]
       }
     },
@@ -4566,6 +5225,15 @@
             "file": "docs/lesson_assets/infographics/69_lesson_2-3_development_growth_b03.png",
             "type": "image/png",
             "description": "Infographic for lesson_2-3_development_growth_b03"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "7fb32028-a422-41f1-bc3e-f1287f03cd0e",
+            "file": "docs/path_videos/path_2-3_development_growth_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_development_growth"
           }
         ]
       }
@@ -4621,6 +5289,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_development_growth_b04"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "74a6cb19-97b2-4406-a9a0-b30fa3defd96",
+            "file": "docs/path_videos/path_2-3_development_growth_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_development_growth"
+          }
         ]
       }
     },
@@ -4674,6 +5351,15 @@
             "file": "docs/lesson_assets/infographics/73_lesson_2-3_islamic_attachment_b01.png",
             "type": "image/png",
             "description": "Infographic for lesson_2-3_islamic_attachment_b01"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "8429769a-26e2-4efa-86fe-c03ff3f7d21c",
+            "file": "docs/path_videos/path_2-3_islamic_attachment_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_islamic_attachment"
           }
         ]
       }
@@ -4729,6 +5415,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_islamic_attachment_b02"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "b745f863-e9cf-4ff8-adb8-e19c08b765a1",
+            "file": "docs/path_videos/path_2-3_islamic_attachment_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_islamic_attachment"
+          }
         ]
       }
     },
@@ -4782,6 +5477,15 @@
             "file": "docs/lesson_assets/infographics/75_lesson_2-3_islamic_attachment_b03.png",
             "type": "image/png",
             "description": "Infographic for lesson_2-3_islamic_attachment_b03"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "e5cf0f41-3675-4e77-8b03-4813628043f7",
+            "file": "docs/path_videos/path_2-3_islamic_attachment_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_islamic_attachment"
           }
         ]
       }
@@ -4837,6 +5541,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_4-6_development_positive_parenting_b01"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "2ead3401-349d-4369-8387-3bf45415502e",
+            "file": "docs/path_videos/path_4-6_development_positive_parenting_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_development_positive_parenting"
+          }
         ]
       }
     },
@@ -4890,6 +5603,15 @@
             "file": "docs/lesson_assets/infographics/18_lesson_4-6_development_positive_parenting_b02.png",
             "type": "image/png",
             "description": "Infographic for lesson_4-6_development_positive_parenting_b02"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "442a5917-6e17-4828-b9f0-61fa9f09877c",
+            "file": "docs/path_videos/path_4-6_development_positive_parenting_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_development_positive_parenting"
           }
         ]
       }
@@ -4945,6 +5667,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_4-6_islamic_parenting_adab_b04"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "478cd841-9b6e-4d7e-a286-dba8f6375636",
+            "file": "docs/path_videos/path_4-6_islamic_parenting_adab_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_islamic_parenting_adab"
+          }
         ]
       }
     },
@@ -4998,6 +5729,15 @@
             "file": "docs/lesson_assets/infographics/26_lesson_4-6_islamic_parenting_bond_b04.png",
             "type": "image/png",
             "description": "Infographic for lesson_4-6_islamic_parenting_bond_b04"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "40d4869c-d621-4c29-9ff6-2ff8a8e8fadf",
+            "file": "docs/path_videos/path_4-6_islamic_parenting_bond_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_4-6_islamic_parenting_bond"
           }
         ]
       }
@@ -5053,6 +5793,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_7-9_development_digital_wellbeing_b04"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "faf7e7dd-5bcd-46f8-ae4e-aa2a7ac58c3f",
+            "file": "docs/path_videos/path_7-9_development_digital_wellbeing_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_development_digital_wellbeing"
+          }
         ]
       }
     },
@@ -5106,6 +5855,15 @@
             "file": "docs/lesson_assets/infographics/31_lesson_7-9_islamic_parenting_worship_b04.png",
             "type": "image/png",
             "description": "Infographic for lesson_7-9_islamic_parenting_worship_b04"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "2b416101-bebb-48e9-b164-7704d5fdf5e5",
+            "file": "docs/path_videos/path_7-9_islamic_parenting_worship_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_islamic_parenting_worship"
           }
         ]
       }
@@ -5161,6 +5919,15 @@
             "type": "image/png",
             "description": "Infographic for lesson_7-9_medical_emotional_health_b03"
           }
+        ],
+        "videos": [
+          {
+            "source_id": "e9a40c99-5286-420f-b093-54148d4ab449",
+            "file": "docs/path_videos/path_7-9_medical_emotional_health_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_medical_emotional_health"
+          }
         ]
       }
     },
@@ -5214,6 +5981,15 @@
             "file": "docs/lesson_assets/infographics/38_lesson_7-9_medical_emotional_health_b04.png",
             "type": "image/png",
             "description": "Infographic for lesson_7-9_medical_emotional_health_b04"
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "f2e2a40a-61f7-4dfd-9785-ef39b312834a",
+            "file": "docs/path_videos/path_7-9_medical_emotional_health_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_7-9_medical_emotional_health"
           }
         ]
       }
