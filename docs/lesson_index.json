@@ -6,11 +6,11 @@
     "notebook_id": "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287",
     "total_source_pdfs": 44,
     "coverage": {
-      "flashcards": "6/44",
-      "quizzes": "6/44",
-      "reports": "23/44",
-      "data_tables": "17/44",
-      "infographics": "10/44"
+      "flashcards": "88/88",
+      "quizzes": "88/88",
+      "reports": "23/88",
+      "data_tables": "17/88",
+      "infographics": "10/88"
     },
     "lessons_by_age": {
       "10-12": 10,
@@ -23,7 +23,7 @@
     "video_languages": [
       "ar"
     ],
-    "last_updated": "2026-06-12T11:00:00"
+    "last_updated": "2026-06-17T10:36:45.998689"
   },
   "lessons": [
     {
@@ -37,45 +37,45 @@
           {
             "id": "gen_lesson_10-12_cyber_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_01_fc.json",
-            "title": "الخصوصية الرقمية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_cyber_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_01_qz.json",
-            "title": "الخصوصية الرقمية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "4c566a4c-3414-4f7a-9a7f-3638fa6fd184",
+            "id": "4c566a4c-3414-4f7a-9a7f-3638fa6fd184_Comprehensive_Lesson_Summary__Foundations_of_Posit",
             "file": "docs/lesson_assets/reports/4c566a4c-3414-4f7a-9a7f-3638fa6fd184_Comprehensive_Lesson_Summary__Foundations_of_Posit.md",
-            "title": "Comprehensive Lesson Summary: Foundations of Positive Islamic Parenting",
+            "title": "ملخص الدرس",
             "item_count": 0
           },
           {
-            "id": "8ac9c785-372b-4639-b477-39bfc6c0019e",
+            "id": "8ac9c785-372b-4639-b477-39bfc6c0019e_Transitioning_to_Maturity__Islamic_Identity_and_Sp",
             "file": "docs/lesson_assets/reports/8ac9c785-372b-4639-b477-39bfc6c0019e_Transitioning_to_Maturity__Islamic_Identity_and_Sp.md",
-            "title": "Transitioning to Maturity: Islamic Identity and Spiritual Foundation (Ages 16-18)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "b69571f1-f4c1-446e-b726-b7d4f0b67ce1",
+            "id": "b69571f1-f4c1-446e-b726-b7d4f0b67ce1_Types_of_Cyberbullying_and_Handling_Strategies_for",
             "file": "docs/lesson_assets/data_tables/b69571f1-f4c1-446e-b726-b7d4f0b67ce1_Types_of_Cyberbullying_and_Handling_Strategies_for.csv",
-            "title": "Types of Cyberbullying and Handling Strategies for Children 10-12",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
         "infographics": [
           {
-            "id": "f2ec998e-6f10-4583-bf12-19b012fba90e",
+            "id": "f2ec998e-6f10-4583-bf12-19b012fba90e_Building_Foundations_Through_Prayer",
             "file": "docs/lesson_assets/infographics/f2ec998e-6f10-4583-bf12-19b012fba90e_Building_Foundations_Through_Prayer.png",
-            "title": "Building Foundations Through Prayer",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -107,50 +107,50 @@
           {
             "id": "gen_lesson_10-12_cyber_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_02_fc.json",
-            "title": "التنمر الإلكتروني — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_cyber_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_02_qz.json",
-            "title": "التنمر الإلكتروني — اختبار",
-            "item_count": 4
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "eb171069-a6a8-45e3-b28a-5d3cf1a21061",
-            "file": "docs/lesson_assets/reports/eb171069-a6a8-45e3-b28a-5d3cf1a21061_Educational_Report__Prayer_as_the_Pillar_of_Religi.md",
-            "title": "Educational Report: Prayer as the Pillar of Religion and Identity for Children",
-            "item_count": 0
-          },
-          {
-            "id": "bbb70814-375f-4f34-9347-e24a3e9f7686",
-            "file": "docs/lesson_assets/reports/bbb70814-375f-4f34-9347-e24a3e9f7686_Empowering_Digital_Citizens__Navigating_Cyberbully.md",
-            "title": "Empowering Digital Citizens: Navigating Cyberbullying and \"Cybullrelgy\" (Ages 10-12)",
-            "item_count": 0
-          },
-          {
-            "id": "ffb71240-b7e8-4741-b46a-94cdcbb5792e",
-            "file": "docs/lesson_assets/reports/ffb71240-b7e8-4741-b46a-94cdcbb5792e_Lesson_Summary__Digital_Wellbeing_and_Islamic_Iden.md",
-            "title": "Lesson Summary: Digital Wellbeing and Islamic Identity for Children (Ages 10–12)",
-            "item_count": 0
-          },
-          {
-            "id": "4c45094b-495a-44b8-8320-4713fa0131ea",
+            "id": "4c45094b-495a-44b8-8320-4713fa0131ea_The_Quran__My_Constitution_and_Life_Compass",
             "file": "docs/lesson_assets/reports/4c45094b-495a-44b8-8320-4713fa0131ea_The_Quran__My_Constitution_and_Life_Compass.md",
-            "title": "The Quran: My Constitution and Life Compass",
+            "title": "ملخص الدرس",
+            "item_count": 0
+          },
+          {
+            "id": "ffb71240-b7e8-4741-b46a-94cdcbb5792e_Lesson_Summary__Digital_Wellbeing_and_Islamic_Iden",
+            "file": "docs/lesson_assets/reports/ffb71240-b7e8-4741-b46a-94cdcbb5792e_Lesson_Summary__Digital_Wellbeing_and_Islamic_Iden.md",
+            "title": "ملخص الدرس",
+            "item_count": 0
+          },
+          {
+            "id": "eb171069-a6a8-45e3-b28a-5d3cf1a21061_Educational_Report__Prayer_as_the_Pillar_of_Religi",
+            "file": "docs/lesson_assets/reports/eb171069-a6a8-45e3-b28a-5d3cf1a21061_Educational_Report__Prayer_as_the_Pillar_of_Religi.md",
+            "title": "ملخص الدرس",
+            "item_count": 0
+          },
+          {
+            "id": "bbb70814-375f-4f34-9347-e24a3e9f7686_Empowering_Digital_Citizens__Navigating_Cyberbully",
+            "file": "docs/lesson_assets/reports/bbb70814-375f-4f34-9347-e24a3e9f7686_Empowering_Digital_Citizens__Navigating_Cyberbully.md",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [],
         "infographics": [
           {
-            "id": "5f9cb911-64c1-480c-b1cf-31e72f2095a5",
+            "id": "5f9cb911-64c1-480c-b1cf-31e72f2095a5_Quranic_Compass_for_Life",
             "file": "docs/lesson_assets/infographics/5f9cb911-64c1-480c-b1cf-31e72f2095a5_Quranic_Compass_for_Life.png",
-            "title": "Quranic Compass for Life",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -219,38 +219,38 @@
           {
             "id": "gen_lesson_10-12_cyber_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_03_fc.json",
-            "title": "التفكير النقدي على الإنترنت — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_cyber_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_03_qz.json",
-            "title": "التفكير النقدي على الإنترنت — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "d12932e5-3c6c-45f4-b9ec-d575dfe110ac",
-            "file": "docs/lesson_assets/reports/d12932e5-3c6c-45f4-b9ec-d575dfe110ac_Lesson_Summary__Divine_Love_and_Prayer_for_Young_H.md",
-            "title": "Lesson Summary: Divine Love and Prayer for Young Hearts (Ages 4-6)",
+            "id": "c77f00a9-6e69-4ee1-8249-af3ac5a3a8dc_Lesson_Summary__Foundations_of_Islamic_Identity_an",
+            "file": "docs/lesson_assets/reports/c77f00a9-6e69-4ee1-8249-af3ac5a3a8dc_Lesson_Summary__Foundations_of_Islamic_Identity_an.md",
+            "title": "ملخص الدرس",
             "item_count": 0
           },
           {
-            "id": "c77f00a9-6e69-4ee1-8249-af3ac5a3a8dc",
-            "file": "docs/lesson_assets/reports/c77f00a9-6e69-4ee1-8249-af3ac5a3a8dc_Lesson_Summary__Foundations_of_Islamic_Identity_an.md",
-            "title": "Lesson Summary: Foundations of Islamic Identity and Ethical Character Development",
+            "id": "d12932e5-3c6c-45f4-b9ec-d575dfe110ac_Lesson_Summary__Divine_Love_and_Prayer_for_Young_H",
+            "file": "docs/lesson_assets/reports/d12932e5-3c6c-45f4-b9ec-d575dfe110ac_Lesson_Summary__Divine_Love_and_Prayer_for_Young_H.md",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [],
         "infographics": [
           {
-            "id": "be4f5fc4-b4e8-4301-a89c-44dabf21c017",
+            "id": "be4f5fc4-b4e8-4301-a89c-44dabf21c017_Quranic_Life_Compass_Infographic",
             "file": "docs/lesson_assets/infographics/be4f5fc4-b4e8-4301-a89c-44dabf21c017_Quranic_Life_Compass_Infographic.png",
-            "title": "Quranic Life Compass Infographic",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -305,37 +305,37 @@
           {
             "id": "gen_lesson_10-12_islamic_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_01_fc.json",
-            "title": "الصلاة: عمود الدين — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_islamic_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_01_qz.json",
-            "title": "الصلاة: عمود الدين — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "9f15cd6c-e7ae-462e-86df-397d5a1443ce",
+            "id": "9f15cd6c-e7ae-462e-86df-397d5a1443ce_Character_Building_Report__Honesty,_Truthfulness,_",
             "file": "docs/lesson_assets/reports/9f15cd6c-e7ae-462e-86df-397d5a1443ce_Character_Building_Report__Honesty,_Truthfulness,_.md",
-            "title": "Character Building Report: Honesty, Truthfulness, and Righteousness (Ages 10-12)",
+            "title": "ملخص الدرس",
             "item_count": 0
           },
           {
-            "id": "8c341602-c149-4800-9815-738ea4696c75",
+            "id": "8c341602-c149-4800-9815-738ea4696c75_Self-Confidence_and_My_Islamic_Identity__A_Guide_f",
             "file": "docs/lesson_assets/reports/8c341602-c149-4800-9815-738ea4696c75_Self-Confidence_and_My_Islamic_Identity__A_Guide_f.md",
-            "title": "Self-Confidence and My Islamic Identity: A Guide for Ages 10-12",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "12406306-3c94-42e8-b745-7a311992f323",
+            "id": "12406306-3c94-42e8-b745-7a311992f323_Ethical_Values_and_Practical_Life_Examples_for_Age",
             "file": "docs/lesson_assets/data_tables/12406306-3c94-42e8-b745-7a311992f323_Ethical_Values_and_Practical_Life_Examples_for_Age.csv",
-            "title": "Ethical Values and Practical Life Examples for Ages 10-12",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -390,31 +390,31 @@
           {
             "id": "gen_lesson_10-12_islamic_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_02_fc.json",
-            "title": "القرآن: دستور الحياة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_islamic_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_02_qz.json",
-            "title": "القرآن: دستور الحياة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "d1107bb0-5c7d-45e6-9db8-d81301c0d77e",
+            "id": "d1107bb0-5c7d-45e6-9db8-d81301c0d77e_Educational_Summary__Building_Islamic_Identity_in_",
             "file": "docs/lesson_assets/reports/d1107bb0-5c7d-45e6-9db8-d81301c0d77e_Educational_Summary__Building_Islamic_Identity_in_.md",
-            "title": "Educational Summary: Building Islamic Identity in Pre-adolescence (Ages 10-12)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "c6b2e1ed-b965-4be3-b78f-3cf6bd4773f1",
+            "id": "c6b2e1ed-b965-4be3-b78f-3cf6bd4773f1_Prayer_Times_and_Rulings_for_Children_(10-12_Years",
             "file": "docs/lesson_assets/data_tables/c6b2e1ed-b965-4be3-b78f-3cf6bd4773f1_Prayer_Times_and_Rulings_for_Children_(10-12_Years.csv",
-            "title": "Prayer Times and Rulings for Children (10-12 Years)",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -439,31 +439,31 @@
           {
             "id": "gen_lesson_10-12_islamic_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_03_fc.json",
-            "title": "الأخلاق في التعامل — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_islamic_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_03_qz.json",
-            "title": "الأخلاق في التعامل — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "aeca8305-44f0-401a-a658-d42a515f1886",
+            "id": "aeca8305-44f0-401a-a658-d42a515f1886_Lesson_Summary__Prayer_and_Islamic_Identity_(Ages_",
             "file": "docs/lesson_assets/reports/aeca8305-44f0-401a-a658-d42a515f1886_Lesson_Summary__Prayer_and_Islamic_Identity_(Ages_.md",
-            "title": "Lesson Summary: Prayer and Islamic Identity (Ages 10-12)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "00db382d-4d83-477f-b60e-5ae5284653c1",
+            "id": "00db382d-4d83-477f-b60e-5ae5284653c1_Quranic_Surahs_and_Lessons_for_Children_Aged_10-12",
             "file": "docs/lesson_assets/data_tables/00db382d-4d83-477f-b60e-5ae5284653c1_Quranic_Surahs_and_Lessons_for_Children_Aged_10-12.csv",
-            "title": "Quranic Surahs and Lessons for Children Aged 10-12",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -488,31 +488,31 @@
           {
             "id": "gen_lesson_10-12_islamic_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_04_fc.json",
-            "title": "الثقة بالنفس والهوية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_islamic_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_04_qz.json",
-            "title": "الثقة بالنفس والهوية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "228b57b2-9d32-4ef3-a736-6648a55d3928",
+            "id": "228b57b2-9d32-4ef3-a736-6648a55d3928_Report__Cultivating_Self-Confidence_through_Islami",
             "file": "docs/lesson_assets/reports/228b57b2-9d32-4ef3-a736-6648a55d3928_Report__Cultivating_Self-Confidence_through_Islami.md",
-            "title": "Report: Cultivating Self-Confidence through Islamic Identity for Pre-teens (Ages 10-12)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "7671318f-8c51-41f2-bd7d-4754dd8d80d0",
+            "id": "7671318f-8c51-41f2-bd7d-4754dd8d80d0_Self-Confidence_Building_Steps_and_Practical_Activ",
             "file": "docs/lesson_assets/data_tables/7671318f-8c51-41f2-bd7d-4754dd8d80d0_Self-Confidence_Building_Steps_and_Practical_Activ.csv",
-            "title": "Self-Confidence Building Steps and Practical Activities for Children 10-12",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -567,31 +567,31 @@
           {
             "id": "gen_lesson_10-12_medical_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_01_fc.json",
-            "title": "البلوغ: حوار مفتوح — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_medical_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_01_qz.json",
-            "title": "البلوغ: حوار مفتوح — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "4d73fc73-5f31-44de-8c4b-ac4db4eebaaf",
+            "id": "4d73fc73-5f31-44de-8c4b-ac4db4eebaaf_Educational_Report__Navigating_Anxiety,_Depression",
             "file": "docs/lesson_assets/reports/4d73fc73-5f31-44de-8c4b-ac4db4eebaaf_Educational_Report__Navigating_Anxiety,_Depression.md",
-            "title": "Educational Report: Navigating Anxiety, Depression, and Mental Wellbeing (Ages 10-12)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "3aee3dc5-e020-4472-bd30-7666d99c2c0d",
+            "id": "3aee3dc5-e020-4472-bd30-7666d99c2c0d_Anxiety_and_Depression_Support_Guide_for_Children_",
             "file": "docs/lesson_assets/data_tables/3aee3dc5-e020-4472-bd30-7666d99c2c0d_Anxiety_and_Depression_Support_Guide_for_Children_.csv",
-            "title": "Anxiety and Depression Support Guide for Children 10-12",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -616,31 +616,31 @@
           {
             "id": "gen_lesson_10-12_medical_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_02_fc.json",
-            "title": "القلق والضغط المدرسي — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_medical_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_02_qz.json",
-            "title": "القلق والضغط المدرسي — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "840485b1-6616-4a91-94e1-842aecadb260",
+            "id": "840485b1-6616-4a91-94e1-842aecadb260_Educational_Summary__Healthy_Habits_and_Well-being",
             "file": "docs/lesson_assets/reports/840485b1-6616-4a91-94e1-842aecadb260_Educational_Summary__Healthy_Habits_and_Well-being.md",
-            "title": "Educational Summary: Healthy Habits and Well-being for the Pre-Teen Years (Ages 10-12)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "f39c34b5-4646-4167-a4db-848e6de76139",
+            "id": "f39c34b5-4646-4167-a4db-848e6de76139_Healthy_Daily_Routine_for_Children_Aged_10-12_Year",
             "file": "docs/lesson_assets/data_tables/f39c34b5-4646-4167-a4db-848e6de76139_Healthy_Daily_Routine_for_Children_Aged_10-12_Year.csv",
-            "title": "Healthy Daily Routine for Children Aged 10-12 Years",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -665,25 +665,25 @@
           {
             "id": "gen_lesson_10-12_medical_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_03_fc.json",
-            "title": "عادات صحية للحياة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_medical_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_03_qz.json",
-            "title": "عادات صحية للحياة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
         "data_tables": [],
         "infographics": [
           {
-            "id": "2f58f121-0e74-49af-b323-b2c36a3c7981",
+            "id": "2f58f121-0e74-49af-b323-b2c36a3c7981_Pre-Teen_Mental_Health_Guide",
             "file": "docs/lesson_assets/infographics/2f58f121-0e74-49af-b323-b2c36a3c7981_Pre-Teen_Mental_Health_Guide.png",
-            "title": "Pre-Teen Mental Health Guide",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -738,39 +738,39 @@
           {
             "id": "gen_lesson_13-15_cyber_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_01_fc.json",
-            "title": "البصمة الرقمية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_cyber_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_01_qz.json",
-            "title": "البصمة الرقمية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "e87e0bff-effc-425e-81ab-62b61faff669",
+            "id": "e87e0bff-effc-425e-81ab-62b61faff669_Cyberbullying_and_Digital_Safety__A_Comprehensive_",
             "file": "docs/lesson_assets/reports/e87e0bff-effc-425e-81ab-62b61faff669_Cyberbullying_and_Digital_Safety__A_Comprehensive_.md",
-            "title": "Cyberbullying and Digital Safety: A Comprehensive Guide for Teens (Ages 13-15)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "69d0dbf1-ed90-400a-89f8-8e90d35d0178",
+            "id": "69d0dbf1-ed90-400a-89f8-8e90d35d0178_Critical_Thinking_Skills_for_Adolescents_(13-15)",
             "file": "docs/lesson_assets/data_tables/69d0dbf1-ed90-400a-89f8-8e90d35d0178_Critical_Thinking_Skills_for_Adolescents_(13-15).csv",
-            "title": "Critical Thinking Skills for Adolescents (13-15)",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
         "infographics": [
           {
-            "id": "3d6de30b-37c5-46cc-9263-2d7753fa69ca",
+            "id": "3d6de30b-37c5-46cc-9263-2d7753fa69ca_Stopping_Cyberbullying_Awareness_Guide",
             "file": "docs/lesson_assets/infographics/3d6de30b-37c5-46cc-9263-2d7753fa69ca_Stopping_Cyberbullying_Awareness_Guide.png",
-            "title": "Stopping Cyberbullying Awareness Guide",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -825,31 +825,31 @@
           {
             "id": "gen_lesson_13-15_cyber_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_02_fc.json",
-            "title": "الذكاء الاصطناعي والمحتوى المزيف — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_cyber_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_02_qz.json",
-            "title": "الذكاء الاصطناعي والمحتوى المزيف — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "d4021015-ba5f-458d-bad7-475ec1e21a7a",
+            "id": "d4021015-ba5f-458d-bad7-475ec1e21a7a_Educational_Summary__Critical_Thinking_and_Digital",
             "file": "docs/lesson_assets/reports/d4021015-ba5f-458d-bad7-475ec1e21a7a_Educational_Summary__Critical_Thinking_and_Digital.md",
-            "title": "Educational Summary: Critical Thinking and Digital Citizenship for Adolescents",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "a5894bb4-702a-4951-b29f-673f9025ba87",
+            "id": "a5894bb4-702a-4951-b29f-673f9025ba87_Critical_Thinking_and_Digital_Safety_for_Adolescen",
             "file": "docs/lesson_assets/data_tables/a5894bb4-702a-4951-b29f-673f9025ba87_Critical_Thinking_and_Digital_Safety_for_Adolescen.csv",
-            "title": "Critical Thinking and Digital Safety for Adolescents (16-18)",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -874,39 +874,39 @@
           {
             "id": "gen_lesson_13-15_cyber_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_03_fc.json",
-            "title": "موازنة الألعاب — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_cyber_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_03_qz.json",
-            "title": "موازنة الألعاب — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "607a9bf5-29f1-4e66-ac6b-3dfdcf418a14",
+            "id": "607a9bf5-29f1-4e66-ac6b-3dfdcf418a14_Lesson_Summary__Mental_Well-being_and_Character_De",
             "file": "docs/lesson_assets/reports/607a9bf5-29f1-4e66-ac6b-3dfdcf418a14_Lesson_Summary__Mental_Well-being_and_Character_De.md",
-            "title": "Lesson Summary: Mental Well-being and Character Development (Level 2)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "d186c3b7-a51e-4e7f-a631-7e35b38044a5",
+            "id": "d186c3b7-a51e-4e7f-a631-7e35b38044a5_Types_of_Cyberbullying_and_Management_Strategies_f",
             "file": "docs/lesson_assets/data_tables/d186c3b7-a51e-4e7f-a631-7e35b38044a5_Types_of_Cyberbullying_and_Management_Strategies_f.csv",
-            "title": "Types of Cyberbullying and Management Strategies for Teens 13-15",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
         "infographics": [
           {
-            "id": "f0748db9-0ca6-4f09-bb7f-db60a557c38d",
+            "id": "f0748db9-0ca6-4f09-bb7f-db60a557c38d_Stop_Cyberbullying_Action_Guide",
             "file": "docs/lesson_assets/infographics/f0748db9-0ca6-4f09-bb7f-db60a557c38d_Stop_Cyberbullying_Action_Guide.png",
-            "title": "Stop Cyberbullying Action Guide",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -931,16 +931,16 @@
           {
             "id": "gen_lesson_13-15_development_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_01_fc.json",
-            "title": "دماغ المراهق: فرصة ثانية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_development_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_01_qz.json",
-            "title": "دماغ المراهق: فرصة ثانية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -966,16 +966,16 @@
           {
             "id": "gen_lesson_13-15_development_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_02_fc.json",
-            "title": "المخاطرة والاندفاع: قرار واعٍ — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_development_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_02_qz.json",
-            "title": "المخاطرة والاندفاع: قرار واعٍ — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1001,16 +1001,16 @@
           {
             "id": "gen_lesson_13-15_development_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_03_fc.json",
-            "title": "هوية المستقبل: تخطيط ومسؤولية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_development_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_03_qz.json",
-            "title": "هوية المستقبل: تخطيط ومسؤولية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1036,37 +1036,37 @@
           {
             "id": "gen_lesson_13-15_islamic_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_01_fc.json",
-            "title": "الشبهات الدينية: كيف يجيب الوالدان — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_islamic_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_01_qz.json",
-            "title": "الشبهات الدينية: كيف يجيب الوالدان — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "785ee902-bc5a-4060-aae7-ffb83063e496",
+            "id": "785ee902-bc5a-4060-aae7-ffb83063e496_Educational_Summary__Building_Spiritual_Resilience",
             "file": "docs/lesson_assets/reports/785ee902-bc5a-4060-aae7-ffb83063e496_Educational_Summary__Building_Spiritual_Resilience.md",
-            "title": "Educational Summary: Building Spiritual Resilience and Identity (Ages 13-15)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "bc076f85-94e0-4d72-85bb-4a77e5713fe9",
-            "file": "docs/lesson_assets/data_tables/bc076f85-94e0-4d72-85bb-4a77e5713fe9_Daily_Prayer_and_Worship_Tracker_for_Teens_(13-15).csv",
-            "title": "Daily Prayer and Worship Tracker for Teens (13-15)",
+            "id": "a0f54cce-5dd1-46ac-99f1-e212a9a36b2d_Self-Confidence_and_Identity_Building_for_Young_Ad",
+            "file": "docs/lesson_assets/data_tables/a0f54cce-5dd1-46ac-99f1-e212a9a36b2d_Self-Confidence_and_Identity_Building_for_Young_Ad.csv",
+            "title": "جدول معلومات",
             "item_count": 0
           },
           {
-            "id": "a0f54cce-5dd1-46ac-99f1-e212a9a36b2d",
-            "file": "docs/lesson_assets/data_tables/a0f54cce-5dd1-46ac-99f1-e212a9a36b2d_Self-Confidence_and_Identity_Building_for_Young_Ad.csv",
-            "title": "Self-Confidence and Identity Building for Young Adolescents",
+            "id": "bc076f85-94e0-4d72-85bb-4a77e5713fe9_Daily_Prayer_and_Worship_Tracker_for_Teens_(13-15)",
+            "file": "docs/lesson_assets/data_tables/bc076f85-94e0-4d72-85bb-4a77e5713fe9_Daily_Prayer_and_Worship_Tracker_for_Teens_(13-15).csv",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -1091,39 +1091,39 @@
           {
             "id": "gen_lesson_13-15_islamic_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_02_fc.json",
-            "title": "العبادة بعمق: الخشوع والتدبر — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_islamic_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_02_qz.json",
-            "title": "العبادة بعمق: الخشوع والتدبر — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "4076c756-252c-47e1-87f1-72ecead5de3f",
+            "id": "4076c756-252c-47e1-87f1-72ecead5de3f_Foundations_of_Prayer__Building_Identity_and_Conne",
             "file": "docs/lesson_assets/reports/4076c756-252c-47e1-87f1-72ecead5de3f_Foundations_of_Prayer__Building_Identity_and_Conne.md",
-            "title": "Foundations of Prayer: Building Identity and Connection (Ages 13-15)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "86c13c8f-af2a-421c-9fb8-d210c8fe4281",
+            "id": "86c13c8f-af2a-421c-9fb8-d210c8fe4281_Ethical_Conduct_and_Social_Manners_for_Adolescents",
             "file": "docs/lesson_assets/data_tables/86c13c8f-af2a-421c-9fb8-d210c8fe4281_Ethical_Conduct_and_Social_Manners_for_Adolescents.csv",
-            "title": "Ethical Conduct and Social Manners for Adolescents (Ages 13-15)",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
         "infographics": [
           {
-            "id": "41e78475-ee1f-4c71-aa02-c718adcc2484",
+            "id": "41e78475-ee1f-4c71-aa02-c718adcc2484_Building_Character_for_Teens",
             "file": "docs/lesson_assets/infographics/41e78475-ee1f-4c71-aa02-c718adcc2484_Building_Character_for_Teens.png",
-            "title": "Building Character for Teens",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -1148,39 +1148,39 @@
           {
             "id": "gen_lesson_13-15_islamic_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_03_fc.json",
-            "title": "الزواج المستقبلي: معايير وحقوق — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_islamic_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_03_qz.json",
-            "title": "الزواج المستقبلي: معايير وحقوق — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "0dd6dba4-b4e1-48ba-8a9a-fae8c840ef0e",
+            "id": "0dd6dba4-b4e1-48ba-8a9a-fae8c840ef0e_Guided_Curriculum_Summary__The_Quran_as_a_Life_Com",
             "file": "docs/lesson_assets/reports/0dd6dba4-b4e1-48ba-8a9a-fae8c840ef0e_Guided_Curriculum_Summary__The_Quran_as_a_Life_Com.md",
-            "title": "Guided Curriculum Summary: The Quran as a Life Compass for Teens",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "deb1e296-d4a8-4ed5-9884-32ea9d1fc38a",
+            "id": "deb1e296-d4a8-4ed5-9884-32ea9d1fc38a_Psychological_Identity_Factors_in_Early_Adolescent",
             "file": "docs/lesson_assets/data_tables/deb1e296-d4a8-4ed5-9884-32ea9d1fc38a_Psychological_Identity_Factors_in_Early_Adolescent.csv",
-            "title": "Psychological Identity Factors in Early Adolescents (13-15 Years)",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
         "infographics": [
           {
-            "id": "07a3234a-7e53-4c7a-80a6-ca03db6167f3",
+            "id": "07a3234a-7e53-4c7a-80a6-ca03db6167f3_Islamic_Teenage_Self-Confidence_Guide",
             "file": "docs/lesson_assets/infographics/07a3234a-7e53-4c7a-80a6-ca03db6167f3_Islamic_Teenage_Self-Confidence_Guide.png",
-            "title": "Islamic Teenage Self-Confidence Guide",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -1205,39 +1205,39 @@
           {
             "id": "gen_lesson_13-15_islamic_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_04_fc.json",
-            "title": "القيادة وتبني القضية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_islamic_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_04_qz.json",
-            "title": "القيادة وتبني القضية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "0d08e799-761b-4836-bd70-f00a7a61d766",
+            "id": "0d08e799-761b-4836-bd70-f00a7a61d766_Lesson_Summary__Ethics_in_Interaction_and_Islamic_",
             "file": "docs/lesson_assets/reports/0d08e799-761b-4836-bd70-f00a7a61d766_Lesson_Summary__Ethics_in_Interaction_and_Islamic_.md",
-            "title": "Lesson Summary: Ethics in Interaction and Islamic Identity (Ages 13-15)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "3c5fb4c4-c4e6-4ecf-9ead-0d9414d650bc",
+            "id": "3c5fb4c4-c4e6-4ecf-9ead-0d9414d650bc_Quranic_Surahs_for_Teenagers_(Ages_13-15)",
             "file": "docs/lesson_assets/data_tables/3c5fb4c4-c4e6-4ecf-9ead-0d9414d650bc_Quranic_Surahs_for_Teenagers_(Ages_13-15).csv",
-            "title": "Quranic Surahs for Teenagers (Ages 13-15)",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
         "infographics": [
           {
-            "id": "64684e13-9c73-4005-92ff-78c44d2dbed9",
+            "id": "64684e13-9c73-4005-92ff-78c44d2dbed9_Teen's_Guide_to_Islamic_Ethics",
             "file": "docs/lesson_assets/infographics/64684e13-9c73-4005-92ff-78c44d2dbed9_Teen's_Guide_to_Islamic_Ethics.png",
-            "title": "Teen's Guide to Islamic Ethics",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -1262,31 +1262,31 @@
           {
             "id": "gen_lesson_13-15_medical_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_01_fc.json",
-            "title": "الاكتئاب والقلق عند المراهقين — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_medical_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_01_qz.json",
-            "title": "الاكتئاب والقلق عند المراهقين — اختبار",
-            "item_count": 4
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "050cbbc5-7538-4b1a-a58a-f4aa7fd9c943",
+            "id": "050cbbc5-7538-4b1a-a58a-f4aa7fd9c943_Adolescent_Mental_Well-being__Foundations_of_Islam",
             "file": "docs/lesson_assets/reports/050cbbc5-7538-4b1a-a58a-f4aa7fd9c943_Adolescent_Mental_Well-being__Foundations_of_Islam.md",
-            "title": "Adolescent Mental Well-being: Foundations of Islamic Identity and Self-Regulation",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
         "data_tables": [
           {
-            "id": "206139c8-8ed7-4416-b99c-0921854ec273",
+            "id": "206139c8-8ed7-4416-b99c-0921854ec273_Anxiety_and_Depression_Among_Adolescents_Aged_13-1",
             "file": "docs/lesson_assets/data_tables/206139c8-8ed7-4416-b99c-0921854ec273_Anxiety_and_Depression_Among_Adolescents_Aged_13-1.csv",
-            "title": "Anxiety and Depression Among Adolescents Aged 13-15",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -1341,24 +1341,24 @@
           {
             "id": "gen_lesson_13-15_medical_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_02_fc.json",
-            "title": "اضطراب المزاج التخريبي (DMDD) — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_medical_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_02_qz.json",
-            "title": "اضطراب المزاج التخريبي (DMDD) — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
         "data_tables": [
           {
-            "id": "f24aae6b-8a53-4dd0-91a1-b16ff784a988",
+            "id": "f24aae6b-8a53-4dd0-91a1-b16ff784a988_Mental_Health_and_Wellbeing_for_Adolescents_Aged_1",
             "file": "docs/lesson_assets/data_tables/f24aae6b-8a53-4dd0-91a1-b16ff784a988_Mental_Health_and_Wellbeing_for_Adolescents_Aged_1.csv",
-            "title": "Mental Health and Wellbeing for Adolescents Aged 13-15",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -1383,24 +1383,24 @@
           {
             "id": "gen_lesson_13-15_medical_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_03_fc.json",
-            "title": "ADHD والتوحد: اختلاف لا نقص — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_medical_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_03_qz.json",
-            "title": "ADHD والتوحد: اختلاف لا نقص — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
         "data_tables": [
           {
-            "id": "6c1abfab-6268-4201-acbf-faa8c714d4e4",
+            "id": "6c1abfab-6268-4201-acbf-faa8c714d4e4_Mental_Health_for_Adolescents_Aged_13-15",
             "file": "docs/lesson_assets/data_tables/6c1abfab-6268-4201-acbf-faa8c714d4e4_Mental_Health_for_Adolescents_Aged_13-15.csv",
-            "title": "Mental Health for Adolescents Aged 13-15",
+            "title": "جدول معلومات",
             "item_count": 0
           }
         ],
@@ -1425,25 +1425,25 @@
           {
             "id": "gen_lesson_13-15_medical_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_04_fc.json",
-            "title": "مقياس المزاج وخطة السلامة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_medical_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_04_qz.json",
-            "title": "مقياس المزاج وخطة السلامة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
         "data_tables": [],
         "infographics": [
           {
-            "id": "feb89afc-126b-4a10-b365-aa5531783dcd",
+            "id": "feb89afc-126b-4a10-b365-aa5531783dcd_Teen_Mental_Wellbeing_Islamic_Guide",
             "file": "docs/lesson_assets/infographics/feb89afc-126b-4a10-b365-aa5531783dcd_Teen_Mental_Wellbeing_Islamic_Guide.png",
-            "title": "Teen Mental Wellbeing Islamic Guide",
+            "title": "إنفوجرافيك",
             "item_count": 0,
             "resolution": "2752x1536"
           }
@@ -1468,23 +1468,23 @@
           {
             "id": "gen_lesson_16-18_cyber_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_01_fc.json",
-            "title": "الهوية الرقمية المهنية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_16-18_cyber_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_01_qz.json",
-            "title": "الهوية الرقمية المهنية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "3908c473-fc9c-48e1-9dfb-61f73c1963b9",
+            "id": "3908c473-fc9c-48e1-9dfb-61f73c1963b9_Advanced_Critical_Thinking_and_Digital_Citizenship",
             "file": "docs/lesson_assets/reports/3908c473-fc9c-48e1-9dfb-61f73c1963b9_Advanced_Critical_Thinking_and_Digital_Citizenship.md",
-            "title": "Advanced Critical Thinking and Digital Citizenship: A Lesson Summary for Ages 16-18",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
@@ -1510,23 +1510,23 @@
           {
             "id": "gen_lesson_16-18_cyber_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_02_fc.json",
-            "title": "أخلاقيات AI وأمان المعلومات — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_16-18_cyber_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_02_qz.json",
-            "title": "أخلاقيات AI وأمان المعلومات — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "72ca91c4-6ebd-44ec-a907-aa5edadf72f9",
+            "id": "72ca91c4-6ebd-44ec-a907-aa5edadf72f9_Digital_Citizenship_and_Cyber_Safety__A_Strategic_",
             "file": "docs/lesson_assets/reports/72ca91c4-6ebd-44ec-a907-aa5edadf72f9_Digital_Citizenship_and_Cyber_Safety__A_Strategic_.md",
-            "title": "Digital Citizenship and Cyber Safety: A Strategic Summary for Young Adults",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
@@ -1552,23 +1552,23 @@
           {
             "id": "gen_lesson_16-18_medical_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_01_fc.json",
-            "title": "الصحة النفسية في الجامعة/العمل — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_16-18_medical_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_01_qz.json",
-            "title": "الصحة النفسية في الجامعة/العمل — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "7613847a-cb58-4ba5-8131-0bb2241caaca",
+            "id": "7613847a-cb58-4ba5-8131-0bb2241caaca_The_Quran_and_Maturity__A_Strategic_Framework_for_",
             "file": "docs/lesson_assets/reports/7613847a-cb58-4ba5-8131-0bb2241caaca_The_Quran_and_Maturity__A_Strategic_Framework_for_.md",
-            "title": "The Quran and Maturity: A Strategic Framework for Young Adults (16-18)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
@@ -1624,16 +1624,16 @@
           {
             "id": "gen_lesson_16-18_medical_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_02_fc.json",
-            "title": "العلاقات والحدود الصحية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_16-18_medical_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_02_qz.json",
-            "title": "العلاقات والحدود الصحية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1659,16 +1659,16 @@
           {
             "id": "gen_lesson_16-18_medical_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_03_fc.json",
-            "title": "حياة نفسية مستدامة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_16-18_medical_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_03_qz.json",
-            "title": "حياة نفسية مستدامة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1694,23 +1694,23 @@
           {
             "id": "gen_lesson_4-6_development_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_development_01_fc.json",
-            "title": "المدح النوعي: بناء الثقة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_development_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_development_01_qz.json",
-            "title": "المدح النوعي: بناء الثقة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "fb227993-03cb-4572-8fff-47cde0c8f89d",
+            "id": "fb227993-03cb-4572-8fff-47cde0c8f89d_Lesson_Summary__Strengthening_Family_Bonding_(Ages",
             "file": "docs/lesson_assets/reports/fb227993-03cb-4572-8fff-47cde0c8f89d_Lesson_Summary__Strengthening_Family_Bonding_(Ages.md",
-            "title": "Lesson Summary: Strengthening Family Bonding (Ages 4-6)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
@@ -1736,16 +1736,16 @@
           {
             "id": "gen_lesson_4-6_development_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_development_02_fc.json",
-            "title": "الأمان الجسدي والنفسي — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_development_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_development_02_qz.json",
-            "title": "الأمان الجسدي والنفسي — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1771,16 +1771,16 @@
           {
             "id": "gen_lesson_4-6_adab_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_adab_01_fc.json",
-            "title": "الرفق: قيمة تربوية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_adab_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_adab_01_qz.json",
-            "title": "الرفق: قيمة تربوية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1806,16 +1806,16 @@
           {
             "id": "gen_lesson_4-6_adab_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_adab_02_fc.json",
-            "title": "اللعب النبوي: حضن قبل توجيه — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_adab_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_adab_02_qz.json",
-            "title": "اللعب النبوي: حضن قبل توجيه — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1841,16 +1841,16 @@
           {
             "id": "gen_lesson_4-6_adab_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_adab_03_fc.json",
-            "title": "القواعد والتعاون: بناء الضمير — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_adab_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_adab_03_qz.json",
-            "title": "القواعد والتعاون: بناء الضمير — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1876,23 +1876,23 @@
           {
             "id": "gen_lesson_4-6_bond_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_bond_01_fc.json",
-            "title": "الرفق: مفتاح الرابطة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_bond_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_bond_01_qz.json",
-            "title": "الرفق: مفتاح الرابطة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "432a41fc-8de1-45e2-a350-6aab057e51c4",
+            "id": "432a41fc-8de1-45e2-a350-6aab057e51c4_Lesson_Summary__The_Quran_and_Our_Values_(Ages_4-6",
             "file": "docs/lesson_assets/reports/432a41fc-8de1-45e2-a350-6aab057e51c4_Lesson_Summary__The_Quran_and_Our_Values_(Ages_4-6.md",
-            "title": "Lesson Summary: The Quran and Our Values (Ages 4-6)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
@@ -1918,16 +1918,16 @@
           {
             "id": "gen_lesson_4-6_bond_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_bond_02_fc.json",
-            "title": "اللعب النبوي: رابطة باللعب — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_bond_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_bond_02_qz.json",
-            "title": "اللعب النبوي: رابطة باللعب — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1953,16 +1953,16 @@
           {
             "id": "gen_lesson_4-6_bond_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_bond_03_fc.json",
-            "title": "الحوار اليومي: السؤال قبل الأمر — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_bond_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_bond_03_qz.json",
-            "title": "الحوار اليومي: السؤال قبل الأمر — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -1988,16 +1988,16 @@
           {
             "id": "gen_lesson_7-9_development_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_01_fc.json",
-            "title": "إدارة وقت الشاشة: عقد عائلي — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_development_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_01_qz.json",
-            "title": "إدارة وقت الشاشة: عقد عائلي — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2023,16 +2023,16 @@
           {
             "id": "gen_lesson_7-9_development_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_02_fc.json",
-            "title": "الصداقة وضغط الأقران — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_development_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_02_qz.json",
-            "title": "الصداقة وضغط الأقران — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2058,23 +2058,23 @@
           {
             "id": "gen_lesson_7-9_worship_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_worship_01_fc.json",
-            "title": "الصلاة: حب لا واجب — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_worship_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_worship_01_qz.json",
-            "title": "الصلاة: حب لا واجب — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [
           {
-            "id": "898ee24d-533b-402b-b1aa-90a0cd540db7",
+            "id": "898ee24d-533b-402b-b1aa-90a0cd540db7_Quran_Lesson_Summary__My_Life’s_Compass_(Ages_7-9)",
             "file": "docs/lesson_assets/reports/898ee24d-533b-402b-b1aa-90a0cd540db7_Quran_Lesson_Summary__My_Life’s_Compass_(Ages_7-9).md",
-            "title": "Quran Lesson Summary: My Life’s Compass (Ages 7-9)",
+            "title": "ملخص الدرس",
             "item_count": 0
           }
         ],
@@ -2100,16 +2100,16 @@
           {
             "id": "gen_lesson_7-9_worship_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_worship_02_fc.json",
-            "title": "الصيام: تدريب على الصبر — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_worship_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_worship_02_qz.json",
-            "title": "الصيام: تدريب على الصبر — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2135,16 +2135,16 @@
           {
             "id": "gen_lesson_7-9_worship_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_worship_03_fc.json",
-            "title": "القرآن: رفيق الحياة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_worship_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_worship_03_qz.json",
-            "title": "القرآن: رفيق الحياة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2170,16 +2170,16 @@
           {
             "id": "gen_lesson_7-9_medical_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_01_fc.json",
-            "title": "الغضب والقلق: أدوات عملية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_medical_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_01_qz.json",
-            "title": "الغضب والقلق: أدوات عملية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2205,16 +2205,16 @@
           {
             "id": "gen_lesson_7-9_medical_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_02_fc.json",
-            "title": "النوم والتركيز — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_medical_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_02_qz.json",
-            "title": "النوم والتركيز — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2240,16 +2240,16 @@
           {
             "id": "gen_lesson_7-9_development_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_03_fc.json",
-            "title": "الألعاب العنيفة: أثر خفي — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_development_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_03_qz.json",
-            "title": "الألعاب العنيفة: أثر خفي — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2275,16 +2275,16 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_01_fc.json",
-            "title": "صفر شاشات تحت السنتين — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_01_qz.json",
-            "title": "صفر شاشات تحت السنتين — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2310,16 +2310,16 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_02_fc.json",
-            "title": "اللعب الحقيقي بديل الشاشة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_02_qz.json",
-            "title": "اللعب الحقيقي بديل الشاشة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2345,16 +2345,16 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_03_fc.json",
-            "title": "حماية النوم والحدود الرقمية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_03_qz.json",
-            "title": "حماية النوم والحدود الرقمية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2380,16 +2380,16 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_01_fc.json",
-            "title": "المرحلة الحسية الحركية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_development_early_moments_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_01_qz.json",
-            "title": "المرحلة الحسية الحركية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2415,16 +2415,16 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_02_fc.json",
-            "title": "الارتباط الآمن — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_development_early_moments_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_02_qz.json",
-            "title": "الارتباط الآمن — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2450,16 +2450,16 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_03_fc.json",
-            "title": "منطقة التطور القريب — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_development_early_moments_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_03_qz.json",
-            "title": "منطقة التطور القريب — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2485,16 +2485,16 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_01_fc.json",
-            "title": "استقبال المولود: سنن الميلاد — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_01_qz.json",
-            "title": "استقبال المولود: سنن الميلاد — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2520,16 +2520,16 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_02_fc.json",
-            "title": "الرفق والرحمة بالرضيع — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_02_qz.json",
-            "title": "الرفق والرحمة بالرضيع — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2555,16 +2555,16 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_03_fc.json",
-            "title": "التواصل الفعّال مع الرضيع — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_03_qz.json",
-            "title": "التواصل الفعّال مع الرضيع — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2590,16 +2590,16 @@
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_attachment_04_fc.json",
-            "title": "بذر الإيمان في القلب الصغير — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_islamic_parenting_attachment_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_attachment_04_qz.json",
-            "title": "بذر الإيمان في القلب الصغير — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2625,16 +2625,16 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_01_fc.json",
-            "title": "الشهران الأولان: التواصل المبكر — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_medical_early_milestones_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_01_qz.json",
-            "title": "الشهران الأولان: التواصل المبكر — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2660,16 +2660,16 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_02_fc.json",
-            "title": "الأشهر الستة الأولى: نوم وتغذية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_medical_early_milestones_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_02_qz.json",
-            "title": "الأشهر الستة الأولى: نوم وتغذية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2695,16 +2695,16 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_03_fc.json",
-            "title": "علامات التنبيه المبكر — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_medical_early_milestones_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_03_qz.json",
-            "title": "علامات التنبيه المبكر — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2730,16 +2730,16 @@
           {
             "id": "gen_lesson_0-3_medical_early_milestones_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_medical_early_milestones_04_fc.json",
-            "title": "طلب المساعدة والتدخل المبكر — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_medical_early_milestones_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_medical_early_milestones_04_qz.json",
-            "title": "طلب المساعدة والتدخل المبكر — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2765,16 +2765,16 @@
           {
             "id": "gen_lesson_2-3_development_independence_01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_development_independence_01_fc.json",
-            "title": "التدريب على استخدام المرحاض والاعتماد على النفس — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_development_independence_01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_independence_01_qz.json",
-            "title": "التدريب على استخدام المرحاض والاعتماد على النفس — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2800,16 +2800,16 @@
           {
             "id": "gen_lesson_2-3_cyber_routine_02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_cyber_routine_02_fc.json",
-            "title": "تنظيم النوم والتعامل الصحي مع الشاشات — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_cyber_routine_02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_02_qz.json",
-            "title": "تنظيم النوم والتعامل الصحي مع الشاشات — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2835,16 +2835,16 @@
           {
             "id": "gen_lesson_2-3_development_language_03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_development_language_03_fc.json",
-            "title": "التطور اللغوي والمعرفي من خلال اللعب التخيلي — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_development_language_03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_language_03_qz.json",
-            "title": "التطور اللغوي والمعرفي من خلال اللعب التخيلي — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2870,16 +2870,16 @@
           {
             "id": "gen_lesson_2-3_islamic_tantrums_04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_tantrums_04_fc.json",
-            "title": "الرابطة الآمنة والتعامل مع نوبات الغضب برفق — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_islamic_tantrums_04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_tantrums_04_qz.json",
-            "title": "الرابطة الآمنة والتعامل مع نوبات الغضب برفق — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "reports": [],
@@ -2903,16 +2903,16 @@
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_cyber_screen_foundations_b04_fc.json",
-            "title": "مكالمة الفيديو: الاستثناء الوحيد المسموح — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_cyber_screen_foundations_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_cyber_screen_foundations_b04_qz.json",
-            "title": "مكالمة الفيديو: الاستثناء الوحيد المسموح — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -2933,16 +2933,16 @@
           {
             "id": "gen_lesson_0-3_development_early_moments_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_development_early_moments_b04_fc.json",
-            "title": "القراءة المشتركة: أول جسر نحو اللغة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_0-3_development_early_moments_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_development_early_moments_b04_qz.json",
-            "title": "القراءة المشتركة: أول جسر نحو اللغة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -2963,16 +2963,16 @@
           {
             "id": "gen_lesson_10-12_cyber_digital_citizenship_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_cyber_digital_citizenship_b04_fc.json",
-            "title": "كلمات السر والأمان: حارس الباب الرقمي — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_cyber_digital_citizenship_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_cyber_digital_citizenship_b04_qz.json",
-            "title": "كلمات السر والأمان: حارس الباب الرقمي — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -2993,16 +2993,16 @@
           {
             "id": "gen_lesson_10-12_medical_puberty_wellbeing_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_medical_puberty_wellbeing_b04_fc.json",
-            "title": "صورة الجسد والثقة: قبل عاصفة المراهقة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_10-12_medical_puberty_wellbeing_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_medical_puberty_wellbeing_b04_qz.json",
-            "title": "صورة الجسد والثقة: قبل عاصفة المراهقة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3023,16 +3023,16 @@
           {
             "id": "gen_lesson_13-15_cyber_digital_maturity_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_cyber_digital_maturity_b04_fc.json",
-            "title": "ضغط الأقران الرقمي والتنمّر: الشجاعة أن تقف — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_cyber_digital_maturity_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_cyber_digital_maturity_b04_qz.json",
-            "title": "ضغط الأقران الرقمي والتنمّر: الشجاعة أن تقف — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3053,16 +3053,16 @@
           {
             "id": "gen_lesson_13-15_development_brain_identity_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_development_brain_identity_b04_fc.json",
-            "title": "الاستقلال المتدرّج: من التحكم إلى الإشراف — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_13-15_development_brain_identity_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_development_brain_identity_b04_qz.json",
-            "title": "الاستقلال المتدرّج: من التحكم إلى الإشراف — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3083,16 +3083,16 @@
           {
             "id": "gen_lesson_16-18_cyber_digital_professional_b03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_digital_professional_b03_fc.json",
-            "title": "البصمة الرقمية والقبول الجامعي والوظيفي — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_16-18_cyber_digital_professional_b03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_digital_professional_b03_qz.json",
-            "title": "البصمة الرقمية والقبول الجامعي والوظيفي — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3113,16 +3113,16 @@
           {
             "id": "gen_lesson_16-18_cyber_digital_professional_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_digital_professional_b04_fc.json",
-            "title": "إدمان الشاشة وإدارة الوقت قبل الاستقلال — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_16-18_cyber_digital_professional_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_digital_professional_b04_qz.json",
-            "title": "إدمان الشاشة وإدارة الوقت قبل الاستقلال — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3143,16 +3143,16 @@
           {
             "id": "gen_lesson_16-18_medical_adult_transition_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_adult_transition_b04_fc.json",
-            "title": "طلب المساعدة النفسية: مهارة لا ضعف — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_16-18_medical_adult_transition_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_adult_transition_b04_qz.json",
-            "title": "طلب المساعدة النفسية: مهارة لا ضعف — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3173,16 +3173,16 @@
           {
             "id": "gen_lesson_2-3_cyber_routine_b01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_cyber_routine_b01_fc.json",
-            "title": "حدّ الساعة: قاعدة الشاشة في عمر السنتين — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_cyber_routine_b01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_b01_qz.json",
-            "title": "حدّ الساعة: قاعدة الشاشة في عمر السنتين — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3203,16 +3203,16 @@
           {
             "id": "gen_lesson_2-3_cyber_routine_b02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_cyber_routine_b02_fc.json",
-            "title": "الشاشة المشتركة بدل الشاشة الصامتة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_cyber_routine_b02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_b02_qz.json",
-            "title": "الشاشة المشتركة بدل الشاشة الصامتة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3233,16 +3233,16 @@
           {
             "id": "gen_lesson_2-3_cyber_routine_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_cyber_routine_b04_fc.json",
-            "title": "نوم بلا شاشات: حماية ساعة ما قبل النوم — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_cyber_routine_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_cyber_routine_b04_qz.json",
-            "title": "نوم بلا شاشات: حماية ساعة ما قبل النوم — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3263,16 +3263,16 @@
           {
             "id": "gen_lesson_2-3_development_growth_b03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_development_growth_b03_fc.json",
-            "title": "نوبات الغضب: عقل صغير بلا كلمات كافية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_development_growth_b03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_growth_b03_qz.json",
-            "title": "نوبات الغضب: عقل صغير بلا كلمات كافية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3293,16 +3293,16 @@
           {
             "id": "gen_lesson_2-3_development_growth_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_development_growth_b04_fc.json",
-            "title": "المشاعر الأولى: تسمية ما يشعر به طفلك — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_development_growth_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_growth_b04_qz.json",
-            "title": "المشاعر الأولى: تسمية ما يشعر به طفلك — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3323,16 +3323,16 @@
           {
             "id": "gen_lesson_2-3_islamic_attachment_b01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_attachment_b01_fc.json",
-            "title": "غرس حب الله بلغة الحب لا الخوف — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_islamic_attachment_b01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_attachment_b01_qz.json",
-            "title": "غرس حب الله بلغة الحب لا الخوف — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3353,16 +3353,16 @@
           {
             "id": "gen_lesson_2-3_islamic_attachment_b02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_attachment_b02_fc.json",
-            "title": "القدوة الصامتة: طفلك يقلّد ما يراك تفعله — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_islamic_attachment_b02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_attachment_b02_qz.json",
-            "title": "القدوة الصامتة: طفلك يقلّد ما يراك تفعله — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3383,16 +3383,16 @@
           {
             "id": "gen_lesson_2-3_islamic_attachment_b03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_attachment_b03_fc.json",
-            "title": "الرفق عند الخطأ: تأديب يبني لا يكسر — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_2-3_islamic_attachment_b03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_attachment_b03_qz.json",
-            "title": "الرفق عند الخطأ: تأديب يبني لا يكسر — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3413,16 +3413,16 @@
           {
             "id": "gen_lesson_4-6_development_positive_parenting_b01_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_development_positive_parenting_b01_fc.json",
-            "title": "الروتين والحدود: الأمان الذي يحب الطفل — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_development_positive_parenting_b01_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_development_positive_parenting_b01_qz.json",
-            "title": "الروتين والحدود: الأمان الذي يحب الطفل — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3443,16 +3443,16 @@
           {
             "id": "gen_lesson_4-6_development_positive_parenting_b02_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_development_positive_parenting_b02_fc.json",
-            "title": "اللعب التخيّلي: مدرسة الطفل الخفية — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_development_positive_parenting_b02_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_development_positive_parenting_b02_qz.json",
-            "title": "اللعب التخيّلي: مدرسة الطفل الخفية — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3473,16 +3473,16 @@
           {
             "id": "gen_lesson_4-6_islamic_parenting_adab_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_islamic_parenting_adab_b04_fc.json",
-            "title": "آداب الكلام: الصدق والكلمة الطيبة — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_islamic_parenting_adab_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_islamic_parenting_adab_b04_qz.json",
-            "title": "آداب الكلام: الصدق والكلمة الطيبة — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3503,16 +3503,16 @@
           {
             "id": "gen_lesson_4-6_islamic_parenting_bond_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_islamic_parenting_bond_b04_fc.json",
-            "title": "الدعاء معاً: تعليم القلب أن يتعلّق بالله — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_4-6_islamic_parenting_bond_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_islamic_parenting_bond_b04_qz.json",
-            "title": "الدعاء معاً: تعليم القلب أن يتعلّق بالله — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3533,16 +3533,16 @@
           {
             "id": "gen_lesson_7-9_development_digital_wellbeing_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_digital_wellbeing_b04_fc.json",
-            "title": "المصروف والمسؤولية: أول دروس إدارة الذات — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_development_digital_wellbeing_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_digital_wellbeing_b04_qz.json",
-            "title": "المصروف والمسؤولية: أول دروس إدارة الذات — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3563,16 +3563,16 @@
           {
             "id": "gen_lesson_7-9_islamic_parenting_worship_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_islamic_parenting_worship_b04_fc.json",
-            "title": "الأخلاق في التعامل: الأمانة وبر الوالدين — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_islamic_parenting_worship_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_islamic_parenting_worship_b04_qz.json",
-            "title": "الأخلاق في التعامل: الأمانة وبر الوالدين — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3593,16 +3593,16 @@
           {
             "id": "gen_lesson_7-9_medical_emotional_health_b03_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_emotional_health_b03_fc.json",
-            "title": "الخوف والقلق: من الوحوش إلى قلق الواقع — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_medical_emotional_health_b03_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_emotional_health_b03_qz.json",
-            "title": "الخوف والقلق: من الوحوش إلى قلق الواقع — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
@@ -3623,16 +3623,16 @@
           {
             "id": "gen_lesson_7-9_medical_emotional_health_b04_fc",
             "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_medical_emotional_health_b04_fc.json",
-            "title": "تنظيم الانفعال: تعليم الطفل أن يهدّئ نفسه — بطاقات",
-            "item_count": 5
+            "title": "فلاش كاردز",
+            "item_count": 0
           }
         ],
         "quizzes": [
           {
             "id": "gen_lesson_7-9_medical_emotional_health_b04_qz",
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_medical_emotional_health_b04_qz.json",
-            "title": "تنظيم الانفعال: تعليم الطفل أن يهدّئ نفسه — اختبار",
-            "item_count": 3
+            "title": "اختبر نفسك",
+            "item_count": 0
           }
         ],
         "podcasts": [
