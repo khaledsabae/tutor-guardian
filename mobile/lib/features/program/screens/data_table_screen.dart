@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-/// Fetches a lesson data-table (CSV) and renders it as a scrollable table.
+/// Fetches a lesson data-table (CSV) and renders it as a vertical list of
+/// cards (one card per row, "header: value" pairs) — readable on a phone in
+/// RTL without horizontal scrolling.
 class DataTableScreen extends StatefulWidget {
   final String url;
   const DataTableScreen({super.key, required this.url});
@@ -30,7 +32,7 @@ class _DataTableScreenState extends State<DataTableScreen> {
   }
 
   /// Minimal quote-aware CSV parser (handles commas/newlines inside quotes
-  /// and "" escapes). Adequate for the generated lesson data tables.
+  /// and "" escapes).
   List<List<String>> _parseCsv(String text) {
     final rows = <List<String>>[];
     var field = StringBuffer();
@@ -52,27 +54,28 @@ class _DataTableScreenState extends State<DataTableScreen> {
       } else if (c == '"') {
         inQuotes = true;
       } else if (c == ',') {
-        row.add(field.toString());
+        row.add(field.toString().trim());
         field = StringBuffer();
       } else if (c == '\n' || c == '\r') {
         if (c == '\r' && i + 1 < text.length && text[i + 1] == '\n') i++;
-        row.add(field.toString());
+        row.add(field.toString().trim());
         field = StringBuffer();
-        if (row.any((f) => f.trim().isNotEmpty)) rows.add(row);
+        if (row.any((f) => f.isNotEmpty)) rows.add(row);
         row = <String>[];
       } else {
         field.write(c);
       }
     }
     if (field.isNotEmpty || row.isNotEmpty) {
-      row.add(field.toString());
-      if (row.any((f) => f.trim().isNotEmpty)) rows.add(row);
+      row.add(field.toString().trim());
+      if (row.any((f) => f.isNotEmpty)) rows.add(row);
     }
     return rows;
   }
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(title: const Text('📋 جدول البيانات')),
       body: FutureBuilder<List<List<String>>>(
@@ -92,29 +95,62 @@ class _DataTableScreenState extends State<DataTableScreen> {
           }
           final header = data.first;
           final body = data.skip(1).toList();
-          return SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: [
-                  for (final h in header)
-                    DataColumn(
-                      label: Text(h,
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                ],
-                rows: [
-                  for (final r in body)
-                    DataRow(
-                      cells: [
-                        for (var i = 0; i < header.length; i++)
-                          DataCell(Text(i < r.length ? r[i] : '')),
+          return ListView.builder(
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
+            itemCount: body.length,
+            itemBuilder: (context, index) {
+              final r = body[index];
+              return Card(
+                margin: const EdgeInsets.only(bottom: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // First column acts as the card title.
+                      if (r.isNotEmpty && r[0].isNotEmpty) ...[
+                        Text(
+                          r[0],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: scheme.primary,
+                          ),
+                        ),
+                        const Divider(height: 18),
                       ],
-                    ),
-                ],
-              ),
-            ),
+                      for (var i = 1; i < header.length; i++)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  header[i],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: scheme.onSurfaceVariant,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                flex: 3,
+                                child: Text(i < r.length ? r[i] : ''),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            },
           );
         },
       ),

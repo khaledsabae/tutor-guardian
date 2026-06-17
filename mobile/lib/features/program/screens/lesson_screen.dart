@@ -232,7 +232,7 @@ class _Body extends ConsumerWidget {
         const SizedBox(height: 16),
         _Section(
           emoji: '📖',
-          title: 'محتوى الدرس',
+          title: 'ملخص الدرس',
           body: lesson.summary,
         ),
         const SizedBox(height: 16),
