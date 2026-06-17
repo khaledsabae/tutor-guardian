@@ -287,16 +287,23 @@ class _WelcomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('👨‍👩‍👧', style: TextStyle(fontSize: 96))
+          ClipRRect(
+            borderRadius: BorderRadius.circular(18),
+            child: Image.asset(
+              'assets/images/banner.png',
+              fit: BoxFit.contain,
+            ),
+          )
               .animate()
               .scale(
-                begin: const Offset(.5, .5),
+                begin: const Offset(.85, .85),
                 duration: Dt.slow,
                 curve: Curves.easeOutBack,
-              ),
+              )
+              .fadeIn(duration: Dt.base),
           const SizedBox(height: 24),
           Text(
-            'أهلاً بك في المربّي الذكي',
+            'أهلاً بك 🌙',
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
