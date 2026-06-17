@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-17T08:54:06.643970Z"
+    "updated_at": "2026-06-17T08:55:54.007589Z"
   },
   "lessons": [
     {
@@ -2452,10 +2452,10 @@
         ],
         "data_tables": [
           {
-            "id": "1aed2b97-b115-487d-96f1-5a37debd0653",
-            "file": "docs/lesson_assets/data_tables/1aed2b97-b115-487d-96f1-5a37debd0653_data_table_lesson_0-3_cyber_screen_foundations_01.csv",
+            "id": "71d5e2b0-977f-436d-a14f-9b3f71236022",
+            "file": "docs/lesson_assets/data_tables/71d5e2b0-977f-436d-a14f-9b3f71236022_data_table_lesson_0-3_cyber_screen_foundations_01.csv",
             "title": "جدول بيانات cyber_screen_foundations (prenatal-1)",
-            "item_count": 18
+            "item_count": 6
           }
         ],
         "infographics": [],
