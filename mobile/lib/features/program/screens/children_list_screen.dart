@@ -57,6 +57,7 @@ class ChildrenListScreen extends ConsumerWidget {
                     child: c,
                     isActive: c.id == activeId,
                     onSwitch: () => _switchTo(context, ref, c),
+                    onDelete: () => _deleteChild(context, ref, c),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -144,6 +145,51 @@ class ChildrenListScreen extends ConsumerWidget {
       ref.invalidate(childrenListProvider);
     }
   }
+
+  Future<void> _deleteChild(
+    BuildContext context,
+    WidgetRef ref,
+    ChildProfile child,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('حذف الطفل'),
+        content: Text(
+          'هل أنت متأكد من حذف «${child.name}»؟ سيُحذف ملفه نهائيًا.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('إلغاء'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            style: TextButton.styleFrom(foregroundColor: AppTheme.dangerFg),
+            child: const Text('حذف'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    try {
+      await ref.read(deleteChildProvider.notifier).call(child.id);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('تم حذف ${child.name}.')),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('تعذّر الحذف: $e'),
+            backgroundColor: AppTheme.dangerFg,
+          ),
+        );
+      }
+    }
+  }
 }
 
 class _ChildCount extends StatelessWidget {
@@ -172,10 +218,12 @@ class _ChildTile extends StatelessWidget {
     required this.child,
     required this.isActive,
     required this.onSwitch,
+    required this.onDelete,
   });
   final ChildProfile child;
   final bool isActive;
   final VoidCallback onSwitch;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -257,6 +305,13 @@ class _ChildTile extends StatelessWidget {
               ] else
                 const Icon(Icons.chevron_left,
                     color: AppTheme.textMuted, size: 20),
+              IconButton(
+                icon: const Icon(Icons.delete_outline,
+                    color: AppTheme.textMuted, size: 20),
+                tooltip: 'حذف الطفل',
+                visualDensity: VisualDensity.compact,
+                onPressed: onDelete,
+              ),
             ],
           ),
         ),

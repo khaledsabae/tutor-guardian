@@ -40,4 +40,10 @@ class SettingsRepository {
     final json = await _client.resetChildProgress(childId);
     return (json['deleted'] as num?)?.toInt() ?? 0;
   }
+
+  /// `DELETE /api/children/{id}` — removes the child profile entirely.
+  Future<bool> deleteChild(int childId) async {
+    final json = await _client.deleteChild(childId);
+    return json['deleted'] == true;
+  }
 }

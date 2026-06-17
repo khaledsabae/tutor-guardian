@@ -459,3 +459,28 @@ def reset_child_progress(child_id: int, request: Request):
         }
     finally:
         conn.close()
+
+
+@router.delete(
+    "/children/{child_id}",
+    summary="Delete a child profile",
+)
+def delete_child(child_id: int, request: Request):
+    """Phase 7 — remove a child profile entirely. Ownership-enforced via
+    device_id (a missing/unowned child raises 404 via _load_owned_child)."""
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        conn.execute(
+            "DELETE FROM child_profiles WHERE id = ? AND device_id = ?",
+            (child_id, device_id),
+        )
+        conn.commit()
+        return {
+            "child_id": child_id,
+            "deleted": True,
+            "deleted_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        }
+    finally:
+        conn.close()

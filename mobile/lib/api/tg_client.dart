@@ -678,6 +678,22 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  /// `DELETE /api/children/{id}` — removes the child profile entirely.
+  Future<Map<String, dynamic>> deleteChild(int childId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final resp = await _http
+        .delete(
+          Uri.parse('$_baseUrl/api/children/$childId'),
+          headers: _authHeaders(token),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   // ── Internals ────────────────────────────────────────────────────────
 
   Map<String, String> _authHeaders(String token) => {

@@ -76,39 +76,18 @@ class _InfographicScreenState extends State<InfographicScreen> {
     final canvas = Canvas(recorder);
     canvas.drawImage(base, Offset.zero, Paint());
 
-    // Brand badge in the bottom-right corner.
-    final logoW = w * 0.12;
+    // Small, unobtrusive logo stamp in the bottom-right corner (logo only).
+    final logoW = w * 0.06;
     final logoH = logoW * logo.height / logo.width;
-    final pad = w * 0.025;
-    final unit = w * 0.018; // scales text/padding with image size
-    final brand = TextPainter(
-      text: TextSpan(
-        text: 'المربّي',
-        style: TextStyle(
-          color: const Color(0xFF01696F),
-          fontWeight: FontWeight.bold,
-          fontSize: logoH * 0.5,
-        ),
-      ),
-      textDirection: TextDirection.rtl,
-    )..layout();
-
-    final contentW = logoW + unit + brand.width;
-    final badgeH = logoH;
-    final left = w - contentW - pad - unit;
-    final top = h - badgeH - pad - unit;
-    final badge = RRect.fromRectAndRadius(
-      Rect.fromLTWH(left - unit, top - unit, contentW + unit * 2, badgeH + unit * 2),
-      Radius.circular(unit * 1.5),
-    );
-    canvas.drawRRect(badge, Paint()..color = const Color(0xF2FFFFFF));
+    final pad = w * 0.02;
+    final left = w - logoW - pad;
+    final top = h - logoH - pad;
     canvas.drawImageRect(
       logo,
       Rect.fromLTWH(0, 0, logo.width.toDouble(), logo.height.toDouble()),
       Rect.fromLTWH(left, top, logoW, logoH),
-      Paint(),
+      Paint()..color = const Color(0xF2FFFFFF), // ~95% opacity, no tint
     );
-    brand.paint(canvas, Offset(left + logoW + unit, top + (logoH - brand.height) / 2));
 
     final picture = recorder.endRecording();
     final img = await picture.toImage(base.width, base.height);

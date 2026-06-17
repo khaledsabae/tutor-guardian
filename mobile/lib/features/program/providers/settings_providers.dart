@@ -125,3 +125,27 @@ class ResetProgressNotifier extends AutoDisposeAsyncNotifier<int?> {
 
 final resetProgressProvider = AsyncNotifierProvider.autoDispose<
     ResetProgressNotifier, int?>(ResetProgressNotifier.new);
+
+/// Delete a child profile entirely. After success, invalidates
+/// [childrenListProvider] so the list re-fetches without the removed child.
+class DeleteChildNotifier extends AutoDisposeAsyncNotifier<bool?> {
+  @override
+  Future<bool?> build() async => null;
+
+  Future<bool> call(int childId) async {
+    state = const AsyncValue.loading();
+    try {
+      final repo = ref.read(settingsRepositoryProvider);
+      final ok = await repo.deleteChild(childId);
+      ref.invalidate(childrenListProvider);
+      state = AsyncValue.data(ok);
+      return ok;
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+      rethrow;
+    }
+  }
+}
+
+final deleteChildProvider = AsyncNotifierProvider.autoDispose<
+    DeleteChildNotifier, bool?>(DeleteChildNotifier.new);
