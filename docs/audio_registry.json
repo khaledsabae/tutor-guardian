@@ -1,0 +1,200 @@
+{
+  "notebook_id": "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287",
+  "last_updated": "2026-06-17T10:25:28.162611",
+  "sources": {
+    "440183bc-479c-49c1-bb07-fe35fa62295f": {
+      "artifact_id": "7d78d463-87bb-4e67-9333-9aa773259ae5",
+      "title": "تحبيب ولادنا في الصلاة من غير عقاب",
+      "created_at": "2026-06-17T09:35:25",
+      "downloaded": true,
+      "file": "docs/source_440183bc-479c-49c1-bb07-fe35fa62295f_podcast.mp3",
+      "lessons": [
+        {
+          "lesson_id": "lesson_10-12_islamic_parenting_identity_01",
+          "file": "docs/lesson_10-12_islamic_parenting_identity_01_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_development_brain_identity_01",
+          "file": "docs/lesson_13-15_development_brain_identity_01_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_medical_mental_health_01",
+          "file": "docs/lesson_13-15_medical_mental_health_01_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_16-18_medical_adult_transition_02",
+          "file": "docs/lesson_16-18_medical_adult_transition_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_4-6_islamic_parenting_bond_01",
+          "file": "docs/lesson_4-6_islamic_parenting_bond_01_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_7-9_islamic_parenting_worship_02",
+          "file": "docs/lesson_7-9_islamic_parenting_worship_02_podcast.mp3"
+        }
+      ]
+    },
+    "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951": {
+      "artifact_id": "2de16e51-d9e8-4b3c-9a04-6bd60f1e9161",
+      "title": "روشتة تربية سن عشرة لاتناشر بالقرآن",
+      "created_at": "2026-06-17T09:53:46",
+      "downloaded": true,
+      "file": "docs/source_55fb8fb3-2eed-4eb2-9940-0a1e07d3e951_podcast.mp3",
+      "lessons": [
+        {
+          "lesson_id": "lesson_10-12_islamic_parenting_identity_02",
+          "file": "docs/lesson_10-12_islamic_parenting_identity_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_development_brain_identity_02",
+          "file": "docs/lesson_13-15_development_brain_identity_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_medical_mental_health_02",
+          "file": "docs/lesson_13-15_medical_mental_health_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_16-18_medical_adult_transition_03",
+          "file": "docs/lesson_16-18_medical_adult_transition_03_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_4-6_islamic_parenting_bond_02",
+          "file": "docs/lesson_4-6_islamic_parenting_bond_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_7-9_islamic_parenting_worship_03",
+          "file": "docs/lesson_7-9_islamic_parenting_worship_03_podcast.mp3"
+        }
+      ]
+    },
+    "bc41f39f-97ae-4af2-80dd-b070907a80e4": {
+      "artifact_id": "3c690926-2359-44d5-a537-3c4082face5f",
+      "title": "إزاي تربي ابنك على أخلاق القوة والصدق",
+      "created_at": "2026-06-17T09:53:49",
+      "downloaded": true,
+      "file": "docs/source_bc41f39f-97ae-4af2-80dd-b070907a80e4_podcast.mp3",
+      "lessons": [
+        {
+          "lesson_id": "lesson_10-12_islamic_parenting_identity_03",
+          "file": "docs/lesson_10-12_islamic_parenting_identity_03_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_development_brain_identity_03",
+          "file": "docs/lesson_13-15_development_brain_identity_03_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_medical_mental_health_03",
+          "file": "docs/lesson_13-15_medical_mental_health_03_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_4-6_development_positive_parenting_01",
+          "file": "docs/lesson_4-6_development_positive_parenting_01_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_4-6_islamic_parenting_bond_03",
+          "file": "docs/lesson_4-6_islamic_parenting_bond_03_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_7-9_medical_emotional_health_01",
+          "file": "docs/lesson_7-9_medical_emotional_health_01_podcast.mp3"
+        }
+      ]
+    },
+    "dab0fff1-8180-4a3f-99ae-6791b243d690": {
+      "artifact_id": "5018d841-8a09-44f2-8b99-5e9a6cff6d00",
+      "title": "سر قفلة كهربا دماغ ابنك",
+      "created_at": "2026-06-17T09:53:55",
+      "downloaded": true,
+      "file": "docs/source_dab0fff1-8180-4a3f-99ae-6791b243d690_podcast.mp3",
+      "lessons": [
+        {
+          "lesson_id": "lesson_10-12_islamic_parenting_identity_04",
+          "file": "docs/lesson_10-12_islamic_parenting_identity_04_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_islamic_parenting_teen_identity_01",
+          "file": "docs/lesson_13-15_islamic_parenting_teen_identity_01_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_medical_mental_health_04",
+          "file": "docs/lesson_13-15_medical_mental_health_04_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_4-6_development_positive_parenting_02",
+          "file": "docs/lesson_4-6_development_positive_parenting_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_7-9_development_digital_wellbeing_01",
+          "file": "docs/lesson_7-9_development_digital_wellbeing_01_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_7-9_medical_emotional_health_02",
+          "file": "docs/lesson_7-9_medical_emotional_health_02_podcast.mp3"
+        }
+      ]
+    },
+    "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e": {
+      "artifact_id": "6af8ec3d-834c-4099-8d71-66703d3a53ad",
+      "title": "إزاي تحمي طفلك من التنمر الإلكتروني",
+      "created_at": "2026-06-17T09:53:59",
+      "downloaded": true,
+      "file": "docs/source_f7e6f02d-39fb-4888-ae4a-9e0644e75f5e_podcast.mp3",
+      "lessons": [
+        {
+          "lesson_id": "lesson_13-15_cyber_digital_maturity_03",
+          "file": "docs/lesson_13-15_cyber_digital_maturity_03_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_islamic_parenting_teen_identity_04",
+          "file": "docs/lesson_13-15_islamic_parenting_teen_identity_04_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_16-18_medical_adult_transition_01",
+          "file": "docs/lesson_16-18_medical_adult_transition_01_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_4-6_islamic_parenting_adab_03",
+          "file": "docs/lesson_4-6_islamic_parenting_adab_03_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_7-9_islamic_parenting_worship_01",
+          "file": "docs/lesson_7-9_islamic_parenting_worship_01_podcast.mp3"
+        }
+      ]
+    },
+    "5fb6588e-d31a-4cca-8e0c-052b364a72ac": {
+      "artifact_id": "da76a3c7-2765-4d23-b012-098f959552c7",
+      "title": "ابنك مش مدمن موبايل ده خايف",
+      "created_at": "2026-06-17T09:12:05",
+      "downloaded": true,
+      "file": "docs/source_5fb6588e-d31a-4cca-8e0c-052b364a72ac_podcast.mp3",
+      "lessons": [
+        {
+          "lesson_id": "lesson_10-12_cyber_digital_citizenship_02",
+          "file": "docs/lesson_10-12_cyber_digital_citizenship_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_cyber_digital_maturity_02",
+          "file": "docs/lesson_13-15_cyber_digital_maturity_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_13-15_islamic_parenting_teen_identity_03",
+          "file": "docs/lesson_13-15_islamic_parenting_teen_identity_03_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_16-18_cyber_digital_professional_02",
+          "file": "docs/lesson_16-18_cyber_digital_professional_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_4-6_islamic_parenting_adab_02",
+          "file": "docs/lesson_4-6_islamic_parenting_adab_02_podcast.mp3"
+        },
+        {
+          "lesson_id": "lesson_7-9_development_digital_wellbeing_03",
+          "file": "docs/lesson_7-9_development_digital_wellbeing_03_podcast.mp3"
+        }
+      ]
+    }
+  }
+}
