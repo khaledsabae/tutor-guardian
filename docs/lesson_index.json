@@ -56,12 +56,6 @@
             "file": "docs/lesson_assets/reports/4c566a4c-3414-4f7a-9a7f-3638fa6fd184_Comprehensive_Lesson_Summary__Foundations_of_Posit.md",
             "title": "ملخص الدرس",
             "item_count": 0
-          },
-          {
-            "id": "8ac9c785-372b-4639-b477-39bfc6c0019e_Transitioning_to_Maturity__Islamic_Identity_and_Sp",
-            "file": "docs/lesson_assets/reports/8ac9c785-372b-4639-b477-39bfc6c0019e_Transitioning_to_Maturity__Islamic_Identity_and_Sp.md",
-            "title": "ملخص الدرس",
-            "item_count": 0
           }
         ],
         "data_tables": [
@@ -85,14 +79,6 @@
           {
             "file": "docs/lesson_01_podcast.mp3",
             "size_bytes": 37871384
-          },
-          {
-            "file": "docs/lesson_10_12_cyber_digital_citizenship_01_podcast.mp3",
-            "size_bytes": 24574571
-          },
-          {
-            "file": "docs/lesson_demo_podcast.mp3",
-            "size_bytes": 34197666
           }
         ],
         "videos": [
@@ -135,24 +121,6 @@
             "file": "docs/lesson_assets/reports/4c45094b-495a-44b8-8320-4713fa0131ea_The_Quran__My_Constitution_and_Life_Compass.md",
             "title": "ملخص الدرس",
             "item_count": 0
-          },
-          {
-            "id": "ffb71240-b7e8-4741-b46a-94cdcbb5792e_Lesson_Summary__Digital_Wellbeing_and_Islamic_Iden",
-            "file": "docs/lesson_assets/reports/ffb71240-b7e8-4741-b46a-94cdcbb5792e_Lesson_Summary__Digital_Wellbeing_and_Islamic_Iden.md",
-            "title": "ملخص الدرس",
-            "item_count": 0
-          },
-          {
-            "id": "eb171069-a6a8-45e3-b28a-5d3cf1a21061_Educational_Report__Prayer_as_the_Pillar_of_Religi",
-            "file": "docs/lesson_assets/reports/eb171069-a6a8-45e3-b28a-5d3cf1a21061_Educational_Report__Prayer_as_the_Pillar_of_Religi.md",
-            "title": "ملخص الدرس",
-            "item_count": 0
-          },
-          {
-            "id": "bbb70814-375f-4f34-9347-e24a3e9f7686_Empowering_Digital_Citizens__Navigating_Cyberbully",
-            "file": "docs/lesson_assets/reports/bbb70814-375f-4f34-9347-e24a3e9f7686_Empowering_Digital_Citizens__Navigating_Cyberbully.md",
-            "title": "ملخص الدرس",
-            "item_count": 0
           }
         ],
         "data_tables": [
@@ -180,48 +148,6 @@
           }
         ],
         "videos": [
-          {
-            "file": "docs/lesson_videos/9a511818_Cyberbullying_Pre-Teens.mp4",
-            "size_mb": 31.3,
-            "language": "en",
-            "description": "Cyberbullying awareness for pre-teens",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/9a511818_Cyberbullying_Pre-Teens.mp4",
-            "size_mb": 31.3,
-            "language": "en",
-            "description": "Cyberbullying awareness for pre-teens",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/82b4b434_Online_Safety.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Online safety for pre-teens",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/82b4b434_Online_Safety_ar.mp4",
-            "size_mb": 25.7,
-            "language": "ar",
-            "description": "Online safety for pre-teens",
-            "note": "Arabic-language version."
-          },
-          {
-            "file": "docs/lesson_videos/9a511818_Cyberbullying_Pre-Teens_ar.mp4",
-            "size_mb": 30.5,
-            "language": "ar",
-            "description": "Cyberbullying awareness for pre-teens",
-            "note": "Arabic-language version."
-          },
-          {
-            "file": "docs/lesson_videos/82b4b434_Online_Safety_ar.mp4",
-            "size_mb": 25.7,
-            "language": "ar",
-            "description": "Online safety for pre-teens",
-            "note": "Arabic-language version."
-          },
           {
             "source_id": "5fb6588e-d31a-4cca-8e0c-052b364a72ac",
             "file": "docs/path_videos/path_10-12_cyber_digital_citizenship_ar_eg.mp4",
@@ -261,12 +187,6 @@
             "file": "docs/lesson_assets/reports/c77f00a9-6e69-4ee1-8249-af3ac5a3a8dc_Lesson_Summary__Foundations_of_Islamic_Identity_an.md",
             "title": "ملخص الدرس",
             "item_count": 0
-          },
-          {
-            "id": "d12932e5-3c6c-45f4-b9ec-d575dfe110ac_Lesson_Summary__Divine_Love_and_Prayer_for_Young_H",
-            "file": "docs/lesson_assets/reports/d12932e5-3c6c-45f4-b9ec-d575dfe110ac_Lesson_Summary__Divine_Love_and_Prayer_for_Young_H.md",
-            "title": "ملخص الدرس",
-            "item_count": 0
           }
         ],
         "data_tables": [
@@ -294,34 +214,6 @@
           }
         ],
         "videos": [
-          {
-            "file": "docs/lesson_videos/c45e22b4_Digital_Detectives.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Critical thinking and digital literacy",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/c45e22b4_Digital_Detectives.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Critical thinking and digital literacy",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/c45e22b4_Digital_Detectives_ar.mp4",
-            "size_mb": 20.9,
-            "language": "ar",
-            "description": "Critical thinking and digital literacy",
-            "note": "Arabic-language version."
-          },
-          {
-            "file": "docs/lesson_videos/c45e22b4_Digital_Detectives_ar.mp4",
-            "size_mb": 20.9,
-            "language": "ar",
-            "description": "Critical thinking and digital literacy",
-            "note": "Arabic-language version."
-          },
           {
             "source_id": "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e",
             "file": "docs/path_videos/path_10-12_cyber_digital_citizenship_ar_eg.mp4",
@@ -361,12 +253,6 @@
             "file": "docs/lesson_assets/reports/9f15cd6c-e7ae-462e-86df-397d5a1443ce_Character_Building_Report__Honesty,_Truthfulness,_.md",
             "title": "ملخص الدرس",
             "item_count": 0
-          },
-          {
-            "id": "8c341602-c149-4800-9815-738ea4696c75_Self-Confidence_and_My_Islamic_Identity__A_Guide_f",
-            "file": "docs/lesson_assets/reports/8c341602-c149-4800-9815-738ea4696c75_Self-Confidence_and_My_Islamic_Identity__A_Guide_f.md",
-            "title": "ملخص الدرس",
-            "item_count": 0
           }
         ],
         "data_tables": [
@@ -393,34 +279,6 @@
           }
         ],
         "videos": [
-          {
-            "file": "docs/lesson_videos/6ca7b391_Islamic_Parenting_Tweens.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Islamic parenting for tweens",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/6ca7b391_Islamic_Parenting_Tweens.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Islamic parenting for tweens",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/6ca7b391_Islamic_Parenting_Tweens_ar.mp4",
-            "size_mb": 24.1,
-            "language": "ar",
-            "description": "Islamic parenting for tweens",
-            "note": "Arabic-language version."
-          },
-          {
-            "file": "docs/lesson_videos/6ca7b391_Islamic_Parenting_Tweens_ar.mp4",
-            "size_mb": 24.1,
-            "language": "ar",
-            "description": "Islamic parenting for tweens",
-            "note": "Arabic-language version."
-          },
           {
             "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
             "file": "docs/path_videos/path_10-12_islamic_parenting_identity_ar_eg.mp4",
@@ -616,34 +474,6 @@
           }
         ],
         "videos": [
-          {
-            "file": "docs/lesson_videos/189647f0_Self-Confidence_&_Identity.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Self-confidence and identity building",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/189647f0_Self-Confidence_&_Identity.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Self-confidence and identity building",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/189647f0_Self-Confidence_&_Identity_ar.mp4",
-            "size_mb": 22.0,
-            "language": "ar",
-            "description": "Self-confidence and identity building",
-            "note": "Arabic-language version."
-          },
-          {
-            "file": "docs/lesson_videos/189647f0_Self-Confidence_&_Identity_ar.mp4",
-            "size_mb": 22.0,
-            "language": "ar",
-            "description": "Self-confidence and identity building",
-            "note": "Arabic-language version."
-          },
           {
             "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
             "file": "docs/path_videos/path_10-12_islamic_parenting_identity_ar_eg.mp4",
@@ -841,34 +671,6 @@
         ],
         "videos": [
           {
-            "file": "docs/lesson_videos/f0060e8d_Adolescence_Safely.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Safe adolescence - healthy habits",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/f0060e8d_Adolescence_Safely.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Safe adolescence - healthy habits",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/f0060e8d_Adolescence_Safely_ar.mp4",
-            "size_mb": 27.1,
-            "language": "ar",
-            "description": "Safe adolescence - healthy habits",
-            "note": "Arabic-language version."
-          },
-          {
-            "file": "docs/lesson_videos/f0060e8d_Adolescence_Safely_ar.mp4",
-            "size_mb": 27.1,
-            "language": "ar",
-            "description": "Safe adolescence - healthy habits",
-            "note": "Arabic-language version."
-          },
-          {
             "source_id": "20e00eef-fa60-4165-9364-ef869223c0f6",
             "file": "docs/path_videos/path_10-12_medical_puberty_wellbeing_ar_eg.mp4",
             "type": "video/mp4",
@@ -934,34 +736,6 @@
           }
         ],
         "videos": [
-          {
-            "file": "docs/lesson_videos/c2491bd6_Digital_Footprint.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Digital footprint and privacy",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/c2491bd6_Digital_Footprint.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Digital footprint and privacy",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/c2491bd6_Digital_Footprint_ar.mp4",
-            "size_mb": 19.0,
-            "language": "ar",
-            "description": "Digital footprint and privacy",
-            "note": "Arabic-language version."
-          },
-          {
-            "file": "docs/lesson_videos/c2491bd6_Digital_Footprint_ar.mp4",
-            "size_mb": 19.0,
-            "language": "ar",
-            "description": "Digital footprint and privacy",
-            "note": "Arabic-language version."
-          },
           {
             "source_id": "b607c436-be69-4a32-839b-af09cae03dc4",
             "file": "docs/path_videos/path_13-15_cyber_digital_maturity_ar_eg.mp4",
@@ -1335,12 +1109,6 @@
             "file": "docs/lesson_assets/data_tables/a0f54cce-5dd1-46ac-99f1-e212a9a36b2d_Self-Confidence_and_Identity_Building_for_Young_Ad.csv",
             "title": "جدول معلومات",
             "item_count": 0
-          },
-          {
-            "id": "bc076f85-94e0-4d72-85bb-4a77e5713fe9_Daily_Prayer_and_Worship_Tracker_for_Teens_(13-15)",
-            "file": "docs/lesson_assets/data_tables/bc076f85-94e0-4d72-85bb-4a77e5713fe9_Daily_Prayer_and_Worship_Tracker_for_Teens_(13-15).csv",
-            "title": "جدول معلومات",
-            "item_count": 0
           }
         ],
         "infographics": [
@@ -1622,34 +1390,6 @@
           }
         ],
         "videos": [
-          {
-            "file": "docs/lesson_videos/186dd5fa_Teen_Mental_Health.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Teen mental health awareness",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/186dd5fa_Teen_Mental_Health.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Teen mental health awareness",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/186dd5fa_Teen_Mental_Health_ar.mp4",
-            "size_mb": 24.4,
-            "language": "ar",
-            "description": "Teen mental health awareness",
-            "note": "Arabic-language version."
-          },
-          {
-            "file": "docs/lesson_videos/186dd5fa_Teen_Mental_Health_ar.mp4",
-            "size_mb": 24.4,
-            "language": "ar",
-            "description": "Teen mental health awareness",
-            "note": "Arabic-language version."
-          },
           {
             "source_id": "cb9959f3-12d6-46e3-a592-8c6d61c30522",
             "file": "docs/path_videos/path_13-15_medical_mental_health_ar_eg.mp4",
@@ -2041,34 +1781,6 @@
           }
         ],
         "videos": [
-          {
-            "file": "docs/lesson_videos/823e565d_Adulthood_Mental_Health.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Adulthood transition and mental health",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/823e565d_Adulthood_Mental_Health.mp4",
-            "size_mb": 31.5,
-            "language": "en",
-            "description": "Adulthood transition and mental health",
-            "note": "English-language version. Arabic version to be generated with explicit language prompts."
-          },
-          {
-            "file": "docs/lesson_videos/823e565d_Adulthood_Mental_Health_ar.mp4",
-            "size_mb": 28.3,
-            "language": "ar",
-            "description": "Adulthood transition and mental health",
-            "note": "Arabic-language version."
-          },
-          {
-            "file": "docs/lesson_videos/823e565d_Adulthood_Mental_Health_ar.mp4",
-            "size_mb": 28.3,
-            "language": "ar",
-            "description": "Adulthood transition and mental health",
-            "note": "Arabic-language version."
-          },
           {
             "source_id": "f9989ce3-a6e7-48dc-a627-87fee569c42d",
             "file": "docs/path_videos/path_16-18_medical_adult_transition_ar_eg.mp4",
