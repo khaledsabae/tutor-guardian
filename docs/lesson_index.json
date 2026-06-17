@@ -354,7 +354,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "440183bc-479c-49c1-bb07-fe35fa62295f",
+            "file": "docs/lesson_assets/infographics/40_lesson_10-12_islamic_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_10-12_islamic_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_10-12_islamic_parenting_identity_01_podcast.mp3",
@@ -433,7 +440,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951",
+            "file": "docs/lesson_assets/infographics/41_lesson_10-12_islamic_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_10-12_islamic_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_10-12_islamic_parenting_identity_02_podcast.mp3",
@@ -482,7 +496,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "bc41f39f-97ae-4af2-80dd-b070907a80e4",
+            "file": "docs/lesson_assets/infographics/42_lesson_10-12_islamic_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_10-12_islamic_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_10-12_islamic_parenting_identity_03_podcast.mp3",
@@ -531,7 +552,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "dab0fff1-8180-4a3f-99ae-6791b243d690",
+            "file": "docs/lesson_assets/infographics/43_lesson_10-12_islamic_04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_10-12_islamic_04"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_10-12_islamic_parenting_identity_04_podcast.mp3",
@@ -610,7 +638,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "c48f34fc-f1a1-4150-a55c-bef14c4051f8",
+            "file": "docs/lesson_assets/infographics/44_lesson_10-12_medical_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_10-12_medical_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_10-12_medical_puberty_wellbeing_01_podcast.mp3",
@@ -659,7 +694,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "42bc52b6-7d36-486f-aa79-e98ea5dcb4c9",
+            "file": "docs/lesson_assets/infographics/45_lesson_10-12_medical_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_10-12_medical_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_10-12_medical_puberty_wellbeing_02_podcast.mp3",
@@ -882,7 +924,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "78567565-5847-4d61-bcd2-aac115428388",
+            "file": "docs/lesson_assets/infographics/47_lesson_13-15_cyber_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_cyber_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_13-15_cyber_digital_maturity_02_podcast.mp3",
@@ -988,7 +1037,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "46ed02d0-0eb1-4f2f-b5c1-6546eafdcc3b",
+            "file": "docs/lesson_assets/infographics/49_lesson_13-15_development_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_development_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_13-15_development_brain_identity_01_podcast.mp3",
@@ -1037,7 +1093,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "8b1d28ae-c4de-4aac-b591-8fbb3f61ddd9",
+            "file": "docs/lesson_assets/infographics/50_lesson_13-15_development_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_development_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_13-15_development_brain_identity_02_podcast.mp3",
@@ -1086,7 +1149,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "baaf13a7-971f-47e3-b5a5-2f89238e0ded",
+            "file": "docs/lesson_assets/infographics/51_lesson_13-15_development_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_development_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_13-15_development_brain_identity_03_podcast.mp3",
@@ -1141,7 +1211,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "73b68643-08f5-4dbf-b705-daef9bc54304",
+            "file": "docs/lesson_assets/infographics/53_lesson_13-15_islamic_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_islamic_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_13-15_islamic_parenting_teen_identity_01_podcast.mp3",
@@ -1361,7 +1438,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "cb9959f3-12d6-46e3-a592-8c6d61c30522",
+            "file": "docs/lesson_assets/infographics/54_lesson_13-15_medical_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_medical_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_13-15_medical_mental_health_01_podcast.mp3",
@@ -1440,7 +1524,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "b9d49f00-f489-4922-bab6-c2a052f30baf",
+            "file": "docs/lesson_assets/infographics/55_lesson_13-15_medical_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_medical_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_13-15_medical_02_podcast.mp3",
@@ -1489,7 +1580,14 @@
             "item_count": 0
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "a2737f57-c687-49b6-beb6-748e966f7a76",
+            "file": "docs/lesson_assets/infographics/56_lesson_13-15_medical_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_medical_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_13-15_medical_03_podcast.mp3",
@@ -1595,7 +1693,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "358f4c4e-9742-45f0-b9ee-037b09ca078d",
+            "file": "docs/lesson_assets/infographics/57_lesson_16-18_cyber_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_16-18_cyber_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_16-18_cyber_01_podcast.mp3",
@@ -1644,7 +1749,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "5f6d098c-f8a8-4f5a-a9f6-79b2cc8c053e",
+            "file": "docs/lesson_assets/infographics/58_lesson_16-18_cyber_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_16-18_cyber_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_16-18_cyber_02_podcast.mp3",
@@ -1693,7 +1805,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "f9989ce3-a6e7-48dc-a627-87fee569c42d",
+            "file": "docs/lesson_assets/infographics/61_lesson_16-18_medical_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_16-18_medical_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_16-18_medical_01_podcast.mp3",
@@ -1772,7 +1891,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "91cd3b56-aba3-40fe-ac12-3f69ac2d0623",
+            "file": "docs/lesson_assets/infographics/62_lesson_16-18_medical_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_16-18_medical_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_16-18_medical_02_podcast.mp3",
@@ -1821,7 +1947,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "e265bfe0-2602-4493-adb4-233c72505d9c",
+            "file": "docs/lesson_assets/infographics/63_lesson_16-18_medical_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_16-18_medical_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_16-18_medical_03_podcast.mp3",
@@ -1968,7 +2101,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "cc3b004a-dff2-44e4-92c2-2ad56cb8ffe9",
+            "file": "docs/lesson_assets/infographics/19_lesson_4-6_adab_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_adab_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_4-6_adab_01_podcast.mp3",
@@ -2017,7 +2157,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "1ef101c8-a442-4139-89dc-7942bc2cea82",
+            "file": "docs/lesson_assets/infographics/20_lesson_4-6_adab_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_adab_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_4-6_adab_02_podcast.mp3",
@@ -2066,7 +2213,14 @@
             "item_count": 7
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "ef52b00c-a493-48d2-8f8c-a94fae2e7835",
+            "file": "docs/lesson_assets/infographics/21_lesson_4-6_adab_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_adab_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_4-6_adab_03_podcast.mp3",
@@ -2115,7 +2269,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "3de4e313-6f2f-4c77-a368-c6682bc43afd",
+            "file": "docs/lesson_assets/infographics/23_lesson_4-6_bond_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_bond_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_4-6_bond_01_podcast.mp3",
@@ -2164,7 +2325,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "cda01e43-ade6-4c2a-b389-e73f03d179f5",
+            "file": "docs/lesson_assets/infographics/24_lesson_4-6_bond_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_bond_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_4-6_bond_02_podcast.mp3",
@@ -2213,7 +2381,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "cc0c9f78-495b-443b-8b4d-ece8d57dbfd5",
+            "file": "docs/lesson_assets/infographics/25_lesson_4-6_bond_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_bond_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_4-6_bond_03_podcast.mp3",
@@ -2262,7 +2437,14 @@
             "item_count": 7
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "37393ebc-4bf7-4cc8-ac6e-b15b4fad2b10",
+            "file": "docs/lesson_assets/infographics/27_lesson_7-9_development_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_development_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_7-9_development_01_podcast.mp3",
@@ -2311,7 +2493,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "370aecdc-3b9f-4d93-805a-517973baba60",
+            "file": "docs/lesson_assets/infographics/28_lesson_7-9_development_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_development_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_7-9_development_02_podcast.mp3",
@@ -2360,7 +2549,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "7ce48001-258f-45f1-b561-556ee5b4fe82",
+            "file": "docs/lesson_assets/infographics/32_lesson_7-9_worship_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_worship_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_7-9_worship_01_podcast.mp3",
@@ -2409,7 +2605,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "d029eaaa-7796-494c-a397-330e7342944c",
+            "file": "docs/lesson_assets/infographics/33_lesson_7-9_worship_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_worship_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_7-9_worship_02_podcast.mp3",
@@ -2458,7 +2661,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "17ff034d-1fb5-4f76-a9d4-2ed77bf1aefb",
+            "file": "docs/lesson_assets/infographics/34_lesson_7-9_worship_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_worship_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_7-9_worship_03_podcast.mp3",
@@ -2507,7 +2717,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "1e9b6c6c-a3e9-4bc3-b8bb-3111cc7cc474",
+            "file": "docs/lesson_assets/infographics/35_lesson_7-9_medical_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_medical_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_7-9_medical_01_podcast.mp3",
@@ -2556,7 +2773,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "954f1301-4611-41f2-b796-6486fd8ac9d5",
+            "file": "docs/lesson_assets/infographics/36_lesson_7-9_medical_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_medical_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_7-9_medical_02_podcast.mp3",
@@ -2605,7 +2829,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "a40ffd21-a118-4494-bc29-ca1ecb385c7a",
+            "file": "docs/lesson_assets/infographics/29_lesson_7-9_development_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_development_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_7-9_development_03_podcast.mp3",
@@ -2654,7 +2885,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "3b1bc4d0-0bbc-4e6b-bf5b-56d88cf5591a",
+            "file": "docs/lesson_assets/infographics/01_lesson_0-3_cyber_screen_foundations_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_cyber_screen_foundations_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_cyber_screen_foundations_01_podcast.mp3",
@@ -2703,7 +2941,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "688a3b81-7e0f-4245-9427-724219cb9aac",
+            "file": "docs/lesson_assets/infographics/02_lesson_0-3_cyber_screen_foundations_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_cyber_screen_foundations_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_cyber_screen_foundations_02_podcast.mp3",
@@ -2752,7 +2997,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "424206c3-c35b-4e26-834b-90ce2cde12bc",
+            "file": "docs/lesson_assets/infographics/03_lesson_0-3_cyber_screen_foundations_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_cyber_screen_foundations_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_cyber_screen_foundations_03_podcast.mp3",
@@ -2801,7 +3053,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "d54a286a-dbd0-4047-8cfb-016026f26020",
+            "file": "docs/lesson_assets/infographics/04_lesson_0-3_development_early_moments_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_development_early_moments_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_development_early_moments_01_podcast.mp3",
@@ -2850,7 +3109,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "f31a7e1b-b4b9-423e-b362-03138496c2bf",
+            "file": "docs/lesson_assets/infographics/05_lesson_0-3_development_early_moments_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_development_early_moments_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_development_early_moments_02_podcast.mp3",
@@ -2899,7 +3165,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "6e81f215-6501-4e8d-aec6-e54b720532eb",
+            "file": "docs/lesson_assets/infographics/06_lesson_0-3_development_early_moments_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_development_early_moments_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_development_early_moments_03_podcast.mp3",
@@ -2948,7 +3221,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "b9bc7171-c5ed-4663-bb13-48d9d227dd2e",
+            "file": "docs/lesson_assets/infographics/07_lesson_0-3_islamic_parenting_attachment_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_islamic_parenting_attachment_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_islamic_parenting_attachment_01_podcast.mp3",
@@ -2997,7 +3277,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "145fc9e8-bc71-4fdb-95f7-87dccb24a345",
+            "file": "docs/lesson_assets/infographics/08_lesson_0-3_islamic_parenting_attachment_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_islamic_parenting_attachment_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_islamic_parenting_attachment_02_podcast.mp3",
@@ -3046,7 +3333,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "4812d67a-00e6-4fa2-a04f-cbfd17123b49",
+            "file": "docs/lesson_assets/infographics/09_lesson_0-3_islamic_parenting_attachment_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_islamic_parenting_attachment_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_islamic_parenting_attachment_03_podcast.mp3",
@@ -3095,7 +3389,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "9810e949-9163-4386-9cdd-37cf11bbc055",
+            "file": "docs/lesson_assets/infographics/10_lesson_0-3_islamic_parenting_attachment_04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_islamic_parenting_attachment_04"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_islamic_parenting_attachment_04_podcast.mp3",
@@ -3144,7 +3445,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "69bfedda-8b9a-4bc8-9b5a-aca294ac78f0",
+            "file": "docs/lesson_assets/infographics/11_lesson_0-3_medical_early_milestones_01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_medical_early_milestones_01"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_medical_early_milestones_01_podcast.mp3",
@@ -3193,7 +3501,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "628dc078-3da1-4c1a-a3bc-450b00249b91",
+            "file": "docs/lesson_assets/infographics/12_lesson_0-3_medical_early_milestones_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_medical_early_milestones_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_medical_early_milestones_02_podcast.mp3",
@@ -3242,7 +3557,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "5fa352a9-d762-43cc-874c-0ac6e7dcaa0f",
+            "file": "docs/lesson_assets/infographics/13_lesson_0-3_medical_early_milestones_03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_medical_early_milestones_03"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_medical_early_milestones_03_podcast.mp3",
@@ -3291,7 +3613,14 @@
             "item_count": 5
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "39974153-9cac-4f6e-ae0c-89670bbfa93e",
+            "file": "docs/lesson_assets/infographics/14_lesson_0-3_medical_early_milestones_04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_0-3_medical_early_milestones_04"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_0-3_medical_early_milestones_04_podcast.mp3",
@@ -3389,7 +3718,14 @@
             "item_count": 6
           }
         ],
-        "infographics": [],
+        "infographics": [
+          {
+            "source_id": "939414c0-68d3-40f4-8a91-31c9f2f2f4f6",
+            "file": "docs/lesson_assets/infographics/15_lesson_2-3_cyber_routine_02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_cyber_routine_02"
+          }
+        ],
         "podcasts": [
           {
             "file": "docs/lesson_2-3_cyber_routine_02_podcast.mp3",
@@ -3632,6 +3968,14 @@
             "title": "جدول بيانات cyber_digital_citizenship (10-12)",
             "item_count": 5
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "757de79a-e9ad-4229-b19b-e22989eee258",
+            "file": "docs/lesson_assets/infographics/39_lesson_10-12_cyber_digital_citizenship_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_10-12_cyber_digital_citizenship_b04"
+          }
         ]
       }
     },
@@ -3677,6 +4021,14 @@
             "file": "docs/lesson_assets/data_tables/f0870840-d4b3-4fdc-9a9b-6ffb6c635997_data_table_lesson_10-12_medical_puberty_wellbeing_b04.csv",
             "title": "جدول بيانات medical_puberty_wellbeing (10-12)",
             "item_count": 6
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "79ef3ff1-8878-40a7-b34f-045db4494cb0",
+            "file": "docs/lesson_assets/infographics/46_lesson_10-12_medical_puberty_wellbeing_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_10-12_medical_puberty_wellbeing_b04"
           }
         ]
       }
@@ -3724,6 +4076,14 @@
             "title": "جدول بيانات cyber_digital_maturity (13-15)",
             "item_count": 5
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "e48b1cdf-4322-40a4-bf85-37c9d33f61ae",
+            "file": "docs/lesson_assets/infographics/48_lesson_13-15_cyber_digital_maturity_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_cyber_digital_maturity_b04"
+          }
         ]
       }
     },
@@ -3769,6 +4129,14 @@
             "file": "docs/lesson_assets/data_tables/8fa4109b-53ea-4aae-be2b-53f8df91b262_data_table_lesson_13-15_development_brain_identity_b04.csv",
             "title": "جدول بيانات development_brain_identity (13-15)",
             "item_count": 7
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "069c2dc6-3067-4131-8d44-d155467a595e",
+            "file": "docs/lesson_assets/infographics/52_lesson_13-15_development_brain_identity_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_13-15_development_brain_identity_b04"
           }
         ]
       }
@@ -3816,6 +4184,14 @@
             "title": "جدول بيانات cyber_digital_professional (16-18)",
             "item_count": 5
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "d37ac22d-d7db-4044-937d-bb073785bc5e",
+            "file": "docs/lesson_assets/infographics/59_lesson_16-18_cyber_digital_professional_b03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_16-18_cyber_digital_professional_b03"
+          }
         ]
       }
     },
@@ -3861,6 +4237,14 @@
             "file": "docs/lesson_assets/data_tables/2fc2b74d-9ad5-4485-b182-27a02514812d_data_table_lesson_16-18_cyber_digital_professional_b04.csv",
             "title": "جدول بيانات cyber_digital_professional (16-18)",
             "item_count": 5
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "fab34fe5-6223-43d4-8fdf-cb5c45b46db3",
+            "file": "docs/lesson_assets/infographics/60_lesson_16-18_cyber_digital_professional_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_16-18_cyber_digital_professional_b04"
           }
         ]
       }
@@ -3908,6 +4292,14 @@
             "title": "جدول بيانات medical_adult_transition (16-18)",
             "item_count": 6
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "39a16fbb-e308-4f72-8115-42ca5f32251c",
+            "file": "docs/lesson_assets/infographics/64_lesson_16-18_medical_adult_transition_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_16-18_medical_adult_transition_b04"
+          }
         ]
       }
     },
@@ -3953,6 +4345,14 @@
             "file": "docs/lesson_assets/data_tables/f7b3a173-a656-4ee2-9a8d-45e5b85dfebc_data_table_lesson_2-3_cyber_routine_b01.csv",
             "title": "جدول بيانات cyber_routine (2-3)",
             "item_count": 7
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "739d0a15-3498-4f55-b67c-dd941d740c04",
+            "file": "docs/lesson_assets/infographics/16_lesson_2-3_cyber_routine_b01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_2-3_cyber_routine_b01"
           }
         ]
       }
@@ -4322,6 +4722,14 @@
             "title": "جدول بيانات development_positive_parenting (4-6)",
             "item_count": 6
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "2ead3401-349d-4369-8387-3bf45415502e",
+            "file": "docs/lesson_assets/infographics/17_lesson_4-6_development_positive_parenting_b01.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_development_positive_parenting_b01"
+          }
         ]
       }
     },
@@ -4367,6 +4775,14 @@
             "file": "docs/lesson_assets/data_tables/8755a418-a2a1-4fcc-9b99-f496df180db5_data_table_lesson_4-6_development_positive_parenting_b02.csv",
             "title": "جدول بيانات development_positive_parenting (4-6)",
             "item_count": 5
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "442a5917-6e17-4828-b9f0-61fa9f09877c",
+            "file": "docs/lesson_assets/infographics/18_lesson_4-6_development_positive_parenting_b02.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_development_positive_parenting_b02"
           }
         ]
       }
@@ -4414,6 +4830,14 @@
             "title": "جدول بيانات islamic_parenting_adab (4-6)",
             "item_count": 5
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "478cd841-9b6e-4d7e-a286-dba8f6375636",
+            "file": "docs/lesson_assets/infographics/22_lesson_4-6_islamic_parenting_adab_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_islamic_parenting_adab_b04"
+          }
         ]
       }
     },
@@ -4459,6 +4883,14 @@
             "file": "docs/lesson_assets/data_tables/3154d440-fd17-4e4f-bec3-b8a5bbda7067_data_table_lesson_4-6_islamic_parenting_bond_b04.csv",
             "title": "جدول بيانات islamic_parenting_bond (4-6)",
             "item_count": 6
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "40d4869c-d621-4c29-9ff6-2ff8a8e8fadf",
+            "file": "docs/lesson_assets/infographics/26_lesson_4-6_islamic_parenting_bond_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_4-6_islamic_parenting_bond_b04"
           }
         ]
       }
@@ -4506,6 +4938,14 @@
             "title": "جدول بيانات development_digital_wellbeing (7-9)",
             "item_count": 5
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "faf7e7dd-5bcd-46f8-ae4e-aa2a7ac58c3f",
+            "file": "docs/lesson_assets/infographics/30_lesson_7-9_development_digital_wellbeing_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_development_digital_wellbeing_b04"
+          }
         ]
       }
     },
@@ -4551,6 +4991,14 @@
             "file": "docs/lesson_assets/data_tables/6cabd57e-36d6-4907-aa9c-a5446d7e4581_data_table_lesson_7-9_islamic_parenting_worship_b04.csv",
             "title": "جدول بيانات islamic_parenting_worship (7-9)",
             "item_count": 5
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "2b416101-bebb-48e9-b164-7704d5fdf5e5",
+            "file": "docs/lesson_assets/infographics/31_lesson_7-9_islamic_parenting_worship_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_islamic_parenting_worship_b04"
           }
         ]
       }
@@ -4598,6 +5046,14 @@
             "title": "جدول بيانات medical_emotional_health (7-9)",
             "item_count": 6
           }
+        ],
+        "infographics": [
+          {
+            "source_id": "e9a40c99-5286-420f-b093-54148d4ab449",
+            "file": "docs/lesson_assets/infographics/37_lesson_7-9_medical_emotional_health_b03.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_medical_emotional_health_b03"
+          }
         ]
       }
     },
@@ -4643,6 +5099,14 @@
             "file": "docs/lesson_assets/data_tables/4832ad02-47a1-4bec-9597-62708aa87b3c_data_table_lesson_7-9_medical_emotional_health_b04.csv",
             "title": "جدول بيانات medical_emotional_health (7-9)",
             "item_count": 6
+          }
+        ],
+        "infographics": [
+          {
+            "source_id": "f2e2a40a-61f7-4dfd-9785-ef39b312834a",
+            "file": "docs/lesson_assets/infographics/38_lesson_7-9_medical_emotional_health_b04.png",
+            "type": "image/png",
+            "description": "Infographic for lesson_7-9_medical_emotional_health_b04"
           }
         ]
       }
