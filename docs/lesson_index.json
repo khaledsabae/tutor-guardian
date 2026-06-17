@@ -9,7 +9,7 @@
       "flashcards": "88/88",
       "quizzes": "88/88",
       "reports": "88/88",
-      "data_tables": "18/88",
+      "data_tables": "88/88",
       "infographics": "10/88"
     },
     "lessons_by_age": {
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-17T08:55:54.007589Z"
+    "updated_at": "2026-06-17T09:43:16.215434Z"
   },
   "lessons": [
     {
@@ -146,7 +146,14 @@
             "item_count": 0
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "ced8a115-a066-41d6-9e53-dea394924774",
+            "file": "docs/lesson_assets/data_tables/ced8a115-a066-41d6-9e53-dea394924774_data_table_lesson_10-12_cyber_02.csv",
+            "title": "جدول بيانات cyber_digital_citizenship (10-12)",
+            "item_count": 5
+          }
+        ],
         "infographics": [
           {
             "id": "5f9cb911-64c1-480c-b1cf-31e72f2095a5_Quranic_Compass_for_Life",
@@ -246,7 +253,14 @@
             "item_count": 0
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "dbd53ba0-9c8e-42c5-ac83-097596239827",
+            "file": "docs/lesson_assets/data_tables/dbd53ba0-9c8e-42c5-ac83-097596239827_data_table_lesson_10-12_cyber_03.csv",
+            "title": "جدول بيانات cyber_digital_citizenship (10-12)",
+            "item_count": 5
+          }
+        ],
         "infographics": [
           {
             "id": "be4f5fc4-b4e8-4301-a89c-44dabf21c017_Quranic_Life_Compass_Infographic",
@@ -686,7 +700,14 @@
             "item_count": 60
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "993b6baa-0120-40bc-b5a8-045624d79701",
+            "file": "docs/lesson_assets/data_tables/993b6baa-0120-40bc-b5a8-045624d79701_data_table_lesson_10-12_medical_03.csv",
+            "title": "جدول بيانات medical_puberty_wellbeing (10-12)",
+            "item_count": 6
+          }
+        ],
         "infographics": [
           {
             "id": "2f58f121-0e74-49af-b323-b2c36a3c7981_Pre-Teen_Mental_Health_Guide",
@@ -959,7 +980,14 @@
             "item_count": 52
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "e396ce1a-4673-4d8c-a3cf-aca907673ea3",
+            "file": "docs/lesson_assets/data_tables/e396ce1a-4673-4d8c-a3cf-aca907673ea3_data_table_lesson_13-15_development_01.csv",
+            "title": "جدول بيانات development_brain_identity (13-15)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1001,7 +1029,14 @@
             "item_count": 50
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "8a745a33-8521-4b98-8e53-354e2db6ba4f",
+            "file": "docs/lesson_assets/data_tables/8a745a33-8521-4b98-8e53-354e2db6ba4f_data_table_lesson_13-15_development_02.csv",
+            "title": "جدول بيانات development_brain_identity (13-15)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1043,7 +1078,14 @@
             "item_count": 59
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "e1b1b927-d2c9-4c1e-b0e1-5c0433965bfe",
+            "file": "docs/lesson_assets/data_tables/e1b1b927-d2c9-4c1e-b0e1-5c0433965bfe_data_table_lesson_13-15_development_03.csv",
+            "title": "جدول بيانات development_brain_identity (13-15)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1488,7 +1530,14 @@
             "item_count": 57
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "5393cd62-9152-4769-98ba-a88e9a05c6a3",
+            "file": "docs/lesson_assets/data_tables/5393cd62-9152-4769-98ba-a88e9a05c6a3_data_table_lesson_13-15_medical_04.csv",
+            "title": "جدول بيانات medical_mental_health (13-15)",
+            "item_count": 5
+          }
+        ],
         "infographics": [
           {
             "id": "feb89afc-126b-4a10-b365-aa5531783dcd_Teen_Mental_Wellbeing_Islamic_Guide",
@@ -1538,7 +1587,14 @@
             "item_count": 0
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "f782e246-37fd-4c81-85b3-0aabbb945a68",
+            "file": "docs/lesson_assets/data_tables/f782e246-37fd-4c81-85b3-0aabbb945a68_data_table_lesson_16-18_cyber_01.csv",
+            "title": "جدول بيانات cyber_digital_professional (16-18)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1580,7 +1636,14 @@
             "item_count": 0
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "0e605124-2e91-4046-9928-00ef46069fb4",
+            "file": "docs/lesson_assets/data_tables/0e605124-2e91-4046-9928-00ef46069fb4_data_table_lesson_16-18_cyber_02.csv",
+            "title": "جدول بيانات cyber_digital_professional (16-18)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1622,7 +1685,14 @@
             "item_count": 0
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "ee5201cf-bc70-4f31-942b-a3a7d2e1cac7",
+            "file": "docs/lesson_assets/data_tables/ee5201cf-bc70-4f31-942b-a3a7d2e1cac7_data_table_lesson_16-18_medical_01.csv",
+            "title": "جدول بيانات medical_adult_transition (16-18)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1694,7 +1764,14 @@
             "item_count": 58
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "5a33d615-86ba-45b5-88f8-f2c7115dbb97",
+            "file": "docs/lesson_assets/data_tables/5a33d615-86ba-45b5-88f8-f2c7115dbb97_data_table_lesson_16-18_medical_02.csv",
+            "title": "جدول بيانات medical_adult_transition (16-18)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1736,7 +1813,14 @@
             "item_count": 55
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "c6923eb8-3a94-4a60-ae40-9615ba19f602",
+            "file": "docs/lesson_assets/data_tables/c6923eb8-3a94-4a60-ae40-9615ba19f602_data_table_lesson_16-18_medical_03.csv",
+            "title": "جدول بيانات medical_adult_transition (16-18)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1778,7 +1862,14 @@
             "item_count": 0
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "8d22631f-c7a5-4868-b1f4-703afe216023",
+            "file": "docs/lesson_assets/data_tables/8d22631f-c7a5-4868-b1f4-703afe216023_data_table_lesson_4-6_development_01.csv",
+            "title": "جدول بيانات development_positive_parenting (4-6)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1820,7 +1911,14 @@
             "item_count": 57
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "d0e8a4b1-fb42-4987-823a-0eb89e8d5645",
+            "file": "docs/lesson_assets/data_tables/d0e8a4b1-fb42-4987-823a-0eb89e8d5645_data_table_lesson_4-6_development_02.csv",
+            "title": "جدول بيانات development_positive_parenting (4-6)",
+            "item_count": 7
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1862,7 +1960,14 @@
             "item_count": 51
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "ec1b5211-429e-480d-8fdd-2ed091b9c08e",
+            "file": "docs/lesson_assets/data_tables/ec1b5211-429e-480d-8fdd-2ed091b9c08e_data_table_lesson_4-6_adab_01.csv",
+            "title": "جدول بيانات islamic_parenting_adab (4-6)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1904,7 +2009,14 @@
             "item_count": 56
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "4407c606-a95c-4a4f-b876-102634f65cbb",
+            "file": "docs/lesson_assets/data_tables/4407c606-a95c-4a4f-b876-102634f65cbb_data_table_lesson_4-6_adab_02.csv",
+            "title": "جدول بيانات islamic_parenting_adab (4-6)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1946,7 +2058,14 @@
             "item_count": 52
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "8cc24904-c7d0-451d-a140-72e693a4301a",
+            "file": "docs/lesson_assets/data_tables/8cc24904-c7d0-451d-a140-72e693a4301a_data_table_lesson_4-6_adab_03.csv",
+            "title": "جدول بيانات islamic_parenting_adab (4-6)",
+            "item_count": 7
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -1988,7 +2107,14 @@
             "item_count": 0
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "dd49b945-75e7-4948-887f-7d3a983d458a",
+            "file": "docs/lesson_assets/data_tables/dd49b945-75e7-4948-887f-7d3a983d458a_data_table_lesson_4-6_bond_01.csv",
+            "title": "جدول بيانات islamic_parenting_bond (4-6)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2030,7 +2156,14 @@
             "item_count": 57
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "7a10cd1f-d3c6-4c6b-80ab-1674e1ccad62",
+            "file": "docs/lesson_assets/data_tables/7a10cd1f-d3c6-4c6b-80ab-1674e1ccad62_data_table_lesson_4-6_bond_02.csv",
+            "title": "جدول بيانات islamic_parenting_bond (4-6)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2072,7 +2205,14 @@
             "item_count": 54
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "d8da7d90-ed73-4ecb-b65a-d4be11c277e6",
+            "file": "docs/lesson_assets/data_tables/d8da7d90-ed73-4ecb-b65a-d4be11c277e6_data_table_lesson_4-6_bond_03.csv",
+            "title": "جدول بيانات islamic_parenting_bond (4-6)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2114,7 +2254,14 @@
             "item_count": 52
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "73a5d0ca-d323-448c-b3a5-9178c9c6d8d9",
+            "file": "docs/lesson_assets/data_tables/73a5d0ca-d323-448c-b3a5-9178c9c6d8d9_data_table_lesson_7-9_development_01.csv",
+            "title": "جدول بيانات development_digital_wellbeing (7-9)",
+            "item_count": 7
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2156,7 +2303,14 @@
             "item_count": 58
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "93ce7115-f8f4-461f-8cba-1fad1063f0fa",
+            "file": "docs/lesson_assets/data_tables/93ce7115-f8f4-461f-8cba-1fad1063f0fa_data_table_lesson_7-9_development_02.csv",
+            "title": "جدول بيانات development_digital_wellbeing (7-9)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2198,7 +2352,14 @@
             "item_count": 0
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "199aaf9c-6232-4278-bba8-d7a244f414af",
+            "file": "docs/lesson_assets/data_tables/199aaf9c-6232-4278-bba8-d7a244f414af_data_table_lesson_7-9_worship_01.csv",
+            "title": "جدول بيانات islamic_parenting_worship (7-9)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2240,7 +2401,14 @@
             "item_count": 48
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "371e248b-986e-4b2c-abd2-dc7036ca5fba",
+            "file": "docs/lesson_assets/data_tables/371e248b-986e-4b2c-abd2-dc7036ca5fba_data_table_lesson_7-9_worship_02.csv",
+            "title": "جدول بيانات islamic_parenting_worship (7-9)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2282,7 +2450,14 @@
             "item_count": 53
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "bd880e8c-0797-4709-b144-f29bd7fb8999",
+            "file": "docs/lesson_assets/data_tables/bd880e8c-0797-4709-b144-f29bd7fb8999_data_table_lesson_7-9_worship_03.csv",
+            "title": "جدول بيانات islamic_parenting_worship (7-9)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2324,7 +2499,14 @@
             "item_count": 61
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "0af15176-7976-4653-93be-5fe430606be8",
+            "file": "docs/lesson_assets/data_tables/0af15176-7976-4653-93be-5fe430606be8_data_table_lesson_7-9_medical_01.csv",
+            "title": "جدول بيانات medical_emotional_health (7-9)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2366,7 +2548,14 @@
             "item_count": 63
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "4c595a52-f652-4c3d-a72b-26edec0f529f",
+            "file": "docs/lesson_assets/data_tables/4c595a52-f652-4c3d-a72b-26edec0f529f_data_table_lesson_7-9_medical_02.csv",
+            "title": "جدول بيانات medical_emotional_health (7-9)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2408,7 +2597,14 @@
             "item_count": 48
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "4b5490f5-76ef-426f-aabd-ad4fe8ea9a83",
+            "file": "docs/lesson_assets/data_tables/4b5490f5-76ef-426f-aabd-ad4fe8ea9a83_data_table_lesson_7-9_development_03.csv",
+            "title": "جدول بيانات development_digital_wellbeing (7-9)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2499,7 +2695,14 @@
             "item_count": 53
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "e0730b9b-2484-4f94-af96-1fc31adb36d6",
+            "file": "docs/lesson_assets/data_tables/e0730b9b-2484-4f94-af96-1fc31adb36d6_data_table_lesson_0-3_cyber_screen_foundations_02.csv",
+            "title": "جدول بيانات cyber_screen_foundations (prenatal-1)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2541,7 +2744,14 @@
             "item_count": 50
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "9e7763f6-bf14-4909-a521-d61026ab284d",
+            "file": "docs/lesson_assets/data_tables/9e7763f6-bf14-4909-a521-d61026ab284d_data_table_lesson_0-3_cyber_screen_foundations_03.csv",
+            "title": "جدول بيانات cyber_screen_foundations (prenatal-1)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2583,7 +2793,14 @@
             "item_count": 50
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "e3b26303-5b50-4f39-8403-796ad143ae7b",
+            "file": "docs/lesson_assets/data_tables/e3b26303-5b50-4f39-8403-796ad143ae7b_data_table_lesson_0-3_development_early_moments_01.csv",
+            "title": "جدول بيانات development_early_moments (prenatal-1)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2625,7 +2842,14 @@
             "item_count": 57
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "eb77e9a5-50fe-488a-9842-a9748f8ce820",
+            "file": "docs/lesson_assets/data_tables/eb77e9a5-50fe-488a-9842-a9748f8ce820_data_table_lesson_0-3_development_early_moments_02.csv",
+            "title": "جدول بيانات development_early_moments (prenatal-1)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2667,7 +2891,14 @@
             "item_count": 57
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "c658a629-8046-4001-9bd8-b4e1373ad269",
+            "file": "docs/lesson_assets/data_tables/c658a629-8046-4001-9bd8-b4e1373ad269_data_table_lesson_0-3_development_early_moments_03.csv",
+            "title": "جدول بيانات development_early_moments (prenatal-1)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2709,7 +2940,14 @@
             "item_count": 57
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "90553fdd-6ed8-4706-9e5b-8f036b1d2992",
+            "file": "docs/lesson_assets/data_tables/90553fdd-6ed8-4706-9e5b-8f036b1d2992_data_table_lesson_0-3_islamic_parenting_attachment_01.csv",
+            "title": "جدول بيانات islamic_parenting_attachment (prenatal-1)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2751,7 +2989,14 @@
             "item_count": 54
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "b30523b8-716e-496c-8db7-f6d6dadac481",
+            "file": "docs/lesson_assets/data_tables/b30523b8-716e-496c-8db7-f6d6dadac481_data_table_lesson_0-3_islamic_parenting_attachment_02.csv",
+            "title": "جدول بيانات islamic_parenting_attachment (prenatal-1)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2793,7 +3038,14 @@
             "item_count": 56
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "c64a453a-c4f5-4ae6-beb3-6100be4b32f5",
+            "file": "docs/lesson_assets/data_tables/c64a453a-c4f5-4ae6-beb3-6100be4b32f5_data_table_lesson_0-3_islamic_parenting_attachment_03.csv",
+            "title": "جدول بيانات islamic_parenting_attachment (prenatal-1)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2835,7 +3087,14 @@
             "item_count": 53
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "2be6dec5-82b9-42e7-a0da-2029ee8c4c32",
+            "file": "docs/lesson_assets/data_tables/2be6dec5-82b9-42e7-a0da-2029ee8c4c32_data_table_lesson_0-3_islamic_parenting_attachment_04.csv",
+            "title": "جدول بيانات islamic_parenting_attachment (prenatal-1)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2877,7 +3136,14 @@
             "item_count": 57
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "60ee8cac-c6f7-4f9c-81e3-bbae7a56d11f",
+            "file": "docs/lesson_assets/data_tables/60ee8cac-c6f7-4f9c-81e3-bbae7a56d11f_data_table_lesson_0-3_medical_early_milestones_01.csv",
+            "title": "جدول بيانات medical_early_milestones (prenatal-1)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2919,7 +3185,14 @@
             "item_count": 55
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "c4210ce2-786c-454c-b196-a2cfe5cd8975",
+            "file": "docs/lesson_assets/data_tables/c4210ce2-786c-454c-b196-a2cfe5cd8975_data_table_lesson_0-3_medical_early_milestones_02.csv",
+            "title": "جدول بيانات medical_early_milestones (prenatal-1)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -2961,7 +3234,14 @@
             "item_count": 51
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "a461268a-cdd8-4e6a-891d-e703fc429769",
+            "file": "docs/lesson_assets/data_tables/a461268a-cdd8-4e6a-891d-e703fc429769_data_table_lesson_0-3_medical_early_milestones_03.csv",
+            "title": "جدول بيانات medical_early_milestones (prenatal-1)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -3003,7 +3283,14 @@
             "item_count": 53
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "c711afad-8bab-4823-a81f-977035befcae",
+            "file": "docs/lesson_assets/data_tables/c711afad-8bab-4823-a81f-977035befcae_data_table_lesson_0-3_medical_early_milestones_04.csv",
+            "title": "جدول بيانات medical_early_milestones (prenatal-1)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -3045,7 +3332,14 @@
             "item_count": 56
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "d6abb8ff-b938-4280-9226-65dad3a37287",
+            "file": "docs/lesson_assets/data_tables/d6abb8ff-b938-4280-9226-65dad3a37287_data_table_lesson_2-3_development_independence_01.csv",
+            "title": "جدول بيانات development_early_moments (2-3)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -3087,7 +3381,14 @@
             "item_count": 51
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "cd698d15-e814-4680-a1cb-e12f9c5d5882",
+            "file": "docs/lesson_assets/data_tables/cd698d15-e814-4680-a1cb-e12f9c5d5882_data_table_lesson_2-3_cyber_routine_02.csv",
+            "title": "جدول بيانات cyber_screen_foundations (2-3)",
+            "item_count": 6
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -3129,7 +3430,14 @@
             "item_count": 54
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "12740679-d854-433d-99d8-d689ec1d0ab3",
+            "file": "docs/lesson_assets/data_tables/12740679-d854-433d-99d8-d689ec1d0ab3_data_table_lesson_2-3_development_language_03.csv",
+            "title": "جدول بيانات development_early_moments (2-3)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -3171,7 +3479,14 @@
             "item_count": 50
           }
         ],
-        "data_tables": [],
+        "data_tables": [
+          {
+            "id": "827ba191-916d-4bd1-a240-229cfd8e6d5e",
+            "file": "docs/lesson_assets/data_tables/827ba191-916d-4bd1-a240-229cfd8e6d5e_data_table_lesson_2-3_islamic_tantrums_04.csv",
+            "title": "جدول بيانات islamic_parenting_attachment (2-3)",
+            "item_count": 5
+          }
+        ],
         "infographics": [],
         "podcasts": [
           {
@@ -3217,6 +3532,14 @@
             "title": "تقرير cyber_screen_foundations (0-3)",
             "item_count": 55
           }
+        ],
+        "data_tables": [
+          {
+            "id": "6594d080-1cda-449b-a83f-f227518dabb1",
+            "file": "docs/lesson_assets/data_tables/6594d080-1cda-449b-a83f-f227518dabb1_data_table_lesson_0-3_cyber_screen_foundations_b04.csv",
+            "title": "جدول بيانات cyber_screen_foundations (0-3)",
+            "item_count": 6
+          }
         ]
       }
     },
@@ -3254,6 +3577,14 @@
             "file": "docs/lesson_assets/reports/54b7a957-9026-4a8c-9e7d-3c61074d83fe_report_lesson_0-3_development_early_moments_b04.md",
             "title": "تقرير development_early_moments (0-3)",
             "item_count": 55
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "fb13118f-f89e-4c57-8b1c-30a11d0efb19",
+            "file": "docs/lesson_assets/data_tables/fb13118f-f89e-4c57-8b1c-30a11d0efb19_data_table_lesson_0-3_development_early_moments_b04.csv",
+            "title": "جدول بيانات development_early_moments (0-3)",
+            "item_count": 6
           }
         ]
       }
@@ -3293,6 +3624,14 @@
             "title": "تقرير cyber_digital_citizenship (10-12)",
             "item_count": 57
           }
+        ],
+        "data_tables": [
+          {
+            "id": "7459e59f-eecc-4b85-8eb4-3ce0a34b8238",
+            "file": "docs/lesson_assets/data_tables/7459e59f-eecc-4b85-8eb4-3ce0a34b8238_data_table_lesson_10-12_cyber_digital_citizenship_b04.csv",
+            "title": "جدول بيانات cyber_digital_citizenship (10-12)",
+            "item_count": 5
+          }
         ]
       }
     },
@@ -3330,6 +3669,14 @@
             "file": "docs/lesson_assets/reports/828919ca-27f7-446b-8c9c-83074e8d16d2_report_lesson_10-12_medical_puberty_wellbeing_b04.md",
             "title": "تقرير medical_puberty_wellbeing (10-12)",
             "item_count": 49
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "f0870840-d4b3-4fdc-9a9b-6ffb6c635997",
+            "file": "docs/lesson_assets/data_tables/f0870840-d4b3-4fdc-9a9b-6ffb6c635997_data_table_lesson_10-12_medical_puberty_wellbeing_b04.csv",
+            "title": "جدول بيانات medical_puberty_wellbeing (10-12)",
+            "item_count": 6
           }
         ]
       }
@@ -3369,6 +3716,14 @@
             "title": "تقرير cyber_digital_maturity (13-15)",
             "item_count": 59
           }
+        ],
+        "data_tables": [
+          {
+            "id": "c1385096-21b8-473e-a9ac-7f915fd72ae2",
+            "file": "docs/lesson_assets/data_tables/c1385096-21b8-473e-a9ac-7f915fd72ae2_data_table_lesson_13-15_cyber_digital_maturity_b04.csv",
+            "title": "جدول بيانات cyber_digital_maturity (13-15)",
+            "item_count": 5
+          }
         ]
       }
     },
@@ -3406,6 +3761,14 @@
             "file": "docs/lesson_assets/reports/05a0e4fe-cd34-4bd0-b1b5-5d07ddd86925_report_lesson_13-15_development_brain_identity_b04.md",
             "title": "تقرير development_brain_identity (13-15)",
             "item_count": 57
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "8fa4109b-53ea-4aae-be2b-53f8df91b262",
+            "file": "docs/lesson_assets/data_tables/8fa4109b-53ea-4aae-be2b-53f8df91b262_data_table_lesson_13-15_development_brain_identity_b04.csv",
+            "title": "جدول بيانات development_brain_identity (13-15)",
+            "item_count": 7
           }
         ]
       }
@@ -3445,6 +3808,14 @@
             "title": "تقرير cyber_digital_professional (16-18)",
             "item_count": 53
           }
+        ],
+        "data_tables": [
+          {
+            "id": "1cbffd34-4cc0-4d36-b694-472b682dc664",
+            "file": "docs/lesson_assets/data_tables/1cbffd34-4cc0-4d36-b694-472b682dc664_data_table_lesson_16-18_cyber_digital_professional_b03.csv",
+            "title": "جدول بيانات cyber_digital_professional (16-18)",
+            "item_count": 5
+          }
         ]
       }
     },
@@ -3482,6 +3853,14 @@
             "file": "docs/lesson_assets/reports/da230371-61e0-4758-b0ad-9dd4e1e8b0c5_report_lesson_16-18_cyber_digital_professional_b04.md",
             "title": "تقرير cyber_digital_professional (16-18)",
             "item_count": 55
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "2fc2b74d-9ad5-4485-b182-27a02514812d",
+            "file": "docs/lesson_assets/data_tables/2fc2b74d-9ad5-4485-b182-27a02514812d_data_table_lesson_16-18_cyber_digital_professional_b04.csv",
+            "title": "جدول بيانات cyber_digital_professional (16-18)",
+            "item_count": 5
           }
         ]
       }
@@ -3521,6 +3900,14 @@
             "title": "تقرير medical_adult_transition (16-18)",
             "item_count": 53
           }
+        ],
+        "data_tables": [
+          {
+            "id": "c37876c0-533f-4c31-a746-41accf2e11b2",
+            "file": "docs/lesson_assets/data_tables/c37876c0-533f-4c31-a746-41accf2e11b2_data_table_lesson_16-18_medical_adult_transition_b04.csv",
+            "title": "جدول بيانات medical_adult_transition (16-18)",
+            "item_count": 6
+          }
         ]
       }
     },
@@ -3558,6 +3945,14 @@
             "file": "docs/lesson_assets/reports/bc48f6ad-ce6d-4333-8821-110c29bde1a3_report_lesson_2-3_cyber_routine_b01.md",
             "title": "تقرير cyber_routine (2-3)",
             "item_count": 56
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "f7b3a173-a656-4ee2-9a8d-45e5b85dfebc",
+            "file": "docs/lesson_assets/data_tables/f7b3a173-a656-4ee2-9a8d-45e5b85dfebc_data_table_lesson_2-3_cyber_routine_b01.csv",
+            "title": "جدول بيانات cyber_routine (2-3)",
+            "item_count": 7
           }
         ]
       }
@@ -3597,6 +3992,14 @@
             "title": "تقرير cyber_routine (2-3)",
             "item_count": 59
           }
+        ],
+        "data_tables": [
+          {
+            "id": "544da312-c85e-49ce-9283-fcfe904e20cd",
+            "file": "docs/lesson_assets/data_tables/544da312-c85e-49ce-9283-fcfe904e20cd_data_table_lesson_2-3_cyber_routine_b02.csv",
+            "title": "جدول بيانات cyber_routine (2-3)",
+            "item_count": 5
+          }
         ]
       }
     },
@@ -3634,6 +4037,14 @@
             "file": "docs/lesson_assets/reports/cbfcfd4e-21e6-49f5-a0d9-5b3d05bc75ab_report_lesson_2-3_cyber_routine_b04.md",
             "title": "تقرير cyber_routine (2-3)",
             "item_count": 49
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "ea08c06f-6187-4f89-8576-3dd74c187d88",
+            "file": "docs/lesson_assets/data_tables/ea08c06f-6187-4f89-8576-3dd74c187d88_data_table_lesson_2-3_cyber_routine_b04.csv",
+            "title": "جدول بيانات cyber_routine (2-3)",
+            "item_count": 6
           }
         ]
       }
@@ -3673,6 +4084,14 @@
             "title": "تقرير development_growth (2-3)",
             "item_count": 54
           }
+        ],
+        "data_tables": [
+          {
+            "id": "78e9a639-61d4-4cbe-bec5-2b12c9e171e6",
+            "file": "docs/lesson_assets/data_tables/78e9a639-61d4-4cbe-bec5-2b12c9e171e6_data_table_lesson_2-3_development_growth_b03.csv",
+            "title": "جدول بيانات development_growth (2-3)",
+            "item_count": 6
+          }
         ]
       }
     },
@@ -3710,6 +4129,14 @@
             "file": "docs/lesson_assets/reports/dfa478f1-61b1-4c76-a532-1d2f8090672c_report_lesson_2-3_development_growth_b04.md",
             "title": "تقرير development_growth (2-3)",
             "item_count": 58
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "b8f4c0f3-538d-4312-9b01-24265098a665",
+            "file": "docs/lesson_assets/data_tables/b8f4c0f3-538d-4312-9b01-24265098a665_data_table_lesson_2-3_development_growth_b04.csv",
+            "title": "جدول بيانات development_growth (2-3)",
+            "item_count": 6
           }
         ]
       }
@@ -3749,6 +4176,14 @@
             "title": "تقرير islamic_attachment (2-3)",
             "item_count": 53
           }
+        ],
+        "data_tables": [
+          {
+            "id": "58528598-f46f-4552-ba72-d809a7d33eb3",
+            "file": "docs/lesson_assets/data_tables/58528598-f46f-4552-ba72-d809a7d33eb3_data_table_lesson_2-3_islamic_attachment_b01.csv",
+            "title": "جدول بيانات islamic_attachment (2-3)",
+            "item_count": 5
+          }
         ]
       }
     },
@@ -3786,6 +4221,14 @@
             "file": "docs/lesson_assets/reports/9b74fd4b-929a-4d59-a8ce-7e1ea4bbabcb_report_lesson_2-3_islamic_attachment_b02.md",
             "title": "تقرير islamic_attachment (2-3)",
             "item_count": 55
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "c781d7b0-0b7a-47a6-a301-12d0037adb6c",
+            "file": "docs/lesson_assets/data_tables/c781d7b0-0b7a-47a6-a301-12d0037adb6c_data_table_lesson_2-3_islamic_attachment_b02.csv",
+            "title": "جدول بيانات islamic_attachment (2-3)",
+            "item_count": 5
           }
         ]
       }
@@ -3825,6 +4268,14 @@
             "title": "تقرير islamic_attachment (2-3)",
             "item_count": 54
           }
+        ],
+        "data_tables": [
+          {
+            "id": "a187e2bb-72d0-42bf-bf9f-202b673eba49",
+            "file": "docs/lesson_assets/data_tables/a187e2bb-72d0-42bf-bf9f-202b673eba49_data_table_lesson_2-3_islamic_attachment_b03.csv",
+            "title": "جدول بيانات islamic_attachment (2-3)",
+            "item_count": 6
+          }
         ]
       }
     },
@@ -3862,6 +4313,14 @@
             "file": "docs/lesson_assets/reports/b0bc05ea-48a4-4679-bfcc-0cfcb4446b2f_report_lesson_4-6_development_positive_parenting_b01.md",
             "title": "تقرير development_positive_parenting (4-6)",
             "item_count": 57
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "9d0f36c3-2c66-4c96-b5e4-9266e3a41f79",
+            "file": "docs/lesson_assets/data_tables/9d0f36c3-2c66-4c96-b5e4-9266e3a41f79_data_table_lesson_4-6_development_positive_parenting_b01.csv",
+            "title": "جدول بيانات development_positive_parenting (4-6)",
+            "item_count": 6
           }
         ]
       }
@@ -3901,6 +4360,14 @@
             "title": "تقرير development_positive_parenting (4-6)",
             "item_count": 53
           }
+        ],
+        "data_tables": [
+          {
+            "id": "8755a418-a2a1-4fcc-9b99-f496df180db5",
+            "file": "docs/lesson_assets/data_tables/8755a418-a2a1-4fcc-9b99-f496df180db5_data_table_lesson_4-6_development_positive_parenting_b02.csv",
+            "title": "جدول بيانات development_positive_parenting (4-6)",
+            "item_count": 5
+          }
         ]
       }
     },
@@ -3938,6 +4405,14 @@
             "file": "docs/lesson_assets/reports/42817f05-fe38-4e13-8016-dc08e46dff42_report_lesson_4-6_islamic_parenting_adab_b04.md",
             "title": "تقرير islamic_parenting_adab (4-6)",
             "item_count": 57
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "7a18b846-584e-4f5a-91cc-971cb62ffca9",
+            "file": "docs/lesson_assets/data_tables/7a18b846-584e-4f5a-91cc-971cb62ffca9_data_table_lesson_4-6_islamic_parenting_adab_b04.csv",
+            "title": "جدول بيانات islamic_parenting_adab (4-6)",
+            "item_count": 5
           }
         ]
       }
@@ -3977,6 +4452,14 @@
             "title": "تقرير islamic_parenting_bond (4-6)",
             "item_count": 59
           }
+        ],
+        "data_tables": [
+          {
+            "id": "3154d440-fd17-4e4f-bec3-b8a5bbda7067",
+            "file": "docs/lesson_assets/data_tables/3154d440-fd17-4e4f-bec3-b8a5bbda7067_data_table_lesson_4-6_islamic_parenting_bond_b04.csv",
+            "title": "جدول بيانات islamic_parenting_bond (4-6)",
+            "item_count": 6
+          }
         ]
       }
     },
@@ -4014,6 +4497,14 @@
             "file": "docs/lesson_assets/reports/d4790665-c179-4347-aa22-638459c15649_report_lesson_7-9_development_digital_wellbeing_b04.md",
             "title": "تقرير development_digital_wellbeing (7-9)",
             "item_count": 57
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "e8bbafef-9308-46d3-a7a9-ec5cd3a8086a",
+            "file": "docs/lesson_assets/data_tables/e8bbafef-9308-46d3-a7a9-ec5cd3a8086a_data_table_lesson_7-9_development_digital_wellbeing_b04.csv",
+            "title": "جدول بيانات development_digital_wellbeing (7-9)",
+            "item_count": 5
           }
         ]
       }
@@ -4053,6 +4544,14 @@
             "title": "تقرير islamic_parenting_worship (7-9)",
             "item_count": 56
           }
+        ],
+        "data_tables": [
+          {
+            "id": "6cabd57e-36d6-4907-aa9c-a5446d7e4581",
+            "file": "docs/lesson_assets/data_tables/6cabd57e-36d6-4907-aa9c-a5446d7e4581_data_table_lesson_7-9_islamic_parenting_worship_b04.csv",
+            "title": "جدول بيانات islamic_parenting_worship (7-9)",
+            "item_count": 5
+          }
         ]
       }
     },
@@ -4091,6 +4590,14 @@
             "title": "تقرير medical_emotional_health (7-9)",
             "item_count": 53
           }
+        ],
+        "data_tables": [
+          {
+            "id": "186f95ac-5fec-490d-85be-987f3b65e7a7",
+            "file": "docs/lesson_assets/data_tables/186f95ac-5fec-490d-85be-987f3b65e7a7_data_table_lesson_7-9_medical_emotional_health_b03.csv",
+            "title": "جدول بيانات medical_emotional_health (7-9)",
+            "item_count": 6
+          }
         ]
       }
     },
@@ -4128,6 +4635,14 @@
             "file": "docs/lesson_assets/reports/5f8207e6-62a2-45b1-8147-7823b2480687_report_lesson_7-9_medical_emotional_health_b04.md",
             "title": "تقرير medical_emotional_health (7-9)",
             "item_count": 60
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "4832ad02-47a1-4bec-9597-62708aa87b3c",
+            "file": "docs/lesson_assets/data_tables/4832ad02-47a1-4bec-9597-62708aa87b3c_data_table_lesson_7-9_medical_emotional_health_b04.csv",
+            "title": "جدول بيانات medical_emotional_health (7-9)",
+            "item_count": 6
           }
         ]
       }
