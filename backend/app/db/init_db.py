@@ -15,6 +15,10 @@ Migration v6: added coach_tips table for the proactive parenting coach.
               Stores the daily surfaced tip per (device_id, child_id, date)
               with lightweight engagement logging (shown_at, tapped_at).
               The `source` column is internal (generated|fallback).
+Migration v7: added child_challenges table for «رحلة الطفل» — the parent's
+              current challenge per child (sleep/lying/screens…). The active
+              row feeds the proactive coach as a higher-priority signal than
+              the most recent chat question (see coach_service).
 """
 import os
 import sqlite3
@@ -40,7 +44,25 @@ CREATE INDEX IF NOT EXISTS ix_coach_tips_device_date
     ON coach_tips (device_id, child_id, date);
 """
 
-SCHEMA_VERSION = 6
+_CREATE_CHILD_CHALLENGES: str = """
+CREATE TABLE IF NOT EXISTS child_challenges (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id     TEXT NOT NULL,
+    child_id      INTEGER NOT NULL
+                    REFERENCES child_profiles(id) ON DELETE CASCADE,
+    challenge_key TEXT NOT NULL,
+    topic         TEXT NOT NULL,
+    domain        TEXT,
+    status        TEXT NOT NULL DEFAULT 'active',  -- active | resolved
+    note          TEXT,
+    started_at    TEXT NOT NULL DEFAULT (datetime('now')),
+    resolved_at   TEXT
+);
+CREATE INDEX IF NOT EXISTS ix_child_challenges_active
+    ON child_challenges (device_id, child_id, status);
+"""
+
+SCHEMA_VERSION = 7
 
 
 def db_path() -> Path:
@@ -154,6 +176,8 @@ def init_db() -> None:
             ON lesson_progress (device_id, path_id);
 
         {_CREATE_COACH_TIPS}
+
+        {_CREATE_CHILD_CHALLENGES}
         """
     )
 
@@ -167,6 +191,7 @@ def init_db() -> None:
     )
 
     _ensure_coach_tips_table(conn)
+    _ensure_child_challenges_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -224,3 +249,14 @@ def _ensure_coach_tips_table(conn: sqlite3.Connection) -> None:
     ):
         if column not in names:
             conn.execute(ddl)
+
+
+def _ensure_child_challenges_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v7 child_challenges table."""
+    try:
+        cur = conn.execute("PRAGMA table_info(child_challenges)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_CHILD_CHALLENGES)

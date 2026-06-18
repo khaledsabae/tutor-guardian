@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../coins/coins_providers.dart';
+import '../data/challenges.dart';
 import '../data/journey_milestones.dart';
 import '../data/journey_store.dart';
 import '../providers/journey_providers.dart';
@@ -62,6 +63,8 @@ class ChildJourneyScreen extends ConsumerWidget {
             children: [
               _Header(name: childName, count: entries.length),
               const SizedBox(height: 16),
+              _ChallengeSection(childId: childId, childName: childName),
+              const SizedBox(height: 8),
               if (entries.isEmpty)
                 const _EmptyTimeline()
               else
@@ -230,6 +233,123 @@ class _Header extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// «تحدّي الطفل الحالي» — the parent picks one focus; the proactive coach
+/// then prioritizes advice on it. Backed by the server (activeChallengeProvider).
+class _ChallengeSection extends ConsumerWidget {
+  const _ChallengeSection({required this.childId, required this.childName});
+  final int childId;
+  final String childName;
+
+  Future<void> _set(BuildContext context, WidgetRef ref, String key) async {
+    try {
+      await ref.read(activeChallengeProvider(childId).notifier).set(key);
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('تعذّر الحفظ — تأكد من الاتصال.')),
+        );
+      }
+    }
+  }
+
+  Future<void> _clear(BuildContext context, WidgetRef ref) async {
+    try {
+      await ref.read(activeChallengeProvider(childId).notifier).clear();
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('تعذّر الحفظ — تأكد من الاتصال.')),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activeKey = ref.watch(activeChallengeProvider(childId)).maybeWhen(
+          data: (k) => k,
+          orElse: () => null,
+        );
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(Dt.rCard),
+        border: Border.all(color: const Color(0xFFE4E7EC)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Text('🎯', style: TextStyle(fontSize: 20)),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'تحدّي $childName الحالي',
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              if (activeKey != null)
+                TextButton(
+                  onPressed: () => _clear(context, ref),
+                  style: TextButton.styleFrom(
+                    visualDensity: VisualDensity.compact,
+                    foregroundColor: AppTheme.primary,
+                  ),
+                  child: const Text('تم الحل ✓'),
+                ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            activeKey == null
+                ? 'اختر تحدّياً تركّز عليه الآن — وسيوجّه «المربّي» نصيحته اليومية إليه.'
+                : 'يركّز «المربّي» على هذا التحدّي في نصيحته اليومية.',
+            style: const TextStyle(
+              fontSize: 12.5,
+              color: AppTheme.textSecondary,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final c in challengeOptions)
+                ChoiceChip(
+                  label: Text('${c.emoji} ${c.label}'),
+                  selected: c.key == activeKey,
+                  onSelected: (_) {
+                    if (c.key == activeKey) {
+                      _clear(context, ref);
+                    } else {
+                      _set(context, ref, c.key);
+                    }
+                  },
+                  selectedColor: AppTheme.primary.withValues(alpha: 0.15),
+                  labelStyle: TextStyle(
+                    fontSize: 13,
+                    fontWeight:
+                        c.key == activeKey ? FontWeight.w800 : FontWeight.w600,
+                    color: c.key == activeKey
+                        ? AppTheme.primary
+                        : AppTheme.textSecondary,
+                  ),
+                ),
+            ],
           ),
         ],
       ),

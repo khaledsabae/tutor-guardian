@@ -576,6 +576,59 @@ class TgClient {
     }
   }
 
+  // ── «رحلة الطفل» current challenge (feeds the coach) ────────────────────
+
+  /// `GET /api/children/{id}/challenge` (authed). Returns the active
+  /// challenge map (`{challenge_key, topic, domain, note, started_at}`) or
+  /// null when none is set.
+  Future<Map<String, dynamic>?> getChallenge(int childId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final resp = await _http
+        .get(Uri.parse('$_baseUrl/api/children/$childId/challenge'),
+            headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return body['challenge'] as Map<String, dynamic>?;
+  }
+
+  /// `PUT /api/children/{id}/challenge` (authed) — set/replace the active
+  /// challenge by key (one of the server's known keys).
+  Future<void> setChallenge(int childId, String challengeKey,
+      {String? note}) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final resp = await _http
+        .put(
+          Uri.parse('$_baseUrl/api/children/$childId/challenge'),
+          headers: _authHeaders(token),
+          body: jsonEncode({
+            'challenge_key': challengeKey,
+            if (note != null && note.isNotEmpty) 'note': note,
+          }),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+  }
+
+  /// `DELETE /api/children/{id}/challenge` (authed) — resolve/clear it.
+  Future<void> clearChallenge(int childId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final resp = await _http
+        .delete(Uri.parse('$_baseUrl/api/children/$childId/challenge'),
+            headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+  }
+
   // ── Children + progress (Phase 5) ──────────────────────────────────────
   //
   // All three require a Bearer token (set by [_AuthHeaders] on the

@@ -13,6 +13,7 @@ library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../state/chat_notifier.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/journey_store.dart';
 
@@ -65,3 +66,28 @@ class ChildJourneyNotifier
 
 final childJourneyProvider = AsyncNotifierProvider.family<ChildJourneyNotifier,
     Map<String, MilestoneEntry>, int>(ChildJourneyNotifier.new);
+
+/// The active «current challenge» key for a child (null = none), backed by
+/// the server. Feeds the proactive coach. Errors degrade to "no challenge".
+class ActiveChallengeNotifier extends FamilyAsyncNotifier<String?, int> {
+  @override
+  Future<String?> build(int childId) async {
+    final ch = await ref.read(tgClientProvider).getChallenge(childId);
+    return ch?['challenge_key'] as String?;
+  }
+
+  Future<void> set(String key, {String? note}) async {
+    await ref.read(tgClientProvider).setChallenge(arg, key, note: note);
+    state = AsyncValue.data(key);
+  }
+
+  Future<void> clear() async {
+    await ref.read(tgClientProvider).clearChallenge(arg);
+    state = const AsyncValue.data(null);
+  }
+}
+
+final activeChallengeProvider =
+    AsyncNotifierProvider.family<ActiveChallengeNotifier, String?, int>(
+  ActiveChallengeNotifier.new,
+);

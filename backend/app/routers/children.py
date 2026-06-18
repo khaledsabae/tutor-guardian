@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import re
 import sqlite3
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Request
@@ -35,6 +35,7 @@ from pydantic import BaseModel, Field, field_validator
 
 from app.core.taxonomy import CANONICAL_AGE_GROUPS
 from app.db.init_db import get_conn
+from app.services.coach_service import CHALLENGE_TOPICS
 
 router = APIRouter()
 
@@ -132,6 +133,24 @@ class ChildResponse(BaseModel):
     avatar_emoji: Optional[str]
     created_at: str
     updated_at: str
+
+
+class ChallengeRequest(BaseModel):
+    """«رحلة الطفل» — set the child's current challenge. The key must be one
+    of the curated `CHALLENGE_TOPICS`; the topic/domain are derived server-side
+    so the coach pipeline stays grounded."""
+
+    challenge_key: str
+    note: Optional[str] = Field(default=None, max_length=300)
+
+    @field_validator("challenge_key")
+    @classmethod
+    def _validate_key(cls, v: str) -> str:
+        if v not in CHALLENGE_TOPICS:
+            raise ValueError(
+                f"challenge_key غير صالح. القيم المسموحة: {sorted(CHALLENGE_TOPICS)}"
+            )
+        return v
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────
@@ -347,6 +366,117 @@ def get_child_progress(
             "last_completed_at": last_completed_at,
             "fetched_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
         }
+    finally:
+        conn.close()
+
+
+# ── «رحلة الطفل» — current challenge (feeds the proactive coach) ──────────
+
+
+def _challenge_row_to_dict(row: Optional[sqlite3.Row]) -> Optional[dict]:
+    if row is None:
+        return None
+    return {
+        "challenge_key": row["challenge_key"],
+        "topic": row["topic"],
+        "domain": row["domain"],
+        "note": row["note"],
+        "started_at": row["started_at"],
+    }
+
+
+def _clear_todays_coach_tip(
+    conn: sqlite3.Connection, device_id: str, child_id: int
+) -> None:
+    """Invalidate today's cached coach tip so the next fetch reflects the
+    new/cleared challenge same-day instead of waiting until tomorrow."""
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    try:
+        conn.execute(
+            "DELETE FROM coach_tips WHERE device_id = ? AND child_id = ? AND date = ?",
+            (device_id, child_id, today),
+        )
+    except sqlite3.Error:
+        pass  # coach_tips may not exist yet on a fresh DB — harmless
+
+
+@router.get(
+    "/children/{child_id}/challenge",
+    summary="Get the child's active current-challenge (or null)",
+)
+def get_challenge(child_id: int, request: Request):
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        row = conn.execute(
+            "SELECT challenge_key, topic, domain, note, started_at "
+            "FROM child_challenges "
+            "WHERE device_id = ? AND child_id = ? AND status = 'active' "
+            "ORDER BY id DESC LIMIT 1",
+            (device_id, child_id),
+        ).fetchone()
+        return {"child_id": child_id, "challenge": _challenge_row_to_dict(row)}
+    finally:
+        conn.close()
+
+
+@router.put(
+    "/children/{child_id}/challenge",
+    summary="Set/replace the child's current challenge",
+)
+def set_challenge(child_id: int, payload: ChallengeRequest, request: Request):
+    device_id = _require_device_id(request)
+    topic, domain = CHALLENGE_TOPICS[payload.challenge_key]
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        # Resolve any existing active challenge, then insert the new one.
+        conn.execute(
+            "UPDATE child_challenges SET status = 'resolved', "
+            "resolved_at = datetime('now') "
+            "WHERE device_id = ? AND child_id = ? AND status = 'active'",
+            (device_id, child_id),
+        )
+        conn.execute(
+            "INSERT INTO child_challenges "
+            "(device_id, child_id, challenge_key, topic, domain, note) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (device_id, child_id, payload.challenge_key, topic, domain, payload.note),
+        )
+        _clear_todays_coach_tip(conn, device_id, child_id)
+        conn.commit()
+        return {
+            "child_id": child_id,
+            "challenge": {
+                "challenge_key": payload.challenge_key,
+                "topic": topic,
+                "domain": domain,
+                "note": payload.note,
+            },
+        }
+    finally:
+        conn.close()
+
+
+@router.delete(
+    "/children/{child_id}/challenge",
+    summary="Resolve (clear) the child's current challenge",
+)
+def clear_challenge(child_id: int, request: Request):
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        conn.execute(
+            "UPDATE child_challenges SET status = 'resolved', "
+            "resolved_at = datetime('now') "
+            "WHERE device_id = ? AND child_id = ? AND status = 'active'",
+            (device_id, child_id),
+        )
+        _clear_todays_coach_tip(conn, device_id, child_id)
+        conn.commit()
+        return {"child_id": child_id, "challenge": None}
     finally:
         conn.close()
 

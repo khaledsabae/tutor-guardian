@@ -65,8 +65,42 @@ _TOPIC_SEEDS: dict[str, str] = {
 }
 
 
+# «رحلة الطفل» — the parent-settable "current challenge" catalogue.
+# Each key maps to (topic_phrase, domain). The topic phrase deliberately
+# embeds a keyword that `_TOPIC_SEEDS` / the daily-tip matcher recognize,
+# so a challenge flows through the exact same grounded pipeline as a real
+# parent question. Domains stay non-medical so the safety gates behave the
+# same (generation still blocked for toddlers / medical).
+CHALLENGE_TOPICS: dict[str, tuple[str, str]] = {
+    "sleep": ("نوم الطفل ورفض النوم", "development"),
+    "lying": ("كذب الطفل", "development"),
+    "screens": ("شاشة الطفل والتابلت", "cyber"),
+    "tantrums": ("عناد الطفل ونوبات الغضب", "development"),
+    "eating": ("أكل الطفل ورفض الطعام", "development"),
+    "hitting": ("ضرب الطفل", "development"),
+    "fear": ("خوف الطفل", "development"),
+    "study": ("مذاكرة الطفل", "development"),
+}
+
+
 def _today_utc() -> str:
     return dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
+
+
+def _active_challenge(
+    conn: sqlite3.Connection, device_id: str, child_id: int
+) -> Optional[sqlite3.Row]:
+    """The most recent active «current challenge» for this child, if any."""
+    try:
+        return conn.execute(
+            "SELECT topic, domain FROM child_challenges "
+            "WHERE device_id = ? AND child_id = ? AND status = 'active' "
+            "ORDER BY id DESC LIMIT 1",
+            (device_id, child_id),
+        ).fetchone()
+    except sqlite3.Error as exc:  # table may not exist on very old DBs
+        logger.warning("active_challenge lookup failed: %s", exc)
+        return None
 
 
 def _get_owned_child(conn: sqlite3.Connection, child_id: int, device_id: str) -> Optional[sqlite3.Row]:
@@ -179,13 +213,24 @@ def _clean_generation(raw: str) -> str:
     return text
 
 
-def _wrap_tip(core: str, child_name: str, age_group: str, recent_topic: str) -> str:
+def _wrap_tip(
+    core: str,
+    child_name: str,
+    age_group: str,
+    recent_topic: str,
+    *,
+    is_challenge: bool = False,
+) -> str:
     """Wrap a matching core with the warm, personalized frame."""
     # Normalize age labels so parents never see internal strings like 'prenatal-1'.
     age_display = age_group.replace("-", "–")
     if age_display.startswith("prenatal"):
         age_display = "0–3"
-    opener = f"{child_name} في عمر {age_display}، ولاحظت إنك سألت عن «{recent_topic}»:"
+    if is_challenge:
+        # Honest framing: the parent flagged this as their current focus.
+        opener = f"{child_name} في عمر {age_display}، وأنت بتتابع تحدّي «{recent_topic}»:"
+    else:
+        opener = f"{child_name} في عمر {age_display}، ولاحظت إنك سألت عن «{recent_topic}»:"
     closer = " اللهم بارك فيه واجعله من الصالحين."
     return f"{opener}\n\n{core.strip()}{closer}"
 
@@ -472,8 +517,18 @@ async def get_proactive_tip(
                 "date": cached["date"],
             }
 
-        recent_topic, domain_raw = _recent_parent_topic(device_id, child_id=child_id)
-        domain = canonical_domain(domain_raw) if domain_raw else None
+        # «رحلة الطفل»: an active current-challenge outranks the most recent
+        # chat question — the parent explicitly flagged it as what they're
+        # working on right now.
+        challenge = _active_challenge(conn, device_id, child_id)
+        if challenge is not None:
+            recent_topic = challenge["topic"]
+            domain = canonical_domain(challenge["domain"]) if challenge["domain"] else None
+            signal_is_challenge = True
+        else:
+            recent_topic, domain_raw = _recent_parent_topic(device_id, child_id=child_id)
+            domain = canonical_domain(domain_raw) if domain_raw else None
+            signal_is_challenge = False
 
         # No signal → plain deterministic tip.
         if not recent_topic or not domain:
@@ -554,7 +609,10 @@ async def get_proactive_tip(
                 "date": date,
             }
 
-        text = _wrap_tip(core_text, child_name, age_group, recent_topic)
+        text = _wrap_tip(
+            core_text, child_name, age_group, recent_topic,
+            is_challenge=signal_is_challenge,
+        )
         chosen_domain = domain if domain else "development"
         tip_id = _store_tip(conn, device_id, child_id, date, chosen_domain, text, source)
         if mark_shown:
