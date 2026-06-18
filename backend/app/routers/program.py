@@ -251,6 +251,56 @@ async def get_daily_tip(
     return _pick_tip_for_today(age_group, time_of_day)
 
 
+# ── Proactive parenting coach (Phase 8) ────────────────────────────────
+
+from app.services import coach_service
+
+
+class CoachTipResponse(BaseModel):
+    id: int
+    text: str
+    domain: str
+    child_id: int
+    date: str
+
+
+@router.get("/coach-tip", response_model=CoachTipResponse)
+async def get_coach_tip(
+    request: Request,
+    child_id: int = Query(..., description="معرّف الطفل النشط"),
+):
+    """نصيحة تربوية استباقية مخصّصة للطفل اليوم.
+
+    تعوّض DailyTipCard في الهوم: إذا كان هناك سؤال حديث للأب في موضوع واضح
+    وعدّت بوابة الجودة، تُولّد نصيحة محددة («لاحظت إنك سألت عن…»). وإلا
+    تعود لنصيحة اليومية العادية بنفس الشكل.
+    """
+    device_id = getattr(request.state, "device_id", None)
+    if not device_id:
+        raise HTTPException(status_code=401, detail="مطلوب توثيق.")
+    try:
+        tip = await coach_service.get_proactive_tip(device_id, child_id)
+        return CoachTipResponse(**tip)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/coach-tip/{tip_id}/tap")
+async def tap_coach_tip(
+    request: Request,
+    tip_id: int,
+):
+    """تسجيل تفاعل خفيف: الأب ضغط على النصيحة."""
+    device_id = getattr(request.state, "device_id", None)
+    if not device_id:
+        raise HTTPException(status_code=401, detail="مطلوب توثيق.")
+    try:
+        coach_service.record_tap(device_id, tip_id)
+        return {"ok": True}
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
 # ── Progress tracking (Phase 5) ──────────────────────────────────────────
 
 class ProgressPatch(BaseModel):

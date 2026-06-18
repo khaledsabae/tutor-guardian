@@ -234,6 +234,35 @@ class DailyTip {
   }
 }
 
+/// Proactive parenting coach tip — `GET /api/program/coach-tip?child_id=`.
+/// The backend gracefully degrades to a plain daily tip when it can't
+/// produce a safe, topic-matched personal tip, so the card always renders.
+class CoachTip {
+  final int id;
+  final String text;
+  final String domain;
+  final int childId;
+  final String date;
+
+  const CoachTip({
+    required this.id,
+    required this.text,
+    required this.domain,
+    required this.childId,
+    required this.date,
+  });
+
+  factory CoachTip.fromJson(Map<String, dynamic> json) {
+    return CoachTip(
+      id: (json['id'] as num).toInt(),
+      text: json['text'] as String? ?? '',
+      domain: json['domain'] as String? ?? '',
+      childId: (json['child_id'] as num).toInt(),
+      date: json['date'] as String? ?? '',
+    );
+  }
+}
+
 /// Bundle returned by `GET /api/program/paths/{id}?include=lessons`.
 class PathDetail {
   final CurriculumPath path;

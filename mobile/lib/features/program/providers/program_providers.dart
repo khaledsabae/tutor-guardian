@@ -147,6 +147,23 @@ final dailyTipProvider = AsyncNotifierProvider.autoDispose.family<
   DailyTipNotifier.new,
 );
 
+// ── coachTipProvider ─────────────────────────────────────────────────────
+// Proactive coach tip keyed by the active child's id. Gracefully degrades
+// to a plain daily tip server-side, so it always resolves to a [CoachTip].
+
+class CoachTipNotifier extends AutoDisposeFamilyAsyncNotifier<CoachTip, int> {
+  @override
+  Future<CoachTip> build(int childId) {
+    final repo = ref.watch(programRepositoryProvider);
+    return repo.getCoachTip(childId);
+  }
+}
+
+final coachTipProvider = AsyncNotifierProvider.autoDispose.family<
+    CoachTipNotifier, CoachTip, int>(
+  CoachTipNotifier.new,
+);
+
 /// A user-visible "selected age group" preference.
 ///
 /// Derived from the active child's profile (falls back to `4-6` before

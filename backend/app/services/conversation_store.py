@@ -177,13 +177,18 @@ def get_session(session_id: str) -> dict | None:
 def list_sessions(device_id: str, limit: int = 50) -> list[dict]:
     """Sessions belonging to a device, newest first, each with a title
     (its first user message) and a message count. Empty sessions are
-    skipped so the history list only shows real conversations."""
+    skipped so the history list only shows real conversations.
+
+    The returned dict includes `metadata` so callers (e.g. proactive coach)
+    can filter sessions by child_id without an extra round-trip.
+    """
     conn = get_conn()
     try:
         rows = conn.execute(
             """
             SELECT s.id AS id,
                    s.updated_at AS updated_at,
+                   s.metadata AS metadata,
                    (SELECT content FROM chat_messages
                      WHERE session_id = s.id AND role = 'user'
                      ORDER BY id ASC LIMIT 1) AS first_user,
@@ -208,5 +213,6 @@ def list_sessions(device_id: str, limit: int = 50) -> list[dict]:
             "title": title[:80],
             "message_count": r["msg_count"],
             "updated_at": r["updated_at"],
+            "metadata": json.loads(r["metadata"] or "{}"),
         })
     return out

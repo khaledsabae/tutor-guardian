@@ -11,6 +11,10 @@ Migration v5: added avatar_emoji column to child_profiles (Phase 5
               Flutter UI requirement). Endpoints that mutate
               child_profiles + lesson_progress are implemented in
               routers/children.py and routers/program.py.
+Migration v6: added coach_tips table for the proactive parenting coach.
+              Stores the daily surfaced tip per (device_id, child_id, date)
+              with lightweight engagement logging (shown_at, tapped_at).
+              The `source` column is internal (generated|fallback).
 """
 import os
 import sqlite3
@@ -18,7 +22,25 @@ from pathlib import Path
 
 _DEFAULT = Path(__file__).resolve().parents[3] / "ops" / "conversations.db"
 
-SCHEMA_VERSION = 5
+_CREATE_COACH_TIPS: str = """
+CREATE TABLE IF NOT EXISTS coach_tips (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id    TEXT NOT NULL,
+    child_id     INTEGER NOT NULL,
+    date         TEXT NOT NULL,
+    domain       TEXT,
+    text         TEXT NOT NULL,
+    source       TEXT NOT NULL DEFAULT 'fallback',
+    shown_at     TEXT,
+    tapped_at    TEXT,
+    created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE (device_id, child_id, date)
+);
+CREATE INDEX IF NOT EXISTS ix_coach_tips_device_date
+    ON coach_tips (device_id, child_id, date);
+"""
+
+SCHEMA_VERSION = 6
 
 
 def db_path() -> Path:
@@ -39,7 +61,7 @@ def init_db() -> None:
     """Create tables if missing and stamp schema_version. Idempotent."""
     conn = get_conn()
     conn.executescript(
-        """
+        f"""
         CREATE TABLE IF NOT EXISTS schema_version (
             version INTEGER NOT NULL
         );
@@ -130,6 +152,8 @@ def init_db() -> None:
 
         CREATE INDEX IF NOT EXISTS ix_lesson_progress_path_device
             ON lesson_progress (device_id, path_id);
+
+        {_CREATE_COACH_TIPS}
         """
     )
 
@@ -141,6 +165,8 @@ def init_db() -> None:
         column="avatar_emoji",
         ddl="ALTER TABLE child_profiles ADD COLUMN avatar_emoji TEXT",
     )
+
+    _ensure_coach_tips_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -178,3 +204,23 @@ def _ensure_column(
     if column in names:
         return
     conn.execute(ddl)
+
+
+def _ensure_coach_tips_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v6 coach_tips table."""
+    try:
+        cur = conn.execute("PRAGMA table_info(coach_tips)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_COACH_TIPS)
+        return
+    for column, ddl in (
+        ("domain", "ALTER TABLE coach_tips ADD COLUMN domain TEXT"),
+        ("source", "ALTER TABLE coach_tips ADD COLUMN source TEXT NOT NULL DEFAULT 'fallback'"),
+        ("shown_at", "ALTER TABLE coach_tips ADD COLUMN shown_at TEXT"),
+        ("tapped_at", "ALTER TABLE coach_tips ADD COLUMN tapped_at TEXT"),
+    ):
+        if column not in names:
+            conn.execute(ddl)

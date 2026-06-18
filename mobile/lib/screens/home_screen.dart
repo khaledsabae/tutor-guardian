@@ -26,7 +26,7 @@ import '../features/program/screens/search_screen.dart';
 import '../features/program/screens/settings_screen.dart';
 import '../features/feedback/feedback_screen.dart';
 import '../features/program/widgets/active_child_chip.dart';
-import '../features/program/widgets/daily_tip_card.dart';
+import '../features/program/widgets/coach_tip_card.dart';
 import '../features/coins/coins_providers.dart';
 import '../features/coins/coins_screen.dart';
 import '../features/program/screens/quiz_game_screen.dart';
@@ -184,7 +184,7 @@ class HomeScreen extends ConsumerWidget {
             onStartFirstPath: () => onGoToTab(1),
           ),
           const SizedBox(height: 20),
-          const DailyTipCard(),
+          CoachTipCard(onAsk: () => onGoToTab(3)),
           const SizedBox(height: 20),
           _QuizCard(),
           const SizedBox(height: 20),

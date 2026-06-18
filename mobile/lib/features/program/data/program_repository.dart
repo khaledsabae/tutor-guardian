@@ -123,4 +123,15 @@ class ProgramRepository {
     );
     return DailyTip.fromJson(json);
   }
+
+  /// `GET /api/program/coach-tip?child_id=` — proactive personalized tip
+  /// (gracefully degrades to a plain daily tip server-side).
+  Future<CoachTip> getCoachTip(int childId) async {
+    final json = await _client.getCoachTip(childId);
+    return CoachTip.fromJson(json);
+  }
+
+  /// `POST /api/program/coach-tip/{id}/tap` — light engagement signal.
+  Future<void> recordCoachTipTap(int tipId) =>
+      _client.recordCoachTipTap(tipId);
 }

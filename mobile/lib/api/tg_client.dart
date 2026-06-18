@@ -547,6 +547,35 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  /// `GET /api/program/coach-tip?child_id=` (authed). Fetching also records
+  /// the "shown" signal server-side (deduped once/day).
+  Future<Map<String, dynamic>> getCoachTip(int childId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/program/coach-tip')
+        .replace(queryParameters: {'child_id': '$childId'});
+    final resp = await _http
+        .get(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  /// `POST /api/program/coach-tip/{id}/tap` (authed) — light engagement log.
+  Future<void> recordCoachTipTap(int tipId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final resp = await _http
+        .post(Uri.parse('$_baseUrl/api/program/coach-tip/$tipId/tap'),
+            headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+  }
+
   // ── Children + progress (Phase 5) ──────────────────────────────────────
   //
   // All three require a Bearer token (set by [_AuthHeaders] on the
