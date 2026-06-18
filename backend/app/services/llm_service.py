@@ -248,10 +248,19 @@ async def generate_reply(
 
     # All LLM calls go through the gateway (retry/backoff + telemetry).
     # tier="cloud_quality" tries the Azure provider first, local as fallback.
-    result = await get_gateway().generate(
-        full_prompt, tier=tier, route_reason=route_reason
-    )
-    return clean_model_output(result.text)
+    #
+    # The local qwen-3B model occasionally leaks CJK characters mid-sentence.
+    # clean_model_output() strips them, but that can leave a truncated sentence,
+    # so regenerate a couple of times to prefer a clean Arabic answer first.
+    text = ""
+    for _attempt in range(3):
+        result = await get_gateway().generate(
+            full_prompt, tier=tier, route_reason=route_reason
+        )
+        text = result.text or ""
+        if len(_CJK_RE.findall(text)) <= 2:
+            break
+    return clean_model_output(text)
 
 
 def build_full_prompt(
