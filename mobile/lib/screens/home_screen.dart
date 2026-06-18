@@ -27,6 +27,7 @@ import '../features/program/screens/settings_screen.dart';
 import '../features/feedback/feedback_screen.dart';
 import '../features/program/widgets/active_child_chip.dart';
 import '../features/program/widgets/coach_tip_card.dart';
+import '../features/journey/widgets/child_journey_card.dart';
 import '../features/coins/coins_providers.dart';
 import '../features/coins/coins_screen.dart';
 import '../features/program/screens/quiz_game_screen.dart';
@@ -185,6 +186,8 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
           CoachTipCard(onAsk: () => onGoToTab(3)),
+          const SizedBox(height: 20),
+          const ChildJourneyCard(),
           const SizedBox(height: 20),
           _QuizCard(),
           const SizedBox(height: 20),

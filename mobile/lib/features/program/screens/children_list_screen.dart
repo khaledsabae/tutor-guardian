@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../journey/providers/journey_providers.dart';
+import '../../journey/screens/child_journey_screen.dart';
 import '../data/progress_models.dart';
 import '../providers/progress_providers.dart';
 import '../providers/settings_providers.dart';
@@ -58,6 +60,7 @@ class ChildrenListScreen extends ConsumerWidget {
                     isActive: c.id == activeId,
                     onSwitch: () => _switchTo(context, ref, c),
                     onDelete: () => _deleteChild(context, ref, c),
+                    onJourney: () => _openJourney(context, c),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -135,6 +138,17 @@ class ChildrenListScreen extends ConsumerWidget {
         );
       }
     }
+  }
+
+  void _openJourney(BuildContext context, ChildProfile child) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ChildJourneyScreen(
+          childId: child.id,
+          childName: child.name,
+        ),
+      ),
+    );
   }
 
   Future<void> _addChild(BuildContext context, WidgetRef ref) async {
@@ -219,11 +233,13 @@ class _ChildTile extends StatelessWidget {
     required this.isActive,
     required this.onSwitch,
     required this.onDelete,
+    required this.onJourney,
   });
   final ChildProfile child;
   final bool isActive;
   final VoidCallback onSwitch;
   final VoidCallback onDelete;
+  final VoidCallback onJourney;
 
   @override
   Widget build(BuildContext context) {
@@ -305,6 +321,14 @@ class _ChildTile extends StatelessWidget {
               ] else
                 const Icon(Icons.chevron_left,
                     color: AppTheme.textMuted, size: 20),
+              if (kJourneyEnabled)
+                IconButton(
+                  icon: const Icon(Icons.auto_stories_outlined,
+                      color: AppTheme.primary, size: 20),
+                  tooltip: 'رحلة الطفل',
+                  visualDensity: VisualDensity.compact,
+                  onPressed: onJourney,
+                ),
               IconButton(
                 icon: const Icon(Icons.delete_outline,
                     color: AppTheme.textMuted, size: 20),
