@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/api_models.dart';
 import '../models/enums.dart';
+import '../features/program/providers/program_providers.dart';
 import '../state/chat_notifier.dart';
 import '../state/connectivity_provider.dart';
 import '../theme/app_theme.dart';
@@ -96,6 +97,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
   Widget build(BuildContext context) {
     final state = ref.watch(chatNotifierProvider);
     final notifier = ref.read(chatNotifierProvider.notifier);
+
+    // The active child's age drives the question — there's no manual age
+    // selector. Keep the chat state in sync whenever the active child changes.
+    final activeAge = AgeGroup.fromWire(ref.watch(selectedAgeGroupProvider));
+    if (state.ageGroup != activeAge) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) notifier.setAgeGroup(activeAge);
+      });
+    }
 
     // Auto-scroll on every message change.
     ref.listen<ChatState>(chatNotifierProvider, (prev, next) {
@@ -284,18 +294,6 @@ class _SettingsBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: _DropdownField<AgeGroup>(
-              label: 'العمر',
-              value: state.ageGroup,
-              items: AgeGroup.values,
-              labelOf: (g) => g.label,
-              onChanged: (g) {
-                if (g != null) notifier.setAgeGroup(g);
-              },
-            ),
-          ),
-          const SizedBox(width: 8),
           Expanded(
             child: _DropdownField<Severity>(
               label: 'الشدة',
