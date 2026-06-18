@@ -295,19 +295,6 @@ class _SettingsBar extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: _DropdownField<Severity>(
-              label: 'الشدة',
-              value: state.severity,
-              items: Severity.values,
-              labelOf: (s) => s.label,
-              onChanged: (s) {
-                if (s != null) notifier.setSeverity(s);
-              },
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 2,
             child: TextFormField(
               initialValue: state.behaviorType,
               decoration: const InputDecoration(
@@ -320,38 +307,6 @@ class _SettingsBar extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _DropdownField<T> extends StatelessWidget {
-  final String label;
-  final T value;
-  final List<T> items;
-  final String Function(T) labelOf;
-  final ValueChanged<T?> onChanged;
-  const _DropdownField({
-    required this.label,
-    required this.value,
-    required this.items,
-    required this.labelOf,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonFormField<T>(
-      initialValue: value,
-      isExpanded: true,
-      isDense: true,
-      decoration: InputDecoration(labelText: label, isDense: true),
-      items: items
-          .map((it) => DropdownMenuItem<T>(
-                value: it,
-                child: Text(labelOf(it), overflow: TextOverflow.ellipsis),
-              ))
-          .toList(),
-      onChanged: onChanged,
     );
   }
 }

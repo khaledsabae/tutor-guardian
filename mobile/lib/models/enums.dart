@@ -34,6 +34,9 @@ enum AgeGroup {
 
   static AgeGroup fromWire(String? s) {
     if (s == null) return AgeGroup.unspecified;
+    // "0-3" is the legacy alias for the prenatal-to-one-year band; show it
+    // as «فترة الحمل وحتى عام» everywhere instead of the raw "0-3".
+    if (s == '0-3') return AgeGroup.prenatalOne;
     for (final g in AgeGroup.values) {
       if (g.wire == s) return g;
     }
