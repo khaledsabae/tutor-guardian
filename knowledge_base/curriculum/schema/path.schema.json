@@ -28,12 +28,24 @@
     },
     "age_group": {
       "type": "string",
-      "enum": ["0-3", "4-6", "7-9", "10-12", "13-15", "16-18"],
+      "enum": [
+        "حتى عام",
+        "4-6",
+        "7-9",
+        "10-12",
+        "13-15",
+        "16-18"
+      ],
       "description": "الفئة العمرية المستهدفة (من CANONICAL_AGE_GROUPS في taxonomy.py — بدون unspecified للمسارات لأنها مرحلة عمرية محددة)."
     },
     "domain": {
       "type": "string",
-      "enum": ["medical", "cyber", "islamic_parenting", "development"],
+      "enum": [
+        "medical",
+        "cyber",
+        "islamic_parenting",
+        "development"
+      ],
       "description": "المجال الأساسي للمسار (من CANONICAL_DOMAINS في taxonomy.py). مسارات التربية الإسلامية تستند على Prophetic 7-7-7 + Ghazali tazkiyah."
     },
     "description": {
@@ -60,7 +72,12 @@
     },
     "pedagogical_framework": {
       "type": "string",
-      "enum": ["prophetic_7_7_7", "ghazali_tazkiyah", "attachment_rahma", "zpd_scaffolded"],
+      "enum": [
+        "prophetic_7_7_7",
+        "ghazali_tazkiyah",
+        "attachment_rahma",
+        "zpd_scaffolded"
+      ],
       "description": "الإطار التربوي المرجعي للمسار. معظم مسارات التربية الإسلامية تعتمد prophetic_7_7_7 (مرحلة 7-14) + ghazali_tazkiyah."
     },
     "primary_reference": {
@@ -70,7 +87,17 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["DSM-5", "كتاب_فقهي", "حديث", "كتاب_تربوي", "تقرير_سيبراني", "إرشاد_مهني", "مقال_تنموي", "تقرير_طبي", "مقال_تربوي"]
+          "enum": [
+            "DSM-5",
+            "كتاب_فقهي",
+            "حديث",
+            "كتاب_تربوي",
+            "تقرير_سيبراني",
+            "إرشاد_مهني",
+            "مقال_تنموي",
+            "تقرير_طبي",
+            "مقال_تربوي"
+          ]
         },
         "info": {
           "type": "string",
