@@ -35,6 +35,7 @@ class ChildJourneyCard extends ConsumerWidget {
             builder: (_) => ChildJourneyScreen(
               childId: profile.id,
               childName: profile.name,
+              ageGroup: profile.ageGroup,
             ),
           ),
         ),

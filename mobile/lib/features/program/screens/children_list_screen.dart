@@ -146,6 +146,7 @@ class ChildrenListScreen extends ConsumerWidget {
         builder: (_) => ChildJourneyScreen(
           childId: child.id,
           childName: child.name,
+          ageGroup: child.ageGroup,
         ),
       ),
     );

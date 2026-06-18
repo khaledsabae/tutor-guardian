@@ -22,10 +22,15 @@ class ChildJourneyScreen extends ConsumerWidget {
     super.key,
     required this.childId,
     required this.childName,
+    this.ageGroup,
   });
 
   final int childId;
   final String childName;
+
+  /// The child's age band (wire value, e.g. `4-6`) — drives the
+  /// developmental-milestone section. Null hides that section.
+  final String? ageGroup;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,6 +53,9 @@ class ChildJourneyScreen extends ConsumerWidget {
           final suggestions = spiritualMilestones
               .where((m) => !logged.containsKey(m.key))
               .toList();
+          final devSuggestions = developmentalMilestonesFor(ageGroup)
+              .where((m) => !logged.containsKey(m.key))
+              .toList();
 
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
@@ -67,17 +75,24 @@ class ChildJourneyScreen extends ConsumerWidget {
                       .slideX(begin: .06),
               const SizedBox(height: 24),
               if (suggestions.isNotEmpty) ...[
-                const _SectionLabel('محطات قادمة 🌱'),
+                const _SectionLabel('محطات إيمانية 🕌'),
                 const SizedBox(height: 10),
                 for (final m in suggestions)
                   _SuggestedTile(
                     milestone: m,
-                    onTap: () => _showLogSheet(
-                      context,
-                      ref,
-                      milestone: m,
-                    ),
+                    onTap: () => _showLogSheet(context, ref, milestone: m),
                   ),
+                const SizedBox(height: 20),
+              ],
+              if (devSuggestions.isNotEmpty) ...[
+                const _SectionLabel('محطات نمائية 📈 (حسب العمر)'),
+                const SizedBox(height: 10),
+                for (final m in devSuggestions)
+                  _SuggestedTile(
+                    milestone: m,
+                    onTap: () => _showLogSheet(context, ref, milestone: m),
+                  ),
+                const SizedBox(height: 20),
               ],
               const SizedBox(height: 16),
               OutlinedButton.icon(
@@ -400,6 +415,27 @@ class _SuggestedTile extends StatelessWidget {
                         color: AppTheme.textSecondary,
                       ),
                     ),
+                    if (milestone.concernNote != null) ...[
+                      const SizedBox(height: 4),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.info_outline,
+                              size: 13, color: Color(0xFFB26A00)),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              milestone.concernNote!,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: Color(0xFFB26A00),
+                                height: 1.35,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ],
                 ),
               ),
