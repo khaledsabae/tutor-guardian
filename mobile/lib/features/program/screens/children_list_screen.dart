@@ -39,12 +39,24 @@ class ChildrenListScreen extends ConsumerWidget {
           ),
           data: (envelope) {
             if (envelope.children.isEmpty) {
-              return const Center(
+              return Center(
                 child: Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Text(
-                    'لا يوجد أطفال على هذا الجهاز. ابدأ بإضافة أول طفل.',
-                    textAlign: TextAlign.center,
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/images/empty/empty_children.png',
+                        height: 150,
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        'لا يوجد أطفال على هذا الجهاز. ابدأ بإضافة أول طفل.',
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                 ),
               );

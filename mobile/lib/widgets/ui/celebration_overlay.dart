@@ -15,6 +15,7 @@ Future<void> showCelebration(
   required String title,
   required String message,
   String buttonLabel = 'متابعة',
+  String? imageAsset,
 }) {
   return showGeneralDialog<void>(
     context: context,
@@ -27,6 +28,7 @@ Future<void> showCelebration(
       title: title,
       message: message,
       buttonLabel: buttonLabel,
+      imageAsset: imageAsset,
     ),
     transitionBuilder: (_, anim, __, child) => ScaleTransition(
       scale: CurvedAnimation(parent: anim, curve: Curves.easeOutBack),
@@ -40,12 +42,14 @@ class _CelebrationDialog extends StatefulWidget {
   final String title;
   final String message;
   final String buttonLabel;
+  final String? imageAsset;
 
   const _CelebrationDialog({
     required this.emoji,
     required this.title,
     required this.message,
     required this.buttonLabel,
+    this.imageAsset,
   });
 
   @override
@@ -84,7 +88,20 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(widget.emoji, style: const TextStyle(fontSize: 80))
+                  (widget.imageAsset != null
+                          ? Image.asset(
+                              widget.imageAsset!,
+                              width: 110,
+                              height: 110,
+                              fit: BoxFit.contain,
+                              filterQuality: FilterQuality.medium,
+                              errorBuilder: (_, __, ___) => Text(
+                                widget.emoji,
+                                style: const TextStyle(fontSize: 80),
+                              ),
+                            )
+                          : Text(widget.emoji,
+                              style: const TextStyle(fontSize: 80)))
                       .animate()
                       .scale(
                         begin: const Offset(.3, .3),

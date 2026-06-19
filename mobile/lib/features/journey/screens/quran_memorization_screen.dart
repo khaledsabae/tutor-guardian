@@ -50,6 +50,7 @@ class QuranMemorizationScreen extends ConsumerWidget {
       await showCelebration(
         context,
         emoji: '📖',
+        imageAsset: milestoneBadgeAsset('first_surah'),
         title: 'ما شاء الله!',
         message: '$childName حفظ أول سورة — سورة ${surahNames[surah - 1]} 🌟',
       );

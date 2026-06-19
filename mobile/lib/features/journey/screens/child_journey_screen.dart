@@ -18,6 +18,7 @@ import '../data/challenges.dart';
 import '../data/journey_milestones.dart';
 import '../data/journey_store.dart';
 import '../providers/journey_providers.dart';
+import '../widgets/milestone_icon.dart';
 import 'quran_memorization_screen.dart';
 
 class ChildJourneyScreen extends ConsumerWidget {
@@ -183,6 +184,7 @@ class ChildJourneyScreen extends ConsumerWidget {
       await showCelebration(
         context,
         emoji: milestone?.emoji ?? '💛',
+        imageAsset: milestone != null ? milestoneBadgeAsset(milestone.key) : null,
         title: 'ما شاء الله!',
         message: 'محطة جديدة في رحلة $childName:\n${result.title}',
       );
@@ -463,23 +465,29 @@ class _EmptyTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
       decoration: BoxDecoration(
         color: AppTheme.surfaceAlt,
         borderRadius: BorderRadius.circular(Dt.rCard),
       ),
-      child: const Row(
+      child: Column(
         children: [
-          Text('🕊️', style: TextStyle(fontSize: 28)),
-          SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              'كل طفل رحلة فريدة. سجّل أول محطة من المحطات القادمة بالأسفل.',
-              style: TextStyle(
-                color: AppTheme.textSecondary,
-                fontSize: 13,
-                height: 1.5,
-              ),
+          Image.asset(
+            'assets/images/empty/empty_journey.png',
+            height: 130,
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) =>
+                const Text('🕊️', style: TextStyle(fontSize: 40)),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'كل طفل رحلة فريدة. سجّل أول محطة من المحطات القادمة بالأسفل.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppTheme.textSecondary,
+              fontSize: 13,
+              height: 1.5,
             ),
           ),
         ],
@@ -512,15 +520,16 @@ class _TimelineCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 44,
-            height: 44,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppTheme.surfaceAlt,
-              borderRadius: BorderRadius.circular(22),
+          SizedBox(
+            width: 46,
+            height: 46,
+            child: Center(
+              child: MilestoneIcon(
+                milestoneKey: entry.key,
+                emoji: entry.emoji,
+                size: 46,
+              ),
             ),
-            child: Text(entry.emoji, style: const TextStyle(fontSize: 22)),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -592,9 +601,12 @@ class _SuggestedTile extends StatelessWidget {
           child: Row(
             children: [
               Opacity(
-                opacity: 0.6,
-                child:
-                    Text(milestone.emoji, style: const TextStyle(fontSize: 24)),
+                opacity: 0.85,
+                child: MilestoneIcon(
+                  milestoneKey: milestone.key,
+                  emoji: milestone.emoji,
+                  size: 40,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(

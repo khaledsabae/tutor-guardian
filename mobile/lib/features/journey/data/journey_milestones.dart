@@ -92,6 +92,26 @@ const List<JourneyMilestone> spiritualMilestones = [
 String journeyRewardId(int childId, String milestoneKey) =>
     'journey:$childId:$milestoneKey';
 
+/// The 9 spiritual milestones that ship with a custom badge illustration
+/// (assets/images/milestones/<key>.png). Developmental + custom milestones
+/// have no badge and fall back to their emoji.
+const Set<String> _badgeMilestoneKeys = {
+  'shahada',
+  'first_dua',
+  'first_prayer',
+  'keeps_prayer',
+  'first_surah',
+  'first_fast',
+  'good_manner',
+  'helped_others',
+  'quran_khatma',
+};
+
+/// Asset path for a milestone's badge illustration, or null if it has none
+/// (the caller then shows [JourneyMilestone.emoji] / [MilestoneEntry.emoji]).
+String? milestoneBadgeAsset(String key) =>
+    _badgeMilestoneKeys.contains(key) ? 'assets/images/milestones/$key.png' : null;
+
 /// Developmental milestones, by age band — curated from the `development`
 /// domain of the curriculum. Keys are `dev_*`-prefixed to share the per-child
 /// store with the spiritual ones without colliding. The handful of

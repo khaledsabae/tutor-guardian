@@ -13,6 +13,10 @@ class EmptyState extends StatelessWidget {
   final String? actionLabel;
   final VoidCallback? onAction;
 
+  /// Optional illustration shown instead of [emoji] (falls back to the emoji
+  /// if the asset is missing).
+  final String? imageAsset;
+
   const EmptyState({
     super.key,
     required this.emoji,
@@ -20,6 +24,7 @@ class EmptyState extends StatelessWidget {
     this.subtitle,
     this.actionLabel,
     this.onAction,
+    this.imageAsset,
   });
 
   @override
@@ -30,7 +35,15 @@ class EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(emoji, style: const TextStyle(fontSize: 72))
+            (imageAsset != null
+                    ? Image.asset(
+                        imageAsset!,
+                        height: 160,
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) =>
+                            Text(emoji, style: const TextStyle(fontSize: 72)),
+                      )
+                    : Text(emoji, style: const TextStyle(fontSize: 72)))
                 .animate()
                 .scale(
                   begin: const Offset(.6, .6),

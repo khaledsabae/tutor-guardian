@@ -78,6 +78,8 @@ flutter:
     - assets/images/
     # «نور» mascot (chosen pose). Other generated art is declared as it lands.
     - assets/images/mascot/wave.png
+    - assets/images/milestones/
+    - assets/images/empty/
 
 # Reuse the existing PWA shield icon — keeps mobile visually consistent
 # with the web client and saves us from designing a new asset. Source
