@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/celebration_overlay.dart';
 import '../../coins/coins_providers.dart';
 import '../../quran/models/surah_names.dart';
 import '../data/journey_milestones.dart';
@@ -46,11 +47,11 @@ class QuranMemorizationScreen extends ConsumerWidget {
         .read(coinsProvider.notifier)
         .creditBadges([journeyRewardId(childId, m.key)]);
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('ما شاء الله 🎉 $childName حفظ أول سورة!'),
-          backgroundColor: AppTheme.primary,
-        ),
+      await showCelebration(
+        context,
+        emoji: '📖',
+        title: 'ما شاء الله!',
+        message: '$childName حفظ أول سورة — سورة ${surahNames[surah - 1]} 🌟',
       );
     }
   }

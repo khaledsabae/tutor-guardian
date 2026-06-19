@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/celebration_overlay.dart';
 import '../../coins/coins_providers.dart';
 import '../data/challenges.dart';
 import '../data/journey_milestones.dart';
@@ -179,11 +180,11 @@ class ChildJourneyScreen extends ConsumerWidget {
         .creditBadges([journeyRewardId(childId, key)]);
 
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('ما شاء الله 🎉 محطة جديدة في رحلة $childName'),
-          backgroundColor: AppTheme.primary,
-        ),
+      await showCelebration(
+        context,
+        emoji: milestone?.emoji ?? '💛',
+        title: 'ما شاء الله!',
+        message: 'محطة جديدة في رحلة $childName:\n${result.title}',
       );
     }
   }
