@@ -37,6 +37,7 @@ import '../widgets/ui/animated_progress_bar.dart';
 import '../widgets/ui/bouncy_button.dart';
 import '../widgets/ui/count_up_text.dart';
 import '../widgets/ui/emoji_hero.dart';
+import '../widgets/ui/noor_mascot.dart';
 import '../widgets/ui/stat_chip.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -139,15 +140,31 @@ class HomeScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
-          Text(
-            profile == null
-                ? 'السلام عليكم 👋'
-                : 'السلام عليكم 👋 رحلة ${profile.name} مستمرة',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppTheme.textSecondary,
-                  fontWeight: FontWeight.w600,
-                ),
-          ).animate().fadeIn(duration: Dt.base),
+          Row(
+            children: [
+              const NoorMascot(size: 56)
+                  .animate()
+                  .fadeIn(duration: Dt.slow)
+                  .scale(
+                    begin: const Offset(.7, .7),
+                    curve: Curves.easeOutBack,
+                    duration: Dt.slow,
+                  ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  profile == null
+                      ? 'السلام عليكم'
+                      : 'السلام عليكم\nرحلة ${profile.name} مستمرة',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppTheme.textSecondary,
+                        fontWeight: FontWeight.w600,
+                        height: 1.4,
+                      ),
+                ).animate().fadeIn(duration: Dt.base),
+              ),
+            ],
+          ),
           const SizedBox(height: 16),
           _StatsRow(bundle: bundle),
           const SizedBox(height: 14),
