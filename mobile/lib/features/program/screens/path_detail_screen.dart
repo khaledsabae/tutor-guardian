@@ -26,6 +26,19 @@ import 'lesson_screen.dart';
 import 'video_player_screen.dart';
 import '../../../config/app_config.dart';
 
+/// Domain → header illustration (solid cream-bg JPGs that blend with the
+/// page background). Curriculum domain `medical` maps to the `health` art.
+String? _domainIllustration(String domain) {
+  const map = {
+    'islamic_parenting': 'islamic_parenting',
+    'development': 'development',
+    'cyber': 'cyber',
+    'medical': 'health',
+  };
+  final name = map[domain];
+  return name == null ? null : 'assets/images/domains/$name.jpg';
+}
+
 class PathDetailScreen extends ConsumerWidget {
   const PathDetailScreen({
     super.key,
@@ -126,7 +139,15 @@ class _Body extends ConsumerWidget {
           style: style,
           progress: progressMap,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 16),
+        if (_domainIllustration(path.domain) != null) ...[
+          Image.asset(
+            _domainIllustration(path.domain)!,
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+          ),
+          const SizedBox(height: 16),
+        ],
         // Prominent video preview for the whole unit (the path's intro video).
         if (path.videoMp4 != null) ...[
           _PathVideoCard(

@@ -290,8 +290,12 @@ class _WelcomePage extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(18),
             child: Image.asset(
-              'assets/images/banner.png',
+              'assets/images/onboarding/ob_welcome.jpg',
               fit: BoxFit.contain,
+              errorBuilder: (_, __, ___) => Image.asset(
+                'assets/images/banner.png',
+                fit: BoxFit.contain,
+              ),
             ),
           )
               .animate()
@@ -343,6 +347,16 @@ class _FeaturesPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Image.asset(
+            'assets/images/onboarding/ob_journey.jpg',
+            height: 150,
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) => const SizedBox(height: 8),
+          ).animate().fadeIn(duration: Dt.base).scale(
+                begin: const Offset(.9, .9),
+                curve: Curves.easeOutBack,
+              ),
+          const SizedBox(height: 16),
           Text(
             'ماذا ستجد؟',
             textAlign: TextAlign.center,
@@ -351,7 +365,7 @@ class _FeaturesPage extends StatelessWidget {
                 .headlineSmall
                 ?.copyWith(fontWeight: FontWeight.w800),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 24),
           for (var i = 0; i < _features.length; i++) ...[
             Container(
               padding: const EdgeInsets.all(16),

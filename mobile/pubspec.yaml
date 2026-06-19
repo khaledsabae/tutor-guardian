@@ -1,7 +1,7 @@
 name: almorabbi
 description: "المربي الذكي — مساعد تربوي إسلامي آمن للأهل (Flutter / Android-first)."
 publish_to: 'none'
-version: 1.0.13+29
+version: 1.0.13+30
 
 environment:
   sdk: ^3.12.1
@@ -80,6 +80,8 @@ flutter:
     - assets/images/mascot/wave.png
     - assets/images/milestones/
     - assets/images/empty/
+    - assets/images/domains/
+    - assets/images/onboarding/
 
 # Reuse the existing PWA shield icon — keeps mobile visually consistent
 # with the web client and saves us from designing a new asset. Source
