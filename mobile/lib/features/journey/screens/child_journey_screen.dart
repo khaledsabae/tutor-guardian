@@ -17,6 +17,7 @@ import '../data/challenges.dart';
 import '../data/journey_milestones.dart';
 import '../data/journey_store.dart';
 import '../providers/journey_providers.dart';
+import 'quran_memorization_screen.dart';
 
 class ChildJourneyScreen extends ConsumerWidget {
   const ChildJourneyScreen({
@@ -64,6 +65,8 @@ class ChildJourneyScreen extends ConsumerWidget {
               _Header(name: childName, count: entries.length),
               const SizedBox(height: 16),
               _ChallengeSection(childId: childId, childName: childName),
+              const SizedBox(height: 12),
+              _QuranMemoCard(childId: childId, childName: childName),
               const SizedBox(height: 8),
               if (entries.isEmpty)
                 const _EmptyTimeline()
@@ -352,6 +355,83 @@ class _ChallengeSection extends ConsumerWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Entry to the Quran-memorization checklist + live memorized count.
+class _QuranMemoCard extends ConsumerWidget {
+  const _QuranMemoCard({required this.childId, required this.childName});
+  final int childId;
+  final String childName;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final count = ref.watch(memorizedSurahsProvider(childId)).maybeWhen(
+          data: (s) => s.length,
+          orElse: () => 0,
+        );
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => QuranMemorizationScreen(
+              childId: childId,
+              childName: childName,
+            ),
+          ),
+        ),
+        borderRadius: BorderRadius.circular(Dt.rCard),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: AppTheme.surface,
+            borderRadius: BorderRadius.circular(Dt.rCard),
+            border: Border.all(color: const Color(0xFFCDE7CE)),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2E7D32).withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text('📖', style: TextStyle(fontSize: 22)),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'حفظ القرآن',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      count == 0
+                          ? 'تابع ما يحفظه — ونحتفل بأول سورة'
+                          : 'حفظ $count سورة',
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        color: AppTheme.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_left, color: AppTheme.textMuted),
+            ],
+          ),
+        ),
       ),
     );
   }

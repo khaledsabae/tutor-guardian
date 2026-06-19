@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../state/chat_notifier.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/journey_store.dart';
+import '../data/memorization_store.dart';
 
 /// Feature flag — Phase 1 «رحلة الطفل». Flip to `false` to hide every
 /// entry point (Home card + child-list action) with zero other side
@@ -90,4 +91,32 @@ class ActiveChallengeNotifier extends FamilyAsyncNotifier<String?, int> {
 final activeChallengeProvider =
     AsyncNotifierProvider.family<ActiveChallengeNotifier, String?, int>(
   ActiveChallengeNotifier.new,
+);
+
+final memorizationStoreProvider = Provider<MemorizationStore>((ref) {
+  final prefs = ref.watch(sharedPreferencesProvider).requireValue;
+  return MemorizationStore(prefs);
+});
+
+/// Memorized surah numbers (1..114) for one child.
+class MemorizedSurahsNotifier extends FamilyAsyncNotifier<Set<int>, int> {
+  @override
+  Future<Set<int>> build(int childId) async {
+    return ref.read(memorizationStoreProvider).loadForChild(childId);
+  }
+
+  /// Toggle a surah's memorized state. Returns true if it is now memorized
+  /// AND it is the child's very first — the caller uses this to log the
+  /// «حفظ أول سورة» milestone.
+  Future<bool> toggle(int surah) async {
+    final wasEmpty = (state.value ?? const <int>{}).isEmpty;
+    final next = await ref.read(memorizationStoreProvider).toggle(arg, surah);
+    state = AsyncValue.data(next);
+    return wasEmpty && next.contains(surah);
+  }
+}
+
+final memorizedSurahsProvider =
+    AsyncNotifierProvider.family<MemorizedSurahsNotifier, Set<int>, int>(
+  MemorizedSurahsNotifier.new,
 );
