@@ -1,0 +1,22 @@
+{
+  "id": "path_2-3_islamic_first_words",
+  "title": "أول الكلمات الطيّبة: بذرةُ اللسان الذاكر (2-3 سنوات)",
+  "age_group": "2-3",
+  "domain": "islamic_parenting",
+  "description": "مسار يعين الوالدين على غرس أول كلمات الذكر والآداب في لسان طفلهم الدارج: البسملة والحمد، السلام والكلمة الطيبة، وأول الآداب بالقدوة لا التلقين.",
+  "lesson_ids": [
+    "lesson_2-3_islamic_first_words_01",
+    "lesson_2-3_islamic_first_words_02",
+    "lesson_2-3_islamic_first_words_03",
+    "lesson_2-3_islamic_first_words_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "كتاب_تربوي",
+    "info": "تربية الأولاد في الإسلام لعبد الله ناصح علوان + منهج التربية النبوية للطفل لمحمد نور سويد"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}

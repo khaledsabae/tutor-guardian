@@ -1,0 +1,20 @@
+{
+  "id": "lesson_7-9_islamic_parenting_akhlaq_01",
+  "path_id": "path_7-9_islamic_parenting_akhlaq",
+  "title": "الصدق: كيف تربّي طفلاً لا يكذب",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [],
+  "summary": "الطفل يكذب غالباً خوفاً من العقاب أو طلباً للقبول. اجعل الصدق آمناً: لا تعاقب على الاعتراف، وامدح الصدق حتى لو كانت الحقيقة صعبة. الصدق يُبنى بالأمان لا بالتهديد.",
+  "try_this": "هذا الأسبوع: حين يصدق طفلك في أمرٍ صعب، امدح صدقه أولاً قبل معالجة الخطأ.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "متى يلجأ طفلك للكذب؟",
+    "هل يشعر أن الصدق آمنٌ معك؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0"
+}

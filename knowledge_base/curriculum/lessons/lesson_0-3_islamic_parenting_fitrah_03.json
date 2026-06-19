@@ -1,0 +1,20 @@
+{
+  "id": "lesson_0-3_islamic_parenting_fitrah_03",
+  "path_id": "path_0-3_islamic_parenting_fitrah",
+  "title": "جوٌّ إيماني هادئ: البيتُ الذي يربّي",
+  "age_group": "0-3",
+  "domain": "islamic_parenting",
+  "unit_ids": [],
+  "summary": "الرضيع يلتقط مشاعر بيته قبل أن يفهم كلماته. بيتٌ تسوده السكينة والذكر والرحمة يغرس في طفلك أمناً عميقاً يصبح أرضاً خصبة للإيمان لاحقاً.",
+  "try_this": "هذا الأسبوع: اجعل في بيتك لحظة هدوءٍ يومية (ذكر، تلاوة، كلمة طيبة) يعيشها طفلك معك.",
+  "order": 3,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "كيف هو الجوّ العام في بيتك؟",
+    "ما اللحظة الهادئة التي أضفتها؟"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0"
+}
