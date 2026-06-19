@@ -31,6 +31,16 @@ class QuranScreen extends ConsumerWidget {
         data: (quranData) {
           return Column(
             children: [
+              // Reverent header illustration (cream bg blends with the page).
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Image.asset(
+                  'assets/images/onboarding/ob_quran.jpg',
+                  height: 120,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                ),
+              ),
               // Last Read Banner
               lastReadAsync.when(
                 data: (lastRead) {
