@@ -1,0 +1,22 @@
+{
+  "id": "path_4-6_cyber_early_screens",
+  "title": "أسس الشاشة الصحية في سن ما قبل المدرسة (4-6 سنوات)",
+  "age_group": "4-6",
+  "domain": "cyber",
+  "description": "مسار يساعد الوالدين على بناء علاقةٍ صحية بين طفلهم والشاشة في سنٍّ حسّاسة: تحديد الوقت المناسب، اختيار محتوى آمن، جعل المشاهدة مشتركةً وحواراً، والفطام عن الإفراط بلا معارك.",
+  "lesson_ids": [
+    "lesson_4-6_cyber_early_screens_01",
+    "lesson_4-6_cyber_early_screens_02",
+    "lesson_4-6_cyber_early_screens_03",
+    "lesson_4-6_cyber_early_screens_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "مرجع_علمي",
+    "info": "توصيات وقت الشاشة للأطفال — AAP + منظمة الصحة العالمية"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}

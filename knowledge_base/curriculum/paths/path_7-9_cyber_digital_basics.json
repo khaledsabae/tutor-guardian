@@ -1,0 +1,22 @@
+{
+  "id": "path_7-9_cyber_digital_basics",
+  "title": "أول خطوات الأمان الرقمي (7-9 سنوات)",
+  "age_group": "7-9",
+  "domain": "cyber",
+  "description": "مسار يساعد الوالدين على تأسيس وعي طفلهم الرقمي: عقد شاشةٍ عائلي، التمييز بين الألعاب المفيدة والضارّة، حماية الخصوصية، والتعامل مع التنمّر الإلكتروني.",
+  "lesson_ids": [
+    "lesson_7-9_cyber_digital_basics_01",
+    "lesson_7-9_cyber_digital_basics_02",
+    "lesson_7-9_cyber_digital_basics_03",
+    "lesson_7-9_cyber_digital_basics_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "مرجع_علمي",
+    "info": "المواطنة الرقمية للأطفال — Common Sense Media + إرشادات الأمان الرقمي"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}

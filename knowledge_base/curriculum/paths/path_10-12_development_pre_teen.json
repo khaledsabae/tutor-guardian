@@ -1,0 +1,22 @@
+{
+  "id": "path_10-12_development_pre_teen",
+  "title": "ما قبل المراهقة: نموٌّ ومسؤولية (10-12 سنة)",
+  "age_group": "10-12",
+  "domain": "development",
+  "description": "مسار يساعد الوالدين على مرافقة طفلهم في عتبة المراهقة: حوار البلوغ بثقة، الاستقلال المتدرّج والمسؤولية، الصداقة وضغط الأقران، وتنظيم الوقت بين الدراسة واللعب والشاشة.",
+  "lesson_ids": [
+    "lesson_10-12_development_pre_teen_01",
+    "lesson_10-12_development_pre_teen_02",
+    "lesson_10-12_development_pre_teen_03",
+    "lesson_10-12_development_pre_teen_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "مرجع_علمي",
+    "info": "نمو ما قبل المراهقة — AAP + علم نفس النمو"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}

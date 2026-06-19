@@ -1,0 +1,22 @@
+{
+  "id": "path_4-6_medical_healthy_growth",
+  "title": "صحة ونمو الطفل في سن ما قبل المدرسة (4-6 سنوات)",
+  "age_group": "4-6",
+  "domain": "medical",
+  "description": "مسار يساعد الوالدين على رعاية صحة طفلهم الجسدية: النوم الكافي، التغذية المتوازنة وعلاج رفض الطعام، ملاحظة علامات النمو، وبناء عادات وقايةٍ ونظافة — مع توضيح متى يُستشار الطبيب.",
+  "lesson_ids": [
+    "lesson_4-6_medical_healthy_growth_01",
+    "lesson_4-6_medical_healthy_growth_02",
+    "lesson_4-6_medical_healthy_growth_03",
+    "lesson_4-6_medical_healthy_growth_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "مرجع_علمي",
+    "info": "إرشادات صحة الطفل — AAP + دليل التغذية للأطفال"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}

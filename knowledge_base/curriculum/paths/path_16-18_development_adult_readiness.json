@@ -1,0 +1,22 @@
+{
+  "id": "path_16-18_development_adult_readiness",
+  "title": "نضجٌ واستقلال: إعداد شابك لحياة الراشدين (16-18 سنة)",
+  "age_group": "16-18",
+  "domain": "development",
+  "description": "مسار يساعد الوالدين على إعداد ابنهم لحياة الراشدين: فهم نضج دماغ المراهق وضبط الاندفاع، إتقان مهارات الحياة المستقلة، رعاية صحته النفسية تحت ضغط المستقبل، وبناء علاقاتٍ ناضجةٍ بحدودٍ سليمة.",
+  "lesson_ids": [
+    "lesson_16-18_development_adult_readiness_01",
+    "lesson_16-18_development_adult_readiness_02",
+    "lesson_16-18_development_adult_readiness_03",
+    "lesson_16-18_development_adult_readiness_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "مرجع_علمي",
+    "info": "إرشادات النمو في المراهقة المتأخرة — AAP + علم نفس النمو"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}

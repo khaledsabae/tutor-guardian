@@ -1,0 +1,22 @@
+{
+  "id": "path_2-3_medical_early_wellbeing",
+  "title": "صحة الدارج: رعاية جسد طفلك من سنتين إلى ثلاث",
+  "age_group": "2-3",
+  "domain": "medical",
+  "description": "مسار يساعد الوالدين على رعاية صحة طفلهم الدارج: التغذية بعد الفطام، نوم الدارج ونوبات الليل، متابعة علامات النمو، والسلامة المنزلية والوقاية من الحوادث — مع توضيح متى يُستشار الطبيب.",
+  "lesson_ids": [
+    "lesson_2-3_medical_early_wellbeing_01",
+    "lesson_2-3_medical_early_wellbeing_02",
+    "lesson_2-3_medical_early_wellbeing_03",
+    "lesson_2-3_medical_early_wellbeing_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "مرجع_علمي",
+    "info": "رعاية الطفل الدارج — AAP + منظمة الصحة العالمية"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0"
+}
