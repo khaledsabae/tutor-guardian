@@ -33,11 +33,31 @@ INDEX_FILE = BASE / "docs" / "lesson_index.json"
 TMP_MAP = pathlib.Path("/tmp/lesson_source_map.json")
 
 
+def _lessons_without_podcasts():
+    """lesson_ids in the index that have NO podcasts registered yet.
+
+    Targeting these makes re-runs idempotent: lessons that already own a
+    podcast are never re-uploaded/re-generated (avoids duplicate audio).
+    """
+    if not INDEX_FILE.exists():
+        return set()
+    idx = json.loads(INDEX_FILE.read_text(encoding="utf-8"))
+    return {
+        l["lesson_id"]
+        for l in idx.get("lessons", [])
+        if l.get("lesson_id") and not l.get("assets", {}).get("podcasts")
+    }
+
+
 def new_md_files():
+    """Source md files for lessons that (a) map to a real curriculum lesson
+    and (b) don't yet have a podcast. This picks up newly-authored lessons
+    (e.g. lesson_<age>_<topic>_NN.md) without re-doing the existing audio."""
+    targets = _lessons_without_podcasts()
     out = []
     for f in sorted(NB_DIR.glob("**/*.md")):
-        stem = f.stem
-        if stem.rsplit("_", 1)[-1].startswith("b") and "_b" in stem:
+        lid = f.stem
+        if (LESSONS_DIR / f"{lid}.json").exists() and lid in targets:
             out.append(f)
     return out
 
