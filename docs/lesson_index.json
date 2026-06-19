@@ -1971,7 +1971,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_development_01_podcast.mp3",
-            "size_bytes": 580464,
+            "size_bytes": 23088878,
             "language": "ar"
           }
         ],
@@ -2036,7 +2036,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_development_02_podcast.mp3",
-            "size_bytes": 607824,
+            "size_bytes": 45222670,
             "language": "ar"
           }
         ],
@@ -2101,7 +2101,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_adab_01_podcast.mp3",
-            "size_bytes": 553536,
+            "size_bytes": 34411436,
             "language": "ar"
           }
         ],
@@ -2166,7 +2166,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_adab_02_podcast.mp3",
-            "size_bytes": 567936,
+            "size_bytes": 37766052,
             "language": "ar"
           }
         ],
@@ -2231,7 +2231,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_adab_03_podcast.mp3",
-            "size_bytes": 583776,
+            "size_bytes": 40729103,
             "language": "ar"
           }
         ],
@@ -2296,7 +2296,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_bond_01_podcast.mp3",
-            "size_bytes": 430704,
+            "size_bytes": 26195478,
             "language": "ar"
           }
         ],
@@ -2361,7 +2361,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_bond_02_podcast.mp3",
-            "size_bytes": 474192,
+            "size_bytes": 32853280,
             "language": "ar"
           }
         ],
@@ -2426,7 +2426,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_bond_03_podcast.mp3",
-            "size_bytes": 571536,
+            "size_bytes": 33625950,
             "language": "ar"
           }
         ],
@@ -2491,7 +2491,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_7-9_development_01_podcast.mp3",
-            "size_bytes": 283392,
+            "size_bytes": 16594046,
             "language": "ar"
           }
         ],
@@ -2556,7 +2556,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_7-9_development_02_podcast.mp3",
-            "size_bytes": 286272,
+            "size_bytes": 37615150,
             "language": "ar"
           }
         ],
@@ -2621,7 +2621,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_7-9_worship_01_podcast.mp3",
-            "size_bytes": 260640,
+            "size_bytes": 41996545,
             "language": "ar"
           }
         ],
@@ -2686,7 +2686,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_7-9_worship_02_podcast.mp3",
-            "size_bytes": 265392,
+            "size_bytes": 43131760,
             "language": "ar"
           }
         ],
@@ -2751,7 +2751,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_7-9_worship_03_podcast.mp3",
-            "size_bytes": 261936,
+            "size_bytes": 42530162,
             "language": "ar"
           }
         ],
@@ -2946,7 +2946,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_7-9_development_03_podcast.mp3",
-            "size_bytes": 284400,
+            "size_bytes": 21809484,
             "language": "ar"
           }
         ],
@@ -5352,7 +5352,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_islamic_parenting_adab_b04_podcast.mp3",
-            "size_bytes": 519984,
+            "size_bytes": 30422983,
             "language": "ar"
           }
         ],
@@ -5415,7 +5415,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_4-6_islamic_parenting_bond_b04_podcast.mp3",
-            "size_bytes": 25200,
+            "size_bytes": 41666985,
             "language": "ar"
           }
         ],
@@ -5478,7 +5478,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_7-9_development_digital_wellbeing_b04_podcast.mp3",
-            "size_bytes": 549216,
+            "size_bytes": 25262826,
             "language": "ar"
           }
         ],
@@ -5541,7 +5541,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_7-9_islamic_parenting_worship_b04_podcast.mp3",
-            "size_bytes": 521280,
+            "size_bytes": 36095093,
             "language": "ar"
           }
         ],
@@ -5667,7 +5667,7 @@
         "podcasts": [
           {
             "file": "docs/lesson_7-9_medical_emotional_health_b04_podcast.mp3",
-            "size_bytes": 527040,
+            "size_bytes": 31365346,
             "language": "ar"
           }
         ],
@@ -5702,6 +5702,1158 @@
             "type": "video/mp4",
             "language": "ar_eg",
             "description": "Path intro video for path_7-9_medical_emotional_health"
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_islamic_parenting_fitrah_01",
+      "age_group": "0-3",
+      "topic_path": "islamic_parenting_fitrah",
+      "title_ar": "صوت القرآن والأذان: أول ما تطرق أذنه",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_fitrah_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_fitrah_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_fitrah_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_fitrah_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_islamic_parenting_fitrah_02",
+      "age_group": "0-3",
+      "topic_path": "islamic_parenting_fitrah",
+      "title_ar": "الدعاء والتحنيك: سنن استقبال المولود",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_fitrah_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_fitrah_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_fitrah_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_fitrah_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_islamic_parenting_fitrah_03",
+      "age_group": "0-3",
+      "topic_path": "islamic_parenting_fitrah",
+      "title_ar": "جوٌّ إيماني هادئ: البيتُ الذي يربّي",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_fitrah_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_fitrah_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_fitrah_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_fitrah_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_0-3_islamic_parenting_fitrah_04",
+      "age_group": "0-3",
+      "topic_path": "islamic_parenting_fitrah",
+      "title_ar": "لمسة الرحمة: الحبُّ أساس التديّن",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_fitrah_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_0-3_islamic_parenting_fitrah_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_0-3_islamic_parenting_fitrah_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_fitrah_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_development_pre_teen_01",
+      "age_group": "10-12",
+      "topic_path": "development_pre_teen",
+      "title_ar": "بوادر البلوغ: حوار الجسد المتغيّر بثقة",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_development_pre_teen_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_development_pre_teen_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_development_pre_teen_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_development_pre_teen_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_development_pre_teen_02",
+      "age_group": "10-12",
+      "topic_path": "development_pre_teen",
+      "title_ar": "الاستقلال المتدرّج والمسؤولية",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_development_pre_teen_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_development_pre_teen_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_development_pre_teen_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_development_pre_teen_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_development_pre_teen_03",
+      "age_group": "10-12",
+      "topic_path": "development_pre_teen",
+      "title_ar": "الصداقة وضغط الأقران: بوصلة القيم",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_development_pre_teen_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_development_pre_teen_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_development_pre_teen_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_development_pre_teen_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_development_pre_teen_04",
+      "age_group": "10-12",
+      "topic_path": "development_pre_teen",
+      "title_ar": "تنظيم الوقت بين الدراسة واللعب والشاشة",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_development_pre_teen_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_development_pre_teen_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_development_pre_teen_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_development_pre_teen_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_parenting_worship_love_01",
+      "age_group": "10-12",
+      "topic_path": "islamic_parenting_worship_love",
+      "title_ar": "الصلاة محبّةً لا إلزاماً",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_islamic_parenting_worship_love_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_parenting_worship_love_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_islamic_parenting_worship_love_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_parenting_worship_love_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_parenting_worship_love_02",
+      "age_group": "10-12",
+      "topic_path": "islamic_parenting_worship_love",
+      "title_ar": "أول صيام رمضان: تدرّجٌ وتحفيز",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_islamic_parenting_worship_love_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_parenting_worship_love_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_islamic_parenting_worship_love_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_parenting_worship_love_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_parenting_worship_love_03",
+      "age_group": "10-12",
+      "topic_path": "islamic_parenting_worship_love",
+      "title_ar": "علاقة حيّة بالقرآن: حفظٌ وفهم",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_islamic_parenting_worship_love_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_parenting_worship_love_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_islamic_parenting_worship_love_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_parenting_worship_love_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_parenting_worship_love_04",
+      "age_group": "10-12",
+      "topic_path": "islamic_parenting_worship_love",
+      "title_ar": "الدعاء: تعليمه مناجاة الله",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_islamic_parenting_worship_love_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_parenting_worship_love_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_islamic_parenting_worship_love_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_parenting_worship_love_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_islamic_parenting_steadfast_01",
+      "age_group": "13-15",
+      "topic_path": "islamic_parenting_steadfast",
+      "title_ar": "العفّة وبدايات الغريزة: حوارٌ مبكر",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_islamic_parenting_steadfast_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_parenting_steadfast_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_islamic_parenting_steadfast_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_parenting_steadfast_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_islamic_parenting_steadfast_02",
+      "age_group": "13-15",
+      "topic_path": "islamic_parenting_steadfast",
+      "title_ar": "الصحبة في زمن السوشيال ميديا",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_islamic_parenting_steadfast_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_parenting_steadfast_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_islamic_parenting_steadfast_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_parenting_steadfast_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_islamic_parenting_steadfast_03",
+      "age_group": "13-15",
+      "topic_path": "islamic_parenting_steadfast",
+      "title_ar": "الإخلاص: العمل لله لا للناس",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_islamic_parenting_steadfast_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_parenting_steadfast_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_islamic_parenting_steadfast_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_parenting_steadfast_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_islamic_parenting_steadfast_04",
+      "age_group": "13-15",
+      "topic_path": "islamic_parenting_steadfast",
+      "title_ar": "القدوة الداخلية: ضميرٌ يراقب الله",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_islamic_parenting_steadfast_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_parenting_steadfast_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_islamic_parenting_steadfast_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_parenting_steadfast_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_development_adult_readiness_01",
+      "age_group": "16-18",
+      "topic_path": "development_adult_readiness",
+      "title_ar": "دماغ شابك يكتمل: قرارٌ واعٍ بدل اندفاع",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_development_adult_readiness_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_development_adult_readiness_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_development_adult_readiness_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_development_adult_readiness_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_development_adult_readiness_02",
+      "age_group": "16-18",
+      "topic_path": "development_adult_readiness",
+      "title_ar": "مهارات الحياة المستقلة: المال والوقت وتدبير الذات",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_development_adult_readiness_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_development_adult_readiness_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_development_adult_readiness_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_development_adult_readiness_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_development_adult_readiness_03",
+      "age_group": "16-18",
+      "topic_path": "development_adult_readiness",
+      "title_ar": "الصحة النفسية وضغط المستقبل: القلق من الغد",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_development_adult_readiness_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_development_adult_readiness_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_development_adult_readiness_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_development_adult_readiness_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_development_adult_readiness_04",
+      "age_group": "16-18",
+      "topic_path": "development_adult_readiness",
+      "title_ar": "العلاقات الناضجة والحدود: صداقاتٌ وشراكاتٌ سليمة",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_development_adult_readiness_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_development_adult_readiness_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_development_adult_readiness_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_development_adult_readiness_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_01",
+      "age_group": "16-18",
+      "topic_path": "islamic_parenting_adult_faith",
+      "title_ar": "إيمانٌ بقناعة: حين يواجه شابك العالم وحده",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_islamic_parenting_adult_faith_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_islamic_parenting_adult_faith_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_islamic_parenting_adult_faith_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_islamic_parenting_adult_faith_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_02",
+      "age_group": "16-18",
+      "topic_path": "islamic_parenting_adult_faith",
+      "title_ar": "العفّة والاستعداد للزواج: حوارٌ صريحٌ بلا خجل",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_islamic_parenting_adult_faith_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_islamic_parenting_adult_faith_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_islamic_parenting_adult_faith_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_islamic_parenting_adult_faith_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_03",
+      "age_group": "16-18",
+      "topic_path": "islamic_parenting_adult_faith",
+      "title_ar": "رسالةٌ لا وظيفة: أن يحيا شابك لغايةٍ أكبر",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_islamic_parenting_adult_faith_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_islamic_parenting_adult_faith_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_islamic_parenting_adult_faith_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_islamic_parenting_adult_faith_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_04",
+      "age_group": "16-18",
+      "topic_path": "islamic_parenting_adult_faith",
+      "title_ar": "إطلاقٌ آمن: من الإشراف إلى الثقة والاستقلال",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_islamic_parenting_adult_faith_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_islamic_parenting_adult_faith_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_islamic_parenting_adult_faith_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_islamic_parenting_adult_faith_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_islamic_first_words_01",
+      "age_group": "2-3",
+      "topic_path": "islamic_first_words",
+      "title_ar": "بسم الله والحمد لله: ذكرٌ في كل لحظة",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_islamic_first_words_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_first_words_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_islamic_first_words_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_first_words_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_islamic_first_words_02",
+      "age_group": "2-3",
+      "topic_path": "islamic_first_words",
+      "title_ar": "السلام والكلمة الطيّبة",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_islamic_first_words_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_first_words_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_islamic_first_words_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_first_words_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_islamic_first_words_03",
+      "age_group": "2-3",
+      "topic_path": "islamic_first_words",
+      "title_ar": "أول الآداب: الأكل باليمين والدعاء",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_islamic_first_words_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_first_words_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_islamic_first_words_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_first_words_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_islamic_first_words_04",
+      "age_group": "2-3",
+      "topic_path": "islamic_first_words",
+      "title_ar": "القدوة لا التلقين: يقلّد ما يرى",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_islamic_first_words_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_islamic_first_words_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_islamic_first_words_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_first_words_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_medical_early_wellbeing_01",
+      "age_group": "2-3",
+      "topic_path": "medical_early_wellbeing",
+      "title_ar": "التغذية بعد الفطام: من الحليب إلى المائدة",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_medical_early_wellbeing_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_medical_early_wellbeing_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_medical_early_wellbeing_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_medical_early_wellbeing_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_medical_early_wellbeing_02",
+      "age_group": "2-3",
+      "topic_path": "medical_early_wellbeing",
+      "title_ar": "نوم الدارج ونوبات الليل",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_medical_early_wellbeing_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_medical_early_wellbeing_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_medical_early_wellbeing_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_medical_early_wellbeing_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_medical_early_wellbeing_03",
+      "age_group": "2-3",
+      "topic_path": "medical_early_wellbeing",
+      "title_ar": "علامات النمو والتطور (ومتى تقلق)",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_medical_early_wellbeing_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_medical_early_wellbeing_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_medical_early_wellbeing_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_medical_early_wellbeing_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_medical_early_wellbeing_04",
+      "age_group": "2-3",
+      "topic_path": "medical_early_wellbeing",
+      "title_ar": "السلامة المنزلية والوقاية من الحوادث",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_medical_early_wellbeing_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_medical_early_wellbeing_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_medical_early_wellbeing_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_medical_early_wellbeing_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_cyber_early_screens_01",
+      "age_group": "4-6",
+      "topic_path": "cyber_early_screens",
+      "title_ar": "كم وقت شاشة يناسب طفلك؟ القاعدة والبديل",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_cyber_early_screens_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_cyber_early_screens_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_cyber_early_screens_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_cyber_early_screens_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_cyber_early_screens_02",
+      "age_group": "4-6",
+      "topic_path": "cyber_early_screens",
+      "title_ar": "اختيار المحتوى الآمن: ماذا يشاهد ومع من",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_cyber_early_screens_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_cyber_early_screens_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_cyber_early_screens_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_cyber_early_screens_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_cyber_early_screens_03",
+      "age_group": "4-6",
+      "topic_path": "cyber_early_screens",
+      "title_ar": "الشاشة المشتركة لا المنفردة: المشاهدة حواراً",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_cyber_early_screens_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_cyber_early_screens_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_cyber_early_screens_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_cyber_early_screens_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_cyber_early_screens_04",
+      "age_group": "4-6",
+      "topic_path": "cyber_early_screens",
+      "title_ar": "فطامٌ لطيف عن الشاشة: روتينٌ بلا معارك",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_cyber_early_screens_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_cyber_early_screens_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_cyber_early_screens_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_cyber_early_screens_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_medical_healthy_growth_01",
+      "age_group": "4-6",
+      "topic_path": "medical_healthy_growth",
+      "title_ar": "النوم الكافي: كم يحتاج طفلك ولماذا",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_medical_healthy_growth_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_medical_healthy_growth_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_medical_healthy_growth_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_medical_healthy_growth_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_medical_healthy_growth_02",
+      "age_group": "4-6",
+      "topic_path": "medical_healthy_growth",
+      "title_ar": "التغذية المتوازنة ورفض الطعام",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_medical_healthy_growth_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_medical_healthy_growth_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_medical_healthy_growth_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_medical_healthy_growth_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_medical_healthy_growth_03",
+      "age_group": "4-6",
+      "topic_path": "medical_healthy_growth",
+      "title_ar": "علاماتٌ نمائية يجب ملاحظتها (ومتى تستشير)",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_medical_healthy_growth_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_medical_healthy_growth_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_medical_healthy_growth_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_medical_healthy_growth_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_medical_healthy_growth_04",
+      "age_group": "4-6",
+      "topic_path": "medical_healthy_growth",
+      "title_ar": "النظافة والوقاية: عاداتٌ صحية مبكرة",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_medical_healthy_growth_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_medical_healthy_growth_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_medical_healthy_growth_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_medical_healthy_growth_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_cyber_digital_basics_01",
+      "age_group": "7-9",
+      "topic_path": "cyber_digital_basics",
+      "title_ar": "عقد الشاشة العائلي: قواعدُ متفقٌ عليها",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_cyber_digital_basics_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_cyber_digital_basics_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_cyber_digital_basics_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_cyber_digital_basics_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_cyber_digital_basics_02",
+      "age_group": "7-9",
+      "topic_path": "cyber_digital_basics",
+      "title_ar": "الألعاب الإلكترونية: المفيد والضارّ",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_cyber_digital_basics_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_cyber_digital_basics_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_cyber_digital_basics_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_cyber_digital_basics_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_cyber_digital_basics_03",
+      "age_group": "7-9",
+      "topic_path": "cyber_digital_basics",
+      "title_ar": "خصوصية الطفل: ما لا يُشارَك على الإنترنت",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_cyber_digital_basics_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_cyber_digital_basics_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_cyber_digital_basics_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_cyber_digital_basics_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_cyber_digital_basics_04",
+      "age_group": "7-9",
+      "topic_path": "cyber_digital_basics",
+      "title_ar": "التنمّر الإلكتروني: كيف يحمي نفسه ومتى يخبرك",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_cyber_digital_basics_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_cyber_digital_basics_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_cyber_digital_basics_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_cyber_digital_basics_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_01",
+      "age_group": "7-9",
+      "topic_path": "islamic_parenting_akhlaq",
+      "title_ar": "الصدق: كيف تربّي طفلاً لا يكذب",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_akhlaq_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_islamic_parenting_akhlaq_01_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_akhlaq_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_islamic_parenting_akhlaq_01_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_02",
+      "age_group": "7-9",
+      "topic_path": "islamic_parenting_akhlaq",
+      "title_ar": "الرحمة بالإخوة والناس",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_akhlaq_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_islamic_parenting_akhlaq_02_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_akhlaq_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_islamic_parenting_akhlaq_02_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_03",
+      "age_group": "7-9",
+      "topic_path": "islamic_parenting_akhlaq",
+      "title_ar": "الأمانة والمسؤولية الصغيرة",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_akhlaq_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_islamic_parenting_akhlaq_03_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_akhlaq_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_islamic_parenting_akhlaq_03_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_04",
+      "age_group": "7-9",
+      "topic_path": "islamic_parenting_akhlaq",
+      "title_ar": "ضبط الغضب على هدي النبي ﷺ",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_akhlaq_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_islamic_parenting_akhlaq_04_fc.json",
+            "title": "فلاش كاردز",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_islamic_parenting_akhlaq_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_islamic_parenting_akhlaq_04_qz.json",
+            "title": "اختبر نفسك",
+            "item_count": 1
           }
         ]
       }

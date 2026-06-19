@@ -18,6 +18,8 @@ on:
     paths:
       - 'backend/**'
       - 'knowledge_base/**'
+      - 'docs/lesson_index.json'
+      - 'docs/lesson_assets/**'
       - 'docker-compose.production.yml'
       - 'requirements*.txt'
       - '.github/workflows/deploy.yml'
