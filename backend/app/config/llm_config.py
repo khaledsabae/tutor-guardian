@@ -45,6 +45,16 @@ class LLMConfig:
     )
     cloud_tier_timeout: int = int(os.environ.get("CLOUD_TIER_TIMEOUT", "60"))
 
+    # ── Primary provider override (DeepSeek / generic OpenAI-compatible) ────
+    # When LLM_PRIMARY_PROVIDER=deepseek and a key is present, the gateway uses
+    # DeepSeek as the PRIMARY model for every call (chat + ingestion), with the
+    # local Ollama chain as automatic fallback. Native OpenAI-style endpoint
+    # (NOT Azure) — works with api.deepseek.com, z.ai, openrouter, etc.
+    primary_provider: str = os.environ.get("LLM_PRIMARY_PROVIDER", "ollama").lower()
+    deepseek_api_key: str = os.environ.get("DEEPSEEK_API_KEY", "")
+    deepseek_base_url: str = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+    deepseek_model: str = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+
     # backward-compat shim: older code reads .model
     @property
     def model(self) -> str:

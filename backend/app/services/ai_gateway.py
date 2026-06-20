@@ -229,6 +229,68 @@ class OpenAICompatProvider:
         }
 
 
+class OpenAIChatProvider:
+    """Generic OpenAI-compatible chat provider (DeepSeek / GLM / OpenRouter…).
+
+    Unlike OpenAICompatProvider (Azure-specific), this targets a plain
+    OpenAI-style base_url (e.g. https://api.deepseek.com). Emits the same dict
+    shape as Ollama so the gateway plumbing is unchanged. Used as the PRIMARY
+    provider when LLM_PRIMARY_PROVIDER=deepseek, with the local Ollama chain
+    kept behind it as automatic fallback.
+    """
+
+    def __init__(self, base_url: str, api_key: str, model: str,
+                 timeout: int, name: str = "deepseek") -> None:
+        from openai import OpenAI  # lazy import — optional dependency
+
+        self.name = name
+        self.model = model
+        self.timeout = timeout
+        self._client = OpenAI(api_key=api_key, base_url=base_url, timeout=timeout)
+
+    def generate(self, prompt: str, *, options: dict) -> dict:
+        r = self._client.chat.completions.create(
+            model=self.model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=options.get("temperature", 0.3),
+            max_tokens=options.get("num_predict", 1024),
+        )
+        text = r.choices[0].message.content or ""
+        text = _ThinkFilter().feed(text)
+        usage = getattr(r, "usage", None)
+        return {
+            "response": text, "done": True,
+            "prompt_eval_count": getattr(usage, "prompt_tokens", None),
+            "eval_count": getattr(usage, "completion_tokens", None),
+        }
+
+    def stream(self, prompt: str, *, options: dict) -> Iterator[dict]:
+        stream = self._client.chat.completions.create(
+            model=self.model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=options.get("temperature", 0.3),
+            max_tokens=options.get("num_predict", 1024),
+            stream=True,
+        )
+        flt = _ThinkFilter()
+        prompt_tokens = completion_tokens = None
+        for chunk in stream:
+            usage = getattr(chunk, "usage", None)
+            if usage:
+                prompt_tokens = getattr(usage, "prompt_tokens", None)
+                completion_tokens = getattr(usage, "completion_tokens", None)
+            if not chunk.choices:
+                continue
+            delta = chunk.choices[0].delta.content or ""
+            delta = flt.feed(delta)
+            if delta:
+                yield {"response": delta, "done": False}
+        yield {
+            "response": "", "done": True,
+            "prompt_eval_count": prompt_tokens, "eval_count": completion_tokens,
+        }
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Telemetry (non-fatal)
 # ─────────────────────────────────────────────────────────────────────────────
@@ -270,11 +332,26 @@ def _log_call(provider: str, model: str, latency_ms: int,
 # ─────────────────────────────────────────────────────────────────────────────
 class AIGateway:
     def __init__(self, provider: LLMProvider | None = None) -> None:
-        self.provider = provider or OllamaProvider(
-            base_url=LLM.base_url, model=LLM.primary_model, timeout=LLM.request_timeout
-        )
+        self.provider = provider or self._default_provider()
         self.primary_model = self._provider_model()
         self.model = self.primary_model
+
+    @staticmethod
+    def _default_provider() -> LLMProvider:
+        """DeepSeek (or any OpenAI-compatible) as primary when configured;
+        otherwise the local Ollama model. Local chain stays as fallback."""
+        if LLM.primary_provider == "deepseek" and LLM.deepseek_api_key:
+            try:
+                return OpenAIChatProvider(
+                    base_url=LLM.deepseek_base_url, api_key=LLM.deepseek_api_key,
+                    model=LLM.deepseek_model, timeout=LLM.cloud_tier_timeout,
+                    name="deepseek",
+                )
+            except Exception as e:  # missing openai pkg / bad config — degrade
+                logger.warning("DeepSeek primary unavailable, using local: %s", e)
+        return OllamaProvider(
+            base_url=LLM.base_url, model=LLM.primary_model, timeout=LLM.request_timeout
+        )
 
     def _provider_model(self) -> str:
         """Safely read the provider runtime model."""
@@ -453,6 +530,10 @@ class AIGateway:
             (fb["name"], OllamaProvider(fb["url"], fb["model"], fb["timeout"]))
             for fb in LLM.stream_chain()
         ]
+        # Primary OpenAI-compatible provider (DeepSeek) streams first; the
+        # local Ollama chain above stays behind it as automatic fallback.
+        if isinstance(self.provider, OpenAIChatProvider):
+            candidates.insert(0, (self.provider.name, self.provider))
         if tier == "cloud_quality":
             cloud = self._cloud_provider()
             if cloud is not None:
