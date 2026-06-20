@@ -160,8 +160,41 @@ def chunk_text(text: str, max_words: int = 250, overlap: int = 50) -> list[str]:
     return chunks
 
 
+# ── DeepSeek (OpenAI-compatible) extraction — fast + CJK-clean ──────────
+# When DEEPSEEK_API_KEY is set, extraction uses DeepSeek instead of the slow,
+# CJK-prone local qwen model. Native api.deepseek.com endpoint.
+DEEPSEEK_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
+DEEPSEEK_BASE = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+DEEPSEEK_MODEL = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+
+
+def _strip_json(raw: str) -> dict | None:
+    raw = re.sub(r"```(?:json)?\s*|```", "", raw).strip()
+    return json.loads(raw)
+
+
+def call_deepseek(chunk: str) -> dict | None:
+    """Extract a knowledge unit via DeepSeek (OpenAI-compatible)."""
+    from openai import OpenAI
+
+    prompt = EXTRACTION_PROMPT.format(chunk=chunk)
+    try:
+        client = OpenAI(api_key=DEEPSEEK_KEY, base_url=DEEPSEEK_BASE, timeout=90)
+        r = client.chat.completions.create(
+            model=DEEPSEEK_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.1, max_tokens=900,
+        )
+        return _strip_json(r.choices[0].message.content or "")
+    except (json.JSONDecodeError, KeyError, Exception) as e:  # noqa: BLE001
+        print(f"  ⚠️  DeepSeek error: {e}")
+        return None
+
+
 def call_ollama(chunk: str) -> dict | None:
-    """Call Ollama with the extraction prompt and parse JSON response."""
+    """Call the configured LLM (DeepSeek if keyed, else Ollama) and parse JSON."""
+    if DEEPSEEK_KEY:
+        return call_deepseek(chunk)
     prompt = EXTRACTION_PROMPT.format(chunk=chunk)
     payload = {
         "model": MODEL,
@@ -174,9 +207,7 @@ def call_ollama(chunk: str) -> dict | None:
             r = client.post(OLLAMA_URL, json=payload)
             r.raise_for_status()
             raw = r.json().get("response", "")
-            # Strip markdown code fences
-            raw = re.sub(r"```(?:json)?\s*|```", "", raw).strip()
-            return json.loads(raw)
+            return _strip_json(raw)
     except (httpx.HTTPError, json.JSONDecodeError, KeyError) as e:
         print(f"  ⚠️  Ollama error: {e}")
         return None

@@ -1,10 +1,10 @@
 {
-  "total_units": 315,
-  "generated_at": "2026-06-13T14:39:51.631071+00:00",
+  "total_units": 379,
+  "generated_at": "2026-06-20T11:39:18.099524+00:00",
   "by_domain": {
     "medical": 105,
     "cyber": 51,
-    "islamic_parenting": 115,
+    "islamic_parenting": 179,
     "development": 44
   },
   "units": [
@@ -2361,6 +2361,18 @@
       "size_chars": 600
     },
     {
+      "id": "isl-00ca8ce8",
+      "domain": "islamic_parenting",
+      "title": "أهمية الحوار والتشجيع في تربية البنات",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1365
+    },
+    {
       "id": "isl-031fc474",
       "domain": "islamic_parenting",
       "title": "مناهج النبي في تربية الأطفال",
@@ -2371,6 +2383,18 @@
       "behavior_type": "تربيه الطفل",
       "needs_ocr": false,
       "size_chars": 1637
+    },
+    {
+      "id": "isl-034b141a",
+      "domain": "islamic_parenting",
+      "title": "أساسيات التربية بالرفق والحكمة",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1345
     },
     {
       "id": "isl-06fef96a",
@@ -2385,6 +2409,18 @@
       "size_chars": 1184
     },
     {
+      "id": "isl-07cd6cf0",
+      "domain": "islamic_parenting",
+      "title": "مسؤولية الآباء في تربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "مسؤولية تربوية",
+      "needs_ocr": false,
+      "size_chars": 845
+    },
+    {
       "id": "isl-08604ca9",
       "domain": "islamic_parenting",
       "title": "مقترحات علوان التربوية: تشويق الولد إلى المعالي",
@@ -2395,6 +2431,42 @@
       "behavior_type": "اختيار الزوجة",
       "needs_ocr": false,
       "size_chars": 1274
+    },
+    {
+      "id": "isl-0d5120d9",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية البنات واختيار الزوج الصالح",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1306
+    },
+    {
+      "id": "isl-0eb77048",
+      "domain": "islamic_parenting",
+      "title": "تعليم الطفل مراقبة الله والتوكل عليه",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تربية دينية",
+      "needs_ocr": false,
+      "size_chars": 938
+    },
+    {
+      "id": "isl-162e28c1",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية الأبناء والمسؤولية تجاههم",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1460
     },
     {
       "id": "isl-17332318",
@@ -2409,6 +2481,18 @@
       "size_chars": 1279
     },
     {
+      "id": "isl-17710349",
+      "domain": "islamic_parenting",
+      "title": "تحديات تربية البنات بين المدرسة والأخلاق",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "قلق تربوي",
+      "needs_ocr": false,
+      "size_chars": 1273
+    },
+    {
       "id": "isl-1812a28d",
       "domain": "islamic_parenting",
       "title": "الالتزام بالشعائر وعزة المسلم",
@@ -2419,6 +2503,18 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1239
+    },
+    {
+      "id": "isl-18fa1a80",
+      "domain": "islamic_parenting",
+      "title": "أهمية اختيار الزوجة الصالحة في تربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "اختيار الزوجة الصالحة للتربية",
+      "needs_ocr": false,
+      "size_chars": 1069
     },
     {
       "id": "isl-199c7aaf",
@@ -2445,6 +2541,18 @@
       "size_chars": 1241
     },
     {
+      "id": "isl-22169daa",
+      "domain": "islamic_parenting",
+      "title": "أهمية القدوة في تربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية وقدوة",
+      "needs_ocr": false,
+      "size_chars": 689
+    },
+    {
       "id": "isl-24a45a01",
       "domain": "islamic_parenting",
       "title": "التدريس في تعليم القرآن",
@@ -2469,6 +2577,42 @@
       "size_chars": 1242
     },
     {
+      "id": "isl-25e3d1bc",
+      "domain": "islamic_parenting",
+      "title": "مخاطر الأجهزة الإلكترونية على الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "إدمان أجهزة إلكترونية",
+      "needs_ocr": false,
+      "size_chars": 993
+    },
+    {
+      "id": "isl-27372b44",
+      "domain": "islamic_parenting",
+      "title": "تربية البنات في الإسلام وأهمية الصبر والحماية",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إسلامية",
+      "needs_ocr": false,
+      "size_chars": 1339
+    },
+    {
+      "id": "isl-276074bc",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية الأبناء بنية صادقة لله",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1289
+    },
+    {
       "id": "isl-2ac57f6a",
       "domain": "islamic_parenting",
       "title": "رسائل إلى المربين وقادة المجتمع في التبليغ",
@@ -2491,6 +2635,30 @@
       "behavior_type": "تربيه الأولاد",
       "needs_ocr": false,
       "size_chars": 1234
+    },
+    {
+      "id": "isl-2bbafb5d",
+      "domain": "islamic_parenting",
+      "title": "أهمية الرفق والرحمة في تربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إيجابية",
+      "needs_ocr": false,
+      "size_chars": 766
+    },
+    {
+      "id": "isl-2be190f6",
+      "domain": "islamic_parenting",
+      "title": "فضل تربية البنات والإحسان إليهن",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إيمانية",
+      "needs_ocr": false,
+      "size_chars": 1248
     },
     {
       "id": "isl-303f1e46",
@@ -2529,6 +2697,30 @@
       "size_chars": 1606
     },
     {
+      "id": "isl-36917162",
+      "domain": "islamic_parenting",
+      "title": "تعويد الأطفال على الصلاة وتجنب التعلق بالهاتف",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تربية دينية",
+      "needs_ocr": false,
+      "size_chars": 1308
+    },
+    {
+      "id": "isl-369ae871",
+      "domain": "islamic_parenting",
+      "title": "أهمية العدل بين الأبناء في التربية",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "العدل بين الأبناء",
+      "needs_ocr": false,
+      "size_chars": 750
+    },
+    {
       "id": "isl-3703ac71",
       "domain": "islamic_parenting",
       "title": "تعزيز التواصل بين الأهل والأطفال الصغار",
@@ -2539,6 +2731,18 @@
       "behavior_type": "السلوك الاجتماعي",
       "needs_ocr": false,
       "size_chars": 1454
+    },
+    {
+      "id": "isl-39499300",
+      "domain": "islamic_parenting",
+      "title": "أساس تربية الأبناء على عبادة الله",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إسلامية",
+      "needs_ocr": false,
+      "size_chars": 1334
     },
     {
       "id": "isl-422bf31f",
@@ -2565,6 +2769,30 @@
       "size_chars": 1217
     },
     {
+      "id": "isl-44bbed14",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية الأبناء ومسؤولية الآباء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "إهمال تربوي",
+      "needs_ocr": false,
+      "size_chars": 928
+    },
+    {
+      "id": "isl-47643ca5",
+      "domain": "islamic_parenting",
+      "title": "تأثير التساهل في تربية البنات على المظهر واللباس",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تربية دينية ومظهر",
+      "needs_ocr": false,
+      "size_chars": 1293
+    },
+    {
       "id": "isl-4882913e",
       "domain": "islamic_parenting",
       "title": "عبدالله علوان: عَلَم من أعلام التربية الإسلامية",
@@ -2577,6 +2805,18 @@
       "size_chars": 1278
     },
     {
+      "id": "isl-4fd89060",
+      "domain": "islamic_parenting",
+      "title": "العدل بين الأبناء وأثره في تربيتهم",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "التمييز بين الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1262
+    },
+    {
       "id": "isl-50943526",
       "domain": "islamic_parenting",
       "title": "العبودية لله: غاية التربية الإسلامية",
@@ -2587,6 +2827,42 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1256
+    },
+    {
+      "id": "isl-51abde6d",
+      "domain": "islamic_parenting",
+      "title": "قلق أم على سلوك ابنتها المدرسي",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "قلق تربوي",
+      "needs_ocr": false,
+      "size_chars": 601
+    },
+    {
+      "id": "isl-52462ce7",
+      "domain": "islamic_parenting",
+      "title": "تحذير من الدعاء على الأبناء في الغضب",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إيمانية",
+      "needs_ocr": false,
+      "size_chars": 844
+    },
+    {
+      "id": "isl-54836d16",
+      "domain": "islamic_parenting",
+      "title": "أهمية التعلم الذاتي وضبط النفس",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "توجيه سلوكي",
+      "needs_ocr": false,
+      "size_chars": 657
     },
     {
       "id": "isl-55ec7f83",
@@ -2649,6 +2925,42 @@
       "size_chars": 1262
     },
     {
+      "id": "isl-61e09b66",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية الأبناء ومسؤولية الآباء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 786
+    },
+    {
+      "id": "isl-65823c35",
+      "domain": "islamic_parenting",
+      "title": "أهمية اختيار الصاحب الصالح في التربية",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تأثير الصحبة",
+      "needs_ocr": false,
+      "size_chars": 776
+    },
+    {
+      "id": "isl-6a8c2563",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية الأبناء وتوجيههم",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 871
+    },
+    {
       "id": "isl-6cecdb96",
       "domain": "islamic_parenting",
       "title": "أهمية السلام في التربية الإسلامية",
@@ -2659,6 +2971,18 @@
       "behavior_type": "فرط حركة",
       "needs_ocr": false,
       "size_chars": 528
+    },
+    {
+      "id": "isl-6e3ef777",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية الطفل على الصدق والأمانة",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "الكذب والانحراف السلوكي",
+      "needs_ocr": false,
+      "size_chars": 948
     },
     {
       "id": "isl-6e679939",
@@ -2697,6 +3021,18 @@
       "size_chars": 1397
     },
     {
+      "id": "isl-73e37a6e",
+      "domain": "islamic_parenting",
+      "title": "نص غير قابل للتحليل التربوي",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "mixed",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "غير محدد",
+      "needs_ocr": false,
+      "size_chars": 626
+    },
+    {
       "id": "isl-775cf0fc",
       "domain": "islamic_parenting",
       "title": "شهادات الغرب في تعاليم الإسلام",
@@ -2707,6 +3043,30 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1262
+    },
+    {
+      "id": "isl-79b5db35",
+      "domain": "islamic_parenting",
+      "title": "أهمية الحنان والتربية الإيمانية في تربية الأبناء",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إيمانية وعاطفية",
+      "needs_ocr": false,
+      "size_chars": 1358
+    },
+    {
+      "id": "isl-7bfdefb2",
+      "domain": "islamic_parenting",
+      "title": "أهمية اختيار الزوجة الصالحة في الإسلام",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "اختيار الزوجة الصالحة",
+      "needs_ocr": false,
+      "size_chars": 955
     },
     {
       "id": "isl-7bff5e2c",
@@ -2721,6 +3081,30 @@
       "size_chars": 1367
     },
     {
+      "id": "isl-7ec75c52",
+      "domain": "islamic_parenting",
+      "title": "أهمية غرس العقيدة والإيمان في الأطفال",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تربية دينية",
+      "needs_ocr": false,
+      "size_chars": 983
+    },
+    {
+      "id": "isl-80a33332",
+      "domain": "islamic_parenting",
+      "title": "تأثير الأجهزة الإلكترونية على الفتيات وأهمية التوجيه",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "إدمان أجهزة إلكترونية",
+      "needs_ocr": false,
+      "size_chars": 1343
+    },
+    {
       "id": "isl-8115fbf7",
       "domain": "islamic_parenting",
       "title": "العمل والنشاط في خدمة المجتمع: منهج قرآني",
@@ -2733,6 +3117,18 @@
       "size_chars": 1241
     },
     {
+      "id": "isl-8251f498",
+      "domain": "islamic_parenting",
+      "title": "أهمية الإحسان في تربية البنات والأولاد",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إسلامية",
+      "needs_ocr": false,
+      "size_chars": 1319
+    },
+    {
       "id": "isl-83d7099a",
       "domain": "islamic_parenting",
       "title": "التربية الجنسية والستر: أدلة وضوابط شرعية",
@@ -2743,6 +3139,18 @@
       "behavior_type": "الحوار",
       "needs_ocr": false,
       "size_chars": 1265
+    },
+    {
+      "id": "isl-84538ea0",
+      "domain": "islamic_parenting",
+      "title": "أهمية القدوة الحسنة في تربية الأبناء",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إسلامية وقدوة",
+      "needs_ocr": false,
+      "size_chars": 1333
     },
     {
       "id": "isl-898aaacc",
@@ -2769,6 +3177,30 @@
       "size_chars": 1319
     },
     {
+      "id": "isl-8bf01cae",
+      "domain": "islamic_parenting",
+      "title": "التحذير من الدعاء على النفس والأهل",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية دينية وأخلاقية",
+      "needs_ocr": false,
+      "size_chars": 851
+    },
+    {
+      "id": "isl-8df11735",
+      "domain": "islamic_parenting",
+      "title": "تربية الأبناء وتوجيههم وفق القيم الإسلامية",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية دينية وأسرية",
+      "needs_ocr": false,
+      "size_chars": 804
+    },
+    {
       "id": "isl-8f891c3d",
       "domain": "islamic_parenting",
       "title": "تسمية المولود والعقيقة: أولى خطوات التربية",
@@ -2779,6 +3211,18 @@
       "behavior_type": "تربية الأطفال",
       "needs_ocr": false,
       "size_chars": 467
+    },
+    {
+      "id": "isl-908e4c80",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية البنات في الإسلام",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إسلامية",
+      "needs_ocr": false,
+      "size_chars": 1223
     },
     {
       "id": "isl-91162ead",
@@ -2803,6 +3247,18 @@
       "behavior_type": "سلوكيات الأسرة",
       "needs_ocr": false,
       "size_chars": 1274
+    },
+    {
+      "id": "isl-9738d757",
+      "domain": "islamic_parenting",
+      "title": "أهمية غرس الحياء في تربية البنات",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1341
     },
     {
       "id": "isl-990bc4e1",
@@ -2851,6 +3307,18 @@
       "behavior_type": "تربية الأبناء",
       "needs_ocr": false,
       "size_chars": 497
+    },
+    {
+      "id": "isl-a444db2a",
+      "domain": "islamic_parenting",
+      "title": "أهمية دعاء الوالدين لصلاح الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إيمانية",
+      "needs_ocr": false,
+      "size_chars": 856
     },
     {
       "id": "isl-a4875a31",
@@ -2925,6 +3393,54 @@
       "size_chars": 1346
     },
     {
+      "id": "isl-b8207e53",
+      "domain": "islamic_parenting",
+      "title": "أثر القدوة الحسنة في تربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "القدوة الحسنة في التربية",
+      "needs_ocr": false,
+      "size_chars": 832
+    },
+    {
+      "id": "isl-ba66715b",
+      "domain": "islamic_parenting",
+      "title": "أهمية المرأة الصالحة في الأسرة وتربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "التربية الأسرية والقيم",
+      "needs_ocr": false,
+      "size_chars": 1050
+    },
+    {
+      "id": "isl-bd142357",
+      "domain": "islamic_parenting",
+      "title": "تعليم الأطفال مراقبة الله والتحذير من الشرك",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تربية دينية",
+      "needs_ocr": false,
+      "size_chars": 900
+    },
+    {
+      "id": "isl-bf36ef72",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية البنات والإحسان إليهن",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية البنات",
+      "needs_ocr": false,
+      "size_chars": 1276
+    },
+    {
       "id": "isl-bfbe3bbe",
       "domain": "islamic_parenting",
       "title": "وحدة القيادة في الأسرة وأثرها في انضباط الأولاد",
@@ -2949,6 +3465,18 @@
       "size_chars": 1272
     },
     {
+      "id": "isl-c0adb8a0",
+      "domain": "islamic_parenting",
+      "title": "أساسيات التربية الدينية للأبناء",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تربية دينية وأخلاقية",
+      "needs_ocr": false,
+      "size_chars": 1304
+    },
+    {
       "id": "isl-c1f0ce4d",
       "domain": "islamic_parenting",
       "title": "التوحيد والعلم والهدى في إصلاح المجتمع",
@@ -2961,6 +3489,18 @@
       "size_chars": 1401
     },
     {
+      "id": "isl-c5b93252",
+      "domain": "islamic_parenting",
+      "title": "فضل تربية البنات والأجر العظيم",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية البنات",
+      "needs_ocr": false,
+      "size_chars": 1216
+    },
+    {
       "id": "isl-c68e6b95",
       "domain": "islamic_parenting",
       "title": "الرعيل الأول: حين تحوّل القرآن إلى واقع معاش",
@@ -2971,6 +3511,18 @@
       "behavior_type": "تعليم وتربية",
       "needs_ocr": false,
       "size_chars": 1184
+    },
+    {
+      "id": "isl-c8183443",
+      "domain": "islamic_parenting",
+      "title": "أصول التربية الإيمانية والأخلاقية للأبناء",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية إيمانية وأخلاقية",
+      "needs_ocr": false,
+      "size_chars": 1400
     },
     {
       "id": "isl-c8cae71a",
@@ -2997,6 +3549,66 @@
       "size_chars": 1239
     },
     {
+      "id": "isl-cd4d1888",
+      "domain": "islamic_parenting",
+      "title": "تربية الأبناء أمانة عظيمة",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1011
+    },
+    {
+      "id": "isl-ce1b71bd",
+      "domain": "islamic_parenting",
+      "title": "مسؤولية الآباء في تربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "مسؤولية تربوية",
+      "needs_ocr": false,
+      "size_chars": 839
+    },
+    {
+      "id": "isl-d126e483",
+      "domain": "islamic_parenting",
+      "title": "توجيه الأبناء للصلاة والأخلاق واختيار الصحبة",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تربية دينية وأخلاقية",
+      "needs_ocr": false,
+      "size_chars": 890
+    },
+    {
+      "id": "isl-d44e6fe8",
+      "domain": "islamic_parenting",
+      "title": "خطر المخدرات وأهمية القدوة الحسنة",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "وقاية من المخدرات",
+      "needs_ocr": false,
+      "size_chars": 828
+    },
+    {
+      "id": "isl-d4dbc6b8",
+      "domain": "islamic_parenting",
+      "title": "تربية البنات على الخير والأخلاق",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تربية أخلاقية ودينية",
+      "needs_ocr": false,
+      "size_chars": 1265
+    },
+    {
       "id": "isl-d7872363",
       "domain": "islamic_parenting",
       "title": "التأسي بأصحاب النبي ﷺ في الإخاء والحب",
@@ -3007,6 +3619,30 @@
       "behavior_type": "حوار",
       "needs_ocr": false,
       "size_chars": 1391
+    },
+    {
+      "id": "isl-d7fe058f",
+      "domain": "islamic_parenting",
+      "title": "علاج الطفل بالدواء غير التقليدي",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "اضطراب سلوكي مقاوم للعلاج",
+      "needs_ocr": false,
+      "size_chars": 640
+    },
+    {
+      "id": "isl-ddc58cc5",
+      "domain": "islamic_parenting",
+      "title": "مسؤولية الآباء في تربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 799
     },
     {
       "id": "isl-ddf22d9e",
@@ -3021,6 +3657,30 @@
       "size_chars": 1255
     },
     {
+      "id": "isl-ded5466d",
+      "domain": "islamic_parenting",
+      "title": "أفضل هدية للولد: التأديب الحسن والعدل",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 734
+    },
+    {
+      "id": "isl-e0cb0e7b",
+      "domain": "islamic_parenting",
+      "title": "أهمية النصح والتوجيه في تربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تربية دينية وأخلاقية",
+      "needs_ocr": false,
+      "size_chars": 825
+    },
+    {
       "id": "isl-e34c25ab",
       "domain": "islamic_parenting",
       "title": "تربية الأبناء على الأسس الإسلامية: مقدمة الكتاب",
@@ -3031,6 +3691,42 @@
       "behavior_type": "تربية أولاده",
       "needs_ocr": false,
       "size_chars": 699
+    },
+    {
+      "id": "isl-e40ef2fa",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية البنات والعدل بين الأبناء",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية البنات والعدل بين الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1405
+    },
+    {
+      "id": "isl-e4672a9e",
+      "domain": "islamic_parenting",
+      "title": "التحذير من الظلم بين الأبناء وأهمية العدل",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "الظلم بين الأبناء",
+      "needs_ocr": false,
+      "size_chars": 822
+    },
+    {
+      "id": "isl-e837f328",
+      "domain": "islamic_parenting",
+      "title": "فضل تربية البنات والرضا بهن",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية البنات",
+      "needs_ocr": false,
+      "size_chars": 1351
     },
     {
       "id": "isl-e851d730",
@@ -3045,6 +3741,54 @@
       "size_chars": 1262
     },
     {
+      "id": "isl-e872dad0",
+      "domain": "islamic_parenting",
+      "title": "قصة التمرة وأجر التربية الصالحة",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تربية دينية وأخلاقية",
+      "needs_ocr": false,
+      "size_chars": 970
+    },
+    {
+      "id": "isl-ee271b17",
+      "domain": "islamic_parenting",
+      "title": "احترام خصوصية الأبناء والعدل في التربية",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "تربية الأبناء والعدل بينهم",
+      "needs_ocr": false,
+      "size_chars": 1311
+    },
+    {
+      "id": "isl-f3270ea2",
+      "domain": "islamic_parenting",
+      "title": "أهمية القدوة الحسنة في تربية الأبناء",
+      "source_file": "Rakaiz_Tarbiya.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "القدوة الأبوية وتأثيرها على الأبناء",
+      "needs_ocr": false,
+      "size_chars": 776
+    },
+    {
+      "id": "isl-f4e75ff2",
+      "domain": "islamic_parenting",
+      "title": "إرشادات لتربية الأطفال على حب الله والقرآن",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تربية دينية وتعليم قرآن",
+      "needs_ocr": false,
+      "size_chars": 1291
+    },
+    {
       "id": "isl-f6c0c64a",
       "domain": "islamic_parenting",
       "title": "«ما نحل والدٌ ولداً أفضل من أدب حسن» — فضل تأديب الأبناء",
@@ -3057,6 +3801,18 @@
       "size_chars": 1220
     },
     {
+      "id": "isl-f77b3ed4",
+      "domain": "islamic_parenting",
+      "title": "أهمية تربية الأبناء على الدين والأخلاق",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "تربية الأبناء",
+      "needs_ocr": false,
+      "size_chars": 1430
+    },
+    {
       "id": "isl-fb6a8582",
       "domain": "islamic_parenting",
       "title": "العدل بين الأولاد: متى يُقبل تمييز المعاملة وكيف يُشرح",
@@ -3067,6 +3823,18 @@
       "behavior_type": "العدل_بين_الأولاد",
       "needs_ocr": false,
       "size_chars": 1473
+    },
+    {
+      "id": "isl-fe05a9ce",
+      "domain": "islamic_parenting",
+      "title": "تعويد الطفل على الصلاة وتحفيظ القرآن",
+      "source_file": "Tarbiya_Al_Banat.pdf",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تربية دينية",
+      "needs_ocr": false,
+      "size_chars": 1302
     },
     {
       "id": "med-00fa7863",
