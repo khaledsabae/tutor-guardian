@@ -110,8 +110,9 @@ async def main():
             if await download(task_id, _vid_path(path_id)):
                 print(f"  ✓ downloaded {path_id}")
                 state.pop(path_id, None)
-        elif st in ("failed", "error"):
-            state.pop(path_id, None)  # let it be re-triggered next run
+        elif st == "failed":
+            state.pop(path_id, None)  # genuine failure — allow re-trigger
+        # "error"/auth-expiry: keep the task and retry next run (do NOT drop)  # let it be re-triggered next run
 
     # 2) trigger paths that have no video and no in-flight task
     for t in mapping:

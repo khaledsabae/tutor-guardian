@@ -15,6 +15,11 @@ export PYTHONUNBUFFERED=1
 cd "$REPO" || exit 1
 
 echo "===== $(date '+%Y-%m-%d %H:%M:%S') path-video run =====" >> "$LOG"
+# Refresh NotebookLM auth each run (the session expires every few hours; without
+# this the poll/download calls fail silently and the backlog never drains).
+timeout 60 ./notebooklm_env/bin/notebooklm login --browser-cookies chrome >> "$LOG" 2>&1
+echo "----- auth refresh exit $? -----" >> "$LOG"
+
 # Bound each run so a stuck poll never wedges the slot; next cron resumes.
 timeout 1800 "$REPO/backend/.venv/bin/python" scripts/gen_path_videos_cron.py >> "$LOG" 2>&1
 echo "----- gen exit $? -----" >> "$LOG"
