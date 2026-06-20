@@ -316,14 +316,33 @@ class _WelcomePage extends StatelessWidget {
           ).animate(delay: 150.ms).fadeIn(duration: Dt.base).slideY(begin: .2),
           const SizedBox(height: 12),
           Text(
-            'رفيقك التربوي اليومي — مسارات تعليمية، نصائح مخصصة، '
-            'ومساعد ذكي يجيب عن أسئلتك.',
+            '«المربّي» رحلة تربية متكاملة ترافق طفلك خطوة بخطوة — '
+            'ليست نصائح عابرة، بل منهجٌ تعيشه معه على مدى رحلته.',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: AppTheme.textSecondary,
                   height: 1.7,
                 ),
           ).animate(delay: 300.ms).fadeIn(duration: Dt.base).slideY(begin: .2),
+          const SizedBox(height: 20),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Dt.primary.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(Dt.rCard),
+              border: Border.all(color: Dt.primary.withValues(alpha: 0.25)),
+            ),
+            child: const Text(
+              '🤍 مجاني بالكامل، لوجه الله\nبلا إعلانات ولا اشتراكات',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Dt.primaryDeep,
+                fontWeight: FontWeight.w700,
+                height: 1.6,
+                fontSize: 14,
+              ),
+            ),
+          ).animate(delay: 450.ms).fadeIn(duration: Dt.base),
         ],
       ),
     );
@@ -334,9 +353,10 @@ class _FeaturesPage extends StatelessWidget {
   const _FeaturesPage();
 
   static const _features = [
-    ('🛤️', 'مسارات تربوية', 'رحلات تعليمية قصيرة مصممة لعمر طفلك'),
-    ('💬', 'مساعد ذكي', 'إجابات موثوقة عن تحدياتك التربوية اليومية'),
-    ('🏅', 'إنجازات وتحفيز', 'تابع تقدمك واكسب شارات مع كل خطوة'),
+    ('🛤️', 'مسارات من ٢٨ يومًا', 'رحلات تربوية متدرّجة لكل مرحلة عمرية — تتابعها يومًا بيوم'),
+    ('🎧', 'دروس وبودكاست وفيديو', 'محتوى غني تعيشه بطرق متعددة، لا مجرد نصوص تُقرأ'),
+    ('🌟', 'رحلة طفلك', 'سجّل محطات نموّه الإيمانية وتابع تقدّمه عبر الزمن'),
+    ('💬', 'مساعد ذكي', 'إجابات موثوقة عن تحدياتك التربوية وقت ما تحتاج'),
   ];
 
   @override
@@ -358,14 +378,23 @@ class _FeaturesPage extends StatelessWidget {
               ),
           const SizedBox(height: 16),
           Text(
-            'ماذا ستجد؟',
+            'أكثر من مجرد قراءة',
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall
                 ?.copyWith(fontWeight: FontWeight.w800),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 8),
+          Text(
+            'منهجٌ تربوي متكامل تعيشه مع طفلك خطوة بخطوة — لا تقرؤه في دقائق:',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppTheme.textSecondary,
+                  height: 1.6,
+                ),
+          ),
+          const SizedBox(height: 20),
           for (var i = 0; i < _features.length; i++) ...[
             Container(
               padding: const EdgeInsets.all(16),

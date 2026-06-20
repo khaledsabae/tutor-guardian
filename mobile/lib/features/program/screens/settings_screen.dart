@@ -142,6 +142,24 @@ class SettingsScreen extends ConsumerWidget {
                 const _AdhkarSettingsRow(),
                 const SizedBox(height: 24),
                 _SettingsRow(
+                  icon: Icons.star_outline,
+                  title: 'قيّم التطبيق',
+                  subtitle: 'رأيك يساعد آباءً غيرك يجدون «المربّي»',
+                  onTap: () async {
+                    final market = Uri.parse(
+                        'market://details?id=com.alsaba.almorabbi');
+                    final web = Uri.parse(
+                        'https://play.google.com/store/apps/details?id=com.alsaba.almorabbi');
+                    if (await canLaunchUrl(market)) {
+                      await launchUrl(market,
+                          mode: LaunchMode.externalApplication);
+                    } else {
+                      await launchUrl(web,
+                          mode: LaunchMode.externalApplication);
+                    }
+                  },
+                ),
+                _SettingsRow(
                   icon: Icons.shield_outlined,
                   title: 'سياسة الخصوصية',
                   subtitle: 'كيف نتعامل مع بياناتك',
