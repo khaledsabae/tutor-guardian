@@ -27,7 +27,9 @@ def sh(*c, t=180):
 
 
 def list_titles():
-    r = sh(CLI, "source", "list", "-n", NB, "--json", t=120)
+    # The notebook has 150+ sources; listing is slow, so be patient (the
+    # default 120s was too tight and crashed the run on the very first list).
+    r = sh(CLI, "source", "list", "-n", NB, "--json", t=400)
     return {s["title"]: s["id"] for s in json.loads(r.stdout).get("sources", [])}
 
 
