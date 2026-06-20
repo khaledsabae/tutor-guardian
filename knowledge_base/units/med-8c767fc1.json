@@ -1,0 +1,29 @@
+{
+  "id": "med-8c767fc1",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "علاج الاكتئاب: التحفيز الدماغي والمنتجات الطبيعية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "a high risk of suicide. The FDA has approved several types of brain stimulation therapy. The most used are electroconvulsive therapy (ECT) and repetitive transcranial magnetic stimulation (rTMS). Other brain stimulation therapies are newer and, in some cases, still considered experimental. You can learn more about these therapies at www.nimh.nih.gov/braintherapies. Natural products The FDA has not approved any natural products for treating depression. Although research is ongoing and findings are inconsistent, some people report that natural products, including vitamin D and the herbal dietary supplement St. John’s wort, helped their depression symptoms. However, these products can come with risks, including, in some cases, interactions with prescription medications. Do not use vitamin D, St. John’s wort, or other dietary supplements or natural products without first talking to a health care provider. Rigorous studies must test whether these and other natural products are safe and effective. How can I take care of myself? Most people with depression benefit from mental health treatment. Once you begin treatment, you should gradually start to feel better. Go easy on yourself during this time. Try to do things you used to enjoy. Even if you don’t feel like doing them, they can improve Other things that may help: ● Try to get physical activity. Just 30 minutes a day of walking can boost your mood. ● Try to maintain a regular bedtime and wake-up time. ● Eat regular, healthy meals. ● Do what you can as you can. Decide what must get done and what can",
+  "text_simplified": "هذا النص يتناول علاج الاكتئاب باستخدام التحفيز الدماغي والمنتجات الطبيعية. يجب استشارة الطبيب قبل استخدام أي مكملات أو أعشاب. النشاط البدني والنظام الغذائي الصحي يساعدان في تحسين المزاج.",
+  "labels": [
+    "اكتئاب",
+    "علاج دماغي",
+    "مكملات طبيعية",
+    "استشارة طبية",
+    "رعاية ذاتية"
+  ],
+  "created_at": "2026-06-20T14:31:37Z",
+  "updated_at": "2026-06-20T14:31:37Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

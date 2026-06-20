@@ -1,0 +1,29 @@
+{
+  "id": "med-d6b4427f",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحسين الجودة في خدمات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تحسين الجودة في خدمات الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "a measure of whether services increase the practices. Quality improvement (QI) is an ongoing, iterative process. probability of desired mental health outcomes and whether The steps associated with ensuring quality, as summarized in Figure 4, are all relevant they are consistent with for child and adolescent mental health services (see also module on Quality current evidence-based Improvement of Mental Healthfor more detail). Quality improvement should include the practices. meaningful participation (where appropriate) of children and adolescents who are receiving services, as well as their families, in designing, implementing and evaluating services. When evaluating services, measures assessing service satisfaction and individual and family outcomes should be included. Figure 4. Steps in the quality improvement (QI) process (For further detail see module on Quality Improvement for Mental Health) 1. ALIGN POLICY FOR QI 2. DESIGN STANDARDS Establish broad parameters for Develop a set of standards quality through consultation, against which services can partnerships, legislation, be measured funding and planning 7. MODIFY & REVIEW ACCREDITATION mechanisms for quality Develop a process to assess the quality of care for different types of services 6. IMPROVE SERVICES 5. INTEGRATE QI 4. MONITOR SERVICES INTO MANAGEMENT Monitor the quality of Integrate quality into the care through quality management of services processes There are two approaches to the design of a standards document for child and adolescent mental health services: a separate document can be compiled for children and adolescents, or the special issues pertaining to children and adolescents can be addressed in a document that covers",
+  "text_simplified": "تحسين الجودة هو عملية مستمرة تهدف إلى زيادة احتمالية تحقيق نتائج إيجابية للصحة النفسية. يجب أن تشمل هذه العملية مشاركة الأطفال والمراهقين وأسرهم في تصميم وتقييم الخدمات. من المهم قياس رضا الأفراد والأسر عن الخدمات المقدمة. تتضمن خطوات تحسين الجودة وضع معايير ومراقبة الخدمات وتطويرها باستمرار.",
+  "labels": [
+    "تحسين الجودة",
+    "الصحة النفسية",
+    "خدمات الأطفال",
+    "مشاركة الأسر",
+    "تقييم الخدمات"
+  ],
+  "created_at": "2026-06-20T14:49:00Z",
+  "updated_at": "2026-06-20T14:49:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-53b99d50",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "أعراض الاكتئاب وطرق علاجه",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "علاجي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "as women) may show symptoms other than sadness, instead seeming angry or irritable. For some people, symptoms manifest as physical problems (for example, a racing heart, tightened chest, chronic headaches, or digestive issues). Many men are more likely to see a health care provider about these physical symptoms than their emotional ones. While increased use of alcohol or drugs can be a sign of depression in any person, men are also more likely to use these substances as a coping strategy. How is depression treated? Depression treatment typically involves psychotherapy (in person or virtual), medication, or both. If these treatments do not reduce symptoms sufficiently, brain stimulation therapy may be another option. Choosing the right treatment plan is based on a person’s needs, preferences, and medical situation and in consultation with a mental health professional or a health care provider. Finding the best treatment may take trial and error. For milder forms of depression, psychotherapy is often tried first, with medication added later if the therapy alone does not produce a good response. People with moderate or severe depression usually are prescribed medication as part of the initial treatment plan. Psychotherapy (also called talk therapy or counseling) can help people with depression by teaching them new ways of thinking and behaving and helping them change habits that contribute to depression. Psychotherapy occurs under the care of a licensed, trained mental health professional in one-on-one sessions or with others in a group setting. Psychotherapy can be effective when delivered in person",
+  "text_simplified": "الاكتئاب قد يظهر بأعراض غير الحزن مثل الغضب أو التهيج، وقد تكون الأعراض جسدية مثل تسارع ضربات القلب أو الصداع المزمن. الرجال غالباً ما يتوجهون للطبيب بسبب الأعراض الجسدية بدلاً من العاطفية، وقد يستخدمون الكحول أو المخدرات كوسيلة للتكيف. يعالج الاكتئاب بالعلاج النفسي أو الأدوية أو كليهما، وقد يحتاج الحالات الشديدة إلى تحفيز الدماغ. اختيار العلاج المناسب يعتمد على احتياجات الشخص واستشارة مختص صحي.",
+  "labels": [
+    "اكتئاب",
+    "أعراض جسدية",
+    "علاج نفسي",
+    "أدوية",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T14:31:20Z",
+  "updated_at": "2026-06-20T14:31:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

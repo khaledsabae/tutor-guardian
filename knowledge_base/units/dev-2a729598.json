@@ -1,0 +1,29 @@
+{
+  "id": "dev-2a729598",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "تحسين متابعة صحة الأطفال عبر البيانات المشتركة",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة الطفل والنمو",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "communities is also a critical Children’s and Adolescents’ Health (see Annex 2). part of any accountability mechanism, improving Joint monitoring across sectors will provide a transparency and joint action. Research is clear picture of whether progress is being made needed to develop better instruments and as intended, and will generate information to measurement methods to use in population- enable cross-sectoral decision-making. based monitoring of children’s development. Proposed actions at country level 1. Agree on the indicators for tracking progress in early childhood development, in line with the national plan and the relevant SDG targets. 2. Update routine information systems to include the indicators, allowing disaggregation. Build capacity, so frontline workers can collect quality data. 3. Make data available to all stakeholders – including families and communities – in a user-friendly format. 4. Support periodic population-based assessment of children’s developmental status and home-care practices, as well as risk factors and protective factors for nurturing care. 5. Use data to make decisions about programming for nurturing care and to ensure accountability. That should include an annual review of progress, covering all sectors. THE LOGIC MODEL Strategic action 5 Use data and innovate Achieving holistic well-being for young children • What indicators can be added to existing requires more scientific evidence. For example, health information systems to inform research in local contexts is needed on: progress? • the best approaches for assessing children’s Building the local evidence is necessary for and families’ holistic needs; making nurturing care part of all systems, and will",
+  "text_simplified": "يجب تحسين متابعة صحة الأطفال والمراهقين من خلال جمع البيانات عبر القطاعات المختلفة. يساعد ذلك في اتخاذ قرارات أفضل وضمان الشفافية والمساءلة. كما ينبغي تطوير أدوات قياس مناسبة لتقييم نمو الأطفال في المجتمعات المحلية.",
+  "labels": [
+    "صحة الأطفال",
+    "البيانات",
+    "المساءلة",
+    "الرعاية المبكرة",
+    "التقييم السكاني"
+  ],
+  "created_at": "2026-06-20T14:25:24Z",
+  "updated_at": "2026-06-20T14:25:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

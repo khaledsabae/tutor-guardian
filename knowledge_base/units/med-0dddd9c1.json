@@ -1,0 +1,29 @@
+{
+  "id": "med-0dddd9c1",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تقييم خدمات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "الصحة النفسية للأطفال والمراهقين",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "on services. In many countries mental health services for children and adolescents is there will not be a distinct budget for child and adolescent mental health. The module also necessary. on Mental Health Financingprovides more guidance on funding issues. The structure and focus of the existing organizationof services for child and adolescent mental health should be examined so as to allow identification of its various An assessment of the components and enable eventual benchmarking. An assessment of the prevailing prevailing situation should situation should involve gaining knowledge of the full range of settings where children involve gaining knowledge of and adolescents live, are educated and socialize. Such settings include: after-school the full range of settings where programmes, clinics, community centres, day programmes, homes, inpatient units, children and adolescents are orphanages, places of worship, prisons, schools, residential settings and the streets. educated, live and socialize. The needs of children and adolescents are inextricably linked with their developmental stage and environmental context.It is important to gather information on relevant age- specific issues. For example, a child's failure to develop may be the result of maternal depression affecting the ability to care. For such cases, it might be necessary to The needs of children and consider whether a home visiting programme or other mother-infant support adolescents are inextricably programme can be identified to promote more appropriate mother-infant interaction, as linked with their developmental well as facilitate the mother's access to needed psychiatric treatment (Beardslee, stage and the social and environmental context. Versage &",
+  "text_simplified": "تتناول هذه الوحدة أهمية فحص هيكل خدمات الصحة النفسية للأطفال والمراهقين وتقييم مكوناتها. يجب جمع معلومات عن الأماكن التي يعيشون ويتعلمون ويتفاعلون فيها مثل المدارس والمنازل والمراكز المجتمعية. ترتبط احتياجات الأطفال والمراهقين بمرحلة نموهم وسياقهم البيئي. على سبيل المثال، قد يكون فشل الطفل في النمو ناتجًا عن اكتئاب الأم، مما يستدعي برامج دعم للأم والطفل.",
+  "labels": [
+    "خدمات الصحة النفسية",
+    "تقييم الاحتياجات",
+    "دعم الأم والطفل",
+    "البيئة التنموية",
+    "المرافق المجتمعية"
+  ],
+  "created_at": "2026-06-20T14:45:55Z",
+  "updated_at": "2026-06-20T14:45:55Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

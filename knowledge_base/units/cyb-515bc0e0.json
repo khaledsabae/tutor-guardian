@@ -1,0 +1,29 @@
+{
+  "id": "cyb-515bc0e0",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة الرقمية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "you, if you do not re- addresses or othe informa- Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop 3. send personal photos and vid- send you unwanted mail; numeric codes, credit card question what you come across eos only to those you actually make sure your anti-spam numbers etc.), E- Grabber while online. Remember things know, your image constitutes service (for incoming e-mails) (capable of gaining access to are not always as they appear. personal data and you need and anti-virus controls (for e- all the e-mail addresses stored to make sure it is not circu- mail attachments) are activat- on the victim’s PC), or Info Respect copyright lated thoughtlessly. The same ed and continuously updated; Grabber (capable of extract- goes for images of others. use two e-mail addresses, ing information such as the What’s great about the Web is the Keep in mind that it is practi- one which is strictly personal various Registration Keys infinite possibilities of finding and cally impossible to determine and for correspondence with of a PC’s most important accessing all kinds of materials where an online image can only your real life contacts programmes). Without your through search engines and they end up; before filming or (friends, relatives, and such), knowledge these programmes can be downloaded either free of photographing someone you and another to be inserted in can send over the Internet all charge or paid for through your should always ask for their all those online",
+  "text_simplified": "يجب على الأطفال والمراهقين حماية معلوماتهم الشخصية وعدم مشاركة الصور والفيديوهات إلا مع الأشخاص الذين يعرفونهم في الحياة الواقعية. من المهم استخدام برامج مكافحة الفيروسات والبريد المزعج، واستخدام عنواني بريد إلكتروني: واحد للتواصل الشخصي وآخر للتسجيلات عبر الإنترنت. تذكر أن الصور قد تنتشر بسهولة دون علمك، لذا اطلب الإذن قبل تصوير الآخرين. احترم حقوق الملكية الفكرية عند تحميل المواد من الإنترنت.",
+  "labels": [
+    "سلامة الإنترنت",
+    "حماية الخصوصية",
+    "مشاركة الصور",
+    "مكافحة الفيروسات",
+    "حقوق الملكية"
+  ],
+  "created_at": "2026-06-20T15:11:57Z",
+  "updated_at": "2026-06-20T15:11:57Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

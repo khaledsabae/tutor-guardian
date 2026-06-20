@@ -1,0 +1,29 @@
+{
+  "id": "med-2a66fb1f",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "فهم الاكتئاب وأعراضه عند الأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "than sad. Although several persistent symptoms, in addition to low mood, are required for a depression diagnosis, people with only a few symptoms may benefit from treatment. The severity and frequency of symptoms and how long they last vary depending on the person. If you think you may have depression, talk to a health care provider, such as a primary care doctor, psychologist, or psychiatrist. During the visit, the provider may ask when your symptoms began, how long they have lasted, how often they occur, and if they keep you from going out or doing your usual activities. It may help to take some notes about your symptoms before the visit. Certain medications and medical conditions, such as viruses or thyroid disorders, can cause the same symptoms as depression. A provider can rule out these possibilities by doing a physical exam, interview, and lab tests. Does depression look the same in everyone? Depression can affect people differently depending on their age. ● Children may be anxious or cranky, pretend to be sick, refuse to go to school, cling to a parent, or worry that a parent may die. ● Older children and teens may get into trouble at school, sulk, be easily frustrated‚ feel restless, or have low self-esteem. They may have other disorders, such as anxiety, an eating disorder, attention-deficit/hyperactivity disorder, or substance use disorder. Older children and teens are also more likely to experience excessive sleepiness (called hypersomnia) and increased appetite (called hyperphagia). ● Young adults are more",
+  "text_simplified": "الاكتئاب ليس مجرد حزن عابر، بل هو حالة صحية تحتاج إلى تشخيص دقيق. تختلف أعراضه وشدتها من شخص لآخر، وقد تشمل تغيرات في النوم والشهية والمزاج. إذا لاحظت على طفلك أو ابنك المراهق علامات مثل التهيج أو العزلة أو صعوبة التركيز، فمن المهم استشارة طبيب مختص. يمكن للطبيب استبعاد الأسباب الطبية الأخرى وتقديم العلاج المناسب.",
+  "labels": [
+    "اكتئاب",
+    "أعراض نفسية",
+    "صحة نفسية",
+    "تشخيص",
+    "استشارة طبية"
+  ],
+  "created_at": "2026-06-20T14:31:11Z",
+  "updated_at": "2026-06-20T14:31:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

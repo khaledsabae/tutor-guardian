@@ -1,0 +1,29 @@
+{
+  "id": "med-d85e8a1c",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية تدريب العاملين في الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تدريب الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "training is essential in the area of child and adolescent mental health. There are likely to be very few appropriately qualified workers within a country, and careful planning will be required to ensure that sufficient human resources are available to achieve policy objectives. It is essential that the needs for human resources development be assessed early in policy development, and that strategies be devised to increase the number of appropriately trained people. General health workers, such as nurses and doctors, may need to be trained to provide General health workers may some child and adolescent mental health services. The functions allocated to need to be trained to provide categories of staff at different levels of service need to make optimal use of available some child and adolescent skills, given the shortage of child and adolescent mental health specialists. mental health services. To increase resources for the provision of specialized treatment, some individuals from different disciplines may be sent abroad for special skills training, which can then be taught to others if such training is not available at home. In some instances, particularly in relation to child and adolescent psychiatric services, there can be retraining or additional training of adult psychiatrists or other clinicians to at least meet some minimal competency requirements for the treatment and care of children and Table 3 illustrates the different roles of personnel. Training programmes should be geared to the functions that personnel will be undertaking. It is not sufficient, for example, for child and adolescent",
+  "text_simplified": "تدريب العاملين في مجال الصحة النفسية للأطفال والمراهقين أمر ضروري. يجب تقييم احتياجات الموارد البشرية مبكرًا ووضع استراتيجيات لزيادة عدد المتخصصين المؤهلين. يمكن تدريب الممرضين والأطباء العامين لتقديم خدمات الصحة النفسية للأطفال. في بعض الحالات، يمكن إرسال أفراد للتدريب في الخارج لنقل الخبرات.",
+  "labels": [
+    "صحة نفسية",
+    "تدريب",
+    "موارد بشرية",
+    "أطفال",
+    "مراهقين"
+  ],
+  "created_at": "2026-06-20T14:48:51Z",
+  "updated_at": "2026-06-20T14:48:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

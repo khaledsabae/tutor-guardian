@@ -1,0 +1,29 @@
+{
+  "id": "cyb-3a2aa75f",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "دليل المواطنة الرقمية الآمنة للأطفال",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "المواطنة الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "spaces and communities, under- really popular, as well as the ability standing how to manage per- to form groups, or guilds,” says sonal information, and about being Luong. “These social aspects are a internet savvy - using your online big reason why people keep play- presence to grow and shape your ing games [in South Korea.]”23 world in a safe, creative way, and inspiring others to do the same24. 23 http://www.msnbc.msn.com/id/17175353/ 24 http://www.digizen.org/ Guidelines for Children and Young People www.itu.int/cop Be smart, responsible and safe online – just like in the real world Guidelines for Children and Young People www.itu.int/cop Here is a list of issues you should consider when discussing “Digital Citizenship.” Digital Etiquette: electronic • Digital exclusion of any kind certain rules of society that people’s lives. The same is standards of conduct or proce- does not enhance the growth fall under illegal acts. These true for the digital com- dure. of human beings in an elec- laws apply to anyone who munity. It is not enough • It is not enough to create tronic society. One gender works or plays online to trust your peers in the rules and policy, we must should not have preferential community for your own Digital Rights & Responsibili- learn to become responsible treatment over another. Elec- safety. In our own homes, ties: those freedoms extended to digital citizens in this new tronic access should not be we put locks on our doors everyone in a digital world. society. determined by race,",
+  "text_simplified": "يجب تعليم الأطفال كيفية إدارة معلوماتهم الشخصية واستخدام الإنترنت بأمان وإبداع. كما ينبغي تشجيعهم على تكوين مجموعات اجتماعية إيجابية عبر الإنترنت والتصرف بمسؤولية مثلما يفعلون في العالم الحقيقي.",
+  "labels": [
+    "المواطنة الرقمية",
+    "السلامة على الإنترنت",
+    "إدارة المعلومات",
+    "المجموعات الاجتماعية",
+    "المسؤولية الرقمية"
+  ],
+  "created_at": "2026-06-20T15:09:21Z",
+  "updated_at": "2026-06-20T15:09:21Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

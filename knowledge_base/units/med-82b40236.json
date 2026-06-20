@@ -1,0 +1,29 @@
+{
+  "id": "med-82b40236",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "مبادئ حماية حقوق الأشخاص ذوي الاضطرابات النفسية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حقوق الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Persons with Mental Illness and the Improvement of Mental Health Care, adopted in 1991, represents another serious international effort to safeguard the rights of all people with mental disorders. There are 25 principles which fall into two general categories: civil rights and procedures, and access to and quality of care. Some of the main principles are: (i) statements of the fundamental freedoms and basic rights of people suffering from mental disorders; (ii) criteria for the determination of mental disorder; (iii) protection of confidentiality; (iv) standards of care and treatment, including involuntary admission and consent to treatment; (v) rights of people with mental disorders in mental health facilities; (vi) provision of resources for mental health facilities; (vii) provision of review mechanisms; (viii) provision for protection of the rights of offenders with mental disorders; and (ix) procedural safeguards to protect the rights of people with mental Children are protected under all human rights instruments. Examples include the International Covenant on Civil and Political Rights, Article 7 of which protects everyone, including those with mental health problems, from torture, cruel or inhuman or degrading treatment or punishment, and the right not to be subjected to medical or scientific experimentation without free consent. Another instrument is the International Covenant on Economic, Social and Cultural Rights, which states (Section 10.3): Special measures of protection and assistance should be taken on behalf of all children and young persons without any discrimination for reasons of parentage or other conditions. Children and young persons should be protected from",
+  "text_simplified": "هذا النص يتناول حقوق الأشخاص المصابين باضطرابات نفسية وفقًا لمبادئ الأمم المتحدة لعام 1991. تشمل المبادئ حماية الحقوق المدنية، ومعايير الرعاية، والموافقة على العلاج، وسرية المعلومات. كما يؤكد على حماية الأطفال بموجب المواثيق الدولية مثل العهد الدولي الخاص بالحقوق المدنية والسياسية.",
+  "labels": [
+    "حقوق الإنسان",
+    "الصحة النفسية",
+    "حماية الأطفال",
+    "الرعاية الصحية",
+    "القوانين الدولية"
+  ],
+  "created_at": "2026-06-20T14:48:43Z",
+  "updated_at": "2026-06-20T14:48:43Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

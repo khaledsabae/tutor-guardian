@@ -1,0 +1,29 @@
+{
+  "id": "med-f337d698",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "الوصم والتمييز ضد الأطفال والمراهقين ذوي الاضطرابات النفسية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "وصم وتمييز",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "people with mental disorders suffer discrimination, children and adolescents are the least capable of advocating for themselves. Also, developmentally, children think more dichotomously than adults about categories such as “good” and “bad,” or “healthy” and “sick”. They are thus less likely to temper a negative remark with other more positive feedback, and may therefore more easily accept negative, misapplied labels. Stigma and discrimination include: bias, stereotyping, fear, embarrassment, anger and rejection or avoidance; violations of basic human rights and freedoms; denial Stigma and discrimination of opportunities for education and training; and denial of civil, political, economic, social include: bias, stereotyping, and cultural rights. Additionally, in contrast to physical illnesses where parents may fear, embarrassment, anger receive community support, stigma often results in parents being blamed for the mental and rejection or avoidance; health problems of their children. violations of basic human rights and freedoms; and Behaviours associated with mental disorders are often misunderstood, or are denial of civil, political, considered to be intentional or deliberately wilful. For example, a depressed child who economic, social and is acting badly may be punished for being naughty or may be told to “snap out of it.” cultural rights. An anxious adolescent may consume increasing amounts of alcohol in order to cope, but is told to “just say no!”. When a problem is misunderstood by others, it is more likely that the solutions applied will be inappropriate and ineffective, or possibly harmful to the health of the individual who is suffering. Social exclusion, punitive",
+  "text_simplified": "الأطفال والمراهقون الذين يعانون من اضطرابات نفسية يتعرضون للوصم والتمييز، وهم أقل قدرة على الدفاع عن أنفسهم مقارنة بالبالغين. يميل الأطفال إلى التفكير بطريقة ثنائية (خير/شر، صحيح/خاطئ)، مما يجعلهم يتقبلون بسهولة التصنيفات السلبية الخاطئة. يؤدي الوصم إلى حرمانهم من حقوقهم الأساسية وفرص التعليم، وغالبًا ما يُلام الأهل على مشاكل أطفالهم النفسية. سوء فهم السلوكيات المرتبطة بالاضطرابات النفسية يؤدي إلى معاملة غير مناسبة قد تضر بصحة الطفل.",
+  "labels": [
+    "وصم",
+    "تمييز",
+    "اضطرابات نفسية",
+    "أطفال",
+    "مراهقون"
+  ],
+  "created_at": "2026-06-20T14:44:14Z",
+  "updated_at": "2026-06-20T14:44:14Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

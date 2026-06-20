@@ -1,0 +1,29 @@
+{
+  "id": "cyb-9b40427c",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "دعم الأطفال والمراهقين في الاستخدام الآمن للإنترنت",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "السلامة الرقمية والوعي الإلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "group with the basics other technical measures may have certainly could continue to play an There is not a one-size-fits-all. in Internet safety, etiquette and a particularly useful role to play in important supporting role, particu- The Child Online Protection understanding. This age group supporting the use of the Internet larly for some young people who Initiative would be very happy to will probably not be able to de- by a young person of this age. may have temporary or longer- assist with adapting and localizing code more sophisticated messages. An important aspect of this age term vulnerabilities. the content of this and any other Parents or adults with responsibil- group is the sometimes uncritical COP Guidelines. If you wish to ity for children should consult the approach to content and contact, Linked to their own hormonal pursue this, you are invited to COP guidelines for parents, guard- which can put the age group in a development and a growing sense make contact via cop@itu.int. ians and educators to see how they particularly vulnerable situation for of physical maturity, teenagers can might best assist the youngest age predators and commercial entities go through phases when they feel group to stay safe online. wishing to engage with them. a very strong need to find their own way, to escape close paren- The second age group: The last age group: tal or adult supervision and seek out their peers. A natural curios- 8-12 year old 13 year old and above ity about",
+  "text_simplified": "هذه الفئة العمرية (8-12 سنة) قد لا تستطيع فهم الرسائل المعقدة، وتحتاج إلى دعم في السلامة والسلوك الرقمي. أما المراهقون (13 سنة فما فوق) فيمرون بمرحلة نمو هرموني ورغبة في الاستقلال، مما يجعلهم أكثر عرضة للمخاطر عبر الإنترنت مثل المحتوى غير النقدي والتواصل مع الغرباء.",
+  "labels": [
+    "سلامة الإنترنت",
+    "تربية رقمية",
+    "مراهقون",
+    "مخاطر إلكترونية",
+    "وعي أبوي"
+  ],
+  "created_at": "2026-06-20T15:09:38Z",
+  "updated_at": "2026-06-20T15:09:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

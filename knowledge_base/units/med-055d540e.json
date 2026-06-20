@@ -1,0 +1,29 @@
+{
+  "id": "med-055d540e",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية تنسيق مستويات العلاج للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تنسيق الرعاية الصحية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "the same setting. It is necessary to coordinatethe different levels of treatment available for varying levels of severity of illness. For example, a drug rehabilitation unit that treats an adolescent for It is necessary to coordinate glue sniffing or opium smoking should contact the local addictions counsellor who may the different levels of treatment be treating the person after he or she has been discharged from the unit. Similarly, a available for differing levels of health worker who screens and initiates treatment of a child with epilepsy should illness severity. contact the traditional healer who has also been consulted. The concept of an organized system of care with a continuum of serviceshas emerged to ensure that services are optimally linked. Such a system links services between the programmes offered by different agencies to provide for the needs of the child or The concept of a continuum adolescent in various settings, from the least restrictive community-based services of services implies linkages (such as outpatient clinic therapy) to the most restrictive (such as inpatient care). In the of services. absence of an organized system of care, there is likely to be poor communication, and therefore inefficient service utilization. Community-based systems of care facilitate access and allow children and adolescents to be treated in the context of their families, schools and local communities (see the module on Organization of Services for Mental Healthfor more details). It is crucial to involve parents/families and communities in planning mental health services for children and adolescents. For",
+  "text_simplified": "يجب تنسيق مستويات العلاج المختلفة حسب شدة المرض، مثل التواصل بين وحدة علاج الإدمان ومستشار الإدمان المحلي بعد خروج المراهق. كما ينبغي للعامل الصحي الذي يعالج طفلاً مصاباً بالصرع أن يتواصل مع المعالج التقليدي. نظام الرعاية المنظم يربط الخدمات بين الوكالات المختلفة لتلبية احتياجات الطفل والمراهق، من الخدمات المجتمعية الأقل تقييداً إلى الرعاية الداخلية. إشراك الأهل والمجتمع في تخطيط خدمات الصحة النفسية للأطفال والمراهقين أمر بالغ الأهمية.",
+  "labels": [
+    "تنسيق الخدمات",
+    "الصحة النفسية",
+    "الأطفال والمراهقين",
+    "الرعاية المجتمعية",
+    "إشراك الأهل"
+  ],
+  "created_at": "2026-06-20T14:47:41Z",
+  "updated_at": "2026-06-20T14:47:41Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

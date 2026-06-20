@@ -1,0 +1,29 @@
+{
+  "id": "dev-a31660e3",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "دعم الرعاية المستجيبة وحماية الطفل من المخاطر",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل ورعايته",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "continuum of care responsive caregivers, helps children to build resilience to adversity, trauma, threats and Children can be at risk of sub-optimal significant life stressors. development because of biological factors, such as disability, or environmental factors, such as Here are five recommended ways for social and violence in the community or at home. These child protection to help support nurturing care. children need to be referred to appropriate community-based services that provide more 1. Guarantee identity citizenship specialized care. Children also need the means for every child to reach those services, including transport and translation. To serve those in greatest need, ensure that there are staff with appropriate Because of inadequate civil registration and qualifications, centres that provide integrated national identification systems, millions of services, and systems that combine these people in low- and middle-income countries services into a continuum of care. are being denied basic services and protection of their rights. Services that are inaccessible to 5. Protect children from maltreatment non-citizens include universal health coverage, and family dissolution education and social protection, as well as humanitarian assistance in emergencies and Ensure that professionals in all sectors conflicts. In order to support nurturing care, understand how dangerous the maltreatment countries need to register the birth of every child of children is. These professionals should and record all the vital events after that. Birth also be able to spot when a child is being registration should also be linked to identification maltreated, and know what to do if they suspect",
+  "text_simplified": "يحتاج الأطفال إلى رعاية مستجيبة لبناء قدرتهم على مواجهة الصعوبات والصدمات. قد يتعرض الأطفال لمخاطر في النمو بسبب عوامل بيولوجية أو بيئية مثل العنف في المنزل أو المجتمع. يجب إحالة هؤلاء الأطفال إلى خدمات مجتمعية متخصصة مع توفير وسائل الوصول إليها مثل النقل والترجمة. كما ينبغي تسجيل ولادة كل طفل لضمان حصوله على الخدمات الأساسية وحماية حقوقه.",
+  "labels": [
+    "رعاية مستجيبة",
+    "حماية الطفل",
+    "تسجيل المواليد",
+    "خدمات مجتمعية",
+    "صمود الطفل"
+  ],
+  "created_at": "2026-06-20T14:26:44Z",
+  "updated_at": "2026-06-20T14:26:44Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-0b06d054",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الإنترنت على الأطفال وكيفية حمايتهم",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "مخاطر الإنترنت",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "of cultural exchange and a source of entertainment. Despite the profound benefits of the Internet, children and young people can also encounter a number of risks when using ICTs. They can be exposed to age-inappropriate content or inappropriate contact, including from potential perpetrators of sexual abuse. They can suffer reputational damage from publishing sensitive personal information either online or through “sexting\", often failing to comprehend the implications of their actions on themselves and 2 OECD, “New Technologies and 21st Century Children: Recent Trends and Outcomes”, Education Working Guidelines for industry on Child Online Protection others and their long-term “digital footprints”. They also face risks related to online privacy stemming from data collection, and collection and use of location information. The Convention on the Rights of the Child, which is the most widely ratified international human rights treaty,3 sets out the civil, political, economic, social, and cultural rights of children. It establishes that all children and young people have the right to education; leisure, play and culture; appropriate information; freedom of thought and expression; and privacy, and to express their views on matters that affect them in accordance with their evolving capacities. The Convention also protects children and young people from all forms of violence, exploitation, abuse and discrimination of any kind, and sets out that the child’s best interest should be the primary consideration in any matters affecting them. Parents, carers, educators and community members, including community leaders and civil society actors, have the responsibility to nurture and support children",
+  "text_simplified": "الإنترنت يقدم فوائد تعليمية وترفيهية للأطفال، لكنه يحمل مخاطر مثل التعرض لمحتوى غير مناسب أو اتصال ضار. قد ينشر الأطفال معلومات شخصية دون إدراك عواقبها، مما يؤثر على سمعتهم وخصوصيتهم. يجب على الأهل والمربين حماية الأطفال وتوجيههم لاستخدام آمن للتقنيات.",
+  "labels": [
+    "سلامة الأطفال",
+    "الخصوصية الرقمية",
+    "محتوى غير مناسب",
+    "توعية رقمية",
+    "حماية الطفل"
+  ],
+  "created_at": "2026-06-20T14:53:35Z",
+  "updated_at": "2026-06-20T14:53:35Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

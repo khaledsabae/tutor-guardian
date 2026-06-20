@@ -1,0 +1,29 @@
+{
+  "id": "cyb-f5c36fc7",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "برامج تعزيز السلامة الرقمية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "السلامة الرقمية والمواطنة الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "third-party scrutiny of these tactics on the Project deSHAME, co-financed by Facebook and the European Union, also facilitates the creation of resources for a wide range of age groups, with a particular focus on children aged 9–13 years. As part of the project, a toolkit called “Step Up, Speak Up!” The project will transfer these learning materials to other European countries and partners worldwide in order to promote young people’s digital rights. Google has developed an array of educational initiatives, resources and tools to help promote online safety for youth. One of them is the Be Internet Awesome campaign around digital citizenship, created in collaboration with organizations such as ConnectSafely, the Family Online Safety Institute and the Internet Keep Safe Coalition. This campaign is targeted towards young people aged 8–11 years. It features a web-based game for youth (Interland) that teaches digital safety fundamentals and resources for educators, such as Digital Citizenship and Safety Curriculum. The Safety Curriculum offers lesson plans for the campaign’s five key thematic areas, one of which focuses on cyberbullying. In addition to this, Google has generated an online digital citizenship and safety course for educators of students of all ages, providing further support for integrating digital citizenship and activities on safety in the classroom. Google also offers several programmes to help engage young people directly in online safety and digital citizenship efforts. The global Web Rangers initiative is one such programme that teaches young people about online safety and encourages them to design their own",
+  "text_simplified": "هذا النص يتحدث عن مشاريع وبرامج تهدف إلى تعزيز السلامة الرقمية للأطفال والمراهقين، مع التركيز على فئة عمرية تتراوح بين 8 و13 عامًا. تشمل هذه البرامج أدوات تعليمية وألعابًا تفاعلية مثل لعبة Interland، بالإضافة إلى مناهج للمعلمين حول المواطنة الرقمية ومكافحة التنمر الإلكتروني. تهدف هذه المبادرات إلى تمكين الشباب من حماية حقوقهم الرقمية وتعزيز السلوك الآمن عبر الإنترنت.",
+  "labels": [
+    "سلامة رقمية",
+    "مواطنة رقمية",
+    "تنمر إلكتروني",
+    "ألعاب تعليمية",
+    "تمكين الشباب"
+  ],
+  "created_at": "2026-06-20T14:56:55Z",
+  "updated_at": "2026-06-20T14:56:55Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-b6e158c3",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية التمويل المستدام لخدمات الصحة النفسية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تمويل الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "is crucial, for two reasons: (i) some interventions for children and adolescents need to be available for an extended period of time; and (ii) the benefits Sustained financing is from an intervention may become clear only after some years. Therefore, in order to ensure that budgets extend from one election cycle to the next, advocacy and educational efforts must ensure that financing is not based on short-term interests. In some countries, NGOs provide most of the services for children and adolescents. They should be encouraged to develop services that are sustainable in the long term. Financing for child and adolescent mental health services needs to provide incentives Financing for child and for collaborative efforts among potentially competing agencies. The needs of the child adolescent mental health or adolescent, rather than the needs of the programme, should be the priority for the services needs to provide provision of funding. Indeed, for children and adolescents with complex disorders, incentives for collaborative collaborative funding is desirable because they have contact with a range of agencies. efforts among potentially competing agencies. One of the most common financial incentives for interagency collaboration is joint funding. For example, a programme to promote the mental health of street children could include the health (drug counselling services), education (school support) and juvenile justice (prison diversion for young offenders) systems, and so provide an incentive for the different agencies to work together to meet the objectives of the programme. Clearly, a collateral benefit from intersectoral collaboration is a greater",
+  "text_simplified": "يجب أن يكون تمويل خدمات الصحة النفسية للأطفال والمراهقين مستدامًا طويل الأمد، وليس مرتبطًا بدورات انتخابية قصيرة. تحتاج المنظمات غير الحكومية إلى دعم لتطوير خدمات دائمة. يجب أن تكون احتياجات الطفل أو المراهق هي الأولوية في التمويل، مع تشجيع التعاون بين الوكالات المختلفة من خلال التمويل المشترك.",
+  "labels": [
+    "تمويل مستدام",
+    "تعاون بين الوكالات",
+    "خدمات الصحة النفسية",
+    "الأطفال والمراهقين",
+    "سياسات طويلة الأمد"
+  ],
+  "created_at": "2026-06-20T14:47:23Z",
+  "updated_at": "2026-06-20T14:47:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

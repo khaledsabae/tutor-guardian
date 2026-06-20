@@ -1,0 +1,29 @@
+{
+  "id": "cyb-f84469fa",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات صناعة التكنولوجيا لحماية الأطفال على الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة الأطفال على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "environment 19 3.4 Educating children, carers and educators about children’s safety and the responsible use of ICTs 22 3.5 Promoting digital technology as a mode for increasing civic 4. General guidelines for industry 27 5. Feature-specific checklists 37 5.1 Feature A: Provide connectivity, data storage and hosting services 37 5.2 Feature B: Offer curated digital content 41 5.3 Feature C: Host user-generated content and connect users 46 5.4 Feature D: Artificial intelligence-driven systems 51 Table 1: General guidelines for industry 28 Table 2: COP checklist for Feature A: Provide connectivity, data and hosting Table 3: COP checklist for Feature B: Offer curated digital content 42 Table 4: COP checklist for Feature C: Host user-generated content and connect users 47 Table 5: COP checklist for Feature D: AI-driven systems 55 Guidelines for industry on Child Online Protection The purpose of this document is to provide a direction for ICT industry stakeholders to build their own child online protection (COP) resources. The aim of these guidelines for industry on child online protection is to provide a useful, flexible and user-friendly framework for both enterprise visions and their responsibility to protect users. They are also aimed at establishing the foundation for safer and more secure use of Internet-based services and associated technologies for today’s children, and future generations. As a toolbox, these guidelines also aim at enhancing business success by helping large and small operations and stakeholders to develop and maintain an attractive and sustainable business model, while understanding the legal and moral",
+  "text_simplified": "هذه الوثيقة تقدم إرشادات لصناعة التكنولوجيا لحماية الأطفال على الإنترنت. تهدف إلى توعية الأطفال ومقدمي الرعاية والمعلمين حول السلامة والاستخدام المسؤول للتكنولوجيا. كما تشجع على استخدام التكنولوجيا الرقمية لتعزيز المشاركة المدنية.",
+  "labels": [
+    "حماية الطفل",
+    "سلامة الإنترنت",
+    "توعية رقمية",
+    "إرشادات صناعية",
+    "استخدام مسؤول"
+  ],
+  "created_at": "2026-06-20T14:53:04Z",
+  "updated_at": "2026-06-20T14:53:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

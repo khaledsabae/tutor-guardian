@@ -1,0 +1,29 @@
+{
+  "id": "med-3d6b3b7b",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تقييم الموارد ووضع الميزانية للبرامج",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط الموارد",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "screening during the second part of Year 2 or thereafter. If training materials are already available, or if the personnel already have sufficient expertise at the outset to obviate the need for training, the time frame can be shortened. tnemtaert/gnineercs .snoitadnemmocer Determining the available resources involves assessing the funding that is available from all sources. Within the mental health sector, funds can be accessed through State funding (from general taxation), social resources, donors, private insurance, and out- of-pocket payments. Additional resources could possibly be accessed from other sectors such as education and justice. The budget is the product of the available resources and the expected costs of the planned services, programmes and projects. In most cases, the costs will need to be cut to bring them in line with available resources. This can involve reducing the number of strategies, increasing the amount of time that is allocated for the achievement of a particular strategy, and reducing the number or intensity of activities for one or more strategies. It is necessary to be realistic about what can be achieved. In fact, it is preferable to promise less and deliver more than the converse. The budget should be reviewed at least on an annual basis, and preferably more frequently. Once the implementation of a strategy is under way, it may be possible to make more accurate estimates of future expenditures on the basis of the costs that have already been incurred. The time frame and resources need to be considered together to",
+  "text_simplified": "يجب تقييم الموارد المتاحة من مصادر متعددة مثل التمويل الحكومي والتأمين الخاص والتبرعات. يجب وضع ميزانية واقعية تتناسب مع الموارد المتاحة، وقد يتطلب ذلك تقليل عدد الاستراتيجيات أو زيادة الوقت اللازم لتحقيقها. من الأفضل أن تعد بأقل مما تستطيع تقديمه لضمان النجاح. يجب مراجعة الميزانية سنوياً على الأقل.",
+  "labels": [
+    "تقييم الموارد",
+    "الميزانية",
+    "التخطيط المالي",
+    "الاستدامة",
+    "إدارة البرامج"
+  ],
+  "created_at": "2026-06-20T14:51:15Z",
+  "updated_at": "2026-06-20T14:51:15Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

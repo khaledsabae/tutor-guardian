@@ -1,0 +1,29 @@
+{
+  "id": "med-7fdbdaef",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "التمييز بين الفعالية والجدوى في تطبيق التدخلات",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط سياسات الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "and pilot projects, a distinction A distinction should be made should be made between efficacy (an intervention’s ability to achieve a desired effect between efficacy and under highly controlled conditions) and effectiveness(an intervention’s ability to achieve effectiveness. a desired effect within the context of a larger, non-controlled setting). The findings from a study using a well defined population group under highly controlled conditions may not necessarily be replicable in a “real-life” setting; hence caution will be needed in applying findings from clinical trials to real-life settings without giving consideration to implementation issues. Nonetheless, in a number of instances there could be sufficient “effectiveness” studies using an appropriate methodology and with findings strong enough to adopt on a broader scale (WHO, 2000; Eisenberg, 2000). Policy-makers should hold consultations with colleagues and nongovernmental organizations (NGOs) from other districts, provinces, countries or regions in deciding upon the programme models to be adopted, which meet reasonable standards of effectiveness worthy of being incorporated into policy (Nock et al., 2004). 2.3 Step 3: Undertake consultation and negotiation Consensus building and negotiation are crucial at every stage of the policy planning cycle. For example, policy-makers can use the initial, information-gathering step as an Consensus building and opportunity to begin building consensus. Children and adolescents themselves may be negotiation are crucial at every motivated to provide information about their needs, and can be important contributors stage of the policy planning to the formulation of mental health policy. Parents and family members have an intimate cycle. knowledge of",
+  "text_simplified": "يجب التمييز بين فعالية التدخل في الظروف المختبرية وفعاليته في الحياة الواقعية. نتائج الدراسات الخاضعة لرقابة صارمة قد لا تنطبق تلقائياً على البيئات الطبيعية. لذلك ينبغي توخي الحذر عند تطبيق نتائج التجارب السريرية دون مراعاة قضايا التنفيذ. بناء التوافق والتفاوض مع الأطفال والأسر والمنظمات غير الحكومية أمر أساسي في تخطيط السياسات.",
+  "labels": [
+    "فعالية التدخل",
+    "تطبيق سريري",
+    "بناء توافق",
+    "سياسات الصحة النفسية",
+    "مشاركة مجتمعية"
+  ],
+  "created_at": "2026-06-20T14:46:24Z",
+  "updated_at": "2026-06-20T14:46:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

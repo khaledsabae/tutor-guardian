@@ -1,0 +1,29 @@
+{
+  "id": "cyb-b326e5ee",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تقنيات مطابقة المحتوى الرقمي وتوصيات حماية الأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "uses to detect harmful content. Other algorithms and tools available to industry include pHash, aHash and dHash. The Facebook photo-matching algorithm, PDQ, owes much inspiration to pHash, although it was built from the ground up as a distinct algorithm with independent software implementation. The video-matching technology, TMK+PDQF, was developed jointly by Facebook’s AI Research team and academics from the University of Modena and Reggio Emilia in Italy. These technologies create an efficient way to store files as short digital hashes that can determine whether two files are the same or similar, even without the original image or video. Hashes can also be more easily shared with other companies and non-profit organizations. PDQ and TMK+PDQF were designed to operate at high scale, supporting video- frame-hashing and real-time applications. Some of the recommendations for businesses to align their principles when designing and implementing AI-based solutions targeting children are provided in Table 5. The recommendations are based on UNICEF’s work to develop global policy guidance on AI and children, which will be aimed at governments and industry. Please see https:// www .unicef .org/ globalinsight/ featured -projects/ ai -children for more information on the project. The recommendations also draw on UNICEF and UC Berkeley’s paper on AI and Child Rights.25 25 UNICEF and UC Berkeley, “Executive Summary: Artificial Intelligence and Children’s Rights”, 2018. Guidelines for industry on Child Online Protection Table 5: COP checklist for Feature D: AI-driven systems Integrating child Providers of AI-driven systems can identify, prevent and mitigate rights considerations the adverse",
+  "text_simplified": "يشرح النص تقنيات مطابقة المحتوى الرقمي مثل PDQ وTMK+PDQF التي تستخدم بصمات رقمية قصيرة للكشف عن الملفات المتطابقة أو المشابهة. كما يقدم توصيات للشركات لتصميم حلول ذكاء اصطناعي تراعي حقوق الأطفال بناءً على إرشادات اليونيسف.",
+  "labels": [
+    "تقنيات المطابقة",
+    "بصمات رقمية",
+    "ذكاء اصطناعي",
+    "حماية الأطفال",
+    "إرشادات اليونيسف"
+  ],
+  "created_at": "2026-06-20T15:01:06Z",
+  "updated_at": "2026-06-20T15:01:06Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-0a401c58",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "استراتيجيات نشر التوعية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "نشر التوعية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "reached at a variety of locations such as schools, streets, rural areas and workplaces. Dissemination must also take into account the fact that large numbers of children, Dissemination must also take into account the fact that large numbers of children, adolescents and their families adolescents and their families are either unable to read, or only able to read with are not able to read. difficulty. There are several reasons for this; for example, a child may be too young to read and an adult may be illiterate. Dissemination techniques also need to be culturally appropriate. Examples of captivating and innovative dissemination techniques appropriate for children and adolescents and their families include dance, magic shows (Lustig, 1994), music (e.g. rap songs) (Remafedi, 1988), puppet shows (Skinner et al., 1991), theatre (Citizens Commission on AIDS for New York City and Northern New Jersey, 1991), story-telling and videos. 4.2 Step 2:Generate political support and funding No policy or plan, no matter how well conceived and well researched, has a chance of No policy or plan, no matter success without political support and a level of funding commensurate with its how well conceived and well objectives and strategies. Political support should be generated early in the process, researched, has a chance of with continued commitment and engagement to ensure that the policy, once success without political formulated, is implemented. Because young people are often dependent on others to support and a level of funding advocate on their behalf, advocates for child and adolescent mental",
+  "text_simplified": "يجب نشر المعلومات بطرق مبتكرة تناسب الأطفال والمراهقين وأسرهم، مثل الرقص والمسرح والحكايات والفيديو. كما ينبغي مراعاة أن بعض الأطفال لا يستطيعون القراءة بسبب صغر السن أو الأمية، لذا يجب استخدام وسائل جذابة ثقافياً. الحصول على الدعم السياسي والتمويل الكافي ضروري لنجاح أي خطة أو سياسة.",
+  "labels": [
+    "توعية",
+    "أطفال",
+    "مراهقون",
+    "نشر معلومات",
+    "دعم سياسي"
+  ],
+  "created_at": "2026-06-20T14:51:33Z",
+  "updated_at": "2026-06-20T14:51:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

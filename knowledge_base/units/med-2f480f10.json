@@ -1,0 +1,29 @@
+{
+  "id": "med-2f480f10",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "دعم الصحة النفسية للأطفال المعرضين للخطر",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "as orphans, children with chronic medical illness, those with learning disabilities, refugees, the mentally handicapped, physically, sexually, or emotionally abused or neglected children, and children or youth in conflict with the law. Attempts should be made to offer interventions in settings frequented by young people, including schools, homes, workplaces, neighbourhood clubs, youth agencies and health services. Box 8. School Mental Health Promotion Project in the Islamic Republic of Iran The national mental health programme in the Islamic Republic of Iran was launched in 1988, and focused mainly on the integration of mental health into primary health care. In recent years, the rising number of young people (about 16.5 million school students) and the rapid process of urbanization, with its associated psychosocial consequences – as reflected in different surveys – has highlighted the specific need for mental health promotion in schools. A pilot project for school children and their parents was started in Damavand, a city north of Tehran. The intervention significantly helped improve students' and parents' attitudes towards mental health, increased student self-esteem, reduced fear of examinations, ended corporal punishment, reduced sexual assaults and led to a decline in smoking (Yasamy et al., 2001). The programme has since been extended to the whole country. Medication for children and Medication for children and adolescents should be prescribed when clinically indicated, adolescents should be and generally as part of a more comprehensive management plan. The purpose of this prescribed when clinically module is not to provide guidance for clinical intervention. The judgment",
+  "text_simplified": "هذا النص يتناول أهمية تقديم الدعم النفسي والاجتماعي للأطفال المعرضين للخطر مثل الأيتام وذوي الأمراض المزمنة وذوي الإعاقات. كما يوصي بتقديم التدخلات في الأماكن التي يرتادها الشباب كالمدارس والمنازل والنوادي. ويذكر مثالاً لمشروع مدرسي في إيران ساهم في تحسين الصحة النفسية للطلاب وتقليل المشكلات السلوكية.",
+  "labels": [
+    "صحة نفسية",
+    "دعم مدرسي",
+    "أطفال معرضون للخطر",
+    "تدخل وقائي",
+    "تحسين السلوك"
+  ],
+  "created_at": "2026-06-20T14:48:04Z",
+  "updated_at": "2026-06-20T14:48:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

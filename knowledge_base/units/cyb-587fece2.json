@@ -1,0 +1,29 @@
+{
+  "id": "cyb-587fece2",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إجراءات حماية الأطفال من المحتوى الضار عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "detected. Tools such as hash scanning of known images and image recognition software are available to assist with this. In services targeted at children, photos and videos can be checked beforehand to make sure that children do not publish sensitive personal information about themselves or A number of measures may be used to control access to user- generated content and protect children and young people online against inappropriate or illegal content. Make sure that secure passwords are used as a step towards protecting children and young people in gaming and other social media settings. Other techniques include: • reviewing discussion groups to identify harmful subject matter, hate speech and illegal behaviour, and deleting such content when it is found to violate the terms of use; • developing tools to actively seek and remove content that is illegal or in breach of the company’s terms of condition and service, as well as tools to prevent uploading of known illegal content to the site; • pre-moderating message boards with a team of specialized children and young people’s moderators who screen for content that is in contradiction to the published “house rules”. Each message can be checked before it is published, and moderators can also spot and flag suspicious users, as well as users in distress; • establishing a team of community hosts who serve as the first point of contact for the moderators when they have concerns Be responsible for reviewing commercial content, including in forums, social networks and gaming sites. Implement",
+  "text_simplified": "يجب استخدام كلمات مرور قوية لحماية الأطفال في الألعاب ومواقع التواصل الاجتماعي. يمكن فحص الصور ومقاطع الفيديو قبل نشرها لمنع تسرب المعلومات الشخصية. كما ينبغي مراجعة مجموعات النقاش لإزالة المحتوى الضار أو غير القانوني. يمكن استخدام فريق من المشرفين المتخصصين لفحص الرسائل قبل نشرها ورصد المستخدمين المشبوهين.",
+  "labels": [
+    "حماية الأطفال",
+    "السلامة الرقمية",
+    "مراقبة المحتوى",
+    "كلمات مرور",
+    "إشراف أبوي"
+  ],
+  "created_at": "2026-06-20T15:00:27Z",
+  "updated_at": "2026-06-20T15:00:27Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

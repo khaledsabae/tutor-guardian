@@ -1,0 +1,29 @@
+{
+  "id": "med-2579a2c2",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أولويات البحث في الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات سلوكية وعقلية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "in populations at high risk. > Longitudinal studies to examine the course of major child and adolescent mental and behavioural disorders and their relationship with psychosocial, genetic, economic and other environmental determinants. > Relationships between psychopathology and risk behaviours, such as sexually risky behaviour and interpersonal violence. Treatment, prevention and promotion outcome research > Efficacy and effectiveness of pharmacological and psychosocial interventions, including interventions that have been shown to be efficacious or effective with adult > Factors affecting treatment adherence, including family factors. > Implementation or dissemination research, which examines the uptake of effective > Efficacy and effectiveness of various models of school-based mental health services. Policy and service research > Outcomes and cost effectiveness of different community care interventions, for example, residential care, day programmes and ambulatory services. > Training requirements for child and adolescent mental health service providers, including different models for supplementing existing generic training to equip practitioners to include child and adolescent mental health services in their range of service provision. > Ways in which interventions by traditional healers can contribute to improving the mental health of child and adolescent populations. >Advantages and disadvantages of different modes of intersectoral collaboration. >Optimal ways of integrating child and adolescent mental health services into general mental health services and paediatric health services. >Impact of policy decisions on access, equity and outcomes. Economic research > Economic impact of child and adolescent mental health interventions, both short- and long-term, and in terms of health service costs and costs in other domains.",
+  "text_simplified": "هذا النص يحدد أولويات البحث في الصحة النفسية للأطفال والمراهقين، مع التركيز على دراسة الاضطرابات السلوكية والعقلية وعلاقتها بالعوامل الوراثية والبيئية. كما يشمل تقييم فعالية العلاجات النفسية والدوائية، وأهمية دمج خدمات الصحة النفسية في المدارس والرعاية الصحية العامة. يُبرز النص الحاجة إلى أبحاث حول السياسات الصحية والتكاليف الاقتصادية للتدخلات.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال ومراهقون",
+    "بحث علمي",
+    "علاج نفسي",
+    "سياسات صحية"
+  ],
+  "created_at": "2026-06-20T14:49:23Z",
+  "updated_at": "2026-06-20T14:49:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

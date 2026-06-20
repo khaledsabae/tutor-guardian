@@ -1,0 +1,29 @@
+{
+  "id": "cyb-41730844",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تحديات أطفال ذوي الإعاقة في البيئة الرقمية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية مفرطة واستغلال",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "by uninformed or unscrupulous people offering treatments, therapies or “cures” for a child’s disability. Equally, some parents of children and young people with disabilities may be overprotective because of their lack of knowledge on how to best guide their child’s use of the Internet or protect them from bullying or harassment. 10 exclusion from, online environments due to inaccessible designs (e.g. apps that don’t allow text size to be increased), denial of requested accommodations (e.g. screen reader software or adaptive computer controls), or the need for appropriate support (e.g. coaching in how to use equipment, one-on-one support to navigating social interactions). 11 5 Andrew Schrock et al., “Solicitation, Harassment, and Problematic Content”, Berkman Center for Internet & 6 UNICEF, “State of the World’s Children Report: Children with Disabilities,” 2013. 7 Katrin Mueller-Johnson et al., “Sexual Victimization of Youth with a Physical Disability: An Examination of Prevalence Rates, and Risk and Protective Factors”, Journal of Interpersonal Violence, 2014. 8 Richard L Bruno, “Devotees, Pretenders and Wannabes: Two Cases of Factitious Disability Disorder”, Sexuality and Disability, 1997. 9 UNICEF, “Child Privacy in the Age of Web 2.0 and 3.0: Challenges and opportunities for policy”, Innocenti Discussion Paper 2017-03 . 10 UNICEF, “Is there a ladder of children’s online participation?”, Innocenti Research Brief, 2019. 11 For guidelines on these rights, see the United Nations Convention on the Rights of Persons with Disabilities and Optional Protocol, especially Article 9 on accessibility and Article 21 on freedom of expression and opinion, and access to information.",
+  "text_simplified": "يستغل بعض الأشخاص غير المؤهلين أو عديمي الضمير حاجة أطفال ذوي الإعاقة للعلاج، ويقدمون علاجات وهمية. كما أن بعض الآباء قد يفرطون في حماية أطفالهم بسبب نقص معرفتهم بكيفية توجيه استخدامهم للإنترنت أو حمايتهم من التنمر. يواجه هؤلاء الأطفال أيضًا استبعادًا من البيئات الرقمية بسبب تصميمات غير متاحة، مثل التطبيقات التي لا تسمح بتكبير النص، أو نقص الدعم المناسب كالمعدات التكيفية.",
+  "labels": [
+    "ذوي الإعاقة",
+    "حماية مفرطة",
+    "استغلال",
+    "تنمر إلكتروني",
+    "إتاحة رقمية"
+  ],
+  "created_at": "2026-06-20T14:54:54Z",
+  "updated_at": "2026-06-20T14:54:54Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

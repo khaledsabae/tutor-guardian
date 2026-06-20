@@ -1,0 +1,29 @@
+{
+  "id": "med-c70fe6a2",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحليل عوامل الانتحار لدى الشباب في رعاية الأسرة",
+  "language": "mixed",
+  "age_group": "13-15",
+  "behavior_type": "انتحار",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "are 5.4 times more likely; > The review suggests that there are three groups amongst those youth who had contact with Child, Youth and Family Services and who died by suicide: - Young women who had low family support, high rates of abuse, high rates of suicide attempts and ongoing involvement of Child, Youth and Family - Young men with a history of offending, particularly impulsive offending involving motor cars; and - Young men and young women with a history of alcohol and drug abuse and a history of previous suicide attempts. This review suggests that targeted interventions for young people in contact with Child, Youth and Family Services has the potential to reach 50% of all young females and 25% of all young males aged under 17 years who would otherwise have killed themselves. 2.2 Step 2:Gather evidence for effective strategies After collecting information about the needs of the population, the process now turns to gathering evidence on which strategies are effective for addressing those needs within the country or region, or elsewhere. Policy-makers have to know not only what works, but also under what circumstances it works and to what extent one can expect it to succeed. The more accurately the evidence reflects the needs of the specific target population, the more likely it is to be relevant. Mental health interventions cover a spectrum of activities, ranging from mental health promotion (to build awareness and resilience) and universal and selective prevention (to reduce risk and vulnerability factors and",
+  "text_simplified": "هذا النص يتناول دراسة عن الشباب الذين تعرضوا لخدمات رعاية الطفل والأسرة وانتحروا. تشير النتائج إلى وجود ثلاث مجموعات رئيسية: فتيات يعانين من ضعف الدعم الأسري وإساءة ومحاولات انتحار سابقة، وشبان لديهم تاريخ من الجرائم الاندفاعية، وشبان وشابات يعانون من إدمان الكحول والمخدرات. توصي الدراسة بتدخلات موجهة لهذه الفئات للحد من مخاطر الانتحار.",
+  "labels": [
+    "انتحار",
+    "شباب",
+    "دعم أسري",
+    "إدمان",
+    "تدخل موجه"
+  ],
+  "created_at": "2026-06-20T14:46:10Z",
+  "updated_at": "2026-06-20T14:46:10Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

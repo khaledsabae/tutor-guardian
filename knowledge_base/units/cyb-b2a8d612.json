@@ -1,0 +1,29 @@
+{
+  "id": "cyb-b2a8d612",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال في العالم الرقمي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "Protection To this end, these guidelines include recommendations on good practice in meeting the risks children face in the digital world and how to act in order to establish a secure environment for children online. These guidelines provide advice on how industry can work to help ensure children’s safety when using ICTs, the Internet or any of the associated technologies or devices that can connect to it, including mobile phones, game consoles, connected toys, watches, the Internet of things and AI-driven systems. They therefore provide an overview of the key issues and challenges regarding child online protection and propose actions for businesses and stakeholders for the development of local and internal COP policies. These guidelines do not cover aspects such as the actual development process or text that COP policies for industry Section 1 – Overview: This section highlights the purpose, scope and target audience of these Section 2 – Introduction to child online protection: This section sets out an overview of the issue of child online protection, outlining some background information, including the special situation of children with disabilities. Moreover, it provides examples of existing international and national models to keep children safe online as possible areas of intervention for industry Section 3 – Key areas of protecting and promoting children’s rights: This section outlines five key areas where companies can take action to ensure children’s safe and positive use of ICTs. Section 4 – General guidelines: This section provides recommendations for all industry stakeholders on protecting children’s safety",
+  "text_simplified": "هذه الإرشادات تهدف إلى حماية الأطفال في العالم الرقمي من خلال تقديم توصيات للصناعات لضمان بيئة آمنة لهم عند استخدام الإنترنت والتقنيات المرتبطة به. تشمل الإرشادات نصائح حول كيفية التعامل مع المخاطر التي يواجهها الأطفال، وتقديم أمثلة على نماذج وطنية ودولية لحمايتهم. كما تحدد خمسة مجالات رئيسية يمكن للشركات العمل فيها لتعزيز الاستخدام الآمن والإيجابي للتكنولوجيا من قبل الأطفال.",
+  "labels": [
+    "حماية رقمية",
+    "سلامة الأطفال",
+    "إرشادات صناعية",
+    "استخدام آمن للإنترنت",
+    "حقوق الطفل"
+  ],
+  "created_at": "2026-06-20T14:53:17Z",
+  "updated_at": "2026-06-20T14:53:17Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

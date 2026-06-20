@@ -1,0 +1,29 @@
+{
+  "id": "cyb-5f85a5bc",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "فوائد ومخاطر الإنترنت للأطفال والشباب",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "استخدام التكنولوجيا والإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "UNICEF estimates that 71 per cent of young people are already online.2 The proliferation of Internet access points, mobile technology and the growing array of Internet-enabled devices, combined with the immense resources to be found in cyberspace, provide unprecedented opportunities to learn, share and communicate. The benefits of ICT usage include broader access to information on social services, educational resources and health advice. As children and young people and families use the Internet and mobile phones to seek information and assistance, and to report incidents of abuse, these technologies can help to protect children and young people from violence and exploitation. Child protection service providers also use ICTs to gather and transmit data, thereby facilitating birth registration, case management, family tracing, data collection and mapping of violence, Moreover, the Internet has increased access to information in all corners of the globe, enabling children and young people to research almost any subject of interest, access worldwide media, pursue vocational prospects and harness ideas for the future. ICT usage empowers children and young people to assert their rights and express their opinions, and also allows them to connect and communicate with their families and friends. ICTs also serve as a paramount mode of cultural exchange and a source of entertainment. Despite the profound benefits of the Internet, children and young people can also encounter a number of risks when using ICTs. They can be exposed to age-inappropriate content or inappropriate contact, including from potential perpetrators of sexual abuse. They can suffer reputational",
+  "text_simplified": "التكنولوجيا الحديثة والإنترنت توفر فرصًا رائعة للأطفال والشباب للتعلم والتواصل والحصول على المعلومات. لكن يجب على الأهل الانتباه إلى أن الأطفال قد يتعرضون لمخاطر مثل محتوى غير مناسب أو تواصل مع أشخاص خطرين.",
+  "labels": [
+    "أمان الإنترنت",
+    "مخاطر رقمية",
+    "تربية رقمية",
+    "حماية الأطفال",
+    "وعي إلكتروني"
+  ],
+  "created_at": "2026-06-20T14:53:31Z",
+  "updated_at": "2026-06-20T14:53:31Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

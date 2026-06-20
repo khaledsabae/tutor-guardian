@@ -1,0 +1,29 @@
+{
+  "id": "cyb-56e102ef",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات لحماية الأطفال عبر الإنترنت لمزودي الخدمات",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "reporting portal solution that allows Internet users in countries and nations without hotlines, to report images and videos of suspected child sexual abuse directly to the IWF through a bespoke online portal page. For providers of connectivity, data storage and hosting services whose services involve some kind of content hosting (many do not), notice and take down processes should be in place. Creating a safer and Providers of connectivity, data storage and hosting services, can age-appropriate digital help create a safer, more enjoyable digital environment for children environment of all ages by taking the following actions: Data storage / hosting service providers should consider presenting the reporting function on all web pages and services, and develop and document clear processes for swiftly managing reports of abuse or other breaches of terms and conditions. Providers of connectivity should offer own-brand technical controls or signpost the availability of tools created by specialist providers that are appropriate for the services offered and are easy for end users to implement and offer the possibility of blocking or filtering access to the Internet through the company networks. Provide appropriate age-verification mechanisms if the company offers content or services (including own brand or third-party services that are promoted by the company), that are only legal or appropriate for adult users (e.g. certain games, lotteries). Guidelines for industry on Child Online Protection Educating children, Providers of connectivity, data storage and hosting services should parents and educators echo key messages from terms and conditions within community about children’s",
+  "text_simplified": "هذا النص يقدم إرشادات لمزودي خدمات الإنترنت والتخزين لحماية الأطفال عبر الإنترنت. يجب توفير أدوات للإبلاغ عن المحتوى المسيء، وآليات للتحقق من العمر، ومرشحات للمحتوى غير المناسب. كما يشدد على أهمية تثقيف الأطفال والأهل والمربين حول السلامة الرقمية.",
+  "labels": [
+    "حماية الطفل",
+    "سلامة رقمية",
+    "إبلاغ عن إساءة",
+    "تحقق من العمر",
+    "تثقيف رقمي"
+  ],
+  "created_at": "2026-06-20T14:59:12Z",
+  "updated_at": "2026-06-20T14:59:12Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

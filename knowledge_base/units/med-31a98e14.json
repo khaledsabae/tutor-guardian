@@ -1,0 +1,29 @@
+{
+  "id": "med-31a98e14",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحليل الموارد البشرية والتمويل للصحة النفسية للأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "includes information on the human resources available. For example, and understanding of the what is the role of primary care providers, what training have they received and what current status of child and competencies do they have? Who supports mothers after childbirth? What is the role adolescent mental health of traditional healers? How many specialist mental health workers are available in the services in the country. country, and do they receive training in child and adolescent mental health? It is important to identify workers who may promote the mental health of children and adolescents (such as youth workers who work with street children), who may not be immediately identifiable as mental health workers. It is also important to understand the attitudesof health workers to the current system It is important to understand and possible changes in the system. The quality of child and adolescent mental health the attitudes of health workers services depends on the knowledge and motivation of these workers. to the current system. Determining the financingof mental health services for children and adolescents is also necessary. This includes identifying both the sources of funding (for example, through Determining the financing of taxation or donor programmes) and the expenditure on services. In many countries mental health services for children and adolescents is there will not be a distinct budget for child and adolescent mental health. The module also necessary. on Mental Health Financingprovides more guidance on funding issues. The structure and focus of the existing organizationof services for child",
+  "text_simplified": "يتناول النص أهمية فهم الموارد البشرية المتاحة لدعم الصحة النفسية للأطفال والمراهقين، مثل دور مقدمي الرعاية الأولية والمعالجين التقليديين والعاملين مع الأطفال. كما يشير إلى ضرورة تقييم تمويل الخدمات النفسية للأطفال والمراهقين، بما في ذلك مصادر التمويل والإنفاق عليها.",
+  "labels": [
+    "موارد بشرية",
+    "صحة نفسية",
+    "أطفال ومراهقون",
+    "تمويل الخدمات",
+    "تقييم النظام"
+  ],
+  "created_at": "2026-06-20T14:45:50Z",
+  "updated_at": "2026-06-20T14:45:50Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

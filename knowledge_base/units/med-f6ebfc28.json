@@ -1,0 +1,29 @@
+{
+  "id": "med-f6ebfc28",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "سياسات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "سياسات الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Mental Health Policy and Service Guidance Package ADOLESCENT MENTAL HEALTH POLICIES “Children are our future. Through well- conceived policy and planning, governments can promote the mental health of children, for the benefit of the child, the family, the community World Health Organization, 2005 Mental Health Policy and Service Guidance Package ADOLESCENT MENTAL HEALTH POLICIES World Health Organization, 2005 WHO Library Cataloguing-in-Publication Data Mental Health Policy and Service Guidance Package : Child and Adolescent Mental Health Policies and Plans. 1.Mental health 2.Policy-making 3.Adolescent health services - legislation 4.Child health services - legislation 5.Social justice 6.Health planning guidelines I.World Health Organization. ISBN 92 4 154657 3 (NLM classification: WM 34) Information concerning this publication can be obtained from: Dr Michelle Funk Mental Health Policy and Service Development Team Department of Mental Health and Substance Abuse Noncommunicable Diseases and Mental Health Cluster World Health Organization CH-1211, Geneva 27 Tel: +41 22 791 3855 Fax: +41 22 791 4160 E-mail: funkm@who.int © World Health Organization 2005 All rights reserved. Publications of the World Health Organization can be obtained from Marketing and Dissemination, World Health Organization, 20 Avenue Appia, 1211 Geneva 27, Switzerland (tel: +41 22 791 2476; fax: +41 22 791 4857; email: bookorders@who.int). Requests for permission to reproduce or translate WHO publications – whether for sale or for noncommercial distribution – should be addressed to Marketing and Dissemination, at the above address (fax: +41 22 791 4806; email: permissions@who.int). The designations employed and the presentation of the material in this publication do not",
+  "text_simplified": "تؤكد منظمة الصحة العالمية على أهمية وضع سياسات وخطط واضحة للصحة النفسية للأطفال والمراهقين. هذه السياسات تساعد الحكومات في تعزيز الصحة النفسية للأجيال القادمة. يجب أن تراعي هذه الخطط احتياجات الأطفال والمراهقين لضمان مستقبل أفضل لهم وللمجتمع.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات حكومية",
+    "أطفال ومراهقون",
+    "تخطيط صحي",
+    "منظمة الصحة العالمية"
+  ],
+  "created_at": "2026-06-20T14:42:10Z",
+  "updated_at": "2026-06-20T14:42:10Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

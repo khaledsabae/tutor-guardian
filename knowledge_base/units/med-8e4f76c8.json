@@ -1,0 +1,29 @@
+{
+  "id": "med-8e4f76c8",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تطوير استراتيجيات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية للأطفال والمراهقين",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "problems > Public alarm about relevant issues such among children and adolescents as substance use among adolescents > Political crises such as civil war > Recent current events highlighting a specific area of need (for example, suicide among adolescents, child > Treaty obligations that accord priority to child and adolescent health (for example, the UN Convention on the Rights of the Child) Following a SWOT analysis, the following actions can be taken to develop and establish priorities for a set of strategies. First, a comprehensive list of any potentially useful proposals should be devised for A comprehensive list of any each of the areas of action that were developed during the policy formulation phase. At potentially useful proposals this stage one should be as inclusive as possible, and consider all proposals, even if at should be devised for each of first they do not appear to be feasible or necessary. The list should include which the areas of action. stakeholders or sectors will be responsible for each strategy. Second, brainstorm with key role players to develop a set of strategies for implementing each of the proposals listed. When devising a plan for child and adolescent mental Brainstorm with key role health, brainstorming sessions should include child and adolescent service providers, players to develop a set of educators, service users (for example, youth and family members) and representatives strategies for implementing from advocacy groups. The latter could include those that focus on young people in each of the proposals listed. general,",
+  "text_simplified": "يجب وضع قائمة شاملة بالمقترحات المفيدة لكل مجال من مجالات العمل التي تم تطويرها خلال مرحلة صياغة السياسات. ينبغي أن تشمل القائمة الجهات المسؤولة عن تنفيذ كل استراتيجية. ثم يتم عقد جلسات عصف ذهني مع الجهات الفاعلة الرئيسية مثل مقدمي الخدمات والمعلمين والأسر لتطوير استراتيجيات التنفيذ.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات",
+    "تخطيط استراتيجي",
+    "مشاركة مجتمعية",
+    "مراهقون"
+  ],
+  "created_at": "2026-06-20T14:50:11Z",
+  "updated_at": "2026-06-20T14:50:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-5407ca24",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال من العنف والاستغلال وتعزيز المواطنة الرقمية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "all forms of violence, exploitation, abuse and discrimination of any kind, and sets out that the child’s best interest should be the primary consideration in any matters affecting them. Parents, carers, educators and community members, including community leaders and civil society actors, have the responsibility to nurture and support children and young people in their passage to adulthood. Governments have an important role in ensuring that all such stakeholders fulfil this role. With regard to protecting children’s rights online, industries need to work together to strike a careful balance between children’s right to protection and their right to access to information and freedom of expression. Companies should therefore prioritize measures to protect children and young people online that are targeted and are not unduly restrictive, either for the child or other users. Moreover, there is a growing consensus that promoting digital citizenship among children and young people, and developing products and platforms that facilitate children’s positive use of ICTs, should be a priority for the private sector. While online technologies present many opportunities for children and young people to communicate, learn new skills, be creative and contribute to improving society for all, they can also pose new risks to the safety of children and young people. They can expose children and young people to potential risks and harms related to issues of privacy, illegal content, harassment, cyberbullying, misuse of personal data or grooming for sexual purposes and even child sexual abuse and exploitation. They may also be exposed to reputational",
+  "text_simplified": "يجب حماية الأطفال من جميع أشكال العنف والاستغلال والإيذاء والتمييز. تقع مسؤولية رعاية الأطفال ودعمهم على الوالدين والمربين والمجتمع والحكومات. يجب تحقيق توازن بين حماية الأطفال على الإنترنت وحقهم في الوصول إلى المعلومات وحرية التعبير. كما ينبغي تعزيز المواطنة الرقمية للأطفال وتطوير منتجات تدعم استخدامهم الإيجابي للتكنولوجيا.",
+  "labels": [
+    "حماية الطفل",
+    "الاستغلال عبر الإنترنت",
+    "المواطنة الرقمية",
+    "حقوق الطفل",
+    "التنمر الإلكتروني"
+  ],
+  "created_at": "2026-06-20T14:53:39Z",
+  "updated_at": "2026-06-20T14:53:39Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

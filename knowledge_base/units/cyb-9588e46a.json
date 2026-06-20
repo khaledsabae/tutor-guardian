@@ -1,0 +1,29 @@
+{
+  "id": "cyb-9588e46a",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة الرقمية للأطفال",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "السلامة الرقمية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "of information, search functions or direc- and communicate with their so vast in scope that it is easy to tories, that is, the thematic friends, how they organize large get lost or run into untruths and categories that most search parts of their social lives and material not appropriate to your engines provide (i.e., for school work. Here you will find needs or age. We are referring to sports, health, cinema, etc.); information on how to be safe sites that, for example, promote using these online platforms racial hatred or incite violence, 3. put your critical sense to work as well as insight into what you sites which could lead you to and try to determine whether can do to help create a safe and come across pornographic or the site is trustworthy: When positive online space for you and child abuse material. This can you access the site do other your friends. occur in a purely accidental way, pages begin to automatically as in the case of searches on open? Are you able to find completely different subjects, out who owns the site? Is it through e-mailing, P2P pro- easy to contact the owner? Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Can you tell who wrote the country; your parents or an- generally, through all the social predator might persuade the child page or particular article you other adult you trust can also networking spaces, where it is to make sexual images",
+  "text_simplified": "يجب على الأطفال توخي الحذر عند استخدام الإنترنت، حيث قد يتعرضون لمحتوى غير مناسب أو خطير مثل العنف أو المواد الإباحية. يمكن للوالدين مساعدة أطفالهم على استخدام الإنترنت بأمان من خلال تعليمهم كيفية التحقق من مصداقية المواقع والتواصل مع الأصدقاء بشكل آمن.",
+  "labels": [
+    "سلامة الإنترنت",
+    "محتوى غير لائق",
+    "مهارات التفكير النقدي",
+    "حماية الأطفال",
+    "التواصل الآمن"
+  ],
+  "created_at": "2026-06-20T15:11:05Z",
+  "updated_at": "2026-06-20T15:11:05Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

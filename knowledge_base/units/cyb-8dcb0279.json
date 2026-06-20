@@ -1,0 +1,29 @@
+{
+  "id": "cyb-8dcb0279",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة الرقمية للأطفال والشباب",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "or activities on the websites to the abuse e-mail of the host of the site. 3. You can report illegal content to an Internet Hotline or to the 4. You can report illegal or possibly illegal activities to the local police. 5. In addition to taking good care of yourself, you should also take care of your computer or mobile device. Like the SMART rules, there are some easy tips to remember in order to keep your computer and mobile device safe. 25 e.g. CHI available at: www.childhelplineinternational.org Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Learn to use your machine safely: 1. Make sure you have installed 6. Learn to check who you are Your online rights and learned how to use a fire- connected to – learn to use • You have the right to make wall and anti-virus software. tools like “Netstat” use of technologies to devel- Remember to keep them up to Finally, a great way to make op your personality and help date! sure that your parents agree increase your capabilities; 2. Learn about your computer’s with your online life is to set • You have the right to protect operating system (like Win- up a written agreement with dows, Linux, etc) and especial- them. The purpose is to reas- ly about how to patch it and sure them that you are aware • You have the right to par- keep it up to date. of the risks associated",
+  "text_simplified": "يجب على الأطفال والشباب تعلم كيفية الإبلاغ عن المحتوى غير القانوني عبر الإنترنت من خلال البريد الإلكتروني أو الخط الساخن أو الشرطة المحلية. كما ينبغي لهم حماية أجهزتهم الإلكترونية باستخدام برامج مكافحة الفيروسات والجدران النارية وتحديثها باستمرار. من المهم أيضًا معرفة من يتصلون به عبر الإنترنت واستخدام أدوات مثل Netstat. يمكن للوالدين والأبناء وضع اتفاقية مكتوبة لضمان السلامة الرقمية وتعزيز الثقة المتبادلة.",
+  "labels": [
+    "سلامة الإنترنت",
+    "حماية الأطفال",
+    "إبلاغ عن محتوى",
+    "أمن الأجهزة",
+    "اتفاقية رقمية"
+  ],
+  "created_at": "2026-06-20T15:10:13Z",
+  "updated_at": "2026-06-20T15:10:13Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-2a932281",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تنفيذ مشاريع تجريبية وتقييم الصحة النفسية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تنظيم خدمات",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "justice for the establishment of the pilot projects; >Obtain funding for the necessary equipment, such as digital recording devices; >Identify specific courts where the pilot project can be implemented; >Hold discussions with the members of the judiciary at these courts to ensure that they support the introduction of concealed witnesses, and to obtain agreement about a commencement date; >Locate a venue at each court where the evidence can be provided; >Provide training for the members of the judiciary who will be required to implement >Monitor the implementation of the project; and >Obtain feedback from all key stakeholders as to the functioning of the system. Research and evaluation 1. Document the rates at which youngsters are referred for interventions for mental disorders prior to the workshops (mentioned above) and after them. 2. Conduct an outcome study of the efficacy of primary health care interventions for mental disorders Completion of study. Stage of project completed: Activities (assuming the intervention has been developed) >Assemble a group of scientists and service managers to oversee the research; >Obtain funding; >Hire a project manager; >Develop a protocol; >Write a detailed description of what is required by the fieldworkers; >Hire and train fieldworkers; >Monitor the progress of the fieldwork; >Enter and refine the data; >Conduct a statistical analysis; and >Write a report. Area for action Organization of services 1. Design and implement an in-service training programme for nurses working at the primary care level. 2. Ensure that identified professionals are available to receive referrals from nurses and",
+  "text_simplified": "هذا النص يتعلق بتنفيذ مشاريع تجريبية في المحاكم لتقديم شهود مخفيين، ويتضمن خطوات مثل الحصول على التمويل وتدريب القضاة. كما يناقش إجراء أبحاث لتقييم فعالية التدخلات الصحية النفسية للأطفال والمراهقين، وتنظيم خدمات الرعاية الأولية من خلال تدريب الممرضات.",
+  "labels": [
+    "مشاريع تجريبية",
+    "شهود مخفيون",
+    "صحة نفسية",
+    "تدريب",
+    "تقييم"
+  ],
+  "created_at": "2026-06-20T14:50:29Z",
+  "updated_at": "2026-06-20T14:50:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

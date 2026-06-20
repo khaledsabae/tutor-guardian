@@ -1,0 +1,29 @@
+{
+  "id": "cyb-ba576b33",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال من الإعلانات عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "online advertising to children and young people. If the content offering supports an interactive element, such as commenting, online forums, social networks, gaming platforms, chat rooms or message boards, communicate a clear set of “house rules” in customer-friendly language within the terms of service and user guidelines. Decide what level of engagement is desired before launching an online service. Services aimed at appealing to children should only present content that is suitable for a young audience. If in doubt, the national authorities in charge of child protection may be consulted. Provide clear and factual content labelling. Be mindful that users can arrive at inappropriate content by following links on third-party sites that bypass contextualizing pages. Guidelines for industry on Child Online Protection Educating children, Companies offering curated digital content can complement parents and educators technical measures with educational activities that are about children’s safety and empowering for children by taking the following actions: their responsible use of ICTs Provide customers with specific and clear information about content, such as the type of content, age ratings/restrictions, strong language or violence and the corresponding parental controls available; and about how to report misuse and inappropriate or illegal content, and how reports will be In the interactive world, this information should be provided in the form of content labels for each program. Encourage adults, especially parents, carers and educators, to be involved in children and young people’s online content consumption, so that they can assist and guide children and young people in choosing",
+  "text_simplified": "يجب على الشركات تقديم محتوى رقمي مناسب للأطفال مع وضع قواعد واضحة للاستخدام. ينبغي توعية الأهل بمخاطر الإعلانات الموجهة للأطفال عبر الإنترنت وأهمية مراقبة المحتوى. كما يُوصى بتوفير معلومات عن تصنيف المحتوى العمري وآليات الإبلاغ عن المحتوى غير المناسب.",
+  "labels": [
+    "إعلانات رقمية",
+    "سلامة الأطفال",
+    "رقابة أبوية",
+    "محتوى مناسب",
+    "توعية رقمية"
+  ],
+  "created_at": "2026-06-20T14:59:41Z",
+  "updated_at": "2026-06-20T14:59:41Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

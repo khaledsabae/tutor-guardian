@@ -1,0 +1,29 @@
+{
+  "id": "dev-257107fb",
+  "domain": "development",
+  "source_file": "Harvard_8_Things_Child_Development.pdf",
+  "title": "أهمية البيئة الآمنة والعلاقات الداعمة بعد الصدمة",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صدمة نفسية",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Harvard Center on the Developing Child",
+  "text_original": "appropriate treatments are provided as needed. 7) Simply removing a child from a dangerous environment will not automatically reverse the negative impacts of that experience. There is no doubt that children in harm’s way should be removed from dangerous situations immediately. Similarly, children experiencing severe neglect should be provided with responsive caregiving as soon as possible. That said, children who have been traumatized need to be in environments that restore their sense of safety, control, and predictability, and they typically require therapeutic, supportive care to facilitate their recovery. developingchild.harvard.edu/resources/8-things-remember-child-development/ 8) Resilience requires relationships, not rugged individualism. The capacity to adapt and thrive despite adversity develops through the interaction of supportive relationships, biological systems, and gene expression. Despite the widespread yet erroneous belief that people need only draw upon some heroic strength of character, science now tells us that it is the reliable presence of at least one supportive relationship and multiple opportunities for developing effective coping skills that are the essential building blocks for strengthening the capacity to do well in the face of significant adversity. developingchild.harvard.edu/resources/8-things-remember-child-development/",
+  "text_simplified": "إخراج الطفل من بيئة خطرة لا يكفي لعلاج آثار الصدمة، بل يحتاج إلى بيئة آمنة وداعمة ورعاية علاجية. المرونة النفسية لا تأتي من قوة الشخصية وحدها، بل من وجود علاقة داعمة واحدة على الأقل وفرص متعددة لتطوير مهارات التكيف.",
+  "labels": [
+    "صدمة",
+    "مرونة نفسية",
+    "دعم عاطفي",
+    "بيئة آمنة",
+    "علاقات داعمة"
+  ],
+  "created_at": "2026-06-20T14:52:23Z",
+  "updated_at": "2026-06-20T14:52:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Harvard_8_Things_Child_Development",
+    "source_author": ""
+  }
+}

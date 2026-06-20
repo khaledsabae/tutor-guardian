@@ -1,0 +1,29 @@
+{
+  "id": "cyb-24677970",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال عبر الإنترنت وتعاون الصناعة",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "there a ladder of children’s online participation?”, Innocenti Research Brief, 2019. 11 For guidelines on these rights, see the United Nations Convention on the Rights of Persons with Disabilities and Optional Protocol, especially Article 9 on accessibility and Article 21 on freedom of expression and opinion, and access to information. Guidelines for industry on Child Online Protection 2.2 Existing national and transnational models for Child Online At the global level, several models are being adopted to keep children and young people safe online. Industry stakeholders should consider these as guidance for international initiatives and as a framework to ensure they spare no efforts to protect children and young people online. The Internet industry is a diverse and intricate arena, compiled of companies of different sizes and functions. It is essential that child protection is addressed not only by platforms and services based around content but also by those supporting the infrastructure of the Internet. It must be noted that the capacity of an industry to introduce a comprehensive child protection policy is limited to its available resources. These guidelines, therefore, recommend that industries work together to deploy services to protect users. By sharing resources and engineering expertise, industries would be able to more effectively create “safe spaces” to Industry cooperation The Technology Coalition is an example of successful cooperation between industry stakeholders to fight CSEA. Transnational models Industries should include relevant international guidelines in their structural programme as well as abide by any relevant national or transnational legislation that applies",
+  "text_simplified": "يجب على شركات الإنترنت حماية الأطفال عبر الإنترنت من خلال التعاون وتبادل الموارد. هناك نماذج دولية ومحلية لتوجيه الصناعة نحو خلق بيئات آمنة للأطفال. من المهم أن تشمل الحماية جميع خدمات الإنترنت وليس فقط منصات المحتوى.",
+  "labels": [
+    "حماية الأطفال",
+    "السلامة الرقمية",
+    "تعاون صناعي",
+    "حقوق الطفل",
+    "محتوى آمن"
+  ],
+  "created_at": "2026-06-20T14:54:59Z",
+  "updated_at": "2026-06-20T14:54:59Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

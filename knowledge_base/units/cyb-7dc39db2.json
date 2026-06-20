@@ -1,0 +1,29 @@
+{
+  "id": "cyb-7dc39db2",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال عبر الإنترنت باستخدام الذكاء الاصطناعي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "Guardian, “‘Partnership on AI’ formed by Google, Facebook, Amazon, IBM and Microsoft”, 2016. Guidelines for industry on Child Online Protection “Like corporations, governments around the world have adopted strategies for becoming leaders in the development and use of AI, fostering environments congenial to innovators and corporations.”24 It is unclear, however, how such national strategies directly address children’s Improving Facebook’s handling of suicide and self-injury related content In 2019, Facebook began hosting regular consultations with experts from around the world to discuss some of the more difficult topics associated with suicide and self- injury. These include how to deal with suicide notes, the risks related to depressing content online and newsworthy depictions of suicide. Further details of these meetings are available on Facebook’s new Suicide Prevention page, in its Safety Center. These consultations resulted in several improvements to the way Facebook handles this type of content. Policy regarding self-harm, for example, was strengthened to prohibit graphic cutting images to avoid unintentionally promoting or triggering self-harm. Even when someone is seeking support or expressing themselves to aid their recovery, Facebook now displays a sensitivity screen over images of healed self-harm cuts. This type of content is now being discovered through the application of AI whereby action on potentially harmful content, including removing it or adding sensitivity screens, can be taken automatically. From April to June 2019, Facebook acted on more than 1.5 million pieces of suicide and self-injury content on its site and identified more than 95 per cent of it before",
+  "text_simplified": "تتعاون شركات التكنولوجيا الكبرى مثل جوجل وفيسبوك وأمازون لوضع إرشادات لحماية الأطفال على الإنترنت. كما طورت فيسبوك سياسات جديدة للتعامل مع محتوى الانتحار وإيذاء النفس، حيث تستخدم الذكاء الاصطناعي لاكتشاف المحتوى الضار تلقائياً وحذفه أو إضافة شاشات حساسة له. تهدف هذه الإجراءات إلى حماية الأطفال والمراهقين من المحتوى المؤذي وتعزيز سلامتهم النفسية.",
+  "labels": [
+    "حماية الأطفال",
+    "الذكاء الاصطناعي",
+    "السلامة على الإنترنت",
+    "محتوى مؤذٍ",
+    "إرشادات رقمية"
+  ],
+  "created_at": "2026-06-20T15:00:56Z",
+  "updated_at": "2026-06-20T15:00:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

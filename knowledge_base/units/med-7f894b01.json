@@ -1,0 +1,29 @@
+{
+  "id": "med-7f894b01",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "اضطرابات الصحة النفسية في المراهقة وعوامل الخطر",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "اضطرابات نفسية وسلوكية في المراهقة",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "that by 2020, depressionwill be the second leading cause of disability worldwide (WHO, 2001). In later childhood, between the ages of 12 and 18 years, mental and behavioural Between the ages of 12 and disorders due to psychoactive substance use can emerge. In many cultures, children 18 years, disorders related to are particularly impressionable and extremely eager to conform to the social norms substance abuse can emerge. defined by their immediate peers. They are thus susceptible to experimentation such as drug abuse, and may unintentionally become addicted to drugs. Addictions can become entrenched at an early age, and, if untreated, can lead to a lifetime of struggle Finally, psychotic disorders (seen in adults) tend to become apparent in later Psychotic disorders can adolescence. Schizophrenia alone affects approximately 1% of the world’s population become apparent in later (Jablensky et al., 1987). While less prevalent than the disorders noted above, psychotic adolescence. disorders can be particularly severe and unremitting if untreated; early detection and effective treatment can markedly improve the course of such illnesses. 1.4 Risk and protective factors There are a number of factors that can affect the mental health of a child or adolescent (Offord, 1998). Broadly speaking, these can be divided into risk and protective factors. The mental health of a child The former refers to factors that increase the probability of occurrence of mental health or adolescent can be affected problems or disorders, while the latter refers to factors that moderate the effects of risk by risk and",
+  "text_simplified": "يُتوقع أن يصبح الاكتئاب ثاني سبب رئيسي للإعاقة عالمياً بحلول عام 2020. بين سن 12 و18 عاماً، قد تظهر اضطرابات سلوكية وعقلية مرتبطة بتعاطي المواد المخدرة، حيث يكون المراهقون عرضة للتجربة والإدمان. كما قد تظهر الاضطرابات الذهانية في مرحلة المراهقة المتأخرة، وتكون شديدة إذا لم تُعالج مبكراً. هناك عوامل خطر وعوامل حماية تؤثر على الصحة النفسية للأطفال والمراهقين.",
+  "labels": [
+    "اكتئاب",
+    "إدمان",
+    "اضطرابات ذهانية",
+    "مراهقة",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T14:44:43Z",
+  "updated_at": "2026-06-20T14:44:43Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-d427cebf",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "توجيه شركات التكنولوجيا لحماية الأطفال عبر الإنترنت",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "are targeted directly or indirectly at children can benefit from the general principles outlined earlier and can adapt, based on their specific field of operation. The core idea is to support and guide the ICT industry in taking the right measures to better protect children online from the risks of harm while empowering them to navigate the online world in the best way possible. The typology below will help provide a clearer understanding of some of the target audiences and how they fit in the checklists in the following section. It should be noted that these are only some specific example categories and are not exhaustive: (a) Internet service providers, including through fixed landline broadband services or cellular data services of mobile network operators: while this typically reflects services offered over a more long-term basis to subscribed customers, it could also be extended to businesses that provide free or paid public WI-FI hotspots. (b) Social network /messaging platforms and online gaming platforms. (c) Hardware and software manufacturers, such as providers of handheld devices including mobile phones, gaming consoles, voice assistance-based home devices, Internet of Things and smart Internet connected toys for children. (d) Companies providing digital media (content creators, providing access to or hosting (e) Companies providing streaming services, including live streams. (f) Companies offering digital file storage services, cloud-based service providers. 5. Feature-specific checklists This chapter complements the previous general checklist for industry by offering recommendations for businesses that provide services with specific features on respecting and supporting children’s",
+  "text_simplified": "يهدف هذا النص إلى توجيه شركات التكنولوجيا والإنترنت لحماية الأطفال عبر الإنترنت من المخاطر، مع تمكينهم من استخدام الإنترنت بأفضل طريقة. يقدم النص قائمة بأنواع الشركات المعنية مثل مزودي خدمات الإنترنت، ومنصات التواصل الاجتماعي، ومنصات الألعاب، ومصنعي الأجهزة، وشركات المحتوى الرقمي، وخدمات التخزين السحابي. كما يشير إلى وجود قوائم مرجعية خاصة بكل ميزة لمساعدة هذه الشركات على تطبيق المبادئ العامة لحماية الأطفال.",
+  "labels": [
+    "حماية الأطفال",
+    "الإنترنت",
+    "شركات التكنولوجيا",
+    "إرشادات صناعية",
+    "سلامة رقمية"
+  ],
+  "created_at": "2026-06-20T14:58:41Z",
+  "updated_at": "2026-06-20T14:58:41Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

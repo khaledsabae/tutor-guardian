@@ -1,0 +1,29 @@
+{
+  "id": "cyb-c9c60cfe",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة على الإنترنت للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "wise to accept them. There’s nothing wrong with declining invitations you are not sure about. Getting more and more contacts is after all not the point of social networking. Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop 1. Protect yourself from upsetting or distressing content. Do not know- ingly access or share links to such sites. If you see something that bothers you, talk about this with your parents or someone you trust. 2. Ignore bad behaviour and leave unpleasant conversations or sites with inappropriate content. As in real life there are people who for some reason, may behave aggressively, insultingly or provocatively towards others, or who want to share harmful content. Usually it is better just to ignore them and then block them. 3. Block anyone approaching you using rude, intruding or threatening emails or comments. Even if the message may be upsetting and makes you feel uncomfortable you should save it so you can show it to an adult for advice if needed. You are not the one to be ashamed of the content of the messages. 4. Always be alert if someone, especially a stranger, wants to talk to you about sex. Remember that you can never be sure of the true identity or the intentions of that person. Approaching a child or a young person in a sexual way is always a serious cause for concern and you should tell a trusted adult, so you or the trusted adult can",
+  "text_simplified": "يجب على الأطفال والمراهقين حماية أنفسهم من المحتوى المزعج على الإنترنت، وتجنب مشاركة الروابط الضارة. إذا واجهوا سلوكًا سيئًا أو رسائل غير لائقة، فمن الأفضل تجاهلها وحظر المرسل، مع الاحتفاظ بالأدلة لإخبار شخص بالغ موثوق. لا تتردد في رفض الدعوات غير الواضحة، لأن الهدف من التواصل الاجتماعي ليس زيادة عدد الاتصالات فقط. عند التعامل مع الغرباء، كن حذرًا خاصة إذا تحدثوا عن مواضيع جنسية، وأخبر شخصًا بالغًا فورًا.",
+  "labels": [
+    "حماية الأطفال",
+    "التنمر الإلكتروني",
+    "الاستغلال الجنسي",
+    "الخصوصية",
+    "التوعية الرقمية"
+  ],
+  "created_at": "2026-06-20T15:10:03Z",
+  "updated_at": "2026-06-20T15:10:03Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-4ae97405",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تصحيح مصطلحات الاعتداء الجنسي على الأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "استغلال جنسي للأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "online CSEA, which can take place virtually and do not have to include a physical face-to-face meeting with the child.34 Although many jurisdictions still label images and videos of child sexual abuse “child pornography” or “indecent images of children”, these Guidelines refer to the issues collectively as “child sexual abuse material” (CSAM). This term is in accordance with the Broadband Commission Guidelines and the WePROTECT Global Alliances’ Model National Response35 describes the content. Pornography refers to a legitimate, commercialized industry, and as the Luxembourg Guidelines state, the use of the term: “may (inadvertently or not) contribute to diminishing the gravity of, trivializing, or even legitimizing what is actually sexual abuse and/or sexual exploitation of children. The term ‘child pornography’ risks insinuating that the acts are carried out with the consent of the child and represent legitimate sexual material.” When using the term CSAM, we refer to material that represents acts that are sexually abusive and/or exploitative to a child. This includes, but is not limited to, material recording the sexual abuse of children by adults, images of children included in sexually explicit conduct, and the sexual organs of children when the images are See the Luxembourg Guidelines for terms such as “computer or digitally generated child sexual abuse material”. 30 See the United Nations Convention on the Rights of the Child. 31 UNICEF and ITU, “Guidelines for Industry on Child Online Protection”, 2014. 32 Article 34 of the United Nations Convention on the Rights of the Child. 33 Terminology Guidelines",
+  "text_simplified": "يشرح النص الفرق بين مصطلح 'مواد إباحية للأطفال' ومصطلح 'مواد الاعتداء الجنسي على الأطفال'، ويؤكد أن المصطلح الأول قد يقلل من خطورة الجريمة ويوحي بموافقة الطفل. يوصي النص باستخدام المصطلح الثاني لوصف المحتوى الذي يوثق اعتداءات جنسية حقيقية على الأطفال، سواء كانت صورًا أو فيديوهات.",
+  "labels": [
+    "استغلال جنسي",
+    "مواد اعتداء",
+    "حماية الطفل",
+    "مصطلحات قانونية",
+    "سلامة رقمية"
+  ],
+  "created_at": "2026-06-20T15:01:43Z",
+  "updated_at": "2026-06-20T15:01:43Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-be852c0c",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال عبر الإنترنت وتعزيز المشاركة الرقمية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "and contexts, can detect and address a range of online harms and and educate threats, and use that information to empower and educate children children to deal with them. When performed within the smart device environment, this can protect young people’s data and privacy while still supporting them. Public service and national media can play an essential role through their programme offers (offline and online) to educate parents and children and make them aware of the risks and opportunities of the Promoting digital Industry can encourage and empower children and young people by technology as a supporting their right to participation through the following actions: mode to further civic engagement Provide information about a service to highlight the benefits children obtain by behaving well and responsibly, such as using the service for creative purposes. Establish written procedures that ensure consistent implementation of policies and processes that protect freedom of expression for all users, including children and young people, as well as documentation of compliance with these policies. Guidelines for industry on Child Online Protection Promoting digital Avoid over-blocking of legitimate and developmentally appropriate technology as a content. In order to ensure that filtering requests and tools are not mode to further misused to restrict children and young people’s access to information, civic engagement ensure transparency about blocked content and establish a process for users to report inadvertent blocking. This process should be available to all consumers, including webmasters. Any reporting process should provide clear, responsible and adjudicated terms of service.",
+  "text_simplified": "يمكن للتكنولوجيا الذكية أن تحمي الأطفال من المخاطر عبر الإنترنت مع تعزيز مشاركتهم المدنية. يجب على وسائل الإعلام والصناعات الرقمية توعية الأهل والأطفال بالمخاطر والفرص. ينبغي وضع سياسات واضحة لحماية حرية التعبير ومنع الحظر المفرط للمحتوى المناسب. كما يجب توفير آليات للإبلاغ عن الحظر غير المقصود لضمان الشفافية.",
+  "labels": [
+    "حماية رقمية",
+    "توعية أطفال",
+    "مشاركة مدنية",
+    "سياسات محتوى",
+    "سلامة الإنترنت"
+  ],
+  "created_at": "2026-06-20T14:58:28Z",
+  "updated_at": "2026-06-20T14:58:28Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

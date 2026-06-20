@@ -1,0 +1,29 @@
+{
+  "id": "cyb-3b37bb54",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "استراتيجيات حماية الأطفال من الاستغلال الجنسي عبر الإنترنت",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال من الاستغلال الجنسي عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "the public about steps that can be taken to address safety concerns. Guidelines for industry on Child Online Protection The WePROTECT Global Alliance At the heart of the WePROTECT Global Alliance strategy are supporting countries to develop coordinated multi-stakeholder responses to tackle online child sexual exploitation, guided by its Model National Response, which acts as a blueprint for national action. It provides a framework for countries to draw upon to tackle online child sexual exploitation. Within the WePROTECT Model National Response, there is a clear set of commitments from ICT companies relating to: • notice and takedown procedures; • report online child sexual exploitation and abuse (CSEA); • develop technology solutions; and • invest in effective COP preventive programmes and response services. The Global Partnership and Fund to End Violence against Children The Global Partnership and Fund to End Violence against Children were launched by the United Nations Secretary-General in 2016 with one goal: to catalyze and support action to end all forms of violence against children by 2030 through a unique collaboration of over 400 partners from all sectors. The focus of the work is on rescue and support of victims, technology solutions to detect and prevent offending, support of law enforcement, legislative and policy reforms, and generation of data and evidence on the scale and nature of online CSEA as well as understanding children’s perspectives.12 3. Key areas of protecting and promoting children’s rights This section outlines five key areas where companies can take actions to protect children",
+  "text_simplified": "هذا النص يتناول حماية الأطفال من الاستغلال الجنسي عبر الإنترنت. يشرح دور تحالفات عالمية مثل WePROTECT والشراكة العالمية لإنهاء العنف ضد الأطفال في وضع استراتيجيات وطنية وإجراءات للشركات التقنية. تشمل الإجراءات إزالة المحتوى الضار، الإبلاغ عن الإساءة، وتطوير حلول تقنية وقائية. الهدف هو إنهاء جميع أشكال العنف ضد الأطفال بحلول عام 2030.",
+  "labels": [
+    "حماية الأطفال",
+    "استغلال جنسي",
+    "إنترنت",
+    "سياسات وقائية",
+    "تعاون دولي"
+  ],
+  "created_at": "2026-06-20T14:55:21Z",
+  "updated_at": "2026-06-20T14:55:21Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

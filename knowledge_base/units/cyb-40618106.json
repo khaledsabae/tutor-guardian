@@ -1,0 +1,29 @@
+{
+  "id": "cyb-40618106",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إجراءات مكافحة المحتوى غير القانوني وحماية الأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال من المحتوى الضار",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "to integrating these (cont.) procedures into the organization. Industry members should then report the actions taken and outcomes achieved by this team in their annual corporate and sustainability report. When national regulations do not provide sufficient protection, companies should respect but exceed national legislation and use their leverage to lobby for legislative changes to enable industry to combat A senior position or team should be created within the organization, dedicated to integrating these procedures and monitoring the operations. These should be transparently reflected in the annual corporate and sustainability reports and made available to the public. Specify that the business will cooperate fully with law enforcement investigations in the event that illegal content is reported or discovered and note details regarding such penalties as fines or cancellation of billing privileges. Use customer terms and conditions and/or acceptable use policies to explicitly state the company’s position on the misuse of its services to store or share CSAM and the consequences of any abuse. Develop notice and take down and reporting processes that allow users to report CSAM or inappropriate contact and the specific profile/ location where it was detected. Establish report follow-up processes, agree on procedures to capture evidence and immediately remove or block access to CSAM. Ensure that, where needed, service providers request the opinion of experts (e.g. national COP bodies) before destroying illegal content. Ensure that relevant third parties with whom the company has a contractual relationship have similarly robust notice and take down processes in place. Be prepared",
+  "text_simplified": "يجب على الشركات إنشاء فريق أو منصب كبير داخل المؤسسة مخصص لتطبيق إجراءات مكافحة المحتوى غير القانوني ومراقبة العمليات. كما ينبغي الإبلاغ عن الإجراءات والنتائج في التقارير السنوية للشركة والاستدامة، والتعاون مع جهات إنفاذ القانون عند اكتشاف محتوى غير قانوني. يجب وضع سياسات واضحة للمستخدمين تحظر إساءة استخدام الخدمات لتخزين أو مشاركة مواد إساءة معاملة الأطفال، وتحديد عواقب المخالفات مثل الغرامات أو إلغاء الامتيازات. كما ينبغي تطوير عمليات الإبلاغ والإزالة الفورية للمحتوى الضار، والاستعانة بخبراء قبل تدمير المحتوى غير القانوني.",
+  "labels": [
+    "حماية الأطفال",
+    "محتوى غير قانوني",
+    "إجراءات تنظيمية",
+    "إبلاغ وإزالة",
+    "مسؤولية الشركات"
+  ],
+  "created_at": "2026-06-20T14:57:40Z",
+  "updated_at": "2026-06-20T14:57:40Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

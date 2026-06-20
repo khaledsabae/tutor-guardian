@@ -1,0 +1,29 @@
+{
+  "id": "med-0802af30",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "حماية الأطفال والمراهقين من الاستغلال والعلاج الإلزامي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "instrument is the International Covenant on Economic, Social and Cultural Rights, which states (Section 10.3): Special measures of protection and assistance should be taken on behalf of all children and young persons without any discrimination for reasons of parentage or other conditions. Children and young persons should be protected from economic and social exploitation. Their employment in work harmful to their morals or health or dangerous to life or likely to hamper their normal development should be punishable by law. States should also set age limits below which the paid employment of child labour should be prohibited and punishable by law. A particularly important issue concerning the rights of children and adolescents is the appropriate use of involuntary admission and treatment, as this decision may be deferred to a parent, guardian or family member. In some cases, psychiatrists or the legal system may make this decision. The rights of the child or adolescent need to be balanced with the need of society to provide treatment for those who, by virtue of a mental disorder, are at risk to themselves or to others, or who are unable to recognize the need for treatment. Human resources and training Human resource development and training is essential in the area of child and adolescent mental health. There are likely to be very few appropriately qualified workers within a country, and careful planning will be required to ensure that sufficient human resources are available to achieve policy objectives. It is essential that the needs for",
+  "text_simplified": "يجب حماية الأطفال والمراهقين من الاستغلال الاقتصادي والاجتماعي، ومنع تشغيلهم في أعمال ضارة بصحتهم أو أخلاقهم. كما ينبغي وضع قوانين تحدد سنًا أدنى للعمل وتجرم تشغيل الأطفال بأجر. من المهم أيضًا الموازنة بين حقوق الطفل وحاجة المجتمع لتقديم العلاج لمن يعانون من اضطرابات نفسية تشكل خطرًا على أنفسهم أو الآخرين.",
+  "labels": [
+    "حقوق الطفل",
+    "حماية من الاستغلال",
+    "الصحة النفسية",
+    "تشغيل الأطفال",
+    "العلاج الإلزامي"
+  ],
+  "created_at": "2026-06-20T14:48:47Z",
+  "updated_at": "2026-06-20T14:48:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

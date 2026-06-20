@@ -1,0 +1,29 @@
+{
+  "id": "med-c2aad4ac",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "خطوات تطوير سياسة الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تطوير سياسات الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "of illness along with the treatment of child and adolescent mental disorders, although the emphasis placed on each differs across countries. Step 6: Determine areas for action In developing a mental health policy for children and adolescents, policy-makers need to coordinate actions in several areas (listed below) to maximize the impact of any mental health policy. >Organization of services >Promotion, prevention, treatment and rehabilitation >Intersectoral collaboration >Legislation and human rights >Human resources and training >Quality improvement >Information systems >Research and evaluation of policies and services Step 7: Identify the major roles and responsibilities of different stakeholders and It is essential that all stakeholders and sectors have a clear understanding of their responsibilities. All those who were involved in the consultation process could be 3. Developing a child and adolescent mental health plan Once the mental health policy has been completed, the next step is to develop a plan for its implementation. The development of such a plan builds on the process already established for policy development as outlined above. Information about a population’s needs, gathering evidence and building consensus are important in the formulation of such a plan. A plan consists of a series of strategies, which represent the lines of action that have the highest probability of achieving the policy objectives in a specific Step 1: Determine the strategies and time frames In developing and setting priorities for a set of strategies, it is often useful to conduct a SWOT analysis, in which the strengths, weaknesses, opportunities and threats",
+  "text_simplified": "هذا النص يشرح خطوات تطوير سياسة الصحة النفسية للأطفال والمراهقين، مع التركيز على تنسيق الإجراءات في مجالات متعددة مثل تنظيم الخدمات والوقاية والعلاج. كما يوضح أهمية تحديد أدوار الجهات المعنية ووضع خطة تنفيذية تعتمد على تحليل الاحتياجات وبناء التوافق.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "سياسات",
+    "تخطيط"
+  ],
+  "created_at": "2026-06-20T14:43:24Z",
+  "updated_at": "2026-06-20T14:43:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

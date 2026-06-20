@@ -1,0 +1,29 @@
+{
+  "id": "cyb-01d555b4",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "كيفية حماية الأطفال من الاستغلال الجنسي عبر الإنترنت",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "استغلال جنسي عبر الإنترنت",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "sex. Remember that you can never be sure of the true identity or the intentions of that person. Approaching a child or a young person in a sexual way is always a serious cause for concern and you should tell a trusted adult, so you or the trusted adult can report it. 5. If you have been lured or tricked by someone into engaging in sexual activities or transmitting sexual images of yourself, you should always tell a trusted adult in order to receive advice and help. No adult has a right to request things of that particular nature from a child or a young person - the responsibility always lies with the adult! Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop TELL SOMEONE ABOUT YOUR CONCERNS 1. If you have any concerns or problems while online, you need to tell someone you can trust. Your parents or some other adult can help and give you good advice on what to do. There are no problems that are too big to be solved! You might also want to call a child helpline25 available in your country. 2. You can report harmful or inappropriate content or activities on the websites to the abuse e-mail of the host of the site. 3. You can report illegal content to an Internet Hotline or to the 4. You can report illegal or possibly illegal activities to the local police. 5. In addition to taking good care of yourself,",
+  "text_simplified": "يجب على الأطفال والشباب إخبار شخص بالغ موثوق به إذا تعرضوا لأي محاولة استغلال جنسي عبر الإنترنت. لا يحق لأي بالغ طلب صور أو أفعال جنسية من طفل، والمسؤولية تقع دائمًا على البالغ. يمكن الإبلاغ عن المحتوى الضار أو غير القانوني للشرطة أو خطوط المساعدة المخصصة.",
+  "labels": [
+    "استغلال جنسي",
+    "سلامة رقمية",
+    "إبلاغ",
+    "حماية الأطفال",
+    "دعم نفسي"
+  ],
+  "created_at": "2026-06-20T15:10:08Z",
+  "updated_at": "2026-06-20T15:10:08Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

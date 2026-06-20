@@ -1,0 +1,29 @@
+{
+  "id": "dev-7e549737",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "أهمية الرعاية قبل الحمل ونمو الطفل المبكر",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "رعاية ما قبل الحمل ونمو الطفل",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "use (such as alcohol and tobacco), immunization, environmental toxins, genetic conditions, infections (such as HIV and sexually transmitted infections), infertility, child spacing, and violence (whether in the home or outside it).33 Adolescence is a critical window of opportunity for promoting and supporting care before pregnancy. The best interventions can delay pregnancy and ensure preparedness for it. These can help mothers, by allowing them to complete school, as well as helping children, by minimizing the probability that they will have low birthweight or stunting.33 NURTURING CARE AND ITS CONTRIBUTIONS THROUGH THE LIFE COURSE Infant and toddler (up to 3 years old) Postnatal and Young child newborn (3-6 years old) Healthy Healthy School Employment pregnancy growth and achievement Earnings Safe School Thriving Healthy childbirth readiness adolescent ageing Pregnancy Postnatal Infant and Young child Older child Adolescence Adulthood Older & childbirth and newborn toddler (3-6 (7 to 10 (10-19 (19+ years) person (up to 3 years old) years old) years old) Older Adolescence person (10-19 years old) We know what threatens home and in the community.6 Discrimination between boys and girls – and the way they early childhood development are socialized into different gender roles in childhood – can also have negative effects on Having an optimal environment, from children’s development at this young age.34 pregnancy to age 3, supports the baby’s physical, emotional, social and cognitive It is very difficult for families to provide care development. And an adverse environment for their young children when they are in harms development – both",
+  "text_simplified": "مرحلة المراهقة هي فرصة مهمة لتعزيز الرعاية الصحية قبل الحمل، مما يساعد على تأخير الحمل وضمان الاستعداد له. الرعاية الجيدة من الحمل حتى سن الثالثة تدعم نمو الطفل الجسدي والعاطفي والاجتماعي والعقلي. البيئة غير المناسبة والعنف والتمييز بين الجنسين يهدد نمو الطفل المبكر. من الصعب على الأسر توفير الرعاية لأطفالها الصغار في ظل المخاطر.",
+  "labels": [
+    "رعاية قبل الحمل",
+    "نمو الطفل",
+    "مراهقة",
+    "صحة الأم",
+    "بيئة آمنة"
+  ],
+  "created_at": "2026-06-20T14:22:17Z",
+  "updated_at": "2026-06-20T14:22:17Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

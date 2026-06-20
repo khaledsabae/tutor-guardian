@@ -1,0 +1,29 @@
+{
+  "id": "cyb-d6686658",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة على الإنترنت للأطفال",
+  "language": "mixed",
+  "age_group": "7-9",
+  "behavior_type": "السلامة على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "someone sages from anyone my parents that someone asks me to if it the internet, and talk to them I meet online. This includes, have not approved. makes me feel uncomfortable, about the sites I visit. Before but is not limited to name, ad- 11. If I see or read things that are especially if I know it’s some- I download or load a new dress, telephone number, age bad, icky or mean, I will log thing my parents would not be programme or join a new site I or school name. off and tell my parents so they happy about or approve of. will check with my parents first Guidelines for Children and Young People www.itu.int/cop 15. I will not call, write a snail mail Date or meet in person anyone who I’ve met online without my parents’ approval or without a I promise to protect my child’s trusted adult coming with me. safety online by making sure 16. I understand my parents will these rules are followed. If my supervise my time online and child encounters unsafe situations may use software to monitor and tells me, I will handle each or limit where I go online. situation with maturity and good They’re doing this because sense, without blaming anyone, they love me and want to and will calmly work through it protect me. with my child to ensure their safer Internet experiences in the future. I will teach my parents more about the Internet so we can have",
+  "text_simplified": "هذه الوحدة تقدم إرشادات للأطفال حول السلامة على الإنترنت، مع التركيز على عدم مشاركة المعلومات الشخصية والتحدث مع الغرباء. تشجع الأطفال على إخبار والديهم عند مواجهة محتوى غير مريح أو خطير، وتؤكد على دور الأهل في المراقبة والحماية.",
+  "labels": [
+    "سلامة رقمية",
+    "معلومات شخصية",
+    "غرباء على الإنترنت",
+    "رقابة أبوية",
+    "توعية أطفال"
+  ],
+  "created_at": "2026-06-20T15:12:51Z",
+  "updated_at": "2026-06-20T15:12:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "med-a150d186",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "خطوات تحديد الأهداف والأنشطة التربوية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط تربوي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "target. Ideal targets and indicators are: (i) quantitative (i.e. measurable); (ii) easy and economical to measure; and (iii) closely related to the strategy (i.e. reflect the immediate consequences of the strategy, as opposed to consequences that depend on additional intermediate outcomes). 3.3Step 3: Determine the major activities The next step is to determine the actual activities that are necessary to achieve each strategy. This is important for two reasons. First, it ensures that important steps are not omitted, and that each activity necessary to meet the objective is carefully thought out. Second, it enables identification of successes. If strategies are difficult and time- Completing an activity will consuming to achieve, it can be demoralizing if milestones on the path to achieving the serve to motivate people to strategy are not identified. Completing an activity will serve to motivate people to complete the other activities complete the other activities necessary to successfully implement the strategy. necessary to successfully implement the strategy. For each activity, it is important to clarify the four issues described below. Who is responsible? It is essential to identify which agents are best placed to implement the activities with maximal efficiency and effectiveness and minimal expense. How long will it take?Planners should define time frames in advance, thus creating a realistic timetable for each activity. By designing a plan on a monthly or other periodic basis it is possible to: (i) determine which activity has to follow another, and which can be done simultaneously; (ii) assess whether a",
+  "text_simplified": "يجب تحديد أهداف قابلة للقياس ومرتبطة بالاستراتيجية لضمان النجاح. ثم تحديد الأنشطة اللازمة لتحقيق كل هدف مع توضيح المسؤوليات والوقت اللازم لكل نشاط. يساعد ذلك في تحفيز الفريق وتحقيق التقدم خطوة بخطوة.",
+  "labels": [
+    "تحديد أهداف",
+    "تخطيط الأنشطة",
+    "قياس الأداء",
+    "تحفيز الفريق"
+  ],
+  "created_at": "2026-06-20T14:50:58Z",
+  "updated_at": "2026-06-20T14:50:58Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

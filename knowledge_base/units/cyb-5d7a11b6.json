@@ -1,0 +1,29 @@
+{
+  "id": "cyb-5d7a11b6",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات لقاء الأصدقاء من الإنترنت بأمان",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "you still would like to meet an online friend offline, you should always take someone reliable with you. You should ask your parent or another trusted adult to join you to avoid any trouble in case the meeting turns out to be a disappointment. 3. Bear in mind that your online friend might turn out to be a differ- ent kind of person than you thought he or she would be. Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop ACCEPTING INVITATIONS / FRIENDSHIPS 1. Most of the people you communicate with online are probably already your friends in real life. You can also be connected to the friends of your friends. Very often that can be fun but at the same time if you do not actually know someone yourself, are you really prepared to count them as a “friend” and share with them exactly the same infor- mation that you share with your oldest and best friends? 2. Through online connections you can connect with people previously unknown to you. You may get requests by strangers who want to be included in your contact list and see your profile, but it is not wise to accept them. There’s nothing wrong with declining invitations you are not sure about. Getting more and more contacts is after all not the point of social networking. Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop 1. Protect yourself from upsetting or distressing",
+  "text_simplified": "عند لقاء صديق من الإنترنت في الواقع، يجب أن يرافقك شخص بالغ موثوق مثل أحد والديك لتجنب أي مشاكل. تذكر أن الشخص الذي تعرفت عليه عبر الإنترنت قد لا يكون كما توقعت. لا تقبل طلبات الصداقة من الغرباء، فليس من الضروري زيادة عدد الاتصالات في وسائل التواصل الاجتماعي.",
+  "labels": [
+    "لقاء آمن",
+    "صداقة إلكترونية",
+    "حماية الأطفال",
+    "غرباء الإنترنت",
+    "إشراف الأهل"
+  ],
+  "created_at": "2026-06-20T15:09:59Z",
+  "updated_at": "2026-06-20T15:09:59Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

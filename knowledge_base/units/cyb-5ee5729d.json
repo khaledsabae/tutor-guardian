@@ -1,0 +1,29 @@
+{
+  "id": "cyb-5ee5729d",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "استخدام الأطفال للإنترنت والأنشطة المفضلة",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "استخدام الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "year specifically liked by children and olds use the internet on a daily ba- young people. In general, for chil- sis”. A similar trend is seen in Sin- dren, the Internet is something gapore6, where 56% of children they feel secure about, something aged 5-14 reports to go online they like, something interesting, every day. The preferred activ- fun, relaxing, useful, and friendly4. ity on the Internet appears to be searching for information related to hobbies and personal interest, playing games and researching for school homework. 4 http://www.childresearch. 5 http://www.saferinternet.org/ww/en/pub/insafe/news/articles/0409/digital_life.htm 6 http://www.itu.int/ITU-D/ict/material/Youth_2008.pdf (page 62) Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop The widely available fixed broad- technology with a growth rate of Digital devices In addition to computers and cell band Internet access in the six million mobiles per month in phones, many other electronic developed countries is still the India alone8. The world’s mobile A recent study in Latin-American devices can or will soon be able preferred way of getting online, in connections now number four bil- homes showed that the young- to access the Internet. Here’s a comparison to developing coun- lion - nearly 100 million of which est generation is a very well- selection of the devices that the tries where such infrastructures include Mobile Broadband9. It is equipped10; participants in the survey have in are less developed. Here mobile clear that the ability to access their homes: Internet access is and increas- online services will increasingly ingly will be",
+  "text_simplified": "الأطفال والشباب يستخدمون الإنترنت يوميًا ويشعرون بالأمان والمرح عند استخدامه. الأنشطة المفضلة لديهم تشمل البحث عن الهوايات، لعب الألعاب، وأداء الواجبات المدرسية. في سنغافورة، 56% من الأطفال من عمر 5 إلى 14 سنة يتصلون بالإنترنت يوميًا. الأجهزة الرقمية مثل الهواتف المحمولة والحواسيب تتيح الوصول المتزايد للإنترنت.",
+  "labels": [
+    "استخدام الإنترنت",
+    "أطفال",
+    "ألعاب",
+    "تعليم",
+    "سلامة رقمية"
+  ],
+  "created_at": "2026-06-20T15:08:34Z",
+  "updated_at": "2026-06-20T15:08:34Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-bf727dd8",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "التنمر الإلكتروني وأهمية الحماية الرقمية للأطفال",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "تنمر إلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "sometimes be Through services such as e-mail, perpetrated by an abuser who more, it is important to re- a source of really good advice forums, chat rooms, blogs, Instant possesses more physical and/or member that you don’t always and information but very Messaging programmes, SMS and social power and dominance than know who is really at the other often it is better to try to find MMS, and video cameras, it is the victim. The victim of bully- end of the computer; a way to discuss these things possible to keep in touch with old ing is sometimes referred to as 3. in order to enter a chat room, with people who you already friends or make new ones in real a target. The harassment can be forum, or more generally, a know and trust in real life. time and in all parts of the world verbal, physical and/or emotional. social network, you often have 5. if attempts at allurement or and to exchange ideas, play games, (www.wikipedia.org) to compile a personal profile, awkward situations should carry out research, etc. Although inserting information that can occur, it is important to find most of these services and the Very often bullying takes place in be detailed to varying degrees. someone to speak to, an adult ways they are used are positive, in schools or local neighbourhoods. In such cases, it is essential to or friend; Internet service some cases these same tools can Unfortunately, there are increasing be cautious about inserting",
+  "text_simplified": "يُستخدم الإنترنت للتواصل مع الأصدقاء ومشاركة الأفكار، لكنه قد يكون وسيلة للتنمر الإلكتروني حيث يسيء شخص ما إلى آخر عبر البريد الإلكتروني أو غرف الدردشة. يجب على الأهل توعية أبنائهم بعدم مشاركة معلومات شخصية مع الغرباء عبر الإنترنت، والتحدث مع شخص بالغ موثوق عند التعرض لأي موقف مزعج.",
+  "labels": [
+    "تنمر إلكتروني",
+    "سلامة رقمية",
+    "خصوصية",
+    "تواصل مع الأهل",
+    "وعي إلكتروني"
+  ],
+  "created_at": "2026-06-20T15:11:27Z",
+  "updated_at": "2026-06-20T15:11:27Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

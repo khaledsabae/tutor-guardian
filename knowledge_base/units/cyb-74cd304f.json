@@ -1,0 +1,29 @@
+{
+  "id": "cyb-74cd304f",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الإنترنت على الأطفال: التغرير والتنمر والخصوصية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "السلامة الرقمية والاستغلال الإلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "Children and adults may use the Internet to harass or even exploit other people. Children may sometimes broadcast hurtful comments or embarrassing images or may steal content or infringe on copyrights. • Inappropriate contact – Both adults and young people can use the Internet to seek out children or other young people who are vulnerable. Frequently, their goal is to convince the target that they have developed a meaningful relationship, but the underlying purpose is manipulative. They may seek to persuade the child to perform sexual or other abusive acts online, using a webcam or other recording device, or they will try to arrange an in- person meeting and physical contact. This process is often referred to as “grooming”. • Commercial risks – This category refers to data privacy risks related to the collection and use of children’s data, as well as digital marketing. Online safety is a community challenge and an opportunity for industry, governments and civil society to work together to establish safety principles and practices. Industry can offer an array of technical approaches, tools and services for parents, and children and young people, and should first and foremost create products that are easy to use, safe by design and age-appropriate for their broad range of users. Additional approaches include offering tools to develop appropriate age-verification systems that respects children’s rights to privacy and access or place restrictions on children and young people’s access to age-inappropriate content, or restrict the people with whom children might have contact or",
+  "text_simplified": "يستخدم بعض الأطفال والبالغين الإنترنت للتنمر أو استغلال الآخرين، وقد ينشرون تعليقات مؤذية أو صورًا محرجة أو ينتهكون حقوق الملكية. كما قد يستهدف البعض الأطفال الضعفاء عبر الإنترنت بهدف التلاعب بهم وإقناعهم بأداء أفعال جنسية أو لقاءات خطيرة، وهي عملية تعرف بالتغرير. هناك أيضًا مخاطر تجارية تتعلق بجمع بيانات الأطفال واستخدامها في التسويق الرقمي. يجب على الصناعة والحكومات والمجتمع العمل معًا لتوفير أدوات وحماية مناسبة للأطفال حسب أعمارهم.",
+  "labels": [
+    "سلامة رقمية",
+    "تغرير",
+    "تنمر إلكتروني",
+    "حماية الأطفال",
+    "مخاطر الإنترنت"
+  ],
+  "created_at": "2026-06-20T14:56:10Z",
+  "updated_at": "2026-06-20T14:56:10Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

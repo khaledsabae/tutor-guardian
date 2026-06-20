@@ -1,0 +1,29 @@
+{
+  "id": "med-cef8569d",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تنفيذ سياسات الصحة النفسية عبر مشاريع تجريبية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط سياسات الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "implementation of the policy. At the local health service level, a community mental health worker may be given responsibility for implementing 4.4 Step 4: Set up pilot projects in demonstration areas Pilot projects in demonstration areas, whereby policies and plans can be implemented relatively rapidly, can serve several useful functions: they can be evaluated more effectively and completely; they can provide empirical support for the initiative through demonstration of both feasibility and short- and long-term efficacy; they can produce advocates from the ranks of those participating in the pilot project; and they can educate colleagues from the health and other sectors on how to develop and implement policies and plans. Care should be taken when establishing pilot projects with short-term funding. There are some risks when a project is commenced without sufficient ongoing funding or the capacity to expand the project later to other areas of the country. Consumers, families and the community may develop expectations of services that cannot be met in the long term with the available resources. It is also important to monitor the implementation of the pilot project in order to ensure that it is effective and that it is not being continued out of sheer inertia to change or due to the belief “that something is better than nothing”, or because it is a source of income for the provider. This is another argument for project evaluation. 4.5 Step 5: Empower providers and maximize coordination It is important to identify which individuals, teams or organizations",
+  "text_simplified": "يشرح النص كيفية تنفيذ سياسات الصحة النفسية من خلال مشاريع تجريبية في مناطق محددة. يجب تمويل هذه المشاريع بشكل مستدام لتجنب خلق توقعات غير قابلة للتحقق لدى الأسر والمجتمع. من المهم تقييم المشاريع باستمرار لضمان فعاليتها وعدم استمرارها لمجرد العادة. كما ينبغي تمكين مقدمي الخدمات وتعزيز التنسيق بينهم.",
+  "labels": [
+    "مشاريع تجريبية",
+    "تمويل مستدام",
+    "تقييم فعالية",
+    "تمكين مقدمي الخدمات",
+    "تنسيق الخدمات"
+  ],
+  "created_at": "2026-06-20T14:51:51Z",
+  "updated_at": "2026-06-20T14:51:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

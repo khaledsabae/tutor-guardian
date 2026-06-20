@@ -1,0 +1,29 @@
+{
+  "id": "med-81dee4c8",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية عامة",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "development (Dawes health problems. et al., 1997). Good mental health in childhood is a prerequisite for optimal psychological development, productive social relationships, effective learning, an ability to care for self, good physical health and effective economic participation as adults. This module emphasizes the need to promote the mental health of all children and adolescents, whether or not they are suffering from mental health problems. This can be done by reducing the impact of risk factors on the one hand, and by enhancing the effects of protective factors on the other (see section 1.4). However, a proportion of children and adolescents suffer from overt mental health An overall prevalence rate of disorders. A mental illness or disorder is diagnosed when a pattern of signs and about 20% has been symptoms is identified that is associated with impairment of psychological and social documented for child and functioning, and that meets criteria for disorder under an accepted system of adolescent mental disorders. classification such as the International Classification of Disease, version 10 (ICD-10, WHO, 1992) or the Diagnostic and Statistical Manual IV (DSM-IV, American Psychiatric Association, 1994).3 Examples include: mood disorders, stress-related and somatoform disorders, and mental and behavioural disorders due to psychoactive substance use. Community-based studies have revealed an overall prevalence rate for such disorders of about 20% in several national and cultural contexts (Bird, 1996; Verhulst, 1995). The prevalence rates of child and adolescent disorders from selected countries are summarized in Table 1. 1 Much of this section is based on",
+  "text_simplified": "الصحة النفسية الجيدة في الطفولة أساسية للنمو النفسي السليم والعلاقات الاجتماعية والنجاح الدراسي. تهدف هذه الوحدة إلى تعزيز الصحة النفسية لجميع الأطفال والمراهقين، سواء كانوا يعانون من مشاكل نفسية أم لا. يمكن تحقيق ذلك بتقليل عوامل الخطر وتعزيز عوامل الحماية. تشير الدراسات إلى أن حوالي 20% من الأطفال والمراهقين يعانون من اضطرابات نفسية واضحة.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "اضطرابات نفسية",
+    "وقاية"
+  ],
+  "created_at": "2026-06-20T14:43:55Z",
+  "updated_at": "2026-06-20T14:43:55Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

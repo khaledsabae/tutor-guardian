@@ -1,0 +1,29 @@
+{
+  "id": "med-c3fa4f1a",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "مناصرة الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "مناصرة الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "joint agreement between the ministry of health and other ministries. > Successful intersectoral collaboration is dependent on the broader organization of government in the country – the manner in which departments and ministries link and communicate with each other will influence the manner and extent of intersectoral Source: adapted from Lazarus, Moolla & Reddy, 1996. The purpose of advocacy is to change the major structural and attitudinal barriers to The purpose of advocacy is to change the major achieving positive mental health outcomes for the population. Methods include structural and attitudinal lobbying, awareness raising, education and training. The goals of advocacy efforts for barriers to achieving positive child and adolescent mental health include: mental health outcomes > Changing laws and government regulations to ensure the human rights of children for the population. and adolescents are respected; > Ensuring equity of all services for children and adolescents with mental disorders; > Improving the promotion of mental health and prevention of mental disorders among children and adolescents; > Keeping children and adolescents out of psychiatric institutions when possible (particularly relevant for the care of young children in the wake of the HIV/AIDS > Putting child and adolescent mental health on governments’ agendas; > Reducing stigma and discrimination of child and adolescent mental disorders in communities; and > Including mental health considerations in the development of policies and plans in other sectors (for example, welfare schemes need to consider appropriate childcare and housing to promote a healthy environment for child rearing). Child and",
+  "text_simplified": "تهدف جهود المناصرة إلى تغيير القوانين والسياسات لضمان حقوق الأطفال والمراهقين في الصحة النفسية. تشمل الأساليب التوعية والتدريب والضغط على صناع القرار. من المهم التعاون بين وزارة الصحة والوزارات الأخرى لتحقيق هذه الأهداف. يجب تقليل الوصم والتمييز ضد اضطرابات الصحة النفسية لدى الأطفال.",
+  "labels": [
+    "صحة نفسية",
+    "مناصرة",
+    "سياسات حكومية",
+    "حقوق الأطفال",
+    "تعاون بين القطاعات"
+  ],
+  "created_at": "2026-06-20T14:48:25Z",
+  "updated_at": "2026-06-20T14:48:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

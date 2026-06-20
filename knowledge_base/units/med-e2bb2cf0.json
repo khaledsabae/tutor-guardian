@@ -1,0 +1,29 @@
+{
+  "id": "med-e2bb2cf0",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "استراتيجيات تنفيذ سياسات الصحة النفسية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية للأطفال والمراهقين",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "success without political support and a level of funding commensurate with its objectives. Because young people are often dependent on others to advocate on their behalf, advocates for child and adolescent mental health should seek to ensure the political and financial viability of a plan, independently of the persistent advocacy of the service users themselves. Advocates for mental health policy within a ministry of health will need to identify allies in other parts of the government, and in the community or country at large. Step 3: Develop a supportive structure The implementation of a child and adolescent mental health policy and plan requires the participation of a number of individuals with a wide range of expertise. Individuals with training or experience mainly applicable to adults may have to be assisted by other appropriate specialists to make planning applicable to children and adolescents. Step 4: Set up pilot projects in demonstration areas Pilot projects in demonstration areas, where policies and plans can be implemented relatively rapidly, can serve several useful functions: they can be evaluated more effectively and completely; they can provide empirical support for the initiative through their demonstration of both feasibility and short- and long-term efficacy; they can produce advocates from the ranks of those who participated in the demonstration area; and they can educate colleagues from the health and other sectors on how to develop policies, plans and programmes. Step 5: Empower providers and maximize coordination The chances of successful implementation of an intervention will be enhanced if",
+  "text_simplified": "يحتاج نجاح سياسات الصحة النفسية للأطفال والمراهقين إلى دعم سياسي وتمويل كافٍ. يجب على المدافعين عن الصحة النفسية ضمان استمرارية الدعم المالي والسياسي بغض النظر عن جهود المستفيدين. ينبغي التعاون مع الحلفاء في الحكومة والمجتمع لتنفيذ الخطط. كما أن إنشاء مشاريع تجريبية وتدريب مقدمي الخدمة يعزز فرص النجاح.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات دعم",
+    "تمويل",
+    "تخطيط",
+    "تعاون مجتمعي"
+  ],
+  "created_at": "2026-06-20T14:43:38Z",
+  "updated_at": "2026-06-20T14:43:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

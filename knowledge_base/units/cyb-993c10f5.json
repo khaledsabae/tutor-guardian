@@ -1,0 +1,29 @@
+{
+  "id": "cyb-993c10f5",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حقوق الأطفال في الألعاب الإلكترونية والتحديات المرتبطة بها",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "إدمان ألعاب إلكترونية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "by Facebook, UNESCO, and the Council of Europe, and is available in many languages. In 2019, UNICEF published a discussion paper on Child Rights and Online Gaming: Opportunities & Challenges for Children and the Industry and challenges for children in one of the fastest growing entertainment industries. The paper explores the following topics: • Children’s right to play and freedom of expression (gaming time and health • Non-discrimination, participation and protection from abuse (social interaction and inclusion, toxic environments, age limits and verification, protection from grooming and sexual abuse); • The right to privacy and freedom from economic exploitation (data-for-access business models, free-to-play games and monetization, lack of transparency in commercial content). Guidelines for industry on Child Online Protection Good practice: Technology The Google Virtual Reality Action Lab examines how virtual reality can help encourage youth to become upstanders against offline and online bullying.1 In September 2019, the BBC launched a mobile application called Own IT, a well- being app aimed at children aged 8–13 receiving their first smartphone. The app is part of the BBC’s commitment to supporting young people in today’s changing media environment and follows the successful launch of the Own IT website in 2018. The app combines state-of-the-art machine-learning technology to track children’s activity on their smartphone with the option for children to self-report their emotional state. It uses this information to deliver tailored content and interventions to help children stay happy and healthy online, offering friendly and supportive nudges when their behaviour strays outside the",
+  "text_simplified": "تتناول هذه الوحدة حقوق الأطفال في الألعاب الإلكترونية وتأثيرها على صحتهم وسلامتهم النفسية. تشمل التحديات مثل وقت اللعب المفرط، والتفاعل الاجتماعي السام، وحماية الخصوصية من الاستغلال التجاري. كما تقدم أمثلة على أدوات تكنولوجية مثل تطبيق Own IT لمساعدة الأطفال على استخدام الإنترنت بشكل صحي وآمن.",
+  "labels": [
+    "حقوق الطفل",
+    "ألعاب إلكترونية",
+    "سلامة رقمية",
+    "صحة نفسية",
+    "توعية أسرية"
+  ],
+  "created_at": "2026-06-20T14:54:35Z",
+  "updated_at": "2026-06-20T14:54:35Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

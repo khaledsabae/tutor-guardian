@@ -1,0 +1,29 @@
+{
+  "id": "cyb-27921523",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "حماية الأطفال من المفترسين الجنسيين عبر الإنترنت",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية واستغلال جنسي",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Can you tell who wrote the country; your parents or an- generally, through all the social predator might persuade the child page or particular article you other adult you trust can also networking spaces, where it is to make sexual images of them- are viewing? (You can always help you in filing a report. You possible to obtain information on selves or their friends or take part do another search to find should also talk to someone users’ ages, sex and more, through in sexual activity using a web cam out more about the author about what happened and the profiles they’ve compiled. to broadcast it. Many children and and/or owner). Make sure any feelings you may still have young people who get drawn into you have written the website about the occurrence/experi- Sexual predators use the Internet these kinds of predatory relation- address correctly; there are ence; to contact children and young ships will lack a certain level of some sites that use a name 5. Contents (images, videos, etc.) people for sexual purposes, often emotional maturity or have low similar to another to take that are found on the web using a technique known as self-esteem. That can make them advantage of possible incor- relating to sex, can often be “grooming”. This involves gain- susceptible to this kind of ma- rect typing. Is the site’s text of a pornographic nature and ing the child’s or young person’s nipulation and",
+  "text_simplified": "يجب على الأطفال والمراهقين توخي الحذر عند استخدام الإنترنت، حيث يستخدم المفترسون الجنسيون تقنيات مثل التلاعب النفسي (الإغراء) لكسب ثقتهم وحثهم على مشاركة محتوى جنسي أو التصرف بطرق غير لائقة. من المهم التحقق من مصداقية المواقع الإلكترونية والتحدث مع أحد الوالدين أو شخص بالغ موثوق به عند التعرض لأي موقف مريب، والإبلاغ عنه للحصول على الدعم.",
+  "labels": [
+    "سلامة الأطفال",
+    "استغلال جنسي",
+    "توعية رقمية",
+    "مفترسون إلكترونيون",
+    "دعم نفسي"
+  ],
+  "created_at": "2026-06-20T15:11:10Z",
+  "updated_at": "2026-06-20T15:11:10Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

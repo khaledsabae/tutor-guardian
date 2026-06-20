@@ -1,0 +1,29 @@
+{
+  "id": "med-5f3f8441",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "أعراض الاكتئاب وطرق التعامل معها",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "engagement in high-risk activities ● Greater impulsivity ● Increased use of alcohol or drugs ● Isolating from family and friends ● Inability to meet responsibilities or ignoring other important roles ● Problems with sexual desire and performance Not everyone who is depressed shows all these symptoms. Some people experience only a few symptoms, while others experience many. Depression symptoms interfere with day-to-day functioning and cause significant distress for the person experiencing them. If you show signs or symptoms of depression and they persist or do not go away, talk to a health care provider. If you see signs of depression in someone you know, encourage them to seek help from a mental health professional. If you or someone you know is struggling or having thoughts of suicide, call or text the 988 Suicide and Crisis Lifeline at 988 or chat at 988lifeline.org. In life- threatening situations, call 911. How is depression diagnosed? To be diagnosed with depression, a person must have symptoms most of the day, nearly every day, for at least 2 weeks. One of the symptoms must be a depressed mood or a loss of interest or pleasure in most activities. Children and adolescents may be irritable rather than sad. Although several persistent symptoms, in addition to low mood, are required for a depression diagnosis, people with only a few symptoms may benefit from treatment. The severity and frequency of symptoms and how long they last vary depending on the person. If you think you may have depression,",
+  "text_simplified": "الاكتئاب هو حالة نفسية تؤثر على المشاعر والسلوك، وتشمل أعراضاً مثل الانعزال عن العائلة والأصدقاء، وزيادة الاندفاعية، وتعاطي الكحول أو المخدرات. قد لا تظهر جميع الأعراض على كل شخص، لكنها تعيق الحياة اليومية وتسبب ضيقاً شديداً. إذا استمرت الأعراض لأكثر من أسبوعين، يجب استشارة طبيب مختص. في حالات التفكير في الانتحار، يجب الاتصال فوراً بخط المساعدة 988.",
+  "labels": [
+    "اكتئاب",
+    "صحة نفسية",
+    "سلوك محفوف بالمخاطر",
+    "عزلة اجتماعية",
+    "تفكير انتحاري"
+  ],
+  "created_at": "2026-06-20T14:31:06Z",
+  "updated_at": "2026-06-20T14:31:06Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-6a6308f7",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية إشراك الأهل في خدمات الصحة النفسية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "إشراك الأهل والمجتمع في الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "facilitate access and allow children and adolescents to be treated in the context of their families, schools and local communities (see the module on Organization of Services for Mental Healthfor more details). It is crucial to involve parents/families and communities in planning mental health services for children and adolescents. For example, parents/families may be able to It is crucial to involve suggest changes that will improve existing services or indicate gaps in the existing parents/families and continuum of services that can be addressed by new services, and that can provide communities in planning essential support to a child or adolescent with a mental health problem. Box 7 illustrates mental health services for treatment planning at a systems level, as well as the positive outcomes that can be children and adolescents achieved when parents/families are included in a young person's treatment plan. Box 7. Treatment planning at a systems level and involving family members Example 1 (Grimes, 2001) The Massachusetts Mental Health Services Program for Youth (MaMHSPY) is supporting a “shared governance” model for addressing the mental health needs of adolescents and children. Six agencies are coordinating to focus on a group of “at risk” and ill children. “Blended funding” is used, meaning that each agency contributes a portion of funding for the programme. Family spokespersons and agency decision- makers participate in the MHSPY Steering Committee. Health as well as mental health concerns are addressed by this governance model. Eligibility criteria for the youth and families to be served was established",
+  "text_simplified": "من المهم إشراك الأهل والمجتمع في تخطيط خدمات الصحة النفسية للأطفال والمراهقين. يمكن للأهل اقتراح تحسينات للخدمات الحالية أو الإشارة إلى الفجوات التي تحتاج لخدمات جديدة. يساهم إشراك الأهل في خطة العلاج في تحقيق نتائج إيجابية للطفل أو المراهق.",
+  "labels": [
+    "صحة نفسية",
+    "إشراك الأهل",
+    "تخطيط الخدمات",
+    "دعم مجتمعي",
+    "علاج الأطفال"
+  ],
+  "created_at": "2026-06-20T14:47:46Z",
+  "updated_at": "2026-06-20T14:47:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

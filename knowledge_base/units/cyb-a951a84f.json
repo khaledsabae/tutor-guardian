@@ -1,0 +1,29 @@
+{
+  "id": "cyb-a951a84f",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تعاون شركات التكنولوجيا لحماية الأطفال من الاستغلال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال من الاستغلال الجنسي عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "able to more effectively create “safe spaces” to Industry cooperation The Technology Coalition is an example of successful cooperation between industry stakeholders to fight CSEA. Transnational models Industries should include relevant international guidelines in their structural programme as well as abide by any relevant national or transnational legislation that applies in the countries in which they operate. Industries should not only consider the actions they must take at the legal level but also what activities they can perform and, where possible, seek to implement initiatives globally. Some of the models that provide principles for such initiatives include: • Five Country Ministerial Voluntary principles to counter online CSEA (2020); • Broadband Commission for Sustainable Development, Child Online Safety: Minimizing the Risk of Violence, Abuse and Exploitation Online (2019); • WePROTECT Global Alliance, A Global Strategic Response to Online Child Sexual Exploitation and Abuse (2019); • Global Partnership to End Violence against Children, Safe to Learn: Call to Action; • Child Dignity in the Digital World, Child Dignity Alliance: Technology Working Group • Directive (EU) 2018/1808 of the European Parliament and of the Council: Audio Visual Media Services Directive; • European Commission General Data Protection Regulation (2018); • OECD Recommendation on Protection of Children Online (2012). National models There are a number of national and international models that set out the clear roles and responsibilities of the technology industry in addressing child online protection. Some of these are not specific to children per se but can apply to them as Internet users.",
+  "text_simplified": "يشرح النص كيفية تعاون شركات التكنولوجيا لحماية الأطفال من الاستغلال والاعتداء الجنسي عبر الإنترنت. يذكر أمثلة على نماذج دولية ووطنية تضع مبادئ وإرشادات للصناعة لخلق بيئات آمنة للأطفال. يجب على الشركات اتباع القوانين المحلية والدولية وتنفيذ مبادرات عالمية لحماية الأطفال.",
+  "labels": [
+    "حماية الأطفال",
+    "استغلال جنسي",
+    "تعاون صناعي",
+    "سلامة رقمية",
+    "إرشادات دولية"
+  ],
+  "created_at": "2026-06-20T14:55:03Z",
+  "updated_at": "2026-06-20T14:55:03Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-860f25bd",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحسن سلوك مراهق بفضل التدخل النفسي والدعم الأسري",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "اضطراب سلوكي ونفسي",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "profoundly as a result of this intervention. School, family and community measures have improved. Service utilization has shifted to less costly and restrictive services, and satisfaction and programme retention is high. Example 2 (Kamradt, 2000) Anthony is a 15-year-old African American, who was placed in the mental health programme, Wraparound Milwaukee, because of multiple counts of criminal damage to property. He was diagnosed with attention deficit disorder and major depression. Anthony’s family strengths included his parents’ desire to keep him at home, a number of aunts and uncles who were interested in being resources for him at times of family stress, and his family’s motivation for change. Anthony’s personal strengths included his outgoing nature, affection for his siblings, a desire to find a job, and love for his His mental health team (called a Child and Family Team) included his mother, stepfather, aunt, a sibling, an in-home therapist, a probation worker, a volunteer mentor and his mental health worker (called his Care Coordinator). Formal services he received through the mental health programme included in-home treatment, day treatment, mentoring and job coaching. Anthony’s aunt provided informal services – Anthony would stay with her during some of his crisis periods. Anthony has been in the mental health programme for two years. He has had no further law violations, he has been an honour student in the alternative school programme, and will soon be returning to his neighbourhood school. He is also working part-time. Promotion, prevention, treatment and rehabilitation Policy-makers should consider all",
+  "text_simplified": "أنتوني، مراهق يبلغ من العمر 15 عامًا، يعاني من اضطراب نقص الانتباه والاكتئاب الشديد، وقد شارك في برنامج صحي نفسي شامل. بفضل دعم أسرته وفريق متكامل من المختصين، تحسن سلوكه وأصبح طالبًا متفوقًا ويعمل بدوام جزئي دون أي مخالفات قانونية.",
+  "labels": [
+    "اضطراب نقص الانتباه",
+    "اكتئاب",
+    "دعم أسري",
+    "برنامج علاجي",
+    "تحسن سلوكي"
+  ],
+  "created_at": "2026-06-20T14:47:55Z",
+  "updated_at": "2026-06-20T14:47:55Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

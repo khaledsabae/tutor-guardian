@@ -1,0 +1,29 @@
+{
+  "id": "cyb-19ecbc77",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "التعاون لوضع قوانين لمكافحة استغلال الأطفال جنسياً",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "استغلال جنسي للأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "law enforcement, governments and civil society must work together to ensure that adequate legal frameworks in accordance with international standards are in place. Such frameworks should criminalize all forms of CSEA, including through CSAM, and protect children who are victims of such abuse or exploitation. These frameworks must ensure that reporting, investigations and content removal processes work as efficiently as possible. Industry should provide links to national hotlines or other locally available hotlines, such as IWF portals in some countries and, in the absence of local reporting opportunities, provide links to other international hotlines as relevant, such as the United States National Center for Missing and Exploited Children (NCMEC) or the International Association of Internet Hotlines (INHOPE), where any of the international hotlines can be used to file a report. Responsible companies are taking a number of steps to help prevent their networks and services from being used to disseminate CSAM. These include introducing language into terms and conditions or codes of conduct that explicitly forbids such content or conduct;14 developing robust notice and takedown processes; and working with and supporting national hotlines. Additionally, some companies deploy technical measures to prevent the misuse of their services or networks for sharing known CSAM. For example, some Internet service providers are blocking access to URLs confirmed by an appropriate authority as containing CSAM if the website is hosted in a country where processes are not in place to ensure it will be rapidly taken down. Others are deploying hashing technologies to automatically",
+  "text_simplified": "يجب على الحكومات والجهات المعنية التعاون لوضع قوانين صارمة تجرم جميع أشكال استغلال الأطفال جنسياً عبر الإنترنت. تشمل هذه القوانين حماية الأطفال الضحايا وضمان الإبلاغ الفعال والتحقيق السريع وإزالة المحتوى الضار. كما ينبغي للشركات منع استخدام خدماتها لنشر مواد الاعتداء الجنسي على الأطفال من خلال شروط الاستخدام وتقنيات الحظر.",
+  "labels": [
+    "حماية الأطفال",
+    "قوانين رقمية",
+    "استغلال جنسي",
+    "سلامة الإنترنت",
+    "إزالة المحتوى"
+  ],
+  "created_at": "2026-06-20T14:55:47Z",
+  "updated_at": "2026-06-20T14:55:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

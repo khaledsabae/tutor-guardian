@@ -1,0 +1,29 @@
+{
+  "id": "med-6bba9f5b",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "متطلبات التدريب لعلاج الأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تدريب مهني",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "or other clinicians to at least meet some minimal competency requirements for the treatment and care of children and Table 3 illustrates the different roles of personnel. Training programmes should be geared to the functions that personnel will be undertaking. It is not sufficient, for example, for child and adolescent psychiatrists to be trained only for the direct delivery of services if a large part of their job description also includes research and service development. Similarly, many treatment programmes will require a multidisciplinary approach, which needs to be considered when developing training programmes (see module on Human Resources and Training for Mental Health). There has been an increasing recognition of the need to provide manuals to assist in the provision of training for specific interventions. A major effort in this regard has been undertaken in a collaborative manner between the World Psychiatric Association (WPA), the International Association for Child and Adolescent Psychiatry and Allied Professions, and the World Health Organization. Information about this programme is available on the WPA web site at: http://www.globalchildmentalhealth.com/. Quality improvement Quality is a measure of whether services increase the probability of desired mental health outcomes and whether they are consistent with current evidence-based Quality is a measure of whether services increase the practices. Quality improvement (QI) is an ongoing, iterative process. probability of desired mental health outcomes and whether The steps associated with ensuring quality, as summarized in Figure 4, are all relevant they are consistent with for child and adolescent mental health services (see",
+  "text_simplified": "يجب أن يخضع الأطباء والمعالجون لتدريب كافٍ لعلاج الأطفال والمراهقين. كما ينبغي أن تكون برامج التدريب مناسبة للمهام التي سيقومون بها، مثل البحث أو التطوير. هناك حاجة متزايدة لتوفير أدلة تدريبية للعلاجات المتخصصة. تحسين الجودة هو عملية مستمرة لضمان تحقيق نتائج صحية نفسية أفضل.",
+  "labels": [
+    "تدريب",
+    "جودة",
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون"
+  ],
+  "created_at": "2026-06-20T14:48:56Z",
+  "updated_at": "2026-06-20T14:48:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

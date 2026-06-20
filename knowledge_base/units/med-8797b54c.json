@@ -1,0 +1,29 @@
+{
+  "id": "med-8797b54c",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحقيق الأهداف الاستراتيجية وتحديد العوائق",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط استراتيجي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "the activity outcomes are achieved, this should automatically result in the strategic targets also being met. If this is not the case, it implies that there were errors in the formulation of the plan. What are the potential obstacles or delays that could inhibit the realization of each activity?It is important to anticipate and address obstacles or delays. Identifying these has the additional benefit of clarifying the reasons why certain time periods were allocated for the completion of an activity. These issues can be summarized in a matrix, as exemplified in Boxes 16 and 17, which refer to the countries with low and medium levels of resources described in previous troppuS rotacidnI 3.4Step 4: Determine the costs, available resources and the budget It is important to establish the costsfor each year as well as for the total duration of time for which the strategy will be implemented. There are three principal resource inputs necessary to implement strategies for child and adolescent mental health (as for other areas of health). Human resources are often the most expensive component of the health-care system. They represent recurrent expenditures throughout the duration of a plan. Capital Human resources are often investment is also necessary to educate and train people. This may involve the most expensive compo- supplementing the training of professionals with additional exposure in the field of child nent of the health-care system. and adolescent mental health. Many clinical psychologists, general practitioners, nurses and psychiatrists, for example, do not receive sufficient training in",
+  "text_simplified": "عند تحقيق نتائج الأنشطة، يجب أن تتحقق الأهداف الاستراتيجية تلقائيًا. إذا لم يحدث ذلك، فهذا يشير إلى أخطاء في صياغة الخطة. من المهم توقع العوائق أو التأخيرات المحتملة التي قد تعيق تنفيذ كل نشاط. كما يجب تحديد التكاليف والموارد المتاحة والميزانية اللازمة لتنفيذ الاستراتيجية.",
+  "labels": [
+    "تخطيط",
+    "موارد",
+    "أهداف",
+    "عوائق",
+    "ميزانية"
+  ],
+  "created_at": "2026-06-20T14:51:07Z",
+  "updated_at": "2026-06-20T14:51:07Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

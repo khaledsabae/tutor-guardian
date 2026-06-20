@@ -1,0 +1,29 @@
+{
+  "id": "cyb-b0544a9c",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال في أنظمة الذكاء الاصطناعي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "to developing trust and facilitating auditing, investigations and recourse when harm to children is suspected. Ensure that there are functional and legal mechanisms for recourse if children are, or claim to be, harmed through AI systems. Processes should be established for the timely redress of any discriminatory outputs, and oversight bodies set up for appeals Accountability and mechanisms for redress go hand in hand. Develop plans for handling especially sensitive data, including revelations of abuse or other harm that may be shared with the company through its products. Digital platforms and AI systems should minimize the collection of data on children and maximize children’s control over the data they do create. Terms of use should be understandable for children to empower their awareness and Educating children, Providers of AI-driven systems can complement technical measures parents and educators with educational and empowerment activities. about children’s safety and their responsible It should be possible to explain the purpose of AI systems to child use of ICTs users and their parents or carers to empower them to decide to use or refuse such platforms. Guidelines for industry on Child Online Protection Promote digital Providers of AI-driven systems can encourage and empower technology as a children and young people by supporting their right to mode to further civic participation. Refer to the general guidelines in Table 1. Using technology AI-driven systems should be developed to support children’s advances to protect development and well-being as an outcome in all system design, and educate children development",
+  "text_simplified": "يجب وضع آليات قانونية ووظيفية للمساءلة عند إلحاق الضرر بالأطفال من أنظمة الذكاء الاصطناعي. ينبغي تقليل جمع بيانات الأطفال ومنحهم سيطرة أكبر على بياناتهم. كما يجب تثقيف الأطفال وأولياء الأمور والمربين حول الاستخدام الآمن والمسؤول للتكنولوجيا.",
+  "labels": [
+    "حماية الطفل",
+    "الذكاء الاصطناعي",
+    "البيانات",
+    "المساءلة",
+    "التثقيف الرقمي"
+  ],
+  "created_at": "2026-06-20T15:01:20Z",
+  "updated_at": "2026-06-20T15:01:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

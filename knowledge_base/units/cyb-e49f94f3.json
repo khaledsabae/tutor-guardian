@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e49f94f3",
+  "domain": "cyber",
+  "source_file": "Every_Online_Safety_Conversation.pdf",
+  "title": "كيف تدعم طفلك في مواجهة الابتزاز الجنسي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "ابتزاز جنسي",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Internet Matters — Online Safety Conversations",
+  "text_original": "on, this is called ‘sexual extortion’. Support your child to get content taken down and get more help eSafety can help get content taken down and provide further support and advice. Make a report to eSafety by completing the online form at www.eSafety.gov.au/report Search for the ‘eSafety Guide’ to learn more about how to stay safe on games, apps and online platforms including social media. Supporting a child if they There are many agencies that support children and experience abuse young people who have experienced online child exploitation or online grooming. These are listed at If your child tells you they have experienced abuse try to accce.gov.au/help-and-support/who-can-help. remain calm and take action to support them: • Do not blame your child – they have done nothing Reporting online child abuse • Make sure they are safe • Listen and believe them It is illegal to view, share or produce suggestive or • Collect evidence including screenshots, URLs and explicit images of children. This content can be reported directly to the platform and at • Make a report to the Australian Centre to Counter www.eSafety.gov.au/report Child Exploitation and get support for your child Getting help from the Australian Centre to Counter Child Exploitation If you are in Australia and a child is in immediate danger, or at risk of harm call Triple Zero (000). To make a report, complete the online form at www.accce.gov.au/report Your report to the Australian Centre to Counter Child Exploitation will be looked at by specialist investigators",
+  "text_simplified": "هذا النوع من الإساءة يسمى الابتزاز الجنسي. ادعم طفلك لإزالة المحتوى المسيء واحصل على مساعدة إضافية من هيئة السلامة الإلكترونية. استمع لطفلك وصدقه ولا تلومه، واجمع الأدلة مثل لقطات الشاشة. أبلغ الجهات المختصة إذا كان الطفل في خطر فوري.",
+  "labels": [
+    "سلامة رقمية",
+    "إساءة إلكترونية",
+    "دعم نفسي",
+    "حماية الطفل",
+    "تبليغ"
+  ],
+  "created_at": "2026-06-20T15:02:38Z",
+  "updated_at": "2026-06-20T15:02:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Every_Online_Safety_Conversation",
+    "source_author": ""
+  }
+}

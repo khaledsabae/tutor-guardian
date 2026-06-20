@@ -1,0 +1,29 @@
+{
+  "id": "med-25557331",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية إشراك المعلمين في سياسات الصحة النفسية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية مدرسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "is such that principally attached to a particular setting that are best placed to contribute policy their interests and needs elements that pertain to that setting. For example, a school-based mental health should be met in a range of promotion policy is more likely to succeed if educators are involved in its formulation. Second, a consultation process can increase the buy-in of crucial stakeholders. If people have been actively involved in the development of a policy, they are more likely A consultation process can to have a vested interest in that policy’s success and in ensuring that it “works”. In increase the buy-in of crucial contrast, when a policy is imposed on those whose commitment is necessary for its stakeholders. successful implementation, they may be resentful at not having been consulted, and may regard the implementation of the policy as an unwanted burden. Also, they may observe weaknesses in the policy that could reduce the motivation for making it Third, while stakeholders may see the benefits of the mental well-being of children and Involvement in a policy adolescents, they may erroneously believe that mental health falls outside their realm. development process may Involvement in a policy development process may increase their insight into the increase insight into the potential contributions of possible contributions their sector could make to the mental health of children and different sectors to the mental adolescents. This could result in an awareness and exploitation of opportunities for the health of children and enhancement of child and",
+  "text_simplified": "يجب إشراك المعلمين وأولياء الأمور في وضع سياسات الصحة النفسية المدرسية لضمان نجاحها. عندما يشارك الأشخاص في تطوير السياسة، يصبحون أكثر التزامًا بتنفيذها. أما فرض السياسات دون استشارة فقد يؤدي إلى مقاومة وعدم فعالية. كما أن المشاركة تزيد من فهم الجميع لدورهم في دعم الصحة النفسية للأطفال والمراهقين.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات مدرسية",
+    "إشراك المعلمين",
+    "استشارة",
+    "تعاون"
+  ],
+  "created_at": "2026-06-20T14:46:43Z",
+  "updated_at": "2026-06-20T14:46:43Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

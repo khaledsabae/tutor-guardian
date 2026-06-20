@@ -1,0 +1,29 @@
+{
+  "id": "med-720265c4",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تنفيذ برامج تعزيز الصحة في المدارس",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "تعزيز الصحة المدرسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "persuade politicians of the cost effectiveness and other advantages of school-based health promotion interventions; >Compile a list of potential sources of funding; >Prepare funding applications for the potential sources of funding; and >Institute the appropriate financial mechanisms to deposit and disburse the funds. Research and evaluation 1. Arrange focus groups with school students to ascertain the culture-specific aspects of risk and protective behaviours among adolescents in the country. 2. Evaluate the pilot project, including inputs, process and outcome. 3. Evaluate the intervention, including the three aspects mentioned above. 4. Evaluate the extent to which dissemination has taken place (reach of the dissemination). Completion of dissemination evaluation Stage of research (see box 14 for more details) >Assemble a group of scientists and service managers to oversee the research; >Obtain funding; >Hire a project manager; >Develop a protocol; >Write a detailed description of what is required by the fieldworkers; >Hire and train fieldworkers; >Monitor the progress of the fieldwork; >Enter and refine the data; >Conduct a statistical analysis; and >Write a report. Human resources and training 1. Arrange workshops for educators in which the etiologies of risk behaviours and the key elements of school-based health promotion are conveyed. 2. Provide support from within the health sector for educators who are implementing school-based health promotion programmes. Support for each of the educators (possibly 50) who are involved in implementing school-based health promotion programmes. Number (percentage) of educators involved in implementing school-based health promotion programmes who receive support from the health sector. >Identify a",
+  "text_simplified": "هذا النص يشرح كيفية تنفيذ برامج تعزيز الصحة في المدارس من خلال التخطيط والتمويل والبحث. يتضمن جمع التبرعات، تقييم المشاريع، وتدريب المعلمين لدعم السلوكيات الصحية لدى المراهقين.",
+  "labels": [
+    "تعزيز الصحة",
+    "برامج مدرسية",
+    "تدريب معلمين",
+    "تمويل",
+    "تقييم"
+  ],
+  "created_at": "2026-06-20T14:50:46Z",
+  "updated_at": "2026-06-20T14:50:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

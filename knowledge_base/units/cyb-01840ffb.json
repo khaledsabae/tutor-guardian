@@ -1,0 +1,29 @@
+{
+  "id": "cyb-01840ffb",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "التنمر الإلكتروني وكيفية حماية الأطفال منه",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "تنمر إلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "takes place in be detailed to varying degrees. someone to speak to, an adult ways they are used are positive, in schools or local neighbourhoods. In such cases, it is essential to or friend; Internet service some cases these same tools can Unfortunately, there are increasing be cautious about inserting providers will also often al- be used to offend, deride, defame numbers of bullies and real forms identifiable or traceable data low users to report incidents and annoy Internet users; and of bullying online, ranging from (name and surname, address, by clicking on “report” or furthermore, violent or offensive offensive websites to harassing the name of your school, Guidelines for Children and Young People www.itu.int/cop text messages, and sending un- seem like an innocent joke sent to the mobile phone sibility of creating a list of wanted photos via mobile phones could wind up having very company; names that users can choose and so on. This particular form irritating and hurtful conse- 2 in the more serious cases, to block. In this way, you can of bullying – which can possibly quences for others; such as cases involving prevent unwanted people offend and hurt someone without 3. it is important to refrain from physical threats, it is advis- from making contact with necessarily involving any physical reacting to provocations able that the police also be you. An Instant Messaging contact – can have just as painful received via SMS , MMS, informed; (IM) system lets you know consequences as that",
+  "text_simplified": "التنمر الإلكتروني هو سلوك عدواني يحدث عبر الإنترنت مثل إرسال رسائل مسيئة أو نشر صور مؤذية. يجب على الأهل تعليم أطفالهم عدم مشاركة معلومات شخصية عبر الإنترنت والإبلاغ عن أي مضايقات. يمكن استخدام أدوات الحظر والإبلاغ المتاحة في التطبيقات لحماية الطفل. في الحالات الخطيرة التي تتضمن تهديدات جسدية، يجب إبلاغ الشرطة.",
+  "labels": [
+    "تنمر إلكتروني",
+    "سلامة رقمية",
+    "مضايقات",
+    "حماية الأطفال",
+    "إبلاغ"
+  ],
+  "created_at": "2026-06-20T15:11:31Z",
+  "updated_at": "2026-06-20T15:11:31Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

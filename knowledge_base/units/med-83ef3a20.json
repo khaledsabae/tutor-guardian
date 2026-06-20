@@ -1,0 +1,29 @@
+{
+  "id": "med-83ef3a20",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تطوير خطة الصحة النفسية باستخدام تحليل SWOT",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط استراتيجي للصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "of enthusiastic cooperation of all key been approved at all necessary stakeholders. levels before the plan is The development of a plan builds on the process already established for policy development outlined in section 2 of this module. Obtaining information about the population’s needs, gathering evidence and building consensus remain important to the creation of a plan. 3.1 Step 1: Determine the strategies and time frames Strategies represent the lines of action which are thought to Strategies represent the lines of action which are thought to have the highest probability have the highest probability of of success in implementing the mental health policy for a given population. Strategies successfully implementing the are also referred to as “strategic plans”. mental health policy for a given population. In developing and setting priorities for a set of strategies, it is often useful to begin with a SWOT analysis, in which the strengths, weaknesses, opportunities and threats of the current situation are identified. Table 5 presents examples of each of the points that could emerge from a SWOT analysis. Table 5. Examples of strengths, weaknesses, opportunities and threats in a SWOT Strengths Weaknesses In developing and establishing priorities for a set of strategies, > Awareness of relevant child and > Inadequate information systems it is often useful to commence adolescent mental health issues > Mental health workers poorly trained in by conducting a SWOT > Buy-in from family and consumer child and adolescent mental health analysis. organizations, schools and advocacy > Perceived insignificance of",
+  "text_simplified": "هذا النص يشرح كيفية تطوير خطة للصحة النفسية بناءً على تحليل نقاط القوة والضعف والفرص والتهديدات. يتم تحديد الاستراتيجيات والأطر الزمنية المناسبة لتنفيذ السياسة النفسية. من المهم جمع المعلومات حول احتياجات السكان وبناء توافق في الآراء.",
+  "labels": [
+    "تخطيط",
+    "صحة نفسية",
+    "استراتيجيات",
+    "تحليل SWOT",
+    "سياسة"
+  ],
+  "created_at": "2026-06-20T14:50:02Z",
+  "updated_at": "2026-06-20T14:50:02Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

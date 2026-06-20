@@ -1,0 +1,29 @@
+{
+  "id": "cyb-568ebd9e",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "قواعد السلامة عند استخدام الإنترنت للأطفال",
+  "language": "mixed",
+  "age_group": "7-9",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "their own ages within the defined groups. able online exists. The impulse tastes. They will very often be able Local laws and customs are also to seek and find out what’s there to use technology with a high level profoundly important in matters is great. Throughout childhood a of proficiency, without any adult child is expected to test the barri- supervision or interaction. Filter- ers and evolve through this kind ing software will start to become of learning. Filtering software or less useful and less relevant but it Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Using the Internet is fun. Enjoy it most by keeping 1. You can do a lot of great things on the Internet. You can play games, you can chat with your friends, meet new friends and find a lot of useful information. You have the right to enjoy and explore all that the digital world has to 2. But you also have to be aware that you can find some unpleasant things on the Internet, such as images and stories that may confuse or even frighten you. Your friends and trusted adults are not the only people within this digital world. Unfortunately the Internet is also used by people who are not so nice or who might even want to harm, harass or bully you or other people. While using the Internet you need to be aware of certain basic rules to be able to safeguard yourself and",
+  "text_simplified": "يجب على الأطفال استخدام الإنترنت بحذر والاستمتاع بفوائده مع الوعي بالمخاطر. من المهم اتباع قواعد السلامة الرقمية وحماية النفس من المحتوى غير المناسب والأشخاص الضارين.",
+  "labels": [
+    "إنترنت",
+    "سلامة",
+    "أطفال",
+    "وعي",
+    "حماية"
+  ],
+  "created_at": "2026-06-20T15:09:46Z",
+  "updated_at": "2026-06-20T15:09:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

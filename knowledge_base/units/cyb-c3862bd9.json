@@ -1,0 +1,29 @@
+{
+  "id": "cyb-c3862bd9",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الاستغلال الجنسي للأطفال في الألعاب الإلكترونية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "استغلال جنسي للأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "of sexuality and sexual identity, while for others, particularly younger children, there is often coercion by an adult or other child. Whatever the case, the resulting content is in many countries illegal and may expose children to the risk of prosecution or be used to further exploit, groom or extort the child. Similarly, online gaming enables children to fulfil their fundamental right to play, as well as build networks, spend time with friends and meet new ones, and develop important skills. While this can be overwhelmingly positive, in some cases, left unmonitored and unsupported by a responsible adult, gaming platforms can also pose risks to children. This includes playing excessively, financial risks linked to excessive in-game purchases, collection and monetization of children’s personal data by industry actors, cyberbullying, hate speech, violence and exposure to inappropriate conduct or content, grooming, using real, computer-generated or even virtual reality images, and videos depicting and normalizing CSEA. These risks are not unique to the gaming environment but apply to other digital environments where children spend time. Furthermore, developments in technology have led to the emergence of the “Internet of Things”, where an increasing number and range of Internet-connected devices are able to communicate and network over the Internet. This includes toys, baby monitors and devices powered by AI that may present risks in terms of privacy and unwanted contact. Guidelines for industry on Child Online Protection Good practice: Research In the context of online or cyberbullying, Microsoft has conducted research into digital safety and",
+  "text_simplified": "يتناول النص مخاطر تعرض الأطفال للاستغلال الجنسي عبر الإنترنت، خاصة في بيئات الألعاب الرقمية. كما يشير إلى أن بعض الأطفال قد يتعرضون للإكراه من قبل بالغين أو أطفال آخرين، مما قد يؤدي إلى عواقب قانونية أو نفسية. ويؤكد على أهمية مراقبة البالغين ودعمهم للأطفال أثناء استخدام الألعاب الإلكترونية لتجنب الإدمان والمخاطر المالية والتنمر الإلكتروني.",
+  "labels": [
+    "استغلال جنسي",
+    "ألعاب إلكترونية",
+    "سلامة رقمية",
+    "تنمر إلكتروني",
+    "حماية الطفل"
+  ],
+  "created_at": "2026-06-20T14:54:27Z",
+  "updated_at": "2026-06-20T14:54:27Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

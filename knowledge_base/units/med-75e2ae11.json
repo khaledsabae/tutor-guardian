@@ -1,0 +1,29 @@
+{
+  "id": "med-75e2ae11",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "إرشادات النشاط البدني للأطفال من منظمة الصحة العالمية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "نشاط بدني",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "at https://apps.who.int/iris/handle/10665/311663 14 Management of Guideline Development Process 15 The expert opinion of the GDG informed discussion on PEER REVIEW the resource implications of the recommendations in different settings. The draft guidelines were reviewed by external peer reviewers identified by the GDG and Steering Group. The cost to government and non-government External peer reviewers were requested to provide organizations of guideline implementation may be comments on issues of clarity, presentation of the minimal, if recommended physical activity can be evidence and implementation and comments were relatively easily incorporated by individuals (parents incorporated as appropriate. External peer reviewers and their children) into their lives, or existing resources could not change the recommendations that had been in primary care, day-care/school-based settings can decided upon by the GDG. External peer reviewers are be shifted resulting in increased physical activity. listed in the Annex and declarations of interest were No evidence was available on the cost to parents or review and no conflict identified. In addition, inputs were caregivers of implementing the recommendations. actively sought from WHO regional offices. Equity, acceptability and feasibility EVALUATION The GDG discussed at length for each recommendation To evaluate use of the guidelines in country, an online if implementing the recommendations would decrease survey will be conducted 2 and 4 years after publication. health equity in their experience. They also considered The first survey will assess the policy discussion on Canadian and Australian stakeholder surveys that these guidelines and the need for national adaptation. actively sought inputs from vulnerable",
+  "text_simplified": "هذه الوحدة تتعلق بتطوير إرشادات منظمة الصحة العالمية للنشاط البدني للأطفال. تم مراجعة المسودة من قبل خبراء وأخذت آراء الأهل والمجتمع في الاعتبار. التوصيات تهدف إلى زيادة النشاط البدني بطرق سهلة يمكن للأسر تطبيقها. التكلفة المتوقعة منخفضة إذا تم دمج النشاط في الحياة اليومية.",
+  "labels": [
+    "نشاط بدني",
+    "إرشادات صحية",
+    "أطفال",
+    "أهل",
+    "منظمة الصحة العالمية"
+  ],
+  "created_at": "2026-06-20T15:06:33Z",
+  "updated_at": "2026-06-20T15:06:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

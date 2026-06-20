@@ -1,0 +1,29 @@
+{
+  "id": "cyb-7433b4c4",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال والمراهقين في البيئة الرقمية",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "States concerning the provision of audiovisual media services (Audiovisual Media Services Directive) in view of changing market realities and Text as published in the Official • , revised 2018, and updated version • Working with young people and children at the BBC; • Framework for Independent Production Companies working on BBC Productions on external providers rules about child protection; • Guidance: Interacting with children and young people online on editorial guidelines for on-line activities. Investigation proving non-respect of age verification for social media in the United Kingdom: Guidelines for industry on Child Online Protection The definitions below are mainly drawn from existing terminology set out in the Convention on the Rights of the Child, 1989, as well as by the Interagency Working Group on Sexual Exploitation of Children in the Terminology Guidelines for the Protection of Children from Sexual Exploitation and Sexual Abuse, 2016 (Luxembourg Guidelines), by the Council of Europe Convention on the Protection of Children against Sexual Exploitation and Sexual Abuse, 2007, as well as by the UNICEF Global Kids Online report, 2019. Adolescents are people aged 10–19 years. It is important to note that “adolescents” is not a binding term under international law, and persons below the age of 18 are considered to be children, whereas persons 18–19 years old are considered adults, unless majority is attained earlier under national law.26 Artificial intelligence In the broadest sense, artificial intelligence (AI) refers indistinctly to systems that are pure science fiction (so-called \"strong\" AIs with a self-aware form) and",
+  "text_simplified": "هذا النص يتناول حماية الأطفال والمراهقين في البيئة الرقمية، مع التركيز على سياسات الإعلام والتوجيهات الخاصة بالتفاعل معهم عبر الإنترنت. يشمل تعريفات للمراهقين (10-19 سنة) ويؤكد أن من هم دون 18 سنة يعتبرون أطفالًا قانونيًا. كما يذكر أدلة وإرشادات لحماية الأطفال من الاستغلال الجنسي عبر الإنترنت.",
+  "labels": [
+    "حماية الأطفال",
+    "البيئة الرقمية",
+    "الاستغلال الجنسي",
+    "المراهقون",
+    "التوجيهات الإعلامية"
+  ],
+  "created_at": "2026-06-20T15:01:29Z",
+  "updated_at": "2026-06-20T15:01:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

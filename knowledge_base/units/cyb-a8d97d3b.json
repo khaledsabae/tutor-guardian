@@ -1,0 +1,29 @@
+{
+  "id": "cyb-a8d97d3b",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الطفل على الإنترنت: مسؤولية مشتركة",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "Businesses need to ensure children’s right both to online protection as well as to access to information and freedom of expression, while promoting children’s positive use of ICTs. 1 United Nations Guiding Principles on Business and Human Rights. Guidelines for industry on Child Online Protection Traditional distinctions between different parts of the telecommunications and mobile phone industries, and between Internet companies and broadcasters, are fast breaking down and becoming blurred. Convergence is drawing these previously disparate digital streams into a single current that is reaching billions of people in all parts of the world. Cooperation and partnership are the keys to establishing the foundations for safer and more secure use of the Internet and associated technologies. Governments, the private sector, policy-makers, educators, civil society, parents and caregivers all have a vital role in achieving this goal. Industry can act in five key areas, as described in section 3. 2. What is child online protection? Over the last 10 years, the use and role of the Internet in people’s lives has changed considerably. With the prevalence of smartphones and tablets, the accessibility of Wi-Fi and 4G technology, and developments in social media platforms and apps, more and more people are accessing UNICEF estimates that 71 per cent of young people are already online.2 The proliferation of Internet access points, mobile technology and the growing array of Internet-enabled devices, combined with the immense resources to be found in cyberspace, provide unprecedented opportunities to learn, share and communicate. The benefits of ICT usage",
+  "text_simplified": "يجب على الشركات ضمان حماية الأطفال على الإنترنت مع احترام حقهم في الوصول إلى المعلومات وحرية التعبير. التعاون بين الحكومات والقطاع الخاص والأسر ضروري لتعزيز الاستخدام الآمن للتكنولوجيا. تزايد استخدام الإنترنت بين الشباب يوفر فرصاً للتعلم والتواصل، لكنه يتطلب حماية من المخاطر.",
+  "labels": [
+    "حماية الطفل",
+    "الاستخدام الآمن للإنترنت",
+    "حقوق الطفل الرقمية",
+    "التعاون المجتمعي",
+    "التوعية الرقمية"
+  ],
+  "created_at": "2026-06-20T14:53:27Z",
+  "updated_at": "2026-06-20T14:53:27Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

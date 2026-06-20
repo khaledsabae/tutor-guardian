@@ -1,0 +1,29 @@
+{
+  "id": "med-4be8ef40",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "توصيات النشاط البدني للأطفال من 5 إلى 17 سنة",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "نشاط بدني وسلوك خامل",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "are currently no particularly in children, the pattern of overall 24-hour comparable data for younger children. activity needs to be considered, since the day is made Recommendations have been established for three up of sleep time, sedentary time and light-, moderate- population-age groups (5–17, 18–64 and over 65 years), and vigorous-intensity physical activity. Sedentary but up until this point did not include children under behaviours, whether riding motorized transport rather the age of 5 years. The recommended physical activity than walking or cycling, sitting at a desk in school, for children 5–17 years old to improve cardiorespiratory watching TV or playing inactive screen-based games and muscular fitness, bone health, cardiovascular and are increasingly prevalent (5) and associated with poor metabolic health biomarkers and reduce symptoms of health outcomes (6). Sleep time is also know to influence anxiety and depression is an accumulation of at least health outcomes and short sleep duration is associated 60 minutes of moderate- to vigorous-intensity physical with overweight and obesity in childhood (7) and activity (see definition of terms in the glossary) each day, adolescence (8), as well as mental health issues amongst through play, games, sports, transportation, recreation adolescents (8). Chronic insufficient sleep up to 7 years of and physical education, in the context of family, school age has been associated with increased adiposity in later and community activities. Amounts greater than 60 childhood and adolescence (9). minutes would provide additional health benefits and vigorous-intensity activities, including those that strengthen muscle and bone, should be",
+  "text_simplified": "يوصي الخبراء بأن يمارس الأطفال من عمر 5 إلى 17 سنة نشاطًا بدنيًا معتدلًا إلى قوي لمدة 60 دقيقة يوميًا لتحسين صحتهم البدنية والنفسية. يجب تقليل السلوكيات الخاملة مثل الجلوس الطويل أمام الشاشات أو استخدام وسائل النقل بدل المشي. قلة النوم ترتبط بزيادة الوزن ومشاكل الصحة النفسية لدى الأطفال والمراهقين. النشاط البدني المنتظم يساعد في تقوية العظام والعضلات وتقليل أعراض القلق والاكتئاب.",
+  "labels": [
+    "نشاط بدني",
+    "صحة الأطفال",
+    "سلوك خامل",
+    "نوم صحي",
+    "وقاية"
+  ],
+  "created_at": "2026-06-20T15:03:57Z",
+  "updated_at": "2026-06-20T15:03:57Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

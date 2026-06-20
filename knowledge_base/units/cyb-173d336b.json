@@ -1,0 +1,29 @@
+{
+  "id": "cyb-173d336b",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "حماية الأطفال من الإساءة والاستغلال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال من مخاطر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "and in Tunis from 16 to 18 need to “strengthen action to November 2005 concluded with protect children from abuse and the approval of the WSIS Out- defend their rights in the context come Documents which made of ICTs”. a bold commitment “to build a people-centred, inclusive and Guidelines for Children and Young People www.itu.int/cop Furthermore the global commu- to potential dangers like illegal nity of children and young people content, viruses, harassment (e.g. stated in the outcome document in chat rooms), the misuse of of the World Congress III against personal data or grooming for Sexual Exploitation of Children sexual purposes. and Adolescents held in Brazil in There is no silver bullet solution 20083 the following: “We ask for to protect children online. This strong cyber safety rules which is a global issue which requires a are well propagated on both the global response from all segments websites and within the com- of society, including children and munities. To this end we call for young people themselves. the increased development of children’s, teachers’, parents’ and family manuals which address the threats of the internet in addition to providing supplemental infor- mation about Sexual Exploitation Online technologies present many possibilities to communicate, learn new skills, be creative and contribute to establishing a bet- ter society for all, but often they also bring new risks e.g. they can expose children and young people 3 http://www.ecpat.net/WorldCongressIII/PDF/Outcome/WCIII_Outcome_Document_Final.pdf Guidelines for Children and Young People www.itu.int/cop Case Study: Children and Young People’s Voices The World",
+  "text_simplified": "يجب تعزيز الإجراءات لحماية الأطفال من الإساءة والاستغلال عبر الإنترنت، مع التركيز على وضع قواعد أمان رقمية قوية ونشرها في المجتمعات. كما ينبغي تطوير أدلة للأهل والمعلمين والأطفال لمواجهة مخاطر الإنترنت مثل المحتوى غير القانوني والتحرش الإلكتروني. هذه قضية عالمية تتطلب استجابة من جميع أفراد المجتمع بما فيهم الأطفال أنفسهم.",
+  "labels": [
+    "حماية الأطفال",
+    "السلامة الرقمية",
+    "الاستغلال الجنسي",
+    "توعية الأهل",
+    "مخاطر الإنترنت"
+  ],
+  "created_at": "2026-06-20T15:08:17Z",
+  "updated_at": "2026-06-20T15:08:17Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

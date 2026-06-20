@@ -1,0 +1,29 @@
+{
+  "id": "cyb-863f4737",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "بناء مرونة الأطفال على الإنترنت وحماية خصوصيتهم",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية وحماية خصوصية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "K. Przybylski, et al., “A Shared Responsibility: Building children’s’ online resilience”, Virgin Media and Parent Zone, 2014. 43 UNICEF and ITU, “Guidelines for Industry on Child Online Protection”, 2014 (as above). 44 UNICEF, \"Child Rights and Online Gaming: Opportunities & Challenges for Children and the Industry\", Guidelines for industry on Child Online Protection Parental control tools Software that allows users, typically a parent, to control some or all functions of a computer or other device that can connect to the Internet. Typically, such programmes can limit access to particular types or classes of websites or online services. Some also provide scope for time management, i.e. the device can be set to have access to the Internet only between certain hours. More advanced versions can record all texts sent or received from a device. The programmes normally will be password protected.45 Personal information This term describes individually identifiable information concerning a person, which is collected online. This includes the full name, contact details, such as home and email addresses, and phone numbers, and fingerprints or facial recognition material, insurance numbers or any other factor that permits the physical or online contacting or localization of a person. In this context, it further refers to any information about a child and his or her entourage that is collected online by service providers online, including connected toys and the Internet of things, and any other connected technology. Privacy is often measured in terms of sharing personal information online, having a public social media profile,",
+  "text_simplified": "يشرح النص أهمية بناء مرونة الأطفال على الإنترنت من خلال أدوات الرقابة الأبوية وحماية المعلومات الشخصية. تشمل الأدوات برامج تتحكم في الوصول إلى المواقع وتحديد أوقات الاستخدام، مع ضرورة حماية بيانات الطفل مثل الاسم والعنوان. يُوصى بتعاون الأسرة والصناعة لتعزيز السلامة الرقمية للأطفال.",
+  "labels": [
+    "رقابة أبوية",
+    "حماية خصوصية",
+    "مرونة رقمية",
+    "سلامة أطفال",
+    "أدوات تحكم"
+  ],
+  "created_at": "2026-06-20T15:02:05Z",
+  "updated_at": "2026-06-20T15:02:05Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

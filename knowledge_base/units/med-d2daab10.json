@@ -1,0 +1,29 @@
+{
+  "id": "med-d2daab10",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "دعم المعلمين وحماية الأطفال من العنف",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Provide readily accessible consultation to educators in follow-up to workshops. Every school should have at least one educator who has attended a workshop. Percentage of schools where at least one educator has attended a workshop >Make contact with each school and secure its collaboration with the strategy; >Identify a contractor to organize the logistics (including liaison with the schools, venues, transport, food) and secure a contract with the subcontractor; >Develop the content of the workshops; >Prepare sufficient copies of the teaching materials (for example, workbooks); >Recruit personnel to facilitate the workshops; >Train facilitators; >Implement workshops; >Identify a consultant for the school; >Monitor implementation of the workshops; and >Consider a plan for repeating the workshops, or for advanced workshops. Legislation and human rights 1. Arrange a multimedia campaign with a key message that violence should be 2. Establish a pilot project in which evidence by children and adolescents against alleged perpetrators of violence against them is provided without the presence of the alleged perpetrator. Establish such a pilot project at courts at each of the three levels of the judiciary. Number of levels/pilot projects established. >Obtain information from other countries about the operation of such courts; >Lobby within the departments of justice for the establishment of the pilot projects; >Obtain funding for the necessary equipment, such as digital recording devices; >Identify specific courts where the pilot project can be implemented; >Hold discussions with the members of the judiciary at these courts to ensure that they support the introduction of concealed witnesses,",
+  "text_simplified": "يهدف هذا النص إلى تحسين دعم الأطفال من خلال توفير استشارات للمعلمين بعد ورش العمل، وضمان وجود معلم مدرب في كل مدرسة. كما يركز على حماية حقوق الأطفال عبر حملات إعلامية ضد العنف وإنشاء مشاريع تجريبية تسمح للأطفال بتقديم أدلة دون وجود المتهم.",
+  "labels": [
+    "استشارات تربوية",
+    "ورش عمل",
+    "حقوق الطفل",
+    "حماية من العنف",
+    "دعم مدرسي"
+  ],
+  "created_at": "2026-06-20T14:50:24Z",
+  "updated_at": "2026-06-20T14:50:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

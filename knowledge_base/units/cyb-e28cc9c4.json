@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e28cc9c4",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "استخدام الأطفال للإنترنت قبل السن القانوني",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "استخدام الإنترنت المبكر",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "and has provided new arenas for Guidelines for industry on Child Online Protection entertainment, education, participation and relationship building. Current digital platforms are used for a variety of activities and are often multi-media experiences. Having access to and learning to use and navigate this technology is seen as critical to young people’s development and ICTs are first used at an early age. It is thus crucial that all actors are aware that children and young people often start using platforms and services before they reach the defined minimum age with which the tech industry is required to comply and, therefore, education should be integrated into all online services used by children alongside protection measures. 2.1.1 Children in the digital world In 2019, more than half of the world’s population used the Internet (53.6 per cent), with an estimated 4.1 billion users. At the global level, one-in-three Internet users is a child under 18 years of age1. According to UNICEF, worldwide, 71 per cent of young people are already online2. Despite the minimum age requirements, Ofcom (United Kingdom communications regulator) estimates that nearly 50 per cent of children between 10 and 12 years already have a social media account.3 Children and young people are now a substantial, permanent and persistent presence on the become a family or consumer product or service, integral to the way families, children In 2017, at the regional level, children and young people’s access to the Internet was strongly linked to the level of national income. Low-income",
+  "text_simplified": "يستخدم الأطفال واليافعون الإنترنت في سن مبكرة جدًا، وغالبًا قبل بلوغهم السن القانوني المحدد من قبل شركات التكنولوجيا. لذلك، من الضروري دمج التوعية والحماية في جميع الخدمات الرقمية التي يستخدمها الأطفال.",
+  "labels": [
+    "حماية الطفل",
+    "استخدام الإنترنت",
+    "توعية رقمية",
+    "سن مبكرة",
+    "سلامة إلكترونية"
+  ],
+  "created_at": "2026-06-20T14:54:00Z",
+  "updated_at": "2026-06-20T14:54:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

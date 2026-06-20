@@ -1,0 +1,29 @@
+{
+  "id": "cyb-3144e18d",
+  "domain": "cyber",
+  "source_file": "Every_Online_Safety_Conversation.pdf",
+  "title": "الاستغلال الجنسي للأطفال عبر الإنترنت وكيفية الحماية",
+  "language": "mixed",
+  "age_group": "13-15",
+  "behavior_type": "استغلال جنسي عبر الإنترنت",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Internet Matters — Online Safety Conversations",
+  "text_original": "have developed conversation their fault and they can get starters to help you talk with your child to help and support. keep them safe from harm. What is online grooming? What is online child exploitation? Online grooming is when an adult makes contact online with someone under the age of 16 with the intention Online child exploitation is the use of technology or the of abusing them. The offence happens when the internet to abuse a child, and to create and share child offender is talking to the child or young person, so no abuse material online. This type of abuse is a real and physical contact needs to occur for police to step in and growing challenge. Children or young people can be tricked or blackmailed into sending photos or videos of themselves with A 13-year-old female was playing an online game and was talking to a person in the in-game chat. When children or The person manipulated the girl to continue young people are talking on another platform and then tricked her blackmailed for money into performing acts with no clothes on. or for more photos or videos with no clothes Source: Australian Centre to Counter Child Exploitation on, this is called ‘sexual extortion’. Support your child to get content taken down and get more help eSafety can help get content taken down and provide further support and advice. Make a report to eSafety by completing the online form at www.eSafety.gov.au/report Search for the ‘eSafety Guide’ to learn",
+  "text_simplified": "الاستغلال الجنسي للأطفال عبر الإنترنت هو خطر حقيقي ومتنامي. يحدث عندما يتواصل شخص بالغ مع طفل تحت سن 16 بنية إساءة معاملته، أو عندما يُخدع الطفل أو يُبتز لإرسال صور أو فيديوهات جنسية. يمكن أن يحدث هذا عبر ألعاب الإنترنت أو منصات المحادثة. يجب على الأهل دعم أطفالهم والإبلاغ عن أي محتوى ضار عبر موقع eSafety.",
+  "labels": [
+    "استغلال جنسي",
+    "أمان الإنترنت",
+    "ابتزاز",
+    "أطفال",
+    "إبلاغ"
+  ],
+  "created_at": "2026-06-20T15:02:33Z",
+  "updated_at": "2026-06-20T15:02:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Every_Online_Safety_Conversation",
+    "source_author": ""
+  }
+}

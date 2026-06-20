@@ -1,0 +1,29 @@
+{
+  "id": "cyb-fe8e70ca",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الطفل في استخدام التكنولوجيا للشركات",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "for industry Section 3 – Key areas of protecting and promoting children’s rights: This section outlines five key areas where companies can take action to ensure children’s safe and positive use of ICTs. Section 4 – General guidelines: This section provides recommendations for all industry stakeholders on protecting children’s safety when using ICTs and on promoting positive ICT use, including responsible digital citizenship among children. Section 5 – Feature-related checklists: This section highlights specific recommendations for stakeholders on concrete actions to respect and support children’s rights, with the following • Feature A: Provide connectivity, data storage and hosting services • Feature B: Offer curated digital content • Feature C: Host user-generated content and connect users • Feature D: AI-driven systems Target audience Building on the United Nations Guiding Principles on Business and Human Rights, 1 the Children’s Rights and Business Principles call on businesses to meet their responsibility to respect children’s rights by avoiding any adverse impacts linked to their operations, products or services. These Principles also articulate the difference between respect (the minimum required of business to avoid causing harm to children) and support (for example, by taking voluntary actions that seek to advance the realization of children’s rights). Businesses need to ensure children’s right both to online protection as well as to access to information and freedom of expression, while promoting children’s positive use of ICTs. 1 United Nations Guiding Principles on Business and Human Rights. Guidelines for industry on Child Online Protection Traditional distinctions between different parts",
+  "text_simplified": "هذا الدليل يشرح كيف يمكن للشركات حماية حقوق الأطفال عند استخدام التكنولوجيا. يركز على خمسة مجالات رئيسية لضمان الاستخدام الآمن والإيجابي للإنترنت. يقدم توصيات للمسؤولية الرقمية وحماية الأطفال من المخاطر الإلكترونية. كما يشمل قوائم تفصيلية لإجراءات محددة مثل تقديم محتوى رقمي مناسب واستخدام الذكاء الاصطناعي بمسؤولية.",
+  "labels": [
+    "حقوق الطفل",
+    "أمان الإنترنت",
+    "مسؤولية الشركات",
+    "استخدام إيجابي للتكنولوجيا",
+    "تربية رقمية"
+  ],
+  "created_at": "2026-06-20T14:53:22Z",
+  "updated_at": "2026-06-20T14:53:22Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

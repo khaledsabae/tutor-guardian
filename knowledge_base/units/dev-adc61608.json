@@ -1,0 +1,29 @@
+{
+  "id": "dev-adc61608",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "حقوق النشر والترخيص لمنشور الرعاية الحاضنة",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "معلومات عامة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "edition shall be the binding and authentic edition”. Any mediation relating to disputes arising under the licence shall be conducted in accordance with the mediation rules of the World Intellectual Property Organization. Suggested citation. World Health Organization, United Nations Children’s Fund, World Bank Group. Nurturing care for early childhood development: a framework for helping children survive and thrive to transform health and human potential. Geneva: World Health Organization; 2018. Licence: CC BY-NC-SA 3.0 IGO. Cataloguing-in-Publication (CIP) data. CIP data are available at http://apps.who.int/iris. Sales, rights and licensing. To purchase WHO publications, see http://apps.who.int/bookorders. To submit requests for commercial use and queries on rights and licensing, see http://www.who.int/about/licensing. Third-party materials. If you wish to reuse material from this work that is attributed to a third party, such as tables, figures or images, it is your responsibility to determine whether permission is needed for that reuse and to obtain permission from the copyright holder. The risk of claims resulting from infringement of any third-party-owned component in the work rests solely with the user. General disclaimers. The designations employed and the presentation of the material in this publication do not imply the expression of any opinion whatsoever on the part of WHO concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines on maps represent approximate border lines for which there may not yet be full agreement. The mention of specific companies or of certain",
+  "text_simplified": "هذا النص يتعلق بحقوق النشر والترخيص لمنشور صادر عن منظمة الصحة العالمية واليونيسيف والبنك الدولي حول الرعاية الحاضنة لنمو الطفل المبكر. يوضح النص أن النسخة الملزمة هي النسخة الأصلية، وأن أي نزاعات تحل وفق قواعد المنظمة العالمية للملكية الفكرية. كما ينبه إلى أن استخدام مواد من أطراف ثالثة يتطلب الحصول على إذن مسبق، وأن المنظمة لا تتحمل مسؤولية أي انتهاك لحقوق الملكية الفكرية.",
+  "labels": [
+    "حقوق نشر",
+    "ترخيص",
+    "منظمة الصحة العالمية",
+    "رعاية الطفولة المبكرة",
+    "ملكية فكرية"
+  ],
+  "created_at": "2026-06-20T14:20:59Z",
+  "updated_at": "2026-06-20T14:20:59Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

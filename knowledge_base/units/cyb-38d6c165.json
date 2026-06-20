@@ -1,0 +1,29 @@
+{
+  "id": "cyb-38d6c165",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تشجيع الأطفال على التنوع وحمايتهم في وسائل التواصل",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "استخدام وسائل التواصل الاجتماعي",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "empowers children to embrace diversity and be positive role models should be strongly encouraged. 5.3 Feature C: Host user-generated content and connect users There was a time when the online world was dominated by adults but it is now clear that children and young people are major participants on multiple platforms in creating and sharing in the explosion of user-generated content. This service feature addresses, among others, social media services, apps and websites related to creative realization. Services that connect users with each other can be divided in three categories: • Primarily messaging apps (Facebook Messenger, Groupme, Line, Tinder, Telegram, Viber, • Primarily social networking services that seek and host user-generated content and allow users to share content and connect within and outside of their networks (Instagram, Facebook, SnapChat, TikTok). • Primarily live streaming apps (Periscope, BiGo Live, Facebook Live, Houseparty, YouTube Live, Twitch, GoLive). Service providers request a minimum age to sign up to the platforms but this is difficult to enforce as age-verification is reliant on reported age. Most services that connect new users with each other also allow location-sharing features, which make children and young people using these services even more susceptible to offline danger. Table 4, which has been adapted from the rules applied by one of the largest social networks, provides guidance for providers of services hosting user-generated content and connecting new users on policies and actions they can take to enhance child online protection and children’s participation. Guidelines for industry on Child Online Protection",
+  "text_simplified": "يجب تشجيع الأطفال على تقبل الاختلافات بين الناس وأن يكونوا قدوة إيجابية. الأطفال والمراهقون يستخدمون منصات التواصل الاجتماعي مثل فيسبوك وتيك توك وإنستغرام بكثرة. هذه المنصات تسمح بمشاركة المحتوى والموقع الجغرافي مما يعرض الأطفال لمخاطر خارج الإنترنت. من الصعب التحقق من أعمار المستخدمين رغم وجود شروط عمرية للتسجيل.",
+  "labels": [
+    "تواصل اجتماعي",
+    "حماية الأطفال",
+    "محتوى مستخدم",
+    "مخاطر رقمية",
+    "قدوة إيجابية"
+  ],
+  "created_at": "2026-06-20T14:59:55Z",
+  "updated_at": "2026-06-20T14:59:55Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-68e1ede6",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "استكشاف الهوية في العوالم الافتراضية للمراهقين",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "استكشاف الهوية الرقمية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "for the user to express that there are now more than themselves differently, testing a An interesting study17 with Habbo Hotel’s users reveals the digital pro- 200 youth-oriented virtual worlds new profile or attitude, being bold files of teens online: “live, planned or in active devel- and upfront on issues that matter opment.”14 to them, or even just live ‘some- Achievers Ambitious, strong minded and materialistic. They value material success and whilst having lots of body’ else’s life for a while. Virtual worlds, like Habbo hotel15, friends do not consider other people's feelings as which target teenagers, allow users Needless to say that there are much as other segments to create a profile and is repre- rules that need to be followed, but Rebels Value gathering lots of experiences in life and enjoy sented in the virtual world via the ability to test a different per- a fast-paced lifestyle. Like Achievers they want to an avatar16. All users will have to sonality can be a fun experience. become “rich and famous”, but they are not willing design their own avatar with easy to compromise on having fun in order to achieve this to use tools. The ability to appear goal as an avatar allows for everyone, Traditionals Value having an ordinary life and see themselves as regardless of their real world honest, polite and obedient. They are keen to help physical appearance, to enter a others but are less ambitious and pleasure seeking community where all are equal compared to",
+  "text_simplified": "المراهقون يستخدمون العوالم الافتراضية مثل 'هابو هوتيل' لاختبار شخصيات ومواقف جديدة مختلفة عن حياتهم الواقعية. هذه العوالم تتيح لهم إنشاء صور رمزية (أفاتار) والمشاركة في مجتمع متساوٍ بغض النظر عن مظهرهم الحقيقي. تظهر الدراسة أن سلوك المراهقين ينقسم إلى أنماط مثل الطموحين والمتمردين والتقليديين، ولكل منهم قيم وأهداف مختلفة.",
+  "labels": [
+    "عوالم افتراضية",
+    "هوية رقمية",
+    "مراهقون",
+    "سلوك اجتماعي",
+    "أفاتار"
+  ],
+  "created_at": "2026-06-20T15:08:56Z",
+  "updated_at": "2026-06-20T15:08:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

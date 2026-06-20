@@ -1,0 +1,28 @@
+{
+  "id": "med-2c4ef43e",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "حقوق نشر منشورات منظمة الصحة العالمية",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Requests for permission to reproduce or translate WHO publications – whether for sale or for noncommercial distribution – should be addressed to Marketing and Dissemination, at the above address (fax: +41 22 791 4806; email: permissions@who.int). The designations employed and the presentation of the material in this publication do not imply the expression of any opinion whatsoever on the part of the World Health Organization concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted lines on maps represent approximate border lines for which there may not yet be full agreement. The mention of specific companies or of certain manufacturers’ products does not imply that they are endorsed or recommended by the World Health Organization in preference to others of a similar nature that are not mentioned. Errors and omissions excepted, the names of proprietary products are distinguished by initial capital letters. The World Health Organization does not warrant that the information contained in this publication is complete and correct and shall not be liable for any damages incurred as a result of its use. Printed in Singapore Acknowledgements The Mental Health Policy and Service Guidance Package was produced under the direction of Dr Michelle Funk, Coordinator, Mental Health Policy and Service Development, and supervised by Dr Benedetto Saraceno, Director, Department of Mental Health and Substance Abuse, World Health Organization. The World Health Organization gratefully acknowledges the work of Professor Alan Flisher, University of Cape",
+  "text_simplified": "هذا النص يتعلق بحقوق نشر منشورات منظمة الصحة العالمية وإخلاء مسؤوليتها. لا يحتوي على معلومات تربوية أو سلوكية للأطفال.",
+  "labels": [
+    "حقوق نشر",
+    "منظمة الصحة",
+    "إخلاء مسؤولية",
+    "معلومات عامة"
+  ],
+  "created_at": "2026-06-20T14:42:14Z",
+  "updated_at": "2026-06-20T14:42:14Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

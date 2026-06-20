@@ -1,0 +1,29 @@
+{
+  "id": "cyb-6409b323",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مبادئ توجيهية لحماية الأطفال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "citizenship among children; • suggest common principles to form the basis of national or regional commitments across all related industries, while recognizing that different types of businesses will use diverse implementation models. Child online protection is a complex challenge that encompasses multiple different governance, policy, operational, technical and legal aspects. These guidelines attempt to address, organize and prioritize many of these areas, based on existing and well recognized models, frameworks and other references. The guidelines focus on protecting children in all areas and against all risks of the digital world and, as such, highlight good practice of industry stakeholders that can be considered in the process of drafting, developing and managing company COP policies. They provide guidance to industry actors not only on how to manage and contain illegal online activity against which they have a duty to act (such as online CSAM) through their services, but also focus on other issues which may not be defined as crimes across all jurisdictions. These include peer-to-peer violence, cyberbullying and online harassment, as well as issues related to privacy or general well-being, fraud or other threats, which may only be harmful to children in certain contexts. Guidelines for industry on Child Online Protection To this end, these guidelines include recommendations on good practice in meeting the risks children face in the digital world and how to act in order to establish a secure environment for children online. These guidelines provide advice on how industry can work to help ensure children’s safety when",
+  "text_simplified": "هذه المبادئ التوجيهية تهدف إلى حماية الأطفال في العالم الرقمي من جميع المخاطر، مثل التنمر الإلكتروني والتحرش والاحتيال. كما تركز على مساعدة الشركات في وضع سياسات تحافظ على سلامة الأطفال عبر الإنترنت.",
+  "labels": [
+    "حماية الأطفال",
+    "السلامة الرقمية",
+    "التنمر الإلكتروني",
+    "سياسات الإنترنت",
+    "مخاطر الإنترنت"
+  ],
+  "created_at": "2026-06-20T14:53:13Z",
+  "updated_at": "2026-06-20T14:53:13Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

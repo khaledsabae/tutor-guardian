@@ -1,0 +1,29 @@
+{
+  "id": "med-53583113",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "نصائح للتعامل مع الاكتئاب وطلب المساعدة",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "may help: ● Try to get physical activity. Just 30 minutes a day of walking can boost your mood. ● Try to maintain a regular bedtime and wake-up time. ● Eat regular, healthy meals. ● Do what you can as you can. Decide what must get done and what can wait. ● Connect with people. Talk to people you trust about how you are feeling. ● Delay making important life decisions until you feel better. Discuss decisions with people who know you well. ● Avoid using alcohol, nicotine, or drugs, including medications not prescribed for you. How can I find help for depression? The National Institute of Mental Health (NIMH) has information on ways to get help, find a health care provider, and access treatment at www.nimh.nih.gov/findhelp. You can also find tips to help prepare for and get the most out of your health care visit at www.nimh.nih.gov/talkingtips. The Substance Abuse and Mental Health Services Administration (SAMHSA) has an online tool to find mental health services in your area at https://findtreatment.gov. How can I help a loved one who is depressed? If someone you know is depressed, help them see a health care provider or mental health professional. You also can: ● Offer support, understanding, patience, and encouragement. ● Invite them out for walks, outings, and other activities. ● Help them stick to their treatment plan, such as setting reminders to take prescribed medications. ● Make sure they have transportation or access to therapy appointments. ● Remind them that, with",
+  "text_simplified": "يمكن تحسين المزاج بممارسة النشاط البدني لمدة 30 دقيقة يومياً، والحفاظ على مواعيد نوم واستيقاظ منتظمة، وتناول وجبات صحية. من المهم التواصل مع الآخرين وتأجيل القرارات المهمة حتى تتحسن الحالة، وتجنب الكحول والمخدرات. إذا كنت تعاني من الاكتئاب، يمكنك طلب المساعدة من معالج أو طبيب نفسي. لدعم شخص قريب مصاب بالاكتئاب، قدم له الدعم والتشجيع وساعده في الالتزام بالعلاج.",
+  "labels": [
+    "اكتئاب",
+    "صحة نفسية",
+    "دعم نفسي",
+    "نشاط بدني",
+    "علاج"
+  ],
+  "created_at": "2026-06-20T14:31:41Z",
+  "updated_at": "2026-06-20T14:31:41Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

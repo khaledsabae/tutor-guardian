@@ -1,0 +1,29 @@
+{
+  "id": "med-487e568f",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "إرشادات استخدام الأدوية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "إدارة الدواء",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "to the whole country. Medication for children and Medication for children and adolescents should be prescribed when clinically indicated, adolescents should be and generally as part of a more comprehensive management plan. The purpose of this prescribed when clinically module is not to provide guidance for clinical intervention. The judgment as to whether indicated, and generally as medication is clinically indicated should be informed by the available scientific evidence part of a more comprehensive and the context of the particular child or adolescent. Concerning the use of medication, management plan. there are many widely available guidelines published by professional organizations and advisory groups (American Academy of Child and Adolescent Psychiatry, 2002). Policy needs to reflect the ongoing discussions on evidence for the effectiveness of various medications (Barkley, 2002). Every effort should be made to ensure that both the child or adolescent and his or her family understand and agree with a recommendation that medication is indicated. It is important to ensure a An adequate budgetary allocation is essential to ensure a regular supply of medication regular supply of medication at treatment facilities. The use of less expensive generic medications may contribute to at treatment facilities. cost containment (see module on Improving Access and Use of Psychotropic Intersectoral collaboration All the stakeholders that were Because children’s and adolescents’ well-being is apparent in and influenced by their consulted earlier can be participation in multiple sectors of society, mental health policy should foster sources of intersectoral collaboration between the different sectors concerned, such",
+  "text_simplified": "يجب وصف الأدوية للأطفال والمراهقين فقط عند الحاجة السريرية، وكجزء من خطة علاج شاملة. يعتمد قرار استخدام الدواء على الأدلة العلمية وحالة الطفل الخاصة. من المهم أن يفهم الطفل والأسرة ويوافقوا على التوصية بالدواء. يجب تخصيص ميزانية كافية لضمان توفر الأدوية بانتظام في مرافق العلاج.",
+  "labels": [
+    "أدوية الأطفال",
+    "خطة علاجية",
+    "موافقة الأسرة",
+    "توفر الأدوية",
+    "سياسة الصحة النفسية"
+  ],
+  "created_at": "2026-06-20T14:48:08Z",
+  "updated_at": "2026-06-20T14:48:08Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

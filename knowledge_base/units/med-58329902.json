@@ -1,0 +1,29 @@
+{
+  "id": "med-58329902",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تخطيط استراتيجيات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط استراتيجي للصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "allocated for each strategy, it is necessary to develop details of how each details of how each strategy strategy will be implemented. These details include setting indicators and targets, and will be implemented. determining the major activities and their costs, available resources and the budget. These issues are addressed in the next three sections. Although they are presented in a linear fashion, it is important to emphasize that the process is iterative and circular. For example, the activities will influence the targets and indicators, which in turn will be dependent on the availability of resources. Examples of strategies are presented in Boxes 14 and 15. These are continuations of Boxes 12 and 13, which introduced countries with low and medium levels of resources Box 14. Example of strategies and activities in a child and adolescent mental health plan for countries with a low level of resources* (continuation of Box 12) Intersectoral collaboration 1. Establish regular meetings between key managers in the health and education 2. Organize workshops for educators that aim to facilitate: (i) early recognition of youngsters suffering from disruptive behaviour disorders, mental handicap and other mental disorders, and (ii) implementation of appropriate school-based interventions for such students. 3. Provide readily accessible consultation to educators in follow-up to workshops. Every school should have at least one educator who has attended a workshop. Percentage of schools where at least one educator has attended a workshop >Make contact with each school and secure its collaboration with the strategy; >Identify a contractor",
+  "text_simplified": "يشرح النص كيفية وضع خطة تنفيذية للاستراتيجيات في مجال الصحة النفسية للأطفال والمراهقين. تتضمن الخطة تحديد المؤشرات والأهداف والأنشطة الرئيسية والتكاليف والموارد المتاحة. تؤكد الفقرة أن العملية متكررة ودائرية وليست خطية، حيث تؤثر الأنشطة على الأهداف وتتأثر بتوفر الموارد. يُقدم مثالاً للتعاون بين قطاعي الصحة والتعليم لتدريب المعلمين على اكتشاف الاضطرابات السلوكية لدى الطلاب.",
+  "labels": [
+    "صحة نفسية",
+    "تخطيط استراتيجي",
+    "تعاون بين القطاعات",
+    "تدريب المعلمين",
+    "اضطرابات سلوكية"
+  ],
+  "created_at": "2026-06-20T14:50:20Z",
+  "updated_at": "2026-06-20T14:50:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-e5047c7e",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تنفيذ سياسة الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "سياسات الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "constant contact with a sponsor or champion at the highest government level is one of the critical factors to initiate and sustain a policy. Community leaders can become important advocates for the policy, ensuring that strategies are actually implemented. 4.3 Step 3: Develop a supportive structure The implementation of a child and adolescent mental health policy and plan requires The implementation of a child contributions from individuals and organizations with a wide range of expertise in, for and adolescent mental health example, child and adolescent physical and mental health, public health, economics, policy and plan requires management, epidemiology and research. As mentioned earlier, individuals with train- contributions from individuals ing or experience that is mainly applicable to adults may need to complement this with with a wide range of expertise. training applicable to children and adolescents. It is necessary to involve all geographical and administrative levels of a country or health system in the implementation process. For example, at the national level, a multidisci- plinary team may be charged with implementing the policy in the country. While the size and skills of the team will vary according to the country’s needs, allocation of responsi- bility to a team will enhance implementation of the policy. At the local health service level, a community mental health worker may be given responsibility for implementing 4.4 Step 4: Set up pilot projects in demonstration areas Pilot projects in demonstration areas, whereby policies and plans can be implemented relatively rapidly, can serve several useful functions:",
+  "text_simplified": "يتطلب تنفيذ سياسة الصحة النفسية للأطفال والمراهقين دعمًا من قادة المجتمع وخبراء متعددين. يجب تشكيل فريق وطني متعدد التخصصات للإشراف على التنفيذ، مع إشراك جميع المستويات الإدارية. يمكن البدء بمشاريع تجريبية في مناطق محددة لاختبار السياسات قبل تعميمها.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال ومراهقون",
+    "تنفيذ سياسات",
+    "قادة مجتمع",
+    "مشاريع تجريبية"
+  ],
+  "created_at": "2026-06-20T14:51:46Z",
+  "updated_at": "2026-06-20T14:51:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

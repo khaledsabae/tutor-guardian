@@ -1,0 +1,29 @@
+{
+  "id": "med-59e736ad",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "برنامج الرعاية النفسية المتكاملة للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "رعاية الصحة النفسية",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "used, meaning that each agency contributes a portion of funding for the programme. Family spokespersons and agency decision- makers participate in the MHSPY Steering Committee. Health as well as mental health concerns are addressed by this governance model. Eligibility criteria for the youth and families to be served was established by consensus using readily available scales for impairment (e.g. Child and Adolescent Functional Assessment Scale (CAFAS). The broad age range covered is 3 to 18 years, and priority is given to those with the greatest risk (scores of greater than 40) of “out of home” placement. Benefits include a long list of currently available services, seen as “usual care”, plus a list of other programmes developed in response to observed needs. Every family gets a Care Manager who works to set up a Care Planning Team made up of both professionals and non- professionals. The Team creates a “mission” for the child. A strength-based assessment is done, needs identified, and interventions planned. The Care Manager delivers some care, links this to primary care and monitors all care; he/she has a close relationship with the family, but is not a therapist. The outcome measure of “days out of home” has dropped profoundly as a result of this intervention. School, family and community measures have improved. Service utilization has shifted to less costly and restrictive services, and satisfaction and programme retention is high. Example 2 (Kamradt, 2000) Anthony is a 15-year-old African American, who was placed in the mental health programme, Wraparound",
+  "text_simplified": "هذا النص يصف برنامجًا تعاونيًا بين عدة جهات لرعاية الصحة النفسية للأطفال والمراهقين من عمر 3 إلى 18 سنة. يتم اختيار الأطفال الأكثر عرضة لخطر الإبعاد عن المنزل، ويُخصص لكل أسرة مدير رعاية يشكل فريقًا لوضع خطة علاجية تركز على نقاط القوة. أدى البرنامج إلى تحسن ملحوظ في المدرسة والأسرة والمجتمع، وانخفاض كبير في عدد الأيام التي يقضيها الطفل خارج المنزل.",
+  "labels": [
+    "صحة نفسية",
+    "رعاية أسرية",
+    "تدخل مبكر",
+    "برنامج مجتمعي",
+    "تقييم وظيفي"
+  ],
+  "created_at": "2026-06-20T14:47:51Z",
+  "updated_at": "2026-06-20T14:47:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

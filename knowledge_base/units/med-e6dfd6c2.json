@@ -1,0 +1,29 @@
+{
+  "id": "med-e6dfd6c2",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "منهجية تطوير توصيات النشاط البدني والنوم للأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تطوير توصيات صحية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "one study on physical activity, three on sedentary behaviour, three on sleep and none on integrated behaviours (21). The GDG reviewed the existing systematic reviews and requested that these be updated to include high quality studies published since the Australian update and those identified in all official WHO languages to reflect the final PICO questions. Going from evidence to recommendations The GDG employed the GRADE Evidence to Decisions The GDG considered the body of evidence in totality (EtD) framework for generating question specific for each recommendation for all critical and important recommendations. The EtD framework is a systematic, outcomes. Given the nature of the topic, studies differed structured and transparent approach to decision widely in the specific exposure/intervention and making. The framework employs explicit criteria for outcome measurements for the same overall exposure/ generating guideline recommendations in light of intervention and outcome domain. Findings also differed research evidence, certainty of evidence, and where given these differences with no specific pattern. As such, required, expert opinion and topical knowledge from it was not possible to apply the classic GRADE approach the perspective of the target audience. The criteria elicit focusing on specific categories of study design only or judgments about the balance between the observed exclusively on the highest quality evidence ignoring the evidence of desirable and undesirable outcomes, diversity of ways in which the intervention/exposure and overall certainty of evidence, relative values of patients outcome were measured and the variability in findings. for desirable and undesirable outcomes, resource use The",
+  "text_simplified": "هذا النص يتناول منهجية تطوير توصيات صحية تتعلق بالنشاط البدني والسلوك الخامل والنوم لدى الأطفال. تم مراجعة الدراسات الحالية وتحديثها بناءً على معايير دقيقة باستخدام إطار GRADE لاتخاذ القرارات. الهدف هو تقديم إرشادات واضحة ومبنية على أدلة قوية تراعي تنوع القياسات والنتائج.",
+  "labels": [
+    "نشاط بدني",
+    "سلوك خامل",
+    "نوم",
+    "توصيات صحية",
+    "منهجية بحثية"
+  ],
+  "created_at": "2026-06-20T15:04:39Z",
+  "updated_at": "2026-06-20T15:04:39Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

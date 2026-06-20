@@ -1,0 +1,29 @@
+{
+  "id": "cyb-a1e86deb",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "تأثير الإنترنت والمكتبات الرقمية على الأطفال",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "استخدام الإنترنت والتكنولوجيا",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "been a remarkable informs their friends and fans the children and young people to library has moved online and the success. The variety of social about it. The fans can then listen instantly share their experiences ability to seek and find relevant networks caters to all ages, to this song streamed online or with friends. and reliable information in any cultures and languages. Having download it to their mp3 player language is a great advantage a profile on a social network has or mobile phone and listen to Virtual worlds for which has been embraced by the become an important part of it on the road. If they like the children and teenagers young generation throughout many children and young people’s song, they will spread the word the world. One of the most used online lives. When home from by telling their friends, who will In these worlds, children can resources online is Wikipedia12. school, the ability to continue then tell their friends and so on. often create an avatar and, with Wikipedia is a multilingual, Web- your discussions with your friends With simple techniques and little it, explore an imaginary universe. based, free-content encyclopaedia online whilst doing your home- financial investment, this band They can play games, chat and project, where you can read, edit work, sending SMS’s and listening can now gain a greater fan base decorate virtual rooms or other and write articles on any subject to music (frequently at the same and potentially be heard by",
+  "text_simplified": "يشرح النص كيف أصبحت المكتبات والموارد التعليمية متاحة عبر الإنترنت للأطفال والشباب، مما يسمح لهم بالوصول إلى المعلومات بلغات وثقافات مختلفة. كما يتناول تأثير الشبكات الاجتماعية والعوالم الافتراضية في حياة الأطفال، حيث يمكنهم إنشاء شخصيات افتراضية واللعب والتواصل مع الأصدقاء. ويشير إلى أن الموسيقى الرقمية تنتشر بسرعة عبر المشاركة بين الأصدقاء.",
+  "labels": [
+    "مكتبات رقمية",
+    "شبكات اجتماعية",
+    "عوالم افتراضية",
+    "موسيقى رقمية",
+    "مشاركة المعلومات"
+  ],
+  "created_at": "2026-06-20T15:08:46Z",
+  "updated_at": "2026-06-20T15:08:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

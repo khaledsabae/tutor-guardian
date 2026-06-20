@@ -1,0 +1,29 @@
+{
+  "id": "cyb-d72d68ba",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات السلامة الرقمية للأطفال والآباء",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "the options available for parents to apply controls. Inform parents about how to report abuse, misuse and inappropriate or illegal content, and how the report will be handled. Let them know what services are age-restricted and other ways to behave safely and responsibly when using interactive services. Establish a “trust and reputation”-based system to encourage good behaviour and enable peers to teach best practices to each other by example. Promote the importance of social reporting, which allows people to reach out to other users or trusted friends to help resolve a conflict or open a conversation about troubling Provide advice and reminders about the nature of a given service or content and how to enjoy it safely. Build community guidelines into interactive services, for example, with safety popups that remind users of appropriate and safe behaviour, such as not giving out their contact details. Cooperate with parents and guide them to ensure that information disclosed on the Internet about children does not put them at risk. Obtain children’s informed consent when featuring them through their own user-created content, wherever possible, and respect any refusal. Promote digital Services hosting user-generated content can encourage and technology as a mode to empower children and young people by supporting their right to further civic engagement participation. Refer to the general guidelines in Table 1. 5.4 Feature D: Artificial intelligence-driven systems With the increased attention given to deep learning technologies, the terms “artificial intelligence”, “machine learning”, and “deep learning\" have been used somewhat interchangeably by",
+  "text_simplified": "يجب توعية الأهل بكيفية الإبلاغ عن المحتوى غير اللائق أو غير القانوني، وكيفية التعامل مع البلاغات. ينبغي تعزيز السلوك الآمن عبر أنظمة الثقة والسمعة، وتشجيع الأطفال على التصرف بمسؤولية عند استخدام الخدمات التفاعلية. من المهم بناء إرشادات مجتمعية داخل الخدمات الرقمية، مثل النوافذ المنبثقة للتذكير بالسلوك الآمن. كما يجب حماية خصوصية الأطفال عبر موافقتهم المستنيرة عند نشر محتوى من إنشائهم.",
+  "labels": [
+    "سلامة الأطفال",
+    "رقابة أبوية",
+    "سلوك آمن",
+    "محتوى غير لائق",
+    "خصوصية رقمية"
+  ],
+  "created_at": "2026-06-20T15:00:37Z",
+  "updated_at": "2026-06-20T15:00:37Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

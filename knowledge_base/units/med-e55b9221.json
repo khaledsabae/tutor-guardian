@@ -1,0 +1,29 @@
+{
+  "id": "med-e55b9221",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية سياسة الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "the vulnerability to disorders, how of all mental disorders and for disorders manifest themselves and how best they may be treated. Thus a the development of an developmental perspective is needed for an understanding of all mental disorders and appropriate mental health for the development of an appropriate child and adolescent mental health policy. policy. A child and adolescent mental health policy should present the values, principles and objectives for improving the mental health of all children and adolescents and reducing the burden of child and adolescent mental disorders in a population. It should define a vision for the future and help establish a model for action. Such a policy would also underscore the priority that a government assigns to child and adolescent mental health in relation to overall health, social and other priorities. It is important for the policy development process to culminate in the production of a written policy document.This is important for two reasons. First, it provides a reference point to which planners and other stakeholders can turn for assistance with decision- making or conflict resolution. Second, it serves a symbolic function as the concrete result of the policy development process, and establishes a basis for future A key issue that needs to be resolved is whether a child and adolescent mental health policy should be part of a general mental health policy, part of a broader children's health policy, or developed as a stand-alone policy. An independent child and adolescent mental health policy will focus attention",
+  "text_simplified": "يشرح النص أهمية وضع سياسة خاصة بالصحة النفسية للأطفال والمراهقين. هذه السياسة تحدد القيم والمبادئ والأهداف لتحسين صحتهم النفسية وتقليل الاضطرابات. يجب أن تكون مكتوبة لتكون مرجعًا للمخططين ولتأكيد أولوية الحكومة لهذا المجال. كما يناقش ما إذا كانت هذه السياسة ستكون جزءًا من سياسة الصحة النفسية العامة أم مستقلة.",
+  "labels": [
+    "سياسة نفسية",
+    "أطفال",
+    "مراهقون",
+    "صحة نفسية",
+    "تطوير سياسة"
+  ],
+  "created_at": "2026-06-20T14:45:24Z",
+  "updated_at": "2026-06-20T14:45:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

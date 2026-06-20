@@ -1,0 +1,29 @@
+{
+  "id": "med-391fed72",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية التدخل المبكر ومراعاة مراحل النمو",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات نفسية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "be better able to understand their impact on a person’s functioning. Early intervention with children and adolescents, as well as with their parents/families, can reduce or eliminate the manifestations of some mental disorders and foster the integration into mainstream educational and health services of children and adolescents who would otherwise require specialized, intensive services. The salience of specific risk and protective factors varies according to the The salience of specific risk developmental stage of the child or adolescent. For example, the family is likely to be and protective factors varies more influential during the earlier years, while in adolescence the impact of peers on according to the mental health is likely to be particularly important. Intervention strategies that fail to developmental stage of recognize the different influences of risk and protective factors according to the the child or adolescent. developmental phase of the child or adolescent will either have less of an impact or be 1.5 Importance of developmental stages In designing child and adolescent mental health policies and plans it is important to ensure that specific developmental stages of emotional, cognitive and social development are taken into account. For example, a plan to prevent or treat conduct disorders in adolescents should devote particular attention to the influence of peers. Conversely, it is the family environment that should be given priority in an analogous plan for pre-pubertal children. Taking into account cognitive development, a plan for adolescents can assume a capacity to consider nuances of morality, risk-benefit ratios and causes",
+  "text_simplified": "التدخل المبكر مع الأطفال والمراهقين وأسرهم يمكن أن يقلل أو يزيل أعراض بعض الاضطرابات النفسية، ويساعد في دمجهم في الخدمات التعليمية والصحية العادية. تختلف أهمية عوامل الخطر والحماية حسب المرحلة النمائية للطفل أو المراهق؛ ففي السنوات المبكرة تكون الأسرة أكثر تأثيرًا، بينما في مرحلة المراهقة يكون تأثير الأقران أكبر. يجب أن تراعي سياسات الصحة النفسية للأطفال والمراهقين مراحل النمو العاطفي والمعرفي والاجتماعي.",
+  "labels": [
+    "تدخل مبكر",
+    "مراحل النمو",
+    "الصحة النفسية",
+    "الأطفال والمراهقين",
+    "عوامل الخطر والحماية"
+  ],
+  "created_at": "2026-06-20T14:44:56Z",
+  "updated_at": "2026-06-20T14:44:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

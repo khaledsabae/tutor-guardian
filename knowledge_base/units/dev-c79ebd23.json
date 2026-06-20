@@ -1,0 +1,29 @@
+{
+  "id": "dev-c79ebd23",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "أثر الفقر والبيئة على نمو الطفل",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "فقر وتأثير بيئي",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "income for poor and vulnerable work and in the community households. An important and growing part of social welfare • Prevention and reduction of indoor and in many countries, social assistance provides income security outdoor air pollution that reduces household poverty, mitigates against shocks, • Clean environments free of hazardous improves access to health and other services, and can increase chemicals immunization coverage, improve children’s and mothers’ health • Safe family and play spaces in urban and and nutrition, and boost school attendance and achievement. rural areas • Prevention of violence by intimate partners and in families, as well as When caregivers are not able to earn adequate income, services for addressing it children’s basic needs – including health care and education • Social care services – cannot be met and early childhood development suffers. A • Cash or in-kind transfers and social insurance minimum wage has the potential to improve the lives of millions • Supporting family care and foster care of children, whether their caregivers work in the formal or over institutional care informal economy. Environmental To protect children’s health and support their development, it is essential that they health have access to clean water and sanitation, good hygiene practices, clean air and a safe environment. But increasing urbanization, industrialization, and climate change are all taking their toll on the environments in which children grow, play and learn.54 For example, one factor that gets in the way of children’s development is lack of access to water, sanitation and",
+  "text_simplified": "يؤثر الدخل المنخفض على قدرة الأهل على تلبية احتياجات أطفالهم الأساسية كالصحة والتعليم، مما يضر بنمو الطفل المبكر. كما أن توفير بيئة نظيفة وآمنة خالية من التلوث والعنف ضروري لصحة الأطفال ونموهم. يمكن للدعم الاجتماعي والنقدي وتحسين الأجور أن يحسن حياة ملايين الأطفال.",
+  "labels": [
+    "فقر",
+    "دعم اجتماعي",
+    "بيئة نظيفة",
+    "صحة الطفل",
+    "تنمية الطفولة المبكرة"
+  ],
+  "created_at": "2026-06-20T14:23:45Z",
+  "updated_at": "2026-06-20T14:23:45Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

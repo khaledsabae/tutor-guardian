@@ -1,0 +1,29 @@
+{
+  "id": "med-06a5c24d",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "خطوات تطوير سياسة الصحة النفسية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تطوير سياسة الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "process can increase the buy-in of crucial stakeholders; and (iii) involvement in a policy development process may increase stakeholders’ insights into the potential contributions of their sector to the mental health of children and Step 4: Exchange with other countries International consultations can make an important contribution to policy development, especially when the consultants have experience in several other countries that are similar in terms of level of economic development, health system organization and governmental arrangements. National and international professional organizations can be instrumental in providing support and promoting networking. Both the headquarters and regional offices of the World Health Organization (WHO) can facilitate such exchanges with other countries. Step 5: Develop the vision, values, principles and objectives of the policy In this step, policy-makers develop the core of the policy, using the outputs of the first four steps. The vision usually sets high but realistic expectations for child and adolescent mental health, identifying what is desirable for a country or region. This would normally be associated with a number values and related principles, which would then form the basis of policy objectives. Many countries’ policy-makers believe it is important to address the promotion of healthy development and the prevention of illness along with the treatment of child and adolescent mental disorders, although the emphasis placed on each differs across countries. Step 6: Determine areas for action In developing a mental health policy for children and adolescents, policy-makers need to coordinate actions in several areas (listed below) to maximize the",
+  "text_simplified": "تشرح هذه الخطوات كيفية تطوير سياسة للصحة النفسية للأطفال والمراهقين. تبدأ بإشراك الجهات المعنية وتبادل الخبرات مع الدول الأخرى. ثم يتم وضع رؤية وقيم وأهداف للسياسة. بعد ذلك، يتم تحديد مجالات العمل المختلفة لتحقيق هذه الأهداف.",
+  "labels": [
+    "صحة نفسية",
+    "سياسة",
+    "أطفال",
+    "مراهقون",
+    "تطوير"
+  ],
+  "created_at": "2026-06-20T14:43:20Z",
+  "updated_at": "2026-06-20T14:43:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-b33278c1",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أساسيات التعاون بين القطاعات لتحسين الصحة المدرسية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تعاون بين القطاعات",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "different sectors can facilitate an intersectoral approach. In this regard, a settings approach (e.g. focusing on the development of health promoting schools) is one way to discuss common issues. >The advantages and benefits of working together need to be identified, and fears and resistance addressed. >The health sector needs to become aware of the multidimensional nature of its work, recognizing the importance of including other sectors in trying to address problems > Fear of loss of resources needs to be addressed. Efforts should be made to show how the collaborative action is cost effective for all concerned. > Resources (finances, posts, time) need to be allocated to intersectoral collaborative >It is important to achieve clarity about who is responsible for what. > Clarification of responsibilities to deal with multiple accountability issues should be > Representation and consultation issues need to be addressed to ensure that adequate communication is achieved throughout the system. >Group dynamics need to be managed to ensure optimal participation. > Efforts should be made to ensure that there is equity between the different sectors Political processes >The political benefits of intersectoral collaboration to all the departments or ministries should be highlighted. > There should be a formalized joint agreement between the ministry of health and other ministries. > Successful intersectoral collaboration is dependent on the broader organization of government in the country – the manner in which departments and ministries link and communicate with each other will influence the manner and extent of intersectoral Source: adapted from",
+  "text_simplified": "التعاون بين القطاعات المختلفة يساعد في تحسين الصحة المدرسية. يجب توضيح فوائد العمل المشترك ومعالجة المخاوف. من المهم توزيع الموارد وتحديد المسؤوليات بوضوح. نجاح التعاون يعتمد على تنظيم الحكومة وطرق التواصل بين الوزارات.",
+  "labels": [
+    "تعاون",
+    "صحة مدرسية",
+    "موارد",
+    "مسؤوليات",
+    "تواصل"
+  ],
+  "created_at": "2026-06-20T14:48:21Z",
+  "updated_at": "2026-06-20T14:48:21Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

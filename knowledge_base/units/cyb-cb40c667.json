@@ -1,0 +1,29 @@
+{
+  "id": "cyb-cb40c667",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة الرقمية للأطفال والشباب",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "this digital world. Unfortunately the Internet is also used by people who are not so nice or who might even want to harm, harass or bully you or other people. While using the Internet you need to be aware of certain basic rules to be able to safeguard yourself and others. 3. You have the right to use the Internet safely and to set your own limits. Be smart, responsible and safe online, as well as in real life! Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop SET YOUR LIMITS 1. Take care of your privacy. Whether using a social networking site or any other online service take care of your privacy and that of your family and friends. You might have the feeling of being anonymous online but collecting information from various sources can reveal too much private in formation about yourself or others you are close to, including your family. 2. If you join a social networking site use the privacy settings to protect your online profile so that only your friends can see it. Wherever pos- sible instead of your real name you should use a nickname that your real friends will be able to recognize. Other interactive services, for ex- ample instant messaging, will often also provide privacy tools. Use them. 3. Think twice before you publish or share anything online. Are you pre- pared to share it with everyone online; your close friends, as well as strangers? Once you",
+  "text_simplified": "يجب على الأطفال والشباب توخي الحذر عند استخدام الإنترنت لحماية أنفسهم والآخرين. من المهم الحفاظ على الخصوصية وعدم مشاركة المعلومات الشخصية مع الغرباء. استخدم إعدادات الخصوصية في مواقع التواصل الاجتماعي واختر اسماً مستعاراً بدلاً من اسمك الحقيقي. فكر مرتين قبل نشر أي شيء على الإنترنت لأنه قد يصل إلى الجميع.",
+  "labels": [
+    "سلامة الإنترنت",
+    "الخصوصية",
+    "التنمر الإلكتروني",
+    "حماية الأطفال",
+    "استخدام مسؤول"
+  ],
+  "created_at": "2026-06-20T15:09:50Z",
+  "updated_at": "2026-06-20T15:09:50Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

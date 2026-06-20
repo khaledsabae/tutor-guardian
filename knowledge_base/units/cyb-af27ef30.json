@@ -1,0 +1,29 @@
+{
+  "id": "cyb-af27ef30",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "تعليم الأطفال الاستخدام الآمن للإنترنت والملفات",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "السلامة الرقمية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "other friends to tell you which videos, and games are among the and that can cause you a great similar phrasings; in cases sources to use and which materials that are most sought deal of trouble. where this is not evident, it is to avoid; after and downloaded by young- nonetheless best not to take b. before opening a down- sters, but they are often covered Remember: any risks; loaded file make sure to by copyright provisions and 1. you are free to use, modify 5. the Peer to Peer (P2P) pro- scan it for viruses; another protected by law. Unauthorized and distribute freeware grammes you use to share quite frequent risk is in downloading and distribution programmes that are not and download files also carry fact that a downloaded file of copyright-protected content copyright-protected; certain risks. One must have might contain viruses and is a crime in most countries 2. some software are, on the a very thorough understand- spyware that can put PCs, and punishable by law. It is also other hand, shareware, and ing of them to be able to use personal data and privacy possible for your involvement therefore free for a specific them without running any at risk; in illegal downloading of copy- trial period; security risks: c. do not share your entire righted material to be traced. This has led, for example, to a child’s 3. your privacy and your PC a. you may not always end hard disk: check your parents being sent",
+  "text_simplified": "يجب على الأهل تعليم أطفالهم كيفية التعامل الآمن مع الإنترنت والملفات الرقمية. من المهم فحص الملفات قبل فتحها للتأكد من خلوها من الفيروسات وبرامج التجسس. كما يجب تجنب تحميل المحتوى المحمي بحقوق النشر دون إذن، لأن ذلك قد يعرض الأسرة للمساءلة القانونية. استخدام برامج المشاركة من نظير إلى نظير يحمل مخاطر أمنية وقانونية.",
+  "labels": [
+    "أمان الإنترنت",
+    "حقوق النشر",
+    "فيروسات",
+    "برامج تجسس",
+    "تحميل آمن"
+  ],
+  "created_at": "2026-06-20T15:12:10Z",
+  "updated_at": "2026-06-20T15:12:10Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

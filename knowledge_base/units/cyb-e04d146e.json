@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e04d146e",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال على الإنترنت لمقدمي الخدمات",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "CSAM. Consider proactive identification techniques such as scanning technology or human Guidelines for industry on Child Online Protection Creating a safer and Service providers offering user-generated content and age-appropriate online connecting users can help create a safer, more enjoyable digital environment environment for children of all ages by taking the following Communicate in customer-friendly language within the terms of service and user guidelines a clear set of “house rules” that • the nature of the service and what is expected of its users; • what is and is not acceptable in terms of content, behaviour and language as well as prohibiting illegal usage; • the consequences of any breach, for example, reporting to law enforcement and suspension of the user’s account. Key safety and legal messages should be presented in an age- appropriate format (i.e. utilizing intuitive icons and symbols) both at signup and in a timely manner as different actions are taken on Make it easy for customers to report concerns about misuse to customer care, with standard and accessible processes in place to deal with different concerns, such as receiving unwanted communications (spam, bullying) or seeing inappropriate Provide age-appropriate content-sharing and visibility settings. For example, make privacy and visibility settings for children and young people more restrictive than the settings for adults by Enforce minimum age requirements and support the research and development of new age-verification systems such as biometrics, using known international standards for the development of such tools. Take steps to identify and remove underage users",
+  "text_simplified": "يجب على مقدمي الخدمات الإلكترونية حماية الأطفال عبر الإنترنت من خلال وضع قواعد واضحة للاستخدام، وتوفير إعدادات خصوصية مناسبة لأعمارهم، وتسهيل الإبلاغ عن المخالفات. كما ينبغي تطبيق أنظمة للتحقق من العمر وإزالة المستخدمين دون السن القانوني لضمان بيئة رقمية آمنة.",
+  "labels": [
+    "حماية الطفل",
+    "السلامة الرقمية",
+    "إعدادات الخصوصية",
+    "التحقق من العمر",
+    "الإبلاغ عن المخالفات"
+  ],
+  "created_at": "2026-06-20T15:00:18Z",
+  "updated_at": "2026-06-20T15:00:18Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

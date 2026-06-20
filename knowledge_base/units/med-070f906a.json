@@ -1,0 +1,29 @@
+{
+  "id": "med-070f906a",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تمكين مقدمي خدمات الصحة النفسية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تمكين مقدمي الخدمة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "low quality and unresponsive to the needs of the population (WHO, 2000). Incentives, such as decentralizing decision-making processes so that health facilities or teams have more control, can empower public providers. For example, the priority for one region may be a school-based mental health promotion programme, while for another region it may be the development of community-based treatment for children with mental retardation. Mental health providers will feel empowered and responsive if they have some control over the implementation of programmes within their region. Private mental health practitioners are an important component of the mental health Private mental health system, and are often more responsive to market conditions. While they are generally practitioners are an important open to innovation and more flexible in responding to the needs of the population, they component of the mental may be difficult to influence with a mental health policy. Strategies to empower private health system, and are often providers include establishing contractual arrangements, regulation and developing more responsive to market quality processes. In child and adolescent mental health, there are likely to be a large number of providers Chances for the successful who are outside the traditional health system. Chances for the successful implementation of an implementation of an intervention will be enhanced if these providers are involved in the intervention will be enhanced development and implementation of the policy and plan. Incentives can be developed if providers outside the to empower these workers. For example, teachers might be empowered to participate traditional health",
+  "text_simplified": "تحسين جودة خدمات الصحة النفسية للأطفال والمراهقين يتطلب تمكين مقدمي الرعاية من خلال منحهم صلاحيات اتخاذ القرار. يجب إشراك المعلمين والممارسين الخاصين في وضع وتنفيذ السياسات لضمان استجابتهم لاحتياجات المجتمع.",
+  "labels": [
+    "صحة نفسية",
+    "تمكين",
+    "سياسات",
+    "أطفال",
+    "مراهقون"
+  ],
+  "created_at": "2026-06-20T14:51:59Z",
+  "updated_at": "2026-06-20T14:51:59Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

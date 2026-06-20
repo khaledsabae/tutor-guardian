@@ -1,0 +1,29 @@
+{
+  "id": "cyb-04214fb9",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الخصوصية والاستغلال الإلكتروني للأطفال",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "مخاطر الخصوصية والاستغلال الإلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "the relevant skills and knowing how to tackle issues related to privacy and reputation is important for young “I know everything you post on the Internet stays there forever and it can affect your life in the future”, 14-year-old boy, Chile. Guidelines for industry on Child Online Protection and control privacy settings, they tend to consider privacy in relation to their friends and acquaintances – “What can my friends see?”- and less so in relation to strangers and third parties. This, combined with children’s natural curiosity and generally lower threshold for risk, can make them vulnerable to grooming, exploitation, bullying or other types of harmful content The widespread popularity of image and video sharing via mobile apps, and particularly the use of live streaming platforms by children, presents further privacy concerns and risks. Some children are producing sexual images of themselves, friends and siblings and sharing them online. In 2019, almost a third (29 per cent) of all webpages captioned by the IWF contained self-generated imagery. Of those, 76 per cent showed girls aged 11–13, with most in their bedrooms or another room in a home setting. For some, particularly older children, this can be seen as the natural exploration of sexuality and sexual identity, while for others, particularly younger children, there is often coercion by an adult or other child. Whatever the case, the resulting content is in many countries illegal and may expose children to the risk of prosecution or be used to further exploit, groom or extort",
+  "text_simplified": "يجب تعليم الأطفال أن كل ما ينشر على الإنترنت يبقى للأبد وقد يؤثر على مستقبلهم. الأطفال يهتمون بخصوصيتهم تجاه الأصدقاء أكثر من الغرباء، مما يجعلهم عرضة للاستغلال والتنمر. مشاركة الصور ومقاطع الفيديو عبر التطبيقات تزيد المخاطر، خاصة مع ظهور محتوى جنسي ذاتي التوليد. بعض الأطفال ينتجون صورًا غير لائقة لأنفسهم أو لأقرانهم، مما قد يعرضهم للمساءلة القانونية أو الابتزاز.",
+  "labels": [
+    "الخصوصية",
+    "الاستغلال",
+    "المحتوى الجنسي",
+    "التنمر",
+    "الوعي الرقمي"
+  ],
+  "created_at": "2026-06-20T14:54:23Z",
+  "updated_at": "2026-06-20T14:54:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

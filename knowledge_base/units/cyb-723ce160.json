@@ -1,0 +1,29 @@
+{
+  "id": "cyb-723ce160",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "توعية الأطفال بالاستخدام الآمن للإنترنت",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "السلامة الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "them to take action. Information can be transmitted online and offline through multiple media channels, taking into consideration that some parents do not use Internet services. It is important to collaborate with school districts to provide curricula on online safety and responsible ICT use for children and young people, and educational materials for parents. Examples include explaining the types of services and options available for monitoring activities, actions to take if a child is experiencing online bullying or grooming, how to avoid spam and manage privacy settings, and how to talk with boys and girls of different age groups about sensitive issues. Communication is a two-way process and many companies provide options for customers to contact them to report issues or discuss concerns. As content and services grow ever richer, all users will continue to benefit from advice and reminders about the nature of a particular service and how to enjoy it safely. While it is important to teach children about responsible use of the Internet, we know children like to experiment, take risks, are inherently curious and may not always make the best decisions. Giving them the chance to exercise their agency contributes to their growth and is a healthy way to help them develop autonomy and resilience, as long as the blowback is not too harsh. While children must be allowed to take some risks in the online environment, it is crucial that parents and companies can support them when things go wrong, as it can off-set the",
+  "text_simplified": "يجب توعية الأطفال والمراهقين حول الاستخدام الآمن للإنترنت، مع توفير مواد تعليمية للأهل حول كيفية حماية أطفالهم من المخاطر الإلكترونية مثل التنمر والتحرش. من المهم السماح للأطفال بتجربة المخاطر المحسوبة لتنمية استقلاليتهم، مع دعمهم عند حدوث مشكلات.",
+  "labels": [
+    "السلامة الرقمية",
+    "تربية رقمية",
+    "مخاطر الإنترنت",
+    "دعم الأهل",
+    "استقلالية الطفل"
+  ],
+  "created_at": "2026-06-20T14:56:45Z",
+  "updated_at": "2026-06-20T14:56:45Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

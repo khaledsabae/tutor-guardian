@@ -1,0 +1,29 @@
+{
+  "id": "cyb-4b498822",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "استخدام الذكاء الاصطناعي لكشف المحتوى الضار وحماية الأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية وحماية من المحتوى الضار",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "of AI whereby action on potentially harmful content, including removing it or adding sensitivity screens, can be taken automatically. From April to June 2019, Facebook acted on more than 1.5 million pieces of suicide and self-injury content on its site and identified more than 95 per cent of it before it was reported by a user. During that same time period, Instagram acted on more than 800 thousand pieces of similar content, of which more than 77 per cent was detected before being reported by a user. Identifying potential bullying or peer-to-peer violence in real time and messaging users Instagram is putting in place AI to root out behaviour such as insults, shaming and disrespect. By using sophisticated reporting tools, moderators can quickly close the account owned by the perpetrator of online bullying. Guidelines for industry on Child Online Protection Good practice: Use of artificial intelligence in the identification of child sexual abuse material Building on Microsoft’s generous contribution of PhotoDNA to fight child exploitation and the recent launch of Google Content Safety API, Facebook has also developed technologies to detect child sexual abuse content. Known as PDQ and TMK+PDQF, these technologies are part of a suite of tools Facebook uses to detect harmful content. Other algorithms and tools available to industry include pHash, aHash and dHash. The Facebook photo-matching algorithm, PDQ, owes much inspiration to pHash, although it was built from the ground up as a distinct algorithm with independent software implementation. The video-matching technology, TMK+PDQF, was developed jointly",
+  "text_simplified": "تستخدم فيسبوك وإنستغرام تقنيات الذكاء الاصطناعي لكشف المحتوى الضار تلقائياً، مثل محتوى إيذاء النفس والانتحار، وإزالته قبل أن يبلغ عنه المستخدمون. كما تعمل على تحديد التنمر الإلكتروني والعنف بين الأقران في الوقت الفعلي، وإغلاق حسابات المتنمرين. طورت فيسبوك أيضاً تقنيات مثل PDQ وTMK+PDQF لكشف محتوى الاعتداء الجنسي على الأطفال.",
+  "labels": [
+    "ذكاء اصطناعي",
+    "حماية الأطفال",
+    "محتوى ضار",
+    "تنمر إلكتروني",
+    "سلامة رقمية"
+  ],
+  "created_at": "2026-06-20T15:01:01Z",
+  "updated_at": "2026-06-20T15:01:01Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

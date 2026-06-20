@@ -1,0 +1,29 @@
+{
+  "id": "cyb-916b215b",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "دعم الأطفال في المخاطر الرقمية وتعزيز المرونة",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية ومحو أمية إعلامية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "healthy way to help them develop autonomy and resilience, as long as the blowback is not too harsh. While children must be allowed to take some risks in the online environment, it is crucial that parents and companies can support them when things go wrong, as it can off-set the negative impact of an uncomfortable experience and turn it into a useful lesson for the future. Good practice: Education NHK Japan runs a suicide prevention campaign for young people on Twitter: In Japan, suicides among teenagers peak when they go back to school after a summer vacation. #On the Night of August 31st. Linking television, live streaming, and social media, NKH successfully created a “place” where teenagers could share their feelings without fear. Guidelines for industry on Child Online Protection Good practice: Education Twitter has also published a guide for educators on media literacy. Drawn up with UNESCO, the handbook primarily aims to help educators equip younger generations with media literacy skills. Another aspect of Twitter’s safety work relates to their disclosure of information operations. This is an archive of State-backed information academic and public understanding of the campaigns related to this issue around the world, and to empower independent, third-party scrutiny of these tactics on the Project deSHAME, co-financed by Facebook and the European Union, also facilitates the creation of resources for a wide range of age groups, with a particular focus on children aged 9–13 years. As part of the project, a toolkit called “Step Up, Speak Up!”",
+  "text_simplified": "يجب السماح للأطفال بتحمل بعض المخاطر عبر الإنترنت لتنمية استقلاليتهم وقدرتهم على التكيف، مع ضرورة دعم الأهل والشركات لهم عند حدوث مشكلات لتحويل التجربة السلبية إلى درس مفيد. تشمل الممارسات الجيدة حملة توعوية يابانية للوقاية من الانتحار بين المراهقين عبر تويتر، ودليل تويتر لمحو الأمية الإعلامية بالتعاون مع اليونسكو، ومشروع deSHAME الذي يركز على الأطفال من 9 إلى 13 عامًا.",
+  "labels": [
+    "سلامة الأطفال",
+    "مخاطر الإنترنت",
+    "محو الأمية الإعلامية",
+    "دعم الأهل",
+    "وقاية رقمية"
+  ],
+  "created_at": "2026-06-20T14:56:50Z",
+  "updated_at": "2026-06-20T14:56:50Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

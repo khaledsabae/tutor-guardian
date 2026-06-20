@@ -1,0 +1,29 @@
+{
+  "id": "cyb-28462bb9",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تعزيز المشاركة المدنية للأطفال عبر التكنولوجيا الرقمية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حقوق المشاركة والتعبير الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "3.5 Promoting digital technology as a mode for increasing civic and impart information and ideas of all kinds, regardless of frontiers, either orally, in writing or in print, in the form of art, or through any other media of the child’s choice.” Companies can fulfil their duty to respect children and young people’s civil and political rights by ensuring that technology, and the application of legislation and policies developed to protect children and young people from online harm do not have the unintended consequences of suppressing their right to participation and expression or preventing them from accessing information that is important for their well-being. It is essential to ensure that age verification systems do not jeopardize the genuine need for specific age groups to access content that is relevant for their At the same time, businesses and industries can also support children and young people’s rights by providing mechanisms and tools to facilitate youth participation. They can emphasize the Internet’s capacity to facilitate positive engagement in broader civic life, drive social progress, and influence the sustainability and resilience of communities, for example, by participating in social and environmental campaigns and holding those in charge accountable. With the right tools and information, children and young people are better placed to access opportunities for health care, education and employment, and to voice their opinions and needs in schools, communities and countries. They become empowered to access information about their rights and seek information about matters that affect them personally, such as their",
+  "text_simplified": "يمكن استخدام التكنولوجيا الرقمية لتعزيز المشاركة المدنية للأطفال ونقل المعلومات بجميع أشكالها. يجب على الشركات حماية حقوق الأطفال في التعبير والمشاركة دون قمعها بسبب إجراءات الحماية من الأضرار عبر الإنترنت. من المهم أن تتيح أنظمة التحقق من العمر وصول الفئات العمرية المناسبة للمحتوى المناسب. كما يمكن للشركات دعم الأطفال بتوفير أدوات للمشاركة الإيجابية في الحياة المدنية والوصول إلى فرص الصحة والتعليم والعمل.",
+  "labels": [
+    "تكنولوجيا رقمية",
+    "مشاركة مدنية",
+    "حقوق الطفل",
+    "حماية عبر الإنترنت",
+    "تمكين"
+  ],
+  "created_at": "2026-06-20T14:57:09Z",
+  "updated_at": "2026-06-20T14:57:09Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

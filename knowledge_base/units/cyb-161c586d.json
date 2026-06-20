@@ -1,0 +1,29 @@
+{
+  "id": "cyb-161c586d",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "توعية الأطفال بالاستخدام الآمن للإنترنت والتقنيات",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "Child Online Protection Educating Based on the local context, provide educational materials for use in children, parents schools and homes to enhance children and young people’s use of and educators ICTs and to develop critical thinking to enable them to behave safely about children’s and responsibly when using ICT services. safety and their responsible use of Support customers by disseminating guidelines on family online safety ICTs that encourage parents and caregivers to: (cont.) • familiarize themselves with products and services used by children and young people; • ensure moderate use of electronic devices by children and young people as part of a healthy and balanced lifestyle; • pay close attention to children and young people’s behaviour in order to identify changes that could indicate cyberbullying or Provide parents with the necessary information to understand how their children and young people are using ICT services, handle issues related to harmful content and conduct and be equipped to guide children and young people in responsible usage. This can be facilitated through the use of tools and interactions with school districts to provide online safety curricula for children and educational materials Using technology Privacy-preserving AI, which understands texts, images, conversations advances to protect and contexts, can detect and address a range of online harms and and educate threats, and use that information to empower and educate children children to deal with them. When performed within the smart device environment, this can protect young people’s data and privacy while still supporting them. Public service",
+  "text_simplified": "تهدف هذه الوحدة إلى توعية الأطفال وأولياء الأمور حول الاستخدام الآمن والمسؤول لتقنيات المعلومات والاتصالات. تشمل التوصيات التعرف على الخدمات التي يستخدمها الأطفال، وضمان الاستخدام المعتدل للأجهزة الإلكترونية، ومراقبة سلوك الأطفال للكشف عن علامات التنمر الإلكتروني. كما تقدم إرشادات للآباء حول كيفية التعامل مع المحتوى الضار وتعزيز التفكير النقدي لدى الأطفال. يمكن استخدام الذكاء الاصطناعي لحماية الخصوصية وكشف المخاطر عبر الإنترنت.",
+  "labels": [
+    "سلامة الأطفال",
+    "استخدام آمن للإنترنت",
+    "توعية رقمية",
+    "تنمر إلكتروني",
+    "خصوصية"
+  ],
+  "created_at": "2026-06-20T14:58:24Z",
+  "updated_at": "2026-06-20T14:58:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-c5429ab7",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "النشاط البدني المعتدل والقوي للأطفال",
+  "language": "mixed",
+  "age_group": "4-6",
+  "behavior_type": "نشاط بدني",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "child getting hot or short of breath. Metabolic equivalent MET The metabolic equivalent of task, or simply metabolic equivalent, is a physiological measure of task expressing the energy cost (or calories) of physical activities. One MET is the energy equivalent expended by an individual while seated at rest. Term Abbreviation Definition Moderate to vigorous MVPA Moderate PA is equivalent to 4–7 METs in children, i.e., 4–7 times resting energy expenditure at intensity physical rest for that child. activity Vigorous PA is equivalent to >7 METs. For young children, this can include brisk walking, cycling, running playing ball games, swimming, dancing etc. during which the child gets hot and breathless. See “Energetic play”. Motor development Development of a child’s musculoskeletal system and acquisition of gross motor skills (sometimes referred to as fundamental movement skills), and fine motor skills, including object control. Nap Period of sleep, usually during the daytime in addition to usual night time sleep. Non-screen-based Usually refers to time spent sitting, not using screen-based entertainment. For young children, sedentary time this includes lying on a mat, sitting in a high-chair, pram or stroller with little movement, sitting reading a book or playing a sedate game. Physical activity PA Movement of the body that uses energy over and above resting. For young children, this can include walking, crawling, running, jumping, balancing, climbing in, through and over objects, dancing, riding wheeled toys, cycling, jumping rope etc. Play Play is defined as being for its own sake (without a specific goal), voluntary,",
+  "text_simplified": "عندما يمارس الطفل نشاطًا بدنيًا متوسطًا إلى قوي، قد يتعرض للاحترار أو ضيق التنفس. هذا النشاط يشمل الجري وركوب الدراجة والسباحة والرقص. يساعد النشاط البدني في تطوير المهارات الحركية الكبرى والدقيقة. يجب تشجيع الأطفال على اللعب النشط يوميًا.",
+  "labels": [
+    "نشاط بدني",
+    "تطور حركي",
+    "لعب نشط",
+    "صحة الطفل",
+    "تمارين هوائية"
+  ],
+  "created_at": "2026-06-20T15:03:12Z",
+  "updated_at": "2026-06-20T15:03:12Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

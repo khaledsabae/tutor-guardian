@@ -1,0 +1,29 @@
+{
+  "id": "med-d880ebf0",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "أنواع الاكتئاب وأعراضه وتأثيره على الحياة",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "interest, most of the time for at least 2 weeks, that interfere with daily activities. ● Persistent depressive disorder (also called dysthymia or dysthymic disorder) consists of less severe depression symptoms that last much longer, usually for at least 2 years. Other types of depression include the following. ● Seasonal affective disorder comes and goes with the seasons, with symptoms typically starting in the late fall and early winter and going away during the spring and summer. For more information, visit www.nimh.nih.gov/SAD. ● Depression with symptoms of psychosis is a severe form of depression in which a person experiences psychosis symptoms, such as delusions or hallucinations. For more information, visit www.nimh.nih.gov/psychosis. ● Bipolar disorder involves depressive episodes, as well as manic episodes (or less severe hypomanic episodes) with unusually elevated mood, greater irritability, or increased activity level. For more information, visit www.nimh.nih.gov/bipolardisorder. Additional types of depression can occur at specific points in a woman’s life. Pregnancy, the postpartum period, the menstrual cycle, and menopause are associated with physical and hormonal changes that can bring on a depressive episode in some people. ●Premenstrual dysphoric disorder is a more severe form of premenstrual syndrome, or PMS, that occurs in the weeks before menstruation. ●Perinatal depression occurs during pregnancy or after childbirth. It is more than the “baby blues” many new moms experience after giving birth. For more information, visit www.nimh.nih.gov/perinataldepression. ●Perimenopausal depression affects some women during the transition to menopause. Women may experience feelings of intense irritability, anxiety, sadness, or loss of",
+  "text_simplified": "الاكتئاب هو حالة مزاجية حزينة تستمر لأكثر من أسبوعين وتؤثر على الحياة اليومية. هناك أنواع مختلفة مثل الاكتئاب المستمر الذي يستمر لسنوات، والاكتئاب الموسمي الذي يظهر في الشتاء. بعض النساء يعانين من اكتئاب مرتبط بالحمل أو الدورة الشهرية أو سن اليأس. في الحالات الشديدة قد تظهر أعراض ذهانية مثل الهلاوس.",
+  "labels": [
+    "اكتئاب",
+    "اضطراب مزاجي",
+    "صحة نفسية",
+    "أعراض ذهانية",
+    "اكتئاب موسمي"
+  ],
+  "created_at": "2026-06-20T14:30:57Z",
+  "updated_at": "2026-06-20T14:30:57Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

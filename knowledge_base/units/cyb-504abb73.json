@@ -1,0 +1,29 @@
+{
+  "id": "cyb-504abb73",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الاستغلال الجنسي للأطفال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "استغلال جنسي للأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "1059 -global -kids -online -comparative -report .html. Guidelines for industry on Child Online Protection Online child sexual exploitation and abuse Online child sexual exploitation and abuse (CSEA) is rising at a startling rate. A decade ago there were fewer than one million files of child abuse material reported. In 2019, that number had climbed to 70 million, a nearly 50 per cent increase over 2018 figures. In addition, for the first time videos of abuse have outnumbered photos in reports to the authorities, showing the need for new tools to address this trend. Victims of online CSEA fall into all age groups but are increasingly younger. In 2018, the INHOPE network of hotlines noted a shift in victim profiles from pubescent to prepubescent. In addition, research by ECPAT International and INTERPOL in 2018 found that younger children were more likely to suffer severe abuse, including torture, violent rape or sadism. This includes infants who are only days, weeks or months old. While girls are more affected, abuse of boys may be more severe. The same report shows that 80 per cent of victims referred to in reports were girls and 17 per cent were boys. Children of both genders were mentioned in 3 per cent of assessed reports.1 • One in three Internet users worldwide is a child. • Every half second, a child goes online for the first time. • 800 million children use social media. • At any one time, 750,000 individuals online are estimated to be looking",
+  "text_simplified": "الاستغلال الجنسي للأطفال عبر الإنترنت يتزايد بشكل خطير، حيث ارتفعت عدد ملفات إساءة معاملة الأطفال من أقل من مليون قبل عقد إلى 70 مليون في 2019. الضحايا يشملون جميع الأعمار لكنهم يصغرون سنًا، حيث أصبح الأطفال الأصغر سنًا أكثر عرضة للإيذاء الشديد بما في ذلك التعذيب والاغتصاب. الفتيات يمثلن 80% من الضحايا، بينما إساءة معاملة الأولاد قد تكون أشد. يجب على الأهل مراقبة نشاط أطفالهم عبر الإنترنت وتعزيز الوعي بمخاطر الاستغلال الجنسي.",
+  "labels": [
+    "استغلال جنسي",
+    "أطفال",
+    "إنترنت",
+    "حماية",
+    "إساءة"
+  ],
+  "created_at": "2026-06-20T14:54:14Z",
+  "updated_at": "2026-06-20T14:54:14Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

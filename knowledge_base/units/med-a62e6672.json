@@ -1,0 +1,29 @@
+{
+  "id": "med-a62e6672",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تطوير البحث والتدريب في الصحة النفسية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية للأطفال والمراهقين",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "as resource centres for research and training. >Develop an inventory of potential sources of funding for research. >Improve child and adolescent mental health research training in professional curricula >child and adolescent psychologists and psychiatrists >child-care workers >paediatric nurses >paediatricians >public health practitioners > Provide a range of research training options for child and adolescent mental health practitioners in the country and elsewhere, for example: >distance learning >doctoral and postdoctoral fellowships >full degree programmes > Organize exchange visits between child and adolescent mental health researchers and centres of research excellence in developed and developing countries (including some WHO collaborating centres). > Dedicate a proportion of research funding to child and adolescent epidemiological and health services research. Source: adapted from Patel, 2002. 2.7Step 7: Identify the major roles and responsibilities of the different stakeholders and sectors It is essential for all stakeholders and sectors to have a clear understanding of their It is essential for all responsibilities. All the stakeholders identified earlier can play an important role in stakeholders and sectors to implementing the child and adolescent mental health plan. For example the ministry of have a clear understanding of their responsibilities. health may have the major responsibility for the development of treatment services; the ministry of education may have the major responsibility for developing mental health programmes in schools; academic institutions can assist with developing training programmes; and general health workers can assist in defining the responsibilities for child and adolescent mental health in primary care. However, ideally, all stakeholders should",
+  "text_simplified": "هذا النص يركز على تطوير البحث والتدريب في مجال الصحة النفسية للأطفال والمراهقين. يشمل إنشاء مصادر تمويل، وتدريب الأطباء النفسيين والممرضين والعاملين في الرعاية الصحية. كما يقترح برامج تعليمية عن بعد وزيارات تبادلية مع مراكز بحثية عالمية. من المهم أن يفهم جميع المعنيين أدوارهم ومسؤولياتهم لتنفيذ خطة الصحة النفسية.",
+  "labels": [
+    "بحث علمي",
+    "تدريب مهني",
+    "صحة نفسية",
+    "تمويل",
+    "تعاون دولي"
+  ],
+  "created_at": "2026-06-20T14:49:32Z",
+  "updated_at": "2026-06-20T14:49:32Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

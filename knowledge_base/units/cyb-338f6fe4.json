@@ -1,0 +1,29 @@
+{
+  "id": "cyb-338f6fe4",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية خصوصية الأطفال والمراهقين عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الخصوصية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "concerning children and young people’s privacy, including considering whether parental consent is required before commercial enterprises can collect personal information from or about a child. Adapt and implement heightened default privacy settings for collection, processing, storage, sale and publishing of personal data, including location-related information and browsing habits, gathered from people under 18 years. Default privacy settings and information about the importance of privacy should be appropriate to the age of the users and the nature of the service. Employ technical measures, such as appropriate parental control tools, safety by design, age-differentiated experiences, password-protected content, block/allow lists, purchase/time controls, opt-out functions, filtering and moderating, to prevent underage access and exposure to inappropriate content or services. Implement technology that can identify the age of users and present For age-sensitive content or services, industry use age verification to limit access to content or material that, either by law or policy, is intended only for persons above a certain age. Companies should also recognize the potential for misuse of such technologies to restrict children and young people’s right to freedom of expression and access to information or endanger their privacy. Guidelines for industry on Child Online Protection Creating a Ensure that content and services that are not appropriate for users of all safer and age- ages are: appropriate online • classified in line with national standards and cultural norms; • consistent with existing standards in equivalent media; • identified with prominent display options to control access; • offered together with age verification, where",
+  "text_simplified": "يجب حماية خصوصية الأطفال والمراهقين عبر الإنترنت من خلال وضع إعدادات خصوصية عالية افتراضياً، والحصول على موافقة الوالدين قبل جمع بياناتهم التجارية. ينبغي استخدام أدوات الرقابة الأبوية وتقنيات التحقق من العمر لمنع وصولهم لمحتوى غير مناسب، مع مراعاة حرية التعبير وعدم انتهاك خصوصيتهم.",
+  "labels": [
+    "خصوصية الأطفال",
+    "الرقابة الأبوية",
+    "التحقق من العمر",
+    "حماية البيانات",
+    "السلامة الرقمية"
+  ],
+  "created_at": "2026-06-20T14:58:02Z",
+  "updated_at": "2026-06-20T14:58:02Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

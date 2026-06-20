@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e979abed",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "الوعي الرقمي وحماية الأطفال من مخاطر الإنترنت",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "الوعي الرقمي والسلامة على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "digital world younger generations in better addressed by all stakeholders, through the click of a mouse. understanding both the differ- including children themselves. An unprecedented level of ences and commonalities of the Whilst all providers of online services and information is ac- people of the world. However, services should do whatever cessible through a computer or children and young people also they can at a technical level to a mobile device with Internet need to be aware of some of make the Internet as safe as it access. The barriers associated the potentially negative aspects can be for children and young with the cost of these devices of the technologies. people, the first and best form and access to the Internet are Harmful activities can include of defense in protecting YOU diminishing rapidly. All these bullying and harassment, identity is making you aware of what technical developments provide theft and online abuse (such as can happen online and make children and young people with children seeing harmful and ille- you understand that there is unparalleled opportunities to gal content, or being exposed to always a solution to a problem explore new frontiers and meet grooming for sexual purposes, that you may encounter online. people from faraway places. or the production, distribution Empowering children and young Children and young people are and collection of child abuse people through education and truly becoming digital citizens material). awareness raising is therefore of in an online world that has no paramount importance. borders or",
+  "text_simplified": "العالم الرقمي يقدم فرصًا هائلة للأطفال والشباب لاستكشاف frontiers جديدة والتواصل مع الآخرين. لكنه يحمل أيضًا مخاطر مثل التنمر الإلكتروني، سرقة الهوية، والتعرض لمحتوى ضار أو غير قانوني. أفضل وسيلة لحماية الأطفال هي توعيتهم بالمخاطر المحتملة وتعليمهم أن هناك دائمًا حلًا لأي مشكلة قد يواجهونها على الإنترنت. تمكين الأطفال والشباب من خلال التعليم والتوعية هو أمر بالغ الأهمية.",
+  "labels": [
+    "سلامة الأطفال",
+    "الوعي الرقمي",
+    "مخاطر الإنترنت",
+    "تمكين الشباب",
+    "تربية رقمية"
+  ],
+  "created_at": "2026-06-20T15:08:00Z",
+  "updated_at": "2026-06-20T15:08:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

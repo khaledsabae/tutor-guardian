@@ -1,0 +1,29 @@
+{
+  "id": "med-ace22623",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تعزيز الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "services will work closely with other sectors to reduce the impact of risk factors for mental disorders and to enhance protective factors. Values → principles > Responsibility to prevent psychological, emotional and social harm → the health system should be oriented towards reducing risk factors for poor mental health and enhancing protective factors. > Promotion of healthy development → interventions should aim to promote the healthy development of all children and adolescents. > Respect for the autonomy of children and adolescents ’ children and adolescents should be involved in decision-making relating to the development and implementation of services and programmes. > To provide comprehensive, age-appropriate community-based mental health > To improve academic outputs among adolescents by reducing the prevalence of risk behaviours and increasing the prevalence of health promoting behaviours. > To enhance access to preventive and promotive interventions for children and adolescents living in rural areas. Areas for action > Information systems: Develop an information system to monitor the extent of risk and protective behaviours among school students. > Organization of services: Develop and implement a school-based mental health promotion intervention. > Research and evaluation: Evaluate the outcome of interventions that aim to reduce the extent of risk behaviours or increase the extent of promotive behaviours. > Human resources and training: Develop training in school-based health promotion interventions for child and adolescent mental health service providers and educators. * This example is provided for heuristic purposes only, and is not a recommendation for > A child and adolescent mental",
+  "text_simplified": "يهدف هذا النص إلى تعزيز الصحة النفسية للأطفال والمراهقين من خلال التعاون بين القطاعات المختلفة. يتم التركيز على تقليل عوامل الخطر وتعزيز العوامل الوقائية، مع تقديم خدمات شاملة ومناسبة لأعمارهم. تشمل مجالات العمل تطوير أنظمة معلومات لمراقبة السلوكيات، وتنظيم تدخلات مدرسية، وتدريب مقدمي الخدمات. الهدف النهائي هو تحسين النتائج الأكاديمية والصحية للأطفال والمراهقين.",
+  "labels": [
+    "صحة نفسية",
+    "وقاية",
+    "مراهقون",
+    "أطفال",
+    "مدارس"
+  ],
+  "created_at": "2026-06-20T14:49:53Z",
+  "updated_at": "2026-06-20T14:49:53Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

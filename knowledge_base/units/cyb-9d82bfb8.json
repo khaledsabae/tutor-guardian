@@ -1,0 +1,29 @@
+{
+  "id": "cyb-9d82bfb8",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إجراءات الإبلاغ عن التحرش الجنسي عبر الإنترنت",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "تحرش جنسي عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "and behaviour. Furthermore, reporting needs to be followed up appropriately, with timely provision of information about the status of the report. Although companies can vary their implementation of follow-up mechanisms on a case-by-case basis, it is essential to set a clear time frame for responses, communicate the decision made regarding the report, and offer a method for following up if the user is not satisfied with the response. 16 eSafety Commissioner, Safety by Design Overview, 2019. Guidelines for industry on Child Online Protection Good practice: Reporting Facebook, in an effort to curb sexual harassment on digital platforms, has co-financed Project deSHAME with the European Union, a collaboration among Childnet, Save the Children, Kek Vonal and UCLan. This project aims to increase reporting of online sexual harassment among minors and improve multisector cooperation in preventing and responding to this behaviour. As one main purpose of the project is to encourage users to report content that is upsetting or inappropriate, Facebook’s Community Standards are also relevant as guidelines on what is and is not allowed on Facebook. They also outline the types of users that it does not allow to post. Facebook has also created safety features such as the “Do you know this person?” feature; an “other” inbox gathering new messages from people the user does not know; and a popup which appears on the news feed if it looks like a minor is being contacted by an adult that they do not know. Online content and service providers can also",
+  "text_simplified": "يجب على الشركات وضع إجراءات واضحة للإبلاغ عن السلوكيات الضارة عبر الإنترنت، مع تحديد وقت محدد للرد على البلاغات وإبلاغ المستخدم بالقرار المتخذ. كما ينبغي توفير وسيلة للمتابعة إذا لم يكن المستخدم راضياً عن الرد. مشروع deSHAME يهدف إلى تشجيع الإبلاغ عن التحرش الجنسي عبر الإنترنت بين القصر وتحسين التعاون بين القطاعات المختلفة.",
+  "labels": [
+    "إبلاغ",
+    "تحرش جنسي",
+    "حماية الأطفال",
+    "سلامة رقمية",
+    "متابعة"
+  ],
+  "created_at": "2026-06-20T14:56:19Z",
+  "updated_at": "2026-06-20T14:56:19Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

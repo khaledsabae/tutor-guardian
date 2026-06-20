@@ -1,0 +1,29 @@
+{
+  "id": "cyb-8a2cf314",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات للأطفال للاستخدام الآمن للإنترنت",
+  "language": "mixed",
+  "age_group": "7-9",
+  "behavior_type": "الاستخدام الآمن للإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "I can. Guidelines for Children and Young People www.itu.int/cop Child’s Contract to make sure they approve. 7. I will treat others the way I can try to make sure it never 4. When considering signing up want to be treated. happens again. I know that the Internet can be a won- to a new online service I will 8. I will use good manners when 12. I will tell my parents if I derful place to visit. I also know that it avoid those which demand too I’m online, including good lan- receive pictures, links to bad is important for me to follow rules that much personal information guage and respect. I will not sites, e-mail or instant messag- will keep me safe on my visits. I agree and try to opt for those which pick fights or use threatening es with bad language or if I’m to the following rules: ask for less. or mean words. in a chat room where people 1. Wherever possible I will 5. I will always take steps to find 9. I will make my own personal are using swear words or mean choose a safe and sensible out what personal information safety my priority, since I know and hateful language. screen name for myself that about me will be published there are some people who 13. I will not send anything in the will not broadcast any per- by the service by default in might be online and pretend to post to anyone",
+  "text_simplified": "هذا النص يقدم إرشادات للأطفال والمراهقين حول الاستخدام الآمن للإنترنت. يتضمن تعليمات مثل اختيار اسم مستخدم آمن، حماية المعلومات الشخصية، ومعاملة الآخرين باحترام. كما يشجع الطفل على إخبار والديه إذا تعرض لمحتوى غير لائق أو تنمر إلكتروني.",
+  "labels": [
+    "سلامة الإنترنت",
+    "إرشادات للأطفال",
+    "حماية المعلومات",
+    "احترام الآخرين",
+    "تنمر إلكتروني"
+  ],
+  "created_at": "2026-06-20T15:12:43Z",
+  "updated_at": "2026-06-20T15:12:43Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

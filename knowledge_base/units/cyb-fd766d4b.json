@@ -1,0 +1,29 @@
+{
+  "id": "cyb-fd766d4b",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال من المحتوى غير المناسب والتنمر الإلكتروني",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال من المحتوى غير المناسب والتنمر الإلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "services that are not appropriate for users of all safer and age- ages are: appropriate online • classified in line with national standards and cultural norms; • consistent with existing standards in equivalent media; • identified with prominent display options to control access; • offered together with age verification, where possible appropriate and with clear terms relating to erasure of any personally identifiable data obtained through the verification process. For example, with regard to media standards, all media regulatory authorities provide a set of requirements for age-related content and Internet providers are required to adapt the repositories and apply the guidelines to their content offer. See, Ofcom in the United Kingdom, CSA in France and AGCOM in Italy. Offer clear reporting tools and develop a follow-up process to reports of inappropriate content, contact and misuse, and provide detailed feedback to service users on the reporting process. Ensure pre-moderation of interactive spaces designed for children and young people in ways that are congruent with children’s rights to privacy and their evolving capacities. Active moderation can encourage an atmosphere where bullying and harassment are not acceptable. Unacceptable behaviour includes: • posting unpleasant or threatening comments on someone’s profile; • setting up fake profiles or hate sites to humiliate a victim; • sending chain messages and attachments with harmful intent; • hacking into someone’s account to send offensive messages to Take special precaution with staff members or collaborators who work with children and young people, for whom a preliminary criminal record check with",
+  "text_simplified": "يجب تصنيف الخدمات الإلكترونية حسب الفئات العمرية وفقًا للمعايير الوطنية والثقافية، مع توفير أدوات للإبلاغ عن المحتوى غير المناسب. كما ينبغي مراقبة المساحات التفاعلية للأطفال والمراهقين لحمايتهم من التنمر والتحرش الإلكتروني.",
+  "labels": [
+    "سلامة الأطفال",
+    "تصنيف عمري",
+    "تنمر إلكتروني",
+    "رقابة أبوية",
+    "خصوصية"
+  ],
+  "created_at": "2026-06-20T14:58:06Z",
+  "updated_at": "2026-06-20T14:58:06Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "dev-fa7db881",
+  "domain": "development",
+  "source_file": "PLH_Positive_Parenting_Tip.pdf",
+  "title": "نصائح للتربية الإيجابية أثناء الجائحة",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إيجابية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Parenting for Lifelong Health / WHO-UNICEF",
+  "text_original": "COVID-19 PARENTING Keeping It Positive It‘s hard to feel positive when our kids or teenagers are driving us crazy. We often end up saying “Stop doing that!” But children are much more likely to do what we ask if we give them positive instructions and lots of praise for what they do right. Say the behaviour Praise your child when they you want to see are behaving well Use positive words when telling your child Try praising your child or teenager for something what to do; like ‘Please put your clothes away’ they have done well. They may not show it, but (instead of ‘Don’t make a mess’) you’ll see them doing that good thing again. It will also reassure them that you notice and care. It’s all in the delivery Shouting at your child will just make you and them more stressed and angrier. Get your child’s attention by using their name. Speak in a calm voice. Can your child actually do what you are asking them? It is very hard for a child to keep quiet Help your teen inside for a whole day but maybe they can keep quiet for 15 minutes while you are on a call. Teens especially need to be able to communicate with their friends. Help your teen connect through social media and other safe distancing ways. This is something you can do together, too! For more information click below links: Parenting tips Parenting tips In worldwide from WHO from UNICEF languages The",
+  "text_simplified": "عندما يزعجك الأطفال أو المراهقون، حاول استخدام كلمات إيجابية بدلاً من الصراخ. امدح سلوكهم الجيد ليشعروا بالاهتمام ويكرروا الفعل. تحدث بهدوء واطلب ما تريده بوضوح، مثل 'ضع ملابسك في مكانها'. ساعد ابنك المراهق على التواصل مع أصدقائه بطرق آمنة.",
+  "labels": [
+    "تربية إيجابية",
+    "مدح",
+    "تواصل هادئ",
+    "مراهقون",
+    "أطفال"
+  ],
+  "created_at": "2026-06-20T14:41:57Z",
+  "updated_at": "2026-06-20T14:41:57Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "PLH_Positive_Parenting_Tip",
+    "source_author": ""
+  }
+}

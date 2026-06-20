@@ -1,0 +1,29 @@
+{
+  "id": "cyb-3d7483b2",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "نصائح للأطفال للتصرف بأمان وأدب عبر الإنترنت",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "السلامة الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "mediately know why or what to important to be kind and polite good to have a lot of friends, with your friends. do about it. This section has some to others online— stop and think having too many, makes it 6. If you want to arrange to really helpful tips to help you be about how your behaviour will harder to keep an eye on who meet someone you’ve met safe online. affect them. sees the stuff you post online. online, check with a parent Don’t accept friend requests first and ask them to go with Chatting to friends using IM, in if you really don’t know the you. Always meet in a brightly chat rooms and on social net- person and you’re not sure lit public place where lots of Treat other people the way you working sites can be great ways about them. other people will be around, would like to be treated. Avoid to keep up to date. Meeting new 3. Keep your personal details preferably during the day. using bad language and don’t say friends online is also fun. You private. Use a nickname 7. If someone writes something things to someone to make them can meet people online who like instead of your real name rude, scary or something you feel bad. the same movies or sports as you. if you are in a site or game don’t like, tell your parents or Learn about the ‘netiquette’ of But while there are lots of good",
+  "text_simplified": "يجب على الأطفال أن يكونوا لطفاء ومهذبين مع الآخرين عبر الإنترنت، وأن يعاملوا الناس كما يحبون أن يعاملوا. من المهم الحفاظ على الخصوصية بعدم مشاركة الاسم الحقيقي أو التفاصيل الشخصية، وعدم قبول طلبات الصداقة من أشخاص غير معروفين. إذا أراد الطفل مقابلة شخص تعرف عليه عبر الإنترنت، فيجب أن يرافقهم أحد الوالدين وأن يتم اللقاء في مكان عام مزدحم خلال النهار. عند مواجهة محتوى غير لائق أو مخيف، يجب إخبار الوالدين فوراً.",
+  "labels": [
+    "السلوك المهذب",
+    "الخصوصية",
+    "الصداقة الآمنة",
+    "الرقابة الأبوية",
+    "الاستخدام الآمن للإنترنت"
+  ],
+  "created_at": "2026-06-20T15:10:31Z",
+  "updated_at": "2026-06-20T15:10:31Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-c23b49a1",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "can also spot and flag suspicious users, as well as users in distress; • establishing a team of community hosts who serve as the first point of contact for the moderators when they have concerns Be responsible for reviewing commercial content, including in forums, social networks and gaming sites. Implement appropriate standards and rules to protect children from age- inappropriate advertising and establish clear limits for online advertising to children and young people. Guidelines for industry on Child Online Protection Educating children, Service providers offering user-generated content can parents and educators complement technical measures with educational and about children’s safety empowerment activities by taking the following actions: and their responsible use of ICTs Create a section dedicated to safety tips, articles, features and dialogue about digital citizenship, as well as links to useful content from third-party experts. Safety advice should be easily spotted and provided in easy-to-understand language. Platform providers are also encouraged to have a uniform navigation interface across different devices, such as computers, tablets or Offer parents clear information about the types of content and services available, including, for example, an explanation of social networking sites and location-based services, how the Internet is accessed via mobile devices, and the options available for parents to apply controls. Inform parents about how to report abuse, misuse and inappropriate or illegal content, and how the report will be handled. Let them know what services are age-restricted and other ways to behave safely and responsibly when using interactive services. Establish a “trust",
+  "text_simplified": "يجب على منصات الألعاب والتواصل الاجتماعي حماية الأطفال من المحتوى غير المناسب والإعلانات الضارة. يمكن للمنصات إنشاء فريق من المشرفين المجتمعيين لمراقبة المحتوى والإبلاغ عن المستخدمين المشبوهين. كما ينبغي توفير نصائح أمان بلغة بسيطة للأهل والأطفال، وتعليمهم كيفية الإبلاغ عن الإساءة والتصرف بمسؤولية عبر الإنترنت.",
+  "labels": [
+    "حماية الطفل",
+    "أمان الإنترنت",
+    "رقابة أبوية",
+    "محتوى غير لائق",
+    "إعلانات ضارة"
+  ],
+  "created_at": "2026-06-20T15:00:32Z",
+  "updated_at": "2026-06-20T15:00:32Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

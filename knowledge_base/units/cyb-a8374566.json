@@ -1,0 +1,29 @@
+{
+  "id": "cyb-a8374566",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الطفل في خدمات الاتصال والتخزين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "access to or hosting (e) Companies providing streaming services, including live streams. (f) Companies offering digital file storage services, cloud-based service providers. 5. Feature-specific checklists This chapter complements the previous general checklist for industry by offering recommendations for businesses that provide services with specific features on respecting and supporting children’s rights online. The following feature-specific checklists outline ways to supplement the common principles and approaches presented in Table 1, as they apply to different services, and should therefore be considered in addition to the steps in Table 1. The features highlighted here are crosscutting and several feature-specific checklists may be relevant for the same company. The following feature checklists are organized by and refer back to the same key areas as the general guidelines in Table 1. Each of the feature checklists has been developed in collaboration with key contributors and, as a result, there are minor variations in the tables. 5.1 Feature A: Provide connectivity, data storage and hosting services Internet access is fundamental to the realization of children’s rights, and connectivity can open up entire worlds for children. Providers of connectivity, data storage and hosting services have tremendous opportunities to build safety and privacy into their offers for children and young people. This service feature addresses, among others, mobile operators, Internet service providers, data storage systems and hosting services. Guidelines for industry on Child Online Protection Mobile operators enable access to the Internet and offer a range of mobile-specific data services. Many operators have already signed up to",
+  "text_simplified": "هذا النص يقدم إرشادات للشركات التي تقدم خدمات الاتصال والتخزين السحابي والاستضافة لحماية حقوق الأطفال على الإنترنت. يجب على هذه الشركات دمج ميزات الأمان والخصوصية في خدماتها لضمان بيئة رقمية آمنة للأطفال.",
+  "labels": [
+    "حماية الطفل",
+    "الإنترنت",
+    "الخصوصية",
+    "الأمان الرقمي",
+    "إرشادات صناعية"
+  ],
+  "created_at": "2026-06-20T14:58:45Z",
+  "updated_at": "2026-06-20T14:58:45Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-6b42585c",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "مصطلحات صحة الأطفال والنمو",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة عامة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": ") ii Contents iii GLOSSARY OF TERMS Term Abbreviation Definition Adiposity Excessive fat accumulation in the body (overweight, obesity), as measured by BMI, BMI-for-age, BMI z-score, skinfold thickness, body fat mass. Body composition The proportion of fat and fat-free mass in the body. This can be measured as percentage body fat. Body mass index (see below) and waist circumference are proxies for body composition and in most situations, are good indicators of health risk associated with excess adiposity. Body mass index BMI Weight (kg) / height (m)2 BMI-for-age BMI adjusted for age, standardized for children. or BMI z-score BMI standard deviation scores are measures of relative weight adjusted for child age and sex. Given a child’s age, sex, BMI, and an appropriate reference standard, a BMI z-score (or its equivalent BMI-for-age percentile) can be determined. Cardiometabolic health The interplay of blood pressure, blood lipids, glucose and insulin on health. Cognitive development The process of learning, memory, attention, concentration and language development. Disability Term for impairments, activity limitations and participation restrictions. Emotional regulation An individual’s ability to manage and respond to emotional experiences such as stress, anxiety, mood, temperament, hyperactivity/impulsivity. Energetic play Active play that is equivalent to moderate-to-vigorous physical activity, when children get out of breath and feel warm. This may take many forms and may involve other children, caregivers, objects or not. Exercise Physical activity that is planned, structured, generally repetitive and has purpose. Fitness A measure of the body's ability to function efficiently and effectively in work and",
+  "text_simplified": "هذا النص يشرح مصطلحات متعلقة بصحة الأطفال مثل السمنة ومؤشر كتلة الجسم والنمو المعرفي والتنظيم العاطفي. يهدف إلى تعريف الأهل بهذه المفاهيم لمساعدتهم في متابعة نمو أطفالهم.",
+  "labels": [
+    "صحة الأطفال",
+    "مؤشر كتلة الجسم",
+    "نمو معرفي",
+    "تنظيم عاطفي",
+    "سمنة"
+  ],
+  "created_at": "2026-06-20T15:03:04Z",
+  "updated_at": "2026-06-20T15:03:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

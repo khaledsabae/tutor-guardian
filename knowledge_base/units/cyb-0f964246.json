@@ -1,0 +1,29 @@
+{
+  "id": "cyb-0f964246",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية حقوق الطفل في أنظمة الذكاء الاصطناعي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "paper on AI and Child Rights.25 25 UNICEF and UC Berkeley, “Executive Summary: Artificial Intelligence and Children’s Rights”, 2018. Guidelines for industry on Child Online Protection Table 5: COP checklist for Feature D: AI-driven systems Integrating child Providers of AI-driven systems can identify, prevent and mitigate rights considerations the adverse impacts of ICTs on children and young people’s rights, into all appropriate and identify opportunities to support the advancement of children corporate policies and young people’s rights. processes AI systems should be designed, developed, implemented and researched to respect, promote and fulfil child rights, as enshrined in the Convention on the Rights of the Child. Childhood, which is increasingly experienced in the digital environment, is a time dedicated to special care and assistance. AI systems should be leveraged to provide this support to its fullest potential. Incorporate an inclusive design approach when developing child- facing products, which maximizes gender, geographic and cultural diversity, and includes a broad range of stakeholders, such as parents, teachers, child psychologists, and, where appropriate, children themselves. Governance frameworks, including ethical guidelines, laws, standards and regulatory bodies, should be established to oversee processes which ensure that the application of AI systems does not infringe upon child rights. Developing standard In collaboration with government, law enforcement, civil society processes to handle and hotline organizations, providers of AI-driven systems play a key CSAM role in combating CSAM by taking the following actions: Refer to the general guidelines in Table 1. Guidelines for industry on Child Online Protection Creating",
+  "text_simplified": "يجب تصميم أنظمة الذكاء الاصطناعي بطريقة تحترم حقوق الطفل وتعززها، خاصة مع ازدياد استخدام الأطفال للبيئة الرقمية. ينبغي إشراك الأهل والمعلمين والأخصائيين النفسيين في تصميم هذه الأنظمة لضمان تنوعها وشموليتها. كما يجب وضع أطر حوكمة وقوانين وأخلاقيات لضمان عدم انتهاك حقوق الطفل. على مقدمي خدمات الذكاء الاصطناعي التعاون مع الجهات المعنية لمكافحة المواد المسيئة للأطفال عبر الإنترنت.",
+  "labels": [
+    "ذكاء اصطناعي",
+    "حقوق الطفل",
+    "حماية رقمية",
+    "إشراك الأهل",
+    "حوكمة"
+  ],
+  "created_at": "2026-06-20T15:01:11Z",
+  "updated_at": "2026-06-20T15:01:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

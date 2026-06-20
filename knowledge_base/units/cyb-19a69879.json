@@ -1,0 +1,29 @@
+{
+  "id": "cyb-19a69879",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "أهمية المهارات الرقمية للأطفال والشباب",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "مهارات رقمية ومشاركة اجتماعية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "information, children and young people are better placed to access opportunities for health care, education and employment, and to voice their opinions and needs in schools, communities and countries. They become empowered to access information about their rights and seek information about matters that affect them personally, such as their sexual health, and about political and government accountability. Companies can also invest in the creation of online experiences appropriate for children and young people and families. They can support the development of technology and content that encourage and enable children and young people to learn, innovate and create solutions. They should always consider safety by design in their products. Companies can, in addition, proactively support children and young people’s rights by working to close the digital divide. Children and young people’s participation requires digital literacy – the ability to understand and interact in the digital world. Without this ability, citizens are not able to participate in many of the social functions that have become digitized, including filing taxes, supporting political candidates, signing online petitions, registering a birth, or simply accessing commercial, health, educational or cultural information. Without action, the gap between citizens who are able to access these forums and those who are not, due to a lack of Internet access or digital literacy, will continue to widen, placing the latter at a significant disadvantage. Companies can support multimedia initiatives to foster the digital skills that children and young people need to be confident, connected and actively involved citizens.17 In",
+  "text_simplified": "يحتاج الأطفال والشباب إلى المهارات الرقمية للمشاركة في المجتمع الحديث، مثل الوصول إلى التعليم والصحة والعمل. يجب على الشركات تصميم تجارب إلكترونية آمنة ومناسبة لهم، ودعم تطوير المحتوى الذي يشجع على التعلم والابتكار. كما ينبغي سد الفجوة الرقمية لضمان عدم حرمان أي طفل من الفرص الأساسية بسبب نقص الإنترنت أو المعرفة الرقمية.",
+  "labels": [
+    "مهارات رقمية",
+    "فجوة رقمية",
+    "حقوق الطفل",
+    "تعليم إلكتروني",
+    "مشاركة مجتمعية"
+  ],
+  "created_at": "2026-06-20T14:57:13Z",
+  "updated_at": "2026-06-20T14:57:13Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

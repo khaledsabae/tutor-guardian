@@ -1,0 +1,29 @@
+{
+  "id": "med-acc7ad20",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تدريب العاملين في الصحة النفسية للأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تدريب مهني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "to educate and train people. This may involve the most expensive compo- supplementing the training of professionals with additional exposure in the field of child nent of the health-care system. and adolescent mental health. Many clinical psychologists, general practitioners, nurses and psychiatrists, for example, do not receive sufficient training in child and adolescent mental health during their professional training. This can be addressed by short courses, fellowships, or ongoing supervision and training (see module on Human Resources and Training for Mental Health). Physical capital refers to buildings, equipment and vehicles, which are purchased through capital investments. Usually, these are not annual expenses. However, a A common error is to fail to common error is to fail to budget for ongoing maintenance to prevent rapid budget for ongoing deterioration and early replacement. maintenance to prevent rapid deterioration and early Consumables refer primarily to medication. Table 6 indicates the resource inputs that replacement. may be necessary for the implementation of a school-based epilepsy prevention and treatment programme. This example can also be used to illustrate how the availability of resources shapes the time frame. Year 1 may involve preparing training materials, to be used during Year 2 by personnel who will begin screening during the second part of Year 2 or thereafter. If training materials are already available, or if the personnel already have sufficient expertise at the outset to obviate the need for training, the time frame can be shortened. tnemtaert/gnineercs .snoitadnemmocer Determining the available resources involves assessing the funding that",
+  "text_simplified": "يتناول النص أهمية تدريب العاملين في مجال الصحة النفسية للأطفال والمراهقين، حيث يعاني العديد من الأطباء النفسيين والممرضين من نقص التدريب الكافي. يمكن تحسين ذلك من خلال دورات قصيرة أو إشراف مستمر. كما يشير النص إلى ضرورة تخصيص ميزانية للصيانة الدورية للمباني والمعدات لتجنب تدهورها السريع.",
+  "labels": [
+    "صحة نفسية",
+    "تدريب",
+    "أطفال",
+    "مراهقين",
+    "موارد"
+  ],
+  "created_at": "2026-06-20T14:51:11Z",
+  "updated_at": "2026-06-20T14:51:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-56945a7d",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تأثير الأقران والأسرة حسب المرحلة العمرية والثقافة",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "تأثير الأقران والأسرة حسب المرحلة العمرية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "adolescents should devote particular attention to the influence of peers. Conversely, it is the family environment that should be given priority in an analogous plan for pre-pubertal children. Taking into account cognitive development, a plan for adolescents can assume a capacity to consider nuances of morality, risk-benefit ratios and causes and consequences. On the other hand, a plan for pre-pubertal children should make no such assumption. It is also important to recognize cultural differences when considering developmental It is important to recognize stages. There is no doubt that certain developmental stages are universally applicable, cultural differences when such as early language development and social reciprocity (Lewis, 1996), while others are culture-specific. The concept of adolescence itself is not universally recognized. In considering developmental many cultures, for example in the Hmong culture, the age of 12 or 13 years denotes the stages. end of childhood and the simultaneous onset of adulthood (Tobin & Friedman, 1984). There is no intermediate stage of adolescence. In Bangladesh, a child who goes to school and has no economic or social responsibilities will be regarded as a child up to the age of puberty. However, boys or girls who are employed will no longer be regarded as children, even if they start to work at the age of 6 years (Blanchet, 1996). Such differences can have a profound effect on how policies, plans and specific interventions are formulated and implemented. For example, interventions designed for societies that view adolescence as a period of continued dependence on",
+  "text_simplified": "يجب على الأهل التركيز على تأثير الأصدقاء في مرحلة المراهقة، بينما تكون البيئة الأسرية أكثر أهمية للأطفال قبل البلوغ. يختلف التخطيط التربوي حسب المرحلة العمرية، فالمراهقون قادرون على فهم الأخلاق والنتائج، أما الأطفال الأصغر فلا يفترض ذلك. كما تختلف مراحل النمو بين الثقافات، فبعض المجتمعات لا تعترف بمرحلة المراهقة وتعتبر الطفل بالغاً عند سن 12 أو 13 عاماً.",
+  "labels": [
+    "مراحل النمو",
+    "تأثير الأقران",
+    "البيئة الأسرية",
+    "الاختلافات الثقافية",
+    "التربية"
+  ],
+  "created_at": "2026-06-20T14:45:02Z",
+  "updated_at": "2026-06-20T14:45:02Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

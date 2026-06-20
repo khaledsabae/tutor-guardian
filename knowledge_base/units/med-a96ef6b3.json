@@ -1,0 +1,29 @@
+{
+  "id": "med-a96ef6b3",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أسس التعاون بين القطاعات لتحقيق الأهداف المشتركة",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تعاون بين القطاعات",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "a sensitive identification of who should be involved. > All participants should reach a common understanding as to why they should work together, which is a crucial step in achieving the commitment needed for such work. Structural support > Intersectoral collaboration should be institutionalized, and not be dependent on ad hoc arrangements and favours. > The institutionalization can take the following forms: the creation of incentive and reward systems linked to intersectoral collaborative action; creating job opportunities that cross traditional boundaries; and staff development that focuses on preparing the sectors concerned to participate in a collaborative effort. Addressing the different goals and perspectives > The different sectors need to become aware of their common goals and tasks, and of how each of the areas of specialization can contribute to the fulfilment of these goals and tasks. > Opportunities for bringing the different sectors together need to be provided. It is often in the “doing” that the benefits of intersectoral collaboration are naturally > Institutionalization of intersectoral collaboration (highlighted above) helps to create structures that “force” the different sectors to work with one another and, through working together, realize their common goals and contributions. > Highlighting a common experience in the different sectors can facilitate an intersectoral approach. In this regard, a settings approach (e.g. focusing on the development of health promoting schools) is one way to discuss common issues. >The advantages and benefits of working together need to be identified, and fears and resistance addressed. >The health sector needs to",
+  "text_simplified": "يجب تحديد المشاركين المناسبين للعمل المشترك وضمان فهمهم لأسباب التعاون. ينبغي إضفاء الطابع المؤسسي على التعاون بين القطاعات بدلاً من الاعتماد على الترتيبات المؤقتة. يمكن تحقيق ذلك عبر إنشاء أنظمة تحفيزية ووظائف عابرة للحدود التقليدية وتطوير الكوادر. كما ينبغي توعية القطاعات المختلفة بأهدافها المشتركة وتوفير فرص للعمل معًا لتحقيقها.",
+  "labels": [
+    "تعاون مؤسسي",
+    "تنسيق قطاعي",
+    "أهداف مشتركة",
+    "تطوير كوادر",
+    "حوافز"
+  ],
+  "created_at": "2026-06-20T14:48:17Z",
+  "updated_at": "2026-06-20T14:48:17Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

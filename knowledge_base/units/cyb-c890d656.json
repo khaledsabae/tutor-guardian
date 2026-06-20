@@ -1,0 +1,29 @@
+{
+  "id": "cyb-c890d656",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "استخدام الذكاء الاصطناعي لحماية الأطفال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "a children and young people by supporting their right to mode to further civic participation. Refer to the general guidelines in Table 1. Using technology AI-driven systems should be developed to support children’s advances to protect development and well-being as an outcome in all system design, and educate children development and implementation. The best available and widely accepted development and well-being metrics should be their reference point. Companies should invest in research and development of ethical AI- based tools to detect acts of online CSAE, and online harassment and bullying, in collaboration with key experts on children’s rights and children themselves. Advances in AI technology should be applied to target age- appropriate messaging for children without compromising their identity, location and personal details. (Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation)), and text as published in the . Revised AVMS (Audio Visual Media Services) amending Directive 2010/13/EU on the coordination of certain provisions laid down by law, regulation or administrative action in Member States concerning the provision of audiovisual media services (Audiovisual Media Services Directive) in view of changing market realities and Text as published in the Official • , revised 2018, and updated version • Working with young people and children at the BBC; • Framework for Independent Production Companies working on",
+  "text_simplified": "يجب دعم حقوق الأطفال والشباب في المشاركة المدنية باستخدام التكنولوجيا. ينبغي تطوير أنظمة ذكاء اصطناعي أخلاقية لحماية الأطفال من التحرش والتنمر عبر الإنترنت، مع احترام خصوصية بياناتهم. كما يجب توجيه الرسائل الإلكترونية بما يتناسب مع أعمارهم دون كشف هوياتهم.",
+  "labels": [
+    "ذكاء اصطناعي",
+    "حماية الأطفال",
+    "مشاركة مدنية",
+    "خصوصية",
+    "مكافحة التنمر"
+  ],
+  "created_at": "2026-06-20T15:01:24Z",
+  "updated_at": "2026-06-20T15:01:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

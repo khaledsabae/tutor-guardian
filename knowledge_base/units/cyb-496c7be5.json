@@ -1,0 +1,29 @@
+{
+  "id": "cyb-496c7be5",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "كيفية التعامل مع التنمر الإلكتروني للأطفال",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "تنمر إلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "are the bully down. Save texts, emails, stop hanging around with friends to check its classification and target of bullying. You might be online conversations or voice- or have lost interest in school or reviews for you. teased or have rumours spread mails as proof. social activities. about you online, receive nasty Tips 4. Report it to: messages or even threats. It can 1. If another player is behaving happen in school, or out of it, any • your school—they should badly or making you uncom- hour of the day, from people you have policies in place about fortable, block them from know, and sometimes people you bullying. your players list. You may also don’t know. It can leave you feel- • your ISP and/or phone pro- Guidelines for Children and Young People www.itu.int/cop Help stop bullying 1. Stand up and speak out! If you see or know about bul- lying happening to a friend, support them and report it. You’d want them to do the 2. Don’t forward messages or pictures that may hurt or be upsetting to someone. Even though you may not have started it, you will be seen to be part of the bullying cycle. 3. Remember to treat others as you would like to be treated when communicating online. Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Your digital footprint 3. Think before you hit send or Offensive or illegal 3. If a website looks suspicious It’s great to",
+  "text_simplified": "التنمر الإلكتروني هو سلوك عدواني يحدث عبر الإنترنت أو في المدرسة، وقد يشمل رسائل مسيئة أو تهديدات أو نشر شائعات. يجب على الطفل إبلاغ شخص بالغ موثوق به، وحفظ الأدلة مثل الرسائل والبريد الإلكتروني، وتجنب مشاركة المحتوى المؤذي. يمكن حظر المتنمرين في الألعاب والتطبيقات، والإبلاغ عنهم للمدرسة أو مزود الخدمة. من المهم معاملة الآخرين بلطف كما تحب أن يعاملوك.",
+  "labels": [
+    "تنمر إلكتروني",
+    "سلامة رقمية",
+    "دعم نفسي",
+    "إبلاغ",
+    "احترام الآخرين"
+  ],
+  "created_at": "2026-06-20T15:10:49Z",
+  "updated_at": "2026-06-20T15:10:49Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

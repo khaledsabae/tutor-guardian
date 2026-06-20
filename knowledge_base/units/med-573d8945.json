@@ -1,0 +1,29 @@
+{
+  "id": "med-573d8945",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تخطيط استراتيجي لخدمات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط استراتيجي للصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "health, brainstorming sessions should include child and adolescent service providers, players to develop a set of educators, service users (for example, youth and family members) and representatives strategies for implementing from advocacy groups. The latter could include those that focus on young people in each of the proposals listed. general, or on young people with specific mental health needs in particular. The SWOT analysis is particularly relevant for this stage. Third, the strategies identified in step 2 need to be pruned, so that there are two or three Identify two or three strategies- for each area of action. strategies for each area of action. It is recommended that key stakeholders and sectors be involved in this process. A time frame should be established for each strategy. This is important to ensure the A time frame should be timely and accountable development of guidelines for budgeting, achieving a established for each strategy. consensus on realistic expectations and developing appropriate criteria for evaluation. Some strategies might be implemented continuously and indefinitely, while others might operate for a limited time period. Once a decision has been made about which strategies to pursue and how much time It is necessary to develop should be allocated for each strategy, it is necessary to develop details of how each details of how each strategy strategy will be implemented. These details include setting indicators and targets, and will be implemented. determining the major activities and their costs, available resources and the budget. These issues are addressed in",
+  "text_simplified": "يجب أن تشمل جلسات العصف الذهني مقدمي الخدمات للأطفال والمراهقين، والمعلمين، والمستخدمين مثل الشباب وأفراد الأسرة، وممثلي مجموعات المناصرة. يتم تحليل نقاط القوة والضعف والفرص والتهديدات (SWOT) لتحديد استراتيجيات التنفيذ، ثم تقليصها إلى استراتيجيتين أو ثلاث لكل مجال عمل. يجب تحديد إطار زمني لكل استراتيجية لضمان المساءلة ووضع ميزانية مناسبة. بعد اختيار الاستراتيجيات، يتم تفصيل خطوات التنفيذ بما في ذلك المؤشرات والأهداف والأنشطة والتكاليف.",
+  "labels": [
+    "صحة نفسية",
+    "تخطيط استراتيجي",
+    "إشراك أصحاب المصلحة",
+    "تحليل SWOT",
+    "تنفيذ البرامج"
+  ],
+  "created_at": "2026-06-20T14:50:15Z",
+  "updated_at": "2026-06-20T14:50:15Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

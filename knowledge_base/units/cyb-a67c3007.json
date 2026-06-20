@@ -1,0 +1,29 @@
+{
+  "id": "cyb-a67c3007",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال على الإنترنت للشركات",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "support children and young people’s rights. Guidelines for industry on Child Online Protection considerations into to privacy and to freedom of speech, while offering education and all appropriate guidance through the company’s services. corporate policies Draw upon internal and external expertise and consult with key stakeholders, including children and young people, on child online safety mechanisms to obtain ongoing feedback and guidance on company approaches. In States which lack adequate legal frameworks for the protection of children and young people’s rights to privacy and freedom of expression, companies should ensure policies and practices are in line with international standards. See United Nations General Assembly Resolution 68/167 on the right to privacy in the digital age. Ensure access to remedy by establishing operational-level grievance and reporting mechanisms for any child rights violations (e.g. CSAM, inappropriate content or contact or breaches of privacy). Nominate a child protection policy manager or other designated person who can be contacted for COP issues. If a child is at risk of harm, the child protection policy manager should immediately alert the appropriate authorities. The BBC editorial guidelines (2019), for example, specify the appointment of a child protection policy manager, which is considered mandatory within public service media. Create and implement company and industry standards for the industry standards protection of children and young people, with regard to the specific to protect children industry and features. Developing In collaboration with government, law enforcement, civil society and standard processes hotline organizations, industry has a key role to play",
+  "text_simplified": "يجب على الشركات حماية حقوق الأطفال والمراهقين على الإنترنت، مثل الخصوصية وحرية التعبير. ينبغي وضع سياسات تستند إلى خبرات داخلية وخارجية، والتشاور مع الأطفال وأصحاب المصلحة. كما يجب إنشاء آليات للإبلاغ عن انتهاكات حقوق الطفل، وتعيين مسؤول لحماية الطفل. إذا كان الطفل في خطر، يجب إبلاغ السلطات فورًا.",
+  "labels": [
+    "حقوق الطفل",
+    "الخصوصية",
+    "حرية التعبير",
+    "السلامة الرقمية",
+    "سياسات الشركات"
+  ],
+  "created_at": "2026-06-20T14:57:30Z",
+  "updated_at": "2026-06-20T14:57:30Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

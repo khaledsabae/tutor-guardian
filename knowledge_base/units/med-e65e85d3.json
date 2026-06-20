@@ -1,0 +1,29 @@
+{
+  "id": "med-e65e85d3",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تأثير اضطرابات السلوك والعاطفة على نمو الطفل",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "اضطرابات سلوكية وعاطفية",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "conduct disorders, which have a profound impact on social development. If untreated, they frequently continue into adolescence and adulthood and lead to dropping out of school, antisocial behaviour, a poor employment history and poverty in adulthood. This impairs parenting and leads to a self-perpetuating, inter-generational cycle. Untrained health workers in adult clinics may not suspect this childhood-onset disorder and may not refer families and children for help. Children and adolescents seldom decide for themselves when to seek out health services for physical or emotional problems. Parents, teachers or other carers can easily recognize many physical conditions, but emotional disorders are often not so readily apparent. Examples of emotional disorders are mood and neurotic disorders(for Mood and anxiety disorders example, depressive episodes and obsessive-compulsive disorder), which typically typically develop during the develop during the school-age years and are easily identifiable by staff trained to treat school-age years. mental disorders in children. However, untrained individuals may not detect these disorders because they are subjective and internal. Children and adolescents are better reporters of internal, subjective states (for example, anxiety and depression) than their carers. But if no one asks them how they are feeling, their symptoms may remain unrecognized. It is estimated that by 2020, depressionwill be the second leading cause of disability worldwide (WHO, 2001). In later childhood, between the ages of 12 and 18 years, mental and behavioural Between the ages of 12 and disorders due to psychoactive substance use can emerge. In many cultures, children 18 years, disorders related",
+  "text_simplified": "اضطرابات السلوك تؤثر بشدة على النمو الاجتماعي للطفل، وإذا لم تعالج فقد تستمر إلى المراهقة والبلوغ وتؤدي إلى التسرب المدرسي والسلوك المعادي للمجتمع والفقر. من المهم أن يسأل الأهل والمعلمون الأطفال عن مشاعرهم لأن الاضطرابات العاطفية مثل القلق والاكتئاب قد لا تكون ظاهرة بوضوح.",
+  "labels": [
+    "اضطرابات سلوكية",
+    "نمو اجتماعي",
+    "اكتئاب",
+    "قلق",
+    "تدخل مبكر"
+  ],
+  "created_at": "2026-06-20T14:44:38Z",
+  "updated_at": "2026-06-20T14:44:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-b77ff7b8",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تصميم تطبيقات آمنة للأطفال وحماية الخصوصية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية وحماية الأطفال",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "Children here are not asked for any personal information to create an account, which is possible only with the email address of a parent or carer. The App creates an opportunity for children and families to discuss online safety and privacy in a positive environment. Examples of age-appropriate design include specific offers of some of the major Public Service Broadcasters for certain age groups: for example, the German ARD (Arbeitsgemeinschaft der öffentlich-rechtlichen Rundfunkanstalten der Bundesrepublik Deutschland – Das Erste) and ZDF (Zweites Deutsches Fernsehen) target their audience starting from 14 years old, offering customized content through the online channel funk.net. The BBC (British Broadcasting Corporation) launched CBeebies, which is directed to children under 6 years old. The website content is specifically tailored for respective age groups. Good practice: Policy and technology Twitter has continuously invested in proprietary technology, which has contributed to steadily reducing the burden on people to report.1 Specifically, more than 50 per cent of Tweets, compared with 20 per cent in 2018, that Twitter follows up in response to their abusive nature, are currently proactively surfaced using technology, rather than relying on reports to Twitter. The new technology is used to deal with the policy content areas of private information, sensitive media, hateful conduct, abuse and 1 Twitter, “15th Transparency Report: Increase in proactive enforcement on accounts”. 3.2 Developing standard processes to handle CSAM In 2019, IWF actioned 132,676 webpages confirmed as containing child sexual abuse. 13 Any URL could contain hundreds, if not thousands, of images",
+  "text_simplified": "هذا النص يشرح كيفية تصميم تطبيقات ومنصات رقمية آمنة للأطفال، حيث لا تُطلب معلومات شخصية لإنشاء حساب بل يُستخدم بريد الوالدين فقط. كما يوضح أمثلة لمحتوى مخصص لكل فئة عمرية مثل قنوات بي بي سي للأطفال تحت 6 سنوات وقنوات ألمانية لمن هم فوق 14 عامًا. ويشير إلى أن تويتر تستخدم تقنيات متطورة لكشف المحتوى المسيء تلقائيًا دون انتظار البلاغات. كما يتناول معايير التعامل مع مواد الاعتداء الجنسي على الأطفال.",
+  "labels": [
+    "أمان الأطفال",
+    "تصميم مناسب للعمر",
+    "خصوصية رقمية",
+    "محتوى مخصص",
+    "تقنيات الكشف الآلي"
+  ],
+  "created_at": "2026-06-20T14:55:39Z",
+  "updated_at": "2026-06-20T14:55:39Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

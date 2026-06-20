@@ -1,0 +1,29 @@
+{
+  "id": "cyb-447c122f",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "حماية الأطفال من الاستغلال الجنسي عبر الإنترنت",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "استغلال جنسي للأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "... 9. We now turn our attention to the it is simply not enough to allow address the threats of the internet in media particularly the internet which governments to make empty prom- addition to providing Source: http://www.iyac.net/ poses one of the greatest threats to ises to curb this attack on children. iyac_charter.pdf and http://www. Consequently, we the children, ask millions of children throughout the supplemental information about virtualglobaltaskforce.com/iyac_char- that action committees be created world. sexual exploitation of children. ter_supp.pdf The full “Adolescent Declaration to End Sexual Exploitation” can be found at: http://www.iiicongressomundial.net/congresso/arquivos/Rio%20Declaration%20and%20Call%20for%20Action%20-%20 FINAL%20Version.pdf Guidelines for Children and Young People www.itu.int/cop Children and young people online should be aware of the opportunities as well as the pitfalls Guidelines for Children and Young People www.itu.int/cop Children and young Information and Communication Access Technologies (ICT’s), are chang- ing the way children interact with A Danish study found5 that as their peers, the way they access “children get older, so their use information, express their views, of the internet increases. 19% of post and share creative content. the respondents aged between 9 The highly interactive nature of 10 use the internet every day. In many Internet related services is comparison, 80% of 14-16 year specifically liked by children and olds use the internet on a daily ba- young people. In general, for chil- sis”. A similar trend is seen in Sin- dren, the Internet is something gapore6, where 56% of children they feel secure about, something aged 5-14 reports to go online they",
+  "text_simplified": "يجب حماية الأطفال من مخاطر الإنترنت والاستغلال الجنسي عبر وسائل الإعلام الرقمية. الأطفال والشباب بحاجة إلى التوعية بفرص الإنترنت ومخاطره. تزداد استخدامات الإنترنت مع تقدم العمر، حيث يستخدم 80% من المراهقين الإنترنت يومياً. ينبغي تشكيل لجان عمل لمواجهة هذه التهديدات.",
+  "labels": [
+    "حماية الأطفال",
+    "الاستغلال الجنسي",
+    "مخاطر الإنترنت",
+    "توعية رقمية",
+    "سلامة الأطفال"
+  ],
+  "created_at": "2026-06-20T15:08:30Z",
+  "updated_at": "2026-06-20T15:08:30Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

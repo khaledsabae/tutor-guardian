@@ -1,0 +1,29 @@
+{
+  "id": "med-4f01832d",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أساسيات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية عامة",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "adolescent disorders and those in adulthood, early intervention could prevent or reduce the likelihood of long-term impairment; and (iii) effective interventions reduce the burden of mental health disorders on the individual and the family, and they reduce the costs to health systems and The mental health of children and adolescents can be influenced by a variety of factors. Risk factors increase the probability of mental health problems, while protective factors moderate the effects of risk exposure. Policies, plans and specific interventions should be designed in a way that reduces risk factors and enhances protective factors. 2. Developing a child and adolescent mental health policy Without guidance for developing child and adolescent mental health policies and plans there is the danger that systems of care will be fragmented, ineffective, expensive and inaccessible. Several different systems of care (e.g. education, welfare, health) may need to be involved to ensure that services for youth are effective. An overriding consideration is that the child’s development stage can influence his/her degree of vulnerability to disorders, how the disorder is expressed and how best treatment should be approached. Thus a developmental perspective is needed for an understanding of all mental disorders and for designing an appropriate mental health policy. This section identifies the steps needed to develop a child and adolescent mental health policy. This policy may be part of an overall health policy, a child and adolescent health policy or a mental health policy. These are not mutually exclusive categories; indeed, more effective action is",
+  "text_simplified": "الصحة النفسية للأطفال والمراهقين تتأثر بعوامل خطر تزيد من احتمالية المشاكل، وعوامل حماية تقلل من تأثير هذه المخاطر. التدخل المبكر يمكن أن يمنع أو يقلل من المشاكل النفسية طويلة الأمد. يجب تصميم سياسات وخطط تراعي مرحلة النمو لتكون فعالة ومنسقة بين أنظمة الرعاية المختلفة.",
+  "labels": [
+    "صحة نفسية",
+    "تدخل مبكر",
+    "عوامل خطر",
+    "سياسات",
+    "مراحل النمو"
+  ],
+  "created_at": "2026-06-20T14:43:07Z",
+  "updated_at": "2026-06-20T14:43:07Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

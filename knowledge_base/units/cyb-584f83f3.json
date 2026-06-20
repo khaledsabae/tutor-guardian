@@ -1,0 +1,29 @@
+{
+  "id": "cyb-584f83f3",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "التنمر الإلكتروني وحماية الأطفال في الألعاب",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "تنمر إلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "computer favourite sports and other response they may get bored friends are being bullied. They can be great fun, but you need to activities. and go away. might keep it to themselves. If be careful about how much you 2. Block the person. This will they are being bullied, you might play and who you play with. It is Bullying stop you seeing messages or notice that they may not chat with important that if you chat with The same rules apply online as texts from a particular person. you online as much, or they sud- other gamers you protect your in the ‘real world’ about how to 3. Tell someone. Tell your mum denly receive lots of SMS messag- privacy and don’t share personal treat other people. Unfortunately, or dad, or another adult you es or are unhappy after they have or private information. If you are people don’t always treat each trust. Keep the evidence. This been on the computer or checked unsure whether a game is suitable, other well online, and you, or a can be useful in tracking the their phone messages. They may ask your parents or a trusted adult friend, may find that you are the bully down. Save texts, emails, stop hanging around with friends to check its classification and target of bullying. You might be online conversations or voice- or have lost interest in school or reviews for you. teased or have rumours spread mails as proof. social activities. about you online,",
+  "text_simplified": "يجب على الأهل مراقبة نشاط أطفالهم على الإنترنت والألعاب الإلكترونية، حيث قد يتعرضون للتنمر الإلكتروني. إذا لاحظتم أن طفلكم لا يتحدث كما كان، أو يتلقى رسائل مزعجة، أو فقد الاهتمام بالمدرسة، فقد يكون ضحية تنمر. علموا أطفالكم حماية خصوصيتهم وعدم مشاركة معلومات شخصية، وإبلاغ شخص بالغ موثوق عند التعرض للتنمر مع حفظ الأدلة.",
+  "labels": [
+    "تنمر إلكتروني",
+    "حماية الخصوصية",
+    "سلامة الأطفال",
+    "ألعاب إلكترونية",
+    "دعم الأهل"
+  ],
+  "created_at": "2026-06-20T15:10:44Z",
+  "updated_at": "2026-06-20T15:10:44Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

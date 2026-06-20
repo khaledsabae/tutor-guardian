@@ -1,0 +1,29 @@
+{
+  "id": "cyb-82e2a0fc",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "اتفاقية استخدام الإنترنت الآمن للأطفال",
+  "language": "mixed",
+  "age_group": "7-9",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "I 6. I will report suspicious and agree to follow these rules: illegal activity and sites to the 1. I will get to know the services proper authorities. and websites my child uses. 7. I will make or find a list of I understand that my parents have 2. I will set reasonable rules and recommended sites for chil- agreed to live by these rules and I guidelines for computer use by dren. agree to help my parents explore my children and I will discuss 8. I will frequently check to see the Internet with me. these rules and post them near where my kids have visited on the computer as a reminder. 3. I will not overreact if my child 9. I will seek options for filter- Child signature tells me about something ing and blocking inappropri- “bad” he or she finds or does ate Internet material from my on the Internet. 4. I will try to get to know my 10. I will talk to my kids about child’s “online friends” and their online explorations and Buddy List contacts just as I take online adventures with try to get to know his or her them as often as I can. Guidelines for Children and Young People www.itu.int/cop Child’s Contract to make sure they approve. 7. I will treat others the way I can try to make sure it never 4. When considering signing up want to be treated. happens again. I know that the Internet can be a",
+  "text_simplified": "هذا النص يتضمن اتفاقية بين الوالدين والطفل حول استخدام الإنترنت بشكل آمن. يهدف إلى تعزيز الرقابة الأبوية ووضع قواعد واضحة للتصفح. يشجع على التواصل المفتوح بين الطفل ووالديه حول التجارب الإلكترونية.",
+  "labels": [
+    "اتفاقية إنترنت",
+    "رقابة أبوية",
+    "سلامة الأطفال",
+    "قواعد التصفح",
+    "تواصل أسري"
+  ],
+  "created_at": "2026-06-20T15:12:39Z",
+  "updated_at": "2026-06-20T15:12:39Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

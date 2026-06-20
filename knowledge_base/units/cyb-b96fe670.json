@@ -1,0 +1,29 @@
+{
+  "id": "cyb-b96fe670",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة الرقمية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "السلامة الرقمية وحماية الخصوصية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "propose types of information. Different your personal data make sure to pass on your details to any In many countries there are na- sites have different rules. Before that whoever is requesting other companies. If you don’t tional or local organizations that you enter any information about information about you is want them to do either or you can turn to for help. yourself into a site’s database or authentic and serious and also both of those things, tick the membership records, check how remember that before giving relevant boxes. If they don’t In some countries, such as Cana- the information might be used, data regarding your friends offer you an option you really da, ‘cyber-bullying’ is considered whether or not some or all of it you need to first inform them should think about not using an actual criminal act. In most will be published, and if so where. and have their permission be- the service at all. countries it is a criminal offence If you feel uncomfortable with cause they may not be happy to threaten someone or to harass the amount of information being about having their e-mail or stalk them, whether in real life asked of you, if you do not re- addresses or othe informa- Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop 3. send personal photos and vid- send you unwanted mail; numeric codes, credit card question what you come across eos only to those you actually make",
+  "text_simplified": "يجب على الأطفال والمراهقين توخي الحذر عند مشاركة معلوماتهم الشخصية عبر الإنترنت. ينبغي التحقق من مصداقية المواقع قبل إدخال البيانات، وعدم مشاركة صور أو فيديوهات إلا مع الأشخاص الموثوقين. في حال الشعور بعدم الراحة تجاه طلب معلومات، يُفضل عدم استخدام الخدمة. التحرش الإلكتروني جريمة في معظم الدول، ويمكن اللجوء إلى منظمات محلية للمساعدة.",
+  "labels": [
+    "الخصوصية",
+    "التحرش الإلكتروني",
+    "مشاركة المعلومات",
+    "السلامة الرقمية",
+    "الوعي الإلكتروني"
+  ],
+  "created_at": "2026-06-20T15:11:53Z",
+  "updated_at": "2026-06-20T15:11:53Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

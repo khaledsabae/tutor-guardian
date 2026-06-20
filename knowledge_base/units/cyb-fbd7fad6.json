@@ -1,0 +1,29 @@
+{
+  "id": "cyb-fbd7fad6",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "دليل المواطنة الرقمية والسلامة على الإنترنت للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "المواطنة الرقمية والسلامة على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "Networks Digital Citizenship Safer Internet celebrations A list of issues you should consider when discussing Digital Citizenship Case Study: The Bright Side of Social Networks for Children with Learning Difficulties 31 Guidelines for Children and Young People www.itu.int/cop 3. What you need to know to stay safe online 37 eeting online friends offline ccepting invitations/friendships ell someone about your concerns Learn to use your machine safely Guidelines for the age group 5-7 year old 41 Guidelines for the age group 8-12 year old 43 Playing online games Your digital footprint Guidelines for Children and Young People www.itu.int/cop Guidelines for the age group 13 year old and above 49 Your online rights • Harmful and illegal content • What is grooming • Cyber bullying • Defend your privacy • Respect copyright • Online commerce 4. Conclusions 63 Sources for further reading 65 Parents’ Contract Child’s Contract Guidelines for Children and Young People www.itu.int/cop “The UN Convention on the Rights of the Child defines a child as being any person under the age of 18. These Guidelines address issues facing all persons under the age of 18 in all parts of the world. However, a young internet user of seven years of age is very unlikely to have the same needs or interests as a 12 year old just starting at High School or a 17 year old on the brink of adulthood. At different points in the Guidelines we have tailored the advice or recommendations to fit these different contexts. Whilst",
+  "text_simplified": "هذا الدليل يقدم نصائح للأطفال والشباب حول الاستخدام الآمن للإنترنت والمواطنة الرقمية. يناقش موضوعات مثل التنمر الإلكتروني، حماية الخصوصية، حقوق الطفل على الإنترنت، وكيفية التعامل مع الغرباء. كما يقدم إرشادات مخصصة لكل فئة عمرية من 5 إلى 17 سنة.",
+  "labels": [
+    "المواطنة الرقمية",
+    "السلامة على الإنترنت",
+    "التنمر الإلكتروني",
+    "حماية الخصوصية",
+    "إرشادات عمرية"
+  ],
+  "created_at": "2026-06-20T15:07:48Z",
+  "updated_at": "2026-06-20T15:07:48Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

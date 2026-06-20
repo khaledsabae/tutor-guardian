@@ -1,0 +1,29 @@
+{
+  "id": "cyb-2066aac9",
+  "domain": "cyber",
+  "source_file": "Every_Online_Safety_Conversation.pdf",
+  "title": "الإبلاغ عن استغلال الأطفال في أستراليا",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "استغلال الأطفال",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "طارئ",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Internet Matters — Online Safety Conversations",
+  "text_original": "Child Exploitation If you are in Australia and a child is in immediate danger, or at risk of harm call Triple Zero (000). To make a report, complete the online form at www.accce.gov.au/report Your report to the Australian Centre to Counter Child Exploitation will be looked at by specialist investigators in the Australian Federal Police. After your report has been assessed, the police will be in contact over email or phone to talk about what has happened and to make sure that your child is safe. For anonymous reporting contact Crime Stoppers at crimestoppers.com.au or 1800 333 000. You can also contact your local police on 131 444. Where to get more information The AFP’s ThinkUKnow program has a range of eSafety has a range of resources and free webinars for resources for families and children around preventing families and children around online safety. These are online child exploitation. These are available at www. available at thinkuknow.org.au. www.eSafety.gov.au/parents www.thinkuknow.org.au",
+  "text_simplified": "إذا كان طفلك في خطر فوري في أستراليا، اتصل بالرقم 000. يمكنك الإبلاغ عن استغلال الأطفال عبر موقع المركز الأسترالي لمكافحة استغلال الأطفال، وسيتواصل معك المحققون المتخصصون للتأكد من سلامة طفلك.",
+  "labels": [
+    "استغلال أطفال",
+    "سلامة الطفل",
+    "إبلاغ فوري",
+    "حماية",
+    "أستراليا"
+  ],
+  "created_at": "2026-06-20T15:02:42Z",
+  "updated_at": "2026-06-20T15:02:42Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Every_Online_Safety_Conversation",
+    "source_author": ""
+  }
+}

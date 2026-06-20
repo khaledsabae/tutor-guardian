@@ -1,0 +1,29 @@
+{
+  "id": "med-ec9efc52",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية إشراك الجهات المعنية في سياسات الصحة النفسية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "agencies, e.g. Indigenous peoples Correctional services Legal aid organizations United Nations Children’s Refugees Fund (UNICEF) Tribal minorities World Federation for Mental Finance Parents and other family World Health Organization Housing Faith-based organizations Internal affairs Private mental health Justice service providers Family/caregiver Service providers from: Safety and security Youth assembled as youth Child and adolescent Social Welfare parliaments mental health units Trade and Industry Paediatric hospitals Consultation and negotiation frequently aim to garner support from a critical mass of Consultation and negotiation stakeholders needed to generate sufficient political will among decision-makers. frequently aim to garner However, there are also other reasons why it is important to have consultation with a support from a critical mass wide range of stakeholders. First, the social ecology of children and adolescents is such of stakeholders needed to that their interests and needs should be met in a range of settings, such as the family, generate sufficient political school and community. There are multiple pathways to sound psychological adjustment will among decision-makers. and good mental health, and each of the settings can contribute elements for a The social ecology of children comprehensive child and adolescent mental health policy. It is generally those who are and adolescents is such that principally attached to a particular setting that are best placed to contribute policy their interests and needs elements that pertain to that setting. For example, a school-based mental health should be met in a range of promotion policy is more likely to succeed if educators are involved",
+  "text_simplified": "يجب إشراك مجموعة واسعة من الجهات المعنية مثل الأهل والمدارس والمنظمات الصحية والقضائية عند وضع سياسات الصحة النفسية للأطفال والمراهقين. كل جهة تساهم بخبرتها في المجال الذي تعمل به، مما يساعد في تلبية احتياجات الطفل في مختلف بيئاته كالأسرة والمدرسة والمجتمع. التعاون بين هذه الجهات يضمن نجاح السياسات وتحقيق الصحة النفسية الجيدة.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات",
+    "تعاون مجتمعي",
+    "أطفال",
+    "مراهقون"
+  ],
+  "created_at": "2026-06-20T14:46:39Z",
+  "updated_at": "2026-06-20T14:46:39Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

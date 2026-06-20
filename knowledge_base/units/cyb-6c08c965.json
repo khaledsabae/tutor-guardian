@@ -1,0 +1,29 @@
+{
+  "id": "cyb-6c08c965",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تأثير الذكاء الاصطناعي على حقوق الأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تأثير التكنولوجيا على حقوق الأطفال",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "and young people by supporting their right to further civic engagement participation. Refer to the general guidelines in Table 1. 5.4 Feature D: Artificial intelligence-driven systems With the increased attention given to deep learning technologies, the terms “artificial intelligence”, “machine learning”, and “deep learning\" have been used somewhat interchangeably by the general public to reflect the concept of replicating “intelligent” behaviour in machines. In this section, we focus on the ways that machine learning and deep learning processes impact children’s lives and ultimately, their human rights. Guidelines for industry on Child Online Protection “Because of the exponential advancement of artificial intelligence-based technologies over the past few years, the current international framework that protects children’s rights does not explicitly address many of the issues raised by the development and use of artificial intelligence. However, it does identify several rights that may be implicated by these technologies, and thus provides an important starting place for any analysis of how children’s rights may be positively or negatively affected by new technologies, such as rights to privacy, to education, to play, and to non-discrimination.”18 The application of AI can affect the impact on children of different services that are used on social networks, such as video streaming platforms. Machine-learning algorithms, the recommendation engine primarily employed by popular video-sharing platforms, are optimized to ensure maximum views of specific videos within a given time.19 Touchscreen technology and the design of these platforms allow very young children to browse and navigate this content. There is a particular",
+  "text_simplified": "يتناول النص تأثير تقنيات الذكاء الاصطناعي والتعلم الآلي على حقوق الأطفال، خاصة في منصات مشاركة الفيديو. تشير الإرشادات إلى أن الإطار الدولي الحالي لا يغطي بشكل كافٍ التحديات الجديدة التي تطرحها هذه التقنيات. يجب حماية حقوق الأطفال في الخصوصية والتعليم واللعب وعدم التمييز عند استخدام هذه الأنظمة.",
+  "labels": [
+    "ذكاء اصطناعي",
+    "حقوق الأطفال",
+    "حماية رقمية",
+    "تعليم",
+    "توصيات"
+  ],
+  "created_at": "2026-06-20T15:00:41Z",
+  "updated_at": "2026-06-20T15:00:41Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

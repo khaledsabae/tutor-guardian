@@ -1,0 +1,29 @@
+{
+  "id": "med-7da11e18",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "العوامل المؤثرة في الصحة النفسية للأطفال والتدخل المبكر",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات نفسية واجتماعية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "family b) School Academic failure Opportunities for involvement in Failure of schools to provide an school life appropriate environment to Positive reinforcement from support attendance and learning academic achievement Inadequate/inappropriate Identity with a school or need for provision of education educational attainment c) Community Lack of \"community efficacy\" Connectedness to community (Sampson, Raudenbush & Earls, Opportunities for constructive 1997) use of leisure Community disorganization Positive cultural experiences Discrimination and marginalization Positive role models Exposure to violence Rewards for community Lack of a sense of \"place\" involvement (Fullilove, 1996) Connection with community Transitions (e.g. urbanization) organizations including religious organizations Evidence of early antecedents of adult mental disorders in childhood is now conclusive (Tsuang et al., 1995). This applies, inter alia, to mood disorders such as depressive Evidence of early antecedents episodes and bipolar affective disorder (formerly called manic depression), and of adult mental disorders in psychotic disorders such as schizophrenia. Some childhood disorders, such as childhood is now conclusive. pervasive developmental disorders and hyperkinetic disorder, may only be recognized in adulthood by health professionals. If adult health professionals had increased exposure to and training in child and adolescent mental health, they would be more likely to make these diagnoses earlier and be better able to understand their impact on a person’s functioning. Early intervention with children and adolescents, as well as with their parents/families, can reduce or eliminate the manifestations of some mental disorders and foster the integration into mainstream educational and health services of children and adolescents who would otherwise",
+  "text_simplified": "يؤثر الفشل الأكاديمي وعدم توفير بيئة مدرسية مناسبة على التحصيل الدراسي للأطفال. كما أن ضعف الروابط المجتمعية وغياب القدوة الإيجابية يزيدان من المخاطر. تشير الأبحاث إلى أن اضطرابات الطفولة مثل الاكتئاب والفصام يمكن اكتشافها مبكراً. التدخل المبكر مع الأطفال والأسر يمكن أن يقلل من أعراض الاضطرابات النفسية ويساعد في دمجهم في التعليم والخدمات الصحية.",
+  "labels": [
+    "فشل أكاديمي",
+    "بيئة مدرسية",
+    "روابط مجتمعية",
+    "اضطرابات نفسية",
+    "تدخل مبكر"
+  ],
+  "created_at": "2026-06-20T14:44:52Z",
+  "updated_at": "2026-06-20T14:44:52Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

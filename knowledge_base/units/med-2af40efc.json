@@ -1,0 +1,29 @@
+{
+  "id": "med-2af40efc",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحديات الصحة النفسية للمراهقين في بلد متوسط الموارد",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "سلوكيات خطرة لدى المراهقين",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "for a country with a medium level of resources (population = 10 million)* Situation analysis Interviews with health workers and community leaders concluded that: > The main unmet child and adolescent mental health challenges were adolescent risk behaviours such as unsafe sexual behaviour (resulting in a high prevalence of HIV and other sexually transmitted infections), alcohol, tobacco and other drug use, and interpersonal violence. > Conversely, there were low rates of health promoting behaviours (such as healthy eating and exercise). > In the cities, mental health services were relatively accessible through an extensive primary health care system, supported by consultation and provision of hospital- based services. > In the rural areas, there were few child and adolescent mental health services. > There was very little interaction between the health and education systems. > The ratios of psychiatrists, clinical psychologists and psychiatric nurses per 100,000 population were 10, 16 and 100 respectively. The majority of these professionals were employed in the public sector. *NOTE: Data is derived from the WHO ATLAS project, and can be accessed at: http://www.who.int/mental_health/evidence/atlas Child and adolescent mental health policy Comprehensive, age-appropriate, community-based child and adolescent mental health services will be available for the whole population. Those services will work closely with other sectors to reduce the impact of risk factors for mental disorders and to enhance protective factors. Values → principles > Responsibility to prevent psychological, emotional and social harm → the health system should be oriented towards reducing risk factors for poor mental health and",
+  "text_simplified": "يعاني المراهقون في هذا البلد من سلوكيات خطيرة مثل العلاقات الجنسية غير الآمنة وتعاطي الكحول والمخدرات والعنف، بينما تقل لديهم العادات الصحية كالتغذية السليمة والرياضة. الخدمات النفسية متوفرة في المدن لكنها نادرة في الريف، وهناك ضعف في التعاون بين الصحة والتعليم.",
+  "labels": [
+    "صحة نفسية",
+    "مراهقون",
+    "سلوكيات خطرة",
+    "خدمات صحية",
+    "وقاية"
+  ],
+  "created_at": "2026-06-20T14:49:49Z",
+  "updated_at": "2026-06-20T14:49:49Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-7582bb60",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "اتفاق الأسرة لسلامة الإنترنت",
+  "language": "mixed",
+  "age_group": "7-9",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "maturity and good They’re doing this because sense, without blaming anyone, they love me and want to and will calmly work through it protect me. with my child to ensure their safer Internet experiences in the future. I will teach my parents more about the Internet so we can have fun together and learn cool new Parent signature(s) I agree to the above. Child signature Guidelines for Children and Young People www.itu.int/cop Photo credits: www.shutterstock.com, Violaine Martin/ITU, Ahone Ayeh Njume-Ebong/ Guidelines for Children and Young People Gu (( i( ((( delines for Children on Ch (( i( ((( ld Online International Telecommunication Union Place des Nations CH-1211 Geneva 20 www.itu.int/cop Printed in Switzerland With the support of: CCHHIISS www.itu.int/cop",
+  "text_simplified": "يشرح النص أهمية نضج الطفل وفهمه أن تصرفات والديه تأتي من الحب والرغبة في حمايته. يتضمن اتفاقاً بين الطفل ووالديه لضمان تجربة إنترنت آمنة، مع تعهد الطفل بتعليم والديه عن الإنترنت لقضاء وقت ممتع معاً.",
+  "labels": [
+    "سلامة الإنترنت",
+    "تربية رقمية",
+    "اتفاق أسري",
+    "حماية الطفل",
+    "تعليم الوالدين"
+  ],
+  "created_at": "2026-06-20T15:12:55Z",
+  "updated_at": "2026-06-20T15:12:55Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

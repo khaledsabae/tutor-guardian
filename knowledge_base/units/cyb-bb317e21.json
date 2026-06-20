@@ -1,0 +1,29 @@
+{
+  "id": "cyb-bb317e21",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "الابتزاز الجنسي للأطفال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "ابتزاز جنسي للأطفال",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "Protection Act”, 1998. 47 The Luxembourg Guidelines, 2016 (as above). Guidelines for industry on Child Online Protection Sextortion or sexual extortion of children Sextortion is the “blackmailing of a person with the help of self-generated images of that person in order to extort sexual favours, money, or other benefits from her or him under the threat of sharing the material beyond the consent of the depicted person (e.g. posting images on social media)”.48 The Internet of Things “The Internet of Things (IoT) represents the next step towards the digitization of our society and economy, where objects and people are interconnected through communication networks and report about their status and/or the surrounding environment.”49 This abbreviation stands for “uniform resource locator”, the address of an Internet page5.0 Virtual reality “Virtual reality is the use of computer technology to create the effect of an interactive three- dimensional world in which the objects have a sense of spatial presence.”51 Wi-Fi (Wireless Fidelity) is the group of technical standards that enable data transmission over wireless networks.52 48 The Luxembourg Guidelines, 2016 (as above). 49 European Commission, “Policy: The Internet of Things\". 50 UNICEF and ITU, “Guidelines for Industry on Child Online Protection”, 2014 (as above). 51 NASA, “Virtual Reality: Definition and Requirements”. 52 US Federal Trade Commission, \"Children’s Online Privacy Protection Act”, 1998. Guidelines for industry on Child Online Protection Telecommunication Place des Nations CH-1211 Geneva 20 Published in Switzerland",
+  "text_simplified": "الابتزاز الجنسي للأطفال هو تهديد بنشر صور خاصة للطفل للحصول على مزايا جنسية أو مالية. يجب على الأهل تعليم أطفالهم عدم مشاركة صور شخصية عبر الإنترنت. كما ينبغي مراقبة استخدام الأطفال للأجهزة المتصلة بالإنترنت والتطبيقات.",
+  "labels": [
+    "ابتزاز جنسي",
+    "حماية الأطفال",
+    "السلامة الرقمية",
+    "توعية أسرية",
+    "مخاطر الإنترنت"
+  ],
+  "created_at": "2026-06-20T15:02:14Z",
+  "updated_at": "2026-06-20T15:02:14Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

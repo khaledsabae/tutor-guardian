@@ -1,0 +1,29 @@
+{
+  "id": "med-35c80247",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية التعاون بين القطاعات للصحة النفسية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تعاون بين القطاعات",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Improving Access and Use of Psychotropic Intersectoral collaboration All the stakeholders that were Because children’s and adolescents’ well-being is apparent in and influenced by their consulted earlier can be participation in multiple sectors of society, mental health policy should foster sources of intersectoral collaboration between the different sectors concerned, such as education, welfare, collaboration. religion, housing, correctional services, police and other social services. All the stakeholders that were consulted earlier can be sources of intersectoral collaboration (Box 4). This form of collaboration is important for the following reasons: >It increases the comprehensive consideration of an issue; >It encourages a continuum of care; > Common risk factors drive some of the problems encountered in many different sectors (Durlak, 1998); >It enables a range of different approaches to addressing an issue; >Similar or identical issues can be addressed in various settings; > It can increase efficiency and cost effectiveness by reducing duplication and enhancing synergy between sectors; and >It increases awareness in other sectors of their potential role in implementing mental health promotion strategies. Box 9 offers a number of suggestions for facilitating intersectoral collaboration. Box 9. Suggestions for securing optimal intersectoral collaboration Who should collaborate, and why? >Initial planning should include a sensitive identification of who should be involved. > All participants should reach a common understanding as to why they should work together, which is a crucial step in achieving the commitment needed for such work. Structural support > Intersectoral collaboration should be institutionalized, and not be dependent on ad",
+  "text_simplified": "التعاون بين القطاعات المختلفة مثل التعليم والرعاية الاجتماعية والصحة يساعد في تحسين الصحة النفسية للأطفال والمراهقين. هذا التعاون يضمن تقديم رعاية متكاملة ومستمرة، ويزيد من فعالية الخدمات ويقلل من التكاليف. يجب أن يكون هذا التعاون مؤسسًا وليس مؤقتًا، مع فهم مشترك بين جميع الأطراف لأهداف العمل.",
+  "labels": [
+    "صحة نفسية",
+    "تعاون مؤسسي",
+    "رعاية متكاملة",
+    "أطفال ومراهقون",
+    "سياسات الصحة"
+  ],
+  "created_at": "2026-06-20T14:48:12Z",
+  "updated_at": "2026-06-20T14:48:12Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

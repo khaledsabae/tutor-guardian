@@ -1,0 +1,29 @@
+{
+  "id": "cyb-a925a235",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إجراءات التعامل مع محتوى الاعتداء الجنسي على الأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل من الاستغلال الجنسي عبر الإنترنت",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "handle CSAM and report cases to the appropriate authorities. If a relationship with law enforcement and a hotline is not already established, engage with them to develop processes together. Providers of connectivity, data storage or hosting services may also provide ICT training for law enforcement. If a company is operating in markets with less developed legal and law enforcement oversight of this issue, it can refer those wishing to file reports to the International Association of Internet Hotlines (INHOPE) where reports can be filed with any international hotline. Consider deploying internationally recognized URL or website blocking lists created by appropriate authorities (e.g. the national law enforcement or hotline, Cybertip Canada, Interpol, IWF), to make it harder for users to access identified CSAM. Develop notice and take down and reporting processes, and link reports of abuse to those processes with a public service agreement on the response procedure and takedown times. See, for example, the UNICEF and GSMA Guide on notice and takedown policies and practices. Set up a reporting mechanism with clear information on its usage by, for example, giving guidance on the illegal content and conduct to be reported and clarifying what materials cannot be attached with the report in order to avoid further distribution on the web. Guidelines for industry on Child Online Protection Developing standard Support law enforcement in the event of criminal investigations processes to handle through such activities as capturing evidence. Use terms of service and conditions to specifically prohibit the use (cont.) of services",
+  "text_simplified": "يجب على الشركات التعامل مع محتوى الاعتداء الجنسي على الأطفال عبر الإنترنت والإبلاغ عنه للسلطات المختصة. ينبغي تطوير عمليات الإبلاغ والإزالة بالتعاون مع جهات إنفاذ القانون وخطوط المساعدة. يمكن استخدام قوائم حظر المواقع المعترف بها دولياً لمنع الوصول إلى هذا المحتوى. كما يجب وضع آليات إبلاغ واضحة للمستخدمين مع شرح للمواد غير القانونية.",
+  "labels": [
+    "حماية الطفل",
+    "محتوى ضار",
+    "إبلاغ",
+    "إنفاذ القانون",
+    "سلامة رقمية"
+  ],
+  "created_at": "2026-06-20T14:59:03Z",
+  "updated_at": "2026-06-20T14:59:03Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

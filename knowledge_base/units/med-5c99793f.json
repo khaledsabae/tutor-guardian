@@ -1,0 +1,29 @@
+{
+  "id": "med-5c99793f",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "سياسات الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية عامة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Aviv, Dr Willians Valentini Psychiatrist, São Paulo, Campinas, Brazil Mrs Pascale Van den Heede Executive Director, Mental Health Europe, Brussels, Dr Robert Vermeiren University Department of Child & Adolescent Psychiatry, Middelheim Hospital, Antwerp, Belgium Mrs Deborah Wan Chief Executive Officer, New Life Psychiatric Rehabilitation Association, Hong Kong, China Dr Mohammad Taghi Yasamy Ministry of Health & Medical Education, Tehran, Islamic Republic of Iran WHO also wishes to acknowledge the generous financial support of the Governments of Australia, Italy, the Netherlands and New Zealand as well as the Eli Lilly and Company Foundation and the Johnson and Johnson Corporate Social Responsibility, “Children are our future. Through well- conceived policy and planning, governments can promote the mental health of children, for the benefit of the child, the family, the community Table of Contents Executive summary 2 Aims and target audience 6 1. I. Context of child and adolescent mental health 7 1.1 Introduction 7 1.2 Stigma and discrimination 9 1.3 Development of mental disorders in children and adolescents 9 1.4 Risk and protective factors 11 1.5 Importance of developmental stages 13 1.6 Economic costs of treating (or not treating) child and adolescent mental disorders 13 2. Developing a child and adolescent mental health policy 15 2.1 Step 1: Gather information and data for policy development 16 2.2 Step 2: Gather evidence for effective strategies 19 2.3 Step 3: Undertake consultation and negotiation 20 2.4 Step 4: Exchange with other countries 22 2.5 Step 5: Set out the vision, values, principles and objectives",
+  "text_simplified": "هذا النص هو جزء من وثيقة منظمة الصحة العالمية حول سياسات الصحة النفسية للأطفال والمراهقين. يوضح أهمية وضع خطط حكومية لتعزيز الصحة النفسية للأطفال، مع التركيز على عوامل الخطر والحماية والتكاليف الاقتصادية. يقدم إرشادات خطوة بخطوة لتطوير سياسة فعالة تشمل جمع المعلومات والأدلة والتشاور مع الخبراء.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "سياسة حكومية",
+    "وقاية"
+  ],
+  "created_at": "2026-06-20T14:42:37Z",
+  "updated_at": "2026-06-20T14:42:37Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

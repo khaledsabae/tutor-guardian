@@ -1,0 +1,29 @@
+{
+  "id": "med-a836aade",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية السياسات والحقوق في الصحة النفسية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سياسات الصحة النفسية للأطفال",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "lobbyists specifically for child and adolescent mental health; and (iv) these groups provide support for caregivers, who might otherwise not cope and thus cause the burden to shift to the State. Adolescents can be important advocates of their own interests and concerns. They need to be recognized with respect and given a voice when developing policies and The establishment of a ministry or commission for children and adolescents with mental disorders or for child and adolescent mental health can ensure sustained, integrated activity across different government departments. It can also become an effective advocate for the needs of children and adolescents by constituting a strong voice in Legislation and human rights Child and adolescent mental health policy is most effective when it encompasses a framework that relates child and adolescent development to an understanding of the Child and adolescent mental rights of the child or adolescent. Related to this is the role of legislation, which should health policy is most effective codify and consolidate the fundamental principles, values and objectives of child rights when it encompasses a as related to mental health. framework that relates child and adolescent development to an understanding of the Support for children’s rights is broad. The United Nations Convention on the Rights of rights of the child or the Child(CRC) of 1989 commits signatories to ensuring that all children have the right to develop physically and mentally, and to be protected from abuse and exploitation. The CRC also stipulates that children must be consulted and",
+  "text_simplified": "يجب أن تشارك السياسات الصحية الأطفال والمراهقين في صنع القرار، وأن تحترم حقوقهم. إنشاء وزارة أو هيئة خاصة بالصحة النفسية للأطفال يضمن عملاً متكاملاً بين الجهات الحكومية. دعم مقدمي الرعاية يمنع تحميل الدولة أعباء إضافية. اتفاقية حقوق الطفل تلزم الدول بحماية النمو النفسي والجسدي للأطفال.",
+  "labels": [
+    "صحة نفسية",
+    "حقوق الطفل",
+    "سياسات حكومية",
+    "دعم مقدمي الرعاية",
+    "تشريعات"
+  ],
+  "created_at": "2026-06-20T14:48:34Z",
+  "updated_at": "2026-06-20T14:48:34Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

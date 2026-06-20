@@ -1,0 +1,29 @@
+{
+  "id": "cyb-48acfeb3",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "فوائد شبكات التواصل للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "13-15",
+  "behavior_type": "استخدام وسائل التواصل الاجتماعي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "games, school work music and so friend’s profile pages. Having forth. These communities might many friends linked to ones not be available to you in your profile does appear to give a high town, region, country, but here status amongst their peers, al- again; ICT’s folds the world and though it is questionable whether brings it to your screen and offers having a high number of online you the possibility of experiment- friends in itself is an objective ing with forms of participation to strive for. Still, 74% of 14-16 and freedom of expression that year young Danes stated that they are rarely guaranteed in their real, commented on other peoples pro- everyday lives in the adult world. files online18, and a similar trend The positive culture that reigns in can be seen across global social online communities helps every- networking sites like Facebook19, one to have a good experience Hi520 and Bebo21, where a great and increases the willingness to deal of the interaction on these engage with other people online sites relates to posting comments and learn about new things. on other peoples profiles. 18 http://www.saferinternet.org/ww/en/pub/insafe/news/articles/0409/digital_life.htm 19 http://www.facebook.com/ 20 http://hi5networks.com/ 21 http://www.bebo.com/ Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Case Study: The Bright Side of Social Networks for Children with Learning Difficulties The positive benefits from Defined/guided social inter- Identity experimentation: A nologies (or new applications of social networks for children action: While online communi- child can create an online iden-",
+  "text_simplified": "تتناول هذه الوحدة تأثير شبكات التواصل الاجتماعي على الأطفال والمراهقين، حيث تظهر فوائد مثل التفاعل الإيجابي والتعبير عن الذات. كما تشير إلى أن 74% من المراهقين الدنماركيين (14-16 سنة) يعلقون على ملفات الآخرين، مما يعزز المشاركة والتعلم. لكنها تطرح تساؤلات حول قيمة كثرة الأصدقاء عبر الإنترنت.",
+  "labels": [
+    "شبكات اجتماعية",
+    "تفاعل إلكتروني",
+    "مراهقون",
+    "تعليم رقمي",
+    "هوية افتراضية"
+  ],
+  "created_at": "2026-06-20T15:09:04Z",
+  "updated_at": "2026-06-20T15:09:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

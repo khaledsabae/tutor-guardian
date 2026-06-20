@@ -1,0 +1,29 @@
+{
+  "id": "cyb-b3119afd",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الخوارزميات والألعاب الذكية على الأطفال",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "مخاطر رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "as video streaming platforms. Machine-learning algorithms, the recommendation engine primarily employed by popular video-sharing platforms, are optimized to ensure maximum views of specific videos within a given time.19 Touchscreen technology and the design of these platforms allow very young children to browse and navigate this content. There is a particular concern that algorithms that use recommended videos can trap children in “filter bubbles” of poor or inappropriate content. As children are particularly susceptible to content recommendations, shocking “related videos” can grab their attention and divert them away from more child-friendly programming.20 AI also has an impact on child online protection with regard to smart toys. The distinct processes involved in the operation of smart toys come with their own challenges, i.e. the toy (which interfaces with the child), the mobile application, acting as access point for Wi-Fi connection, and the toy’s/consumer’s personalized online account, where data is stored. Such toys communicate with cloud-based servers that store and process data provided by the children who interact with the toy. This model has privacy concerns if security is not applied at every layer, which has been demonstrated by the many cases of hacking in which personal details were leaked. Moreover, some of the hacked devices (including smart web-enabled devices such as baby monitors, voice assistants etc.) can be used for surveillance of users without their knowledge or consent. When integrating response mechanisms to detected threats against children using these devices by, for example, providing tips and recommendations based on detected behaviour (as",
+  "text_simplified": "تستخدم منصات الفيديو خوارزميات ذكاء اصطناعي لتوصية الأطفال بمقاطع قد تكون غير مناسبة، مما قد يحبسهم في محتوى ضار. كما أن الألعاب الذكية والأجهزة المتصلة بالإنترنت قد تتعرض للاختراق، مما يعرض خصوصية الأطفال وبياناتهم للخطر. يجب على الأهل مراقبة استخدام الأطفال لهذه التقنيات واختيار المحتوى الآمن.",
+  "labels": [
+    "ذكاء اصطناعي",
+    "خصوصية الأطفال",
+    "ألعاب ذكية",
+    "محتوى غير مناسب",
+    "حماية رقمية"
+  ],
+  "created_at": "2026-06-20T15:00:46Z",
+  "updated_at": "2026-06-20T15:00:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

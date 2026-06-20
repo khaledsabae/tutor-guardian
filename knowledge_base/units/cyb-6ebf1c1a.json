@@ -1,0 +1,29 @@
+{
+  "id": "cyb-6ebf1c1a",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "نصائح للتعامل مع التنمر الإلكتروني والألعاب",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "تنمر إلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "simple tips: person. It’s easier to say and do Guidelines for Children and Young People www.itu.int/cop uncomfortable, don’t respond. be able to report them to the ing unsafe and alone. vider or the website adminis- Leave the chat room or forum game site operator. No-one has the right to bully trator—there are actions they straight away. 2. Limit your game play time so another person. At its most seri- can take to help. Tell your parents or another adult you can still do other things ous, bullying is illegal and can be • the police—if there is a threat you trust if you read upsetting like homework, jobs around investigated by the police. to your safety the police will language, or see nasty pictures or the house and hanging out help. something scary. with your friends. Tips 3. Keep personal details private. If you are being bullied online: If a friend is being bullied Playing online games 4. Remember to make time of- 1. Ignore it. Don’t respond to online Playing games online and using fline for your friends, your the bully. If they don’t get a It can be hard to know if your consoles or games on a computer favourite sports and other response they may get bored friends are being bullied. They can be great fun, but you need to activities. and go away. might keep it to themselves. If be careful about how much you 2. Block the person. This will they are being bullied, you",
+  "text_simplified": "يجب على الأطفال والمراهقين تجاهل المتنمرين وعدم الرد عليهم، وحظرهم إذا أمكن، وإبلاغ والديهم أو شخص بالغ موثوق به عند التعرض للتنمر الإلكتروني. كما ينبغي الحد من وقت اللعب للحفاظ على التوازن مع الأنشطة الأخرى، والحفاظ على خصوصية المعلومات الشخصية، وتخصيص وقت للأصدقاء والهوايات خارج الإنترنت.",
+  "labels": [
+    "تنمر إلكتروني",
+    "سلامة رقمية",
+    "إدارة وقت اللعب",
+    "خصوصية",
+    "دعم الأهل"
+  ],
+  "created_at": "2026-06-20T15:10:40Z",
+  "updated_at": "2026-06-20T15:10:40Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

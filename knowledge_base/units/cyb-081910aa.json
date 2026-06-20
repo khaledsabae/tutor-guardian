@@ -1,0 +1,29 @@
+{
+  "id": "cyb-081910aa",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "تعليم الأطفال الاستخدام الآمن والمسؤول للتكنولوجيا",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "المواطنة الرقمية والسلامة على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "about tech- buying and selling of goods. In a digital society these two sponsible citizens, we must nology and the use of technol- • Children and Young people areas must work together for protect our information ogy. need to learn about how to everyone to be productive. from outside forces that • As new technologies emerge, be effective consumers in a might cause disruption or Digital Security (self-protec- we need to learn how to use safe digital economy. harm. tion): electronic precautions to that technology quickly and Digital Law: electronic respon- guarantee safety. appropriately. We need to be digital literate. sibility for actions and deeds • In any society, there are • Digital law deals with the eth- individuals who steal, deface Source: http://www.digitalcitizenship. Digital Access: full electronic ics of technology. There are property, or disrupt other net/Nine_Elements.html participation in society. Guidelines for Children and Young People www.itu.int/cop All children and young people around the world have the right to a safe experience online Guidelines for Children and Young People www.itu.int/cop What you need to know to stay safe online INTERNET SAFETY individual attention. One size does not fit all. Nothing should ever be assumed or taken for granted. Internet safety messages need to The first age group be timely, age specific, culturally sensitive and match the values and 5-7 year old laws of the society in which the This group experience their first child or young person lives. contacts with technology. Their The COP Initiative has identi- usage should",
+  "text_simplified": "يحتاج الأطفال والشباب إلى تعلم كيفية استخدام التكنولوجيا بأمان ومسؤولية. يجب حماية المعلومات الشخصية من المخاطر الخارجية، وفهم القوانين الرقمية المتعلقة بالأخلاقيات والمسؤولية. كما ينبغي تعليمهم كيفية أن يكونوا مستهلكين فعالين في الاقتصاد الرقمي، مع مراعاة أن رسائل السلامة على الإنترنت يجب أن تكون مناسبة لأعمارهم وثقافتهم.",
+  "labels": [
+    "المواطنة الرقمية",
+    "السلامة على الإنترنت",
+    "حماية المعلومات",
+    "القوانين الرقمية",
+    "التعليم الرقمي"
+  ],
+  "created_at": "2026-06-20T15:09:29Z",
+  "updated_at": "2026-06-20T15:09:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

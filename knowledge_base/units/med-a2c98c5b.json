@@ -1,0 +1,29 @@
+{
+  "id": "med-a2c98c5b",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "عواقب إهمال علاج الاضطرابات النفسية لدى الأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات نفسية",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "fearful that they may be neglect of spiritual duties physically abused. They may keep them locked up or isolated from the community. Such severe measures can have devastating effects on the physical and emotional development of these children and adolescents. Unless children and adolescents with mental disorders receive appropriate treatment, their difficulties are likely to persist, and their social, educational and vocational prospects diminished. This results in direct costs to the family and lost productivity for society. It is also now known that individuals with untreated mental disorders represent a disproportionately large segment of the populations in the juvenile justice and adult criminal justice systems. For example, a study among youth in detention centres in Massachusetts, United States of America (USA), found that approximately 70% of the males and 81% of the females scored above the clinical cut-off on at least one of the scales of a screening instrument: alcohol/drug use, angry-irritable, depressed-anxious, somatic complaints and suicide ideation (Cauffman, 2004). These sequelae are particularly tragic because some mental illnesses are preventable, many are treatable, and children with psychiatric disorders could be living normal or near-normal lives if given appropriate treatment. Service delivery can be planned on the assumption 1.3 Development of mental disorders in children and adolescents that, generally, specific mental disorders will be present at Service delivery can be planned on the assumption that, generally, specific mental specific stages of child and disorders will be present at specific age ranges during the course of child and adolescent development. adolescent",
+  "text_simplified": "إهمال علاج الاضطرابات النفسية لدى الأطفال والمراهقين قد يؤدي إلى عواقب وخيمة تشمل العزلة الاجتماعية، تدهور التحصيل الدراسي، وزيادة خطر دخول نظام العدالة. من الضروري تقديم العلاج المناسب لتمكينهم من عيش حياة طبيعية، فالعديد من هذه الاضطرابات يمكن الوقاية منها أو علاجها.",
+  "labels": [
+    "اضطرابات نفسية",
+    "علاج",
+    "عواقب الإهمال",
+    "صحة نفسية",
+    "الأطفال والمراهقون"
+  ],
+  "created_at": "2026-06-20T14:44:24Z",
+  "updated_at": "2026-06-20T14:44:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

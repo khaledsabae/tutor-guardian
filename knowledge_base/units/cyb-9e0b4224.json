@@ -1,0 +1,29 @@
+{
+  "id": "cyb-9e0b4224",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال في الفضاء الرقمي وتمكينهم",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "that children and young people can fulfil their potential – online and offline. While no there is no universal definition, child online protection takes a holistic approach to building safe, age appropriate, inclusive and participatory digital spaces for children and young people, characterized by: • response, support and self-help in the face of threats; • prevention of harms; • a dynamic balance between ensuring protection and providing opportunity for children to become digital citizens; • upholding the rights and the responsibilities of both children and society. Moreover, due to the rapid advancements in technology and society and the borderless nature of the Internet, child online protection needs to be agile and adaptive to be effective. New challenges will emerge with the development of technological innovations and will vary from region to region. These will be best dealt with by working together as a global community, as new solutions to these challenges need to be found. 2.1 Background information As the Internet is fully integrated into children and young people’s lives, it is impossible to consider the digital and physical worlds separately. Such connectivity has been tremendously empowering. The online world allows children and young people to overcome disadvantages and disabilities, and has provided new arenas for Guidelines for industry on Child Online Protection entertainment, education, participation and relationship building. Current digital platforms are used for a variety of activities and are often multi-media experiences. Having access to and learning to use and navigate this technology is seen as critical to",
+  "text_simplified": "يجب حماية الأطفال والمراهقين في الفضاء الرقمي مع تمكينهم من الاستفادة من الفرص المتاحة عبر الإنترنت. يتطلب ذلك تحقيق توازن بين الحماية من المخاطر وتعزيز المشاركة الإيجابية، مع مراعاة حقوق الطفل ومسؤوليات المجتمع. كما ينبغي أن تكون جهود الحماية مرنة وقابلة للتكيف مع التطورات التكنولوجية السريعة.",
+  "labels": [
+    "حماية رقمية",
+    "سلامة الأطفال",
+    "مواطنة رقمية",
+    "مخاطر الإنترنت",
+    "تمكين رقمي"
+  ],
+  "created_at": "2026-06-20T14:53:56Z",
+  "updated_at": "2026-06-20T14:53:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-d9101eff",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "إشراك الأطفال والأهل في سياسات الصحة النفسية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "opportunity to begin building consensus. Children and adolescents themselves may be negotiation are crucial at every motivated to provide information about their needs, and can be important contributors stage of the policy planning to the formulation of mental health policy. Parents and family members have an intimate cycle. knowledge of the impact of mental disorders on the functioning of the child or adolescent and the family. As always, the funding policies and plans affect what areas of consensus will ultimately become reality (Box 3). Box 3. A school-based participatory action research project A community-based child and adolescent mental health programme, which was a participatory action research project, actively involved village leaders and families at each phase of the programme, from mapping to referral. Children and families in 15 villages in Kandal, Cambodia, and student health volunteers and teachers from four schools in Kandal province participated in the pilot programme. Fifteen psychology students volunteered to assess the \"mental health needs\" of the community, and a core group evolved to implement the programme. In all, 2000 families were contacted in the programme area. A Research Questionnaire for Children (RQC) was used to assess the prevalence of neuro-developmental and psychological problems in children and adolescents in the age group 2–18 years. The outcome of the research highlighted the need for psychosocial education and community-based initiatives to promote the comprehensive health and development of children. Center for Child Mental Health, Caritas, Cambodia, 2004 It is critically important to maintain the involvement of all key",
+  "text_simplified": "يجب إشراك الأطفال والمراهقين والأهل في وضع سياسات الصحة النفسية، لأنهم يعرفون احتياجاتهم وتأثير الاضطرابات على حياتهم. مشروع بحثي في كمبوديا أشرك قرى ومدارس وأسراً لتقييم الاحتياجات النفسية للأطفال من عمر 2 إلى 18 سنة، وخلص إلى أهمية التثقيف النفسي والاجتماعي والمبادرات المجتمعية.",
+  "labels": [
+    "صحة نفسية",
+    "إشراك أسري",
+    "تثقيف مجتمعي",
+    "أطفال ومراهقون",
+    "سياسات"
+  ],
+  "created_at": "2026-06-20T14:46:29Z",
+  "updated_at": "2026-06-20T14:46:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

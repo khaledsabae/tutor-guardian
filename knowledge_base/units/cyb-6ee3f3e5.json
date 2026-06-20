@@ -1,0 +1,29 @@
+{
+  "id": "cyb-6ee3f3e5",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مبادئ حماية الأطفال على الإنترنت للقطاع الصناعي",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "International Telecommunication Union Development sector industry on Child Online Protection Guidelines for industry on Child Online Protection Acknowledgements These guidelines have been developed by the International Telecommunication Union (ITU) and a working group of contributing authors from leading institutions active in the sector of information and communication technologies (ICT) as well as child protection issues and included the EBU, the Global Partnership to End Violence Against Children, GSMA, the International Disability Alliance, the Internet Watch Foundation (IWF), Privately SA and UNICEF. The working group was chaired by Anjan Bose (UNICEF) and coordinated by Fanny Rotino (ITU). These ITU guidelines would not have been possible without the time, enthusiasm and dedication of the contributing authors. Invaluable contributions were also received from the e-Worldwide Group (e-WWG), Facebook, Tencent Games, Twitter, the Walt Disney Company, as well as other industry stakeholders, that share a common objective of making the Internet a better and safer place for children and young people. ITU is grateful to the following partners, who contributed their valuable time and insights (listed in alphabetical order of the organizations): • Awo Aidam Amenyah (Child Online Africa) • Giacomo Mazzone (EBU) • Salma Abbasi (e-WWG) • Amy Crocker and Serena Tommasino (Global Partnership to End Violence Against Children) • Jenny Jones (GSMA) • Lucy Richardson (International Disability Alliance) • Fanny Rotino (ITU) • Tess Leyland (IWF) • Deepak Tewari (Privately SA) • Katy Minshall (Twitter) • Anjan Bose, Daniel Kardefelt Winther, Emma Day, Josianne Galea Baron, Sarah Jacobstein • Amy E. Cunningham",
+  "text_simplified": "هذه المبادئ التوجيهية وضعها الاتحاد الدولي للاتصالات بالتعاون مع خبراء من منظمات دولية لحماية الأطفال على الإنترنت. تهدف إلى جعل الإنترنت مكانًا أكثر أمانًا للأطفال والشباب من خلال توجيه الشركات والمؤسسات.",
+  "labels": [
+    "حماية الأطفال",
+    "الإنترنت الآمن",
+    "توجيهات صناعية",
+    "سلامة رقمية",
+    "مسؤولية مشتركة"
+  ],
+  "created_at": "2026-06-20T14:52:37Z",
+  "updated_at": "2026-06-20T14:52:37Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

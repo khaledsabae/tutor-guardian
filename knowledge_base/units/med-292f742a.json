@@ -1,0 +1,29 @@
+{
+  "id": "med-292f742a",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "دعم الصحة النفسية للأمهات والمراهقين",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "اكتئاب مراهقين",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "children and consider whether a home visiting programme or other mother-infant support adolescents are inextricably programme can be identified to promote more appropriate mother-infant interaction, as linked with their developmental well as facilitate the mother's access to needed psychiatric treatment (Beardslee, stage and the social and environmental context. Versage & Gladstone, 1998; Lyons-Ruth, Wolfe & Lyubchik, 2000). Similarly, an adolescent suffering from a major depressive disorder needs to be able to access appropriate diagnostic facilities without barriers and with minimal stigma. Once diagnosed, adolescent-friendly services for treatment need to be available. Box 1 presents an example of how gathering information and data contributes to policy Box 1. Gathering information and data for policy development for young people at risk for suicide in New Zealand As part of the development of best practice guidelines for the management of young people at risk of suicide, researchers at the Wellington School of Medicine completed a review of all young people who committed suicide during the period 1994–1999 (Smith, 1999). The review involved contact with Child, Youth and Family Services. It included all young people identified in the Child, Youth and Family Services register of young people who had died while in contact with the service, and an additional 22 young people from data matching the names from the New Zealand Health Information Service’s register of suicides with those of the Child, Youth and Family data systems. The results of this review show that 129 young people aged between 12 and 16 years died",
+  "text_simplified": "يحتاج الأطفال والمراهقون إلى دعم يتناسب مع مراحل نموهم وسياقهم الاجتماعي. يجب توفير برامج زيارة منزلية للأمهات لتحسين التفاعل مع أطفالهن وعلاج أي مشاكل نفسية لديهن. كما يحتاج المراهق المصاب بالاكتئاب الشديد إلى خدمات تشخيص وعلاج مناسبة دون وصمة عار. مثال من نيوزيلندا يوضح أهمية جمع البيانات لتطوير سياسات الوقاية من انتحار الشباب.",
+  "labels": [
+    "اكتئاب",
+    "مراهقون",
+    "صحة نفسية",
+    "وقاية من الانتحار",
+    "دعم الأمهات"
+  ],
+  "created_at": "2026-06-20T14:46:00Z",
+  "updated_at": "2026-06-20T14:46:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

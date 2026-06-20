@@ -1,0 +1,29 @@
+{
+  "id": "med-fda7bf25",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية الصحة النفسية والتدخل المبكر للأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "been in the mental health programme for two years. He has had no further law violations, he has been an honour student in the alternative school programme, and will soon be returning to his neighbourhood school. He is also working part-time. Promotion, prevention, treatment and rehabilitation Policy-makers should consider all effective options for disease prevention, health promotion, treatment and rehabilitation. Disease prevention and health promotion Policy-makers should consider among children and adolescents can have particularly far-reaching implications. For all effective options for disease example, most mental disorders from which adults suffer have their origin in childhood prevention, health promotion, or adolescence. One can therefore reduce the extent of long-term functional impairment treatment and rehabilitation. by early recognition and prompt intervention. Health promotion interventions can focus on factors that determine or maintain mental ill health, such as poverty and stigma. Life skills programmes and child-friendly schools have been found to help promote sound and positive mental health (WHO, 1993; 1998). In New Zealand, the concept of recovery guides intervention. This concept underscores the need to support \"the ability to live well in the presence or absence of one's mental illness” (see www.mhc.govt.nz/ publications/2001/Recovery_Competencies.pdf). Priority should be given to vulnerable populations such as orphans, children with chronic medical illness, those with learning disabilities, refugees, the mentally handicapped, physically, sexually, or emotionally abused or neglected children, and children or youth in conflict with the law. Attempts should be made to offer interventions in settings frequented by young people, including schools, homes, workplaces, neighbourhood",
+  "text_simplified": "هذا النص يتناول أهمية الصحة النفسية للأطفال والمراهقين، ويشير إلى أن معظم الاضطرابات النفسية لدى البالغين تبدأ في الطفولة. يوصي بالتدخل المبكر والوقاية من خلال برامج المهارات الحياتية والمدارس الصديقة للطفل، مع التركيز على الفئات الضعيفة مثل الأيتام واللاجئين.",
+  "labels": [
+    "صحة نفسية",
+    "وقاية",
+    "تدخل مبكر",
+    "فئات ضعيفة",
+    "برامج مدرسية"
+  ],
+  "created_at": "2026-06-20T14:47:59Z",
+  "updated_at": "2026-06-20T14:47:59Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

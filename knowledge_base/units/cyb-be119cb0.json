@@ -1,0 +1,29 @@
+{
+  "id": "cyb-be119cb0",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "حماية الأطفال على الإنترنت والتعاون العالمي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "a global issue, so a global response Guidelines for Children and Young People www.itu.int/cop I welcome this opportunity to share with you these preliminary guidelines which have been developed with the invaluable help of multiple stakeholders. Child Online Protection – in the era of the massively-available broadband Internet – is a critical issue that urgently requires a global, coordinated response. While local and even national initiatives certainly have their place, the Internet knows no boundaries, and an international cooperation will be the key to our success in winning the battles ahead. Children themselves – using computers and mobile devices to access the Internet – can do a great deal to help us win the fight against cybercrime and cyberthreats, and I am personally grateful for your Dr Hamadoun I. Touré Secretary-General of the International Telecommunication Union (ITU) Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Executive Summary The information society in More often than not, this is These are all threats to children which today’s children and a positive and educational and young people’s well being young people are growing up, experience: one that assists and a challenge that must be offers an instant digital world younger generations in better addressed by all stakeholders, through the click of a mouse. understanding both the differ- including children themselves. An unprecedented level of ences and commonalities of the Whilst all providers of online services and information is ac- people of the world. However, services should do",
+  "text_simplified": "حماية الأطفال على الإنترنت أصبحت قضية عالمية تتطلب تعاوناً دولياً منسقاً. يمكن للأطفال أنفسهم المساهمة في مكافحة الجرائم الإلكترونية والتهديدات الرقمية. يجب على جميع الأطراف المعنية، بما في ذلك الأطفال، العمل معاً لمواجهة هذه التحديات.",
+  "labels": [
+    "حماية الأطفال",
+    "الإنترنت",
+    "جرائم إلكترونية",
+    "تعاون دولي",
+    "توعية رقمية"
+  ],
+  "created_at": "2026-06-20T15:07:56Z",
+  "updated_at": "2026-06-20T15:07:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

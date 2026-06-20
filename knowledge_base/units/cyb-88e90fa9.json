@@ -1,0 +1,29 @@
+{
+  "id": "cyb-88e90fa9",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال من المحتوى الرقمي المسيء",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل من المحتوى الرقمي الضار",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "industry on Child Online Protection Table 3: COP checklist for Feature B: Offer curated digital content Integrating child rights Services providing curated digital content can help identify, considerations into all prevent and mitigate adverse impacts of ICTs on children and appropriate corporate young people’s rights, and identify opportunities to support policies and management the advancement of children and young people’s rights by processes taking the following actions Develop policies that safeguard the welfare of children and young people who contribute content online to take into account the physical and emotional welfare and dignity of people under 18 who are involved in programmes, films, games, news etc. irrespective of consent that might have been given by a parent or other adult. Developing standard In collaboration with government, law enforcement, civil society processes to handle CSAM and hotline organizations, companies offering curated digital content can play a key role in combating CSAM through the following actions: In cases of CSAM, for example through “comment” or “review” features whereby users have the capacity to upload content, staff should contact the executive management team responsible for reporting such material to the appropriate authorities. In addition, they should: • alert national law enforcement agencies immediately; • alert their manager and report the material to the child protection policy manager; • contact the internal investigation service by phone or email with details of the incident and to ask for advice; • wait for advice from the relevant agency before deleting the material, saving it to a",
+  "text_simplified": "يجب على الشركات التي تقدم محتوى رقمي للأطفال أن تضع سياسات تحمي سلامتهم الجسدية والعاطفية. كما ينبغي التعاون مع السلطات لمكافحة المواد المسيئة للأطفال عبر الإنترنت. عند رصد أي محتوى مسيء، يجب إبلاغ الجهات المختصة فوراً وعدم حذفه قبل الحصول على تعليمات.",
+  "labels": [
+    "حماية الطفل",
+    "محتوى رقمي",
+    "مكافحة الإساءة",
+    "سلامة الأطفال",
+    "سياسات رقمية"
+  ],
+  "created_at": "2026-06-20T14:59:24Z",
+  "updated_at": "2026-06-20T14:59:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

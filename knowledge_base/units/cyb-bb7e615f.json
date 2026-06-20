@@ -1,0 +1,29 @@
+{
+  "id": "cyb-bb7e615f",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تعزيز الاستخدام الآمن والمسؤول للتكنولوجيا للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "استخدام التكنولوجيا والسلوك الرقمي",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "provide information directly to children and young people on safer ICT use and positive and responsible behaviour. Beyond raising awareness about safety, companies can facilitate positive experiences by developing content for children and young people about being respectful, kind and open-minded when using ICTs and looking after friends. They can provide information about actions to take if they have negative experiences such as online bullying or grooming, making it easier to report such incidents and providing a function to opt out of receiving anonymous messages. Parents sometimes have less understanding and knowledge of the Internet and mobile devices than children and young people. Moreover, the convergence of mobile devices and Internet services makes parental oversight more difficult. Industry can work in collaboration with government and educators to strengthen parents’ capacity to support their children in building their digital resilience and acting as responsible digital citizens. The aim is not to transfer responsibility for children and young people’s ICT use to parents alone, but rather to recognize that parents are in a better position to decide what is appropriate for their children and that they should be made aware of all risks in order to better protect their children and empower them to take action. Information can be transmitted online and offline through multiple media channels, taking into consideration that some parents do not use Internet services. It is important to collaborate with school districts to provide curricula on online safety and responsible ICT use for children and young people, and",
+  "text_simplified": "يجب توعية الأطفال والشباب بكيفية استخدام التكنولوجيا بأمان ومسؤولية، مع تعزيز السلوك الإيجابي مثل الاحترام واللطف. يمكن للشركات تقديم محتوى تعليمي حول كيفية التعامل مع التنمر الإلكتروني أو التحرش، وتسهيل الإبلاغ عن هذه الحوادث. كما ينبغي دعم الأهل لزيادة فهمهم للتكنولوجيا ومساعدتهم في حماية أطفالهم وتمكينهم من التصرف بحكمة. التعاون مع المدارس ضروري لتضمين مناهج تعليمية عن السلامة الرقمية والاستخدام المسؤول.",
+  "labels": [
+    "سلامة رقمية",
+    "توعية أطفال",
+    "سلوك إيجابي",
+    "تنمر إلكتروني",
+    "تمكين الأهل"
+  ],
+  "created_at": "2026-06-20T14:56:41Z",
+  "updated_at": "2026-06-20T14:56:41Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

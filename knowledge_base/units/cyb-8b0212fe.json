@@ -1,0 +1,29 @@
+{
+  "id": "cyb-8b0212fe",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية خصوصية الأطفال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الخصوصية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "and personal consequences of revealing or agreeing to share their personal information online, or to the use of their personal information for commercial purposes. Services directed at or likely to attract a main audience of children and young people must consider the risks posed to them by access to, or collection and use of, personal information (including location information), and ensure those risks are properly addressed, and users informed. In particular, companies should ensure the language and style of any materials or communication used to promote services, provide access to services, or by which personal information is accessed, collected and used, aid understanding and assist users in managing their privacy in clear and simple ways, and explaining what they are consenting to in clear, accessible language. Guidelines for industry on Child Online Protection Good practice: Innovation In 2018 –2019 UNICEF East Asia and Pacific Regional Office organized five multi- stakeholder roundtables to share promising industry practices to address online CSEA. Participants in the roundtables were leading private sector companies, such as Google, Facebook, Microsoft, Telenor, Ericsson, MobiCom (Mongolia) Mobifone+ (Vietnam), Globe Telecom (the Philippines), True (Thailand), GSMA and civil society partners, including INHOPE, ECPAT International and Child Helpline International. As part of the same project, in February 2020, UNICEF launched a Think Tank to accelerate industry leadership in the East Asia and Pacific region to prevent violence against children in the online world. The Think Tank is an incubator for ideas and innovation, drawing on the unique perspective of industry",
+  "text_simplified": "يجب على الشركات التي تقدم خدمات للأطفال والمراهقين عبر الإنترنت أن تشرح لهم بطريقة واضحة وبسيطة مخاطر مشاركة معلوماتهم الشخصية. كما ينبغي أن تساعدهم في إدارة خصوصيتهم وفهم ما يوافقون عليه بلغة سهلة.",
+  "labels": [
+    "الخصوصية",
+    "الأطفال",
+    "الإنترنت",
+    "الموافقة",
+    "الحماية"
+  ],
+  "created_at": "2026-06-20T14:56:27Z",
+  "updated_at": "2026-06-20T14:56:27Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

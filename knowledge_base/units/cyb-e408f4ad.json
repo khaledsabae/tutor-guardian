@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e408f4ad",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "أداة PhotoDNA لحماية الأطفال من المحتوى الجنسي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل من الاستغلال الجنسي عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "law enforcement measures. 14 It should be noted that inappropriate user conduct is not limited to CSAM and that any type of inappropriate behaviour or content should be handled accordingly by the company. Guidelines for industry on Child Online Protection Microsoft PhotoDNA is a tool that creates hashes of images and compares them to a database of hashes already identified and confirmed to be CSAM. If it finds a match, the image is blocked. This tool has enabled content providers to remove millions of illegal photographs from the Internet; helped convict child sexual predators; and in some cases, helped law enforcement rescue potential victims before they were physically harmed. Microsoft has long been committed to protecting its customers from illegal content on its products and services, and applying technology the company already created to combating this growth in illegal videos was a logical next step. However, this tool does not employ facial recognition technology, nor can it identify a person or object in the image. However, with the invention of PhotoDNA for Video, things have taken a new turn. PhotoDNA for Video breaks down a video into key frames and essentially creates hashes for those screenshots. In the same way that PhotoDNA can match an image that has been altered to avoid detection, PhotoDNA for Video can find child sexual exploitation content that has been edited or spliced into a video that might otherwise appear harmless. Moreover, Microsoft has recently released a new tool for identifying child predators who groom",
+  "text_simplified": "تشرح هذه الوحدة كيف تستخدم شركة مايكروسوفت أداة (PhotoDNA) لحماية الأطفال من المحتوى الجنسي غير القانوني على الإنترنت. تقوم الأداة بتحويل الصور ومقاطع الفيديو إلى بصمات رقمية ومقارنتها بقاعدة بيانات للمواد المحظورة، مما يساعد في حذف المحتوى الضار وإنقاذ الأطفال من الأذى. هذه التقنية لا تتعرف على الوجوه أو الأشخاص، بل تكتشف المحتوى المحظور حتى لو تم تعديله.",
+  "labels": [
+    "حماية الطفل",
+    "استغلال جنسي",
+    "تقنية رقمية",
+    "سلامة الإنترنت",
+    "مكافحة الجريمة"
+  ],
+  "created_at": "2026-06-20T14:55:56Z",
+  "updated_at": "2026-06-20T14:55:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

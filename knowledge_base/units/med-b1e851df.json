@@ -1,0 +1,29 @@
+{
+  "id": "med-b1e851df",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "دعم الصحة النفسية للأطفال والمراهقين ومكافحة الوصم",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "دعوة ووعي بالصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "> Reducing stigma and discrimination of child and adolescent mental disorders in communities; and > Including mental health considerations in the development of policies and plans in other sectors (for example, welfare schemes need to consider appropriate childcare and housing to promote a healthy environment for child rearing). Child and adolescent mental health advocacy by parents, professionals and government departments responsible for health and education have brought a new Child and adolescent mental awareness to legislative bodies in developed countries of the need for child and health advocacy has brought adolescent mental health services. International research and clinical attention to a new awareness to legislative specific disorders can prompt the creation of parent advocacy groups, such as the bodies in developed countries burgeoning autism initiatives. It is helpful to be supportive of these groups as allies in of the need for child and the development of policy for the following reasons: (i) parents of children and adolescent mental health adolescents with mental disorders tend to have considerable knowledge about the services. disorder, which can be harnessed to achieve common goals; (ii) parent advocacy groups can be helpful in gaining NGO support for programme development; (iii) parent advocates can be effective lobbyists specifically for child and adolescent mental health; and (iv) these groups provide support for caregivers, who might otherwise not cope and thus cause the burden to shift to the State. Adolescents can be important advocates of their own interests and concerns. They need to be recognized with respect and",
+  "text_simplified": "يهدف هذا النص إلى تقليل الوصم والتمييز ضد اضطرابات الصحة النفسية للأطفال والمراهقين في المجتمعات. كما يدعو إلى إدراج اعتبارات الصحة النفسية في سياسات القطاعات الأخرى مثل الرعاية الاجتماعية والإسكان. ويشير إلى أهمية دور الأهل والمهنيين والحكومات في الدعوة لتحسين خدمات الصحة النفسية. كما يوصي بدعم مجموعات الدفاع عن حقوق الأهل والمراهقين أنفسهم كشركاء فاعلين في تطوير السياسات.",
+  "labels": [
+    "الوصم",
+    "التمييز",
+    "الصحة النفسية",
+    "الدعوة",
+    "السياسات"
+  ],
+  "created_at": "2026-06-20T14:48:29Z",
+  "updated_at": "2026-06-20T14:48:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

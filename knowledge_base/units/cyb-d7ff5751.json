@@ -1,0 +1,29 @@
+{
+  "id": "cyb-d7ff5751",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال عبر الإنترنت لشركات التكنولوجيا",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "المواطنة الرقمية وحماية الأطفال",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "of “own-brand” interactive services. Engage with the broader issues around safe and responsible digital citizenship, for example online reputation and digital footprint, harmful content and grooming. Consider partnering with local experts, such as children’s NGOs, charities and parenting groups, to help shape the company’s message and reach the intended audience. If the business already works with children or schools, for example, possibility of extending this engagement to include educating and engaging with children and young people, and educators on COP Investing in Invest in evidence-based research and in-depth analysis of digital research technologies, the impact of technologies on children, child protection and child rights considerations with regard to the digital environment, to integrate online protection systems into services used by children and young people and better understand what types of interventions are most effective at improving children’s online experiences. Guidelines for industry on Child Online Protection Typology of ICT companies While these ITU guidelines are targeted at the ICT industry as a whole, it is important to recognize that the services ICT companies offer, ways they operate, regulatory schemes under which they function, and scope and scale of their offers are very different. Any technology company whose products and services are targeted directly or indirectly at children can benefit from the general principles outlined earlier and can adapt, based on their specific field of operation. The core idea is to support and guide the ICT industry in taking the right measures to better protect children online from the risks of",
+  "text_simplified": "يجب على شركات التكنولوجيا التعاون مع الخبراء المحليين مثل منظمات الأطفال والمدارس لتعزيز المواطنة الرقمية الآمنة. كما ينبغي الاستثمار في الأبحاث لفهم تأثير التكنولوجيا على الأطفال وحمايتهم من المخاطر عبر الإنترنت.",
+  "labels": [
+    "حماية الأطفال",
+    "المواطنة الرقمية",
+    "التوعية الرقمية",
+    "السلامة عبر الإنترنت",
+    "التعاون المجتمعي"
+  ],
+  "created_at": "2026-06-20T14:58:36Z",
+  "updated_at": "2026-06-20T14:58:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

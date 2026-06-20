@@ -1,0 +1,29 @@
+{
+  "id": "med-0b53717c",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أولويات البحث في الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "invested in a system. **Process refers to the way in which service items are delivered, including the service items themselves. *** Outcome refers to the changes in functioning, morbidity and mortality among those to whom the service is delivered (Thornicroft et al., 1999). Key indicators for change need to be agreed upon by all stakeholders, so that they can be clear as to whether or not expected outcomes are achieved. Research and evaluation of policy and services The following are areas of The World Health Report 2001 (WHO, 2001) identified five priority research areas for priority for research: mental health. These areas, which are also relevant for child and adolescent mental epidemiological research; health, are: epidemiological research; treatment, prevention and promotion outcome treatment, prevention and research; policy and service research; economic research and research in developing promotion outcome research; countries; and cross-cultural comparisons. Box 10 lists some specific research policy and service research, priorities in each of these areas. economic research and research in developing countries; and cross-cultural Box 10. Research priorities for child and adolescent mental heath research* Epidemiological research > Prevalence and burden of major child and adolescent mental and behavioural disorders, both in communities in general and in populations at high risk. > Longitudinal studies to examine the course of major child and adolescent mental and behavioural disorders and their relationship with psychosocial, genetic, economic and other environmental determinants. > Relationships between psychopathology and risk behaviours, such as sexually risky behaviour and interpersonal violence. Treatment, prevention and",
+  "text_simplified": "يشرح النص أهمية تحديد مؤشرات التغيير الرئيسية بالاتفاق بين جميع الأطراف المعنية لقياس نتائج الخدمات المقدمة. كما يحدد خمسة مجالات بحثية ذات أولوية في الصحة النفسية للأطفال والمراهقين، تشمل الدراسات الوبائية وعلاج الاضطرابات والوقاية منها.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "بحث علمي",
+    "مؤشرات تغيير"
+  ],
+  "created_at": "2026-06-20T14:49:18Z",
+  "updated_at": "2026-06-20T14:49:18Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

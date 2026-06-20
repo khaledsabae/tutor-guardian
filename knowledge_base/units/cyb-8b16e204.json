@@ -1,0 +1,29 @@
+{
+  "id": "cyb-8b16e204",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات للأهل حول الاستخدام الآمن للتكنولوجيا",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "إدمان ألعاب",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "be In the interactive world, this information should be provided in the form of content labels for each program. Encourage adults, especially parents, carers and educators, to be involved in children and young people’s online content consumption, so that they can assist and guide children and young people in choosing content when making a purchase, and help establish rules of behaviour. Help children (and parents and carers) to learn to manage their screen-time and understand how to use technology in a way that feels good to them, including when to stop and do something else. Provide rules of use in clear and accessible language that encourage children and young people to be vigilant and responsible when they are navigating the Internet. Build age-appropriate tools, such as tutorials and help centres. Work with online or in-person prevention programmes and counselling clinics when appropriate. For example, if there is a risk of children and young people becoming too engaged with technology, making it difficult for them to develop personal relationships or take part in healthy physical activities, a site could provide a contact link for a helpline or counselling Make safety information, such as links to advice, prominent, easily accessible and clear when online content is likely to appeal to a high proportion of children and young people. Offer a parental guidance tool, such as a “lock\" for control of content that can be accessed through a particular browser Cooperate with parents to ensure that information disclosed on the Internet about children",
+  "text_simplified": "يجب توفير معلومات واضحة للأهل حول محتوى البرامج التفاعلية، وتشجيعهم على المشاركة في اختيار المحتوى المناسب لأطفالهم. ينبغي مساعدة الأطفال على إدارة وقت الشاشة وفهم الاستخدام الصحي للتكنولوجيا، مع وضع قواعد سلوك بلغة بسيطة. كما يُوصى ببناء أدوات مناسبة للعمر مثل الدروس ومراكز المساعدة، والتعاون مع برامج الوقاية والاستشارات عند الحاجة.",
+  "labels": [
+    "إدارة وقت الشاشة",
+    "رقابة أبوية",
+    "سلامة رقمية",
+    "توعية إعلامية",
+    "استخدام صحي للتكنولوجيا"
+  ],
+  "created_at": "2026-06-20T14:59:46Z",
+  "updated_at": "2026-06-20T14:59:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

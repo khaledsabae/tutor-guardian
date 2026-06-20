@@ -1,0 +1,29 @@
+{
+  "id": "med-333adf4d",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "توصيات النشاط البدني للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "7-9",
+  "behavior_type": "نشاط بدني وصحة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "7 years of and physical education, in the context of family, school age has been associated with increased adiposity in later and community activities. Amounts greater than 60 childhood and adolescence (9). minutes would provide additional health benefits and vigorous-intensity activities, including those that strengthen muscle and bone, should be incorporated at least three times per week. x Introduction 1 Improving the physical activity, sedentary and sleep Given the new evidence available on the health effects of time behaviours of young children will contribute to sedentary and sleep time, these WHO recommendations their physical health, reduce the risk of developing on physical activity for children under 5 years of age obesity in childhood and the associated NCDs in later consider not only the separate but also the cumulative life and improve mental health and wellbeing. These and synergistic effects of physical activity, sedentary health outcomes will contribute to the attainment of the behaviour and sleep on health outcomes. Sustainable Development Goal (SDGs) targets 2.2 (to end In 2017, New Zealand published guidance for movement all forms of malnutrition) and 3.4 (to reduce by one-third and sleep in children under 5 years of age (18) and premature mortality from NCDs). a number of other countries have followed suit. The The important interactions between physical activity, national health authorities in Canada and Australia sedentary behaviour and adequate sleep time on launched comprehensive 24-hour movement (physical physical and mental health and wellbeing were activity, sedentary and sleep time) guidelines for children recognized by",
+  "text_simplified": "يوصي الخبراء بأن يمارس الأطفال والمراهقون نشاطًا بدنيًا معتدلًا إلى قوي لمدة 60 دقيقة يوميًا على الأقل، مع التركيز على تقوية العضلات والعظام ثلاث مرات أسبوعيًا. يساعد ذلك في تقليل السمنة وتحسين الصحة البدنية والعقلية، كما أن تقليل وقت الجلوس وزيادة النوم الكافي يعزز الفوائد الصحية.",
+  "labels": [
+    "نشاط بدني",
+    "صحة الأطفال",
+    "الوقاية من السمنة",
+    "توصيات منظمة الصحة",
+    "وقت الشاشة"
+  ],
+  "created_at": "2026-06-20T15:04:02Z",
+  "updated_at": "2026-06-20T15:04:02Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

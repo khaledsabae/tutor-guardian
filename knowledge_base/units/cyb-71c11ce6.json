@@ -1,0 +1,29 @@
+{
+  "id": "cyb-71c11ce6",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة الرقمية للأطفال والشباب",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "السلامة الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "choosing other modes of payment you can avoid the possibility of someone stealing your credit 4. if you receive an unsolicited e- mail offering you an incredible deal, it is highly likely that it is 5. if something looks too good to be true, it most probably is, and it would be best to forget 6. in the case of purchases made by mobile phones for which a credit card is not required, verify what the costs of the services actually are, the ser- vice’s conditions of agreement and how one can back out. Guidelines for Children and Young People www.itu.int/cop By keeping these basic rules in mind, you will be able to steer clear of the majority of the pitfalls you can encounter online. Should you encounter unpleasant or disturbing experiences, make sure you talk to a trusted source. Remember, you have the right to be protected as well as the responsibility to act appropriately, offline as well as online. Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Sources for Further Reading & United Nation’s Convention of the Rights Connect Safely is for parents, teens, educa- of the Child tors, advocates - everyone engaged in and http://www.unicef.org/crc/ interested in the impact of the social Web http://www.connectsafely.org/ http://www.itu.int/wsis Children and Adolescents Closing State- ment at World Congress III Against Sexual ITU’s activities on cybersecurity http://www.itu.int/cybersecurity http://www.ecpat.net/WorldCongressIII/ Child Online Protection (COP) Initiative PDF/Outcome/WCIII_Outcome_Docu- http://www.itu.int/cop ment_Final.pdf Imagine Your Future – a prediction of The Children and",
+  "text_simplified": "يجب على الأطفال والشباب توخي الحذر عند الدفع عبر الإنترنت، مثل تجنب مشاركة معلومات البطاقة الائتمانية مع مصادر غير موثوقة. إذا تلقيت رسالة إلكترونية غير مرغوب فيها تعرض صفقة مذهلة، فمن المحتمل أنها احتيالية. عند الشراء عبر الهاتف المحمول دون استخدام بطاقة ائتمان، تحقق من التكاليف الفعلية وشروط الخدمة وكيفية إلغاء الاشتراك. تذكر أن تتحدث مع شخص بالغ موثوق إذا واجهت أي تجربة مزعجة على الإنترنت.",
+  "labels": [
+    "أمان الإنترنت",
+    "احتيال إلكتروني",
+    "حماية الأطفال",
+    "نصائح للشباب",
+    "الدفع الآمن"
+  ],
+  "created_at": "2026-06-20T15:12:32Z",
+  "updated_at": "2026-06-20T15:12:32Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

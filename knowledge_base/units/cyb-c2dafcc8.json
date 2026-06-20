@@ -1,0 +1,29 @@
+{
+  "id": "cyb-c2dafcc8",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إدارة المحتوى وحماية الطفل عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل عبر الإنترنت",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "regarding ownership of user-generated content, including the option to remove user-created content at the user’s request. Remove content that violates the provider’s policies and alert the user who has posted it about the violation. Guidelines for industry on Child Online Protection Developing standard Indicate that a user’s failure to comply with policies for processes to handle acceptable use will have consequences, including: • removal of content, suspension or closure of their account; (cont.) • revoking their ability to share particular types of content or use certain features; • preventing them from contacting children; • referring issues to law enforcement. Developing standard Promote reporting mechanisms for CSAM or any other illegal content and ensure that customers know how to file a report if processes to handle child they discover such content. sexual abuse material Build systems and provide trained staff to assess issues on a case-by-case basis and take appropriate action. Establish comprehensive and well-resourced user-support operation teams. Ideally, these teams would be trained to handle different types of incidents in order to ensure that an adequate response is provided and appropriate actions are taken. When the user files a complaint, depending on the type of incident, it should be routed to appropriate staff. The company might also set up special teams to handle user appeals for instances when reports may have been filed in error. Have processes in place to immediately remove or block access to CSAM, including notice and takedown processes to remove illegal content as soon as it",
+  "text_simplified": "يجب على مقدمي الخدمات الإلكترونية وضع سياسات واضحة لإدارة المحتوى الذي ينشئه المستخدمون، مع إتاحة خيار إزالة المحتوى المخالف أو بناءً على طلب المستخدم. كما ينبغي تطوير آليات للإبلاغ عن المحتوى غير القانوني مثل مواد الاعتداء الجنسي على الأطفال، وتدريب فرق الدعم للتعامل مع الحالات بشكل فردي واتخاذ الإجراءات المناسبة.",
+  "labels": [
+    "حماية الطفل",
+    "محتوى غير قانوني",
+    "إبلاغ",
+    "سياسات رقمية",
+    "سلامة إلكترونية"
+  ],
+  "created_at": "2026-06-20T15:00:09Z",
+  "updated_at": "2026-06-20T15:00:09Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

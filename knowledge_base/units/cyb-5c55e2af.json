@@ -1,0 +1,29 @@
+{
+  "id": "cyb-5c55e2af",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "مخاطر التحميل غير القانوني وحماية الأطفال",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "إدمان ألعاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "any at risk; in illegal downloading of copy- trial period; security risks: c. do not share your entire righted material to be traced. This has led, for example, to a child’s 3. your privacy and your PC a. you may not always end hard disk: check your parents being sent an enormous could be harmed by viruses up downloading what you configurations to ensure bill to cover the cost of the mate- or other “malware”. It is intended to download : that you have shared only rial downloaded and if the family therefore always best to install different types of content refuse to pay the bill other forms and continuously update pro- may be concealed behind of legal action can be taken. Some tection systems such as anti- the title of a song or countries are considering banning virus, anti-dialer software and video. In the worst cases, people from using the Internet if and a firewall. Always make for example, it might con- they are caught persistently using sure to read the guide relat- tain child abuse images. it to obtain unauthorised access ing to the programme you Examine your particular to copyrighted material. In addi- are using to avoid making the programme guide to find Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop those folders you wanted come from a reputable source e.g. age verification systems linked to and, in particular, how to with- to share and remember a bank or credit card",
+  "text_simplified": "يجب على الأهل تعليم أطفالهم مخاطر تحميل المواد غير القانونية من الإنترنت، مثل الفيروسات والبرامج الضارة التي قد تضر بالحاسوب والخصوصية. كما قد يتعرض الطفل لعواقب قانونية خطيرة كالغرامات المالية أو حظر استخدام الإنترنت. من المهم استخدام برامج حماية محدثة وعدم مشاركة الملفات الشخصية مع الغرباء.",
+  "labels": [
+    "تحميل غير قانوني",
+    "أمان الإنترنت",
+    "برامج ضارة",
+    "خصوصية",
+    "عواقب قانونية"
+  ],
+  "created_at": "2026-06-20T15:12:14Z",
+  "updated_at": "2026-06-20T15:12:14Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

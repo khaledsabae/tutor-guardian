@@ -1,0 +1,29 @@
+{
+  "id": "med-957462de",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تنفيذ سياسات الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "سياسات الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "criteria for evaluation. > Each strategy should include one or more targets. > Activities need to be identified, and the costs, available resources and budget 4. Implementation of child and adolescent mental health policies and plans This section identifies the steps for successful implementation of child and adolescent mental health policies and plans. These steps include disseminating the policy; generating political support and funding; developing a supportive structure, setting up pilot projects in demonstration areas; and maximizing coordination. It is also important to consider the evaluation of child and adolescent mental health policies and plans. While a comprehensive discussion of evaluation issues is beyond the scope of this module, Table 4 provides a summary of some of the areas to be included in an evaluation using the Mental Health Matrix (Thornicroft & Tansella, 1999) as a conceptual framework. In addition the modules on Quality Improvement for Mental Health, Information Systems and Research and Evaluation provide more detailed 4.1 Step 1: Disseminate the policy The formulated policy must be disseminated to health district The formulated policy must be disseminated to all involved governmental bodies at all offices and other partner appropriate levels, other stakeholders and key individuals. This needs to be an ongoing agencies, and to individuals process over time and requires sustained efforts. Box 18 presents some ideas as to within those agencies. how such dissemination can take place. Box 18. Ideas for the dissemination of a child and adolescent mental health > Hold meetings with health teams, consumers, families,",
+  "text_simplified": "يتناول النص خطوات تنفيذ سياسات الصحة النفسية للأطفال والمراهقين، مثل نشر السياسة ودعمها سياسياً ومالياً. كما يشير إلى أهمية تقييم هذه السياسات باستخدام إطار عمل مناسب، مع التركيز على تنسيق الجهود بين الجهات المعنية.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات",
+    "أطفال",
+    "مراهقين",
+    "تقييم"
+  ],
+  "created_at": "2026-06-20T14:51:24Z",
+  "updated_at": "2026-06-20T14:51:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

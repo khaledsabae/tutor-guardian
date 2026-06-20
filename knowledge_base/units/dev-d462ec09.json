@@ -1,0 +1,29 @@
+{
+  "id": "dev-d462ec09",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "نموذج منطقي لجمع بيانات الرعاية والمراقبة",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط رعاية ومراقبة بيانات",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "systems sex, age, income, wealth, race or ethnicity, need to follow a logic model. This should migratory status, disability and geographic underpin the vision and the national plan, and location – are needed to provide information it should cover inputs, outputs and outcomes. on inequities and to enable at-risk populations to be targeted. Many indicators that are relevant for nurturing care – such as those for health and nutrition – Routine data collection has a cost in terms of staff are already routine parts of health information time and other resources. For that reason, each systems. But for other components of nurturing data-collection point should be related to a specific care – particularly responsive caregiving, early decision-making mechanism, and sufficient funds learning opportunities, and safety and security should be allocated for follow-up action. – new indicators need to be embedded in national monitoring plans and systems. Score cards and dashboards are helpful ways to present data to policy-makers, programme staff Countries will need to choose relevant indicators and service providers, as well as to the media, to complement the generic ones recommended civil society and parliamentarians. Presenting by the SDGs and the Global Strategy for Women’s, data to families and communities is also a critical Children’s and Adolescents’ Health (see Annex 2). part of any accountability mechanism, improving Joint monitoring across sectors will provide a transparency and joint action. Research is clear picture of whether progress is being made needed to develop better instruments and as intended, and will generate",
+  "text_simplified": "يجب أن تعتمد أنظمة الرعاية على نموذج منطقي يشمل المدخلات والمخرجات والنتائج. تحتاج البيانات إلى تغطية الفجوات بين الفئات المختلفة مثل العمر والجنس والدخل لاستهداف الفئات الأكثر عرضة للخطر. يمكن استخدام بطاقات الأداء ولوحات البيانات لعرض المعلومات على صانعي القرار والأسر والمجتمعات لتحسين الشفافية والعمل المشترك.",
+  "labels": [
+    "رعاية مغذية",
+    "جمع بيانات",
+    "مراقبة وطنية",
+    "مساءلة",
+    "فئات معرضة للخطر"
+  ],
+  "created_at": "2026-06-20T14:25:20Z",
+  "updated_at": "2026-06-20T14:25:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

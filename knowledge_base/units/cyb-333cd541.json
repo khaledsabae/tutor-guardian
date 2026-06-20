@@ -1,0 +1,29 @@
+{
+  "id": "cyb-333cd541",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إجراءات حماية الأطفال من المحتوى الجنسي الرقمي",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال من المحتوى الضار",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "with monitoring and extending to the final transfer and destruction of the content. Include a list of all personnel responsible for handling the material in the documentation. Promote reporting mechanisms for CSAM and ensure that customers know how to file a report if they discover such content. If a national hotline is available, offer links to that hotline from the corporate website and from any relevant content services promoted by the company. Take all relevant services/data sets to prevent the dissemination of known child sexual abuse content on their services or platforms. Actively assess all content hosted on the company’s servers, including commercial (branded or contracted from third-party content providers) on a regular basis. Consider using tools such as hash scanning of known child sexual abuse images, image recognition software or URL blocking to handle CSAM. Creating a Industry can help create a safer, more enjoyable digital environment for safer and age- children and young people of all ages by taking the following actions: appropriate online environment Adopt safety and privacy-by-design principles in company technologies and services and prioritize solutions that reduce the volume of data relating to children to a minimum. Implement age-appropriate designs in the services offered. Present information to children regarding the rules of the site in an accessible and age-appropriate manner, providing the appropriate amount of detail. In addition to the age-appropriate and accessible terms and conditions, industry should similarly, and clearly communicate information, such as rules and key policies. This should emphasize acceptable and unacceptable",
+  "text_simplified": "يجب على الشركات مراقبة المحتوى الرقمي لمنع انتشار مواد الاعتداء الجنسي على الأطفال. ينبغي توفير آليات للإبلاغ عن هذا المحتوى وتدريب الموظفين على التعامل معه. كما يُوصى بتصميم خدمات رقمية آمنة ومناسبة للأطفال مع تقليل جمع بياناتهم.",
+  "labels": [
+    "سلامة الأطفال",
+    "محتوى ضار",
+    "إبلاغ",
+    "تصميم آمن",
+    "مسؤولية رقمية"
+  ],
+  "created_at": "2026-06-20T14:57:48Z",
+  "updated_at": "2026-06-20T14:57:48Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

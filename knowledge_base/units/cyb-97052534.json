@@ -1,0 +1,29 @@
+{
+  "id": "cyb-97052534",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "الاستغلال الجنسي للأطفال عبر الإنترنت وحمايتهم",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "استغلال جنسي للأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "2014. 27 Council of Europe, “What’s AI?”. 28 OECD, “Recommendation of the Council on Artificial Intelligence”, 2019. 29 UNICEF and ITU, “Guidelines for Industry on Child Online Protection”, 2014. Guidelines for industry on Child Online Protection Best interest of the child Refers to all the elements necessary to make a decision in a specific situation for a specific individual child or group of children.30 In accordance with article 1 of the Convention on the Rights of the Child, a child is anyone below the age of 18, unless majority is attained earlier under national law.31 Child sexual exploitation and abuse Describes all forms of sexual exploitation and sexual abuse, e.g. “(a) the inducement or coercion of a child to engage in any unlawful sexual activity; (b) the exploitative use of children in prostitution or other unlawful sexual practices; (c) the exploitative use of children in pornographic performances and materials”,32 as well as a “sexual contact that usually involves force upon a person without consent”.33 Child sexual exploitation and abuse (CSEA) increasingly takes place through the Internet, or with some connection to the online environment. Child sexual exploitation and abuse material The rapid evolution of ICTs has created new forms of online CSEA, which can take place virtually and do not have to include a physical face-to-face meeting with the child.34 Although many jurisdictions still label images and videos of child sexual abuse “child pornography” or “indecent images of children”, these Guidelines refer to the issues collectively as “child sexual abuse",
+  "text_simplified": "يشرح النص تعريف الطفل بأنه كل شخص دون الثامنة عشرة، ويوضح معنى الاستغلال الجنسي للأطفال الذي يشمل الإكراه على أنشطة جنسية غير قانونية واستغلالهم في مواد إباحية. كما يشير إلى أن هذا الاستغلال يحدث بشكل متزايد عبر الإنترنت دون الحاجة للقاء جسدي. يجب على الأهل حماية أطفالهم من هذه المخاطر الرقمية.",
+  "labels": [
+    "استغلال جنسي",
+    "حماية الطفل",
+    "مخاطر الإنترنت",
+    "تربية رقمية",
+    "سلامة الأطفال"
+  ],
+  "created_at": "2026-06-20T15:01:38Z",
+  "updated_at": "2026-06-20T15:01:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

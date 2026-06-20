@@ -1,0 +1,29 @@
+{
+  "id": "med-65a4c563",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تمكين مقدمي الخدمات لتحسين الصحة النفسية للأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "advocates from the ranks of those who participated in the demonstration area; and they can educate colleagues from the health and other sectors on how to develop policies, plans and programmes. Step 5: Empower providers and maximize coordination The chances of successful implementation of an intervention will be enhanced if service providers are sufficiently empowered and supported in terms of information, skills, ongoing support, and human and financial resources. A first step in this process is to identify which individuals, teams or organizations in the health or other sectors will be responsible for implementing the programme. All sectors have a stake in both the present and future physical and mental well-being of young people. Collaboration (including cost-sharing) around mental health initiatives produces win-win situations for everyone, most importantly for the young people involved. In addition to intersectoral collaboration, other stakeholders (such as officials in the areas of education and justice) need to interact on an ongoing basis to maintain support for and ensure the smooth delivery of mental health services. Aims and target audience 1. Enable countries to develop and implement appropriate, evidence-based policies and plans for child and adolescent mental health. 2. Inform those ultimately responsible for developing, implementing and evaluating mental health policies, plans and programmes for children and adolescents of the unique challenges of working on behalf of these age groups. 3. Share workable solutions to common problems experienced by many people. 4. Identify other resources that offer additional tools or information. The other modules in this",
+  "text_simplified": "يشرح النص كيفية تمكين مقدمي الخدمات الصحية لتحسين تنفيذ برامج الصحة النفسية للأطفال والمراهقين. يركز على التعاون بين القطاعات المختلفة مثل الصحة والتعليم والعدالة لضمان نجاح هذه البرامج. كما يهدف إلى تطوير سياسات قائمة على الأدلة وتبادل الحلول العملية للمشكلات الشائعة.",
+  "labels": [
+    "صحة نفسية",
+    "تعاون بين القطاعات",
+    "تمكين مقدمي الخدمات",
+    "سياسات قائمة على الأدلة",
+    "برامج للأطفال والمراهقين"
+  ],
+  "created_at": "2026-06-20T14:43:42Z",
+  "updated_at": "2026-06-20T14:43:42Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

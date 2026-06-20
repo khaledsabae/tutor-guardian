@@ -1,0 +1,29 @@
+{
+  "id": "med-134a00ca",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "وضع رؤية لسياسة الصحة النفسية للأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية للأطفال والمراهقين",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "encouraged to share resources with less developed countries through sponsoring visiting consultants or exchange programmes for training, or funding joint training posts or joint development projects. National and international professional organizations (such as the International Association of Child and Adolescent Psychiatry and Allied Professions, the World Association for Infant Mental Health and the World Federation for Mental Health) can be instrumental in providing support and promoting networking. WHO headquarters and regional offices are ideally positioned to facilitate exchange with other countries. 2.5 Step 5: Set out the vision, values, principles and objectives of the policy In this step, policy-makers develop the core of the policy, informed by the outputs of It is important to address the the first four steps. It is important to address the twin goals of responding to problems twin goals of responding to (for example, the provision of psychosocial interventions to children and adolescents problems and promoting who suffer from mental disorders) and promoting healthy development(for example, the healthy development. promotion of well functioning families and school-based life skills programmes). Visionrepresents the positive expectations for the future mental health of children and adolescents. It should specify what is desirable and what goals should be strived to Vision represents the achieve. However, it should also be realistic about what is achievable in the economic expectations of the future and social context and realities of the country. The vision should serve to motivate and mental health of children and unite all stakeholders by appealing to their highest idealistic",
+  "text_simplified": "يجب تشجيع تبادل الخبرات مع الدول الأقل نموًا من خلال برامج التدريب والزيارات الاستشارية. كما ينبغي وضع رؤية واضحة لسياسة الصحة النفسية للأطفال والمراهقين، تجمع بين معالجة المشكلات وتعزيز النمو الصحي.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات",
+    "تبادل خبرات",
+    "تنمية",
+    "أطفال ومراهقون"
+  ],
+  "created_at": "2026-06-20T14:46:52Z",
+  "updated_at": "2026-06-20T14:46:52Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

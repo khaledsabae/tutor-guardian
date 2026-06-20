@@ -1,0 +1,29 @@
+{
+  "id": "med-b0960610",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "الرؤية والقيم في سياسة الصحة النفسية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Vision represents the achieve. However, it should also be realistic about what is achievable in the economic expectations of the future and social context and realities of the country. The vision should serve to motivate and mental health of children and unite all stakeholders by appealing to their highest idealistic and altruistic motivations. adolescents. An example of a vision for a child and adolescent mental health policy would be: Creating an environment which meets the psychosocial needs of children to enable their optimal development. Values refer to intrinsic worth, quality or usefulness. They need to be consistent with the vision and flow from it. Certain values are widely held by policy-makers, planners, service providers and advocates engaged in the field of child and adolescent mental health. These include the values of reducing sufferingand fostering family cohesion. Of course, even among those who subscribe to these values, there may be a divergence Values refer to intrinsic worth, about their implications and meaning. A child psychiatric service, for example, may quality or usefulness. require all family members to be involved in the treatment plan for a child with a mental disorder, but mainly to ensure treatment adherence. In contrast, within a family therapy unit, most of the professional effort may be directed at altering the family structure, with almost no focus on the “index patient” whose problems precipitated referral to the Other values are more specific to cultural, economic and social circumstances, and to roles within the child and adolescent mental health",
+  "text_simplified": "الرؤية تمثل الهدف المنشود، ويجب أن تكون واقعية وقابلة للتحقق في ضوء الظروف الاقتصادية والاجتماعية للبلد. تهدف الرؤية إلى تحفيز الصحة النفسية للأطفال والمراهقين وتوحيد الجهود بين المعنيين. مثال على رؤية لسياسة الصحة النفسية للأطفال: خلق بيئة تلبي الاحتياجات النفسية والاجتماعية للأطفال لتمكين نموهم الأمثل. القيم تنبع من الرؤية وتشمل تقليل المعاناة وتعزيز التماسك الأسري، مع اختلاف في تفسيرها بين المختصين.",
+  "labels": [
+    "رؤية",
+    "قيم",
+    "صحة نفسية للأطفال",
+    "سياسة",
+    "تماسك أسري"
+  ],
+  "created_at": "2026-06-20T14:46:56Z",
+  "updated_at": "2026-06-20T14:46:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

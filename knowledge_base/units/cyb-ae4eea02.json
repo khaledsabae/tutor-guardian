@@ -1,0 +1,29 @@
+{
+  "id": "cyb-ae4eea02",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات لحماية الأطفال على الإنترنت",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "استخدام الإنترنت والسلامة الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "engaged in and http://www.unicef.org/crc/ interested in the impact of the social Web http://www.connectsafely.org/ http://www.itu.int/wsis Children and Adolescents Closing State- ment at World Congress III Against Sexual ITU’s activities on cybersecurity http://www.itu.int/cybersecurity http://www.ecpat.net/WorldCongressIII/ Child Online Protection (COP) Initiative PDF/Outcome/WCIII_Outcome_Docu- http://www.itu.int/cop ment_Final.pdf Imagine Your Future – a prediction of The Children and Young Person’s Global how the future will be Online Charter http://www.elon.edu/e-web/predictions/ http://www.iyac.net/children/index.htm kidzone/yourfuture.xhtml#kids%27%20 A number of Childnet’s resources for The Internet Big Picture - World Internet http://www.childnet-int.org/young- Users and Population Stats people/ http://www.internetworldstats.com/stats. Internet safety information (access to sites in different languages) Child-friendly version of ‘A World Fit for http://www.saferinternet.org/ww/en/ Children’ pub/insafe/index.htm http://www.unicef.org/specialsession/ http://www.getnetwise.org/ wffc/child_friendly.html Opinion polls: What young people think http://www.unicef.org/polls/ Guidelines for Children and Young People www.itu.int/cop Parent Contract 5. I will try to provide close sup- I agree to the above. port and supervision of my I know that the Internet can be a won- younger children’s use of the derful place for my kids to visit. I also Internet, for example by trying Parent signature(s) know that I must do my part to help to keep their computer in a keep them safe on their visits. Under- family area standing that my kids can help me, I 6. I will report suspicious and agree to follow these rules: illegal activity and sites to the 1. I will get to know the services proper authorities. and websites my child uses. 7. I will make or find a list of I understand that my parents have 2. I",
+  "text_simplified": "يحتوي النص على روابط ومصادر توعوية حول حماية الأطفال على الإنترنت، مع التركيز على دور الأهل في مراقبة استخدام أطفالهم للإنترنت وتوقيع اتفاقية أسرية للاستخدام الآمن. كما يشير إلى أهمية الإبلاغ عن الأنشطة المشبوهة ووضع الحاسوب في مكان مفتوح بالمنزل.",
+  "labels": [
+    "حماية الأطفال",
+    "الإنترنت الآمن",
+    "رقابة أبوية",
+    "اتفاقية أسرية",
+    "توعية رقمية"
+  ],
+  "created_at": "2026-06-20T15:12:36Z",
+  "updated_at": "2026-06-20T15:12:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

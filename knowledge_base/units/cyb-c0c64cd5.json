@@ -1,0 +1,29 @@
+{
+  "id": "cyb-c0c64cd5",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "التنمر الإلكتروني وحماية البيانات الشخصية للأطفال",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "تنمر إلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "can abuse. Alternatively, you can nified when filmed with mobile lead to an off-line meeting and become accessible to anyone, turn directly to the police; phones and exchanged or posted possible abuse; and it is therefore advisable to on the Net. It is also advisable to save 2. protecting your personal data create an identity for yourself, e-mails and chat room text, What is bullying? Bullying is the is important; in the real world, using nicknames or aliases and SMS or MMS messages (using act of intentionally causing harm you would never give out such fictional images or avatars, “messages inbox”, for exam- to another person through verbal details and you’d never tell and not provide any detailed ple), as they can be provided as harassment, physical assault or people you don’t know about personal information; evidence to the police. other more subtle methods of your private matters. Even if 4. when you are curious about coercion such as manipulation. In a nice virtual friendship has your sexuality or your more in- Bullying everyday language bullying often been formed, that might seem timate feelings, remember that describes a form of harassment like it could lead to something the Internet can sometimes be Through services such as e-mail, perpetrated by an abuser who more, it is important to re- a source of really good advice forums, chat rooms, blogs, Instant possesses more physical and/or member that you don’t always and information but very Messaging programmes, SMS and social power and dominance",
+  "text_simplified": "التنمر هو إيذاء متعمد لشخص آخر عبر الإساءة اللفظية أو الجسدية أو التلاعب النفسي، ويحدث غالبًا عندما يكون المتنمر أقوى جسديًا أو اجتماعيًا. يجب على الأهل تعليم أبنائهم حماية بياناتهم الشخصية على الإنترنت وعدم مشاركة التفاصيل الخاصة مع الغرباء. كما ينبغي حفظ الرسائل الإلكترونية والنصوص كدليل يمكن تقديمه للشرطة عند الحاجة. في حال التعرض للتنمر أو التحرش عبر الإنترنت، يُنصح بالتواصل المباشر مع السلطات.",
+  "labels": [
+    "تنمر",
+    "حماية بيانات",
+    "سلامة رقمية",
+    "تحرش إلكتروني",
+    "توعية أسرية"
+  ],
+  "created_at": "2026-06-20T15:11:23Z",
+  "updated_at": "2026-06-20T15:11:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

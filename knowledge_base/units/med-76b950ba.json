@@ -1,0 +1,29 @@
+{
+  "id": "med-76b950ba",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تطوير سياسة الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سياسة الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "or increase the extent of promotive behaviours. > Human resources and training: Develop training in school-based health promotion interventions for child and adolescent mental health service providers and educators. * This example is provided for heuristic purposes only, and is not a recommendation for > A child and adolescent mental health policy begins with the gathering of information and data for policy development. > Evidence is needed to identify effective strategies. > Consensus building and negotiation are crucial at every step of the policy planning > A child and adolescent mental health policy should include a vision, values, principles and objectives. > A number of different areas for action are likely to be required to realize the objectives within the policy. 3. Developing a child and adolescent mental Once development of the mental health policy is completed, the next step is to develop a plan to implement its objectives. A plan consists of a detailed schema for implementing strategic actions that favour the promotion of mental health, the prevention of mental disorders, treatment and rehabilitation. Ideally, the policy should have been approved at all necessary levels before the plan is Ideally, the policy should have developed. This improves the likelihood of enthusiastic cooperation of all key been approved at all necessary stakeholders. levels before the plan is The development of a plan builds on the process already established for policy development outlined in section 2 of this module. Obtaining information about the population’s needs, gathering evidence and building consensus remain",
+  "text_simplified": "تتعلق هذه الوحدة بكيفية تطوير سياسة الصحة النفسية للأطفال والمراهقين. تبدأ العملية بجمع المعلومات والبيانات، ثم بناء توافق في الآراء حول الرؤية والأهداف. بعد الانتهاء من السياسة، يتم وضع خطة تنفيذية تشمل تعزيز الصحة النفسية والوقاية والعلاج. يجب أن تحظى السياسة بالموافقة من جميع الجهات المعنية قبل وضع الخطة لضمان التعاون.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "سياسة",
+    "تخطيط"
+  ],
+  "created_at": "2026-06-20T14:49:57Z",
+  "updated_at": "2026-06-20T14:49:57Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

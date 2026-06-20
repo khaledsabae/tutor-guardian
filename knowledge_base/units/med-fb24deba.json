@@ -1,0 +1,29 @@
+{
+  "id": "med-fb24deba",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "توصيات النوم والنشاط البدني للأطفال",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "سلوك حركي ونوم",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "• Sleep & sedentary behaviour & physical activity the Australian guidelines process and an additional three studies (32, 55, 56) (568 participants) for the update to Physical December 2017. In total, these included cluster RCTs (n=5), non-randomized interventions (n=1), longitudinal (n=3) and cross-sectional (n=4) studies. The GRADE table for combined movement behaviours is available in Web Annex Evidence Profiles, section 1.4 . The most ideal combinations of sedentary behaviour and physical activity, thought to be beneficial for health (less Sleep sedentary time, more physical activity) were favourably associated with motor development and fitness in pre- school children, both favourably and not associated with Sedentary ? adiposity and not associated with growth. The most ideal combinations of sleep and sedentary behaviour (more sleep and less sedentary time) were favourably associated with adiposity in young children. The evidence showed that replacing sedentary time with moderate- to vigorous-intensity physical activity is likely to improve health indicators in children. However, there was no information available that considered all three movement behaviours (physical activity, sedentary and For the critical outcomes, there was moderate quality evidence for growth, low quality evidence for motor development and adiposity and very low-quality evidence for fitness. The overall quality of evidence was rated as very low. Available online at https://apps.who.int/iris/handle/10665/311663 10 Recommendations 11 The GDG considered the value of a 24-hour approach (57). Compositional analysis from Canada using to recommendations on physical activity, sedentary objective monitoring indicates that lower levels of behaviour and sleep. Although the GDG discussed sedentary behaviour",
+  "text_simplified": "توصي الإرشادات الأسترالية ومنظمة الصحة العالمية بأهمية التوازن بين النوم والسلوك الخامل والنشاط البدني للأطفال. تشير الدراسات إلى أن تقليل وقت الجلوس وزيادة النشاط البدني المعتدل إلى القوي يحسن النمو الحركي واللياقة البدنية ويقلل السمنة لدى الأطفال الصغار. كما أن الجمع بين النوم الكافي وتقليل السلوك الخامل مفيد للصحة. لكن جودة الأدلة العلمية كانت منخفضة إلى متوسطة.",
+  "labels": [
+    "نشاط بدني",
+    "نوم",
+    "سلوك خامل",
+    "صحة أطفال",
+    "إرشادات"
+  ],
+  "created_at": "2026-06-20T15:05:46Z",
+  "updated_at": "2026-06-20T15:05:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

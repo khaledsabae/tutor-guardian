@@ -1,0 +1,29 @@
+{
+  "id": "cyb-6c0a7e73",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "التنمر الإلكتروني وكيفية حماية الطفل منه",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "تنمر إلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "to refrain from physical threats, it is advis- from making contact with necessarily involving any physical reacting to provocations able that the police also be you. An Instant Messaging contact – can have just as painful received via SMS , MMS, informed; (IM) system lets you know consequences as that of tradition- instant messages, in offensive 2 it is possible to trace the when one of your known and al forms of bullying. or defamatory e-mails, in e-mail account from which approved contacts is online For this reason it is important that chat rooms or during online the offensive message and, at that point, you can you know that this phenomenon encounters with other users. was sent, but practically begin a chat session with the exists and that you are aware of Instead you need to employ impossible to prove who person you feel like talking the different forms it can take certain strategies that can actually used it to send the with; and what can be done to avoid exclude or limit the actions of message. The online bully there are quite a number of dif- becoming a victim: those attempting to provoke could also hack into some- ferent IM systems, such as ICQ, you such as: one else’s account and use AOL Messenger, Yahoo Messen- 1. do not circulate your personal 2 many games allow for the it for his/her offensive ger! Bullies know which are the data thoughtlessly, as this exclusion of undesirable behaviour and therefore most",
+  "text_simplified": "التنمر الإلكتروني هو سلوك عدواني يحدث عبر الإنترنت مثل الرسائل المسيئة أو الإهانات في غرف الدردشة. يجب على الأهل تعليم أبنائهم عدم مشاركة بياناتهم الشخصية بلا حذر. من المهم معرفة أن المتنمر قد يخترق حسابات الآخرين لإرسال رسائل مؤذية. يمكن استخدام استراتيجيات مثل حظر الأشخاص المزعجين في الألعاب لحماية الطفل.",
+  "labels": [
+    "تنمر إلكتروني",
+    "سلامة رقمية",
+    "حماية الأطفال",
+    "استراتيجيات وقائية",
+    "وعي أبوي"
+  ],
+  "created_at": "2026-06-20T15:11:35Z",
+  "updated_at": "2026-06-20T15:11:35Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

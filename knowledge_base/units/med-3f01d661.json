@@ -1,0 +1,29 @@
+{
+  "id": "med-3f01d661",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "توصيات النشاط البدني للأطفال من 3-4 سنوات",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "نشاط بدني",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "the costs. progressive increase in activity to reach the target No evidence was available on the values and preferences, through additional time for free active play will have acceptability or feasibility of the recommendations in health benefits. low and middle-income settings. The GDG discussed that there may be some variability on how some The recommendation for 60 minutes of moderate- to groups value adiposity in children. Physical activity vigorous-intensity physical activity per day for 3–4-year- can be increased in various ways requiring minimal olds aligns with the recommendation for 60 minutes per facilities or equipment, but safe environments should day of moderate- to vigorous-intensity physical activity be ensured. The GDG noted that for infants, interactive in children 5 years of age and older (1), and is associated floor-based play would require appropriate supervision with desirable health indicators. and a safe environment. Tailored communication and/ or resources may be required for certain settings (such The GDG discussed extensively the use of the term as low resource settings) and special populations physical activity or active or energetic play, recognizing (children with disabilities). The GDG noted that studies that in young children, physical activity will most likely in Canada (33, 34) and Australia (35) indicated that most take the form of energetic play rather than organized children 1 to 4 years of age and about 30% of infants exercise, physical education or sport. The GDG decided were already meeting the recommendations for physical to use the term physical activity and moderate- to activity",
+  "text_simplified": "يوصي الخبراء بأن يمارس الأطفال من عمر 3 إلى 4 سنوات نشاطًا بدنيًا معتدلًا إلى قوي لمدة 60 دقيقة يوميًا، وهو ما يتوافق مع توصيات الأطفال الأكبر سنًا. يمكن زيادة النشاط البدني بطرق متنوعة لا تتطلب معدات باهظة، مع ضرورة توفير بيئة آمنة وإشراف مناسب، خاصة للرضع والأطفال ذوي الإعاقة.",
+  "labels": [
+    "نشاط بدني",
+    "أطفال",
+    "توصيات صحية",
+    "لعب نشط",
+    "بيئة آمنة"
+  ],
+  "created_at": "2026-06-20T15:05:01Z",
+  "updated_at": "2026-06-20T15:05:01Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-074a8944",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال في العالم الرقمي ودور التكنولوجيا",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل في الفضاء الرقمي",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "landscape in which this generation’s children find themselves. In addition to reflecting new developments in digital technologies and platforms, this new edition addresses an important lacuna: the situation faced by children with disabilities, for whom the online world offers a particularly crucial lifeline to full – and fulfilling – social participation. The technology industry has a critical and proactive role to play in establishing the foundations for safer and more secure use of Internet-based services and other technologies, for today’s children and future generations. Business must increasingly put children’s interests at the heart of its work, paying special attention to protecting the privacy of young users’ personal data, preserving their right to freedom of expression, combating the growing scourge of CSAM and ensuring there are systems in place to effectively address violations of children’s rights when they occur. Where domestic laws have not yet caught up with international law, every business has an opportunity – and a responsibility – to bring its own operational frameworks into line with the very highest standards and best practices. For industry, we hope these guidelines will serve as a solid foundation on which to develop business policies and innovative solutions. In the true spirit of the ITU role as a global convener, I am proud that these guidelines are the product of a global collaborative effort and have been co-authored by experts drawn from a broad international community. I am also delighted to introduce our new COP mascot, Sango: a friendly, feisty and fearless",
+  "text_simplified": "هذه الوثيقة تناقش حماية الأطفال في العالم الرقمي، مع التركيز على الأطفال ذوي الإعاقة الذين يعتمدون على الإنترنت للمشاركة الاجتماعية. تدعو الشركات التكنولوجية إلى وضع مصلحة الطفل في صميم عملها، وحماية خصوصية بياناتهم، وحرية التعبير، ومكافحة المواد المسيئة. كما تشجع الشركات على تطبيق أعلى المعايير الدولية لحماية حقوق الطفل حتى في غياب القوانين المحلية.",
+  "labels": [
+    "حماية الطفل",
+    "الإنترنت",
+    "الخصوصية",
+    "ذوي الإعاقة",
+    "المسؤولية الرقمية"
+  ],
+  "created_at": "2026-06-20T14:52:56Z",
+  "updated_at": "2026-06-20T14:52:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

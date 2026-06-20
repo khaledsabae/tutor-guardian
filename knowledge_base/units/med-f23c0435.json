@@ -1,0 +1,29 @@
+{
+  "id": "med-f23c0435",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "وضع أهداف ومؤشرات لبرامج الصحة النفسية بالمدارس",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط برامج الصحة النفسية المدرسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "more the health sector for educators who are implementing school-based health promotion targets, which represent the desired outcomes of the programmes. A target for this strategy might be that support is provided to 50% of all educators in a defined geographical area by an individual from the health sector who is specifically trained for the purpose of implementing a school-based mental health promotion programme. Such a target cannot be established in isolation from strategies in other areas of action that are necessary to achieve this target. The targets for the different strategies may need to be aligned to ensure that all of them can be met. Indicators provide information Indicators provide information that enables an assessment of the extent to which a that enables an assessment of target has been met. One needs to know the extent to which a target has been met in the extent to which a target order to determine whether the strategy has been implemented successfully. In the example above involving educators’ workshops, a suitable indicator would be the percentage of schools from which at least one educator has attended a workshop. The indicator should be in a format that is directly comparable with the target. Ideal targets and indicators are: (i) quantitative (i.e. measurable); (ii) easy and economical to measure; and (iii) closely related to the strategy (i.e. reflect the immediate consequences of the strategy, as opposed to consequences that depend on additional intermediate outcomes). 3.3Step 3: Determine the major activities The next step",
+  "text_simplified": "يشرح النص كيفية وضع أهداف ومؤشرات قابلة للقياس لبرامج تعزيز الصحة النفسية في المدارس. يجب أن تكون الأهداف محددة مثل تدريب 50% من المعلمين في منطقة معينة، وأن ترتبط المؤشرات مباشرة بالاستراتيجية المطبقة. المؤشرات الجيدة تكون كمية وسهلة القياس وتعكس النتائج المباشرة للبرنامج.",
+  "labels": [
+    "أهداف قابلة للقياس",
+    "مؤشرات الأداء",
+    "الصحة النفسية المدرسية",
+    "تدريب المعلمين",
+    "تقييم البرامج"
+  ],
+  "created_at": "2026-06-20T14:50:54Z",
+  "updated_at": "2026-06-20T14:50:54Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-3221c78e",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال في الفضاء الرقمي: سياسات وتصميم آمن",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "سلامة رقمية وحماية خصوصية الأطفال",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "predictable, equitable, transparent, rights-compatible, a source of continuous learning, and based on engagement and dialogue. Together with internal processes to address negative impacts, grievance mechanisms should ensure that companies have frameworks in place to ensure children and young people have suitable recourse when their rights have been threatened. When companies take a compliance-based approach towards ICT safety that focuses on meeting national legislation, following international guidance when national legislation is not present, and avoiding adverse impacts on children and young people’s rights, companies proactively promote children and young people’s development and well-being through voluntary actions that advance children and young people’s rights to access information, freedom of expression, participation, education and culture. Guidelines for industry on Child Online Protection Good practice: Policy and age-appropriate design The app developer Toca Boca produces digital toys from the child perspective. The company privacy policy is designed to share what information the company collects and how it is used. Toca Boca, Inc is a member of the PRIVO Kids Privacy Assured COPPA Safe Harbor Certification Program. LEGO® Life is an example of safe social media platform for children under the age of 13 years to share their LEGO creations, get inspired and interact safely. Children here are not asked for any personal information to create an account, which is possible only with the email address of a parent or carer. The App creates an opportunity for children and families to discuss online safety and privacy in a positive environment. Examples of age-appropriate design include",
+  "text_simplified": "يجب أن تكون آليات التظلم في الشركات واضحة وعادلة وشفافة لحماية حقوق الأطفال والشباب. كما ينبغي للشركات اتباع نهج قائم على الامتثال للقوانين والمبادئ التوجيهية الدولية لتعزيز رفاهية الأطفال. ومن الأمثلة الجيدة تطبيق توكا بوكا الذي يصمم ألعابًا رقمية مع مراعاة خصوصية الطفل، ومنصة ليغو لايف التي توفر بيئة آمنة للأطفال لمشاركة إبداعاتهم دون جمع معلومات شخصية.",
+  "labels": [
+    "سلامة الأطفال على الإنترنت",
+    "خصوصية البيانات",
+    "تصميم مناسب للعمر",
+    "حماية الحقوق الرقمية",
+    "توعية أسرية"
+  ],
+  "created_at": "2026-06-20T14:55:34Z",
+  "updated_at": "2026-06-20T14:55:34Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

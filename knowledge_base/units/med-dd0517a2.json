@@ -1,0 +1,29 @@
+{
+  "id": "med-dd0517a2",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "التدخلات النفسية في المدارس وأهمية المشاريع التجريبية",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "مشاكل سلوكية وعاطفية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "more accurately the evidence reflects the needs of the specific target population, the more likely it is to be relevant. Mental health interventions cover a spectrum of activities, ranging from mental health promotion (to build awareness and resilience) and universal and selective prevention (to reduce risk and vulnerability factors and build protective factors), as well as indicated prevention and early intervention strategies (for those with early signs of disorder), to treatment of varying intensity (for those with an established disorder) and extended care and rehabilitation programmes (for those with secondary impairments as a result of a disorder). There is varying but increasing evidence available for the efficacy and effectiveness of such interventions on particular populations. Pilot projectsare especially relevant at this stage of the policy planning cycle. Not only do they provide information about successful interventions, but they may also help Pilot projects are especially reveal why certain programmes failed. Box 2 describes a pilot project to identify and relevant at this stage of the manage mental health problems in schools. policy planning cycle. Box 2. Pilot project to provide mental health intervention in schools in Cambodia In Cambodia, a team from the Center for Child Mental Health (CCMH) conducted a survey in four schools of Kandal province in order to assess the prevalence of emotional and behavioural problems amongst students. A Strength and Difficulties Questionnaire (SDQ) was used to assess: difficulties in relationships, conduct and emotional problems, hyperactivity and attention problems, and social skills. Of those surveyed, 20% of",
+  "text_simplified": "تظهر الأدلة أن التدخلات في الصحة النفسية تتنوع من تعزيز الوعي والمرونة إلى الوقاية والعلاج المكثف. المشاريع التجريبية مفيدة في تحديد نجاح أو فشل البرامج، كما في مشروع كمبوديا الذي كشف أن 20% من الطلاب يعانون من مشاكل سلوكية أو عاطفية.",
+  "labels": [
+    "صحة نفسية",
+    "تدخل مدرسي",
+    "مشروع تجريبي",
+    "مشاكل سلوكية",
+    "وقاية"
+  ],
+  "created_at": "2026-06-20T14:46:14Z",
+  "updated_at": "2026-06-20T14:46:14Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

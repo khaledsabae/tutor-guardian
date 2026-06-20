@@ -1,0 +1,29 @@
+{
+  "id": "cyb-16495109",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات السلامة على الإنترنت للأطفال والأهل",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "السلامة الرقمية للأطفال",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "are promoted by the company), that are only legal or appropriate for adult users (e.g. certain games, lotteries). Guidelines for industry on Child Online Protection Educating children, Providers of connectivity, data storage and hosting services should parents and educators echo key messages from terms and conditions within community about children’s safety guidelines written in user-friendly language to support children and and their responsible their parents and caregivers. Within the service itself, at the point of use of ICTs uploading content, include reminders about such topics as the type of content considered to be inappropriate. Provide children and young people with information on safer Internet use. Consider creative ways to promote key messages such as the following: “Never share any contact details, including your physical location and your phone number, with anyone you don’t know in person.” “Never agree to get together with anyone you have met online on your own without consulting an adult first. Always tell a trusted friend about your whereabouts.” “Do not respond to bullying, obscene or offensive messages. But save the evidence – do not delete the message.” “Tell a trusted adult or friend if you are uncomfortable or upset about something or someone.” “Never give away your account password or username! Be aware that other people online may give false information to convince you to share your private information.” Service providers can partner with organizations that are well- positioned to educate and support children on safer internet usage and related issues. See Child Helpline International",
+  "text_simplified": "يجب تعليم الأطفال قواعد السلامة على الإنترنت، مثل عدم مشاركة المعلومات الشخصية أو كلمة السر مع الغرباء. ينبغي للأهل توجيه أطفالهم بعدم الرد على الرسائل المسيئة وحفظ الأدلة، وإخبار شخص بالغ موثوق عند الشعور بعدم الارتياح. يمكن لمقدمي الخدمات التعاون مع منظمات متخصصة لدعم الأطفال في الاستخدام الآمن للإنترنت.",
+  "labels": [
+    "سلامة الإنترنت",
+    "حماية الأطفال",
+    "مشاركة المعلومات",
+    "التنمر الإلكتروني",
+    "توعية رقمية"
+  ],
+  "created_at": "2026-06-20T14:59:16Z",
+  "updated_at": "2026-06-20T14:59:16Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e1d68f0c",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال عبر الإنترنت لشركات التكنولوجيا",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "which has been adapted from the rules applied by one of the largest social networks, provides guidance for providers of services hosting user-generated content and connecting new users on policies and actions they can take to enhance child online protection and children’s participation. Guidelines for industry on Child Online Protection Table 4: COP checklist for Feature C: Host user-generated content and Integrating child rights Services hosting user-generated content and connecting users considerations into all can identify, prevent and mitigate the adverse impacts of ICTs on appropriate corporate children and young people’s rights, and identify opportunities to policies and management support the advancement of children and young people’s rights. Refer to the general guidelines in Table 1. Developing standard In collaboration with government, law enforcement, civil society processes to handle and hotline organizations, companies hosting user-generated CSAM content and connecting users can play a key role in combating CSAM by taking the following actions: Establish procedures for all sites to provide immediate assistance to law enforcement during emergencies and for routine inquiries. Specify that the business will cooperate fully with law enforcement investigations in the event that illegal content is reported or discovered and note details regarding such penalties as fines or cancellation of billing privileges. Work with internal functions such as customer care, fraud prevention and security to ensure that the business can submit reports of suspected illegal content directly to law enforcement and hotlines. Ideally, this should be done in a way that does not expose front-line staff to",
+  "text_simplified": "هذه الإرشادات مستوحاة من قواعد إحدى شبكات التواصل الكبيرة، وتقدم توجيهات للشركات التي تستضيف محتوى من المستخدمين أو تربط بينهم. تهدف إلى حماية الأطفال عبر الإنترنت من خلال تعزيز مشاركتهم وتقليل الآثار السلبية للتكنولوجيا. تشمل الإجراءات التعاون مع جهات إنفاذ القانون لمكافحة محتوى الاعتداء الجنسي على الأطفال (CSAM)، ووضع سياسات واضحة للإبلاغ عن المحتوى غير القانوني.",
+  "labels": [
+    "حماية الأطفال",
+    "محتوى ضار",
+    "إنفاذ القانون",
+    "إرشادات صناعية",
+    "سلامة رقمية"
+  ],
+  "created_at": "2026-06-20T14:59:59Z",
+  "updated_at": "2026-06-20T14:59:59Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

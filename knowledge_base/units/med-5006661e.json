@@ -1,0 +1,29 @@
+{
+  "id": "med-5006661e",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "التكاليف الاقتصادية لعلاج الاضطرابات النفسية لدى الأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات نفسية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "as children, even if they start to work at the age of 6 years (Blanchet, 1996). Such differences can have a profound effect on how policies, plans and specific interventions are formulated and implemented. For example, interventions designed for societies that view adolescence as a period of continued dependence on parents will need to consider the important role that parents may play in seeking out, evaluating and consenting to services. 1.6 Economic costs of treating (or not treating) child and adolescent mental The WHO Mental Health Policy and Service Guidance Package: The Mental Health Context notes that: Families and caregivers end up bearing nearly all or the majority of these economic costs, except in a few well-established market economies with comprehensive well funded public mental health care systems. Even when families do bear the economic burden, governments and societies ultimately pay a price in terms of reduced national income and increased expenditure on social welfare programmes. The economic logic is thus stark and simple – treating mental illness can be expensive, but leaving mental illness untreated is more expensive and a luxury that most nations can ill afford. For children and adolescents with mental disorders, families and societies incur For children and adolescents significant costs. Both the children and adolescents and their parents/families are with mental disorders, affected. The child may miss school, not be able to work in the family business or be families and societies incur able to bring in money from other sources, because of his or",
+  "text_simplified": "هذا النص يناقش تأثير الاضطرابات النفسية على الأطفال والمراهقين من الناحية الاقتصادية. يوضح أن الأسر تتحمل معظم التكاليف، خاصة في الدول التي لا تملك أنظمة رعاية صحية نفسية شاملة. كما يشير إلى أن عدم علاج هذه الاضطرابات يكلف المجتمع أكثر على المدى البعيد.",
+  "labels": [
+    "اضطرابات نفسية",
+    "تكاليف اقتصادية",
+    "أطفال",
+    "مراهقون",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T14:45:06Z",
+  "updated_at": "2026-06-20T14:45:06Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

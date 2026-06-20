@@ -1,0 +1,29 @@
+{
+  "id": "med-08ab5a80",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية التمويل المستدام لخدمات الصحة النفسية للأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تمويل الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "and culture, as well as public policies will determine the emphasis or priorities in each of these areas. Adequate and sustained financing is one of the most important factors in the implementation of policy. It is a powerful tool that allows the ministry of health to Adequate and sustained transform the policy into reality (see module on Mental Health Financing). financing is a powerful tool that allows the ministry of A budget needs to be established for child and adolescent mental health services, health to transform the policy whether it is part of the overall health budget, an identifiable overall mental health into reality. budget, or a child and adolescent budget. If this does not occur, there is the danger that adult mental health services (which are generally underfunded) will pull funding away from child and adolescent mental health services. Similarly, there needs to be a process whereby expenditure can be monitored and reported regularly, so that comparisons can be made between the budgets and expenditures for children and adolescents and those for adults. This can contribute to greater transparency in allocation decisions, support more equitable resource distribution and help identify priority areas of need in ongoing planning. Sustained financing is crucial, for two reasons: (i) some interventions for children and adolescents need to be available for an extended period of time; and (ii) the benefits Sustained financing is from an intervention may become clear only after some years. Therefore, in order to ensure that budgets extend from one election",
+  "text_simplified": "يحتاج دعم الصحة النفسية للأطفال والمراهقين إلى تمويل مستدام وكافٍ لضمان استمرارية الخدمات. يجب تخصيص ميزانية واضحة لهذه الخدمات ضمن الميزانية الصحية العامة أو ميزانية الصحة النفسية. يساعد رصد الإنفاق بانتظام في تحقيق الشفافية والعدالة في توزيع الموارد. التمويل المستدام ضروري لأن بعض التدخلات تحتاج وقتاً طويلاً لتظهر فوائدها.",
+  "labels": [
+    "تمويل",
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "سياسات"
+  ],
+  "created_at": "2026-06-20T14:47:18Z",
+  "updated_at": "2026-06-20T14:47:18Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

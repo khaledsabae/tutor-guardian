@@ -1,0 +1,29 @@
+{
+  "id": "med-e984090b",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "أعراض الاكتئاب حسب العمر والجنس",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "be easily frustrated‚ feel restless, or have low self-esteem. They may have other disorders, such as anxiety, an eating disorder, attention-deficit/hyperactivity disorder, or substance use disorder. Older children and teens are also more likely to experience excessive sleepiness (called hypersomnia) and increased appetite (called hyperphagia). ● Young adults are more likely to be irritable, complain of weight gain and hypersomnia, and have a negative view of life and the future. They often have other disorders, such as generalized anxiety disorder, social phobia, panic disorder, or substance use disorder. ● Middle-aged adults may have more depressive episodes, decreased libido, middle- of-the-night insomnia, or early morning waking. They often report stomach problems, such as diarrhea or constipation. ● Older adults often feel sadness, grief, or other less obvious symptoms. They may report a lack of emotions rather than a depressed mood. Older adults are also more likely to have other medical conditions or pain that can cause or contribute to depression. Memory and thinking problems (called pseudodementia) may be prominent in severe cases. Depression can also look different in men versus women, such as the symptoms they show and the behaviors they use to cope with them. For instance, men (as well as women) may show symptoms other than sadness, instead seeming angry or irritable. For some people, symptoms manifest as physical problems (for example, a racing heart, tightened chest, chronic headaches, or digestive issues). Many men are more likely to see a health care provider about these physical symptoms than their",
+  "text_simplified": "الاكتئاب يظهر بأعراض مختلفة حسب العمر والجنس. قد يشعر الأطفال والمراهقون بالإحباط أو القلق أو تدني احترام الذات، بينما يعاني البالغون من اضطرابات النوم والشهية. الرجال قد يظهرون غضباً أو أعراضاً جسدية بدلاً من الحزن. كبار السن قد يشعرون بالحزن أو فقدان المشاعر أو مشاكل في الذاكرة.",
+  "labels": [
+    "اكتئاب",
+    "أعراض عمرية",
+    "فروق جنسية",
+    "اضطرابات مصاحبة",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T14:31:15Z",
+  "updated_at": "2026-06-20T14:31:15Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

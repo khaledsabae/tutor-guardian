@@ -1,0 +1,29 @@
+{
+  "id": "cyb-6f5c7706",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "مبادئ توجيهية لحماية الأطفال في الفضاء الإلكتروني",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال في الفضاء الإلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "and be adapted and used in a way online. specifically the WSIS Outcomes which is consistent with national recognized the needs of children It is hoped that this will not only or local customs and laws. More- and young people and their pro- lead to the building of a more over, as indicated in the insert tection in cyberspace. The Tunis inclusive information society, on page 4 it will be appreciated Commitment recognized “the but also enable countries to that these guidelines address role of ICTs in the protection meet their obligations towards issues which might affect all of children and in enhancing protecting and realizing the children and young people the development of children” as rights of children as stated in the under the age of 18 but each age well as the need to “strengthen United Nations Convention on group will have different needs. action to protect children from the Rights of the Child, adopted Indeed each child is unique, de- abuse and defend their rights in by UN General Assembly reso- serving individual consideration. the context of ICTs”. lution 44/25 of 20 November These global guidelines for 1989 and the WSIS Outcomes Through issuing these Guide- 1 www.itu.int/cop 2 http://www.unicef.org/crc/ Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop The UN Convention on the development oriented informa- Rights of the Child, approved tion society, where everyone can by the United Nations in 1989, create, access, utilize and share is the most important",
+  "text_simplified": "هذه المبادئ التوجيهية العالمية تهدف إلى حماية الأطفال والشباب في الفضاء الإلكتروني، مع مراعاة احتياجات كل فئة عمرية. يجب تكييفها وفقًا للقوانين والعادات المحلية، مع الاعتراف بدور تكنولوجيا المعلومات والاتصالات في حماية حقوق الطفل. كل طفل فريد ويستحق اعتبارًا فرديًا، مع التركيز على بناء مجتمع معلومات شامل.",
+  "labels": [
+    "حماية الأطفال",
+    "الفضاء الإلكتروني",
+    "حقوق الطفل",
+    "تكنولوجيا المعلومات",
+    "مجتمع شامل"
+  ],
+  "created_at": "2026-06-20T15:08:08Z",
+  "updated_at": "2026-06-20T15:08:08Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

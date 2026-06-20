@@ -1,0 +1,29 @@
+{
+  "id": "med-c1e47264",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تشجيع الشباب على الاهتمام بالصحة النفسية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "دعم الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "can be encouraged well-being of young people to extend this interest to mental health issues. Table 7 lists some potential allies, along can be encouraged to extend with examples of how improved child and adolescent mental health will have collateral this interest to mental health benefits in their sphere of operation. Clearly, child and adolescent mental health issues. advocates need to lobby officials in a range of relevant government departments. Table 7. Potential allies when developing child and adolescent mental health services Potential allies Benefits within the sphere of interest of the ally for improved child and adolescent mental health Civic organizations such as scouts, Increased enrolment musical groups, AIDS prevention Improved performance organizations Fewer behavioural problems Justice system officials Fewer criminal acts Fewer court cases Fewer and milder sentences Primary care clinics Improved physical health Increased treatment adherence Rate payers’ or tenants’ associations More considerate neighbours Religious organizations Increased participation and attendance School officials Improved academic performance Lower truant and dropout rates Fewer behavioural problems It is essential that people who are able to generate support for the policy at the highest levels of government are involved in the development and implementation of the policy. Identifying and staying in constant contact with a sponsor or champion at the highest government level is one of the critical factors to initiate and sustain a policy. Community leaders can become important advocates for the policy, ensuring that strategies are actually implemented. 4.3 Step 3: Develop a supportive structure The implementation of a",
+  "text_simplified": "يمكن تشجيع الشباب على الاهتمام بقضايا الصحة النفسية من خلال إشراكهم في أنشطة مجتمعية ومنظمات مختلفة. تحسين الصحة النفسية للأطفال والمراهقين يعود بفوائد متعددة على المجتمع، مثل تحسين الأداء الأكاديمي وتقليل المشكلات السلوكية. من المهم التعاون مع قادة المجتمع والمسؤولين الحكوميين لدعم تنفيذ السياسات المتعلقة بالصحة النفسية.",
+  "labels": [
+    "صحة نفسية",
+    "شباب",
+    "دعم مجتمعي",
+    "سياسات حكومية",
+    "تعاون"
+  ],
+  "created_at": "2026-06-20T14:51:42Z",
+  "updated_at": "2026-06-20T14:51:42Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

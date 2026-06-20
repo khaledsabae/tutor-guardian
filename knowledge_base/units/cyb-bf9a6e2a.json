@@ -1,0 +1,29 @@
+{
+  "id": "cyb-bf9a6e2a",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الإنترنت للأطفال ذوي الإعاقة وحماية الخصوصية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "مخاطر الإنترنت للأطفال ذوي الإعاقة",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "higher risk online, yet they have a greater need to be online. Research shows that children with disabilities are more likely to experience abuse of any kind, 6 specifically sexual victimization. 7 Victimization can include bullying, harassment, exclusion and discrimination based on a child’s actual or perceived disability or on aspects related to their disability, such as the way that they behave or speak, or equipment or services they use. offenders may include “devotees” – non-disabled persons sexually attracted to persons with disabilities (most commonly amputees and persons using mobility aids), some of whom even pretend to be disabled themselves. 8 Actions by such people may include downloading photos sharing them through dedicated forums or social media accounts. Reporting tools on forums There are concerns that “sharenting” (parents sharing information and photos of their children and young people online) can violate a child’s privacy, lead to bullying, and embarrassment, or have negative consequences later in life. 9 Some parents of children with disabilities may share information or media of their child in pursuit of support or advice, as a result, placing their child at risk of privacy violations both now and in the future. Such parents also risk being targeted by uninformed or unscrupulous people offering treatments, therapies or “cures” for a child’s disability. Equally, some parents of children and young people with disabilities may be overprotective because of their lack of knowledge on how to best guide their child’s use of the Internet or protect them from bullying or",
+  "text_simplified": "الأطفال ذوو الإعاقة معرضون لخطر أكبر على الإنترنت، لكنهم يحتاجون إليه بشدة. قد يتعرضون للتنمر أو الاستغلال الجنسي من قبل أشخاص يستهدفون إعاقتهم. كما أن مشاركة الأهل لمعلومات أطفالهم قد تعرض خصوصيتهم للخطر.",
+  "labels": [
+    "أطفال ذوو إعاقة",
+    "سلامة الإنترنت",
+    "تنمر إلكتروني",
+    "استغلال جنسي",
+    "خصوصية"
+  ],
+  "created_at": "2026-06-20T14:54:49Z",
+  "updated_at": "2026-06-20T14:54:49Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

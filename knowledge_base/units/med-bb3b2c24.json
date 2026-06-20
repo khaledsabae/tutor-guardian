@@ -1,0 +1,29 @@
+{
+  "id": "med-bb3b2c24",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "جمع البيانات حول الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "الصحة النفسية للأطفال والمراهقين",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "of the total population, for example, children and adolescents with severe mental disorders, or street children who may be at high risk of developing a mental disorder. The methods for collecting the above data vary, depending on the resources and time available. Epidemiological data is more scarce for children and adolescents than for adults. However, a disorder that has a higher prevalence rate does not necessarily indicate a greater degree of need. Indeed, a rare disorder that severely compromises the quality of life of the person, and which has high care demands and is easily preventable, may receive a higher priority than other disorders that do not share these characteristics. Prevalence estimates are most commonly derived from an expert synthesis of the best available data. Such estimates will generally be good enough for planning purposes. Prevalence estimates are Epidemiological data of good scientific quality in the area in which services need to be most commonly derived from developed are rarely available. Generally, conducting such studies in contexts where an expert synthesis of the resources are minimal will not be a cost-effective strategy. best available data. In addition to epidemiological studies, assessment can also involve rapid appraisal of the population. Relevant to child and adolescent mental health issues, interviews with educators, clergy and law enforcement may also be useful. Children and adolescents Assessment can also involve may be included in such an appraisal, when appropriate, to gain an additional insight rapid appraisal of the from the potential target population regarding the",
+  "text_simplified": "تختلف طرق جمع البيانات حول الصحة النفسية للأطفال والمراهقين حسب الموارد والوقت المتاح. بعض الاضطرابات النادرة قد تكون أكثر أولوية من غيرها إذا كانت تؤثر بشدة على جودة الحياة ويمكن الوقاية منها. يمكن استخدام تقديرات الخبراء للتخطيط، كما يمكن إجراء مقابلات مع المعلمين ورجال الدين والشرطة لفهم المشكلات النفسية للأطفال.",
+  "labels": [
+    "بيانات وبائية",
+    "اضطرابات نفسية",
+    "أطفال ومراهقون",
+    "تقييم سريع",
+    "أولوية الرعاية"
+  ],
+  "created_at": "2026-06-20T14:45:37Z",
+  "updated_at": "2026-06-20T14:45:37Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

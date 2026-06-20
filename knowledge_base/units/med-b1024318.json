@@ -1,0 +1,29 @@
+{
+  "id": "med-b1024318",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "نظام معلومات خدمات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "نظام معلومات الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "information system might implementation. consist of a list of the names of service users with some basic information such as diagnosis. At the other extreme, it might be a technologically sophisticated database comprising many of the input, process and outcome indicators for child and adolescent mental health services listed in Table 4. However, the information systems should not be too time-consuming or costly, or too challenging to maintain from a technical standpoint and in relation to the resources available. In addition, providers from different settings should have ready access to the systems in order to ensure continuity of care across such settings. The data need to be relevant and meaningful from the policy point of view. All this should be achieved while assuring the rights of children, adolescents and their families to confidentiality. Indeed, confidentiality concerns should be codified for the protection of children, adolescents and their families. Temporal dimension Input* Process** Outcome*** (1) Country/ Bed/population ratio Bed occupancy rate Divorce rate regional level Community/hospital ratio (staff) Admission rate Homelessness rate Expenditure on child and Average length of stay Imprisonment rate adolescent mental health Readmission rate School dropout rate Government policies Community/ hospital ratio Suicide rate Mental health laws (utilization) Staff/patient ratio Default rate Staff/population ratio Minimum standards of care Treatment protocols and Patterns of service use guidelines Audit procedures Pathways to care and Targeting of special groups (2) Local level Availability of medication Admission rate Outcomes aggregated at (catchment area) Community/hospital ratio (staff) Average length of stay local level",
+  "text_simplified": "نظام المعلومات قد يكون بسيطاً مثل قائمة بأسماء المستفيدين وتشخيصاتهم، أو متطوراً تقنياً يشمل مؤشرات المدخلات والعمليات والنتائج لخدمات الصحة النفسية للأطفال والمراهقين. يجب ألا يكون النظام مكلفاً أو صعب الصيانة، ويجب أن يكون متاحاً لمقدمي الخدمات من أماكن مختلفة لضمان استمرارية الرعاية. كما يجب أن تكون البيانات ذات صلة بالسياسات، مع ضمان حقوق السرية للأطفال والمراهقين وعائلاتهم.",
+  "labels": [
+    "نظام معلومات",
+    "صحة نفسية",
+    "أطفال ومراهقين",
+    "سرية",
+    "استمرارية رعاية"
+  ],
+  "created_at": "2026-06-20T14:49:10Z",
+  "updated_at": "2026-06-20T14:49:10Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

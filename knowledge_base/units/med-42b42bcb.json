@@ -1,0 +1,29 @@
+{
+  "id": "med-42b42bcb",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "خطوات تطوير سياسات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تطوير سياسات الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "health policy 15 2.1 Step 1: Gather information and data for policy development 16 2.2 Step 2: Gather evidence for effective strategies 19 2.3 Step 3: Undertake consultation and negotiation 20 2.4 Step 4: Exchange with other countries 22 2.5 Step 5: Set out the vision, values, principles and objectives of the policy 22 2.6 Step 6: Determine areas for action 24 2.7 Identify the major roles and responsibilities of the different stakeholders 2.8 Examples of policies 39 3. Developing a child and adolescent mental health plan 42 3.1 Step 1: Determine the strategies and time frames 42 3.2 Step 2: Set indicators and targets 49 3.3 Step 3: Determine the major activities 50 3.4 Step 4: Determine the costs, available resources and the budget 53 4. Implementation of child and adolescent mental health policies and plans 56 4.1 Step 1: Disseminate the policy 56 4.2 Step 2: Generate political support and funding 57 4.3 Step 3: Develop a supportive structure 58 4.4 Step 4: Set up pilot projects in demonstration areas 58 4.5 Step 5: Empower providers and maximize coordination 58 Barriers and solutions 61 This module is part of the WHO Mental Health Policy and Service Guidance Package, which provides practical information for assisting countries to improve the mental health of their populations. What is the purpose of the guidance package? The purpose of the guidance package is to assist policy-makers and planners to: - Develop a policy and comprehensive strategy for improving the mental health of -",
+  "text_simplified": "هذا النص يشرح خطوات تطوير سياسات الصحة النفسية للأطفال والمراهقين، بدءًا من جمع المعلومات وتبادل الخبرات مع الدول الأخرى، وصولًا إلى تحديد الرؤية والأهداف. كما يوضح كيفية وضع خطة عمل تشمل تحديد الاستراتيجيات والميزانية، ثم تنفيذ السياسات عبر نشرها ودعمها سياسيًا وماليًا. الهدف هو مساعدة المسؤولين على تحسين الصحة النفسية للسكان.",
+  "labels": [
+    "سياسات صحية",
+    "صحة نفسية",
+    "أطفال ومراهقون",
+    "تخطيط استراتيجي",
+    "منظمة الصحة العالمية"
+  ],
+  "created_at": "2026-06-20T14:42:41Z",
+  "updated_at": "2026-06-20T14:42:41Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

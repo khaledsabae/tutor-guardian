@@ -1,0 +1,29 @@
+{
+  "id": "med-e3c1a803",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "معلومات عن مضادات الاكتئاب والاكتئاب المقاوم للعلاج",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "علاجي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "information on psychotherapy, including what to look for in a therapist and how to find one, visit www.nimh.nih.gov/psychotherapies. Antidepressants are medications commonly used to treat depression. They work by changing how the brain produces or uses certain chemicals involved in mood or stress. Antidepressants take time—usually 4−8 weeks—to work, and problems with sleep, appetite, and concentration often improve before mood lifts. Giving a medication a chance to work is important before deciding whether it is right for you. Treatment-resistant depression occurs when a person doesn’t get better after trying at least two antidepressants. Esketamine is a medication approved by the U.S. Food and Drug Administration (FDA) for treatment-resistant depression. Delivered as a nasal spray in a doctor’s office, clinic, or hospital, the medication acts rapidly, typically within a couple of hours, to relieve depression symptoms. People will usually continue to take an antidepressant pill to maintain the improvement in their symptoms. Another option for treatment-resistant depression is to combine an antidepressant with a different type of medication that may make it more effective, such as an antipsychotic or anticonvulsant medication. All medications can have side effects. Talk to a health care provider before starting or stopping any medication. For more information, visit www.nimh.nih.gov/medications. Note: In some cases, children, teenagers, and young adults under 25 years may experience an increase in suicidal thoughts or behavior when taking antidepressants, especially in the first few weeks after starting or when the dose is changed. The FDA advises that patients of all ages taking",
+  "text_simplified": "مضادات الاكتئاب هي أدوية تعالج الاكتئاب بتغيير كيمياء الدماغ، وتحتاج من 4 إلى 8 أسابيع لتعمل. إذا لم يتحسن المريض بعد تجربة دواءين، فقد يكون مصابًا باكتئاب مقاوم للعلاج، ويتوفر له دواء سريع المفعول كرذاذ أنفي. يجب استشارة الطبيب قبل البدء أو التوقف عن أي دواء، مع الانتباه لاحتمال زيادة الأفكار الانتحارية لدى الأطفال والمراهقين.",
+  "labels": [
+    "مضادات اكتئاب",
+    "اكتئاب مقاوم",
+    "علاج دوائي",
+    "أفكار انتحارية",
+    "استشارة طبية"
+  ],
+  "created_at": "2026-06-20T14:31:28Z",
+  "updated_at": "2026-06-20T14:31:28Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

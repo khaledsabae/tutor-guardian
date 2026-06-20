@@ -1,0 +1,29 @@
+{
+  "id": "cyb-cd2ac235",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "سياسات حماية الأطفال من الإساءة الرقمية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "السلامة الرقمية ومكافحة الإساءة الإلكترونية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "and accessible. The Harmful Digital Communications Act, New Zealand The 2015 Act made cyber abuse a specific crime and focuses on a broad range of harms, from cyberbullying to revenge pornography. It aims to deter, prevent and lessen digital communication that is harmful, making it illegal to post a digital communication with the intention of causing serious emotional distress to someone else, and sets out a series of 10 communication principles. It empowers users to complain to an independent organization if these principles are broken or apply for court orders against the author or host of the communication if the issue is not resolved. The eSafety Commissioner, Australia Established in 2015, the Australia eSafety Commissioner is the world’s first government agency dedicated to tackling online abuse and keeping its citizens safer online. As the national independent regulator for online safety, eSafety has a powerful combination of functions. These range from prevention through awareness-raising, education, research and best practice guidance, to early intervention and harm remediation through multiple statutory regulatory schemes that give eSafety the power to rapidly remove cyberbullying, image-based abuse and illegal online content. This broad remit enables eSafety to address online safety in a multifaceted, holistic and proactive way. In 2018, eSafety developed Safety by Design (SbD), an initiative that places the safety and rights of users at the centre of the design, development and deployment of online products and services. A set of safety by design principles sit at the heart of the initiative, which set out",
+  "text_simplified": "يشرح النص قوانين وسياسات لحماية الأطفال من الإساءة الرقمية، مثل قانون نيوزيلندا لعام 2015 الذي يجرم التنمر الإلكتروني، ومكتب مفوض السلامة الإلكترونية الأسترالي الذي يعمل على منع وإزالة المحتوى الضار. يركز النص على أهمية تصميم المنتجات الرقمية بطريقة تراعي سلامة المستخدمين.",
+  "labels": [
+    "السلامة الرقمية",
+    "التنمر الإلكتروني",
+    "حماية الأطفال",
+    "قوانين الإنترنت",
+    "التصميم الآمن"
+  ],
+  "created_at": "2026-06-20T14:55:12Z",
+  "updated_at": "2026-06-20T14:55:12Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

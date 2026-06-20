@@ -1,0 +1,29 @@
+{
+  "id": "cyb-b98b3d51",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة على الإنترنت للأطفال من 8 إلى 12 سنة",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "سلامة الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "this age. It would be wise to consider limiting such a young child’s potential access to the internet e.g. by constructing a list of safe web sites which are age appropriate. The aim is to provide this age group with the basics in Internet safety, etiquette and un- derstanding. This age group will probably not be able to decode more sophisticated messages. Parent or adults with responsibil- ity for children should consult the COP guidelines for parents, Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Guidelines for the age group 8-12 year old. There are lots of different things you can do online. While most of 1. Be careful who you trust on- do this if you’re not sure. It’s things online that you might not the time it’s all great fun, some- line. A person can pretend to really important. do in ‘real life’. This may hurt that times things don’t go as well as be someone they are not. 5. Always keep your password person’s feelings or make them you hoped and you may not im- feel unsafe or embarrassed. It’s 2. Choose your friends. While it’s secret. Don’t even share it mediately know why or what to important to be kind and polite good to have a lot of friends, with your friends. do about it. This section has some to others online— stop and think having too many, makes it 6. If you want to arrange to really helpful tips",
+  "text_simplified": "يجب على الأهل الحد من وصول الأطفال الصغار إلى الإنترنت عبر إنشاء قائمة بالمواقع الآمنة المناسبة لأعمارهم. تهدف هذه الإرشادات إلى تعليم الأطفال أساسيات السلامة والسلوك المهذب على الإنترنت. من المهم تعليم الطفل عدم الثقة بالغرباء عبر الإنترنت وعدم مشاركة كلمة السر مع الأصدقاء. كما ينبغي تشجيع الطفل على التوقف والتفكير قبل التصرف عبر الإنترنت لتجنب إيذاء مشاعر الآخرين.",
+  "labels": [
+    "سلامة رقمية",
+    "تربية رقمية",
+    "حماية الطفل",
+    "استخدام الإنترنت",
+    "توعية أسرية"
+  ],
+  "created_at": "2026-06-20T15:10:26Z",
+  "updated_at": "2026-06-20T15:10:26Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

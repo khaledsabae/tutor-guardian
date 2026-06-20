@@ -1,0 +1,29 @@
+{
+  "id": "cyb-ea6b5420",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال على الإنترنت لمزودي الخدمة",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "children and young people. This service feature addresses, among others, mobile operators, Internet service providers, data storage systems and hosting services. Guidelines for industry on Child Online Protection Mobile operators enable access to the Internet and offer a range of mobile-specific data services. Many operators have already signed up to COP codes of practice and offer a range of tools and information resources to support their commitments. Most Internet service providers act as both a conduit, providing access to and from the Internet, and a repository for data through their hosting, caching and storage services. As a result, they have had primary responsibility for protecting children online. Internet access in public spaces It is becoming increasingly common for municipalities, retailers, transportation companies, hotel chains and other businesses and organizations to provide Internet access via Wi-Fi hotspots. Such access is typically free or provided at minimal cost, and sometimes with minimal sign-on formalities as a public service, or by a company to attract customers to its premises or persuade more people to use its services. Promoting Wi-Fi is an effective way to ensure Internet availability in a given area. Care needs to be taken, however, when such access is provided in public spaces where children are likely to be present on a regular basis. Users need to be mindful of the fact that Wi-Fi signals might be available to passers-by and user data compromised. The Wi-Fi provider will therefore not always be able to support or supervise the use of an",
+  "text_simplified": "هذا النص يتناول حماية الأطفال على الإنترنت من خلال توجيه إرشادات لشركات الاتصالات ومزودي خدمات الإنترنت. يجب على هذه الشركات توفير أدوات ومعلومات لحماية الأطفال أثناء استخدامهم للإنترنت في الأماكن العامة مثل المقاهي ووسائل النقل. كما يجب على مقدمي خدمة الواي فاي توخي الحذر في الأماكن التي يتواجد فيها الأطفال بانتظام. على المستخدمين الانتباه إلى أن إشارات الواي فاي قد تكون متاحة للمارة وقد تتعرض بياناتهم للاختراق.",
+  "labels": [
+    "حماية الأطفال",
+    "الإنترنت",
+    "الواي فاي",
+    "الخصوصية",
+    "إرشادات الصناعة"
+  ],
+  "created_at": "2026-06-20T14:58:50Z",
+  "updated_at": "2026-06-20T14:58:50Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

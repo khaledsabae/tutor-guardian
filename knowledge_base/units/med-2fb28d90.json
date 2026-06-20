@@ -1,0 +1,29 @@
+{
+  "id": "med-2fb28d90",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "أهمية النوم والنشاط البدني للأطفال",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "نشاط بدني ونوم",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "to 8 Years? Lloyd RM, et al. Consensus Statement of the American A Cohort Study. Journal of physical activity & health. Academy of Sleep Medicine on the Recommended Amount of Sleep for Healthy Children: Methodology 45. Konrad C, Herbert JS, Schneider S, Seehagen S. and Discussion. J Clin Sleep Med. 2016;12(11):1549-61. Gist extraction and sleep in 12-month-old infants. Neurobiol Learn Mem. 2016;134 Pt B:216-20. 18 References 19 55. Adamo KB, Wasenius NS, Grattan KP, Harvey 59. Chaput JP, Colley RC, Aubert S, Carson V, Janssen ALJ, Naylor PJ, Barrowman NJ, et al. Effects of a I, Roberts KC, et al. Proportion of preschool-aged Preschool Intervention on Physical Activity and Body children meeting the Canadian 24-Hour Movement Composition. J Pediatr. 2017;188:42-9 e2. Guidelines and associations with adiposity: results from the Canadian Health Measures Survey. BMC Public 56. Wasenius NS, Grattan KP, Harvey ALJ, Naylor PJ, Health. 2017;17(Suppl 5):829. Goldfield GS, Adamo KB. The effect of a physical activity intervention on preschoolers’ fundamental motor 60. Lee EY, Hesketh KD, Hunter S, Kuzik N, Rhodes skills - A cluster RCT. J Sci Med Sport. 2017. RE, Rinaldi CM, et al. Meeting new Canadian 24- Hour Movement Guidelines for the Early Years 57. Santos R, Zhang Z, Pereira JR, Sousa-Sa E, Cliff DP, and associations with adiposity among toddlers Okely AD. Compliance with the Australian 24- living in Edmonton, Canada. BMC Public Health. hour movement guidelines for the early years: associations with weight status. BMC Public Health. 2017;17(Suppl 5):867. 61. Hesketh KD, Downing KL,",
+  "text_simplified": "يحتاج الأطفال من عمر 4 إلى 8 سنوات إلى نوم كافٍ ونشاط بدني منتظم للحفاظ على صحتهم. تشير الدراسات إلى أن اتباع إرشادات الحركة لمدة 24 ساعة يساعد في تقليل السمنة وتحسين المهارات الحركية. يجب على الأهل تشجيع أطفالهم على اللعب النشط والنوم في أوقات منتظمة.",
+  "labels": [
+    "نوم صحي",
+    "نشاط بدني",
+    "أطفال",
+    "إرشادات حركة",
+    "صحة عامة"
+  ],
+  "created_at": "2026-06-20T15:07:13Z",
+  "updated_at": "2026-06-20T15:07:13Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

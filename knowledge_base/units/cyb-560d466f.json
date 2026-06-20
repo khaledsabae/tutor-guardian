@@ -1,0 +1,29 @@
+{
+  "id": "cyb-560d466f",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات حماية الخصوصية للأطفال على الإنترنت",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "clear service providers or, in the 4. Many instant messaging In all cases remember that it on this concept; what may case of abuse via mobile programmes offer the pos- is important to tell someone phones, the report can be about what is happening if you Guidelines for Children and Young People www.itu.int/cop ever feel at all uncomfortable or or online. ally know or trust the site, don’t tion about them passed on to threatened. provide it. Look for another or others; An interesting fact: the term similar service which asks for less Tell your parents, a teacher bully originally had a very differ- 2. you may not be obliged to information or promises to treat or someone within the school ent meaning from the one it has provide all of the informa- your information more carefully. staff you feel you can trust. today - in fact, 500 years ago it tion requested of you and Wherever possible it is advisable Even telling your friends could meant “friend” or “family mem- you should insert only the to create an identity (or alias) by be helpful. ber” – how things have changed! types of data that are strictly using an invented nickname and required. In any event, it is not add anything else. Above all You can also report to the service Defend your privacy always best to find out as it is important for you to have a provider or mobile operator, even much as possible about the clear understanding",
+  "text_simplified": "يجب على الأطفال والمراهقين حماية خصوصيتهم عند استخدام الإنترنت والتطبيقات. لا تشارك معلومات شخصية إلا عند الضرورة، واستخدم أسماء مستعارة. إذا شعرت بعدم الراحة أو التهديد، أخبر والديك أو معلمك أو شخصًا تثق به. يمكنك أيضًا الإبلاغ عن الإساءة لمزود الخدمة.",
+  "labels": [
+    "خصوصية",
+    "أمان إلكتروني",
+    "تنمر إلكتروني",
+    "إبلاغ",
+    "حماية الأطفال"
+  ],
+  "created_at": "2026-06-20T15:11:44Z",
+  "updated_at": "2026-06-20T15:11:44Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

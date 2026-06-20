@@ -1,0 +1,29 @@
+{
+  "id": "dev-4fb3af0c",
+  "domain": "development",
+  "source_file": "PLH_Positive_Parenting_Tip.pdf",
+  "title": "مساعدة المراهق على التواصل مع الأصدقاء بأمان",
+  "language": "mixed",
+  "age_group": "13-15",
+  "behavior_type": "تواصل اجتماعي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Parenting for Lifelong Health / WHO-UNICEF",
+  "text_original": "call. Teens especially need to be able to communicate with their friends. Help your teen connect through social media and other safe distancing ways. This is something you can do together, too! For more information click below links: Parenting tips Parenting tips In worldwide from WHO from UNICEF languages The mark “CDC” is owned by the US Dept of Health and Human Services and is used with permission. Use of this logo is not an endorsement by HHS or CDC of any particular product, service, Parenting for Lifelong Health is supported by the UKRI GCRF Accelerating Achievement for Africa’s Adolescents Hub, the European Research Council (ERC) under the European Union’s Seventh Framework Programme and the Horizon 2020 Research and Innovation Programme, Oxford University Innovation GCRF Sustainable Impact Fund, UNICEF, the Leverhulme Trust, the Economic and Social Research Council, WHO, CIDA, the National Research Foundation of South Africa, Ilifa Labantwana, Rand Merchant Bank Fund, the ApexHi Charitable Trust, the John Fell Fund, the Evaluation Fund, the UBS Optimus Foundation, USAID-PEPFAR, the Wellcome Trust, Grand Challenges Canada and Wellspring Advisors.",
+  "text_simplified": "يحتاج المراهقون بشكل خاص إلى التواصل مع أصدقائهم. ساعد ابنك المراهق على التواصل عبر وسائل التواصل الاجتماعي وطرق التباعد الآمن الأخرى. يمكنكم القيام بذلك معًا أيضًا.",
+  "labels": [
+    "تواصل",
+    "مراهقون",
+    "وسائل التواصل الاجتماعي",
+    "تربية",
+    "تباعد آمن"
+  ],
+  "created_at": "2026-06-20T14:42:01Z",
+  "updated_at": "2026-06-20T14:42:01Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "PLH_Positive_Parenting_Tip",
+    "source_author": ""
+  }
+}

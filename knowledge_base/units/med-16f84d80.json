@@ -1,0 +1,29 @@
+{
+  "id": "med-16f84d80",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية التخطيط الزمني للأنشطة التربوية للأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط تربوي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "will it take?Planners should define time frames in advance, thus creating a realistic timetable for each activity. By designing a plan on a monthly or other periodic basis it is possible to: (i) determine which activity has to follow another, and which can be done simultaneously; (ii) assess whether a plan is realistic and feasible; (iii) ensure that activities are spread throughout the year, as opposed to having some extremely busy patches followed by periods of relative inactivity; and (iv) facilitate regular reviews of progress towards completing each activity. Children and adolescents have a rapid developmental trajectory. This implies that for some activities time frames may be somewhat shorter than they would be for adults in terms of evaluating effectiveness. Positive or negative outcomes will be apparent at a relatively early stage. For example, the acquisition of many academic skills occurs in specific and fairly short time periods. Thus the effects of treating a mental health problem that interferes with the acquisition of academic skills (such as attention deficit hyperactivity disorders) should be visible fairly quickly. What are the outputs? The outputs for an activity correspond to the targets for a strategy – they define the desired results. If all the activity outcomes are achieved, this should automatically result in the strategic targets also being met. If this is not the case, it implies that there were errors in the formulation of the plan. What are the potential obstacles or delays that could inhibit the realization of each activity?It is",
+  "text_simplified": "يجب على المخططين تحديد أطر زمنية واقعية لكل نشاط مسبقاً، مع مراعاة سرعة النمو لدى الأطفال والمراهقين. يساعد التخطيط الشهري أو الدوري في ترتيب الأنشطة وتقييم جدواها وتوزيعها على مدار العام. تظهر نتائج علاج المشكلات النفسية التي تؤثر على التعلم، مثل فرط الحركة، بسرعة نسبياً. يجب تحديد المعوقات المحتملة التي قد تؤخر تحقيق الأنشطة.",
+  "labels": [
+    "تخطيط زمني",
+    "نمو الأطفال",
+    "تقييم الجدوى",
+    "مشكلات التعلم",
+    "فرط الحركة"
+  ],
+  "created_at": "2026-06-20T14:51:03Z",
+  "updated_at": "2026-06-20T14:51:03Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

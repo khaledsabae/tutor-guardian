@@ -1,0 +1,29 @@
+{
+  "id": "dev-75346fc0",
+  "domain": "development",
+  "source_file": "Harvard_Environment_of_Relationships.pdf",
+  "title": "تكيف الأطفال المبكر مع المدرسة والعلاقات المؤثرة",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "التكيف المدرسي",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Harvard Center on the Developing Child",
+  "text_original": "reac- early school adjustment. Child Development, 67(6), tivity across generations. Annual Review of Neuroscience, 37. Ladd, G.W., Kochenderfer, B.J., & Coleman, C.C. (1997). 53. Liu, D., Diorio, J.,Tannenbaum, B., Caldji, C., Francis, D., Classroom peer acceptance, friendship, and victimiza- Freedman, A., Sharma, S., Pearson, D., Plotsky, P.M., & tion: Distinct relational systems that contribute uniquely Meaney, M.J. (1997). Maternal care, hippocampal gluco- to children’s school adjustment? Child Development, 68, corticoid receptors, and hypothalamic-pituitary-adrenal 1181-1197. responses to stress. Science, 277, 1659-1662. 38. Pianta, R.C., & Steinberg, M. (1992). Teacher-child rela- 54. Leiderman, P. (1981). Human mother-infant social tionships and the process of adjusting to school. In R.C. bonding: Is there a sensitive phase? In K. Immelmann, Pianta (Ed.), Beyond the parent:The role of other adults G. Barlow, L. Petrinovich, & M. Main (Eds.), Behavioral in children’s lives. New Directions for Child Development, development (pp. 454-468). Cambridge: Cambridge 57, 61-80. University Press. 39. Dunn, J. (2004). Children’s friendships: The beginnings of 55. Caldji, C.,Tannenbaum, B., Sharma, S., Francis, D., intimacy. Oxford, UK: Blackwell Publishers. Plotsky, P.M., & Meaney, M.J.(1998).Maternal care 40. Fox, N.A., Henderson, H.A., Rubin, K.H., Calkins, during infancy regulates the development of neural S.D., & Schmidt, L.A. (2001). Continuity and dis- systems mediating the expression of fearfulness in the continuity of behavioral inhibition and exuberance: rat. Proceedings of the National Academy of Sciences of the Psychophysiological and behavioral influences across the United States of America, 95 (9), 5335-5340. first four years of life. Child Development, 72 (1), 1-21. 56. Coplan,",
+  "text_simplified": "يركز النص على تكيف الأطفال مع المدرسة في المراحل المبكرة، وأهمية العلاقات مع الأقران والمعلمين في ذلك. كما يشير إلى دور الرعاية الأمومية في تنظيم استجابات التوتر لدى الأطفال. هذه العوامل تؤثر على التكيف المدرسي والنمو النفسي للطفل.",
+  "labels": [
+    "تكيف مدرسي",
+    "علاقات أقران",
+    "رعاية أمومية",
+    "نمو نفسي",
+    "توتر"
+  ],
+  "created_at": "2026-06-20T14:30:16Z",
+  "updated_at": "2026-06-20T14:30:16Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Harvard_Environment_of_Relationships",
+    "source_author": ""
+  }
+}

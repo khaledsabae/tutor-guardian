@@ -1,0 +1,29 @@
+{
+  "id": "cyb-9cc6328a",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية حقوق الأطفال والمراهقين على الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حقوق رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "to privacy and freedom of expression without being subjected to unlawful interference. Additionally, the United Nations Human Rights Council Resolution 32/13 on the promotion, protection and enjoyment of human rights on the Internet, recognizes the global and open nature of the Internet as a driving force in accelerating progress towards development and affirms that the same rights people have offline must also be protected online. In States where there is a lack of adequate legal frameworks for the protection of children and young people’s rights to privacy and freedom of expression, the companies should follow enhanced due diligence to ensure policies and practices are in line with international law. As youth civic engagement continues to increase through online communications, companies have a greater responsibility to respect children and young people’s rights, even where domestic laws have not yet caught up with international standards. Companies should have in place an operational-level grievance mechanism to provide a format for affected individuals to raise concerns of potential violations. Operational level mechanisms should be accessible to children, their families and those who represent their interests. Principle 31 of the Guiding Principles on Business and Human Rights clarifies that such mechanisms should be legitimate, accessible, predictable, equitable, transparent, rights-compatible, a source of continuous learning, and based on engagement and dialogue. Together with internal processes to address negative impacts, grievance mechanisms should ensure that companies have frameworks in place to ensure children and young people have suitable recourse when their rights have been threatened. When companies",
+  "text_simplified": "يجب على الشركات حماية حقوق الأطفال والمراهقين في الخصوصية وحرية التعبير على الإنترنت، حتى في الدول التي تفتقر إلى قوانين كافية. ينبغي أن توفر الشركات آليات سهلة الوصول لتقديم الشكاوى للأطفال وأسرهم، وأن تلتزم بالمعايير الدولية لحقوق الإنسان.",
+  "labels": [
+    "الخصوصية",
+    "حرية التعبير",
+    "حقوق الطفل",
+    "الإنترنت",
+    "المساءلة"
+  ],
+  "created_at": "2026-06-20T14:55:29Z",
+  "updated_at": "2026-06-20T14:55:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

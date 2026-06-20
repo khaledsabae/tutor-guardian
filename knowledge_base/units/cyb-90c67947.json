@@ -1,0 +1,29 @@
+{
+  "id": "cyb-90c67947",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مبادئ حماية الطفل عبر الإنترنت وتعاون عالمي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "of the ITU role as a global convener, I am proud that these guidelines are the product of a global collaborative effort and have been co-authored by experts drawn from a broad international community. I am also delighted to introduce our new COP mascot, Sango: a friendly, feisty and fearless character designed entirely by a group of children as part of the ITU new international youth outreach programme. In an age where more and more young people are coming online, the ITU child protection guidelines are more important than ever. Industry, governments, parents and educators, as well as children themselves, all have a vital role to play. I am grateful, as always, for your support and I look forward to continuing our close collaboration on this critical issue. Doreen Bogdan-Martin Telecommunication Development Bureau, ITU Table of Contents Acknowledgements ii 2. What is child online protection? 3 2.1 Background information 5 2.2 Existing national and transnational models for Child Online Protection 13 3. Key areas of protecting and promoting children’s rights 15 3.1 Integrating child rights considerations into all appropriate corporate policies and management processes 15 3.2 Developing standard processes to handle CSAM 17 3.3 Creating a safer and age-appropriate online environment 19 3.4 Educating children, carers and educators about children’s safety and the responsible use of ICTs 22 3.5 Promoting digital technology as a mode for increasing civic 4. General guidelines for industry 27 5. Feature-specific checklists 37 5.1 Feature A: Provide connectivity, data storage and hosting services 37 5.2",
+  "text_simplified": "هذه المبادئ التوجيهية هي نتاج جهد عالمي مشترك لحماية الأطفال عبر الإنترنت. تم تصميم شخصية 'سانغو' كرمز للتوعية بمشاركة الأطفال أنفسهم. يجب على الصناعة والحكومات والأهل والمعلمين التعاون لضمان بيئة رقمية آمنة للأطفال.",
+  "labels": [
+    "حماية الطفل",
+    "السلامة الرقمية",
+    "توعية",
+    "تعاون دولي",
+    "بيئة آمنة"
+  ],
+  "created_at": "2026-06-20T14:53:00Z",
+  "updated_at": "2026-06-20T14:53:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

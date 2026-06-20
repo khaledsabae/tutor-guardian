@@ -1,0 +1,29 @@
+{
+  "id": "med-3fefdd37",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية خدمات الصحة النفسية المخصصة للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "مشكلات نفسية عامة",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Alternatively, mental health problems could serve as risk factors in difficult circumstances; for example, when an adolescent uses alcohol or drugs to deal with depressive feelings. Whatever the nature of the relationship between mental health problems and difficult circumstances, specific intervention strategies are necessary to address children’s and adolescents’ needs. There are advantages in regarding child and adolescent mental health services as a discrete area of health care. In many countries, child and adolescent mental health services are regarded as a subset of general mental health services or child health services, or as a minor extension of these services. The bulk of funding for mental health services is devoted to adult services, which makes it difficult to develop appropriate child and adolescent mental health services. If child and adolescent mental health services were to be viewed as a distinct category of health care with unique requirements, specific funding arrangements and policy development would be facilitated. However, in some countries, there may be advantages to adopting a more integrated approach. This needs to be taken into account when deciding whether and to what extent child and adolescent mental health services should be integrated or kept 1.2 Stigma and discrimination While all people with mental disorders suffer discrimination, children and adolescents are the least capable of advocating for themselves. Also, developmentally, children think more dichotomously than adults about categories such as “good” and “bad,” or “healthy” and “sick”. They are thus less likely to temper a negative remark with other more positive",
+  "text_simplified": "يمكن أن تؤدي المشكلات النفسية لدى الأطفال والمراهقين إلى سلوكيات خطيرة مثل تعاطي الكحول أو المخدرات للتعامل مع الاكتئاب. من المهم تخصيص خدمات الصحة النفسية للأطفال والمراهقين كمجال مستقل له احتياجاته الفريدة. يعاني الأطفال والمراهقون من الوصم والتمييز أكثر من غيرهم، وهم أقل قدرة على الدفاع عن أنفسهم. يجب توفير استراتيجيات تدخل محددة لتلبية احتياجاتهم.",
+  "labels": [
+    "صحة نفسية",
+    "مراهقون",
+    "وصم",
+    "تعاطي مخدرات",
+    "خدمات متخصصة"
+  ],
+  "created_at": "2026-06-20T14:44:09Z",
+  "updated_at": "2026-06-20T14:44:09Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

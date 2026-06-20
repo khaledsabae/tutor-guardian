@@ -1,0 +1,29 @@
+{
+  "id": "med-54fad984",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "توصيات النشاط البدني والسلوك الخامل للأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "توصيات صحية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "No comments were received. activity, sedentary and sleep patterns. These data Declared interests are summarized and reviewed. form part of a PhD and are in the process of being No conflict of interest was identified. prepared for publication, but were shared with the GDG during the second GDG meeting. All these sources of information were used to guide the GDG’s discussion on RECOMMENDATIONS values and preferences, in addition to expert knowledge from the GDG on the situation in their settings. In accordance with the GRADE process, the Resource implications GDG considered the proposed wording of the recommendations and the rating of its strength (strong A systematic review of the resource implications for or conditional) considering not just the nature and quality these guidelines was prepared by Olga Milliken, of the of evidence but an assessment of caregiver and children’s WHO Collaborating Centre on Chronic NCD Policy, values and preferences, the balance between benefits Ottawa, Canada. This review considered the evidence for and harms and the impact of the recommendation physical activity interventions, and concluded that there on gender, social and health equity, as well as the is very limited evidence on cost-effectiveness of relevant acceptability, feasibility and resource implications. interventions for children, and no evidence for children Decisions were reached by consensus through discussion. under 5 years of age and their parents. In conclusion, Voting was not required for the GDG to agree on the the search yielded no eligible published articles. The wording or strength of the recommendations. studies",
+  "text_simplified": "تم تحليل النص المتعلق بتوصيات النشاط البدني والسلوك الخامل وأنماط النوم للأطفال. اعتمدت التوصيات على مراجعة الأدلة وقيم الأسر وخبراء المجموعة التوجيهية، مع التركيز على التوازن بين الفوائد والأضرار والموارد المتاحة.",
+  "labels": [
+    "نشاط بدني",
+    "سلوك خامل",
+    "نوم",
+    "توصيات صحية",
+    "أطفال"
+  ],
+  "created_at": "2026-06-20T15:06:24Z",
+  "updated_at": "2026-06-20T15:06:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

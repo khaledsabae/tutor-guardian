@@ -1,0 +1,29 @@
+{
+  "id": "med-7d68867a",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "انتشار المشكلات الانفعالية والسلوكية لدى طلاب المدارس",
+  "language": "mixed",
+  "age_group": "7-9",
+  "behavior_type": "مشكلات سلوكية وانفعالية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "a survey in four schools of Kandal province in order to assess the prevalence of emotional and behavioural problems amongst students. A Strength and Difficulties Questionnaire (SDQ) was used to assess: difficulties in relationships, conduct and emotional problems, hyperactivity and attention problems, and social skills. Of those surveyed, 20% of teachers and 13% of parents reported that the children had problems. The CCMH team interviewed all the “case positive children”, counselled them at school, and referred a number to the CCMH if they required additional help. Class teachers were actively involved in the “school-based counselling”, which strengthened the student- teacher relationship. The CCMH team conducted workshops on a School Mental Health Programme for the teachers, and they continue to sustain the programme in the four (Center for Child Mental Health, Caritas, Cambodia, 2004) In addition to pilot projects using a controlled design and independent evaluation, often the people involved describe other interesting programmes. While the programmes may not have been formally designed or evaluated, they will often provide useful process information such as levels of programme or service acceptability, programme/service attendance, client satisfaction, difficulties in setting up and implementing programmes/services and perceived successes. When evaluating studies in the international literature and pilot projects, a distinction A distinction should be made should be made between efficacy (an intervention’s ability to achieve a desired effect between efficacy and under highly controlled conditions) and effectiveness(an intervention’s ability to achieve effectiveness. a desired effect within the context of a larger, non-controlled setting). The findings",
+  "text_simplified": "أظهر مسح في أربع مدارس بمقاطعة كندال أن 20% من المعلمين و13% من الآباء أبلغوا عن وجود مشكلات سلوكية وانفعالية لدى الطلاب. تم استخدام استبيان لتقييم صعوبات العلاقات والسلوك والانتباه وفرط الحركة. قدم الفريق استشارات مدرسية وأحال الحالات التي تحتاج مساعدة إضافية. كما عُقدت ورش عمل للمعلمين حول برنامج الصحة النفسية المدرسية.",
+  "labels": [
+    "صحة نفسية مدرسية",
+    "استبيان القوة والصعوبات",
+    "استشارات مدرسية",
+    "علاقة معلم-طالب",
+    "برامج وقائية"
+  ],
+  "created_at": "2026-06-20T14:46:20Z",
+  "updated_at": "2026-06-20T14:46:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

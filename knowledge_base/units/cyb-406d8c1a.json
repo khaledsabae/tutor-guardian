@@ -1,0 +1,29 @@
+{
+  "id": "cyb-406d8c1a",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "معايير حماية الأطفال من المواد المسيئة عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال من الاستغلال الإلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "media. Create and implement company and industry standards for the industry standards protection of children and young people, with regard to the specific to protect children industry and features. Developing In collaboration with government, law enforcement, civil society and standard processes hotline organizations, industry has a key role to play in combating to CSAM CSAM by taking the following actions: Prohibit uploading, posting, transmitting, sharing or making available content that violates the rights of any party or infringes any local, state, national or international law. Communicate with national law enforcement agencies or the national hotline(s) to communicate reports of CSAM as soon as these are brought to the provider’s knowledge. Ensure that internal procedures are in place to comply with reporting responsibilities under local and international laws. Where a company is operating in markets with less developed regulatory and law enforcement oversight of this issue, it can refer those wishing to file reports to the International Association of Internet Hotlines (INHOPE), where reports can be filed with any international Guidelines for industry on Child Online Protection Developing Establish internal procedures to ensure compliance under local and standard processes international laws on combating CSAM. Establish a senior position or team dedicated to integrating these (cont.) procedures into the organization. Industry members should then report the actions taken and outcomes achieved by this team in their annual corporate and sustainability report. When national regulations do not provide sufficient protection, companies should respect but exceed national legislation and use their leverage to lobby",
+  "text_simplified": "يجب على شركات التكنولوجيا والإعلام حماية الأطفال من المواد المسيئة عبر الإنترنت. يتطلب ذلك وضع معايير داخلية صارمة تمنع نشر المحتوى الضار. كما ينبغي التعاون مع السلطات والخطوط الساخنة للإبلاغ الفوري عن أي انتهاكات. في الدول ذات القوانين الضعيفة، يمكن اللجوء إلى منظمات دولية مثل INHOPE.",
+  "labels": [
+    "حماية الأطفال",
+    "الاستغلال الإلكتروني",
+    "معايير الصناعة",
+    "الإبلاغ عن الانتهاكات",
+    "التعاون الدولي"
+  ],
+  "created_at": "2026-06-20T14:57:35Z",
+  "updated_at": "2026-06-20T14:57:35Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "dev-f54ce529",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "قائمة مصادر الصور في دليل رعاية الأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "Nyani Quarmyne/Panos Pictures Page 3: © UNICEF/UN032020/LeMoyne Page 5: Save the Children Page 9: Giacomo Pirozzi/Panos Page 10: Mark Henley/Panos Pictures Page 13: © UNICEF/UN046138/Kljajo Page 15: © UNICEF/UN034623/LeMoyne Page 16: © UNICEF/Marco Dormino Page 25: © UNICEF/UN062342/Zammit Page 27: © UNICEF/UN064705/Ose Page 39: Jane Lucas Page 41: Aga Khan Development Network/J-L. Ray Page 44: Flickr Creative Commons License/White Ribbon Alliance Uganda For more information see: www.nurturing-care.org",
+  "text_simplified": "هذا النص يحتوي على قائمة بمصادر الصور المستخدمة في تقرير أو دليل توعوي حول رعاية الأطفال. يظهر النص أسماء المصورين والمنظمات مثل اليونيسف ومنظمة إنقاذ الطفولة. لا يحتوي على معلومات تربوية أو سلوكية محددة.",
+  "labels": [
+    "مصادر صور",
+    "رعاية أطفال",
+    "توعية",
+    "يونيسف"
+  ],
+  "created_at": "2026-06-20T14:28:34Z",
+  "updated_at": "2026-06-20T14:28:34Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

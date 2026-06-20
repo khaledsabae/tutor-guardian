@@ -1,0 +1,29 @@
+{
+  "id": "dev-ff344c8a",
+  "domain": "development",
+  "source_file": "Harvard_Environment_of_Relationships.pdf",
+  "title": "أهمية العلاقات الإيجابية في نجاح الطفل المدرسي",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "العلاقات الاجتماعية والعاطفية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Harvard Center on the Developing Child",
+  "text_original": "who have healthy stimulating activities and support for develop- relationships with their primary caregivers are ing positive relationships with other children. more likely to develop insights into other peo- Unfortunately, the generally poor quality of care ple’s feelings, needs, and thoughts, which form provided in many child care arrangements in the United States does not support these ben- efits because of high caregiver turnover, poorly children who develop warm, positive relationships designed programs, or inadequate preparation with their kindergarten teachers are more excited of staff. Current research also suggests the addi- tional risk that a greater amount of time in out- about learning, more positive about coming to of-home care during infancy may be associated with greater disobedience and aggression by the school, more self-confident, and achieve time children enter school.12, 22, 23, 29, 30, 31, 32, 33 more in the classroom. relationships are important to school adjust- ment. Children who develop warm, positive relationships with their kindergarten teach- a foundation for cooperative interactions with ers are more excited about learning, more others and an emerging conscience. Sensitive positive about coming to school, more self- and responsive parent-child relationships also confident, and achieve more in the classroom. are associated with stronger cognitive skills in Relationships with peers also are important. young children and enhanced social compe- Children who experience greater peer accep- tence and work skills later in school, which illus- tance and friendship tend to feel more positively trates the connection between social/emotional about the school experience and perform",
+  "text_simplified": "الأطفال الذين يتمتعون بعلاقات دافئة وإيجابية مع معلميهم في رياض الأطفال يكونون أكثر حماسًا للتعلم وأكثر ثقة بأنفسهم ويحققون نتائج أفضل في الفصل. كما أن العلاقات الحساسة والمستجيبة بين الوالدين والطفل ترتبط بمهارات معرفية أقوى وكفاءة اجتماعية أفضل في المدرسة. للأسف، فإن سوء جودة الرعاية في العديد من مراكز رعاية الأطفال في الولايات المتحدة بسبب ارتفاع معدل دوران مقدمي الرعاية وعدم كفاية البرامج لا يدعم هذه الفوائد.",
+  "labels": [
+    "علاقات دافئة",
+    "مهارات اجتماعية",
+    "التكيف المدرسي",
+    "رعاية الأطفال",
+    "الثقة بالنفس"
+  ],
+  "created_at": "2026-06-20T14:29:05Z",
+  "updated_at": "2026-06-20T14:29:05Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Harvard_Environment_of_Relationships",
+    "source_author": ""
+  }
+}

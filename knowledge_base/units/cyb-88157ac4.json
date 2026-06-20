@@ -1,0 +1,29 @@
+{
+  "id": "cyb-88157ac4",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات حماية الأطفال في العالم الرقمي",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "may encounter online. people from faraway places. or the production, distribution Empowering children and young Children and young people are and collection of child abuse people through education and truly becoming digital citizens material). awareness raising is therefore of in an online world that has no paramount importance. borders or frontiers. Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop These Guidelines have been children and young people have lines the COP Initiative calls prepared in the context of the been developed by the ITU and upon all stakeholders, includ- Child Online Protection (COP)1 a team of contributing authors ing children and young people, Initiative in order to establish from leading institutions active to promote the adoption of the foundations for a safe and in the ICT sector, for example policies and strategies that will secure cyberworld not only for Save the Children, Interpol and protect children in cyberspace today’s children but also for fu- Telefonica, CHIS and INSAFE. and provide safer access to all ture generations. They are meant the extraordinary opportunities The United Nation’s Convention to act as a blueprint which can and resources that are available of the Rights of the Child2 and be adapted and used in a way online. specifically the WSIS Outcomes which is consistent with national recognized the needs of children It is hoped that this will not only or local customs and laws. More- and young people and their pro- lead to the building of a more",
+  "text_simplified": "هذا الدليل يهدف إلى حماية الأطفال والشباب في العالم الرقمي من خلال تعزيز الوعي والتعليم. يشجع على تبني سياسات واستراتيجيات تحميهم من المخاطر الإلكترونية مثل استغلالهم في مواد إساءة معاملة الأطفال. كما يسعى إلى توفير وصول آمن إلى الفرص والموارد المتاحة عبر الإنترنت.",
+  "labels": [
+    "حماية الأطفال",
+    "الوعي الرقمي",
+    "السلامة الإلكترونية",
+    "تعليم رقمي",
+    "سياسات الحماية"
+  ],
+  "created_at": "2026-06-20T15:08:04Z",
+  "updated_at": "2026-06-20T15:08:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

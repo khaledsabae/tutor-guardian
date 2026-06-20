@@ -1,0 +1,29 @@
+{
+  "id": "cyb-a6f2ec93",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "دليل حماية الأطفال على الإنترنت",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "Gu (( i( ((( delines for Children on Ch (( i( ((( ld Online International Telecommunication Union Place des Nations CH-1211 Geneva 20 www.itu.int/cop Printed in Switzerland With the support of: CCHHIISS www.itu.int/cop This document may be updated from time to time. Third-party sources are quoted as appropriate. The International Telecommunication Union (ITU) is not responsible for the content of external sources including external websites referenced in this publication. Neither ITU nor any person acting on its behalf is responsible for the use that might be made of the information contained in this publication. Mention of and references to specific countries, companies, products, initiatives or guidelines do not in any way imply that they are endorsed or recommended by ITU, the authors, or any other organization that the authors are affiliated with, in preference to others of a similar nature that are not mentioned. Requests to reproduce extracts of this publication may be submitted to: jur@itu.int © International Telecommunication Union (ITU), 2009 ACKNOWLEDGEMENTS These Guidelines have been prepared by the International Telecommunication Union (ITU) and a team of contributing authors from leading institutions active in the information and communications technologies (ICT) sector and in child online safety issues. These Guidelines would not have been possible without the time, enthusiasm and dedication of its contributing authors. ITU is grateful to all of the following authors, who have contributed their valuable time and insights: (listed in alphabetical order) • Cristina Bueti (ITU) • Maria José Cantarino de Frías (Telefonica) • John Carr",
+  "text_simplified": "هذه الوثيقة هي دليل دولي صادر عن الاتحاد الدولي للاتصالات لحماية الأطفال على الإنترنت. تهدف إلى توعية الأهل والمربين بمخاطر الإنترنت وكيفية تعزيز السلامة الرقمية للأطفال.",
+  "labels": [
+    "سلامة الأطفال",
+    "الإنترنت",
+    "حماية رقمية",
+    "توعية",
+    "إرشادات دولية"
+  ],
+  "created_at": "2026-06-20T15:07:40Z",
+  "updated_at": "2026-06-20T15:07:40Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

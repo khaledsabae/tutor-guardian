@@ -1,0 +1,29 @@
+{
+  "id": "med-b0ea86e3",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "عوامل الخطر والحماية لصحة الطفل النفسية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "be divided into risk and protective factors. The mental health of a child The former refers to factors that increase the probability of occurrence of mental health or adolescent can be affected problems or disorders, while the latter refers to factors that moderate the effects of risk by risk and protective factors. exposure. As the term “bio-psycho-social” in the definition of mental health used earlier suggests, these risk and protective factors can exist in the biological, psychological and social domains. Table 2 provides examples of risk and protective factors in each of Table 2. Selected risk and protective factors for mental health of children and Domain Risk factors Protective factors Biological Exposure to toxins (e.g. tobacco Age-appropriate physical and alcohol) in pregnancy development Genetic tendency to psychiatric Good physical health disorder Good intellectual functioning Hypoxia at birth and other birth Other illnesses Psychological Learning disorders Ability to learn from experiences Maladaptive personality traits Good self-esteem Sexual, physical and emotional High level of problem-solving abuse and neglect ability Difficult temperament Social skills a) Family Inconsistent care-giving Family attachment Family conflict Opportunities for positive Poor family discipline involvement in family Poor family management Rewards for involvement Death of a family member in family b) School Academic failure Opportunities for involvement in Failure of schools to provide an school life appropriate environment to Positive reinforcement from support attendance and learning academic achievement Inadequate/inappropriate Identity with a school or need for provision of education educational attainment c) Community Lack of \"community efficacy\" Connectedness to",
+  "text_simplified": "صحة الطفل النفسية تتأثر بعوامل خطر وعوامل حماية. عوامل الخطر تزيد احتمالية حدوث المشاكل النفسية، بينما عوامل الحماية تقلل من تأثيرها. هذه العوامل قد تكون بيولوجية أو نفسية أو اجتماعية. من المهم تعزيز عوامل الحماية في الأسرة والمدرسة والمجتمع.",
+  "labels": [
+    "صحة نفسية",
+    "عوامل خطر",
+    "عوامل حماية",
+    "طفولة",
+    "مراهقة"
+  ],
+  "created_at": "2026-06-20T14:44:47Z",
+  "updated_at": "2026-06-20T14:44:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

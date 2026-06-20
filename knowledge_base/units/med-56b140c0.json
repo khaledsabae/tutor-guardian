@@ -1,0 +1,29 @@
+{
+  "id": "med-56b140c0",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "ما هو الاكتئاب؟ أنواعه وأعراضه وتأثيره",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "National Institute of Mental Health What is depression? Everyone feels sad or low sometimes, but these feelings usually pass. Depression (also called major depression, major depressive disorder, or clinical depression) is different. It can cause severe symptoms that affect how a person feels, thinks, and handles daily activities, such as sleeping, eating, or working. Depression can affect anyone regardless of age, sex, race or ethnicity, income, culture, or education. Research suggests that genetic, biological, environmental, and psychological factors play a role in the disorder. Women are diagnosed with depression more often than men, but men can also be depressed. Because men may be less likely to recognize, talk about, and seek help for their negative feelings, they are at greater risk of their depression symptoms being undiagnosed and undertreated. In addition, depression can co-occur with other mental disorders or chronic illnesses, such as diabetes, cancer, heart disease, and chronic pain. Depression can make these conditions worse and vice versa. Sometimes, medications taken for an illness cause side effects that contribute to depression symptoms as well. What are the different types of depression? There are two common types of depression. ● Major depression includes symptoms of depressed mood or loss of interest, most of the time for at least 2 weeks, that interfere with daily activities. ● Persistent depressive disorder (also called dysthymia or dysthymic disorder) consists of less severe depression symptoms that last much longer, usually for at least 2 years. Other types of depression include the following. ● Seasonal",
+  "text_simplified": "الاكتئاب ليس مجرد حزن عابر، بل هو حالة تؤثر على المشاعر والتفكير والأنشطة اليومية مثل النوم والأكل والعمل. يمكن أن يصيب أي شخص بغض النظر عن العمر أو الجنس أو الثقافة، وتلعب العوامل الوراثية والبيئية والنفسية دورًا في ظهوره. النساء يُشخَّصن بالاكتئاب أكثر من الرجال، لكن الرجال قد لا يتحدثون عن مشاعرهم مما يجعل حالتهم أكثر خطورة. هناك نوعان شائعان: الاكتئاب الكبير الذي يستمر أسبوعين على الأقل، والاكتئاب المستمر الذي يكون أقل حدة لكنه يدوم سنتين أو أكثر.",
+  "labels": [
+    "اكتئاب",
+    "صحة نفسية",
+    "أعراض",
+    "تشخيص",
+    "دعم نفسي"
+  ],
+  "created_at": "2026-06-20T14:30:53Z",
+  "updated_at": "2026-06-20T14:30:53Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-d4f9e10d",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "نصائح للتسوق الإلكتروني الآمن للأبناء",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "مخاطر التسوق الإلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "card online commerce concerns the the vendor. You could forfeit the with spending limits and can or, in the case of mobile phones, sale of products or services which goods and you could end up with help avoid unpleasant sur- by debiting the credit on the are age restricted in some way. a criminal record, so don’t do it. prises. mobile phone subscription. There For example, in many countries it are also online spaces devoted to is illegal for vendors to sell or pro- There are, in any case, a series of 3. Before you buy anything exchanges and purchases of all vide alcohol or tobacco to legal tactics that can help you reduce online, make sure the site uses sorts of products, at very com- minors. Gambling is also generally the risks and enable you to make a secure system for transac- petitive prices. limited to people over a certain use of the convenient opportuni- tions so as to prevent, for age. Yet in the online environ- ties offered by online commerce: example, “sniffing”, which One of the fundamental differ- ment it can be very hard for the 1. take great care in choosing the is a means of capturing data ence between online and tradi- vendor to determine the age of sites that you want to make during transmission. Even tional commerce lies with the dif- the person proposing to make the purchases from and ensure though many sites incorporate ficulty in identifying who is at the purchase",
+  "text_simplified": "التجارة الإلكترونية تختلف عن التقليدية بصعوبة التحقق من هوية المشتري. يجب على الأهل تعليم أبنائهم تجنب شراء المنتجات الممنوعة قانوناً كالكحول والتبغ والقمار. كما ينبغي التأكد من استخدام مواقع آمنة للدفع لحماية البيانات الشخصية.",
+  "labels": [
+    "تسوق إلكتروني",
+    "حماية بيانات",
+    "منتجات ممنوعة",
+    "أمان الإنترنت",
+    "توعية أسرية"
+  ],
+  "created_at": "2026-06-20T15:12:23Z",
+  "updated_at": "2026-06-20T15:12:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

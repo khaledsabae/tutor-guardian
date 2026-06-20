@@ -1,0 +1,29 @@
+{
+  "id": "cyb-b7fb6ae0",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مبادئ السلامة الرقمية لحماية الأطفال",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "way. In 2018, eSafety developed Safety by Design (SbD), an initiative that places the safety and rights of users at the centre of the design, development and deployment of online products and services. A set of safety by design principles sit at the heart of the initiative, which set out realistic, actionable and achievable measures for industry to undertake to better protect and safeguard citizens online. The three overarching principles are: 1) Service provider responsibilities: the burden of safety should never fall solely upon the end-user. Preventative steps can be taken to ensure that known and anticipated harms have been evaluated in the design and provision of an online service, along with steps to make services less likely to facilitate, inflame or encourage illegal and inappropriate 2) User empowerment and autonomy: the dignity of users and their best interests are of central importance. Human agency and autonomy should be supported, amplified and strengthened in service design allowing users greater control, governance and regulation of their own experiences. 3) Transparency and accountability : these are hallmarks of a robust approach to safety, that provide assurances that services are operating according to their published safety objectives, as well as educating and empowering the public about steps that can be taken to address safety concerns. Guidelines for industry on Child Online Protection The WePROTECT Global Alliance At the heart of the WePROTECT Global Alliance strategy are supporting countries to develop coordinated multi-stakeholder responses to tackle online child sexual exploitation, guided by its Model",
+  "text_simplified": "مبادئ السلامة الرقمية تضع مسؤولية حماية الأطفال على عاتق مزودي الخدمات وليس الأهل وحدهم. يجب تصميم التطبيقات والمواقع بطريقة تحمي المستخدمين وتمنع الإساءة. كما ينبغي أن تكون الشركات شفافة في إجراءاتها وتتيح للأهل التحكم في تجارب أطفالهم.",
+  "labels": [
+    "سلامة الأطفال",
+    "حماية رقمية",
+    "مسؤولية الشركات",
+    "تمكين الأهل",
+    "شفافية"
+  ],
+  "created_at": "2026-06-20T14:55:16Z",
+  "updated_at": "2026-06-20T14:55:16Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

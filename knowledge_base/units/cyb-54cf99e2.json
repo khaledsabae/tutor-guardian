@@ -1,0 +1,29 @@
+{
+  "id": "cyb-54cf99e2",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "برامج المواطنة الرقمية والسلامة للأطفال",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "المواطنة الرقمية والسلامة على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "digital citizenship and activities on safety in the classroom. Google also offers several programmes to help engage young people directly in online safety and digital citizenship efforts. The global Web Rangers initiative is one such programme that teaches young people about online safety and encourages them to design their own campaigns around positive and safe Internet use. There are also country-specific programmes for young people, such as the Internet Citizens and Internet Legends programmes in the United Kingdom, launched by Google. Guidelines for industry on Child Online Protection In the Eurovision Youth News Exchange, the European Broadcasting Union gathers 15 European television broadcasters to share programmes, formats and solutions online and offline. In recent years, teaching digital literacy and alerting children to risks on the Internet have become central to their programmes. Among the most successful initiatives of recent years are the social media ads and news programmes suitable for children produced by Super and Ultra nytt under NRK, Norway's public broadcaster. Good practice: Strategic partnerships As part of a project supported by the End Violence Against Children Fund, in 2018 Capital Humano y Social Alternativo entered into a partnership with Telefónica, the largest Internet, cable and telephone service provider in Peru, with 14.4 million customers, including more than 8 million Movistar mobile users. Several activities were carried out under this fruitful partnership: • A virtual course on child online protection was developed by Telefónica with the technical support of Capital Humano y Social Alternativo. This course is now openly",
+  "text_simplified": "يتناول النص أهمية المواطنة الرقمية والسلامة على الإنترنت للأطفال، ويستعرض برامج مثل Web Rangers التي تعلم الشباب الاستخدام الآمن والإيجابي للإنترنت. كما يذكر شراكات استراتيجية مثل التعاون بين منظمة Capital Humano y Social Alternativo وشركة Telefónica في بيرو لتطوير دورات افتراضية حول حماية الطفل عبر الإنترنت.",
+  "labels": [
+    "مواطنة رقمية",
+    "سلامة إنترنت",
+    "برامج تعليمية",
+    "شراكات استراتيجية",
+    "حماية الطفل"
+  ],
+  "created_at": "2026-06-20T14:56:59Z",
+  "updated_at": "2026-06-20T14:56:59Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

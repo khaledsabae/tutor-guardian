@@ -1,0 +1,29 @@
+{
+  "id": "med-ea09b938",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحسين خدمات الصحة النفسية للمراهقين",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "adolescent mental health services into general mental health services and paediatric health services. >Impact of policy decisions on access, equity and outcomes. Economic research > Economic impact of child and adolescent mental health interventions, both short- and long-term, and in terms of health service costs and costs in other domains. > Cost-benefit analysis of different interventions, for example integrated into adult services vs. not; school-based vs. clinic-based. Cross-cultural comparisons >Influence of cultural context on psychopathology. >Impact of cultural factors on reliability and validity of research instruments. >Development of appropriate methodologies to study mental health across and within Source: adapted from WHO, 2001. There are a number of barriers to conducting research on child and adolescent mental health services. In Box 11 several steps that could be taken to improve the quality and quantity of such research are suggested. Box 11. Selected steps to improve the quality and quantity of child and adolescent mental health services research* > Develop a child and adolescent mental health research web site that includes a bibliography of child and adolescent mental health research in developing countries. > Develop a network of institutions that are involved in child and adolescent mental health research, which can serve as resource centres for research and training. >Develop an inventory of potential sources of funding for research. >Improve child and adolescent mental health research training in professional curricula >child and adolescent psychologists and psychiatrists >child-care workers >paediatric nurses >paediatricians >public health practitioners > Provide a range of research training options",
+  "text_simplified": "هذا النص يناقش أهمية دمج خدمات الصحة النفسية للمراهقين مع الخدمات العامة للأطفال والبالغين. كما يشير إلى ضرورة إجراء أبحاث اقتصادية لتحليل تكاليف وفوائد التدخلات النفسية المختلفة. ويؤكد على تأثير الثقافة في تشخيص الاضطرابات النفسية وتطوير أدوات بحثية مناسبة. ويقترح تحسين تدريب العاملين في مجال الصحة النفسية للأطفال والمراهقين.",
+  "labels": [
+    "صحة نفسية",
+    "مراهقون",
+    "أبحاث",
+    "خدمات صحية",
+    "تدريب مهني"
+  ],
+  "created_at": "2026-06-20T14:49:27Z",
+  "updated_at": "2026-06-20T14:49:27Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

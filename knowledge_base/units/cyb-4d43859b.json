@@ -1,0 +1,29 @@
+{
+  "id": "cyb-4d43859b",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "مخاطر التحرش الجنسي عبر الإنترنت وكيفية حماية الأطفال",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "استغلال جنسي عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "are come across sites containing can potentially be used by abusive For this reason: sometimes used to persuade and violent, racist, illegal or child adults to make contact with boys 1. it is essential that you be lure the child to a place where the abuse materials don’t forget and girls. This happens particu- aware of this risk, and of the predator can sexually exploit him that these sites can be report- larly through SMS and MMS mes- fact that not everyone online or her. These encounters may ed to the police or a hotline. saging, chat rooms, Instant Mes- is who he/she claims to be. even be photographed or video- Try to find out to whom you saging programmes, newsgroups, Online seducers can often pre- taped, or if a meeting does not can send these reports in your forums, online games, and, more tend to be your age in order take place in the real world the Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop to create an atmosphere of mobile phone numbers, e-mail “notify”, in order to report the off-line behaviour becomes mag- familiarity and trust that could address, etc.). Such details can abuse. Alternatively, you can nified when filmed with mobile lead to an off-line meeting and become accessible to anyone, turn directly to the police; phones and exchanged or posted possible abuse; and it is therefore advisable to on the Net. It is also advisable to save 2. protecting your",
+  "text_simplified": "يجب على الأهل أن يكونوا على دراية بمخاطر الإنترنت، حيث يمكن للمتحرشين التظاهر بأنهم أطفال لكسب الثقة والوصول إلى الأطفال. قد يؤدي ذلك إلى لقاءات حقيقية أو استغلال جنسي، وقد يتم تصوير هذه اللقاءات. من المهم الإبلاغ عن المواقع المشبوهة للشرطة أو خطوط المساعدة، وتعليم الأطفال عدم مشاركة المعلومات الشخصية عبر الإنترنت.",
+  "labels": [
+    "سلامة الأطفال",
+    "مخاطر الإنترنت",
+    "استغلال جنسي",
+    "توعية رقمية",
+    "حماية الطفل"
+  ],
+  "created_at": "2026-06-20T15:11:18Z",
+  "updated_at": "2026-06-20T15:11:18Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

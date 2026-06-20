@@ -1,0 +1,29 @@
+{
+  "id": "cyb-ba2fd4c2",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "دمج حقوق الطفل في سياسات الشركات لحمايتهم عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل من الاستغلال الجنسي عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "of law enforcement, legislative and policy reforms, and generation of data and evidence on the scale and nature of online CSEA as well as understanding children’s perspectives.12 3. Key areas of protecting and promoting children’s rights This section outlines five key areas where companies can take actions to protect children and young people’s safety when using ICTs and promote their positive use of ICTs. 3.1 Integrating child rights considerations into all appropriate corporate policies and management processes Integrating child rights considerations requires that companies take adequate measures to identify, prevent, mitigate and, where appropriate, remediate potential and actual adverse impacts on children’s rights. The United Nations Guiding Principles on Business and Human Rights call on all businesses and industries to put in place appropriate policies and processes to meet their responsibility to respect human rights. 12 For more information see End Violence Against Children, “Grantees of the End Violence Fund”. Guidelines for industry on Child Online Protection Industries should pay special attention to children and young people as a vulnerable group with regard to their data protection and freedom of expression. The United Nations General Assembly Resolution 68/167 on the right to privacy in the digital age reaffirms the right to privacy and freedom of expression without being subjected to unlawful interference. Additionally, the United Nations Human Rights Council Resolution 32/13 on the promotion, protection and enjoyment of human rights on the Internet, recognizes the global and open nature of the Internet as a driving force in accelerating progress towards",
+  "text_simplified": "يجب على الشركات دمج اعتبارات حقوق الطفل في سياساتها وإجراءاتها الإدارية لحماية الأطفال من الاستغلال الجنسي عبر الإنترنت. يتطلب ذلك تحديد ومنع وتخفيف الآثار السلبية المحتملة على حقوق الطفل، مع التركيز على حماية البيانات وحرية التعبير للأطفال كفئة ضعيفة.",
+  "labels": [
+    "حقوق الطفل",
+    "الاستغلال الجنسي",
+    "حماية البيانات",
+    "سياسات الشركات",
+    "الإنترنت"
+  ],
+  "created_at": "2026-06-20T14:55:25Z",
+  "updated_at": "2026-06-20T14:55:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

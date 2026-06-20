@@ -1,0 +1,29 @@
+{
+  "id": "med-8f7debc2",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "نقص خدمات الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات سلوكية وعنف وإعاقة ذهنية",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "to violence, and intellectual disability resulting in poor scholastic > The only services available were at two university clinics and in the private sector, to which only 10% of the population had access due to economic and transport > The ratios of psychiatrists, clinical psychologists and psychiatric nurses per 100,000 population were 0.6, 1.0 and 10 respectively. However, a total of about 50% of the time of these personnel was spent in the university clinics and private sector. *Note: Data is derived from the WHO ATLAS project and can be accessed at: http://www.who.int/mental_health/evidence/atlas Child and adolescent mental health policy Child and adolescent mental health services will deliver comprehensive, integrated, community-based promotion, prevention and treatment services, with an emphasis on disruptive behaviour disorders, minimizing the effects of violence and mental Values → principles > Vulnerable groups in society should be protected and supported → specific mental health services for children and adolescents should be developed. > Mental health is indivisible from physical health → child and adolescent mental health services should be integrated into general health services. > Children and adolescents with mental health problems are entitled to receive the same high standard of treatment and care provided to other groups in society. > To reduce the prevalence of common mental health problems in children and adolescents (especially disruptive behaviour disorders, and the effects of exposure to violence and intellectual disability), and reduce the level of associated suffering, impairment and disability. > To reduce children’s and adolescents’ exposure to violence, and",
+  "text_simplified": "يُعاني الأطفال والمراهقون من نقص حاد في خدمات الصحة النفسية، حيث لا تتوفر سوى عيادات جامعية وقطاع خاص لا يستطيع الوصول إليه سوى 10% من السكان. تهدف السياسة المقترحة إلى تطوير خدمات مجتمعية شاملة ومتكاملة مع الرعاية الصحية العامة، مع التركيز على اضطرابات السلوك والعنف والإعاقة الذهنية.",
+  "labels": [
+    "صحة نفسية",
+    "خدمات أطفال",
+    "عنف",
+    "إعاقة ذهنية",
+    "سياسة علاجية"
+  ],
+  "created_at": "2026-06-20T14:49:40Z",
+  "updated_at": "2026-06-20T14:49:40Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

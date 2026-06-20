@@ -1,0 +1,29 @@
+{
+  "id": "med-fb4254d7",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "المشاكل النفسية لدى الأطفال والمراهقين في ظروف صعبة",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "مشاكل نفسية عامة",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "in various countries (Giel et al., 1981). Only 10%–22% of these cases were recognized by primary health workers, which implies that the vast majority of children did not receive appropriate services. It should be borne in mind that, in addition to those who have a diagnosable mental disorder, many more have problems that can be considered “sub-threshold”, in the sense that they do not meet diagnostic criteria. This means that they too are suffering and would benefit from interventions. Some children and adolescents are in difficult circumstances; for example, they might Some difficult circumstances experience physical, emotional and/or sexual abuse, experience or witness violence or in which children and warfare, suffer from intellectual disability, slavery or homelessness, migrate from rural to adolescents find themselves urban areas, live in poverty, engage in sex work, be addicted to substances such as can be interrelated with mental alcohol and cannabis, or be infected or affected by HIV/AIDS. Difficult circumstances health problems in a number and mental health problems can be interrelated in a number of ways. They could, for of ways. example, serve as risk factors for mental health problems, such as post-traumatic stress disorder in a child who has been sexually abused. Alternatively, mental health problems could serve as risk factors in difficult circumstances; for example, when an adolescent uses alcohol or drugs to deal with depressive feelings. Whatever the nature of the relationship between mental health problems and difficult circumstances, specific intervention strategies are necessary to address children’s and adolescents’ needs.",
+  "text_simplified": "يعاني العديد من الأطفال والمراهقين من مشاكل نفسية لا يتم اكتشافها أو علاجها بشكل كافٍ. بعض هذه المشاكل تكون دون مستوى التشخيص الرسمي لكنها تسبب معاناة وتحتاج إلى تدخل. كما أن الظروف الصعبة مثل الإساءة أو الفقر أو الإدمان تزيد من خطر المشاكل النفسية. من الضروري تقديم استراتيجيات تدخل مناسبة لتلبية احتياجاتهم.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "ظروف صعبة",
+    "تدخل مبكر"
+  ],
+  "created_at": "2026-06-20T14:44:04Z",
+  "updated_at": "2026-06-20T14:44:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

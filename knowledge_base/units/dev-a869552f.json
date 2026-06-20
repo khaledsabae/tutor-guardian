@@ -1,0 +1,29 @@
+{
+  "id": "dev-a869552f",
+  "domain": "development",
+  "source_file": "CDC_Milestones_18_24_Months.pdf",
+  "title": "توجيه الطفل لتعلم المشاركة وضبط النفس",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "تطور الطفل ونموه",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "CDC Developmental Milestones",
+  "text_original": "more. This operate more complicated toys. opens up new ways to play. hand-y! ■ Have fun in the kitchen: finger paint with colored pudding on a baking sheet or mold cookie dough into fun shapes to bake. For toddlers, emotions still win ■ Play back and forth games to help her understand and practice over self-control. This can make turn-taking. sharing very hard. Your child may ■ Make sure your child has lots of opportunities to play with other understand “no” but her mind still children. Be their guide in learning to share. Developing this says “yes” as she grabs a toy from skill takes time and practice. another child. · Your toddler may be experiencing ■ Expand his words and phrases into a sentence: “Me down” be- a “vocabulary explosion.” He’s comes “You want to get down.” Chatter-box learning new words every day and ■ Play games with words. Try replacing a word in a familiar song: may combine two or more in a “Row, row, row your car.” phrase. He may want to practice Your toddler may have more tan- ■ Continue to label his emotions to help him feel in control and to trums. He may get frustrated when let him know you understand. he can’t do something he wants by some steam. ■ Help him slow down or take a break when you see signs that he is getting frustrated or overwhelmed. Your toddler will love music, danc- ■ Make music a part of your day",
+  "text_simplified": "يحتاج الطفل في هذه المرحلة إلى فرص للعب مع الآخرين ليتعلم المشاركة وضبط النفس. يمكن للوالدين مساعدته من خلال ألعاب تبادل الأدوار وتوسيع جمله. كما يجب التعامل مع نوبات الغضب بتفهم وتهدئته عند الشعور بالإحباط. الموسيقى والرقص أنشطة محببة للطفل في هذا العمر.",
+  "labels": [
+    "مشاركة",
+    "ضبط النفس",
+    "نوبات غضب",
+    "تطور اللغة",
+    "لعب تفاعلي"
+  ],
+  "created_at": "2026-06-20T15:13:43Z",
+  "updated_at": "2026-06-20T15:13:43Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "CDC_Milestones_18_24_Months",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "dev-30dbbcba",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "بناء الأدلة المحلية لتحسين رعاية الأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تطوير سياسات الرعاية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "be added to existing requires more scientific evidence. For example, health information systems to inform research in local contexts is needed on: progress? • the best approaches for assessing children’s Building the local evidence is necessary for and families’ holistic needs; making nurturing care part of all systems, and will require partnerships between • effective components of multi-faceted implementers, policy-makers, and researchers. interventions for diverse communities; and Currently, these partnerships are often underdeveloped, particularly in low-resource • effective approaches for scale-up and settings, where scientific communities implementation across contexts. may lack experience due to funding and infrastructure constraints. That makes it harder Interventions are often designed in controlled for them to conduct research and develop the studies, and countries need to tailor them to local evidence base. their local contexts. Implementation research looks at how to do that. It can also inform To address the knowledge gaps, it is essential the models used for scaling up interventions. that countries take the lead in research, Here are some examples of implementation- fostering national leadership and setting research questions: priorities. Important approaches include enabling peer review and joint learning and • How to create demand for good-quality establishing multidisciplinary teams. These nurturing care interventions? help to share good practices and address implementation problems. National learning • What is the extra cost of delivering new and research platforms can be very helpful in interventions using existing systems? this regard. Proposed actions at country level 1. Foster collaboration among programme implementers, researchers and scientists,",
+  "text_simplified": "يحتاج تحسين رعاية الأطفال إلى أدلة علمية محلية قوية. يجب أن تتعاون فرق البحث مع واضعي السياسات والمنفذين لتكييف التدخلات مع السياقات المختلفة. من المهم أن تقود الدول أبحاثها الخاصة وتحدد أولوياتها لسد الفجوات المعرفية. يساعد إنشاء منصات تعلم وطنية في تبادل الممارسات الجيدة وحل مشكلات التنفيذ.",
+  "labels": [
+    "أدلة علمية",
+    "شراكات بحثية",
+    "تكييف محلي",
+    "قيادة وطنية",
+    "منصات تعلم"
+  ],
+  "created_at": "2026-06-20T14:25:29Z",
+  "updated_at": "2026-06-20T14:25:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

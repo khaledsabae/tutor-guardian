@@ -1,0 +1,29 @@
+{
+  "id": "cyb-3951dcbe",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تعزيز السلامة الرقمية للأطفال والشباب",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "further misused to restrict children and young people’s access to information, civic engagement ensure transparency about blocked content and establish a process for users to report inadvertent blocking. This process should be available to all consumers, including webmasters. Any reporting process should provide clear, responsible and adjudicated terms of service. Develop online platforms that promote children and young people’s right to express themselves; facilitate their participation in public life; and encourage their collaboration, entrepreneurship and civic Develop educational content for children and young people that encourages learning, creative thinking and problem solving. Promote digital literacy, capacity building and ICT skills to equip children and young people, particularly those in rural and underserved areas, to utilize ICT resources and fully participate safely in the digital Collaborate with local civil society and government on national and local priorities for expanding universal and equitable access to ICTs, platforms and devices, and the underlying infrastructure to support Inform and engage customers, including parents, caregivers, children • type of content and corresponding parental controls; • reporting mechanisms for cases of abuse, misuse and inappropriate or illegal content; • follow-up procedures for reports; • types of services that are age restricted; • safe and responsible use of “own-brand” interactive services. Engage with the broader issues around safe and responsible digital citizenship, for example online reputation and digital footprint, harmful content and grooming. Consider partnering with local experts, such as children’s NGOs, charities and parenting groups, to help shape the company’s message and reach the intended audience.",
+  "text_simplified": "يجب حماية الأطفال والشباب أثناء استخدام الإنترنت من خلال وضع قواعد واضحة للمحتوى المحظور وآليات للإبلاغ عن الأخطاء. كما ينبغي تطوير منصات رقمية تعزز حقهم في التعبير والمشاركة، وتعليمهم المهارات الرقمية والتفكير الإبداعي. من المهم التعاون مع المجتمع المحلي والخبراء لضمان وصول آمن ومنصف للتكنولوجيا للجميع.",
+  "labels": [
+    "حماية الأطفال",
+    "مهارات رقمية",
+    "محتوى آمن",
+    "مواطنة رقمية",
+    "تعاون مجتمعي"
+  ],
+  "created_at": "2026-06-20T14:58:32Z",
+  "updated_at": "2026-06-20T14:58:32Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

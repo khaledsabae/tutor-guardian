@@ -1,0 +1,29 @@
+{
+  "id": "cyb-53e1caf1",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال من المحتوى الضار عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل من المحتوى الضار عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "known CSAM. For example, some Internet service providers are blocking access to URLs confirmed by an appropriate authority as containing CSAM if the website is hosted in a country where processes are not in place to ensure it will be rapidly taken down. Others are deploying hashing technologies to automatically detect and remove images of child sexual abuse that are already known to law enforcement or hotlines. Industry members should consider and incorporate all relevant services for their operations to prevent the dissemination of child sexual abuse. Industry actors should commit to allocate proportionate resources and continue to develop and share preferably open source technological solutions to detect and remove CSAM. Good practice: Technology Microsoft uses a four-pronged approach to foster responsible and safe technology use, with a focus on the technology itself, self-governance, partnerships, and consumer education and outreach. Microsoft has also embedded features that help empower individuals to more effectively manage their online safety. “Family Safety” is one such feature, which permits parents and carers to monitor their children’s Internet use. Microsoft enforces policies against harassment on its platforms, and users who abuse these regulations are subject to account termination or, in case of more serious violations, to law enforcement measures. 14 It should be noted that inappropriate user conduct is not limited to CSAM and that any type of inappropriate behaviour or content should be handled accordingly by the company. Guidelines for industry on Child Online Protection Microsoft PhotoDNA is a tool that creates hashes of images",
+  "text_simplified": "تستخدم شركات التكنولوجيا أدوات مثل التجزئة الرقمية (hashing) لاكتشاف ومنع انتشار صور إساءة معاملة الأطفال. توفر مايكروسوفت ميزة \"السلامة العائلية\" التي تتيح للأهل مراقبة استخدام أطفالهم للإنترنت. يجب على شركات التكنولوجيا تطوير حلول مفتوحة المصدر لمكافحة المحتوى الضار. كما ينبغي التعامل مع أي سلوك غير لائق بحزم وفقاً للقوانين.",
+  "labels": [
+    "سلامة الطفل",
+    "رقابة أبوية",
+    "تقنيات الكشف",
+    "إساءة رقمية",
+    "مسؤولية الشركات"
+  ],
+  "created_at": "2026-06-20T14:55:52Z",
+  "updated_at": "2026-06-20T14:55:52Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

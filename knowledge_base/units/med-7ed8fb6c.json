@@ -1,0 +1,29 @@
+{
+  "id": "med-7ed8fb6c",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "اتفاقية حقوق الطفل ودعم الصحة النفسية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حقوق الطفل والصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "The United Nations Convention on the Rights of rights of the child or the Child(CRC) of 1989 commits signatories to ensuring that all children have the right to develop physically and mentally, and to be protected from abuse and exploitation. The CRC also stipulates that children must be consulted and heard in matters concerning them. It explicitly and implicitly supports the need for addressing the mental health needs of children. It is possible to incorporate many aspects of the CRC into policy or legislation. For example, Article A19 states that all appropriate measures to protect the child from all forms of physical and mental violence should be taken, and that a mentally or physically disabled child should enjoy a full and decent life in which participation in the community is facilitated. Other articles address issues that are relevant for child and adolescent mental health services, such as: (i) provision for confidentiality; (ii) provision of strict controls over involuntary commitment; (iii) ensuring access to family members; (iv) eliminating unnecessary coercive treatments, such as inappropriate electro convulsive therapy, sedation or restraint; and (v) protecting people with mental disorders from abusive treatment. The United Nations General Assembly Resolution 46/119 on the Protection of Persons with Mental Illness and the Improvement of Mental Health Care, adopted in 1991, represents another serious international effort to safeguard the rights of all people with mental disorders. There are 25 principles which fall into two general categories: civil rights and procedures, and access to and quality of care.",
+  "text_simplified": "اتفاقية الأمم المتحدة لحقوق الطفل لعام 1989 تلزم الدول بضمان حق الأطفال في النمو البدني والعقلي والحماية من الإساءة والاستغلال. كما تؤكد على ضرورة استشارة الأطفال والاستماع إليهم في الأمور التي تخصهم. تدعم الاتفاقية تلبية احتياجات الصحة النفسية للأطفال، وتدعو إلى حمايتهم من العنف الجسدي والنفسي. هناك مبادئ أخرى تحمي حقوق الأطفال ذوي الاضطرابات النفسية، مثل السرية ومنع العلاجات القسرية غير المناسبة.",
+  "labels": [
+    "حقوق الطفل",
+    "الصحة النفسية",
+    "حماية من الإساءة",
+    "اتفاقية دولية",
+    "سياسات وقوانين"
+  ],
+  "created_at": "2026-06-20T14:48:39Z",
+  "updated_at": "2026-06-20T14:48:39Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

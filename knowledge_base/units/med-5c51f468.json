@@ -1,0 +1,29 @@
+{
+  "id": "med-5c51f468",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "وحدات تعليمية للصحة النفسية وصنع السياسات",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "may use a specific module when the emphasis is on a particular area of mental health. For example, those wishing to address the issue of mental health legislation may find the module entitled Mental Health Legislation and Human Rights useful for this purpose. - They can serve as a training package for policy-makers, planners and others involved in organizing, delivering and funding mental health services. They can be used as educational materials in university or college courses. Professional organizations may choose to use the modules as aids for training persons working in the field of - They can be used as a framework for technical consultancy by a wide range of international and national organizations that provide support to countries wishing to reform their mental health policies and/or services. - They can also be used as advocacy tools by consumer, family and advocacy organizations. The modules contain information of value for public education and for increasing awareness amongst politicians, opinion-makers, other health professionals and the general public about mental disorders and mental health Format of the modules Each module clearly outlines its aims and the target audience for which it is intended. The modules are presented in a step-by-step format to facilitate the use and implementation of the guidance provided. The guidance is not intended to be prescriptive or to be interpreted in a rigid way. Instead, countries are encouraged to adapt the material in accordance with their own needs and circumstances. Practical examples from different countries are used throughout",
+  "text_simplified": "هذه الوحدات التعليمية مصممة لتحسين الصحة النفسية عبر تدريب صانعي القرار والمخططين. يمكن استخدامها كمواد تعليمية في الجامعات وكأدوات مناصرة للتوعية بالاضطرابات النفسية. تشجع الوحدات على التكيف مع احتياجات كل دولة بدلاً من تطبيقها بشكل صارم.",
+  "labels": [
+    "صحة نفسية",
+    "تدريب",
+    "توعية",
+    "سياسات",
+    "مناصرة"
+  ],
+  "created_at": "2026-06-20T14:42:54Z",
+  "updated_at": "2026-06-20T14:42:54Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

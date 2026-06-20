@@ -1,0 +1,29 @@
+{
+  "id": "med-3bcbb90a",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحليل احتياجات الأطفال النفسية والاجتماعية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "احتياجات نفسية واجتماعية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "may already be accessing services may add useful information. EXPERT SYNTHESIS AND INTERPRETATION OF THE BEST AVAILABLE DATA FROM THE ABOVE Needs to be adjusted for specific local factors, such as the extent of non-health service provision, family support, local traditions and migration. In addition to determining the prevalence of specific problems and disorders, it is helpful to identify the major risk and protective factors that have an adverse impact on the population concerned, and which have been identified by key community participants or experts. For example, where the need to increase agricultural production in many rural communities is associated with children’s reduced school attendance rates, programmes may be required to improve school education and enhance social development. Alternatively, increasing social isolation and demands for high academic performance in some developed communities may be associated with higher rates of depression, suicide and family conflict; this may necessitate programmes that are able to support more realistic academic goals and improve family communication. Information on the Information on the population’s needs should be supplemented with good data and population’s needs should be understanding of the current status of child and adolescent mental health services in supplemented with good data the country. This includes information on the human resources available. For example, and understanding of the what is the role of primary care providers, what training have they received and what current status of child and competencies do they have? Who supports mothers after childbirth? What is the role adolescent mental health of",
+  "text_simplified": "يجب جمع معلومات دقيقة عن احتياجات الأطفال النفسية والاجتماعية مع مراعاة العوامل المحلية مثل الدعم الأسري والتقاليد والهجرة. من المفيد تحديد عوامل الخطر والحماية المؤثرة، مثل تأثير زيادة الإنتاج الزراعي على انخفاض التحصيل الدراسي، أو تأثير العزلة الاجتماعية وضغط الأداء الأكاديمي على ارتفاع معدلات الاكتئاب والصراع الأسري. كما ينبغي تقييم الخدمات المتاحة للصحة النفسية للأطفال والمراهقين والموارد البشرية المدربة مثل مقدمي الرعاية الأولية.",
+  "labels": [
+    "صحة نفسية",
+    "عوامل خطر",
+    "عوامل حماية",
+    "خدمات دعم",
+    "تحصيل دراسي"
+  ],
+  "created_at": "2026-06-20T14:45:46Z",
+  "updated_at": "2026-06-20T14:45:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "dev-841b74cd",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "إخلاء مسؤولية منظمة الصحة العالمية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines on maps represent approximate border lines for which there may not yet be full agreement. The mention of specific companies or of certain manufacturers’ products does not imply that they are endorsed or recommended by WHO in preference to others of a similar nature that are not mentioned. Errors and omissions excepted, the names of proprietary products are distinguished by initial capital letters. All reasonable precautions have been taken by WHO to verify the information contained in this publication. However, the published material is being distributed without warranty of any kind, either expressed or implied. The responsibility for the interpretation and use of the material lies with the reader. In no event shall WHO be liable for damages arising from its use. Design and layout: Blossom; Sara Naicker. Printed in Switzerland Table of contents 1 Foreword 04 Five strategic actions 28 Strategic action 1 Lead and invest 29 Strategic action 2 Focus on families and 01 Introduction their communities 30 Strategic action 3 Strengthen services 2 A framework for nurturing care 31 Strategic action 4 Monitor progress 4 Why this Framework now? 32 Strategic action 5 Use data and innovate 4 What contribution can this Framework make? 05 Making nurturing care happen 02 A case for nurturing care 36 Roles and responsibilities 37 The health and nutrition sector 5 We know why early",
+  "text_simplified": "هذا النص هو إخلاء مسؤولية من منظمة الصحة العالمية حول الخرائط والمعلومات المنشورة. لا يقدم النص أي محتوى تعليمي أو تربوي للأهل.",
+  "labels": [
+    "إخلاء مسؤولية",
+    "منظمة الصحة العالمية",
+    "معلومات عامة"
+  ],
+  "created_at": "2026-06-20T14:21:02Z",
+  "updated_at": "2026-06-20T14:21:02Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-667d2730",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "فوائد التكنولوجيا للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "استخدام التكنولوجيا",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "region in relation to displaced due to natural disasters, mobile subscriptions, China and war civil strife or other major India have become leaders in the disruptive events. 7 http://europa.eu/rapid/pressReleasesAction.do?reference=IP/09/596 8 http://www.tigweb.org/express/panorama/article.html?ContentID=11441 9 http://gsmworld.com/newsroom/press-releases/2009/2521.htm#nav-6 10 http://www.generacionesinteractivas.org/?page_id=660 Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Information information is never boring and ways of self expression. In other This is not so different from with the increased localisation words, you can be creative, funny, the offline world, but the ability The access to information is of content, the language barriers reflective and entertained by using to reach a larger audience in a crucial for children and adoles- slowly diminish. ICT’s. shorter time is one of the great cent when doing their homework. advantages of ICT’s. In essence, a A study on Japanese children’s Social networks An example could be that of a service might take off slowly but Internet usage11 indicates that young band that creates a new reach critical global mass in a very 70% uses the Internet to help The birth of online social net- song, posts it on MySpace13, and short time due to the ability of them with their homework. The works has been a remarkable informs their friends and fans the children and young people to library has moved online and the success. The variety of social about it. The fans can then listen instantly share their experiences ability to seek and find relevant networks caters to all ages, to this song",
+  "text_simplified": "يشرح النص كيف أن تكنولوجيا المعلومات والاتصالات توفر للأطفال والمراهقين فرصًا للإبداع والتعبير عن الذات، كما تساعدهم في أداء واجباتهم المدرسية من خلال الوصول إلى المعلومات. كما يشير إلى أن الشبكات الاجتماعية أصبحت جزءًا مهمًا من حياتهم، وأن الحواجز اللغوية تقل مع تزايد المحتوى المحلي.",
+  "labels": [
+    "تكنولوجيا المعلومات",
+    "شبكات اجتماعية",
+    "تعليم",
+    "إبداع",
+    "أطفال"
+  ],
+  "created_at": "2026-06-20T15:08:42Z",
+  "updated_at": "2026-06-20T15:08:42Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

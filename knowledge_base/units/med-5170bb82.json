@@ -1,0 +1,29 @@
+{
+  "id": "med-5170bb82",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تأثير سوء فهم الاضطرابات النفسية على الأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "وصم الاضطرابات النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "increasing amounts of alcohol in order to cope, but is told to “just say no!”. When a problem is misunderstood by others, it is more likely that the solutions applied will be inappropriate and ineffective, or possibly harmful to the health of the individual who is suffering. Social exclusion, punitive action and criticism leading to lowered self-esteem may result. A mistaken and inappropriate understanding of mental disorders can result in children and adolescents being deprived of the assistance they need. Stigmatization may result, with a range of negative impacts, including a reduction in the resources needed for treatment. In certain countries, mental disorders may be attributed to spiritual causes, or to In certain countries, mental possession by the devil due to alleged evil acts or the neglect of spiritual duties. disorders may be attributed Epilepsy, for example, has a wide range of such putative causes worldwide, and is to spiritual causes, or to sometimes even considered contagious. Children or adolescents with epilepsy may be possession by the devil, due excluded from school for fear that others will contract their illness. Families may be to alleged evil acts or the ashamed of their children who suffer from a mental disorder or fearful that they may be neglect of spiritual duties physically abused. They may keep them locked up or isolated from the community. Such severe measures can have devastating effects on the physical and emotional development of these children and adolescents. Unless children and adolescents with mental disorders receive appropriate treatment,",
+  "text_simplified": "عندما يُساء فهم المشكلات النفسية للأطفال والمراهقين، قد تُطبق حلول غير مناسبة أو ضارة. يمكن أن يؤدي الوصم الاجتماعي والعقاب إلى تدني تقدير الذات وحرمانهم من المساعدة اللازمة. في بعض الثقافات، تُعزى الاضطرابات النفسية إلى أسباب روحية أو مس شيطاني، مما يسبب عزل الأطفال أو حبسهم. هذا يؤثر سلباً على نموهم الجسدي والعاطفي.",
+  "labels": [
+    "وصم اجتماعي",
+    "اضطرابات نفسية",
+    "سوء الفهم",
+    "عزل الأطفال",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T14:44:19Z",
+  "updated_at": "2026-06-20T14:44:19Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e90b0a44",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "شراكة لتوعية الأطفال بحماية أنفسهم عبر الإنترنت في بيرو",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "توعية رقمية وحماية من الاستغلال الجنسي للأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "in Peru, with 14.4 million customers, including more than 8 million Movistar mobile users. Several activities were carried out under this fruitful partnership: • A virtual course on child online protection was developed by Telefónica with the technical support of Capital Humano y Social Alternativo. This course is now openly available on Telefónica’s website and the company is tracking the number of people who enroll and successfully complete the course. The Peruvian Ministry of Education agreed to include access to this virtual course through its official • A booklet on Internet safety was created by Capital Humano y Social Alternativo and distributed by Telefónica in its over 300 mobile sales centres. The aim is to raise awareness among Telefónica customers of online safety and the risks associated with online CSEA. • An interactive game on online CSEA was developed by Telefónica with the technical support of Capital Humano y Social Alternativo, which its customers can play while waiting for their turns at Telefónica’s stores. Building on the success with Telefónica, Capital Humano y Social Alternativo partnered with Econocable, an Internet and cable service provider that works in remote and low-income areas in Peru. Guidelines for industry on Child Online Protection 3.5 Promoting digital technology as a mode for increasing civic and impart information and ideas of all kinds, regardless of frontiers, either orally, in writing or in print, in the form of art, or through any other media of the child’s choice.” Companies can fulfil their duty to respect children",
+  "text_simplified": "هذا النص يصف شراكة في بيرو بين شركة تليفونيكا ومنظمة كابيتال هيومانو لتوعية الأطفال وأولياء الأمور بمخاطر الإنترنت والاستغلال الجنسي للأطفال عبر الإنترنت. تم إنتاج دورة تدريبية افتراضية، كتيب عن الأمان الرقمي، ولعبة تفاعلية للتوعية. كما تم توسيع الشراكة لتشمل مزود خدمة إنترنت آخر في المناطق النائية.",
+  "labels": [
+    "حماية الأطفال",
+    "أمان الإنترنت",
+    "توعية رقمية",
+    "شراكة مجتمعية",
+    "استغلال جنسي"
+  ],
+  "created_at": "2026-06-20T14:57:04Z",
+  "updated_at": "2026-06-20T14:57:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

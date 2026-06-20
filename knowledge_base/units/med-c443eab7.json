@@ -1,0 +1,29 @@
+{
+  "id": "med-c443eab7",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحديد أهداف الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط سياسات الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "achieved. They should Objectives are more specific be measurable to allow progress to be monitored and to ensure accountability. WHO than principles, and refer to has defined three objectives for health policies: i) improving the health of the population; what the policy sets out to ii) responding to people’s expectations; and iii) providing financial protection against the achieve. costs of ill health via subsidies, cost-sharing mechanisms and insurance. These objectives can also be applied to child and adolescent mental health. This description of the vision, values, principles and objectives suggests that the process of policy development proceeds through these steps in a linear manner. However, in practice, the process is not entirely sequential. 2.6 Step 6: Determine areas for action Once the objectives have been defined, they need to be transformed into areas for action. A child and adolescent mental health policy should include coordinated actions in several areas to avoid isolated developments with limited impact. Actions in different areas should mutually reinforce each other. Two conditions are necessary for this to Actions in different areas occur. First, there needs to be a clear grasp of how the actions fit within an overall child should mutually reinforce and adolescent mental health policy. This is more likely to be the case if Steps 1 to 5 each other in a synergistic have been followed. Second, there needs to be a high degree of intersectoral and manner. interagency collaboration, so that opportunities for synergism can be grasped and unnecessary duplication avoided. Clearly,",
+  "text_simplified": "يجب أن تكون الأهداف محددة وقابلة للقياس لمتابعة التقدم وضمان المساءلة. حددت منظمة الصحة العالمية ثلاثة أهداف للسياسات الصحية: تحسين صحة السكان، الاستجابة لتوقعات الناس، وتوفير الحماية المالية من تكاليف المرض. يمكن تطبيق هذه الأهداف على الصحة النفسية للأطفال والمراهقين. بعد تحديد الأهداف، يجب تحويلها إلى مجالات عمل منسقة لتعزيز التآزر بين القطاعات.",
+  "labels": [
+    "أهداف قابلة للقياس",
+    "صحة نفسية للأطفال",
+    "سياسات صحية",
+    "تنسيق بين القطاعات",
+    "حماية مالية"
+  ],
+  "created_at": "2026-06-20T14:47:10Z",
+  "updated_at": "2026-06-20T14:47:10Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

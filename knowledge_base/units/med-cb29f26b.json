@@ -1,0 +1,28 @@
+{
+  "id": "med-cb29f26b",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "قائمة خبراء في الصحة العامة",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "Matías Portela Dr Nyaradzai Dangarembizi-Munambah Department of Health Promotion and Community Department of Rehabilitation Participation Ministry of Health University of Zimbabwe Santiago College of Health Sciences Chile Professor John Reilly University of Strathclyde Dr Catherine Draper Glasgow MRC/Wits Developmental Pathways for Health United Kingdom Dr Rachel Rodin University of the Witwatersrand WHO Collaborating Center on Noncommunicable Public Health Agency of Canada Dr Nathalie Farpour-Lambert Ottawa University Hospital Canada Professor Mark Tremblay Children’s Hospital of Eastern Ontario Ms Kamesh Flynn Research Institute Western Cape Department of Social Development Ottawa Cape Town Canada Professor Pujitha Wickramasinghe Ms Noshin Khan Department of Paediatrics Teachers Resource Center University of Colombo Karachi Colombo Pakistan Sri Lanka External peer reviewers WHO Steering Group Orana Chandrasiri Dr Fiona Bull International Health Policy Program Programme Manager Bangkok Surveillance and Population-based Prevention Thailand Prevention of Noncommunicable Diseases Professor Jonathan D. Klein Dr Bernadette Daelmans Department of Pediatrics Coordinator University of Illinois Maternal, Newborn, Child and Adolescent Health Dr Larry Gummer-Straw United States of America Dr Susanne Ring-Dimitriou Nutrition for Health and Development Department of Sport Science and Exercise University of Salzburg WHO European Office for Prevention and Control of Noncommunicable Diseases Professor Yoichi Sakakihara Dr Nigel Rollins Child Research Net Medical Officer Ochanomizu University Maternal, Newborn, Child and Adolescent Health Japan Dr Thaksaphon Thamarangsi Professor Mark Tomlinson Noncommunicable Diseases, Regional Office Department of Psychology for South-East Asia Stellenbosch University Stellenbosch Dr Temo Waqanivalu South Africa Team Leader Surveillance and Population-based Prevention Prevention of Noncommunicable Diseases Dr Juana Willumsen Technical",
+  "text_simplified": "هذا النص يحتوي على قائمة بأسماء باحثين وخبراء من منظمات وجامعات مختلفة في مجال الصحة العامة وتعزيز الصحة. لا يتضمن النص معلومات محددة عن سلوك أو مشكلة تربوية معينة.",
+  "labels": [
+    "قائمة خبراء",
+    "صحة عامة",
+    "تعزيز الصحة",
+    "غير محدد"
+  ],
+  "created_at": "2026-06-20T15:07:21Z",
+  "updated_at": "2026-06-20T15:07:21Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

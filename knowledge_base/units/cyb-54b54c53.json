@@ -1,0 +1,29 @@
+{
+  "id": "cyb-54b54c53",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة الرقمية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "will be able to recognize. Other interactive services, for ex- ample instant messaging, will often also provide privacy tools. Use them. 3. Think twice before you publish or share anything online. Are you pre- pared to share it with everyone online; your close friends, as well as strangers? Once you post information, photographs or any other material on the Internet, you may never be able to remove it or pre- vent other people from using it. You can never know for sure where it 4. Be critical what appears to be a fact may really not be true at all. Unfortunately, if it appears too good to be true, it probably is. Always double check the information from other reliable sources. 5. You have rights and you, as well as other people, should respect them. You should never accept harassment or bullying by other people. The laws and expectations of decent and acceptable behaviour are valid online as well as in real life. Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop MEETING ONLINE FRIENDS OFFLINE 1. Sometimes online contacts develop into friendships. 2. Think twice before meeting an online friend in real life. If you still would like to meet an online friend offline, you should always take someone reliable with you. You should ask your parent or another trusted adult to join you to avoid any trouble in case the meeting turns out to be a disappointment. 3. Bear in mind that your",
+  "text_simplified": "يجب على الأطفال توخي الحذر عند مشاركة المعلومات أو الصور عبر الإنترنت، لأنها قد تبقى متاحة للأبد. من المهم التحقق من صحة المعلومات من مصادر موثوقة قبل تصديقها. لا ينبغي قبول التحرش أو التنمر الإلكتروني، فالقوانين تحمي الجميع على الإنترنت كما في الواقع. عند لقاء صديق من الإنترنت في الحياة الواقعية، يجب اصطحاب شخص بالغ موثوق لتجنب المخاطر.",
+  "labels": [
+    "سلامة الإنترنت",
+    "مشاركة المعلومات",
+    "التنمر الإلكتروني",
+    "لقاء الأصدقاء عبر الإنترنت",
+    "التحقق من المعلومات"
+  ],
+  "created_at": "2026-06-20T15:09:55Z",
+  "updated_at": "2026-06-20T15:09:55Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

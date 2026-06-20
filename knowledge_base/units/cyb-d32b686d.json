@@ -1,0 +1,29 @@
+{
+  "id": "cyb-d32b686d",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "نصائح للسلامة عند التحدث مع الغرباء على الإنترنت",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "السلامة الرقمية والتنمر الإلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "meet people online who like instead of your real name rude, scary or something you feel bad. the same movies or sports as you. if you are in a site or game don’t like, tell your parents or Learn about the ‘netiquette’ of But while there are lots of good where there may be lots of another adult you trust. being online. What’s considered points about keeping in touch people you don’t know. Ask okay to do and say and what with online friends, there are also your parents before giving Netiquette isn’t? For example, if you type a some risks with meeting people anyone on the Internet your message to someone in UPPER Sometimes it’s easy to forget that online—especially if you don’t name, address, phone number CASE they may think you are the other person you are chatting know them in real life. or any other personal details. shouting at them. to on IM, playing a game with, or To help stay safe while you chat, 4. Set your profile to private. posting to their profile is a real If someone says something rude Ask your parents to help you or something that makes you feel remember some simple tips: person. It’s easier to say and do Guidelines for Children and Young People www.itu.int/cop uncomfortable, don’t respond. be able to report them to the ing unsafe and alone. vider or the website adminis- Leave the chat room or forum game site operator. No-one has the right to bully",
+  "text_simplified": "عند استخدام الإنترنت، قد تقابل أشخاصًا لا تعرفهم في الحقيقة، وقد يقولون لك كلمات جارحة أو مخيفة. من المهم ألا تشارك معلوماتك الشخصية مثل اسمك الحقيقي أو عنوانك أو رقم هاتفك مع أي شخص على الإنترنت. إذا شعرت بعدم الراحة أو تعرضت للتنمر، أخبر والديك أو شخصًا بالغًا تثق به، ولا ترد على الإساءة. تذكر أن تستخدم قواعد السلوك الرقمي المهذب (النتيكيت) واضبط إعدادات خصوصية حسابك.",
+  "labels": [
+    "سلامة الإنترنت",
+    "تنمر إلكتروني",
+    "خصوصية",
+    "نتيكيت",
+    "حماية الأطفال"
+  ],
+  "created_at": "2026-06-20T15:10:36Z",
+  "updated_at": "2026-06-20T15:10:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

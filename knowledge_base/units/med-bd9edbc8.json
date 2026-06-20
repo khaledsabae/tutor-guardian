@@ -1,0 +1,29 @@
+{
+  "id": "med-bd9edbc8",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "توصيات لخدمات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية للأطفال والمراهقين",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "role within this optimal mix of services. While the absolute need for such services is likely to vary between countries, the proportion required in countries is roughly the same. Figure 3. WHO-recommended optimal mix of services Psychiatric Community services in mental hospitals services Mental health services through primary health care Informal community care QUANTITY OF SERVICES NEEDED Source: adapted from WHO, 2003. fo noitacifitnedI yranilpicsiditluM yranilpicsiditluM Where possible, child and adolescent mental health services should not be located alongside general child and adolescent health facilities. Moreover, there should be separate inpatient facilities for child and adolescent mental health care, as children and Children and adolescents are adolescents can experience fear and intimidation if they are treated alongside adults. generally best served by Also, different tools, instruments and facilities are necessary for mental health work with separate inpatient facilities for children and adolescents, such as therapeutic games, progress assessment guides and child and adolescent mental observational data gathering forms. In some scenarios, it may be advantageous to combine services for children and adults. In the case of services for mothers suffering from post-partum psychiatric disorders, for example, it may be appropriate to attend to the mental health of the infant in the same setting. It is necessary to coordinatethe different levels of treatment available for varying levels of severity of illness. For example, a drug rehabilitation unit that treats an adolescent for It is necessary to coordinate glue sniffing or opium smoking should contact the local addictions counsellor who may the",
+  "text_simplified": "يجب أن تكون خدمات الصحة النفسية للأطفال والمراهقين منفصلة عن خدمات البالغين لتجنب الخوف والترهيب. كما ينبغي توفير مرافق خاصة لهم تحتوي على أدوات مناسبة مثل الألعاب العلاجية وأدوات التقييم. في بعض الحالات، مثل اضطرابات ما بعد الولادة، يمكن دمج الخدمات للأمهات والأطفال. من الضروري التنسيق بين مستويات العلاج المختلفة حسب شدة الحالة.",
+  "labels": [
+    "خدمات نفسية",
+    "أطفال ومراهقين",
+    "مرافق منفصلة",
+    "تنسيق علاجي",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T14:47:36Z",
+  "updated_at": "2026-06-20T14:47:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

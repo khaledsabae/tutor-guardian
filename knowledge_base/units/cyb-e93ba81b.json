@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e93ba81b",
+  "domain": "cyber",
+  "source_file": "Every_Online_Safety_Conversation.pdf",
+  "title": "الاستغلال الجنسي للأطفال عبر الإنترنت وكيفية الوقاية",
+  "language": "mixed",
+  "age_group": "13-15",
+  "behavior_type": "استغلال جنسي عبر الإنترنت",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Internet Matters — Online Safety Conversations",
+  "text_original": "Every online safety conversation matters The internet connects us with the world, CASE STUDY including family and friends locally and A 15-year-old male joined a video call on a overseas, through messages, live video messaging app from someone they thought was chat and even playing online games. a person their own age. The boy was tricked into Being online can be positive and fun and sending images of himself with no clothes on, help children and young people learn and and the other person started to blackmail the connect with others. But sometimes it boy for money, threatening to share the images can expose children and young people with his family. to risks. Source: Australian Centre to Counter Child Exploitation Together we can help keep all children Experiencing online child and young people safe. This advice sheet exploitation can impact a helps families learn more about online child and young person’s child exploitation and how to get help mental health and wellbeing, now and in the future. So, The eSafety Commissioner (eSafety) it’s important that all children and the Australian Federal Police-led and young people know that Australian Centre to Counter Child if it happens to them, it’s not Exploitation have developed conversation their fault and they can get starters to help you talk with your child to help and support. keep them safe from harm. What is online grooming? What is online child exploitation? Online grooming is when an adult makes contact online with someone under the age of",
+  "text_simplified": "الإنترنت يمكن أن يكون مفيدًا للأطفال للتعلم والتواصل، لكنه قد يعرضهم لمخاطر مثل الاستغلال الجنسي. يجب على الأهل التحدث مع أطفالهم حول السلامة الرقمية وتعليمهم أن طلب المساعدة ليس خطأهم.",
+  "labels": [
+    "سلامة رقمية",
+    "استغلال أطفال",
+    "ابتزاز إلكتروني",
+    "توعية أسرية",
+    "حماية الطفل"
+  ],
+  "created_at": "2026-06-20T15:02:28Z",
+  "updated_at": "2026-06-20T15:02:28Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Every_Online_Safety_Conversation",
+    "source_author": ""
+  }
+}

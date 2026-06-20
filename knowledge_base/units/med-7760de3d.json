@@ -1,0 +1,29 @@
+{
+  "id": "med-7760de3d",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "فعالية التدخلات النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية عامة",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "and treatment interventions (Keating & Hertzman, 1999; Durlak, 1998). For example, studies have shown that a family-based social work intervention for Emerging scientific evidence children and adolescents who deliberately poisoned themselves (Byford et al., 1999), shows that mental health and a diversion programme for children with conduct disorder (Greenwood et al., 1996), interventions are cost were cost effective. Even though these studies were carried out in the United Kingdom or the United States, this is likely to be the case in other countries as well. What has not yet been demonstrated is that interventions in childhood or adolescence will lead to cost savings in adulthood. However, it is reasonable to assume that costs will be reduced if impairment is lessened. > Child and adolescent mental health policies should promote the mental health of all children and provide treatment and care for children and adolescents with mental health problems. > Child and adolescent mental health problems and disorders need to be seen in their wider social context. > Children and adolescents with mental health problems and disorders are particularly vulnerable to stigma and discrimination. > Mental disorders in children and adolescents vary according to their developmental > Factors that affect the mental health of children and adolescents can be divided into risk and protective factors. > Risk and protective factors can be targets for intervention. > Mental health interventions need to be sensitive to the developmental stage of children and adolescents and should take into account social and cultural > There",
+  "text_simplified": "تشير الدراسات إلى أن التدخلات العلاجية للأطفال والمراهقين الذين يعانون من مشاكل نفسية، مثل إيذاء النفس أو اضطراب السلوك، يمكن أن تكون فعالة من حيث التكلفة. من المهم أن تركز سياسات الصحة النفسية على تعزيز الصحة النفسية لجميع الأطفال وتوفير العلاج لمن يحتاجون إليه، مع مراعاة السياق الاجتماعي والثقافي ومراحل النمو.",
+  "labels": [
+    "صحة نفسية",
+    "تدخلات علاجية",
+    "فعالية التكلفة",
+    "سياسات الصحة",
+    "عوامل الخطر والحماية"
+  ],
+  "created_at": "2026-06-20T14:45:15Z",
+  "updated_at": "2026-06-20T14:45:15Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

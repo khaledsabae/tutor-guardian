@@ -1,0 +1,29 @@
+{
+  "id": "cyb-40187b4a",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الإنترنت على الأطفال وسبل الحماية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "as “computer or digitally generated child sexual abuse material”. 30 See the United Nations Convention on the Rights of the Child. 31 UNICEF and ITU, “Guidelines for Industry on Child Online Protection”, 2014. 32 Article 34 of the United Nations Convention on the Rights of the Child. 33 Terminology Guidelines for the Protection of Children from Sexual Exploitation and Sexual Abuse (Luxembourg Guidelines), 2016. 34 The Luxembourg Guidelines (as above), 2016 and the UNICEF Global Kids Online report, 2019. 35 Broadband Commission for Sustainable Development, “Child Online Safety: Minimizing the Risk of Violence, Abuse and Exploitation Online”, 2019; WePROTECT Global Alliance, “Preventing and Tackling Child Sexual Exploitation and Abuse (CSEA): A Model National Response”, 2016. Guidelines for industry on Child Online Protection Children and young people Describes all persons under the age of 18 years, whereby “children” (also referred to as “younger children” in these ITU guidelines) covers all persons under the age of 15 years and “young people” comprises persons in the 15–18 age group. Connected toys connect to the Internet using technologies such as Wi-Fi and Bluetooth, and typically operate in conjunction with companion apps to enable interactive play for children. According to Juniper Research, in 2015 the market for connected toys reached USD 2.8 billion and is predicted to increase to USD 11 billion by 2020. These toys collect and store personal information from children including names, geolocation, addresses, photographs, audio and video recordings.36 Cyberbullying describes an intentionally aggressive act carried out repeatedly by either a group",
+  "text_simplified": "يشرح النص مصطلحات مهمة لحماية الأطفال على الإنترنت، مثل المواد المسيئة للأطفال رقمياً والتنمر الإلكتروني. كما يوضح أن الألعاب المتصلة بالإنترنت تجمع معلومات شخصية عن الأطفال كالأسماء والصور والمواقع. ويؤكد على ضرورة اتباع إرشادات دولية لحماية الأطفال من الاستغلال والعنف عبر الإنترنت.",
+  "labels": [
+    "حماية الأطفال",
+    "الاستغلال الجنسي",
+    "التنمر الإلكتروني",
+    "الألعاب المتصلة",
+    "الخصوصية"
+  ],
+  "created_at": "2026-06-20T15:01:47Z",
+  "updated_at": "2026-06-20T15:01:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

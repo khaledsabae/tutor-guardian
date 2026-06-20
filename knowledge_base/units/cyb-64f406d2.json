@@ -1,0 +1,29 @@
+{
+  "id": "cyb-64f406d2",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "دور الأجهزة المحمولة في تعليم الأطفال",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "استخدام التكنولوجيا",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "a very well- selection of the devices that the tries where such infrastructures include Mobile Broadband9. It is equipped10; participants in the survey have in are less developed. Here mobile clear that the ability to access their homes: Internet access is and increas- online services will increasingly ingly will be the way to access happen through handheld devices. Equipment at home Group 6-9 years Group 10-18 years the Internet. In many countries Internet cafés and other commu- The benefits are obvious, a range A computer at home 61% 65% of educational services could be nal resources are also important Internet Connection 40% 46% provided via mobiles to children providers of access for children in remote villages and communi- Personal cell phone 42% 83% and young people. They are likely ties. Mobile phones could serve as to remain so for some time. In an essential means for children to the European Union, 50% of become connected to one another 10 year-old, 87% of 13 year-old for educational and peer-learning and 95% of 16 year-old children activities. These are particularly have a mobile phone7. In the important for communities that Asia Pacific region, the fastest are either nomadic or have been growing region in relation to displaced due to natural disasters, mobile subscriptions, China and war civil strife or other major India have become leaders in the disruptive events. 7 http://europa.eu/rapid/pressReleasesAction.do?reference=IP/09/596 8 http://www.tigweb.org/express/panorama/article.html?ContentID=11441 9 http://gsmworld.com/newsroom/press-releases/2009/2521.htm#nav-6 10 http://www.generacionesinteractivas.org/?page_id=660 Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Information",
+  "text_simplified": "يُظهر النص أن الأطفال والشباب يستخدمون الأجهزة المحمولة بشكل متزايد للوصول إلى الإنترنت والخدمات التعليمية. تختلف نسبة امتلاك الهواتف المحمولة حسب الفئة العمرية، حيث تزداد بشكل كبير مع التقدم في العمر. يمكن للهواتف المحمولة أن تكون وسيلة مهمة للتعليم والتواصل، خاصة في المجتمعات التي تعاني من نقص البنية التحتية.",
+  "labels": [
+    "استخدام الإنترنت",
+    "هواتف محمولة",
+    "تعليم رقمي",
+    "فجوة رقمية",
+    "أطفال"
+  ],
+  "created_at": "2026-06-20T15:08:38Z",
+  "updated_at": "2026-06-20T15:08:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

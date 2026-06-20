@@ -1,0 +1,29 @@
+{
+  "id": "cyb-53dc7b13",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "حماية حقوق الطفل في الفضاء الإلكتروني",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل في الفضاء الإلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "www.itu.int/cop 2 http://www.unicef.org/crc/ Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop The UN Convention on the development oriented informa- Rights of the Child, approved tion society, where everyone can by the United Nations in 1989, create, access, utilize and share is the most important and sig- information and knowledge.” nificant legal tool in the defence At WSIS, ITU was entrusted and promotion of children’s and by leaders of the international young people’s rights. It places the community with Action Line C5: emphasis on real needs, not only “building confidence and security in terms of vulnerability and pro- in the use of ICTs”. The WSIS tective measures, but also in terms outcomes also specifically recog- of the promotion and apprecia- nized the needs of children and tion of the abilities of each and young people and their protection every child and young person. in cyberspace. The Tunis Com- The World Summit on the In- mitment recognized “the role of formation Society (WSIS) which ICTs in the protection of children was held in two phases in Ge- and in enhancing the develop- neva from 10 to 12 December ment of children” as well as the 2003 and in Tunis from 16 to 18 need to “strengthen action to November 2005 concluded with protect children from abuse and the approval of the WSIS Out- defend their rights in the context come Documents which made of ICTs”. a bold commitment “to build a people-centred, inclusive and Guidelines for",
+  "text_simplified": "اتفاقية الأمم المتحدة لحقوق الطفل هي أداة قانونية مهمة لحماية وتعزيز حقوق الأطفال والشباب. تؤكد الاتفاقية على احتياجات الأطفال الحقيقية وتعزيز قدراتهم. كما أن قمة المجتمع المعلوماتي أقرت أهمية حماية الأطفال في الفضاء الإلكتروني وتعزيز دور تكنولوجيا المعلومات في تنميتهم.",
+  "labels": [
+    "حقوق الطفل",
+    "حماية إلكترونية",
+    "اتفاقية الأمم المتحدة",
+    "تكنولوجيا المعلومات",
+    "تنمية الأطفال"
+  ],
+  "created_at": "2026-06-20T15:08:13Z",
+  "updated_at": "2026-06-20T15:08:13Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

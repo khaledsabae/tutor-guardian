@@ -1,0 +1,29 @@
+{
+  "id": "med-8694ff2e",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحليل التحديات والفرص في الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Awareness of relevant child and > Inadequate information systems it is often useful to commence adolescent mental health issues > Mental health workers poorly trained in by conducting a SWOT > Buy-in from family and consumer child and adolescent mental health analysis. organizations, schools and advocacy > Perceived insignificance of child and groups adolescent mental health issues (e.g. > Favourable laws depression) compared to other health > High degree of motivation of human issues (infant mortality) resources > Poor coordination between different > High levels of intersectoral collaboration levels of care > Successful pilot experiences > Poor intersectoral collaboration > Poor quality improvement processes > Scarce allocation of resources to child and adolescent mental health Opportunities Threats > Availability of the current module > Budgetary crises > Election of politicians with an interest in > Certain cultural practices the mental well-being of children and > Personnel shortages > International initiatives that are relevant > Public focus on non-mental-health for child and adolescent mental health issues or adult mental health (for example, the Mental Health Global > Public ignorance about child and Action Plan (mhGAP) and Tobacco adolescent mental health needs Free Initiative of the WHO) > Stigma about mental health problems > Public alarm about relevant issues such among children and adolescents as substance use among adolescents > Political crises such as civil war > Recent current events highlighting a specific area of need (for example, suicide among adolescents, child > Treaty obligations that accord priority to child and adolescent",
+  "text_simplified": "هذا النص يناقش التحديات والفرص المتعلقة بالصحة النفسية للأطفال والمراهقين. من أبرز التحديات ضعف أنظمة المعلومات، نقص تدريب العاملين، قلة التنسيق بين مستويات الرعاية، وندرة الموارد. أما الفرص فتشمل وجود قوانين داعمة، تعاون بين القطاعات، واهتمام سياسي بالصحة النفسية. يجب على الأهل الانتباه لأهمية الصحة النفسية لأطفالهم وطلب المساعدة عند الحاجة.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "تحديات",
+    "فرص"
+  ],
+  "created_at": "2026-06-20T14:50:06Z",
+  "updated_at": "2026-06-20T14:50:06Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

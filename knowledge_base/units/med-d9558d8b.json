@@ -1,0 +1,29 @@
+{
+  "id": "med-d9558d8b",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "خدمات متكاملة لأطفال الشوارع وتعاون مؤسسي",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "رعاية أطفال الشوارع",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "street children could include the health (drug counselling services), education (school support) and juvenile justice (prison diversion for young offenders) systems, and so provide an incentive for the different agencies to work together to meet the objectives of the programme. Clearly, a collateral benefit from intersectoral collaboration is a greater awareness of the potential role for others to play in the promotion of mental health in their constituencies. Funding needs to foster the development of a \"continuum of services\", which refers to the optimal mix of a broad range of biomedical and psychosocial services. Consumer Funding needs to foster the choice should be taken into account when decisions are made about which services are development of a continuum offered. The extent of services available at different levels (primary care, community, of services. general hospitals or psychiatric institutions) depends on financing decisions made at national and district levels (see module on Organization of Services for Mental Health). Financing of services should incorporate some degree of flexibilityto allow for the cost Financing of services should of “outliers” – atypically expensive cases that can skew the average cost of care. incorporate some flexibility to Examples of such outliers include children or adolescents with schizophrenia or severe allow for the cost of “outliers”. obsessive compulsive disorder. The response and duration of treatment of such child and adolescent mental disorders may be unpredictable and necessitate long-term care. Anticipating limited financial exposure for disproportionate utilization by a number of clients can avoid financial crises. Organization of",
+  "text_simplified": "يجب توفير خدمات متكاملة لأطفال الشوارع تشمل الصحة والتعليم والعدالة، مع تعاون المؤسسات المختلفة لتحقيق أهداف البرنامج. يحتاج التمويل إلى دعم تطوير خدمات مستمرة تجمع بين الرعاية الطبية والنفسية والاجتماعية، مع مراعاة اختيارات المستفيدين. كما ينبغي أن يكون التمويل مرناً لتغطية الحالات المكلفة مثل الأطفال المصابين بالفصام أو الوسواس القهري الشديد.",
+  "labels": [
+    "أطفال الشوارع",
+    "خدمات متكاملة",
+    "تمويل مرن",
+    "صحة نفسية",
+    "تعاون مؤسسي"
+  ],
+  "created_at": "2026-06-20T14:47:27Z",
+  "updated_at": "2026-06-20T14:47:27Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-be5bd5a3",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "إرشادات مرنة للصحة النفسية للمراهقين",
+  "language": "mixed",
+  "age_group": "13-15",
+  "behavior_type": "صحة نفسية للمراهقين",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "to facilitate the use and implementation of the guidance provided. The guidance is not intended to be prescriptive or to be interpreted in a rigid way. Instead, countries are encouraged to adapt the material in accordance with their own needs and circumstances. Practical examples from different countries are used throughout the modules. There is extensive cross-referencing between the modules. Readers of one module may need to consult another (as indicated in the text) should they wish to seek additional guidance. All modules should be read in the light of WHO’s policy of providing most mental health care through general health services and community settings. Mental health is necessarily an intersectoral issue requiring the involvement of the education, employment, housing and social services sectors, as well as the criminal justice system. It is also important to engage in consultations with consumer and family organizations in the development of policies and the delivery of services. Dr Michelle Funk Dr Benedetto Saraceno ADOLESCENT MENTAL HEALTH POLICIES Executive summary 1. Context of child and adolescent mental health Children and adolescents with good mental health are able to achieve and maintain optimal psychological and social functioning and well-being. They have a sense of identity and self-worth, sound family and peer relationships, an ability to be productive and to learn, and a capacity to tackle developmental challenges and use cultural resources to maximize growth. Moreover, the good mental health of children and adolescents is crucial for their active social and economic participation. This module demonstrates the",
+  "text_simplified": "يقدم هذا الدليل إرشادات مرنة يمكن تكييفها حسب احتياجات كل دولة. الصحة النفسية للمراهقين مهمة لنموهم الاجتماعي والاقتصادي، وتتطلب تعاون قطاعات الصحة والتعليم والإسكان والعمل والعدالة.",
+  "labels": [
+    "صحة نفسية",
+    "مراهقون",
+    "سياسات",
+    "تكييف",
+    "تعاون قطاعي"
+  ],
+  "created_at": "2026-06-20T14:42:58Z",
+  "updated_at": "2026-06-20T14:42:58Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

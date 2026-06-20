@@ -1,0 +1,29 @@
+{
+  "id": "cyb-8f4abbd3",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مبادرة اليونيسف لحماية الأطفال من العنف عبر الإنترنت",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "السلامة الرقمية وحماية الأطفال من العنف عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "part of the same project, in February 2020, UNICEF launched a Think Tank to accelerate industry leadership in the East Asia and Pacific region to prevent violence against children in the online world. The Think Tank is an incubator for ideas and innovation, drawing on the unique perspective of industry actors (product creation, marketing, etc.) for the development of impactful educational materials and identification of the most effective delivery platforms, as well as for the development of an evaluation framework that can measure the impact of these educational materials and messages targeted at children. The Think Tank is comprised of Facebook, Telenor, academic experts, United Nations agencies, such as ITU, UNESCO and UNODC, and others, such as the Australia eSafety Commissioner, ECPAT International, ICMEC, INTERPOL, and the End Violence Global Fund. The Think Tank inaugural meeting, held in parallel to the ASEAN Regional Conference on Child Online Protection, drew together experts, including Microsoft, to explore technology and research possibilities for better tracking changes in online behaviour, based on uptake of online safety materials and messages. 3.4 Educating children, carers and educators about children’s safety and the responsible use of ICTs Technical measures can be an important part of ensuring that children and young people are protected from the potential risks online, but these are only one element of the equation. Parental control tools, awareness raising and education are also key components that will help empower and inform children and young people of all ages, as well as parents, caregivers and",
+  "text_simplified": "أطلقت اليونيسف في فبراير 2020 مركزًا للفكر لتسريع القيادة الصناعية في شرق آسيا والمحيط الهادئ لمنع العنف ضد الأطفال عبر الإنترنت. يضم المركز شركات تقنية وخبراء أكاديميين ووكالات أممية لتطوير مواد تعليمية ومنصات فعالة وقياس أثرها. يهدف إلى تثقيف الأطفال ومقدمي الرعاية حول السلامة الرقمية والاستخدام المسؤول للتكنولوجيا.",
+  "labels": [
+    "سلامة رقمية",
+    "حماية الأطفال",
+    "توعية",
+    "منع العنف",
+    "تكنولوجيا"
+  ],
+  "created_at": "2026-06-20T14:56:31Z",
+  "updated_at": "2026-06-20T14:56:31Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

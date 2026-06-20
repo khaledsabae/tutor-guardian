@@ -1,0 +1,29 @@
+{
+  "id": "cyb-471ccc8d",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "حماية الأطفال والمراهقين أثناء التصفح الآمن للإنترنت",
+  "language": "mixed",
+  "age_group": "10-12",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "safe online. wishing to engage with them. a very strong need to find their own way, to escape close paren- The second age group: The last age group: tal or adult supervision and seek out their peers. A natural curios- 8-12 year old 13 year old and above ity about sexual matters can lead This age span is a challenging This group is the one covering some people in this age group into transition for the child. Typically the longest span, is the group potentially worrying situations and he or she is becoming a young per- consisting of young people who this makes it all the more impor- son with a greater capacity to form are, namely, teenagers. This group tant for them to understand how questions. Their curiosity will start is growing up rapidly, transition- to stay safe online. to push them to seek out and chal- ing from being young people to The COP guidelines recognize lenge boundaries, looking for their becoming young adults. They are the difficulty in creating messages own answers. It is an age group both developing and exploring that will cover the needs of all where awareness of what is avail- their own identities, their own ages within the defined groups. able online exists. The impulse tastes. They will very often be able Local laws and customs are also to seek and find out what’s there to use technology with a high level profoundly important in matters is great. Throughout childhood a of proficiency,",
+  "text_simplified": "هذه الوحدة تتناول كيفية حماية الأطفال والمراهقين أثناء استخدام الإنترنت، مع التركيز على مرحلتين عمريتين: 8-12 سنة و13 سنة فما فوق. في المرحلة الأولى (8-12 سنة)، يظهر الطفل فضولاً طبيعياً حول الأمور الجنسية وقد يبحث عن إجابات بنفسه، مما يستدعي توعيته بمخاطر الإنترنت. أما المرحلة الثانية (13 سنة فما فوق)، فهي مرحلة المراهقة حيث يسعى الشاب لاستكشاف هويته واستقلاليته، ويحتاج إلى إرشادات واضحة للبقاء آمناً عبر الإنترنت.",
+  "labels": [
+    "سلامة الإنترنت",
+    "فضول جنسي",
+    "مراهقة",
+    "رقابة أبوية",
+    "توعية رقمية"
+  ],
+  "created_at": "2026-06-20T15:09:43Z",
+  "updated_at": "2026-06-20T15:09:43Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

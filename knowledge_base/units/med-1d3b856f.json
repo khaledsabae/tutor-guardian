@@ -1,0 +1,29 @@
+{
+  "id": "med-1d3b856f",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "إدارة جودة خدمات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "إدارة جودة الخدمات",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "quality management of services processes There are two approaches to the design of a standards document for child and adolescent mental health services: a separate document can be compiled for children and adolescents, or the special issues pertaining to children and adolescents can be addressed in a document that covers all age groups. Whatever approach is followed, particular attention should be paid, among others, to the following: > Ensuring the rights of child and adolescent service users, which includes aspects such as the provision of age-appropriate services, protection from abuse and neglect, protection within the criminal justice system, separate facilities for children and adolescents (compared to adults), and the right to education; >Recognition that the child’s or adolescent's developmental stage influences his or her optimal response to treatment; >Ensuring confidentiality of communication and identity; and >Involvement of parents where appropriate. Information systems Information systems are of immense value in the formulation of policy and the Information systems are of monitoring of its implementation. Where possible, funds should be allocated for immense value in the establishing and operating a database. Such databases can vary enormously in formulation of policy and the monitoring of its complexity and comprehensiveness. At one extreme, an information system might implementation. consist of a list of the names of service users with some basic information such as diagnosis. At the other extreme, it might be a technologically sophisticated database comprising many of the input, process and outcome indicators for child and adolescent mental health services listed in",
+  "text_simplified": "يجب تصميم خدمات الصحة النفسية للأطفال والمراهقين مع مراعاة حقوقهم، مثل توفير خدمات مناسبة لأعمارهم وحمايتهم من الإساءة. كما ينبغي إشراك الوالدين عند الحاجة، والحفاظ على سرية المعلومات، مع الاعتراف بأن مرحلة النمو تؤثر على استجابة الطفل للعلاج. أما أنظمة المعلومات فتُساعد في وضع السياسات ومتابعة تنفيذها، ويُفضل تخصيص ميزانية لإنشاء قاعدة بيانات تتراوح بين البسيطة والمتقدمة.",
+  "labels": [
+    "صحة نفسية",
+    "حقوق الطفل",
+    "جودة الخدمات",
+    "نظم المعلومات",
+    "المراهقون"
+  ],
+  "created_at": "2026-06-20T14:49:05Z",
+  "updated_at": "2026-06-20T14:49:05Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

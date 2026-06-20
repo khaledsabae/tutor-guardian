@@ -1,0 +1,29 @@
+{
+  "id": "cyb-4825369d",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية خصوصية الأطفال على الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "know this person?” feature; an “other” inbox gathering new messages from people the user does not know; and a popup which appears on the news feed if it looks like a minor is being contacted by an adult that they do not know. Online content and service providers can also describe the nature of content or services they are providing and the intended target age range. These descriptions should be aligned with pre- existing national and international standards, relevant regulations, and advice on marketing and advertising to children made available by the appropriate classification bodies. This process becomes more difficult, however, with the growing range of interactive services that enable the publication of user-generated content, for example, via message boards, chat rooms and social networking services. When companies specifically target children and young people, and when services are overwhelmingly aimed at younger audiences, the expectations in user-friendly, easily understandable and accessible terms of content and security will be much higher. Companies are also encouraged to adopt the highest privacy standards when it comes to collecting, processing and storing data from or about children and young people, as children and young people may lack the maturity to appreciate the wider social and personal consequences of revealing or agreeing to share their personal information online, or to the use of their personal information for commercial purposes. Services directed at or likely to attract a main audience of children and young people must consider the risks posed to them by access to, or",
+  "text_simplified": "يجب على الشركات التي تقدم خدمات عبر الإنترنت للأطفال والشباب أن تصف بوضوح طبيعة محتواها والفئة العمرية المستهدفة. كما ينبغي لها تطبيق أعلى معايير الخصوصية عند جمع بيانات الأطفال، لأنهم قد لا يدركون عواقب مشاركة معلوماتهم الشخصية.",
+  "labels": [
+    "خصوصية الأطفال",
+    "حماية البيانات",
+    "سلامة الإنترنت",
+    "تربية رقمية",
+    "محتوى آمن"
+  ],
+  "created_at": "2026-06-20T14:56:23Z",
+  "updated_at": "2026-06-20T14:56:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

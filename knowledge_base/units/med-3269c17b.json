@@ -1,0 +1,29 @@
+{
+  "id": "med-3269c17b",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "قائمة خبراء الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "India Professor Anthony Pillay Principal Psychologist, Midlands Hospital Complex, Pietermaritzburg, KwaZulu-Natal, South Africa Dr Yogan Pillay Chief Director, Strategic Planning, Department of Health, Pretoria, South Africa Professor Ashoka Prasad Special Expert, Ministry of Health, Mahe, Dr Dainius Puras Head and Associate Professor, Centre of Child Psychiatry and Social Paediatrics, Department of Psychiatry, Vilnius University, Vilnius, Lithuania Professor Linda Richter Child, Youth and Family Development, Human Sciences Research Council, University of Natal, Durban, South Africa Professor Brian Robertson Emeritus Professor, Department of Psychiatry and Mental Health, University of Cape Town, Republic of South Africa Dr Luis Augusto Rohde Vice-Chair, Department of Psychiatry, Federal University of Rio Grande du Sul, Professor of Child Psychiatry, Hospital de Clinicas de Porto Alegre, Porto Alegre, Brazil Dr Kari Schleimer Department of Child and Adolescent Psychiatry (CAP), Malmö University Hospital, Malmö, Sweden Mr Don A.R. Smith Department of Psychological Medicine, Wellington School of Medicine and Health Sciences, Wellington, New Zealand Dr Ka Sunbaunat Director, Mental Health, Department of Health, Ministry of Health, Phnom Penh, Cambodia Dr Alain Tortosa President of AAPEL, Association d'Aide aux Personnes avec un “Etat Limite”, Lille, France Dr Samuel Tyano Secretary for Finances, World Psychiatry Association (WPA), c/o Tel Aviv University, Tel Aviv, Dr Willians Valentini Psychiatrist, São Paulo, Campinas, Brazil Mrs Pascale Van den Heede Executive Director, Mental Health Europe, Brussels, Dr Robert Vermeiren University Department of Child & Adolescent Psychiatry, Middelheim Hospital, Antwerp, Belgium Mrs Deborah Wan Chief Executive Officer, New Life Psychiatric Rehabilitation Association, Hong Kong, China Dr Mohammad",
+  "text_simplified": "هذا النص يحتوي على قائمة بأسماء وتخصصات خبراء في الصحة النفسية للأطفال والمراهقين من دول مختلفة. لا يتضمن النص أي معلومات عن سلوك معين أو مشكلة نفسية محددة.",
+  "labels": [
+    "خبراء",
+    "صحة نفسية",
+    "أطفال",
+    "مراهقين",
+    "دولي"
+  ],
+  "created_at": "2026-06-20T14:42:33Z",
+  "updated_at": "2026-06-20T14:42:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

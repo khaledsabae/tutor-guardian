@@ -1,0 +1,29 @@
+{
+  "id": "dev-ac8756af",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "أهمية الرعاية الصحية قبل الحمل لنمو الطفل",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "رعاية صحية قبل الحمل",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "their own, those have significant long-term benefits, including children developed better than children in the for adult health, well-being, education, earnings, control group – which demonstrates important personal relationships and social life.7,8 inter-generational benefits.10 Care before One thing is essential to protect children’s health and development, and that is the pregnancy care their parents get, to make sure they are in good health before they conceive.29,30 Care before pregnancy improves men’s and women’s physical and mental health. It also reduces the chances of their children being born prematurely, with low birthweight, birth defects or other birth-related conditions that could hinder optimal development. Studies have defined the mechanisms by which parents’ poor metabolic and mental health before pregnancy can affect their children’s development, in infancy and beyond.31,32 Importantly, studies also show that this transgenerational transmission can be mitigated by interventions to improve the parents’ health before conception and to support infants’ health in the post-natal period. Interventions address the behaviour – as well as the individual and environmental risk factors – that contribute to poor outcomes, both in the mother and the child. These risk factors include nutrition (such as micronutrient deficiencies, and being overweight or obese), parents’ mental health, substance use (such as alcohol and tobacco), immunization, environmental toxins, genetic conditions, infections (such as HIV and sexually transmitted infections), infertility, child spacing, and violence (whether in the home or outside it).33 Adolescence is a critical window of opportunity for promoting and supporting care before pregnancy. The best interventions can delay",
+  "text_simplified": "الرعاية الصحية قبل الحمل تحسن صحة الوالدين الجسدية والنفسية، وتقلل مخاطر الولادة المبكرة والعيوب الخلقية لدى الأطفال. التدخلات المبكرة لتحسين صحة الوالدين قبل الحمل تدعم نمو الطفل على المدى الطويل، وتشمل معالجة التغذية والصحة النفسية والعنف المنزلي.",
+  "labels": [
+    "رعاية قبل الحمل",
+    "صحة الوالدين",
+    "نمو الطفل",
+    "وقاية",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T14:22:12Z",
+  "updated_at": "2026-06-20T14:22:12Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-f9832e73",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "نشر سياسات الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "an ongoing agencies, and to individuals process over time and requires sustained efforts. Box 18 presents some ideas as to within those agencies. how such dissemination can take place. Box 18. Ideas for the dissemination of a child and adolescent mental health > Hold meetings with health teams, consumers, families, advocacy groups and other stakeholders for analysis of the policy or plan. > Involve as many sectors as possible in the dissemination process. > Organize a public event with the media, where the minister for health, or another leader, officially announces the launch of the new policy, plan or programme. > Organize national seminars to discuss the policy or plan. > Print and distribute posters, leaflets and flyers highlighting the main ideas of the policy or plan. > Print booklets about the policy, plan or programme for distribution to stakeholders. > Recruit and support consumer, family and other advocacy groups to help with information dissemination about the policy or plan. Stakeholders in the area of mental health of children and adolescents include the children and adolescents themselves, and their families. The success of the dissemination of a policy and plan will be maximized if children, adolescents and their families are reached at a variety of locations such as schools, streets, rural areas and workplaces. Dissemination must also take into account the fact that large numbers of children, Dissemination must also take into account the fact that large numbers of children, adolescents and their families adolescents and their families are either",
+  "text_simplified": "نشر سياسات الصحة النفسية للأطفال والمراهقين يتطلب جهوداً مستمرة ومشاركة قطاعات متعددة. يمكن تحقيق ذلك عبر عقد اجتماعات مع الفرق الصحية والأسر، وتنظيم فعاليات عامة مع وسائل الإعلام، وتوزيع منشورات وملصقات. كما ينبغي الوصول إلى الأطفال والأسر في المدارس والشوارع والمناطق الريفية لضمان نجاح التوعية.",
+  "labels": [
+    "صحة نفسية",
+    "توعية",
+    "سياسات",
+    "أطفال",
+    "مراهقون"
+  ],
+  "created_at": "2026-06-20T14:51:28Z",
+  "updated_at": "2026-06-20T14:51:28Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

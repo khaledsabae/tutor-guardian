@@ -1,0 +1,29 @@
+{
+  "id": "med-aff9a041",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "حزمة إرشادية للصحة النفسية للأطفال والمراهقين",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Guidance Package was produced under the direction of Dr Michelle Funk, Coordinator, Mental Health Policy and Service Development, and supervised by Dr Benedetto Saraceno, Director, Department of Mental Health and Substance Abuse, World Health Organization. The World Health Organization gratefully acknowledges the work of Professor Alan Flisher, University of Cape Town, Observatory, Republic of South Africa, and Dr Stuart Lustig, Harvard Medical School, United States of America (USA), who prepared this Editorial and technical coordination group: Dr Michelle Funk, World Health Organization, Headquarters (WHO/HQ), Dr Myron Belfer (WHO/HQ), Ms Natalie Drew (WHO/HQ), Dr Margaret Grigg (WHO/HQ), Dr Benedetto Saraceno (WHO/HQ), Professor Peter Birleson, Director Eastern Health, Child & Adolescent Mental Health Services, Victoria, Melbourne, Australia, Dr Itzhak Levav, Mental Health Services, Ministry of Health, Jerusalem, Israel and Ms Basia Arnold, Mental Health Directorate, Ministry of Health, New Zealand. Technical assistance: Dr Thomas Barrett (WHO/HQ), Dr Jose Bertolote (WHO/HQ), Dr JoAnne Epping Jordan (WHO/HQ), Dr Thérèse Agossou, Acting Regional Adviser, Mental Health, WHO Regional Office for Africa (AFRO), Dr José Miguel Caldas de Almeida, Programme Coordinator, Mental Health, WHO Regional Office for the Americas (AMRO), Dr Claudio Miranda, Regional Adviser on Mental Health (AMRO), Dr S. Murthy, Acting Regional Adviser, WHO Regional Office for the Eastern Mediterranean (EMRO), Dr Matt Muijen, Acting Regional Adviser, Mental Health, WHO Regional Office for Europe (EURO), Dr Vijay Chandra, Regional Adviser, Mental Health and Substance Abuse, WHO Regional Office for South-East Asia (SEARO), Dr Xiangdong Wang, Regional Adviser, Mental Health and Drug Dependence, WHO Regional",
+  "text_simplified": "هذه الحزمة الإرشادية أعدتها منظمة الصحة العالمية تحت إشراف خبراء في الصحة النفسية. تهدف إلى تقديم توجيهات للعاملين في مجال الصحة النفسية للأطفال والمراهقين.",
+  "labels": [
+    "منظمة الصحة العالمية",
+    "صحة نفسية",
+    "أطفال",
+    "مراهقين",
+    "إرشادات"
+  ],
+  "created_at": "2026-06-20T14:42:18Z",
+  "updated_at": "2026-06-20T14:42:18Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

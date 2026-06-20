@@ -1,0 +1,29 @@
+{
+  "id": "cyb-f73aab70",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال عبر الإنترنت وتصنيف المحتوى",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "simple and easily accessible method of alerting the content producer to breaches of any rules of the online • remove content that breaks the rules; • offer users a simple and easily accessible method of alerting the content producer to breaches of any rules of the online • remove content that breaks the rules; Before uploading age-sensitive editorially curated content onto a social networking site, be aware of the site’s terms and conditions. Be sensitive to minimum age requirements on different social networking sites. The terms and conditions of each online space should also include clear reporting mechanisms for infringements of such Guidelines for industry on Child Online Protection Creating a safer and Companies offering curated digital content can help create a age-appropriate online safer and more enjoyable digital environment for children and environment young people of all ages by taking the following actions: Work with others in the industry to develop content classification/age rating systems that are based on accepted national or international standards and consistent with approaches taken in equivalent media. Where possible, content classifications should be consistent across different media platforms, for example, a film trailer in a movie theatre and on a smartphone would show customers the same classifications. Develop child-friendly and age-appropriate products for children and young people that are safe by design and complemented by a solid age-verification system. To help parents and others decide whether content is age- appropriate for children and young people, build applications and services in all media to align",
+  "text_simplified": "يجب على الشركات التي تقدم محتوى رقمي للأطفال أن تضع آليات واضحة للإبلاغ عن المخالفات وإزالة المحتوى المخالف للقواعد. كما ينبغي مراعاة الحد الأدنى للعمر على مواقع التواصل الاجتماعي وتصنيف المحتوى حسب الفئات العمرية بناءً على معايير وطنية أو دولية.",
+  "labels": [
+    "حماية الأطفال",
+    "تصنيف المحتوى",
+    "آليات الإبلاغ",
+    "السلامة الرقمية",
+    "الحد الأدنى للعمر"
+  ],
+  "created_at": "2026-06-20T14:59:33Z",
+  "updated_at": "2026-06-20T14:59:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

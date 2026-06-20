@@ -1,0 +1,29 @@
+{
+  "id": "cyb-28c42f6b",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الاستغلال الجنسي للأطفال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "استغلال جنسي عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "mentioned in 3 per cent of assessed reports.1 • One in three Internet users worldwide is a child. • Every half second, a child goes online for the first time. • 800 million children use social media. • At any one time, 750,000 individuals online are estimated to be looking to connect with children for sexual purposes. • There are more than 46 million unique images or videos of CSAM in the EUROPOL • Over 89 per cent of victims are aged between 3 and 13 years old. For more information about the scale and response to online CSEA see the WePROTECT Global Alliance. 1 ECPAT and Interpol, “Towards a Global Indicator on Unidentified Victims in Child Sexual Exploitation Material: summary report”, 2018. 2 End Violence Against Children, “Safe Online”. 2.1.2 The impact of different platforms on children’s digital experiences The Internet and digital technology present both opportunities and risks to children and young people. Some of these are outlined below. When children use social media, they benefit from many opportunities to explore, learn, communicate and develop key skills. Social networks are seen by children as platforms that allow them to explore their personal identity in a safe environment. Having the relevant skills and knowing how to tackle issues related to privacy and reputation is important for young “I know everything you post on the Internet stays there forever and it can affect your life in the future”, 14-year-old boy, Chile. Guidelines for industry on Child Online Protection and control",
+  "text_simplified": "يتعرض الأطفال لمخاطر جسيمة على الإنترنت، حيث يُقدر أن 750 ألف شخص يبحثون عن التواصل مع الأطفال لأغراض جنسية في أي وقت. أكثر من 89% من ضحايا الاستغلال الجنسي عبر الإنترنت تتراوح أعمارهم بين 3 و13 عامًا. يجب على الأهل مراقبة استخدام أطفالهم للإنترنت وتعليمهم كيفية حماية خصوصيتهم.",
+  "labels": [
+    "سلامة الأطفال",
+    "استغلال جنسي",
+    "إنترنت",
+    "رقابة أبوية",
+    "خصوصية"
+  ],
+  "created_at": "2026-06-20T14:54:18Z",
+  "updated_at": "2026-06-20T14:54:18Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

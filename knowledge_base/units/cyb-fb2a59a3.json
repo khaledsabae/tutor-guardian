@@ -1,0 +1,29 @@
+{
+  "id": "cyb-fb2a59a3",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات للأطفال للتواصل الآمن عبر الإنترنت",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "السلوك الرقمي الآمن",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "Remember to treat others as you would like to be treated when communicating online. Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Your digital footprint 3. Think before you hit send or Offensive or illegal 3. If a website looks suspicious It’s great to share things online post. Once posted, it can be content or has a warning page for with your friends. Part of the difficult to remove content. people under 18 years, leave When you’re surfing the web fun of sharing videos, images 4. Don’t post anything you immediately. Some sites are you may come across websites, and other content, is that lots of don’t want others to know or not meant for kids. photos, text or other material that people can view and respond. Re- find out about—or that you 4. Check with your parents that makes you feel uncomfortable or member that what you share with wouldn’t say to them face to your search engine is set to upset. There are some easy ways your friends may also be viewed face. block material that is meant to handle these situations. by others whom you don’t know. 5. Remember that private im- for adults. They may also be able to look at ages and videos you send to Tips 5. Ask your parents to install in- it for years to come. Everything friends or post on a social ternet filter software to block 1. Tell your parents or another you post",
+  "text_simplified": "يجب على الأطفال والمراهقين معاملة الآخرين بلطف واحترام عند التواصل عبر الإنترنت. لا تنشر أي شيء لا تريد أن يعرفه الآخرون، وتذكر أن ما تنشره قد يبقى على الإنترنت لفترة طويلة. استشر والديك قبل زيارة مواقع مشبوهة، واطلب منهم تثبيت برامج تصفية المحتوى لحمايتك.",
+  "labels": [
+    "سلامة الإنترنت",
+    "احترام الآخرين",
+    "البصمة الرقمية",
+    "حماية الأطفال",
+    "التواصل الإلكتروني"
+  ],
+  "created_at": "2026-06-20T15:10:53Z",
+  "updated_at": "2026-06-20T15:10:53Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-4beaad2f",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "سياسات حماية الأطفال من المحتوى غير القانوني",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل من المحتوى الضار",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "or cancellation of billing privileges. Work with internal functions such as customer care, fraud prevention and security to ensure that the business can submit reports of suspected illegal content directly to law enforcement and hotlines. Ideally, this should be done in a way that does not expose front-line staff to the content or revictimize the affected child/children and young people. To address situations where staff may be exposed to abusive material, implement a policy or programme to support staff resiliency, safety and well-being. Use terms of service and conditions to prohibit illegal content and behaviour, highlighting that: • harmful content, including suspected grooming of children with the intention of either contact or non-contact abuse, will not be tolerated; • illegal content, including the uploading or further dissemination of CSAM, will not be tolerated; • the company will refer to and collaborate fully with law enforcement investigations in the event that illegal content, or any breach of the child protection policy, is reported or Document the company’s practices for handling CSAM, beginning with monitoring and extending to the final transfer and destruction of the content. Include a list of all personnel responsible for handling the material in the documentation. Adopt policies regarding ownership of user-generated content, including the option to remove user-created content at the user’s request. Remove content that violates the provider’s policies and alert the user who has posted it about the violation. Guidelines for industry on Child Online Protection Developing standard Indicate that a user’s failure to comply",
+  "text_simplified": "يجب على الشركات التعاون مع الجهات المختصة لحماية الأطفال من المحتوى الضار عبر الإنترنت. يتطلب ذلك وضع سياسات واضحة لمنع المحتوى غير القانوني، مثل استغلال الأطفال، والإبلاغ عنه للسلطات. كما ينبغي حماية الموظفين من التعرض المباشر لهذا المحتوى ودعم صحتهم النفسية. وأخيرًا، يجب إزالة المحتوى المخالف فورًا وإبلاغ المستخدمين بذلك.",
+  "labels": [
+    "حماية الطفل",
+    "محتوى ضار",
+    "استغلال الأطفال",
+    "سياسات رقمية",
+    "سلامة الموظفين"
+  ],
+  "created_at": "2026-06-20T15:00:04Z",
+  "updated_at": "2026-06-20T15:00:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

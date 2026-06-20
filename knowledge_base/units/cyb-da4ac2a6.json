@@ -1,0 +1,29 @@
+{
+  "id": "cyb-da4ac2a6",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إجراءات حماية الأطفال من المحتوى الجنسي عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال من المحتوى الجنسي",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "to appropriate staff. The company might also set up special teams to handle user appeals for instances when reports may have been filed in error. Have processes in place to immediately remove or block access to CSAM, including notice and takedown processes to remove illegal content as soon as it is identified. Ensure that third parties with whom the company has a contractual relationship have similarly robust notice and takedown processes in place. If legislation allows, the material can be kept for evidence of a crime in case of investigations. Develop technical systems that can detect known illegal content and can prevent it from being uploaded, including to private groups, or flag it for immediate review by the company’s safety team. Take all relevant measures to safeguard services from being misused to host, disseminate or create CSAM. Where possible, create proactive technical measures to analyse the objects and metadata linked to a profile to detect criminal behaviour or patterns, and take appropriate action. If the application or service allows customers to upload and store photographs on servers that are owned or operated by the company, have processes and tools in place to identify images that are most likely to contain CSAM. Consider proactive identification techniques such as scanning technology or human Guidelines for industry on Child Online Protection Creating a safer and Service providers offering user-generated content and age-appropriate online connecting users can help create a safer, more enjoyable digital environment environment for children of all ages by taking the",
+  "text_simplified": "يجب على الشركات وضع إجراءات فورية لإزالة أو حظر المحتوى الذي يصور اعتداءات جنسية على الأطفال (CSAM) فور اكتشافه. كما ينبغي تطوير أنظمة تقنية لكشف هذا المحتوى ومنع رفعه، واتخاذ تدابير لحماية الخدمات من إساءة استخدامها لنشر أو تخزين هذا المحتوى.",
+  "labels": [
+    "حماية الأطفال",
+    "محتوى جنسي",
+    "إجراءات تقنية",
+    "سلامة رقمية",
+    "إزالة محتوى"
+  ],
+  "created_at": "2026-06-20T15:00:13Z",
+  "updated_at": "2026-06-20T15:00:13Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

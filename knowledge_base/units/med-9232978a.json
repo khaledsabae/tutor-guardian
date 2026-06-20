@@ -1,0 +1,29 @@
+{
+  "id": "med-9232978a",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "قائمة خبراء الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تعاون دولي في الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Belmopan, Belize Ms Keren Corbett Project Leader, Mental Health Development Centre, National Institute for Mental Health, Reddich, Worcestershire, United Kingdom Dr Myrielle M. Cruz Psychiatrist, National Mental Health Program, Department of Health, Santa Cruz, Manila, Dr Paolo Delvecchio Consumer Advocate, United States Department of Health and Human Services, Washington, DC, USA Professor Theo A.H. Doreleijers Chair, European Association of Forensic Child and Adolescent Psychiatry, Psychology and Other Involved Professions, and VU University Medical Center, Paedological Institute, Duivendrecht, The Dr Liknapichitkul Dusit Director, Institute of Child and Adolescent Mental Health, Department of Mental Health Pubic Health Minister, Thailand Dr John Fayyad Child & Adolescent Psychiatry, Department of Psychiatry and Psychology, St. George Hospital, Beirut, Lebanon Dr Howard Goldman Program Director, National Association of State Mental Health, Research Institute, Virginia, USA Dr Katherine Grimes Assistant Professor of Psychiatry, Department of Psychiatry, Harvard Medical School, USA Dr Pierre Klauser Specialist in Paediatrics, Swiss Medical Association, Geneva, Switzerland Dr Krista Kutash Associate Professor and Deputy Director, Research and Training Center for Children’s Mental Health, Louis de la Parte Florida Mental Health Institute, University of South Florida, Tampa, USA Dr Stan Kutcher Associate Dean, Clinical Research Centre, Dalhousie University, Halifax, Nova Scotia, Canada Dr Pirkko Lahti Executive Director, Finnish Association for Mental Health, Helsinki, Finland Dr Crick Lund Consultant, Cape Town, South Africa Dr Ma Hong Deputy Director, National Center for Mental Health, China-CDC, Haidian District, Beijing, China Dr Douma Djibo Maïga Psychiatrist, Coordinator of Mental Health Programme, Ministry of Public Health, Niamey, Dr Joest",
+  "text_simplified": "هذا النص يحتوي على قائمة بأسماء وخبراء في مجال الصحة النفسية للأطفال والمراهقين من دول مختلفة. يهدف إلى توثيق التعاون الدولي في تطوير برامج الصحة النفسية.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "تعاون دولي",
+    "خبراء"
+  ],
+  "created_at": "2026-06-20T14:42:25Z",
+  "updated_at": "2026-06-20T14:42:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-cbd278a6",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "فوائد شبكات التواصل للأطفال ذوي صعوبات التعلم",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "استخدام وسائل التواصل الاجتماعي للأطفال ذوي صعوبات التعلم",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Case Study: The Bright Side of Social Networks for Children with Learning Difficulties The positive benefits from Defined/guided social inter- Identity experimentation: A nologies (or new applications of social networks for children action: While online communi- child can create an online iden- existing technologies), you will with learning difficulties can be cation technologies increasingly tity that is different from what be better equipped to adapt to summarised as follows:22 allow for freeform interaction, he or she normally presents. For future technology. This will help social interaction can be nar- example, a kid who really likes you quickly assess the risks of Practicing social skills: you rowed (for purposes of scope comics can be the “king of all communicating through these get a chance to meet all kinds of and safety). Some examples of superhero knowledge” online new methods and adapt your people online. Because socializ- focused interaction online in- without being teased about it behaviour to maintain control ing via technology isn’t as imme- clude buddy/friend lists, moder- at school. Such a child can also over your own safety. diate as face-to-face interactions ated themed chat rooms or mes- find a peer group online that or telephone conversations, you sage boards and, for younger appreciates this aspect of him have a little more time to think children, the opportunity for or her.” about a situation before you parents to help a child by typing respond. This is an opportu- Frequent use of",
+  "text_simplified": "يمكن لشبكات التواصل الاجتماعي أن تفيد الأطفال ذوي صعوبات التعلم إذا تم استخدامها بطريقة موجهة وآمنة. فهي تساعدهم على ممارسة المهارات الاجتماعية وتجربة هويات جديدة دون خوف من السخرية. كما تتيح للأهل فرصة مساعدة أطفالهم في التفاعل عبر الإنترنت. فهم هذه الفوائد يمكن الأهل من تقييم المخاطر والتكيف مع التقنيات الحديثة.",
+  "labels": [
+    "صعوبات تعلم",
+    "مهارات اجتماعية",
+    "هوية رقمية",
+    "تواصل آمن",
+    "إشراف أبوي"
+  ],
+  "created_at": "2026-06-20T15:09:08Z",
+  "updated_at": "2026-06-20T15:09:08Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

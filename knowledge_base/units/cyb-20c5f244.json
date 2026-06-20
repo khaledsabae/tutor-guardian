@@ -1,0 +1,29 @@
+{
+  "id": "cyb-20c5f244",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "تعليم الأطفال السلامة في التجارة الإلكترونية",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "السلامة الرقمية والتجارة الإلكترونية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "making the programme guide to find Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop those folders you wanted come from a reputable source e.g. age verification systems linked to and, in particular, how to with- to share and remember a bank or credit card company. their purchasing procedures, but draw from the purchase; also that sharing files protected They will ask you to enter a lot of this is still a very new and limited find out about the protection by copyright is a crime. personal information e.g. bank ac- technology, however it is a grow- and management of personal count details, passwords, date of ing, practice. Buying age restricted data and payment security; and Online commerce birth and so on, which they will products online, and telling lies compare prices, looking for then misuse. about your age in order to do so, the same item on other sites; You can purchase products online means you could be committing 2. prepaid credit cards, or ones or by using a mobile phone. Pur- An additional complication with a criminal offence and so could that can be topped up, come chases can be made by credit card online commerce concerns the the vendor. You could forfeit the with spending limits and can or, in the case of mobile phones, sale of products or services which goods and you could end up with help avoid unpleasant sur- by debiting the credit on the are age restricted in",
+  "text_simplified": "يجب على الأهل تعليم أطفالهم كيفية التعامل الآمن مع التجارة الإلكترونية، مثل عدم مشاركة المعلومات الشخصية والمصرفية عبر الإنترنت. كما ينبغي توعيتهم بأن شراء المنتجات المحددة بعمر معين مع الكذب بشأن العمر قد يكون جريمة، وأن مشاركة الملفات المحمية بحقوق الطبع هي أيضاً جريمة. يمكن استخدام بطاقات الدفع المسبق للحد من المخاطر المالية.",
+  "labels": [
+    "السلامة الرقمية",
+    "التجارة الإلكترونية",
+    "حماية البيانات",
+    "الشراء عبر الإنترنت",
+    "حقوق الطبع"
+  ],
+  "created_at": "2026-06-20T15:12:19Z",
+  "updated_at": "2026-06-20T15:12:19Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-0b7a8771",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات لحماية الأطفال في الفضاء الرقمي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية للأطفال",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "the same classifications. Develop child-friendly and age-appropriate products for children and young people that are safe by design and complemented by a solid age-verification system. To help parents and others decide whether content is age- appropriate for children and young people, build applications and services in all media to align with content rating systems. Adopt appropriate age-verification methods to prevent children and young people from accessing age-sensitive content, sites, products or interactive services. Provide advice and reminders about the nature and age- classification of the content they are using. A company that offers audiovisual and multimedia services might want to provide a personal identification number to users who seek to access content that can be harmful for children and Ensure pricing transparency for products and services, and information collected about users. Ensure that data collection policies comply with relevant laws concerning children and young people’s privacy, including whether parental consent is required before commercial enterprises can collect personal information from or about a child. Ensure that advertising or commercial communication is clearly recognizable as such. Supervise content made available online and adapt it to the user groups who are likely to access it by, for example, establishing appropriate policies for online advertising to children and young people. If the content offering supports an interactive element, such as commenting, online forums, social networks, gaming platforms, chat rooms or message boards, communicate a clear set of “house rules” in customer-friendly language within the terms of service and user guidelines. Decide what level",
+  "text_simplified": "يجب على الشركات تصميم منتجات رقمية آمنة ومناسبة للأطفال حسب أعمارهم، مع تطبيق أنظمة تحقق من العمر لمنع وصولهم لمحتوى ضار. كما ينبغي توفير إرشادات واضحة للأهل حول تصنيف المحتوى، وضمان الشفافية في جمع البيانات والإعلانات الموجهة للأطفال.",
+  "labels": [
+    "حماية الطفل",
+    "تصنيف المحتوى",
+    "التحقق من العمر",
+    "الخصوصية",
+    "إعلانات آمنة"
+  ],
+  "created_at": "2026-06-20T14:59:37Z",
+  "updated_at": "2026-06-20T14:59:37Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

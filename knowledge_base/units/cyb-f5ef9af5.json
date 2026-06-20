@@ -1,0 +1,29 @@
+{
+  "id": "cyb-f5ef9af5",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "المعرفة الرقمية والمرونة والاستمالة عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "and dignity through the responsible use of technology.40 36 Jeremy Greenberg, “Dangerous Games: Connected Toys, COPPA, and Bad Security”, Georgetown Law Technology Review, 2017. 37 Anna Costanza Baldry et al. “Cyberbullying and Cybervictimization versus Parental Supervision, Monitoring and Control of Adolescents’ Online Activities”, Children and Youth Services Review, 2019. 38 The Luxembourg Guidelines, 2016 and the UNICEF Global Kids Online report, 2019 (as above). 39 UNICEF Global Kids Online report, 2019 (as above). 40 Council of Europe, “Digital Citizenship and Digital Citizenship Education”. Guidelines for industry on Child Online Protection Digital literacy Digital literacy means having the skills a person needs to live, learn and work in a society where communication and access to information is increasingly through digital technologies like Internet platforms, social media and mobile devices.41 It includes clear communication, technical skills and critical thinking. Digital resilience This term describes a child’s capacity to cope emotionally with harm encountered online. It also refers to the emotional intelligence needed to understand when a child is at risk online, know how to seek help, learn from experience and recover when things go wrong.42 Describes all persons who hold a position in a school management or governance structure. Grooming/online grooming Grooming/online grooming, as defined in the Luxembourg Guidelines, refers to “the process of establishing/building a relationship with a child either in person or through the use of the Internet or other digital technologies to facilitate either online or offline sexual contact with that person”. It is the criminal activity of becoming",
+  "text_simplified": "المعرفة الرقمية تعني امتلاك المهارات اللازمة للعيش والتعلم والعمل في مجتمع يعتمد على التكنولوجيا الرقمية مثل الإنترنت ووسائل التواصل الاجتماعي. المرونة الرقمية تصف قدرة الطفل على التعامل عاطفياً مع الأذى الذي قد يواجهه عبر الإنترنت، وتشمل الذكاء العاطفي لطلب المساعدة والتعلم من التجارب. الاستمالة أو الاستمالة عبر الإنترنت هي عملية بناء علاقة مع الطفل لتسهيل الاتصال الجنسي، وهي نشاط إجرامي.",
+  "labels": [
+    "معرفة رقمية",
+    "مرونة رقمية",
+    "استمالة أطفال",
+    "حماية أطفال",
+    "توعية رقمية"
+  ],
+  "created_at": "2026-06-20T15:01:56Z",
+  "updated_at": "2026-06-20T15:01:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

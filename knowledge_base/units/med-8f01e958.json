@@ -1,0 +1,29 @@
+{
+  "id": "med-8f01e958",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "التكاليف الاجتماعية للاضطرابات النفسية لدى الأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات نفسية",
+  "intervention_type": "علاجي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "children and adolescents significant costs. Both the children and adolescents and their parents/families are with mental disorders, affected. The child may miss school, not be able to work in the family business or be families and societies incur able to bring in money from other sources, because of his or her condition. The family significant costs. may incur debts as well as future lost productivity. Family members may also incur costs, as they often change or lose their jobs to stay home with their children or adolescents with mental disorders (SANE Australia, 1992). Knapp, Scott & Davies (1999) have shown that children with depression and/or conduct disorder can generate high costs in childhood and adulthood (Knapp et al., 2002). Furthermore, children with co-morbid depression and conduct disorder have higher adult service use and costs than the general population or those with depression alone (Knapp et al., 2002). A related finding is that the costs of antisocial behaviour incurred by individuals from childhood to adulthood were 10 times greater for those who were seriously antisocial in childhood than for those who were not (Scott et al., 2001). There is mounting scientific evidence to demonstrate the cost effectiveness of mental health prevention and treatment interventions (Keating & Hertzman, 1999; Durlak, 1998). For example, studies have shown that a family-based social work intervention for Emerging scientific evidence children and adolescents who deliberately poisoned themselves (Byford et al., 1999), shows that mental health and a diversion programme for children with conduct disorder (Greenwood et",
+  "text_simplified": "الاضطرابات النفسية لدى الأطفال والمراهقين تسبب تكاليف كبيرة للأسر والمجتمع. قد يتغيب الطفل عن المدرسة أو لا يستطيع العمل، مما يؤدي إلى ديون وفقدان الإنتاجية. كما أن التدخلات الأسرية والعلاجية المبكرة فعالة من حيث التكلفة وتقلل من الآثار السلبية طويلة المدى.",
+  "labels": [
+    "اضطرابات نفسية",
+    "تكاليف اجتماعية",
+    "أطفال ومراهقون",
+    "تدخل مبكر",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T14:45:11Z",
+  "updated_at": "2026-06-20T14:45:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

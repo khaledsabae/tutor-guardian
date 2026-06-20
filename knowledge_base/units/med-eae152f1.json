@@ -1,0 +1,29 @@
+{
+  "id": "med-eae152f1",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "سياسات الصحة النفسية للأطفال والمراهقين في المدارس",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات سلوكية ونفسية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "treatment services; the ministry of education may have the major responsibility for developing mental health programmes in schools; academic institutions can assist with developing training programmes; and general health workers can assist in defining the responsibilities for child and adolescent mental health in primary care. However, ideally, all stakeholders should participate in planning so as to take advantage of the unique skills and experiences of each sector. 2.8Examples of policies Boxes 12 and 13 present summarized child and adolescent mental health policies for two fictitious countries, one with a low level of resources for child and adolescent mental health, and the other with a medium level of resources. It should be noted that these examples are provided for heuristic purposes only, and should not be regarded as recommendations. These examples will be developed in the three subsequent sections of this module. Box 12. Example of a child and adolescent mental health policy for a country with a low level of resources (population = 10 million)* Situation analysis Interviews with health workers and community leaders concluded that: > The main child and adolescent mental health challenges were disruptive behaviour disorders (especially attention deficit hyperactivity disorder and conduct disorder), effects of exposure to violence, and intellectual disability resulting in poor scholastic > The only services available were at two university clinics and in the private sector, to which only 10% of the population had access due to economic and transport > The ratios of psychiatrists, clinical psychologists and psychiatric nurses per 100,000",
+  "text_simplified": "يجب أن تتعاون وزارة التربية والمؤسسات الأكاديمية والعاملون الصحيون لوضع برامج للصحة النفسية في المدارس. التحديات الرئيسية للأطفال والمراهقين تشمل اضطرابات السلوك وفرط الحركة وصعوبات التعلم. الخدمات المتاحة محدودة جداً وتصل إلى 10% فقط من السكان. من المهم وضع سياسات وطنية بمشاركة جميع الأطراف.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات تعليمية",
+    "اضطرابات سلوكية",
+    "تعاون مؤسسي",
+    "خدمات محدودة"
+  ],
+  "created_at": "2026-06-20T14:49:36Z",
+  "updated_at": "2026-06-20T14:49:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

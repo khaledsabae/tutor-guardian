@@ -1,0 +1,29 @@
+{
+  "id": "cyb-2e1d1d27",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "تصميم آمن ومناسب للأطفال في الفضاء الرقمي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "السلامة الرقمية للأطفال",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "design and age-appropriate for their broad range of users. Additional approaches include offering tools to develop appropriate age-verification systems that respects children’s rights to privacy and access or place restrictions on children and young people’s access to age-inappropriate content, or restrict the people with whom children might have contact or the times at which they may go online. Most importantly, “safety by design1”6 frameworks including privacy need to be incorporated into innovation and product design processes. Children’s safety and responsible use of technology has to be carefully considered and not be an afterthought. Some programmes allow parents to monitor the texts and other communications that their children and young people send and receive. If programmes of this type are to be used, it is important that this is discussed openly with the child, otherwise such conduct can be perceived as “spying\" and may undermine trust within the family. Acceptable-use policies are one way that companies can establish what type of behaviour by both adults and children is encouraged, what types of activities are not acceptable, and the consequences of any breaches to these policies. Clear and transparent reporting mechanisms should be made available to users who have concerns about content and behaviour. Furthermore, reporting needs to be followed up appropriately, with timely provision of information about the status of the report. Although companies can vary their implementation of follow-up mechanisms on a case-by-case basis, it is essential to set a clear time frame for responses, communicate the decision made regarding",
+  "text_simplified": "يجب تصميم التطبيقات والمواقع الإلكترونية بطريقة تناسب جميع الأعمار وتحترم خصوصية الأطفال. من المهم أن تكون السلامة الرقمية جزءًا أساسيًا من تصميم المنتجات، وليس فكرة لاحقة. يمكن للوالدين مراقبة تواصل أطفالهم بشفافية بعد مناقشة الأمر معهم، لتجنب كسر الثقة. كما ينبغي وضع سياسات استخدام واضحة وآليات للإبلاغ عن المحتوى غير المناسب مع متابعة فعالة.",
+  "labels": [
+    "سلامة رقمية",
+    "خصوصية الأطفال",
+    "مراقبة الوالدين",
+    "سياسات الاستخدام",
+    "حماية المحتوى"
+  ],
+  "created_at": "2026-06-20T14:56:15Z",
+  "updated_at": "2026-06-20T14:56:15Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

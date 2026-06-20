@@ -1,0 +1,29 @@
+{
+  "id": "med-d9e5e796",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "مصفوفة الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "تقييم خدمات الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Staff/patient ratio Default rate Staff/population ratio Minimum standards of care Treatment protocols and Patterns of service use guidelines Audit procedures Pathways to care and Targeting of special groups (2) Local level Availability of medication Admission rate Outcomes aggregated at (catchment area) Community/hospital ratio (staff) Average length of stay local level Hospital and community Bed occupancy rate Physical morbidity services Community/hospital ratio Suicide rate Local service budget for child (utilization) and adolescent mental health Default rate Staff numbers and mix Readmission rate Working relationships between Subjective quality of treatments services (intersectoral (3) Patient Level Assessment of individual needs Continuity of care Disability Content of treatment Continuity of clinicians Impact on caregivers Demands made by patients and Extent of involvement of parents Needs families and schools Percentage of days children Information for patients/care- Frequency of appointments and adolescents are absent givers Pattern of care process for from school Staff skills and knowledge individual patients Percentage of time parents Quality of life Satisfaction with services Symptom reduction Table 4. The mental health matrix, with particular reference to child and adolescent mental health services Source: Thornicroft & Tansella, 1999; some contents of the table have drawn on Lund, 2002. *Input refers to the resources invested in a system. **Process refers to the way in which service items are delivered, including the service items themselves. *** Outcome refers to the changes in functioning, morbidity and mortality among those to whom the service is delivered (Thornicroft et al., 1999). Key indicators for change need to be",
+  "text_simplified": "يشرح النص مكونات نظام تقييم خدمات الصحة النفسية للأطفال والمراهقين. يشمل ذلك مؤشرات على مستوى النظام مثل نسب الموظفين إلى المرضى ومعدلات الإشغال، ومؤشرات على مستوى المريض مثل استمرارية الرعاية وتأثيرها على الأسرة. الهدف هو تحسين جودة الخدمات من خلال قياس المدخلات والعمليات والنتائج.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال ومراهقين",
+    "مؤشرات الجودة",
+    "خدمات الرعاية",
+    "تقييم"
+  ],
+  "created_at": "2026-06-20T14:49:14Z",
+  "updated_at": "2026-06-20T14:49:14Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

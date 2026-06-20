@@ -1,0 +1,29 @@
+{
+  "id": "cyb-ef8daa79",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات الأمان الإلكتروني للأطفال والشباب",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "أمان إلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "a complex e-mail not know or programmes you or you think is being unjustly address, possibly with both do not know the possible ef- charged for, then your best numbers and letters (e.g. mrx- fects of, they could be a Key move is to leave it alone. You 3wec97@... . com) so it be- Logger (capable of recording have the right to criticise and comes more difficult to guess all the keys being punched by spammers or unknown on the keyboard, enabling people who might want to them to find out passwords, Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Peer to Peer (P2P) software en- tion, when using other people’s errors that are listed below; out how you can detect ables one to share and exchange work, like articles or dissertations, 4. copyright protected mate- fake files and only go to one’s files directly with other remember to quote the sources rial is generally indicated by sources you know are Internet users, without any extra appropriately. If you fail to do so standard wording, such as trustworthy: ask your connection costs. Music, films, it will be classified as plagiarism “all rights reserved” or other friends to tell you which videos, and games are among the and that can cause you a great similar phrasings; in cases sources to use and which materials that are most sought deal of trouble. where this is not evident, it is to avoid; after and downloaded by young-",
+  "text_simplified": "يجب على الأطفال والشباب توخي الحذر عند التعامل مع البريد الإلكتروني المشبوه الذي يحتوي على أرقام وحروف غريبة، فقد يكون أداة لتسجيل ضغطات لوحة المفاتيح وسرقة كلمات المرور. من الأفضل تجاهل هذه الرسائل وعدم الرد عليها. كما ينبغي احترام حقوق الملكية الفكرية عند استخدام أعمال الآخرين، والاستشهاد بالمصادر بشكل صحيح لتجنب مشكلة الانتحال الأدبي. يُنصح بسؤال الأصدقاء عن المصادر الموثوقة لتجنب الملفات المزيفة.",
+  "labels": [
+    "أمان إلكتروني",
+    "بريد إلكتروني مشبوه",
+    "ملكية فكرية",
+    "انتحال أدبي",
+    "مصادر موثوقة"
+  ],
+  "created_at": "2026-06-20T15:12:06Z",
+  "updated_at": "2026-06-20T15:12:06Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

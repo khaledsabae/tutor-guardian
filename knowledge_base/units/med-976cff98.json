@@ -1,0 +1,29 @@
+{
+  "id": "med-976cff98",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "دعم المعلمين من قطاع الصحة لبرامج تعزيز الصحة المدرسية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تعزيز الصحة المدرسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "within the health sector for educators who are implementing school-based health promotion programmes. Support for each of the educators (possibly 50) who are involved in implementing school-based health promotion programmes. Number (percentage) of educators involved in implementing school-based health promotion programmes who receive support from the health sector. >Identify a group of health professionals who are motivated to work in collaboration with educators; >Give the health professionals the necessary training to carry out this function; >Provide the educators with the necessary information about the health professionals and what they can contribute to their work; >Implement a system that links the educators with the health professionals; and >Monitor the implementation of the new system * This example is included for heuristic purposes only, and is not a recommendation for action. The target, indicator and activities are provided only for the last strategy for each area of action. 3.2Step 2: Set indicators and targets Each strategy should be accompanied by one or more targets, which represent the desired outcomes of the strategy. The example in Box 17 indicates that in the area of Each strategy should be intersectoral collaboration, the proposed strategy was to provide support from within accompanied by one or more the health sector for educators who are implementing school-based health promotion targets, which represent the desired outcomes of the programmes. A target for this strategy might be that support is provided to 50% of all educators in a defined geographical area by an individual from the health sector who",
+  "text_simplified": "هذا النص يتناول كيفية دعم المعلمين من قبل قطاع الصحة لتنفيذ برامج تعزيز الصحة في المدارس. يقترح تدريب مهنيين صحيين للتعاون مع المعلمين وتزويدهم بالمعلومات اللازمة. كما يدعو إلى إنشاء نظام يربط المعلمين بالمهنيين الصحيين ومراقبة تنفيذه. الهدف هو تقديم الدعم لنسبة محددة من المعلمين في منطقة جغرافية معينة.",
+  "labels": [
+    "صحة مدرسية",
+    "تعاون بين القطاعات",
+    "دعم المعلمين",
+    "برامج تعزيز الصحة",
+    "تدريب مهني صحي"
+  ],
+  "created_at": "2026-06-20T14:50:50Z",
+  "updated_at": "2026-06-20T14:50:50Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

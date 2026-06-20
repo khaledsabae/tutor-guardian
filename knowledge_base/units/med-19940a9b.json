@@ -1,0 +1,29 @@
+{
+  "id": "med-19940a9b",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "مخاطر مضادات الاكتئاب والتحفيز الدماغي للاكتئاب",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "اكتئاب وأفكار انتحارية",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "information, visit www.nimh.nih.gov/medications. Note: In some cases, children, teenagers, and young adults under 25 years may experience an increase in suicidal thoughts or behavior when taking antidepressants, especially in the first few weeks after starting or when the dose is changed. The FDA advises that patients of all ages taking antidepressants be watched closely, especially during the first few weeks of treatment. Information about medication changes frequently. You can learn more about specific medications like esketamine, including the latest approvals, side effects, warnings, and patient information, on the FDA website at www.fda.gov/drugsatfda. Brain stimulation therapy Brain stimulation therapy is an option when other depression treatments have not worked. The therapy involves activating or inhibiting the brain with electricity or magnetic waves. Although brain stimulation therapy is less frequently used than psychotherapy and medication, it can play an important role in treating depression in people who have not responded to other treatments. The therapy generally is used only after a person has tried psychotherapy and medication, and those treatments usually continue. Brain stimulation therapy is sometimes used as an earlier treatment option when severe depression has become life-threatening, such as when a person has stopped eating or drinking or is at a high risk of suicide. The FDA has approved several types of brain stimulation therapy. The most used are electroconvulsive therapy (ECT) and repetitive transcranial magnetic stimulation (rTMS). Other brain stimulation therapies are newer and, in some cases, still considered experimental. You can learn more about these therapies at www.nimh.nih.gov/braintherapies.",
+  "text_simplified": "قد تزيد مضادات الاكتئاب من الأفكار الانتحارية لدى الأطفال والمراهقين تحت 25 عامًا، خاصة في الأسابيع الأولى من العلاج. يجب مراقبة المريض عن كثب خلال هذه الفترة. العلاج بالتحفيز الدماغي يُستخدم عندما لا تفيد العلاجات الأخرى، ويشمل تقنيات مثل الصدمات الكهربائية والتحفيز المغناطيسي. يُستخدم هذا العلاج في الحالات الشديدة التي تهدد الحياة.",
+  "labels": [
+    "مضادات اكتئاب",
+    "أفكار انتحارية",
+    "تحفيز دماغي",
+    "مراقبة دوائية",
+    "علاج نفسي"
+  ],
+  "created_at": "2026-06-20T14:31:33Z",
+  "updated_at": "2026-06-20T14:31:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

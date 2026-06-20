@@ -1,0 +1,29 @@
+{
+  "id": "cyb-2e39ac93",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات السلامة الرقمية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "13-15",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "anyone on the make a note about where you Internet your name, address, got it from. phone number or any other personal details. 2. Don’t share your username or password with anyone. Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop Age group 13 year old Harmful and illegal grammes, forums, chat rooms and, more generally, through the and above content many channels involved in social Huge number of young people Curiosity, interests, and a desire networking. in this age group use social to learn new things and explore network sites, online games new facets of knowledge: the Therefore: and Instant Messenger applica- Internet is a great tool to satisfy 1. before starting a search you tions. Going online is not just such needs. But the Internet is an should have a clear idea of something they do occasionally open world in which everyone is what you are looking for; or for fun. For many it is an free to circulate news or almost 2. in order to narrow things integral part of their daily lives. anything else. It contains an down you can use advanced It’s how they stay in touch with infinite amount of information, search functions or direc- and communicate with their so vast in scope that it is easy to tories, that is, the thematic friends, how they organize large get lost or run into untruths and categories that most search parts of their social lives and material not appropriate to",
+  "text_simplified": "يجب على الأطفال والمراهقين عدم مشاركة معلوماتهم الشخصية مثل الاسم والعنوان ورقم الهاتف عبر الإنترنت. كما ينبغي عليهم عدم مشاركة اسم المستخدم أو كلمة المرور مع أي شخص. من المهم أن تكون لديهم فكرة واضحة عما يبحثون عنه قبل البدء في التصفح، واستخدام وظائف البحث المتقدمة لتضييق النتائج.",
+  "labels": [
+    "سلامة الإنترنت",
+    "معلومات شخصية",
+    "خصوصية",
+    "مراهقون",
+    "توعية رقمية"
+  ],
+  "created_at": "2026-06-20T15:11:01Z",
+  "updated_at": "2026-06-20T15:11:01Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-0cea8b97",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات للأطفال للتعامل مع التنمر الإلكتروني",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "تنمر إلكتروني",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "IM systems, such as ICQ, you such as: one else’s account and use AOL Messenger, Yahoo Messen- 1. do not circulate your personal 2 many games allow for the it for his/her offensive ger! Bullies know which are the data thoughtlessly, as this exclusion of undesirable behaviour and therefore most popular among youngsters could make you easily identifi- (or unwanted users); letting the blame fall on and make use of them for their able and more prone to acts of bullying and intimidation 2 when chat rooms are the unfortunate person own purposes such as flaming, or by others your own age; monitored, it is possible whose e-mail account was provoking an online fight. Con- to save the offending text wrongfully used; versations or fights that break out 2. once information is posted on- online can, at times, have after- from the chat and report it 2 most e-mail programmes line it is out of your control effects that drag on at school or to the monitor; offer filters to block un- and available to anyone and other places offline. open to any sort of use. You 2 abuses can be reported to wanted incoming e-mails. need to be completely clear service providers or, in the 4. Many instant messaging In all cases remember that it on this concept; what may case of abuse via mobile programmes offer the pos- is important to tell someone phones, the report can be about what is happening if you Guidelines for Children and",
+  "text_simplified": "يجب على الأطفال عدم مشاركة معلوماتهم الشخصية عبر الإنترنت، لأن ذلك قد يجعلهم عرضة للتنمر الإلكتروني. كما ينبغي الإبلاغ عن أي إساءة أو سلوك مسيء لمشرفي الدردشة أو لمزودي الخدمة. من المهم إخبار شخص بالغ موثوق به عند التعرض لأي مضايقة.",
+  "labels": [
+    "سلامة رقمية",
+    "تنمر إلكتروني",
+    "خصوصية",
+    "إبلاغ",
+    "أطفال"
+  ],
+  "created_at": "2026-06-20T15:11:39Z",
+  "updated_at": "2026-06-20T15:11:39Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

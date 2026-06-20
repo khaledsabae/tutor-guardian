@@ -1,0 +1,29 @@
+{
+  "id": "med-b003330d",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "سياسات وخطط الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "سياسات الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "Health > Child and Adolescent Mental Health Policies and Plans Legislation and Hand plans ealth Human Policy, Planning and resources and plans and budgeting for training programmes service delivery CInfoormation ntext access and use Quality of psychotropic improvement still to be developed The following additional modules are planned for inclusion in the final guidance > Mental Health Information Systems > Human Resources and Training for Mental Health > Research and Evaluation of Mental Health Policy and Services > Workplace Mental Health Policies and Programmes For whom is the guidance package intended? The modules should be of interest to: - policy-makers and health planners; - government departments at federal, state/regional and local levels; - mental health professionals; - groups representing people with mental disorders; - representatives or associations of families and carers of people with mental - advocacy organizations representing the interests of people with mental disorders, and their relatives and families; - nongovernmental organizations involved or interested in the provision of mental health services. How to use the modules - They can be used individually or as a package. They are cross-referenced with each other for ease of use. Country users may wish to go through each module systematically or may use a specific module when the emphasis is on a particular area of mental health. For example, those wishing to address the issue of mental health legislation may find the module entitled Mental Health Legislation and Human Rights useful for this purpose. - They can serve as a training",
+  "text_simplified": "هذا الدليل يهدف إلى مساعدة المسؤولين في وضع سياسات وخطط للصحة النفسية للأطفال والمراهقين. يشمل مواضيع مثل التشريعات، الموارد البشرية، والتدريب. يمكن استخدام الوحدات بشكل فردي أو كحزمة متكاملة حسب احتياجات كل دولة.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات",
+    "أطفال",
+    "مراهقون",
+    "تدريب"
+  ],
+  "created_at": "2026-06-20T14:42:50Z",
+  "updated_at": "2026-06-20T14:42:50Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-646fc4d4",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "الصحة النفسية للأطفال والمراهقين وعوامل الخطر",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية للأطفال والمراهقين",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "and evaluating mental health policies, plans and programmes for children and adolescents of the unique challenges of working on behalf of these age groups. 3. Share workable solutions to common problems experienced by many people. 4. Identify other resources that offer additional tools or information. The other modules in this series do not focus on specific age groups, but have relevance for children and adolescents. This module focuses specifically on children and adolescents, and highlights the areas pertaining to these age groups that do not receive sufficient attention in the other modules. Target audience 1. Policy-makers and public health professionals in ministries of health or health departments of countries and large administrative divisions of countries (regions, states or provinces). 2. International, regional and national policy and advocacy organizations such as consumer groups, caregiver groups, WHO regions and professional 3. Professionals in child and adolescent mental health 1. Context of child and adolescent mental health 1.1 Introduction1 Children and adolescents are thinking and feeling beings with a degree of mental complexity that is only now being recognized. While it has long been accepted that physical health can be affected by traumas, genetic disturbances, toxins and illness, it has only recently been understood that these same stressors can affect mental health, and have long-lasting repercussions. When risk factors and vulnerabilities outweigh or overcome factors that are protective or that increase resilience, mental disorder can result. Child and adolescent mental disorders manifest themselves in many domains and in different ways. It is now",
+  "text_simplified": "هذا النص يتناول الصحة النفسية للأطفال والمراهقين، ويشرح أنهم كائنات مفكرة ومشعرة تتأثر صحتهم النفسية بالصدمات والعوامل الوراثية والسموم والأمراض. عندما تفوق عوامل الخطر عوامل الحماية، قد تنشأ الاضطرابات النفسية التي تظهر بطرق مختلفة. الوحدة تركز على احتياجات هذه الفئات العمرية التي لم تحظ باهتمام كاف في الوحدات الأخرى.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "اضطرابات نفسية",
+    "عوامل خطر"
+  ],
+  "created_at": "2026-06-20T14:43:47Z",
+  "updated_at": "2026-06-20T14:43:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

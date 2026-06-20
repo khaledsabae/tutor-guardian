@@ -1,0 +1,29 @@
+{
+  "id": "med-673ef23b",
+  "domain": "medical",
+  "source_file": "NIMH_Depression.pdf",
+  "title": "علاج الاكتئاب بالعلاج النفسي والأدوية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اكتئاب",
+  "intervention_type": "علاجي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Depression",
+  "text_original": "with depression by teaching them new ways of thinking and behaving and helping them change habits that contribute to depression. Psychotherapy occurs under the care of a licensed, trained mental health professional in one-on-one sessions or with others in a group setting. Psychotherapy can be effective when delivered in person or virtually via telehealth. A provider may support or supplement therapy using digital or mobile technology, like apps or other tools. Evidence-based therapies to treat depression include cognitive behavioral therapy and interpersonal therapy. Using other forms of psychotherapy, such as psychodynamic therapy, for a limited time also may help some people with depression. ● Cognitive behavioral therapy (CBT): With CBT, people learn to challenge and change unhelpful thoughts and behaviors to improve their depressive and anxious feelings. Recent advances in CBT include adding mindfulness principles and specializing the therapy to target specific symptoms like insomnia. ● Interpersonal therapy (IPT): IPT focuses on interpersonal and life events that impact mood and vice versa. IPT aims to help people improve their communication skills within relationships, form social support networks, and develop realistic expectations to better deal with crises or other issues that may be contributing to or worsening their depression. For more information on psychotherapy, including what to look for in a therapist and how to find one, visit www.nimh.nih.gov/psychotherapies. Antidepressants are medications commonly used to treat depression. They work by changing how the brain produces or uses certain chemicals involved in mood or stress. Antidepressants take time—usually 4−8 weeks—to work, and",
+  "text_simplified": "العلاج النفسي يساعد الأشخاص المصابين بالاكتئاب على تعلم طرق جديدة في التفكير والسلوك وتغيير العادات التي تساهم في الاكتئاب. يتم تحت إشراف مختص صحي نفسي مرخص، ويمكن أن يكون فردياً أو جماعياً، حضورياً أو عبر الإنترنت. تشمل العلاجات الفعالة العلاج السلوكي المعرفي والعلاج الشخصي، وقد تستخدم الأدوية المضادة للاكتئاب التي تحتاج من 4 إلى 8 أسابيع لتعمل.",
+  "labels": [
+    "اكتئاب",
+    "علاج نفسي",
+    "علاج سلوكي معرفي",
+    "علاج شخصي",
+    "أدوية مضادة للاكتئاب"
+  ],
+  "created_at": "2026-06-20T14:31:24Z",
+  "updated_at": "2026-06-20T14:31:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NIMH_Depression",
+    "source_author": ""
+  }
+}

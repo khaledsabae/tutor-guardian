@@ -1,0 +1,29 @@
+{
+  "id": "cyb-d4de1e70",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "أدوات تقنية لمكافحة استغلال الأطفال عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "استغلال جنسي للأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "that PhotoDNA can match an image that has been altered to avoid detection, PhotoDNA for Video can find child sexual exploitation content that has been edited or spliced into a video that might otherwise appear harmless. Moreover, Microsoft has recently released a new tool for identifying child predators who groom children for abuse in online chats. Project Artemis, developed in collaboration with The Meet Group, Roblox, Kik and Thorn, builds on Microsoft’s patented technology and will be made freely available via Thorn to qualified online service companies that offer a chat function. Project Artemis is a tech tool which helps to raise red flags to administrators when moderation is needed in chat rooms. With this grooming detection technique, it will be possible to identify, address and report predators attempting to lure children for sexual purposes. The IWF provides a range of services to industry members to protect their users from stumbling across CSAM. These include: • A dynamic, quality-assured URL blocking list of live material; • A hash list of known criminal content related to CSAM; • A unique keyword list of cryptic terms known to be associated with CSAM; • A list of details of domain names that are known for hosting child sexual abuse content to enable the rapid removal of domains hosting illegal content. 3.3 Creating a safer and age-appropriate online environment Very few things in life can be considered absolutely safe and risk-free all of the time. Even in cities where the movement of traffic is",
+  "text_simplified": "يشرح النص أدوات تقنية لمكافحة استغلال الأطفال عبر الإنترنت، مثل تقنية PhotoDNA للكشف عن محتوى الاستغلال الجنسي للأطفال حتى لو تم تعديله، ومشروع Artemis الذي يساعد في تحديد المتحرشين الذين يستهدفون الأطفال في غرف الدردشة. كما تقدم مؤسسة IWF خدمات مثل قوائم حظر عناوين URL والكلمات المشفرة المرتبطة بهذا المحتوى لحماية المستخدمين.",
+  "labels": [
+    "حماية الأطفال",
+    "محتوى إباحي للأطفال",
+    "أدوات تقنية",
+    "مكافحة الاستغلال",
+    "سلامة الإنترنت"
+  ],
+  "created_at": "2026-06-20T14:56:01Z",
+  "updated_at": "2026-06-20T14:56:01Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e8894b21",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "قواعد السلامة على الإنترنت للأطفال",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "السلامة على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "priority, since I know and hateful language. screen name for myself that about me will be published there are some people who 13. I will not send anything in the will not broadcast any per- by the service by default in might be online and pretend to post to anyone I’ve met online, sonal information about my my profile and will always opt be someone they’re not. without my parents’ okay. If I for the maximum degree of 10. I will be honest with my get something in the post from 2. I will keep all of my passwords privacy. parents about people I meet someone I’ve met online, I’ll private. 6. I will not share my personal online and will tell them, with- tell my parents immediately 3. I will discuss with my parents information, or that of my out always being asked, about (because that means they have all of the different pro- parents or any other family these people. I won’t answer my private information). grammes and applications I member, in any way, shape or any e-mails or instant mes- 14. I will not do anything online use on my computer and on form, online or with someone sages from anyone my parents that someone asks me to if it the internet, and talk to them I meet online. This includes, have not approved. makes me feel uncomfortable, about the sites I visit. Before but is not limited to name, ad- 11. If I see or read",
+  "text_simplified": "هذه الوحدة تهدف إلى تعليم الأطفال والمراهقين قواعد السلامة على الإنترنت. يجب على الطفل عدم مشاركة معلوماته الشخصية مع الغرباء، وإخبار والديه فورًا إذا تعرض لأي موقف مريب. كما ينبغي أن يكون صادقًا مع والديه حول الأشخاص الذين يقابلهم عبر الإنترنت، وألا يرسل صورًا أو معلومات دون موافقتهم.",
+  "labels": [
+    "سلامة رقمية",
+    "خصوصية",
+    "تواصل مع الوالدين",
+    "وعي إلكتروني",
+    "حماية الأطفال"
+  ],
+  "created_at": "2026-06-20T15:12:47Z",
+  "updated_at": "2026-06-20T15:12:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

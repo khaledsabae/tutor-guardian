@@ -1,0 +1,29 @@
+{
+  "id": "cyb-b5a9572f",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الأطفال في أنظمة الذكاء الاصطناعي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "rights. Developing standard In collaboration with government, law enforcement, civil society processes to handle and hotline organizations, providers of AI-driven systems play a key CSAM role in combating CSAM by taking the following actions: Refer to the general guidelines in Table 1. Guidelines for industry on Child Online Protection Creating a safer and Providers of AI-driven systems can help create a safer and more age-appropriate online enjoyable digital environment for children of all ages by taking the environment following actions: Adopt a multi-disciplinary approach when developing technologies that affect children and consult with civil society, including academia, to identify the potential impacts of these technologies on the rights of a diverse range of potential end-users. Implement safety by design and privacy by design for products and services addressed to or commonly used by children. As AI systems are data-hungry, companies using AI for their services should apply special vigilance with regard to the collection, processing, storage, sale and publishing of children’s personal AI systems should be transparent, in that it should be possible to discover how and why a system made a particular decision or, in the case of a robot, acted the way it did. This transparency is crucial to developing trust and facilitating auditing, investigations and recourse when harm to children is suspected. Ensure that there are functional and legal mechanisms for recourse if children are, or claim to be, harmed through AI systems. Processes should be established for the timely redress of any discriminatory outputs, and oversight",
+  "text_simplified": "يجب على مقدمي أنظمة الذكاء الاصطناعي حماية الأطفال عبر تصميم آمن وخاص، والتعاون مع الحكومة والمجتمع المدني. كما ينبغي أن تكون الأنظمة شفافة لضمان الثقة، وتوفير آليات قانونية للتعامل مع أي ضرر قد يلحق بالأطفال.",
+  "labels": [
+    "ذكاء اصطناعي",
+    "حماية الأطفال",
+    "السلامة الرقمية",
+    "الشفافية",
+    "خصوصية البيانات"
+  ],
+  "created_at": "2026-06-20T15:01:16Z",
+  "updated_at": "2026-06-20T15:01:16Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

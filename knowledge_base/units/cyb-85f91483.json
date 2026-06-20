@@ -1,0 +1,29 @@
+{
+  "id": "cyb-85f91483",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر التكنولوجيا الرقمية على سلامة الأطفال",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "مخاطر الإنترنت على الأطفال",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "Union (ITU). ITU is not responsible for the content or accuracy of this translation. The original English edition shall be the binding and authentic edition”. For more information, please visit https://creativecommons.org/ licenses/by-nc-sa/3.0/igo/ The explosion in digital technologies has created unprecedented opportunities for children and young people to communicate, connect, share, learn, access information and express their opinions on matters that affect their lives and their communities. But wider and more easily available access to online services also poses significant challenges to children’s safety – both online and offline. From issues of privacy, peer-to-peer-violence, and violent and/or age-inappropriate content, to Internet scammers and crimes against children such as online grooming, and sexual abuse and exploitation, today’s children face many serious risks. Threats are multiplying and perpetrators increasingly operate simultaneously across borders, making them hard to track and even harder to hold to account. In addition, the COVID-19 global pandemic saw a surge in the number of children joining the online world for the first time, to support their studies and maintain social interaction. The constraints imposed by the virus not only meant that many younger children began interacting online much earlier than their parents might have planned but also that the need to juggle work commitments left many parents unable to supervise their children, leaving young people at risk of accessing inappropriate content or being targeted by criminals in the production of child sexual abuse material (CSAM). Criminals are profiting from technological advances, such as inter-connecting apps and games, fast file",
+  "text_simplified": "التطور الرقمي السريع يمنح الأطفال فرصًا كبيرة للتعلم والتواصل، لكنه يعرضهم لمخاطر جسيمة مثل التنمر الإلكتروني والمحتوى غير المناسب والاستغلال الجنسي. ازدادت هذه المخاطر خلال جائحة كورونا حيث بدأ أطفال أصغر سنًا استخدام الإنترنت دون إشراف كافٍ من الأهل. المجرمون يستغلون التكنولوجيا الحديثة لاستهداف الأطفال عبر التطبيقات والألعاب المتصلة.",
+  "labels": [
+    "سلامة الأطفال",
+    "مخاطر رقمية",
+    "استغلال جنسي",
+    "تنمر إلكتروني",
+    "إشراف أبوي"
+  ],
+  "created_at": "2026-06-20T14:52:46Z",
+  "updated_at": "2026-06-20T14:52:46Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

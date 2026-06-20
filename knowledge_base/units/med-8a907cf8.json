@@ -1,0 +1,29 @@
+{
+  "id": "med-8a907cf8",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "خطة إنشاء نظام صحي مدرسي شامل",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط صحي مدرسي",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "established in all 24 education districts. Number (percentage) of education districts with a database. >Secure the collaboration of the managers of all the education districts; >Identify one person in each education district who will take responsibility for creating and managing the database; >Constitute a working group to decide upon the kind of data to be recorded; >Develop a system to gather the data at each school; >Create a process to enable the school-level data to be summarized in the form of district-level data; and >Institute a data quality control system. Organization of services 1. Form an intersectoral working group to decide on the nature and format of the proposed school-based health promotion programmes. 2. Develop and implement a pilot programme in a small group of schools. 3. Disseminate the programme (informed by the results of the pilot project) to all schools in the country. 4. Access funding from within the health and education sectors as well as from To raise 2 million MUs (monetary units) Amount of money raised >Gather evidence of the cost effectiveness of school-based health promotion >Lobby within the health and education sectors for additional funds or funds that can be reallocated from existing budgets; >Attempt to persuade politicians of the cost effectiveness and other advantages of school-based health promotion interventions; >Compile a list of potential sources of funding; >Prepare funding applications for the potential sources of funding; and >Institute the appropriate financial mechanisms to deposit and disburse the funds. Research and evaluation 1. Arrange focus groups",
+  "text_simplified": "هذا النص يصف خطة لإنشاء نظام صحي مدرسي يشمل قاعدة بيانات وبرامج توعوية. يجب تشكيل فرق عمل لجمع البيانات وتطوير برامج تجريبية ثم تعميمها. كما يتطلب جمع تمويل من قطاعي الصحة والتعليم لدعم هذه المبادرات.",
+  "labels": [
+    "صحة مدرسية",
+    "قاعدة بيانات",
+    "تمويل",
+    "برامج توعوية",
+    "تقييم"
+  ],
+  "created_at": "2026-06-20T14:50:42Z",
+  "updated_at": "2026-06-20T14:50:42Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-37c04831",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "الاستدراج الجنسي للأطفال عبر الإنترنت",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "استدراج جنسي",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "grooming, as defined in the Luxembourg Guidelines, refers to “the process of establishing/building a relationship with a child either in person or through the use of the Internet or other digital technologies to facilitate either online or offline sexual contact with that person”. It is the criminal activity of becoming friends with a child…, in order to try to persuade the child to have a sexual relationship. Information and communication technologies Information and communication technologies (ICTs) describe all information technologies that emphasize the aspect of communication. This includes all Internet-connecting services and devices such as computers, laptops, tablets, smartphones, game consoles, and smartwatches.43 It also includes services such as radio and television as well as broadband, network hardware and satellite systems. Online gaming is defined as playing any type of single or multiplayer commercial digital game via any Internet-connected device, including dedicated consoles, desktop computers, laptops, tablets and mobile phones. The “online gaming ecosystem” is defined to include watching others play video games via e-sports, streaming or video-sharing platforms, which typically provide options for viewers to comment on or interact with the players and other members of the audience.44 41 Western Sydney University, “What is digital literacy?”. 42 Dr. Andrew K. Przybylski, et al., “A Shared Responsibility: Building children’s’ online resilience”, Virgin Media and Parent Zone, 2014. 43 UNICEF and ITU, “Guidelines for Industry on Child Online Protection”, 2014 (as above). 44 UNICEF, \"Child Rights and Online Gaming: Opportunities & Challenges for Children and the Industry\", Guidelines for industry on",
+  "text_simplified": "الاستدراج الجنسي للأطفال هو عملية بناء علاقة مع الطفل عبر الإنترنت أو شخصيًا بهدف إقامة اتصال جنسي. يجب على الأهل مراقبة تفاعلات أطفالهم عبر الأجهزة الرقمية والألعاب الإلكترونية. كما ينبغي تعليم الأطفال كيفية التعرف على محاولات الاستدراج والإبلاغ عنها.",
+  "labels": [
+    "استدراج",
+    "سلامة الطفل",
+    "حماية رقمية",
+    "تربية رقمية",
+    "وعي أبوي"
+  ],
+  "created_at": "2026-06-20T15:02:01Z",
+  "updated_at": "2026-06-20T15:02:01Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

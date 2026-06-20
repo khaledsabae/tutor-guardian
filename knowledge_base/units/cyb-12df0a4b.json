@@ -1,0 +1,28 @@
+{
+  "id": "cyb-12df0a4b",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "اتفاقية استخدام الإنترنت بين الأهل والمراهقين",
+  "language": "mixed",
+  "age_group": "13-15",
+  "behavior_type": "السلامة الرقمية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "protect operating system (like Win- up a written agreement with dows, Linux, etc) and especial- them. The purpose is to reas- ly about how to patch it and sure them that you are aware • You have the right to par- keep it up to date. of the risks associated with ticipate, have fun and access being online, knowing how to information appropriate to 3. If parental controls are in- behave and what to do, as well your age and personality; stalled then talk with your par- involving your parents making • You have the right to ex- ents and agree on the level that them understand what you ac- press yourself freely, and be matches your age and needs. tually do when you are online. treated with respect while Don’t try to crack them. The agreement needs to be always respecting others; 4. If you receive a file you are based on a mutual agreement • You have the right to be unsure of or don’t know who between you and your parents. critical and discuss anything has sent it, do NOT open it. There is an example of such you read or come across This is the way Trojans and a contract at the end of these viruses infect your machine. guidelines (Appendix 1). You • You have the right to say 5. Get a feeling for your machine will be able to find different NO if someone makes you and how it works so that you versions",
+  "text_simplified": "يجب على الأهل والمراهقين الاتفاق كتابياً على قواعد استخدام الإنترنت، مع التأكيد على حقوق الطفل في المشاركة والتعبير والخصوصية. من المهم تحديث نظام التشغيل لحماية الجهاز، وعدم فتح الملفات المشبوهة لتجنب الفيروسات. كما ينبغي استخدام أدوات الرقابة الأبوية بعد الاتفاق على مستواها المناسب للعمر.",
+  "labels": [
+    "حقوق الطفل",
+    "الرقابة الأبوية",
+    "الأمن السيبراني",
+    "اتفاقية استخدام الإنترنت"
+  ],
+  "created_at": "2026-06-20T15:10:17Z",
+  "updated_at": "2026-06-20T15:10:17Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-0c29e289",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الإنترنت على الأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "مخاطر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "safety of children and young people. They can expose children and young people to potential risks and harms related to issues of privacy, illegal content, harassment, cyberbullying, misuse of personal data or grooming for sexual purposes and even child sexual abuse and exploitation. They may also be exposed to reputational damage including “revenge porn” linked to publishing sensitive personal information either online or through “sexting”, a way for users to send sexually explicit messages, photographs or images between mobile phones. They also face risks related to online privacy when using the Internet. Children, by nature of their age and developing maturity, are often unable to fully comprehend the risks associated with the online world and the possible negative repercussions of their inappropriate behaviour on others and themselves. Despite the advantages, there are also downsides to the use of emerging and more-advanced technologies. Developments in AI and machine learning, virtual and augmented reality, big data, robotics and the Internet of Things are set to transform children and young people’s media practices even further. While these technologies are predominantly being developed to expand the scope of service delivery and enhance convenience (through, for example, voice assistance, accessibility and new forms of digital immersion), some such technologies could have unintentional impacts and even be misused by child sex offenders to serve their needs. Creating a safe and secure online environment for children and youth requires the effective participation of governments, the private sector and all stakeholders. Focusing on the digital skills and literacy",
+  "text_simplified": "يتعرض الأطفال والمراهقون لمخاطر متعددة عبر الإنترنت مثل التنمر الإلكتروني، والتحرش، وانتهاك الخصوصية، ومشاركة المحتوى الجنسي. كما أن التطورات التكنولوجية الحديثة قد تُستخدم بشكل ضار من قبل بعض المجرمين. لذلك، من الضروري تعزيز المهارات الرقمية للأطفال وتعاون جميع الجهات لحمايتهم.",
+  "labels": [
+    "سلامة الأطفال",
+    "التنمر الإلكتروني",
+    "الخصوصية",
+    "المهارات الرقمية",
+    "الاستغلال الجنسي"
+  ],
+  "created_at": "2026-06-20T14:53:44Z",
+  "updated_at": "2026-06-20T14:53:44Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

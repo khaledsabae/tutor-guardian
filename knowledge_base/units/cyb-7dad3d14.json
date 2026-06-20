@@ -1,0 +1,29 @@
+{
+  "id": "cyb-7dad3d14",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الطفل عبر الإنترنت للشركات والأهل",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية وحماية الطفل",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "information to children regarding the rules of the site in an accessible and age-appropriate manner, providing the appropriate amount of detail. In addition to the age-appropriate and accessible terms and conditions, industry should similarly, and clearly communicate information, such as rules and key policies. This should emphasize acceptable and unacceptable behaviour on the service, the consequences of breaking any rules, the specifics of the service and what the user is consenting to through signing up. Such information should be particularly geared towards young users and their parents and caregivers. Use terms of service or terms and conditions to draw users’ attention to content in the company’s online services that may not be appropriate for all ages. The terms and conditions should also include clear mechanisms for reporting and dealing with infringements of such rules. Guidelines for industry on Child Online Protection Creating a Consider providing mechanisms such as parental control software and safer and age- other tools that enable parents and carers to manage their children’s appropriate online access to Internet resources while providing guidance to them on their environment appropriate usage so that children’s rights are not infringed. These include block/allow lists, content filters, usage monitoring, contact management and time/programme limits. Offer easy-to-use parental control options that allow parents and carers to restrict certain services and content that children can access when using electronic devices. These restrictions can include network and device level controls, and application controls. Considering that this has huge implication on a child’s ability to advance",
+  "text_simplified": "يجب على الشركات تقديم معلومات واضحة ومناسبة لعمر الطفل حول قواعد الموقع وسياساته. ينبغي شرح السلوك المقبول وغير المقبول، وعواقب مخالفة القواعد، مع توفير أدوات رقابة أبوية مثل التصفية وإدارة الوقت. هذا يساعد الأهل على حماية أطفالهم أثناء استخدام الإنترنت.",
+  "labels": [
+    "حماية الطفل",
+    "رقابة أبوية",
+    "قواعد الموقع",
+    "سلامة الإنترنت",
+    "توعية رقمية"
+  ],
+  "created_at": "2026-06-20T14:57:53Z",
+  "updated_at": "2026-06-20T14:57:53Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

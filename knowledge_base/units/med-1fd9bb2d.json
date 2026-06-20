@@ -1,0 +1,29 @@
+{
+  "id": "med-1fd9bb2d",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تطوير سياسة الصحة النفسية للأطفال والمراهقين",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "سياسة الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "A key issue that needs to be resolved is whether a child and adolescent mental health policy should be part of a general mental health policy, part of a broader children's health policy, or developed as a stand-alone policy. An independent child and adolescent mental health policy will focus attention on the key issues, and ensure that the needs of this group are not lost in the development of a broader policy. On the other hand, a broader approach may allow for a more comprehensive response to the mental health needs of children and adolescents, and allow more diverse stakeholders to participate in the process. This section provides a series of steps that can be taken to develop a child and This section provides a series adolescent mental health policy. These steps include gathering information and data for of steps that can be taken to policy development; gathering evidence for effective strategies; consultation and develop a child and adolescent negotiation; exchange with other countries; determining the vision, values, principles mental health policy. and objectives of the policy; determining the areas for action; and identifying the major roles and responsibilities of different stakeholders and sectors. 2.1 Step 1: Gather information and data for policy development The development of a child and adolescent mental health policy begins with the question: What are the needs of the population? This requires an understanding of the prevalence of mental disorders and, more specifically, mental health problems among children and adolescents. It is also necessary to",
+  "text_simplified": "يجب تحديد ما إذا كانت سياسة الصحة النفسية للأطفال والمراهقين ستكون جزءًا من سياسة عامة أم مستقلة. السياسة المستقلة تركز على احتياجات هذه الفئة، بينما السياسة الأوسع تتيح مشاركة أكثر تنوعًا. تشمل خطوات تطويرها جمع البيانات والأدلة، والتشاور، وتحديد الرؤية والأهداف.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "سياسة",
+    "تطوير"
+  ],
+  "created_at": "2026-06-20T14:45:28Z",
+  "updated_at": "2026-06-20T14:45:28Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

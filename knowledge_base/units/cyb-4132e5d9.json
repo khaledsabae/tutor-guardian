@@ -1,0 +1,29 @@
+{
+  "id": "cyb-4132e5d9",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "سد الفجوة الرقمية وتعزيز المهارات الرقمية للأطفال",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "فجوة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "those who are not, due to a lack of Internet access or digital literacy, will continue to widen, placing the latter at a significant disadvantage. Companies can support multimedia initiatives to foster the digital skills that children and young people need to be confident, connected and actively involved citizens.17 In many countries, digital and media literacy, and efforts to close the digital divide have been part of the mission of the public service media over recent years. The Italian Parliament, for example, has proposed that the national broadcaster's priorities include closing the digital divide and ensuring child protection both offline and online, an example which could be followed by other countries. 17 For examples of youth participation from the mobile community see here. Guidelines for industry on Child Online Protection Good practice: Multiagency collaboration Recently, Microsoft joined the global campaign Power of ZERO, led by the organization No Bully, which aims to help young children, and the adults who care for them, learn to use digital technology well and develop the voice, compassion and inclusivity that are the heart of digital citizenship. The initiative offers early educators (the campaign is targeted towards children ages 8 and under) and families with free learning materials to help young children cultivate the “12 powers for good” (Power of Zero’s 12 life skills or “powers,” for children to successfully navigate both the online and offline world, including resilience, respect, inclusivity and creativity) and lay a strong foundation for them at an early age. 4.",
+  "text_simplified": "الفجوة الرقمية تتسع بين من يمتلكون مهارات الإنترنت ومن لا يمتلكونها، مما يضع الأخيرين في وضع غير مواتٍ. يمكن للشركات دعم مبادرات الوسائط المتعددة لتعزيز المهارات الرقمية لدى الأطفال والشباب. في العديد من الدول، أصبحت محو الأمية الرقمية والإعلامية جزءًا من مهمة الإعلام العام. مثال ذلك إيطاليا التي اقترحت أن تشمل أولويات البث الوطني سد الفجوة الرقمية وحماية الأطفال.",
+  "labels": [
+    "فجوة رقمية",
+    "مهارات رقمية",
+    "حماية الأطفال",
+    "مواطنة رقمية",
+    "تعليم مبكر"
+  ],
+  "created_at": "2026-06-20T14:57:17Z",
+  "updated_at": "2026-06-20T14:57:17Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

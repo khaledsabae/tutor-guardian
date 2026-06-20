@@ -1,0 +1,29 @@
+{
+  "id": "med-65fab928",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "تأثير النشاط البدني والنوم على نمو الأطفال",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "نشاط بدني ونوم",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "AL, et al. Role of physical activity and sleep duration 51. Kocevska D, Rijlaarsdam J, Ghassabian A, Jaddoe in growth and body composition of preschool-aged VW, Franco OH, Verhulst FC, et al. Early Childhood children. Obesity. 2016;24(6):1328-35. Sleep Patterns and Cognitive Development at Age 42. Kostyrka-Allchorne K, Cooper NR, Gossmann AM, 6 Years: The Generation R Study. J Pediatr Psychol. Barber KJ, Simpson A. Differential effects of film on 2017;42(3):260-8. preschool children’s behaviour dependent on editing 52. Mindell JA, Leichman ES, DuMond C, Sadeh A. pace. Acta Paediatr. 2017;106(5):831-6. Sleep and Social-Emotional Development in 43. McVeigh J, Smith A, Howie E, Straker L. Trajectories Infants and Toddlers. J Clin Child Adolesc Psychol. of Television Watching from Childhood to Early 2017;46(2):236-46. Adulthood and Their Association with Body 53. Hirshkowitz M, Whiton K, Albert SM, Alessi C, Bruni O, Composition and Mental Health Outcomes in Young DonCarlos L, et al. National Sleep Foundation’s updated Adults. PLoS One. 2016;11(4). sleep duration recommendations: final report. Sleep 44. Hinkley T, Timperio A, Salmon J, Hesketh K. Does Health. 2015;1(4):233-43. Preschool Physical Activity and Electronic Media Use 54. Paruthi S, Brooks LJ, D’Ambrosio C, Hall WA, Kotagal S, Predict Later Social and Emotional Skills at 6 to 8 Years? Lloyd RM, et al. Consensus Statement of the American A Cohort Study. Journal of physical activity & health. Academy of Sleep Medicine on the Recommended Amount of Sleep for Healthy Children: Methodology 45. Konrad C, Herbert JS, Schneider S, Seehagen S. and Discussion. J Clin Sleep Med.",
+  "text_simplified": "تشير الدراسات إلى أن النشاط البدني الكافي والنوم المنتظم مهمان لنمو الأطفال وتطورهم المعرفي والاجتماعي والعاطفي. كما أن مشاهدة التلفاز لفترات طويلة قد تؤثر سلبًا على الصحة النفسية والجسمية. يُوصى باتباع إرشادات النوم الموصى بها لكل فئة عمرية.",
+  "labels": [
+    "نشاط بدني",
+    "نوم",
+    "نمو الطفل",
+    "تطور معرفي",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T15:07:09Z",
+  "updated_at": "2026-06-20T15:07:09Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

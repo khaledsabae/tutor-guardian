@@ -1,0 +1,29 @@
+{
+  "id": "cyb-018193c5",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال من الاستغلال الجنسي عبر الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "خطر الاستغلال الجنسي عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "need to juggle work commitments left many parents unable to supervise their children, leaving young people at risk of accessing inappropriate content or being targeted by criminals in the production of child sexual abuse material (CSAM). Criminals are profiting from technological advances, such as inter-connecting apps and games, fast file sharing, live streaming, cryptocurrencies, the Dark Web, and strong encryption software. However, they are also profiting from often uncoordinated and hesitant action on the part of the tech sector to effectively combat the problem. Emerging technologies can be a part of the solution, for example Interpol’s artificial intelligence- based child sexual abuse database that uses image and video comparison software to quickly make connections between victims, abusers and places. But technology alone will not solve To reduce the risks of the digital revolution while enabling more and more young people to reap its benefits, a collaborative and coordinated multi-stakeholder response has never been more essential. Governments, civil society, local communities, international organizations and Recognizing this, in 2018, ITU Member States requested a comprehensive updating of our guidelines on child online protection. These new ITU guidelines have been rethought, rewritten and redesigned to reflect the very significant shifts in the digital landscape in which this generation’s children find themselves. In addition to reflecting new developments in digital technologies and platforms, this new edition addresses an important lacuna: the situation faced by children with disabilities, for whom the online world offers a particularly crucial lifeline to full – and fulfilling – social",
+  "text_simplified": "انشغال الأهل بالعمل يمنعهم من مراقبة أطفالهم، مما يعرضهم لخطر المحتوى غير المناسب أو الاستغلال الجنسي عبر الإنترنت. المجرمون يستغلون التكنولوجيا الحديثة مثل التطبيقات والألعاب المتصلة والتشفير القوي لتحقيق أرباح غير مشروعة. لكن التكنولوجيا وحدها لا تكفي، بل هناك حاجة إلى تعاون الحكومات والمجتمع المدني والمنظمات الدولية لحماية الأطفال. تم تحديث إرشادات حماية الطفل عبر الإنترنت لتشمل الأطفال ذوي الإعاقة الذين يعتمدون على العالم الرقمي للتواصل الاجتماعي.",
+  "labels": [
+    "حماية الطفل",
+    "الاستغلال الجنسي",
+    "التكنولوجيا",
+    "الرقابة الأبوية",
+    "التعاون الدولي"
+  ],
+  "created_at": "2026-06-20T14:52:51Z",
+  "updated_at": "2026-06-20T14:52:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

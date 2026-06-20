@@ -1,0 +1,29 @@
+{
+  "id": "med-bf9b3481",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية التخطيط المالي والسياسي لدعم الصحة النفسية للشباب",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "دعم الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "in the process, researched, has a chance of with continued commitment and engagement to ensure that the policy, once success without political formulated, is implemented. Because young people are often dependent on others to support and a level of funding advocate on their behalf, advocates for child and adolescent mental health need to commensurate with its ensure the political and financial viability of a plan, often without the persistent objectives. advocacy of the service users themselves. Accurate estimates of cost should be provided to potential supporters to avoid underfunding of programmes or raising expectations for savings that may not be realized. Many advances in programming require initial investments before savings or efficiencies can be realized. Advocates of a mental health policy within the ministry of health will need to find allies in other parts of the government, and in the community or country at large. They could organize meetings with their counterparts in other government departments. The goal of such meetings would be to demonstrate the importance of child and adolescent mental health and enlist broad support from within the government for implementation Anyone with an interest in the Generally, anyone with an interest in the well-being of young people can be encouraged well-being of young people to extend this interest to mental health issues. Table 7 lists some potential allies, along can be encouraged to extend with examples of how improved child and adolescent mental health will have collateral this interest to mental health benefits in their sphere of",
+  "text_simplified": "يحتاج دعم الصحة النفسية للأطفال والمراهقين إلى تخطيط مالي وسياسي دقيق لضمان نجاح السياسات. يجب توفير تقديرات دقيقة للتكاليف لتجنب نقص التمويل أو رفع توقعات غير واقعية. يمكن للحلفاء في الحكومة والمجتمع دعم هذه القضايا من خلال اجتماعات تظهر أهمية الصحة النفسية للشباب.",
+  "labels": [
+    "صحة نفسية",
+    "سياسات",
+    "تمويل",
+    "دعم حكومي",
+    "مراهقون"
+  ],
+  "created_at": "2026-06-20T14:51:38Z",
+  "updated_at": "2026-06-20T14:51:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

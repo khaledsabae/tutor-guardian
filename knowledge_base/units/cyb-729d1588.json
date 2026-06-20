@@ -1,0 +1,29 @@
+{
+  "id": "cyb-729d1588",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "حماية الأطفال من الاستغلال الجنسي عبر الإنترنت",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "استغلال جنسي للأطفال عبر الإنترنت",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "to communicate, learn new skills, be creative and contribute to establishing a bet- ter society for all, but often they also bring new risks e.g. they can expose children and young people 3 http://www.ecpat.net/WorldCongressIII/PDF/Outcome/WCIII_Outcome_Document_Final.pdf Guidelines for Children and Young People www.itu.int/cop Case Study: Children and Young People’s Voices The World Congress III against Sexual Exploitation of Children and Adolescents took place in Rio de Janeiro, Brazil, from 25 to 28 November 2008. There were 3,500 participants including 300 adolescents – 150 of which were from foreign countries. It concluded with an outcome document called the “Rio de Janeiro Declaration to Prevent and Stop Sexual Exploitation of Children and Adolescents”, which contains the “Adolescent Declaration to End Sexual Exploitation”. Here are some of the key messages from children and young people to the We the children of the world com- to audit the action plans in each 10. We the children must make 12. Further, we provide a mend the Government of Brazil country. known our plight for governments mandate for the media to gather and the other governments and to pursue strict and punitive legisla- documents, reports, folders, responsible agencies for giving us tion with regards to the Internet, CDs, videos and other materials 8. We also call for the adoption of the children, the present and future especially child pornography- simply to increase knowledge on this an International Day where children of the world, a voice at this World another form of abuse. issue. We the children of the",
+  "text_simplified": "يستخدم الأطفال والمراهقون الإنترنت للتواصل وتعلم مهارات جديدة والإبداع، لكنه قد يعرضهم لمخاطر مثل الاستغلال الجنسي. يجب على الحكومات وضع قوانين صارمة لمكافحة المواد الإباحية للأطفال على الإنترنت. كما ينبغي للأطفال التعبير عن معاناتهم والمطالبة بحمايتهم. على وسائل الإعلام نشر الوعي حول هذه القضايا.",
+  "labels": [
+    "استغلال جنسي",
+    "سلامة الإنترنت",
+    "حماية الأطفال",
+    "توعية",
+    "قوانين صارمة"
+  ],
+  "created_at": "2026-06-20T15:08:22Z",
+  "updated_at": "2026-06-20T15:08:22Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

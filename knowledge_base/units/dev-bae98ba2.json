@@ -1,0 +1,29 @@
+{
+  "id": "dev-bae98ba2",
+  "domain": "development",
+  "source_file": "WHO_Nurturing_Care_ECD.pdf",
+  "title": "أساسيات تنمية الطفل والصحة العامة",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تنمية الطفل والصحة العامة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO — Nurturing Care for Early Childhood Development",
+  "text_original": "old whose births have been registered with a civil authority SDG 16.9.1 Percentage of population using safely managed drinking water services SDG 6.1.1 Percentage of population using safely managed sanitation services, including a hand-washing SDG 6.2.1 facility with soap and water 1. Christakis D. Media and children [video]. City: 15. Hepper P. Behavior during the prenatal period: Publisher; 2011 (https://www.youtube.com/ Adaptive for development and survival. Child watch?v=BoT7qH_uVNo, accessed 2 May 2018). Development Perspectives. 2015;9(1):38–43. 2. Survive, Thrive, Transform – The Global Strategy for 16. van IJzendoorn MH, Bakermans?Kranenburg MJ, Women’s, Children’s and Adolescents’ Health (2016 – Ebstein RP. Methylation matters in child development: 2030). New York: United Nations; 2015. Toward developmental behavioral epigenetics. Child Development Perspectives. 2011;5(4):305–10. 3. Transforming our World: The 2030 Agenda for Sustainable Development. New York: United 17. Campbell F, Conti G, Heckman JJ, et al. Early Nations; 2015. childhood investments substantially boost adult health. Science. 2014;343(6178):1478–85. 4. The United Nations Convention of the Rights of the Child. New York: United Nations; 1989. 18. Nofziger S, Rosen NL. Building self-control to prevent crime. In: Teasdale B, Bradley M, editors. Preventing 5. Shonkoff JP, Garner AS, Committee on Psychosocial crime and violence. Basel, Switzerland: Springer Aspects of, Child Family, Health et al. The lifelong International Publishing; 2017:43–56. effects of early childhood adversity and toxic stress. Pediatrics. 2012;129(1):e232–46. 19. Murray L, Andrews E. The social baby. London: The Children’s Project; 2002. 6. Black MM, Walker SP, Fernald LCH, et al. Early childhood development coming of age: science through the",
+  "text_simplified": "يؤكد النص على أهمية تسجيل المواليد لدى السلطات المدنية كجزء من أهداف التنمية المستدامة. كما يشير إلى ضرورة توفير خدمات مياه الشرب المأمونة ومرافق الصرف الصحي مع غسل اليدين بالصابون. يتناول النص أيضا تأثير الطفولة المبكرة على الصحة مدى الحياة وأهمية الاستثمار في تنمية الطفل.",
+  "labels": [
+    "تسجيل المواليد",
+    "مياه الشرب",
+    "الصرف الصحي",
+    "تنمية الطفولة المبكرة",
+    "الصحة العامة"
+  ],
+  "created_at": "2026-06-20T14:27:33Z",
+  "updated_at": "2026-06-20T14:27:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Nurturing_Care_ECD",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-58e967c4",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "مخاطر التسوق عبر الإنترنت وكيفية تجنب الاحتيال",
+  "language": "ar",
+  "age_group": "10-12",
+  "behavior_type": "وعي رقمي وأمان إلكتروني",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "capturing data ence between online and tradi- vendor to determine the age of sites that you want to make during transmission. Even tional commerce lies with the dif- the person proposing to make the purchases from and ensure though many sites incorporate ficulty in identifying who is at the purchase or acquire the service. their credibility. Gather as systems that counter the inter- other end of the exchange and All that many companies do is much information as you can ception of data in transit, your the risk of fraud that may lie just ask the person to check a box to about the site in question, such details could still be stolen if around the corner. One of the confirm they meet the minimum as name, address, telephone someone hacks into the server most widespread risks is that of age requirement. number and head office of the of the company where your “phishing”. This happens when credit card details have been company, description of the people respond to fake emails, Some companies in a number of contract’s general conditions spam, which usually appear to countries are beginning to deploy Guidelines for Children and Young People www.itu.int/cop stored. Clearly, by choosing other modes of payment you can avoid the possibility of someone stealing your credit 4. if you receive an unsolicited e- mail offering you an incredible deal, it is highly likely that it is 5. if something looks too good to be true, it most probably is, and it",
+  "text_simplified": "هذا النص يتحدث عن مخاطر التسوق عبر الإنترنت، مثل صعوبة معرفة هوية البائع وخطر الاحتيال. من أشهر هذه المخاطر التصيد الاحتيالي عبر رسائل البريد الإلكتروني المزيفة. يُنصح بجمع معلومات عن الموقع قبل الشراء، مثل الاسم والعنوان ورقم الهاتف. كما يُفضل استخدام طرق دفع آمنة لتجنب سرقة بيانات البطاقة الائتمانية.",
+  "labels": [
+    "أمان إلكتروني",
+    "تسوق آمن",
+    "تصيد احتيالي",
+    "حماية البيانات",
+    "وعي رقمي"
+  ],
+  "created_at": "2026-06-20T15:12:27Z",
+  "updated_at": "2026-06-20T15:12:27Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-8fc5bede",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الأجهزة الذكية على الأطفال وغياب السياسات",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "مخاطر رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "the hacked devices (including smart web-enabled devices such as baby monitors, voice assistants etc.) can be used for surveillance of users without their knowledge or consent. When integrating response mechanisms to detected threats against children using these devices by, for example, providing tips and recommendations based on detected behaviour (as mentioned earlier with the BBC Own It app), it is crucial that the companies designing the smart devices base these recommendations on evidence and develop them in consultation with child protection and child safeguarding experts. While some companies are advancing principles for the ethical use of AI,21 it is not clear if there are any public policies aimed at AI and children.22 Several technology and trade associations, and computer science groups, have drafted ethical principles with regards to AI.23 However, these do not explicitly refer to child rights, ways in which these AI technologies may create risks for children, or proactive plans for mitigating those. 18 UNICEF and UC Berkeley, “Executive Summary: Artificial Intelligence and Children’s Rights”, 2018. 21 See Microsoft, \"Salient Human Rights Issues”, Report - FY17; and Google, “Responsible Development of 22 Microsoft Official Blog, “The Future Computed: Artificial Intelligence and its role in society”, 2018. 23 The Guardian, “‘Partnership on AI’ formed by Google, Facebook, Amazon, IBM and Microsoft”, 2016. Guidelines for industry on Child Online Protection “Like corporations, governments around the world have adopted strategies for becoming leaders in the development and use of AI, fostering environments congenial to innovators and corporations.”24 It is unclear, however,",
+  "text_simplified": "يمكن اختراق الأجهزة الذكية مثل مراقبات الأطفال والمساعدات الصوتية لمراقبة المستخدمين دون علمهم. يجب على الشركات تصميم توصياتها بناءً على أدلة وبالتشاور مع خبراء حماية الطفل. لا توجد سياسات واضحة لحماية حقوق الأطفال في مجال الذكاء الاصطناعي. المبادئ الأخلاقية الحالية لا تشير صراحةً إلى حقوق الطفل أو مخاطر هذه التقنيات.",
+  "labels": [
+    "أمان رقمي",
+    "حماية الطفل",
+    "ذكاء اصطناعي",
+    "خصوصية",
+    "أجهزة ذكية"
+  ],
+  "created_at": "2026-06-20T15:00:51Z",
+  "updated_at": "2026-06-20T15:00:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

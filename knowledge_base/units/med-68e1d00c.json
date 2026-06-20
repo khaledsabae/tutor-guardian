@@ -1,0 +1,29 @@
+{
+  "id": "med-68e1d00c",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تطوير سياسة الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سياسة الصحة النفسية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "data for policy development The development of a child and adolescent mental health policy begins with the question: What are the needs of the population? This requires an understanding of the prevalence of mental disorders and, more specifically, mental health problems among children and adolescents. It is also necessary to know what resources are currently Once this data is collected, it becomes easier to define the scope of the policy. For example, in some countries epilepsy and mental retardation will be included in a child and adolescent mental health policy, while in other countries they will be incorporated into other health policies. It is important that policy be formulated with an understanding of the population’s It is important that policy be needs.Need can be identified in several ways, including through information about the formulated with an prevalence and incidence of child and adolescent mental disorders, learning which understanding of the problems communities have identified, and understanding how people seek help for population’s needs. child and adolescent problems (see also the modules, Mental Health Policy, Plans and Programmes andPlanning and Budgeting to Deliver Services for Mental Health). In some situations, it may be more feasible to restrict attention to certain subsets of the total population, for example, children and adolescents with severe mental disorders, or street children who may be at high risk of developing a mental disorder. The methods for collecting the above data vary, depending on the resources and time available. Epidemiological data is more scarce for children and",
+  "text_simplified": "تطوير سياسة الصحة النفسية للأطفال والمراهقين يبدأ بفهم احتياجات السكان. يجب جمع بيانات عن انتشار الاضطرابات النفسية والموارد المتاحة. تختلف الأمراض المشمولة في السياسة حسب كل دولة. يمكن تحديد الاحتياجات من خلال معرفة معدلات الاضطرابات ومشاكل المجتمعات وطرق طلب المساعدة.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقين",
+    "سياسة",
+    "بيانات"
+  ],
+  "created_at": "2026-06-20T14:45:32Z",
+  "updated_at": "2026-06-20T14:45:32Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

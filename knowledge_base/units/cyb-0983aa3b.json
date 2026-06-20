@@ -1,0 +1,29 @@
+{
+  "id": "cyb-0983aa3b",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إجراءات حماية خصوصية الأطفال على الإنترنت",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "visibility settings for children and young people more restrictive than the settings for adults by Enforce minimum age requirements and support the research and development of new age-verification systems such as biometrics, using known international standards for the development of such tools. Take steps to identify and remove underage users who have misrepresented their age to gain access. Consideration needs to be given to the additional personal data collection that this may entail and the need to limit the collection and storage of this information and its processing. If not already in place, set up appropriate sign-on processes to determine whether users are old enough to access the content or service without compromising their identity, location and personal details. Use nationally established functional age- verification systems as appropriate, where relevant measures for data privacy of the child subjects exists. A reporting function or a help desk/centre that can encourage users to report people who have falsified their ages. Guidelines for industry on Child Online Protection Creating a safer and Protect younger users from uninvited communication and ensure age-appropriate online that privacy and information-collection guidelines are in place. Find ways to review hosted images and videos and delete inappropriate ones when detected. Tools such as hash scanning of known images and image recognition software are available to assist with this. In services targeted at children, photos and videos can be checked beforehand to make sure that children do not publish sensitive personal information about themselves or A number of measures may",
+  "text_simplified": "يجب جعل إعدادات الخصوصية للأطفال والمراهقين أكثر تقييدًا من إعدادات البالغين. ينبغي تطبيق أنظمة التحقق من العمر وإزالة المستخدمين القصر الذين يزورون أعمارهم. من المهم حماية الأطفال من التواصل غير المرغوب فيه ومراجعة الصور ومقاطع الفيديو لحذف المحتوى غير المناسب. يجب أيضًا توفير آليات للإبلاغ عن المخالفين ومراعاة جمع البيانات الشخصية بحذر.",
+  "labels": [
+    "الخصوصية",
+    "التحقق من العمر",
+    "حماية الأطفال",
+    "الرقابة على المحتوى",
+    "الأمان الرقمي"
+  ],
+  "created_at": "2026-06-20T15:00:23Z",
+  "updated_at": "2026-06-20T15:00:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

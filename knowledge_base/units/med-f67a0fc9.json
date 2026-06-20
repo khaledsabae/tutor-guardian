@@ -1,0 +1,29 @@
+{
+  "id": "med-f67a0fc9",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "خطوات وضع الاستراتيجيات وتحديد الأولويات",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تخطيط استراتيجي",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "of action that have the highest probability of achieving the policy objectives in a specific Step 1: Determine the strategies and time frames In developing and setting priorities for a set of strategies, it is often useful to conduct a SWOT analysis, in which the strengths, weaknesses, opportunities and threats of the current situation are identified. Following a SWOT analysis, a series of actions should be taken to develop and identify priorities for a set of strategies: (i) create a comprehensive list of potentially useful proposals for each of the areas of action developed during the policy formulation phase; (ii) brainstorm with key players to develop a set of strategies for implementing each of the proposals; (iii) revise and modify strategies based on a second round of inputs from key players so that there are two or three strategies for each area of action; (iv) establish a time frame for each strategy; and (v) develop details for how each strategy will be implemented. Details include setting indicators and targets, outlining the major activities, determining the costs, identifying available resources and creating a budget. Step 2: Set indicators and targets Each strategy should be accompanied by one or more targets which represent the desired outcome of the strategy. Indicatorsenable an assessment of the extent to which a target has been met. Step 3: Determine the major activities The next step should be to determine the actual activities that are necessary for each strategy. Each activity should be accompanied by a set",
+  "text_simplified": "هذا النص يتعلق بتخطيط الاستراتيجيات ووضع الأولويات لتحقيق الأهداف. يشرح خطوات مثل تحليل نقاط القوة والضعف والفرص والتهديدات، ثم تحديد الأهداف والمؤشرات والأنشطة الرئيسية. النص موجه للمختصين في وضع السياسات وليس للأهل أو التربية.",
+  "labels": [
+    "تخطيط",
+    "استراتيجيات",
+    "تحليل SWOT",
+    "أهداف",
+    "مؤشرات"
+  ],
+  "created_at": "2026-06-20T14:43:29Z",
+  "updated_at": "2026-06-20T14:43:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "med-84e4cce9",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "سياسة الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات سلوكية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "in society. > To reduce the prevalence of common mental health problems in children and adolescents (especially disruptive behaviour disorders, and the effects of exposure to violence and intellectual disability), and reduce the level of associated suffering, impairment and disability. > To reduce children’s and adolescents’ exposure to violence, and support the scholastic progress of those suffering from mental disorders as a consequence of > To ensure equitable access to mental health services for all children and adolescents. Areas for action > Intersectoral collaboration: Improve communications between the health and education systems to facilitate early recognition and the implementation of appropriate school-based interventions. > Legislation and human rights: Liaise with the legal system to ensure that evidence by children and adolescents against alleged perpetrators of violence against them is provided without the presence of the alleged perpetrator. > Research and evaluation: Evaluate an existing best practice model of school-based intervention programmes to reduce disruptive behaviour disorders and enhance school performance. > Organization of services: Provide training and secondary consultation to primary health care workers. * This example is provided for heuristic purposes only, and is not a recommendation for Box 13. Example of a child and adolescent mental health policy for a country with a medium level of resources (population = 10 million)* Situation analysis Interviews with health workers and community leaders concluded that: > The main unmet child and adolescent mental health challenges were adolescent risk behaviours such as unsafe sexual behaviour (resulting in a high prevalence of HIV",
+  "text_simplified": "يهدف هذا النص إلى تقليل المشكلات النفسية الشائعة لدى الأطفال والمراهقين، مثل اضطرابات السلوك والعنف والإعاقة الذهنية. كما يسعى إلى دعم التقدم الدراسي للأطفال الذين يعانون من اضطرابات نفسية وضمان حصولهم على خدمات الصحة النفسية بشكل عادل. تشمل مجالات العمل تحسين التعاون بين الصحة والتعليم، وتدريب العاملين في الرعاية الصحية الأولية، وتقييم برامج التدخل المدرسية.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال ومراهقون",
+    "اضطرابات سلوكية",
+    "تدخل مدرسي",
+    "تعاون صحي تعليمي"
+  ],
+  "created_at": "2026-06-20T14:49:45Z",
+  "updated_at": "2026-06-20T14:49:45Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

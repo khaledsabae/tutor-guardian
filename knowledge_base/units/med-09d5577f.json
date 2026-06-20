@@ -1,0 +1,29 @@
+{
+  "id": "med-09d5577f",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "تحسين خدمات الصحة النفسية في الرعاية الأولية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "تحسين خدمات الصحة النفسية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "the fieldwork; >Enter and refine the data; >Conduct a statistical analysis; and >Write a report. Area for action Organization of services 1. Design and implement an in-service training programme for nurses working at the primary care level. 2. Ensure that identified professionals are available to receive referrals from nurses and other professionals working at the primary health care level, and that lines of communication are efficient. 3. Introduce a system whereby psychiatrists and clinical psychologists working in the university clinic volunteer to spend half a day per week providing consultation- liaison (CL) services for primary health care (PHC) staff Eighty per cent of psychiatrists and clinical psychologists spending half a day per week providing CL services for PHC staff Percentage of psychiatrists and clinical psychologists spending half a day per week providing CL services for PHC staff >Obtain the necessary support and approval from the university authorities; >Hold a seminar for the psychiatrists and psychologists working at the university clinic to: (i) inform them about the current situation with regard to PHC mental health services; (ii) motivate them to volunteer to provide CL services for half a day per week; and (iii) explore what the nature of these services should be; >Make the necessary logistical and practical arrangements for the new service; >Inform PHC staff of the new service and secure their support; >Develop a system of referrals; >Monitor the implementation of the new service; and > Approach psychiatrists and clinical psychologists who have not volunteered with a view to",
+  "text_simplified": "يهدف هذا النص إلى تحسين خدمات الصحة النفسية في مراكز الرعاية الأولية من خلال تدريب الممرضات وتوفير خدمات استشارية من أطباء نفسيين وأخصائيين نفسيين. يتم ذلك عبر تصميم برامج تدريبية، وتنسيق الإحالات، وتحفيز المتخصصين الجامعيين للتطوع بنصف يوم أسبوعياً لدعم العاملين في الرعاية الأولية.",
+  "labels": [
+    "صحة نفسية",
+    "رعاية أولية",
+    "تدريب مهني",
+    "استشارات",
+    "تنسيق خدمات"
+  ],
+  "created_at": "2026-06-20T14:50:33Z",
+  "updated_at": "2026-06-20T14:50:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

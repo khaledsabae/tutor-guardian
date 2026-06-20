@@ -1,0 +1,29 @@
+{
+  "id": "med-453c262c",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "الصحة النفسية للأطفال والمراهقين وعوامل الخطر والحماية",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية عامة",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "mental health of children and adolescents can be divided into risk and protective factors. > Risk and protective factors can be targets for intervention. > Mental health interventions need to be sensitive to the developmental stage of children and adolescents and should take into account social and cultural > There is increasing evidence that prevention and treatment interventions are cost 2. Developing a child and adolescent mental health policy A recent survey has revealed that no country in the world has a clearly defined mental health policy pertaining uniquely to children and adolescents (Shatkin & Belfer, 2004). However, 34 countries (7% of countries worldwide) were found to have identifiable mental health policies, which may have some beneficial impact on children and adolescents. This relative lack of policies is unfortunate, since an explicit policy for child and adolescent mental health can improve the quality and accessibility of services and promote the mental health of all children and adolescents within a country. Several different systems of care (e.g. education, welfare, health) may need to be A developmental perspective involved to ensure that services for children and adolescents are effective. An overriding is needed for an understanding consideration is that child development influences the vulnerability to disorders, how of all mental disorders and for disorders manifest themselves and how best they may be treated. Thus a the development of an developmental perspective is needed for an understanding of all mental disorders and appropriate mental health for the development of an appropriate child and",
+  "text_simplified": "الصحة النفسية للأطفال والمراهقين تتأثر بعوامل خطر وعوامل حماية يمكن استهدافها بالتدخلات. يجب أن تراعي هذه التدخلات مرحلة النمو والسياق الاجتماعي والثقافي. لا توجد سياسة واضحة للصحة النفسية خاصة بالأطفال والمراهقين في معظم دول العالم، رغم أن وجودها يحسن جودة الخدمات وإمكانية الوصول إليها. المنظور النمائي ضروري لفهم الاضطرابات النفسية وعلاجها.",
+  "labels": [
+    "صحة نفسية",
+    "أطفال",
+    "مراهقون",
+    "سياسات",
+    "تدخلات"
+  ],
+  "created_at": "2026-06-20T14:45:20Z",
+  "updated_at": "2026-06-20T14:45:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

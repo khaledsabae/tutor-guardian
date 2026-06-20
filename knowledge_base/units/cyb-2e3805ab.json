@@ -1,0 +1,29 @@
+{
+  "id": "cyb-2e3805ab",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال عند استخدام شبكات الواي فاي العامة",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "سلامة رقمية",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "public spaces where children are likely to be present on a regular basis. Users need to be mindful of the fact that Wi-Fi signals might be available to passers-by and user data compromised. The Wi-Fi provider will therefore not always be able to support or supervise the use of an Internet connection it has supplied and users need to therefore take precautions not to share sensitive information over publicly available Wi-Fi. In public spaces, Wi-Fi providers may want to consider additional measures to protect children and young people, such as: • Proactively blocking access to web addresses known to contain content that is inappropriate for a wide audience, in addition to their efforts to blocking access • Including clauses in terms and conditions of use that forbid the use of Wi-Fi services to access or display any material that may be unsuitable in an environment where children are present. The terms and conditions should also include clear mechanisms regarding the consequences of infringements of such rules. • Taking all measures to protect against unauthorized access, which may result in manipulation or loss of personal data. • Installing filters on the Wi-Fi system to reinforce the policy on inappropriate • Providing procedures and software to signpost and offer optional parental control related to children and young people’s access to Internet content. Good practice: The telecommunication regulations of most European Union member states, for example, stipulate that access to the network must be identified, through individual SIM cards or other identification tools.",
+  "text_simplified": "يجب على الأهل توخي الحذر عند استخدام شبكات الواي فاي العامة في الأماكن التي يتواجد فيها الأطفال، لأن هذه الشبكات قد تعرض بيانات المستخدمين للخطر. يُنصح بعدم مشاركة معلومات حساسة عبر هذه الشبكات، ويمكن لمزودي الخدمة اتخاذ إجراءات لحماية الأطفال مثل حظر المواقع غير المناسبة وتوفير أدوات الرقابة الأبوية.",
+  "labels": [
+    "واي فاي عام",
+    "حماية الأطفال",
+    "أمان الإنترنت",
+    "رقابة أبوية",
+    "خصوصية البيانات"
+  ],
+  "created_at": "2026-06-20T14:58:54Z",
+  "updated_at": "2026-06-20T14:58:54Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-df031886",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إرشادات حماية الطفل في المحتوى الرقمي",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "when online content is likely to appeal to a high proportion of children and young people. Offer a parental guidance tool, such as a “lock\" for control of content that can be accessed through a particular browser Cooperate with parents to ensure that information disclosed on the Internet about children does not put them at risk. How children are identified in editorially curated content requires careful consideration and will vary according to the context. Obtain children’s informed consent when featuring them in programmes, films, videos etc., wherever possible, and respect any refusal to take part. Guidelines for industry on Child Online Protection Promoting digital Companies offering curated digital content can encourage and technology as a mode to empower children and young people by supporting their right further civic engagement to participation through the following actions: Develop and/or offer a range of high-quality, challenging, educational, enjoyable and interesting content that is age- appropriate and helps children and young people make sense of the world in which they live. In addition to being attractive and usable, reliable and safe, such content can contribute to children and young people’s physical, mental and social development by providing new opportunities to entertain and Content that empowers children to embrace diversity and be positive role models should be strongly encouraged. 5.3 Feature C: Host user-generated content and connect users There was a time when the online world was dominated by adults but it is now clear that children and young people are major participants on multiple",
+  "text_simplified": "يجب حماية الأطفال والمراهقين عبر الإنترنت من خلال أدوات رقابية أبوية مثل قفل المحتوى. ينبغي الحصول على موافقة الأطفال عند تصويرهم أو نشر معلومات عنهم، وتشجيع المحتوى التعليمي والآمن الذي ينمي قدراتهم البدنية والعقلية والاجتماعية.",
+  "labels": [
+    "حماية الأطفال",
+    "الرقابة الأبوية",
+    "المحتوى الرقمي",
+    "الموافقة المسبقة",
+    "التمكين الرقمي"
+  ],
+  "created_at": "2026-06-20T14:59:50Z",
+  "updated_at": "2026-06-20T14:59:50Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

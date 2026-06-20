@@ -1,0 +1,29 @@
+{
+  "id": "med-d6bd6688",
+  "domain": "medical",
+  "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
+  "title": "أهمية الصحة النفسية للأطفال والمراهقين",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "صحة نفسية عامة",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Child and Adolescent Mental Health Policies",
+  "text_original": "self-worth, sound family and peer relationships, an ability to be productive and to learn, and a capacity to tackle developmental challenges and use cultural resources to maximize growth. Moreover, the good mental health of children and adolescents is crucial for their active social and economic participation. This module demonstrates the need to promote the development of all children and adolescents, whether or not they have mental health problems. In addition, it is important to provide effective interventions and support to the 20% of children and adolescents believed to be suffering from overt mental health problems or disorders. The burden associated with mental disorders in children and adolescents is considerable, and it is made worse by stigma and discrimination. In many situations, mental disorders are poorly understood, and affected children are mistakenly viewed as “not trying hard enough” or as troublemakers. There are three compelling reasons for developing effective interventions for children and adolescents: (i) since specific mental disorders occur at certain stages of child and adolescent development, screening programmes and interventions for such disorders can be targeted to the stage at which they are most likely to appear; (ii) since there is a high degree of continuity between child and adolescent disorders and those in adulthood, early intervention could prevent or reduce the likelihood of long-term impairment; and (iii) effective interventions reduce the burden of mental health disorders on the individual and the family, and they reduce the costs to health systems and The mental health of children and adolescents",
+  "text_simplified": "الصحة النفسية للأطفال والمراهقين ضرورية لنموهم الاجتماعي والاقتصادي. يجب تعزيز النمو الصحي لجميع الأطفال بغض النظر عن وجود مشاكل نفسية. هناك حاجة لتقديم دعم فعال لـ 20% من الأطفال الذين يعانون من اضطرابات نفسية واضحة. التدخل المبكر يمنع تفاقم المشاكل ويقلل العبء على الفرد والأسرة.",
+  "labels": [
+    "صحة نفسية",
+    "تدخل مبكر",
+    "اضطرابات نفسية",
+    "دعم أسري",
+    "نمو الطفل"
+  ],
+  "created_at": "2026-06-20T14:43:03Z",
+  "updated_at": "2026-06-20T14:43:03Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Child_Adolescent_Mental_Health_Policy",
+    "source_author": ""
+  }
+}

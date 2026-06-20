@@ -1,0 +1,29 @@
+{
+  "id": "cyb-e54f969f",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "إرشادات سلامة الإنترنت للأطفال من 5 إلى 7 سنوات",
+  "language": "mixed",
+  "age_group": "4-6",
+  "behavior_type": "سلامة الإنترنت للأطفال",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "safety messages need to The first age group be timely, age specific, culturally sensitive and match the values and 5-7 year old laws of the society in which the This group experience their first child or young person lives. contacts with technology. Their The COP Initiative has identi- usage should be closely supervised fied three principal age groupings at all times by a parent or adult. of young Internet users. These Filtering software or other tech- groupings broadly correspond nical measures may also have a with the key stages of develop- particularly useful role to play in ment on a child’s journey to supporting the use of the Internet adulthood. Hence the guidelines by a child of this age. It would be can be seen as a ladder which takes wise to consider limiting such a you through progressive phases. young child’s potential access e.g. by However, we cannot emphasise constructing a list of safe web sites too strongly that every child is dif- which are age appropriate such as a ferent who requires and deserves walled garden. The aim is to pro- Guidelines for Children and Young People www.itu.int/cop Guidelines for Children and Young People www.itu.int/cop vide this age group with the basics other technical measures may have certainly could continue to play an There is not a one-size-fits-all. in Internet safety, etiquette and a particularly useful role to play in important supporting role, particu- The Child Online Protection understanding. This age group supporting the use of the Internet",
+  "text_simplified": "يجب أن تكون رسائل السلامة للأطفال مناسبة لأعمارهم وحساسة ثقافياً وتتوافق مع قوانين المجتمع. بالنسبة للأطفال من 5 إلى 7 سنوات، يجب أن يكون استخدامهم للتكنولوجيا تحت إشراف دائم من الوالدين، ويمكن استخدام برامج التصفية أو قوائم المواقع الآمنة لحمايتهم.",
+  "labels": [
+    "سلامة الإنترنت",
+    "إشراف الوالدين",
+    "حماية الأطفال",
+    "استخدام التكنولوجيا",
+    "تربية رقمية"
+  ],
+  "created_at": "2026-06-20T15:09:34Z",
+  "updated_at": "2026-06-20T15:09:34Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

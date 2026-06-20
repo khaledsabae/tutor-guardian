@@ -1,0 +1,28 @@
+{
+  "id": "cyb-bf048aa1",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "مخاطر الإنترنت على الأطفال وكيفية الوقاية",
+  "language": "ar",
+  "age_group": "7-9",
+  "behavior_type": "مخاطر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "known for hosting child sexual abuse content to enable the rapid removal of domains hosting illegal content. 3.3 Creating a safer and age-appropriate online environment Very few things in life can be considered absolutely safe and risk-free all of the time. Even in cities where the movement of traffic is highly regulated and closely controlled, accidents still happen. By the same token, cyberspace is not without risks, especially for children and young people. Children and young people can be thought of as receivers, participants and actors in their online environment. The risks that they face can be categorized into four areas:15 15 Sonia Livingstone et al., “EU Kids Online: Final Report”, London school of economics, 2009. Guidelines for industry on Child Online Protection • Inappropriate content – Children and young people may stumble upon inappropriate and illegal content while searching for something else by clicking a presumably innocuous link in an instant message, on a blog or when sharing files. They may also seek out and share inappropriate or age-sensitive material. What is considered harmful content varies from country to country; examples include content that promotes substance abuse, racial hatred, risk-taking behaviour, suicide, anorexia or violence. • Inappropriate conduct – Children and adults may use the Internet to harass or even exploit other people. Children may sometimes broadcast hurtful comments or embarrassing images or may steal content or infringe on copyrights. • Inappropriate contact – Both adults and young people can use the Internet to seek out children or other",
+  "text_simplified": "يواجه الأطفال والمراهقون مخاطر متعددة على الإنترنت، منها المحتوى غير المناسب والاتصالات الضارة. يجب على الأهل توعية أبنائهم بهذه المخاطر وتعزيز الاستخدام الآمن للإنترنت.",
+  "labels": [
+    "سلامة الأطفال",
+    "محتوى غير لائق",
+    "استخدام آمن للإنترنت",
+    "توعية رقمية"
+  ],
+  "created_at": "2026-06-20T14:56:05Z",
+  "updated_at": "2026-06-20T14:56:05Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

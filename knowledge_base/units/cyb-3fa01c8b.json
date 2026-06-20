@@ -1,0 +1,29 @@
+{
+  "id": "cyb-3fa01c8b",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "نماذج حماية الأطفال على الإنترنت ومسؤوليات الصناعة",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "of Children Online (2012). National models There are a number of national and international models that set out the clear roles and responsibilities of the technology industry in addressing child online protection. Some of these are not specific to children per se but can apply to them as Internet users. They provide overarching guidelines to the industry regarding regulatory policies, standards and collaboration with other sectors. For the purpose of this document, the key principles of such models, as they apply to the ICT industry, are highlighted. Guidelines for industry on Child Online Protection The Age Appropriate Design Code, the United Kingdom In early 2019, the Information Commissioner’s Office published proposals for its age- appropriate design code on the protection of childrens’s data. The proposed code is based on the best interests of the child, as laid out in the United Nations Convention on the Rights of the Child, and sets out several expectations for industry. The code consists of fifteen standards including, location services to be off by default for children, for industry to collect and retain only the minimum amount of personal data of children, for products to be private by design and for explanations to be age-appropriate and accessible. The Harmful Digital Communications Act, New Zealand The 2015 Act made cyber abuse a specific crime and focuses on a broad range of harms, from cyberbullying to revenge pornography. It aims to deter, prevent and lessen digital communication that is harmful, making it illegal to post a digital",
+  "text_simplified": "هذا النص يتناول نماذج وطنية ودولية تحدد مسؤوليات شركات التكنولوجيا في حماية الأطفال على الإنترنت. يذكر مثالين: قانون التصميم المناسب للعمر في بريطانيا الذي يفرض معايير مثل إيقاف خدمات الموقع افتراضياً للأطفال، وقانون الاتصالات الرقمية الضارة في نيوزيلندا الذي يجرم التنمر الإلكتروني. الهدف هو توجيه الصناعة لحماية الأطفال من المخاطر الرقمية.",
+  "labels": [
+    "حماية رقمية",
+    "تشريعات الإنترنت",
+    "سلامة الأطفال",
+    "مسؤولية الصناعة",
+    "مخاطر إلكترونية"
+  ],
+  "created_at": "2026-06-20T14:55:07Z",
+  "updated_at": "2026-06-20T14:55:07Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

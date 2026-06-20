@@ -1,0 +1,29 @@
+{
+  "id": "cyb-4d325acb",
+  "domain": "cyber",
+  "source_file": "ITU_Child_Online_Protection.pdf",
+  "title": "الحقوق والمسؤوليات في العالم الرقمي",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "المواطنة الرقمية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Guidelines for Children)",
+  "text_original": "for your own Digital Rights & Responsibili- learn to become responsible treatment over another. Elec- safety. In our own homes, ties: those freedoms extended to digital citizens in this new tronic access should not be we put locks on our doors everyone in a digital world. society. determined by race, physical and fire alarms in our or mental challenges. The • Basic digital rights must be homes to provide some Digital Communication: elec- issue of people in cities or addressed, discussed, and level of protection. The tronic exchange of information. towns with limited connectiv- understood in the digital same must be true in the • Anyone should be afforded ity needs to be addressed as world. With these rights also digital world to provide the opportunity to access well. To become productive come responsibilities. Users, protection and digital information anywhere and citizens, we need to be com- including children and young security. We need to have anytime. mitted to equal digital access. people, must help define how virus protection, backups the technology is to be used of data, and surge control Digital Literacy: proces of Digital Commerce: electronic in an appropriate manner. of our equipment. As re- teaching and learning about tech- buying and selling of goods. In a digital society these two sponsible citizens, we must nology and the use of technol- • Children and Young people areas must work together for protect our information ogy. need to learn about how to everyone to be productive. from outside forces",
+  "text_simplified": "في العالم الرقمي، لكل شخص حقوق ومسؤوليات. يجب حماية المعلومات الشخصية مثلما نحمي منازلنا بالأقفال. كما ينبغي أن يكون الوصول إلى التكنولوجيا متاحًا للجميع بغض النظر عن العرق أو الإعاقة. ويحتاج الأطفال والشباب إلى تعلم الاستخدام المسؤول للتكنولوجيا.",
+  "labels": [
+    "حقوق رقمية",
+    "مسؤولية رقمية",
+    "أمان رقمي",
+    "وصول عادل",
+    "محو الأمية الرقمية"
+  ],
+  "created_at": "2026-06-20T15:09:25Z",
+  "updated_at": "2026-06-20T15:09:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_Child_Online_Protection",
+    "source_author": ""
+  }
+}

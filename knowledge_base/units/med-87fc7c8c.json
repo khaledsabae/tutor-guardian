@@ -1,0 +1,28 @@
+{
+  "id": "med-87fc7c8c",
+  "domain": "medical",
+  "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
+  "title": "حقوق النشر والترخيص لمنظمة الصحة العالمية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "WHO — Physical Activity, Sedentary Behaviour and Sleep (under 5)",
+  "text_original": "is not permitted. If you adapt the work, then you the expression of any opinion whatsoever on the part of WHO must license your work under the same or equivalent Creative concerning the legal status of any country, territory, city or area Commons licence. If you create a translation of this work, you or of its authorities, or concerning the delimitation of its frontiers should add the following disclaimer along with the suggested or boundaries. Dotted and dashed lines on maps represent citation: “This translation was not created by the World Health approximate border lines for which there may not yet be Organization (WHO). WHO is not responsible for the content or full agreement. accuracy of this translation. The original English edition shall be The mention of specific companies or of certain manufacturers’ the binding and authentic edition”. products does not imply that they are endorsed or Any mediation relating to disputes arising under the licence recommended by WHO in preference to others of a similar shall be conducted in accordance with the mediation rules nature that are not mentioned. Errors and omissions excepted, of the World Intellectual Property Organization. the names of proprietary products are distinguished by initial capital letters. Suggested citation. Guidelines on physical activity, sedentary behaviour and sleep for children under 5 years of age. Geneva: All reasonable precautions have been taken by WHO to verify World Health Organization; 2019. Licence: CC BY-NC-SA 3.0 IGO. the information contained in this publication. However, the published material is being",
+  "text_simplified": "هذا النص يتعلق بحقوق النشر والترخيص لمنظمة الصحة العالمية. يجب أن يكون العمل مرخصًا بموجب رخصة المشاع الإبداعي المماثلة عند التعديل أو الترجمة. النص لا يتعلق بسلوك تربوي أو تعليمي للأطفال.",
+  "labels": [
+    "حقوق نشر",
+    "ترخيص",
+    "منظمة الصحة العالمية",
+    "مشاع إبداعي"
+  ],
+  "created_at": "2026-06-20T15:02:56Z",
+  "updated_at": "2026-06-20T15:02:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "WHO_Physical_Activity_Sleep_Under5",
+    "source_author": ""
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "cyb-27fca85f",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إجراءات حماية الأطفال عبر الإنترنت لمقدمي الخدمات",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال عبر الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "procedures and software to signpost and offer optional parental control related to children and young people’s access to Internet content. Good practice: The telecommunication regulations of most European Union member states, for example, stipulate that access to the network must be identified, through individual SIM cards or other identification tools. Table 2 provides guidance for providers of connectivity, data storage and hosting services on actions they can take to enhance child online protection and children’s participation. Guidelines for industry on Child Online Protection Table 2: COP checklist for Feature A: Provide connectivity, data and hosting Integrating child Providers of connectivity, data storage and hosting services can rights considerations identify, prevent and mitigate the adverse impacts of ICTs on into all appropriate children and young people’s rights, and identify opportunities to corporate policies support the advancement of children and young people’s rights. processes Refer to the general guidelines in Table 1. Developing standard In collaboration with government, law enforcement, civil society processes to handle and hotline organizations, providers of connectivity, data storage CSAM and hosting services can play a key role in combating CSAM by taking the following actions: Collaborate with government, law enforcement, civil society and hotline organizations to effectively handle CSAM and report cases to the appropriate authorities. If a relationship with law enforcement and a hotline is not already established, engage with them to develop processes together. Providers of connectivity, data storage or hosting services may also provide ICT training for law enforcement. If a company is operating",
+  "text_simplified": "يجب على مقدمي خدمات الاتصال والبيانات والاستضافة حماية الأطفال عبر الإنترنت من خلال تطبيق إجراءات الرقابة الأبوية والتعاون مع الجهات المختصة لمكافحة المواد المسيئة للأطفال. يمكنهم تعزيز حقوق الأطفال عبر تحديد المخاطر ومنعها والتخفيف من آثارها السلبية، مع تقديم التدريب اللازم لإنفاذ القانون.",
+  "labels": [
+    "رقابة أبوية",
+    "حماية رقمية",
+    "مكافحة الإساءة",
+    "تعاون مؤسسي",
+    "سلامة الأطفال"
+  ],
+  "created_at": "2026-06-20T14:58:58Z",
+  "updated_at": "2026-06-20T14:58:58Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

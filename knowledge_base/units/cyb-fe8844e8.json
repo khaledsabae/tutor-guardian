@@ -1,0 +1,29 @@
+{
+  "id": "cyb-fe8844e8",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "إجراءات حماية الأطفال من المحتوى الجنسي الضار",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الطفل من المحتوى الجنسي الضار",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "remove or block access to CSAM. Ensure that, where needed, service providers request the opinion of experts (e.g. national COP bodies) before destroying illegal content. Ensure that relevant third parties with whom the company has a contractual relationship have similarly robust notice and take down processes in place. Be prepared to handle CSAM and report cases to the appropriate authorities. If a relationship with law enforcement and the national hotline is not already established, engage with them to develop processes together. Work with internal functions, such as customer care, fraud prevention and security to ensure that the business can submit reports of suspected illegal content directly to law enforcement and hotlines. Ideally, this should be done in a way that neither exposes front-line staff to harmful content nor re-victimizes the affected child/children and young people. To address situations where staff may be exposed to abusive material, implement a policy or programme to support staff resiliency, safety and well-being. Guidelines for industry on Child Online Protection Developing Include data retention and preservation policies to support law standard processes enforcement in the event of criminal investigations through such to CSAM activities as capturing evidence. Document the company’s practices for handling CSAM, beginning with monitoring and extending to the final transfer and destruction of the content. Include a list of all personnel responsible for handling the material in the documentation. Promote reporting mechanisms for CSAM and ensure that customers know how to file a report if they discover such content. If a national",
+  "text_simplified": "يجب حماية الأطفال من المحتوى الجنسي الضار عبر الإنترنت. على الشركات إزالة هذا المحتوى فوراً والإبلاغ عنه للسلطات المختصة. كما ينبغي دعم الموظفين الذين قد يتعرضون لهذا المحتوى لحمايتهم نفسياً.",
+  "labels": [
+    "حماية الطفل",
+    "محتوى ضار",
+    "إبلاغ",
+    "سلامة رقمية",
+    "دعم نفسي"
+  ],
+  "created_at": "2026-06-20T14:57:44Z",
+  "updated_at": "2026-06-20T14:57:44Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

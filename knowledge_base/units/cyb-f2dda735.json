@@ -1,0 +1,29 @@
+{
+  "id": "cyb-f2dda735",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال عبر الإنترنت والتوعية الرقمية",
+  "language": "mixed",
+  "age_group": "unspecified",
+  "behavior_type": "السلامة الرقمية وحماية الأطفال",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "children and young people are protected from the potential risks online, but these are only one element of the equation. Parental control tools, awareness raising and education are also key components that will help empower and inform children and young people of all ages, as well as parents, caregivers and Many companies are investing in educational programmes designed to enable users to make informed decisions about content and services. Companies are assisting parents, caregivers and educators in guiding children and young people towards safer, more responsible and appropriate online and mobile phone experiences. This includes sign posting age-sensitive content and ensuring that information on items such as content prices, subscription terms and how to cancel subscriptions, is clearly communicated. Promoting respect of the minimum age requirement by social media in all countries where age verification is possible would also help to protect children by allowing them to access services at an appropriate age. An important consideration that needs to go alongside this recommendation is the additional personal data collection that this may entail and the need to limit the collection and storage of this information and its processing. Guidelines for industry on Child Online Protection It is also important to provide information directly to children and young people on safer ICT use and positive and responsible behaviour. Beyond raising awareness about safety, companies can facilitate positive experiences by developing content for children and young people about being respectful, kind and open-minded when using ICTs and looking after friends. They can",
+  "text_simplified": "يجب حماية الأطفال والشباب من المخاطر المحتملة على الإنترنت، مع تعزيز دور أدوات الرقابة الأبوية والتوعية والتعليم. تساهم الشركات في تمكين المستخدمين من اتخاذ قرارات مستنيرة حول المحتوى والخدمات، وتوجيه الأهل نحو تجارب رقمية أكثر أمانًا ومسؤولية. من المهم أيضًا توفير معلومات مباشرة للأطفال حول الاستخدام الآمن للتكنولوجيا وتعزيز السلوك الإيجابي والمحترم عبر الإنترنت.",
+  "labels": [
+    "حماية الأطفال",
+    "السلامة الرقمية",
+    "الرقابة الأبوية",
+    "التوعية الإلكترونية",
+    "سلوك إيجابي"
+  ],
+  "created_at": "2026-06-20T14:56:36Z",
+  "updated_at": "2026-06-20T14:56:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}

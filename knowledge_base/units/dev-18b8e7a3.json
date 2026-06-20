@@ -1,0 +1,29 @@
+{
+  "id": "dev-18b8e7a3",
+  "domain": "development",
+  "source_file": "Harvard_Environment_of_Relationships.pdf",
+  "title": "أهمية العلاقات مع الأقران في النمو الاجتماعي والمعرفي",
+  "language": "ar",
+  "age_group": "4-6",
+  "behavior_type": "مهارات اجتماعية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Harvard Center on the Developing Child",
+  "text_original": "stronger cognitive skills in Relationships with peers also are important. young children and enhanced social compe- Children who experience greater peer accep- tence and work skills later in school, which illus- tance and friendship tend to feel more positively trates the connection between social/emotional about the school experience and perform better development and intellectual growth. The in the classroom.33, 34, 35, 36, 37, 38 broader quality of the home environment (in- cluding toys, activities, and interactions with- children have different ways of interacting with in the family setting) also is strongly related their peers. Some are gregarious, others are too to early cognitive and language development, shy to get involved (although they want to), performance on IQ testing, and later achieve- some need time to “warm up,” and others are ment in school.12, 18, 19, 20, 21, 22, 23, 24, 25, 26 not as interested in being sociable. All of these variations fall within a normal range, and it is Young children also learn a great deal from each essential to differentiate among the many poten- other. they learn how to share, to engage in re- tial reasons (both biological and environmental) ciprocal interactions (e.g., taking turns, giving that a young child may have limited or difficult and receiving), to take the needs and desires of interactions with others. Playing cooperatively, others into account, and to manage their own im- making friends, and sustaining friendships over pulses. Just being around other children, how- time are not always easy. Any child",
+  "text_simplified": "الأطفال يتعلمون مهارات اجتماعية مهمة من التفاعل مع أقرانهم، مثل المشاركة وأخذ الأدوار وإدارة الانفعالات. العلاقات الإيجابية مع الأصدقاء تعزز الشعور بالرضا عن المدرسة وتحسن الأداء الأكاديمي. تختلف طرق تفاعل الأطفال مع الآخرين، فبعضهم اجتماعي والبعض الآخر خجول أو يحتاج وقتاً للتأقلم، وكل هذه الاختلافات طبيعية. البيئة المنزلية الغنية بالألعاب والأنشطة والتفاعلات الأسرية تدعم النمو المعرفي واللغوي.",
+  "labels": [
+    "مهارات اجتماعية",
+    "تفاعل الأقران",
+    "نمو معرفي",
+    "بيئة منزلية",
+    "صداقة"
+  ],
+  "created_at": "2026-06-20T14:29:09Z",
+  "updated_at": "2026-06-20T14:29:09Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Harvard_Environment_of_Relationships",
+    "source_author": ""
+  }
+}

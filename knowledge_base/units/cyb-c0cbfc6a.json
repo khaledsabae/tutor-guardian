@@ -1,0 +1,29 @@
+{
+  "id": "cyb-c0cbfc6a",
+  "domain": "cyber",
+  "source_file": "ITU_COP_Industry_Guidelines.pdf",
+  "title": "حماية الأطفال على الإنترنت: مسؤولية مشتركة",
+  "language": "ar",
+  "age_group": "unspecified",
+  "behavior_type": "حماية الأطفال على الإنترنت",
+  "intervention_type": "وقائي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "ITU — Child Online Protection (Industry Guidelines)",
+  "text_original": "risks. The Initiative brings together partners from all sectors of the global community to ensure a safe and secure online experience for children everywhere. As part of the Initiative, in 2009 ITU published a set of COP guidelines for four groups: children; parents, guardians and educators; industry; and policy-makers. Child online protection is understood in these guidelines as an all- inclusive approach to respond to all potential threats and harms that children and young people may encounter either online or facilitated by online technologies. In this document, child online protection also includes harm to children that occurs offline but is linked to evidence of online violence and abuse. In addition to the consideration of children’s online behaviour and activities, child online protection also refers to the misuse of technology by persons other than the children themselves to exploit children. All relevant stakeholders have a role in helping children and young people benefit from the opportunities that the Internet can offer, while acquiring digital literacy and resilience with regard to their online well-being and protection. Protecting children and young people is the shared responsibility of all stakeholders. For that to happen, policy-makers, industry, parents, carers, educators and other stakeholders, must ensure that children and young people can fulfil their potential – online and offline. While no there is no universal definition, child online protection takes a holistic approach to building safe, age appropriate, inclusive and participatory digital spaces for children and young people, characterized by: • response, support and self-help in",
+  "text_simplified": "حماية الأطفال على الإنترنت مسؤولية مشتركة بين الأهل والمربين وصناع السياسات والصناعة. تهدف هذه المبادرة إلى توفير بيئة رقمية آمنة للأطفال من خلال التوعية بالمخاطر وتعزيز الثقافة الرقمية. تشمل الحماية التصدي للتهديدات الإلكترونية والاستغلال عبر التكنولوجيا، مع التركيز على بناء مساحات رقمية مناسبة لأعمارهم.",
+  "labels": [
+    "حماية رقمية",
+    "سلامة الأطفال",
+    "مخاطر الإنترنت",
+    "توعية رقمية",
+    "مسؤولية مشتركة"
+  ],
+  "created_at": "2026-06-20T14:53:52Z",
+  "updated_at": "2026-06-20T14:53:52Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ITU_COP_Industry_Guidelines",
+    "source_author": ""
+  }
+}
