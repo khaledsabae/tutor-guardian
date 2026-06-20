@@ -62,6 +62,17 @@ def azure_client():
     ), os.environ.get("AZURE_OPENAI_DEPLOYMENT", "DeepSeek-V4-Flash")
 
 
+def deepseek_client():
+    """DeepSeek native (OpenAI-compatible) — premium, fast, CJK-clean pairs."""
+    import os
+    from openai import OpenAI
+
+    return OpenAI(
+        api_key=os.environ["DEEPSEEK_API_KEY"],
+        base_url=os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com"),
+    ), os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+
+
 BACKEND = "ollama"  # set by main() from --backend
 OLLAMA_BASE = None
 OLLAMA_MODEL = "qwen2.5:7b"
@@ -214,7 +225,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--output", default=str(PROJECT_ROOT / "ops/data/qa_dataset_v2.jsonl"))
     ap.add_argument("--limit-calls", type=int, default=0, help="stop after N API calls (smoke)")
-    ap.add_argument("--backend", choices=["ollama", "azure"], default="ollama")
+    ap.add_argument("--backend", choices=["ollama", "azure", "deepseek"], default="ollama")
     ap.add_argument("--ollama-url", default="http://100.109.163.64:11434")
     ap.add_argument("--ollama-model", default="qwen2.5:7b")
     args = ap.parse_args()
@@ -241,6 +252,8 @@ def main() -> None:
     client = model = None
     if BACKEND == "azure":
         client, model = azure_client()
+    elif BACKEND == "deepseek":
+        client, model = deepseek_client()
     calls = 0
     written = 0
 
