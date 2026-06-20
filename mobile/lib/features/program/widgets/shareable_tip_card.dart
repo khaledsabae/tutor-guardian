@@ -142,6 +142,16 @@ class ShareableTipCard extends StatelessWidget {
                         Text('المربي الذكي', style: GoogleFonts.cairo(fontSize: 22, fontWeight: FontWeight.w700, color: AppTheme.primary)),
                         const SizedBox(height: 4),
                         Text('شريكك في رحلة التربية', style: GoogleFonts.cairo(fontSize: 14, fontWeight: FontWeight.w400, color: AppTheme.textSecondary)),
+                        const SizedBox(height: 8),
+                        Text(
+                          '📲 مجانًا على Google Play — ابحث: «المربّي»',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.cairo(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.primary,
+                          ),
+                        ),
                       ],
                     ),
                   ],
