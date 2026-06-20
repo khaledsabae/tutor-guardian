@@ -29,9 +29,8 @@ echo "----- rsync exit $? -----" >> "$LOG"
 # Self-disable once every new-lesson podcast exists.
 NEED=$(/home/khalednew/projects/tutor-guardian/backend/.venv/bin/python -c "
 import json,os
-NEW=('16-18_islamic_parenting_adult_faith','16-18_development_adult_readiness','4-6_cyber_early_screens','4-6_medical_healthy_growth','2-3_medical_early_wellbeing','7-9_cyber_digital_basics','10-12_development_pre_teen','0-3_islamic_parenting_fitrah','2-3_islamic_first_words','7-9_islamic_parenting_akhlaq','10-12_islamic_parenting_worship_love','13-15_islamic_parenting_steadfast')
 m=json.load(open('source_to_lesson.json'))
-lids=[v[2] for v in m.values() if isinstance(v,list) and len(v)>=3 and any(p in v[2] for p in NEW)]
+lids=[v[2] for v in m.values() if isinstance(v,list) and len(v)>=3]
 miss=[l for l in lids if not (os.path.exists(f'docs/{l}_podcast.mp3') and os.path.getsize(f'docs/{l}_podcast.mp3')>500*1024)]
 print(len(miss))
 " 2>/dev/null)

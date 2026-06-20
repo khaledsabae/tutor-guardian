@@ -56,11 +56,15 @@ def _load(p, default):
 
 
 def _targets():
+    """Every source-mapped lesson — the main loop skips those that already own
+    a podcast, so this regenerates ONLY the missing ones (the 48 new lessons +
+    any whose placeholder podcast was deleted). Idempotent, never re-does good
+    audio."""
     smap = _load(MAP_FILE, {})
     out = []
     for sid, meta in smap.items():
         lid = meta[2] if isinstance(meta, list) and len(meta) >= 3 else None
-        if lid and any(p in lid for p in NEW_PATHS):
+        if lid:
             out.append((lid, sid))
     return out
 
