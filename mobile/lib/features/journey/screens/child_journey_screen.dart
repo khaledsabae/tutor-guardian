@@ -14,6 +14,7 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../coins/coins_providers.dart';
+import '../../program/data/review_prompt.dart';
 import '../data/challenges.dart';
 import '../data/journey_milestones.dart';
 import '../data/journey_store.dart';
@@ -188,6 +189,7 @@ class ChildJourneyScreen extends ConsumerWidget {
         title: 'ما شاء الله!',
         message: 'محطة جديدة في رحلة $childName:\n${result.title}',
       );
+      if (context.mounted) await ReviewPrompt.maybeAsk(context);
     }
   }
 }
