@@ -1,0 +1,58 @@
+/// Central share helper — the one place that turns any widget into a
+/// shared PNG with a reverent, pre-filled «تذكير» message and an install
+/// link. Every viral surface in the app routes through here so the message
+/// framing, install CTA, and (later) referral attribution stay consistent.
+///
+/// WhatsApp is surfaced first by the OS share sheet in Arabic markets; we
+/// don't hard-bind to it (an image can't be pre-attached to a wa.me link),
+/// but the pre-filled text + install URL travel with the image to whatever
+/// app the parent picks.
+library;
+
+import 'dart:io';
+
+import 'package:flutter/widgets.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
+
+class ShareService {
+  /// Base install URL. Phase 0.2 appends `&referrer=ref_<code>` so the
+  /// Google Play Install Referrer API can attribute the install for free
+  /// (no deprecated Firebase Dynamic Links needed).
+  static const String installUrl =
+      'https://play.google.com/store/apps/details?id=com.alsaba.almorabbi';
+
+  /// Build the install URL, optionally carrying a referral code.
+  static String installUrlFor({String? referralCode}) =>
+      referralCode == null || referralCode.isEmpty
+          ? installUrl
+          : '$installUrl&referrer=ref_$referralCode';
+
+  /// Capture [card] to a PNG and open the share sheet with a reverent,
+  /// pre-filled message plus the install link.
+  ///
+  /// [message] is the human line (e.g. «ما شاء الله، أتمّ محمد أول صلاة 🤍»);
+  /// the install CTA is appended automatically so callers never forget it.
+  static Future<bool> shareMomentCard({
+    required Widget card,
+    required String message,
+    required String fileTag,
+    String? referralCode,
+  }) async {
+    try {
+      final image = await ScreenshotController()
+          .captureFromWidget(card, pixelRatio: 2.0);
+      final dir = await Directory.systemTemp.createTemp('tg_share_');
+      final file = File('${dir.path}/$fileTag.png');
+      await file.writeAsBytes(image);
+
+      final text = '$message\n\n📲 «المربّي» مجانًا لوجه الله:\n'
+          '${installUrlFor(referralCode: referralCode)}';
+
+      final result = await Share.shareXFiles([XFile(file.path)], text: text);
+      return result.status == ShareResultStatus.success;
+    } catch (_) {
+      return false;
+    }
+  }
+}

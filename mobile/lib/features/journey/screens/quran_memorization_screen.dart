@@ -13,6 +13,8 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../coins/coins_providers.dart';
 import '../../quran/models/surah_names.dart';
+import '../../share/share_service.dart';
+import '../../share/shareable_moment_card.dart';
 import '../data/journey_milestones.dart';
 import '../providers/journey_providers.dart';
 
@@ -53,6 +55,19 @@ class QuranMemorizationScreen extends ConsumerWidget {
         imageAsset: milestoneBadgeAsset('first_surah'),
         title: 'ما شاء الله!',
         message: '$childName حفظ أول سورة — سورة ${surahNames[surah - 1]} 🌟',
+        onShare: () => ShareService.shareMomentCard(
+          fileTag: 'quran_first_surah_$surah',
+          message: 'ما شاء الله 📖 $childName حفظ أول سورة — '
+              'سورة ${surahNames[surah - 1]} 🌟\n'
+              'اللهم اجعله من أهل القرآن وخاصته.',
+          card: ShareableMomentCard(
+            emoji: '📖',
+            eyebrow: 'محطة قرآنية لـ $childName',
+            headline: 'حفظ أول سورة — سورة ${surahNames[surah - 1]}',
+            body: 'اللهم اجعله من أهل القرآن وخاصّتك يا رب 🤍',
+            icon: Icons.menu_book_outlined,
+          ),
+        ),
       );
     }
   }

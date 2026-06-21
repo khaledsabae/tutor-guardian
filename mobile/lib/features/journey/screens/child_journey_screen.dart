@@ -15,6 +15,8 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../coins/coins_providers.dart';
 import '../../program/data/review_prompt.dart';
+import '../../share/share_service.dart';
+import '../../share/shareable_moment_card.dart';
 import '../data/challenges.dart';
 import '../data/journey_milestones.dart';
 import '../data/journey_store.dart';
@@ -182,12 +184,27 @@ class ChildJourneyScreen extends ConsumerWidget {
         .creditBadges([journeyRewardId(childId, key)]);
 
     if (context.mounted) {
+      final emoji = milestone?.emoji ?? '💛';
       await showCelebration(
         context,
-        emoji: milestone?.emoji ?? '💛',
+        emoji: emoji,
         imageAsset: milestone != null ? milestoneBadgeAsset(milestone.key) : null,
         title: 'ما شاء الله!',
         message: 'محطة جديدة في رحلة $childName:\n${result.title}',
+        onShare: () => ShareService.shareMomentCard(
+          fileTag: 'milestone_$key',
+          message: 'ما شاء الله 🤍 سجّلت محطة جديدة في رحلة $childName:\n'
+              '«${result.title}»\nاللهم بارك له واجعله من الصالحين.',
+          card: ShareableMomentCard(
+            emoji: emoji,
+            eyebrow: 'محطة في رحلة $childName',
+            headline: result.title,
+            body: result.note.trim().isNotEmpty
+                ? result.note
+                : 'اللهم بارك له واجعله قرة عين لوالديه 🤍',
+            icon: Icons.celebration_outlined,
+          ),
+        ),
       );
       if (context.mounted) await ReviewPrompt.maybeAsk(context);
     }

@@ -16,6 +16,8 @@ Future<void> showCelebration(
   required String message,
   String buttonLabel = 'متابعة',
   String? imageAsset,
+  Future<void> Function()? onShare,
+  String shareLabel = 'شارك هذه اللحظة 🤍',
 }) {
   return showGeneralDialog<void>(
     context: context,
@@ -29,6 +31,8 @@ Future<void> showCelebration(
       message: message,
       buttonLabel: buttonLabel,
       imageAsset: imageAsset,
+      onShare: onShare,
+      shareLabel: shareLabel,
     ),
     transitionBuilder: (_, anim, __, child) => ScaleTransition(
       scale: CurvedAnimation(parent: anim, curve: Curves.easeOutBack),
@@ -43,6 +47,8 @@ class _CelebrationDialog extends StatefulWidget {
   final String message;
   final String buttonLabel;
   final String? imageAsset;
+  final Future<void> Function()? onShare;
+  final String shareLabel;
 
   const _CelebrationDialog({
     required this.emoji,
@@ -50,6 +56,8 @@ class _CelebrationDialog extends StatefulWidget {
     required this.message,
     required this.buttonLabel,
     this.imageAsset,
+    this.onShare,
+    this.shareLabel = 'شارك هذه اللحظة 🤍',
   });
 
   @override
@@ -59,6 +67,17 @@ class _CelebrationDialog extends StatefulWidget {
 class _CelebrationDialogState extends State<_CelebrationDialog> {
   late final ConfettiController _confetti =
       ConfettiController(duration: const Duration(milliseconds: 1500));
+  bool _sharing = false;
+
+  Future<void> _handleShare() async {
+    if (_sharing) return;
+    setState(() => _sharing = true);
+    try {
+      await widget.onShare!();
+    } finally {
+      if (mounted) setState(() => _sharing = false);
+    }
+  }
 
   @override
   void initState() {
@@ -129,6 +148,14 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                     ),
                   ),
                   const SizedBox(height: 24),
+                  if (widget.onShare != null) ...[
+                    BouncyButton(
+                      label: _sharing ? 'جاري التحضير…' : widget.shareLabel,
+                      color: Dt.primary,
+                      onTap: _sharing ? () {} : _handleShare,
+                    ),
+                    const SizedBox(height: 10),
+                  ],
                   BouncyButton(
                     label: widget.buttonLabel,
                     color: Dt.accent,
