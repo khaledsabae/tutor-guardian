@@ -1,11 +1,11 @@
 {
-  "total_units": 883,
-  "generated_at": "2026-06-20T15:16:18.507932+00:00",
+  "total_units": 836,
+  "generated_at": "2026-06-21T03:07:21.027315+00:00",
   "by_domain": {
-    "medical": 263,
-    "cyber": 255,
-    "islamic_parenting": 298,
-    "development": 67
+    "medical": 253,
+    "cyber": 251,
+    "islamic_parenting": 285,
+    "development": 47
   },
   "units": [
     {
@@ -201,18 +201,6 @@
       "size_chars": 5655
     },
     {
-      "id": "23f40364-6a52-4b4b-86af-29a1e3d54f8b",
-      "domain": "development",
-      "title": "دماغ المراهق: الانتقال الفسيولوجي من الطفولة إلى الرشد",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
       "id": "24e75eee-6a98-4d35-a300-02c01499c525",
       "domain": "medical",
       "title": "اضطراب العناد الشارد: استراتيجيات المنزل والأسرة",
@@ -283,30 +271,6 @@
       "behavior_type": "التطور_الطبيعي",
       "needs_ocr": false,
       "size_chars": 5645
-    },
-    {
-      "id": "2b7f3d08-8ecd-457b-b1e5-e4c4cc34c95e",
-      "domain": "development",
-      "title": "تحولات دماغ المراهق وتأثرها بالبيئة المحيطة",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
-      "id": "2d4ecd6c-510f-4451-ac2e-1e1c3fec6058",
-      "domain": "development",
-      "title": "علم دماغ المراهق: توجيه البرامج والسياسات المستقبلية",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
     },
     {
       "id": "2dd953f6-aafe-4a67-9571-ba214533f43f",
@@ -417,18 +381,6 @@
       "size_chars": 51874
     },
     {
-      "id": "401f39d6-0276-4c41-87e6-de883c9236d6",
-      "domain": "islamic_parenting",
-      "title": "أحكام المولود الجديد عند علوان (فهرس إنجليزي)",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "Islamic_Child_Education",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
       "id": "40f84fca-81b0-4533-8c7c-a0dbbf8a4598",
       "domain": "cyber",
       "title": "A focus on adolescent social media use and",
@@ -487,18 +439,6 @@
       "behavior_type": "نصائح_تربوية_عامة",
       "needs_ocr": false,
       "size_chars": 600
-    },
-    {
-      "id": "4fcec458-d52b-4e74-8f25-e5aaa3cd5c0a",
-      "domain": "islamic_parenting",
-      "title": "آداب الاستئذان والنظر في تربية المراهقين",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "التربية_الجنسية",
-      "needs_ocr": false,
-      "size_chars": 225
     },
     {
       "id": "635f8863-5aab-4df5-94ad-7ac78ffc1137",
@@ -585,18 +525,6 @@
       "size_chars": 600
     },
     {
-      "id": "6b71ada0-c189-4d5e-89f2-cce19272f4b8",
-      "domain": "development",
-      "title": "ملحق فني من تقرير دماغ المراهق (UNICEF)",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
       "id": "6ba3aaa0-3251-4c53-8767-ae1eb9611669",
       "domain": "medical",
       "title": "Measures of Early Social Communication and Vocabulary",
@@ -631,18 +559,6 @@
       "behavior_type": "الصحة_النفسية_للأطفال",
       "needs_ocr": false,
       "size_chars": 600
-    },
-    {
-      "id": "70ef8432-d97f-490a-acab-8df9e57f8652",
-      "domain": "medical",
-      "title": "مؤشرات نمو طفلك في عمر الشهرين (CDC)",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "prenatal-1",
-      "normalized_age_group": "prenatal-1",
-      "behavior_type": "التوحد",
-      "needs_ocr": false,
-      "size_chars": 599
     },
     {
       "id": "723a3b98-bf3c-4607-8a02-9e774d1da69c",
@@ -741,30 +657,6 @@
       "size_chars": 600
     },
     {
-      "id": "7f487a00-8c7e-4f90-bb16-7b8badf6078f",
-      "domain": "development",
-      "title": "التصوير العصبي لدماغ المراهق: نافذة المرونة الثانية",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
-      "id": "808d5a15-b04c-48d3-97e1-2ed87fae9b71",
-      "domain": "development",
-      "title": "سنوات المراهقة: حيث يتشكل الدماغ الذي سيعيش به ابنك",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
       "id": "8295e748-32d6-4f5a-9ced-e63307cde035",
       "domain": "medical",
       "title": "Global Report Developmental Disabilities",
@@ -811,18 +703,6 @@
       "behavior_type": "الصحة_النفسية",
       "needs_ocr": false,
       "size_chars": 113451
-    },
-    {
-      "id": "890bf34f-b3b5-4b8f-91e4-71b58102a728",
-      "domain": "development",
-      "title": "تطبيق علم الأعصاب الحديث في برامج رعاية المراهقين",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
     },
     {
       "id": "8b869dfa-053f-4c5e-abe2-159eed4d599a",
@@ -885,18 +765,6 @@
       "size_chars": 4593
     },
     {
-      "id": "9282de4e-f0f4-4055-85d3-fd8605d45b6b",
-      "domain": "development",
-      "title": "دماغ المراهق تحت الحرمان والأزمات: رؤى علمية",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
       "id": "92b2c72a-77e1-4f1b-8245-c8b347d4eb73",
       "domain": "medical",
       "title": "Information Resource",
@@ -919,18 +787,6 @@
       "behavior_type": "ضعف_التركيز",
       "needs_ocr": false,
       "size_chars": 12737
-    },
-    {
-      "id": "9537a6a8-1794-48c0-8155-f742fa03fed9",
-      "domain": "development",
-      "title": "من المختبر إلى الواقع: علم أعصاب المراهقة للتطبيق",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
     },
     {
       "id": "95e7a228-ce19-494e-99c0-18e4f6402566",
@@ -1065,18 +921,6 @@
       "size_chars": 600
     },
     {
-      "id": "a85a51d4-3b5c-4979-a212-4a598a470d9b",
-      "domain": "islamic_parenting",
-      "title": "مسؤولية التربية العقلية عند علوان (فهرس إنجليزي)",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "Islamic_Child_Education",
-      "needs_ocr": false,
-      "size_chars": 486
-    },
-    {
       "id": "a9219a05-46a1-4ece-8961-686d0d27f960",
       "domain": "islamic_parenting",
       "title": "العلم والأخلاق: ركيزتا بناء شخصية الأبناء",
@@ -1125,18 +969,6 @@
       "size_chars": 82087
     },
     {
-      "id": "ae449033-324c-46ec-ba6d-43617e53baa1",
-      "domain": "development",
-      "title": "تعريف بتقرير دماغ المراهق — مكتب أبحاث اليونيسف",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 599
-    },
-    {
       "id": "aedda350-cf2a-4d53-869a-2b07a694180d",
       "domain": "islamic_parenting",
       "title": "أساليب تربية الأبناء المناسبة لسن 7-9 سنوات",
@@ -1147,18 +979,6 @@
       "behavior_type": "أساليب_التربية",
       "needs_ocr": false,
       "size_chars": 118
-    },
-    {
-      "id": "b12c6a7d-2f9f-4769-916b-1cc005069652",
-      "domain": "development",
-      "title": "نصائح CDC للتربية الإيجابية في الطفولة الوسطى (9-11)",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "10-12",
-      "normalized_age_group": "10-12",
-      "behavior_type": "التربية_الإيجابية",
-      "needs_ocr": false,
-      "size_chars": 600
     },
     {
       "id": "b173f42a-157f-4929-89a9-b67d12828f3d",
@@ -1279,18 +1099,6 @@
       "behavior_type": "ضعف_التركيز",
       "needs_ocr": false,
       "size_chars": 2164
-    },
-    {
-      "id": "b93653de-7273-4f0c-a6cb-46a9c2b5c42f",
-      "domain": "development",
-      "title": "المراهقة: نافذة فرصة ثانية ومخاطر صحية يجب الانتباه لها",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
     },
     {
       "id": "bca43fa9-622d-580b-a4ef-a05fd39e1305",
@@ -2697,18 +2505,6 @@
       "size_chars": 768
     },
     {
-      "id": "cyb-762ee095",
-      "domain": "cyber",
-      "title": "تأثير زيادة وقت اللعب بالفيديو على الأطفال الصغار",
-      "source_file": "Screen_Time_2025.pdf",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
-      "needs_ocr": false,
-      "size_chars": 1370
-    },
-    {
       "id": "cyb-7dad3d14",
       "domain": "cyber",
       "title": "إرشادات حماية الطفل عبر الإنترنت للشركات والأهل",
@@ -3081,18 +2877,6 @@
       "size_chars": 1476
     },
     {
-      "id": "cyb-a6f2ec93",
-      "domain": "cyber",
-      "title": "دليل حماية الأطفال على الإنترنت",
-      "source_file": "ITU_Child_Online_Protection.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلامة رقمية",
-      "needs_ocr": false,
-      "size_chars": 1672
-    },
-    {
       "id": "cyb-a75c4112",
       "domain": "cyber",
       "title": "نصائح للأمهات حول استخدام وسائل الإعلام الرقمية للاطفال في ا",
@@ -3453,18 +3237,6 @@
       "size_chars": 1683
     },
     {
-      "id": "cyb-c1d58bd3",
-      "domain": "cyber",
-      "title": "استخدام الأطفال للأجهزة: تحليل البيانات",
-      "source_file": "Screen_Time_2025.pdf",
-      "language": "ar",
-      "original_age_group": "prenatal-1",
-      "normalized_age_group": "prenatal-1",
-      "behavior_type": "فرط في استخدام الأجهزة",
-      "needs_ocr": false,
-      "size_chars": 1457
-    },
-    {
       "id": "cyb-c231a76a",
       "domain": "cyber",
       "title": "كيفية التعامل مع التحرش الرقمي؟",
@@ -3595,18 +3367,6 @@
       "behavior_type": "استخدام وسائل التواصل الاجتماعي للأطفال ذوي صعوبات التعلم",
       "needs_ocr": false,
       "size_chars": 1602
-    },
-    {
-      "id": "cyb-cc89b0a7",
-      "domain": "cyber",
-      "title": "دليل حماية الأطفال على الإنترنت",
-      "source_file": "ITU_Child_Online_Protection.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "سلامة رقمية",
-      "needs_ocr": false,
-      "size_chars": 1631
     },
     {
       "id": "cyb-cd2ac235",
@@ -4209,18 +3969,6 @@
       "size_chars": 226
     },
     {
-      "id": "d3b5e4e6-bc8e-4eca-b9b4-0541171ab326",
-      "domain": "development",
-      "title": "نصائح CDC للتربية الإيجابية لمرحلة ما قبل المدرسة (3-5)",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "التربية_الإيجابية",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
       "id": "d428eb33-23ec-46e2-a859-3cc81d4c35d8",
       "domain": "cyber",
       "title": "التنمر الإلكتروني وأثره النفسي والجسدي",
@@ -4389,18 +4137,6 @@
       "size_chars": 1674
     },
     {
-      "id": "dev-645a7c7f",
-      "domain": "development",
-      "title": "إطار الرعاية المغذية لنمو الطفل المبكر",
-      "source_file": "WHO_Nurturing_Care_ECD.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1796
-    },
-    {
       "id": "dev-75346fc0",
       "domain": "development",
       "title": "تكيف الأطفال المبكر مع المدرسة والعلاقات المؤثرة",
@@ -4483,18 +4219,6 @@
       "behavior_type": "التأخر الدراسي",
       "needs_ocr": false,
       "size_chars": 1715
-    },
-    {
-      "id": "dev-9e23e6d4",
-      "domain": "development",
-      "title": "قائمة مراجع في تنمية الطفل والتربية",
-      "source_file": "Harvard_Environment_of_Relationships.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1777
     },
     {
       "id": "dev-a31660e3",
@@ -4701,18 +4425,6 @@
       "size_chars": 1791
     },
     {
-      "id": "dev-e601788b",
-      "domain": "development",
-      "title": "نصائح الأمهات لتطوير صحي في مرحلة المراهقة",
-      "source_file": "Positive_Parenting_9_11.pdf",
-      "language": "ar",
-      "original_age_group": "7-9",
-      "normalized_age_group": "7-9",
-      "behavior_type": "قلق, إدمان ألعاب",
-      "needs_ocr": false,
-      "size_chars": 1561
-    },
-    {
       "id": "dev-ef1087c3",
       "domain": "development",
       "title": "فرصة ثانية للتأثير في نمو دماغ الطفل",
@@ -4723,18 +4435,6 @@
       "behavior_type": "التنمية_المبكرة",
       "needs_ocr": false,
       "size_chars": 1660
-    },
-    {
-      "id": "dev-f54ce529",
-      "domain": "development",
-      "title": "قائمة مصادر الصور في دليل رعاية الأطفال",
-      "source_file": "WHO_Nurturing_Care_ECD.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 507
     },
     {
       "id": "dev-fa7db881",
@@ -4759,18 +4459,6 @@
       "behavior_type": "العلاقات الاجتماعية والعاطفية",
       "needs_ocr": false,
       "size_chars": 1726
-    },
-    {
-      "id": "df2bbc86-7340-4b26-9b96-0d3295c9a1b6",
-      "domain": "development",
-      "title": "اكتشافات دماغ المراهق: من المعامل إلى حياة أبنائنا",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 600
     },
     {
       "id": "df840cb4-0720-4c57-9495-64dbf45e8e18",
@@ -4807,18 +4495,6 @@
       "behavior_type": "الصحة_النفسية",
       "needs_ocr": false,
       "size_chars": 17824
-    },
-    {
-      "id": "e313c48b-f705-4cdd-a7e6-0e585f6ab69f",
-      "domain": "development",
-      "title": "شكر وتقدير — تقرير دماغ المراهق (UNICEF)",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
-      "needs_ocr": false,
-      "size_chars": 599
     },
     {
       "id": "e3caaf25-9c84-4ff2-a924-00263347df1c",
@@ -4925,18 +4601,6 @@
       "original_age_group": "10-12",
       "normalized_age_group": "10-12",
       "behavior_type": "أسس_التربية_الإسلامية",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
-      "id": "f047bd8f-ef57-43d1-8ff3-18b949445d88",
-      "domain": "development",
-      "title": "دماغ المراهق: نافذة الفرصة الثانية (مقدمة التقرير)",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "المراهقة_والتطور_العصبي",
       "needs_ocr": false,
       "size_chars": 600
     },
@@ -5061,30 +4725,6 @@
       "size_chars": 535
     },
     {
-      "id": "fa6e2d20-4ddc-401f-be85-f3e1e24c1091",
-      "domain": "islamic_parenting",
-      "title": "أحكام استقبال المولود: الولادة والتسمية والعقيقة",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "prenatal-1",
-      "normalized_age_group": "prenatal-1",
-      "behavior_type": "رعاية_المولود",
-      "needs_ocr": false,
-      "size_chars": 225
-    },
-    {
-      "id": "fda90146-a230-4111-96c9-5210463458e0",
-      "domain": "islamic_parenting",
-      "title": "بيانات نشر كتاب تربية الأولاد (صفحة الحقوق)",
-      "source_file": "",
-      "language": "",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "Islamic_Child_Education",
-      "needs_ocr": false,
-      "size_chars": 600
-    },
-    {
       "id": "isl-003e7702",
       "domain": "islamic_parenting",
       "title": "مفهوم المنهج في اللغة والاصطلاح والتربية",
@@ -5107,18 +4747,6 @@
       "behavior_type": "تربية الأبناء",
       "needs_ocr": false,
       "size_chars": 1365
-    },
-    {
-      "id": "isl-0235b73e",
-      "domain": "islamic_parenting",
-      "title": "قائمة مراجع إسلامية وتربوية",
-      "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1346
     },
     {
       "id": "isl-0243bed4",
@@ -5179,18 +4807,6 @@
       "behavior_type": "مسؤولية تربوية",
       "needs_ocr": false,
       "size_chars": 845
-    },
-    {
-      "id": "isl-085f3af3",
-      "domain": "islamic_parenting",
-      "title": "قائمة مراجع في تربية الطفل المسلم",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1318
     },
     {
       "id": "isl-08604ca9",
@@ -5853,18 +5469,6 @@
       "size_chars": 1356
     },
     {
-      "id": "isl-435e9173",
-      "domain": "islamic_parenting",
-      "title": "مراجع تربوية إسلامية لتوجيه الأهل",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1308
-    },
-    {
       "id": "isl-440cdac2",
       "domain": "islamic_parenting",
       "title": "الرفق في تعاملنا مع أطفالنا",
@@ -6163,18 +5767,6 @@
       "behavior_type": "تربية الأبناء",
       "needs_ocr": false,
       "size_chars": 786
-    },
-    {
-      "id": "isl-639c81ed",
-      "domain": "islamic_parenting",
-      "title": "قائمة مراجع تربوية إسلامية للأهل",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1328
     },
     {
       "id": "isl-64e37a2f",
@@ -6837,18 +6429,6 @@
       "size_chars": 1346
     },
     {
-      "id": "isl-9a1ea18b",
-      "domain": "islamic_parenting",
-      "title": "قائمة مراجع تربوية إسلامية",
-      "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1338
-    },
-    {
       "id": "isl-9b3b5acd",
       "domain": "islamic_parenting",
       "title": "تربية الطفل الذكي وأهمية احترام الوالدين",
@@ -7125,18 +6705,6 @@
       "size_chars": 1409
     },
     {
-      "id": "isl-b3c765a4",
-      "domain": "islamic_parenting",
-      "title": "قائمة كتب تربوية إسلامية للأهل",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تربية إسلامية",
-      "needs_ocr": false,
-      "size_chars": 1309
-    },
-    {
       "id": "isl-b720986d",
       "domain": "islamic_parenting",
       "title": "مراعاة الفروق الفردية في التربية النبوية",
@@ -7231,18 +6799,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1346
-    },
-    {
-      "id": "isl-bf1c3efe",
-      "domain": "islamic_parenting",
-      "title": "قائمة ببليوغرافية لمصادر تربوية ودينية",
-      "source_file": "Kayfa_Turabbi_Waladak.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1282
     },
     {
       "id": "isl-bf36ef72",
@@ -7749,18 +7305,6 @@
       "size_chars": 1413
     },
     {
-      "id": "isl-ed02af73",
-      "domain": "islamic_parenting",
-      "title": "قائمة مراجع إسلامية في التربية والحديث",
-      "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1224
-    },
-    {
       "id": "isl-ee097ab9",
       "domain": "islamic_parenting",
       "title": "التربية النبوية وتوجيه السلوك الإيماني",
@@ -8241,18 +7785,6 @@
       "size_chars": 1589
     },
     {
-      "id": "med-20e75319",
-      "domain": "medical",
-      "title": "قائمة المساهمين في وحدة الصحة النفسية",
-      "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
-      "language": "en",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "صحة نفسية",
-      "needs_ocr": false,
-      "size_chars": 1814
-    },
-    {
       "id": "med-25557331",
       "domain": "medical",
       "title": "أهمية إشراك المعلمين في سياسات الصحة النفسية",
@@ -8383,18 +7915,6 @@
       "behavior_type": "صحة نفسية",
       "needs_ocr": false,
       "size_chars": 1633
-    },
-    {
-      "id": "med-3269c17b",
-      "domain": "medical",
-      "title": "قائمة خبراء الصحة النفسية للأطفال والمراهقين",
-      "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1860
     },
     {
       "id": "med-333adf4d",
@@ -8577,18 +8097,6 @@
       "size_chars": 1707
     },
     {
-      "id": "med-4c2d7521",
-      "domain": "medical",
-      "title": "قائمة خبراء الصحة العامة والأمراض غير المعدية",
-      "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 655
-    },
-    {
       "id": "med-4f01832d",
       "domain": "medical",
       "title": "أساسيات الصحة النفسية للأطفال والمراهقين",
@@ -8743,18 +8251,6 @@
       "behavior_type": "صحة نفسية",
       "needs_ocr": false,
       "size_chars": 1608
-    },
-    {
-      "id": "med-5c99793f",
-      "domain": "medical",
-      "title": "سياسات الصحة النفسية للأطفال والمراهقين",
-      "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "صحة نفسية عامة",
-      "needs_ocr": false,
-      "size_chars": 1642
     },
     {
       "id": "med-5f3f8441",
@@ -9225,18 +8721,6 @@
       "size_chars": 1714
     },
     {
-      "id": "med-9232978a",
-      "domain": "medical",
-      "title": "قائمة خبراء الصحة النفسية للأطفال والمراهقين",
-      "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "تعاون دولي في الصحة النفسية",
-      "needs_ocr": false,
-      "size_chars": 1876
-    },
-    {
       "id": "med-957462de",
       "domain": "medical",
       "title": "تنفيذ سياسات الصحة النفسية للأطفال والمراهقين",
@@ -9369,18 +8853,6 @@
       "size_chars": 1691
     },
     {
-      "id": "med-ac145c0b",
-      "domain": "medical",
-      "title": "الخوف من الظلام لدى الأطفال الصغار",
-      "source_file": "",
-      "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "خوف الأطفال من الظلام",
-      "needs_ocr": false,
-      "size_chars": 0
-    },
-    {
       "id": "med-ac9f0f45",
       "domain": "medical",
       "title": "العلاجات لADHD: الأدوات المتاحة",
@@ -9475,18 +8947,6 @@
       "behavior_type": "صحة نفسية",
       "needs_ocr": false,
       "size_chars": 1788
-    },
-    {
-      "id": "med-b1024318",
-      "domain": "medical",
-      "title": "نظام معلومات خدمات الصحة النفسية للأطفال والمراهقين",
-      "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "نظام معلومات الصحة النفسية",
-      "needs_ocr": false,
-      "size_chars": 1761
     },
     {
       "id": "med-b1e851df",
@@ -9787,18 +9247,6 @@
       "behavior_type": "قلق, إدمان ألعاب",
       "needs_ocr": false,
       "size_chars": 1832
-    },
-    {
-      "id": "med-cb29f26b",
-      "domain": "medical",
-      "title": "قائمة خبراء في الصحة العامة",
-      "source_file": "WHO_Physical_Activity_Sleep_Under5.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1988
     },
     {
       "id": "med-ccf5e011",
@@ -10147,18 +9595,6 @@
       "behavior_type": "صحة نفسية",
       "needs_ocr": false,
       "size_chars": 1753
-    },
-    {
-      "id": "med-ea13f256",
-      "domain": "medical",
-      "title": "قائمة خبراء الصحة النفسية الدولية",
-      "source_file": "WHO_Child_Adolescent_Mental_Health_Policy.pdf",
-      "language": "mixed",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "غير محدد",
-      "needs_ocr": false,
-      "size_chars": 1824
     },
     {
       "id": "med-eae152f1",
