@@ -124,14 +124,18 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--premium", default="ops/data/qa_dataset_premium_25k.jsonl")
     ap.add_argument("--clean", default="ops/data/qa_dataset_clean.jsonl")
+    ap.add_argument("--new", default="ops/data/qa_dataset_new_sources.jsonl",
+                    help="extra DeepSeek pairs from newly-ingested sources")
     ap.add_argument("--out", default="ops/data/qa_dataset_final.jsonl")
     args = ap.parse_args()
 
     prem_raw, clean_raw = _load(args.premium), _load(args.clean)
     prem, prem_drop = _clean_rows(prem_raw, "premium_deepseek")
     clean, clean_drop = _clean_rows(clean_raw, "clean_legacy")
-    # الأولوية للـpremium (DeepSeek أحدث وأجود) عند التكرار التام
-    final, exact_dups, instr_overlap = _merge_dedup(prem, clean)
+    new_raw = _load(args.new) if Path(args.new).exists() else []
+    new, new_drop = _clean_rows(new_raw, "new_sources_deepseek")
+    # الأولوية للـDeepSeek (premium + new) قبل القديم عند التكرار التام
+    final, exact_dups, instr_overlap = _merge_dedup(prem, new, clean)
 
     Path(args.out).write_text(
         "\n".join(json.dumps(r, ensure_ascii=False) for r in final) + "\n",
@@ -140,9 +144,10 @@ def main() -> None:
     _report(final, {
         "sources": {
             "premium (DeepSeek)": {"raw": len(prem_raw), "kept": len(prem), "drop": prem_drop},
+            "new sources (DeepSeek)": {"raw": len(new_raw), "kept": len(new), "drop": new_drop},
             "clean (legacy)": {"raw": len(clean_raw), "kept": len(clean), "drop": clean_drop},
         },
-        "merged_in": len(prem) + len(clean),
+        "merged_in": len(prem) + len(new) + len(clean),
         "exact_dups": exact_dups,
         "instr_overlap": instr_overlap,
     })
