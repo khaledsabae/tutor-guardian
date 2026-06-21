@@ -10,13 +10,14 @@ import httpx
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
 
 from app.config.guardrails_loader import load_guardrails_config
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
-from app.routers import health, assistant, chat, feedback, privacy, program, children
+from app.routers import (
+    health, assistant, chat, feedback, privacy, program, children, referral,
+)
 from app import curriculum_loader as curriculum
 
 logger = logging.getLogger(__name__)
@@ -106,6 +107,7 @@ app.include_router(feedback.router, prefix="/api")
 app.include_router(program.router, prefix="/api")  # curriculum: paths/lessons/daily-tip
 app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
 app.include_router(children.router, prefix="/api")  # child profiles + progress (auth)
+app.include_router(referral.router, prefix="/api")  # referral codes + attribution (auth)
 
 DOCS_DIR = PROJECT_ROOT / "docs"
 if DOCS_DIR.is_dir():

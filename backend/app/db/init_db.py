@@ -62,7 +62,24 @@ CREATE INDEX IF NOT EXISTS ix_child_challenges_active
     ON child_challenges (device_id, child_id, status);
 """
 
-SCHEMA_VERSION = 7
+_CREATE_REFERRALS: str = """
+CREATE TABLE IF NOT EXISTS referral_codes (
+    device_id  TEXT PRIMARY KEY,
+    code       TEXT NOT NULL UNIQUE,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE TABLE IF NOT EXISTS referrals (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    referrer_device TEXT NOT NULL,
+    referred_device TEXT NOT NULL UNIQUE,  -- a device can be referred only once
+    code            TEXT NOT NULL,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS ix_referrals_referrer
+    ON referrals (referrer_device);
+"""
+
+SCHEMA_VERSION = 8
 
 
 def db_path() -> Path:
@@ -192,6 +209,7 @@ def init_db() -> None:
 
     _ensure_coach_tips_table(conn)
     _ensure_child_challenges_table(conn)
+    _ensure_referrals_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -260,3 +278,14 @@ def _ensure_child_challenges_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_CHILD_CHALLENGES)
+
+
+def _ensure_referrals_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v8 referral tables."""
+    try:
+        cur = conn.execute("PRAGMA table_info(referrals)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_REFERRALS)
