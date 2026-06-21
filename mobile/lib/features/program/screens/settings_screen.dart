@@ -34,6 +34,7 @@ import 'favorites_screen.dart';
 import '../providers/lesson_assets_provider.dart';
 import '../../adhkar/services/notification_service.dart';
 import '../../feedback/feedback_screen.dart';
+import '../../referral/invite_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -113,6 +114,15 @@ class SettingsScreen extends ConsumerWidget {
                       ref.invalidate(childrenListProvider);
                     }
                   },
+                ),
+                _SettingsRow(
+                  icon: Icons.favorite_outline,
+                  title: 'ادعُ صديقًا 🤍',
+                  subtitle: 'دلالتك على الخير صدقة — وكلاكما يكسب مكافأة',
+                  iconColor: AppTheme.primary,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const InviteScreen()),
+                  ),
                 ),
                 _SettingsRow(
                   icon: Icons.feedback_outlined,

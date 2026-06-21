@@ -15,6 +15,8 @@ import 'package:flutter/widgets.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../referral/referral_service.dart';
+
 class ShareService {
   /// Base install URL. Phase 0.2 appends `&referrer=ref_<code>` so the
   /// Google Play Install Referrer API can attribute the install for free
@@ -40,6 +42,9 @@ class ShareService {
     String? referralCode,
   }) async {
     try {
+      // Default to this device's referral code so every shared moment is an
+      // attributed install driver (Phase 0.2), with no caller wiring needed.
+      referralCode ??= ReferralService.cachedCode;
       final image = await ScreenshotController()
           .captureFromWidget(card, pixelRatio: 2.0);
       final dir = await Directory.systemTemp.createTemp('tg_share_');

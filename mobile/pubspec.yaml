@@ -44,6 +44,8 @@ dependencies:
   in_app_review: ^2.0.10
   # QR code on share cards (Phase 0.1 — deep-link install path)
   qr_flutter: ^4.1.0
+  # Play Install Referrer — free referral attribution (Phase 0.2)
+  play_install_referrer: ^0.5.0
   # File picker for backup import/export
   file_picker: ^8.0.0
 

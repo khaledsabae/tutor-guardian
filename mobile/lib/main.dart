@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -12,6 +14,7 @@ import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/program/screens/paths_screen.dart';
+import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
 import 'screens/chat_screen.dart';
 import 'features/adhkar/services/notification_service.dart';
@@ -36,6 +39,12 @@ void main() async {
   await NotificationService.instance.init();
 
   runApp(const ProviderScope(child: TutorGuardianApp()));
+
+  // Phase 0.2 growth loop — fire-and-forget so it never blocks cold start.
+  // Capture the Play install referrer (claim a referral the first time) and
+  // prime this device's own code so every shared moment card carries it.
+  unawaited(ReferralService.instance.captureAndClaimOnFirstRun()
+      .then((_) => ReferralService.instance.refresh()));
 }
 
 /// Root widget.

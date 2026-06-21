@@ -595,6 +595,35 @@ class TgClient {
     return body['challenge'] as Map<String, dynamic>?;
   }
 
+  /// `GET /api/referral/me` (authed) → `{code, invited_count, reward_coins,
+  /// share_url}`. Creates the device's referral code on first call.
+  Future<Map<String, dynamic>> getReferral() async {
+    final session = await ensureSession();
+    final resp = await _http
+        .get(Uri.parse('$_baseUrl/api/referral/me'),
+            headers: _authHeaders(session.token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  /// `POST /api/referral/claim` (authed) → `{ok, already_claimed,
+  /// reward_coins}`. Records this device as referred by [code].
+  Future<Map<String, dynamic>> claimReferral(String code) async {
+    final session = await ensureSession();
+    final resp = await _http
+        .post(Uri.parse('$_baseUrl/api/referral/claim'),
+            headers: _authHeaders(session.token),
+            body: jsonEncode({'code': code}))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   /// `PUT /api/children/{id}/challenge` (authed) — set/replace the active
   /// challenge by key (one of the server's known keys).
   Future<void> setChallenge(int childId, String challengeKey,
