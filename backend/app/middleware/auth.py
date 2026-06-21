@@ -41,8 +41,9 @@ def _is_protected(path: str, method: str) -> bool:
     if path == "/api/chat/sessions":
         return method != "POST"
     # In-app feedback: POST is public (anyone can send); the GET list/audio
-    # endpoints are admin-gated inside the route via the X-Admin-Key header.
-    if path == "/api/feedback/app" or path.startswith("/api/feedback/app/"):
+    # and digest endpoints are admin-gated inside the route via X-Admin-Key.
+    if (path == "/api/feedback/app" or path.startswith("/api/feedback/app/")
+            or path == "/api/feedback/digest"):
         return False
     if path in _PUBLIC_PATHS:
         return False
