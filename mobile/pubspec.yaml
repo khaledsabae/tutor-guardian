@@ -40,6 +40,10 @@ dependencies:
   # Share + screenshot for share cards
   share_plus: ^10.0.0
   screenshot: ^3.0.0
+  # Native in-app review (Phase 0.3 — ratings velocity for ASO)
+  in_app_review: ^2.0.10
+  # QR code on share cards (Phase 0.1 — deep-link install path)
+  qr_flutter: ^4.1.0
   # File picker for backup import/export
   file_picker: ^8.0.0
 

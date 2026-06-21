@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Gentle, one-time "rate the app" prompt — shown only AFTER a few positive
 /// moments (e.g. logging a milestone), never on first use, and never twice.
@@ -10,15 +10,21 @@ class ReviewPrompt {
   static const _kAsked = 'review.asked';
   static const _threshold = 2; // ask after the 2nd positive moment, not the 1st
 
-  static Future<void> _openStore() async {
-    final market = Uri.parse('market://details?id=com.alsaba.almorabbi');
-    final web = Uri.parse(
-        'https://play.google.com/store/apps/details?id=com.alsaba.almorabbi');
-    if (await canLaunchUrl(market)) {
-      await launchUrl(market, mode: LaunchMode.externalApplication);
-    } else {
-      await launchUrl(web, mode: LaunchMode.externalApplication);
+  /// Native in-app review sheet (no app exit → higher completion), falling
+  /// back to the store listing if the API isn't available on the device.
+  static Future<void> _requestReview() async {
+    final inAppReview = InAppReview.instance;
+    try {
+      if (await inAppReview.isAvailable()) {
+        await inAppReview.requestReview();
+        return;
+      }
+    } catch (_) {
+      // fall through to store listing
     }
+    await inAppReview.openStoreListing(
+      appStoreId: 'com.alsaba.almorabbi',
+    );
   }
 
   /// Records a positive moment; once [_threshold] have accrued (and we haven't
@@ -52,6 +58,6 @@ class ReviewPrompt {
         ],
       ),
     );
-    if (yes == true) await _openStore();
+    if (yes == true) await _requestReview();
   }
 }
