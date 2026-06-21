@@ -6,6 +6,8 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/skeleton.dart';
+import '../../share/share_service.dart';
+import '../../share/shareable_moment_card.dart';
 import '../data/badges.dart';
 import '../providers/progress_providers.dart';
 
@@ -91,13 +93,30 @@ class _BadgeTile extends StatelessWidget {
   final AchievementBadge badge;
   const _BadgeTile({required this.badge});
 
+  Future<void> _share() async {
+    await ShareService.shareMomentCard(
+      fileTag: 'badge_${badge.id}',
+      message: 'ما شاء الله 🌟 وصلت لإنجاز «${badge.title}» في رحلتي '
+          'التربوية مع «المربّي» 🤍',
+      card: ShareableMomentCard(
+        emoji: badge.emoji,
+        eyebrow: 'إنجاز جديد',
+        headline: badge.title,
+        body: badge.description,
+        icon: Icons.emoji_events_outlined,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final earned = badge.earned;
     return Semantics(
       label: '${badge.title}. ${badge.description}. '
-          '${earned ? "تم الحصول عليه" : "لم يُفتح بعد"}',
-      child: Container(
+          '${earned ? "تم الحصول عليه — اضغط للمشاركة" : "لم يُفتح بعد"}',
+      child: GestureDetector(
+        onTap: earned ? _share : null,
+        child: Container(
         decoration: BoxDecoration(
           gradient: earned ? Dt.accentGradient : null,
           color: earned ? null : AppTheme.surfaceAlt,
@@ -137,6 +156,7 @@ class _BadgeTile extends StatelessWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }
