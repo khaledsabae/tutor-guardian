@@ -75,9 +75,12 @@ jobs:
           docker compose -f docker-compose.production.yml up -d --remove-orphans backend
 
           # ── 5. Wait for the new container to be healthy ──────────────
-          echo "→ waiting for container health"
+          # Cold start loads the embedding model weights + ChromaDB, which
+          # routinely takes >60s — give it up to 180s before failing so a
+          # slow-but-successful boot isn't reported as a deploy failure.
+          echo "→ waiting for container health (up to 180s)"
           STATUS="missing"
-          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+          for i in $(seq 1 36); do
             sleep 5
             STATUS=$(docker inspect --format='{{.State.Health.Status}}' tg_backend 2>/dev/null || echo "missing")
             echo "  attempt $i: $STATUS"
@@ -85,7 +88,7 @@ jobs:
           done
 
           if [ "$STATUS" != "healthy" ]; then
-            echo "::error::tg_backend is not healthy after 60s"
+            echo "::error::tg_backend is not healthy after 180s"
             docker logs --tail 50 tg_backend 2>&1 || true
             exit 1
           fi
