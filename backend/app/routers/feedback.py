@@ -7,7 +7,6 @@ POST /api/feedback   → تسجيل 👍 / 👎 مع تعليق اختياري
 """
 import base64
 import os
-import sqlite3
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -114,6 +113,19 @@ def list_app_feedback(x_admin_key: str = Header(default="")) -> dict:
     for it in items:
         it["has_audio"] = bool(it["has_audio"])
     return {"count": len(rows), "items": items}
+
+
+@router.get("/digest")
+async def feedback_digest(limit: int = 200, x_admin_key: str = Header(default="")) -> dict:
+    """Khaled-only: ملخّص قرارات ذكي ومرتّب بالأولوية لكل الفيدباك.
+
+    يحلّل تقييمات 👍/👎 (مربوطة بالـQ&A الحقيقية) + فيدباك التطبيق عبر DeepSeek،
+    ويرجّع العناصر الحقيقية القابلة للتنفيذ مصنّفة ومرتّبة حسب الخطورة."""
+    if x_admin_key != _ADMIN_KEY:
+        raise HTTPException(status_code=403, detail="forbidden")
+    from app.services.feedback_analyzer import analyze
+
+    return await analyze(limit)
 
 
 @router.get("/app/{feedback_id}/audio")
