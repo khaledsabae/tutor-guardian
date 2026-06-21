@@ -9,6 +9,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../core/analytics.dart';
 import '../../theme/app_theme.dart';
 import '../share/share_service.dart';
 import '../share/shareable_moment_card.dart';
@@ -30,6 +31,7 @@ class _InviteScreenState extends State<InviteScreen> {
   @override
   void initState() {
     super.initState();
+    Analytics.inviteOpened();
     _load();
   }
 
@@ -53,6 +55,7 @@ class _InviteScreenState extends State<InviteScreen> {
     final info = _info;
     if (info == null || _sharing) return;
     setState(() => _sharing = true);
+    Analytics.inviteShared();
     await ShareService.shareMomentCard(
       fileTag: 'invite_${info.code}',
       referralCode: info.code,

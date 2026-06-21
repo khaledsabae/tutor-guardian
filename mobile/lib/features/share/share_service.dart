@@ -15,6 +15,7 @@ import 'package:flutter/widgets.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../core/analytics.dart';
 import '../referral/referral_service.dart';
 
 class ShareService {
@@ -55,7 +56,12 @@ class ShareService {
           '${installUrlFor(referralCode: referralCode)}';
 
       final result = await Share.shareXFiles([XFile(file.path)], text: text);
-      return result.status == ShareResultStatus.success;
+      final ok = result.status == ShareResultStatus.success;
+      if (ok) {
+        // fileTag like "milestone_<id>" / "quran_<n>" / "invite_<code>".
+        await Analytics.shareMoment(fileTag.split('_').first);
+      }
+      return ok;
     } catch (_) {
       return false;
     }

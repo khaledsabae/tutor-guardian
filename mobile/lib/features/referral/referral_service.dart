@@ -15,6 +15,7 @@ import 'package:play_install_referrer/play_install_referrer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/tg_client.dart';
+import '../../core/analytics.dart';
 import '../coins/coins_service.dart';
 
 class ReferralInfo {
@@ -67,6 +68,12 @@ class ReferralService {
   /// Claim a referral code (from install referrer or pasted by the user).
   /// Credits the new parent's welcome bonus exactly once.
   Future<ClaimOutcome> claimManual(String code) async {
+    final outcome = await _claim(code);
+    await Analytics.referralClaimed(outcome.name);
+    return outcome;
+  }
+
+  Future<ClaimOutcome> _claim(String code) async {
     final p = await SharedPreferences.getInstance();
     if (p.getBool(_kClaimed) ?? false) return ClaimOutcome.alreadyClaimed;
     try {

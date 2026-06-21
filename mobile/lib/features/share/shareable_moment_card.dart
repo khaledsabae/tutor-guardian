@@ -11,8 +11,11 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../theme/app_theme.dart';
+import '../referral/referral_service.dart';
+import 'share_service.dart';
 
 class ShareableMomentCard extends StatelessWidget {
   const ShareableMomentCard({
@@ -155,12 +158,36 @@ class ShareableMomentCard extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          '📲 مجانًا لوجه الله على Google Play — ابحث: «المربّي»',
+          '📲 مجانًا لوجه الله — امسح الكود أو ابحث: «المربّي»',
           textAlign: TextAlign.center,
           style: GoogleFonts.cairo(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppTheme.primary,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppTheme.primary.withValues(alpha: 0.15)),
+          ),
+          child: QrImageView(
+            data: ShareService.installUrlFor(
+              referralCode: ReferralService.cachedCode,
+            ),
+            size: 116,
+            gapless: true,
+            eyeStyle: const QrEyeStyle(
+              eyeShape: QrEyeShape.square,
+              color: AppTheme.primary,
+            ),
+            dataModuleStyle: const QrDataModuleStyle(
+              dataModuleShape: QrDataModuleShape.square,
+              color: AppTheme.primary,
+            ),
           ),
         ),
       ],

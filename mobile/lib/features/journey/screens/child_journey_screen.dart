@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../core/analytics.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../coins/coins_providers.dart';
 import '../../program/data/review_prompt.dart';
@@ -178,6 +179,7 @@ class ChildJourneyScreen extends ConsumerWidget {
           emoji: milestone?.emoji ?? '💛',
           note: result.note,
         );
+    Analytics.milestoneLogged();
     // Celebrate once, ever, per child+milestone — reuses the coins ledger.
     await ref
         .read(coinsProvider.notifier)
