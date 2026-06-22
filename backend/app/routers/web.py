@@ -29,13 +29,24 @@ router = APIRouter(tags=["web"])
 
 _PLAY = "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
 _TEAL = "#01696F"
-# Brand crescent logo, already served by the /ui static mount.
-_OG_IMAGE = "/ui/icons/icon-512.png"
+# Branded hero (JPG for reliable WhatsApp/social preview), served via /docs.
+_OG_IMAGE = "/docs/marketing/launch_graphics/landing_hero.jpg"
 _CODE_RE = re.compile(r"^[A-Z0-9]{4,16}$")
 
 
 def _install_url(ref: str | None) -> str:
     return f"{_PLAY}&referrer=ref_{ref}" if ref and _CODE_RE.match(ref) else _PLAY
+
+
+def _abs(canonical: str, path: str) -> str:
+    """Absolute URL for [path] using the scheme+host of [canonical] — WhatsApp
+    needs an absolute og:image."""
+    try:
+        scheme, rest = canonical.split("//", 1)
+        host = rest.split("/", 1)[0]
+        return f"{scheme}//{host}{path}"
+    except Exception:  # noqa: BLE001
+        return path
 
 
 def _esc(s: str | None) -> str:
@@ -59,7 +70,7 @@ def _page(*, title: str, desc: str, body: str, ref: str | None,
 <meta property="og:site_name" content="المربّي">
 <meta property="og:title" content="{t}">
 <meta property="og:description" content="{d}">
-<meta property="og:image" content="{_OG_IMAGE}">
+<meta property="og:image" content="{_abs(canonical, _OG_IMAGE)}">
 <meta property="og:url" content="{canonical}">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -68,6 +79,8 @@ def _page(*, title: str, desc: str, body: str, ref: str | None,
   body {{ margin:0; font-family: 'Segoe UI', Tahoma, sans-serif;
     background:#FAF7F2; color:#1c1c1c; line-height:1.8; }}
   .wrap {{ max-width: 720px; margin: 0 auto; padding: 24px 18px 96px; }}
+  .hero {{ width:100%; height:auto; border-radius:16px; margin:8px 0 4px;
+    box-shadow:0 6px 24px rgba(1,105,111,.18); }}
   header {{ text-align:center; padding: 28px 0 8px; }}
   header .brand {{ color: var(--teal); font-weight:800; font-size: 26px; }}
   header .tag {{ color:#6b6b6b; font-size: 14px; }}
@@ -108,6 +121,8 @@ def _page(*, title: str, desc: str, body: str, ref: str | None,
 def landing(request: Request, ref: str | None = Query(None)) -> HTMLResponse:
     """Share/install landing — where shared cards & referral links arrive."""
     body = (
+        f'<img class="hero" src="{_OG_IMAGE}" alt="المربّي" '
+        'loading="lazy" width="1820" height="1024">'
         '<span class="eyebrow">دعوة لوجه الله</span>'
         '<h1>ربِّ طفلك بثقة — بالعربي وبالأدلة</h1>'
         '<div class="content">«المربّي» تطبيق تربية إسلامي ذكي يجاوبك فورًا '
