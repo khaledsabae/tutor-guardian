@@ -19,17 +19,17 @@ import '../../core/analytics.dart';
 import '../referral/referral_service.dart';
 
 class ShareService {
-  /// Base install URL. Phase 0.2 appends `&referrer=ref_<code>` so the
-  /// Google Play Install Referrer API can attribute the install for free
-  /// (no deprecated Firebase Dynamic Links needed).
-  static const String installUrl =
-      'https://play.google.com/store/apps/details?id=com.alsaba.almorabbi';
+  /// Shared links point at the public web landing (Phase 2), not directly at
+  /// Play: it renders an Open Graph preview in WhatsApp, gives a content taste,
+  /// works on iOS/desktop, and its install button forwards `ref` to the Play
+  /// Install Referrer for free attribution (no deprecated Dynamic Links).
+  static const String installUrl = 'https://tg-api.alsaba.cloud/go';
 
-  /// Build the install URL, optionally carrying a referral code.
+  /// Build the share/install URL, optionally carrying a referral code.
   static String installUrlFor({String? referralCode}) =>
       referralCode == null || referralCode.isEmpty
           ? installUrl
-          : '$installUrl&referrer=ref_$referralCode';
+          : '$installUrl?ref=$referralCode';
 
   /// Capture [card] to a PNG and open the share sheet with a reverent,
   /// pre-filled message plus the install link.
