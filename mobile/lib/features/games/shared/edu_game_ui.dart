@@ -7,6 +7,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
@@ -225,7 +226,7 @@ class _LevelCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Dt.rCard),
               border: Border.all(
-                color: unlocked ? tier.color.withValues(alpha: 0.5) : Colors.white24,
+                color: unlocked ? tier.color.withValues(alpha: 0.5) : Colors.grey.shade300,
               ),
             ),
             child: Column(
@@ -234,7 +235,7 @@ class _LevelCard extends StatelessWidget {
                 Text(
                   '$level',
                   style: TextStyle(
-                    color: unlocked ? theme.textColor : Colors.white38,
+                    color: unlocked ? theme.textColor : Colors.grey,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                   ),
@@ -243,7 +244,7 @@ class _LevelCard extends StatelessWidget {
                 Text(
                   tier.label,
                   style: TextStyle(
-                    color: unlocked ? tier.color : Colors.white38,
+                    color: unlocked ? tier.color : Colors.grey,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
@@ -255,7 +256,7 @@ class _LevelCard extends StatelessWidget {
                     for (int i = 0; i < 3; i++)
                       Icon(
                         i < stars ? Icons.star : Icons.star_border,
-                        color: i < stars ? Colors.amber : Colors.white30,
+                        color: i < stars ? Colors.amber : Colors.grey.shade400,
                         size: 16,
                       ),
                   ],
@@ -265,13 +266,13 @@ class _LevelCard extends StatelessWidget {
                   Text(
                     'أفضل: $bestScore',
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.6),
+                      color: Colors.grey.withValues(alpha: 0.8),
                       fontSize: 10,
                     ),
                   ),
                 ],
                 if (!unlocked)
-                  const Icon(Icons.lock, color: Colors.white38, size: 16),
+                  const Icon(Icons.lock, color: Colors.grey, size: 16),
               ],
             ),
           ),
@@ -299,7 +300,7 @@ class EduPauseOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black.withValues(alpha: 0.7),
+      color: Colors.black.withValues(alpha: 0.5),
       child: Center(
         child: Container(
           margin: const EdgeInsets.all(32),
@@ -372,8 +373,8 @@ class _PauseButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: isDestructive
               ? AppTheme.dangerFg
-              : theme.accentColor.withValues(alpha: 0.15),
-          foregroundColor: isDestructive ? Colors.white : theme.accentColor,
+              : AppTheme.primary.withValues(alpha: 0.1),
+          foregroundColor: isDestructive ? Colors.white : AppTheme.primary,
           padding: const EdgeInsets.symmetric(vertical: 14),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
@@ -428,43 +429,57 @@ class EduResultDialog extends StatelessWidget {
             ),
           ],
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
+        content: Stack(
+          alignment: Alignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            if (result.completed)
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: Lottie.asset(
+                    'assets/animations/celebration_stars.json',
+                    repeat: false,
+                  ),
+                ),
+              ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                for (int i = 0; i < 3; i++)
-                  Icon(
-                    i < result.stars ? Icons.star : Icons.star_border,
-                    color: i < result.stars ? Colors.amber : Colors.white30,
-                    size: 36,
-                  )
-                      .animate()
-                      .scale(delay: Duration(milliseconds: i * 150), duration: 300.ms),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (int i = 0; i < 3; i++)
+                      Icon(
+                        i < result.stars ? Icons.star : Icons.star_border,
+                        color: i < result.stars ? Colors.amber : Colors.white30,
+                        size: 36,
+                      )
+                          .animate()
+                          .scale(delay: Duration(milliseconds: i * 150), duration: 300.ms),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  '${result.correctAnswers} / ${result.totalQuestions} إجابات صحيحة',
+                  style: TextStyle(color: theme.textColor, fontSize: 18),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'النقاط: ${result.score}',
+                  style: TextStyle(
+                    color: theme.accentColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                if (!result.completed)
+                  Text(
+                    'حاول تاني! كل محاولة بتعلّمك أكتر.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: theme.textColor.withValues(alpha: 0.7)),
+                  ),
               ],
             ),
-            const SizedBox(height: 16),
-            Text(
-              '${result.correctAnswers} / ${result.totalQuestions} إجابات صحيحة',
-              style: TextStyle(color: theme.textColor, fontSize: 18),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'النقاط: ${result.score}',
-              style: TextStyle(
-                color: theme.accentColor,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            if (!result.completed)
-              Text(
-                'حاول تاني! كل محاولة بتعلّمك أكتر.',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: theme.textColor.withValues(alpha: 0.7)),
-              ),
           ],
         ),
         actions: [
