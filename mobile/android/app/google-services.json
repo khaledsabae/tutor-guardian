@@ -12,7 +12,16 @@
           "package_name": "com.alsaba.almorabbi"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "620240456244-e0ap0isfsufoue1atumhen5l0ttlm6ga.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alsaba.almorabbi",
+            "certificate_hash": "da5dbffb7f0bba371e1785168aac172ed366e63b"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBkRIIv6s_k4UlDfJSncO2WJk_goDkTnt0"
