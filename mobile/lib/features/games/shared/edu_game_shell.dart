@@ -5,10 +5,10 @@ library;
 
 import 'dart:async';
 
-import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../theme/app_theme.dart';
@@ -131,8 +131,8 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
   int? _selectedOptionIndex;
   bool _paused = false;
   bool _finished = false;
+  bool _showMiniStarBurst = false;
 
-  final ConfettiController _confetti = ConfettiController(duration: const Duration(seconds: 1));
 
   @override
   void initState() {
@@ -143,7 +143,6 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
 
   @override
   void dispose() {
-    _confetti.dispose();
     super.dispose();
   }
 
@@ -169,7 +168,8 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
       final points = 10 + (widget.level - 1); // slight scaling per level
       _score += points;
       lightHaptic();
-      _confetti.play();
+      // small brand-aligned celebration on each correct answer
+      _playMiniStarBurst();
     } else {
       _lives--;
       errorHaptic();
@@ -256,9 +256,18 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
       _showFeedback = false;
       _selectedOptionIndex = null;
       _finished = false;
+      _showMiniStarBurst = false;
     });
   }
 
+
+  void _playMiniStarBurst() {
+    if (!mounted) return;
+    setState(() => _showMiniStarBurst = true);
+    Future.delayed(const Duration(milliseconds: 1800), () {
+      if (mounted) setState(() => _showMiniStarBurst = false);
+    });
+  }
   void _togglePause() => setState(() => _paused = !_paused);
 
   @override
@@ -315,15 +324,16 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: ConfettiWidget(
-                  confettiController: _confetti,
-                  blastDirectionality: BlastDirectionality.explosive,
-                  colors: [widget.theme.accentColor, Colors.amber, AppTheme.success],
-                  numberOfParticles: 20,
+              if (_showMiniStarBurst)
+                Positioned.fill(
+                  child: IgnorePointer(
+                    child: Lottie.asset(
+                      'assets/animations/celebration_stars.json',
+                      repeat: false,
+                      onLoaded: (_) {},
+                    ),
+                  ),
                 ),
-              ),
               if (_paused)
                 EduPauseOverlay(
                   theme: widget.theme,

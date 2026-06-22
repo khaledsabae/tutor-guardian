@@ -44,15 +44,26 @@ class EduGameTheme {
     required this.textColor,
   });
 
+  /// Brand palette for the unified identity: warm teal + cream + white.
+  /// Game shells now use these tokens so the four mini-games feel like
+  /// one family instead of four unrelated apps.
+  static const unifiedBackground = Color(0xFFFAF7F2);
+  static const unifiedSurface = Color(0xFFFFFFFF);
+  static const unifiedPrimary = Color(0xFF01696F);
+  static const unifiedPrimarySoft = Color(0xFFE6F2F2);
+  static const unifiedAccent = Color(0xFFF59E0B);
+  static const unifiedText = Color(0xFF1E293B);
+
+  // ── Per-game accent tints (kept only as subtle flavour) ───────────────────
   static const dataDefender = EduGameTheme(
     id: 'data_defender',
     name: 'حارس البيانات',
     heroEmoji: '🛡️',
     description: 'تعلّم كيف تحمي بياناتك من الفيروسات والروابط المشبوهة.',
-    backgroundColor: Color(0xFF0B1120),
-    surfaceColor: Color(0xFF1E293B),
+    backgroundColor: unifiedBackground,
+    surfaceColor: unifiedSurface,
     accentColor: Color(0xFF06B6D4),
-    textColor: Colors.white,
+    textColor: unifiedText,
   );
 
   static const healthyHero = EduGameTheme(
@@ -60,10 +71,10 @@ class EduGameTheme {
     name: 'البطل الصحي',
     heroEmoji: '🩺',
     description: 'اختيارات ذكية للأكل والنوم والصحة اليومية.',
-    backgroundColor: Color(0xFF0F3D4A),
-    surfaceColor: Color(0xFF164E63),
+    backgroundColor: unifiedBackground,
+    surfaceColor: unifiedSurface,
     accentColor: Color(0xFF22C55E),
-    textColor: Colors.white,
+    textColor: unifiedText,
   );
 
   static const emotionMaze = EduGameTheme(
@@ -71,10 +82,10 @@ class EduGameTheme {
     name: 'متاهة المشاعر',
     heroEmoji: '🧠',
     description: 'تعلّم كيف تتعامل مع المشاعر وتحل الأزمات الأسرية بهدوء.',
-    backgroundColor: Color(0xFF2E1065),
-    surfaceColor: Color(0xFF4C1D95),
+    backgroundColor: unifiedBackground,
+    surfaceColor: unifiedSurface,
     accentColor: Color(0xFFA855F7),
-    textColor: Colors.white,
+    textColor: unifiedText,
   );
 
   static const treeOfDeeds = EduGameTheme(
@@ -82,10 +93,10 @@ class EduGameTheme {
     name: 'شجرة الأخلاق',
     heroEmoji: '🌳',
     description: 'قرارات تبني شخصية جميلة وتقربنا من الله.',
-    backgroundColor: Color(0xFF422006),
-    surfaceColor: Color(0xFF713F12),
+    backgroundColor: unifiedBackground,
+    surfaceColor: unifiedSurface,
     accentColor: Color(0xFF84CC16),
-    textColor: Colors.white,
+    textColor: unifiedText,
   );
 }
 
