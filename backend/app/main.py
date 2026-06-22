@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import httpx
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -116,7 +116,6 @@ app.include_router(push.router, prefix="/api")  # FCM token storage (auth)
 app.include_router(identity.router, prefix="/api")  # optional Google Sign-In (auth)
 
 # ── Phase 1.1: admin push endpoint (for manual/cron sends) ─────────
-from fastapi import HTTPException
 
 @app.post("/api/admin/send-push")
 def admin_send_push(request: Request, payload: dict) -> dict:
