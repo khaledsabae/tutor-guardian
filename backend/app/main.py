@@ -17,7 +17,7 @@ from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
 from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
-    web,
+    web, stats,
 )
 from app import curriculum_loader as curriculum
 
@@ -110,6 +110,7 @@ app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
 app.include_router(web.router)  # public SEO pages + share landing (/go, /l, /p; Phase 2)
 app.include_router(children.router, prefix="/api")  # child profiles + progress (auth)
 app.include_router(referral.router, prefix="/api")  # referral codes + attribution (auth)
+app.include_router(stats.router, prefix="/api")  # community social-proof (public; Phase 3)
 app.include_router(push.router, prefix="/api")  # FCM token storage (auth)
 app.include_router(identity.router, prefix="/api")  # optional Google Sign-In (auth)
 
