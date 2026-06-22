@@ -1,8 +1,8 @@
 {
-  "total_units": 1110,
-  "generated_at": "2026-06-21T11:03:56.960974+00:00",
+  "total_units": 1111,
+  "generated_at": "2026-06-22T12:06:52.282029+00:00",
   "by_domain": {
-    "medical": 258,
+    "medical": 259,
     "cyber": 251,
     "islamic_parenting": 544,
     "development": 57
@@ -11251,6 +11251,18 @@
       "behavior_type": "نشاط بدني",
       "needs_ocr": false,
       "size_chars": 1647
+    },
+    {
+      "id": "med-3f714838",
+      "domain": "medical",
+      "title": "الحفاظ على وزن الطفل وتجنب أمراض السمنة والسكري والقلب",
+      "source_file": "Saudi_MOH_Child_Nutrition_Guide.pdf",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "فرط حركة",
+      "needs_ocr": false,
+      "size_chars": 584
     },
     {
       "id": "med-3f756fa9",
