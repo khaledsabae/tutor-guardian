@@ -44,7 +44,7 @@ def _abs(canonical: str, path: str) -> str:
     behind the Cloudflare/TLS proxy, but the site is served over https)."""
     try:
         host = canonical.split("//", 1)[1].split("/", 1)[0]
-        scheme = "http" if host.startswith(("localhost", "127.0.0.1")) else "https"
+        scheme = "http" if host.startswith(("localhost", "127.0.0.1", "testserver")) else "https"
         return f"{scheme}://{host}{path}"
     except Exception:  # noqa: BLE001
         return path
@@ -56,9 +56,10 @@ def _esc(s: str | None) -> str:
 
 def _page(*, title: str, desc: str, body: str, ref: str | None,
           canonical: str) -> HTMLResponse:
-    """Wrap content in the branded RTL shell with OG tags + install CTA."""
+    """Modern branded RTL landing shell with OG tags + install CTA."""
     t, d = _esc(title), _esc(desc)
     install = _install_url(ref)
+    og_image = _abs(canonical, _OG_IMAGE)
     doc = f"""<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -67,50 +68,145 @@ def _page(*, title: str, desc: str, body: str, ref: str | None,
 <title>{t} — المربّي</title>
 <meta name="description" content="{d}">
 <link rel="canonical" href="{canonical}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="المربّي">
 <meta property="og:title" content="{t}">
 <meta property="og:description" content="{d}">
-<meta property="og:image" content="{_abs(canonical, _OG_IMAGE)}">
+<meta property="og:image" content="{og_image}">
 <meta property="og:url" content="{canonical}">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-  :root {{ --teal: {_TEAL}; }}
-  * {{ box-sizing: border-box; }}
-  body {{ margin:0; font-family: 'Segoe UI', Tahoma, sans-serif;
-    background:#FAF7F2; color:#1c1c1c; line-height:1.8; }}
-  .wrap {{ max-width: 720px; margin: 0 auto; padding: 24px 18px 96px; }}
-  .hero {{ width:100%; height:auto; border-radius:16px; margin:8px 0 4px;
-    box-shadow:0 6px 24px rgba(1,105,111,.18); }}
-  header {{ text-align:center; padding: 28px 0 8px; }}
-  header .brand {{ color: var(--teal); font-weight:800; font-size: 26px; }}
-  header .tag {{ color:#6b6b6b; font-size: 14px; }}
-  h1 {{ color: var(--teal); font-size: 26px; margin: 18px 0 10px; }}
-  .eyebrow {{ display:inline-block; background: rgba(1,105,111,.1);
-    color: var(--teal); border-radius: 20px; padding: 4px 14px;
-    font-size: 13px; font-weight:700; }}
-  .content {{ font-size: 18px; }}
-  .lessons a {{ display:block; padding:12px 14px; margin:8px 0;
-    background:#fff; border:1px solid #eadfce; border-radius:12px;
-    color:#1c1c1c; text-decoration:none; }}
-  .cta {{ position: fixed; bottom:0; left:0; right:0; background:#fff;
-    border-top:1px solid #eadfce; padding:14px; text-align:center; }}
-  .cta a {{ display:inline-block; background: var(--teal); color:#fff;
-    text-decoration:none; padding:14px 28px; border-radius:14px;
-    font-weight:800; font-size:17px; }}
-  .free {{ color:#6b6b6b; font-size:13px; margin-top:6px; }}
+  :root {{
+    --teal: {_TEAL};
+    --teal-light: rgba(1,105,111,.08);
+    --teal-glow: rgba(1,105,111,.15);
+    --cream: #FAF7F2;
+    --charcoal: #1c1c1c;
+    --muted: #6b6b6b;
+  }}
+  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{
+    font-family: 'Cairo', 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }}
+  .wrap {{ max-width: 780px; margin: 0 auto; padding: 0 18px 130px; }}
+  .nav {{
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250,247,242,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(1,105,111,.08);
+  }}
+  .nav-inner {{
+    max-width: 780px; margin: 0 auto; padding: 14px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+  }}
+  .brand {{
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 800; font-size: 20px; color: var(--teal);
+  }}
+  .brand img {{ width: 32px; height: 32px; border-radius: 50%; }}
+  .nav-tag {{
+    font-size: 12px; color: var(--muted);
+    display: none;
+  }}
+  @media (min-width: 520px) {{ .nav-tag {{ display: block; }} }}
+  .hero {{
+    width: 100%; height: auto; border-radius: 20px;
+    margin: 22px 0 18px;
+    box-shadow: 0 18px 48px rgba(1,105,111,.18);
+  }}
+  .eyebrow {{
+    display: inline-block;
+    background: var(--teal-light); color: var(--teal);
+    border-radius: 999px; padding: 6px 16px;
+    font-size: 13px; font-weight: 700;
+    margin-bottom: 14px;
+  }}
+  h1 {{
+    color: var(--teal); font-size: clamp(28px, 5.5vw, 42px);
+    line-height: 1.2; font-weight: 800; margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }}
+  .subtitle {{
+    font-size: clamp(17px, 3vw, 20px);
+    color: var(--muted); max-width: 560px; margin-bottom: 28px;
+  }}
+  .content {{
+    font-size: 17px; color: var(--charcoal);
+    background: #fff; border: 1px solid rgba(1,105,111,.08);
+    border-radius: 18px; padding: 22px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.04);
+    margin-bottom: 22px;
+  }}
+  .content p + p {{ margin-top: 14px; }}
+  .lessons a {{
+    display: block; padding: 14px 16px; margin: 10px 0;
+    background: #fff; border: 1px solid rgba(1,105,111,.10);
+    border-radius: 14px; color: var(--charcoal);
+    text-decoration: none; font-weight: 600;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }}
+  .lessons a:hover {{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(1,105,111,.10);
+  }}
+  .feature-grid {{
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px; margin: 24px 0;
+  }}
+  .feature-card {{
+    background: #fff; border: 1px solid rgba(1,105,111,.08);
+    border-radius: 14px; padding: 16px; text-align: center;
+  }}
+  .feature-card .icon {{ font-size: 28px; margin-bottom: 8px; }}
+  .feature-card .label {{ font-size: 14px; font-weight: 700; color: var(--teal); }}
+  .cta {{
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(1,105,111,.10);
+    padding: 14px 18px 18px; text-align: center; z-index: 100;
+  }}
+  .cta a {{
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--teal); color: #fff;
+    text-decoration: none; padding: 15px 32px;
+    border-radius: 999px; font-weight: 800; font-size: 17px;
+    box-shadow: 0 8px 24px rgba(1,105,111,.25);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }}
+  .cta a:hover {{ transform: translateY(-2px); box-shadow: 0 10px 28px rgba(1,105,111,.32); }}
+  .free {{
+    color: var(--muted); font-size: 13px; margin-top: 8px;
+  }}
+  footer {{
+    text-align: center; padding: 30px 0 100px;
+    color: var(--muted); font-size: 13px;
+  }}
 </style>
 </head>
 <body>
+<div class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <img src="/assets/images/logo.png" alt="المربّي">
+      المربّي
+    </div>
+    <div class="nav-tag">مساعد تربية إسلامية ذكي</div>
+  </div>
+</div>
 <div class="wrap">
-  <header>
-    <div class="brand">🌙 المربّي</div>
-    <div class="tag">مساعد تربية إسلامية ذكي — مجاني لوجه الله</div>
-  </header>
   {body}
 </div>
 <div class="cta">
-  <a href="{install}">📲 حمّل «المربّي» مجانًا</a>
+  <a href="{install}">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    حمّل «المربّي» مجانًا
+  </a>
   <div class="free">بلا إعلانات · بلا اشتراكات · لوجه الله</div>
 </div>
 </body>
@@ -123,12 +219,21 @@ def landing(request: Request, ref: str | None = Query(None)) -> HTMLResponse:
     """Share/install landing — where shared cards & referral links arrive."""
     body = (
         f'<img class="hero" src="{_OG_IMAGE}" alt="المربّي" '
-        'loading="lazy" width="1820" height="1024">'
-        '<span class="eyebrow">دعوة لوجه الله</span>'
-        '<h1>ربِّ طفلك بثقة — بالعربي وبالأدلة</h1>'
-        '<div class="content">«المربّي» تطبيق تربية إسلامي ذكي يجاوبك فورًا '
-        'عن تحدّيات طفلك اليومية، ومنهج متكامل من الحمل حتى ١٨ سنة، ورحلة '
-        'لطفلك، وقرآن وأذكار — مجاني تمامًا بلا إعلانات.</div>'
+        'loading="lazy" width="1200" height="675">'
+        '<span class="eyebrow">دعوة لوجه الله 🤍</span>'
+        '<h1>ربِّ طفلك بثقة — بالعربي وبالأدلة الشرعية</h1>'
+        '<p class="subtitle">«المربّي» مساعد تربية إسلامي ذكي يجاوبك فورًا عن '
+        'تحدّيات طفلك اليومية، ويخطّط لك رحلة تربوية متكاملة من الحمل حتى ١٨ سنة.</p>'
+        '<div class="feature-grid">'
+        '<div class="feature-card"><div class="icon">🤖</div><div class="label">مساعد ذكي</div></div>'
+        '<div class="feature-card"><div class="icon">📖</div><div class="label">قرآن وأذكار</div></div>'
+        '<div class="feature-card"><div class="icon">🛤️</div><div class="label">رحلة الطفل</div></div>'
+        '<div class="feature-card"><div class="icon">🎯</div><div class="label">تحدّيات يومية</div></div>'
+        '</div>'
+        '<div class="content">'
+        '<p>مجاني تمامًا. بلا إعلانات. بلا اشتراكات. لوجه الله.</p>'
+        '<p>اضغط الزرّ السفلي وحمّل التطبيق الآن، ثم شارك «نصيحة اليوم» مع من تحب '
+        'لكي تكون دعوتك صدقة جارية.</p></div>'
     )
     return _page(title="ربِّ طفلك بثقة مع المربّي",
                  desc="تطبيق تربية إسلامي ذكي، مجاني بلا إعلانات.",

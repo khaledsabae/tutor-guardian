@@ -141,3 +141,8 @@ if DOCS_DIR.is_dir():
 
 if FRONTEND_DIR.is_dir():
     app.mount("/ui", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="static")
+
+# Make mobile marketing assets (logo, icons) available to public landing pages.
+_MOBILE_ASSETS = PROJECT_ROOT / "mobile" / "assets"
+if _MOBILE_ASSETS.is_dir():
+    app.mount("/assets", StaticFiles(directory=str(_MOBILE_ASSETS)), name="mobile_assets")
