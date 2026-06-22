@@ -17,6 +17,7 @@ import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/program/screens/paths_screen.dart';
+import 'features/deeplink/deep_link_handler.dart';
 import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
@@ -49,6 +50,11 @@ void main() async {
 
   runApp(const ProviderScope(child: TutorGuardianApp()));
 
+  // Phase 0/1 deep links.
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    DeepLinkHandler.instance.init(appNavigatorKey);
+  });
+
   // Phase 0.2 + Phase 1 growth loops — fire-and-forget so it never blocks
   // cold start. Order: session → push token → referral → identity.
   unawaited(_postLaunchGrowthLoop());
@@ -61,10 +67,14 @@ Future<void> _postLaunchGrowthLoop() async {
     return;
   }
   await PushService.instance.registerToken();
+  await PushService.instance.listenForeground();
   await ReferralService.instance.captureAndClaimOnFirstRun();
   await ReferralService.instance.refresh();
   await IdentityService.instance.silentRestore();
 }
+
+// Global navigator key for deep links/pushes that fire before a context exists.
+final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
 /// Root widget.
 ///
@@ -84,6 +94,7 @@ class TutorGuardianApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: appNavigatorKey,
       title: AppConfig.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),

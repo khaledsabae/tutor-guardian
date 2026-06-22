@@ -52,6 +52,10 @@ class Analytics {
   /// Server accepted a push-token registration.
   static Future<void> pushTokenRegistered() => _log('push_token_registered');
 
+  /// A push notification was received while the app is in foreground.
+  static Future<void> pushReceived(String type) =>
+      _log('push_received', {'type': type});
+
   /// Catch-all user property setter (best-effort).
   static Future<void> setAnalyticsUserProperty(String name, String value) async {
     try {

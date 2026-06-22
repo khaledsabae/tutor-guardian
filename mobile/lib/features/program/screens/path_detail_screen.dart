@@ -25,6 +25,10 @@ import '../providers/progress_providers.dart';
 import 'lesson_screen.dart';
 import 'video_player_screen.dart';
 import '../../../config/app_config.dart';
+import '../../../core/analytics.dart';
+import '../../share/share_service.dart';
+import '../../share/shareable_moment_card.dart';
+
 
 /// Domain → header illustration (solid cream-bg JPGs that blend with the
 /// page background). Curriculum domain `medical` maps to the `health` art.
@@ -214,7 +218,32 @@ class _Body extends ConsumerWidget {
               ? null
               : () => openLesson(detail.lessons.first.id),
         ),
+        if (progressMap != null && progressMap.completedCount == total) ...[
+          const SizedBox(height: 12),
+          BouncyButton(
+            label: 'شارك إتمام المسار 🤍',
+            color: Colors.white,
+            icon: const Icon(Icons.share, color: AppTheme.primary),
+            onTap: () => _sharePathCompletion(context, detail.path),
+          ),
+        ],
       ],
+    );
+  }
+
+  void _sharePathCompletion(BuildContext context, CurriculumPath path) {
+    Analytics.shareMoment('path');
+    ShareService.shareMomentCard(
+      fileTag: 'path_${path.id}',
+      message: 'ما شاء الله 🤍 خلّصت مسار «${path.title}» في «المربّي»!\\n'
+          'كل خطوة في تربية أولادك صدقة جارية:',
+      card: ShareableMomentCard(
+        emoji: '🌟',
+        eyebrow: 'مسار مكتمل',
+        headline: path.title,
+        body: path.description,
+        icon: Icons.route_outlined,
+      ),
     );
   }
 }

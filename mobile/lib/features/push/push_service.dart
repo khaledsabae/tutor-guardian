@@ -65,6 +65,14 @@ class PushService {
     }
   }
 
+  /// Listen to foreground messages so we can update badge or route the user.
+  Future<void> listenForeground() async {
+    FirebaseMessaging.onMessage.listen((message) {
+      Analytics.pushReceived(message.data['type'] ?? 'unknown');
+      // UI decisions are left to whichever screen is visible.
+    });
+  }
+
   /// For foreground presentation customization (optional).
   Future<void> configureForeground() async {
     try {

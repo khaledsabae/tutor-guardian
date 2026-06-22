@@ -14,6 +14,10 @@ import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 
 import '../../../config/app_config.dart';
+import '../../../core/analytics.dart';
+import '../../share/share_service.dart';
+import '../../share/shareable_moment_card.dart';
+
 import '../../../theme/app_theme.dart';
 
 class QuizGameScreen extends ConsumerStatefulWidget {
@@ -226,6 +230,32 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
     );
   }
 
+  Future<void> _shareResult() async {
+    final total = _questions.length * 10;
+    final pct = (_score / total * 100).round();
+    String praise;
+    if (pct >= 80) {
+      praise = 'ممتاز! 🏆';
+    } else if (pct >= 50) {
+      praise = 'جيد! 👏';
+    } else {
+      praise = 'واصل التعلم 💪';
+    }
+    await Analytics.shareMoment('quiz');
+    await ShareService.shareMomentCard(
+      fileTag: 'quiz_result',
+      message: 'حصلت على $_score من $total نقطة في اختبار «المربّي» 🤍\\n'
+          '$praise — جرّب أنت كمان:',
+      card: ShareableMomentCard(
+        emoji: pct >= 80 ? '🏆' : (pct >= 50 ? '👏' : '💪'),
+        eyebrow: 'نتيجة الاختبار',
+        headline: '$_score / $total نقطة',
+        body: '$praise — واصل التعلم يوميًا مع المربّي.',
+        icon: Icons.quiz_outlined,
+      ),
+    );
+  }
+
   Widget _buildResults() {
     final total = _questions.length * 10;
     final pct = (_score / total * 100).round();
@@ -286,6 +316,19 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
               ),
             ),
             const SizedBox(height: 32),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: _shareResult,
+                icon: const Icon(Icons.share),
+                label: const Text('شارك نتيجتك 🤍'),
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  textStyle: const TextStyle(fontSize: 18),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
