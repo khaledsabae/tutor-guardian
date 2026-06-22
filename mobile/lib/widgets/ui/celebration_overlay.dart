@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../theme/design_tokens.dart';
 import 'bouncy_button.dart';
@@ -185,6 +186,16 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
               Color(0xFFFB7185),
               Dt.success,
             ],
+          ),
+        ),
+        // Brand-aligned gentle Lottie stars behind the dialog.
+        Positioned.fill(
+          child: IgnorePointer(
+            child: Lottie.asset(
+              'assets/animations/celebration_stars.json',
+              fit: BoxFit.contain,
+              repeat: false,
+            ),
           ),
         ),
       ],
