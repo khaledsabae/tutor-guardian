@@ -25,13 +25,18 @@ _app: firebase_admin.App | None = None
 
 
 def _load_credentials() -> Optional[dict]:
-    """Read service account JSON from env or file. Returns None if missing."""
+    """Read service account JSON from env, env-path, or file. Returns None if missing."""
     raw = os.environ.get("FIREBASE_CREDENTIALS", "").strip()
     if raw:
         try:
             return json.loads(raw)
         except json.JSONDecodeError:
             return None
+    path_env = os.environ.get("FIREBASE_CREDENTIALS_PATH", "").strip()
+    if path_env:
+        p = Path(path_env)
+        if p.exists():
+            return json.loads(p.read_text(encoding="utf-8"))
     if _CREDENTIALS_PATH.exists():
         return json.loads(_CREDENTIALS_PATH.read_text(encoding="utf-8"))
     return None
