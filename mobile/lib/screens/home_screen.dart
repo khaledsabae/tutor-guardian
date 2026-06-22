@@ -35,6 +35,7 @@ import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import '../widgets/ui/animated_progress_bar.dart';
 import '../widgets/ui/bouncy_button.dart';
+import '../widgets/ui/community_proof_card.dart';
 import '../widgets/ui/count_up_text.dart';
 import '../widgets/ui/emoji_hero.dart';
 import '../widgets/ui/noor_mascot.dart';
@@ -167,6 +168,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           _StatsRow(bundle: bundle),
+          const CommunityProofCard(),
           const SizedBox(height: 14),
           // Feedback nudge — extra-visible during the testing phase.
           Material(
