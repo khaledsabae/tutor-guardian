@@ -16,7 +16,7 @@ from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
 from app.routers import (
-    health, assistant, chat, feedback, privacy, program, children, referral,
+    health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
 )
 from app import curriculum_loader as curriculum
 
@@ -108,6 +108,8 @@ app.include_router(program.router, prefix="/api")  # curriculum: paths/lessons/d
 app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
 app.include_router(children.router, prefix="/api")  # child profiles + progress (auth)
 app.include_router(referral.router, prefix="/api")  # referral codes + attribution (auth)
+app.include_router(push.router, prefix="/api")  # FCM token storage (auth)
+app.include_router(identity.router, prefix="/api")  # optional Google Sign-In (auth)
 
 DOCS_DIR = PROJECT_ROOT / "docs"
 if DOCS_DIR.is_dir():
