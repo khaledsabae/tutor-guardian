@@ -12,22 +12,37 @@ Needs env:
 
 Safe to run repeatedly: all sends are best-effort and idempotent-ish.
 """
-import os
+import argparse
 import sqlite3
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--base-url", default="http://localhost:8000")
+parser.add_argument("--dry-run", action="store_true")
+args = parser.parse_args()
+BASE_URL = args.base_url.rstrip("/")
+DRY_RUN = args.dry_run
 
 # Ensure project root on path for app imports.
 ROOT = Path(__file__).resolve().parents[2]
 BACKEND = ROOT / "backend"
 sys.path.insert(0, str(BACKEND))
 
+# ruff: noqa: E402
 from app.db.init_db import db_path
 from app.services.push_sender import send_to_device
 
 
 DB_PATH = db_path()
+
+
+def _send(device_id: str, title: str, body: str, data: dict):
+    if DRY_RUN:
+        print(f"  [dry-run] would send to {device_id}: {title}")
+        return {"ok": True, "dry_run": True}
+    return send_to_device(device_id, title, body, data)
 
 
 def _query(sql: str, params: tuple = ()):
@@ -61,7 +76,7 @@ def streak_at_risk():
         (cutoff,),
     )
     for r in rows:
-        send_to_device(
+        _send(
             device_id=r["device_id"],
             title="سلسلتك في انتظارك 🤍",
             body="درس جديد من «المربّي» ياخد دقيقتين — ادخل الحين واستمر في رحلة تربية أولادك.",
@@ -73,7 +88,7 @@ def new_content_digest():
     """Broadcast a gentle content nudge to all parents with tokens.
     In the future this can filter by child age."""
     for device_id in _device_ids_with_tokens():
-        send_to_device(
+        _send(
             device_id=device_id,
             title="نصيحة اليوم 🌙",
             body="افتح المربّي واقرأ نصيحة اليوم — صدقة جارية لو شاركتها مع أحد الوالدين.",
@@ -95,7 +110,7 @@ def win_back():
         (cutoff,),
     )
     for r in rows:
-        send_to_device(
+        _send(
             device_id=r["device_id"],
             title="مشتاقين ليك 🤍",
             body="رحلة تربية أولادك مستمرة — ادخل المربّي دلوقتي واكمل من حيث وقفت.",
