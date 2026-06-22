@@ -39,12 +39,13 @@ def _install_url(ref: str | None) -> str:
 
 
 def _abs(canonical: str, path: str) -> str:
-    """Absolute URL for [path] using the scheme+host of [canonical] — WhatsApp
-    needs an absolute og:image."""
+    """Absolute URL for [path] using the host of [canonical] — WhatsApp needs an
+    absolute og:image. Force https on real hosts (the backend sees plain http
+    behind the Cloudflare/TLS proxy, but the site is served over https)."""
     try:
-        scheme, rest = canonical.split("//", 1)
-        host = rest.split("/", 1)[0]
-        return f"{scheme}//{host}{path}"
+        host = canonical.split("//", 1)[1].split("/", 1)[0]
+        scheme = "http" if host.startswith(("localhost", "127.0.0.1")) else "https"
+        return f"{scheme}://{host}{path}"
     except Exception:  # noqa: BLE001
         return path
 
