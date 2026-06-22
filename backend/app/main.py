@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import httpx
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -19,6 +19,7 @@ from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats,
 )
+from app.services.push_sender import send_to_device
 from app import curriculum_loader as curriculum
 
 logger = logging.getLogger(__name__)
@@ -113,6 +114,27 @@ app.include_router(referral.router, prefix="/api")  # referral codes + attributi
 app.include_router(stats.router, prefix="/api")  # community social-proof (public; Phase 3)
 app.include_router(push.router, prefix="/api")  # FCM token storage (auth)
 app.include_router(identity.router, prefix="/api")  # optional Google Sign-In (auth)
+
+# ── Phase 1.1: admin push endpoint (for manual/cron sends) ─────────
+from fastapi import HTTPException
+
+@app.post("/api/admin/send-push")
+def admin_send_push(request: Request, payload: dict) -> dict:
+    """Manual push sender. Body: {device_id, title, body, data?}."""
+    # Basic auth: require a configured admin key in header.
+    expected = os.environ.get("TG_ADMIN_KEY", "")
+    provided = request.headers.get("x-admin-key", "")
+    if not expected or provided != expected:
+        raise HTTPException(status_code=403, detail="forbidden")
+
+    result = send_to_device(
+        device_id=payload.get("device_id", ""),
+        title=payload.get("title", "المربّي"),
+        body=payload.get("body", ""),
+        data=payload.get("data"),
+    )
+    return result
+
 
 DOCS_DIR = PROJECT_ROOT / "docs"
 if DOCS_DIR.is_dir():

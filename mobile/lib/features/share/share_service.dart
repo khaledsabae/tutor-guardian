@@ -14,6 +14,7 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/analytics.dart';
 import '../referral/referral_service.dart';
@@ -30,6 +31,23 @@ class ShareService {
       referralCode == null || referralCode.isEmpty
           ? installUrl
           : '$installUrl?ref=$referralCode';
+
+  /// Open WhatsApp directly with a pre-filled text + install link.
+  /// Falls back to the system share sheet if WhatsApp is not installed.
+  static Future<bool> shareWhatsApp(String message, {String? referralCode}) async {
+    referralCode ??= ReferralService.cachedCode;
+    final buffer = StringBuffer()
+      ..write(message)
+      ..write('\n\n📲 «المربّي» مجانًا لوجه الله:\n')
+      ..write(installUrlFor(referralCode: referralCode));
+    final text = buffer.toString();
+    final uri = Uri.parse('https://wa.me/?text=\${Uri.encodeComponent(text)}');
+    if (await canLaunchUrl(uri)) {
+      return await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+    final result = await Share.share(text);
+    return result.status == ShareResultStatus.success;
+  }
 
   /// Capture [card] to a PNG and open the share sheet with a reverent,
   /// pre-filled message plus the install link.

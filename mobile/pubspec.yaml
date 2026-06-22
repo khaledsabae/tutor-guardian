@@ -1,7 +1,7 @@
 name: almorabbi
 description: "المربي الذكي — مساعد تربوي إسلامي آمن للأهل (Flutter / Android-first)."
 publish_to: 'none'
-version: 1.0.17+39
+version: 1.0.18+40
 
 environment:
   sdk: ^3.12.1
@@ -75,6 +75,8 @@ dependencies:
   firebase_messaging: ^15.2.0
   # Phase 1 — optional identity that survives reinstall
   google_sign_in: ^6.2.0
+  # Phase 0/1 — deep links + whatsapp direct share
+  app_links: ^6.3.3
 
 dev_dependencies:
   flutter_test:
