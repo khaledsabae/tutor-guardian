@@ -11,6 +11,8 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
+import httpx
+
 from fastapi import APIRouter, Header, HTTPException, Request, status
 from pydantic import BaseModel, Field, field_validator
 
@@ -22,6 +24,30 @@ router = APIRouter(prefix="/feedback", tags=["feedback"])
 _FEEDBACK_AUDIO_DIR = Path(__file__).resolve().parents[3] / "docs" / "feedback"
 # Simple shared secret so only Khaled can read submitted feedback.
 _ADMIN_KEY = os.environ.get("FEEDBACK_ADMIN_KEY", "almorabbi-admin")
+# Optional Telegram notifications for new app feedback.
+_TG_BOT_TOKEN = os.environ.get("FEEDBACK_TELEGRAM_BOT_TOKEN")
+_TG_CHAT_ID = os.environ.get("FEEDBACK_TELEGRAM_CHAT_ID")
+
+
+def _notify_new_feedback(fid: str, message: str, has_audio: bool, app_version: str | None) -> None:
+    """Best-effort Telegram ping when a new feedback row is created."""
+    if not _TG_BOT_TOKEN or not _TG_CHAT_ID:
+        return
+    try:
+        text = (
+            "📝 فيدباك جديد في المربّي\n"
+            f"ID: `{fid[:8]}`\n"
+            f"الإصدار: {app_version or 'unknown'}\n"
+            f"صوتي: {'نعم' if has_audio else 'لا'}\n"
+            f"المحتوى: {message[:300]}{'...' if len(message) > 300 else ''}"
+        )
+        httpx.post(
+            f"https://api.telegram.org/bot{_TG_BOT_TOKEN}/sendMessage",
+            json={"chat_id": _TG_CHAT_ID, "text": text, "parse_mode": "Markdown"},
+            timeout=10,
+        )
+    except Exception:
+        pass  # never block feedback submission on notification failure
 
 
 def _ensure_app_feedback_table(con) -> None:
@@ -90,6 +116,7 @@ def submit_app_feedback(body: AppFeedbackIn) -> dict:
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(status_code=500, detail=f"DB error: {exc}") from exc
 
+    _notify_new_feedback(fid, body.message.strip(), body.audio_base64 is not None, body.app_version)
     return {"status": "ok", "id": fid}
 
 
