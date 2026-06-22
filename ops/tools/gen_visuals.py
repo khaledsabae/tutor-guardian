@@ -23,43 +23,66 @@ from pathlib import Path
 
 import httpx
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "mobile" / "assets" / "images" / "generated"
-FAL_MODEL = "https://fal.run/fal-ai/flux/schnell"
-COST_PER_IMAGE = 0.003  # USD, FLUX schnell @ ~1MP
+# Recraft V3 — vector/logo specialist (much higher quality than FLUX schnell
+# for clean flat-vector brand art). ~$0.04/image; the $10 free credit covers
+# the full set (~12 imgs ≈ $0.48) many times over.
+FAL_MODEL = "https://fal.run/fal-ai/recraft-v3"
+# digital_illustration → high-quality raster PNG (verifiable + drop-in to the
+# existing Image.asset pipeline). vector_illustration returns SVG (crisper but
+# needs flutter_svg) — a possible later upgrade.
+RECRAFT_STYLE = "digital_illustration"
+COST_PER_IMAGE = 0.04  # USD, Recraft V3
 
-# الأسلوب الموحّد — يُلصق بنهاية كل prompt لضمان هوية بصرية واحدة محتشمة.
+# الأسلوب الموحّد المتمحور حول اللوجو — يُلصق بنهاية كل prompt لهوية واحدة.
+# اللوجو: هلال يندمج مع وجه هادئ في بروفايل + كتاب مفتوح + نبتة + نجمة، خط
+# أبيض نظيف على تركواز. كل أصل يعيد توظيف نفس اللغة البصرية.
 STYLE = (
-    "flat vector children's-book illustration, warm teal (#01696F) and cream "
-    "(#FAF7F2) palette, soft rounded shapes, gentle shadows, modest and calm, "
-    "no realistic faces, subtle Islamic geometric motifs, spiritual warm tone, "
-    "clean minimal background, high quality, centered composition"
+    "elegant minimal flat vector illustration, crisp clean white line-art and "
+    "white silhouettes on a solid deep teal #01696F background, refined and "
+    "calm and contemplative mood evoking inner peace and growth through "
+    "knowledge, smooth balanced geometric composition; recurring motifs of a "
+    "serene crescent moon doubling as a peaceful closed-eyes face, an open "
+    "book, a small plant sprout growing upward from knowledge, and a bright "
+    "guiding star; modest, spiritual, polished, premium, no detailed realistic "
+    "faces, centered and well-spaced, cohesive single brand identity. "
+    "ABSOLUTELY NO TEXT, no words, no letters, no captions, no wordmark"
 )
 
-# أولوية: أصول النمو (الكروت + المتجر) أولًا، ثم onboarding، ثم الفن العام.
+# متمحورة حول اللوجو، تستبدل الفانوس القديم. أولوية: النمو (كروت+متجر) ثم
+# الماسكوت/الهوية ثم رحلة الطفل ثم onboarding/empty states.
 ASSETS: dict[str, str] = {
+    # — هوية/ماسكوت (يستبدل الفانوس «نور» القديم) —
+    "mascot_serene": "a single serene crescent moon with a calm closed-eyes "
+        "face profile, friendly and welcoming, warm and gentle",
+    "mascot_celebrate": "a serene crescent moon with a calm closed-eyes face "
+        "profile surrounded by small stars and sparkles, joyful",
+    "mascot_reading": "a serene crescent moon with a calm closed-eyes face "
+        "profile beside an open book with a small plant sprout, reverent",
     # — خلفيات/زينة كروت المشاركة ومتجر Play (أعلى أثر على النمو) —
-    "share_bg_celebration": "a soft decorative background with a glowing "
-        "crescent moon, a small lantern, and scattered light particles",
-    "store_hero_family": "a warm scene of a parent's hand and a child's hand "
-        "reaching together toward an open book and a small plant sprout",
-    # — تميمة «نور» الفانوس (أوضاع) —
-    "mascot_wave": "a friendly glowing lantern character named Noor, waving "
-        "warmly, big kind eyes, cheerful",
-    "mascot_celebrate": "a friendly glowing lantern character named Noor, "
-        "celebrating with sparkles and confetti, joyful",
-    "mascot_reading": "a friendly glowing lantern character named Noor next to "
-        "an open Quran, calm and reverent",
+    "share_bg_celebration": "a soft decorative frame for a greeting card: a "
+        "crescent moon in a corner, scattered small stars and gentle light, "
+        "mostly empty calm center, plenty of negative space for text",
+    "store_hero": "a warm hero scene: a crescent moon and a star above an open "
+        "book from which a small plant sprout grows, symbolizing nurturing a "
+        "child's growth and faith",
     # — فن المحطات (رحلة الطفل) —
-    "milestone_first_prayer": "a small prayer rug and a glowing crescent, "
-        "symbolizing a child's first prayer, warm and spiritual",
-    "milestone_first_surah": "an open Quran with soft light rays and a small "
-        "star, symbolizing memorizing the first surah",
+    "milestone_first_prayer": "a small prayer rug under a crescent moon and a "
+        "star, symbolizing a child's first prayer",
+    "milestone_first_surah": "an open book with soft light rays and a star "
+        "above it, symbolizing memorizing the first surah",
+    "milestone_first_fast": "a crescent moon with a small lantern and a star, "
+        "symbolizing a child's first fast in Ramadan",
     # — onboarding / حالات فارغة —
-    "onboarding_welcome": "a cozy reading nook with a lantern, a plant, and a "
-        "stack of books, inviting and warm",
-    "empty_journey": "a gentle winding path with small milestone flags leading "
-        "toward a glowing horizon, hopeful",
+    "onboarding_welcome": "a cozy warm scene with a large crescent moon, an "
+        "open book, a growing plant, and a few stars, inviting and gentle",
+    "empty_journey": "a gentle winding path marked with small stars leading "
+        "toward a glowing crescent moon on the horizon, hopeful",
+    "empty_children": "a small plant sprout in soft soil under a crescent moon, "
+        "inviting to start, calm",
+    "empty_search": "a simple magnifying glass with a small star inside, in the "
+        "brand line-art style, calm and minimal",
 }
 
 
@@ -69,12 +92,10 @@ def _generate(client: httpx.Client, key: str, prompt: str) -> bytes:
         headers={"Authorization": f"Key {key}"},
         json={
             "prompt": f"{prompt}. {STYLE}",
+            "style": RECRAFT_STYLE,
             "image_size": "square_hd",
-            "num_inference_steps": 4,
-            "num_images": 1,
-            "enable_safety_checker": True,
         },
-        timeout=120,
+        timeout=180,
     )
     resp.raise_for_status()
     url = resp.json()["images"][0]["url"]
