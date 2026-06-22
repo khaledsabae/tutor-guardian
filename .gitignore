@@ -84,3 +84,5 @@ ops/data/qa_dataset_v2.ckpt.json
 
 backend/secrets/
 *firebase-adminsdk*.json
+# Android App Bundles (large release artifacts; store separately)
+*.aab
