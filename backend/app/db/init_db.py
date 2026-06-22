@@ -202,9 +202,22 @@ def init_db() -> None:
             score          INTEGER,
             UNIQUE(device_id, child_id, path_id, lesson_id)
         );
-        CREATE INDEX IF NOT EXISTS ix_lesson_progress_device_child
-            ON lesson_progress (device_id, child_id, path_id);
     """
+    )
+
+    # Defensive (prod hotfix): an older prod lesson_progress table can predate
+    # the child_id column (its CREATE TABLE IF NOT EXISTS was a no-op). The old
+    # indexes never referenced child_id so the gap stayed hidden; the new
+    # child_id index crashed startup with "no such column: child_id". Ensure
+    # the column exists (idempotent — no-op when present) BEFORE the index.
+    # lesson_progress is created in the executescript above, so it exists here.
+    _ensure_column(
+        conn, table="lesson_progress", column="child_id",
+        ddl="ALTER TABLE lesson_progress ADD COLUMN child_id INTEGER",
+    )
+    conn.execute(
+        "CREATE INDEX IF NOT EXISTS ix_lesson_progress_device_child "
+        "ON lesson_progress (device_id, child_id, path_id)"
     )
 
     _ensure_column(
