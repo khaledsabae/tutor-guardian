@@ -2,18 +2,17 @@
 """
 gen_visuals — توليد المحتوى البصري المخصّص لـ«المربّي» بأسلوب موحّد محتشم.
 
-يستخدم fal.ai → FLUX.1 [schnell] (ترخيص Apache-2.0، استخدام تجاري مسموح،
-~$0.003/صورة؛ fal.ai بيمنح $10 كريديت مجاني لا ينتهي → عمليًا $0 لاحتياجنا).
-يتجنّب FLUX [dev] لأن رخصته غير تجارية.
+يستخدم fal.ai → Recraft V3 (متخصص في الفيكتور/اللوجوهات، جودة أعلى من FLUX schnell).
+~$0.04/صورة؛ fal.ai بيمنح $10 كريديت مجاني لا ينتهي.
 
 التشغيل:
-    export FAL_KEY="مفتاحك من fal.ai"        # تسجيل مجاني، الكريديت تلقائي
-    python ops/tools/gen_visuals.py            # يولّد المتبقّي فقط (idempotent)
-    python ops/tools/gen_visuals.py --only mascot_wave   # أصل واحد
-    python ops/tools/gen_visuals.py --dry-run  # يطبع الخطة + التكلفة بلا توليد
+    export FAL_KEY="مفتاحك من fal.ai"
+    python ops/tools/gen_visuals.py              # يولّد المتبقّي فقط (idempotent)
+    python ops/tools/gen_visuals.py --only badge_first_dua
+    python ops/tools/gen_visuals.py --dry-run    # خطة + تكلفة بلا توليد
 
-كل أصل = (filename, prompt) ويُدمج مع STYLE الثابت لضمان الاتساق البصري.
-المخرجات → mobile/assets/images/generated/  (PNG شفّاف 1024×1024).
+كل أصل = (filename, prompt, size) ويُدمج مع STYLE الثابت لضمان الاتساق البصري.
+المخرجات → mobile/assets/images/generated/
 """
 import argparse
 import os
@@ -25,19 +24,11 @@ import httpx
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "mobile" / "assets" / "images" / "generated"
-# Recraft V3 — vector/logo specialist (much higher quality than FLUX schnell
-# for clean flat-vector brand art). ~$0.04/image; the $10 free credit covers
-# the full set (~12 imgs ≈ $0.48) many times over.
 FAL_MODEL = "https://fal.run/fal-ai/recraft-v3"
-# digital_illustration → high-quality raster PNG (verifiable + drop-in to the
-# existing Image.asset pipeline). vector_illustration returns SVG (crisper but
-# needs flutter_svg) — a possible later upgrade.
 RECRAFT_STYLE = "digital_illustration"
 COST_PER_IMAGE = 0.04  # USD, Recraft V3
 
-# الأسلوب الموحّد المتمحور حول اللوجو — يُلصق بنهاية كل prompt لهوية واحدة.
-# اللوجو: هلال يندمج مع وجه هادئ في بروفايل + كتاب مفتوح + نبتة + نجمة، خط
-# أبيض نظيف على تركواز. كل أصل يعيد توظيف نفس اللغة البصرية.
+# الهوية البصرية الموحّدة — هلال بوجه هادئ + كتاب + نبتة + نجمة، أبيض على تركواز عميق.
 STYLE = (
     "elegant minimal flat vector illustration, crisp clean white line-art and "
     "white silhouettes on a solid deep teal #01696F background, refined and "
@@ -50,65 +41,160 @@ STYLE = (
     "ABSOLUTELY NO TEXT, no words, no letters, no captions, no wordmark"
 )
 
-# متمحورة حول اللوجو، تستبدل الفانوس القديم. أولوية: النمو (كروت+متجر) ثم
-# الماسكوت/الهوية ثم رحلة الطفل ثم onboarding/empty states.
-ASSETS: dict[str, str] = {
-    # — هوية/ماسكوت (يستبدل الفانوس «نور» القديم) —
-    "mascot_serene": "a single serene crescent moon with a calm closed-eyes "
+# (key, prompt, size). Recraft sizes: square_hd (1024×1024), landscape_4_3,
+# portrait_4_3, landscape_16_9, portrait_16_9. Default = square_hd.
+ASSETS: dict[str, tuple[str, str]] = {
+    # — هوية/ماسكوت —
+    "mascot_serene": (
+        "a single serene crescent moon with a calm closed-eyes "
         "face profile, friendly and welcoming, warm and gentle",
-    "mascot_celebrate": "a serene crescent moon with a calm closed-eyes face "
+        "square_hd",
+    ),
+    "mascot_celebrate": (
+        "a serene crescent moon with a calm closed-eyes face "
         "profile surrounded by small stars and sparkles, joyful",
-    "mascot_reading": "a serene crescent moon with a calm closed-eyes face "
+        "square_hd",
+    ),
+    "mascot_reading": (
+        "a serene crescent moon with a calm closed-eyes face "
         "profile beside an open book with a small plant sprout, reverent",
-    # — خلفيات/زينة كروت المشاركة ومتجر Play (أعلى أثر على النمو) —
-    "share_bg_celebration": "a soft decorative frame for a greeting card: a "
+        "square_hd",
+    ),
+    # — كروت مشاركة + متجر —
+    "share_bg_celebration": (
+        "a soft decorative frame for a greeting card: a "
         "crescent moon in a corner, scattered small stars and gentle light, "
         "mostly empty calm center, plenty of negative space for text",
-    "store_hero": "a warm hero scene: a crescent moon and a star above an open "
+        "square_hd",
+    ),
+    "store_hero": (
+        "a warm hero scene: a crescent moon and a star above an open "
         "book from which a small plant sprout grows, symbolizing nurturing a "
         "child's growth and faith",
-    # — فن المحطات (رحلة الطفل) —
-    "milestone_first_prayer": "a small prayer rug under a crescent moon and a "
+        "square_hd",
+    ),
+    # — فن المحطات —
+    "milestone_first_prayer": (
+        "a small prayer rug under a crescent moon and a "
         "star, symbolizing a child's first prayer",
-    "milestone_first_surah": "an open book with soft light rays and a star "
+        "square_hd",
+    ),
+    "milestone_first_surah": (
+        "an open book with soft light rays and a star "
         "above it, symbolizing memorizing the first surah",
-    "milestone_first_fast": "a crescent moon with a small lantern and a star, "
+        "square_hd",
+    ),
+    "milestone_first_fast": (
+        "a crescent moon with a small lantern and a star, "
         "symbolizing a child's first fast in Ramadan",
-    # — onboarding / حالات فارغة —
-    "onboarding_welcome": "a cozy warm scene with a large crescent moon, an "
+        "square_hd",
+    ),
+    # — شارات المحطات القديمة (تستبدل PNGs غير الموحّدة) —
+    "badge_first_dua": (
+        "a small serene crescent moon with closed eyes above praying hands, "
+        "symbolizing a child's first dua, simple badge icon",
+        "square_hd",
+    ),
+    "badge_good_manner": (
+        "a small open book with a heart above it and a crescent moon, "
+        "symbolizing good manners and akhlaq, simple badge icon",
+        "square_hd",
+    ),
+    "badge_helped_others": (
+        "two small hands reaching toward each other under a crescent moon "
+        "and star, symbolizing helping others, simple badge icon",
+        "square_hd",
+    ),
+    "badge_keeps_prayer": (
+        "a small prayer rug with a crescent moon and a star above it, "
+        "symbolizing keeping prayer, simple badge icon",
+        "square_hd",
+    ),
+    "badge_quran_khatma": (
+        "an open book with light rays and a crescent moon above it, "
+        "symbolizing completing Quran khatma, simple badge icon",
+        "square_hd",
+    ),
+    "badge_shahada": (
+        "a bright guiding star above an open book, symbolizing the shahada "
+        "and faith declaration, simple badge icon",
+        "square_hd",
+    ),
+    # — onboarding / empty states —
+    "onboarding_welcome": (
+        "a cozy warm scene with a large crescent moon, an "
         "open book, a growing plant, and a few stars, inviting and gentle",
-    "empty_journey": "a gentle winding path marked with small stars leading "
+        "square_hd",
+    ),
+    "empty_journey": (
+        "a gentle winding path marked with small stars leading "
         "toward a glowing crescent moon on the horizon, hopeful",
-    "empty_children": "a small plant sprout in soft soil under a crescent moon, "
+        "square_hd",
+    ),
+    "empty_children": (
+        "a small plant sprout in soft soil under a crescent moon, "
         "inviting to start, calm",
-    "empty_search": "a simple magnifying glass with a small star inside, in the "
+        "square_hd",
+    ),
+    "empty_search": (
+        "a simple magnifying glass with a small star inside, in the "
         "brand line-art style, calm and minimal",
-    # — domain illustrations for path detail screens —
-    "domain_islamic_parenting": "a warm scene of a parent and child sitting "
+        "square_hd",
+    ),
+    # — domain illustrations —
+    "domain_islamic_parenting": (
+        "a warm scene of a parent and child sitting "
         "together reading an open book under a crescent moon and a star, "
         "symbolizing Islamic upbringing",
-    "domain_development": "a small plant sprout growing from an open book, "
+        "square_hd",
+    ),
+    "domain_development": (
+        "a small plant sprout growing from an open book, "
         "with a crescent moon and a star watching over it, symbolizing child "
         "development and growth",
-    "domain_cyber": "a serene crescent moon and a star above an open book with "
+        "square_hd",
+    ),
+    "domain_cyber": (
+        "a serene crescent moon and a star above an open book with "
         "a small shield icon, symbolizing online safety and digital ethics",
-    "domain_health": "a small plant sprout with a crescent moon and a star "
+        "square_hd",
+    ),
+    "domain_health": (
+        "a small plant sprout with a crescent moon and a star "
         "above it, symbolizing health and wellness, calm and natural",
-    # — in-app banners / hero —
-    "banner": "a wide warm banner: crescent moon, open book, growing plant, "
+        "square_hd",
+    ),
+    # — banners —
+    "banner": (
+        "a wide warm banner: crescent moon, open book, growing plant, "
         "and stars, with plenty of calm center space, suitable for an app "
         "banner",
+        "landscape_16_9",
+    ),
+    # — Play Store / app icon —
+    "feature_graphic": (
+        "a wide Play Store feature graphic: serene crescent moon with closed "
+        "eyes, open book, small plant sprout and stars, solid teal background, "
+        "plenty of calm left space for app name text, premium and spiritual",
+        "landscape_16_9",
+    ),
+    "app_icon": (
+        "a clean app icon: serene crescent moon doubling as a calm closed-eyes "
+        "face profile, open book below it, small plant sprout and a star, "
+        "compact centered composition, solid teal background",
+        "square_hd",
+    ),
 }
 
 
-def _generate(client: httpx.Client, key: str, prompt: str) -> bytes:
+def _generate(client: httpx.Client, key: str, prompt: str, size: str) -> bytes:
     resp = client.post(
         FAL_MODEL,
         headers={"Authorization": f"Key {key}"},
         json={
             "prompt": f"{prompt}. {STYLE}",
             "style": RECRAFT_STYLE,
-            "image_size": "square_hd",
+            "image_size": size,
         },
         timeout=180,
     )
@@ -122,6 +208,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="generate a single asset by name")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--force", action="store_true", help="regenerate even if exists")
     args = ap.parse_args()
 
     targets = {args.only: ASSETS[args.only]} if args.only else dict(ASSETS)
@@ -130,29 +217,28 @@ def main() -> int:
         return 1
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    pending = {
-        name: p for name, p in targets.items()
-        if not (OUT_DIR / f"{name}.webp").exists()
-    }
+    pending: dict[str, tuple[str, str]] = {}
+    for name, (prompt, size) in targets.items():
+        if args.force or not (OUT_DIR / f"{name}.webp").exists():
+            pending[name] = (prompt, size)
+
     print(f"📦 {len(targets)} asset(s) | {len(pending)} pending | "
           f"est. cost ${len(pending) * COST_PER_IMAGE:.3f} "
           f"(fal.ai gives $10 free credit)")
     if args.dry_run:
         for name in pending:
-            print(f"  • {name}")
+            print(f"  • {name} ({pending[name][1]})")
         return 0
 
-    key = os.environ.get("FAL_KEY", "")
+    key = os.environ.get("FAL_KEY", "").strip()
     if not key:
         print("❌ set FAL_KEY (free signup at fal.ai → $10 credit auto-applied)")
         return 1
 
     with httpx.Client() as client:
-        for name, prompt in pending.items():
+        for name, (prompt, size) in pending.items():
             try:
-                data = _generate(client, key, prompt)
-                # Recraft V3 returns WebP; save with the correct extension so the
-                # Flutter asset pipeline loads it efficiently.
+                data = _generate(client, key, prompt, size)
                 out_path = OUT_DIR / f"{name}.webp"
                 out_path.write_bytes(data)
                 print(f"  ✅ {out_path.name} ({len(data) // 1024} KB)")

@@ -111,10 +111,17 @@ const Set<String> _badgeMilestoneKeys = {
 /// (the caller then shows [JourneyMilestone.emoji] / [MilestoneEntry.emoji]).
 String? milestoneBadgeAsset(String key) {
   if (!_badgeMilestoneKeys.contains(key)) return null;
-  // Prefer the unified brand set (logo-centric) where it exists.
-  const branded = {'first_prayer', 'first_surah', 'first_fast'};
+  // Unified brand set (logo-centric) — replaces the old PNGs.
+  const branded = {
+    'first_prayer', 'first_surah', 'first_fast',
+    'first_dua', 'good_manner', 'helped_others',
+    'keeps_prayer', 'quran_khatma', 'shahada',
+  };
   if (branded.contains(key)) {
-    return 'assets/images/generated/milestone_first_$key.webp';
+    if ({'first_prayer', 'first_surah', 'first_fast'}.contains(key)) {
+      return 'assets/images/generated/milestone_first_$key.webp';
+    }
+    return 'assets/images/generated/badge_$key.webp';
   }
   return 'assets/images/milestones/$key.png';
 }
