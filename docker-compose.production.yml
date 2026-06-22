@@ -18,6 +18,8 @@ services:
       # to bake into the image. rsynced from the dev machine; the image's
       # COPY docs/ is shadowed by this read-only mount.
       - ./docs:/app/docs:ro
+      # Firebase Admin service account — kept outside the image for rotation.
+      - ./backend/secrets:/app/backend/secrets:ro
     networks:
       - internal
       - analytics_net               # shared with analytics_nginx for direct name-based proxy
