@@ -46,11 +46,11 @@ class ChildrenListScreen extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
-                        'assets/images/empty/empty_children.png',
-                        height: 150,
-                        fit: BoxFit.contain,
-                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-                      ),
+                      'assets/images/generated/empty_children.webp',
+                      height: 150,
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                    ),
                       const SizedBox(height: 12),
                       const Text(
                         'لا يوجد أطفال على هذا الجهاز. ابدأ بإضافة أول طفل.',

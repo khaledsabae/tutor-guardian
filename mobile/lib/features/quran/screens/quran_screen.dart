@@ -35,7 +35,7 @@ class QuranScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Image.asset(
-                  'assets/images/onboarding/ob_quran.jpg',
+                  'assets/images/generated/milestone_first_surah.webp',
                   height: 120,
                   fit: BoxFit.contain,
                   errorBuilder: (_, __, ___) => const SizedBox.shrink(),

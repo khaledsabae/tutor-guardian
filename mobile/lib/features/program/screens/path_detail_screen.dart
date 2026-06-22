@@ -30,13 +30,13 @@ import '../../../config/app_config.dart';
 /// page background). Curriculum domain `medical` maps to the `health` art.
 String? _domainIllustration(String domain) {
   const map = {
-    'islamic_parenting': 'islamic_parenting',
-    'development': 'development',
-    'cyber': 'cyber',
-    'medical': 'health',
+    'islamic_parenting': 'domain_islamic_parenting',
+    'development': 'domain_development',
+    'cyber': 'domain_cyber',
+    'medical': 'domain_health',
   };
   final name = map[domain];
-  return name == null ? null : 'assets/images/domains/$name.jpg';
+  return name == null ? null : 'assets/images/generated/$name.webp';
 }
 
 class PathDetailScreen extends ConsumerWidget {

@@ -82,14 +82,12 @@ flutter:
   assets:
     - assets/data/
     - assets/images/
-    # «نور» mascot (chosen pose). Other generated art is declared as it lands.
-    - assets/images/mascot/wave.png
+    - assets/images/logo.png
+    # Milestones that still use legacy art (kept until regenerated).
     - assets/images/milestones/
-    - assets/images/empty/
-    - assets/images/domains/
-    - assets/images/onboarding/
     # Unified brand visual set — logo-centric (crescent+book+sprout+star),
-    # generated via ops/tools/gen_visuals.py (Recraft V3).
+    # generated via ops/tools/gen_visuals.py (Recraft V3). Replaces the old
+    # mascot/empty/domains/onboarding directories.
     - assets/images/generated/
 
 # Reuse the existing PWA shield icon — keeps mobile visually consistent

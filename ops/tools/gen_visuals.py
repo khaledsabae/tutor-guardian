@@ -83,6 +83,21 @@ ASSETS: dict[str, str] = {
         "inviting to start, calm",
     "empty_search": "a simple magnifying glass with a small star inside, in the "
         "brand line-art style, calm and minimal",
+    # — domain illustrations for path detail screens —
+    "domain_islamic_parenting": "a warm scene of a parent and child sitting "
+        "together reading an open book under a crescent moon and a star, "
+        "symbolizing Islamic upbringing",
+    "domain_development": "a small plant sprout growing from an open book, "
+        "with a crescent moon and a star watching over it, symbolizing child "
+        "development and growth",
+    "domain_cyber": "a serene crescent moon and a star above an open book with "
+        "a small shield icon, symbolizing online safety and digital ethics",
+    "domain_health": "a small plant sprout with a crescent moon and a star "
+        "above it, symbolizing health and wellness, calm and natural",
+    # — in-app banners / hero —
+    "banner": "a wide warm banner: crescent moon, open book, growing plant, "
+        "and stars, with plenty of calm center space, suitable for an app "
+        "banner",
 }
 
 
@@ -117,7 +132,7 @@ def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     pending = {
         name: p for name, p in targets.items()
-        if not (OUT_DIR / f"{name}.png").exists()
+        if not (OUT_DIR / f"{name}.webp").exists()
     }
     print(f"📦 {len(targets)} asset(s) | {len(pending)} pending | "
           f"est. cost ${len(pending) * COST_PER_IMAGE:.3f} "
@@ -136,8 +151,11 @@ def main() -> int:
         for name, prompt in pending.items():
             try:
                 data = _generate(client, key, prompt)
-                (OUT_DIR / f"{name}.png").write_bytes(data)
-                print(f"  ✅ {name}.png ({len(data) // 1024} KB)")
+                # Recraft V3 returns WebP; save with the correct extension so the
+                # Flutter asset pipeline loads it efficiently.
+                out_path = OUT_DIR / f"{name}.webp"
+                out_path.write_bytes(data)
+                print(f"  ✅ {out_path.name} ({len(data) // 1024} KB)")
             except Exception as exc:  # noqa: BLE001
                 print(f"  ❌ {name}: {exc}")
     print(f"\n💾 saved to {OUT_DIR.relative_to(ROOT)} — declare new files in "

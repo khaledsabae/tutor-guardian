@@ -290,10 +290,10 @@ class _WelcomePage extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(18),
             child: Image.asset(
-              'assets/images/onboarding/ob_welcome.jpg',
+              'assets/images/generated/onboarding_welcome.webp',
               fit: BoxFit.contain,
               errorBuilder: (_, __, ___) => Image.asset(
-                'assets/images/banner.png',
+                'assets/images/generated/banner.webp',
                 fit: BoxFit.contain,
               ),
             ),
@@ -368,7 +368,7 @@ class _FeaturesPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Image.asset(
-            'assets/images/onboarding/ob_journey.jpg',
+            'assets/images/generated/mascot_reading.webp',
             height: 150,
             fit: BoxFit.contain,
             errorBuilder: (_, __, ___) => const SizedBox(height: 8),

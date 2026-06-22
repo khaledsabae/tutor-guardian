@@ -495,7 +495,7 @@ class _EmptyTimeline extends StatelessWidget {
       child: Column(
         children: [
           Image.asset(
-            'assets/images/empty/empty_journey.png',
+            'assets/images/generated/empty_journey.webp',
             height: 130,
             fit: BoxFit.contain,
             errorBuilder: (_, __, ___) =>

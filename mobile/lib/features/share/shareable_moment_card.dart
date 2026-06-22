@@ -66,8 +66,37 @@ class ShareableMomentCard extends StatelessWidget {
           ),
           child: Stack(
             children: [
+              // Unified brand background — logo-centric decorative frame
+              // (crescent + book + sprout + star) generated via Recraft V3.
               Positioned.fill(
-                child: CustomPaint(painter: _PatternPainter()),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: Image.asset(
+                    'assets/images/generated/share_bg_celebration.webp',
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => CustomPaint(
+                      painter: _PatternPainter(),
+                      size: size,
+                    ),
+                  ),
+                ),
+              ),
+              // Soft gradient overlay so text stays readable on the art.
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        AppTheme.surface.withValues(alpha: 0.25),
+                        AppTheme.surface.withValues(alpha: 0.82),
+                      ],
+                      stops: const [0.0, 0.65],
+                    ),
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(64),

@@ -126,7 +126,7 @@ class _Body extends ConsumerWidget {
         if (results.isEmpty) {
           return EmptyState(
             emoji: '🤷',
-            imageAsset: 'assets/images/empty/empty_search.png',
+            imageAsset: 'assets/images/generated/empty_search.webp',
             title: 'لا نتائج لـ «$query»',
             subtitle: 'جرّب كلمات أخرى أو أبسط.',
           );

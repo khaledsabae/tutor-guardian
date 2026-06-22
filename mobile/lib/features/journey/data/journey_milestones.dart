@@ -109,8 +109,15 @@ const Set<String> _badgeMilestoneKeys = {
 
 /// Asset path for a milestone's badge illustration, or null if it has none
 /// (the caller then shows [JourneyMilestone.emoji] / [MilestoneEntry.emoji]).
-String? milestoneBadgeAsset(String key) =>
-    _badgeMilestoneKeys.contains(key) ? 'assets/images/milestones/$key.png' : null;
+String? milestoneBadgeAsset(String key) {
+  if (!_badgeMilestoneKeys.contains(key)) return null;
+  // Prefer the unified brand set (logo-centric) where it exists.
+  const branded = {'first_prayer', 'first_surah', 'first_fast'};
+  if (branded.contains(key)) {
+    return 'assets/images/generated/milestone_first_$key.webp';
+  }
+  return 'assets/images/milestones/$key.png';
+}
 
 /// Developmental milestones, by age band — curated from the `development`
 /// domain of the curriculum. Keys are `dev_*`-prefixed to share the per-child
