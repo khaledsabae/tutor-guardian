@@ -81,6 +81,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         await showCelebration(
           context,
           emoji: '🎉',
+          imageAsset: 'assets/images/generated/mascot_celebrate.webp',
           title: 'ما شاء الله!',
           message: 'تم تسجيل إكمال الدرس',
         );
