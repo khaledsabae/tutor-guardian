@@ -38,4 +38,24 @@ class Analytics {
 
   /// A child-journey milestone was logged — a key "first value" signal.
   static Future<void> milestoneLogged() => _log('milestone_logged');
+
+  /// A Google identity was linked — data now survives reinstall.
+  static Future<void> identityLinked() => _log('identity_linked');
+
+  /// The user explicitly unlinked their Google identity.
+  static Future<void> identityUnlinked() => _log('identity_unlinked');
+
+  /// Push notification permission was granted (or denied). [granted] = true/false.
+  static Future<void> pushPermission(bool granted) =>
+      _log('push_permission', {'granted': granted});
+
+  /// Server accepted a push-token registration.
+  static Future<void> pushTokenRegistered() => _log('push_token_registered');
+
+  /// Catch-all user property setter (best-effort).
+  static Future<void> setAnalyticsUserProperty(String name, String value) async {
+    try {
+      await _fa.setUserProperty(name: name, value: value);
+    } catch (_) { /* ignore */ }
+  }
 }

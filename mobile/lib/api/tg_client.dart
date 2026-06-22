@@ -624,6 +624,53 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  /// `POST /api/push/register` (authed) — store FCM token on the server.
+  Future<void> registerPushToken(String token, {String platform = 'android'}) async {
+    final session = await ensureSession();
+    final resp = await _http
+        .post(Uri.parse('$_baseUrl/api/push/register'),
+            headers: _authHeaders(session.token),
+            body: jsonEncode({'token': token, 'platform': platform}))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+  }
+
+  /// `POST /api/identity/link-google` (authed) — link Google id to device_id.
+  Future<void> linkGoogleIdentity({
+    required String googleId,
+    String? email,
+    String? displayName,
+  }) async {
+    final session = await ensureSession();
+    final resp = await _http
+        .post(Uri.parse('$_baseUrl/api/identity/link-google'),
+            headers: _authHeaders(session.token),
+            body: jsonEncode({
+              'google_id': googleId,
+              if (email != null) 'email': email,
+              if (displayName != null) 'display_name': displayName,
+            }))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+  }
+
+  /// `GET /api/identity/me` (authed) → `{linked, email, display_name}`.
+  Future<Map<String, dynamic>> getIdentity() async {
+    final session = await ensureSession();
+    final resp = await _http
+        .get(Uri.parse('$_baseUrl/api/identity/me'),
+            headers: _authHeaders(session.token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   /// `PUT /api/children/{id}/challenge` (authed) — set/replace the active
   /// challenge by key (one of the server's known keys).
   Future<void> setChallenge(int childId, String challengeKey,

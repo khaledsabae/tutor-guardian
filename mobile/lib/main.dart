@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,11 +10,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
 
+import 'api/tg_client.dart';
 import 'config/app_config.dart';
+import 'features/identity/identity_service.dart';
 import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/program/screens/paths_screen.dart';
+import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
 import 'screens/chat_screen.dart';
@@ -22,6 +26,11 @@ import 'screens/home_screen.dart';
 import 'features/quran/screens/quran_screen.dart';
 import 'theme/app_theme.dart';
 import 'theme/design_tokens.dart';
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,11 +49,21 @@ void main() async {
 
   runApp(const ProviderScope(child: TutorGuardianApp()));
 
-  // Phase 0.2 growth loop — fire-and-forget so it never blocks cold start.
-  // Capture the Play install referrer (claim a referral the first time) and
-  // prime this device's own code so every shared moment card carries it.
-  unawaited(ReferralService.instance.captureAndClaimOnFirstRun()
-      .then((_) => ReferralService.instance.refresh()));
+  // Phase 0.2 + Phase 1 growth loops — fire-and-forget so it never blocks
+  // cold start. Order: session → push token → referral → identity.
+  unawaited(_postLaunchGrowthLoop());
+}
+
+Future<void> _postLaunchGrowthLoop() async {
+  try {
+    await TgClient().ensureSession();
+  } catch (_) {
+    return;
+  }
+  await PushService.instance.registerToken();
+  await ReferralService.instance.captureAndClaimOnFirstRun();
+  await ReferralService.instance.refresh();
+  await IdentityService.instance.silentRestore();
 }
 
 /// Root widget.

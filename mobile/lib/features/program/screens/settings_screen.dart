@@ -35,6 +35,7 @@ import '../providers/lesson_assets_provider.dart';
 import '../../adhkar/services/notification_service.dart';
 import '../../feedback/feedback_screen.dart';
 import '../../referral/invite_screen.dart';
+import '../../identity/identity_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -122,6 +123,15 @@ class SettingsScreen extends ConsumerWidget {
                   iconColor: AppTheme.primary,
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const InviteScreen()),
+                  ),
+                ),
+                _SettingsRow(
+                  icon: Icons.cloud_sync_outlined,
+                  title: 'احفظ تقدّمك 🤍',
+                  subtitle: 'تسجيل دخول اختياري — يحفظ بياناتك لو غيّرت الجهاز',
+                  iconColor: AppTheme.primary,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const IdentityScreen()),
                   ),
                 ),
                 _SettingsRow(
