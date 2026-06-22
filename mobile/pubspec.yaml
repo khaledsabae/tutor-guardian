@@ -46,6 +46,8 @@ dependencies:
   qr_flutter: ^4.1.0
   # Play Install Referrer — free referral attribution (Phase 0.2)
   play_install_referrer: ^0.5.0
+  # Lottie animations for brand-aligned celebrations
+  lottie: ^3.3.0
   # File picker for backup import/export
   file_picker: ^8.0.0
 
@@ -89,6 +91,8 @@ flutter:
     # generated via ops/tools/gen_visuals.py (Recraft V3). Replaces the old
     # mascot/empty/domains/onboarding directories.
     - assets/images/generated/
+    # Brand-aligned Lottie celebrations (generated via ops/tools/gen_lottie.py)
+    - assets/animations/
 
 # Reuse the existing PWA shield icon — keeps mobile visually consistent
 # with the web client and saves us from designing a new asset. Source

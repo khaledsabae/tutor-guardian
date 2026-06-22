@@ -7,11 +7,11 @@ library;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 
 import '../../../config/app_config.dart';
 import '../../../theme/app_theme.dart';
@@ -33,20 +33,17 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
   String? _error;
   int _timeLeft = 15;
   Timer? _timer;
-  late ConfettiController _confettiController;
+  bool _showResultsLottie = false;
 
   @override
   void initState() {
     super.initState();
-    _confettiController =
-        ConfettiController(duration: const Duration(seconds: 3));
     _fetchQuestions();
   }
 
   @override
   void dispose() {
     _timer?.cancel();
-    _confettiController.dispose();
     super.dispose();
   }
 
@@ -115,9 +112,11 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
 
   void _nextQuestion() {
     if (_currentIndex >= _questions.length - 1) {
-      // Show results
-      if (_score >= 70) _confettiController.play();
-      setState(() => _currentIndex = _questions.length); // trigger results view
+      // Trigger brand-aligned celebration on the results screen.
+      setState(() {
+        _currentIndex = _questions.length;
+        _showResultsLottie = true;
+      });
       return;
     }
     setState(() {
@@ -134,6 +133,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
       _score = 0;
       _selectedAnswer = -1;
       _answered = false;
+      _showResultsLottie = false;
     });
     _fetchQuestions();
   }
@@ -174,6 +174,8 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final total = _questions.length * 10;
+    final pct = _questions.isEmpty ? 0 : (_score / total * 100).round();
     return Scaffold(
       appBar: AppBar(
         title: const Text('🧠 اختبر معلوماتك'),
@@ -181,6 +183,16 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
       ),
       body: Stack(
         children: [
+          // Brand-aligned star field behind the results.
+          if (_showResultsLottie && pct >= 60)
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Lottie.asset(
+                  'assets/animations/celebration_stars.json',
+                  repeat: false,
+                ),
+              ),
+            ),
           SafeArea(
             child: _loading
                 ? const Center(child: CircularProgressIndicator())
@@ -189,24 +201,6 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
                     : _currentIndex >= _questions.length
                         ? _buildResults()
                         : _buildQuestion(),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: ConfettiWidget(
-              confettiController: _confettiController,
-              blastDirectionality: BlastDirectionality.explosive,
-              emissionFrequency: 0.05,
-              numberOfParticles: 30,
-              maxBlastForce: 20,
-              minBlastForce: 5,
-              gravity: 0.3,
-              colors: const [
-                Color(0xFF01696F),
-                Color(0xFF4CAF50),
-                Color(0xFFFFD700),
-                Color(0xFFFF6B35),
-              ],
-            ),
           ),
         ],
       ),
@@ -252,9 +246,18 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Text(emoji, style: const TextStyle(fontSize: 72))
-                .animate()
-                .scale(duration: 600.ms, curve: Curves.elasticOut),
+            if (pct >= 80)
+              SizedBox(
+                height: 140,
+                child: Lottie.asset(
+                  'assets/animations/success_check.json',
+                  repeat: false,
+                ),
+              )
+            else
+              Text(emoji, style: const TextStyle(fontSize: 72))
+                  .animate()
+                  .scale(duration: 600.ms, curve: Curves.elasticOut),
             const SizedBox(height: 16),
             Text(msg,
                 style: const TextStyle(
