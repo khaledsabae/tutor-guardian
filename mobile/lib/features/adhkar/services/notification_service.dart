@@ -14,6 +14,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../data/family_adhkar.dart';
 
+
 class NotificationService {
   NotificationService._();
   static final NotificationService instance = NotificationService._();
@@ -26,6 +27,8 @@ class NotificationService {
   static const _kEveningHour = 'tg.adhkar_evening_hour';
   static const _kWirdEnabled = 'tg.wird_reminder_enabled';
   static const _kWirdHour = 'tg.wird_reminder_hour';
+  /// Last 7 indices used so we don't repeat the same content too often.
+  static const _kHistory = 'tg.adhkar_history';
 
   static const _morningId = 1001;
   static const _eveningId = 1002;
@@ -91,15 +94,17 @@ class NotificationService {
     return await android.requestNotificationsPermission() ?? false;
   }
 
-  /// Schedule morning + evening adhkar notifications.
+  /// Schedule morning + evening parenting-content notifications.
   Future<void> scheduleDaily({SharedPreferences? prefs}) async {
     prefs ??= await SharedPreferences.getInstance();
     final morningHour = prefs.getInt(_kMorningHour) ?? 6;
     final eveningHour = prefs.getInt(_kEveningHour) ?? 19;
 
-    final rng = Random();
-    final morningDhikr = familyAdhkar[rng.nextInt(familyAdhkar.length)];
-    final eveningDhikr = familyAdhkar[rng.nextInt(familyAdhkar.length)];
+    // Morning: hadith or verse (inspirational). Evening: hadith or tip (practical).
+    final morning = _pickContent(prefs, allowedKinds: {'hadith', 'verse'});
+    final evening = _pickContent(prefs, allowedKinds: {'hadith', 'tip'});
+    _remember(prefs, morning);
+    _remember(prefs, evening);
 
     // Cancel existing before re-scheduling.
     await _plugin.cancel(_morningId);
@@ -108,23 +113,48 @@ class NotificationService {
     await _scheduleOne(
       id: _morningId,
       hour: morningHour,
-      dhikr: morningDhikr,
-      title: '🌅 ذكر الصباح — المربي الذكي',
+      content: morning,
+      title: '🌅 نصيحة تربوية — المربي الذكي',
     );
 
     await _scheduleOne(
       id: _eveningId,
       hour: eveningHour,
-      dhikr: eveningDhikr,
-      title: '🌙 ذكر المساء — المربي الذكي',
+      content: evening,
+      title: '🌙 تذكير تربوي — المربي الذكي',
     );
+  }
+
+  /// Pick a random item of [allowedKinds], avoiding the last 7 used indices.
+  ParentingContent _pickContent(SharedPreferences prefs, {required Set<String> allowedKinds}) {
+    final rng = Random();
+    final candidates = familyAdhkar
+        .asMap()
+        .entries
+        .where((e) => allowedKinds.contains(e.value.kind))
+        .map((e) => e.key)
+        .toList();
+    final history = prefs.getStringList(_kHistory) ?? [];
+    final recent = history.take(7).map(int.parse).toSet();
+    final fresh = candidates.where((i) => !recent.contains(i)).toList();
+    final pool = fresh.isNotEmpty ? fresh : candidates;
+    return familyAdhkar[pool[rng.nextInt(pool.length)]];
+  }
+
+  void _remember(SharedPreferences prefs, ParentingContent item) {
+    final idx = familyAdhkar.indexOf(item);
+    if (idx < 0) return;
+    final history = prefs.getStringList(_kHistory) ?? [];
+    history.insert(0, idx.toString());
+    if (history.length > 14) history.removeLast();
+    prefs.setStringList(_kHistory, history);
   }
 
   Future<void> _scheduleOne({
     required int id,
     required int hour,
     required String title,
-    FamilyDhikr? dhikr,
+    ParentingContent? content,
     String? bodyOverride,
   }) async {
     final now = tz.TZDateTime.now(tz.local);
@@ -134,16 +164,16 @@ class NotificationService {
     }
 
     const androidDetails = AndroidNotificationDetails(
-      'adhkar_channel',
-      'أذكار الأسرة',
-      channelDescription: 'إشعارات يومية بأحاديث عن الأسرة والتربية',
+      'parenting_content_channel',
+      'تذكيرات تربوية',
+      channelDescription: 'آيات وأحاديث ونصائح تربوية يومية',
       importance: Importance.high,
       priority: Priority.high,
       styleInformation: BigTextStyleInformation(''),
     );
 
     final body =
-        bodyOverride ?? '${dhikr?.text ?? ''}\n— ${dhikr?.source ?? ''}';
+        bodyOverride ?? '${content?.text ?? ''}\n— ${content?.source ?? ''}';
     await _plugin.zonedSchedule(
       id,
       title,
