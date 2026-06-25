@@ -1,11 +1,12 @@
 {
-  "total_units": 1111,
-  "generated_at": "2026-06-22T12:06:52.282029+00:00",
+  "total_units": 1121,
+  "generated_at": "2026-06-25T07:56:36.361036+00:00",
   "by_domain": {
     "medical": 259,
     "cyber": 251,
     "islamic_parenting": 544,
-    "development": 57
+    "development": 57,
+    "aqeedah": 10
   },
   "units": [
     {
@@ -979,6 +980,126 @@
       "behavior_type": "أساليب_التربية",
       "needs_ocr": false,
       "size_chars": 118
+    },
+    {
+      "id": "aqe-0af54c62",
+      "domain": "aqeedah",
+      "title": "لماذا خلقنا الله؟",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 288
+    },
+    {
+      "id": "aqe-6dd8b600",
+      "domain": "aqeedah",
+      "title": "العقيدة في سلوكي",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 395
+    },
+    {
+      "id": "aqe-b1e103fc",
+      "domain": "aqeedah",
+      "title": "من هو الله؟",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 356
+    },
+    {
+      "id": "aqe-c078677c",
+      "domain": "aqeedah",
+      "title": "محمد ﷺ قدوتنا",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 277
+    },
+    {
+      "id": "aqe-c28835f1",
+      "domain": "aqeedah",
+      "title": "الله يحبنا ويرعانا",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 315
+    },
+    {
+      "id": "aqe-d0f14b8c",
+      "domain": "aqeedah",
+      "title": "ما بعد الموت؟",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 324
+    },
+    {
+      "id": "aqe-d34c31d5",
+      "domain": "aqeedah",
+      "title": "أركان الإيمان الستة",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 354
+    },
+    {
+      "id": "aqe-d4f44453",
+      "domain": "aqeedah",
+      "title": "أسماء الله الحسنى",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 308
+    },
+    {
+      "id": "aqe-e3092aff",
+      "domain": "aqeedah",
+      "title": "الملائكة والكتب والرسل",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 329
+    },
+    {
+      "id": "aqe-ff6b8a27",
+      "domain": "aqeedah",
+      "title": "أين الله؟ وكيف يراقبنا؟",
+      "source_file": "aqidah_unified_manifest.md",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تعليم_العقيدة",
+      "needs_ocr": false,
+      "size_chars": 343
     },
     {
       "id": "b173f42a-157f-4929-89a9-b67d12828f3d",

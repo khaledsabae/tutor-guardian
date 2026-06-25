@@ -83,6 +83,8 @@ class CurriculumPath {
     switch (wire) {
       case 'islamic_parenting':
         return 'تربية إسلامية';
+      case 'aqeedah':
+        return 'العقيدة';
       case 'development':
         return 'تنمية';
       case 'medical':

@@ -79,6 +79,7 @@ enum Domain {
   medical('medical', 'الصحة والنمو'),
   cyber('cyber', 'الأمان الرقمي'),
   islamicParenting('islamic_parenting', 'التربية الإسلامية'),
+  aqeedah('aqeedah', 'العقيدة'),
   development('development', 'تطور الطفل'),
   unknown('', 'غير محدد');
 

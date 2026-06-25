@@ -148,6 +148,12 @@ ASSETS: dict[str, tuple[str, str]] = {
         "symbolizing Islamic upbringing",
         "square_hd",
     ),
+    "domain_aqeedah": (
+        "a serene crescent moon and a bright guiding star above an "
+        "open book radiating gentle light from its pages, symbolizing the "
+        "foundations of faith and belief, reverent and luminous",
+        "square_hd",
+    ),
     "domain_development": (
         "a small plant sprout growing from an open book, "
         "with a crescent moon and a star watching over it, symbolizing child "

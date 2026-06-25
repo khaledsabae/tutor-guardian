@@ -4,7 +4,7 @@ quality model or the fast local chain.
 Policy (cheap heuristics, evaluated top-down):
   cloud_quality when the answer is high-stakes or hard:
     • severity متوسط/شديد
-    • fiqh / islamic_parenting domain (precision matters religiously)
+    • fiqh / islamic_parenting / aqeedah domain (precision matters religiously)
     • multi-domain questions (synthesis)
     • long questions or deep conversations
     • weak retrieval (the local 3B can't compensate for thin context)
@@ -75,7 +75,7 @@ def choose_tier(
         return ("local_fast", "cloud_circuit_open")
     if severity in ("متوسط", "شديد"):
         return ("cloud_quality", f"severity:{severity}")
-    if any(d in ("fiqh", "islamic_parenting") for d in domains):
+    if any(d in ("fiqh", "islamic_parenting", "aqeedah") for d in domains):
         return ("cloud_quality", "domain:fiqh")
     if len(domains) >= 2:
         return ("cloud_quality", "multi_domain")

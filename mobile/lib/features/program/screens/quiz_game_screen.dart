@@ -148,6 +148,8 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
     switch (d) {
       case 'islamic_parenting':
         return 'تربية إسلامية';
+      case 'aqeedah':
+        return 'العقيدة';
       case 'medical':
         return 'صحة';
       case 'cyber':
@@ -162,6 +164,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
   Color _domainColor(String d) {
     switch (d) {
       case 'islamic_parenting':
+      case 'aqeedah':
         return const Color(0xFF2E7D32);
       case 'medical':
         return const Color(0xFF1565C0);

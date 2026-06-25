@@ -804,7 +804,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               ),
             ),
           );
-        } else if (domain == 'islamic_parenting' || domain == 'islamic') {
+        } else if (domain == 'islamic_parenting' || domain == 'aqeedah' || domain == 'islamic') {
           buttons.add(
             _AssetButton(
               icon: Icons.nature_people,

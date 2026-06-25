@@ -86,6 +86,8 @@ class DomainStyle {
 const _domainStyles = <String, DomainStyle>{
   'islamic_parenting':
       DomainStyle(Color(0xFF10B981), Color(0xFF059669), '🕌'),
+  'aqeedah':
+      DomainStyle(Color(0xFF01696F), Color(0xFF014F55), '☪️'),
   'development': DomainStyle(Color(0xFF8B5CF6), Color(0xFF6D28D9), '🌱'),
   'medical': DomainStyle(Color(0xFFFB7185), Color(0xFFE11D48), '🩺'),
   'cyber': DomainStyle(Color(0xFF3B82F6), Color(0xFF1D4ED8), '🛡️'),

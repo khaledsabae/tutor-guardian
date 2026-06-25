@@ -23,6 +23,7 @@ CANONICAL_DOMAINS: set[str] = {
     "cyber",
     "islamic_parenting",
     "development",
+    "aqeedah",
 }
 
 # ── Input-domain aliases → canonical storage domain ─────────────────────────
