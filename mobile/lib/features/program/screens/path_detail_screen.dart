@@ -35,6 +35,7 @@ import '../../share/shareable_moment_card.dart';
 String? _domainIllustration(String domain) {
   const map = {
     'islamic_parenting': 'domain_islamic_parenting',
+    'aqeedah': 'domain_aqeedah',
     'development': 'domain_development',
     'cyber': 'domain_cyber',
     'medical': 'domain_health',

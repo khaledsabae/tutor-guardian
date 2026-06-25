@@ -1,0 +1,30 @@
+{
+  "id": "path_7-9_aqeedah_fundamentals",
+  "title": "أساسيات العقيدة — زراعة الإيمان في النشء",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "description": "مسار 10 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم (3-12 سنة). مبني على القرآن والسنة على فهم سلف الأمة، بعيد عن الخلافات.",
+  "lesson_ids": [
+    "lesson_7-9_aqeedah_fundamentals_01",
+    "lesson_7-9_aqeedah_fundamentals_02",
+    "lesson_7-9_aqeedah_fundamentals_03",
+    "lesson_7-9_aqeedah_fundamentals_04",
+    "lesson_7-9_aqeedah_fundamentals_05",
+    "lesson_7-9_aqeedah_fundamentals_06",
+    "lesson_7-9_aqeedah_fundamentals_07",
+    "lesson_7-9_aqeedah_fundamentals_08",
+    "lesson_7-9_aqeedah_fundamentals_09",
+    "lesson_7-9_aqeedah_fundamentals_10"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "aqeedah_parent_led",
+  "primary_reference": {
+    "type": "دراسات_عقدية",
+    "info": "العقيدة الطحاوية، القواعد الأربع للعثيمين، ثلاثة الأصول، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش)"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-24T00:00:00",
+  "updated_at": "2026-06-24T00:00:00"
+}

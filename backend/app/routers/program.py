@@ -39,7 +39,7 @@ router = APIRouter(prefix="/program", tags=["program"])
 _VALID_AGE_GROUPS = {
     "prenatal-1", "0-3", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18",
 }
-_VALID_DOMAINS = {"medical", "cyber", "islamic_parenting", "development"}
+_VALID_DOMAINS = {"medical", "cyber", "islamic_parenting", "development", "aqeedah"}
 _VALID_TIME_OF_DAY = {"morning", "evening", "bedtime", "anytime"}
 _VALID_PROGRESS_STATUS = {"not_started", "in_progress", "completed"}
 
