@@ -9,7 +9,7 @@
       "flashcards": "88/88",
       "quizzes": "88/88",
       "reports": "88/88",
-      "data_tables": "88/88",
+      "data_tables": "88/136",
       "infographics": "10/88"
     },
     "lessons_by_age": {
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-17T09:43:16.215434Z"
+    "updated_at": "2026-06-25T18:28:49.500109Z"
   },
   "lessons": [
     {
@@ -3007,6 +3007,12 @@
           {
             "id": "e0730b9b-2484-4f94-af96-1fc31adb36d6",
             "file": "docs/lesson_assets/data_tables/e0730b9b-2484-4f94-af96-1fc31adb36d6_data_table_lesson_0-3_cyber_screen_foundations_02.csv",
+            "title": "جدول بيانات cyber_screen_foundations (prenatal-1)",
+            "item_count": 5
+          },
+          {
+            "id": "8b10786c-26b4-4119-8f88-2d43a638c4fb",
+            "file": "docs/lesson_assets/data_tables/8b10786c-26b4-4119-8f88-2d43a638c4fb_data_table_lesson_0-3_cyber_screen_foundations_02.csv",
             "title": "جدول بيانات cyber_screen_foundations (prenatal-1)",
             "item_count": 5
           }
