@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-25T19:27:37.900444Z"
+    "updated_at": "2026-06-25T19:29:39.824660Z"
   },
   "lessons": [
     {
@@ -1007,6 +1007,12 @@
             "file": "docs/lesson_assets/reports/55f9ac5e-16d0-4817-ab55-eb78771198b8_report_lesson_13-15_development_02.md",
             "title": "تقرير development_brain_identity (13-15)",
             "item_count": 50
+          },
+          {
+            "id": "735a79b9-0069-4d4d-b303-1571bf91ff47",
+            "file": "docs/lesson_assets/reports/735a79b9-0069-4d4d-b303-1571bf91ff47_report_lesson_13-15_development_02.md",
+            "title": "تقرير development_brain_identity (13-15)",
+            "item_count": 52
           }
         ],
         "data_tables": [
