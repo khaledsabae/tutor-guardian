@@ -36,7 +36,19 @@ OUT_DIR    = Path("/kaggle/working/tg-tutor-commandr-lora")
 MERGED_DIR = Path("/kaggle/working/tg-tutor-commandr-merged")
 MAX_SEQ    = 1024          # median answer ~307 chars; 1024 tokens is ample
 EPOCHS     = 2
-HF_TOKEN   = os.environ.get("HF_TOKEN")  # set from Kaggle Secret
+
+# HF_TOKEN: Kaggle Secrets are NOT auto-exported to env — read via UserSecretsClient.
+HF_TOKEN = None
+try:
+    from kaggle_secrets import UserSecretsClient
+    HF_TOKEN = UserSecretsClient().get_secret("HF_TOKEN")
+except Exception:
+    HF_TOKEN = os.environ.get("HF_TOKEN")
+assert HF_TOKEN, ("HF_TOKEN not found — add a Kaggle Secret named HF_TOKEN and "
+                  "tick 'Attached' for this notebook (Add-ons → Secrets).")
+os.environ["HF_TOKEN"] = HF_TOKEN              # so downstream hub calls see it too
+from huggingface_hub import login
+login(token=HF_TOKEN)                          # authenticate the whole session
 
 # ── tokenizer + 4-bit base ──────────────────────────────────────────────────
 tok = AutoTokenizer.from_pretrained(BASE_MODEL, token=HF_TOKEN)
