@@ -10,7 +10,7 @@
       "quizzes": "88/88",
       "reports": "88/136",
       "data_tables": "88/136",
-      "infographics": "95/136"
+      "infographics": "110/136"
     },
     "lessons_by_age": {
       "10-12": 10,
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-26T09:29:23.785053Z"
+    "updated_at": "2026-06-26T22:13:31.303910Z"
   },
   "lessons": [
     {
@@ -6444,6 +6444,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "32236fce-b573-4c9b-b0d9-b9de4dfae87e_infographic",
+            "file": "docs/lesson_assets/infographics/32236fce-b573-4c9b-b0d9-b9de4dfae87e_infographic_lesson_10-12_development_pre_teen_04.png",
+            "title": "مهارة إدارة الوقت للطفل المسؤول",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6467,6 +6476,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_parenting_worship_love_01_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "1981f935-27bf-4caa-bb72-1d60d92f79d1_infographic",
+            "file": "docs/lesson_assets/infographics/1981f935-27bf-4caa-bb72-1d60d92f79d1_infographic_lesson_10-12_islamic_parenting_worship_love_01.png",
+            "title": "الصلاة: من العادة إلى القلب",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -6492,6 +6510,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "f8fff2a2-e612-4985-8120-09587fcdcc4d_infographic",
+            "file": "docs/lesson_assets/infographics/f8fff2a2-e612-4985-8120-09587fcdcc4d_infographic_lesson_10-12_islamic_parenting_worship_love_02.png",
+            "title": "أول صيام رمضان: تدرج وتحفيز",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6515,6 +6542,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_parenting_worship_love_03_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "694557d4-4bb5-4b6d-974d-7a0db4e4a165_infographic",
+            "file": "docs/lesson_assets/infographics/694557d4-4bb5-4b6d-974d-7a0db4e4a165_infographic_lesson_10-12_islamic_parenting_worship_love_03.png",
+            "title": "تحويل حفظ القرآن لنور القلب",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -6540,6 +6576,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "15cdf31d-abca-4070-834d-bb7f6eb0a3ef_infographic",
+            "file": "docs/lesson_assets/infographics/15cdf31d-abca-4070-834d-bb7f6eb0a3ef_infographic_lesson_10-12_islamic_parenting_worship_love_04.png",
+            "title": "الدعاء: من العادة لمناجاة القلب",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6563,6 +6608,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_parenting_steadfast_01_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "e89d8617-9850-450c-93ba-461814fdd944_infographic",
+            "file": "docs/lesson_assets/infographics/e89d8617-9850-450c-93ba-461814fdd944_infographic_lesson_13-15_islamic_parenting_steadfast_01.png",
+            "title": "العفة وبدايات الغريزة",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -6588,6 +6642,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "2aa9f42a-1dc6-4e6a-a94c-3e0f75c42843_infographic",
+            "file": "docs/lesson_assets/infographics/2aa9f42a-1dc6-4e6a-a94c-3e0f75c42843_infographic_lesson_13-15_islamic_parenting_steadfast_02.png",
+            "title": "دليل اختيار القدوة للمراهقين",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6611,6 +6674,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_parenting_steadfast_03_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "99424618-fc1c-449e-9580-492e0a946da9_infographic",
+            "file": "docs/lesson_assets/infographics/99424618-fc1c-449e-9580-492e0a946da9_infographic_lesson_13-15_islamic_parenting_steadfast_03.png",
+            "title": "دليل تعزيز الإخلاص لدى المراهقين",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -6636,6 +6708,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "6c056bd5-e27d-45ec-bf62-75440ba63f88_infographic",
+            "file": "docs/lesson_assets/infographics/6c056bd5-e27d-45ec-bf62-75440ba63f88_infographic_lesson_13-15_islamic_parenting_steadfast_04.png",
+            "title": "غرس الرقابة الذاتية لدى المراهقين",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6659,6 +6740,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_development_adult_readiness_01_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "e99e9776-548e-426c-a74e-79407aba0533_infographic",
+            "file": "docs/lesson_assets/infographics/e99e9776-548e-426c-a74e-79407aba0533_infographic_lesson_16-18_development_adult_readiness_01.png",
+            "title": "دماغ شابك: من الاندفاع للوعي",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -6684,6 +6774,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "bcd8f6ad-e7b8-4df4-a7a0-05bdc86d6f18_infographic",
+            "file": "docs/lesson_assets/infographics/bcd8f6ad-e7b8-4df4-a7a0-05bdc86d6f18_infographic_lesson_16-18_development_adult_readiness_02.png",
+            "title": "مهارات الاستقلال جسر نحو الرشد",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6707,6 +6806,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_development_adult_readiness_03_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "b3f3eafe-f516-4ef0-805e-42e5c1fe9076_infographic",
+            "file": "docs/lesson_assets/infographics/b3f3eafe-f516-4ef0-805e-42e5c1fe9076_infographic_lesson_16-18_development_adult_readiness_03.png",
+            "title": "دليل دعم الصحة النفسية للمراهقين",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -6732,6 +6840,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "fa79f9fd-7fed-4e01-8a83-592ba2093d09_infographic",
+            "file": "docs/lesson_assets/infographics/fa79f9fd-7fed-4e01-8a83-592ba2093d09_infographic_lesson_16-18_development_adult_readiness_04.png",
+            "title": "ركائز الصداقة السليمة للشاب الراشد",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6756,6 +6873,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "be0b10f7-2ff2-40f8-bfc0-3130c9ef6f9f_infographic",
+            "file": "docs/lesson_assets/infographics/be0b10f7-2ff2-40f8-bfc0-3130c9ef6f9f_infographic_lesson_16-18_islamic_parenting_adult_faith_01.png",
+            "title": "رحلة الشاب نحو الرشد الإيماني",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6779,6 +6905,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_islamic_parenting_adult_faith_02_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "90b94779-a2fc-4d7e-a5ba-8aeff43744e1_infographic",
+            "file": "docs/lesson_assets/infographics/90b94779-a2fc-4d7e-a5ba-8aeff43744e1_infographic_lesson_16-18_islamic_parenting_adult_faith_02.png",
+            "title": "دليل الوالدين لمرافقة الشباب للزواج",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
