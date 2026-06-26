@@ -10,7 +10,7 @@
       "quizzes": "88/88",
       "reports": "88/136",
       "data_tables": "88/136",
-      "infographics": "10/88"
+      "infographics": "95/136"
     },
     "lessons_by_age": {
       "10-12": 10,
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-25T19:30:25.122521Z"
+    "updated_at": "2026-06-26T07:38:53.211342Z"
   },
   "lessons": [
     {
@@ -6213,6 +6213,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "0359a0d5-6030-4a88-bad5-5ba888ba78ee_infographic",
+            "file": "docs/lesson_assets/infographics/0359a0d5-6030-4a88-bad5-5ba888ba78ee_infographic_lesson_0-3_islamic_parenting_fitrah_01.png",
+            "title": "صوت القرآن والأذان: أول ما تطرق أذنه",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6236,6 +6245,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_fitrah_02_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "703c11f4-7f13-4053-b6a9-bf797e08d68b_infographic",
+            "file": "docs/lesson_assets/infographics/703c11f4-7f13-4053-b6a9-bf797e08d68b_infographic_lesson_0-3_islamic_parenting_fitrah_02.png",
+            "title": "الدعاء والتحنيك: سنن استقبال المولود",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -6261,6 +6279,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "58fb4c5d-0c33-4931-b6a5-1386df1e9427_infographic",
+            "file": "docs/lesson_assets/infographics/58fb4c5d-0c33-4931-b6a5-1386df1e9427_infographic_lesson_0-3_islamic_parenting_fitrah_03.png",
+            "title": "جوٌّ إيماني هادئ: البيتُ الذي يربّي",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6284,6 +6311,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_0-3_islamic_parenting_fitrah_04_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "b604024d-e712-4b7c-9839-60fd27b0b598_infographic",
+            "file": "docs/lesson_assets/infographics/b604024d-e712-4b7c-9839-60fd27b0b598_infographic_lesson_0-3_islamic_parenting_fitrah_04.png",
+            "title": "لمسة الرحمة: الحبُّ أساس التديّن",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -6309,6 +6345,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "60f63c75-8118-48a6-9035-44f5104c6337_infographic",
+            "file": "docs/lesson_assets/infographics/60f63c75-8118-48a6-9035-44f5104c6337_infographic_lesson_10-12_development_pre_teen_01.png",
+            "title": "بوادر البلوغ: حوار الجسد المتغيّر بثقة",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6333,6 +6378,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "fc7c77ed-c472-4a78-9790-547841bf5f45_infographic",
+            "file": "docs/lesson_assets/infographics/fc7c77ed-c472-4a78-9790-547841bf5f45_infographic_lesson_10-12_development_pre_teen_02.png",
+            "title": "الاستقلال المتدرّج والمسؤولية",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6356,6 +6410,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_development_pre_teen_03_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "31ae05e1-53c0-42cb-92d8-bb9bb3354791_infographic",
+            "file": "docs/lesson_assets/infographics/31ae05e1-53c0-42cb-92d8-bb9bb3354791_infographic_lesson_10-12_development_pre_teen_03.png",
+            "title": "الصداقة وضغط الأقران: بوصلة القيم",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
