@@ -24,103 +24,114 @@ import 'path_detail_screen.dart';
 import 'search_screen.dart';
 import 'settings_screen.dart';
 
-class PathsScreen extends ConsumerWidget {
+/// Canonical display order for the domain filter chips. Any domain not
+/// listed here is appended after these, in first-seen order.
+const _domainChipOrder = <String>[
+  'islamic_parenting',
+  'aqeedah',
+  'development',
+  'medical',
+  'cyber',
+];
+
+class PathsScreen extends ConsumerStatefulWidget {
   const PathsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PathsScreen> createState() => _PathsScreenState();
+}
+
+class _PathsScreenState extends ConsumerState<PathsScreen> {
+  // Active domain filter; `null` means "show all paths".
+  String? _filter;
+
+  @override
+  Widget build(BuildContext context) {
     final ageGroup = ref.watch(selectedAgeGroupProvider);
     final args = PathsListArgs(ageGroup: ageGroup);
     final asyncPaths = ref.watch(pathsListProvider(args));
 
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('مساراتي 🛤️'),
-          actions: [
-            // Phase 8-B — active child chip (tap to switch).
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-              child: Center(child: ActiveChildChip()),
-            ),
-            IconButton(
-              tooltip: 'بحث',
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
-              },
-            ),
-            // Phase 7 — settings is a push route, not a tab.
-            IconButton(
-              tooltip: 'الإعدادات',
-              icon: const Icon(Icons.settings_outlined),
-              onPressed: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
-              },
-            ),
-            IconButton(
-              tooltip: 'تحديث',
-              onPressed: () =>
-                  ref.read(pathsListProvider(args).notifier).refresh(),
-              icon: const Icon(Icons.refresh),
-            ),
-          ],
-          bottom: const TabBar(
-            indicatorColor: Color(0xFF01696F),
-            labelColor: Color(0xFF01696F),
-            unselectedLabelColor: Color(0xFF64748B),
-            tabs: [
-              Tab(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.menu_book_outlined, size: 18),
-                    SizedBox(width: 6),
-                    Text('المناهج التربوية', style: TextStyle(fontWeight: FontWeight.w800)),
-                  ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('مساراتي 🛤️'),
+        actions: [
+          // Phase 8-B — active child chip (tap to switch).
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+            child: Center(child: ActiveChildChip()),
+          ),
+          IconButton(
+            tooltip: 'بحث',
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
+            },
+          ),
+          // Phase 7 — settings is a push route, not a tab.
+          IconButton(
+            tooltip: 'الإعدادات',
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
+            },
+          ),
+          IconButton(
+            tooltip: 'تحديث',
+            onPressed: () =>
+                ref.read(pathsListProvider(args).notifier).refresh(),
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
+      ),
+      body: asyncPaths.when(
+        data: (envelope) {
+          final allPaths = envelope.paths;
+          // Distinct domains present, in canonical-then-first-seen order.
+          final present = <String>[];
+          for (final p in allPaths) {
+            if (!present.contains(p.domain)) present.add(p.domain);
+          }
+          present.sort((a, b) {
+            final ia = _domainChipOrder.indexOf(a);
+            final ib = _domainChipOrder.indexOf(b);
+            return (ia == -1 ? 999 : ia).compareTo(ib == -1 ? 999 : ib);
+          });
+
+          // A filter that no longer matches any path falls back to "all".
+          final activeFilter =
+              (_filter != null && present.contains(_filter)) ? _filter : null;
+          final visible = activeFilter == null
+              ? allPaths
+              : allPaths.where((p) => p.domain == activeFilter).toList();
+
+          return Column(
+            children: [
+              if (present.length > 1)
+                _DomainFilterBar(
+                  domains: present,
+                  selected: activeFilter,
+                  onSelect: (d) => setState(() => _filter = d),
                 ),
-              ),
-              Tab(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.star_outline, size: 18),
-                    SizedBox(width: 6),
-                    Text('العقيدة الإسلامية', style: TextStyle(fontWeight: FontWeight.w800)),
-                  ],
-                ),
+              Expanded(
+                child: _buildPathsList(context, ref, visible, ageGroup, args),
               ),
             ],
-          ),
+          );
+        },
+        loading: () => const SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: SkeletonList(count: 4, itemHeight: 170),
         ),
-        body: asyncPaths.when(
-          data: (envelope) {
-            final generalPaths = envelope.paths.where((p) => p.domain != 'aqeedah').toList();
-            final aqeedahPaths = envelope.paths.where((p) => p.domain == 'aqeedah').toList();
-
-            return TabBarView(
-              children: [
-                _buildPathsList(context, ref, generalPaths, ageGroup, args, isAqeedah: false),
-                _buildPathsList(context, ref, aqeedahPaths, ageGroup, args, isAqeedah: true),
-              ],
-            );
-          },
-          loading: () => const SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: SkeletonList(count: 4, itemHeight: 170),
-          ),
-          error: (err, _) => EmptyState(
-            emoji: '📡',
-            title: 'تعذّر تحميل المسارات',
-            subtitle: '$err',
-            actionLabel: 'إعادة المحاولة',
-            onAction: () => ref.read(pathsListProvider(args).notifier).refresh(),
-          ),
+        error: (err, _) => EmptyState(
+          emoji: '📡',
+          title: 'تعذّر تحميل المسارات',
+          subtitle: '$err',
+          actionLabel: 'إعادة المحاولة',
+          onAction: () => ref.read(pathsListProvider(args).notifier).refresh(),
         ),
       ),
     );
@@ -131,16 +142,13 @@ class PathsScreen extends ConsumerWidget {
     WidgetRef ref,
     List<CurriculumPath> paths,
     String ageGroup,
-    PathsListArgs args, {
-    required bool isAqeedah,
-  }) {
+    PathsListArgs args,
+  ) {
     if (paths.isEmpty) {
-      return EmptyState(
-        emoji: isAqeedah ? '☪️' : '🧭',
-        title: isAqeedah ? 'مسار العقيدة قادم قريباً' : 'لا توجد مسارات بعد',
-        subtitle: isAqeedah
-            ? 'نعمل على إعداد مسار العقيدة المخصص لهذه المرحلة العمرية.'
-            : 'لا توجد مسارات لهذه المرحلة العمرية حالياً.',
+      return const EmptyState(
+        emoji: '🧭',
+        title: 'لا توجد مسارات بعد',
+        subtitle: 'لا توجد مسارات لهذه المرحلة العمرية حالياً.',
       );
     }
     return RefreshIndicator(
@@ -158,6 +166,111 @@ class PathsScreen extends ConsumerWidget {
               .fadeIn(duration: Dt.base)
               .slideY(begin: .08, curve: Curves.easeOutCubic);
         },
+      ),
+    );
+  }
+}
+
+/// Horizontal, scrollable row of domain filter chips. The first chip
+/// ("الكل") clears the filter; each domain chip wears its own color so the
+/// curriculum (تربية) and creed (عقيدة) tracks read as siblings you can hop
+/// between freely — not locked, separate sections.
+class _DomainFilterBar extends StatelessWidget {
+  const _DomainFilterBar({
+    required this.domains,
+    required this.selected,
+    required this.onSelect,
+  });
+
+  final List<String> domains;
+  final String? selected;
+  final ValueChanged<String?> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 56,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        children: [
+          _Chip(
+            label: 'الكل',
+            emoji: '🗂️',
+            color: Theme.of(context).colorScheme.primary,
+            isSelected: selected == null,
+            onTap: () => onSelect(null),
+          ),
+          const SizedBox(width: 8),
+          for (final d in domains) ...[
+            _Chip(
+              label: CurriculumPath.labelForDomain(d),
+              emoji: styleFor(d).emoji,
+              color: styleFor(d).base,
+              isSelected: selected == d,
+              onTap: () => onSelect(d),
+            ),
+            const SizedBox(width: 8),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _Chip extends StatelessWidget {
+  const _Chip({
+    required this.label,
+    required this.emoji,
+    required this.color,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final String label;
+  final String emoji;
+  final Color color;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: isSelected,
+      label: 'تصفية: $label',
+      excludeSemantics: true,
+      child: Material(
+        color: isSelected ? color : color.withValues(alpha: .10),
+        borderRadius: BorderRadius.circular(Dt.rChip),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(Dt.rChip),
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(Dt.rChip),
+              border: Border.all(
+                color: isSelected ? color : color.withValues(alpha: .35),
+                width: 1.5,
+              ),
+            ),
+            child: Row(
+              children: [
+                Text(emoji, style: const TextStyle(fontSize: 15)),
+                const SizedBox(width: 6),
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                    color: isSelected ? Colors.white : color,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
