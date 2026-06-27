@@ -1,0 +1,24 @@
+{
+  "id": "path_13-15_aqeedah_certainty",
+  "title": "اليقين في زمن الشبهات",
+  "age_group": "13-15",
+  "domain": "aqeedah",
+  "description": "مسار يرافق مراهقك (13-15) في بناء يقينٍ راسخ وسط الشبهات: استقبال الأسئلة الدينية، دلائل الإيمان، الإخلاص، ومراقبة الله الباطنة — عقيدةٌ بقناعةٍ لا بتقليد.",
+  "lesson_ids": [
+    "lesson_13-15_islamic_parenting_teen_identity_01",
+    "lesson_13-15_islamic_parenting_steadfast_03",
+    "lesson_13-15_islamic_parenting_steadfast_04",
+    "lesson_13-15_aqeedah_certainty_01"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "aqeedah_parent_led",
+  "primary_reference": {
+    "type": "دراسات_عقدية",
+    "info": "ثلاثة الأصول والقواعد الأربع لابن عثيمين، العقيدة الطحاوية، أسئلة الأطفال الإيمانية، أصول الإيمان على فهم السلف"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-27T00:00:00",
+  "updated_at": "2026-06-27T00:00:00"
+}

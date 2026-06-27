@@ -327,7 +327,7 @@ class TgClient {
   }
 
   /// Send general in-app feedback (text and/or a base64 voice note) to Khaled.
-  Future<void> sendAppFeedback({
+  Future<String> sendAppFeedback({
     String message = '',
     String? contact,
     String? audioBase64,
@@ -342,13 +342,14 @@ class TgClient {
             if (contact != null && contact.isNotEmpty) 'contact': contact,
             if (audioBase64 != null) 'audio_base64': audioBase64,
             if (deviceId != null) 'device_id': deviceId,
-            'app_version': AppConfig.appVersion,
           }),
         )
-        .timeout(AppConfig.streamTimeout);
-    if (resp.statusCode != 201 && resp.statusCode != 200) {
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 201) {
       throw _wrap(resp);
     }
+    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return body['id'] as String;
   }
 
   /// List the device's past conversations (for the history drawer).

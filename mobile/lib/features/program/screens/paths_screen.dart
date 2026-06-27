@@ -33,84 +33,131 @@ class PathsScreen extends ConsumerWidget {
     final args = PathsListArgs(ageGroup: ageGroup);
     final asyncPaths = ref.watch(pathsListProvider(args));
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('مساراتي 🛤️'),
-        actions: [
-          // Phase 8-B — active child chip (tap to switch).
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-            child: Center(child: ActiveChildChip()),
-          ),
-          IconButton(
-            tooltip: 'بحث',
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
-            },
-          ),
-          // Phase 7 — settings is a push route, not a tab.
-          IconButton(
-            tooltip: 'الإعدادات',
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
-            },
-          ),
-          IconButton(
-            tooltip: 'تحديث',
-            onPressed: () =>
-                ref.read(pathsListProvider(args).notifier).refresh(),
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
-      ),
-      body: asyncPaths.when(
-        data: (envelope) {
-          if (envelope.paths.isEmpty) {
-            return const EmptyState(
-              emoji: '🧭',
-              title: 'لا توجد مسارات بعد',
-              subtitle: 'لا توجد مسارات لهذه المرحلة العمرية حالياً.',
-            );
-          }
-          return RefreshIndicator(
-            onRefresh: () =>
-                ref.read(pathsListProvider(args).notifier).refresh(),
-            child: ListView.separated(
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-              itemCount: envelope.paths.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
-              itemBuilder: (context, i) {
-                final card =
-                    _PathCard(path: envelope.paths[i], ageGroup: ageGroup);
-                // Stagger only the first screenful; later items appear
-                // instantly (they're below the fold anyway).
-                if (i >= Dt.maxStaggeredItems) return card;
-                return card
-                    .animate(delay: Dt.stagger * i)
-                    .fadeIn(duration: Dt.base)
-                    .slideY(begin: .08, curve: Curves.easeOutCubic);
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('مساراتي 🛤️'),
+          actions: [
+            // Phase 8-B — active child chip (tap to switch).
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+              child: Center(child: ActiveChildChip()),
+            ),
+            IconButton(
+              tooltip: 'بحث',
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
               },
             ),
-          );
+            // Phase 7 — settings is a push route, not a tab.
+            IconButton(
+              tooltip: 'الإعدادات',
+              icon: const Icon(Icons.settings_outlined),
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
+              },
+            ),
+            IconButton(
+              tooltip: 'تحديث',
+              onPressed: () =>
+                  ref.read(pathsListProvider(args).notifier).refresh(),
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
+          bottom: const TabBar(
+            indicatorColor: Color(0xFF01696F),
+            labelColor: Color(0xFF01696F),
+            unselectedLabelColor: Color(0xFF64748B),
+            tabs: [
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.menu_book_outlined, size: 18),
+                    SizedBox(width: 6),
+                    Text('المناهج التربوية', style: TextStyle(fontWeight: FontWeight.w800)),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.star_outline, size: 18),
+                    SizedBox(width: 6),
+                    Text('العقيدة الإسلامية', style: TextStyle(fontWeight: FontWeight.w800)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: asyncPaths.when(
+          data: (envelope) {
+            final generalPaths = envelope.paths.where((p) => p.domain != 'aqeedah').toList();
+            final aqeedahPaths = envelope.paths.where((p) => p.domain == 'aqeedah').toList();
+
+            return TabBarView(
+              children: [
+                _buildPathsList(context, ref, generalPaths, ageGroup, args, isAqeedah: false),
+                _buildPathsList(context, ref, aqeedahPaths, ageGroup, args, isAqeedah: true),
+              ],
+            );
+          },
+          loading: () => const SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            child: SkeletonList(count: 4, itemHeight: 170),
+          ),
+          error: (err, _) => EmptyState(
+            emoji: '📡',
+            title: 'تعذّر تحميل المسارات',
+            subtitle: '$err',
+            actionLabel: 'إعادة المحاولة',
+            onAction: () => ref.read(pathsListProvider(args).notifier).refresh(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPathsList(
+    BuildContext context,
+    WidgetRef ref,
+    List<CurriculumPath> paths,
+    String ageGroup,
+    PathsListArgs args, {
+    required bool isAqeedah,
+  }) {
+    if (paths.isEmpty) {
+      return EmptyState(
+        emoji: isAqeedah ? '☪️' : '🧭',
+        title: isAqeedah ? 'مسار العقيدة قادم قريباً' : 'لا توجد مسارات بعد',
+        subtitle: isAqeedah
+            ? 'نعمل على إعداد مسار العقيدة المخصص لهذه المرحلة العمرية.'
+            : 'لا توجد مسارات لهذه المرحلة العمرية حالياً.',
+      );
+    }
+    return RefreshIndicator(
+      onRefresh: () => ref.read(pathsListProvider(args).notifier).refresh(),
+      child: ListView.separated(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+        itemCount: paths.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 16),
+        itemBuilder: (context, i) {
+          final card = _PathCard(path: paths[i], ageGroup: ageGroup);
+          if (i >= Dt.maxStaggeredItems) return card;
+          return card
+              .animate(delay: Dt.stagger * i)
+              .fadeIn(duration: Dt.base)
+              .slideY(begin: .08, curve: Curves.easeOutCubic);
         },
-        loading: () => const SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
-          child: SkeletonList(count: 4, itemHeight: 170),
-        ),
-        error: (err, _) => EmptyState(
-          emoji: '📡',
-          title: 'تعذّر تحميل المسارات',
-          subtitle: '$err',
-          actionLabel: 'إعادة المحاولة',
-          onAction: () => ref.read(pathsListProvider(args).notifier).refresh(),
-        ),
       ),
     );
   }

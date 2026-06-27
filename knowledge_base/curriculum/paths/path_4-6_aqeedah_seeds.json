@@ -1,0 +1,24 @@
+{
+  "id": "path_4-6_aqeedah_seeds",
+  "title": "بذور العقيدة: أول تعريفٍ بالله",
+  "age_group": "4-6",
+  "domain": "aqeedah",
+  "description": "مسار 4 دروس قصيرة يعرّف الطفل (4-6) بربّه تعريفاً محبَّباً محسوساً: الله الخالق المنعِم، محبّته ورؤيته، وحبّ النبي ﷺ — بذور العقيدة الأولى.",
+  "lesson_ids": [
+    "lesson_4-6_aqeedah_seeds_01",
+    "lesson_4-6_aqeedah_seeds_02",
+    "lesson_4-6_aqeedah_seeds_03",
+    "lesson_4-6_aqeedah_seeds_04"
+  ],
+  "estimated_days": 10,
+  "pedagogical_framework": "aqeedah_parent_led",
+  "primary_reference": {
+    "type": "دراسات_عقدية",
+    "info": "ثلاثة الأصول والقواعد الأربع لابن عثيمين، العقيدة الطحاوية، أسئلة الأطفال الإيمانية، أصول الإيمان على فهم السلف"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-27T00:00:00",
+  "updated_at": "2026-06-27T00:00:00"
+}
