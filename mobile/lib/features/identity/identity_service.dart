@@ -5,7 +5,9 @@
 /// opt-in only; the user can keep using the app anonymously.
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/tg_client.dart';
@@ -19,6 +21,10 @@ class IdentityService {
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
+    // NOTE: For Android, google_sign_in needs a Web OAuth client ID configured
+    // in Google Cloud Console under Credentials → Create Credentials → OAuth client ID → Web application.
+    // Copy that client ID here and rebuild. The Android client ID in google-services.json is NOT enough.
+    // webClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
   );
 
   /// Returns true if a previous sign-in happened on this device.
@@ -48,7 +54,12 @@ class IdentityService {
       await _link(account);
       Analytics.identityLinked();
       return true;
-    } catch (_) {
+    } on PlatformException catch (e) {
+      // Common Android failures: sign_in_failed / 10 = no web client ID configured.
+      debugPrint('Google Sign-In error: ${e.code} — ${e.message}');
+      return false;
+    } catch (e) {
+      debugPrint('Google Sign-In unexpected error: $e');
       return false;
     }
   }

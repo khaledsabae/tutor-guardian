@@ -53,6 +53,7 @@ void main() async {
   // Phase 0/1 deep links.
   WidgetsBinding.instance.addPostFrameCallback((_) {
     DeepLinkHandler.instance.init(appNavigatorKey);
+    NotificationService.instance.processPendingTap();
   });
 
   // Phase 0.2 + Phase 1 growth loops — fire-and-forget so it never blocks

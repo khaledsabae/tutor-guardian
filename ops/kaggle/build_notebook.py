@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """Assemble the command-r Kaggle notebook (finetune_tg_kaggle.ipynb).
 
-Authoritative source for the 4 cells. Incorporates the fixes proven on Kaggle:
+Authoritative source for the cells. Incorporates the fixes proven on Kaggle:
   - TRL SFTConfig + processing_class (new TRL API)
   - bfloat16 -> float32 sweep (T4 fp16/GradScaler conflict)
-  - device_map={"":0}, MAX_SEQ=512, EPOCHS=1, 10k subset (fit Kaggle time)
-  - uninstall torchao 0.10 (peft merge raises on the stale version)
-  - MERGE ON GPU (P100/T4 16GB) not CPU — CPU merge OOM'd & killed the kernel
+  - Run training on GPU 0 only (device_map={"": 0}) to avoid TRL device mismatch error
+  - Run merging on both T4 GPUs (device_map="auto") in a subprocess to avoid VRAM OOM
   - GGUF export + cleanup so committed output stays < Kaggle 20GB cap
 Run mode MUST be 'Save & Run All' (commit) so /kaggle/working persists.
 """
@@ -21,7 +20,7 @@ PIP = '''# المربّي — fine-tune command-r7b-arabic (QLoRA). Accelerator 
 !pip uninstall -y torchao
 '''
 
-TRAIN = '''import os
+TRAIN_CODE = '''import os
 from pathlib import Path
 import torch
 from datasets import load_dataset
@@ -32,7 +31,6 @@ from trl import SFTTrainer, SFTConfig
 BASE_MODEL = "CohereLabs/c4ai-command-r7b-arabic-02-2025"
 DATA_DIR   = Path(os.environ.get("DATA_DIR", "/kaggle/input/tg-qa-dataset"))
 OUT_DIR    = Path("/kaggle/working/tg-tutor-commandr-lora")
-MERGED_DIR = Path("/kaggle/working/tg-tutor-commandr-merged")
 MAX_SEQ    = 512
 EPOCHS     = 1
 
@@ -78,7 +76,7 @@ args = SFTConfig(output_dir=str(OUT_DIR), num_train_epochs=EPOCHS, per_device_tr
                  dataset_text_field="text", packing=False)
 
 trainer = SFTTrainer(model=model, args=args, train_dataset=ds_train, eval_dataset=ds_val,
-                     peft_config=peft_cfg, processing_class=tok)
+                      peft_config=peft_cfg, processing_class=tok)
 
 for _n, _p in trainer.model.named_parameters():
     if _p.dtype == torch.bfloat16:
@@ -89,25 +87,52 @@ trainer.save_model(str(OUT_DIR))
 print("TRAIN DONE -> adapter saved at", OUT_DIR)
 '''
 
-MERGE = '''# Merge LoRA on the GPU (CPU merge OOMs Kaggle RAM and kills the kernel).
-import gc, torch
-try:
-    del trainer, model
-except Exception:
-    pass
-gc.collect(); torch.cuda.empty_cache()
+TRAIN_CELL = f'''# Write training script to disk
+with open("train.py", "w") as f:
+    f.write("""{TRAIN_CODE}""")
 
+# Execute training in a separate process to avoid memory leaks/VRAM pollution
+!python3 train.py
+'''
+
+MERGE_CODE = '''import os
+from pathlib import Path
+import torch
 from peft import AutoPeftModelForCausalLM
 from transformers import AutoTokenizer
 
-m = AutoPeftModelForCausalLM.from_pretrained(str(OUT_DIR), torch_dtype=torch.float16,
-                                             device_map={"": 0}, token=HF_TOKEN,
-                                             trust_remote_code=True, low_cpu_mem_usage=True)
+OUT_DIR    = Path("/kaggle/working/tg-tutor-commandr-lora")
+MERGED_DIR = Path("/kaggle/working/tg-tutor-commandr-merged")
+
+HF_TOKEN = None
+try:
+    from kaggle_secrets import UserSecretsClient
+    HF_TOKEN = UserSecretsClient().get_secret("HF_TOKEN")
+except Exception:
+    HF_TOKEN = os.environ.get("HF_TOKEN")
+assert HF_TOKEN, "HF_TOKEN missing"
+
+print("Merging LoRA adapter into base on GPU (sharded)...")
+m = AutoPeftModelForCausalLM.from_pretrained(
+    str(OUT_DIR),
+    torch_dtype=torch.float16,
+    device_map="auto",
+    token=HF_TOKEN,
+    trust_remote_code=True,
+    low_cpu_mem_usage=True
+)
 m = m.merge_and_unload()
 m.save_pretrained(str(MERGED_DIR), safe_serialization=True, max_shard_size="2GB")
 AutoTokenizer.from_pretrained(str(OUT_DIR), token=HF_TOKEN).save_pretrained(str(MERGED_DIR))
-del m; gc.collect(); torch.cuda.empty_cache()
 print("MERGED OK ->", MERGED_DIR)
+'''
+
+MERGE_CELL = f'''# Write merge script to disk
+with open("merge.py", "w") as f:
+    f.write("""{MERGE_CODE}""")
+
+# Execute merge in a separate process with device_map="auto" to load clean and shard across both T4 GPUs
+!python3 merge.py
 '''
 
 GGUF = '''# GGUF Q4_K_M for Ollama. Cleanup keeps committed output < Kaggle 20GB cap.
@@ -135,7 +160,7 @@ nb = {
         mc("# Tutor Guardian — command-r7b-arabic fine-tune\n"
            "Accelerator = **GPU T4 x2** · Run as **Save & Run All** (commit).\n"
            "Cells: pip → train → merge(GPU) → GGUF."),
-        cc(PIP), cc(TRAIN), cc(MERGE), cc(GGUF),
+        cc(PIP), cc(TRAIN_CELL), cc(MERGE_CELL), cc(GGUF),
     ],
     "metadata": {
         "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},

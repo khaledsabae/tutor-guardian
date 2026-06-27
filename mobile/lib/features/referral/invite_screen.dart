@@ -56,21 +56,38 @@ class _InviteScreenState extends State<InviteScreen> {
     if (info == null || _sharing) return;
     setState(() => _sharing = true);
     Analytics.inviteShared();
-    await ShareService.shareMomentCard(
-      fileTag: 'invite_${info.code}',
-      referralCode: info.code,
-      message: 'جرّب «المربّي» معايا 🤍 — تطبيق تربية إسلامي ذكي، '
+    try {
+      final ok = await ShareService.shareMomentCard(
+        fileTag: 'invite_${info.code}',
+        referralCode: info.code,
+        message: 'جرّب «المربّي» معايا 🤍 — تطبيق تربية إسلامي ذكي، '
+            'مجاني تمامًا بلا إعلانات. دلالة على الخير صدقة 🌿',
+        card: const ShareableMomentCard(
+          emoji: '🤍',
+          eyebrow: 'دعوة لوجه الله',
+          headline: 'جرّب «المربّي» معايا',
+          body: 'تطبيق تربية إسلامي ذكي يجاوبك بثقة — مجاني بلا إعلانات.\n'
+              '«الدالُّ على الخير كفاعله»',
+          icon: Icons.favorite_outline,
+        ),
+      );
+      if (!ok && mounted) {
+        // Fallback: plain text share if image capture/share sheet fails.
+        await ShareService.shareWhatsApp(
+          'جرّب «المربّي» معايا 🤍 — تطبيق تربية إسلامي ذكي، '
           'مجاني تمامًا بلا إعلانات. دلالة على الخير صدقة 🌿',
-      card: const ShareableMomentCard(
-        emoji: '🤍',
-        eyebrow: 'دعوة لوجه الله',
-        headline: 'جرّب «المربّي» معايا',
-        body: 'تطبيق تربية إسلامي ذكي يجاوبك بثقة — مجاني بلا إعلانات.\n'
-            '«الدالُّ على الخير كفاعله»',
-        icon: Icons.favorite_outline,
-      ),
-    );
-    if (mounted) setState(() => _sharing = false);
+          referralCode: info.code,
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('تعذّر المشاركة: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _sharing = false);
+    }
   }
 
   Future<void> _claim() async {

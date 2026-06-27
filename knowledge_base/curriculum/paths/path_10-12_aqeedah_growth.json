@@ -1,0 +1,24 @@
+{
+  "id": "path_10-12_aqeedah_growth",
+  "title": "ترسيخ العقيدة: من المعرفة إلى المراقبة",
+  "age_group": "10-12",
+  "domain": "aqeedah",
+  "description": "مسار يرسّخ عقيدة ابنك (10-12) قبيل البلوغ: من معرفةٍ إلى مراقبةٍ وقناعة — الهوية الإيمانية، فهم أركان الإيمان بعمق، الإخلاص والمراقبة، والرضا بالقدر.",
+  "lesson_ids": [
+    "lesson_10-12_islamic_parenting_identity_04",
+    "lesson_10-12_aqeedah_growth_01",
+    "lesson_10-12_aqeedah_growth_02",
+    "lesson_10-12_aqeedah_growth_03"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "aqeedah_parent_led",
+  "primary_reference": {
+    "type": "دراسات_عقدية",
+    "info": "ثلاثة الأصول والقواعد الأربع لابن عثيمين، العقيدة الطحاوية، أسئلة الأطفال الإيمانية، أصول الإيمان على فهم السلف"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-27T00:00:00",
+  "updated_at": "2026-06-27T00:00:00"
+}

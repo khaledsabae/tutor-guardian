@@ -7,11 +7,13 @@ library;
 
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../../../main.dart';
 import '../data/family_adhkar.dart';
 
 
@@ -35,6 +37,7 @@ class NotificationService {
   static const _wirdId = 1003;
 
   bool _initialized = false;
+  String? pendingPayload;
 
   /// Call once at app startup.
   Future<void> init() async {
@@ -45,7 +48,12 @@ class NotificationService {
 
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const initSettings = InitializationSettings(android: androidInit);
-    await _plugin.initialize(initSettings);
+    await _plugin.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse: (response) {
+        _handleNotificationTap(response.payload);
+      },
+    );
 
     final prefs = await SharedPreferences.getInstance();
     final enabled = prefs.getBool(_kEnabled) ?? true;
@@ -56,6 +64,113 @@ class NotificationService {
     }
     if (enabled) await scheduleDaily(prefs: prefs);
     if (wird) await scheduleWirdReminder(prefs: prefs);
+
+    // Check if cold-started from notification
+    final details = await _plugin.getNotificationAppLaunchDetails();
+    if (details != null && details.didNotificationLaunchApp) {
+      pendingPayload = details.notificationResponse?.payload;
+    }
+  }
+
+  void processPendingTap() {
+    if (pendingPayload != null) {
+      _handleNotificationTap(pendingPayload);
+      pendingPayload = null;
+    }
+  }
+
+  void _handleNotificationTap(String? payload) {
+    if (payload == null) return;
+    if (payload.startsWith('adhkar_')) {
+      final idx = int.tryParse(payload.substring(7));
+      if (idx != null && idx >= 0 && idx < familyAdhkar.length) {
+        final content = familyAdhkar[idx];
+        _showTipDialog(content);
+      }
+    }
+  }
+
+  void _showTipDialog(ParentingContent content) {
+    final context = appNavigatorKey.currentContext;
+    if (context == null) {
+      // Retry in a bit if context isn't ready
+      Future.delayed(const Duration(milliseconds: 500), () => _showTipDialog(content));
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            title: Row(
+              children: [
+                Text(
+                  content.kind == 'hadith'
+                      ? '🕌 حديث شريف'
+                      : content.kind == 'verse'
+                          ? '📖 آية كريمة'
+                          : '💡 نصيحة اليوم',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
+                    color: Color(0xFF0F172A),
+                  ),
+                ),
+              ],
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    content.text,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      height: 1.6,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF334155),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1F5F9),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      content.source,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF64748B),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(
+                  'حسناً',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14,
+                    color: Color(0xFF10B981),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   /// Daily reminder to read the Qur'an wird (default 5 PM).
@@ -184,6 +299,7 @@ class NotificationService {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
+      payload: content != null ? 'adhkar_${familyAdhkar.indexOf(content)}' : null,
     );
   }
 

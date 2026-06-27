@@ -93,7 +93,7 @@ class _CoachCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'مرشد $childName',
+                      'نصيحة اليوم لـ $childName',
                       style: const TextStyle(
                         color: Color(0xFF8A5A0F),
                         fontWeight: FontWeight.w700,

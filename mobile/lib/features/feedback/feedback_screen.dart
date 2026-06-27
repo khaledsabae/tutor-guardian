@@ -79,15 +79,20 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       String? audioB64;
       if (_audioPath != null) {
         final bytes = await File(_audioPath!).readAsBytes();
+        if (bytes.length > 2 * 1024 * 1024) {
+          _snack('الملف الصوتي كبير جدًا (أكبر من 2 ميجا). جرّب تسجيل أقصر.');
+          setState(() => _sending = false);
+          return;
+        }
         audioB64 = base64Encode(bytes);
       }
-      await ref.read(tgClientProvider).sendAppFeedback(
+      final id = await ref.read(tgClientProvider).sendAppFeedback(
             message: msg,
             contact: _contact.text.trim(),
             audioBase64: audioB64,
           );
       if (!mounted) return;
-      _snack('وصلت ملاحظتك، شكراً لك! 🌿', ok: true);
+      _snack('وصلت ملاحظتك، شكراً لك! 🌿 (ID: ${id.substring(0, 8)})', ok: true);
       Navigator.of(context).pop();
     } catch (e) {
       _snack('تعذّر الإرسال: $e');

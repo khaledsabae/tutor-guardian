@@ -1,0 +1,24 @@
+{
+  "id": "path_16-18_aqeedah_conviction",
+  "title": "إيمانٌ بقناعة: العقيدة في مواجهة العالم",
+  "age_group": "16-18",
+  "domain": "aqeedah",
+  "description": "مسار ينقل شابك (16-18) من إيمانٍ موروثٍ إلى يقينٍ بقناعةٍ يثبت أمام العالم: ترسيخ الإيمان الذاتي، مواجهة الإلحاد والشبهات المعاصرة، العقيدة بوصلةً للقرارات، والحياة لغايةٍ أكبر.",
+  "lesson_ids": [
+    "lesson_16-18_islamic_parenting_adult_faith_01",
+    "lesson_16-18_aqeedah_conviction_01",
+    "lesson_16-18_aqeedah_conviction_02",
+    "lesson_16-18_islamic_parenting_adult_faith_03"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "aqeedah_parent_led",
+  "primary_reference": {
+    "type": "دراسات_عقدية",
+    "info": "ثلاثة الأصول والقواعد الأربع لابن عثيمين، العقيدة الطحاوية، أسئلة الأطفال الإيمانية، أصول الإيمان على فهم السلف"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-27T00:00:00",
+  "updated_at": "2026-06-27T00:00:00"
+}
