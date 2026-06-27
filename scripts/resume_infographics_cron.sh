@@ -28,4 +28,15 @@ fi
 
 echo "missing=$missing — running generator" >> "$LOG"
 "$PY" -u scripts/generate_missing_infographics.py --delay 4 >> "$LOG" 2>&1
+
+# Deploy: PNGs are gitignored (only the index is tracked via git), so rsync the
+# generated infographics to the VPS — otherwise the index references images that
+# 404 in the app. Incremental: only newly-generated PNGs transfer.
+VPS="root@72.62.44.131"
+VPS_DOCS="/root/tutor-guardian/docs/"
+echo "----- rsync infographics to VPS $(date '+%H:%M:%S') -----" >> "$LOG"
+rsync -a --include='*.png' --exclude='*' \
+  "$REPO/docs/lesson_assets/infographics/" \
+  "$VPS:${VPS_DOCS}lesson_assets/infographics/" >> "$LOG" 2>&1
+echo "----- rsync exit $? -----" >> "$LOG"
 echo "----- run end $(date '+%F %T') -----" >> "$LOG"
