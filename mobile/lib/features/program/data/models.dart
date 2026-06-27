@@ -79,6 +79,10 @@ class CurriculumPath {
   /// Human-readable domain label.
   String get domainLabel => _domainLabel(domain);
 
+  /// Human-readable label for a canonical domain wire value (no instance
+  /// needed — used by the domain filter chips on the paths screen).
+  static String labelForDomain(String wire) => _domainLabel(wire);
+
   static String _domainLabel(String wire) {
     switch (wire) {
       case 'islamic_parenting':
