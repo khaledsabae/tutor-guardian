@@ -50,6 +50,12 @@ def _is_protected(path: str, method: str) -> bool:
         return False
     if path in _PUBLIC_PATHS:
         return False
+    # Coach tip (GET fetch + POST {id}/tap) both read the device identity from
+    # request.state.device_id, which is only populated for protected routes.
+    # Without this they 401 for everyone and the Home «نصيحة اليوم» card, which
+    # silently hides on error, never renders.
+    if path.startswith("/api/program/coach-tip"):
+        return True
     for prefix in _PROTECTED_PREFIXES:
         if path.startswith(prefix):
             return True
