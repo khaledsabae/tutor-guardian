@@ -10,7 +10,7 @@
       "quizzes": "88/88",
       "reports": "88/136",
       "data_tables": "88/136",
-      "infographics": "125/156"
+      "infographics": "140/156"
     },
     "lessons_by_age": {
       "10-12": 10,
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-28T10:13:40.405281Z"
+    "updated_at": "2026-06-28T22:12:47.635427Z"
   },
   "lessons": [
     {
@@ -7480,6 +7480,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "60f5ffd8-c79b-4482-a508-3d193183ec20_infographic",
+            "file": "docs/lesson_assets/infographics/60f5ffd8-c79b-4482-a508-3d193183ec20_infographic_lesson_4-6_medical_healthy_growth_02.png",
+            "title": "دليل التعامل مع انتقائية الطعام",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       },
       "source_id": "76d29441-28e9-4ef3-9797-a47144887a60"
@@ -7504,6 +7513,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_medical_healthy_growth_03_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "64a07192-1cf7-465a-ad2c-e5ade95a7a10_infographic",
+            "file": "docs/lesson_assets/infographics/64a07192-1cf7-465a-ad2c-e5ade95a7a10_infographic_lesson_4-6_medical_healthy_growth_03.png",
+            "title": "علامات نمو الطفل واستشارة الطبيب",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       },
@@ -7530,6 +7548,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "5cf0fa09-eb56-47c3-90e9-9f23f4d4b0d8_infographic",
+            "file": "docs/lesson_assets/infographics/5cf0fa09-eb56-47c3-90e9-9f23f4d4b0d8_infographic_lesson_4-6_medical_healthy_growth_04.png",
+            "title": "دليل عادات نظافة الطفل الصحية",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       },
       "source_id": "4d589f71-a3e8-441c-b074-91b6c5feab64"
@@ -7554,6 +7581,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_cyber_digital_basics_01_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "8560b50f-d329-42a9-99f7-9cb759573db2_infographic",
+            "file": "docs/lesson_assets/infographics/8560b50f-d329-42a9-99f7-9cb759573db2_infographic_lesson_7-9_cyber_digital_basics_01.png",
+            "title": "عقد الشاشة العائلي للأمان الرقمي",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       },
@@ -7580,6 +7616,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "812aa0cd-a973-41f7-b90b-9d35a84c05e7_infographic",
+            "file": "docs/lesson_assets/infographics/812aa0cd-a973-41f7-b90b-9d35a84c05e7_infographic_lesson_7-9_cyber_digital_basics_02.png",
+            "title": "دليل أمان الأطفال بالألعاب الإلكترونية",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       },
       "source_id": "e215ff99-18c3-4fdb-aa78-38bb24d8a4ef"
@@ -7604,6 +7649,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_cyber_digital_basics_03_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "e63e0b3b-9870-4d4e-a32d-9bb009216439_infographic",
+            "file": "docs/lesson_assets/infographics/e63e0b3b-9870-4d4e-a32d-9bb009216439_infographic_lesson_7-9_cyber_digital_basics_03.png",
+            "title": "خطوات الأمان الرقمي للأطفال",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       },
@@ -7630,6 +7684,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "20fa2ad4-836a-48e8-879e-59fc5243353b_infographic",
+            "file": "docs/lesson_assets/infographics/20fa2ad4-836a-48e8-879e-59fc5243353b_infographic_lesson_7-9_cyber_digital_basics_04.png",
+            "title": "خطوات الأمان ضد التنمر الإلكتروني",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       },
       "source_id": "b15e60e3-a604-42a8-940f-df292e64c688"
@@ -7654,6 +7717,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_islamic_parenting_akhlaq_01_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "33bbbc01-eb55-4ebf-85ad-bdaa0e74eaa0_infographic",
+            "file": "docs/lesson_assets/infographics/33bbbc01-eb55-4ebf-85ad-bdaa0e74eaa0_infographic_lesson_7-9_islamic_parenting_akhlaq_01.png",
+            "title": "دليل تربية الطفل على الصدق",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       },
@@ -7680,6 +7752,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "f617dc6e-9969-41de-a82b-52825e75d0f4_infographic",
+            "file": "docs/lesson_assets/infographics/f617dc6e-9969-41de-a82b-52825e75d0f4_infographic_lesson_7-9_islamic_parenting_akhlaq_02.png",
+            "title": "غرس خلق الرحمة في طفلك",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       },
       "source_id": "a0b8cec2-c352-4c50-95ff-f7fc2a3a2334"
@@ -7704,6 +7785,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_islamic_parenting_akhlaq_03_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "ff6bef9e-0861-4822-8227-6da36a14397f_infographic",
+            "file": "docs/lesson_assets/infographics/ff6bef9e-0861-4822-8227-6da36a14397f_infographic_lesson_7-9_islamic_parenting_akhlaq_03.png",
+            "title": "رحلة غرس الأمانة والمسؤولية",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       },
@@ -7730,6 +7820,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "016249d4-a44e-4686-b5fb-2c28144d45cd_infographic",
+            "file": "docs/lesson_assets/infographics/016249d4-a44e-4686-b5fb-2c28144d45cd_infographic_lesson_7-9_islamic_parenting_akhlaq_04.png",
+            "title": "تعليم الأطفال ضبط الغضب",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       },
       "source_id": "8dbfa18c-62de-4a8f-8e63-11b539d235ed"
@@ -7743,7 +7842,15 @@
       "assets": {
         "flashcards": [],
         "quizzes": [],
-        "infographics": [],
+        "infographics": [
+          {
+            "id": "469cbf36-35cf-4f65-a48e-6b639461f2e5_infographic",
+            "file": "docs/lesson_assets/infographics/469cbf36-35cf-4f65-a48e-6b639461f2e5_infographic_lesson_7-9_aqeedah_fundamentals_01.png",
+            "title": "طرق تعريف الأطفال بالله",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
         "podcasts": [
           {
             "id": "lesson_7-9_aqeedah_fundamentals_01_podcast",
@@ -7764,7 +7871,15 @@
       "assets": {
         "flashcards": [],
         "quizzes": [],
-        "infographics": [],
+        "infographics": [
+          {
+            "id": "e666a1ee-1210-4f5c-918e-34eb7cd07bcc_infographic",
+            "file": "docs/lesson_assets/infographics/e666a1ee-1210-4f5c-918e-34eb7cd07bcc_infographic_lesson_7-9_aqeedah_fundamentals_02.png",
+            "title": "غرس حب الله في الأطفال",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
         "podcasts": [
           {
             "id": "lesson_7-9_aqeedah_fundamentals_02_podcast",
@@ -7785,7 +7900,15 @@
       "assets": {
         "flashcards": [],
         "quizzes": [],
-        "infographics": [],
+        "infographics": [
+          {
+            "id": "49fb6cca-b9a9-40eb-902a-bc73b6ae2333_infographic",
+            "file": "docs/lesson_assets/infographics/49fb6cca-b9a9-40eb-902a-bc73b6ae2333_infographic_lesson_7-9_aqeedah_fundamentals_03.png",
+            "title": "دليل تربوي حول غاية الخلق",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
         "podcasts": [
           {
             "id": "lesson_7-9_aqeedah_fundamentals_03_podcast",
@@ -7806,7 +7929,15 @@
       "assets": {
         "flashcards": [],
         "quizzes": [],
-        "infographics": [],
+        "infographics": [
+          {
+            "id": "a2c5413b-524f-4b7e-a1f9-002234a216f0_infographic",
+            "file": "docs/lesson_assets/infographics/a2c5413b-524f-4b7e-a1f9-002234a216f0_infographic_lesson_7-9_aqeedah_fundamentals_04.png",
+            "title": "كيف تغرس مراقبة الله بطفلك",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
+        ],
         "podcasts": [
           {
             "id": "lesson_7-9_aqeedah_fundamentals_04_podcast",
