@@ -76,7 +76,7 @@ enum Severity {
 
 /// Domains returned by the server (canonical, post-alias resolution).
 enum Domain {
-  medical('medical', 'الصحة والنمو'),
+  medical('medical', 'العادات والمهارات الحياتية'),
   cyber('cyber', 'الأمان الرقمي'),
   islamicParenting('islamic_parenting', 'التربية الإسلامية'),
   aqeedah('aqeedah', 'العقيدة'),

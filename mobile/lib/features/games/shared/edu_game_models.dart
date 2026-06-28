@@ -68,9 +68,9 @@ class EduGameTheme {
 
   static const healthyHero = EduGameTheme(
     id: 'healthy_hero',
-    name: 'البطل الصحي',
-    heroEmoji: '🩺',
-    description: 'اختيارات ذكية للأكل والنوم والصحة اليومية.',
+    name: 'بطل العادات الذكية',
+    heroEmoji: '🌟',
+    description: 'عادات ومهارات حياتية ذكية لطفلك.',
     backgroundColor: unifiedBackground,
     surfaceColor: unifiedSurface,
     accentColor: Color(0xFF22C55E),

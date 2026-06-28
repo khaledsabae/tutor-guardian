@@ -796,8 +796,8 @@ class _InteractiveAssetsSection extends ConsumerWidget {
         } else if (domain == 'medical') {
           buttons.add(
             _AssetButton(
-              icon: Icons.monitor_heart,
-              label: '🎮 العب وتعلم (رحلة البطل الصحي)',
+              icon: Icons.videogame_asset_rounded,
+              label: '🎮 العب وتعلم',
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const HealthyHeroGameScreen()),
