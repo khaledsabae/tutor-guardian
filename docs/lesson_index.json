@@ -6223,7 +6223,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "fea88841-da5f-4434-b5a9-d4000929b36f"
     },
     {
       "lesson_id": "lesson_0-3_islamic_parenting_fitrah_02",
@@ -6256,7 +6257,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "748b6af3-dd65-48a5-8caf-76e0f4b09620"
     },
     {
       "lesson_id": "lesson_0-3_islamic_parenting_fitrah_03",
@@ -6289,7 +6291,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "fec99dc8-ee24-4818-800c-f1be304fe18b"
     },
     {
       "lesson_id": "lesson_0-3_islamic_parenting_fitrah_04",
@@ -6322,7 +6325,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "7b209dd7-f40d-4937-909e-cb43350a17bb"
     },
     {
       "lesson_id": "lesson_10-12_development_pre_teen_01",
@@ -6354,8 +6358,18 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_development_pre_teen_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_development_pre_teen_01_podcast.mp3",
+            "file": "docs/lesson_10-12_development_pre_teen_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
-      }
+      },
+      "source_id": "4ffd1532-529b-4b91-b96f-7dfe00c766de"
     },
     {
       "lesson_id": "lesson_10-12_development_pre_teen_02",
@@ -6388,7 +6402,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "fa931e68-9a58-4eb5-b579-62e4c82fef17"
     },
     {
       "lesson_id": "lesson_10-12_development_pre_teen_03",
@@ -6421,7 +6436,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "0222e0ba-bee8-45be-8cdb-38d8e38e615f"
     },
     {
       "lesson_id": "lesson_10-12_development_pre_teen_04",
@@ -6454,7 +6470,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "a48a147f-8802-45b8-a959-87184a328074"
     },
     {
       "lesson_id": "lesson_10-12_islamic_parenting_worship_love_01",
@@ -6487,7 +6504,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "72ac293d-0780-49c7-a761-b7c2fcaa188e"
     },
     {
       "lesson_id": "lesson_10-12_islamic_parenting_worship_love_02",
@@ -6520,7 +6538,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "b2a45a45-3a51-4f28-9708-016e2a45ff83"
     },
     {
       "lesson_id": "lesson_10-12_islamic_parenting_worship_love_03",
@@ -6553,7 +6572,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "f94d77f8-54ea-4ed5-9c17-24f629df1cac"
     },
     {
       "lesson_id": "lesson_10-12_islamic_parenting_worship_love_04",
@@ -6586,7 +6606,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "b1abab7b-7567-4b77-ae47-b548b19f5723"
     },
     {
       "lesson_id": "lesson_13-15_islamic_parenting_steadfast_01",
@@ -6619,7 +6640,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "ee8a5f5f-1af0-4a06-b348-ab14ebcb1c48"
     },
     {
       "lesson_id": "lesson_13-15_islamic_parenting_steadfast_02",
@@ -6652,7 +6674,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "f9f42aea-b04d-4968-ba28-93a153a767e1"
     },
     {
       "lesson_id": "lesson_13-15_islamic_parenting_steadfast_03",
@@ -6685,7 +6708,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "d8861ed5-fec2-4cc5-b4a2-170ef107f557"
     },
     {
       "lesson_id": "lesson_13-15_islamic_parenting_steadfast_04",
@@ -6718,7 +6742,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "52c1c070-b2be-4ba4-9b40-b9bf8e6e3fc8"
     },
     {
       "lesson_id": "lesson_16-18_development_adult_readiness_01",
@@ -6751,7 +6776,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "974faceb-753e-47b7-b629-ec1a42128fe8"
     },
     {
       "lesson_id": "lesson_16-18_development_adult_readiness_02",
@@ -6784,7 +6810,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "f4de3214-a45e-4b66-abd0-58c826fb0408"
     },
     {
       "lesson_id": "lesson_16-18_development_adult_readiness_03",
@@ -6817,7 +6844,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "0cb5f954-5ab8-46dc-b137-2deec55af6de"
     },
     {
       "lesson_id": "lesson_16-18_development_adult_readiness_04",
@@ -6850,7 +6878,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "eb5067b4-eb12-4028-b135-8b74b3e79859"
     },
     {
       "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_01",
@@ -6883,7 +6912,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "69cb6991-c63d-4e9b-9fbb-1496c63a4083"
     },
     {
       "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_02",
@@ -6916,7 +6946,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "1955ad55-60d2-46bb-90c6-d9812abf2f2f"
     },
     {
       "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_03",
@@ -6949,7 +6980,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "d3f04832-4537-424f-a17d-b4c43a577715"
     },
     {
       "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_04",
@@ -6982,7 +7014,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "0488261d-8c1c-4ada-89ce-365074f5e759"
     },
     {
       "lesson_id": "lesson_2-3_islamic_first_words_01",
@@ -7015,7 +7048,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "81adac3c-57f0-44d0-9faa-b0c0b813e66c"
     },
     {
       "lesson_id": "lesson_2-3_islamic_first_words_02",
@@ -7048,7 +7082,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "9d6ef7ea-cfe8-4707-9bd7-c9dc3375a7da"
     },
     {
       "lesson_id": "lesson_2-3_islamic_first_words_03",
@@ -7081,7 +7116,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "ab4bf1c0-84af-4b25-8647-cca10200a370"
     },
     {
       "lesson_id": "lesson_2-3_islamic_first_words_04",
@@ -7114,7 +7150,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "c5a48cd3-cbac-48af-b52b-08f3569f9068"
     },
     {
       "lesson_id": "lesson_2-3_medical_early_wellbeing_01",
@@ -7147,7 +7184,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "b3ac3dab-5aba-42a9-9e2f-b7f95c5303e1"
     },
     {
       "lesson_id": "lesson_2-3_medical_early_wellbeing_02",
@@ -7180,7 +7218,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "b1f0139a-aa21-4011-8912-e2a842f76960"
     },
     {
       "lesson_id": "lesson_2-3_medical_early_wellbeing_03",
@@ -7213,7 +7252,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "a7a8d28d-bdf8-4628-88d6-07d89a1f73b9"
     },
     {
       "lesson_id": "lesson_2-3_medical_early_wellbeing_04",
@@ -7246,7 +7286,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "f6a37ec5-5aec-49dd-9006-d505c0c429f2"
     },
     {
       "lesson_id": "lesson_4-6_cyber_early_screens_01",
@@ -7279,7 +7320,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "ae027c4e-5eea-459d-b319-552fc6a6ea6a"
     },
     {
       "lesson_id": "lesson_4-6_cyber_early_screens_02",
@@ -7312,7 +7354,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "edf0d955-453b-4454-a2cf-46a2159cad61"
     },
     {
       "lesson_id": "lesson_4-6_cyber_early_screens_03",
@@ -7345,7 +7388,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "afd8166b-1e82-40b4-88c0-e702f6e48d4b"
     },
     {
       "lesson_id": "lesson_4-6_cyber_early_screens_04",
@@ -7378,7 +7422,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "fba81554-adb8-4dc5-9d4a-37bad4e33cb5"
     },
     {
       "lesson_id": "lesson_4-6_medical_healthy_growth_01",
@@ -7411,7 +7456,8 @@
             "resolution": "2752x1536"
           }
         ]
-      }
+      },
+      "source_id": "80b89dff-6126-4121-a534-7975c0176efb"
     },
     {
       "lesson_id": "lesson_4-6_medical_healthy_growth_02",
@@ -7435,7 +7481,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "76d29441-28e9-4ef3-9797-a47144887a60"
     },
     {
       "lesson_id": "lesson_4-6_medical_healthy_growth_03",
@@ -7459,7 +7506,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "676a4e60-5692-424a-b975-3479f1c906e5"
     },
     {
       "lesson_id": "lesson_4-6_medical_healthy_growth_04",
@@ -7483,7 +7531,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "4d589f71-a3e8-441c-b074-91b6c5feab64"
     },
     {
       "lesson_id": "lesson_7-9_cyber_digital_basics_01",
@@ -7507,7 +7556,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "48fc1841-fe27-47a5-8b82-46894431dc5f"
     },
     {
       "lesson_id": "lesson_7-9_cyber_digital_basics_02",
@@ -7531,7 +7581,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "e215ff99-18c3-4fdb-aa78-38bb24d8a4ef"
     },
     {
       "lesson_id": "lesson_7-9_cyber_digital_basics_03",
@@ -7555,7 +7606,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "5b125e2f-2c81-42a9-ac5b-e791d04bde6e"
     },
     {
       "lesson_id": "lesson_7-9_cyber_digital_basics_04",
@@ -7579,7 +7631,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "b15e60e3-a604-42a8-940f-df292e64c688"
     },
     {
       "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_01",
@@ -7603,7 +7656,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "ab604dea-b233-4ecd-b344-6e0ca7100f39"
     },
     {
       "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_02",
@@ -7627,7 +7681,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "a0b8cec2-c352-4c50-95ff-f7fc2a3a2334"
     },
     {
       "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_03",
@@ -7651,7 +7706,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "d5a0c2e3-b327-49eb-86e1-f6965c157ae1"
     },
     {
       "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_04",
@@ -7675,7 +7731,8 @@
             "item_count": 1
           }
         ]
-      }
+      },
+      "source_id": "8dbfa18c-62de-4a8f-8e63-11b539d235ed"
     },
     {
       "lesson_id": "lesson_7-9_aqeedah_fundamentals_01",
