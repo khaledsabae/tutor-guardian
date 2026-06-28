@@ -92,7 +92,7 @@ class CurriculumPath {
       case 'development':
         return 'تنمية';
       case 'medical':
-        return 'صحة';
+        return 'مهارات';
       case 'cyber':
         return 'أمان رقمي';
       default:

@@ -103,7 +103,7 @@ class GameTheme {
     backgroundColor: Color(0xFF38BDF8),
     accentColor: Color(0xFF22C55E),
     textColor: Colors.white,
-    name: 'البطل الصحي',
+    name: 'بطل العادات الذكية',
   );
 
   static const emotionMaze = GameTheme(

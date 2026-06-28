@@ -151,7 +151,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
       case 'aqeedah':
         return 'العقيدة';
       case 'medical':
-        return 'صحة';
+        return 'مهارات';
       case 'cyber':
         return 'أمان رقمي';
       case 'development':
