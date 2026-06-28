@@ -11,6 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/app_theme.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
+import '../../share/share_service.dart';
+import '../../share/shareable_moment_card.dart';
 import '../providers/program_providers.dart';
 
 class CoachTipCard extends ConsumerWidget {
@@ -35,8 +37,29 @@ class CoachTipCard extends ConsumerWidget {
           onTap: () {
             // Fire-and-forget engagement log; never block the UX on it.
             ref.read(programRepositoryProvider).recordCoachTipTap(tip.id);
+            // Seed the assistant with a concrete question about *this* tip so
+            // switching tabs lands the parent in a relevant conversation,
+            // not a blank chat. ChatScreen picks this up and auto-sends it.
+            ref.read(pendingChatQuestionProvider.notifier).state =
+                'بخصوص نصيحة اليوم: «${tip.text}»\n\n'
+                'ازاي أقدر أطبّقها مع ${profile.name} بشكل عملي؟';
             onAsk?.call();
           },
+          // Render the tip as a reverent, branded 1080×1080 card and open the
+          // share sheet — turns the daily tip into a صدقة جارية growth surface.
+          // The shared artifact stays child-agnostic for privacy.
+          onShare: () => ShareService.shareMomentCard(
+            fileTag: 'coachtip_${tip.id}',
+            message: 'نصيحة اليوم في تربية أبنائنا 🌱\n\n${tip.text}\n\n'
+                'انشرها تكن صدقة جارية لكل أب وأم:',
+            card: ShareableMomentCard(
+              emoji: '🌱',
+              eyebrow: 'نصيحة اليوم',
+              headline: 'وقفة في تربية أبنائنا',
+              body: tip.text,
+              icon: Icons.lightbulb_outline,
+            ),
+          ),
         ),
         loading: () => const SizedBox.shrink(),
         error: (_, __) => const SizedBox.shrink(),
@@ -50,11 +73,13 @@ class _CoachCard extends StatelessWidget {
     required this.text,
     required this.childName,
     required this.onTap,
+    required this.onShare,
   });
 
   final String text;
   final String childName;
   final VoidCallback onTap;
+  final VoidCallback onShare;
 
   @override
   Widget build(BuildContext context) {
@@ -109,11 +134,14 @@ class _CoachCard extends StatelessWidget {
                         height: 1.5,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    const SizedBox(height: 10),
+                    Row(
                       children: [
-                        Text(
+                        // Share pill — own tap target so it doesn't trigger
+                        // the card's "ask" onTap.
+                        _ShareButton(onTap: onShare),
+                        const Spacer(),
+                        const Text(
                           'اسأل المربّي عن ده',
                           style: TextStyle(
                             color: Color(0xFF8A5A0F),
@@ -121,12 +149,54 @@ class _CoachCard extends StatelessWidget {
                             fontSize: 12,
                           ),
                         ),
-                        SizedBox(width: 4),
-                        Icon(Icons.arrow_back,
+                        const SizedBox(width: 4),
+                        const Icon(Icons.arrow_back,
                             color: Color(0xFF8A5A0F), size: 16),
                       ],
                     ),
                   ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Small "شير" pill inside the coach card. Has its own [InkWell] so tapping it
+/// shares the tip instead of bubbling up to the card's "ask the coach" action.
+class _ShareButton extends StatelessWidget {
+  const _ShareButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.55),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: const Color(0xFF8A5A0F), width: 1),
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.ios_share, color: Color(0xFF8A5A0F), size: 15),
+              SizedBox(width: 5),
+              Text(
+                'شارك النصيحة',
+                style: TextStyle(
+                  color: Color(0xFF8A5A0F),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
                 ),
               ),
             ],

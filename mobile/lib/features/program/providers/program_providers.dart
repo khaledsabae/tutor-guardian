@@ -38,6 +38,14 @@ final programRepositoryProvider = Provider<ProgramRepository>((ref) {
   return ProgramRepository(client);
 });
 
+/// A question seeded from elsewhere (e.g. the «اسأل المربّي عن ده» button on the
+/// coach-tip card) that the chat screen should auto-send once it's visible.
+///
+/// The producer sets the text and switches to the chat tab; [ChatScreen]
+/// listens, sends it through [ChatNotifier.sendMessage], and clears it back to
+/// null so it fires exactly once.
+final pendingChatQuestionProvider = StateProvider<String?>((ref) => null);
+
 // ── pathsListProvider ────────────────────────────────────────────────────
 
 class PathsListArgs {

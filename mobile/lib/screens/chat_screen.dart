@@ -114,6 +114,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
       }
     });
 
+    // A question seeded from outside the chat (e.g. «اسأل المربّي عن ده» on the
+    // coach-tip card). Auto-send it once, then clear so it never re-fires.
+    ref.listen<String?>(pendingChatQuestionProvider, (prev, next) {
+      if (next == null || next.trim().isEmpty) return;
+      ref.read(pendingChatQuestionProvider.notifier).state = null;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        await ref.read(chatNotifierProvider.notifier).sendMessage(next);
+        _scrollToBottom();
+      });
+    });
+
     // Push the latest online/offline status into the notifier so its
     // `sendMessage` can short-circuit with a friendly Arabic message.
     final connectivity = ref.watch(connectivityProvider);
