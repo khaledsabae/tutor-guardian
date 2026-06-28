@@ -10,7 +10,7 @@
       "quizzes": "88/88",
       "reports": "88/136",
       "data_tables": "88/136",
-      "infographics": "110/156"
+      "infographics": "125/156"
     },
     "lessons_by_age": {
       "10-12": 10,
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-27T13:33:07.969401Z"
+    "updated_at": "2026-06-28T10:13:40.405281Z"
   },
   "lessons": [
     {
@@ -6939,6 +6939,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "c5c3f4ff-8615-4348-a6a3-00d979281759_infographic",
+            "file": "docs/lesson_assets/infographics/c5c3f4ff-8615-4348-a6a3-00d979281759_infographic_lesson_16-18_islamic_parenting_adult_faith_03.png",
+            "title": "كيف يكتشف ابنك رسالته الحياتية؟",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -6962,6 +6971,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_islamic_parenting_adult_faith_04_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "f591145a-8acb-4c8e-848d-555ab5836baa_infographic",
+            "file": "docs/lesson_assets/infographics/f591145a-8acb-4c8e-848d-555ab5836baa_infographic_lesson_16-18_islamic_parenting_adult_faith_04.png",
+            "title": "إطلاق آمن: من الإشراف للثقة",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -6987,6 +7005,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "30911d08-da63-4b4f-8ae4-8c6b538a690c_infographic",
+            "file": "docs/lesson_assets/infographics/30911d08-da63-4b4f-8ae4-8c6b538a690c_infographic_lesson_2-3_islamic_first_words_01.png",
+            "title": "تعليم الأذكار الدينية للأطفال",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -7010,6 +7037,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_first_words_02_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "df83aed9-08b5-452e-ac37-a1feab49d477_infographic",
+            "file": "docs/lesson_assets/infographics/df83aed9-08b5-452e-ac37-a1feab49d477_infographic_lesson_2-3_islamic_first_words_02.png",
+            "title": "السلام والكلمة الطيبة للأطفال",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -7035,6 +7071,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "e3398a98-8333-43ca-825e-4bfd1ecb46c4_infographic",
+            "file": "docs/lesson_assets/infographics/e3398a98-8333-43ca-825e-4bfd1ecb46c4_infographic_lesson_2-3_islamic_first_words_03.png",
+            "title": "آداب الطعام للصغار بحب",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -7058,6 +7103,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_islamic_first_words_04_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "2e357221-2060-44d4-a1d6-15a1c2bbd0b0_infographic",
+            "file": "docs/lesson_assets/infographics/2e357221-2060-44d4-a1d6-15a1c2bbd0b0_infographic_lesson_2-3_islamic_first_words_04.png",
+            "title": "القدوة الحسنة في تربية الأبناء",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -7083,6 +7137,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "3a52c8aa-81c8-45fd-82cc-70c42131dab4_infographic",
+            "file": "docs/lesson_assets/infographics/3a52c8aa-81c8-45fd-82cc-70c42131dab4_infographic_lesson_2-3_medical_early_wellbeing_01.png",
+            "title": "دليل التغذية السليمة بعد الفطام",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -7106,6 +7169,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_medical_early_wellbeing_02_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "dbacc568-919e-4c51-b48d-f96688bbe964_infographic",
+            "file": "docs/lesson_assets/infographics/dbacc568-919e-4c51-b48d-f96688bbe964_infographic_lesson_2-3_medical_early_wellbeing_02.png",
+            "title": "دليل روتين نوم الأطفال الصحي",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -7131,6 +7203,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "78a6a2c4-c765-4bb3-b43b-bc29ee3f2c58_infographic",
+            "file": "docs/lesson_assets/infographics/78a6a2c4-c765-4bb3-b43b-bc29ee3f2c58_infographic_lesson_2-3_medical_early_wellbeing_03.png",
+            "title": "رحلة نمو طفلك وتطوره",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -7154,6 +7235,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_medical_early_wellbeing_04_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "67b053c5-60dd-47d0-9c8a-13220a6cf8e2_infographic",
+            "file": "docs/lesson_assets/infographics/67b053c5-60dd-47d0-9c8a-13220a6cf8e2_infographic_lesson_2-3_medical_early_wellbeing_04.png",
+            "title": "دليل سلامة الأطفال في المنزل",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -7179,6 +7269,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "291ef6c0-8d14-4d8f-938e-7786ea9e69b2_infographic",
+            "file": "docs/lesson_assets/infographics/291ef6c0-8d14-4d8f-938e-7786ea9e69b2_infographic_lesson_4-6_cyber_early_screens_01.png",
+            "title": "دليل تنظيم وقت شاشة الطفل",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -7202,6 +7301,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_cyber_early_screens_02_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "c55b4c1b-5858-492b-867c-309683704710_infographic",
+            "file": "docs/lesson_assets/infographics/c55b4c1b-5858-492b-867c-309683704710_infographic_lesson_4-6_cyber_early_screens_02.png",
+            "title": "دليل اختيار محتوى الطفل الآمن",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
@@ -7227,6 +7335,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "940fbab3-5b70-4409-8a0e-9bc06c5d8f78_infographic",
+            "file": "docs/lesson_assets/infographics/940fbab3-5b70-4409-8a0e-9bc06c5d8f78_infographic_lesson_4-6_cyber_early_screens_03.png",
+            "title": "دليل المشاهدة المشتركة الممتعة",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -7251,6 +7368,15 @@
             "title": "اختبر نفسك",
             "item_count": 1
           }
+        ],
+        "infographics": [
+          {
+            "id": "dac7b0d4-f93c-4e91-85e5-d4111864fed4_infographic",
+            "file": "docs/lesson_assets/infographics/dac7b0d4-f93c-4e91-85e5-d4111864fed4_infographic_lesson_4-6_cyber_early_screens_04.png",
+            "title": "روتين فطام لطيف عن الشاشة",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -7274,6 +7400,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_medical_healthy_growth_01_qz.json",
             "title": "اختبر نفسك",
             "item_count": 1
+          }
+        ],
+        "infographics": [
+          {
+            "id": "94b615dc-2a28-4f83-9a6a-d81169e3a75f_infographic",
+            "file": "docs/lesson_assets/infographics/94b615dc-2a28-4f83-9a6a-d81169e3a75f_infographic_lesson_4-6_medical_healthy_growth_01.png",
+            "title": "دليل نوم الأطفال لنمو سليم",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }
