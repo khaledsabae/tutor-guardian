@@ -64,8 +64,17 @@ class ShareService {
       // Default to this device's referral code so every shared moment is an
       // attributed install driver (Phase 0.2), with no caller wiring needed.
       referralCode ??= ReferralService.cachedCode;
-      final image = await ScreenshotController()
-          .captureFromWidget(card, pixelRatio: 2.0);
+      // Render at the card's own 1080×1080 design size — NOT the device
+      // screen. Without [targetSize], captureFromWidget constrains the card to
+      // the phone's logical screen height (~700–900px), squeezing the 1080-tall
+      // layout and clipping its lower content (the tip body, footer/QR) on most
+      // devices. Passing targetSize makes every shared card pixel-identical
+      // regardless of the screen it's shared from.
+      final image = await ScreenshotController().captureFromWidget(
+        card,
+        pixelRatio: 2.0,
+        targetSize: const Size(1080, 1080),
+      );
       final dir = await Directory.systemTemp.createTemp('tg_share_');
       final file = File('${dir.path}/$fileTag.png');
       await file.writeAsBytes(image);

@@ -100,13 +100,20 @@ class ShareableMomentCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(64),
+                // Deterministic, flex-free layout. ScreenshotController's
+                // captureFromWidget renders in a detached tree that mishandles
+                // Expanded/Flexible/Spacer/SingleChildScrollView (per its own
+                // docs), which previously starved/clipped the [body]. Plain
+                // Text with a maxLines guard renders reliably; [ShareService]
+                // pins the canvas to 1080×1080 so this always fits.
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(emoji, style: const TextStyle(fontSize: 120)),
-                    const SizedBox(height: 24),
+                    Text(emoji, style: const TextStyle(fontSize: 116)),
+                    const SizedBox(height: 22),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 10),
                       decoration: BoxDecoration(
                         color: AppTheme.primary.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(24),
@@ -120,35 +127,35 @@ class ShareableMomentCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 28),
                     Text(
                       headline,
                       textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.cairo(
-                        fontSize: 46,
+                        fontSize: 44,
                         fontWeight: FontWeight.w800,
                         color: AppTheme.textPrimary,
-                        height: 1.35,
+                        height: 1.3,
                       ),
                     ),
                     if (body != null && body!.trim().isNotEmpty) ...[
-                      const SizedBox(height: 28),
-                      Flexible(
-                        child: SingleChildScrollView(
-                          child: Text(
-                            body!,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.cairo(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w500,
-                              color: AppTheme.textSecondary,
-                              height: 1.6,
-                            ),
-                          ),
+                      const SizedBox(height: 26),
+                      Text(
+                        body!,
+                        textAlign: TextAlign.center,
+                        maxLines: 6,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.cairo(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.textPrimary,
+                          height: 1.55,
                         ),
                       ),
                     ],
-                    const Spacer(),
+                    const SizedBox(height: 40),
                     _brandFooter(),
                   ],
                 ),
