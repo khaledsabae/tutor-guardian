@@ -77,11 +77,20 @@ def parse_tips() -> list[dict]:
             if tip_match:
                 tip_id = int(tip_match.group(1))
                 text = tip_match.group(2).strip()
+                
+                # نفضل الكارت المخصص للمنشور (tip_X.png) إذا كان موجوداً
+                card_name = f"tip_{tip_id}.png"
+                card_path = DOCS_DIR / "marketing" / "daily_tips_cards" / card_name
+                if card_path.exists():
+                    image_name = card_name
+                else:
+                    image_name = IMAGE_MAPPING.get(current_category, "social_announce_square.webp")
+                
                 tips.append({
                     "id": tip_id,
                     "category": current_category,
                     "text": text,
-                    "image": IMAGE_MAPPING.get(current_category, "social_announce_square.webp")
+                    "image": image_name
                 })
                 
     return tips
@@ -340,8 +349,16 @@ def main():
 
     # تحضير النص والصورة
     post_text = format_post_text(target_tip)
-    local_image_path = DOCS_DIR / "marketing" / "launch_graphics" / target_tip["image"]
-    public_image_url = f"{API_BASE_URL}/docs/marketing/launch_graphics/{target_tip['image']}"
+    
+    # تحديد مكان الصورة الفعلي (كارت مصمم مسبقاً أو صورة عامة)
+    image_name = target_tip["image"]
+    card_path = DOCS_DIR / "marketing" / "daily_tips_cards" / image_name
+    if card_path.exists():
+        local_image_path = card_path
+        public_image_url = f"{API_BASE_URL}/docs/marketing/daily_tips_cards/{image_name}"
+    else:
+        local_image_path = DOCS_DIR / "marketing" / "launch_graphics" / image_name
+        public_image_url = f"{API_BASE_URL}/docs/marketing/launch_graphics/{image_name}"
 
     print(f"📋 النصيحة المستهدفة: #{target_tip['id']} ({target_tip['category']})")
     print(f"🖼️ الصورة المحلية: {local_image_path.name}")
