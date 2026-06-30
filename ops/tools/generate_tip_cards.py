@@ -1,35 +1,65 @@
 #!/usr/bin/env python3
 """
-generate_tip_cards.py — سكربت لتوليد كروت نصائح يومية مربعة (1024x1024) 
-بهوية التطبيق البصرية المعتمدة (تصميم Glassmorphism راقي مع تدرج لوني وتنسيق عربي احترافي)
-لكل نصيحة من الـ 30 نصيحة، لتكون جاهزة للنشر على إنستجرام وتيك توك وفيسبوك.
+generate_tip_cards.py — توليد كروت نصائح يومية مربعة (1080x1080)
+مطابقة لتصميم ShareableMomentCard الفاخر والمعتمد في كود تطبيق المربّي الذكي.
+يستخدم خط Cairo الرسمي للتطبيق وصورة الخلفية الرسمية share_bg_celebration.webp ومكتبة PIL الأصلية (Raqm) ومكتبة qrcode.
 """
 import sys
 import re
-import json
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
-import arabic_reshaper
-from bidi.algorithm import get_display
+import qrcode
 
 # تحديد المسارات
 ROOT = Path(__file__).resolve().parents[2]
 DOCS_DIR = ROOT / "docs"
 LOGO_PATH = DOCS_DIR / "marketing" / "launch_graphics" / "facebook_profile_logo.png"
 OUTPUT_DIR = DOCS_DIR / "marketing" / "daily_tips_cards"
+BG_IMAGE_PATH = ROOT / "mobile" / "assets" / "images" / "generated" / "share_bg_celebration.webp"
 
-# الخطوط المستخدمة
-FONT_REGULAR_PATH = "/usr/share/fonts/truetype/noto/NotoSansArabic-Regular.ttf"
-FONT_BOLD_PATH = "/usr/share/fonts/truetype/noto/NotoSansArabic-Bold.ttf"
+# الخطوط الرسمية للتطبيق (Cairo تم تحميله من Google Fonts)
+FONT_REGULAR_PATH = str(ROOT / "ops" / "tools" / "fonts" / "Cairo-Regular.ttf")
+FONT_BOLD_PATH = str(ROOT / "ops" / "tools" / "fonts" / "Cairo-Bold.ttf")
 
-# التدرجات اللونية الفاخرة لكل فئة عمرية
-GRADIENTS = {
-    "رضّع": ("#014A4E", "#002022"),       # تركوازي داكن روحي للأعمار الأولى
-    "دارج": ("#025257", "#002326"),       # تركوازي متوسط
-    "مدرسي": ("#036167", "#002629"),      # أزرق مخضر
-    "مراهق": ("#003336", "#001214"),      # عميق جداً للمراهقين
-    "عابر": ("#014A4E", "#002022")       # تركوازي التطبيق الافتراضي
-}
+# الألوان الرسمية للتطبيق (AppTheme & Design Tokens)
+COLOR_PRIMARY = (13, 148, 136)       # AppTheme.primary (#0D9488)
+COLOR_TEXT_PRIMARY = (30, 41, 59)    # AppTheme.textPrimary (#1E293B)
+
+def strip_emojis(text: str) -> str:
+    """تنظيف النص بالكامل من الإيموجي والرموز الخاصة لتفادي ظهور مربعات [ ] في مكتبة الخطوط"""
+    emoji_pattern = re.compile(
+        "["
+        "\U00010000-\U0010ffff"  # الرموز الخاصة خارج النطاق الأساسي
+        "\u2600-\u27BF"          # رموز الزينة والقلوب والنجوم والأسهم
+        "\u2300-\u23FF"          # الرموز التقنية
+        "\u200d"                 # واصل عرض صفر
+        "\ufe0f"                 # محدد الاختلافات
+        "]+", 
+        flags=re.UNICODE
+    )
+    # إزالة إيموجي الأرقام مثل 1️⃣ 2️⃣
+    text = re.sub(r"\d️⃣", "", text)
+    text = emoji_pattern.sub("", text)
+    return text
+
+def clean_text_for_rendering(text: str) -> str:
+    """تنظيف وتجهيز النص للنشر: إزالة الماركداون والرموز التي تسبب مربعات فارغة واستبدالها بنصوص عربية نظيفة"""
+    # 1. إزالة كود الماركداون للخط العريض والمائل
+    text = text.replace("**", "").replace("*", "").replace("_", "")
+    
+    # 2. إزالة الإيموجي والرموز غير المعتمدة في الخطوط
+    text = strip_emojis(text)
+    
+    # 3. استبدال الأسهم والواصلات الطويلة والشرطة المائلة برموز متوافقة 100% مع خط Cairo
+    text = text.replace("→", " - ").replace("—", " - ").replace("–", " - ")
+    text = text.replace("/", " - ").replace("+", " و ")
+    
+    # 4. استبدال الأقواس الإنجليزية بأقواس اقتباس عربية «» لمنع ظهور الـ []
+    text = text.replace("(", "«").replace(")", "»")
+    
+    # 5. تنظيف أي مسافات متكررة
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
 
 def parse_tips() -> list[dict]:
     """يقرأ ويحلل ملف 02_content_arsenal.md لاستخراج النصائح وتصنيفاتها"""
@@ -66,29 +96,29 @@ def parse_tips() -> list[dict]:
                 
     return tips
 
-def create_linear_gradient(width, height, color1, color2):
-    """توليد صورة تدرج لوني عمودي عميق"""
-    base = Image.new("RGBA", (width, height), color1)
-    top = Image.new("RGBA", (width, height), color2)
+def create_gradient_overlay(width, height):
+    """توليد قناع تدرج لوني أبيض ناعم للشفافية لمنع تداخل النص مع صورة الخلفية"""
+    # تدرج يبدأ من 25% تعتيم أبيض في الأعلى وينتهي بـ 82% تعتيم أبيض في الأسفل
+    base = Image.new("RGBA", (width, height), (255, 255, 255, 210)) # 82% opacity
+    top = Image.new("RGBA", (width, height), (255, 255, 255, 64))   # 25% opacity
     mask = Image.new("L", (width, height))
     mask_data = []
     for y in range(height):
+        # تدرج خطي رأسي
         factor = int((y / height) * 255)
         mask_data.extend([factor] * width)
     mask.putdata(mask_data)
-    return Image.composite(top, base, mask)
+    return Image.composite(base, top, mask)
 
 def wrap_arabic_text(text, font, max_width, draw) -> list[str]:
-    """تقسيم النص العربي إلى سطور تتناسب مع العرض الأقصى بالبكسل مع الحفاظ على الاتجاه الصحيح"""
+    """تقسيم النص العربي إلى سطور تتناسب مع العرض الأقصى بالبكسل مع قياس العرض الفعلي بطريقة RTL"""
     words = text.split()
     lines = []
     current_line = []
     
     for word in words:
         test_line = " ".join(current_line + [word])
-        reshaped = arabic_reshaper.reshape(test_line)
-        display = get_display(reshaped)
-        width = draw.textlength(display, font=font)
+        width = draw.textlength(test_line, font=font, direction="rtl")
         
         if width <= max_width:
             current_line.append(word)
@@ -103,85 +133,110 @@ def wrap_arabic_text(text, font, max_width, draw) -> list[str]:
     if current_line:
         lines.append(" ".join(current_line))
         
-    # إعادة تشكيل وعكس كل سطر بشكل مستقل ليظهر بشكل صحيح
-    final_lines = []
-    for line in lines:
-        reshaped = arabic_reshaper.reshape(line)
-        display = get_display(reshaped)
-        final_lines.append(display)
-        
-    return final_lines
+    return lines
 
 def generate_card(tip: dict, output_path: Path):
-    """توليد صورة الكارت بالمقاس 1024x1024 بالهوية البصرية الاحترافية"""
-    width, height = 1024, 1024
+    """توليد صورة الكارت بالمقاس 1080x1080 بتصميم ShareableMomentCard الأصيل"""
+    width, height = 1080, 1080
     
-    # 1. تحديد درجات الألوان المناسبة للفئة العمرية
-    cat_key = "عابر"
-    for k in GRADIENTS.keys():
-        if k in tip["category"]:
-            cat_key = k
-            break
-    color1, color2 = GRADIENTS[cat_key]
-    
-    # 2. إنشاء الخلفية المتدرجة
-    img = create_linear_gradient(width, height, color1, color2)
+    # 1. تحميل صورة الخلفية الرسمية للتطبيق أو التراجع لخلفية متدرجة لو لم تكن موجودة
+    if BG_IMAGE_PATH.exists():
+        img = Image.open(BG_IMAGE_PATH).convert("RGBA")
+        img = img.resize((width, height), Image.Resampling.LANCZOS)
+    else:
+        # خلفية متدرجة بديلة
+        base_color = (COLOR_PRIMARY[0], COLOR_PRIMARY[1], COLOR_PRIMARY[2], 20)
+        img = Image.new("RGBA", (width, height), (255, 255, 255, 255))
+        top = Image.new("RGBA", (width, height), base_color)
+        mask = Image.new("L", (width, height))
+        mask.putdata([int((y / height) * 255) for y in range(height) for _ in range(width)])
+        img = Image.composite(top, img, mask)
+        
+    # 2. تطبيق طبقة الشفافية المتدرجة البيضاء (Gradient Overlay) لضمان وضوح النص وقراءته
+    overlay = create_gradient_overlay(width, height)
+    img = Image.alpha_composite(img, overlay)
     draw = ImageDraw.Draw(img)
     
-    # 3. رسم كارت الـ Glassmorphism في المنتصف
-    # مستطيل شبه شفاف بحواف مستديرة (تأثير الزجاج الفاخر)
-    card_coords = [80, 100, width - 80, height - 120]
-    # تعبئة بيضاء شفافة بتركيز 12%
-    draw.rounded_rectangle(card_coords, radius=35, fill=(255, 255, 255, 30), outline=(255, 255, 255, 60), width=2)
+    # 3. تحميل خط Cairo وتحديد الأحجام
+    font_eyebrow = ImageFont.truetype(FONT_BOLD_PATH, 24)
+    font_headline = ImageFont.truetype(FONT_BOLD_PATH, 42)
+    font_body = ImageFont.truetype(FONT_BOLD_PATH, 32)
+    font_footer_title = ImageFont.truetype(FONT_BOLD_PATH, 26)
+    font_footer_sub = ImageFont.truetype(FONT_REGULAR_PATH, 18)
     
-    # 4. تحميل الخطوط وتجهيز النصوص
-    font_title = ImageFont.truetype(FONT_BOLD_PATH, 38)
-    font_body = ImageFont.truetype(FONT_REGULAR_PATH, 32)
-    font_footer = ImageFont.truetype(FONT_BOLD_PATH, 28)
-    font_sub_footer = ImageFont.truetype(FONT_REGULAR_PATH, 20)
-    
-    # أ) عنوان الفئة والترتيب
-    title_text = f"💡 نصيحة اليوم التربوية ({tip['category']})"
-    reshaped_title = get_display(arabic_reshaper.reshape(title_text))
-    
-    # رسم خط فاصل ناعم تحت العنوان
-    draw.line([160, 210, width - 160, 210], fill=(255, 255, 255, 45), width=1)
-    
-    # ب) نص النصيحة (تقسيم ورسم في منتصف كارت الزجاج)
-    # أقصى عرض للنص هو 750 بكسل
-    wrapped_lines = wrap_arabic_text(tip["text"], font_body, 740, draw)
-    
-    # 5. حساب مواقع الرسم
-    # رسم العنوان بالأعلى
-    title_w = draw.textlength(reshaped_title, font=font_title)
-    draw.text(((width - title_w) // 2, 140), reshaped_title, font=font_title, fill="#E6FAF8")
-    
-    # رسم النص في المنتصف العمودي تماماً
-    line_height = 55
-    total_text_h = len(wrapped_lines) * line_height
-    # بداية الرسم العمودي
-    start_y = 250 + (480 - total_text_h) // 2
-    
-    for i, line in enumerate(wrapped_lines):
-        line_w = draw.textlength(line, font=font_body)
-        draw.text(((width - line_w) // 2, start_y + (i * line_height)), line, font=font_body, fill="#FFFFFF")
-        
-    # ج) تذييل الكارت (اللوجو ورابط المتجر)
-    # تحميل اللوجو المعتمد ودمجه بالأسفل
+    # أ) رسم لوجو التطبيق الرسمي المعتمد في الأعلى
     if LOGO_PATH.exists():
         logo = Image.open(LOGO_PATH).convert("RGBA")
-        logo_size = 90
-        logo_resized = logo.resize((logo_size, logo_size), Image.Resampling.LANCZOS)
-        # موضع اللوجو (الركن السفلي الأيسر داخل كارت الزجاج)
-        img.paste(logo_resized, (120, height - 230), logo_resized)
-        
-    # اسم التطبيق والرابط بجانب اللوجو
-    app_title = get_display(arabic_reshaper.reshape("تطبيق المربّي الذكي"))
-    app_link = get_display(arabic_reshaper.reshape("حمّله الآن مجاناً على Google Play"))
+        logo_top_size = 120
+        logo_top_resized = logo.resize((logo_top_size, logo_top_size), Image.Resampling.LANCZOS)
+        # ممركز في الأعلى
+        img.paste(logo_top_resized, (540 - 60, 80), logo_top_resized)
     
-    # رسم اسم التطبيق بجانب اللوجو
-    draw.text((230, height - 215), app_title, font=font_footer, fill="#2EC4B6")
-    draw.text((230, height - 175), app_link, font=font_sub_footer, fill="#B5E2DF")
+    # ب) رسم الـ Eyebrow (نصيحة اليوم) بداخل كبسولة/شيب تركوازي ناعم
+    eyebrow_text = "نصيحة اليوم"
+    eyebrow_w = draw.textlength(eyebrow_text, font=font_eyebrow, direction="rtl")
+    # إحداثيات الكبسولة
+    chip_x1 = 540 - (eyebrow_w // 2) - 24
+    chip_y1 = 230
+    chip_x2 = 540 + (eyebrow_w // 2) + 24
+    chip_y2 = 230 + 44
+    draw.rounded_rectangle([chip_x1, chip_y1, chip_x2, chip_y2], radius=22, fill=(COLOR_PRIMARY[0], COLOR_PRIMARY[1], COLOR_PRIMARY[2], 30)) # 12% opacity
+    draw.text((540, 236), eyebrow_text, font=font_eyebrow, fill="#0D9488", direction="rtl", anchor="mt")
+    
+    # ج) رسم العنوان (Headline)
+    clean_cat = clean_text_for_rendering(tip['category'])
+    headline_text = f"وقفة في تربية أبنائنا «{clean_cat}»"
+    draw.text((540, 310), headline_text, font=font_headline, fill="#1E293B", direction="rtl", anchor="mt")
+    
+    # د) رسم نص النصيحة (Body) بعد تنظيفه بالكامل من الإيموجي والماركداون والرموز غير المعتمدة
+    clean_body_text = clean_text_for_rendering(tip["text"])
+    wrapped_lines = wrap_arabic_text(clean_body_text, font_body, 900, draw)
+    line_height = 58
+    total_text_h = len(wrapped_lines) * line_height
+    # رسم السطور ممركزة عمودياً بين 380 و 670
+    start_y = 380 + (290 - total_text_h) // 2
+    for i, line in enumerate(wrapped_lines):
+        draw.text((540, start_y + (i * line_height)), line, font=font_body, fill="#1E293B", direction="rtl", anchor="mm")
+        
+    # هـ) تذييل الكارت البصري (Brand Footer)
+    # دائرة الأيقونة المتدرجة للعلامة التجارية
+    icon_circle_y = 700
+    draw.ellipse([540 - 32, icon_circle_y, 540 + 32, icon_circle_y + 64], fill=COLOR_PRIMARY)
+    # رسم نجمة خماسية بالخطوط بداخل الدائرة
+    star_points = [
+        (540, icon_circle_y + 16),
+        (544, icon_circle_y + 28),
+        (556, icon_circle_y + 28),
+        (546, icon_circle_y + 36),
+        (550, icon_circle_y + 48),
+        (540, icon_circle_y + 40),
+        (530, icon_circle_y + 48),
+        (534, icon_circle_y + 36),
+        (524, icon_circle_y + 28),
+        (536, icon_circle_y + 28)
+    ]
+    draw.polygon(star_points, fill=(255, 255, 255, 255))
+    
+    # اسم التطبيق والرابط - نستخدم خط Cairo الرسمي
+    footer_title = "المربّي - شريكك في رحلة التربية"
+    footer_sub = "مجانًا لوجه الله - امسح الكود أو ابحث: «المربّي»"
+    draw.text((540, 780), footer_title, font=font_footer_title, fill="#0D9488", direction="rtl", anchor="mt")
+    draw.text((540, 820), footer_sub, font=font_footer_sub, fill="#0D9488", direction="rtl", anchor="mt")
+    
+    # و) رسم كود الـ QR
+    qr = qrcode.QRCode(version=1, box_size=4, border=1)
+    qr.add_data("https://play.google.com/store/apps/details?id=com.alsaba.almorabbi")
+    qr.make(fit=True)
+    qr_color = "#0D9488"
+    qr_img = qr.make_image(fill_color=qr_color, back_color="white").convert("RGBA")
+    qr_resized = qr_img.resize((116, 116), Image.Resampling.LANCZOS)
+    
+    # إطار الكود المستدير الفاخر
+    qr_frame_coords = [540 - 58 - 8, 860 - 8, 540 + 58 + 8, 860 + 116 + 8]
+    draw.rounded_rectangle(qr_frame_coords, radius=12, fill=(255, 255, 255, 255), outline=(COLOR_PRIMARY[0], COLOR_PRIMARY[1], COLOR_PRIMARY[2], 38), width=1)
+    
+    # لصق كود الـ QR بداخل الإطار
+    img.paste(qr_resized, (540 - 58, 860), qr_resized)
     
     # 6. حفظ الصورة النهائية بصيغة PNG
     output_path.parent.mkdir(parents=True, exist_ok=True)
