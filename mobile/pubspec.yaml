@@ -1,7 +1,7 @@
 name: almorabbi
 description: "المربي الذكي — مساعد تربوي إسلامي آمن للأهل (Flutter / Android-first)."
 publish_to: 'none'
-version: 1.0.24+54
+version: 1.0.24+57
 
 environment:
   sdk: ^3.12.1
@@ -96,8 +96,10 @@ flutter:
     # generated via ops/tools/gen_visuals.py (Recraft V3). Replaces the old
     # mascot/empty/domains/onboarding directories.
     - assets/images/generated/
+    - assets/images/stories/
     # Brand-aligned Lottie celebrations (generated via ops/tools/gen_lottie.py)
     - assets/animations/
+    - assets/audio/
 
 # Reuse the existing PWA shield icon — keeps mobile visually consistent
 # with the web client and saves us from designing a new asset. Source
