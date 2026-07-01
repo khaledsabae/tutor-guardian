@@ -5,8 +5,6 @@
 /// No server needed — runs entirely on-device.
 library;
 
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,8 +27,8 @@ class NotificationService {
   static const _kEveningHour = 'tg.adhkar_evening_hour';
   static const _kWirdEnabled = 'tg.wird_reminder_enabled';
   static const _kWirdHour = 'tg.wird_reminder_hour';
-  /// Last 7 indices used so we don't repeat the same content too often.
-  static const _kHistory = 'tg.adhkar_history';
+  static const _kNextMorningIndex = 'tg.adhkar_next_morning';
+  static const _kNextEveningIndex = 'tg.adhkar_next_evening';
 
   static const _morningId = 1001;
   static const _eveningId = 1002;
@@ -216,10 +214,8 @@ class NotificationService {
     final eveningHour = prefs.getInt(_kEveningHour) ?? 19;
 
     // Morning: hadith or verse (inspirational). Evening: hadith or tip (practical).
-    final morning = _pickContent(prefs, allowedKinds: {'hadith', 'verse'});
-    final evening = _pickContent(prefs, allowedKinds: {'hadith', 'tip'});
-    _remember(prefs, morning);
-    _remember(prefs, evening);
+    final morning = _pickSequentialContent(prefs, allowedKinds: {'hadith', 'verse'}, prefKey: _kNextMorningIndex);
+    final evening = _pickSequentialContent(prefs, allowedKinds: {'hadith', 'tip'}, prefKey: _kNextEveningIndex);
 
     // Cancel existing before re-scheduling.
     await _plugin.cancel(_morningId);
@@ -240,29 +236,26 @@ class NotificationService {
     );
   }
 
-  /// Pick a random item of [allowedKinds], avoiding the last 7 used indices.
-  ParentingContent _pickContent(SharedPreferences prefs, {required Set<String> allowedKinds}) {
-    final rng = Random();
+  /// Pick an item of [allowedKinds] sequentially to avoid any repetition until all are shown.
+  ParentingContent _pickSequentialContent(SharedPreferences prefs, {required Set<String> allowedKinds, required String prefKey}) {
     final candidates = familyAdhkar
         .asMap()
         .entries
         .where((e) => allowedKinds.contains(e.value.kind))
         .map((e) => e.key)
         .toList();
-    final history = prefs.getStringList(_kHistory) ?? [];
-    final recent = history.take(7).map(int.parse).toSet();
-    final fresh = candidates.where((i) => !recent.contains(i)).toList();
-    final pool = fresh.isNotEmpty ? fresh : candidates;
-    return familyAdhkar[pool[rng.nextInt(pool.length)]];
-  }
 
-  void _remember(SharedPreferences prefs, ParentingContent item) {
-    final idx = familyAdhkar.indexOf(item);
-    if (idx < 0) return;
-    final history = prefs.getStringList(_kHistory) ?? [];
-    history.insert(0, idx.toString());
-    if (history.length > 14) history.removeLast();
-    prefs.setStringList(_kHistory, history);
+    int currentIndex = prefs.getInt(prefKey) ?? 0;
+    if (currentIndex >= candidates.length) {
+      currentIndex = 0; // Reset once we've gone through all
+    }
+
+    final selectedIdx = candidates[currentIndex];
+
+    // Increment index for the next time
+    prefs.setInt(prefKey, currentIndex + 1);
+
+    return familyAdhkar[selectedIdx];
   }
 
   Future<void> _scheduleOne({

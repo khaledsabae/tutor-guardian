@@ -24,6 +24,7 @@ import '../features/program/screens/badges_screen.dart';
 import '../features/program/screens/path_detail_screen.dart';
 import '../features/program/screens/search_screen.dart';
 import '../features/program/screens/settings_screen.dart';
+import '../features/program/screens/story_list_screen.dart';
 import '../features/feedback/feedback_screen.dart';
 import '../features/program/widgets/active_child_chip.dart';
 import '../features/program/widgets/coach_tip_card.dart';
@@ -211,7 +212,66 @@ class HomeScreen extends ConsumerWidget {
           _QuizCard(),
           const SizedBox(height: 20),
           _AskAssistantCard(onTap: () => onGoToTab(3)),
+          const SizedBox(height: 20),
+          const _BedtimeStoriesCard(),
         ],
+      ),
+    );
+  }
+}
+
+class _BedtimeStoriesCard extends StatelessWidget {
+  const _BedtimeStoriesCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: const Color(0xFF0B3B3B),
+      borderRadius: BorderRadius.circular(Dt.rCard),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Dt.rCard),
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const StoryListScreen()),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+          child: Row(
+            children: [
+              Container(
+                width: 54,
+                height: 54,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: .12),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Text('🌙', style: TextStyle(fontSize: 26)),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'حكايات قبل النوم',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'قصص قصيرة وهادئة مع صوت طبيعي للنوم 🐦',
+                      style: TextStyle(color: Color(0xFFE0D5C1), fontSize: 12.5),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.arrow_back_ios_new,
+                  size: 14, color: Color(0xFFE0D5C1)),
+            ],
+          ),
+        ),
       ),
     );
   }
