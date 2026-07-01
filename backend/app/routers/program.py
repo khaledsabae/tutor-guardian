@@ -341,15 +341,24 @@ def patch_lesson_progress(
     if lesson is None:
         raise HTTPException(status_code=404, detail=f"الدرس '{lesson_id}' غير موجود")
     path_id = lesson["path_id"]
-
-    now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # Prefer child_id from a currently active child for this device. If no
+    # child exists, we still allow the PATCH (legacy behaviour) and store
+    # child_id = 0, which keeps the UNIQUE constraint happy without leaking
+    # a real child id.
     conn = get_conn()
     try:
+        child_row = conn.execute(
+            "SELECT id FROM child_profiles WHERE device_id = ? ORDER BY created_at ASC LIMIT 1",
+            (device_id,),
+        ).fetchone()
+        child_id = child_row["id"] if child_row else 0
+
+        now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         # Idempotent upsert. We re-read the existing row to preserve
         # `started_at` when the client transitions to `completed`.
         existing = conn.execute(
-            "SELECT * FROM lesson_progress WHERE device_id = ? AND lesson_id = ?",
-            (device_id, lesson_id),
+            "SELECT * FROM lesson_progress WHERE device_id = ? AND child_id = ? AND lesson_id = ?",
+            (device_id, child_id, lesson_id),
         ).fetchone()
 
         if existing is None:
@@ -358,11 +367,12 @@ def patch_lesson_progress(
             conn.execute(
                 """
                 INSERT INTO lesson_progress
-                    (device_id, lesson_id, path_id, status, started_at, completed_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                    (device_id, child_id, lesson_id, path_id, status, started_at, completed_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     device_id,
+                    child_id,
                     lesson_id,
                     path_id,
                     payload.status,
@@ -387,7 +397,7 @@ def patch_lesson_progress(
                 """
                 UPDATE lesson_progress
                    SET path_id = ?, status = ?, started_at = ?, completed_at = ?, updated_at = ?
-                 WHERE device_id = ? AND lesson_id = ?
+                 WHERE device_id = ? AND child_id = ? AND lesson_id = ?
                 """,
                 (
                     path_id,
@@ -396,6 +406,7 @@ def patch_lesson_progress(
                     completed_at,
                     now,
                     device_id,
+                    child_id,
                     lesson_id,
                 ),
             )

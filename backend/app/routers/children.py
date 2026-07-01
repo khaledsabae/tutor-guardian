@@ -315,14 +315,14 @@ def get_child_progress(
         _load_owned_child(conn, child_id, device_id)
 
         sql = (
-            "SELECT lesson_id, path_id, status, started_at, completed_at, updated_at "
+            "SELECT lesson_id, path_id, status, started_at, completed_at "
             "FROM lesson_progress WHERE device_id = ?"
         )
         params: list = [device_id]
         if path_id is not None:
             sql += " AND path_id = ?"
             params.append(path_id)
-        sql += " ORDER BY updated_at DESC"
+        sql += " ORDER BY completed_at DESC"
         rows = conn.execute(sql, params).fetchall()
         lessons = [
             {
@@ -331,7 +331,6 @@ def get_child_progress(
                 "status": r["status"],
                 "started_at": r["started_at"],
                 "completed_at": r["completed_at"],
-                "updated_at": r["updated_at"],
             }
             for r in rows
         ]
@@ -358,11 +357,37 @@ def get_child_progress(
             today=datetime.utcnow().date(),
         )
 
+        # Daily login streak (v10): counts consecutive calendar days on which
+        # the app was opened for this child. We upsert today's row idempotently
+        # and compute the run from the stored dates, so opening the app daily
+        # increments the streak even when no lesson is completed.
+        today_str = datetime.utcnow().strftime("%Y-%m-%d")
+        conn.execute(
+            """
+            INSERT INTO daily_login_streaks (device_id, child_id, date)
+            VALUES (?, ?, ?)
+            ON CONFLICT(device_id, child_id, date) DO NOTHING
+            """,
+            (device_id, child_id, today_str),
+        )
+        login_dates_rows = conn.execute(
+            "SELECT date FROM daily_login_streaks "
+            "WHERE device_id = ? AND child_id = ? ORDER BY date DESC",
+            (device_id, child_id),
+        ).fetchall()
+        login_dates = [_parse_iso_utc_date(r["date"]) for r in login_dates_rows]
+        login_dates = [d for d in login_dates if d is not None]
+        daily_login_streak, _ = _compute_streak(
+            login_dates,
+            today=datetime.utcnow().date(),
+        )
+
         return {
             "child_id": child_id,
             "device_id": device_id,
             "lessons": lessons,
             "streak_days": streak_days,
+            "daily_login_streak": daily_login_streak,
             "last_completed_at": last_completed_at,
             "fetched_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
         }

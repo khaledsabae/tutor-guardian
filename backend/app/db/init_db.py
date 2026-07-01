@@ -24,6 +24,12 @@ Migration v8: added referral_codes + referrals tables for the Phase 0
 Migration v9: added push_tokens + parent_identities tables for Phase 1:
               server-side push notifications and optional Google Sign-In
               identity that survives app reinstall.
+Migration v10: added daily_login_streaks table. Stores one row per
+               (device_id, child_id, date). The progress endpoint uses it
+               to compute a "consecutive days the child was engaged" streak
+               that is independent from lesson completions, so opening the
+               app daily counts toward the streak even when no lesson is
+               completed.
 """
 import os
 import sqlite3
@@ -113,7 +119,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 9
+SCHEMA_VERSION = 10
 
 
 def db_path() -> Path:
@@ -181,7 +187,7 @@ def init_db() -> None:
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
             device_id   TEXT NOT NULL,
             name        TEXT NOT NULL,
-            dob         TEXT NOT NULL,
+            age_group   TEXT NOT NULL,
             gender      TEXT,
             avatar_emoji TEXT,
             created_at  TEXT NOT NULL DEFAULT (datetime('now')),
@@ -200,6 +206,7 @@ def init_db() -> None:
             started_at     TEXT,
             completed_at   TEXT,
             score          INTEGER,
+            updated_at     TEXT,
             UNIQUE(device_id, child_id, path_id, lesson_id)
         );
     """
@@ -215,11 +222,23 @@ def init_db() -> None:
         conn, table="lesson_progress", column="child_id",
         ddl="ALTER TABLE lesson_progress ADD COLUMN child_id INTEGER",
     )
+    _ensure_column(
+        conn,
+        table="lesson_progress",
+        column="updated_at",
+        ddl="ALTER TABLE lesson_progress ADD COLUMN updated_at TEXT",
+    )
     conn.execute(
         "CREATE INDEX IF NOT EXISTS ix_lesson_progress_device_child "
         "ON lesson_progress (device_id, child_id, path_id)"
     )
 
+    _ensure_column(
+        conn,
+        table="child_profiles",
+        column="age_group",
+        ddl="ALTER TABLE child_profiles ADD COLUMN age_group TEXT NOT NULL DEFAULT ''",
+    )
     _ensure_column(
         conn,
         table="child_profiles",
@@ -232,6 +251,7 @@ def init_db() -> None:
     _ensure_referrals_table(conn)
     _ensure_push_tokens_table(conn)
     _ensure_parent_identities_table(conn)
+    _ensure_daily_login_streaks_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -240,6 +260,33 @@ def init_db() -> None:
         conn.execute("UPDATE schema_version SET version = ?", (SCHEMA_VERSION,))
     conn.commit()
     conn.close()
+
+
+_CREATE_DAILY_LOGIN_STREAKS: str = """
+CREATE TABLE IF NOT EXISTS daily_login_streaks (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    child_id    INTEGER NOT NULL,
+    date        TEXT NOT NULL,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE(device_id, child_id, date)
+);
+CREATE INDEX IF NOT EXISTS ix_daily_login_streaks_device_child
+    ON daily_login_streaks (device_id, child_id, date);
+CREATE INDEX IF NOT EXISTS ix_daily_login_streaks_date
+    ON daily_login_streaks (date);
+"""
+
+
+def _ensure_daily_login_streaks_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v10 daily_login_streaks table."""
+    try:
+        cur = conn.execute("PRAGMA table_info(daily_login_streaks)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_DAILY_LOGIN_STREAKS)
 
 
 def current_version() -> int:
