@@ -57,20 +57,11 @@ def reverse_source_map() -> dict[str, str]:
     return rev
 
 
+from scripts.infographic_prompts_lib import buildable_targets
+
 def missing_infographic_lessons() -> list[dict]:
-    idx = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
-    out = []
-    for l in idx["lessons"]:
-        if not (l.get("assets", {}) or {}).get("infographics"):
-            out.append(
-                {
-                    "lesson_id": l["lesson_id"],
-                    "age_group": l.get("age_group", ""),
-                    "topic_path": l.get("topic_path", ""),
-                    "title_ar": l.get("title_ar", ""),
-                }
-            )
-    return out
+    lessons, _ = buildable_targets()
+    return lessons
 
 
 def ask_source_axes(source_id: str) -> str | None:
@@ -98,10 +89,11 @@ def ask_source_axes(source_id: str) -> str | None:
 
 def build_description(lesson: dict) -> str:
     age = lesson.get("age_group", "")
+    title = lesson.get("title", "")
+    desc = lesson.get("description", "")
     return (
-        f"أنشئ إنفوجرافيك تربوي عربي أنيق وعملي للأهل (الفئة العمرية {age}). "
-        "اعتمد حصراً على محتوى المصدر المحدد لهذا الدرس فقط، واستخرج منه عنوان الدرس "
-        "وأهم 3-4 نقاط، وقسّمه إلى أقسام مرقّمة بأيقونات بسيطة معبّرة. "
+        f"أنشئ إنفوجرافيك تربوي عربي أنيق وعملي للأهل (الفئة العمرية {age}) بعنوان '{title}'.\n"
+        f"محتوى الإنفوجرافيك يجب أن يغطي النقاط التالية حصراً:\n{desc}\n\n"
         "المتطلبات: ألوان باستيل هادئة، خط عربي واضح، تخطيط RTL، "
         "بدون أي نص إنجليزي، بدون صور أشخاص حقيقية، بدون فوضى بصرية."
     )
