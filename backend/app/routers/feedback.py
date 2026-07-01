@@ -23,7 +23,19 @@ router = APIRouter(prefix="/feedback", tags=["feedback"])
 # Where uploaded voice notes land (served read-only at /docs by main.py).
 _FEEDBACK_AUDIO_DIR = Path(__file__).resolve().parents[3] / "docs" / "feedback"
 # Simple shared secret so only Khaled can read submitted feedback.
-_ADMIN_KEY = os.environ.get("FEEDBACK_ADMIN_KEY", "almorabbi-admin")
+# Fail closed: if FEEDBACK_ADMIN_KEY is unset the admin endpoints are disabled
+# (no guessable default). Must be configured in the production .env.
+_ADMIN_KEY = os.environ.get("FEEDBACK_ADMIN_KEY", "")
+
+
+def _require_admin(x_admin_key: str) -> None:
+    """Guard admin-only feedback endpoints with a constant-time secret compare."""
+    import secrets as _secrets
+
+    if not _ADMIN_KEY or not _secrets.compare_digest(x_admin_key, _ADMIN_KEY):
+        raise HTTPException(status_code=403, detail="forbidden")
+
+
 # Optional Telegram notifications for new app feedback.
 _TG_BOT_TOKEN = os.environ.get("FEEDBACK_TELEGRAM_BOT_TOKEN")
 _TG_CHAT_ID = os.environ.get("FEEDBACK_TELEGRAM_CHAT_ID")
@@ -124,8 +136,7 @@ def submit_app_feedback(body: AppFeedbackIn) -> dict:
 def list_app_feedback(x_admin_key: str = Header(default="")) -> dict:
     """Khaled-only: list submitted feedback. Voice notes (has_audio=true) are
     fetched separately at GET /api/feedback/app/{id}/audio."""
-    if x_admin_key != _ADMIN_KEY:
-        raise HTTPException(status_code=403, detail="forbidden")
+    _require_admin(x_admin_key)
     con = get_conn()
     _ensure_app_feedback_table(con)
     rows = con.execute(
@@ -148,8 +159,7 @@ async def feedback_digest(limit: int = 200, x_admin_key: str = Header(default=""
 
     يحلّل تقييمات 👍/👎 (مربوطة بالـQ&A الحقيقية) + فيدباك التطبيق عبر DeepSeek،
     ويرجّع العناصر الحقيقية القابلة للتنفيذ مصنّفة ومرتّبة حسب الخطورة."""
-    if x_admin_key != _ADMIN_KEY:
-        raise HTTPException(status_code=403, detail="forbidden")
+    _require_admin(x_admin_key)
     from app.services.feedback_analyzer import analyze
 
     return await analyze(limit)
@@ -160,8 +170,7 @@ def get_app_feedback_audio(feedback_id: str, x_admin_key: str = Header(default="
     """Khaled-only: download a feedback voice note as audio/mp4."""
     from fastapi.responses import Response
 
-    if x_admin_key != _ADMIN_KEY:
-        raise HTTPException(status_code=403, detail="forbidden")
+    _require_admin(x_admin_key)
     con = get_conn()
     _ensure_app_feedback_table(con)
     row = con.execute(
