@@ -7966,6 +7966,15 @@
             "duration_estimate": "medium",
             "file": "docs/lesson_7-9_aqeedah_fundamentals_05_podcast.mp3"
           }
+        ],
+        "infographics": [
+          {
+            "id": "bac8bec3-f91d-49d0-b4f6-3e806fa75f46_infographic",
+            "file": "docs/lesson_assets/infographics/bac8bec3-f91d-49d0-b4f6-3e806fa75f46_infographic_lesson_7-9_aqeedah_fundamentals_05.png",
+            "title": "أسماء الله الحسنى",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -7986,6 +7995,15 @@
             "duration_estimate": "medium",
             "file": "docs/lesson_7-9_aqeedah_fundamentals_06_podcast.mp3"
           }
+        ],
+        "infographics": [
+          {
+            "id": "d11d7763_infographic",
+            "file": "docs/lesson_assets/infographics/d11d7763_infographic_lesson_7-9_aqeedah_fundamentals_06.png",
+            "title": "أركان الإيمان الستة",
+            "item_count": 0,
+            "resolution": "2752x1536"
+          }
         ]
       }
     },
@@ -8005,6 +8023,15 @@
             "language": "ar",
             "duration_estimate": "medium",
             "file": "docs/lesson_7-9_aqeedah_fundamentals_07_podcast.mp3"
+          }
+        ],
+        "infographics": [
+          {
+            "id": "7cf1084c-8d9f-4257-a599-f042481fa80c_infographic",
+            "file": "docs/lesson_assets/infographics/7cf1084c-8d9f-4257-a599-f042481fa80c_infographic_lesson_7-9_aqeedah_fundamentals_07.png",
+            "title": "محمد ﷺ قدوتنا",
+            "item_count": 0,
+            "resolution": "2752x1536"
           }
         ]
       }

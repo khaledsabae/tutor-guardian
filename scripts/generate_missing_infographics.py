@@ -36,6 +36,9 @@ NLM = str(BASE_DIR / "notebooklm_env" / "bin" / "notebooklm")
 LANG = "ar_001"
 RESOLUTION = "2752x1536"
 
+sys.path.insert(0, str(BASE_DIR))
+from scripts.infographic_prompts_lib import buildable_targets
+
 STARTED_RE = re.compile(r"(?:Started|Task):\s*([0-9a-f-]{36})")
 EMPTY_MARKERS = ("No parseable chunks", "Source not found", "Error:")
 
