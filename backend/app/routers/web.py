@@ -217,28 +217,27 @@ def _page(*, title: str, desc: str, body: str, ref: str | None,
 @router.get("/go", response_class=HTMLResponse)
 def landing(request: Request, ref: str | None = Query(None)) -> HTMLResponse:
     """Share/install landing — where shared cards & referral links arrive."""
-    body = (
-        f'<img class="hero" src="{_OG_IMAGE}" alt="المربّي" '
-        'loading="lazy" width="1200" height="675">'
-        '<span class="eyebrow">دعوة لوجه الله 🤍</span>'
-        '<h1>ربِّ طفلك بثقة — بالعربي وبالأدلة الشرعية</h1>'
-        '<p class="subtitle">«المربّي» مساعد تربية إسلامي ذكي يجاوبك فورًا عن '
-        'تحدّيات طفلك اليومية، ويخطّط لك رحلة تربوية متكاملة من الحمل حتى ١٨ سنة.</p>'
-        '<div class="feature-grid">'
-        '<div class="feature-card"><div class="icon">🤖</div><div class="label">مساعد ذكي</div></div>'
-        '<div class="feature-card"><div class="icon">📖</div><div class="label">قرآن وأذكار</div></div>'
-        '<div class="feature-card"><div class="icon">🛤️</div><div class="label">رحلة الطفل</div></div>'
-        '<div class="feature-card"><div class="icon">🎯</div><div class="label">تحدّيات يومية</div></div>'
-        '</div>'
-        '<div class="content">'
-        '<p>مجاني تمامًا. بلا إعلانات. بلا اشتراكات. لوجه الله.</p>'
-        '<p>اضغط الزرّ السفلي وحمّل التطبيق الآن، ثم شارك «نصيحة اليوم» مع من تحب '
-        'لكي تكون دعوتك صدقة جارية.</p></div>'
-    )
-    return _page(title="ربِّ طفلك بثقة مع المربّي",
-                 desc="تطبيق تربية إسلامي ذكي، مجاني بلا إعلانات.",
-                 body=body, ref=ref,
-                 canonical=str(request.url))
+    from pathlib import Path
+    
+    current_dir = Path(__file__).resolve().parent
+    project_root = current_dir.parent.parent.parent
+    cinematic_file = project_root / "frontend" / "cinematic.html"
+    
+    if not cinematic_file.is_file():
+        return HTMLResponse("<h1>المربّي — صفحة الهبوط تحت الصيانة</h1>", status_code=503)
+        
+    with open(cinematic_file, "r", encoding="utf-8") as f:
+        html_content = f.read()
+        
+    install_url = _install_url(ref)
+    og_image = _abs(str(request.url), "/ui/assets/banner.png")
+    canonical = str(request.url)
+    
+    html_content = html_content.replace("{{DOWNLOAD_URL}}", install_url)
+    html_content = html_content.replace("{{OG_IMAGE}}", og_image)
+    html_content = html_content.replace("{{CANONICAL_URL}}", canonical)
+    
+    return HTMLResponse(content=html_content, status_code=200)
 
 
 @router.get("/l/{lesson_id}", response_class=HTMLResponse)
