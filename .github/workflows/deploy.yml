@@ -16,6 +16,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'frontend/**'
       - 'backend/**'
       - 'knowledge_base/**'
       - 'docs/lesson_index.json'
