@@ -79,16 +79,17 @@ def _seed_completion(
     lesson_id: str,
     completed_at: str,
     path_id: str = "path_4-6_islamic_parenting_adab",
+    child_id: int = 1,
 ) -> None:
     conn = sqlite3.connect(tmp_db)
     try:
         conn.execute(
             """
             INSERT INTO lesson_progress
-                (device_id, lesson_id, path_id, status, completed_at)
-            VALUES (?, ?, ?, 'completed', ?)
+                (device_id, child_id, lesson_id, path_id, status, completed_at)
+            VALUES (?, ?, ?, ?, 'completed', ?)
             """,
-            (device_id, lesson_id, path_id, completed_at),
+            (device_id, child_id, lesson_id, path_id, completed_at),
         )
         conn.commit()
     finally:
@@ -188,6 +189,7 @@ def test_progress_endpoint_returns_streak_days_zero_when_empty(client):
     assert r.status_code == 200
     body = r.json()
     assert body["streak_days"] == 0
+    assert body["daily_login_streak"] == 1  # today's login recorded
     assert body["last_completed_at"] is None
 
 
@@ -196,28 +198,85 @@ def test_progress_endpoint_returns_streak_days(client, tmp_db):
     # Relative to the real "today" — the endpoint computes streak against the
     # server's current date, so seeding a fixed date makes this time-dependent.
     today = date.today()
-    _seed_completion(tmp_db, "test-device-001", "lesson_a", f"{today}T10:00:00Z")
     _seed_completion(
-        tmp_db, "test-device-001", "lesson_b", f"{today - timedelta(days=1)}T10:00:00Z"
+        tmp_db, "test-device-001", "lesson_a", f"{today}T10:00:00Z", child_id=child_id
     )
     _seed_completion(
-        tmp_db, "test-device-001", "lesson_c", f"{today - timedelta(days=2)}T10:00:00Z"
+        tmp_db,
+        "test-device-001",
+        "lesson_b",
+        f"{today - timedelta(days=1)}T10:00:00Z",
+        child_id=child_id,
+    )
+    _seed_completion(
+        tmp_db,
+        "test-device-001",
+        "lesson_c",
+        f"{today - timedelta(days=2)}T10:00:00Z",
+        child_id=child_id,
     )
 
     r = client.get(f"/api/children/{child_id}/progress")
     body = r.json()
     assert body["streak_days"] == 3
+    assert body["daily_login_streak"] == 1  # only today from this GET
     assert body["last_completed_at"] == f"{today}T10:00:00Z"
 
 
 def test_progress_endpoint_last_completed_at(client, tmp_db):
     child_id = _create_child(client)
     today = date(2026, 6, 8)
-    _seed_completion(tmp_db, "test-device-001", "lesson_x", f"{today}T10:00:00Z")
+    _seed_completion(
+        tmp_db, "test-device-001", "lesson_x", f"{today}T10:00:00Z", child_id=child_id
+    )
 
     r = client.get(f"/api/children/{child_id}/progress")
     body = r.json()
     assert body["last_completed_at"] == f"{today}T10:00:00Z"
+    assert body["streak_days"] == 0  # far in the past
+    assert body["daily_login_streak"] == 1  # today counted as login
+
+
+def test_progress_endpoint_daily_login_streak_counts_consecutive_days(client):
+    """Opening the app on consecutive days increments daily_login_streak
+    independently from lesson completions."""
+    child_id = _create_child(client)
+    today = date.today()
+    _seed_login_dates(
+        client,
+        "test-device-001",
+        child_id,
+        [
+            today,
+            today - timedelta(days=1),
+            today - timedelta(days=2),
+            today - timedelta(days=4),  # gap — should not count
+        ],
+    )
+    r = client.get(f"/api/children/{child_id}/progress")
+    body = r.json()
+    assert body["streak_days"] == 0
+    assert body["daily_login_streak"] == 3
+
+
+def _seed_login_dates(
+    client, device_id: str, child_id: int, dates: list
+) -> None:
+    """Insert raw daily_login_streaks rows. Bypasses the endpoint so we can
+    simulate historical days."""
+    from app.db.init_db import get_conn
+
+    conn = get_conn()
+    try:
+        for d in dates:
+            conn.execute(
+                "INSERT INTO daily_login_streaks (device_id, child_id, date) "
+                "VALUES (?, ?, ?)",
+                (device_id, child_id, d.isoformat()),
+            )
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def test_progress_endpoint_streak_ignores_path_filter(client, tmp_db):
@@ -226,7 +285,12 @@ def test_progress_endpoint_streak_ignores_path_filter(client, tmp_db):
     today = date.today()  # relative to real now (endpoint uses server date)
     # Seed completions on two different paths
     _seed_completion(
-        tmp_db, "test-device-001", "lesson_a", f"{today}T10:00:00Z", path_id="path_1"
+        tmp_db,
+        "test-device-001",
+        "lesson_a",
+        f"{today}T10:00:00Z",
+        path_id="path_1",
+        child_id=child_id,
     )
     _seed_completion(
         tmp_db,
@@ -234,6 +298,7 @@ def test_progress_endpoint_streak_ignores_path_filter(client, tmp_db):
         "lesson_b",
         f"{today - timedelta(days=1)}T10:00:00Z",
         path_id="path_2",
+        child_id=child_id,
     )
 
     # Filtered by path_1 — streak still counts both because it's
@@ -241,3 +306,4 @@ def test_progress_endpoint_streak_ignores_path_filter(client, tmp_db):
     r = client.get(f"/api/children/{child_id}/progress?path_id=path_1")
     body = r.json()
     assert body["streak_days"] == 2
+    assert body["daily_login_streak"] == 1  # today from this GET

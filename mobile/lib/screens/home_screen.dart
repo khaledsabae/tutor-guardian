@@ -179,13 +179,13 @@ class HomeScreen extends ConsumerWidget {
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const FeedbackScreen()),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 child: Row(
                   children: [
-                    const Text('💬', style: TextStyle(fontSize: 22)),
-                    const SizedBox(width: 10),
-                    const Expanded(
+                    Text('💬', style: TextStyle(fontSize: 22)),
+                    SizedBox(width: 10),
+                    Expanded(
                       child: Text(
                         'رأيك يهمنا! شاركنا أي ملاحظة أو مشكلة — كتابةً أو صوتاً.',
                         style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
@@ -227,7 +227,7 @@ class _StatsRow extends ConsumerWidget {
             .where((l) => l.status == ProgressStatus.completed)
             .length ??
         0;
-    final streak = bundle?.streakDays ?? 0;
+    final streak = bundle?.dailyLoginStreak ?? 0;
     final badges = computeBadges(bundle);
     final earned = earnedCount(badges);
 

@@ -11,11 +11,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class OnboardingStorage {
   OnboardingStorage(this._prefs);
 
-  static const _kOnboardingCompleted = 'tg.onboarding.completed';
-  static const _kActiveChildId = 'tg.active_child_id';
-  static const _kActiveChildName = 'tg.active_child_name';
-  static const _kActiveChildAgeGroup = 'tg.active_child_age_group';
-  static const _kActiveChildAvatar = 'tg.active_child_avatar';
+  static const keyOnboardingCompleted = 'tg.onboarding.completed';
+  static const keyActiveChildId = 'tg.active_child_id';
+  static const keyActiveChildName = 'tg.active_child_name';
+  static const keyActiveChildAgeGroup = 'tg.active_child_age_group';
+  static const keyActiveChildAvatar = 'tg.active_child_avatar';
+
+  static const _kOnboardingCompleted = keyOnboardingCompleted;
+  static const _kActiveChildId = keyActiveChildId;
+  static const _kActiveChildName = keyActiveChildName;
+  static const _kActiveChildAgeGroup = keyActiveChildAgeGroup;
+  static const _kActiveChildAvatar = keyActiveChildAvatar;
 
     final SharedPreferences _prefs;
 

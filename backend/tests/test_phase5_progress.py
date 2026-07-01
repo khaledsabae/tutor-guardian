@@ -89,15 +89,15 @@ def _create_child_payload(**overrides):
 
 
 def test_v5_schema_adds_avatar_emoji_column(tmp_db):
-    """Migration v5 must add avatar_emoji without breaking older DBs."""
+    """Migration v5/v10 must keep avatar_emoji + age_group present."""
     conn = sqlite3.connect(tmp_db)
     try:
         rows = conn.execute("PRAGMA table_info(child_profiles)").fetchall()
         names = {r[1] for r in rows}
         assert "avatar_emoji" in names
-        # All v4 columns still present
-        for col in ("id", "device_id", "name", "age_group", "gender", "created_at", "updated_at"):
-            assert col in names
+        assert "age_group" in names
+        required = {"id", "device_id", "name", "gender", "created_at", "updated_at"}
+        assert required.issubset(names)
     finally:
         conn.close()
 
@@ -202,20 +202,20 @@ def test_get_child_progress_returns_records(client, tmp_db):
         conn.execute(
             """
             INSERT INTO lesson_progress
-                (device_id, lesson_id, path_id, status, started_at, completed_at)
-            VALUES (?, ?, ?, ?, ?, ?)
+                (device_id, child_id, lesson_id, path_id, status, started_at, completed_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
-            ("test-device-001", "lesson_4-6_islamic_parenting_adab_01",
+            ("test-device-001", child_id, "lesson_4-6_islamic_parenting_adab_01",
              "path_4-6_islamic_parenting_adab", "completed",
              "2026-06-08T10:00:00Z", "2026-06-08T10:15:00Z"),
         )
         conn.execute(
             """
             INSERT INTO lesson_progress
-                (device_id, lesson_id, path_id, status, started_at)
-            VALUES (?, ?, ?, ?, ?)
+                (device_id, child_id, lesson_id, path_id, status, started_at)
+            VALUES (?, ?, ?, ?, ?, ?)
             """,
-            ("test-device-001", "lesson_4-6_islamic_parenting_adab_02",
+            ("test-device-001", child_id, "lesson_4-6_islamic_parenting_adab_02",
              "path_4-6_islamic_parenting_adab", "in_progress",
              "2026-06-08T11:00:00Z"),
         )
@@ -268,9 +268,9 @@ def test_get_child_progress_filter_by_path_id(client, tmp_db):
         ]:
             conn.execute(
                 """INSERT INTO lesson_progress
-                      (device_id, lesson_id, path_id, status)
-                   VALUES (?, ?, ?, 'completed')""",
-                ("test-device-001", lid, pid),
+                      (device_id, child_id, lesson_id, path_id, status)
+                   VALUES (?, ?, ?, ?, 'completed')""",
+                ("test-device-001", child_id, lid, pid),
             )
         conn.commit()
     finally:

@@ -297,6 +297,7 @@ void main() {
       'child_id': 1,
       'lessons': [],
       'streak_days': 7,
+      'daily_login_streak': 9,
       'last_completed_at': '2026-06-08T10:00:00Z',
     };
 
@@ -329,7 +330,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Streak chip shows "7 أيام متتالية"
+    // Path detail header shows the LESSON streak (7), not login streak (9).
     expect(find.text('7 أيام متتالية'), findsOneWidget);
     expect(find.textContaining('متتالية'), findsOneWidget);
   });

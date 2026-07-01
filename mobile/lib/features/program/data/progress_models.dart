@@ -116,6 +116,10 @@ class ChildProgressBundle {
   /// Phase 6 — number of consecutive UTC days (ending today or
   /// yesterday) on which the user completed at least one lesson.
   final int streakDays;
+  /// Phase 10 — number of consecutive UTC days the child was engaged
+  /// (app opened), independent from lesson completions. Displayed on
+  /// the Home screen as the primary "days in a row" streak.
+  final int dailyLoginStreak;
   /// Phase 6 — ISO 8601 timestamp of the most recent completion.
   final String? lastCompletedAt;
 
@@ -125,6 +129,7 @@ class ChildProgressBundle {
     required this.lessons,
     this.fetchedAt,
     this.streakDays = 0,
+    this.dailyLoginStreak = 0,
     this.lastCompletedAt,
   });
 
@@ -137,6 +142,7 @@ class ChildProgressBundle {
           .toList(),
       fetchedAt: json['fetched_at'] as String?,
       streakDays: (json['streak_days'] as num?)?.toInt() ?? 0,
+      dailyLoginStreak: (json['daily_login_streak'] as num?)?.toInt() ?? 0,
       lastCompletedAt: json['last_completed_at'] as String?,
     );
   }
