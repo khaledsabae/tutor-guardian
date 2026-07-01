@@ -32,6 +32,6 @@ class AppConfig {
   static const String appName = 'المربي الذكي';
   static const String appShortName = 'المربي';
 
-  /// App version (kept in sync with `pubspec.yaml`).
-  static const String appVersion = '1.0.11';
+  /// App version (kept in sync with `pubspec.yaml` — bump on every release).
+  static const String appVersion = '1.0.24';
 }

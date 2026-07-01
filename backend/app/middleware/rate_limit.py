@@ -23,8 +23,16 @@ from starlette.responses import JSONResponse
 logger = logging.getLogger(__name__)
 
 _LIMIT = int(os.environ.get("RATE_LIMIT_PER_MINUTE", "30"))
+_GENERAL_LIMIT = int(os.environ.get("RATE_LIMIT_GENERAL_PER_MINUTE", "120"))
 _WINDOW = 60.0
-_PROTECTED_PREFIXES = ("/api/assistant",)
+# Every /api endpoint is rate-limited. The AI assistant (expensive to serve)
+# keeps the tighter _LIMIT; all other endpoints (children, progress, referral,
+# push, identity, auth) get the more generous _GENERAL_LIMIT so normal app usage
+# — cold-start bursts, progress sync — never trips a false 429. Each scope has an
+# independent per-device bucket. Setting RATE_LIMIT_PER_MINUTE=0 disables both.
+_PROTECTED_PREFIXES = ("/api/",)
+_ASSISTANT_PREFIX = "/api/assistant"
+_EXEMPT_PREFIXES = ("/api/health", "/api/healthz")
 _REDIS_URL = os.environ.get("REDIS_URL", "")
 
 
@@ -49,7 +57,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         if self._redis:
             logger.info("Rate-limit using Redis: %s", _REDIS_URL)
 
-    async def _check_redis(self, key: str) -> bool | None:
+    async def _check_redis(self, key: str, limit: int) -> bool | None:
         """Check rate-limit via Redis. Returns True if allowed, False if blocked, None on error."""
         if not self._redis:
             return None
@@ -63,23 +71,35 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
             pipe.zadd(key, {str(now): now})
             pipe.expire(key, int(_WINDOW) + 1)
             _, count, _, _ = await pipe.execute()
-            return count <= _LIMIT
+            return count <= limit
         except Exception as e:
             logger.warning("Redis rate-limit error: %s", e)
             return None  # fall through to in-memory
 
     async def dispatch(self, request: Request, call_next):
-        if _LIMIT <= 0 or not request.url.path.startswith(_PROTECTED_PREFIXES):
+        path = request.url.path
+        if (
+            _LIMIT <= 0
+            or not path.startswith(_PROTECTED_PREFIXES)
+            or path.startswith(_EXEMPT_PREFIXES)
+        ):
             return await call_next(request)
+
+        # Two independent budgets: the AI assistant (expensive) vs the rest of the
+        # API. Namespacing the key by scope keeps their buckets separate so a busy
+        # chat session can't exhaust the CRUD budget or vice versa.
+        if path.startswith(_ASSISTANT_PREFIX):
+            scope, limit = "ai", _LIMIT
+        else:
+            scope, limit = "api", _GENERAL_LIMIT
 
         # Per-device if auth token present, otherwise per-IP
         device_id = getattr(request.state, "device_id", None)
-        key = f"rl:{device_id}" if device_id else (
-            f"rl:ip:{request.client.host}" if request.client else "rl:unknown"
-        )
+        ident = device_id or (request.client.host if request.client else "unknown")
+        key = f"rl:{scope}:{ident}"
 
         # Try Redis first, fall back to in-memory
-        redis_allowed = await self._check_redis(key)
+        redis_allowed = await self._check_redis(key, limit)
         if redis_allowed is not None:
             if not redis_allowed:
                 return JSONResponse(
@@ -96,7 +116,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         if now - start >= _WINDOW:
             start, count = now, 0
 
-        if count >= _LIMIT:
+        if count >= limit:
             retry_after = int(_WINDOW - (now - start)) + 1
             return JSONResponse(
                 status_code=429,
