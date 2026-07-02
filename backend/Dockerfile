@@ -23,6 +23,7 @@ COPY knowledge_base/ ./knowledge_base/
 COPY ops/tools/ ./ops/tools/
 COPY frontend/ ./frontend/
 COPY docs/ ./docs/
+COPY .well-known/ ./.well-known/
 
 ENV PROJECT_ROOT=/app \
     PYTHONPATH=/app/backend \
