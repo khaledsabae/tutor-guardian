@@ -146,3 +146,10 @@ if FRONTEND_DIR.is_dir():
 _MOBILE_ASSETS = PROJECT_ROOT / "mobile" / "assets"
 if _MOBILE_ASSETS.is_dir():
     app.mount("/assets", StaticFiles(directory=str(_MOBILE_ASSETS)), name="mobile_assets")
+
+# ── Android App Links verification ─────────────────────────────────────
+# Google Play verifies the domain tg-api.alsaba.cloud by fetching
+# https://tg-api.alsaba.cloud/.well-known/assetlinks.json
+_WELL_KNOWN = PROJECT_ROOT / ".well-known"
+if _WELL_KNOWN.is_dir():
+    app.mount("/.well-known", StaticFiles(directory=str(_WELL_KNOWN)), name="well_known")
