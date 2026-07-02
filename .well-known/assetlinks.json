@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.alsaba.almorabbi",
+    "sha256_cert_fingerprints":
+    ["958519FC4AE940B746C9BAF1A39847808125FC9540CC60EFD6C7785047C1EFE3"]
+  }
+}]
