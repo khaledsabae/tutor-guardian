@@ -119,8 +119,16 @@ class HabitEventOut(BaseModel):
     category: str
     habit_name: str
     status: str
+    submitted_by: str = "parent"
+    device_timestamp: str | None = None
     created_at: str
     updated_at: str
+
+
+class ChildHabitEventCreate(HabitEventCreate):
+    """Child-submitted habit evaluation; the server stamps submitted_by."""
+
+    device_timestamp: str | None = None  # ISO timestamp captured on child device
 
 
 class TodayHabitItem(BaseModel):

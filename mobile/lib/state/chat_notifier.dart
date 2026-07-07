@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/tg_client.dart';
 import '../config/app_config.dart';
+import '../features/program/providers/progress_providers.dart';
 import '../models/api_models.dart';
 import '../models/enums.dart';
 
@@ -133,7 +134,12 @@ class ChatState {
 
 /// Provider for the singleton [TgClient]. Tests can override this.
 final tgClientProvider = Provider<TgClient>((ref) {
-  final client = TgClient();
+  final client = TgClient(
+    onNeedActiveChildId: () async {
+      final id = ref.read(activeChildIdProvider);
+      return id;
+    },
+  );
   ref.onDispose(client.close);
   return client;
 });

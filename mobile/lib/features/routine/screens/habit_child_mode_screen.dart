@@ -20,6 +20,14 @@ class HabitChildModeScreen extends ConsumerWidget {
       );
     }
 
+    // Expired UX Guard: if the child session died and the notifier surfaced
+    // an explicit expiry message, take the child back to the lock screen so
+    // the parent can re-issue a token. This avoids leaving the child in a
+    // hung screen or showing a raw HTTP error.
+    if (state.error == 'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.') {
+      return _ExpiredGuard(childId: state.childId);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('ميزان العادات'),
@@ -82,6 +90,50 @@ class HabitChildModeScreen extends ConsumerWidget {
           isExit: true,
         ),
       ),
+    );
+  }
+}
+
+class _ExpiredGuard extends StatefulWidget {
+  final int? childId;
+  const _ExpiredGuard({this.childId});
+
+  @override
+  State<_ExpiredGuard> createState() => _ExpiredGuardState();
+}
+
+class _ExpiredGuardState extends State<_ExpiredGuard> {
+  @override
+  void initState() {
+    super.initState();
+    // Let the frame settle, then push the lock screen as a modal replacement.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _redirect());
+  }
+
+  Future<void> _redirect() async {
+    if (!mounted) return;
+    final childId = widget.childId;
+    await Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => childId == null
+            ? const Scaffold(
+                body: Center(
+                  child: Text('انتهى وقت الجلسة. يُرجى العودة للمربي.'),
+                ),
+              )
+            : ChildModeLockScreen(
+                childId: childId,
+                childName: 'الطفل',
+                isExit: false,
+              ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }
