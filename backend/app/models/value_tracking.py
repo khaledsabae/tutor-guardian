@@ -134,6 +134,15 @@ class TodayHabitItem(BaseModel):
     template_id: int | None = None
 
 
+class ChildHabitDayOut(BaseModel):
+    """Read-only day view returned to the child-mode self-reporting client."""
+
+    child_id: int
+    date: str
+    habits: list[TodayHabitItem]
+    events: list[HabitEventOut]
+
+
 class HabitDayOut(BaseModel):
     child_id: int
     date: str

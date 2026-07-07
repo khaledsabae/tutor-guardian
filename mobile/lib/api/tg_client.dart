@@ -1061,12 +1061,57 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  // ── Child mode ─────────────────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> createChildSession(int childId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-sessions')
+        .replace(queryParameters: {'child_id': '$childId'});
+    final resp = await _http
+        .post(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> fetchChildTodayHabits({required String childToken}) async {
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/today');
+    final resp = await _http
+        .get(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createChildHabitEvent({
+    required String childToken,
+    required Map<String, dynamic> body,
+  }) async {
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/events');
+    final resp = await _http
+        .post(
+          uri,
+          headers: _childAuthHeaders(childToken),
+          body: jsonEncode(body),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   // ── Internals ────────────────────────────────────────────────────────
 
   Map<String, String> _authHeaders(String token) => {
         'Content-Type': 'application/json; charset=utf-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
+      };
+
+  Map<String, String> _childAuthHeaders(String childToken) => {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Accept': 'application/json',
+        'Authorization': 'Child-Bearer $childToken',
       };
 
   TgStreamEvent? _parseFrame(String eventName, String dataText) {

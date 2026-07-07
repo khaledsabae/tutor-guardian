@@ -1,0 +1,238 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../models/habit_models.dart';
+import '../providers/child_mode_providers.dart';
+import 'child_mode_lock_screen.dart';
+
+/// The child-facing self-reporting screen.
+/// Very simple, large buttons, confirmation dialogs, no edit/delete.
+class HabitChildModeScreen extends ConsumerWidget {
+  const HabitChildModeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(childModeProvider);
+
+    if (!state.active || state.day == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ميزان العادات'),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'خروج',
+            onPressed: () => _askExit(context, ref),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: state.day!.habits.length,
+          itemBuilder: (context, index) {
+            final item = state.day!.habits[index];
+            return _HabitChildCard(
+              item: HabitItem(
+                category: item.category,
+                habitName: item.habitName,
+              ),
+              submitted: state.isSubmitted(item.habitName),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<void> _askExit(BuildContext context, WidgetRef ref) async {
+    final state = ref.read(childModeProvider);
+    final childId = state.childId;
+    if (childId == null) return;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('خروج من وضع الطفل'),
+        content: const Text('هل تريد الخروج من وضع الطفل والعودة لحساب المربي؟'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('إلغاء'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('خروج'),
+          ),
+        ],
+      ),
+    );
+    if (ok != true && context.mounted) return;
+    if (!context.mounted) return;
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ChildModeLockScreen(
+          childId: childId,
+          childName: 'الطفل',
+          isExit: true,
+        ),
+      ),
+    );
+  }
+}
+
+class _HabitChildCard extends ConsumerStatefulWidget {
+  const _HabitChildCard({required this.item, required this.submitted});
+
+  final HabitItem item;
+  final bool submitted;
+
+  @override
+  ConsumerState<_HabitChildCard> createState() => _HabitChildCardState();
+}
+
+class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
+  bool _busy = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = switch (widget.item.category) {
+      HabitCategory.worship => theme.colorScheme.primary,
+      HabitCategory.selfBuilding => theme.colorScheme.secondary,
+      HabitCategory.study => theme.colorScheme.tertiary,
+    };
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(_categoryIcon(widget.item.category), color: color),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    widget.item.habitName,
+                    style: theme.textTheme.titleMedium,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            if (widget.submitted)
+              Center(
+                child: Chip(
+                  avatar: const Icon(Icons.check_circle, color: Colors.white),
+                  label: const Text('تم التسجيل'),
+                  backgroundColor: theme.colorScheme.primary,
+                  labelStyle: const TextStyle(color: Colors.white),
+                ),
+              )
+            else
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _ActionButton(
+                    label: 'تم',
+                    icon: Icons.check,
+                    color: Colors.green,
+                    onPressed: _busy ? null : () => _submit('completed', 'تمام'),
+                  ),
+                  _ActionButton(
+                    label: 'جزئي',
+                    icon: Icons.remove_circle_outline,
+                    color: Colors.orange,
+                    onPressed: _busy ? null : () => _submit('partially', 'جزئي'),
+                  ),
+                  _ActionButton(
+                    label: 'لم يتم',
+                    icon: Icons.close,
+                    color: Colors.red,
+                    onPressed: _busy ? null : () => _submit('missed', 'لم يتم'),
+                  ),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  IconData _categoryIcon(HabitCategory c) => switch (c) {
+    HabitCategory.worship => Icons.mosque,
+    HabitCategory.selfBuilding => Icons.self_improvement,
+    HabitCategory.study => Icons.menu_book,
+  };
+
+  Future<void> _submit(String status, String label) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('تأكيد التسجيل'),
+        content: Text(
+          'هل أنت متأكد من تسجيل "${widget.item.habitName}" كـ "$label"؟ لا يمكن التعديل إلا من حساب المربي.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('إلغاء'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('تأكيد'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    setState(() => _busy = true);
+    final ok = await ref
+        .read(childModeProvider.notifier)
+        .submit(widget.item, status);
+    if (mounted) {
+      setState(() => _busy = false);
+      if (!ok) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('لم يتم التسجيل. حاول مرة أخرى.')),
+        );
+      }
+    }
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  const _ActionButton({
+    required this.label,
+    required this.icon,
+    required this.color,
+    this.onPressed,
+  });
+
+  final String label;
+  final IconData icon;
+  final Color color;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      icon: Icon(icon, color: Colors.white),
+      label: Text(label),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+    );
+  }
+}

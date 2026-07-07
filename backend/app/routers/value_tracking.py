@@ -19,6 +19,7 @@ from fastapi import APIRouter, HTTPException, Query, Request
 
 from app.db.init_db import get_conn
 from app.models.value_tracking import (
+    ChildHabitDayOut,
     HabitDayOut,
     HabitDeleteOut,
     HabitEventCreate,
@@ -26,6 +27,18 @@ from app.models.value_tracking import (
     HabitSummaryOut,
     TodayHabitItem,
 )
+
+__all__ = [
+    "router",
+    "_DEFAULT_HABITS",
+    "_load_active_templates",
+    "_load_today_events",
+    "_build_today_habits",
+    "_persist_event",
+    "_verify_child_ownership",
+    "_is_habit_age",
+    "_event_row_to_model",
+]
 
 router = APIRouter()
 
@@ -38,6 +51,20 @@ def _require_device_id(request: Request) -> str:
     if not device_id:
         raise HTTPException(status_code=401, detail="مطلوب توثيق.")
     return device_id
+
+
+def _verify_child_ownership(device_id: str, child_id: int) -> sqlite3.Row:
+    """Verify that child_id belongs to device_id."""
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT * FROM child_profiles WHERE id = ?", (child_id,)
+        ).fetchone()
+        if row is None or row["device_id"] != device_id:
+            raise HTTPException(status_code=404, detail="طفل غير موجود.")
+        return row
+    finally:
+        conn.close()
 
 
 def _load_owned_child(conn: sqlite3.Connection, child_id: int, device_id: str) -> sqlite3.Row:
@@ -64,6 +91,46 @@ def _event_row_to_model(row: sqlite3.Row) -> HabitEventOut:
         created_at=row["created_at"],
         updated_at=row["updated_at"],
     )
+
+
+def _load_today_events(
+    conn: sqlite3.Connection, device_id: str, child_id: int, today: str
+) -> list[sqlite3.Row]:
+    return conn.execute(
+        "SELECT * FROM habits_value_events "
+        "WHERE device_id = ? AND child_id = ? AND date(created_at) = ? "
+        "ORDER BY created_at",
+        (device_id, child_id, today),
+    ).fetchall()
+
+
+def _persist_event(
+    conn: sqlite3.Connection,
+    device_id: str,
+    child_id: int,
+    today: str,
+    payload: HabitEventCreate,
+) -> HabitEventOut:
+    cur = conn.execute(
+        """
+        INSERT INTO habits_value_events (
+            device_id, child_id, category, habit_name, status
+        ) VALUES (?, ?, ?, ?, ?)
+        """,
+        (
+            device_id,
+            child_id,
+            payload.category,
+            payload.habit_name,
+            payload.status,
+        ),
+    )
+    event_id = cur.lastrowid
+    conn.commit()
+    row = conn.execute(
+        "SELECT * FROM habits_value_events WHERE id = ?", (event_id,)
+    ).fetchone()
+    return _event_row_to_model(row)
 
 
 # ── Age-gate helper ───────────────────────────────────────────────────────
@@ -184,12 +251,7 @@ def get_today(request: Request, child_id: int = Query(..., ge=1)):
                 detail="ميزان العادات متاح للأطفال من 7 إلى 18 سنة فقط.",
             )
         today = _today()
-        rows = conn.execute(
-            "SELECT * FROM habits_value_events "
-            "WHERE device_id = ? AND child_id = ? AND date(created_at) = ? "
-            "ORDER BY created_at",
-            (device_id, child_id, today),
-        ).fetchall()
+        rows = _load_today_events(conn, device_id, child_id, today)
         templates = _load_active_templates(conn, device_id, child_id)
 
         # Compute today's local points from events.
@@ -233,26 +295,7 @@ def create_event(
                 status_code=400,
                 detail="اسم العادة غير مسموح به. اختر عادة من القائمة أو أنشئ قالباً مخصصاً.",
             )
-        cur = conn.execute(
-            """
-            INSERT INTO habits_value_events (
-                device_id, child_id, category, habit_name, status
-            ) VALUES (?, ?, ?, ?, ?)
-            """,
-            (
-                device_id,
-                child_id,
-                payload.category,
-                payload.habit_name,
-                payload.status,
-            ),
-        )
-        event_id = cur.lastrowid
-        conn.commit()
-        row = conn.execute(
-            "SELECT * FROM habits_value_events WHERE id = ?", (event_id,)
-        ).fetchone()
-        return _event_row_to_model(row)
+        return _persist_event(conn, device_id, child_id, _today(), payload)
     finally:
         conn.close()
 

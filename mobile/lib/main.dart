@@ -21,7 +21,9 @@ import 'features/deeplink/deep_link_handler.dart';
 import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
+import 'features/routine/providers/child_mode_providers.dart';
 import 'features/routine/screens/daily_routine_screen.dart';
+import 'features/routine/screens/habit_child_mode_screen.dart';
 import 'features/adhkar/services/notification_service.dart';
 import 'screens/home_screen.dart';
 import 'screens/chat_screen.dart';
@@ -129,8 +131,12 @@ class _AppBootstrapper extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncPrefs = ref.watch(sharedPreferencesProvider);
+    final childMode = ref.watch(childModeProvider);
     return asyncPrefs.when(
       data: (_) {
+        if (childMode.active) {
+          return const HabitChildModeScreen();
+        }
         // First, sync the onboardingCompletedProvider from disk.
         final completed = ref.watch(onboardingCompletedProvider);
         if (!completed) {
@@ -149,6 +155,10 @@ class _AppBootstrapper extends ConsumerWidget {
             }
           });
         }
+        // Also restore child mode from secure storage if a token exists.
+        Future(() async {
+          await ref.read(childModeProvider.notifier).restore();
+        });
         return const RootScaffold();
       },
       loading: () => const _SplashScreen(),
