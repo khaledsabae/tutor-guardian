@@ -19,12 +19,11 @@ class IdentityService {
 
   static const _kLinked = 'identity.linked';
 
-  // TODO: Replace with the Web client ID from Google Cloud Console:
-  // Credentials → OAuth client ID → Web application.
-  // Without this, the Google Sign-In plugin will not return an id_token on Android.
+  // Web client ID from Google Cloud Console → OAuth client ID → Web application.
+  // Used by the google_sign_in plugin on Android to request an id_token.
   static const String _serverClientId = String.fromEnvironment(
     'GOOGLE_SERVER_CLIENT_ID',
-    defaultValue: '',
+    defaultValue: '620240456244-e0ap0isfsufoue1atumhen5l0ttlm6ga.apps.googleusercontent.com',
   );
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(
