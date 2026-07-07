@@ -128,6 +128,14 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
             if (e.status != HabitStatus.missed) e.habitName,
         },
       );
+    } on TgApiError catch (e) {
+      if (e.statusCode == 401) {
+        await clearChildMode();
+        await _clearChildId();
+        state = const ChildModeState(error: 'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.');
+      } else {
+        state = state.copyWith(loading: false, error: e.toString());
+      }
     } catch (e) {
       state = state.copyWith(loading: false, error: e.toString());
     }
@@ -143,12 +151,22 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
           'category': item.category.wireName,
           'habit_name': item.habitName,
           'status': status,
+          'device_timestamp': DateTime.now().toUtc().toIso8601String(),
         },
       );
       state = state.copyWith(
         submittedHabits: {...state.submittedHabits, item.habitName},
       );
       return true;
+    } on TgApiError catch (e) {
+      if (e.statusCode == 401) {
+        await clearChildMode();
+        await _clearChildId();
+        state = const ChildModeState(error: 'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.');
+      } else {
+        state = state.copyWith(error: e.toString());
+      }
+      return false;
     } catch (e) {
       state = state.copyWith(error: e.toString());
       return false;

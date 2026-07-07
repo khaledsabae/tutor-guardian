@@ -409,6 +409,8 @@ def test_child_mode_records_event_submit_only(client):
     body = r.json()
     assert body["status"] == "completed"
     assert body["child_id"] == cid
+    assert body["submitted_by"] == "child"
+    assert body["device_timestamp"] is not None
     # Submit-only: second attempt for the same habit today is rejected.
     r2 = client.post(
         "/api/value-tracking/child-mode/events",
@@ -416,6 +418,45 @@ def test_child_mode_records_event_submit_only(client):
         json={"category": "worship", "habit_name": "صلاة الفجر", "status": "partially"},
     )
     assert r2.status_code == 409
+
+
+def test_child_mode_event_inherits_parent_view_as_child_source(client):
+    cid = _create_child(client, age_group="7-9")
+    token = _issue_child_token(client, cid)
+    client.post(
+        "/api/value-tracking/child-mode/events",
+        headers={"Authorization": f"Child-Bearer {token}"},
+        json={"category": "worship", "habit_name": "صلاة الفجر", "status": "completed"},
+    )
+    # Parent-facing today view exposes the event with submitted_by child.
+    r = client.get("/api/value-tracking/today", params={"child_id": cid})
+    assert r.status_code == 200
+    events = r.json()["events"]
+    assert len(events) == 1
+    assert events[0]["submitted_by"] == "child"
+
+
+def test_parent_event_defaults_to_submitted_by_parent(client):
+    cid = _create_child(client, age_group="7-9")
+    r = client.post(
+        "/api/value-tracking/events",
+        params={"child_id": cid},
+        json={"category": "worship", "habit_name": "صلاة الفجر", "status": "completed"},
+    )
+    assert r.status_code == 200
+    assert r.json()["submitted_by"] == "parent"
+
+
+def test_child_mode_event_rejects_missing_device_timestamp(client):
+    cid = _create_child(client, age_group="7-9")
+    token = _issue_child_token(client, cid)
+    r = client.post(
+        "/api/value-tracking/child-mode/events",
+        headers={"Authorization": f"Child-Bearer {token}"},
+        json={"category": "worship", "habit_name": "صلاة الفجر", "status": "completed"},
+    )
+    assert r.status_code == 200
+    assert r.json()["device_timestamp"] is not None
 
 
 def test_child_mode_rejects_unknown_habit(client):

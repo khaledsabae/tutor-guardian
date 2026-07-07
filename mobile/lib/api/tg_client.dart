@@ -70,6 +70,8 @@ class _AuthStore {
   static const _kDeviceId = 'tg_device_id';
   static const _kSessionId = 'tg_session_id';
   static const _kToken = 'tg_token';
+  static const _kActiveChildId = 'tg_active_child_id';
+  static const _kChildToken = 'tg_child_session_token';
 
   final FlutterSecureStorage _storage;
   final Uuid _uuid = const Uuid();
@@ -115,12 +117,41 @@ class _AuthStore {
     await _storage.delete(key: _kSessionId);
     await _storage.delete(key: _kToken);
   }
+
+  Future<int?> readActiveChildId() async {
+    final raw = await _storage.read(key: _kActiveChildId);
+    if (raw == null) return null;
+    return int.tryParse(raw);
+  }
+
+  Future<void> writeActiveChildId(int? childId) async {
+    if (childId == null) {
+      await _storage.delete(key: _kActiveChildId);
+    } else {
+      await _storage.write(key: _kActiveChildId, value: childId.toString());
+    }
+  }
+
+  Future<String?> readChildToken() async {
+    return await _storage.read(key: _kChildToken);
+  }
+
+  Future<void> writeChildToken(String token) async {
+    await _storage.write(key: _kChildToken, value: token);
+  }
+
+  Future<void> clearChildToken() async {
+    await _storage.delete(key: _kChildToken);
+  }
 }
 
 /// The Tutor Guardian API client.
 class TgClient {
-  TgClient({http.Client? httpClient, FlutterSecureStorage? storage})
-      : _http = httpClient ?? http.Client(),
+  TgClient({
+    http.Client? httpClient,
+    FlutterSecureStorage? storage,
+    this.onNeedActiveChildId,
+  })  : _http = httpClient ?? http.Client(),
         _auth = _AuthStore(storage ?? const FlutterSecureStorage()),
         _ownsHttpClient = httpClient == null,
         _baseUrlOverride = null;
@@ -131,6 +162,7 @@ class TgClient {
     required String baseUrl,
     http.Client? httpClient,
     FlutterSecureStorage? storage,
+    this.onNeedActiveChildId,
   })  : _http = httpClient ?? http.Client(),
         _auth = _AuthStore(storage ?? const FlutterSecureStorage()),
         _ownsHttpClient = httpClient == null,
@@ -138,8 +170,10 @@ class TgClient {
 
   final http.Client _http;
   final _AuthStore _auth;
+  final Future<int?> Function()? onNeedActiveChildId;
   final bool _ownsHttpClient;
   final String? _baseUrlOverride;
+  bool _refreshingChildToken = false;
 
   String get _baseUrl => _baseUrlOverride ?? AppConfig.apiBaseUrl;
 
@@ -1063,6 +1097,13 @@ class TgClient {
 
   // ── Child mode ─────────────────────────────────────────────────────────
 
+  /// Thrown when a child-mode request cannot be refreshed and the UI should
+  /// return to the lock screen so the parent can re-issue a token.
+  static const childSessionExpired = TgApiError(
+    401,
+    'انتهى وقت جلسة الطفل الآمنة. يُرجى إعادة الهاتف للمربي.',
+  );
+
   Future<Map<String, dynamic>> createChildSession(int childId) async {
     final session = await ensureSession();
     final token = session.token;
@@ -1080,6 +1121,13 @@ class TgClient {
     final resp = await _http
         .get(uri, headers: _childAuthHeaders(childToken))
         .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode == 401) {
+      final refreshed = await _refreshChildTokenOrFail();
+      if (refreshed != null) {
+        return fetchChildTodayHabits(childToken: refreshed);
+      }
+      throw childSessionExpired;
+    }
     if (resp.statusCode != 200) throw _wrap(resp);
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
@@ -1096,8 +1144,39 @@ class TgClient {
           body: jsonEncode(body),
         )
         .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode == 401) {
+      final refreshed = await _refreshChildTokenOrFail();
+      if (refreshed != null) {
+        return createChildHabitEvent(childToken: refreshed, body: body);
+      }
+      throw childSessionExpired;
+    }
     if (resp.statusCode != 200) throw _wrap(resp);
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  /// Tries to silently refresh the child token using the stored parent token.
+  /// Returns the new child token, or null if the parent session is also gone.
+  Future<String?> _refreshChildTokenOrFail() async {
+    if (_refreshingChildToken) return null;
+    _refreshingChildToken = true;
+    try {
+      final activeChildId = await (onNeedActiveChildId?.call() ?? _auth.readActiveChildId());
+      if (activeChildId == null) return null;
+      try {
+        final session = await _auth.readSession();
+        if (session.$1 == null) return null;
+        final newSession = await createChildSession(activeChildId);
+        final token = newSession['token'] as String?;
+        if (token == null) return null;
+        await _auth.writeChildToken(token);
+        return token;
+      } catch (_) {
+        return null;
+      }
+    } finally {
+      _refreshingChildToken = false;
+    }
   }
 
   // ── Internals ────────────────────────────────────────────────────────

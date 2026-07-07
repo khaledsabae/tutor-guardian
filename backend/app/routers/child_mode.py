@@ -6,13 +6,14 @@ parent-facing session creation endpoint. They are intentionally narrow:
 * submit a single status for one habit today (no edit/delete)
 """
 import sqlite3
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 
 from fastapi import APIRouter, HTTPException, Query, Request
 
 from app.db.init_db import get_conn
 from app.models.value_tracking import (
     ChildHabitDayOut,
+    ChildHabitEventCreate,
     HabitEventCreate,
     HabitEventOut,
     TodayHabitItem,
@@ -24,11 +25,13 @@ from app.routers.value_tracking import (
     _load_today_events,
     _persist_event,
     _verify_child_ownership,
-    router as value_router,
 )
 from app.services import child_token as child_token_service
 
 router = APIRouter(tags=["child-mode"])
+
+# Maximum acceptable drift between device_timestamp and server UTC time.
+_MAX_CLOCK_SKEW = timedelta(minutes=15)
 
 
 def _get_child_id(request: Request) -> int:
@@ -43,6 +46,34 @@ def _require_device_id(request: Request) -> str:
     if not device_id:
         raise HTTPException(status_code=401, detail="مطلوب توثيق.")
     return device_id
+
+
+def _validate_device_timestamp(device_timestamp: str | None) -> str:
+    """Validate that the device timestamp is within acceptable server drift.
+
+    Prevents clock-skew cheating (e.g. a child manually advancing device time
+    to log future habits). Falls back to server UTC time when not provided.
+    """
+    if device_timestamp is None:
+        return datetime.now(timezone.utc).isoformat()
+    try:
+        # FastAPI/Pydantic already ensured an ISO-formatted string, but
+        # re-parsing defensively guards against malformed manual input.
+        parsed = datetime.fromisoformat(device_timestamp)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+    except ValueError:
+        raise HTTPException(
+            status_code=422,
+            detail="صيغة الطابع الزمني للجهاز غير صالحة.",
+        )
+    server_now = datetime.now(timezone.utc)
+    if abs(parsed - server_now) > _MAX_CLOCK_SKEW:
+        raise HTTPException(
+            status_code=422,
+            detail="وقت الجهاز منحرف عن الخادم. تأكد من ضبط الساعة التلقائي.",
+        )
+    return device_timestamp
 
 
 @router.post("/value-tracking/child-sessions", response_model=dict)
@@ -86,7 +117,7 @@ def child_get_today(request: Request):
 
 
 @router.post("/value-tracking/child-mode/events", response_model=HabitEventOut)
-def child_record_event(request: Request, body: HabitEventCreate):
+def child_record_event(request: Request, body: ChildHabitEventCreate):
     """Child endpoint: submit today's status for one habit (submit-only)."""
     child_id = _get_child_id(request)
     device_id = _require_device_id(request)
@@ -111,6 +142,14 @@ def child_record_event(request: Request, body: HabitEventCreate):
                 status_code=409,
                 detail="تم تسجيل هذه العادة اليوم بالفعل. لا يمكن تعديلها من وضع الطفل.",
             )
-        return _persist_event(conn, device_id, child_id, today, body)
+        return _persist_event(
+            conn,
+            device_id,
+            child_id,
+            today,
+            body,
+            submitted_by="child",
+            device_timestamp=_validate_device_timestamp(body.device_timestamp),
+        )
     finally:
         conn.close()

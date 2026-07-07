@@ -20,6 +20,7 @@ from fastapi import APIRouter, HTTPException, Query, Request
 from app.db.init_db import get_conn
 from app.models.value_tracking import (
     ChildHabitDayOut,
+    ChildHabitEventCreate,
     HabitDayOut,
     HabitDeleteOut,
     HabitEventCreate,
@@ -88,6 +89,8 @@ def _event_row_to_model(row: sqlite3.Row) -> HabitEventOut:
         category=row["category"],
         habit_name=row["habit_name"],
         status=row["status"],
+        submitted_by=row["submitted_by"],
+        device_timestamp=row["device_timestamp"],
         created_at=row["created_at"],
         updated_at=row["updated_at"],
     )
@@ -110,12 +113,16 @@ def _persist_event(
     child_id: int,
     today: str,
     payload: HabitEventCreate,
+    submitted_by: str = "parent",
+    device_timestamp: str | None = None,
 ) -> HabitEventOut:
+    ts = device_timestamp or datetime.now(timezone.utc).isoformat()
     cur = conn.execute(
         """
         INSERT INTO habits_value_events (
-            device_id, child_id, category, habit_name, status
-        ) VALUES (?, ?, ?, ?, ?)
+            device_id, child_id, category, habit_name, status,
+            submitted_by, device_timestamp
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
         (
             device_id,
@@ -123,6 +130,8 @@ def _persist_event(
             payload.category,
             payload.habit_name,
             payload.status,
+            submitted_by,
+            ts,
         ),
     )
     event_id = cur.lastrowid

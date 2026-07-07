@@ -42,6 +42,8 @@ Migration v15: added habits_value_events table for «ميزان العادات»
                age-dynamic habit/value tracking for children 7–18.
 Migration v16: added habit_templates table for custom parent-defined habits
                with soft-delete via is_active and unique (child_id, custom_name).
+Migration v17: added submitted_by + device_timestamp columns to
+               habits_value_events to track entry source and device time.
 """
 import os
 import sqlite3
@@ -133,7 +135,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 16
+SCHEMA_VERSION = 17
 
 
 def db_path() -> Path:
@@ -279,6 +281,7 @@ def init_db() -> None:
     _ensure_daily_routines_table(conn)
     _ensure_habits_value_table(conn)
     _ensure_habit_templates_table(conn)
+    _ensure_habits_value_audit_columns(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -343,14 +346,16 @@ CREATE INDEX IF NOT EXISTS ix_daily_login_streaks_date
 
 _CREATE_HABITS_VALUE_EVENTS: str = """
 CREATE TABLE IF NOT EXISTS habits_value_events (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    device_id   TEXT NOT NULL,
-    child_id    INTEGER NOT NULL,
-    category    TEXT NOT NULL,
-    habit_name  TEXT NOT NULL,
-    status      TEXT NOT NULL,
-    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
-    updated_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id        TEXT NOT NULL,
+    child_id         INTEGER NOT NULL,
+    category         TEXT NOT NULL,
+    habit_name       TEXT NOT NULL,
+    status           TEXT NOT NULL,
+    submitted_by     TEXT NOT NULL DEFAULT 'parent',
+    device_timestamp TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at       TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at       TEXT NOT NULL DEFAULT (datetime('now')),
     FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS ix_habits_value_events_device_child_date
@@ -417,6 +422,22 @@ def _ensure_habit_templates_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_HABIT_TEMPLATES)
+
+
+def _ensure_habits_value_audit_columns(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v17 audit columns on habits_value_events."""
+    _ensure_column(
+        conn,
+        table="habits_value_events",
+        column="submitted_by",
+        ddl="ALTER TABLE habits_value_events ADD COLUMN submitted_by TEXT NOT NULL DEFAULT 'parent'",
+    )
+    _ensure_column(
+        conn,
+        table="habits_value_events",
+        column="device_timestamp",
+        ddl="ALTER TABLE habits_value_events ADD COLUMN device_timestamp TEXT NOT NULL DEFAULT (datetime('now'))",
+    )
 
 
 def current_version() -> int:
