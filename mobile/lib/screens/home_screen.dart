@@ -46,7 +46,7 @@ class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key, required this.onGoToTab});
 
   /// Switches the root scaffold tab.
-  /// Indices: 0 = اليوم, 1 = مساراتي, 2 = الورد (Quran), 3 = المساعد (chat).
+  /// Indices: 0 = اليوم, 1 = مساراتي, 2 = الورد (Quran), 3 = حساب اليوم, 4 = المساعد (chat).
   final ValueChanged<int> onGoToTab;
 
   @override

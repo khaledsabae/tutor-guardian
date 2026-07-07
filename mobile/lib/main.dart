@@ -21,9 +21,10 @@ import 'features/deeplink/deep_link_handler.dart';
 import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
-import 'screens/chat_screen.dart';
+import 'features/routine/screens/daily_routine_screen.dart';
 import 'features/adhkar/services/notification_service.dart';
 import 'screens/home_screen.dart';
+import 'screens/chat_screen.dart';
 import 'features/quran/screens/quran_screen.dart';
 import 'theme/app_theme.dart';
 import 'theme/design_tokens.dart';
@@ -217,7 +218,7 @@ class _BootErrorScreen extends StatelessWidget {
   }
 }
 
-/// The 3-tab bottom navigation shell: اليوم / مساراتي / المساعد.
+/// The 5-tab bottom navigation shell: اليوم / مساراتي / الورد / حساب اليوم / المساعد.
 ///
 /// Note: each tab keeps its own state via the [IndexedStack] so that
 /// switching between tabs does not lose scroll position or in-flight
@@ -241,6 +242,7 @@ class _RootScaffoldState extends State<RootScaffold> {
           HomeScreen(onGoToTab: (i) => setState(() => _index = i)),
           const PathsScreen(),
           const QuranScreen(),
+          const DailyRoutineScreen(),
           const ChatScreen(),
         ],
       ),
@@ -262,6 +264,11 @@ class _RootScaffoldState extends State<RootScaffold> {
             icon: Icon(Icons.menu_book_outlined),
             selectedIcon: Icon(Icons.menu_book),
             label: 'الورد',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.child_care_outlined),
+            selectedIcon: Icon(Icons.child_care),
+            label: 'حِساب اليوم',
           ),
           NavigationDestination(
             icon: Icon(Icons.chat_bubble_outline),

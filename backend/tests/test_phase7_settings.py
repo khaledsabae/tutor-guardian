@@ -224,11 +224,12 @@ def test_reset_progress_deletes_lesson_progress(client, tmp_db):
         conn.execute(
             """
             INSERT INTO lesson_progress
-                (device_id, lesson_id, path_id, status, completed_at)
-            VALUES (?, ?, ?, 'completed', ?)
+                (device_id, child_id, lesson_id, path_id, status, completed_at)
+            VALUES (?, ?, ?, ?, 'completed', ?)
             """,
             (
                 "test-device-001",
+                1,
                 "lesson_4-6_islamic_parenting_adab_01",
                 "path_4-6_islamic_parenting_adab",
                 "2026-06-08T10:00:00Z",
@@ -268,9 +269,9 @@ def test_reset_progress_is_idempotent(client, tmp_db):
     conn = sqlite3.connect(tmp_db)
     try:
         conn.execute(
-            "INSERT INTO lesson_progress (device_id, lesson_id, path_id, status) "
-            "VALUES (?, ?, ?, 'completed')",
-            ("test-device-001", "lesson_x", "path_x"),
+            "INSERT INTO lesson_progress (device_id, child_id, lesson_id, path_id, status) "
+            "VALUES (?, ?, ?, ?, 'completed')",
+            ("test-device-001", 1, "lesson_x", "path_x"),
         )
         conn.commit()
     finally:
@@ -292,9 +293,9 @@ def test_reset_progress_only_affects_requesting_device(client, tmp_db):
             ("other-device", "lesson_b"),
         ]:
             conn.execute(
-                "INSERT INTO lesson_progress (device_id, lesson_id, path_id, status) "
-                "VALUES (?, ?, ?, 'completed')",
-                (dev, lid, "path_x"),
+                "INSERT INTO lesson_progress (device_id, child_id, lesson_id, path_id, status) "
+                "VALUES (?, ?, ?, ?, 'completed')",
+                (dev, 1, lid, "path_x"),
             )
         conn.commit()
     finally:

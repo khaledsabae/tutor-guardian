@@ -83,9 +83,9 @@ def test_list_paths_invalid_age_group_422(client):
 
 def test_list_paths_empty_age_group_returns_zero(client):
     r = client.get("/api/program/paths", params={"age_group": "16-18"})
-    # 16-18 now has 2 published paths (medical + cyber)
+    # 16-18 now has 5 published paths across domains
     assert r.status_code == 200
-    assert r.json()["count"] == 2
+    assert r.json()["count"] == 5
 
 
 # ── 2. Path detail ──────────────────────────────────────────────────────

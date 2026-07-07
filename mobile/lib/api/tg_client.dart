@@ -865,6 +865,84 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  // ── Daily routine — حساب اليوم ───────────────────────────────────────
+
+  Future<Map<String, dynamic>> fetchTodayRoutine(int childId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/daily-routine/today')
+        .replace(queryParameters: {'child_id': '$childId'});
+    final resp = await _http
+        .get(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createRoutineEvent(
+    int childId, {
+    required Map<String, dynamic> body,
+  }) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/daily-routine/events')
+        .replace(queryParameters: {'child_id': '$childId'});
+    final resp = await _http
+        .post(
+          uri,
+          headers: _authHeaders(token),
+          body: jsonEncode(body),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateRoutineEvent(
+    int eventId, {
+    required Map<String, dynamic> body,
+  }) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final resp = await _http
+        .patch(
+          Uri.parse('$_baseUrl/api/daily-routine/events/$eventId'),
+          headers: _authHeaders(token),
+          body: jsonEncode(body),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deleteRoutineEvent(int eventId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final resp = await _http
+        .delete(
+          Uri.parse('$_baseUrl/api/daily-routine/events/$eventId'),
+          headers: _authHeaders(token),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> fetchRoutineSummary(
+    int childId, {
+    int days = 7,
+  }) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/daily-routine/summary')
+        .replace(queryParameters: {'child_id': '$childId', 'days': '$days'});
+    final resp = await _http
+        .get(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   // ── Internals ────────────────────────────────────────────────────────
 
   Map<String, String> _authHeaders(String token) => {

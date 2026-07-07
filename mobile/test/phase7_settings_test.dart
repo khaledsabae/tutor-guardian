@@ -120,8 +120,13 @@ void main() {
       expect(find.text('سارة'), findsOneWidget);
       expect(find.text('تعديل معلومات الطفل'), findsOneWidget);
       expect(find.text('إعادة تعيين التقدّم'), findsOneWidget);
+      // Scroll to the language row and privacy row below it.
+      await tester.scrollUntilVisible(
+        find.text('لغة الوسائط التعليمية'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('لغة الوسائط التعليمية'), findsOneWidget);
-      // The privacy row sits below the new media/adhkar rows — scroll to it.
       await tester.scrollUntilVisible(
         find.text('سياسة الخصوصية'),
         300,

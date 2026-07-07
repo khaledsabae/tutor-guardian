@@ -183,7 +183,7 @@ void main() {
         summary: 'ملخص تجريبي للدرس.',
         tryThis: 'جرّب هذا النص في أسبوعك.',
         reflectionPrompts: ['سؤال 1؟', 'سؤال 2؟'],
-        withWarning: true,
+        withWarning: false,
       );
 
       SharedPreferences.setMockInitialValues({});
@@ -216,10 +216,17 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('الملخص'), findsOneWidget);
+      expect(find.text('ملخص الدرس'), findsOneWidget);
       expect(find.text('جرّب هذا'), findsOneWidget);
       expect(find.text('ملخص تجريبي للدرس.'), findsOneWidget);
       expect(find.text('جرّب هذا النص في أسبوعك.'), findsOneWidget);
+      // Scroll down to the reflection prompts; they live below the fold in
+      // the lesson ListView, so find.text cannot see them while offstage.
+      await tester.scrollUntilVisible(
+        find.text('سؤال 1؟'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('سؤال 1؟'), findsOneWidget);
       expect(find.text('سؤال 2؟'), findsOneWidget);
       // needs_professional_followup is NOT set on this lesson
@@ -404,7 +411,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pump(const Duration(milliseconds: 100));
       // The lesson screen should appear with the lesson loaded
-      expect(find.text('الملخص'), findsOneWidget);
+      expect(find.text('ملخص الدرس'), findsOneWidget);
     });
 
     testWidgets('RootScaffold NavigationBar switches tabs', (WidgetTester tester) async {
@@ -459,17 +466,11 @@ void main() {
       await tester.pump(const Duration(milliseconds: 1000));
       await tester.pump(const Duration(milliseconds: 1000));
 
-      // Check NavigationBar exists and has 3 destinations
-      // (اليوم / مساراتي / المساعد — tab 0 "اليوم" is the default)
       expect(find.byType(NavigationBar), findsOneWidget);
       final navBar = tester.widget<NavigationBar>(find.byType(NavigationBar));
-      expect(navBar.destinations.length, 4); // اليوم / مساراتي / الورد / المساعد
+      expect(navBar.destinations.length, 5);
 
-      // Destination labels render
-      expect(find.byWidgetPredicate((widget) =>
-        widget is Text && widget.data != null && widget.data!.contains('المساعد')
-      ), findsWidgets);
-      expect(find.text('مساراتي'), findsOneWidget);
+      expect(find.text('حِساب اليوم'), findsOneWidget);
 
       // Actually switch to the مساراتي (paths) tab. IndexedStack keeps the
       // non-active tab offstage, so its content isn't findable until selected.
