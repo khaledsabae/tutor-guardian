@@ -650,24 +650,21 @@ class TgClient {
     }
   }
 
-  /// `POST /api/identity/link-google` (authed) — link Google id to device_id.
-  Future<void> linkGoogleIdentity({
-    required String googleId,
-    String? email,
-    String? displayName,
-  }) async {
+  /// `POST /api/identity/link-google` (authed) — link Google ID token to device_id.
+  /// The backend verifies the ID token with Google's public tokeninfo endpoint.
+  Future<void> linkGoogleIdentity({required String idToken}) async {
     final session = await ensureSession();
     final resp = await _http
         .post(Uri.parse('$_baseUrl/api/identity/link-google'),
             headers: _authHeaders(session.token),
-            body: jsonEncode({
-              'google_id': googleId,
-              if (email != null) 'email': email,
-              if (displayName != null) 'display_name': displayName,
-            }))
+            body: jsonEncode({'id_token': idToken}))
         .timeout(AppConfig.httpTimeout);
     if (resp.statusCode != 200) {
       throw _wrap(resp);
+    }
+    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    if (body['ok'] != true) {
+      throw TgApiError(400, body['error']?.toString() ?? 'فشل ربط حساب Google');
     }
   }
 

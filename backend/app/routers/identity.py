@@ -5,23 +5,91 @@ Allows an anonymous device-bound parent to optionally link a Google
 identity. The link survives app reinstall because child_profiles + progress
 are keyed off device_id, and the server can migrate data from a previous
 device_id to the linked google_id. This is the seed of multi-device sync.
+
+Security:
+  - The mobile app sends a Google ID token (JWT), not a raw google_id.
+  - The server verifies the token signature/claims with Google's public
+    tokeninfo endpoint before linking.
 """
+import logging
+from typing import Optional
+
+import httpx
 from fastapi import APIRouter, Request
 
 from app.db.init_db import get_conn
 
+logger = logging.getLogger(__name__)
 router = APIRouter(tags=["identity"])
 
 
-@router.post("/identity/link-google")
-def link_google_identity(request: Request, payload: dict) -> dict:
-    device_id = getattr(request.state, "device_id", "")
-    google_id = payload.get("google_id", "").strip()
-    email = payload.get("email", "").strip()
-    display_name = payload.get("display_name", "").strip()
+# Accepted issuers per Google OAuth 2.0 docs.
+_GOOGLE_ISSUERS = frozenset({"https://accounts.google.com", "accounts.google.com"})
 
-    if not google_id or not device_id:
-        return {"ok": False, "error": "google_id_and_device_required"}
+
+async def _verify_google_id_token(id_token: str, expected_aud: Optional[str] = None) -> Optional[dict]:
+    """Verify a Google ID token via Google's tokeninfo endpoint.
+
+    Returns the token payload on success, None on failure.
+    Validates issuer and (optionally) audience.
+    """
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            r = await client.get(
+                "https://oauth2.googleapis.com/tokeninfo",
+                params={"id_token": id_token},
+            )
+    except httpx.HTTPError as e:
+        logger.warning("Google tokeninfo network error: %s", e)
+        return None
+
+    if r.status_code != 200:
+        logger.warning("Google tokeninfo returned %s: %s", r.status_code, r.text)
+        return None
+
+    try:
+        payload = r.json()
+    except Exception:
+        return None
+
+    iss = payload.get("iss", "")
+    if iss not in _GOOGLE_ISSUERS:
+        logger.warning("Google token invalid issuer: %s", iss)
+        return None
+
+    # Google tokens include 'exp' as a Unix timestamp string.
+    try:
+        exp = int(payload.get("exp", "0"))
+    except (ValueError, TypeError):
+        return None
+    if exp == 0:
+        return None
+
+    if expected_aud and payload.get("aud") != expected_aud:
+        logger.warning("Google token audience mismatch: %s vs %s", payload.get("aud"), expected_aud)
+        return None
+
+    return payload
+
+
+@router.post("/identity/link-google")
+async def link_google_identity(request: Request, payload: dict) -> dict:
+    device_id = getattr(request.state, "device_id", "")
+    id_token = (payload.get("id_token") or "").strip()
+
+    if not id_token or not device_id:
+        return {"ok": False, "error": "id_token_and_device_required"}
+
+    token_payload = await _verify_google_id_token(id_token)
+    if token_payload is None:
+        return {"ok": False, "error": "invalid_google_id_token"}
+
+    google_id = token_payload.get("sub", "").strip()
+    email = (token_payload.get("email") or "").strip()
+    display_name = (token_payload.get("name") or "").strip()
+
+    if not google_id:
+        return {"ok": False, "error": "invalid_google_id_token"}
 
     conn = get_conn()
     conn.execute(
@@ -50,7 +118,7 @@ def link_google_identity(request: Request, payload: dict) -> dict:
     _merge_legacy_device_data(conn, device_id, google_id)
 
     conn.close()
-    return {"ok": True}
+    return {"ok": True, "google_id": google_id, "email": email}
 
 
 @router.get("/identity/me")
