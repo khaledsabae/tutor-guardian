@@ -22,6 +22,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
@@ -277,8 +278,49 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 }
 
-class _WelcomePage extends StatelessWidget {
+class _WelcomePage extends StatefulWidget {
   const _WelcomePage();
+
+  @override
+  State<_WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<_WelcomePage> {
+  late final VideoPlayerController _controller;
+  bool _initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset(
+      'assets/images/generated/onboarding_welcome.mp4',
+    );
+    // Defer initialise to after the first frame so any platform
+    // UnimplementedError (test env, missing codec) is caught safely
+    // in an async context rather than blowing up during initState.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initVideo();
+    });
+  }
+
+  Future<void> _initVideo() async {
+    try {
+      await _controller.initialize();
+      if (!mounted) return;
+      _controller.setLooping(true);
+      _controller.setVolume(0); // muted — respectful auto-play
+      _controller.play();
+      setState(() => _initialized = true);
+    } catch (_) {
+      // Video platform unavailable — placeholder shows instead.
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -288,24 +330,31 @@ class _WelcomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(18),
-            child: Image.asset(
-              'assets/images/generated/onboarding_welcome.webp',
-              fit: BoxFit.contain,
-              errorBuilder: (_, __, ___) => Image.asset(
-                'assets/images/generated/banner.webp',
-                fit: BoxFit.contain,
-              ),
-            ),
-          )
-              .animate()
-              .scale(
-                begin: const Offset(.85, .85),
-                duration: Dt.slow,
-                curve: Curves.easeOutBack,
-              )
-              .fadeIn(duration: Dt.base),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: _initialized
+                  ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )
+                  : AspectRatio(
+                      aspectRatio: 1280 / 720,
+                      child: Container(
+                        color: Colors.black12,
+                        child: const Center(
+                          child: Icon(Icons.play_circle_outline,
+                              size: 48, color: Colors.white24),
+                        ),
+                      ),
+                    ),
+            )
+                .animate()
+                .scale(
+                  begin: const Offset(.85, .85),
+                  duration: Dt.slow,
+                  curve: Curves.easeOutBack,
+                )
+                .fadeIn(duration: Dt.base),
           const SizedBox(height: 24),
           Text(
             'أهلاً بك 🌙',
