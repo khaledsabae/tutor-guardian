@@ -17,7 +17,7 @@ from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
 from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
-    web, stats, daily_routine,
+    web, stats, daily_routine, value_tracking,
 )
 from app.services.push_sender import send_to_device
 from app import curriculum_loader as curriculum
@@ -115,6 +115,7 @@ app.include_router(stats.router, prefix="/api")  # community social-proof (publi
 app.include_router(push.router, prefix="/api")  # FCM token storage (auth)
 app.include_router(identity.router, prefix="/api")  # optional Google Sign-In (auth)
 app.include_router(daily_routine.router, prefix="/api")  # حساب اليوم routine tracker (auth)
+app.include_router(value_tracking.router, prefix="/api")  # ميزان العادات habit tracker (auth)
 
 # ── Phase 1.1: admin push endpoint (for manual/cron sends) ─────────
 
