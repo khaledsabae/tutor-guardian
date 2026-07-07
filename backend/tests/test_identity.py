@@ -47,12 +47,14 @@ def client(app):
         yield c
 
 
+_WEB_CLIENT_ID = "620240456244-e0ap0isfsufoue1atumhen5l0ttlm6ga.apps.googleusercontent.com"
+
 _FAKE_TOKENINFO = {
     "iss": "https://accounts.google.com",
     "sub": "google-12345",
     "email": "parent@example.com",
     "name": "Test Parent",
-    "aud": "any-aud",
+    "aud": _WEB_CLIENT_ID,
     "exp": "9999999999",
 }
 
@@ -120,6 +122,22 @@ def test_link_google_rejects_non_google_issuer(client):
 def test_link_google_requires_sub_claim(client):
     payload = dict(_FAKE_TOKENINFO)
     payload.pop("sub")
+    with patch(
+        "app.routers.identity.httpx.AsyncClient.get",
+        new_callable=AsyncMock,
+        return_value=Response(200, json=payload),
+    ):
+        r = client.post(
+            "/api/identity/link-google",
+            json={"id_token": "valid.id.token"},
+        )
+    assert r.json()["ok"] is False
+    assert r.json()["error"] == "invalid_google_id_token"
+
+
+def test_link_google_rejects_wrong_audience(client):
+    payload = dict(_FAKE_TOKENINFO)
+    payload["aud"] = "wrong-client-id.apps.googleusercontent.com"
     with patch(
         "app.routers.identity.httpx.AsyncClient.get",
         new_callable=AsyncMock,

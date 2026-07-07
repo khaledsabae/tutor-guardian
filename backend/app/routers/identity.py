@@ -26,12 +26,16 @@ router = APIRouter(tags=["identity"])
 # Accepted issuers per Google OAuth 2.0 docs.
 _GOOGLE_ISSUERS = frozenset({"https://accounts.google.com", "accounts.google.com"})
 
+# Hard-coded, non-secret client ID used to validate the Google ID token audience.
+# The web client ID is the one the mobile plugin uses as serverClientId.
+_GOOGLE_WEB_CLIENT_ID = "620240456244-e0ap0isfsufoue1atumhen5l0ttlm6ga.apps.googleusercontent.com"
 
-async def _verify_google_id_token(id_token: str, expected_aud: Optional[str] = None) -> Optional[dict]:
+
+async def _verify_google_id_token(id_token: str) -> Optional[dict]:
     """Verify a Google ID token via Google's tokeninfo endpoint.
 
     Returns the token payload on success, None on failure.
-    Validates issuer and (optionally) audience.
+    Validates issuer, expiry, and audience/authorized party.
     """
     try:
         async with httpx.AsyncClient(timeout=10.0) as client:
@@ -57,7 +61,6 @@ async def _verify_google_id_token(id_token: str, expected_aud: Optional[str] = N
         logger.warning("Google token invalid issuer: %s", iss)
         return None
 
-    # Google tokens include 'exp' as a Unix timestamp string.
     try:
         exp = int(payload.get("exp", "0"))
     except (ValueError, TypeError):
@@ -65,8 +68,11 @@ async def _verify_google_id_token(id_token: str, expected_aud: Optional[str] = N
     if exp == 0:
         return None
 
-    if expected_aud and payload.get("aud") != expected_aud:
-        logger.warning("Google token audience mismatch: %s vs %s", payload.get("aud"), expected_aud)
+    # Accept tokens issued for the Web client ID (serverClientId).
+    aud = payload.get("aud", "")
+    azp = payload.get("azp", "")
+    if aud != _GOOGLE_WEB_CLIENT_ID and azp != _GOOGLE_WEB_CLIENT_ID:
+        logger.warning("Google token audience not recognised: aud=%s azp=%s", aud, azp)
         return None
 
     return payload
