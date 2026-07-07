@@ -942,6 +942,67 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  // ── Value tracking — ميزان العادات ────────────────────────────────────
+
+  Future<Map<String, dynamic>> fetchTodayHabits(int childId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/today')
+        .replace(queryParameters: {'child_id': '$childId'});
+    final resp = await _http
+        .get(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createHabitEvent(
+    int childId, {
+    required Map<String, dynamic> body,
+  }) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/events')
+        .replace(queryParameters: {'child_id': '$childId'});
+    final resp = await _http
+        .post(
+          uri,
+          headers: _authHeaders(token),
+          body: jsonEncode(body),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deleteHabitEvent(int eventId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final resp = await _http
+        .delete(
+          Uri.parse('$_baseUrl/api/value-tracking/events/$eventId'),
+          headers: _authHeaders(token),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> fetchHabitSummary(
+    int childId, {
+    int days = 7,
+  }) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/summary')
+        .replace(queryParameters: {'child_id': '$childId', 'days': '$days'});
+    final resp = await _http
+        .get(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   // ── Internals ────────────────────────────────────────────────────────
 
   Map<String, String> _authHeaders(String token) => {

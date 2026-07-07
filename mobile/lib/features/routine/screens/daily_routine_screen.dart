@@ -14,10 +14,28 @@ import 'package:almorabbi/theme/app_theme.dart';
 import 'package:almorabbi/theme/design_tokens.dart';
 import 'package:almorabbi/features/routine/models/routine_models.dart';
 import 'package:almorabbi/features/routine/providers/routine_providers.dart';
+import 'package:almorabbi/features/routine/models/habit_models.dart';
+import 'package:almorabbi/features/routine/providers/habit_providers.dart';
 
 bool routineAgeAllowed(String ageGroup) {
-  // Daily routine is for babies/toddlers up to 6 years.
-  return const {'prenatal-1', '0-3', '2-3', '4-6', '7-9'}.contains(ageGroup);
+  // Daily routine (sleep/feed/diaper) is for babies/toddlers 0–6 years.
+  return const {'prenatal-1', '0-3', '2-3', '4-6'}.contains(ageGroup);
+}
+
+bool habitAgeAllowed(String ageGroup) {
+  // Habit balance (ميزان العادات) is for children 7–18 years.
+  return const {'7-9', '10-12', '13-15', '16-18'}.contains(ageGroup);
+}
+
+String habitTabLabel(String ageGroup) {
+  // Dynamic bottom nav label for the 4th tab based on active child's age.
+  if (habitAgeAllowed(ageGroup)) return 'ميزان العادات';
+  return 'حِساب اليوم';
+}
+
+String habitScreenTitle(String ageGroup) {
+  if (habitAgeAllowed(ageGroup)) return 'ميزان العادات ⚖️';
+  return 'حِساب اليوم 🍼';
 }
 
 List<RoutineEventType> allowedRoutineTypes(String ageGroup) {
@@ -40,16 +58,36 @@ class DailyRoutineScreen extends ConsumerWidget {
     final childId = ref.watch(activeChildIdProvider);
     final profile = ref.watch(activeChildProfileProvider);
 
+    // Age-dynamic switch: habit tracking for 7–18, routine for 0–6.
+    final isHabitAge = profile != null && habitAgeAllowed(profile.ageGroup);
+
+    if (isHabitAge) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(habitScreenTitle(profile.ageGroup)),
+          actions: const [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Center(child: _ActiveChildChip()),
+            ),
+          ],
+        ),
+        body: childId == null
+            ? const _NoChildState()
+            : _HabitBalanceBody(ageGroup: profile.ageGroup),
+      );
+    }
+
     if (profile != null && !routineAgeAllowed(profile.ageGroup)) {
       return Scaffold(
-        appBar: AppBar(title: const Text('حِساب اليوم 🍼')),
+        appBar: AppBar(title: Text(habitScreenTitle(profile.ageGroup))),
         body: _RoutineAgeGate(profile: profile),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('حِساب اليوم 🍼'),
+        title: Text(habitScreenTitle(profile?.ageGroup ?? '')),
         actions: const [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
@@ -544,5 +582,235 @@ class _AddEventSheetState extends State<_AddEventSheet> {
   void dispose() {
     _notesController.dispose();
     super.dispose();
+  }
+}
+
+// ── Habit Balance (ميزان العادات) ────────────────────────────────────────
+
+class _HabitBalanceBody extends ConsumerStatefulWidget {
+  const _HabitBalanceBody({required this.ageGroup});
+
+  final String ageGroup;
+
+  @override
+  ConsumerState<_HabitBalanceBody> createState() => _HabitBalanceBodyState();
+}
+
+class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController =
+      TabController(length: 3, vsync: this);
+  int _selectedTab = 0;
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final childId = ref.watch(activeChildIdProvider);
+    if (childId == null) return const SizedBox.shrink();
+
+    final habitsAsync = ref.watch(todayHabitsProvider(childId));
+    final categories = HabitCategory.values;
+
+    return Column(
+      children: [
+        TabBar(
+          controller: _tabController,
+          tabs: categories
+              .map((c) => Tab(text: '${c.icon} ${c.label}'))
+              .toList(),
+          onTap: (i) => setState(() => _selectedTab = i),
+        ),
+        Expanded(
+          child: habitsAsync.when(
+            data: (day) => Column(
+              children: [
+                _HabitSummaryCard(points: day.points),
+                Expanded(
+                  child: _HabitCategoryGrid(
+                    category: categories[_selectedTab],
+                    ageGroup: widget.ageGroup,
+                    day: day,
+                    childId: childId,
+                    onRefresh: () => ref.refresh(todayHabitsProvider(childId)),
+                  ),
+                ),
+              ],
+            ),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (e, _) => Center(child: Text('خطأ: $e')),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _HabitSummaryCard extends StatelessWidget {
+  const _HabitSummaryCard({required this.points});
+
+  final double points;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(Dt.pad).copyWith(bottom: 0),
+      color: Dt.primary.withValues(alpha: .08),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dt.pad, vertical: 12),
+        child: Row(
+          children: [
+            const Icon(Icons.emoji_events_outlined, color: Dt.primary),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'نقاط اليوم',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+            Text(
+              '${points.toStringAsFixed(1)} / ${(HabitStatus.values.length * 3).toStringAsFixed(0)}',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Dt.primary,
+                  ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HabitCategoryGrid extends ConsumerWidget {
+  const _HabitCategoryGrid({
+    required this.category,
+    required this.ageGroup,
+    required this.day,
+    required this.childId,
+    required this.onRefresh,
+  });
+
+  final HabitCategory category;
+  final String ageGroup;
+  final HabitDay day;
+  final int childId;
+  final VoidCallback onRefresh;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final habits = habitsForAge(ageGroup)[category] ?? [];
+    return ListView.builder(
+      padding: const EdgeInsets.all(Dt.pad),
+      itemCount: habits.length,
+      itemBuilder: (context, i) {
+        final habitName = habits[i];
+        final existing = day.events
+            .where((e) => e.category == category && e.habitName == habitName)
+            .toList();
+        return _HabitCard(
+          habitName: habitName,
+          category: category,
+          childId: childId,
+          existingEvent: existing.isNotEmpty ? existing.first : null,
+          onRecorded: onRefresh,
+        );
+      },
+    );
+  }
+}
+
+class _HabitCard extends StatefulWidget {
+  const _HabitCard({
+    required this.habitName,
+    required this.category,
+    required this.childId,
+    required this.existingEvent,
+    required this.onRecorded,
+  });
+
+  final String habitName;
+  final HabitCategory category;
+  final int childId;
+  final HabitEvent? existingEvent;
+  final VoidCallback onRecorded;
+
+  @override
+  State<_HabitCard> createState() => _HabitCardState();
+}
+
+class _HabitCardState extends State<_HabitCard> {
+  bool _saving = false;
+
+  Future<void> _record(HabitStatus status) async {
+    if (_saving) return;
+    setState(() => _saving = true);
+    try {
+      await TgClient().createHabitEvent(
+        widget.childId,
+        body: {
+          'category': widget.category.wireName,
+          'habit_name': widget.habitName,
+          'status': status.wireName,
+        },
+      );
+      widget.onRecorded();
+    } on TgApiError catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('فشل التسجيل: ${e.message}')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final current = widget.existingEvent?.status;
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(Dt.pad),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                widget.habitName,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+            if (_saving)
+              const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            else
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: HabitStatus.values.map((s) {
+                  final isSelected = current == s;
+                  return IconButton(
+                    icon: Text(s.icon, style: const TextStyle(fontSize: 24)),
+                    tooltip: s.label,
+                    style: isSelected
+                        ? IconButton.styleFrom(
+                            backgroundColor: Dt.primary.withValues(alpha: .15),
+                          )
+                        : null,
+                    onPressed: () => _record(s),
+                  );
+                }).toList(),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -38,6 +38,8 @@ Migration v13: aligned chat_messages schema with conversation_store.py:
                added domain, severity, mode, needs_human_review.
 Migration v14: added child_daily_routines + routine_events tables for
                «حِساب اليوم» daily routine tracker (sleep/feed/diaper).
+Migration v15: added habits_value_events table for «ميزان العادات» —
+               age-dynamic habit/value tracking for children 7–18.
 """
 import os
 import sqlite3
@@ -129,7 +131,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 14
+SCHEMA_VERSION = 15
 
 
 def db_path() -> Path:
@@ -273,6 +275,7 @@ def init_db() -> None:
     _ensure_api_tokens_columns(conn)
     _ensure_chat_messages_columns(conn)
     _ensure_daily_routines_table(conn)
+    _ensure_habits_value_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -335,6 +338,23 @@ CREATE INDEX IF NOT EXISTS ix_daily_login_streaks_date
 """
 
 
+_CREATE_HABITS_VALUE_EVENTS: str = """
+CREATE TABLE IF NOT EXISTS habits_value_events (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    child_id    INTEGER NOT NULL,
+    category    TEXT NOT NULL,
+    habit_name  TEXT NOT NULL,
+    status      TEXT NOT NULL,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_habits_value_events_device_child_date
+    ON habits_value_events (device_id, child_id, created_at);
+"""
+
+
 def _ensure_daily_routines_table(conn: sqlite3.Connection) -> None:
     """Idempotent migration helper for the v14 daily routines tables."""
     try:
@@ -355,6 +375,17 @@ def _ensure_daily_login_streaks_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_DAILY_LOGIN_STREAKS)
+
+
+def _ensure_habits_value_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v15 habits_value_events table."""
+    try:
+        cur = conn.execute("PRAGMA table_info(habits_value_events)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_HABITS_VALUE_EVENTS)
 
 
 def current_version() -> int:

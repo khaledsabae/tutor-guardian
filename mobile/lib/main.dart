@@ -218,23 +218,30 @@ class _BootErrorScreen extends StatelessWidget {
   }
 }
 
-/// The 5-tab bottom navigation shell: اليوم / مساراتي / الورد / حساب اليوم / المساعد.
+/// The 5-tab bottom navigation shell: اليوم / مساراتي / الورد / حساب اليوم|ميزان العادات / المساعد.
 ///
 /// Note: each tab keeps its own state via the [IndexedStack] so that
 /// switching between tabs does not lose scroll position or in-flight
 /// streaming tokens.
-class RootScaffold extends StatefulWidget {
+///
+/// The label of the 4th tab changes based on the active child's age group:
+///   * 0-6 years → «حِساب اليوم» (biological routine tracker)
+///   * 7-18 years → «ميزان العادات» (habit/value tracker)
+class RootScaffold extends ConsumerStatefulWidget {
   const RootScaffold({super.key});
 
   @override
-  State<RootScaffold> createState() => _RootScaffoldState();
+  ConsumerState<RootScaffold> createState() => _RootScaffoldState();
 }
 
-class _RootScaffoldState extends State<RootScaffold> {
+class _RootScaffoldState extends ConsumerState<RootScaffold> {
   int _index = 0;
 
   @override
   Widget build(BuildContext context) {
+    final profile = ref.watch(activeChildProfileProvider);
+    final fourthLabel = habitTabLabel(profile?.ageGroup ?? '');
+
     return Scaffold(
       body: IndexedStack(
         index: _index,
@@ -249,28 +256,28 @@ class _RootScaffoldState extends State<RootScaffold> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: (i) => setState(() => _index = i),
-        destinations: const [
-          NavigationDestination(
+        destinations: [
+          const NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home_rounded),
             label: 'اليوم',
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(Icons.route_outlined),
             selectedIcon: Icon(Icons.route),
             label: 'مساراتي',
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(Icons.menu_book_outlined),
             selectedIcon: Icon(Icons.menu_book),
             label: 'الورد',
           ),
           NavigationDestination(
-            icon: Icon(Icons.child_care_outlined),
-            selectedIcon: Icon(Icons.child_care),
-            label: 'حِساب اليوم',
+            icon: const Icon(Icons.child_care_outlined),
+            selectedIcon: const Icon(Icons.child_care),
+            label: fourthLabel,
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(Icons.chat_bubble_outline),
             selectedIcon: Icon(Icons.chat_bubble),
             label: 'المساعد',
