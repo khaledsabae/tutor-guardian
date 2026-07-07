@@ -135,14 +135,23 @@ with open("merge.py", "w") as f:
 !python3 merge.py
 '''
 
-GGUF = '''# GGUF Q4_K_M for Ollama. Cleanup keeps committed output < Kaggle 20GB cap.
-!git clone --depth 1 https://github.com/ggerganov/llama.cpp /kaggle/working/llama.cpp
-!pip install -q -r /kaggle/working/llama.cpp/requirements.txt
-!python /kaggle/working/llama.cpp/convert_hf_to_gguf.py /kaggle/working/tg-tutor-commandr-merged --outfile /kaggle/working/tg-tutor-v4-f16.gguf --outtype f16
-!cmake -S /kaggle/working/llama.cpp -B /kaggle/working/llama.cpp/build -DGGML_CUDA=OFF
-!cmake --build /kaggle/working/llama.cpp/build --target llama-quantize -j4
-!/kaggle/working/llama.cpp/build/bin/llama-quantize /kaggle/working/tg-tutor-v4-f16.gguf /kaggle/working/tg-tutor-v4-Q4_K_M.gguf Q4_K_M
-!rm -rf /kaggle/working/tg-tutor-commandr-merged /kaggle/working/tg-tutor-v4-f16.gguf /kaggle/working/llama.cpp
+GGUF = '''# GGUF Q4_K_M for Ollama.
+# Disk discipline: /kaggle/working is capped at ~20GB, but the 16GB merged model
+# and the 16GB f16 GGUF cannot coexist there (that overflow crashed v21 with
+# "[Errno 28] No space left on device"). So all 16GB intermediates live on /tmp
+# (root overlay, ~57GB) and only the final ~4.5GB Q4 lands in /kaggle/working.
+!git clone --depth 1 https://github.com/ggerganov/llama.cpp /tmp/llama.cpp
+!pip install -q -r /tmp/llama.cpp/requirements.txt
+# Base-model weights were already folded into the merge — reclaim its ~16GB cache.
+!rm -rf /root/.cache/huggingface/hub
+# f16 GGUF -> /tmp (NOT /kaggle/working) so it never competes with the merged model.
+!python /tmp/llama.cpp/convert_hf_to_gguf.py /kaggle/working/tg-tutor-commandr-merged --outfile /tmp/tg-tutor-v4-f16.gguf --outtype f16
+# Merged HF shards are now baked into the f16 GGUF — drop them before quantizing (~16GB).
+!rm -rf /kaggle/working/tg-tutor-commandr-merged
+!cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build -DGGML_CUDA=OFF
+!cmake --build /tmp/llama.cpp/build --target llama-quantize -j4
+!/tmp/llama.cpp/build/bin/llama-quantize /tmp/tg-tutor-v4-f16.gguf /kaggle/working/tg-tutor-v4-Q4_K_M.gguf Q4_K_M
+!rm -rf /tmp/tg-tutor-v4-f16.gguf /tmp/llama.cpp
 !ls -lh /kaggle/working
 print("DONE -> download tg-tutor-v4-Q4_K_M.gguf from the Output tab")
 '''
