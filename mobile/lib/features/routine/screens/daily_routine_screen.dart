@@ -16,13 +16,18 @@ import 'package:almorabbi/features/routine/models/routine_models.dart';
 import 'package:almorabbi/features/routine/providers/routine_providers.dart';
 
 bool routineAgeAllowed(String ageGroup) {
-  return const {'prenatal-1', '0-3', '4-6', '7-9'}.contains(ageGroup);
+  // Daily routine is for babies/toddlers up to 6 years.
+  return const {'prenatal-1', '0-3', '2-3', '4-6', '7-9'}.contains(ageGroup);
 }
 
 List<RoutineEventType> allowedRoutineTypes(String ageGroup) {
   return switch (ageGroup) {
-    'prenatal-1' || '0-3' || '4-6' => RoutineEventType.values,
-    '7-9' => const [RoutineEventType.sleep, RoutineEventType.feed],
+    // 0–3 years: breast/bottle feeding, diapers and sleep are all normal.
+    'prenatal-1' || '0-3' || '2-3' => RoutineEventType.values,
+    // 4–6 years: diapers may still happen; feeding is no longer tracked.
+    '4-6' => const [RoutineEventType.sleep, RoutineEventType.diaper],
+    // 7–9 years: only sleep tracking remains age-appropriate.
+    '7-9' => const [RoutineEventType.sleep],
     _ => const [],
   };
 }
