@@ -44,11 +44,23 @@ class _IdentityScreenState extends State<IdentityScreen> {
 
   Future<void> _signIn() async {
     setState(() => _loading = true);
-    final ok = await IdentityService.instance.signInAndLink();
-    if (ok && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('تم ربط الحساب 🤍')),
-      );
+    try {
+      final ok = await IdentityService.instance.signInAndLink();
+      if (ok && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('تم ربط الحساب 🤍')),
+        );
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('لم يكتمل ربط الحساب. تحقق من إعداد Google أو جرّب مرة أخرى.')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('فشل ربط الحساب: ${e.toString()}')),
+        );
+      }
     }
     await _load();
   }

@@ -652,7 +652,8 @@ class TgClient {
 
   /// `POST /api/identity/link-google` (authed) — link Google ID token to device_id.
   /// The backend verifies the ID token with Google's public tokeninfo endpoint.
-  Future<void> linkGoogleIdentity({required String idToken}) async {
+  /// Returns the server's JSON response (e.g. `{ok: true, google_id, email}`).
+  Future<Map<String, dynamic>> linkGoogleIdentity({required String idToken}) async {
     final session = await ensureSession();
     final resp = await _http
         .post(Uri.parse('$_baseUrl/api/identity/link-google'),
@@ -666,6 +667,7 @@ class TgClient {
     if (body['ok'] != true) {
       throw TgApiError(400, body['error']?.toString() ?? 'فشل ربط حساب Google');
     }
+    return body;
   }
 
   /// `GET /api/identity/me` (authed) → `{linked, email, display_name}`.

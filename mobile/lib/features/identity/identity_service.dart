@@ -100,7 +100,13 @@ class IdentityService {
     }
 
     await TgClient().ensureSession();
-    await TgClient().linkGoogleIdentity(idToken: idToken);
+    final response = await TgClient().linkGoogleIdentity(idToken: idToken);
+
+    // Backend must confirm the link; otherwise we must not mark as linked.
+    if (response['ok'] != true) {
+      final error = response['error'] ?? 'unknown';
+      throw Exception('رفض الخادم ربط الحساب: $error');
+    }
 
     final p = await SharedPreferences.getInstance();
     await p.setBool(_kLinked, true);
