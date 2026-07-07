@@ -60,6 +60,9 @@ abstract final class Dt {
   static const Duration slow = Duration(milliseconds: 600);
   static const Duration stagger = Duration(milliseconds: 60);
 
+  // ── Spacing ──────────────────────────────────────────────────────────────
+  static const double pad = 16;
+
   /// Items beyond this index appear without an entrance animation —
   /// they're off-screen anyway and animating them wastes frames.
   static const int maxStaggeredItems = 10;

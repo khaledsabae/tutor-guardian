@@ -284,9 +284,10 @@ class _WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(28),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(18),
             child: Image.asset(
@@ -345,6 +346,7 @@ class _WelcomePage extends StatelessWidget {
           ).animate(delay: 450.ms).fadeIn(duration: Dt.base),
         ],
       ),
+      ),
     );
   }
 }
@@ -363,10 +365,11 @@ class _FeaturesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(28),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
           Image.asset(
             'assets/images/generated/mascot_reading.webp',
             height: 150,
@@ -440,6 +443,7 @@ class _FeaturesPage extends StatelessWidget {
             if (i < _features.length - 1) const SizedBox(height: 14),
           ],
         ],
+      ),
       ),
     );
   }

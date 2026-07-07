@@ -451,12 +451,14 @@ class _Section extends StatelessWidget {
             children: [
               Text(emoji, style: const TextStyle(fontSize: 20)),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall
-                    ?.copyWith(fontWeight: FontWeight.w800, color: accent),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(fontWeight: FontWeight.w800, color: accent),
+                ),
               ),
             ],
           ),
@@ -838,11 +840,13 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               children: [
                 const Text('🎬', style: TextStyle(fontSize: 20)),
                 const SizedBox(width: 8),
-                Text(
-                  'ابدأ بالمحتوى التفاعلي',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w800,
-                      ),
+                Expanded(
+                  child: Text(
+                    'ابدأ بالمحتوى التفاعلي',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                  ),
                 ),
               ],
             ),

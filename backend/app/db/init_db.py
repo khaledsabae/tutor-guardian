@@ -30,6 +30,14 @@ Migration v10: added daily_login_streaks table. Stores one row per
                that is independent from lesson completions, so opening the
                app daily counts toward the streak even when no lesson is
                completed.
+Migration v11: added session_id + expires_at columns to api_tokens to match
+               the token contract used by conversation_store.py and auth.py.
+Migration v12: aligned child_challenges schema with children.py router:
+               added topic, domain, note, resolved_at; removed notes, completed_at.
+Migration v13: aligned chat_messages schema with conversation_store.py:
+               added domain, severity, mode, needs_human_review.
+Migration v14: added child_daily_routines + routine_events tables for
+               «حِساب اليوم» daily routine tracker (sleep/feed/diaper).
 """
 import os
 import sqlite3
@@ -92,10 +100,12 @@ CREATE TABLE IF NOT EXISTS child_challenges (
     device_id       TEXT NOT NULL,
     child_id        INTEGER NOT NULL,
     challenge_key   TEXT NOT NULL,
+    topic           TEXT NOT NULL,
+    domain          TEXT NOT NULL,
     status          TEXT NOT NULL DEFAULT 'active',
-    notes           TEXT,
+    note            TEXT,
     started_at      TEXT NOT NULL DEFAULT (datetime('now')),
-    completed_at    TEXT,
+    resolved_at     TEXT,
     UNIQUE(device_id, child_id, status)
 );
 CREATE INDEX IF NOT EXISTS ix_child_challenges_device_child
@@ -119,7 +129,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 10
+SCHEMA_VERSION = 14
 
 
 def db_path() -> Path:
@@ -159,6 +169,10 @@ def init_db() -> None:
                                  REFERENCES chat_sessions(id) ON DELETE CASCADE,
             role               TEXT NOT NULL,
             content            TEXT NOT NULL,
+            domain             TEXT,
+            severity           TEXT,
+            mode               TEXT,
+            needs_human_review INTEGER NOT NULL DEFAULT 0,
             created_at         TEXT NOT NULL DEFAULT (datetime('now')),
             model              TEXT,
             guardrail_version  TEXT
@@ -169,10 +183,14 @@ def init_db() -> None:
         CREATE TABLE IF NOT EXISTS api_tokens (
             token       TEXT PRIMARY KEY,
             device_id   TEXT NOT NULL,
+            session_id  TEXT NOT NULL,
+            expires_at  TEXT,
             created_at  TEXT NOT NULL DEFAULT (datetime('now'))
         );
         CREATE INDEX IF NOT EXISTS ix_api_tokens_device
             ON api_tokens (device_id);
+        CREATE INDEX IF NOT EXISTS ix_api_tokens_session
+            ON api_tokens (session_id);
 
         CREATE TABLE IF NOT EXISTS user_feedback (
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -252,6 +270,9 @@ def init_db() -> None:
     _ensure_push_tokens_table(conn)
     _ensure_parent_identities_table(conn)
     _ensure_daily_login_streaks_table(conn)
+    _ensure_api_tokens_columns(conn)
+    _ensure_chat_messages_columns(conn)
+    _ensure_daily_routines_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -261,6 +282,42 @@ def init_db() -> None:
     conn.commit()
     conn.close()
 
+
+_CREATE_DAILY_ROUTINES: str = """
+CREATE TABLE IF NOT EXISTS child_daily_routines (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id    TEXT NOT NULL,
+    child_id     INTEGER NOT NULL,
+    routine_date TEXT NOT NULL,
+    created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE(device_id, child_id, routine_date),
+    FOREIGN KEY (child_id) REFERENCES child_profiles(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_daily_routines_device_child_date
+    ON child_daily_routines (device_id, child_id, routine_date);
+CREATE INDEX IF NOT EXISTS ix_daily_routines_date
+    ON child_daily_routines (routine_date);
+
+CREATE TABLE IF NOT EXISTS routine_events (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    routine_id   INTEGER NOT NULL,
+    event_type   TEXT NOT NULL,
+    started_at   TEXT NOT NULL,
+    ended_at     TEXT,
+    feed_type    TEXT,
+    amount_ml    INTEGER,
+    side         TEXT,
+    diaper_type  TEXT,
+    notes        TEXT,
+    source       TEXT NOT NULL DEFAULT 'manual',
+    created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (routine_id) REFERENCES child_daily_routines(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS ix_routine_events_routine
+    ON routine_events (routine_id, event_type, started_at);
+"""
 
 _CREATE_DAILY_LOGIN_STREAKS: str = """
 CREATE TABLE IF NOT EXISTS daily_login_streaks (
@@ -276,6 +333,17 @@ CREATE INDEX IF NOT EXISTS ix_daily_login_streaks_device_child
 CREATE INDEX IF NOT EXISTS ix_daily_login_streaks_date
     ON daily_login_streaks (date);
 """
+
+
+def _ensure_daily_routines_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v14 daily routines tables."""
+    try:
+        cur = conn.execute("PRAGMA table_info(child_daily_routines)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_DAILY_ROUTINES)
 
 
 def _ensure_daily_login_streaks_table(conn: sqlite3.Connection) -> None:
@@ -327,7 +395,12 @@ def _ensure_coach_tips_table(conn: sqlite3.Connection) -> None:
 
 
 def _ensure_child_challenges_table(conn: sqlite3.Connection) -> None:
-    """Idempotent migration helper for the v7 child_challenges table."""
+    """Idempotent migration helper for the v7+ child_challenges table.
+
+    v12: aligned schema with children.py router (topic, domain, note,
+    resolved_at). Existing rows are dropped because this is dev/test data;
+    production migration should back up first.
+    """
     try:
         cur = conn.execute("PRAGMA table_info(child_challenges)")
         names = {row[1] for row in cur.fetchall()}
@@ -335,6 +408,28 @@ def _ensure_child_challenges_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_CHILD_CHALLENGES)
+        return
+    # Migrate old v7/v10 schema to v12 if needed.
+    required = {"topic", "domain", "note", "resolved_at"}
+    if not required.issubset(names):
+        conn.executescript(
+            """
+            ALTER TABLE child_challenges RENAME TO child_challenges_old;
+            """
+            + _CREATE_CHILD_CHALLENGES
+            + """
+            INSERT INTO child_challenges (
+                id, device_id, child_id, challenge_key, topic, domain,
+                status, note, started_at, resolved_at
+            )
+            SELECT
+                id, device_id, child_id, challenge_key, challenge_key,
+                'islamic_parenting', status, notes, started_at, completed_at
+            FROM child_challenges_old
+            WHERE status = 'active' OR resolved_at IS NOT NULL;
+            DROP TABLE child_challenges_old;
+            """
+        )
 
 
 def _ensure_referrals_table(conn: sqlite3.Connection) -> None:
@@ -368,3 +463,44 @@ def _ensure_parent_identities_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_PARENT_IDENTITIES)
+
+
+def _ensure_api_tokens_columns(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v11 api_tokens schema drift.
+
+    conversation_store.py expects session_id + expires_at; older tables
+    created with the v10 schema lack both columns. Add them without
+    touching existing rows.
+    """
+    try:
+        cur = conn.execute("PRAGMA table_info(api_tokens)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if names:
+        if "session_id" not in names:
+            conn.execute("ALTER TABLE api_tokens ADD COLUMN session_id TEXT NOT NULL DEFAULT ''")
+        if "expires_at" not in names:
+            conn.execute("ALTER TABLE api_tokens ADD COLUMN expires_at TEXT")
+
+
+def _ensure_chat_messages_columns(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v13 chat_messages schema drift.
+
+    conversation_store.py expects domain, severity, mode, needs_human_review;
+    older tables created with the v10 schema lack these columns.
+    """
+    try:
+        cur = conn.execute("PRAGMA table_info(chat_messages)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if names:
+        for col, ddl in [
+            ("domain", "ALTER TABLE chat_messages ADD COLUMN domain TEXT"),
+            ("severity", "ALTER TABLE chat_messages ADD COLUMN severity TEXT"),
+            ("mode", "ALTER TABLE chat_messages ADD COLUMN mode TEXT"),
+            ("needs_human_review", "ALTER TABLE chat_messages ADD COLUMN needs_human_review INTEGER NOT NULL DEFAULT 0"),
+        ]:
+            if col not in names:
+                conn.execute(ddl)
