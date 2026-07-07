@@ -194,3 +194,22 @@ def test_other_device_cannot_access(client, tmp_db):
     conn.close()
     r = client.get("/api/daily-routine/today", params={"child_id": other_id})
     assert r.status_code == 404
+
+
+def test_requires_authentication(tmp_db):
+    """Without the auth middleware the router must itself reject the request."""
+    a = FastAPI()
+    a.include_router(children_router, prefix="/api")
+    a.include_router(routine_router, prefix="/api")
+    with TestClient(a) as c:
+        r = c.get("/api/daily-routine/today", params={"child_id": 1})
+        assert r.status_code == 401
+
+
+def test_auth_middleware_protects_daily_routine(tmp_db):
+    """With the real AuthMiddleware, /api/daily-routine/* rejects missing tokens."""
+    from app.main import app as real_app
+    with TestClient(real_app) as c:
+        r = c.get("/api/daily-routine/today", params={"child_id": 1})
+        assert r.status_code == 401
+        assert "توثيق" in r.json()["detail"]
