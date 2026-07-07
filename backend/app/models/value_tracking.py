@@ -1,6 +1,6 @@
 """Pydantic models for «ميزان العادات» — age-dynamic habit/value tracker.
 
-Tracks daily habit completion for children aged 10–18 across three
+Tracks daily habit completion for children aged 7–18 across three
 categories: worship, self_building, study. All habit names are free-text
 but filtered to keep tracking strictly behavioural — no medical
 diagnosis, medication, or dosage content is accepted.
@@ -42,7 +42,7 @@ class HabitEventCreate(BaseModel):
     """Parent-submitted habit evaluation for one of the three categories."""
 
     category: str
-    habit_name: str = Field(max_length=200)
+    habit_name: str = Field(max_length=120)
     status: str
 
     @field_validator("category")
@@ -59,6 +59,8 @@ class HabitEventCreate(BaseModel):
         v = v.strip()
         if not v:
             raise ValueError("اسم العادة مطلوب.")
+        if len(v) > 120:
+            raise ValueError("اسم العادة يجب ألا يتجاوز 120 حرفاً.")
         return _no_medical_terms(v)
 
     @field_validator("status")
@@ -70,7 +72,45 @@ class HabitEventCreate(BaseModel):
         return v
 
 
-# ── Output models ──────────────────────────────────────────────────────────
+class HabitTemplateCreate(BaseModel):
+    """Parent-defined custom habit template for a specific child."""
+
+    category: str
+    custom_name: str = Field(max_length=120)
+
+    @field_validator("category")
+    @classmethod
+    def _validate_category(cls, v: str) -> str:
+        v = v.strip().lower()
+        if v not in CATEGORIES:
+            raise ValueError(f"التصنيف غير صالح. القيم المسموحة: {sorted(CATEGORIES)}")
+        return v
+
+    @field_validator("custom_name")
+    @classmethod
+    def _validate_custom_name(cls, v: str) -> str:
+        v = v.strip()
+        if not v:
+            raise ValueError("اسم العادة المخصصة مطلوب.")
+        if len(v) > 120:
+            raise ValueError("اسم العادة يجب ألا يتجاوز 120 حرفاً.")
+        return _no_medical_terms(v)
+
+
+class HabitTemplateUpdate(BaseModel):
+    """Soft-archive or re-activate a custom habit template."""
+
+    is_active: bool
+
+
+class HabitTemplateOut(BaseModel):
+    id: int
+    child_id: int
+    category: str
+    custom_name: str
+    is_active: bool
+    created_at: str
+    updated_at: str
 
 
 class HabitEventOut(BaseModel):
@@ -83,11 +123,23 @@ class HabitEventOut(BaseModel):
     updated_at: str
 
 
+class TodayHabitItem(BaseModel):
+    """One habit row shown to the parent/teen for today's tracking."""
+
+    category: str
+    habit_name: str
+    source: str  # 'default' | 'custom'
+    status: str | None = None
+    event_id: int | None = None
+    template_id: int | None = None
+
+
 class HabitDayOut(BaseModel):
     child_id: int
     date: str
     events: list[HabitEventOut]
     points: float = 0.0
+    habits: list[TodayHabitItem]
 
 
 class HabitSummaryOut(BaseModel):

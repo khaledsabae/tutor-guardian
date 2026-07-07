@@ -1003,6 +1003,64 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  // ── Custom habit templates ────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> createHabitTemplate(
+    int childId, {
+    required Map<String, dynamic> body,
+  }) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/habit-templates')
+        .replace(queryParameters: {'child_id': '$childId'});
+    final resp = await _http
+        .post(
+          uri,
+          headers: _authHeaders(token),
+          body: jsonEncode(body),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 201) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> listHabitTemplates(
+    int childId, {
+    bool activeOnly = false,
+  }) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/habit-templates').replace(
+      queryParameters: {
+        'child_id': '$childId',
+        if (activeOnly) 'active_only': 'true',
+      },
+    );
+    final resp = await _http
+        .get(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    final raw = jsonDecode(utf8.decode(resp.bodyBytes)) as List<dynamic>;
+    return <String, dynamic>{'templates': raw};
+  }
+
+  Future<Map<String, dynamic>> updateHabitTemplate(
+    int templateId, {
+    required Map<String, dynamic> body,
+  }) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final resp = await _http
+        .patch(
+          Uri.parse('$_baseUrl/api/habit-templates/$templateId'),
+          headers: _authHeaders(token),
+          body: jsonEncode(body),
+        )
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   // ── Internals ────────────────────────────────────────────────────────
 
   Map<String, String> _authHeaders(String token) => {

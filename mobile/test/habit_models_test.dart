@@ -5,7 +5,7 @@ import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/screens/daily_routine_screen.dart';
 
 void main() {
-group('habitAgeAllowed (7-18)', () {
+  group('habitAgeAllowed (7-18)', () {
     test('returns true for 7-9', () {
       expect(habitAgeAllowed('7-9'), isTrue);
     });
@@ -111,34 +111,70 @@ group('habitAgeAllowed (7-18)', () {
       expect(day.childId, 5);
       expect(day.date, '2026-07-07');
       expect(day.events, isEmpty);
+      expect(day.habits, isEmpty);
+      expect(day.points, 0.0);
     });
-    test('parses multiple events', () {
+    test('parses habits list from merged response', () {
       final json = {
         'child_id': 5,
         'date': '2026-07-07',
-        'events': [
+        'events': [],
+        'points': 2.5,
+        'habits': [
           {
-            'id': 1,
-            'child_id': 5,
             'category': 'worship',
             'habit_name': 'صلاة الفجر',
+            'source': 'default',
             'status': 'completed',
-            'created_at': '2026-07-07T10:00:00',
+            'event_id': 1,
           },
           {
-            'id': 2,
-            'child_id': 5,
-            'category': 'study',
-            'habit_name': 'المراجعة',
-            'status': 'missed',
-            'created_at': '2026-07-07T11:00:00',
+            'category': 'self_building',
+            'habit_name': 'مساعدة الوالدة',
+            'source': 'custom',
+            'status': null,
+            'template_id': 7,
           },
         ],
       };
       final day = HabitDay.fromJson(json);
-      expect(day.events.length, 2);
-      expect(day.events[0].status, HabitStatus.completed);
-      expect(day.events[1].status, HabitStatus.missed);
+      expect(day.habits.length, 2);
+      expect(day.habits[0].source, 'default');
+      expect(day.habits[1].source, 'custom');
+      expect(day.habits[1].templateId, 7);
+      expect(day.points, 2.5);
+    });
+  });
+
+  group('HabitTemplate.fromJson', () {
+    test('parses active custom template', () {
+      final json = {
+        'id': 7,
+        'child_id': 5,
+        'category': 'self_building',
+        'custom_name': 'مساعدة الوالدة',
+        'is_active': 1,
+        'created_at': '2026-07-07T10:00:00',
+        'updated_at': '2026-07-07T10:00:00',
+      };
+      final t = HabitTemplate.fromJson(json);
+      expect(t.id, 7);
+      expect(t.customName, 'مساعدة الوالدة');
+      expect(t.category, HabitCategory.selfBuilding);
+      expect(t.isActive, isTrue);
+    });
+    test('parses archived template', () {
+      final json = {
+        'id': 8,
+        'child_id': 5,
+        'category': 'study',
+        'custom_name': 'تمرين السباحة',
+        'is_active': 0,
+        'created_at': '2026-07-07T10:00:00',
+        'updated_at': '2026-07-07T10:00:00',
+      };
+      final t = HabitTemplate.fromJson(json);
+      expect(t.isActive, isFalse);
     });
   });
 

@@ -13,6 +13,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from app.db.init_db import init_db
 from app.routers.children import router as children_router
 from app.routers.value_tracking import router as value_router
+from app.routers.habit_templates import router as templates_router
 
 
 @pytest.fixture
@@ -39,6 +40,7 @@ def app(tmp_db):
     a.add_middleware(_AuthStubMiddleware)
     a.include_router(children_router, prefix="/api")
     a.include_router(value_router, prefix="/api")
+    a.include_router(templates_router, prefix="/api")
     return a
 
 
@@ -233,5 +235,111 @@ def test_auth_middleware_protects_value_tracking(tmp_db):
     from app.main import app as real_app
     with TestClient(real_app) as c:
         r = c.get("/api/value-tracking/today", params={"child_id": 1})
+        assert r.status_code == 401
+        assert "توثيق" in r.json()["detail"]
+
+
+# ── Custom habit template tests ──────────────────────────────────────────────
+
+
+def _create_template(client, child_id, name, category="self_building"):
+    r = client.post(
+        "/api/habit-templates",
+        params={"child_id": child_id},
+        json={"category": category, "custom_name": name},
+    )
+    assert r.status_code == 201, r.text
+    return r.json()
+
+
+def test_create_custom_template(client):
+    cid = _create_child(client)
+    t = _create_template(client, cid, "مساعدة الوالدة")
+    assert t["child_id"] == cid
+    assert t["category"] == "self_building"
+    assert t["custom_name"] == "مساعدة الوالدة"
+    assert t["is_active"] is True
+
+
+def test_duplicate_template_name_rejected(client):
+    cid = _create_child(client)
+    _create_template(client, cid, "مساعدة الوالدة")
+    r = client.post(
+        "/api/habit-templates",
+        params={"child_id": cid},
+        json={"category": "self_building", "custom_name": "مساعدة الوالدة"},
+    )
+    assert r.status_code == 409
+
+
+def test_list_templates_and_filter_active(client):
+    cid = _create_child(client)
+    a = _create_template(client, cid, "مساعدة الوالدة")
+    b = _create_template(client, cid, "تمرين السباحة")
+    client.patch(f"/api/habit-templates/{b['id']}", json={"is_active": False})
+    r = client.get("/api/habit-templates", params={"child_id": cid})
+    assert len(r.json()) == 2
+    r2 = client.get("/api/habit-templates", params={"child_id": cid, "active_only": True})
+    assert len(r2.json()) == 1
+    assert r2.json()[0]["custom_name"] == "مساعدة الوالدة"
+
+
+def test_soft_delete_keeps_history(client, tmp_db):
+    cid = _create_child(client, age_group="10-12")
+    t = _create_template(client, cid, "تمرين السباحة")
+    # Record an event before archiving.
+    client.post(
+        "/api/value-tracking/events",
+        params={"child_id": cid},
+        json={"category": "self_building", "habit_name": "تمرين السباحة", "status": "completed"},
+    )
+    # Archive the template.
+    r = client.patch(f"/api/habit-templates/{t['id']}", json={"is_active": False})
+    assert r.status_code == 200
+    assert r.json()["is_active"] is False
+    # Historical event is still present.
+    r2 = client.get("/api/value-tracking/today", params={"child_id": cid})
+    assert r2.json()["points"] == 1.0
+
+
+def test_today_merges_defaults_and_active_customs(client):
+    cid = _create_child(client, age_group="10-12")
+    _create_template(client, cid, "تمرين السباحة", category="self_building")
+    r = client.get("/api/value-tracking/today", params={"child_id": cid})
+    body = r.json()
+    names = {h["habit_name"] for h in body["habits"]}
+    assert "صلاة الفجر" in names
+    assert "تمرين السباحة" in names
+    sources = {h["habit_name"]: h["source"] for h in body["habits"]}
+    assert sources["صلاة الفجر"] == "default"
+    assert sources["تمرين السباحة"] == "custom"
+
+
+def test_event_for_archived_custom_rejected(client):
+    cid = _create_child(client, age_group="10-12")
+    t = _create_template(client, cid, "تمرين السباحة")
+    client.patch(f"/api/habit-templates/{t['id']}", json={"is_active": False})
+    r = client.post(
+        "/api/value-tracking/events",
+        params={"child_id": cid},
+        json={"category": "self_building", "habit_name": "تمرين السباحة", "status": "completed"},
+    )
+    assert r.status_code == 400
+
+
+def test_event_for_unknown_habit_rejected(client):
+    cid = _create_child(client, age_group="10-12")
+    r = client.post(
+        "/api/value-tracking/events",
+        params={"child_id": cid},
+        json={"category": "self_building", "habit_name": "عادة غير موجودة", "status": "completed"},
+    )
+    assert r.status_code == 400
+
+
+def test_custom_template_requires_auth(tmp_db):
+    from app.main import app as real_app
+    with TestClient(real_app) as c:
+        r = c.get("/api/habit-templates", params={"child_id": 1})
         assert r.status_code == 401
         assert "توثيق" in r.json()["detail"]

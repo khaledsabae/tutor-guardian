@@ -1,0 +1,224 @@
+/// Parent screen for customizing a child's habit templates.
+///
+/// Allows adding new custom habits per category, archiving/unarchiving
+/// existing ones, while preserving historical events (soft archive).
+library;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/features/program/providers/progress_providers.dart';
+import 'package:almorabbi/features/routine/models/habit_models.dart';
+import 'package:almorabbi/features/routine/providers/habit_providers.dart';
+import 'package:almorabbi/theme/design_tokens.dart';
+
+class HabitCustomizeScreen extends ConsumerStatefulWidget {
+  const HabitCustomizeScreen({super.key});
+
+  @override
+  ConsumerState<HabitCustomizeScreen> createState() => _HabitCustomizeScreenState();
+}
+
+class _HabitCustomizeScreenState extends ConsumerState<HabitCustomizeScreen> {
+  HabitCategory _selectedCategory = HabitCategory.worship;
+  final _nameController = TextEditingController();
+  bool _saving = false;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final childId = ref.watch(activeChildIdProvider);
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('تخصيص العادات')),
+      body: childId == null
+          ? const Center(child: Text('لا يوجد طفل نشط'))
+          : Column(
+              children: [
+                _CategorySelector(
+                  selected: _selectedCategory,
+                  onChanged: (c) => setState(() => _selectedCategory = c),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(Dt.pad),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _nameController,
+                          decoration: const InputDecoration(
+                            labelText: 'اسم العادة الجديدة',
+                            hintText: 'مثال: تمرين السباحة',
+                          ),
+                          maxLength: 60,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      FilledButton.icon(
+                        onPressed: _saving ? null : () => _addTemplate(childId),
+                        icon: _saving
+                            ? const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              )
+                            : const Icon(Icons.add),
+                        label: const Text('إضافة'),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: _TemplateList(
+                    childId: childId,
+                    category: _selectedCategory,
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+
+  Future<void> _addTemplate(int childId) async {
+    final name = _nameController.text.trim();
+    if (name.isEmpty || name.length < 2 || name.length > 60) {
+      _showSnack('اسم العادة يجب أن يكون بين 2 و 60 حرفاً');
+      return;
+    }
+    setState(() => _saving = true);
+    try {
+      await TgClient().createHabitTemplate(
+        childId,
+        body: {
+          'category': _selectedCategory.wireName,
+          'custom_name': name,
+        },
+      );
+      _nameController.clear();
+      ref.invalidate(habitTemplatesProvider(childId));
+      _showSnack('تمت إضافة العادة');
+    } on TgApiError catch (e) {
+      _showSnack('فشل الإضافة: ${e.message}');
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
+  }
+
+  void _showSnack(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+}
+
+class _CategorySelector extends StatelessWidget {
+  const _CategorySelector({required this.selected, required this.onChanged});
+
+  final HabitCategory selected;
+  final ValueChanged<HabitCategory> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return SegmentedButton<HabitCategory>(
+      segments: HabitCategory.values
+          .map((c) => ButtonSegment(
+                value: c,
+                label: Text('${c.icon} ${c.label}'),
+              ))
+          .toList(),
+      selected: {selected},
+      onSelectionChanged: (s) => onChanged(s.first),
+    );
+  }
+}
+
+class _TemplateList extends ConsumerWidget {
+  const _TemplateList({required this.childId, required this.category});
+
+  final int childId;
+  final HabitCategory category;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncTemplates = ref.watch(habitTemplatesProvider(childId));
+
+    return asyncTemplates.when(
+      data: (all) {
+        final templates = all.where((t) => t.category == category).toList();
+        if (templates.isEmpty) {
+          return const Center(child: Text('لا توجد عادات مخصصة في هذا القسم'));
+        }
+        return ListView.builder(
+          padding: const EdgeInsets.all(Dt.pad),
+          itemCount: templates.length,
+          itemBuilder: (context, i) {
+            final t = templates[i];
+            return _TemplateTile(
+              template: t,
+              onToggle: () => _toggleActive(context, ref, t),
+            );
+          },
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) => Center(child: Text('خطأ: $e')),
+    );
+  }
+
+  Future<void> _toggleActive(
+    BuildContext context,
+    WidgetRef ref,
+    HabitTemplate template,
+  ) async {
+    try {
+      await TgClient().updateHabitTemplate(
+        template.id,
+        body: {'is_active': !template.isActive},
+      );
+      ref.invalidate(habitTemplatesProvider(template.childId));
+    } on TgApiError catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('فشل التحديث: ${e.message}')),
+      );
+    }
+  }
+}
+
+class _TemplateTile extends StatelessWidget {
+  const _TemplateTile({required this.template, required this.onToggle});
+
+  final HabitTemplate template;
+  final VoidCallback onToggle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: ListTile(
+        leading: Icon(
+          template.isActive ? Icons.check_circle : Icons.archive_outlined,
+          color: template.isActive ? null : Colors.grey,
+        ),
+        title: Text(
+          template.customName,
+          style: TextStyle(
+            decoration: template.isActive ? null : TextDecoration.lineThrough,
+            color: template.isActive ? null : Colors.grey,
+          ),
+        ),
+        subtitle: Text(template.isActive ? 'نشطة' : 'مؤرشفة'),
+        trailing: Switch(
+          value: template.isActive,
+          onChanged: (_) => onToggle(),
+        ),
+      ),
+    );
+  }
+}

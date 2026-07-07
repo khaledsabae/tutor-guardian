@@ -16,6 +16,7 @@ import 'package:almorabbi/features/routine/models/routine_models.dart';
 import 'package:almorabbi/features/routine/providers/routine_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
+import 'package:almorabbi/features/routine/screens/habit_customize_screen.dart';
 
 bool routineAgeAllowed(String ageGroup) {
   // Daily routine (sleep/feed/diaper) is for babies/toddlers 0–6 years.
@@ -608,6 +609,14 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
     super.dispose();
   }
 
+  void _openCustomizeScreen(int childId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const HabitCustomizeScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final childId = ref.watch(activeChildIdProvider);
@@ -629,11 +638,13 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
           child: habitsAsync.when(
             data: (day) => Column(
               children: [
-                _HabitSummaryCard(points: day.points),
+                _HabitSummaryCard(
+                  points: day.points,
+                  totalHabits: day.habits.length,
+                ),
                 Expanded(
-                  child: _HabitCategoryGrid(
+                  child: _HabitCategoryList(
                     category: categories[_selectedTab],
-                    ageGroup: widget.ageGroup,
                     day: day,
                     childId: childId,
                     onRefresh: () => ref.refresh(todayHabitsProvider(childId)),
@@ -645,18 +656,31 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
             error: (e, _) => Center(child: Text('خطأ: $e')),
           ),
         ),
+        SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Dt.pad, vertical: 8),
+            child: OutlinedButton.icon(
+              onPressed: () => _openCustomizeScreen(childId),
+              icon: const Icon(Icons.edit_note_outlined),
+              label: const Text('تخصيص العادات'),
+            ),
+          ),
+        ),
       ],
     );
   }
 }
 
 class _HabitSummaryCard extends StatelessWidget {
-  const _HabitSummaryCard({required this.points});
+  const _HabitSummaryCard({required this.points, required this.totalHabits});
 
   final double points;
+  final int totalHabits;
 
   @override
   Widget build(BuildContext context) {
+    final maxPoints = totalHabits.toDouble();
     return Card(
       margin: const EdgeInsets.all(Dt.pad).copyWith(bottom: 0),
       color: Dt.primary.withValues(alpha: .08),
@@ -673,7 +697,7 @@ class _HabitSummaryCard extends StatelessWidget {
               ),
             ),
             Text(
-              '${points.toStringAsFixed(1)} / ${(HabitStatus.values.length * 3).toStringAsFixed(0)}',
+              '${points.toStringAsFixed(1)} / ${maxPoints.toStringAsFixed(0)}',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Dt.primary,
@@ -686,37 +710,56 @@ class _HabitSummaryCard extends StatelessWidget {
   }
 }
 
-class _HabitCategoryGrid extends ConsumerWidget {
-  const _HabitCategoryGrid({
+class _HabitCategoryList extends ConsumerWidget {
+  const _HabitCategoryList({
     required this.category,
-    required this.ageGroup,
     required this.day,
     required this.childId,
     required this.onRefresh,
   });
 
   final HabitCategory category;
-  final String ageGroup;
   final HabitDay day;
   final int childId;
   final VoidCallback onRefresh;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final habits = habitsForAge(ageGroup)[category] ?? [];
+    final items = day.habits.where((h) => h.category == category).toList();
+    if (items.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('🌱', style: TextStyle(fontSize: 48)),
+            const SizedBox(height: 12),
+            Text(
+              'لا توجد عادات في هذا القسم',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ],
+        ),
+      );
+    }
     return ListView.builder(
       padding: const EdgeInsets.all(Dt.pad),
-      itemCount: habits.length,
+      itemCount: items.length,
       itemBuilder: (context, i) {
-        final habitName = habits[i];
-        final existing = day.events
-            .where((e) => e.category == category && e.habitName == habitName)
-            .toList();
+        final item = items[i];
         return _HabitCard(
-          habitName: habitName,
+          habitName: item.habitName,
           category: category,
           childId: childId,
-          existingEvent: existing.isNotEmpty ? existing.first : null,
+          existingEvent: item.status == null
+              ? null
+              : HabitEvent(
+                  id: item.eventId,
+                  childId: childId,
+                  category: category,
+                  habitName: item.habitName,
+                  status: item.status!,
+                  createdAt: '',
+                ),
           onRecorded: onRefresh,
         );
       },

@@ -1,8 +1,13 @@
 """Value tracking router for «ميزان العادات».
 
 Tracks daily habit completion (worship / self_building / study) for
-children aged 10–18. All endpoints require Bearer auth and operate only
+children aged 7–18. All endpoints require Bearer auth and operate only
 on children owned by the caller's device.
+
+Merge logic in get_today(): age-banded defaults are merged with active
+parent-defined custom templates from habit_templates. A recorded event
+can belong to either source; the habit_name must match an allowed default
+or an active custom template for the child.
 """
 from __future__ import annotations
 
@@ -19,6 +24,7 @@ from app.models.value_tracking import (
     HabitEventCreate,
     HabitEventOut,
     HabitSummaryOut,
+    TodayHabitItem,
 )
 
 router = APIRouter()
@@ -64,14 +70,110 @@ def _event_row_to_model(row: sqlite3.Row) -> HabitEventOut:
 
 _HABIT_AGE_GROUPS = {"7-9", "10-12", "13-15", "16-18"}
 
+# Mirrors kAgeBandedHabits in mobile/lib/features/routine/models/habit_models.dart.
+_DEFAULT_HABITS: dict[str, dict[str, list[str]]] = {
+    "7-9": {
+        "worship": ["صلاة الفجر", "ورد القرآن"],
+        "self_building": ["بر الوالدين", "النظام", "النوم المبكر"],
+        "study": ["أداء الواجب", "مراجعة اليوم"],
+    },
+    "10-12": {
+        "worship": ["صلاة الفجر", "ورد القرآن", "صلاة النافلة"],
+        "self_building": ["بر الوالدين", "النظام", "التحكم بالغضب", "الصدق"],
+        "study": ["أداء الواجب", "القراءة", "المراجعة"],
+    },
+    "13-15": {
+        "worship": ["صلاة الفجر", "ورد القرآن", "قيام الليل"],
+        "self_building": ["بر الوالدين", "النظام", "التحكم بالغضب", "الأمانة", "الصبر"],
+        "study": ["أداء الواجب", "القراءة", "المراجعة", "التخطيط الدراسي"],
+    },
+    "16-18": {
+        "worship": ["صلاة الفجر", "ورد القرآن", "قيام الليل", "ذكر الله"],
+        "self_building": ["بر الوالدين", "النظام", "التحكم بالغضب", "الأمانة", "الصبر", "المواظبة"],
+        "study": ["أداء الواجب", "القراءة", "المراجعة", "التخطيط الدراسي", "البحث"],
+    },
+}
+
+
+def _default_habits_for_age(age_group: str) -> dict[str, list[str]]:
+    return _DEFAULT_HABITS.get(age_group, _DEFAULT_HABITS["10-12"])
+
 
 def _is_habit_age(age_group: str) -> bool:
     return age_group in _HABIT_AGE_GROUPS
 
 
+def _load_active_templates(conn: sqlite3.Connection, device_id: str, child_id: int) -> list[sqlite3.Row]:
+    return conn.execute(
+        "SELECT id, category, custom_name, is_active FROM habit_templates "
+        "WHERE device_id = ? AND child_id = ? AND is_active = 1 "
+        "ORDER BY created_at",
+        (device_id, child_id),
+    ).fetchall()
+
+
+def _build_today_habits(
+    age_group: str,
+    templates: list[sqlite3.Row],
+    today_events: list[sqlite3.Row],
+) -> list[TodayHabitItem]:
+    """Merge defaults + active custom templates and attach today's status."""
+    event_by_name: dict[str, sqlite3.Row] = {
+        r["habit_name"]: r for r in today_events if r["status"] != "missed"
+    }
+    seen: set[str] = set()
+    items: list[TodayHabitItem] = []
+
+    for category, names in _default_habits_for_age(age_group).items():
+        for name in names:
+            if name in seen:
+                continue
+            seen.add(name)
+            ev = event_by_name.get(name)
+            items.append(
+                TodayHabitItem(
+                    category=category,
+                    habit_name=name,
+                    source="default",
+                    status=ev["status"] if ev else None,
+                    event_id=ev["id"] if ev else None,
+                    template_id=None,
+                )
+            )
+
+    for t in templates:
+        name = t["custom_name"]
+        if name in seen:
+            continue
+        seen.add(name)
+        ev = event_by_name.get(name)
+        items.append(
+            TodayHabitItem(
+                category=t["category"],
+                habit_name=name,
+                source="custom",
+                status=ev["status"] if ev else None,
+                event_id=ev["id"] if ev else None,
+                template_id=t["id"],
+            )
+        )
+    return items
+
+
+def _allowed_habit_names(
+    age_group: str,
+    templates: list[sqlite3.Row],
+) -> tuple[set[str], set[str]]:
+    defaults = set()
+    for names in _default_habits_for_age(age_group).values():
+        defaults.update(names)
+    customs = {t["custom_name"] for t in templates if t["is_active"]}
+    return defaults, customs
+
+
 @router.get("/value-tracking/today", response_model=HabitDayOut)
 def get_today(request: Request, child_id: int = Query(..., ge=1)):
-    """Fetch today's habit events for a child."""
+    """Fetch today's habit events for a child, merged with default + custom templates."""
     device_id = _require_device_id(request)
     conn = get_conn()
     try:
@@ -88,14 +190,17 @@ def get_today(request: Request, child_id: int = Query(..., ge=1)):
             "ORDER BY created_at",
             (device_id, child_id, today),
         ).fetchall()
+        templates = _load_active_templates(conn, device_id, child_id)
 
         # Compute today's local points from events.
         points = _sum_points(rows)
+        habits = _build_today_habits(child["age_group"], templates, rows)
         return HabitDayOut(
             child_id=child_id,
             date=today,
             events=[_event_row_to_model(r) for r in rows],
             points=points,
+            habits=habits,
         )
     finally:
         conn.close()
@@ -107,7 +212,11 @@ def create_event(
     payload: HabitEventCreate,
     child_id: int = Query(..., ge=1),
 ):
-    """Record a new habit evaluation for a child today."""
+    """Record a new habit evaluation for a child today.
+
+    The habit_name must match either a default habit for the child's age
+    band or an active custom template owned by this device.
+    """
     device_id = _require_device_id(request)
     conn = get_conn()
     try:
@@ -116,6 +225,13 @@ def create_event(
             raise HTTPException(
                 status_code=400,
                 detail="ميزان العادات متاح للأطفال من 7 إلى 18 سنة فقط.",
+            )
+        templates = _load_active_templates(conn, device_id, child_id)
+        defaults, customs = _allowed_habit_names(child["age_group"], templates)
+        if payload.habit_name not in defaults and payload.habit_name not in customs:
+            raise HTTPException(
+                status_code=400,
+                detail="اسم العادة غير مسموح به. اختر عادة من القائمة أو أنشئ قالباً مخصصاً.",
             )
         cur = conn.execute(
             """

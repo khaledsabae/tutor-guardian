@@ -4,6 +4,13 @@ library;
 enum HabitCategory { worship, selfBuilding, study }
 
 extension HabitCategoryX on HabitCategory {
+  static HabitCategory fromWireName(String name) {
+    return HabitCategory.values.firstWhere(
+      (c) => c.wireName == name,
+      orElse: () => HabitCategory.selfBuilding,
+    );
+  }
+
   String get wireName {
     switch (this) {
       case HabitCategory.worship:
@@ -96,10 +103,7 @@ class HabitEvent {
     return HabitEvent(
       id: json['id'] as int?,
       childId: json['child_id'] as int,
-      category: HabitCategory.values.firstWhere(
-        (c) => c.wireName == (json['category'] as String),
-        orElse: () => HabitCategory.worship,
-      ),
+      category: HabitCategoryX.fromWireName(json['category'] as String),
       habitName: json['habit_name'] as String,
       status: HabitStatus.values.firstWhere(
         (s) => s.wireName == (json['status'] as String),
@@ -118,17 +122,57 @@ class HabitEvent {
   }
 }
 
+/// A merged row returned by `GET /api/value-tracking/today`.
+/// Represents one habit for the day — either a default or a custom template —
+/// optionally with an already-recorded event.
+class TodayHabitItem {
+  final HabitCategory category;
+  final String habitName;
+  final String source; // 'default' | 'custom'
+  final HabitStatus? status;
+  final int? eventId;
+  final int? templateId;
+
+  const TodayHabitItem({
+    required this.category,
+    required this.habitName,
+    required this.source,
+    this.status,
+    this.eventId,
+    this.templateId,
+  });
+
+  factory TodayHabitItem.fromJson(Map<String, dynamic> json) {
+    final rawStatus = json['status'] as String?;
+    return TodayHabitItem(
+      category: HabitCategoryX.fromWireName(json['category'] as String),
+      habitName: json['habit_name'] as String,
+      source: json['source'] as String,
+      status: rawStatus == null
+          ? null
+          : HabitStatus.values.firstWhere(
+              (s) => s.wireName == rawStatus,
+              orElse: () => HabitStatus.missed,
+            ),
+      eventId: json['event_id'] as int?,
+      templateId: json['template_id'] as int?,
+    );
+  }
+}
+
 class HabitDay {
   final int childId;
   final String date;
   final List<HabitEvent> events;
   final double points;
+  final List<TodayHabitItem> habits;
 
   const HabitDay({
     required this.childId,
     required this.date,
     required this.events,
     this.points = 0.0,
+    this.habits = const [],
   });
 
   factory HabitDay.fromJson(Map<String, dynamic> json) {
@@ -140,16 +184,63 @@ class HabitDay {
               .toList() ??
           [],
       points: (json['points'] as num?)?.toDouble() ?? 0.0,
+      habits: (json['habits'] as List?)
+              ?.map((h) => TodayHabitItem.fromJson(h as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
   }
 }
 
-/// Hardcoded habit presets per category (MVP — no customization).
+/// Custom habit template created by the parent for a specific child.
+class HabitTemplate {
+  final int id;
+  final int childId;
+  final HabitCategory category;
+  final String customName;
+  final bool isActive;
+  final String createdAt;
+  final String updatedAt;
+
+  const HabitTemplate({
+    required this.id,
+    required this.childId,
+    required this.category,
+    required this.customName,
+    this.isActive = true,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory HabitTemplate.fromJson(Map<String, dynamic> json) {
+    return HabitTemplate(
+      id: json['id'] as int,
+      childId: json['child_id'] as int,
+      category: HabitCategoryX.fromWireName(json['category'] as String),
+      customName: json['custom_name'] as String,
+      isActive: (json['is_active'] as int? ?? 1) == 1,
+      createdAt: json['created_at'] as String,
+      updatedAt: json['updated_at'] as String,
+    );
+  }
+
+  Map<String, dynamic> toCreateJson() {
+    return {
+      'category': category.wireName,
+      'custom_name': customName,
+    };
+  }
+
+  Map<String, dynamic> toUpdateJson() {
+    return {'is_active': isActive};
+  }
+}
+
+/// Age-banded default habit presets.
 ///
-/// Age-banded:
-///   * 7-9 years: simplified starter set ("muruu hum bil-sala li-sab'"),
-///     includes 'النوم المبكر' in place of biological sleep tracking.
-///   * 10-18 years: full adolescent habit set.
+/// 7-9 years: simplified starter set ("muruu hum bil-sala li-sab'"),
+///   includes 'النوم المبكر' in place of biological sleep tracking.
+/// 10-18 years: full adolescent habit set.
 const Map<String, Map<HabitCategory, List<String>>> kAgeBandedHabits = {
   // 7-9: starter routine — prayers, Quran, homework, respect, early sleep.
   '7-9': {
