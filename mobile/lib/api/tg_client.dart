@@ -1116,6 +1116,18 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  Future<Map<String, dynamic>> createChildWebClaim(int childId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-web-claims')
+        .replace(queryParameters: {'child_id': '$childId'});
+    final resp = await _http
+        .post(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   Future<Map<String, dynamic>> fetchChildTodayHabits({required String childToken}) async {
     final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/today');
     final resp = await _http

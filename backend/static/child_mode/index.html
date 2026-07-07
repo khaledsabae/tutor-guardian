@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ميزان العادات - وضع المراهق</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700;900&display=swap');
+    body { font-family: 'Noto Sans Arabic', system-ui, sans-serif; }
+    .card-enter { animation: cardEnter .35s ease-out both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 min-h-screen text-slate-100">
+  <div id="app" class="max-w-md mx-auto min-h-screen p-4 flex flex-col">
+    <!-- Header -->
+    <header class="flex items-center justify-between mb-6 pt-2">
+      <div>
+        <h1 class="text-2xl font-bold text-emerald-300">ميزان العادات</h1>
+        <p id="subtitle" class="text-sm text-slate-400">جارٍ التحقق من الجلسة...</p>
+      </div>
+      <div id="expiry" class="text-xs text-slate-500"></div>
+    </header>
+
+    <!-- Loading / claim state -->
+    <div id="claim-panel" class="hidden flex-1 flex flex-col items-center justify-center text-center space-y-4">
+      <div class="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center">
+        <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      </div>
+      <p class="text-lg font-medium">امسح رمز QR من تطبيق المربي</p>
+      <p class="text-sm text-slate-400">أو افتح الرابط الذي تلقيته عبره.</p>
+    </div>
+
+    <!-- Habits list -->
+    <main id="habits" class="hidden flex-1 space-y-3"></main>
+
+    <!-- Empty / done state -->
+    <div id="empty" class="hidden flex-1 flex flex-col items-center justify-center text-center space-y-3">
+      <div class="text-5xl">🌟</div>
+      <p class="text-lg font-medium">تم تسجيل كل عادات اليوم</p>
+      <p class="text-sm text-slate-400">أحسنت! غداً نبدأ صفحة جديدة.</p>
+    </div>
+
+    <!-- Error state -->
+    <div id="error" class="hidden flex-1 flex flex-col items-center justify-center text-center space-y-4">
+      <div class="text-5xl">🔒</div>
+      <p id="error-title" class="text-lg font-medium">انتهت الجلسة</p>
+      <p id="error-body" class="text-sm text-slate-400">يُرجى العودة للمربي لإعادة مسح رمز QR.</p>
+      <button id="scan-again" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium transition">
+        إعادة المسح
+      </button>
+    </div>
+
+    <footer class="text-center text-xs text-slate-600 py-4">تطبيق المربي الذكي</footer>
+  </div>
+
+  <script>
+    const API_BASE = '';
+    const TOKEN_KEY='tg_child_web_token';
+    const EXPIRES_KEY = 'tg_child_web_expires';
+
+    const $ = id => document.getElementById(id);
+    const api = async (path, opts = {}) => {
+      const token = localStorage.getItem(TOKEN_KEY);
+      const headers = { 'Content-Type': 'application/json', ...opts.headers };
+      if (token) headers['Authorization'] = `Child-Bearer ${token}`;
+      const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
+      if (res.status === 401) {
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(EXPIRES_KEY);
+        showError('انتهت الجلسة', 'يُرجى العودة للمربي لإعادة مسح رمز QR.');
+        return null;
+      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.status === 204 ? null : res.json();
+    };
+
+    function showPanel(name) {
+      ['claim-panel','habits','empty','error'].forEach(id => $(id).classList.add('hidden'));
+      $(name).classList.remove('hidden');
+    }
+
+    function showError(title, body) {
+      $('error-title').textContent = title;
+      $('error-body').textContent = body;
+      showPanel('error');
+    }
+
+    async function claimFromUrl() {
+      const params = new URLSearchParams(location.search);
+      const code = params.get('claim');
+      if (!code) return false;
+      try {
+        const data = await api(`/api/child-web/claim-session?claim=${encodeURIComponent(code)}`, { method: 'POST' });
+        if (!data) return false;
+        localStorage.setItem(TOKEN_KEY, data.token);
+        localStorage.setItem(EXPIRES_KEY, data.expires_at);
+        $('subtitle').textContent = `مرحباً ${data.child_name}`;
+        renderExpiry(data.expires_at);
+        await loadHabits();
+        history.replaceState({}, '', '/child-mode/web/');
+        return true;
+      } catch (err) {
+        showError('رمز QR منتهي', 'اطلب من المربي إصدار رمز جديد.');
+        return true;
+      }
+    }
+
+    function renderExpiry(iso) {
+      const d = iso ? new Date(iso) : null;
+      $('expiry').textContent = d ? `تنتهي الجلسة: ${d.toLocaleTimeString('ar-SA', { hour:'2-digit', minute:'2-digit' })}` : '';
+    }
+
+    async function loadHabits() {
+      try {
+        const data = await api('/api/value-tracking/child-mode/today');
+        if (!data) return;
+        $('subtitle').textContent = `مرحباً ${data.child_name || ''}`;
+        const events = data.events || [];
+        const habits = (data.habits || []).filter(h => !events.some(e => e.habit_name === h.habit_name));
+        renderExpiry(localStorage.getItem(EXPIRES_KEY));
+
+        if (!habits.length) {
+          showPanel('empty');
+          return;
+        }
+
+        const container = $('habits');
+        container.innerHTML = '';
+        habits.forEach((h, i) => {
+          const el = document.createElement('div');
+          el.className = 'card-enter bg-slate-800/80 border border-slate-700 rounded-xl p-4 shadow-lg';
+          el.style.animationDelay = `${i * 60}ms`;
+          el.innerHTML = `
+            <div class="flex items-center gap-3 mb-3">
+              <div class="text-2xl">${categoryIcon(h.category)}</div>
+              <div>
+                <h3 class="font-bold text-slate-100">${h.habit_name}</h3>
+                <p class="text-xs text-slate-400">${categoryLabel(h.category)}</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <button data-status="completed" class="status-btn py-2 rounded-lg bg-emerald-600/20 text-emerald-300 border border-emerald-600/40 hover:bg-emerald-600/30 font-medium text-sm transition">تم</button>
+              <button data-status="partial" class="status-btn py-2 rounded-lg bg-amber-600/20 text-amber-300 border border-amber-600/40 hover:bg-amber-600/30 font-medium text-sm transition">جزئي</button>
+              <button data-status="missed" class="status-btn py-2 rounded-lg bg-rose-600/20 text-rose-300 border border-rose-600/40 hover:bg-rose-600/30 font-medium text-sm transition">لم يتم</button>
+            </div>
+          `;
+          el.querySelectorAll('.status-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              el.querySelectorAll('.status-btn').forEach(b => { b.disabled = true; b.classList.add('opacity-50'); });
+              await submit(h.habit_name, h.category, btn.dataset.status, el);
+            });
+          });
+          container.appendChild(el);
+        });
+        showPanel('habits');
+      } catch (err) {
+        showError('خطأ في التحميل', 'تعذر الوصول للخادم. تأكد من الاتصال بالإنترنت.');
+      }
+    }
+
+    async function submit(habitName, category, status, card) {
+      try {
+        const iso = new Date().toISOString();
+        await api('/api/value-tracking/child-mode/events', {
+          method: 'POST',
+          body: JSON.stringify({ category, habit_name: habitName, status, device_timestamp: iso })
+        });
+        card.style.transform = 'scale(0.98)';
+        setTimeout(() => loadHabits(), 250);
+      } catch (err) {
+        card.querySelectorAll('.status-btn').forEach(b => { b.disabled = false; b.classList.remove('opacity-50'); });
+        alert('تعذر إرسال التقييم. حاول مرة أخرى.');
+      }
+    }
+
+    function categoryIcon(cat) {
+      const map = { worship: '🕌', conduct: '🤝', learning: '📚', health: '💪', responsibility: '🏠', creativity: '🎨' };
+      return map[cat] || '✨';
+    }
+    function categoryLabel(cat) {
+      const map = { worship: 'العبادة', conduct: 'الأخلاق', learning: 'التعلم', health: 'الصحة', responsibility: 'المسؤولية', creativity: 'الإبداع' };
+      return map[cat] || cat;
+    }
+
+    async function init() {
+      const hasToken = localStorage.getItem(TOKEN_KEY);
+      if (location.pathname.includes('/claim-session/')) {
+        await claimFromUrl();
+      } else if (hasToken) {
+        await loadHabits();
+      } else {
+        $('subtitle').textContent = 'امسح رمز QR من تطبيق المربي';
+        showPanel('claim-panel');
+      }
+    }
+
+    $('scan-again').addEventListener('click', () => {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(EXPIRES_KEY);
+      $('subtitle').textContent = 'امسح رمز QR من تطبيق المربي';
+      showPanel('claim-panel');
+    });
+
+    init();
+  </script>
+</body>
+</html>

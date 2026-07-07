@@ -76,6 +76,34 @@ def _validate_device_timestamp(device_timestamp: str | None) -> str:
     return device_timestamp
 
 
+@router.post("/value-tracking/child-web-claims", response_model=dict)
+def create_child_web_claim(request: Request, child_id: int = Query(..., ge=1)):
+    """Parent endpoint: create a one-time QR claim code for web teen access.
+
+    Returns a short URL-safe claim code and the full teen-facing URL. The
+    browser must open that URL and redeem the code via POST within 2 minutes.
+    The actual HMAC token is never exposed in the URL.
+    """
+    device_id = _require_device_id(request)
+    _verify_child_ownership(device_id, child_id)
+    ttl = child_token_service.web_ttl_seconds()
+    code = child_token_service.create_claim_code(device_id, child_id, ttl_seconds=ttl)
+    # Build the public claim URL.  Use a configurable host if available.
+    scheme = request.headers.get("x-forwarded-proto", request.url.scheme)
+    host = request.headers.get("x-forwarded-host", request.url.hostname)
+    port = request.headers.get("x-forwarded-port") or (
+        str(request.url.port) if request.url.port and request.url.port not in {80, 443} else ""
+    )
+    base = f"{scheme}://{host}" + (f":{port}" if port else "")
+    claim_url = f"{base}/child-mode/web/?claim={code}"
+    return {
+        "claim_code": code,
+        "claim_url": claim_url,
+        "expires_in_seconds": 120,
+        "child_id": child_id,
+    }
+
+
 @router.post("/value-tracking/child-sessions", response_model=dict)
 def create_child_session(request: Request, child_id: int = Query(..., ge=1)):
     """Parent endpoint: issue a short-lived child-mode token for a child.
