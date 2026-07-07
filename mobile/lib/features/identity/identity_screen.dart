@@ -4,6 +4,8 @@
 /// The sign-in is opt-in; anonymous use remains the default.
 library;
 
+import 'dart:io' show SocketException;
+
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_theme.dart';
@@ -57,8 +59,11 @@ class _IdentityScreenState extends State<IdentityScreen> {
       }
     } catch (e) {
       if (mounted) {
+        final msg = e is SocketException
+            ? 'تعذّر الاتصال بالخادم. تحقق من اتصالك بالإنترنت.'
+            : 'فشل ربط الحساب: ${e.toString()}';
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('فشل ربط الحساب: ${e.toString()}')),
+          SnackBar(content: Text(msg)),
         );
       }
     }

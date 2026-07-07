@@ -5,6 +5,8 @@
 /// opt-in only; the user can keep using the app anonymously.
 library;
 
+import 'dart:io' show SocketException;
+
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/services.dart';
@@ -51,7 +53,9 @@ class IdentityService {
     }
   }
 
-  /// Explicit sign-in from Settings. Returns true on success.
+  /// Explicit sign-in from Settings. Throws on network failure so the UI
+  /// can show a targeted message; returns false only for recoverable
+  /// (config / user-cancelled) errors.
   Future<bool> signInAndLink() async {
     if (_serverClientId.isEmpty) {
       debugPrint('GOOGLE_SERVER_CLIENT_ID not configured; Google Sign-In will fail.');
@@ -63,6 +67,8 @@ class IdentityService {
       await _link(account);
       Analytics.identityLinked();
       return true;
+    } on SocketException {
+      rethrow; // Network failure — let the UI show a connectivity message.
     } on PlatformException catch (e) {
       // Common Android failures: sign_in_failed / 10 = no web client ID configured.
       debugPrint('Google Sign-In error: ${e.code} — ${e.message}');
