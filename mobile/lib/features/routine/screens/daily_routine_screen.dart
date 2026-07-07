@@ -623,38 +623,47 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
 
   Future<void> _showWebShareDialog(int childId, String childName) async {
     final client = ref.read(tgClientProvider);
-    late BuildContext dialogContext;
 
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (ctx) {
-        dialogContext = ctx;
-        return const AlertDialog(
-          content: SizedBox(
-            width: 80,
-            height: 80,
-            child: Center(child: CircularProgressIndicator()),
-          ),
-        );
-      },
+      builder: (ctx) => const AlertDialog(
+        content: SizedBox(
+          width: 80,
+          height: 80,
+          child: Center(child: CircularProgressIndicator()),
+        ),
+      ),
     );
 
+    Map<String, dynamic>? data;
     try {
-      final data = await client.createChildWebClaim(childId);
-      if (!dialogContext.mounted) return;
-      Navigator.of(dialogContext).pop();
+      data = await client.createChildWebClaim(childId);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.of(context, rootNavigator: true).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('تعذر إنشاء رمز QR: $e')),
+      );
+      return;
+    }
 
-      final claimUrl = data['claim_url'] as String? ?? '';
+    if (!mounted) return;
+    Navigator.of(context, rootNavigator: true).pop();
 
-      await showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
+    final claimUrl = data['claim_url'] as String? ?? '';
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
           title: const Text('شارك الميزان مع المراهق'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
+          content: SizedBox(
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
                 if (claimUrl.isNotEmpty) ...[
                   Container(
                     padding: const EdgeInsets.all(12),
@@ -685,6 +694,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
               ],
             ),
           ),
+        ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(),
@@ -707,15 +717,6 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
           ],
         ),
       );
-    } catch (e) {
-      if (!dialogContext.mounted) return;
-      Navigator.of(dialogContext).pop();
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('تعذر إنشاء رمز QR: $e')),
-        );
-      }
-    }
   }
 
   Future<void> _enterChildMode(int childId, String childName) async {
@@ -782,9 +783,9 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                 const SizedBox(height: 8),
                 if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
                   OutlinedButton.icon(
-                    onPressed: () {
+                    onPressed: () async {
                       final profile = ref.read(activeChildProfileProvider);
-                      _showWebShareDialog(childId, profile?.name ?? 'الطفل');
+                      await _showWebShareDialog(childId, profile?.name ?? 'الطفل');
                     },
                     icon: const Icon(Icons.qr_code_2),
                     label: const Text('مشاركة الميزان عبر الويب 🔗'),
