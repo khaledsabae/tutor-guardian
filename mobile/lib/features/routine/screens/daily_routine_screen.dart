@@ -16,6 +16,7 @@ import 'package:almorabbi/features/routine/models/routine_models.dart';
 import 'package:almorabbi/features/routine/providers/routine_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
+import 'package:almorabbi/features/routine/screens/child_mode_lock_screen.dart';
 import 'package:almorabbi/features/routine/screens/habit_customize_screen.dart';
 
 bool routineAgeAllowed(String ageGroup) {
@@ -617,6 +618,17 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
     );
   }
 
+  Future<void> _enterChildMode(int childId, String childName) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ChildModeLockScreen(
+          childId: childId,
+          childName: childName,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final childId = ref.watch(activeChildIdProvider);
@@ -660,10 +672,23 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
           top: false,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: Dt.pad, vertical: 8),
-            child: OutlinedButton.icon(
-              onPressed: () => _openCustomizeScreen(childId),
-              icon: const Icon(Icons.edit_note_outlined),
-              label: const Text('تخصيص العادات'),
+            child: Column(
+              children: [
+                OutlinedButton.icon(
+                  onPressed: () => _openCustomizeScreen(childId),
+                  icon: const Icon(Icons.edit_note_outlined),
+                  label: const Text('تخصيص العادات'),
+                ),
+                const SizedBox(height: 8),
+                FilledButton.icon(
+                  onPressed: () {
+                    final profile = ref.read(activeChildProfileProvider);
+                    _enterChildMode(childId, profile?.name ?? 'الطفل');
+                  },
+                  icon: const Icon(Icons.child_care),
+                  label: const Text('تسليم الجهاز للطفل (وضع الطفل)'),
+                ),
+              ],
             ),
           ),
         ),

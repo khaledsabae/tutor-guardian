@@ -80,6 +80,20 @@ extension HabitStatusX on HabitStatus {
         return '❌';
     }
   }
+
+  static HabitStatus fromWireName(String name) {
+    return HabitStatus.values.firstWhere(
+      (s) => s.wireName == name,
+      orElse: () => HabitStatus.missed,
+    );
+  }
+}
+
+class HabitItem {
+  final HabitCategory category;
+  final String habitName;
+
+  const HabitItem({required this.category, required this.habitName});
 }
 
 class HabitEvent {

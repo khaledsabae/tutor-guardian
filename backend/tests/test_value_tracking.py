@@ -11,9 +11,11 @@ from fastapi.testclient import TestClient
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.db.init_db import init_db
+from app.routers.child_mode import router as child_mode_router
 from app.routers.children import router as children_router
-from app.routers.value_tracking import router as value_router
 from app.routers.habit_templates import router as templates_router
+from app.routers.value_tracking import router as value_router
+from app.services import child_token
 
 
 @pytest.fixture
@@ -30,7 +32,18 @@ class _AuthStubMiddleware(BaseHTTPMiddleware):
         self.device_id = device_id
 
     async def dispatch(self, request: Request, call_next):
-        request.state.device_id = self.device_id
+        auth_header = request.headers.get("Authorization", "")
+        if auth_header.startswith("Child-Bearer "):
+            token = auth_header[13:].strip()
+            payload = child_token.verify_child_token(token)
+            if payload is None:
+                from starlette.responses import JSONResponse
+                return JSONResponse(status_code=401, content={"detail": "توكن وضع الطفل غير صالح"})
+            request.state.child_mode = True
+            request.state.device_id = payload["device_id"]
+            request.state.child_id = payload["child_id"]
+        else:
+            request.state.device_id = self.device_id
         return await call_next(request)
 
 
@@ -41,6 +54,7 @@ def app(tmp_db):
     a.include_router(children_router, prefix="/api")
     a.include_router(value_router, prefix="/api")
     a.include_router(templates_router, prefix="/api")
+    a.include_router(child_mode_router, prefix="/api")
     return a
 
 
@@ -343,3 +357,102 @@ def test_custom_template_requires_auth(tmp_db):
         r = c.get("/api/habit-templates", params={"child_id": 1})
         assert r.status_code == 401
         assert "توثيق" in r.json()["detail"]
+
+
+# ── Child mode tests ─────────────────────────────────────────────────────────
+
+
+def _issue_child_token(client, child_id) -> str:
+    r = client.post(
+        "/api/value-tracking/child-sessions",
+        params={"child_id": child_id},
+    )
+    assert r.status_code == 200, r.text
+    return r.json()["token"]
+
+
+def test_child_session_issued_by_parent(client):
+    cid = _create_child(client, age_group="7-9")
+    token = _issue_child_token(client, cid)
+    assert token
+    payload = child_token.verify_child_token(token)
+    assert payload is not None
+    assert payload["child_id"] == cid
+    assert payload["scope"] == "habit_child"
+
+
+def test_child_mode_today_returns_merged_habits(client):
+    cid = _create_child(client, age_group="7-9")
+    token = _issue_child_token(client, cid)
+    r = client.get(
+        "/api/value-tracking/child-mode/today",
+        headers={"Authorization": f"Child-Bearer {token}"},
+    )
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["child_id"] == cid
+    names = {h["habit_name"] for h in body["habits"]}
+    assert "صلاة الفجر" in names
+    assert "النوم المبكر" in names
+
+
+def test_child_mode_records_event_submit_only(client):
+    cid = _create_child(client, age_group="7-9")
+    token = _issue_child_token(client, cid)
+    headers = {"Authorization": f"Child-Bearer {token}"}
+    r = client.post(
+        "/api/value-tracking/child-mode/events",
+        headers=headers,
+        json={"category": "worship", "habit_name": "صلاة الفجر", "status": "completed"},
+    )
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["status"] == "completed"
+    assert body["child_id"] == cid
+    # Submit-only: second attempt for the same habit today is rejected.
+    r2 = client.post(
+        "/api/value-tracking/child-mode/events",
+        headers=headers,
+        json={"category": "worship", "habit_name": "صلاة الفجر", "status": "partially"},
+    )
+    assert r2.status_code == 409
+
+
+def test_child_mode_rejects_unknown_habit(client):
+    cid = _create_child(client, age_group="7-9")
+    token = _issue_child_token(client, cid)
+    r = client.post(
+        "/api/value-tracking/child-mode/events",
+        headers={"Authorization": f"Child-Bearer {token}"},
+        json={"category": "worship", "habit_name": "عادة غير موجودة", "status": "completed"},
+    )
+    assert r.status_code == 400
+
+
+def test_child_mode_requires_child_bearer_header(client):
+    r = client.get("/api/value-tracking/child-mode/today")
+    assert r.status_code == 401
+
+
+def test_child_mode_rejects_parent_bearer_token(client):
+    cid = _create_child(client, age_group="7-9")
+    r = client.get(
+        "/api/value-tracking/child-mode/today",
+        headers={"Authorization": "Bearer fake-parent-token"},
+    )
+    assert r.status_code == 401
+
+
+def test_child_mode_cannot_access_parent_routes(client):
+    cid = _create_child(client, age_group="7-9")
+    token = _issue_child_token(client, cid)
+    # Parent routes accept Child-Bearer header in the stub middleware, but
+    # the production AuthMiddleware only allows Child-Bearer on /child-mode/*.
+    from app.main import app as real_app
+    with TestClient(real_app) as c:
+        r = c.get(
+            "/api/value-tracking/summary",
+            headers={"Authorization": f"Child-Bearer {token}"},
+            params={"child_id": cid},
+        )
+        assert r.status_code == 401

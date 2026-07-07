@@ -10,9 +10,13 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
+from app.services import child_token as child_token_service
 from app.services import conversation_store as store
 
 logger = logging.getLogger(__name__)
+
+# Child-mode endpoints are protected by a separate token scheme.
+_CHILD_MODE_PREFIX = "/api/value-tracking/child-mode/"
 
 # Endpoints that don't require authentication
 _PUBLIC_PATHS = {
@@ -77,8 +81,27 @@ class AuthMiddleware(BaseHTTPMiddleware):
         if not _is_protected(path, request.method):
             return await call_next(request)
 
-        # GET /api/chat/sessions/{id} is protected (requires auth)
         auth_header = request.headers.get("Authorization", "")
+
+        # Child-mode routes use a separate scoped token scheme.
+        if path.startswith(_CHILD_MODE_PREFIX):
+            if not auth_header.startswith("Child-Bearer "):
+                return JSONResponse(
+                    status_code=401,
+                    content={"detail": "مطلوب توثيق وضع الطفل."},
+                )
+            token = auth_header[13:].strip()
+            payload = child_token_service.verify_child_token(token)
+            if payload is None:
+                return JSONResponse(
+                    status_code=401,
+                    content={"detail": "توكن وضع الطفل غير صالح أو منتهي."},
+                )
+            request.state.child_mode = True
+            request.state.device_id = payload["device_id"]
+            request.state.child_id = payload["child_id"]
+            request.state.token = token
+            return await call_next(request)
 
         if not auth_header.startswith("Bearer "):
             return JSONResponse(
