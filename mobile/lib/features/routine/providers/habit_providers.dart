@@ -1,4 +1,6 @@
 /// Riverpod providers for the habit tracker (ميزان العادات).
+library;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
@@ -19,7 +21,7 @@ final todayHabitsProvider =
         if (e.statusCode == 401) {
           await client.ensureSession();
         }
-        yield const HabitDay(childId: 0, date: '', events: []);
+        yield HabitDay(childId: childId, date: '', events: [], habits: []);
       }
       await Future.delayed(const Duration(seconds: 30));
     }
@@ -38,3 +40,16 @@ final habitSummaryProvider =
 final habitActiveChildIdProvider = Provider<int?>((ref) {
   return ref.watch(activeChildIdProvider);
 });
+
+/// Custom habit templates for a child. Refreshable after add/archive/unarchive.
+final habitTemplatesProvider =
+    FutureProvider.autoDispose.family<List<HabitTemplate>, int>(
+  (ref, childId) async {
+    final raw = await TgClient().listHabitTemplates(childId);
+    final list = (raw['templates'] as List?)
+            ?.map((t) => HabitTemplate.fromJson(t as Map<String, dynamic>))
+            .toList() ??
+        [];
+    return list;
+  },
+);

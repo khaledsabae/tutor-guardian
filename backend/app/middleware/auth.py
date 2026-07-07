@@ -34,6 +34,7 @@ _PROTECTED_PREFIXES = (
     "/api/identity",
     "/api/daily-routine",
     "/api/value-tracking",
+    "/api/habit-templates",
 )
 # Progress PATCH is the only mutating verb under /api/program — we
 # match on the exact path suffix so the read-only GETs remain public.
