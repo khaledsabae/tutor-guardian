@@ -84,7 +84,11 @@ def trigger_podcast(source_id, lesson_id, notebook_id=None):
 
 
 def poll_task(task_id):
-    out, rc = run([NOTEBOOKLM, "artifact", "poll", task_id, "--json"], timeout=30)
+    try:
+        out, rc = run([NOTEBOOKLM, "artifact", "poll", task_id, "--json"], timeout=30)
+    except Exception as e:
+        print(f"    poll_task exception for {task_id}: {e}")
+        return None, None
     try:
         d = json.loads(out)
         return d.get("status"), d.get("url")
@@ -123,8 +127,20 @@ def update_index(lesson_id, file_path):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def commit_and_sync(downloaded):
-    if downloaded == 0:
+def podcast_exists_on_disk(lesson_id: str, min_bytes: int = 10000) -> Path | None:
+    """Return the existing MP3 path if it is already on disk and looks valid."""
+    candidate = DOCS_DIR / f"{lesson_id}_podcast.mp3"
+    if candidate.exists() and candidate.stat().st_size >= min_bytes:
+        return candidate
+    # Some historical files use underscores instead of hyphens.
+    alt = DOCS_DIR / f"{lesson_id.replace('-', '_')}_podcast.mp3"
+    if alt.exists() and alt.stat().st_size >= min_bytes:
+        return alt
+    return None
+
+
+def commit_and_sync(downloaded, index_updated=False):
+    if downloaded == 0 and not index_updated:
         return
     print("\nCommitting updates to git...")
     os.system(
@@ -134,6 +150,8 @@ def commit_and_sync(downloaded):
         f"&& git push origin main"
     )
 
+    if downloaded == 0:
+        return
     print("\nSyncing MP3 files to VPS...")
     os.system(
         "rsync -a --include='*.mp3' --exclude='*' "
@@ -177,12 +195,25 @@ def main():
 
     # Find lessons with source_id but no podcast
     to_process = []
+    index_updated = False
     for l in data["lessons"]:
         lid = l.get("lesson_id", "")
         source_id = l.get("source_id", "")
         podcasts = l.get("assets", {}).get("podcasts", [])
-        if source_id and not podcasts:
+        if source_id and podcasts:
+            continue
+        existing = podcast_exists_on_disk(lid)
+        if existing:
+            print(f"  ⏭ {lid} already exists on disk ({existing.stat().st_size // 1024} KB); syncing index.")
+            update_index(lid, f"docs/{existing.name}")
+            index_updated = True
+            continue
+        if source_id:
             to_process.append({"id": lid, "source_id": source_id})
+
+    if index_updated:
+        with open(INDEX_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
 
     print(f"Found {len(to_process)} lessons ready for generation (have source_id, no podcast)")
 
@@ -228,6 +259,17 @@ def main():
 
     # Resume any previously pending tasks from state
     pending = state.get("pending_podcast_tasks", {})
+    # Drop pending tasks whose podcast already exists on disk or in the index.
+    clean_pending = {}
+    for lid, info in pending.items():
+        lesson = next((l for l in data["lessons"] if l.get("lesson_id") == lid), None)
+        has_index_podcast = bool(lesson and lesson.get("assets", {}).get("podcasts"))
+        if has_index_podcast or podcast_exists_on_disk(lid):
+            print(f"  ⏭ dropping stale pending task {lid} (already has podcast)")
+            continue
+        clean_pending[lid] = info
+    pending = clean_pending
+    state["pending_podcast_tasks"] = pending
     if pending and not rate_limited_now:
         print(f"  (also polling {len(pending)} tasks from a previous run)")
         tasks.update(pending)
@@ -290,7 +332,7 @@ def main():
     state["pending_podcast_tasks"] = remaining
     save_state(state)
 
-    commit_and_sync(downloaded)
+    commit_and_sync(downloaded, index_updated)
 
 
 if __name__ == "__main__":

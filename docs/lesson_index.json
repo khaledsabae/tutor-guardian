@@ -1513,7 +1513,15 @@
             "description": "Infographic for lesson_13-15_medical_02"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_13-15_medical_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_13-15_medical_02_podcast.mp3",
+            "file": "docs/lesson_13-15_medical_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "b9d49f00-f489-4922-bab6-c2a052f30baf",
@@ -1656,7 +1664,15 @@
             "resolution": "2752x1536"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_13-15_medical_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_13-15_medical_04_podcast.mp3",
+            "file": "docs/lesson_13-15_medical_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "0e79b612-e0fa-4455-a120-59938e7110bc",
@@ -1721,7 +1737,15 @@
             "description": "Infographic for lesson_16-18_cyber_01"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_cyber_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_cyber_01_podcast.mp3",
+            "file": "docs/lesson_16-18_cyber_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "358f4c4e-9742-45f0-b9ee-037b09ca078d",
@@ -1786,7 +1810,15 @@
             "description": "Infographic for lesson_16-18_cyber_02"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_cyber_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_cyber_02_podcast.mp3",
+            "file": "docs/lesson_16-18_cyber_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "5f6d098c-f8a8-4f5a-a9f6-79b2cc8c053e",
@@ -1851,7 +1883,15 @@
             "description": "Infographic for lesson_16-18_medical_01"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_medical_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_medical_01_podcast.mp3",
+            "file": "docs/lesson_16-18_medical_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "f9989ce3-a6e7-48dc-a627-87fee569c42d",
@@ -1922,7 +1962,15 @@
             "description": "Infographic for lesson_16-18_medical_02"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_medical_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_medical_02_podcast.mp3",
+            "file": "docs/lesson_16-18_medical_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "91cd3b56-aba3-40fe-ac12-3f69ac2d0623",
@@ -1993,7 +2041,15 @@
             "description": "Infographic for lesson_16-18_medical_03"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_medical_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_medical_03_podcast.mp3",
+            "file": "docs/lesson_16-18_medical_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "e265bfe0-2602-4493-adb4-233c72505d9c",
@@ -3047,7 +3103,15 @@
             "description": "Infographic for lesson_7-9_medical_01"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_medical_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_medical_01_podcast.mp3",
+            "file": "docs/lesson_7-9_medical_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "1e9b6c6c-a3e9-4bc3-b8bb-3111cc7cc474",
@@ -3118,7 +3182,15 @@
             "description": "Infographic for lesson_7-9_medical_02"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_medical_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_medical_02_podcast.mp3",
+            "file": "docs/lesson_7-9_medical_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "954f1301-4611-41f2-b796-6486fd8ac9d5",
@@ -4260,7 +4332,15 @@
             "description": "Infographic for lesson_2-3_development_independence_01"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_development_independence_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_development_independence_01_podcast.mp3",
+            "file": "docs/lesson_2-3_development_independence_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "02a935ab-8fe5-4d04-a77b-0faaf59c6553",
@@ -4325,7 +4405,15 @@
             "description": "Infographic for lesson_2-3_cyber_routine_02"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_cyber_routine_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_cyber_routine_02_podcast.mp3",
+            "file": "docs/lesson_2-3_cyber_routine_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "939414c0-68d3-40f4-8a91-31c9f2f2f4f6",
@@ -4390,7 +4478,15 @@
             "description": "Infographic for lesson_2-3_development_language_03"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_development_language_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_development_language_03_podcast.mp3",
+            "file": "docs/lesson_2-3_development_language_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "407b5539-eee6-4574-ad06-78245cdb791a",
@@ -4455,7 +4551,15 @@
             "description": "Infographic for lesson_2-3_islamic_tantrums_04"
           }
         ],
-        "podcasts": [],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_islamic_tantrums_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_islamic_tantrums_04_podcast.mp3",
+            "file": "docs/lesson_2-3_islamic_tantrums_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
+        ],
         "videos": [
           {
             "source_id": "8d5b520e-e613-4bb8-af0c-fb5c4800a678",
@@ -6222,6 +6326,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_0-3_islamic_parenting_fitrah_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_islamic_parenting_fitrah_01_podcast.mp3",
+            "file": "docs/lesson_0-3_islamic_parenting_fitrah_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "fea88841-da5f-4434-b5a9-d4000929b36f"
@@ -6255,6 +6368,15 @@
             "title": "دليل الغذاء الروحي للمولود الجديد",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_0-3_islamic_parenting_fitrah_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_islamic_parenting_fitrah_02_podcast.mp3",
+            "file": "docs/lesson_0-3_islamic_parenting_fitrah_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6290,6 +6412,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_0-3_islamic_parenting_fitrah_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_islamic_parenting_fitrah_03_podcast.mp3",
+            "file": "docs/lesson_0-3_islamic_parenting_fitrah_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "fec99dc8-ee24-4818-800c-f1be304fe18b"
@@ -6323,6 +6454,15 @@
             "title": "لمسة الرحمة في تربية الطفل",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_0-3_islamic_parenting_fitrah_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_islamic_parenting_fitrah_04_podcast.mp3",
+            "file": "docs/lesson_0-3_islamic_parenting_fitrah_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6401,6 +6541,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_development_pre_teen_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_development_pre_teen_02_podcast.mp3",
+            "file": "docs/lesson_10-12_development_pre_teen_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "fa931e68-9a58-4eb5-b579-62e4c82fef17"
@@ -6434,6 +6583,15 @@
             "title": "تقوية بوصلة طفلك الداخلية",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_development_pre_teen_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_development_pre_teen_03_podcast.mp3",
+            "file": "docs/lesson_10-12_development_pre_teen_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6469,6 +6627,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_development_pre_teen_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_development_pre_teen_04_podcast.mp3",
+            "file": "docs/lesson_10-12_development_pre_teen_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "a48a147f-8802-45b8-a959-87184a328074"
@@ -6502,6 +6669,15 @@
             "title": "الصلاة: من العادة إلى القلب",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_islamic_parenting_worship_love_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_islamic_parenting_worship_love_01_podcast.mp3",
+            "file": "docs/lesson_10-12_islamic_parenting_worship_love_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6537,6 +6713,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_islamic_parenting_worship_love_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_islamic_parenting_worship_love_02_podcast.mp3",
+            "file": "docs/lesson_10-12_islamic_parenting_worship_love_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "b2a45a45-3a51-4f28-9708-016e2a45ff83"
@@ -6570,6 +6755,15 @@
             "title": "تحويل حفظ القرآن لنور القلب",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_islamic_parenting_worship_love_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_islamic_parenting_worship_love_03_podcast.mp3",
+            "file": "docs/lesson_10-12_islamic_parenting_worship_love_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6605,6 +6799,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_islamic_parenting_worship_love_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_islamic_parenting_worship_love_04_podcast.mp3",
+            "file": "docs/lesson_10-12_islamic_parenting_worship_love_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "b1abab7b-7567-4b77-ae47-b548b19f5723"
@@ -6638,6 +6841,15 @@
             "title": "العفة وبدايات الغريزة",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_13-15_islamic_parenting_steadfast_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_13-15_islamic_parenting_steadfast_01_podcast.mp3",
+            "file": "docs/lesson_13-15_islamic_parenting_steadfast_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6673,6 +6885,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_13-15_islamic_parenting_steadfast_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_13-15_islamic_parenting_steadfast_02_podcast.mp3",
+            "file": "docs/lesson_13-15_islamic_parenting_steadfast_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "f9f42aea-b04d-4968-ba28-93a153a767e1"
@@ -6706,6 +6927,15 @@
             "title": "دليل تعزيز الإخلاص لدى المراهقين",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_13-15_islamic_parenting_steadfast_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_13-15_islamic_parenting_steadfast_03_podcast.mp3",
+            "file": "docs/lesson_13-15_islamic_parenting_steadfast_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6741,6 +6971,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_13-15_islamic_parenting_steadfast_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_13-15_islamic_parenting_steadfast_04_podcast.mp3",
+            "file": "docs/lesson_13-15_islamic_parenting_steadfast_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "52c1c070-b2be-4ba4-9b40-b9bf8e6e3fc8"
@@ -6774,6 +7013,15 @@
             "title": "دماغ شابك: من الاندفاع للوعي",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_development_adult_readiness_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_development_adult_readiness_01_podcast.mp3",
+            "file": "docs/lesson_16-18_development_adult_readiness_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6809,6 +7057,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_development_adult_readiness_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_development_adult_readiness_02_podcast.mp3",
+            "file": "docs/lesson_16-18_development_adult_readiness_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "f4de3214-a45e-4b66-abd0-58c826fb0408"
@@ -6842,6 +7099,15 @@
             "title": "دليل دعم الصحة النفسية للمراهقين",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_development_adult_readiness_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_development_adult_readiness_03_podcast.mp3",
+            "file": "docs/lesson_16-18_development_adult_readiness_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6877,6 +7143,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_development_adult_readiness_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_development_adult_readiness_04_podcast.mp3",
+            "file": "docs/lesson_16-18_development_adult_readiness_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "eb5067b4-eb12-4028-b135-8b74b3e79859"
@@ -6910,6 +7185,15 @@
             "title": "رحلة الشاب نحو الرشد الإيماني",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_islamic_parenting_adult_faith_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_islamic_parenting_adult_faith_01_podcast.mp3",
+            "file": "docs/lesson_16-18_islamic_parenting_adult_faith_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -6945,6 +7229,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_islamic_parenting_adult_faith_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_islamic_parenting_adult_faith_02_podcast.mp3",
+            "file": "docs/lesson_16-18_islamic_parenting_adult_faith_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "1955ad55-60d2-46bb-90c6-d9812abf2f2f"
@@ -6978,6 +7271,15 @@
             "title": "كيف يكتشف ابنك رسالته الحياتية؟",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_islamic_parenting_adult_faith_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_islamic_parenting_adult_faith_03_podcast.mp3",
+            "file": "docs/lesson_16-18_islamic_parenting_adult_faith_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7013,6 +7315,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_islamic_parenting_adult_faith_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_islamic_parenting_adult_faith_04_podcast.mp3",
+            "file": "docs/lesson_16-18_islamic_parenting_adult_faith_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "0488261d-8c1c-4ada-89ce-365074f5e759"
@@ -7046,6 +7357,15 @@
             "title": "تعليم الأذكار الدينية للأطفال",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_islamic_first_words_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_islamic_first_words_01_podcast.mp3",
+            "file": "docs/lesson_2-3_islamic_first_words_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7081,6 +7401,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_islamic_first_words_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_islamic_first_words_02_podcast.mp3",
+            "file": "docs/lesson_2-3_islamic_first_words_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "9d6ef7ea-cfe8-4707-9bd7-c9dc3375a7da"
@@ -7114,6 +7443,15 @@
             "title": "آداب الطعام للصغار بحب",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_islamic_first_words_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_islamic_first_words_03_podcast.mp3",
+            "file": "docs/lesson_2-3_islamic_first_words_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7149,6 +7487,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_islamic_first_words_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_islamic_first_words_04_podcast.mp3",
+            "file": "docs/lesson_2-3_islamic_first_words_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "c5a48cd3-cbac-48af-b52b-08f3569f9068"
@@ -7182,6 +7529,15 @@
             "title": "دليل التغذية السليمة بعد الفطام",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_medical_early_wellbeing_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_medical_early_wellbeing_01_podcast.mp3",
+            "file": "docs/lesson_2-3_medical_early_wellbeing_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7217,6 +7573,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_medical_early_wellbeing_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_medical_early_wellbeing_02_podcast.mp3",
+            "file": "docs/lesson_2-3_medical_early_wellbeing_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "b1f0139a-aa21-4011-8912-e2a842f76960"
@@ -7250,6 +7615,15 @@
             "title": "رحلة نمو طفلك وتطوره",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_medical_early_wellbeing_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_medical_early_wellbeing_03_podcast.mp3",
+            "file": "docs/lesson_2-3_medical_early_wellbeing_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7285,6 +7659,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_medical_early_wellbeing_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_medical_early_wellbeing_04_podcast.mp3",
+            "file": "docs/lesson_2-3_medical_early_wellbeing_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "f6a37ec5-5aec-49dd-9006-d505c0c429f2"
@@ -7318,6 +7701,15 @@
             "title": "دليل تنظيم وقت شاشة الطفل",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_cyber_early_screens_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_cyber_early_screens_01_podcast.mp3",
+            "file": "docs/lesson_4-6_cyber_early_screens_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7353,6 +7745,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_cyber_early_screens_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_cyber_early_screens_02_podcast.mp3",
+            "file": "docs/lesson_4-6_cyber_early_screens_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "edf0d955-453b-4454-a2cf-46a2159cad61"
@@ -7386,6 +7787,15 @@
             "title": "دليل المشاهدة المشتركة الممتعة",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_cyber_early_screens_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_cyber_early_screens_03_podcast.mp3",
+            "file": "docs/lesson_4-6_cyber_early_screens_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7421,6 +7831,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_cyber_early_screens_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_cyber_early_screens_04_podcast.mp3",
+            "file": "docs/lesson_4-6_cyber_early_screens_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "fba81554-adb8-4dc5-9d4a-37bad4e33cb5"
@@ -7454,6 +7873,15 @@
             "title": "دليل نوم الأطفال لنمو سليم",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_medical_healthy_growth_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_medical_healthy_growth_01_podcast.mp3",
+            "file": "docs/lesson_4-6_medical_healthy_growth_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7489,6 +7917,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_medical_healthy_growth_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_medical_healthy_growth_02_podcast.mp3",
+            "file": "docs/lesson_4-6_medical_healthy_growth_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "76d29441-28e9-4ef3-9797-a47144887a60"
@@ -7522,6 +7959,15 @@
             "title": "علامات نمو الطفل واستشارة الطبيب",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_medical_healthy_growth_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_medical_healthy_growth_03_podcast.mp3",
+            "file": "docs/lesson_4-6_medical_healthy_growth_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7557,6 +8003,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_medical_healthy_growth_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_medical_healthy_growth_04_podcast.mp3",
+            "file": "docs/lesson_4-6_medical_healthy_growth_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "4d589f71-a3e8-441c-b074-91b6c5feab64"
@@ -7590,6 +8045,15 @@
             "title": "عقد الشاشة العائلي للأمان الرقمي",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_cyber_digital_basics_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_cyber_digital_basics_01_podcast.mp3",
+            "file": "docs/lesson_7-9_cyber_digital_basics_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7625,6 +8089,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_cyber_digital_basics_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_cyber_digital_basics_02_podcast.mp3",
+            "file": "docs/lesson_7-9_cyber_digital_basics_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "e215ff99-18c3-4fdb-aa78-38bb24d8a4ef"
@@ -7658,6 +8131,15 @@
             "title": "خطوات الأمان الرقمي للأطفال",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_cyber_digital_basics_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_cyber_digital_basics_03_podcast.mp3",
+            "file": "docs/lesson_7-9_cyber_digital_basics_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7693,6 +8175,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_cyber_digital_basics_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_cyber_digital_basics_04_podcast.mp3",
+            "file": "docs/lesson_7-9_cyber_digital_basics_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "b15e60e3-a604-42a8-940f-df292e64c688"
@@ -7726,6 +8217,15 @@
             "title": "دليل تربية الطفل على الصدق",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_islamic_parenting_akhlaq_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_islamic_parenting_akhlaq_01_podcast.mp3",
+            "file": "docs/lesson_7-9_islamic_parenting_akhlaq_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
@@ -7761,6 +8261,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_islamic_parenting_akhlaq_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_islamic_parenting_akhlaq_02_podcast.mp3",
+            "file": "docs/lesson_7-9_islamic_parenting_akhlaq_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "a0b8cec2-c352-4c50-95ff-f7fc2a3a2334"
@@ -7795,6 +8304,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_islamic_parenting_akhlaq_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_islamic_parenting_akhlaq_03_podcast.mp3",
+            "file": "docs/lesson_7-9_islamic_parenting_akhlaq_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "d5a0c2e3-b327-49eb-86e1-f6965c157ae1"
@@ -7828,6 +8346,15 @@
             "title": "تعليم الأطفال ضبط الغضب",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_islamic_parenting_akhlaq_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_islamic_parenting_akhlaq_04_podcast.mp3",
+            "file": "docs/lesson_7-9_islamic_parenting_akhlaq_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       },
