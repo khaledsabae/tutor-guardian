@@ -22,6 +22,7 @@ class OnboardingStorage {
   static const _kActiveChildName = keyActiveChildName;
   static const _kActiveChildAgeGroup = keyActiveChildAgeGroup;
   static const _kActiveChildAvatar = keyActiveChildAvatar;
+  static const _kLastSeenVersion = 'tg.last_seen_version';
 
     final SharedPreferences _prefs;
 
@@ -63,6 +64,13 @@ class OnboardingStorage {
     await _prefs.remove(_kActiveChildId);
     await _prefs.remove(_kActiveChildName);
     await _prefs.remove(_kActiveChildAgeGroup);
+  }
+
+  /// The last app version the user has seen the update splash for.
+  String? get lastSeenVersion => _prefs.getString(_kLastSeenVersion);
+
+  Future<void> markUpdateSeen(String version) async {
+    await _prefs.setString(_kLastSeenVersion, version);
   }
 
   /// Clear everything — useful for "switch device" debug flows.

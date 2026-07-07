@@ -15,6 +15,7 @@ import 'config/app_config.dart';
 import 'features/identity/identity_service.dart';
 import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
+import 'features/onboarding/screens/update_splash_screen.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/program/screens/paths_screen.dart';
 import 'features/deeplink/deep_link_handler.dart';
@@ -159,6 +160,15 @@ class _AppBootstrapper extends ConsumerWidget {
         Future(() async {
           await ref.read(childModeProvider.notifier).restore();
         });
+        // If the user just updated the app, show the what's-new splash
+        // once before entering the main screen.  The splash flips the
+        // provider below when dismissed, triggering a rebuild into the
+        // normal [RootScaffold].
+        ref.watch(updateSplashDismissedProvider);
+        final seenVersion = ref.read(onboardingStorageProvider).lastSeenVersion;
+        if (seenVersion != updateSplashVersion) {
+          return const UpdateSplashScreen();
+        }
         return const RootScaffold();
       },
       loading: () => const _SplashScreen(),

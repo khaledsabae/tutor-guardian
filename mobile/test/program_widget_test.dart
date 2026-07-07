@@ -436,6 +436,7 @@ void main() {
       final storage = OnboardingStorage(prefs);
       await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
       await storage.markOnboardingCompleted();
+      await storage.markUpdateSeen('1.0.25'); // skip the update splash
 
       final container = ProviderContainer(
         overrides: [
