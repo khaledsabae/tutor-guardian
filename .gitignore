@@ -86,3 +86,13 @@ backend/secrets/
 *firebase-adminsdk*.json
 # Android App Bundles (large release artifacts; store separately)
 *.aab
+
+# ── User-facing media assets (hosted on VPS; kept out of git) ────────────
+docs/marketing/watermarked_infographics/
+docs/research/aqidah_library/
+docs/path_videos/
+
+# ── Local development / agent scratch dirs ─────────────────────────────────
+logs/
+memory/
+.agents/
