@@ -4,8 +4,10 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
@@ -16,6 +18,7 @@ import 'package:almorabbi/features/routine/models/routine_models.dart';
 import 'package:almorabbi/features/routine/providers/routine_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
+import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/features/routine/screens/child_mode_lock_screen.dart';
 import 'package:almorabbi/features/routine/screens/habit_customize_screen.dart';
 
@@ -610,12 +613,109 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
     super.dispose();
   }
 
-  void _openCustomizeScreen(int childId) {
-    Navigator.of(context).push(
+  Future<void> _openCustomizeScreen(int childId) async {
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => const HabitCustomizeScreen(),
       ),
     );
+  }
+
+  Future<void> _showWebShareDialog(int childId, String childName) async {
+    final client = ref.read(tgClientProvider);
+    late BuildContext dialogContext;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) {
+        dialogContext = ctx;
+        return const AlertDialog(
+          content: SizedBox(
+            width: 80,
+            height: 80,
+            child: Center(child: CircularProgressIndicator()),
+          ),
+        );
+      },
+    );
+
+    try {
+      final data = await client.createChildWebClaim(childId);
+      if (!dialogContext.mounted) return;
+      Navigator.of(dialogContext).pop();
+
+      final claimUrl = data['claim_url'] as String? ?? '';
+
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('شارك الميزان مع المراهق'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (claimUrl.isNotEmpty) ...[
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: QrImageView(
+                      data: claimUrl,
+                      version: QrVersions.auto,
+                      size: 220,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                const Text(
+                  'امسح الرمز من هاتف الابن، أو انسخ الرابط وأرسله عبر واتساب.',
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                if (claimUrl.isNotEmpty)
+                  SelectableText(
+                    claimUrl,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('إغلاق'),
+            ),
+            if (claimUrl.isNotEmpty)
+              FilledButton.icon(
+                onPressed: () async {
+                  await Clipboard.setData(ClipboardData(text: claimUrl));
+                  if (ctx.mounted) Navigator.of(ctx).pop();
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('تم نسخ الرابط')),
+                    );
+                  }
+                },
+                icon: const Icon(Icons.copy),
+                label: const Text('نسخ الرابط'),
+              ),
+          ],
+        ),
+      );
+    } catch (e) {
+      if (!dialogContext.mounted) return;
+      Navigator.of(dialogContext).pop();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('تعذر إنشاء رمز QR: $e')),
+        );
+      }
+    }
   }
 
   Future<void> _enterChildMode(int childId, String childName) async {
@@ -680,6 +780,17 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                   label: const Text('تخصيص العادات'),
                 ),
                 const SizedBox(height: 8),
+                if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      final profile = ref.read(activeChildProfileProvider);
+                      _showWebShareDialog(childId, profile?.name ?? 'الطفل');
+                    },
+                    icon: const Icon(Icons.qr_code_2),
+                    label: const Text('مشاركة الميزان عبر الويب 🔗'),
+                  ),
+                if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
+                  const SizedBox(height: 8),
                 FilledButton.icon(
                   onPressed: () {
                     final profile = ref.read(activeChildProfileProvider);

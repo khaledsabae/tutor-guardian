@@ -91,7 +91,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
                     content={"detail": "مطلوب توثيق وضع الطفل."},
                 )
             token = auth_header[13:].strip()
-            payload = child_token_service.verify_child_token(token)
+            payload = child_token_service.verify_child_token(token, allow_web=path.startswith(_CHILD_MODE_PREFIX))
             if payload is None:
                 return JSONResponse(
                     status_code=401,
