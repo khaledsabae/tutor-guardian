@@ -19,12 +19,17 @@ class IdentityService {
 
   static const _kLinked = 'identity.linked';
 
+  // TODO: Replace with the Web client ID from Google Cloud Console:
+  // Credentials → OAuth client ID → Web application.
+  // Without this, the Google Sign-In plugin will not return an id_token on Android.
+  static const String _serverClientId = String.fromEnvironment(
+    'GOOGLE_SERVER_CLIENT_ID',
+    defaultValue: '',
+  );
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
-    // NOTE: For Android, google_sign_in needs a Web OAuth client ID configured
-    // in Google Cloud Console under Credentials → Create Credentials → OAuth client ID → Web application.
-    // Copy that client ID here and rebuild. The Android client ID in google-services.json is NOT enough.
-    // webClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+    serverClientId: _serverClientId.isEmpty ? null : _serverClientId,
   );
 
   /// Returns true if a previous sign-in happened on this device.
@@ -37,6 +42,7 @@ class IdentityService {
   /// re-auth silently and tell the backend to link this device_id.
   Future<void> silentRestore() async {
     if (!await isLinked) return;
+    if (_serverClientId.isEmpty) return;
     try {
       final account = await _googleSignIn.signInSilently();
       if (account == null) return;
@@ -48,6 +54,10 @@ class IdentityService {
 
   /// Explicit sign-in from Settings. Returns true on success.
   Future<bool> signInAndLink() async {
+    if (_serverClientId.isEmpty) {
+      debugPrint('GOOGLE_SERVER_CLIENT_ID not configured; Google Sign-In will fail.');
+      return false;
+    }
     try {
       final account = await _googleSignIn.signIn();
       if (account == null) return false;
@@ -84,16 +94,14 @@ class IdentityService {
   }
 
   Future<void> _link(GoogleSignInAccount account) async {
-    final googleId = account.id;
-    if (googleId.isEmpty) return;
-    final email = account.email;
+    final auth = await account.authentication;
+    final idToken = auth.idToken;
+    if (idToken == null || idToken.isEmpty) {
+      throw Exception('لم يتم استلام Google ID token. تأكد من ضبط GOOGLE_SERVER_CLIENT_ID.');
+    }
 
     await TgClient().ensureSession();
-    await TgClient().linkGoogleIdentity(
-      googleId: googleId,
-      email: email,
-      displayName: account.displayName,
-    );
+    await TgClient().linkGoogleIdentity(idToken: idToken);
 
     final p = await SharedPreferences.getInstance();
     await p.setBool(_kLinked, true);
