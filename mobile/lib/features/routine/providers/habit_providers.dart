@@ -9,6 +9,10 @@ import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 
 /// Async stream of today's habits for the active child.
+///
+/// Polls every 30 s. Broad catch keeps the stream alive across transient
+/// network glitches (SocketException, timeout) so the UI never shows a
+/// fatal error screen — it just yields empty data until the next tick.
 final todayHabitsProvider =
     StreamProvider.autoDispose.family<HabitDay, int>(
   (ref, childId) async* {
@@ -21,6 +25,10 @@ final todayHabitsProvider =
         if (e.statusCode == 401) {
           await client.ensureSession();
         }
+        yield HabitDay(childId: childId, date: '', events: [], habits: []);
+      } catch (_) {
+        // SocketException (DNS failure, offline), TimeoutException, etc.
+        // Yield empty data — next poll in 30 s may succeed.
         yield HabitDay(childId: childId, date: '', events: [], habits: []);
       }
       await Future.delayed(const Duration(seconds: 30));
