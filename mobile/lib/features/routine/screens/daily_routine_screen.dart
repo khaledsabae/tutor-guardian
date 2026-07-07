@@ -15,12 +15,32 @@ import 'package:almorabbi/theme/design_tokens.dart';
 import 'package:almorabbi/features/routine/models/routine_models.dart';
 import 'package:almorabbi/features/routine/providers/routine_providers.dart';
 
+bool routineAgeAllowed(String ageGroup) {
+  return const {'prenatal-1', '0-3', '4-6', '7-9'}.contains(ageGroup);
+}
+
+List<RoutineEventType> allowedRoutineTypes(String ageGroup) {
+  return switch (ageGroup) {
+    'prenatal-1' || '0-3' || '4-6' => RoutineEventType.values,
+    '7-9' => const [RoutineEventType.sleep, RoutineEventType.feed],
+    _ => const [],
+  };
+}
+
 class DailyRoutineScreen extends ConsumerWidget {
   const DailyRoutineScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final childId = ref.watch(activeChildIdProvider);
+    final profile = ref.watch(activeChildProfileProvider);
+
+    if (profile != null && !routineAgeAllowed(profile.ageGroup)) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('حِساب اليوم 🍼')),
+        body: _RoutineAgeGate(profile: profile),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +55,7 @@ class DailyRoutineScreen extends ConsumerWidget {
       body: childId == null
           ? const _NoChildState()
           : const _RoutineBody(),
-      floatingActionButton: childId == null
+      floatingActionButton: childId == null || (profile != null && !routineAgeAllowed(profile.ageGroup))
           ? null
           : FloatingActionButton.extended(
               onPressed: () => _showAddEventDialog(context, childId),
@@ -46,13 +66,45 @@ class DailyRoutineScreen extends ConsumerWidget {
   }
 
   void _showAddEventDialog(BuildContext context, int childId) {
+    final profile = ProviderScope.containerOf(context)
+        .read(activeChildProfileProvider);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(Dt.rSheet)),
       ),
-      builder: (_) => _AddEventSheet(childId: childId),
+      builder: (_) => _AddEventSheet(
+        childId: childId,
+        ageGroup: profile?.ageGroup ?? '0-3',
+      ),
+    );
+  }
+}
+
+class _RoutineAgeGate extends StatelessWidget {
+  final ActiveChildProfile profile;
+  const _RoutineAgeGate({required this.profile});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('🍼', style: TextStyle(fontSize: 56)),
+          const SizedBox(height: 12),
+          Text(
+            'التتبع اليومي متاح للأطفال حتى 9 سنوات',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'الطفل ${profile.name} في مرحلة ${profile.ageGroup}',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -276,15 +328,17 @@ class _EventTile extends StatelessWidget {
 // ── Add-event sheet ───────────────────────────────────────────────────────
 
 class _AddEventSheet extends StatefulWidget {
-  const _AddEventSheet({required this.childId});
+  const _AddEventSheet({required this.childId, required this.ageGroup});
   final int childId;
+  final String ageGroup;
 
   @override
   State<_AddEventSheet> createState() => _AddEventSheetState();
 }
 
 class _AddEventSheetState extends State<_AddEventSheet> {
-  RoutineEventType _type = RoutineEventType.feed;
+  late RoutineEventType _type = allowedRoutineTypes(widget.ageGroup).first;
+  late final List<RoutineEventType> _allowedTypes = allowedRoutineTypes(widget.ageGroup);
   DateTime _startedAt = DateTime.now();
   DateTime? _endedAt;
   String? _feedType;
@@ -320,7 +374,7 @@ class _AddEventSheetState extends State<_AddEventSheet> {
           ),
           const SizedBox(height: 12),
           SegmentedButton<RoutineEventType>(
-            segments: RoutineEventType.values
+            segments: _allowedTypes
                 .map((t) => ButtonSegment(
                       value: t,
                       label: Text('${t.icon} ${t.label}'),
