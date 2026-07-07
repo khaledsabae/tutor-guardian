@@ -47,7 +47,7 @@ def client(app):
         yield c
 
 
-_WEB_CLIENT_ID = "620240456244-cbai6ejaebbhqp0kepeifdkc5aa5un06.apps.googleusercontent.com"
+_WEB_CLIENT_ID = "620240456244-d7a3fd35ianuu34i1sobb0pj4ncttmdu.apps.googleusercontent.com"
 
 _FAKE_TOKENINFO = {
     "iss": "https://accounts.google.com",

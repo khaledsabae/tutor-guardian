@@ -23,7 +23,7 @@ class IdentityService {
   // Used by the google_sign_in plugin on Android to request an id_token.
   static const String _serverClientId = String.fromEnvironment(
     'GOOGLE_SERVER_CLIENT_ID',
-    defaultValue: '620240456244-cbai6ejaebbhqp0kepeifdkc5aa5un06.apps.googleusercontent.com',
+    defaultValue: '620240456244-d7a3fd35ianuu34i1sobb0pj4ncttmdu.apps.googleusercontent.com',
   );
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(

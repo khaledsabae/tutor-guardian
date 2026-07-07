@@ -28,7 +28,7 @@ _GOOGLE_ISSUERS = frozenset({"https://accounts.google.com", "accounts.google.com
 
 # Hard-coded, non-secret client ID used to validate the Google ID token audience.
 # The web client ID is the one the mobile plugin uses as serverClientId.
-_GOOGLE_WEB_CLIENT_ID = "620240456244-cbai6ejaebbhqp0kepeifdkc5aa5un06.apps.googleusercontent.com"
+_GOOGLE_WEB_CLIENT_ID = "620240456244-d7a3fd35ianuu34i1sobb0pj4ncttmdu.apps.googleusercontent.com"
 
 
 async def _verify_google_id_token(id_token: str) -> Optional[dict]:
