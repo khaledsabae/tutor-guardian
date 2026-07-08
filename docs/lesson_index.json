@@ -7998,6 +7998,14 @@
             "title": "جدول بيانات medical_early_wellbeing (2-3)",
             "item_count": 6
           }
+        ],
+        "reports": [
+          {
+            "id": "lesson_2-3_medical_early_wellbeing_01_report",
+            "file": "docs/lesson_assets/reports/7a59e3b8-8de7-421e-a5b6-dccd13105747_report_lesson_2-3_medical_early_wellbeing_01.md",
+            "title": "reports",
+            "language": "ar"
+          }
         ]
       },
       "source_id": "b3ac3dab-5aba-42a9-9e2f-b7f95c5303e1"
@@ -8048,6 +8056,14 @@
             "file": "docs/lesson_assets/data_tables/fdee5c96-4b96-4bb4-b0e6-5fd0e55ad5fe_data_table_lesson_2-3_medical_early_wellbeing_02.csv",
             "title": "جدول بيانات medical_early_wellbeing (2-3)",
             "item_count": 5
+          }
+        ],
+        "reports": [
+          {
+            "id": "lesson_2-3_medical_early_wellbeing_02_report",
+            "file": "docs/lesson_assets/reports/469ac40a-cb9c-414f-8f28-369e1f97056f_report_lesson_2-3_medical_early_wellbeing_02.md",
+            "title": "reports",
+            "language": "ar"
           }
         ]
       },
@@ -8100,6 +8116,14 @@
             "title": "جدول بيانات medical_early_wellbeing (2-3)",
             "item_count": 5
           }
+        ],
+        "reports": [
+          {
+            "id": "lesson_2-3_medical_early_wellbeing_03_report",
+            "file": "docs/lesson_assets/reports/b67c7ea8-42da-4f08-ba23-266e9db12769_report_lesson_2-3_medical_early_wellbeing_03.md",
+            "title": "reports",
+            "language": "ar"
+          }
         ]
       },
       "source_id": "a7a8d28d-bdf8-4628-88d6-07d89a1f73b9"
@@ -8151,6 +8175,14 @@
             "title": "جدول بيانات medical_early_wellbeing (2-3)",
             "item_count": 6
           }
+        ],
+        "reports": [
+          {
+            "id": "lesson_2-3_medical_early_wellbeing_04_report",
+            "file": "docs/lesson_assets/reports/facc4305-2c5b-477b-8751-c58a04518b64_report_lesson_2-3_medical_early_wellbeing_04.md",
+            "title": "reports",
+            "language": "ar"
+          }
         ]
       },
       "source_id": "f6a37ec5-5aec-49dd-9006-d505c0c429f2"
@@ -8193,6 +8225,14 @@
             "file": "docs/lesson_4-6_cyber_early_screens_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "lesson_4-6_cyber_early_screens_01_report",
+            "file": "docs/lesson_assets/reports/a47f29b9-dde6-44bd-8956-29af7911b981_report_lesson_4-6_cyber_early_screens_01.md",
+            "title": "reports",
+            "language": "ar"
           }
         ]
       },
@@ -8237,6 +8277,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "lesson_4-6_cyber_early_screens_02_report",
+            "file": "docs/lesson_assets/reports/78565608-5801-4a00-92d0-02f886f403b7_report_lesson_4-6_cyber_early_screens_02.md",
+            "title": "reports",
+            "language": "ar"
+          }
         ]
       },
       "source_id": "edf0d955-453b-4454-a2cf-46a2159cad61"
@@ -8279,6 +8327,14 @@
             "file": "docs/lesson_4-6_cyber_early_screens_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "lesson_4-6_cyber_early_screens_03_report",
+            "file": "docs/lesson_assets/reports/f2f55d05-7a0e-4319-8cb4-c33c8f8dfd78_report_lesson_4-6_cyber_early_screens_03.md",
+            "title": "reports",
+            "language": "ar"
           }
         ]
       },
@@ -8323,6 +8379,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "lesson_4-6_cyber_early_screens_04_report",
+            "file": "docs/lesson_assets/reports/96ef0fe4-0500-4587-9472-ca310f5d2b85_report_lesson_4-6_cyber_early_screens_04.md",
+            "title": "reports",
+            "language": "ar"
+          }
         ]
       },
       "source_id": "fba81554-adb8-4dc5-9d4a-37bad4e33cb5"
@@ -8365,6 +8429,14 @@
             "file": "docs/lesson_4-6_medical_healthy_growth_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "lesson_4-6_medical_healthy_growth_01_report",
+            "file": "docs/lesson_assets/reports/f661aa61-4645-4233-8d33-ec3b87a1889e_report_lesson_4-6_medical_healthy_growth_01.md",
+            "title": "reports",
+            "language": "ar"
           }
         ]
       },
@@ -8409,6 +8481,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "lesson_4-6_medical_healthy_growth_02_report",
+            "file": "docs/lesson_assets/reports/51a18d6b-4e0d-469c-86f3-dfc5f4ad215b_report_lesson_4-6_medical_healthy_growth_02.md",
+            "title": "reports",
+            "language": "ar"
+          }
         ]
       },
       "source_id": "76d29441-28e9-4ef3-9797-a47144887a60"
@@ -8452,6 +8532,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "lesson_4-6_medical_healthy_growth_03_report",
+            "file": "docs/lesson_assets/reports/122b8747-9e75-4be5-b7c6-1a1b5f2bc329_report_lesson_4-6_medical_healthy_growth_03.md",
+            "title": "reports",
+            "language": "ar"
+          }
         ]
       },
       "source_id": "676a4e60-5692-424a-b975-3479f1c906e5"
@@ -8494,6 +8582,14 @@
             "file": "docs/lesson_4-6_medical_healthy_growth_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "lesson_4-6_medical_healthy_growth_04_report",
+            "file": "docs/lesson_assets/reports/ec95b543-f8bd-407e-8fb8-b5fdc5a32abc_report_lesson_4-6_medical_healthy_growth_04.md",
+            "title": "reports",
+            "language": "ar"
           }
         ]
       },

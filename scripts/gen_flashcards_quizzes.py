@@ -121,7 +121,7 @@ def main():
     by_id = {l["lesson_id"]: l for l in index["lessons"]}
 
     new = [f for f in sorted(LESSONS_DIR.glob("*.json"))
-           if f.stem.rsplit("_", 1)[-1].startswith("b")]
+           if f.stem.rsplit("_", 1)[-1].startswith("b") or "aqeedah" in f.stem]
     if args.only:
         new = [f for f in new if f.stem == args.only]
     if args.limit:
