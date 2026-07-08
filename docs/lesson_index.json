@@ -9,7 +9,7 @@
       "flashcards": "88/88",
       "quizzes": "88/88",
       "reports": "118/156",
-      "data_tables": "88/156",
+      "data_tables": "107/156",
       "infographics": "155/156"
     },
     "lessons_by_age": {
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-07-08T12:35:55.485051Z"
+    "updated_at": "2026-07-08T12:37:23.641767Z"
   },
   "lessons": [
     {
@@ -6354,12 +6354,6 @@
             "file": "docs/lesson_assets/reports/6ef69d84-6b9a-475e-8b1e-47f643fadd24_report_lesson_0-3_islamic_parenting_fitrah_01.md",
             "title": "تقرير islamic_parenting_fitrah (0-3)",
             "item_count": 48
-          },
-          {
-            "id": "3eaf8b1d-18f1-48cb-9445-19e1c62e6d09",
-            "file": "docs/lesson_assets/reports/3eaf8b1d-18f1-48cb-9445-19e1c62e6d09_report_lesson_0-3_islamic_parenting_fitrah_01.md",
-            "title": "تقرير islamic_parenting_fitrah (0-3)",
-            "item_count": 47
           }
         ],
         "data_tables": [
@@ -6368,6 +6362,12 @@
             "file": "docs/lesson_assets/data_tables/2466e76f-e498-488e-8000-fb8fd6b744db_data_table_lesson_0-3_islamic_parenting_fitrah_01.csv",
             "title": "جدول بيانات تربوي",
             "language": "ar"
+          },
+          {
+            "id": "dbe35ed9-8043-4371-bf0b-be1a1a44bea4",
+            "file": "docs/lesson_assets/data_tables/dbe35ed9-8043-4371-bf0b-be1a1a44bea4_data_table_lesson_0-3_islamic_parenting_fitrah_01.csv",
+            "title": "جدول بيانات islamic_parenting_fitrah (0-3)",
+            "item_count": 5
           }
         ]
       },
@@ -6419,12 +6419,6 @@
             "file": "docs/lesson_assets/reports/363adef5-b980-44d1-931b-15a556a8310a_report_lesson_0-3_islamic_parenting_fitrah_02.md",
             "title": "تقرير islamic_parenting_fitrah (0-3)",
             "item_count": 50
-          },
-          {
-            "id": "703513dd-eeee-41fd-9d82-ba5968bf00d7",
-            "file": "docs/lesson_assets/reports/703513dd-eeee-41fd-9d82-ba5968bf00d7_report_lesson_0-3_islamic_parenting_fitrah_02.md",
-            "title": "تقرير islamic_parenting_fitrah (0-3)",
-            "item_count": 49
           }
         ],
         "data_tables": [
@@ -6433,6 +6427,12 @@
             "file": "docs/lesson_assets/data_tables/9e8e3cd4-48f6-4362-8ebc-6c0bb7e2d9a1_data_table_lesson_0-3_islamic_parenting_fitrah_02.csv",
             "title": "جدول بيانات تربوي",
             "language": "ar"
+          },
+          {
+            "id": "e24468cb-e1e7-4d0f-a193-148b52087f18",
+            "file": "docs/lesson_assets/data_tables/e24468cb-e1e7-4d0f-a193-148b52087f18_data_table_lesson_0-3_islamic_parenting_fitrah_02.csv",
+            "title": "جدول بيانات islamic_parenting_fitrah (0-3)",
+            "item_count": 5
           }
         ]
       },
@@ -6484,12 +6484,6 @@
             "file": "docs/lesson_assets/reports/bc318783-031d-4366-9895-52bd76e0dd94_report_lesson_0-3_islamic_parenting_fitrah_03.md",
             "title": "تقرير islamic_parenting_fitrah (0-3)",
             "item_count": 47
-          },
-          {
-            "id": "ac6bfa7f-a248-49a6-9b8c-8d5f9ca3cbf2",
-            "file": "docs/lesson_assets/reports/ac6bfa7f-a248-49a6-9b8c-8d5f9ca3cbf2_report_lesson_0-3_islamic_parenting_fitrah_03.md",
-            "title": "تقرير islamic_parenting_fitrah (0-3)",
-            "item_count": 48
           }
         ],
         "data_tables": [
@@ -6498,6 +6492,12 @@
             "file": "docs/lesson_assets/data_tables/f17045ff-5539-4655-80fc-7b95df10c227_data_table_lesson_0-3_islamic_parenting_fitrah_03.csv",
             "title": "جدول بيانات تربوي",
             "language": "ar"
+          },
+          {
+            "id": "fb0245f2-9b31-43f1-88e3-58d67b026d1b",
+            "file": "docs/lesson_assets/data_tables/fb0245f2-9b31-43f1-88e3-58d67b026d1b_data_table_lesson_0-3_islamic_parenting_fitrah_03.csv",
+            "title": "جدول بيانات islamic_parenting_fitrah (0-3)",
+            "item_count": 5
           }
         ]
       },
@@ -6549,12 +6549,6 @@
             "file": "docs/lesson_assets/reports/e8add1e8-165b-4d7b-b0b8-95d077950159_report_lesson_0-3_islamic_parenting_fitrah_04.md",
             "title": "تقرير islamic_parenting_fitrah (0-3)",
             "item_count": 52
-          },
-          {
-            "id": "7b0fa51d-3b8b-4098-91ff-25ded6842119",
-            "file": "docs/lesson_assets/reports/7b0fa51d-3b8b-4098-91ff-25ded6842119_report_lesson_0-3_islamic_parenting_fitrah_04.md",
-            "title": "تقرير islamic_parenting_fitrah (0-3)",
-            "item_count": 47
           }
         ],
         "data_tables": [
@@ -6563,6 +6557,12 @@
             "file": "docs/lesson_assets/data_tables/250a3496-1c6c-4467-9f42-e291cb484f5d_data_table_lesson_0-3_islamic_parenting_fitrah_04.csv",
             "title": "جدول بيانات تربوي",
             "language": "ar"
+          },
+          {
+            "id": "f5ccb179-62d1-4286-898c-ffb93d26e1d1",
+            "file": "docs/lesson_assets/data_tables/f5ccb179-62d1-4286-898c-ffb93d26e1d1_data_table_lesson_0-3_islamic_parenting_fitrah_04.csv",
+            "title": "جدول بيانات islamic_parenting_fitrah (0-3)",
+            "item_count": 5
           }
         ]
       },
@@ -6605,12 +6605,6 @@
             "file": "docs/lesson_assets/reports/4af2d062-aa16-456c-9c19-044037c45fcc_report_lesson_10-12_development_pre_teen_01.md",
             "title": "تقرير development_pre_teen (10-12)",
             "item_count": 55
-          },
-          {
-            "id": "24496265-8c6b-4456-a41a-f1f697f6a407",
-            "file": "docs/lesson_assets/reports/24496265-8c6b-4456-a41a-f1f697f6a407_report_lesson_10-12_development_pre_teen_01.md",
-            "title": "تقرير development_pre_teen (10-12)",
-            "item_count": 47
           }
         ],
         "data_tables": [
@@ -6619,6 +6613,12 @@
             "file": "docs/lesson_assets/data_tables/7eae7354-681c-4eb1-b25b-7402e4404152_data_table_lesson_10-12_development_pre_teen_01.csv",
             "title": "جدول بيانات تربوي",
             "language": "ar"
+          },
+          {
+            "id": "b5e5ad33-717d-41c2-bcf1-ceef617a698c",
+            "file": "docs/lesson_assets/data_tables/b5e5ad33-717d-41c2-bcf1-ceef617a698c_data_table_lesson_10-12_development_pre_teen_01.csv",
+            "title": "جدول بيانات development_pre_teen (10-12)",
+            "item_count": 5
           }
         ]
       },
@@ -6670,12 +6670,6 @@
             "file": "docs/lesson_assets/reports/9b2ff599-7e6b-4104-b235-6692c5ae6ee4_report_lesson_10-12_development_pre_teen_02.md",
             "title": "تقرير development_pre_teen (10-12)",
             "item_count": 52
-          },
-          {
-            "id": "7a8a93fd-1ca9-44ec-92c7-27b105dd7fcc",
-            "file": "docs/lesson_assets/reports/7a8a93fd-1ca9-44ec-92c7-27b105dd7fcc_report_lesson_10-12_development_pre_teen_02.md",
-            "title": "تقرير development_pre_teen (10-12)",
-            "item_count": 50
           }
         ],
         "data_tables": [
@@ -6684,6 +6678,12 @@
             "file": "docs/lesson_assets/data_tables/a1a72ec0-896c-43f1-94a6-9dd2f673f837_data_table_lesson_10-12_development_pre_teen_02.csv",
             "title": "جدول بيانات تربوي",
             "language": "ar"
+          },
+          {
+            "id": "f5986036-47fa-4132-b039-7fa3e28ea0a5",
+            "file": "docs/lesson_assets/data_tables/f5986036-47fa-4132-b039-7fa3e28ea0a5_data_table_lesson_10-12_development_pre_teen_02.csv",
+            "title": "جدول بيانات development_pre_teen (10-12)",
+            "item_count": 5
           }
         ]
       },
@@ -6735,12 +6735,6 @@
             "file": "docs/lesson_assets/reports/e89e9316-6f00-42ba-ad15-fcb538532fb1_report_lesson_10-12_development_pre_teen_03.md",
             "title": "تقرير development_pre_teen (10-12)",
             "item_count": 51
-          },
-          {
-            "id": "77c2d2be-373a-4622-9ddb-e986b7af168b",
-            "file": "docs/lesson_assets/reports/77c2d2be-373a-4622-9ddb-e986b7af168b_report_lesson_10-12_development_pre_teen_03.md",
-            "title": "تقرير development_pre_teen (10-12)",
-            "item_count": 52
           }
         ],
         "data_tables": [
@@ -6749,6 +6743,12 @@
             "file": "docs/lesson_assets/data_tables/24b8acdf-dbff-41c0-b441-3114459b588f_data_table_lesson_10-12_development_pre_teen_03.csv",
             "title": "جدول بيانات تربوي",
             "language": "ar"
+          },
+          {
+            "id": "16718f98-ca91-4f60-aa35-350657fae875",
+            "file": "docs/lesson_assets/data_tables/16718f98-ca91-4f60-aa35-350657fae875_data_table_lesson_10-12_development_pre_teen_03.csv",
+            "title": "جدول بيانات development_pre_teen (10-12)",
+            "item_count": 6
           }
         ]
       },
@@ -6800,20 +6800,14 @@
             "file": "docs/lesson_assets/reports/3e43363b-ed75-4637-a9c5-55ec344b1e0a_report_lesson_10-12_development_pre_teen_04.md",
             "title": "تقرير development_pre_teen (10-12)",
             "item_count": 49
-          },
-          {
-            "id": "f8282234-d74b-4741-94a1-3990163c71e0",
-            "file": "docs/lesson_assets/reports/f8282234-d74b-4741-94a1-3990163c71e0_report_lesson_10-12_development_pre_teen_04.md",
-            "title": "تقرير development_pre_teen (10-12)",
-            "item_count": 50
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_10-12_development_pre_teen_04_data_table",
+            "id": "a19513ed-b0da-4dea-824b-ddaf0e0cd36e",
             "file": "docs/lesson_assets/data_tables/a19513ed-b0da-4dea-824b-ddaf0e0cd36e_data_table_lesson_10-12_development_pre_teen_04.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "title": "جدول بيانات development_pre_teen (10-12)",
+            "item_count": 5
           }
         ]
       },
@@ -6865,20 +6859,14 @@
             "file": "docs/lesson_assets/reports/ab40dad8-9e68-4ee1-b959-745ba13a66a1_report_lesson_10-12_islamic_parenting_worship_love_01.md",
             "title": "تقرير islamic_parenting_worship_love (10-12)",
             "item_count": 48
-          },
-          {
-            "id": "6b202bd0-51bb-4a2f-b393-0a8a52b31d9c",
-            "file": "docs/lesson_assets/reports/6b202bd0-51bb-4a2f-b393-0a8a52b31d9c_report_lesson_10-12_islamic_parenting_worship_love_01.md",
-            "title": "تقرير islamic_parenting_worship_love (10-12)",
-            "item_count": 52
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_10-12_islamic_parenting_worship_love_01_data_table",
+            "id": "7d80b858-51f8-40ee-b3f0-9c2ffbade14f",
             "file": "docs/lesson_assets/data_tables/7d80b858-51f8-40ee-b3f0-9c2ffbade14f_data_table_lesson_10-12_islamic_parenting_worship_love_01.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "title": "جدول بيانات islamic_parenting_worship_love (10-12)",
+            "item_count": 5
           }
         ]
       },
@@ -6930,20 +6918,14 @@
             "file": "docs/lesson_assets/reports/4f93ed9f-b1f2-4f8d-b96e-28dc5163272e_report_lesson_10-12_islamic_parenting_worship_love_02.md",
             "title": "تقرير islamic_parenting_worship_love (10-12)",
             "item_count": 51
-          },
-          {
-            "id": "432d8dc7-5f80-4ede-8c30-7c8604d5eae0",
-            "file": "docs/lesson_assets/reports/432d8dc7-5f80-4ede-8c30-7c8604d5eae0_report_lesson_10-12_islamic_parenting_worship_love_02.md",
-            "title": "تقرير islamic_parenting_worship_love (10-12)",
-            "item_count": 51
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_10-12_islamic_parenting_worship_love_02_data_table",
-            "file": "docs/lesson_assets/data_tables/c0f2f956-75be-4e71-94f2-a7ca5242b334_data_table_lesson_10-12_islamic_parenting_worship_love_02.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "id": "970431cf-f2be-4f89-888e-fe52adeaf46f",
+            "file": "docs/lesson_assets/data_tables/970431cf-f2be-4f89-888e-fe52adeaf46f_data_table_lesson_10-12_islamic_parenting_worship_love_02.csv",
+            "title": "جدول بيانات islamic_parenting_worship_love (10-12)",
+            "item_count": 5
           }
         ]
       },
@@ -6995,20 +6977,14 @@
             "file": "docs/lesson_assets/reports/6bd42e26-b96b-4332-a12d-8e0a747ae276_report_lesson_10-12_islamic_parenting_worship_love_03.md",
             "title": "تقرير islamic_parenting_worship_love (10-12)",
             "item_count": 49
-          },
-          {
-            "id": "dd32e746-b47f-40f8-b0fa-ba72f6ede04b",
-            "file": "docs/lesson_assets/reports/dd32e746-b47f-40f8-b0fa-ba72f6ede04b_report_lesson_10-12_islamic_parenting_worship_love_03.md",
-            "title": "تقرير islamic_parenting_worship_love (10-12)",
-            "item_count": 48
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_10-12_islamic_parenting_worship_love_03_data_table",
-            "file": "docs/lesson_assets/data_tables/99215b56-0112-4662-b7c8-46003b3bccce_data_table_lesson_10-12_islamic_parenting_worship_love_03.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "id": "b064f417-88b6-4c7e-9614-e2dcc057eb5c",
+            "file": "docs/lesson_assets/data_tables/b064f417-88b6-4c7e-9614-e2dcc057eb5c_data_table_lesson_10-12_islamic_parenting_worship_love_03.csv",
+            "title": "جدول بيانات islamic_parenting_worship_love (10-12)",
+            "item_count": 5
           }
         ]
       },
@@ -7060,20 +7036,14 @@
             "file": "docs/lesson_assets/reports/2e471d3a-7178-4675-aa3d-6fb4955d1b98_report_lesson_10-12_islamic_parenting_worship_love_04.md",
             "title": "تقرير islamic_parenting_worship_love (10-12)",
             "item_count": 50
-          },
-          {
-            "id": "c4b09da5-00fa-417e-8012-f51117166c1e",
-            "file": "docs/lesson_assets/reports/c4b09da5-00fa-417e-8012-f51117166c1e_report_lesson_10-12_islamic_parenting_worship_love_04.md",
-            "title": "تقرير islamic_parenting_worship_love (10-12)",
-            "item_count": 51
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_10-12_islamic_parenting_worship_love_04_data_table",
+            "id": "e70945f7-ad51-45ce-b247-251ee5ee3cb7",
             "file": "docs/lesson_assets/data_tables/e70945f7-ad51-45ce-b247-251ee5ee3cb7_data_table_lesson_10-12_islamic_parenting_worship_love_04.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "title": "جدول بيانات islamic_parenting_worship_love (10-12)",
+            "item_count": 5
           }
         ]
       },
@@ -7125,20 +7095,14 @@
             "file": "docs/lesson_assets/reports/9842d661-7fc2-4947-abd3-d7813e716764_report_lesson_13-15_islamic_parenting_steadfast_01.md",
             "title": "تقرير islamic_parenting_steadfast (13-15)",
             "item_count": 53
-          },
-          {
-            "id": "e0b3d3f1-6902-448e-b723-8240d9a567ef",
-            "file": "docs/lesson_assets/reports/e0b3d3f1-6902-448e-b723-8240d9a567ef_report_lesson_13-15_islamic_parenting_steadfast_01.md",
-            "title": "تقرير islamic_parenting_steadfast (13-15)",
-            "item_count": 49
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_13-15_islamic_parenting_steadfast_01_data_table",
+            "id": "b6d76314-e24c-4b25-a7f2-297d50f485b2",
             "file": "docs/lesson_assets/data_tables/b6d76314-e24c-4b25-a7f2-297d50f485b2_data_table_lesson_13-15_islamic_parenting_steadfast_01.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "title": "جدول بيانات islamic_parenting_steadfast (13-15)",
+            "item_count": 5
           }
         ]
       },
@@ -7190,20 +7154,14 @@
             "file": "docs/lesson_assets/reports/bb34c29f-15f5-4b8a-9033-09b0fcc2f22d_report_lesson_13-15_islamic_parenting_steadfast_02.md",
             "title": "تقرير islamic_parenting_steadfast (13-15)",
             "item_count": 52
-          },
-          {
-            "id": "4db87890-d86f-4837-aa8f-e4d495e441a4",
-            "file": "docs/lesson_assets/reports/4db87890-d86f-4837-aa8f-e4d495e441a4_report_lesson_13-15_islamic_parenting_steadfast_02.md",
-            "title": "تقرير islamic_parenting_steadfast (13-15)",
-            "item_count": 49
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_13-15_islamic_parenting_steadfast_02_data_table",
+            "id": "63666aec-4efc-4420-8ca2-00f96afa7585",
             "file": "docs/lesson_assets/data_tables/63666aec-4efc-4420-8ca2-00f96afa7585_data_table_lesson_13-15_islamic_parenting_steadfast_02.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "title": "جدول بيانات islamic_parenting_steadfast (13-15)",
+            "item_count": 5
           }
         ]
       },
@@ -7255,20 +7213,14 @@
             "file": "docs/lesson_assets/reports/cfb02c86-046e-42a0-ba7f-cad96c53e177_report_lesson_13-15_islamic_parenting_steadfast_03.md",
             "title": "تقرير islamic_parenting_steadfast (13-15)",
             "item_count": 50
-          },
-          {
-            "id": "f425636c-676c-4ea6-a1c1-d441e422e8a9",
-            "file": "docs/lesson_assets/reports/f425636c-676c-4ea6-a1c1-d441e422e8a9_report_lesson_13-15_islamic_parenting_steadfast_03.md",
-            "title": "تقرير islamic_parenting_steadfast (13-15)",
-            "item_count": 54
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_13-15_islamic_parenting_steadfast_03_data_table",
+            "id": "5be3054b-ceef-4ab9-92c1-6c9c38c29f0e",
             "file": "docs/lesson_assets/data_tables/5be3054b-ceef-4ab9-92c1-6c9c38c29f0e_data_table_lesson_13-15_islamic_parenting_steadfast_03.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "title": "جدول بيانات islamic_parenting_steadfast (13-15)",
+            "item_count": 5
           }
         ]
       },
@@ -7320,20 +7272,14 @@
             "file": "docs/lesson_assets/reports/41a5c82e-8c0c-407e-97cf-f07987f1bfd0_report_lesson_13-15_islamic_parenting_steadfast_04.md",
             "title": "تقرير islamic_parenting_steadfast (13-15)",
             "item_count": 49
-          },
-          {
-            "id": "cbd1a560-ebd1-43e9-8b22-90bca6141215",
-            "file": "docs/lesson_assets/reports/cbd1a560-ebd1-43e9-8b22-90bca6141215_report_lesson_13-15_islamic_parenting_steadfast_04.md",
-            "title": "تقرير islamic_parenting_steadfast (13-15)",
-            "item_count": 51
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_13-15_islamic_parenting_steadfast_04_data_table",
+            "id": "0e2198fc-ed69-4fdd-ae2a-aab4e21ab883",
             "file": "docs/lesson_assets/data_tables/0e2198fc-ed69-4fdd-ae2a-aab4e21ab883_data_table_lesson_13-15_islamic_parenting_steadfast_04.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "title": "جدول بيانات islamic_parenting_steadfast (13-15)",
+            "item_count": 5
           }
         ]
       },
@@ -7385,20 +7331,14 @@
             "file": "docs/lesson_assets/reports/1869d5e8-0117-43f8-85ff-fb270b271125_report_lesson_16-18_development_adult_readiness_01.md",
             "title": "تقرير development_adult_readiness (16-18)",
             "item_count": 52
-          },
-          {
-            "id": "5ae17ff9-3316-4f48-abba-e1c58756e849",
-            "file": "docs/lesson_assets/reports/5ae17ff9-3316-4f48-abba-e1c58756e849_report_lesson_16-18_development_adult_readiness_01.md",
-            "title": "تقرير development_adult_readiness (16-18)",
-            "item_count": 54
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_16-18_development_adult_readiness_01_data_table",
+            "id": "752c4e5e-501f-45f7-8697-dc4a9f1c145f",
             "file": "docs/lesson_assets/data_tables/752c4e5e-501f-45f7-8697-dc4a9f1c145f_data_table_lesson_16-18_development_adult_readiness_01.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "title": "جدول بيانات development_adult_readiness (16-18)",
+            "item_count": 5
           }
         ]
       },
@@ -7450,20 +7390,14 @@
             "file": "docs/lesson_assets/reports/b6a78029-05b4-4cd3-a057-9732cda3cad1_report_lesson_16-18_development_adult_readiness_02.md",
             "title": "تقرير development_adult_readiness (16-18)",
             "item_count": 52
-          },
-          {
-            "id": "a22d8b3d-0c10-46c5-b19d-d41326f5fa9f",
-            "file": "docs/lesson_assets/reports/a22d8b3d-0c10-46c5-b19d-d41326f5fa9f_report_lesson_16-18_development_adult_readiness_02.md",
-            "title": "تقرير development_adult_readiness (16-18)",
-            "item_count": 52
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_16-18_development_adult_readiness_02_data_table",
+            "id": "ac9db552-cc3c-4600-bc68-dd3704335a2b",
             "file": "docs/lesson_assets/data_tables/ac9db552-cc3c-4600-bc68-dd3704335a2b_data_table_lesson_16-18_development_adult_readiness_02.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "title": "جدول بيانات development_adult_readiness (16-18)",
+            "item_count": 5
           }
         ]
       },
@@ -7515,20 +7449,14 @@
             "file": "docs/lesson_assets/reports/41c82e42-bd3e-412f-9e1c-2e9f49ea6044_report_lesson_16-18_development_adult_readiness_03.md",
             "title": "تقرير development_adult_readiness (16-18)",
             "item_count": 55
-          },
-          {
-            "id": "c542dd90-b9eb-49d1-910a-154614ca851c",
-            "file": "docs/lesson_assets/reports/c542dd90-b9eb-49d1-910a-154614ca851c_report_lesson_16-18_development_adult_readiness_03.md",
-            "title": "تقرير development_adult_readiness (16-18)",
-            "item_count": 53
           }
         ],
         "data_tables": [
           {
-            "id": "lesson_16-18_development_adult_readiness_03_data_table",
-            "file": "docs/lesson_assets/data_tables/10027168-e0c8-4968-8687-60ba046005c9_data_table_lesson_16-18_development_adult_readiness_03.csv",
-            "title": "data_tables",
-            "language": "ar"
+            "id": "c6fdc177-0f56-47c5-83ff-877c80f9cbc2",
+            "file": "docs/lesson_assets/data_tables/c6fdc177-0f56-47c5-83ff-877c80f9cbc2_data_table_lesson_16-18_development_adult_readiness_03.csv",
+            "title": "جدول بيانات development_adult_readiness (16-18)",
+            "item_count": 5
           }
         ]
       },
@@ -7580,20 +7508,6 @@
             "file": "docs/lesson_assets/reports/e405aaa8-7e61-4694-840c-788254d66056_report_lesson_16-18_development_adult_readiness_04.md",
             "title": "تقرير development_adult_readiness (16-18)",
             "item_count": 58
-          },
-          {
-            "id": "f9f5b023-d4ec-4e09-b2d5-9fba2bd1225c",
-            "file": "docs/lesson_assets/reports/f9f5b023-d4ec-4e09-b2d5-9fba2bd1225c_report_lesson_16-18_development_adult_readiness_04.md",
-            "title": "تقرير development_adult_readiness (16-18)",
-            "item_count": 53
-          }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_16-18_development_adult_readiness_04_data_table",
-            "file": "docs/lesson_assets/data_tables/f134029e-9de9-4e8f-849b-f285921633e8_data_table_lesson_16-18_development_adult_readiness_04.csv",
-            "title": "data_tables",
-            "language": "ar"
           }
         ]
       },
@@ -7645,20 +7559,6 @@
             "file": "docs/lesson_assets/reports/9f76b5a7-1219-4d17-a165-d1694d688bad_report_lesson_16-18_islamic_parenting_adult_faith_01.md",
             "title": "تقرير islamic_parenting_adult_faith (16-18)",
             "item_count": 51
-          },
-          {
-            "id": "998a076c-98c9-44af-a5cc-b0f5719a19ac",
-            "file": "docs/lesson_assets/reports/998a076c-98c9-44af-a5cc-b0f5719a19ac_report_lesson_16-18_islamic_parenting_adult_faith_01.md",
-            "title": "تقرير islamic_parenting_adult_faith (16-18)",
-            "item_count": 49
-          }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_16-18_islamic_parenting_adult_faith_01_data_table",
-            "file": "docs/lesson_assets/data_tables/043abf40-4b38-473a-b733-4159dbc35260_data_table_lesson_16-18_islamic_parenting_adult_faith_01.csv",
-            "title": "data_tables",
-            "language": "ar"
           }
         ]
       },
@@ -7710,20 +7610,6 @@
             "file": "docs/lesson_assets/reports/9e366018-1214-44c5-ac59-70fac0a406a5_report_lesson_16-18_islamic_parenting_adult_faith_02.md",
             "title": "تقرير islamic_parenting_adult_faith (16-18)",
             "item_count": 51
-          },
-          {
-            "id": "b9d0df37-ebb9-4f99-9426-5ee491e9f368",
-            "file": "docs/lesson_assets/reports/b9d0df37-ebb9-4f99-9426-5ee491e9f368_report_lesson_16-18_islamic_parenting_adult_faith_02.md",
-            "title": "تقرير islamic_parenting_adult_faith (16-18)",
-            "item_count": 52
-          }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_16-18_islamic_parenting_adult_faith_02_data_table",
-            "file": "docs/lesson_assets/data_tables/d3efc27c-0e07-4e6e-af9e-eb248d6ccea6_data_table_lesson_16-18_islamic_parenting_adult_faith_02.csv",
-            "title": "data_tables",
-            "language": "ar"
           }
         ]
       },
@@ -7776,14 +7662,6 @@
             "title": "تقرير islamic_parenting_adult_faith (16-18)",
             "item_count": 51
           }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_16-18_islamic_parenting_adult_faith_03_data_table",
-            "file": "docs/lesson_assets/data_tables/5a8b807e-7d15-4832-be6c-6e423456f624_data_table_lesson_16-18_islamic_parenting_adult_faith_03.csv",
-            "title": "data_tables",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "d3f04832-4537-424f-a17d-b4c43a577715"
@@ -7834,14 +7712,6 @@
             "file": "docs/lesson_assets/reports/1f9910e0-6699-417a-a15f-bdc89b7b47da_report_lesson_16-18_islamic_parenting_adult_faith_04.md",
             "title": "تقرير islamic_parenting_adult_faith (16-18)",
             "item_count": 51
-          }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_16-18_islamic_parenting_adult_faith_04_data_table",
-            "file": "docs/lesson_assets/data_tables/a2f89971-1464-4d54-80f5-ec690d34ca50_data_table_lesson_16-18_islamic_parenting_adult_faith_04.csv",
-            "title": "data_tables",
-            "language": "ar"
           }
         ]
       },
@@ -7894,14 +7764,6 @@
             "title": "تقرير islamic_first_words (2-3)",
             "item_count": 49
           }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_2-3_islamic_first_words_01_data_table",
-            "file": "docs/lesson_assets/data_tables/22523df9-62c2-44e0-a777-f53ae35189d9_data_table_lesson_2-3_islamic_first_words_01.csv",
-            "title": "data_tables",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "81adac3c-57f0-44d0-9faa-b0c0b813e66c"
@@ -7952,14 +7814,6 @@
             "file": "docs/lesson_assets/reports/603592ea-27b8-4011-b11a-1f0380d171f6_report_lesson_2-3_islamic_first_words_02.md",
             "title": "تقرير islamic_first_words (2-3)",
             "item_count": 47
-          }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_2-3_islamic_first_words_02_data_table",
-            "file": "docs/lesson_assets/data_tables/a7426d51-6e47-4da3-a98b-ed219ce8f54b_data_table_lesson_2-3_islamic_first_words_02.csv",
-            "title": "data_tables",
-            "language": "ar"
           }
         ]
       },
@@ -8012,14 +7866,6 @@
             "title": "تقرير islamic_first_words (2-3)",
             "item_count": 48
           }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_2-3_islamic_first_words_03_data_table",
-            "file": "docs/lesson_assets/data_tables/bf62e74f-5aed-46f6-89aa-709df1c2319d_data_table_lesson_2-3_islamic_first_words_03.csv",
-            "title": "data_tables",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "ab4bf1c0-84af-4b25-8647-cca10200a370"
@@ -8071,14 +7917,6 @@
             "title": "تقرير islamic_first_words (2-3)",
             "item_count": 51
           }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_2-3_islamic_first_words_04_data_table",
-            "file": "docs/lesson_assets/data_tables/baac7a1e-faa1-40bd-9017-48967bc161a3_data_table_lesson_2-3_islamic_first_words_04.csv",
-            "title": "data_tables",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "c5a48cd3-cbac-48af-b52b-08f3569f9068"
@@ -8121,22 +7959,6 @@
             "file": "docs/lesson_2-3_medical_early_wellbeing_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
-          }
-        ],
-        "reports": [
-          {
-            "id": "lesson_2-3_medical_early_wellbeing_01_report",
-            "file": "docs/lesson_assets/reports/7a59e3b8-8de7-421e-a5b6-dccd13105747_report_lesson_2-3_medical_early_wellbeing_01.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
-          }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_2-3_medical_early_wellbeing_01_data_table",
-            "file": "docs/lesson_assets/data_tables/a67d904a-1379-4b62-8c16-1c8651da9c0d_data_table_lesson_2-3_medical_early_wellbeing_01.csv",
-            "title": "data_tables",
-            "language": "ar"
           }
         ]
       },
@@ -8181,22 +8003,6 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
-        ],
-        "reports": [
-          {
-            "id": "lesson_2-3_medical_early_wellbeing_02_report",
-            "file": "docs/lesson_assets/reports/469ac40a-cb9c-414f-8f28-369e1f97056f_report_lesson_2-3_medical_early_wellbeing_02.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
-          }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_2-3_medical_early_wellbeing_02_data_table",
-            "file": "docs/lesson_assets/data_tables/fdee5c96-4b96-4bb4-b0e6-5fd0e55ad5fe_data_table_lesson_2-3_medical_early_wellbeing_02.csv",
-            "title": "data_tables",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "b1f0139a-aa21-4011-8912-e2a842f76960"
@@ -8239,22 +8045,6 @@
             "file": "docs/lesson_2-3_medical_early_wellbeing_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
-          }
-        ],
-        "reports": [
-          {
-            "id": "lesson_2-3_medical_early_wellbeing_03_report",
-            "file": "docs/lesson_assets/reports/b67c7ea8-42da-4f08-ba23-266e9db12769_report_lesson_2-3_medical_early_wellbeing_03.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
-          }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_2-3_medical_early_wellbeing_03_data_table",
-            "file": "docs/lesson_assets/data_tables/2bb97b2b-e0ed-42c4-b03a-420d2c843c28_data_table_lesson_2-3_medical_early_wellbeing_03.csv",
-            "title": "data_tables",
-            "language": "ar"
           }
         ]
       },
@@ -8299,22 +8089,6 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
-        ],
-        "reports": [
-          {
-            "id": "lesson_2-3_medical_early_wellbeing_04_report",
-            "file": "docs/lesson_assets/reports/facc4305-2c5b-477b-8751-c58a04518b64_report_lesson_2-3_medical_early_wellbeing_04.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
-          }
-        ],
-        "data_tables": [
-          {
-            "id": "lesson_2-3_medical_early_wellbeing_04_data_table",
-            "file": "docs/lesson_assets/data_tables/26435498-51f1-49f7-955f-718ad87b3c8b_data_table_lesson_2-3_medical_early_wellbeing_04.csv",
-            "title": "data_tables",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "f6a37ec5-5aec-49dd-9006-d505c0c429f2"
@@ -8357,14 +8131,6 @@
             "file": "docs/lesson_4-6_cyber_early_screens_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
-          }
-        ],
-        "reports": [
-          {
-            "id": "lesson_4-6_cyber_early_screens_01_report",
-            "file": "docs/lesson_assets/reports/a47f29b9-dde6-44bd-8956-29af7911b981_report_lesson_4-6_cyber_early_screens_01.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
           }
         ]
       },
@@ -8409,14 +8175,6 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
-        ],
-        "reports": [
-          {
-            "id": "lesson_4-6_cyber_early_screens_02_report",
-            "file": "docs/lesson_assets/reports/78565608-5801-4a00-92d0-02f886f403b7_report_lesson_4-6_cyber_early_screens_02.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "edf0d955-453b-4454-a2cf-46a2159cad61"
@@ -8459,14 +8217,6 @@
             "file": "docs/lesson_4-6_cyber_early_screens_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
-          }
-        ],
-        "reports": [
-          {
-            "id": "lesson_4-6_cyber_early_screens_03_report",
-            "file": "docs/lesson_assets/reports/f2f55d05-7a0e-4319-8cb4-c33c8f8dfd78_report_lesson_4-6_cyber_early_screens_03.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
           }
         ]
       },
@@ -8511,14 +8261,6 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
-        ],
-        "reports": [
-          {
-            "id": "lesson_4-6_cyber_early_screens_04_report",
-            "file": "docs/lesson_assets/reports/96ef0fe4-0500-4587-9472-ca310f5d2b85_report_lesson_4-6_cyber_early_screens_04.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "fba81554-adb8-4dc5-9d4a-37bad4e33cb5"
@@ -8561,14 +8303,6 @@
             "file": "docs/lesson_4-6_medical_healthy_growth_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
-          }
-        ],
-        "reports": [
-          {
-            "id": "lesson_4-6_medical_healthy_growth_01_report",
-            "file": "docs/lesson_assets/reports/f661aa61-4645-4233-8d33-ec3b87a1889e_report_lesson_4-6_medical_healthy_growth_01.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
           }
         ]
       },
@@ -8613,14 +8347,6 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
-        ],
-        "reports": [
-          {
-            "id": "lesson_4-6_medical_healthy_growth_02_report",
-            "file": "docs/lesson_assets/reports/51a18d6b-4e0d-469c-86f3-dfc5f4ad215b_report_lesson_4-6_medical_healthy_growth_02.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "76d29441-28e9-4ef3-9797-a47144887a60"
@@ -8664,14 +8390,6 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
-        ],
-        "reports": [
-          {
-            "id": "lesson_4-6_medical_healthy_growth_03_report",
-            "file": "docs/lesson_assets/reports/122b8747-9e75-4be5-b7c6-1a1b5f2bc329_report_lesson_4-6_medical_healthy_growth_03.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
-          }
         ]
       },
       "source_id": "676a4e60-5692-424a-b975-3479f1c906e5"
@@ -8714,14 +8432,6 @@
             "file": "docs/lesson_4-6_medical_healthy_growth_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
-          }
-        ],
-        "reports": [
-          {
-            "id": "lesson_4-6_medical_healthy_growth_04_report",
-            "file": "docs/lesson_assets/reports/ec95b543-f8bd-407e-8fb8-b5fdc5a32abc_report_lesson_4-6_medical_healthy_growth_04.md",
-            "title": "تقرير تربوي",
-            "language": "ar"
           }
         ]
       },
