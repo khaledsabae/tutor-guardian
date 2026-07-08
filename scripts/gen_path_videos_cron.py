@@ -141,8 +141,10 @@ async def main():
             if st == "completed" and await download(task_id, _vid_path(path_id)):
                 print(f"  ✓ downloaded {path_id}")
                 state.pop(path_id, None)
-            elif st in ("failed", "error"):
+            elif st == "failed":
+                print(f"  ✗ {path_id} permanently failed")
                 state.pop(path_id, None)
+            # "pending", "error" (auth expiry / transient): keep in state, retry next run
         STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
 
     done = sum(1 for t in mapping if _has_video(t["path_id"]))
