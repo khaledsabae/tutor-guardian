@@ -194,8 +194,9 @@ def main():
     notebook_id = data.get("metadata", {}).get("notebook_id")
 
     # Find lessons with source_id but no podcast
+    # Also sync index for any MP3 on disk that hasn't been registered yet.
     to_process = []
-    index_updated = False
+    index_dirty = False
     for l in data["lessons"]:
         lid = l.get("lesson_id", "")
         source_id = l.get("source_id", "")
@@ -205,13 +206,20 @@ def main():
         existing = podcast_exists_on_disk(lid)
         if existing:
             print(f"  ⏭ {lid} already exists on disk ({existing.stat().st_size // 1024} KB); syncing index.")
-            update_index(lid, f"docs/{existing.name}")
-            index_updated = True
+            base_url = "https://tg-api.alsaba.cloud/static/docs"
+            l.setdefault("assets", {})["podcasts"] = [{
+                "id": f"{lid}_podcast",
+                "url": f"{base_url}/{existing.name}",
+                "file": f"docs/{existing.name}",
+                "language": "ar",
+                "duration_estimate": "medium"
+            }]
+            index_dirty = True
             continue
         if source_id:
             to_process.append({"id": lid, "source_id": source_id})
 
-    if index_updated:
+    if index_dirty:
         with open(INDEX_FILE, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -332,7 +340,7 @@ def main():
     state["pending_podcast_tasks"] = remaining
     save_state(state)
 
-    commit_and_sync(downloaded, index_updated)
+    commit_and_sync(downloaded, index_dirty)
 
 
 if __name__ == "__main__":
