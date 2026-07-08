@@ -8,7 +8,7 @@
     "coverage": {
       "flashcards": "88/88",
       "quizzes": "88/88",
-      "reports": "88/156",
+      "reports": "118/156",
       "data_tables": "88/156",
       "infographics": "155/156"
     },
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-07-08T11:45:36.590102Z"
+    "updated_at": "2026-07-08T12:09:17.906189Z"
   },
   "lessons": [
     {
@@ -6347,6 +6347,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "6ef69d84-6b9a-475e-8b1e-47f643fadd24",
+            "file": "docs/lesson_assets/reports/6ef69d84-6b9a-475e-8b1e-47f643fadd24_report_lesson_0-3_islamic_parenting_fitrah_01.md",
+            "title": "تقرير islamic_parenting_fitrah (0-3)",
+            "item_count": 48
+          }
         ]
       },
       "source_id": "fea88841-da5f-4434-b5a9-d4000929b36f"
@@ -6389,6 +6397,14 @@
             "file": "docs/lesson_0-3_islamic_parenting_fitrah_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "363adef5-b980-44d1-931b-15a556a8310a",
+            "file": "docs/lesson_assets/reports/363adef5-b980-44d1-931b-15a556a8310a_report_lesson_0-3_islamic_parenting_fitrah_02.md",
+            "title": "تقرير islamic_parenting_fitrah (0-3)",
+            "item_count": 50
           }
         ]
       },
@@ -6433,6 +6449,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "bc318783-031d-4366-9895-52bd76e0dd94",
+            "file": "docs/lesson_assets/reports/bc318783-031d-4366-9895-52bd76e0dd94_report_lesson_0-3_islamic_parenting_fitrah_03.md",
+            "title": "تقرير islamic_parenting_fitrah (0-3)",
+            "item_count": 47
+          }
         ]
       },
       "source_id": "fec99dc8-ee24-4818-800c-f1be304fe18b"
@@ -6476,6 +6500,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "e8add1e8-165b-4d7b-b0b8-95d077950159",
+            "file": "docs/lesson_assets/reports/e8add1e8-165b-4d7b-b0b8-95d077950159_report_lesson_0-3_islamic_parenting_fitrah_04.md",
+            "title": "تقرير islamic_parenting_fitrah (0-3)",
+            "item_count": 52
+          }
         ]
       },
       "source_id": "7b209dd7-f40d-4937-909e-cb43350a17bb"
@@ -6509,6 +6541,14 @@
             "title": "بوادر البلوغ وحوار الثقة",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "reports": [
+          {
+            "id": "4af2d062-aa16-456c-9c19-044037c45fcc",
+            "file": "docs/lesson_assets/reports/4af2d062-aa16-456c-9c19-044037c45fcc_report_lesson_10-12_development_pre_teen_01.md",
+            "title": "تقرير development_pre_teen (10-12)",
+            "item_count": 55
           }
         ]
       },
@@ -6553,6 +6593,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "9b2ff599-7e6b-4104-b235-6692c5ae6ee4",
+            "file": "docs/lesson_assets/reports/9b2ff599-7e6b-4104-b235-6692c5ae6ee4_report_lesson_10-12_development_pre_teen_02.md",
+            "title": "تقرير development_pre_teen (10-12)",
+            "item_count": 52
+          }
         ]
       },
       "source_id": "fa931e68-9a58-4eb5-b579-62e4c82fef17"
@@ -6595,6 +6643,14 @@
             "file": "docs/lesson_10-12_development_pre_teen_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "e89e9316-6f00-42ba-ad15-fcb538532fb1",
+            "file": "docs/lesson_assets/reports/e89e9316-6f00-42ba-ad15-fcb538532fb1_report_lesson_10-12_development_pre_teen_03.md",
+            "title": "تقرير development_pre_teen (10-12)",
+            "item_count": 51
           }
         ]
       },
@@ -6639,6 +6695,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "3e43363b-ed75-4637-a9c5-55ec344b1e0a",
+            "file": "docs/lesson_assets/reports/3e43363b-ed75-4637-a9c5-55ec344b1e0a_report_lesson_10-12_development_pre_teen_04.md",
+            "title": "تقرير development_pre_teen (10-12)",
+            "item_count": 49
+          }
         ]
       },
       "source_id": "a48a147f-8802-45b8-a959-87184a328074"
@@ -6681,6 +6745,14 @@
             "file": "docs/lesson_10-12_islamic_parenting_worship_love_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "ab40dad8-9e68-4ee1-b959-745ba13a66a1",
+            "file": "docs/lesson_assets/reports/ab40dad8-9e68-4ee1-b959-745ba13a66a1_report_lesson_10-12_islamic_parenting_worship_love_01.md",
+            "title": "تقرير islamic_parenting_worship_love (10-12)",
+            "item_count": 48
           }
         ]
       },
@@ -6725,6 +6797,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "4f93ed9f-b1f2-4f8d-b96e-28dc5163272e",
+            "file": "docs/lesson_assets/reports/4f93ed9f-b1f2-4f8d-b96e-28dc5163272e_report_lesson_10-12_islamic_parenting_worship_love_02.md",
+            "title": "تقرير islamic_parenting_worship_love (10-12)",
+            "item_count": 51
+          }
         ]
       },
       "source_id": "b2a45a45-3a51-4f28-9708-016e2a45ff83"
@@ -6767,6 +6847,14 @@
             "file": "docs/lesson_10-12_islamic_parenting_worship_love_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "6bd42e26-b96b-4332-a12d-8e0a747ae276",
+            "file": "docs/lesson_assets/reports/6bd42e26-b96b-4332-a12d-8e0a747ae276_report_lesson_10-12_islamic_parenting_worship_love_03.md",
+            "title": "تقرير islamic_parenting_worship_love (10-12)",
+            "item_count": 49
           }
         ]
       },
@@ -6811,6 +6899,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "2e471d3a-7178-4675-aa3d-6fb4955d1b98",
+            "file": "docs/lesson_assets/reports/2e471d3a-7178-4675-aa3d-6fb4955d1b98_report_lesson_10-12_islamic_parenting_worship_love_04.md",
+            "title": "تقرير islamic_parenting_worship_love (10-12)",
+            "item_count": 50
+          }
         ]
       },
       "source_id": "b1abab7b-7567-4b77-ae47-b548b19f5723"
@@ -6853,6 +6949,14 @@
             "file": "docs/lesson_13-15_islamic_parenting_steadfast_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "9842d661-7fc2-4947-abd3-d7813e716764",
+            "file": "docs/lesson_assets/reports/9842d661-7fc2-4947-abd3-d7813e716764_report_lesson_13-15_islamic_parenting_steadfast_01.md",
+            "title": "تقرير islamic_parenting_steadfast (13-15)",
+            "item_count": 53
           }
         ]
       },
@@ -6897,6 +7001,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "bb34c29f-15f5-4b8a-9033-09b0fcc2f22d",
+            "file": "docs/lesson_assets/reports/bb34c29f-15f5-4b8a-9033-09b0fcc2f22d_report_lesson_13-15_islamic_parenting_steadfast_02.md",
+            "title": "تقرير islamic_parenting_steadfast (13-15)",
+            "item_count": 52
+          }
         ]
       },
       "source_id": "f9f42aea-b04d-4968-ba28-93a153a767e1"
@@ -6939,6 +7051,14 @@
             "file": "docs/lesson_13-15_islamic_parenting_steadfast_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "cfb02c86-046e-42a0-ba7f-cad96c53e177",
+            "file": "docs/lesson_assets/reports/cfb02c86-046e-42a0-ba7f-cad96c53e177_report_lesson_13-15_islamic_parenting_steadfast_03.md",
+            "title": "تقرير islamic_parenting_steadfast (13-15)",
+            "item_count": 50
           }
         ]
       },
@@ -6983,6 +7103,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "41a5c82e-8c0c-407e-97cf-f07987f1bfd0",
+            "file": "docs/lesson_assets/reports/41a5c82e-8c0c-407e-97cf-f07987f1bfd0_report_lesson_13-15_islamic_parenting_steadfast_04.md",
+            "title": "تقرير islamic_parenting_steadfast (13-15)",
+            "item_count": 49
+          }
         ]
       },
       "source_id": "52c1c070-b2be-4ba4-9b40-b9bf8e6e3fc8"
@@ -7025,6 +7153,14 @@
             "file": "docs/lesson_16-18_development_adult_readiness_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "1869d5e8-0117-43f8-85ff-fb270b271125",
+            "file": "docs/lesson_assets/reports/1869d5e8-0117-43f8-85ff-fb270b271125_report_lesson_16-18_development_adult_readiness_01.md",
+            "title": "تقرير development_adult_readiness (16-18)",
+            "item_count": 52
           }
         ]
       },
@@ -7069,6 +7205,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "b6a78029-05b4-4cd3-a057-9732cda3cad1",
+            "file": "docs/lesson_assets/reports/b6a78029-05b4-4cd3-a057-9732cda3cad1_report_lesson_16-18_development_adult_readiness_02.md",
+            "title": "تقرير development_adult_readiness (16-18)",
+            "item_count": 52
+          }
         ]
       },
       "source_id": "f4de3214-a45e-4b66-abd0-58c826fb0408"
@@ -7111,6 +7255,14 @@
             "file": "docs/lesson_16-18_development_adult_readiness_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "41c82e42-bd3e-412f-9e1c-2e9f49ea6044",
+            "file": "docs/lesson_assets/reports/41c82e42-bd3e-412f-9e1c-2e9f49ea6044_report_lesson_16-18_development_adult_readiness_03.md",
+            "title": "تقرير development_adult_readiness (16-18)",
+            "item_count": 55
           }
         ]
       },
@@ -7155,6 +7307,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "e405aaa8-7e61-4694-840c-788254d66056",
+            "file": "docs/lesson_assets/reports/e405aaa8-7e61-4694-840c-788254d66056_report_lesson_16-18_development_adult_readiness_04.md",
+            "title": "تقرير development_adult_readiness (16-18)",
+            "item_count": 58
+          }
         ]
       },
       "source_id": "eb5067b4-eb12-4028-b135-8b74b3e79859"
@@ -7197,6 +7357,14 @@
             "file": "docs/lesson_16-18_islamic_parenting_adult_faith_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "9f76b5a7-1219-4d17-a165-d1694d688bad",
+            "file": "docs/lesson_assets/reports/9f76b5a7-1219-4d17-a165-d1694d688bad_report_lesson_16-18_islamic_parenting_adult_faith_01.md",
+            "title": "تقرير islamic_parenting_adult_faith (16-18)",
+            "item_count": 51
           }
         ]
       },
@@ -7241,6 +7409,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "9e366018-1214-44c5-ac59-70fac0a406a5",
+            "file": "docs/lesson_assets/reports/9e366018-1214-44c5-ac59-70fac0a406a5_report_lesson_16-18_islamic_parenting_adult_faith_02.md",
+            "title": "تقرير islamic_parenting_adult_faith (16-18)",
+            "item_count": 51
+          }
         ]
       },
       "source_id": "1955ad55-60d2-46bb-90c6-d9812abf2f2f"
@@ -7283,6 +7459,14 @@
             "file": "docs/lesson_16-18_islamic_parenting_adult_faith_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "a270aa1b-76e4-4874-a5ab-4d57954df049",
+            "file": "docs/lesson_assets/reports/a270aa1b-76e4-4874-a5ab-4d57954df049_report_lesson_16-18_islamic_parenting_adult_faith_03.md",
+            "title": "تقرير islamic_parenting_adult_faith (16-18)",
+            "item_count": 51
           }
         ]
       },
@@ -7327,6 +7511,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "1f9910e0-6699-417a-a15f-bdc89b7b47da",
+            "file": "docs/lesson_assets/reports/1f9910e0-6699-417a-a15f-bdc89b7b47da_report_lesson_16-18_islamic_parenting_adult_faith_04.md",
+            "title": "تقرير islamic_parenting_adult_faith (16-18)",
+            "item_count": 51
+          }
         ]
       },
       "source_id": "0488261d-8c1c-4ada-89ce-365074f5e759"
@@ -7369,6 +7561,14 @@
             "file": "docs/lesson_2-3_islamic_first_words_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "c2de1f54-f131-4adc-a270-639426409664",
+            "file": "docs/lesson_assets/reports/c2de1f54-f131-4adc-a270-639426409664_report_lesson_2-3_islamic_first_words_01.md",
+            "title": "تقرير islamic_first_words (2-3)",
+            "item_count": 49
           }
         ]
       },
@@ -7413,6 +7613,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "603592ea-27b8-4011-b11a-1f0380d171f6",
+            "file": "docs/lesson_assets/reports/603592ea-27b8-4011-b11a-1f0380d171f6_report_lesson_2-3_islamic_first_words_02.md",
+            "title": "تقرير islamic_first_words (2-3)",
+            "item_count": 47
+          }
         ]
       },
       "source_id": "9d6ef7ea-cfe8-4707-9bd7-c9dc3375a7da"
@@ -7456,6 +7664,14 @@
             "language": "ar",
             "duration_estimate": "medium"
           }
+        ],
+        "reports": [
+          {
+            "id": "1d82e340-31b8-4f99-9513-410180d1898d",
+            "file": "docs/lesson_assets/reports/1d82e340-31b8-4f99-9513-410180d1898d_report_lesson_2-3_islamic_first_words_03.md",
+            "title": "تقرير islamic_first_words (2-3)",
+            "item_count": 48
+          }
         ]
       },
       "source_id": "ab4bf1c0-84af-4b25-8647-cca10200a370"
@@ -7498,6 +7714,14 @@
             "file": "docs/lesson_2-3_islamic_first_words_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          }
+        ],
+        "reports": [
+          {
+            "id": "4b5a0bed-7605-40f1-b250-97572f0dbfbf",
+            "file": "docs/lesson_assets/reports/4b5a0bed-7605-40f1-b250-97572f0dbfbf_report_lesson_2-3_islamic_first_words_04.md",
+            "title": "تقرير islamic_first_words (2-3)",
+            "item_count": 51
           }
         ]
       },
@@ -8740,6 +8964,14 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "reports": [
+          {
+            "id": "7c446cf2-4e5e-4183-858b-d3cae4cd08e8",
+            "file": "docs/lesson_assets/reports/7c446cf2-4e5e-4183-858b-d3cae4cd08e8_report_lesson_4-6_aqeedah_seeds_03.md",
+            "title": "تقرير aqeedah_seeds (4-6)",
+            "item_count": 49
+          }
         ]
       }
     },
@@ -8759,6 +8991,14 @@
             "title": "أحب الله وأحب نبيه ﷺ",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "reports": [
+          {
+            "id": "1ea31fa8-130a-4a59-a182-cd3a56ea5126",
+            "file": "docs/lesson_assets/reports/1ea31fa8-130a-4a59-a182-cd3a56ea5126_report_lesson_4-6_aqeedah_seeds_04.md",
+            "title": "تقرير aqeedah_seeds (4-6)",
+            "item_count": 50
           }
         ]
       }
