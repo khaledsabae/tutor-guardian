@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-07-08T10:33:27.522804Z"
+    "updated_at": "2026-07-08T11:45:36.590102Z"
   },
   "lessons": [
     {
@@ -3247,6 +3247,12 @@
           {
             "id": "79ee6ebc-f360-4df8-9b5b-37460258e40b",
             "file": "docs/lesson_assets/reports/79ee6ebc-f360-4df8-9b5b-37460258e40b_report_lesson_7-9_development_03.md",
+            "title": "تقرير development_digital_wellbeing (7-9)",
+            "item_count": 52
+          },
+          {
+            "id": "5e34d819-6fa8-480a-843a-a60fe207e7cb",
+            "file": "docs/lesson_assets/reports/5e34d819-6fa8-480a-843a-a60fe207e7cb_report_lesson_7-9_development_03.md",
             "title": "تقرير development_digital_wellbeing (7-9)",
             "item_count": 52
           }
