@@ -8,7 +8,7 @@
     "coverage": {
       "flashcards": "88/88",
       "quizzes": "88/88",
-      "reports": "88/136",
+      "reports": "88/156",
       "data_tables": "88/136",
       "infographics": "155/156"
     },
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-06-30T13:23:07.017188Z"
+    "updated_at": "2026-07-08T10:32:45.987735Z"
   },
   "lessons": [
     {
@@ -3243,6 +3243,12 @@
             "file": "docs/lesson_assets/reports/3f43fe8b-b1ea-4ae6-81e6-64be99084901_report_lesson_7-9_development_03.md",
             "title": "تقرير development_digital_wellbeing (7-9)",
             "item_count": 55
+          },
+          {
+            "id": "79ee6ebc-f360-4df8-9b5b-37460258e40b",
+            "file": "docs/lesson_assets/reports/79ee6ebc-f360-4df8-9b5b-37460258e40b_report_lesson_7-9_development_03.md",
+            "title": "تقرير development_digital_wellbeing (7-9)",
+            "item_count": 52
           }
         ],
         "data_tables": [
