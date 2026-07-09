@@ -66,9 +66,7 @@ def looks_like_rate_limit(out: str) -> bool:
 
 
 def trigger_podcast(source_id, lesson_id, notebook_id=None):
-    cmd = [NOTEBOOKLM, "generate", "audio", "--language", "ar_001", "-s", source_id]
-    if notebook_id:
-        cmd.extend(["-n", notebook_id])
+    cmd = [NOTEBOOKLM, "generate", "audio", "-n", notebook_id, "--language", "ar_001", "-s", source_id]
     out, rc = run(cmd, timeout=60)
 
     if looks_like_rate_limit(out):
@@ -83,9 +81,9 @@ def trigger_podcast(source_id, lesson_id, notebook_id=None):
     return None
 
 
-def poll_task(task_id):
+def poll_task(task_id, notebook_id=""):
     try:
-        out, rc = run([NOTEBOOKLM, "artifact", "poll", task_id, "--json"], timeout=30)
+        out, rc = run([NOTEBOOKLM, "artifact", "poll", "-n", notebook_id, task_id, "--json"], timeout=30)
     except Exception as e:
         print(f"    poll_task exception for {task_id}: {e}")
         return None, None
@@ -96,14 +94,21 @@ def poll_task(task_id):
         return None, None
 
 
-def download_podcast(source_id, lesson_id, task_id):
-    # Prefer downloading by artifact task id if the CLI supports it; fallback to source_id.
+def download_podcast(source_id, lesson_id, task_id, notebook_id=""):
+    """Download by artifact task id (the UUID returned by generate) to {lesson_id}_podcast.mp3."""
     out_path = DOCS_DIR / f"{lesson_id}_podcast.mp3"
-    cmd = [NOTEBOOKLM, "download", "audio", "--artifact", source_id, str(out_path), "--force"]
+    cmd = [NOTEBOOKLM, "download", "audio", "-n", notebook_id, "-a", task_id, str(out_path), "--force"]
     out, rc = run(cmd, timeout=120)
     if rc == 0 and out_path.exists() and out_path.stat().st_size > 10000:
         size_kb = out_path.stat().st_size // 1024
         print(f"    -> Downloaded! ({size_kb} KB)")
+        return f"docs/{out_path.name}"
+    # Fallback: try by source_id (old style)
+    cmd2 = [NOTEBOOKLM, "download", "audio", "-n", notebook_id, "-a", source_id, str(out_path), "--force"]
+    out2, rc2 = run(cmd2, timeout=120)
+    if rc2 == 0 and out_path.exists() and out_path.stat().st_size > 10000:
+        size_kb = out_path.stat().st_size // 1024
+        print(f"    -> Downloaded! (source fallback, {size_kb} KB)")
         return f"docs/{out_path.name}"
     return None
 
@@ -303,10 +308,10 @@ def main():
         for lid, info in list(remaining.items()):
             task_id = info["task_id"]
             source_id = info["source_id"]
-            status, url = poll_task(task_id)
+            status, url = poll_task(task_id, notebook_id)
             if status in ("pending", "complete") and url:
                 print(f"  [{lid}] Ready! Downloading...")
-                file_path = download_podcast(source_id, lid, task_id)
+                file_path = download_podcast(source_id, lid, task_id, notebook_id)
                 if file_path:
                     update_index(lid, file_path)
                     downloaded += 1

@@ -35,6 +35,7 @@ MIN_SIZE = 5 * 1024 * 1024
 POLL_BUDGET_SEC = 22 * 60  # bounded polling per run; cron retries the rest
 ENV = {**os.environ, "HOME": "/home/khalednew"}
 
+NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 PROMPT = (
     "أنشئ فيديو تعريفي قصير وممتع (~5 دقائق) باللهجة المصرية كعرض تمهيدي لمسار '{title}'. "
     "اشرح للأمهات والآباء بأسلوب دافئ وعملي أهم الأهداف التربوية لهذا المسار، والخطوات العملية "
@@ -70,7 +71,7 @@ def _load(p, default):
 
 async def trigger(source_id, title):
     code, out, err = await _run(
-        CLI, "generate", "video", "--language", "ar_eg", "-s", source_id, PROMPT.format(title=title)
+        CLI, "generate", "video", "-n", NOTEBOOK_ID, "--language", "ar_eg", "-s", source_id, PROMPT.format(title=title)
     )
     blob = out + err
     if "RateLimit" in blob or "quota" in blob.lower():
@@ -80,7 +81,7 @@ async def trigger(source_id, title):
 
 
 async def poll(task_id):
-    code, out, err = await _run(CLI, "artifact", "poll", task_id, "--json", timeout=90)
+    code, out, err = await _run(CLI, "artifact", "poll", "-n", NOTEBOOK_ID, task_id, "--json", timeout=90)
     if code != 0:
         return "error"
     try:
@@ -90,7 +91,7 @@ async def poll(task_id):
 
 
 async def download(task_id, out_path):
-    code, _, _ = await _run(CLI, "download", "video", "--artifact", task_id, str(out_path), "--force")
+    code, _, _ = await _run(CLI, "download", "video", "-n", NOTEBOOK_ID, "--artifact", task_id, str(out_path), "--force")
     return out_path.exists() and out_path.stat().st_size > MIN_SIZE
 
 
