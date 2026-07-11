@@ -3346,9 +3346,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_cyber_screen_foundations_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_cyber_screen_foundations_01_podcast.mp3",
             "file": "docs/lesson_0-3_cyber_screen_foundations_01_podcast.mp3",
-            "size_bytes": 42651183,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -3423,9 +3425,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_cyber_screen_foundations_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_cyber_screen_foundations_02_podcast.mp3",
             "file": "docs/lesson_0-3_cyber_screen_foundations_02_podcast.mp3",
-            "size_bytes": 44537404,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -3494,9 +3498,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_cyber_screen_foundations_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_cyber_screen_foundations_03_podcast.mp3",
             "file": "docs/lesson_0-3_cyber_screen_foundations_03_podcast.mp3",
-            "size_bytes": 32014008,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -3565,9 +3571,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_development_early_moments_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_development_early_moments_01_podcast.mp3",
             "file": "docs/lesson_0-3_development_early_moments_01_podcast.mp3",
-            "size_bytes": 30415512,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -3636,9 +3644,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_development_early_moments_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_development_early_moments_02_podcast.mp3",
             "file": "docs/lesson_0-3_development_early_moments_02_podcast.mp3",
-            "size_bytes": 30451370,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -3707,9 +3717,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_development_early_moments_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_development_early_moments_03_podcast.mp3",
             "file": "docs/lesson_0-3_development_early_moments_03_podcast.mp3",
-            "size_bytes": 31863853,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -3778,9 +3790,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_islamic_parenting_attachment_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_islamic_parenting_attachment_01_podcast.mp3",
             "file": "docs/lesson_0-3_islamic_parenting_attachment_01_podcast.mp3",
-            "size_bytes": 27982343,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -3849,9 +3863,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_islamic_parenting_attachment_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_islamic_parenting_attachment_02_podcast.mp3",
             "file": "docs/lesson_0-3_islamic_parenting_attachment_02_podcast.mp3",
-            "size_bytes": 45566424,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -3920,9 +3936,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_islamic_parenting_attachment_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_islamic_parenting_attachment_03_podcast.mp3",
             "file": "docs/lesson_0-3_islamic_parenting_attachment_03_podcast.mp3",
-            "size_bytes": 38763696,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -3991,9 +4009,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_islamic_parenting_attachment_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_islamic_parenting_attachment_04_podcast.mp3",
             "file": "docs/lesson_0-3_islamic_parenting_attachment_04_podcast.mp3",
-            "size_bytes": 24718750,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -4062,9 +4082,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_medical_early_milestones_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_medical_early_milestones_01_podcast.mp3",
             "file": "docs/lesson_0-3_medical_early_milestones_01_podcast.mp3",
-            "size_bytes": 29993320,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -4133,9 +4155,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_medical_early_milestones_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_medical_early_milestones_02_podcast.mp3",
             "file": "docs/lesson_0-3_medical_early_milestones_02_podcast.mp3",
-            "size_bytes": 40957066,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -4204,9 +4228,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_medical_early_milestones_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_medical_early_milestones_03_podcast.mp3",
             "file": "docs/lesson_0-3_medical_early_milestones_03_podcast.mp3",
-            "size_bytes": 21275983,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -4275,9 +4301,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_medical_early_milestones_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_medical_early_milestones_04_podcast.mp3",
             "file": "docs/lesson_0-3_medical_early_milestones_04_podcast.mp3",
-            "size_bytes": 41941264,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "videos": [
@@ -4606,9 +4634,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_cyber_screen_foundations_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_cyber_screen_foundations_b04_podcast.mp3",
             "file": "docs/lesson_0-3_cyber_screen_foundations_b04_podcast.mp3",
-            "size_bytes": 43103373,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -4675,9 +4705,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_0-3_development_early_moments_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_0-3_development_early_moments_b04_podcast.mp3",
             "file": "docs/lesson_0-3_development_early_moments_b04_podcast.mp3",
-            "size_bytes": 28561414,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -4744,9 +4776,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_10-12_cyber_digital_citizenship_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_cyber_digital_citizenship_b04_podcast.mp3",
             "file": "docs/lesson_10-12_cyber_digital_citizenship_b04_podcast.mp3",
-            "size_bytes": 46315305,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -4813,9 +4847,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_10-12_medical_puberty_wellbeing_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_medical_puberty_wellbeing_b04_podcast.mp3",
             "file": "docs/lesson_10-12_medical_puberty_wellbeing_b04_podcast.mp3",
-            "size_bytes": 40773179,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -4882,9 +4918,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_13-15_cyber_digital_maturity_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_13-15_cyber_digital_maturity_b04_podcast.mp3",
             "file": "docs/lesson_13-15_cyber_digital_maturity_b04_podcast.mp3",
-            "size_bytes": 36547915,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -4951,9 +4989,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_13-15_development_brain_identity_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_13-15_development_brain_identity_b04_podcast.mp3",
             "file": "docs/lesson_13-15_development_brain_identity_b04_podcast.mp3",
-            "size_bytes": 43994075,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5020,9 +5060,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_16-18_cyber_digital_professional_b03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_cyber_digital_professional_b03_podcast.mp3",
             "file": "docs/lesson_16-18_cyber_digital_professional_b03_podcast.mp3",
-            "size_bytes": 21799026,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5089,9 +5131,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_16-18_cyber_digital_professional_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_cyber_digital_professional_b04_podcast.mp3",
             "file": "docs/lesson_16-18_cyber_digital_professional_b04_podcast.mp3",
-            "size_bytes": 40149169,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5158,9 +5202,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_16-18_medical_adult_transition_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_medical_adult_transition_b04_podcast.mp3",
             "file": "docs/lesson_16-18_medical_adult_transition_b04_podcast.mp3",
-            "size_bytes": 42493557,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5227,9 +5273,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_2-3_cyber_routine_b01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_cyber_routine_b01_podcast.mp3",
             "file": "docs/lesson_2-3_cyber_routine_b01_podcast.mp3",
-            "size_bytes": 44656930,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5296,9 +5344,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_2-3_cyber_routine_b02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_cyber_routine_b02_podcast.mp3",
             "file": "docs/lesson_2-3_cyber_routine_b02_podcast.mp3",
-            "size_bytes": 29640601,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5365,9 +5415,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_2-3_cyber_routine_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_cyber_routine_b04_podcast.mp3",
             "file": "docs/lesson_2-3_cyber_routine_b04_podcast.mp3",
-            "size_bytes": 30577736,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5434,9 +5486,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_2-3_development_growth_b03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_development_growth_b03_podcast.mp3",
             "file": "docs/lesson_2-3_development_growth_b03_podcast.mp3",
-            "size_bytes": 29970161,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5503,9 +5557,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_2-3_development_growth_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_development_growth_b04_podcast.mp3",
             "file": "docs/lesson_2-3_development_growth_b04_podcast.mp3",
-            "size_bytes": 41123656,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5572,9 +5628,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_2-3_islamic_attachment_b01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_islamic_attachment_b01_podcast.mp3",
             "file": "docs/lesson_2-3_islamic_attachment_b01_podcast.mp3",
-            "size_bytes": 39572340,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5641,9 +5699,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_2-3_islamic_attachment_b02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_islamic_attachment_b02_podcast.mp3",
             "file": "docs/lesson_2-3_islamic_attachment_b02_podcast.mp3",
-            "size_bytes": 46190433,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5710,9 +5770,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_2-3_islamic_attachment_b03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_islamic_attachment_b03_podcast.mp3",
             "file": "docs/lesson_2-3_islamic_attachment_b03_podcast.mp3",
-            "size_bytes": 18727653,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5779,9 +5841,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_4-6_development_positive_parenting_b01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_development_positive_parenting_b01_podcast.mp3",
             "file": "docs/lesson_4-6_development_positive_parenting_b01_podcast.mp3",
-            "size_bytes": 36597966,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5848,9 +5912,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_4-6_development_positive_parenting_b02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_development_positive_parenting_b02_podcast.mp3",
             "file": "docs/lesson_4-6_development_positive_parenting_b02_podcast.mp3",
-            "size_bytes": 48486895,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5917,9 +5983,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_4-6_islamic_parenting_adab_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_islamic_parenting_adab_b04_podcast.mp3",
             "file": "docs/lesson_4-6_islamic_parenting_adab_b04_podcast.mp3",
-            "size_bytes": 30422983,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -5986,9 +6054,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_4-6_islamic_parenting_bond_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_islamic_parenting_bond_b04_podcast.mp3",
             "file": "docs/lesson_4-6_islamic_parenting_bond_b04_podcast.mp3",
-            "size_bytes": 41666985,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -6055,9 +6125,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_7-9_development_digital_wellbeing_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_development_digital_wellbeing_b04_podcast.mp3",
             "file": "docs/lesson_7-9_development_digital_wellbeing_b04_podcast.mp3",
-            "size_bytes": 25262826,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -6124,9 +6196,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_7-9_islamic_parenting_worship_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_islamic_parenting_worship_b04_podcast.mp3",
             "file": "docs/lesson_7-9_islamic_parenting_worship_b04_podcast.mp3",
-            "size_bytes": 36095093,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -6193,9 +6267,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_7-9_medical_emotional_health_b03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_medical_emotional_health_b03_podcast.mp3",
             "file": "docs/lesson_7-9_medical_emotional_health_b03_podcast.mp3",
-            "size_bytes": 537696,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
@@ -6262,9 +6338,11 @@
         ],
         "podcasts": [
           {
+            "id": "lesson_7-9_medical_emotional_health_b04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_medical_emotional_health_b04_podcast.mp3",
             "file": "docs/lesson_7-9_medical_emotional_health_b04_podcast.mp3",
-            "size_bytes": 31365346,
-            "language": "ar"
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ],
         "reports": [
