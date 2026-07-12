@@ -1,10 +1,10 @@
 {
-  "total_units": 1121,
-  "generated_at": "2026-06-25T07:56:36.361036+00:00",
+  "total_units": 1122,
+  "generated_at": "2026-07-12T18:24:24.671078+00:00",
   "by_domain": {
     "medical": 259,
     "cyber": 251,
-    "islamic_parenting": 544,
+    "islamic_parenting": 545,
     "development": 57,
     "aqeedah": 10
   },
@@ -10880,6 +10880,18 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1330
+    },
+    {
+      "id": "isl-toddler-prayer",
+      "domain": "islamic_parenting",
+      "title": "تقديم الصلاة للأطفال في السن المبكرة (2-3 سنوات)",
+      "source_file": "",
+      "language": "",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "تعويد على الصلاة والارتباط العاطفي بها",
+      "needs_ocr": false,
+      "size_chars": 486
     },
     {
       "id": "med-00fa7863",
