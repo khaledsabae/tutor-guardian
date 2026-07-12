@@ -16,13 +16,14 @@ OUT = Path(__file__).resolve().parent / "finetune_tg_kaggle.ipynb"
 
 PIP = '''# المربّي — fine-tune command-r7b-arabic (QLoRA). Accelerator = GPU T4 x2.
 # RUN AS: Save Version -> Save & Run All (commit) so output persists.
-!pip install -q -U transformers trl peft bitsandbytes accelerate datasets huggingface_hub
+!pip install -q transformers trl peft bitsandbytes accelerate datasets huggingface_hub
 !pip uninstall -y torchao
 '''
 
 TRAIN_CODE = '''import os
 from pathlib import Path
 import torch
+assert torch.cuda.is_available(), "CUDA GPU is not available! SFT training requires GPU."
 from datasets import load_dataset
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import LoraConfig

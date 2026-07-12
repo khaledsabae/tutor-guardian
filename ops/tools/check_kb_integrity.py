@@ -200,7 +200,41 @@ def main() -> int:
     else:
         print(f"  ✅  CJK PURITY OK — 0 files with CJK characters (curriculum + all 292 units)")
 
+    # ── REPORT FORMAT GATE: check generated reports under docs/lesson_assets/reports/ ──
+    print("=" * 67)
+    print("  REPORT FORMAT CHECK — فحص صياغة وجودة التقارير التربوية")
+    print("=" * 67)
+
+    report_errors = []
+    reports_dir = ROOT / "docs" / "lesson_assets" / "reports"
+    if reports_dir.exists():
+        for fp in reports_dir.glob("*.md"):
+            try:
+                content = fp.read_text(encoding="utf-8")
+                # Reject if contains LLM formatting leftovers
+                if "Answer:" in content or "answer:" in content:
+                    report_errors.append(f"{fp.name}: Contains raw 'Answer:' prefix")
+                # Reject if the header has untranslated English labels
+                header_match = re.match(r"^# تقرير تربوي عملي:\s*([^(]+)", content)
+                if header_match:
+                    topic_name = header_match.group(1).strip()
+                    if re.search(r"[a-zA-Z]", topic_name):
+                        report_errors.append(f"{fp.name}: Untranslated domain title in header: '{topic_name}'")
+            except Exception as e:
+                warnings.append(f"REPORTS: could not read {fp.name}: {e}")
+
+    if report_errors:
+        print(f"\n🔴  REPORT FORMAT VIOLATIONS ({len(report_errors)}):")
+        for v in report_errors[:10]:
+            print(f"     ✗ {v}")
+        if len(report_errors) > 10:
+            print(f"     ... and {len(report_errors) - 10} more")
+        errors.append(f"REPORT FORMAT GATE FAILED: {len(report_errors)} report(s) contain raw LLM text or untranslated domain titles")
+    else:
+        print("  ✅  REPORT FORMAT OK — all reports are clean and fully translated")
+
     if warnings:
+
         print(f"\n🟡  WARNINGS ({len(warnings)}):")
         # collapse the noisy optional-metadata warnings into a count
         meta_warns = [w for w in warnings if "missing optional" in w]
