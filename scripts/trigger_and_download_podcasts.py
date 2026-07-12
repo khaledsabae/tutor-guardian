@@ -179,6 +179,10 @@ def main():
     state["last_run_triggered"] = 0
     state["last_run_downloaded"] = 0
 
+    # Cooldown gates the TRIGGER phase only: generate consumes the daily audio
+    # quota, but polling/downloading already-generated artifacts does not —
+    # skipping the whole run left 16 finished podcasts sitting undownloaded.
+    in_cooldown = False
     now = datetime.now(timezone.utc)
     last_rl = state.get("last_rate_limit_at")
     if last_rl:
@@ -188,11 +192,12 @@ def main():
             cooldown = RATE_LIMIT_COOLDOWN_HOURS * 3600
             if elapsed < cooldown:
                 remaining = int(cooldown - elapsed)
+                in_cooldown = True
                 print(
-                    f"⏳ NotebookLM rate-limit cooldown active. "
-                    f"Retry in {remaining // 3600}h {(remaining % 3600) // 60}m. Skipping run."
+                    f"⏳ NotebookLM rate-limit cooldown active "
+                    f"({remaining // 3600}h {(remaining % 3600) // 60}m left) — "
+                    f"skipping triggers, still polling pending tasks."
                 )
-                return
         except Exception:
             pass
 
@@ -238,6 +243,9 @@ def main():
             json.dump(data, f, ensure_ascii=False, indent=2)
 
     print(f"Found {len(to_process)} lessons ready for generation (have source_id, no podcast)")
+
+    if in_cooldown:
+        to_process = []
 
     if MAX_TRIGGER_PER_RUN and len(to_process) > MAX_TRIGGER_PER_RUN:
         print(f"  (limiting this run to first {MAX_TRIGGER_PER_RUN} lessons)")
@@ -292,7 +300,9 @@ def main():
         clean_pending[lid] = info
     pending = clean_pending
     state["pending_podcast_tasks"] = pending
-    if pending and not rate_limited_now:
+    if pending:
+        # Poll pending even right after a rate limit — polling doesn't spend
+        # generate quota, and finished artifacts must still get downloaded.
         print(f"  (also polling {len(pending)} tasks from a previous run)")
         # A freshly-triggered task always wins over a stale one from state.
         for lid, info in pending.items():
