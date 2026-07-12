@@ -8,7 +8,7 @@
     "coverage": {
       "flashcards": "88/88",
       "quizzes": "88/88",
-      "reports": "118/156",
+      "reports": "130/156",
       "data_tables": "120/156",
       "infographics": "155/156"
     },
@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-07-08T12:37:51.907247Z"
+    "updated_at": "2026-07-12T18:39:28.418720Z"
   },
   "lessons": [
     {
@@ -6432,6 +6432,12 @@
             "file": "docs/lesson_assets/reports/6ef69d84-6b9a-475e-8b1e-47f643fadd24_report_lesson_0-3_islamic_parenting_fitrah_01.md",
             "title": "تقرير islamic_parenting_fitrah (0-3)",
             "item_count": 48
+          },
+          {
+            "id": "c90b1e5e-5717-46d4-b3d7-594f2ae6f6ad",
+            "file": "docs/lesson_assets/reports/c90b1e5e-5717-46d4-b3d7-594f2ae6f6ad_report_lesson_0-3_islamic_parenting_fitrah_01.md",
+            "title": "تقرير islamic_parenting_fitrah (0-3)",
+            "item_count": 51
           }
         ],
         "data_tables": [
