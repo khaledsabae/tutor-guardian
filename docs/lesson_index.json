@@ -9101,6 +9101,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_aqeedah_fundamentals_03_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_aqeedah_fundamentals_03_podcast.mp3",
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_03_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       }
     },
@@ -9553,6 +9562,15 @@
             "item_count": 0,
             "resolution": "2752x1536"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_aqeedah_conviction_02_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_aqeedah_conviction_02_podcast.mp3",
+            "file": "docs/lesson_16-18_aqeedah_conviction_02_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       }
     },
@@ -9675,6 +9693,15 @@
             "file": "docs/lesson_assets/reports/1ea31fa8-130a-4a59-a182-cd3a56ea5126_report_lesson_4-6_aqeedah_seeds_04.md",
             "title": "تقرير aqeedah_seeds (4-6)",
             "item_count": 50
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_aqeedah_seeds_04_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_aqeedah_seeds_04_podcast.mp3",
+            "file": "docs/lesson_4-6_aqeedah_seeds_04_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       }
