@@ -6668,6 +6668,15 @@
             "title": "جدول بيانات development_pre_teen (10-12)",
             "item_count": 5
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_development_pre_teen_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_development_pre_teen_01_podcast.mp3",
+            "file": "docs/lesson_10-12_development_pre_teen_01_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
+          }
         ]
       },
       "source_id": "4ffd1532-529b-4b91-b96f-7dfe00c766de"
@@ -9140,6 +9149,15 @@
             "title": "أسماء الله الحسنى",
             "item_count": 0,
             "resolution": "2752x1536"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_aqeedah_fundamentals_05_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_aqeedah_fundamentals_05_podcast.mp3",
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_05_podcast.mp3",
+            "language": "ar",
+            "duration_estimate": "medium"
           }
         ]
       }
