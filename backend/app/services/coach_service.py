@@ -28,6 +28,7 @@ from app.db.init_db import get_conn
 from app.services import conversation_store as store
 from app.services import llm_service
 from app.services.ai_gateway import get_gateway
+from app.services.coach_safety import verify_tip_safety
 
 logger = logging.getLogger(__name__)
 
@@ -241,43 +242,12 @@ def _looks_personal(text: str) -> bool:
 
 def _is_core_ok(core: str, recent_topic: str, age_group: str, domain: Optional[str]) -> bool:
     """Substance + Arabic-only + reasonable length + topic overlap + age/medical safety."""
-    if not core:
+    is_safe, _ = verify_tip_safety(core, age_group, domain or "development")
+    if not is_safe:
         return False
+
     core = core.strip()
-    if len(core) < _MIN_TIP_LENGTH or len(core) > _MAX_TIP_LENGTH:
-        return False
-    if _CJK_RE.search(core):
-        return False
-    if not re.search(r"[\u0600-\u06FF]", core):
-        return False
-    latin_chars = len(re.findall(r"[a-zA-Z]", core))
-    if latin_chars > 0 and latin_chars / len(core) > 0.03:
-        return False
-
-    # Reject corrupted/generated markers that slip through.
     lowered_core = core.lower()
-    if any(m in lowered_core for m in ["غير مضمونة", "غير مضمون", "غير مؤكدة", "غير مؤكد", "للأسف", "ليس هناك حل", "لا يوجد علاج"]):
-        logger.info("coach quality: meta/dislaimer text")
-        return False
-
-    # Medical safety: never generate medical advice outside medical domain.
-    medical_terms = ["طبيب نفسي", "علاج", "تشخيص", "تدخل", "أعراض", "طبيب الأطفال", "صيدلي", "دواء", "حبوب", "جرعة"]
-    if domain != "medical" and any(m in lowered_core for m in medical_terms):
-        logger.info("coach quality: medical term in non-medical domain")
-        return False
-
-    # Reject broken/incomprehensible fragments.
-    if re.search(r"[\u0600-\u06FF]\s+[بتثجحخدذرزسشصضطظعغفقكلمنهوي]\.?$", core):
-        logger.info("coach quality: sentence ends with isolated single letter fragment")
-        return False
-    if re.search(r"\b(وبكسرت|وبكسر|بكسرت|بكسر)\b", core):
-        logger.info("coach quality: broken conjunction fragment")
-        return False
-
-    # Medical safety: we never generate medical advice; seeds/curriculum only.
-    if domain == "medical" or age_group in ("0-3", "2-3"):
-        logger.info("coach quality: medical/toddler content — generation forbidden")
-        return False
 
     # Topic relevance by content-word overlap.
     topic_words = {w for w in re.findall(r"[\u0600-\u06FF]{3,}", recent_topic)}
