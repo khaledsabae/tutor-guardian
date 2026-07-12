@@ -63,6 +63,19 @@ CREATE INDEX IF NOT EXISTS ix_push_tokens_device
     ON push_tokens (device_id);
 """
 
+_CREATE_USER_BACKUPS: str = """
+CREATE TABLE IF NOT EXISTS user_backups (
+    device_id   TEXT PRIMARY KEY,
+    google_id   TEXT,
+    salt        TEXT NOT NULL,
+    nonce       TEXT NOT NULL,
+    payload     TEXT NOT NULL,
+    updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS ix_user_backups_google
+    ON user_backups (google_id);
+"""
+
 _CREATE_PARENT_IDENTITIES: str = """
 CREATE TABLE IF NOT EXISTS parent_identities (
     google_id    TEXT PRIMARY KEY,
@@ -135,7 +148,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 17
+SCHEMA_VERSION = 18
 
 
 def db_path() -> Path:
@@ -282,6 +295,7 @@ def init_db() -> None:
     _ensure_habits_value_table(conn)
     _ensure_habit_templates_table(conn)
     _ensure_habits_value_audit_columns(conn)
+    _ensure_user_backups_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -587,3 +601,14 @@ def _ensure_chat_messages_columns(conn: sqlite3.Connection) -> None:
         ]:
             if col not in names:
                 conn.execute(ddl)
+
+
+def _ensure_user_backups_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the user_backups table."""
+    try:
+        cur = conn.execute("PRAGMA table_info(user_backups)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_USER_BACKUPS)
