@@ -71,7 +71,7 @@ def streak_at_risk():
             SELECT device_id FROM push_tokens WHERE token IS NOT NULL AND token != ''
         )
         GROUP BY cp.device_id
-        HAVING MAX(COALESCE(lp.last_activity_at, cp.created_at)) < ?
+        HAVING MAX(COALESCE(lp.updated_at, cp.created_at)) < ?
         """,
         (cutoff,),
     )
