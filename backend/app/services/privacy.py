@@ -18,6 +18,7 @@ the cloud tier is an opt-in quality upgrade, not a data pipeline.
 from __future__ import annotations
 
 import logging
+import os
 import re
 import sqlite3
 from functools import lru_cache
@@ -50,7 +51,11 @@ def _known_names_cached(_epoch: int) -> tuple[str, ...]:
 
 def known_child_names() -> tuple[str, ...]:
     """Child names from the local store, cached ~per-process."""
-    return _known_names_cached(0)
+    try:
+        epoch = int(os.path.getmtime(db_path()))
+    except Exception:
+        epoch = 0
+    return _known_names_cached(epoch)
 
 
 def redact_for_cloud(text: str) -> str:

@@ -53,6 +53,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
         # In-memory fallback: key -> (window_start_epoch, count)
         self._buckets: dict[str, tuple[float, int]] = {}
+        self._last_cleanup = time.monotonic()
         self._redis = _get_redis_client()
         if self._redis:
             logger.info("Rate-limit using Redis: %s", _REDIS_URL)
@@ -111,6 +112,14 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
 
         # In-memory fallback
         now = time.monotonic()
+
+        # Periodic cleanup of expired buckets to prevent memory leaks/OOM
+        if now - self._last_cleanup > 300.0:
+            expired_keys = [k for k, (start, _) in self._buckets.items() if now - start >= _WINDOW]
+            for k in expired_keys:
+                self._buckets.pop(k, None)
+            self._last_cleanup = now
+
         start, count = self._buckets.get(key, (now, 0))
 
         if now - start >= _WINDOW:
