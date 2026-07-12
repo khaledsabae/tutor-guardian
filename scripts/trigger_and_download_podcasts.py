@@ -382,6 +382,22 @@ def main():
 
     commit_and_sync(downloaded, index_dirty)
 
+    # Self-retire: when every sourced lesson has a podcast and nothing is in
+    # flight, this agent's mission is complete — disable via PCC (records the
+    # reason) instead of looping as a no-op scanner every hour forever.
+    if downloaded and not remaining:
+        with open(INDEX_FILE) as f:
+            final = json.load(f)
+        left = [l for l in final["lessons"]
+                if l.get("source_id") and not l.get("assets", {}).get("podcasts")]
+        if not left:
+            subprocess.run([
+                "/home/khalednew/projects/publishing-center/bin/pcc",
+                "disable", "tutor_podcasts", "--reason",
+                f"mission complete {datetime.now(timezone.utc).date()}: every sourced lesson has a podcast; re-enable when new lessons get source_ids",
+            ], timeout=30)
+            print("🎓 backlog empty — agent disabled itself via PCC")
+
 
 if __name__ == "__main__":
     main()
