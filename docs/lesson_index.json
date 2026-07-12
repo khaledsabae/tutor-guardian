@@ -24,7 +24,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-07-12T18:39:28.418720Z"
+    "updated_at": "2026-07-12T18:40:13.987041Z"
   },
   "lessons": [
     {
@@ -6444,6 +6444,12 @@
           {
             "id": "2466e76f-e498-488e-8000-fb8fd6b744db",
             "file": "docs/lesson_assets/data_tables/2466e76f-e498-488e-8000-fb8fd6b744db_data_table_lesson_0-3_islamic_parenting_fitrah_01.csv",
+            "title": "جدول بيانات islamic_parenting_fitrah (0-3)",
+            "item_count": 5
+          },
+          {
+            "id": "45e8857c-3d75-4ea6-86b1-984ca0e1a4df",
+            "file": "docs/lesson_assets/data_tables/45e8857c-3d75-4ea6-86b1-984ca0e1a4df_data_table_lesson_0-3_islamic_parenting_fitrah_01.csv",
             "title": "جدول بيانات islamic_parenting_fitrah (0-3)",
             "item_count": 5
           }
