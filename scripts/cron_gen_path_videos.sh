@@ -31,6 +31,8 @@ rsync -av --min-size=5242880 --include='*_ar_eg.mp4' --include='*/' --exclude='*
 echo "----- rsync exit $? -----" >> "$LOG"
 
 # Self-disable once every mapped path has a video.
+# The cron line is PCC-managed now — disable the agent in PCC (records the
+# reason) instead of editing crontab, which only contained a dead comment.
 NEED=$(python3 -c "
 import json,os
 m=json.load(open('scratch/path_source_mapping_new.json'))
@@ -39,6 +41,11 @@ print(len(miss))
 " 2>/dev/null)
 echo "----- remaining: ${NEED:-?} -----" >> "$LOG"
 if [ "${NEED:-1}" = "0" ]; then
-    echo "All path videos done — removing cron line." >> "$LOG"
-    crontab -l 2>/dev/null | grep -v 'cron_gen_path_videos.sh' | crontab -
+    echo "All path videos done — disabling agent via PCC." >> "$LOG"
+    /home/khalednew/projects/publishing-center/bin/pcc disable tutor_genvideos \
+        --reason "mission complete: all mapped path videos exist ($(date +%F))" >> "$LOG" 2>&1
 fi
+
+# Surface the run summary to stdout too, so the PCC layer isn't blind to what
+# happened inside (full detail stays in $LOG).
+tail -n 3 "$LOG"

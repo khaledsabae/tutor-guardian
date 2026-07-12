@@ -31,7 +31,9 @@ CLI = str(BASE / "notebooklm_env" / "bin" / "notebooklm")
 VIDEOS_DIR = BASE / "docs" / "path_videos"
 MAP_FILE = BASE / "scratch" / "path_source_mapping_new.json"
 STATE_FILE = BASE / "scratch" / "path_video_tasks.json"
+FAILS_FILE = BASE / "scratch" / "path_video_failures.json"
 MIN_SIZE = 5 * 1024 * 1024
+MAX_FAILS = 3  # stop re-triggering a path after this many hard failures
 POLL_BUDGET_SEC = 22 * 60  # bounded polling per run; cron retries the rest
 ENV = {**os.environ, "HOME": "/home/khalednew"}
 
@@ -99,6 +101,7 @@ async def main():
     VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
     mapping = _load(MAP_FILE, [])
     state = _load(STATE_FILE, {})  # path_id -> task_id (in flight)
+    fails = _load(FAILS_FILE, {})  # path_id -> consecutive hard-failure count
 
     # 1) resolve in-flight tasks
     for path_id, task_id in list(state.items()):
@@ -111,14 +114,19 @@ async def main():
             if await download(task_id, _vid_path(path_id)):
                 print(f"  ✓ downloaded {path_id}")
                 state.pop(path_id, None)
+                fails.pop(path_id, None)
         elif st == "failed":
             state.pop(path_id, None)  # genuine failure — allow re-trigger
+            fails[path_id] = fails.get(path_id, 0) + 1
         # "error"/auth-expiry: keep the task and retry next run (do NOT drop)  # let it be re-triggered next run
 
     # 2) trigger paths that have no video and no in-flight task
     for t in mapping:
         pid = t["path_id"]
         if _has_video(pid) or pid in state:
+            continue
+        if fails.get(pid, 0) >= MAX_FAILS:
+            print(f"[trigger] {pid}: skipped — {fails[pid]} hard failures; needs manual root-cause before retry")
             continue
         tid = await trigger(t["source_id"], t["title"])
         if tid == "RATELIMIT":
@@ -142,14 +150,18 @@ async def main():
             if st == "completed" and await download(task_id, _vid_path(path_id)):
                 print(f"  ✓ downloaded {path_id}")
                 state.pop(path_id, None)
+                fails.pop(path_id, None)
             elif st == "failed":
                 print(f"  ✗ {path_id} permanently failed")
                 state.pop(path_id, None)
+                fails[path_id] = fails.get(path_id, 0) + 1
             # "pending", "error" (auth expiry / transient): keep in state, retry next run
         STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    FAILS_FILE.write_text(json.dumps(fails, ensure_ascii=False, indent=2), encoding="utf-8")
     done = sum(1 for t in mapping if _has_video(t["path_id"]))
-    print(f"\n[summary] videos done: {done}/{len(mapping)} | in-flight: {len(state)}")
+    benched = sum(1 for t in mapping if fails.get(t["path_id"], 0) >= MAX_FAILS and not _has_video(t["path_id"]))
+    print(f"\n[summary] videos done: {done}/{len(mapping)} | in-flight: {len(state)} | benched (>= {MAX_FAILS} fails): {benched}")
 
 
 if __name__ == "__main__":

@@ -91,6 +91,9 @@ def poll_task(task_id, notebook_id=""):
         d = json.loads(out)
         return d.get("status"), d.get("url")
     except Exception:
+        # Non-JSON usually means an auth/transport error from the CLI, not a
+        # task still cooking — surface it so the real cause is visible in logs.
+        print(f"    poll_task non-JSON output for {task_id}: {out[:120]}")
         return None, None
 
 
@@ -198,6 +201,10 @@ def main():
 
     notebook_id = data.get("metadata", {}).get("notebook_id")
 
+    # Lessons that already have a live pending task must NOT be re-triggered —
+    # re-triggering burns quota and the old task id used to clobber the new one.
+    already_pending = set(state.get("pending_podcast_tasks", {}))
+
     # Find lessons with source_id but no podcast
     # Also sync index for any MP3 on disk that hasn't been registered yet.
     to_process = []
@@ -207,6 +214,8 @@ def main():
         source_id = l.get("source_id", "")
         podcasts = l.get("assets", {}).get("podcasts", [])
         if source_id and podcasts:
+            continue
+        if lid in already_pending:
             continue
         existing = podcast_exists_on_disk(lid)
         if existing:
@@ -285,7 +294,9 @@ def main():
     state["pending_podcast_tasks"] = pending
     if pending and not rate_limited_now:
         print(f"  (also polling {len(pending)} tasks from a previous run)")
-        tasks.update(pending)
+        # A freshly-triggered task always wins over a stale one from state.
+        for lid, info in pending.items():
+            tasks.setdefault(lid, info)
 
     if not tasks:
         print("No tasks triggered — quota may still be limited. Try again later.")
@@ -309,7 +320,10 @@ def main():
             task_id = info["task_id"]
             source_id = info["source_id"]
             status, url = poll_task(task_id, notebook_id)
-            if status in ("pending", "complete") and url:
+            # The CLI reports "completed" (not "complete" — the old comparison
+            # left finished artifacts undownloaded forever). A present URL is
+            # the real readiness gate.
+            if status in ("pending", "complete", "completed") and url:
                 print(f"  [{lid}] Ready! Downloading...")
                 file_path = download_podcast(source_id, lid, task_id, notebook_id)
                 if file_path:
@@ -323,6 +337,17 @@ def main():
                 print(f"  [{lid}] FAILED")
                 failed.append(lid)
                 done_this_round.append(lid)
+            elif status is None:
+                # None = poll returned no parseable state (dead task / auth error).
+                # These never resolve on their own — drop after 5 rounds instead of
+                # re-polling forever until the wrapper timeout kills the run.
+                info["none_polls"] = info.get("none_polls", 0) + 1
+                if info["none_polls"] >= 5:
+                    print(f"  [{lid}] dropped — {info['none_polls']} unreadable polls (dead task, will re-trigger next run)")
+                    failed.append(lid)
+                    done_this_round.append(lid)
+                else:
+                    print(f"  [{lid}] status=None ({info['none_polls']}/5 before drop)")
             else:
                 print(f"  [{lid}] status={status} (waiting...)")
 

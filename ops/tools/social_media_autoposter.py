@@ -59,13 +59,22 @@ def parse_tips() -> list[dict]:
 
     tips = []
     current_category = "عابر للأعمار"
-    
+    in_tips_bank = False
+
     with open(tips_file, "r", encoding="utf-8") as f:
         for line in f:
             line_str = line.strip()
             if not line_str:
                 continue
-            
+
+            # الملف فيه أكتر من قائمة مرقّمة (النصائح + سكربتات الريلز) —
+            # نلتقط أرقام قسم بنك النصائح (أ) فقط وإلا تتكرر الـ ids
+            if line_str.startswith("## "):
+                in_tips_bank = line_str.startswith("## أ)")
+                continue
+            if not in_tips_bank:
+                continue
+
             # استخراج التصنيف العمري
             cat_match = re.match(r"^\*\*(.*?)\*\*", line_str)
             if cat_match:
@@ -335,12 +344,14 @@ def main():
             "image": "social_announce_square.webp"
         }
     else:
-        # النشر التلقائي للخطوة التالية
+        # النشر التلقائي للخطوة التالية — الدورة على أعلى id فعلي، مش عدد
+        # العناصر (len كان أكبر من أقصى id فتجمّد النشر عند آخر نصيحة)
+        max_id = max(t["id"] for t in tips)
         next_id = state["last_posted_id"] + 1
-        if next_id > len(tips):
+        if next_id > max_id:
             # إعادة تشغيل الدورة من البداية
             next_id = 1
-        
+
         matching = [t for t in tips if t["id"] == next_id]
         if not matching:
             print("❌ لا توجد نصائح متبقية للنشر.")
