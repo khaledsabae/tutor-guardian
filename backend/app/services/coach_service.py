@@ -161,7 +161,7 @@ def _build_coach_prompt(
     age_group: str,
     exact_question: str,
 ) -> str:
-    """Simple, grounded prompt for tg-tutor:v3 (3B)."""
+    """Simple, grounded prompt for tg-tutor:v5."""
     gender = _gender_word(child_gender)
     return (
         f"اسم الطفل: {child_name}، {gender}، عمره {age_group}.\n"
