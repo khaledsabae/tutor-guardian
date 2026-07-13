@@ -228,10 +228,9 @@ class _SummaryCard extends ConsumerWidget {
     final summaryAsync = ref.watch(routineSummaryProvider(childId));
 
     return summaryAsync.when(
-      data: (s) => s == null
-          ? const SizedBox.shrink()
-          : Card(
+      data: (s) => Card(
               margin: const EdgeInsets.all(Dt.pad),
+
               child: Padding(
                 padding: const EdgeInsets.all(Dt.pad),
                 child: Column(
