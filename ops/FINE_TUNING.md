@@ -3,6 +3,15 @@
 > مرجع لأي وكيل/مطوّر: كيف يعمل النموذج المحلي، كيف نولّد بيانات التدريب، كيف نفحص
 > جودتها، وكيف ندرّب نسخة مخصّصة (`tg-tutor`) ونرجّعها للسيرفر.
 
+## إصدارات النموذج
+
+| الإصدار | Base | طريقة الدمج | الوزن | مكان التشغيل | ملاحظات |
+|---|---|---|---|---|---|
+| `tg-tutor:v5` | `c4ai-command-r7b-arabic` (7B) | LoRA adapter `khaledhamdy/tg-tutor-commandr-lora` مدمج في GGUF | Q4_K_M (~4.8 GB) | Ollama على `tg-home` (100.109.163.64) | الأحدث والمُدار حاليًا |
+| `tg-tutor:v4` وما قبل | `gemma-4-it` / غير واضح | مسارات قديمة | — | — | مُتقاعدة |
+
+`tg-tutor:latest` يشاور على `tg-tutor:v5`. أي استدعاء بدون tag يجيب النسخة الحالية تلقائيًا.
+
 ---
 
 ## 1. السيرفر المحلي (Ollama)
@@ -18,6 +27,7 @@ SSH      : ssh -i ~/.ssh/id_ed25519 khaled@100.109.163.64
 النماذج المتاحة:
 | النموذج | الدور | السرعة (CPU) |
 |---------|-------|--------------|
+| `tg-tutor:v5` | نصائح تربوية مخصّصة | بطيء على CPU (~دقيقة للرد الكامل) |
 | `qwen2.5:3b` | classifier + ردّ سريع | ~14-16 tok/s |
 | `gemma4:e4b` | جودة أعلى | ~9 tok/s |
 | `gemma4:e4b-it-qat` | توليد بيانات التدريب (QAT، جودة عربية أعلى) | ~9 tok/s |
@@ -25,7 +35,7 @@ SSH      : ssh -i ~/.ssh/id_ed25519 khaled@100.109.163.64
 اختبار سريع للسيرفر:
 ```bash
 curl http://100.109.163.64:11434/api/tags      # قائمة النماذج
-curl http://100.109.163.64:11434/api/generate -d '{"model":"gemma4:e4b-it-qat","prompt":"مرحبا","stream":false}'
+curl http://100.109.163.64:11434/api/generate -d '{"model":"tg-tutor:v5","prompt":"مرحبا","stream":false}'
 ```
 
 ---
@@ -111,19 +121,51 @@ head -1 ops/data/qa_dataset.jsonl | python3 -m json.tool --no-ensure-ascii
 > ⚠️ **أمان:** Kaggle API token يُجدَّد من `kaggle.com/settings` بعد التدريب
 > (التوكن القديم اتشارك في محادثات — لازم يتغيّر).
 
+### مسار بديل: تحويل + دمج محليًا على tg-home
+
+لو التدريب خلص على Kaggle ورفع الـ LoRA adapter لـ HuggingFace (`khaledhamdy/tg-tutor-commandr-lora`)،
+ممكن نكمل بقية المسار محليًا على السيرفر (CPU) بدل الاعتماد على Kaggle GPU:
+
+```bash
+# على اللابتوب/العملاق، من داخل tutor-guardian:
+scp ops/kaggle/run_convert.sh tg-home:~/tg_convert/
+# يفترض وجود HF_TOKEN في ~/tg_convert/.env على tg-home
+ssh tg-home 'cd ~/tg_convert && nohup bash run_convert.sh > convert.log 2>&1 &'
+```
+
+ما يفعله السكربت:
+1. ينزّل الـ base `c4ai-command-r7b-arabic` من HuggingFace.
+2. ينزّل الـ LoRA adapter `khaledhamdy/tg-tutor-commandr-lora`.
+3. يحوّل الـ base والـ LoRA لـ GGUF f16 باستخدام `llama.cpp`.
+4. يدمج الـ LoRA في الـ base عبر `llama-export-lora`.
+5. يكمّم الناتج إلى `Q4_K_M`.
+6. يسجّله في Ollama كـ `tg-tutor:v5` ثم يخلي `tg-tutor:latest` يشاور عليه.
+
+> الفائدة: لو Kaggle قُطع أو وقع، الـ 4 ساعات تدريب مضمونة على HF ونقدر نكمل محليًا في أقل من ساعة.
+
 ---
 
 ## 5. نشر النموذج المدرَّب على السيرفر المحلي
 
+### الطريقة A: النشر الكامل من Kaggle (قديم)
 ```bash
 # على السيرفر المنزلي (Tailscale)
 scp tg-tutor-v1-Q4_K_M.gguf Modelfile.tg-tutor khaled@100.109.163.64:~/
 ssh khaled@100.109.163.64 'ollama create tg-tutor:v2 -f ~/Modelfile.tg-tutor'
 ```
 
-ثم على الـ VPS، حدّث متغيّر البيئة:
+### الطريقة B: بعد التحويل المحلي (مستحسن حاليًا)
+```bash
+# السكربت بيعمل تسجيل Ollama تلقائيًا؛ للتأكد:
+ssh tg-home 'ollama list | grep tg-tutor'
+ollama cp tg-tutor:v5 tg-tutor:latest   # لو محتاج تخلي latest يشاور على v5
 ```
-OLLAMA_PRIMARY_MODEL=tg-tutor:v2
+
+ثم على الـ VPS/البيئة التي تشغّل المُربّي، حدّث متغيّر البيئة:
+```
+OLLAMA_PRIMARY_MODEL=tg-tutor:v5
+# أو للـdebug scripts:
+OLLAMA_PRIMARY_MODEL=tg-tutor:latest
 ```
 وأعد تشغيل الـ backend container. الـ AI gateway سيستخدم النموذج المخصّص تلقائياً.
 

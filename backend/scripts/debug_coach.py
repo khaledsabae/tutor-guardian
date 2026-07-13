@@ -14,8 +14,8 @@ logging.basicConfig(level=logging.INFO, format="%(name)s: %(levelname)s: %(messa
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-os.environ.setdefault("OLLAMA_PRIMARY_MODEL", "tg-tutor:v5")
-os.environ.setdefault("OLLAMA_LOCAL_FAST_MODEL", "tg-tutor:v5")
+os.environ.setdefault("OLLAMA_PRIMARY_MODEL", "tg-tutor:v4")
+os.environ.setdefault("OLLAMA_LOCAL_FAST_MODEL", "tg-tutor:v4")
 os.environ["COACH_TIP_ENABLED"] = "true"
 
 from app.db.init_db import init_db, get_conn

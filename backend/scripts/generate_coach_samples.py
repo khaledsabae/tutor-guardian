@@ -6,8 +6,8 @@ Run from repo root or backend/ with:
 
     CONVERSATIONS_DB=/tmp/coach_samples.db \
     OLLAMA_BASE_URL=http://100.109.163.64:11434 \
-    OLLAMA_PRIMARY_MODEL=tg-tutor:v5 \
-    OLLAMA_LOCAL_FAST_MODEL=tg-tutor:v5 \
+    OLLAMA_PRIMARY_MODEL=tg-tutor:v4 \
+    OLLAMA_LOCAL_FAST_MODEL=tg-tutor:v4 \
     OLLAMA_TIMEOUT=600 \
     COACH_TIP_ENABLED=true \
     python3 -m scripts.generate_coach_samples
@@ -27,8 +27,8 @@ sys.path.insert(0, str(ROOT))
 
 # Set env before importing app modules
 os.environ.setdefault("OLLAMA_BASE_URL", "http://100.109.163.64:11434")
-os.environ.setdefault("OLLAMA_PRIMARY_MODEL", "tg-tutor:v5")
-os.environ.setdefault("OLLAMA_LOCAL_FAST_MODEL", "tg-tutor:v5")
+os.environ.setdefault("OLLAMA_PRIMARY_MODEL", "tg-tutor:v4")
+os.environ.setdefault("OLLAMA_LOCAL_FAST_MODEL", "tg-tutor:v4")
 os.environ.setdefault("OLLAMA_TIMEOUT", "600")
 os.environ.setdefault("COACH_TIP_ENABLED", "true")
 
