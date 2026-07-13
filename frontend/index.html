@@ -1,594 +1,306 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <title>Tutor Guardian — مساعد تربوي ذكي</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #e8edf2;
-      height: 100dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .app {
-      width: 100%;
-      max-width: 680px;
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-      box-shadow: 0 0 20px rgba(0,0,0,0.12);
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>المربّي</title>
 
-    /* ── Header ── */
-    .header {
-      background: #1a5f7a;
-      color: #fff;
-      padding: 10px 16px 8px;
-      flex-shrink: 0;
-    }
-    .header h1 { font-size: 1.05rem; text-align: center; letter-spacing: 0.3px; }
-    .header .subtitle { text-align: center; font-size: 0.72rem; opacity: 0.8; margin-top: 2px; }
-    .dev-badge {
-      text-align: center;
-      font-size: 0.65rem;
-      background: rgba(255,255,255,0.15);
-      border-radius: 4px;
-      padding: 2px 8px;
-      margin-top: 5px;
-    }
+<link rel="canonical" href="https://tg-api.alsaba.cloud/go">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="المربّي">
+<meta property="og:title" content="المربّي — مساعد تربوي ذكي للأهل العرب المسلمين">
+<meta property="og:description" content="تطبيق تربية إسلامي ذكي، مجاني بلا إعلانات.">
+<meta property="og:image" content="https://tg-api.alsaba.cloudassets/banner.png">
+<meta property="og:url" content="http://tg-api.alsaba.cloud/go">
+<meta name="twitter:card" content="summary_large_image">
 
-    /* ── Settings bar ── */
-    .settings-bar {
-      padding: 7px 12px;
-      background: #f4f6f8;
-      border-bottom: 1px solid #dde2e8;
-      flex-shrink: 0;
-    }
-    .settings-row {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .settings-row label {
-      font-size: 0.72rem;
-      color: #666;
-      white-space: nowrap;
-    }
-    .settings-row select,
-    .settings-row input[type="text"] {
-      font-size: 0.78rem;
-      padding: 3px 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: #fff;
-      color: #333;
-      flex: 1;
-      min-width: 70px;
-      font-family: inherit;
-    }
-    .settings-row input[type="text"] { min-width: 130px; }
-    .settings-row select:focus,
-    .settings-row input:focus { outline: none; border-color: #1a5f7a; }
+<meta name="description" content="المربّي - مساعد تربوي ذكي للأهل العرب المسلمين." />
 
-    /* ── Chat thread ── */
-    #chatThread {
-      flex: 1;
-      overflow-y: auto;
-      padding: 14px 12px 6px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      scroll-behavior: smooth;
-    }
-    #chatThread::-webkit-scrollbar { width: 5px; }
-    #chatThread::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Arabic: El Messiri (headings) + Tajawal (body). Swap for your script if not Arabic. -->
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Tajawal:wght@200;300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
-    .empty-state {
-      margin: auto;
-      text-align: center;
-      color: #bbb;
-    }
-    .empty-state .icon { font-size: 2.8rem; margin-bottom: 10px; }
-    .empty-state p { font-size: 0.88rem; line-height: 1.6; }
-
-    /* ── Message rows ── */
-    .msg-row { display: flex; width: 100%; }
-    /* RTL: flex-start = right side (user), flex-end = left side (assistant) */
-    .msg-row.user      { justify-content: flex-start; }
-    .msg-row.assistant { justify-content: flex-end; }
-
-    /* ── Bubbles ── */
-    .bubble {
-      max-width: 80%;
-      padding: 9px 13px;
-      border-radius: 12px;
-      font-size: 0.91rem;
-      line-height: 1.75;
-      word-break: break-word;
-    }
-    /* user = right side in RTL → tail at top-right corner */
-    .msg-row.user .bubble {
-      background: #1a5f7a;
-      color: #fff;
-      border-radius: 12px 2px 12px 12px;
-    }
-    /* assistant = left side in RTL → tail at top-left corner */
-    .msg-row.assistant .bubble {
-      background: #f1f3f5;
-      color: #222;
-      border-radius: 2px 12px 12px 12px;
-      border: 1px solid #e2e6ea;
-    }
-    .bubble-sender {
-      font-size: 0.68rem;
-      font-weight: 700;
-      margin-bottom: 5px;
-      opacity: 0.75;
-    }
-    .msg-row.user .bubble-sender     { color: rgba(255,255,255,0.9); }
-    .msg-row.assistant .bubble-sender { color: #888; }
-
-    .bubble-body { line-height: 1.75; }
-    .bubble-body code {
-      background: rgba(0,0,0,0.07);
-      padding: 1px 4px;
-      border-radius: 3px;
-      font-size: 0.85em;
-    }
-
-    /* Alerts inside assistant bubble */
-    .bubble-alert {
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 5px 9px;
-      border-radius: 6px;
-      margin-bottom: 7px;
-    }
-    .bubble-alert.yellow { background: #fff3cd; color: #856404; }
-    .bubble-alert.red    { background: #f8d7da; color: #721c24; }
-
-    /* Metadata row under assistant reply */
-    .bubble-meta {
-      margin-top: 8px;
-      padding-top: 6px;
-      border-top: 1px solid #dde2e8;
-      font-size: 0.7rem;
-      color: #aaa;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      align-items: center;
-    }
-    .domain-badge {
-      background: #dff0f7;
-      color: #1a5f7a;
-      border-radius: 10px;
-      padding: 1px 7px;
-      font-weight: 700;
-      font-size: 0.68rem;
-    }
-
-    /* Feedback inside assistant bubble */
-    .bubble-feedback {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 7px;
-    }
-    .bubble-feedback .fb-label { font-size: 0.72rem; color: #aaa; }
-    .fb-btn {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 14px;
-      padding: 2px 9px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .fb-btn:hover:not(:disabled) { background: #eee; }
-    .fb-btn:disabled { cursor: default; opacity: 0.7; }
-    .fb-btn.voted-up   { background: #d4edda; border-color: #28a745; }
-    .fb-btn.voted-down { background: #f8d7da; border-color: #dc3545; }
-    .fb-result { font-size: 0.72rem; color: #888; }
-
-    /* Typing indicator */
-    .typing {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      padding: 4px 2px;
-    }
-    .typing span {
-      width: 6px; height: 6px;
-      background: #aaa;
-      border-radius: 50%;
-      animation: tdot 1.2s infinite ease-in-out;
-    }
-    .typing span:nth-child(2) { animation-delay: 0.2s; }
-    .typing span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes tdot {
-      0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
-      40%           { transform: translateY(-5px); opacity: 1; }
-    }
-
-    /* ── Input area ── */
-    .input-area {
-      background: #fff;
-      border-top: 1px solid #dde2e8;
-      padding: 8px 12px 10px;
-      flex-shrink: 0;
-    }
-    .input-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-      min-height: 18px;
-    }
-    .turn-badge { font-size: 0.7rem; color: #bbb; }
-    .clear-btn {
-      font-size: 0.7rem;
-      color: #c0392b;
-      background: none;
-      border: 1px solid #f5c6cb;
-      border-radius: 5px;
-      padding: 2px 8px;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .clear-btn:hover { background: #fde; }
-    .input-row {
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
-    }
-    #message_text {
-      flex: 1;
-      padding: 9px 12px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 0.92rem;
-      font-family: inherit;
-      resize: none;
-      min-height: 42px;
-      max-height: 110px;
-      overflow-y: auto;
-      background: #fafafa;
-      direction: rtl;
-      transition: border-color 0.2s;
-      line-height: 1.5;
-    }
-    #message_text:focus { outline: none; border-color: #1a5f7a; background: #fff; }
-    .send-btn {
-      background: #1a5f7a;
-      border: none;
-      border-radius: 10px;
-      width: 42px;
-      height: 42px;
-      cursor: pointer;
-      flex-shrink: 0;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-    }
-    .send-btn:hover  { background: #145068; }
-    .send-btn:disabled { background: #aaa; cursor: not-allowed; }
-  </style>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="app">
+<div id="ambient"></div><div id="glow"></div><div id="vignette"></div><div id="grain"></div><div id="progress"></div>
 
-  <!-- Header -->
-  <div class="header">
-    <h1>🛡️ Tutor Guardian</h1>
-    <div class="subtitle">مساعد تربوي ذكي للأهل العرب المسلمين</div>
-    <div class="dev-badge">🧪 واجهة اختبار للمطوّرين — المنتج النهائي تطبيق موبايل</div>
-  </div>
+<header id="header">
+  <a class="brand" href="#hero"><span class="wm">المربّي</span></a>
+  <nav>
+    <a href="#reveal">التجربة</a><a href="#ritual">المميزات</a><a href="#editions">عن التطبيق</a>
+    <a class="nav-cta" href="#cta">حمّل مجاناً</a>
+  </nav>
+</header>
 
-  <!-- Settings bar -->
-  <div class="settings-bar">
-    <div class="settings-row">
-      <label>الفئة العمرية</label>
-      <select id="age_group">
-        <option value="0-3">0-3</option>
-        <option value="4-6" selected>4-6</option>
-        <option value="7-9">7-9</option>
-        <option value="10-12">10-12</option>
-        <option value="13-15">13-15</option>
-        <option value="16-18">16-18</option>
-        <option value="unspecified">غير محدد</option>
-      </select>
-      <label>الشدة</label>
-      <select id="severity">
-        <option value="خفيف">خفيف</option>
-        <option value="متوسط" selected>متوسط</option>
-        <option value="شديد">شديد</option>
-        <option value="طارئ">طارئ</option>
-      </select>
-      <input type="text" id="behavior_type" placeholder="نوع السلوك (اختياري)">
+<main>
+  <!-- 1 · HERO -->
+  <section id="hero" data-ambient="#0B3B3B" data-glow="0">
+    <div class="stage fallback-host">
+      <div class="aura" aria-hidden="true"></div>
+      <div class="motes" aria-hidden="true">
+        <span style="left:24%;top:64%;width:7px;height:7px;animation-duration:9s;animation-delay:0s"></span>
+        <span style="left:38%;top:72%;width:5px;height:5px;animation-duration:11s;animation-delay:1.4s"></span>
+        <span style="left:52%;top:60%;width:9px;height:9px;animation-duration:13s;animation-delay:3.1s"></span>
+        <span style="left:63%;top:70%;width:4px;height:4px;animation-duration:10s;animation-delay:.7s"></span>
+        <span style="left:71%;top:64%;width:6px;height:6px;animation-duration:12s;animation-delay:2.3s"></span>
+        <span style="left:45%;top:78%;width:5px;height:5px;animation-duration:14s;animation-delay:4.2s"></span>
+        <span style="left:31%;top:55%;width:4px;height:4px;animation-duration:11s;animation-delay:5.5s"></span>
+        <span style="left:58%;top:80%;width:7px;height:7px;animation-duration:9.5s;animation-delay:6.1s"></span>
+      </div>
+      <div class="hero-inner" style="display: none;">
+        <span class="latin">TUTOR GUARDIAN</span>
+        <!-- transparent cutout (background-removed) — NOT a blend trick -->
+        <div class="media-float"><div class="media-tilt">
+          <img class="hero-media" src="assets/product-cut.png" alt="المربّي" loading="eager" />
+          <span class="specular" aria-hidden="true"></span>
+        </div></div>
+        <h1>المربّي الذكي — تربية إسلامية</h1>
+        <div class="sub">ربِّ طفلك بثقة — بالعربي وبالأدلة الشرعية.</div>
+      </div>
+      <div class="scrollcue"><span>اكتشف</span><span class="bar"></span></div>
     </div>
-  </div>
+  </section>
 
-  <!-- Chat thread -->
-  <div id="chatThread">
-    <div class="empty-state" id="emptyState">
-      <div class="icon">🛡️</div>
-      <p>ابدأ بكتابة سؤالك التربوي<br>وسيرد عليك المساعد فور الإرسال</p>
-    </div>
-  </div>
+  <!-- 2 · TUTOR JOURNEY -->
+  <section id="tutor-journey" data-ambient="#F5EDE0" data-glow="0">
+    <div id="world"></div>
+  </section>
 
-  <!-- Input area -->
-  <div class="input-area">
-    <div class="input-top">
-      <span class="turn-badge" id="turnBadge"></span>
-      <button class="clear-btn" id="clearBtn" onclick="clearConversation()" style="display:none">🔄 بدء محادثة جديدة</button>
-    </div>
-    <div class="input-row">
-      <textarea id="message_text"
-        placeholder="اكتب سؤالك هنا... (Enter للإرسال)"
-        rows="1"
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendQuery();}"
-        oninput="autoResize(this)"></textarea>
-      <button class="send-btn" id="sendBtn" onclick="sendQuery()" title="إرسال">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"/>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-        </svg>
-      </button>
-    </div>
-  </div>
+  <!-- 3 · REVEAL -->
+  <section id="reveal" data-ambient="#F4EFE4" data-glow=".55">
+    <div class="wrap"><div class="grid">
+      <div class="shot fallback-host reveal"><img class="multiply" src="assets/product-hero.jpg" alt="المربّي" loading="lazy" /></div>
+      <div class="copy">
+        <span class="idx reveal">٠١ — المساعد الذكي</span>
+        <h2 class="gold-text reveal">إجابات فورية لكل تحدي</h2>
+        <p class="lead reveal">المربّي ليس مجرد تطبيق، بل مستشار تربوي دائم في جيبك، يقدم حلولاً عملية للحظات الصعبة.</p>
+        <ul class="specs">
+          <li class="reveal"><span class="k">استجابة</span><span class="v">فورية على مدار الساعة</span></li>
+          <li class="reveal"><span class="k">محتوى</span><span class="v">مخصص حسب عمر الطفل</span></li>
+          <li class="reveal"><span class="k">مرجعية</span><span class="v">قرآن وأحاديث نبوية</span></li>
+          <li class="reveal"><span class="k">خصوصية</span><span class="v">آمنة ومحفوظة تماماً</span></li>
+        </ul>
+      </div>
+    </div></div>
+  </section>
 
-</div>
+  <!-- 4 · RITUAL / MOMENT -->
+  <section id="ritual" data-ambient="#F1E7D5" data-glow=".5">
+    <div class="wrap"><div class="frame fallback-host">
+      <!-- if a person appears: full hijab + conservative (see memory/07) -->
+      <img src="assets/ritual.jpg" alt="استخدام تطبيق المربّي" loading="lazy" />
+      <div class="copy reveal">
+        <span class="idx">٠٢ — رحلة متكاملة</span>
+        <h2 class="gold-text">من الحمل حتى الشباب</h2>
+        <p>نرافقك في كل خطوة، بخطط تربوية متكاملة وقصص وأدعية لتنشئة جيل واثق ومعتز بهويته.</p>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 5 · CTA -->
+  <section id="cta" data-ambient="#F6F1E8" data-glow=".5">
+    <div class="stage fallback-host">
+      <img class="cta-poster multiply" id="ctaPoster" src="assets/product-hero.jpg" alt="" aria-hidden="true" />
+      <video id="ctaVideo" muted playsinline preload="none" aria-hidden="true" poster="assets/product-hero.jpg"></video>
+      <div class="dim" id="ctaDim"></div>
+      <div class="content" id="ctaContent">
+        <span class="latin">لوجه الله تعالى</span>
+        <h2 class="gold-text">حمّل المربّي الآن</h2>
+        <p>تطبيق مجاني تماماً، بلا إعلانات ولا اشتراكات.</p>
+        <div class="btns"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.alsaba.almorabbi">تنزيل التطبيق</a><a class="btn btn-ghost" href="#editions">المزيد من المعلومات</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · EDITIONS -->
+  <section id="editions" data-ambient="#F2ECE0" data-glow=".5">
+    <div class="wrap">
+      <div class="head"><span class="idx reveal">٠٣ — أدوات مخصصة</span><h2 class="gold-text reveal">كل ما تحتاجه للتربية</h2></div>
+      <div class="cards">
+        <article class="ed-card reveal"><div class="pic fallback-host"><img src="assets/edition-1.jpg" alt="متابعة السلوك والتقدم" loading="lazy" /></div><div class="body"><h3>متابعة السلوك والتقدم</h3><p>تتبع إنجازات طفلك اليومية والدروس التربوية والعملية التي يكتمل بناؤها خطوة بخطوة.</p></div></article>
+        <article class="ed-card reveal"><div class="pic fallback-host"><img src="assets/edition-2.jpg" alt="مسارات تربوية منهجية" loading="lazy" /></div><div class="body"><h3>مسارات تربوية منهجية</h3><p>رحلات متكاملة في مواضيع حساسة كالتعامل مع الشاشات، الاستقلالية، وبناء الرابطة الآمنة.</p></div></article>
+        <article class="ed-card reveal"><div class="pic fallback-host"><img src="assets/edition-3.jpg" alt="المستشار التربوي الذكي" loading="lazy" /></div><div class="body"><h3>المستشار التربوي الذكي</h3><p>إجابات فورية مدعومة بالأدلة الشرعية والمنهجية العلمية لكل سؤال أو تحدي يواجهك مع طفلك.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="wrap">
+    <div class="wm gold-text">المربّي</div>
+    <nav class="links"><a href="#reveal">التجربة</a><a href="#ritual">المميزات</a><a href="#editions">عن التطبيق</a><a href="#cta">حمّل مجاناً</a></nav>
+    <div class="cr">© 2026 المربّي. جميع الحقوق محفوظة.</div>
+  </div></footer>
+</main>
+
+<!-- Javascript Scroll-World Engine -->
+<script src="engine.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    mountScrollWorld(document.getElementById('world'), {
+      diveScroll: 1.6, 
+      connScroll: 1.0, 
+      crossfade: 0.28,  
+      nav: true,
+      atmosphere: true,
+      sections: [
+        {
+          id: 'hero',
+          label: 'البداية',
+          clip: 'assets/hero_clip.mp4',
+          accent: '#8B7BB5',
+          linger: 0.4,
+          eyebrow: 'الذكاء التربوي الحارس',
+          title: 'حماية ذكية وتوجيه سليم لأطفالك',
+          body: 'تيوتور جاردين هو مساعد تربوي ذكي يدمج بين الطب النفسي للأطفال والتربية الإسلامية النبوية ليوفر درعاً سيبرانياً ونفسياً متكاملاً لعائلتك.',
+          tags: ['ذكاء اصطناعي تربوي', 'حماية سيبرانية', 'RAG محلي آمن']
+        },
+        {
+          id: 'medical',
+          label: 'التوجيه النفسي',
+          clip: 'assets/medical_clip.mp4',
+          accent: '#76A5AF',
+          linger: 0.45,
+          eyebrow: 'الرعاية النفسية والسلوكية',
+          title: 'افهم سلوك أطفالك بحكمة وعلم',
+          body: 'احصل على إرشادات فورية للتعامل مع نوبات الغضب والاضطرابات السلوكية بناءً على أسس طبية علمية دون إفشاء لخصوصية بياناتكم.',
+          tags: ['تعديل سلوكي', 'دعم نفسي للأهل', 'تحليلات موثوقة']
+        },
+        {
+          id: 'islamic',
+          label: 'التربية النبوية',
+          clip: 'assets/islamic_clip.mp4',
+          accent: '#8FB98A',
+          linger: 0.45,
+          eyebrow: 'القيم والتربية الإسلامية',
+          title: 'بناء أخلاق متجذرة في الهدي النبوي',
+          body: 'تأصيل قيم التربية الإسلامية النبوية في نفوس الأبناء بأسلوب معاصر يرتبط بواقعهم ويقوي صلتهم بعباداتهم ومجتمعهم.',
+          tags: ['أخلاق وقيم', 'سيرة تربوية', 'فقه واقع الأسرة']
+        },
+        {
+          id: 'cyber',
+          label: 'الأمان الرقمي',
+          clip: 'assets/cyber_clip.mp4',
+          accent: '#C88A5A',
+          linger: 0.45,
+          eyebrow: 'الحماية السيبرانية للأطفال',
+          title: 'درع رقمي متكامل يرافق أجهزتهم',
+          body: 'أدوات ذكية لإدارة وقت الشاشة، وفلترة المحتوى الضار، ومراقبة تفاعل طفلك مع الألعاب لحمايته من التنمر ومخاطر الإنترنت.',
+          tags: ['إدارة الأجهزة', 'ألعاب آمنة', 'مراقبة هادئة']
+        },
+        {
+          id: 'finale',
+          label: 'حمل التطبيق',
+          clip: 'assets/finale_clip.mp4',
+          accent: '#B57BA6',
+          linger: 0.5,
+          eyebrow: 'مستقبل تربوي آمن لعائلتك',
+          title: 'ابدأ رحلتك التربوية المطمئنة اليوم',
+          body: 'حمّل تطبيق Tutor Guardian الآن واجعل تربية أطفالك في العصر الرقمي تجربة مليئة بالطمأنينة والأمان والذكاء.',
+          tags: ['تنزيل مجاني للنسخة التجريبية', 'متوافق مع أندرويد وiOS']
+        }
+      ],
+      connectors: []
+    });
+  });
+</script>
 
 <script>
-  const API_BASE = '/api';
-  const MAX_HISTORY = 5;
-  let turnCount = 0;
-  let sessionToken = null;
-  let currentSessionId = null;
-  let conversationHistory = [];
+(function(){
+  "use strict";
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hasGSAP=typeof gsap!=="undefined"&&typeof ScrollTrigger!=="undefined";
+  if(hasGSAP) gsap.registerPlugin(ScrollTrigger);
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const smooth=(e0,e1,x)=>{const t=clamp((x-e0)/(e1-e0),0,1);return t*t*(3-2*t);};
 
-  async function initSession() {
-    try {
-      const res = await fetch(`${API_BASE}/chat/sessions`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}',
-      });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
-      sessionToken = data.token;
-      currentSessionId = data.session_id;
-    } catch (e) {
-      console.warn('Session init failed:', e.message);
-    }
-  }
-  initSession();
+  // graceful asset fallback
+  document.querySelectorAll("img[src]").forEach(img=>img.addEventListener("error",()=>{
+    img.style.display="none"; const h=img.closest(".fallback-host"); if(h) h.classList.add("is-missing");
+  },{once:true}));
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
-
-  function autoResize(el) {
-    el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 110) + 'px';
+  // Lenis driven by GSAP ticker (ONE rAF clock)
+  let lenis=null;
+  if(typeof Lenis!=="undefined"&&hasGSAP&&!reduce){
+    lenis=new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true});
+    lenis.on("scroll",ScrollTrigger.update);
+    gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0); window.lenis=lenis;
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{
+      const t=document.querySelector(a.getAttribute("href")); if(t){e.preventDefault();lenis.scrollTo(t,{offset:0});}}));
   }
 
-  function md(t) {
-    return (t || '')
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/`(.+?)`/g, '<code>$1</code>')
-      .replace(/\n/g, '<br>');
+  // header hide/show + progress
+  const header=document.getElementById("header"), progress=document.getElementById("progress");
+  if(hasGSAP) ScrollTrigger.create({start:0,end:"max",onUpdate:s=>{
+    progress.style.transform="scaleX("+s.progress+")";
+    header.classList.toggle("solid",s.scroll()>40);
+    if(s.scroll()>140) header.classList.toggle("hidden",s.direction===1); else header.classList.remove("hidden");
+  }});
+
+  // ambient per section
+  const ambient=document.getElementById("ambient"), glow=document.getElementById("glow");
+  function applyAmbient(c,g){ if(hasGSAP){gsap.to(ambient,{backgroundColor:c,duration:1.1,overwrite:"auto",ease:"power2.out"});gsap.to(glow,{opacity:g,duration:1.1,overwrite:"auto"});}else{ambient.style.backgroundColor=c;glow.style.opacity=g;} }
+  document.querySelectorAll("section[data-ambient]").forEach(sec=>{
+    const c=sec.getAttribute("data-ambient"),g=parseFloat(sec.getAttribute("data-glow")||".5");
+    if(hasGSAP) ScrollTrigger.create({trigger:sec,start:"top 60%",end:"bottom 40%",onEnter:()=>applyAmbient(c,g),onEnterBack:()=>applyAmbient(c,g)});
+    else if("IntersectionObserver" in window) new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)applyAmbient(c,g);}),{threshold:.4}).observe(sec);
+  });
+
+  // reveals
+  const reveals=document.querySelectorAll(".reveal");
+  if(hasGSAP&&!reduce) reveals.forEach(el=>ScrollTrigger.create({trigger:el,start:"top 86%",once:true,onEnter:()=>el.classList.add("in")}));
+  else if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.2});reveals.forEach(el=>io.observe(el));}
+  else reveals.forEach(el=>el.classList.add("in"));
+
+  // HERO entrance + 3D pointer parallax + scroll handoff
+  if(hasGSAP&&!reduce){
+    gsap.timeline({defaults:{ease:"power3.out"}})
+      .fromTo("#hero .hero-media",{opacity:0,scale:.82,y:60,rotateZ:-5},{opacity:1,scale:1,y:0,rotateZ:0,duration:1.5},0.15)
+      .fromTo("#hero .latin",{opacity:0,y:14},{opacity:1,y:0,duration:.8},0.55)
+      .fromTo("#hero h1",{opacity:0,y:24,clipPath:"inset(-20% 0 120% 0)"},{opacity:1,y:0,clipPath:"none",duration:1.1},0.7)
+      .fromTo("#hero .sub",{opacity:0,y:12},{opacity:1,y:0,duration:.8},1.05)
+      .fromTo("#hero .scrollcue",{opacity:0},{opacity:1,duration:.8},1.3);
+    gsap.to("#hero .hero-inner",{scrollTrigger:{trigger:"#hero",start:"top top",end:"78% top",scrub:true},y:-50,opacity:0,ease:"none"});
+    gsap.to("#hero .aura",{scrollTrigger:{trigger:"#hero",start:"top top",end:"bottom top",scrub:true},scale:1.5,opacity:0,ease:"none"});
+    const stage=document.querySelector("#hero .stage"),tilt=document.querySelector("#hero .media-tilt"),aura=document.querySelector("#hero .aura"),motes=document.querySelector("#hero .motes");
+    stage.addEventListener("pointermove",e=>{const r=stage.getBoundingClientRect(),nx=(e.clientX-r.left)/r.width-.5,ny=(e.clientY-r.top)/r.height-.5;
+      tilt.style.setProperty("--ty",(nx*12).toFixed(2)+"deg");tilt.style.setProperty("--tx",(-ny*9).toFixed(2)+"deg");
+      aura.style.setProperty("--px",(-nx*46).toFixed(1)+"px");aura.style.setProperty("--py",(-ny*34).toFixed(1)+"px");
+      motes.style.transform="translate3d("+(nx*22).toFixed(1)+"px,"+(ny*16).toFixed(1)+"px,0)";});
+    stage.addEventListener("pointerleave",()=>{tilt.style.setProperty("--ty","0deg");tilt.style.setProperty("--tx","0deg");aura.style.setProperty("--px","0px");aura.style.setProperty("--py","0px");motes.style.transform="translate3d(0,0,0)";});
+  }
+  if(!hasGSAP) document.querySelectorAll("#hero .latin,#hero .hero-media,#hero h1,#hero .sub,#hero .scrollcue,#hero .aura").forEach(e=>{e.style.opacity=e.classList.contains("aura")?.6:1;e.style.clipPath="none";e.style.transform="none";});
+
+  // RITUAL + REVEAL parallax
+  if(hasGSAP&&!reduce){
+    gsap.to("#ritual .frame img",{scrollTrigger:{trigger:"#ritual",start:"top bottom",end:"bottom top",scrub:true},y:"-7%",ease:"none"});
   }
 
-  function scrollToBottom() {
-    const t = document.getElementById('chatThread');
-    t.scrollTop = t.scrollHeight;
-  }
+  
 
-  // ── DOM builders ──────────────────────────────────────────────────────────
+  // CTA — video alone first, then dim/wash + content reveal. (No `loop` attr → `ended` advances the playlist.)
+  (function initCTA(){
+    const sec=document.getElementById("cta"),video=document.getElementById("ctaVideo"),poster=document.getElementById("ctaPoster"),dim=document.getElementById("ctaDim"),content=document.getElementById("ctaContent");
+    const playlist=["assets/finale_clip.mp4"]; let pi=0,attempts=0;
+    function load(i){pi=((i%playlist.length)+playlist.length)%playlist.length;video.src=playlist[pi];const pr=video.play();if(pr&&pr.catch)pr.catch(()=>{});}
+    video.addEventListener("loadeddata",()=>{attempts=0;poster.style.opacity=0;});
+    video.addEventListener("ended",()=>load(pi+1));
+    video.addEventListener("error",()=>{if(++attempts<playlist.length)load(pi+1);});
+    let started=false; const start=()=>{if(started)return;started=true;load(0);};
+    ["pointerdown","keydown","wheel","touchstart"].forEach(ev=>window.addEventListener(ev,start,{once:true,passive:true}));
+    if(hasGSAP&&!reduce){
+      ScrollTrigger.create({trigger:sec,start:"top center",onEnter:start,onEnterBack:start});
+      ScrollTrigger.create({trigger:sec,start:"top top",end:"bottom bottom",scrub:true,onUpdate:s=>{const p=s.progress;dim.style.opacity=smooth(0.34,0.66,p);content.style.opacity=smooth(0.40,0.72,p);content.style.transform="translateY("+(28*(1-smooth(0.40,0.72,p)))+"px)";}});
+    } else {dim.style.opacity=.94;content.style.opacity=1;content.style.transform="none";}
+  })();
 
-  function appendUserBubble(text) {
-    document.getElementById('emptyState')?.remove();
-    const thread = document.getElementById('chatThread');
-    const row = document.createElement('div');
-    row.className = 'msg-row user';
-    row.innerHTML =
-      `<div class="bubble">` +
-        `<div class="bubble-sender">أنت</div>` +
-        `<div class="bubble-body">${md(text)}</div>` +
-      `</div>`;
-    thread.appendChild(row);
-    scrollToBottom();
-  }
-
-  function appendAssistantBubble() {
-    const thread = document.getElementById('chatThread');
-    const row = document.createElement('div');
-    row.className = 'msg-row assistant';
-    row.innerHTML =
-      `<div class="bubble">` +
-        `<div class="bubble-sender">🛡️ المساعد</div>` +
-        `<div class="bubble-body">` +
-          `<div class="typing"><span></span><span></span><span></span></div>` +
-        `</div>` +
-      `</div>`;
-    thread.appendChild(row);
-    scrollToBottom();
-    return row;
-  }
-
-  function streamToken(row, accumulated) {
-    row.querySelector('.bubble-body').innerHTML =
-      md(accumulated) + '<span style="opacity:.35">▌</span>';
-    scrollToBottom();
-  }
-
-  function finaliseAssistantBubble(row, text, data) {
-    const fbId = 'fb' + Date.now();
-    let alertsHtml = '';
-    if (data.mode === 'banned')
-      alertsHtml += '<div class="bubble-alert red">⛔️ الطلب مرفوض — خارج نطاق المساعدة</div>';
-    if (data.escalation_target === 'emergency_services')
-      alertsHtml += '<div class="bubble-alert red">🚨 حالة طارئة — تواصل مع مختص فوراً</div>';
-    if (data.needs_human_review)
-      alertsHtml += '<div class="bubble-alert yellow">⚠️ يُنصح بمراجعة مختص</div>';
-
-    const domainBadge = data.domain
-      ? `<span class="domain-badge">📂 ${data.domain}</span>` : '';
-    const modeTxt  = data.mode     ? `<span>${data.mode}</span>` : '';
-    const sevTxt   = data.severity ? `<span>${data.severity}</span>` : '';
-
-    const feedbackHtml = data.mode !== 'banned' ? `
-      <div class="bubble-feedback">
-        <span class="fb-label">هل أفاد الرد؟</span>
-        <button class="fb-btn" id="${fbId}-up"   onclick="submitFeedback('up','${fbId}')">👍</button>
-        <button class="fb-btn" id="${fbId}-down" onclick="submitFeedback('down','${fbId}')">👎</button>
-        <span class="fb-result" id="${fbId}-res"></span>
-      </div>` : '';
-
-    row.querySelector('.bubble-body').innerHTML =
-      alertsHtml +
-      `<div>${md(text || 'لا يوجد رد.')}</div>` +
-      `<div class="bubble-meta">${domainBadge}${modeTxt}${sevTxt}</div>` +
-      feedbackHtml;
-
-    scrollToBottom();
-  }
-
-  // ── Main send ─────────────────────────────────────────────────────────────
-
-  async function sendQuery() {
-    const sendBtn = document.getElementById('sendBtn');
-    const msgEl   = document.getElementById('message_text');
-    const text    = msgEl.value.trim();
-    if (!text || sendBtn.disabled) return;
-
-    const payload = {
-      behavior_type:        document.getElementById('behavior_type').value.trim() || '',
-      age_group:            document.getElementById('age_group').value,
-      severity:             document.getElementById('severity').value,
-      message_text:         text,
-      conversation_history: conversationHistory.slice(-MAX_HISTORY * 2),
-    };
-
-    msgEl.value = '';
-    msgEl.style.height = 'auto';
-    sendBtn.disabled = true;
-
-    appendUserBubble(text);
-    const assistantRow = appendAssistantBubble();
-    let acc = '';
-    let finalReply = '';
-
-    try {
-      const headers = { 'Content-Type': 'application/json' };
-      if (sessionToken) headers['Authorization'] = `Bearer ${sessionToken}`;
-
-      const res = await fetch(`${API_BASE}/assistant/stream`, {
-        method: 'POST', headers, body: JSON.stringify(payload),
-      });
-      if (!res.ok || !res.body) throw new Error('HTTP ' + res.status);
-
-      const reader  = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buf = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buf += decoder.decode(value, { stream: true });
-        const frames = buf.split('\n\n');
-        buf = frames.pop();
-
-        for (const frame of frames) {
-          const ev       = (frame.match(/event: (.*)/) || [])[1];
-          const dataLine = (frame.match(/data: (.*)/)  || [])[1];
-          if (!dataLine) continue;
-          const data = JSON.parse(dataLine);
-
-          if (ev === 'token') {
-            acc += data.delta;
-            streamToken(assistantRow, acc);
-
-          } else if (ev === 'done') {
-            finalReply = data.reply_text || acc || '';
-            finaliseAssistantBubble(assistantRow, finalReply, data);
-            turnCount++;
-
-            if (finalReply && data.mode !== 'banned') {
-              conversationHistory.push({ role: 'user',      content: text });
-              conversationHistory.push({ role: 'assistant', content: finalReply });
-              if (conversationHistory.length > MAX_HISTORY * 2)
-                conversationHistory = conversationHistory.slice(-MAX_HISTORY * 2);
-            }
-
-            document.getElementById('turnBadge').textContent =
-              turnCount > 0 ? `💬 ${turnCount} أسئلة` : '';
-            document.getElementById('clearBtn').style.display = 'inline-block';
-
-          } else if (ev === 'error') {
-            finaliseAssistantBubble(assistantRow,
-              '❌ ' + (data.detail || 'خطأ في الاتصال'), { mode: 'error' });
-          }
-        }
-      }
-    } catch (err) {
-      finaliseAssistantBubble(assistantRow,
-        '❌ خطأ في الاتصال بالخادم: ' + err.message, { mode: 'error' });
-    } finally {
-      sendBtn.disabled = false;
-      msgEl.focus();
-    }
-  }
-
-  // ── Feedback ──────────────────────────────────────────────────────────────
-
-  async function submitFeedback(rating, fbId) {
-    const upBtn  = document.getElementById(`${fbId}-up`);
-    const dnBtn  = document.getElementById(`${fbId}-down`);
-    const resEl  = document.getElementById(`${fbId}-res`);
-    if (!upBtn) return;
-    upBtn.disabled = true;
-    dnBtn.disabled = true;
-    (rating === 'up' ? upBtn : dnBtn).classList.add(rating === 'up' ? 'voted-up' : 'voted-down');
-    try {
-      const headers = { 'Content-Type': 'application/json' };
-      if (sessionToken) headers['Authorization'] = `Bearer ${sessionToken}`;
-      const res = await fetch(`${API_BASE}/feedback`, {
-        method: 'POST', headers,
-        body: JSON.stringify({ session_id: currentSessionId, rating }),
-      });
-      if (resEl) resEl.textContent = res.ok ? '✅ شكراً!' : '❌ تعذّر الحفظ';
-    } catch {
-      if (resEl) resEl.textContent = '❌ خطأ';
-    }
-  }
-
-  // ── Clear conversation ────────────────────────────────────────────────────
-
-  function clearConversation() {
-    conversationHistory = [];
-    turnCount = 0;
-    document.getElementById('chatThread').innerHTML =
-      `<div class="empty-state" id="emptyState">` +
-        `<div class="icon">🛡️</div>` +
-        `<p>ابدأ بكتابة سؤالك التربوي<br>وسيرد عليك المساعد فور الإرسال</p>` +
-      `</div>`;
-    document.getElementById('clearBtn').style.display = 'none';
-    document.getElementById('turnBadge').textContent = '';
-    initSession();
-  }
+  if(hasGSAP){window.addEventListener("load",()=>ScrollTrigger.refresh());if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>ScrollTrigger.refresh());}
+})();
 </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"7a8db528beef4fe1be0eadf9d6490d25","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
