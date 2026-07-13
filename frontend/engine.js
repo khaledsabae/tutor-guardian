@@ -379,7 +379,7 @@ function mountScrollWorld(container, config) {
         if (s.video.seeking) continue;
         if (!s.visible && Math.abs(s.cur - s.target) < 0.002) continue;
         
-        s.cur += (s.target - s.cur) * (reduce ? 1.0 : 0.18);
+        s.cur += (s.target - s.cur) * (reduce ? 1.0 : 0.23);
         const dur = s.video.duration || 1;
         const t = clamp(s.cur, 0, 0.999) * dur;
         
