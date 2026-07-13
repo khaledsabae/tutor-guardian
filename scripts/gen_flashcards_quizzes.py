@@ -131,10 +131,14 @@ def main():
     for f in new:
         d = json.loads(f.read_text(encoding="utf-8"))
         lid, title = d["id"], d["title"]
-        cards = valid_cards(ollama_json(FC_PROMPT.format(
-            title=title, summary=d["summary"], try_this=d.get("try_this", ""))))
-        quiz = valid_quiz(ollama_json(QZ_PROMPT.format(
-            title=title, summary=d["summary"])))
+        try:
+            cards = valid_cards(ollama_json(FC_PROMPT.format(
+                title=title, summary=d["summary"], try_this=d.get("try_this", ""))))
+            quiz = valid_quiz(ollama_json(QZ_PROMPT.format(
+                title=title, summary=d["summary"])))
+        except Exception as e:
+            print(f"✗ {lid}: error — {e}")
+            continue
         if not cards or not quiz:
             print(f"✗ {lid}: cards={bool(cards)} quiz={bool(quiz)} — skipped")
             continue

@@ -21,6 +21,11 @@ PIP = '''# المربّي — fine-tune command-r7b-arabic (QLoRA). Accelerator 
 '''
 
 TRAIN_CODE = '''import os
+# Pin training to a SINGLE GPU before importing torch. On Kaggle T4x2 the HF Trainer
+# otherwise auto-enables DataParallel and scatters the input batch to cuda:1 while the
+# model (device_map={"": 0}) sits on cuda:0 -> "tensors on different devices" at embedding.
+# Merge runs in a separate process and still sees both GPUs (device_map="auto").
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from pathlib import Path
 import torch
 assert torch.cuda.is_available(), "CUDA GPU is not available! SFT training requires GPU."
@@ -86,14 +91,31 @@ for _n, _p in trainer.model.named_parameters():
 trainer.train()
 trainer.save_model(str(OUT_DIR))
 print("TRAIN DONE -> adapter saved at", OUT_DIR)
+
+# INSURANCE: push the trained adapter to a private HF repo immediately, so a later
+# failure in merge/GGUF never discards the (expensive) training run. Kaggle does NOT
+# persist /kaggle/working when the kernel errors, so the local adapter alone is not safe.
+try:
+    from huggingface_hub import HfApi, create_repo
+    ADAPTER_REPO = "khaledhamdy/tg-tutor-commandr-lora"
+    create_repo(ADAPTER_REPO, private=True, exist_ok=True, token=HF_TOKEN)
+    HfApi().upload_folder(folder_path=str(OUT_DIR), repo_id=ADAPTER_REPO, token=HF_TOKEN)
+    print("ADAPTER BACKED UP -> https://huggingface.co/" + ADAPTER_REPO)
+except Exception as _e:
+    print("WARN: adapter HF backup failed:", _e)
 '''
 
 TRAIN_CELL = f'''# Write training script to disk
+import subprocess, sys
+from pathlib import Path as _P
 with open("train.py", "w") as f:
     f.write("""{TRAIN_CODE}""")
 
-# Execute training in a separate process to avoid memory leaks/VRAM pollution
-!python3 train.py
+# Execute training in a separate process to avoid memory leaks/VRAM pollution.
+# check=True -> a nonzero exit (e.g. HF_TOKEN missing) RAISES and fails the kernel
+# loudly instead of silently continuing to a fake "DONE".
+subprocess.run([sys.executable, "train.py"], check=True)
+assert _P("/kaggle/working/tg-tutor-commandr-lora").is_dir(), "Training produced no adapter dir"
 '''
 
 MERGE_CODE = '''import os
@@ -129,11 +151,15 @@ print("MERGED OK ->", MERGED_DIR)
 '''
 
 MERGE_CELL = f'''# Write merge script to disk
+import subprocess, sys
+from pathlib import Path as _P
 with open("merge.py", "w") as f:
     f.write("""{MERGE_CODE}""")
 
-# Execute merge in a separate process with device_map="auto" to load clean and shard across both T4 GPUs
-!python3 merge.py
+# Execute merge in a separate process with device_map="auto" to load clean and shard
+# across both T4 GPUs. check=True fails the kernel loudly if the merge errors out.
+subprocess.run([sys.executable, "merge.py"], check=True)
+assert _P("/kaggle/working/tg-tutor-commandr-merged").is_dir(), "Merge produced no merged model dir"
 '''
 
 GGUF = '''# GGUF Q4_K_M for Ollama.
@@ -145,8 +171,26 @@ GGUF = '''# GGUF Q4_K_M for Ollama.
 !pip install -q -r /tmp/llama.cpp/requirements.txt
 # Base-model weights were already folded into the merge — reclaim its ~16GB cache.
 !rm -rf /root/.cache/huggingface/hub
+
+# FIX: the transformers version pulled by llama.cpp's requirements chokes on Cohere's
+# tokenizer_config.json when `extra_special_tokens` is stored as a list (saved that way by
+# the training-time transformers) -> "AttributeError: 'list' object has no attribute 'keys'"
+# during convert_hf_to_gguf's AutoTokenizer load. Normalize it to a dict before converting.
+import json as _json, pathlib as _pl
+_tc = _pl.Path("/kaggle/working/tg-tutor-commandr-merged/tokenizer_config.json")
+_cfg = _json.loads(_tc.read_text())
+if isinstance(_cfg.get("extra_special_tokens"), list):
+    _cfg.pop("extra_special_tokens", None)
+    _tc.write_text(_json.dumps(_cfg, ensure_ascii=False))
+    print("patched: removed list-form extra_special_tokens from tokenizer_config.json")
+
 # f16 GGUF -> /tmp (NOT /kaggle/working) so it never competes with the merged model.
-!python /tmp/llama.cpp/convert_hf_to_gguf.py /kaggle/working/tg-tutor-commandr-merged --outfile /tmp/tg-tutor-v4-f16.gguf --outtype f16
+# subprocess check=True: if conversion fails, RAISE here (keeping the merged model intact
+# for diagnosis) instead of silently continuing to delete it and fail later.
+import subprocess, sys
+subprocess.run([sys.executable, "/tmp/llama.cpp/convert_hf_to_gguf.py",
+                "/kaggle/working/tg-tutor-commandr-merged",
+                "--outfile", "/tmp/tg-tutor-v4-f16.gguf", "--outtype", "f16"], check=True)
 # Merged HF shards are now baked into the f16 GGUF — drop them before quantizing (~16GB).
 !rm -rf /kaggle/working/tg-tutor-commandr-merged
 !cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build -DGGML_CUDA=OFF
@@ -154,7 +198,14 @@ GGUF = '''# GGUF Q4_K_M for Ollama.
 !/tmp/llama.cpp/build/bin/llama-quantize /tmp/tg-tutor-v4-f16.gguf /kaggle/working/tg-tutor-v4-Q4_K_M.gguf Q4_K_M
 !rm -rf /tmp/tg-tutor-v4-f16.gguf /tmp/llama.cpp
 !ls -lh /kaggle/working
-print("DONE -> download tg-tutor-v4-Q4_K_M.gguf from the Output tab")
+# Verify by ACTUAL EFFECT: only declare success if the quantized model really exists
+# and is non-trivial in size. Prevents a "COMPLETE" kernel with no downloadable model.
+import os
+_gguf = "/kaggle/working/tg-tutor-v4-Q4_K_M.gguf"
+assert os.path.exists(_gguf), f"FAILED: {_gguf} was not produced — check train/merge/convert logs above"
+_sz = os.path.getsize(_gguf)
+assert _sz > 1_000_000_000, f"FAILED: {_gguf} is only {_sz} bytes — quantization did not complete"
+print(f"DONE -> {_gguf} ({_sz/1e9:.2f} GB) ready to download from the Output tab")
 '''
 
 
