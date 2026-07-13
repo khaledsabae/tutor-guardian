@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-<!-- ============================================================================
-     CINEMATIC LUXURY LANDING-PAGE SKELETON  (single file)
-     Fill the {{PLACEHOLDERS}}, drop assets into assets/, set FRAME_COUNT.
-     The engine (Lenis+GSAP ticker, hide/show header, per-section ambient,
-     cinematic hero, canvas frame-sequence film, CTA reveal, fallbacks) is
-     already correct — see ../memory/ for why each piece is built this way.
-     Default theme = LIGHT. To go DARK: swap the palette vars + ambient values,
-     and use mix-blend-mode:screen with black-bg assets (see memory/05-theming).
-     ============================================================================ -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
@@ -20,7 +11,7 @@
 <meta property="og:title" content="المربّي — مساعد تربوي ذكي للأهل العرب المسلمين">
 <meta property="og:description" content="تطبيق تربية إسلامي ذكي، مجاني بلا إعلانات.">
 <meta property="og:image" content="{{OG_IMAGE}}">
-<meta property="og:url" content="{{CANONICAL_URL}}">
+<meta property="og:url" content="http://tg-api.alsaba.cloud/go">
 <meta name="twitter:card" content="summary_large_image">
 
 <meta name="description" content="المربّي - مساعد تربوي ذكي للأهل العرب المسلمين." />
@@ -34,171 +25,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
-<style>
-  :root{
-    /* LIGHT palette — derive accents from YOUR product. Gold must be deep to read on light. */
-    --paper:#FBF8F2; --mist:#F7F4EC; --cream:#F3EEE2; --sand:#ECE2CF;
-    --ink:#241812; --ink-soft:#6E5C4B; --ink-faint:#9A8975;
-    --gold:#A97B33; --gold-deep:#8A6128; --gold-bright:#C2974A; --accent:#A8632E;
-    --line:rgba(58,33,20,.16); --line-soft:rgba(58,33,20,.09);
-    --ambient:#FBF8F2; --maxw:1280px; --ease:cubic-bezier(.22,.61,.36,1);
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%} html{scroll-behavior:auto}
-  body{background:var(--paper);color:var(--ink);font-family:"Tajawal",system-ui,sans-serif;font-weight:300;
-    -webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.8}
-  ::selection{background:var(--gold-bright);color:#fff}
-  h1,h2,h3,.display{font-family:"El Messiri",serif;font-weight:600;line-height:1.1;color:var(--ink)}
-  .latin{font-family:"Cormorant Garamond",serif;letter-spacing:.34em;text-transform:uppercase}
-
-  /* fixed cinematic layers */
-  #ambient{position:fixed;inset:0;z-index:-3;background:var(--ambient)}
-  #glow{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.5;
-    background:radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.8),rgba(244,239,229,0) 60%)}
-  #vignette{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:radial-gradient(135% 120% at 50% 42%,transparent 55%,rgba(120,90,50,.06) 100%)}
-  #grain{position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:.035;mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-  #progress{position:fixed;top:0;right:0;left:0;height:2px;z-index:70;transform-origin:right;transform:scaleX(0);
-    background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright),var(--accent))}
-
-  /* header */
-  header{position:fixed;top:0;right:0;left:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-    padding:clamp(14px,2.4vw,28px) clamp(18px,4vw,54px);will-change:transform;
-    transition:transform .5s var(--ease),background .5s,backdrop-filter .5s,box-shadow .5s,padding .5s}
-  header.hidden{transform:translateY(-115%)}
-  header.solid{background:rgba(251,248,242,.78);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line-soft);
-    padding-top:clamp(10px,1.6vw,16px);padding-bottom:clamp(10px,1.6vw,16px)}
-  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-  .brand .wm{font-family:"El Messiri",serif;font-weight:700;font-size:clamp(21px,2.4vw,27px);color:var(--ink)}
-  header nav{display:flex;align-items:center;gap:clamp(16px,2.4vw,36px)}
-  header nav a{color:var(--ink-soft);text-decoration:none;font-size:14px;font-weight:500;transition:color .3s}
-  header nav a:hover{color:var(--gold-deep)}
-  .nav-cta{border:1px solid var(--gold);border-radius:999px;padding:8px 22px;color:var(--gold-deep)!important}
-  .nav-cta:hover{background:var(--gold);color:#fff!important}
-  @media(max-width:680px){header nav a:not(.nav-cta){display:none}}
-  a:focus-visible,.btn:focus-visible,.nav-cta:focus-visible,header nav a:focus-visible,footer .links a:focus-visible{
-    outline:2px solid var(--gold-deep);outline-offset:3px;border-radius:6px}
-
-  /* layout helpers */
-  section{position:relative}
-  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(20px,5vw,68px)}
-  .eyebrow{font-family:"Cormorant Garamond",serif;letter-spacing:.46em;text-transform:uppercase;font-size:13px;color:var(--gold-deep);font-weight:500}
-  .idx{font-family:"El Messiri",serif;font-size:15px;color:var(--gold);font-weight:600}
-  .gold-text{background:linear-gradient(180deg,var(--gold-bright),var(--gold) 50%,var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .multiply{mix-blend-mode:multiply}   /* ONLY on non-GSAP-transformed product shots (see memory/05) */
-  .fallback-host{position:relative}
-  .fallback-host.is-missing{background-image:linear-gradient(135deg,var(--cream),var(--sand) 78%);background-size:cover}
-  .reveal{opacity:0;transform:translateY(34px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
-  .reveal.in{opacity:1;transform:none}
-
-  /* 1 · HERO (cinematic) */
-  #hero{height:135vh}
-  #hero .stage{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;text-align:center;padding:6vh 18px 0;perspective:1300px;
-    background:#0B3B3B url(/ui/assets/banner.png) center center/cover no-repeat}
-  @media(max-width:768px){
-    #hero .stage{background-size:contain;background-position:center 20%}
-  }
-  #hero .aura{display:none}
-  #hero .motes{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-  #hero .motes span{position:absolute;border-radius:50%;opacity:0;will-change:transform,opacity;filter:blur(.4px);
-    background:radial-gradient(circle,rgba(238,208,142,.95),rgba(238,208,142,0) 70%);animation:mote linear infinite}
-  @keyframes mote{0%{opacity:0;transform:translateY(40px) scale(.5)}12%{opacity:.75}55%{opacity:.55}100%{opacity:0;transform:translateY(-120px) scale(1.05)}}
-  #hero .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;will-change:transform,opacity}
-  #hero .latin{font-size:13px;color:var(--gold-deep);margin-bottom:2.6vh;opacity:0}
-  #hero .media-float{animation:floaty 6.5s var(--ease) infinite}
-  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
-  #hero .media-tilt{position:relative;transform-style:preserve-3d;transform:rotateX(var(--tx,0deg)) rotateY(var(--ty,0deg));transition:transform .3s ease-out}
-  #hero .hero-media{display:block;height:46vh;width:auto;max-width:80vw;object-fit:contain;opacity:0;filter:drop-shadow(0 28px 36px rgba(90,62,28,.32))}
-  #hero .specular{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0;
-    -webkit-mask:url(/ui/assets/product-cut.png) center/contain no-repeat;mask:url(/ui/assets/product-cut.png) center/contain no-repeat;
-    background:linear-gradient(115deg,transparent 40%,rgba(255,251,240,.65) 50%,transparent 60%);background-size:280% 280%;
-    animation:sheen 7.5s ease-in-out 2.2s infinite}
-  @keyframes sheen{0%,16%{background-position:150% 0;opacity:0}24%{opacity:.95}46%,100%{background-position:-50% 0;opacity:0}}
-  #hero h1{font-size:clamp(42px,9vw,110px);font-weight:700;line-height:1.25;margin-top:2.6vh;padding:10px 0;opacity:0;clip-path:inset(-20% 0 120% 0);color:#FFF;text-shadow:0 2px 10px rgba(0,0,0,0.3)}
-  #hero .sub{margin-top:1.4vh;font-size:clamp(15px,2vw,21px);color:rgba(250,247,242,0.85);text-shadow:0 1px 6px rgba(0,0,0,0.3);opacity:0}
-  header:not(.solid) .brand .wm, header:not(.solid) nav a:not(.nav-cta){color:#FAF7F2}
-  header:not(.solid) .brand .wm:hover, header:not(.solid) nav a:not(.nav-cta):hover{color:var(--gold-bright)}
-  .scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;
-    color:var(--ink-faint);font-size:11px;letter-spacing:.32em;font-family:"Cormorant Garamond",serif;text-transform:uppercase}
-  .scrollcue .bar{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);animation:cue 2.4s var(--ease) infinite}
-  @keyframes cue{0%{transform:scaleY(.2);opacity:.2;transform-origin:top}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.2);opacity:.2;transform-origin:bottom}}
-
-  /* 2 · FILM (canvas frame-sequence) */
-  #film{height:1600vh}
-  #film .stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--paper)}
-  #film canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-  #film .film-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none}
-  #film .caps{position:absolute;right:clamp(20px,6vw,98px);bottom:clamp(74px,13vh,140px);z-index:4;width:min(80vw,440px);text-align:right;pointer-events:none}
-  #film .cap{position:absolute;right:0;bottom:0;opacity:0;transform:translateY(14px);font-family:"El Messiri",serif;font-size:clamp(22px,3.6vw,42px);font-weight:700;line-height:1.28;color:var(--ink);text-shadow:0 0 8px var(--paper), 0 0 16px var(--paper), 0 0 24px var(--paper);-webkit-text-stroke:0.3px var(--paper)}
-  #film .loader{position:absolute;left:clamp(18px,5vw,42px);bottom:clamp(24px,5vh,40px);z-index:5;font-family:"Cormorant Garamond",serif;letter-spacing:.28em;font-size:12px;color:var(--ink-faint);transition:opacity .6s}
-
-  /* 3 · REVEAL */
-  #reveal{padding:22vh 0 18vh}
-  #reveal .grid{display:grid;grid-template-columns:1fr;gap:clamp(40px,6vw,84px);align-items:center}
-  @media(min-width:900px){#reveal .grid{grid-template-columns:1.05fr .95fr}}
-  #reveal .shot{position:relative;aspect-ratio:4/3;display:grid;place-items:center}
-  #reveal .shot img{width:100%;height:100%;object-fit:contain}
-  #reveal .copy{text-align:right} #reveal .idx{display:block;margin-bottom:12px}
-  #reveal h2{font-size:clamp(36px,5.6vw,78px);margin:8px 0 22px}
-  #reveal .lead{font-size:clamp(16px,1.8vw,20px);color:var(--ink-soft);max-width:46ch;margin-inline-start:auto}
-  #reveal .specs{list-style:none;margin-top:36px}
-  #reveal .specs li{display:flex;align-items:baseline;justify-content:flex-end;gap:18px;padding:18px 0;border-top:1px solid var(--line)}
-  #reveal .specs li:last-child{border-bottom:1px solid var(--line)}
-  #reveal .specs .k{font-family:"El Messiri",serif;color:var(--gold-deep);font-weight:600;white-space:nowrap}
-  #reveal .specs .v{color:var(--ink-soft)}
-
-  /* 4 · RITUAL / MOMENT */
-  #ritual{padding:20vh 0}
-  #ritual .frame{position:relative;height:clamp(460px,84vh,840px);border-radius:3px;overflow:hidden;box-shadow:0 50px 110px -50px rgba(80,55,25,.45)}
-  #ritual .frame img{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;will-change:transform}
-  #ritual .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(to left,rgba(251,248,242,.9),rgba(251,248,242,.25) 52%,transparent 84%),linear-gradient(0deg,rgba(251,248,242,.8),transparent 52%)}
-  #ritual .copy{position:absolute;z-index:2;right:clamp(24px,5vw,72px);bottom:clamp(42px,9vh,96px);max-width:min(88vw,540px);text-align:right}
-  #ritual .idx{display:block;margin-bottom:12px} #ritual h2{font-size:clamp(34px,5.6vw,70px);margin:8px 0 16px}
-  #ritual p{color:var(--ink-soft);font-size:clamp(15px,1.7vw,19px);max-width:44ch;margin-inline-start:auto}
-
-  /* 5 · CTA */
-  #cta{height:260vh}
-  #cta .stage{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center;background:var(--paper)}
-  #cta video,#cta .cta-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
-  #cta .cta-poster{transition:opacity .8s ease}
-  #cta .dim{position:absolute;inset:0;opacity:0;backdrop-filter:blur(2px);background:radial-gradient(120% 100% at 50% 50%,rgba(251,248,242,.62),rgba(244,238,226,.9))}
-  #cta .content{position:relative;z-index:3;text-align:center;opacity:0;transform:translateY(28px);padding-inline:20px}
-  #cta .content .latin{display:block;font-size:12px;color:var(--gold-deep);margin-bottom:18px}
-  #cta h2{font-size:clamp(44px,9vw,118px);line-height:.94}
-  #cta .content p{margin:18px auto 0;color:var(--ink-soft);font-size:clamp(15px,1.8vw,20px);max-width:40ch}
-  #cta .btns{margin-top:40px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-  .btn{border-radius:999px;padding:15px 40px;font-family:"El Messiri",serif;font-size:17px;font-weight:600;text-decoration:none;display:inline-block;transition:transform .35s var(--ease),box-shadow .35s,background .35s,color .35s}
-  .btn-primary{background:linear-gradient(180deg,var(--gold-bright),var(--gold));color:#fff;box-shadow:0 16px 40px -14px rgba(169,123,51,.7)}
-  .btn-primary:hover{transform:translateY(-3px)}
-  .btn-ghost{border:1px solid var(--gold);color:var(--gold-deep)} .btn-ghost:hover{background:var(--gold);color:#fff;transform:translateY(-3px)}
-
-  /* 6 · EDITIONS */
-  #editions{padding:18vh 0 12vh;text-align:center}
-  #editions .head{margin-bottom:clamp(40px,6vw,72px)} #editions .idx{display:block;margin-bottom:10px}
-  #editions h2{font-size:clamp(34px,5.4vw,66px);margin-top:6px}
-  #editions .cards{display:grid;grid-template-columns:1fr;gap:26px}
-  @media(min-width:760px){#editions .cards{grid-template-columns:repeat(3,1fr)}}
-  .ed-card{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--mist);transition:transform .5s var(--ease),box-shadow .5s,border-color .5s}
-  .ed-card:hover{transform:translateY(-8px);box-shadow:0 34px 70px -36px rgba(80,55,25,.4)}
-  .ed-card .pic{aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden;padding:8%}
-  .ed-card .pic img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;transition:transform .9s var(--ease)}
-  .ed-card:hover .pic img{transform:scale(1.05)}
-  .ed-card .body{padding:6px 22px 28px} .ed-card h3{font-size:23px;color:var(--ink)} .ed-card p{font-size:14px;color:var(--ink-soft);margin-top:8px}
-
-  footer{padding:9vh 0 5vh;text-align:center;border-top:1px solid var(--line)}
-  footer .wm{font-family:"El Messiri",serif;font-size:40px;font-weight:700}
-  footer .links{margin:24px 0;display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
-  footer .links a{color:var(--ink-soft);text-decoration:none;font-size:14px;transition:color .3s} footer .links a:hover{color:var(--gold-deep)}
-  footer .cr{color:var(--ink-faint);font-size:12px}
-
-  @media(prefers-reduced-motion:reduce){
-    #hero .aura,#hero .motes span,#hero .specular,#hero .media-float,.scrollcue .bar{animation:none}
-    #hero .aura{opacity:.6} #hero .latin,#hero .hero-media,#hero h1,#hero .sub{opacity:1;clip-path:none}
-    *{scroll-behavior:auto}
-  }
-</style>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <div id="ambient"></div><div id="glow"></div><div id="vignette"></div><div id="grain"></div><div id="progress"></div>
@@ -230,7 +57,7 @@
         <span class="latin">TUTOR GUARDIAN</span>
         <!-- transparent cutout (background-removed) — NOT a blend trick -->
         <div class="media-float"><div class="media-tilt">
-          <img class="hero-media" src="/ui/assets/product-cut.png" alt="المربّي" loading="eager" />
+          <img class="hero-media" src="assets/product-cut.png" alt="المربّي" loading="eager" />
           <span class="specular" aria-hidden="true"></span>
         </div></div>
         <h1>المربّي الذكي — تربية إسلامية</h1>
@@ -240,24 +67,15 @@
     </div>
   </section>
 
-  <!-- 2 · FILM -->
-  <section id="film" data-ambient="#F8F5EF" data-glow=".7">
-    <div class="stage fallback-host">
-      <canvas id="filmCanvas"></canvas>
-      <div class="caps" id="filmCaps">
-        <div class="cap" data-a="0.02" data-b="0.24">في كل مرحلة عمرية تحديات جديدة</div>
-        <div class="cap" data-a="0.30" data-b="0.52">ذكاء اصطناعي يفهم احتياجات طفلك</div>
-        <div class="cap" data-a="0.58" data-b="0.80">مدعوم بالأدلة الشرعية والقيم الإسلامية</div>
-        <div class="cap" data-a="0.86" data-b="0.99">رفيقك اليومي لتربية واثقة</div>
-      </div>
-      <div class="loader" id="filmLoader">…</div>
-    </div>
+  <!-- 2 · TUTOR JOURNEY -->
+  <section id="tutor-journey" data-ambient="#F5EDE0" data-glow="0">
+    <div id="world"></div>
   </section>
 
   <!-- 3 · REVEAL -->
   <section id="reveal" data-ambient="#F4EFE4" data-glow=".55">
     <div class="wrap"><div class="grid">
-      <div class="shot fallback-host reveal"><img class="multiply" src="/ui/assets/product-hero.jpg" alt="المربّي" loading="lazy" /></div>
+      <div class="shot fallback-host reveal"><img class="multiply" src="assets/product-hero.jpg" alt="المربّي" loading="lazy" /></div>
       <div class="copy">
         <span class="idx reveal">٠١ — المساعد الذكي</span>
         <h2 class="gold-text reveal">إجابات فورية لكل تحدي</h2>
@@ -276,7 +94,7 @@
   <section id="ritual" data-ambient="#F1E7D5" data-glow=".5">
     <div class="wrap"><div class="frame fallback-host">
       <!-- if a person appears: full hijab + conservative (see memory/07) -->
-      <img src="/ui/assets/ritual.jpg" alt="استخدام تطبيق المربّي" loading="lazy" />
+      <img src="assets/ritual.jpg" alt="استخدام تطبيق المربّي" loading="lazy" />
       <div class="copy reveal">
         <span class="idx">٠٢ — رحلة متكاملة</span>
         <h2 class="gold-text">من الحمل حتى الشباب</h2>
@@ -288,8 +106,8 @@
   <!-- 5 · CTA -->
   <section id="cta" data-ambient="#F6F1E8" data-glow=".5">
     <div class="stage fallback-host">
-      <img class="cta-poster multiply" id="ctaPoster" src="/ui/assets/product-hero.jpg" alt="" aria-hidden="true" />
-      <video id="ctaVideo" muted playsinline preload="none" aria-hidden="true" poster="/ui/assets/product-hero.jpg"></video>
+      <img class="cta-poster multiply" id="ctaPoster" src="assets/product-hero.jpg" alt="" aria-hidden="true" />
+      <video id="ctaVideo" muted playsinline preload="none" aria-hidden="true" poster="assets/product-hero.jpg"></video>
       <div class="dim" id="ctaDim"></div>
       <div class="content" id="ctaContent">
         <span class="latin">لوجه الله تعالى</span>
@@ -305,9 +123,9 @@
     <div class="wrap">
       <div class="head"><span class="idx reveal">٠٣ — أدوات مخصصة</span><h2 class="gold-text reveal">كل ما تحتاجه للتربية</h2></div>
       <div class="cards">
-        <article class="ed-card reveal"><div class="pic fallback-host"><img src="/ui/assets/edition-1.jpg" alt="متابعة السلوك والتقدم" loading="lazy" /></div><div class="body"><h3>متابعة السلوك والتقدم</h3><p>تتبع إنجازات طفلك اليومية والدروس التربوية والعملية التي يكتمل بناؤها خطوة بخطوة.</p></div></article>
-        <article class="ed-card reveal"><div class="pic fallback-host"><img src="/ui/assets/edition-2.jpg" alt="مسارات تربوية منهجية" loading="lazy" /></div><div class="body"><h3>مسارات تربوية منهجية</h3><p>رحلات متكاملة في مواضيع حساسة كالتعامل مع الشاشات، الاستقلالية، وبناء الرابطة الآمنة.</p></div></article>
-        <article class="ed-card reveal"><div class="pic fallback-host"><img src="/ui/assets/edition-3.jpg" alt="المستشار التربوي الذكي" loading="lazy" /></div><div class="body"><h3>المستشار التربوي الذكي</h3><p>إجابات فورية مدعومة بالأدلة الشرعية والمنهجية العلمية لكل سؤال أو تحدي يواجهك مع طفلك.</p></div></article>
+        <article class="ed-card reveal"><div class="pic fallback-host"><img src="assets/edition-1.jpg" alt="متابعة السلوك والتقدم" loading="lazy" /></div><div class="body"><h3>متابعة السلوك والتقدم</h3><p>تتبع إنجازات طفلك اليومية والدروس التربوية والعملية التي يكتمل بناؤها خطوة بخطوة.</p></div></article>
+        <article class="ed-card reveal"><div class="pic fallback-host"><img src="assets/edition-2.jpg" alt="مسارات تربوية منهجية" loading="lazy" /></div><div class="body"><h3>مسارات تربوية منهجية</h3><p>رحلات متكاملة في مواضيع حساسة كالتعامل مع الشاشات، الاستقلالية، وبناء الرابطة الآمنة.</p></div></article>
+        <article class="ed-card reveal"><div class="pic fallback-host"><img src="assets/edition-3.jpg" alt="المستشار التربوي الذكي" loading="lazy" /></div><div class="body"><h3>المستشار التربوي الذكي</h3><p>إجابات فورية مدعومة بالأدلة الشرعية والمنهجية العلمية لكل سؤال أو تحدي يواجهك مع طفلك.</p></div></article>
       </div>
     </div>
   </section>
@@ -318,6 +136,78 @@
     <div class="cr">© 2026 المربّي. جميع الحقوق محفوظة.</div>
   </div></footer>
 </main>
+
+<!-- Javascript Scroll-World Engine -->
+<script src="engine.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    mountScrollWorld(document.getElementById('world'), {
+      diveScroll: 1.6, 
+      connScroll: 1.0, 
+      crossfade: 0.28,  
+      nav: true,
+      atmosphere: true,
+      sections: [
+        {
+          id: 'hero',
+          label: 'البداية',
+          clip: 'assets/hero_clip.mp4',
+          accent: '#8B7BB5',
+          linger: 0.4,
+          eyebrow: 'الذكاء التربوي الحارس',
+          title: 'حماية ذكية وتوجيه سليم لأطفالك',
+          body: 'تيوتور جاردين هو مساعد تربوي ذكي يدمج بين الطب النفسي للأطفال والتربية الإسلامية النبوية ليوفر درعاً سيبرانياً ونفسياً متكاملاً لعائلتك.',
+          tags: ['ذكاء اصطناعي تربوي', 'حماية سيبرانية', 'RAG محلي آمن']
+        },
+        {
+          id: 'medical',
+          label: 'التوجيه النفسي',
+          clip: 'assets/medical_clip.mp4',
+          accent: '#76A5AF',
+          linger: 0.45,
+          eyebrow: 'الرعاية النفسية والسلوكية',
+          title: 'افهم سلوك أطفالك بحكمة وعلم',
+          body: 'احصل على إرشادات فورية للتعامل مع نوبات الغضب والاضطرابات السلوكية بناءً على أسس طبية علمية دون إفشاء لخصوصية بياناتكم.',
+          tags: ['تعديل سلوكي', 'دعم نفسي للأهل', 'تحليلات موثوقة']
+        },
+        {
+          id: 'islamic',
+          label: 'التربية النبوية',
+          clip: 'assets/islamic_clip.mp4',
+          accent: '#8FB98A',
+          linger: 0.45,
+          eyebrow: 'القيم والتربية الإسلامية',
+          title: 'بناء أخلاق متجذرة في الهدي النبوي',
+          body: 'تأصيل قيم التربية الإسلامية النبوية في نفوس الأبناء بأسلوب معاصر يرتبط بواقعهم ويقوي صلتهم بعباداتهم ومجتمعهم.',
+          tags: ['أخلاق وقيم', 'سيرة تربوية', 'فقه واقع الأسرة']
+        },
+        {
+          id: 'cyber',
+          label: 'الأمان الرقمي',
+          clip: 'assets/cyber_clip.mp4',
+          accent: '#C88A5A',
+          linger: 0.45,
+          eyebrow: 'الحماية السيبرانية للأطفال',
+          title: 'درع رقمي متكامل يرافق أجهزتهم',
+          body: 'أدوات ذكية لإدارة وقت الشاشة، وفلترة المحتوى الضار، ومراقبة تفاعل طفلك مع الألعاب لحمايته من التنمر ومخاطر الإنترنت.',
+          tags: ['إدارة الأجهزة', 'ألعاب آمنة', 'مراقبة هادئة']
+        },
+        {
+          id: 'finale',
+          label: 'حمل التطبيق',
+          clip: 'assets/finale_clip.mp4',
+          accent: '#B57BA6',
+          linger: 0.5,
+          eyebrow: 'مستقبل تربوي آمن لعائلتك',
+          title: 'ابدأ رحلتك التربوية المطمئنة اليوم',
+          body: 'حمّل تطبيق Tutor Guardian الآن واجعل تربية أطفالك في العصر الرقمي تجربة مليئة بالطمأنينة والأمان والذكاء.',
+          tags: ['تنزيل مجاني للنسخة التجريبية', 'متوافق مع أندرويد وiOS']
+        }
+      ],
+      connectors: []
+    });
+  });
+</script>
 
 <script>
 (function(){
@@ -390,28 +280,12 @@
     gsap.to("#ritual .frame img",{scrollTrigger:{trigger:"#ritual",start:"top bottom",end:"bottom top",scrub:true},y:"-7%",ease:"none"});
   }
 
-  // FILM — canvas frame sequence (NEVER video.currentTime). Set FRAME_COUNT to your real count.
-  (function initFilm(){
-    const FRAME_COUNT=47;
-    const url=i=>"/ui/assets/seq/f"+String(i).padStart(3,"0")+".jpg";
-    const canvas=document.getElementById("filmCanvas"),stage=canvas.closest(".stage"),fallback=document.querySelector("#film .film-fallback"),loaderEl=document.getElementById("filmLoader"),caps=Array.from(document.querySelectorAll("#filmCaps .cap")),ctx=canvas.getContext("2d",{alpha:false}),frames=new Array(FRAME_COUNT);
-    let loaded=0,errored=0,ready=false,useFallback=false,cur=-1,lastIdx=0,filmST=null;
-    const progIdx=()=>filmST?Math.round(clamp(filmST.progress,0,1)*(FRAME_COUNT-1)):0;
-    function showFallback(){useFallback=true;ready=true;canvas.style.display="none";if(fallback&&fallback.complete&&fallback.naturalWidth>0)fallback.style.display="block";else if(fallback)fallback.style.display="none";if(loaderEl)loaderEl.style.opacity=0;}
-    function maybeReady(){if(ready)return;if(loaded+errored>=FRAME_COUNT||loaded>=Math.ceil(FRAME_COUNT*0.6)){if(loaded===0){showFallback();return;}ready=true;if(loaderEl)loaderEl.style.opacity=0;resize();draw(progIdx());}if(loaderEl&&!ready)loaderEl.textContent="… "+Math.round(loaded/FRAME_COUNT*100)+"%";}
-    if(reduce||!hasGSAP){showFallback();return;}
-    for(let i=0;i<FRAME_COUNT;i++){const im=new Image();im.decoding="async";im.onload=()=>{frames[i]=im;loaded++;maybeReady();};im.onerror=()=>{errored++;maybeReady();};im.src=url(i);}
-    setTimeout(()=>{if(!ready){if(loaded>0){ready=true;if(loaderEl)loaderEl.style.opacity=0;resize();draw(progIdx());}else showFallback();}},9000);
-    function resize(){const dpr=Math.min(2,window.devicePixelRatio||1),w=stage.clientWidth,h=stage.clientHeight;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width=w+"px";canvas.style.height=h+"px";cur=-1;if(ready&&!useFallback)draw(lastIdx);}
-    function draw(i){if(useFallback)return;i=clamp(i,0,FRAME_COUNT-1);let im=frames[i];if(!im){for(let d=1;d<FRAME_COUNT;d++){if(frames[i-d]){im=frames[i-d];break;}if(frames[i+d]){im=frames[i+d];break;}}if(!im)return;}if(i===cur)return;cur=i;lastIdx=i;const cw=canvas.width,ch=canvas.height,iw=im.naturalWidth,ih=im.naturalHeight,s=Math.max(cw/iw,ch/ih),dw=iw*s,dh=ih*s;ctx.fillStyle="#FBF8F2";ctx.fillRect(0,0,cw,ch);ctx.drawImage(im,(cw-dw)/2,(ch-dh)/2,dw,dh);}
-    window.addEventListener("resize",resize,{passive:true});
-    filmST=ScrollTrigger.create({trigger:"#film",start:"top top",end:"bottom bottom",scrub:true,onUpdate:self=>{const p=self.progress;if(ready&&!useFallback)draw(Math.round(p*(FRAME_COUNT-1)));for(const c of caps){const a=parseFloat(c.dataset.a),b=parseFloat(c.dataset.b),mid=(a+b)/2,o=Math.min(smooth(a,a+(mid-a)*0.6,p),1-smooth(mid+(b-mid)*0.4,b,p));c.style.opacity=Math.max(0,o);c.style.transform="translateY("+(12*(1-Math.max(0,o)))+"px)";}}});
-  })();
+  
 
   // CTA — video alone first, then dim/wash + content reveal. (No `loop` attr → `ended` advances the playlist.)
   (function initCTA(){
     const sec=document.getElementById("cta"),video=document.getElementById("ctaVideo"),poster=document.getElementById("ctaPoster"),dim=document.getElementById("ctaDim"),content=document.getElementById("ctaContent");
-    const playlist=["/ui/assets/cta.mp4","/ui/assets/life1.mp4"]; let pi=0,attempts=0;
+    const playlist=["assets/finale_clip.mp4"]; let pi=0,attempts=0;
     function load(i){pi=((i%playlist.length)+playlist.length)%playlist.length;video.src=playlist[pi];const pr=video.play();if(pr&&pr.catch)pr.catch(()=>{});}
     video.addEventListener("loadeddata",()=>{attempts=0;poster.style.opacity=0;});
     video.addEventListener("ended",()=>load(pi+1));
@@ -427,5 +301,6 @@
   if(hasGSAP){window.addEventListener("load",()=>ScrollTrigger.refresh());if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>ScrollTrigger.refresh());}
 })();
 </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"7a8db528beef4fe1be0eadf9d6490d25","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
