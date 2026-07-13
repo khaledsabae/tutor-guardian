@@ -58,7 +58,7 @@
 
   /* 1 · HERO (cinematic) */
   #hero{height:135vh}
-  #hero .stage{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;flex-direction:column;
+  #hero .stage{position:sticky;top:0;height:100vh; height:100svh;overflow:hidden;display:flex;flex-direction:column;
     align-items:center;justify-content:center;text-align:center;padding:6vh 18px 0;perspective:1300px;
     background:#0B3B3B url(https://tg-api.alsaba.cloud/ui/assets/banner.png) center center/cover no-repeat}
   @media(max-width:768px){
@@ -91,7 +91,7 @@
 
   /* 2 · FILM (canvas frame-sequence) */
   #film{height:1600vh}
-  #film .stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--paper)}
+  #film .stage{position:sticky;top:0;height:100vh; height:100svh;overflow:hidden;background:var(--paper)}
   #film canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   #film .film-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none}
   #film .caps{position:absolute;right:clamp(20px,6vw,98px);bottom:clamp(74px,13vh,140px);z-index:4;width:min(80vw,440px);text-align:right;pointer-events:none}
@@ -124,7 +124,7 @@
 
   /* 5 · CTA */
   #cta{height:260vh}
-  #cta .stage{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center;background:var(--paper)}
+  #cta .stage{position:sticky;top:0;height:100vh; height:100svh;overflow:hidden;display:grid;place-items:center;background:var(--paper)}
   #cta video,#cta .cta-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
   #cta .cta-poster{transition:opacity .8s ease}
   #cta .dim{position:absolute;inset:0;opacity:0;backdrop-filter:blur(2px);background:radial-gradient(120% 100% at 50% 50%,rgba(251,248,242,.62),rgba(244,238,226,.9))}
@@ -425,7 +425,7 @@
     position: absolute;
     inset: 0;
     width: 100vw;
-    height: 100svh;
+    height: 100vh; height: 100svh;
     object-fit: cover;
     object-position: center center;
     transform-origin: center center;
@@ -444,7 +444,7 @@
     position: absolute;
     inset: 0;
     width: 100vw;
-    height: 100svh;
+    height: 100vh; height: 100svh;
     object-fit: cover;
     object-position: center center;
     z-index: 5;
@@ -800,6 +800,6 @@
   position: sticky;
   top: 0;
   width: 100%;
-  height: 100svh;
+  height: 100vh; height: 100svh;
   overflow: hidden;
 }
