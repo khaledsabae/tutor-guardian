@@ -67,8 +67,8 @@ android {
             }
             // Strip unused ABIs / split per ABI for smaller artefacts.
             // (Re-enable if you want a fat AAB; not needed for Play.)
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
         }
     }
 }
