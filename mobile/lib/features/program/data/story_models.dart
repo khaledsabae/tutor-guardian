@@ -28,6 +28,7 @@ class Story {
   final String description;
   final String coverImage;
   final String themeColor;
+  final String? videoFile;
   final List<StoryPage> pages;
 
   Story({
@@ -36,6 +37,7 @@ class Story {
     required this.description,
     required this.coverImage,
     required this.themeColor,
+    this.videoFile,
     required this.pages,
   });
 
@@ -50,9 +52,13 @@ class Story {
       description: json['description'] as String,
       coverImage: json['coverImage'] as String,
       themeColor: json['themeColor'] as String,
+      videoFile: json['videoFile'] as String?,
       pages: parsedPages,
     );
   }
+
+  /// Whether the story has a looping ambient video cover.
+  bool get hasVideo => videoFile != null && videoFile!.isNotEmpty;
 }
 
 /// Provider to load stories from the local JSON asset.

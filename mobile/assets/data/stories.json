@@ -3,28 +3,29 @@
     "id": "hope_sprout",
     "title": "يوسف وغرسة الأمل",
     "description": "قصة تربوية تعلم الأطفال الصبر والعناية بالزرع والأخلاق الحميدة.",
-    "coverImage": "assets/images/stories/hope_sprout_cover.png",
+    "coverImage": "docs/stories/hope_sprout_cover.png",
     "themeColor": "0xFF0D9488",
+    "videoFile": "docs/stories/hope_sprout.mp4",
     "pages": [
       {
         "pageNumber": 1,
         "text": "يوسف ولد طيب يحب الطبيعة ومساعدة والديه. في صباح يوم مشرق، أعطاه والده بذرة صغيرة ذهبية اللون وقال له: «هذه بذرة مباركة يا بني، ازرعها واعتنِ بها وسوف تعلمك سرّاً عظيماً».",
-        "image": "assets/images/stories/hope_sprout_1.png"
+        "image": "docs/stories/hope_sprout_1.png"
       },
       {
         "pageNumber": 2,
         "text": "حفر يوسف في الأرض برفق ووضع البذرة، ثم غطاها بالتراب وسقاها بماء عذب. كان ينتظر بجانبها كل صباح متمنياً أن تخرج له النبتة بسرعة، ولكن الأرض ظلت ساكنة كما هي.",
-        "image": "assets/images/stories/hope_sprout_2.png"
+        "image": "docs/stories/hope_sprout_2.png"
       },
       {
         "pageNumber": 3,
         "text": "شعر يوسف بالضيق وذهب إلى والده حزيناً يريد الاستسلام. فقال له والده ضاحكاً ومربتاً على كتفه: «يا يوسف، الزرع كالتربية، كلاهما يحتاج إلى الصبر والرفق والتوكل على الله. استمر في سقايتها ودع الباقي للخالق».",
-        "image": "assets/images/stories/hope_sprout_3.png"
+        "image": "docs/stories/hope_sprout_3.png"
       },
       {
         "pageNumber": 4,
         "text": "بعد أيام من العناية والصبر والدعاء، رأى يوسف برعماً أخضر صغيراً يشق الأرض بقوة ويرتفع نحو شمس الصباح. فرح يوسف كثيراً وعلم أن كل عمل صالح يحتاج إلى صبر ليزهر ويثمر.",
-        "image": "assets/images/stories/hope_sprout_4.png"
+        "image": "docs/stories/hope_sprout_4.png"
       }
     ]
   },
@@ -32,28 +33,149 @@
     "id": "kitten_kindness",
     "title": "أنس والهر الصغير",
     "description": "قصة إيمانية تعلم الأطفال خلق الرفق بالحيوان اقتداءً برسولنا الكريم.",
-    "coverImage": "assets/images/stories/kitten_kindness_cover.png",
+    "coverImage": "docs/stories/kitten_kindness_cover.png",
     "themeColor": "0xFF0284C7",
+    "videoFile": "docs/stories/kitten_kindness.mp4",
     "pages": [
       {
         "pageNumber": 1,
         "text": "بينما كان أنس يسير عائداً من مدرسته، سمع صوتاً خافتاً قادماً من وراء شجرة قديمة. اقترب ببطء ليجد هراً صغيراً يرتجف من البرد والخوف وقد اتسخ فروه الجميل.",
-        "image": "assets/images/stories/kitten_kindness_1.png"
+        "image": "docs/stories/kitten_kindness_1.png"
       },
       {
         "pageNumber": 2,
         "text": "شعر أنس بالشفقة الشديدة عليه، وتذكر فوراً حديث رسول الله صلى الله عليه وسلم الذي علمه له والده: «في كل كبد رطبة أجر». فقرر أن يساعد هذا المخلوق الصغير والضعيف.",
-        "image": "assets/images/stories/kitten_kindness_2.png"
+        "image": "docs/stories/kitten_kindness_2.png"
       },
       {
         "pageNumber": 3,
         "text": "أسرع أنس للمنزل وأحضر وعاء حليب دافئ ومنديل نظيف. اقترب من الهر بلطف وقدم له الحليب، ثم مسح فروه المبلل بعناية فائقة حتى شعر الهر الصغير بالأمان والدفء.",
-        "image": "assets/images/stories/kitten_kindness_3.png"
+        "image": "docs/stories/kitten_kindness_3.png"
       },
       {
         "pageNumber": 4,
         "text": "نظر الهر الصغير إلى أنس بعينين لامعتين وبدأ يصدر صوتاً هادئاً يعبر فيه عن شكره وسعادته. امتلأ قلب أنس بالسرور لأنه طبق خلقاً عظيماً يحبه الله ورسوله.",
-        "image": "assets/images/stories/kitten_kindness_4.png"
+        "image": "docs/stories/kitten_kindness_4.png"
+      }
+    ]
+  },
+  {
+    "id": "layla_star",
+    "title": "ليلى ونجمتها الصغيرة",
+    "description": "قصة هادئة تساعد الأطفال على الاسترخاء وحمد الله على نعم اليوم قبل النوم.",
+    "coverImage": "docs/stories/layla_star_cover.png",
+    "themeColor": "0xFF1E293B",
+    "videoFile": "docs/stories/layla_star_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "كانت ليلى طفلة صغيرة تحب تأمل السماء قبل النوم. في غرفتها الدافئة، فتحت النافذة ونظرت إلى السماء الصافية المليئة بالنجوم، وقالت هامسة: «يا نجوم السماء المضيئة، هل تنامين مثلنا؟».",
+        "image": "docs/stories/layla_star_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "لمعت نجمة صغيرة في الأفق وبدت وكأنها تبتسم لليلى. جلست ليلى على سريرها المريح وتذكرت نصيحة والدتها: «يا ليلى، قبل أن تغمضي عينيكِ، تذكري ثلاثة أشياء جميلة حدثت اليوم واحمدي الله عليها».",
+        "image": "docs/stories/layla_star_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "بدأت ليلى تفكر: أولاً، اللعب مع قطتي اللطيفة؛ ثانياً، مساعدة جدي في سقاية حديقة المنزل؛ وثالثاً، طعام أمي اللذيذ. قالت ليلى بقلبٍ سعيد: «الحمد لله على كل هذه النعم الجميلة».",
+        "image": "docs/stories/layla_star_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "شعرت ليلى بالدفء والسكينة يسريان في جسدها الصغير. قرأت آية الكرسي ودعاء النوم، ثم غطت نفسها باللحاف الدافئ. أغمضت عينيها وهي ترى نجمتها الصغيرة تحرس أحلامها السعيدة.",
+        "image": "docs/stories/layla_star_4.png"
+      }
+    ]
+  },
+  {
+    "id": "saleh_bird",
+    "title": "صالح وعصفور الأمانة",
+    "description": "قصة مشوقة تعلم الأطفال رد الأمانات لأصحابها وأهمية الصدق والأمانة.",
+    "coverImage": "docs/stories/saleh_bird_cover.png",
+    "themeColor": "0xFF065F46",
+    "videoFile": "docs/stories/saleh_bird_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "في يوم من الأيام، كان صالح يلعب بكرته في حديقة الحي، فرأى عصفوراً صغيراً يبني عشه فوق شجرة زيتون مباركة. وفجأة، سقط شيء لامع من يد رجل كان يمر تحت الشجرة.",
+        "image": "docs/stories/saleh_bird_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "ركض صالح بسرعة نحو الشجرة ليجد محفظة صغيرة ممتلئة بالنقود. فكر صالح للحظة: «يا ترى، لمن هذه المحفظة؟ يجب أن أبحث عن صاحبها بسرعة، فالأمانة خلق يحبه الله».",
+        "image": "docs/stories/saleh_bird_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "بدأ صالح يبحث في الأرجاء ويسأل المارة، حتى رأى نفس الرجل يبحث بقلق شديد ووجهه يملأه الحزن. اقترب منه صالح وقال بابتسامة وهدوء: «يا عم، هل فقدت شيئاً؟».",
+        "image": "docs/stories/saleh_bird_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "أخرج صالح المحفظة وسلمها للرجل الذي تهلل وجهه بالفرحة ودعا لصالح بالبركة والصلاح وقال له: «شكراً لأمانتك يا بني». عاد صالح للمنزل سعيداً وعلم أن حفظ الأمانة يجلب رضا الله ومحبة الناس.",
+        "image": "docs/stories/saleh_bird_4.png"
+      }
+    ]
+  },
+  {
+    "id": "noor_clean",
+    "title": "نور والحديقة النظيفة",
+    "description": "قصة ملهمة تعلم الأطفال أهمية النظافة والمحافظة على نظافة الحي والمدرسة.",
+    "coverImage": "docs/stories/noor_clean_cover.png",
+    "themeColor": "0xFF047857",
+    "videoFile": "docs/stories/noor_clean_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "كانت نور طفلة نشيطة تحب اللعب في حديقة الحي بعد العصر. وفي أحد الأيام، لاحظت نور أن بعض المخلفات والأوراق متناثرة على العشب الأخضر الجميل، مما جعل الحديقة تبدو حزينة.",
+        "image": "docs/stories/noor_clean_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "تذكرت نور كلام معلمتها في المدرسة: «النظافة من الإيمان، والبيئة أمانة في أيدينا». فقررت ألا تقف متفرجة، وأحضرت كيسين كبيرين وبدأت بجمع الأوراق والعلب البلاستيكية بهمة ونشاط.",
+        "image": "docs/stories/noor_clean_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "رأى أصدقاء نور في الحي ما تفعله، فأسرعوا لمساعدتها قائلين: «نريد أن تكون حديقتنا الأجمل!». تعاون الجميع بحب، وخلال وقت قصير عادت الحديقة نظيفة تلمع تحت أشعة الشمس الدافئة.",
+        "image": "docs/stories/noor_clean_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "جلست نور مع أصدقائها على المقعد الخشبي مستمتعين بالمنظر الجميل والنسيم العليل. شعرت نور بالفخر والسعادة لأنها بادرت بالنظافة وجعلت مكان لعبهم جميلاً وصحياً للجميع.",
+        "image": "docs/stories/noor_clean_4.png"
+      }
+    ]
+  },
+  {
+    "id": "maryam_toys",
+    "title": "مريم وصندوق الألعاب",
+    "description": "قصة لطيفة تعلم الأطفال متعة مشاركة الألعاب مع الآخرين وإسعاد الأصدقاء.",
+    "coverImage": "docs/stories/maryam_toys_cover.png",
+    "themeColor": "0xFFB45309",
+    "videoFile": "docs/stories/maryam_toys_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "في يوم ميلادها، حصلت مريم على صندوق ألعاب جديد ممتلئ بالدمى الملونة والسيارات الصغيرة. كانت مريم سعيدة جداً بألعابها الجديدة وتضمها بحب وفرح شديد.",
+        "image": "docs/stories/maryam_toys_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "جاءت ابنة جارتهم الصغيرة، فاطمة, لزيارتها. نظرت فاطمة إلى الألعاب الجديدة بشوق متمنية اللعب بها، لكن مريم ترددت وخافت أن تنكسر ألعابها المفضلة، فأخفتها وراء ظهرها.",
+        "image": "docs/stories/maryam_toys_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "لاحظت والدة مريم الموقف، فاقتربت منها وقالت بلطف: «يا مريم، الألعاب تكون أكثر متعة عندما نلعب بها معاً، والكرم يدخل السرور على قلوب أصدقائنا ويجلب لنا رضا الله». فكرت مريم قليلاً وقررت المشاركة.",
+        "image": "docs/stories/maryam_toys_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "فتحت مريم الصندوق وقدمت دمية جميلة لفاطمة قائلة: «دعنا نلعب معاً يا فاطمة!». علت الابتسامة وجه فاطمة، وقضتا وقتاً رائعاً يملأه الضحك. علمت مريم أن المشاركة تضاعف الفرحة وتصنع أجمل الصداقات.",
+        "image": "docs/stories/maryam_toys_4.png"
       }
     ]
   }

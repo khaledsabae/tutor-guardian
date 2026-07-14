@@ -1,7 +1,7 @@
 name: almorabbi
 description: "المربي الذكي — مساعد تربوي إسلامي آمن للأهل (Flutter / Android-first)."
 publish_to: 'none'
-version: 1.0.25+63
+version: 1.0.26+64
 
 environment:
   sdk: ^3.12.1
@@ -67,6 +67,9 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   timezone: ^0.10.0
 
+  # Keep screen on during story reading.
+  wakelock_plus: ^1.2.11
+
   # Firebase
   flame: ^1.16.0
   firebase_core: ^3.13.0
@@ -78,6 +81,8 @@ dependencies:
   google_sign_in: ^6.2.0
   # Phase 0/1 — deep links + whatsapp direct share
   app_links: ^6.3.3
+  page_flip: ^0.2.5+1
+  animated_book_widget: ^1.0.1
 
 dev_dependencies:
   flutter_test:
@@ -101,6 +106,8 @@ flutter:
     # Brand-aligned Lottie celebrations (generated via ops/tools/gen_lottie.py)
     - assets/animations/
     - assets/audio/
+    - assets/video/
+    - assets/video/stories/
 
 # Reuse the existing PWA shield icon — keeps mobile visually consistent
 # with the web client and saves us from designing a new asset. Source

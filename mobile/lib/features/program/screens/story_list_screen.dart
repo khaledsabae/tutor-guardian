@@ -80,7 +80,11 @@ class StoryListScreen extends ConsumerWidget {
                               color: themeColor.withValues(alpha: .1),
                               child: Center(
                                 child: Text(
-                                  story.id == 'hope_sprout' ? '🌱' : '🐱',
+                                  story.id == 'hope_sprout' ? '🌱' : 
+                                  story.id == 'kitten_kindness' ? '🐱' :
+                                  story.id == 'layla_star' ? '⭐' :
+                                  story.id == 'saleh_bird' ? '🐦' :
+                                  story.id == 'noor_clean' ? '🌳' : '🎁',
                                   style: const TextStyle(fontSize: 40),
                                 ),
                               ),

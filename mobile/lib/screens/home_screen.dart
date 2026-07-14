@@ -24,7 +24,7 @@ import '../features/program/screens/badges_screen.dart';
 import '../features/program/screens/path_detail_screen.dart';
 import '../features/program/screens/search_screen.dart';
 import '../features/program/screens/settings_screen.dart';
-import '../features/program/screens/story_list_screen.dart';
+import '../features/program/screens/story_bookshelf_screen.dart';
 import '../features/feedback/feedback_screen.dart';
 import '../features/program/widgets/active_child_chip.dart';
 import '../features/program/widgets/coach_tip_card.dart';
@@ -231,7 +231,7 @@ class _BedtimeStoriesCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(Dt.rCard),
         onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const StoryListScreen()),
+          MaterialPageRoute(builder: (_) => const StoryBookshelfScreen()),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),

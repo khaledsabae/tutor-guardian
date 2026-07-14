@@ -18,7 +18,7 @@ import '../data/onboarding_storage.dart';
 
 /// The app version tag displayed in the what's-new list.
 /// Bump this whenever a new update-splash is warranted.
-const updateSplashVersion = '1.0.25';
+const updateSplashVersion = '1.0.26';
 
 /// Simple state — when set to true, [_AppBootstrapper] knows the update
 /// splash has been dismissed and will render [RootScaffold] instead.
@@ -36,12 +36,12 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
   bool _videoReady = false;
 
   static const _features = [
+    ('📖', 'قصص قبل النوم الجديدة',
+        'أضفنا 4 قصص تربوية مصورة وهادئة جديدة (ليلى، صالح، نور، ومريم) لمساعدة طفلك على الاسترخاء والنوم بسلام.'),
     ('📱', 'QR ويب شير للمراهقين 13-18',
         'شارك "ميزان العادات" مع ابنك المراهق عبر رابط ويب — يدخل من متصفحه بدون تثبيت.'),
     ('👦', 'وضع الطفل 7-12 سنة',
         'خلّي طفلك يسجّل عاداته اليومية بنفسه تحت إشرافك — تقييم ذاتي بدون ضغط.'),
-    ('🎬', 'فيديو ترحيبي جديد',
-        'فيديو تعريف قصير عند أول فتحة يحكي لك رحلة المربي الذكي.'),
     ('🔗', 'ثبات وسرعة',
         'التطبيق بقى يتعامل مع انقطاع الشبكة بسلاسة — بياناتك في أمان.'),
   ];

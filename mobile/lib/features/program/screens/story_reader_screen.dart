@@ -1,10 +1,17 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:just_audio/just_audio.dart';
-import '../../../theme/app_theme.dart';
-import '../../../theme/design_tokens.dart';
-import '../data/story_models.dart';
+import 'package:video_player/video_player.dart';
 
+import '../../../config/app_config.dart';
+import '../data/story_models.dart';
+import '../services/bedtime_audio_service.dart';
+
+/// Immersive bedtime story reader: looping ambient video background,
+/// smooth page-view navigation, parallax illustration, soft text, and a
+/// gentle sleep-mode dimmer. No TTS — the parent reads to the child.
 class StoryReaderScreen extends StatefulWidget {
   final Story story;
 
@@ -15,39 +22,73 @@ class StoryReaderScreen extends StatefulWidget {
 }
 
 class _StoryReaderScreenState extends State<StoryReaderScreen> {
-  final PageController _pageController = PageController();
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  late final PageController _pageController;
+  VideoPlayerController? _bgVideoController;
+
   int _currentPage = 0;
   bool _audioMuted = false;
+  bool _sleepMode = false;
+  bool _audioReady = false;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController();
+    _pageController.addListener(_onPageChanged);
     _initAudio();
+    _initBackgroundVideo();
+    StoryWakeLock.keepAwake();
+  }
+
+  void _onPageChanged() {
+    final page = _pageController.page?.round() ?? 0;
+    if (page != _currentPage) {
+      setState(() => _currentPage = page);
+    }
   }
 
   Future<void> _initAudio() async {
+    await BedtimeAudioService.instance.initialize(
+      assetPath: 'assets/audio/nature_ambient.mp3',
+      initialVolume: 0.18,
+    );
+    await BedtimeAudioService.instance.play();
+    if (mounted) setState(() => _audioReady = true);
+  }
+
+  Future<void> _initBackgroundVideo() async {
     try {
-      await _audioPlayer.setAsset('assets/audio/nature_ambient.mp3');
-      await _audioPlayer.setLoopMode(LoopMode.one);
-      await _audioPlayer.setVolume(0.25); // Calm background level
-      await _audioPlayer.play();
+      if (widget.story.hasVideo) {
+        _bgVideoController = VideoPlayerController.networkUrl(
+          Uri.parse('${AppConfig.apiBaseUrl}/docs/stories/night_loop.mp4'),
+        );
+        await _bgVideoController!.initialize();
+        await _bgVideoController!.setLooping(true);
+        await _bgVideoController!.setVolume(0);
+        await _bgVideoController!.play();
+        if (mounted) setState(() {});
+      }
     } catch (e) {
-      debugPrint('Error playing background audio: $e');
+      debugPrint('Background video error: $e');
     }
   }
 
   @override
   void dispose() {
+    _pageController.removeListener(_onPageChanged);
     _pageController.dispose();
-    _audioPlayer.dispose();
+    BedtimeAudioService.instance.dimForSleep();
+    _bgVideoController?.dispose();
+    StoryWakeLock.allowSleep();
     super.dispose();
   }
 
   void _nextPage() {
-    if (_currentPage < widget.story.pages.length - 1) {
-      _pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
+    final lastPage = widget.story.pages.length;
+    if (_currentPage < lastPage) {
+      _pageController.animateToPage(
+        _currentPage + 1,
+        duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOut,
       );
     }
@@ -55,8 +96,9 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   void _prevPage() {
     if (_currentPage > 0) {
-      _pageController.previousPage(
-        duration: const Duration(milliseconds: 300),
+      _pageController.animateToPage(
+        _currentPage - 1,
+        duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOut,
       );
     }
@@ -65,12 +107,19 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   void _toggleAudio() {
     setState(() {
       _audioMuted = !_audioMuted;
-      if (_audioMuted) {
-        _audioPlayer.pause();
-      } else {
-        _audioPlayer.play();
-      }
+      _audioMuted
+          ? BedtimeAudioService.instance.pause()
+          : BedtimeAudioService.instance.play();
     });
+  }
+
+  void _toggleSleepMode() {
+    setState(() => _sleepMode = !_sleepMode);
+    if (_sleepMode) {
+      BedtimeAudioService.instance.dimForSleep();
+    } else {
+      BedtimeAudioService.instance.setVolume(0.18);
+    }
   }
 
   @override
@@ -79,206 +128,372 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       int.tryParse(widget.story.themeColor) ?? 0xFF0D9488,
     );
     final totalPages = widget.story.pages.length;
+    final pageCount = totalPages + 1; // +1 for end card.
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.story.title),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: Icon(
-              _audioMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
-              color: themeColor,
+      backgroundColor: const Color(0xFF0B3B3B),
+      body: Stack(
+        children: [
+          // Ambient looping video or static illustration.
+          Positioned.fill(
+            child: widget.story.hasVideo &&
+                    _bgVideoController != null &&
+                    _bgVideoController!.value.isInitialized
+                ? VideoPlayer(_bgVideoController!)
+                : (widget.story.coverImage.startsWith('docs/')
+                    ? Image.network(
+                        '${AppConfig.apiBaseUrl}/${widget.story.coverImage}',
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      )
+                    : Image.asset(
+                        widget.story.coverImage,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      )),
+          ),
+          // Dark scrim so text always readable.
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    const Color(0xFF0B3B3B).withValues(alpha: 0.70),
+                    const Color(0xFF0B3B3B).withValues(alpha: 0.88),
+                    const Color(0xFF0B3B3B).withValues(alpha: 0.95),
+                  ],
+                ),
+              ),
             ),
-            onPressed: _toggleAudio,
-            tooltip: 'صوت الطبيعة في الخلفية',
+          ),
+          // Sleep-mode overlay.
+          AnimatedOpacity(
+            opacity: _sleepMode ? 0.55 : 0,
+            duration: const Duration(seconds: 2),
+            child: Container(color: const Color(0xFF001F1F)),
+          ),
+          // Page reader.
+          SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(height: 12),
+                // Top bar.
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      _RoundButton(
+                        icon: Icons.arrow_back,
+                        onTap: () => Navigator.of(context).pop(),
+                      ),
+                      const Spacer(),
+                      _RoundButton(
+                        icon: _audioMuted ? Icons.volume_off : Icons.volume_up,
+                        onTap: _audioReady ? _toggleAudio : null,
+                      ),
+                      const SizedBox(width: 10),
+                      _RoundButton(
+                        icon: Icons.brightness_2,
+                        filled: _sleepMode,
+                        onTap: _toggleSleepMode,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                // Progress.
+                LinearProgressIndicator(
+                  value: (_currentPage + 1) / pageCount,
+                  backgroundColor: Colors.white.withValues(alpha: 0.15),
+                  valueColor: AlwaysStoppedAnimation(themeColor),
+                  minHeight: 4,
+                ).animate().scaleX(),
+                const SizedBox(height: 16),
+                // Story pages.
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      ...widget.story.pages.map(
+                        (page) => _StoryPage(
+                          page: page,
+                          themeColor: themeColor,
+                          allPages: widget.story.pages,
+                        ),
+                      ),
+                      _buildEndCard(themeColor),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                // Bottom controls.
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _RoundButton(
+                        icon: Icons.arrow_back_ios,
+                        onTap: _currentPage > 0 ? _prevPage : null,
+                      ),
+                      Text(
+                        '${min(_currentPage + 1, pageCount)} / $pageCount',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      _RoundButton(
+                        icon: Icons.arrow_forward_ios,
+                        onTap: _currentPage < pageCount - 1
+                            ? _nextPage
+                            : null,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ],
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Linear Progress Indicator
-            LinearProgressIndicator(
-              value: (_currentPage + 1) / totalPages,
+    );
+  }
+
+  Widget _buildEndCard(Color themeColor) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+      padding: const EdgeInsets.all(28),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFDFBF6),
+        borderRadius: BorderRadius.circular(28),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            '🌟',
+            style: TextStyle(fontSize: 72),
+          )
+              .animate(onPlay: (c) => c.repeat())
+              .scaleXY(begin: 0.9, end: 1.1, duration: 1200.ms)
+              .then()
+              .scaleXY(begin: 1.1, end: 0.9, duration: 1200.ms),
+          const SizedBox(height: 20),
+          Text(
+            'أحسنت يا بطل!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
               color: themeColor,
-              backgroundColor: themeColor.withValues(alpha: .15),
-              minHeight: 6,
+              fontSize: 24,
+              fontWeight: FontWeight.w800,
             ),
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: (page) {
-                  setState(() {
-                    _currentPage = page;
-                  });
-                },
-                itemCount: totalPages,
-                itemBuilder: (context, index) {
-                  final page = widget.story.pages[index];
-                  return Column(
-                    children: [
-                      // Page Illustration Image (Top half)
-                      Expanded(
-                        flex: 5,
-                        child: Container(
-                          margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                          decoration: BoxDecoration(
-                            color: themeColor.withValues(alpha: .08),
-                            borderRadius: BorderRadius.circular(24),
-                            border: Border.all(
-                              color: themeColor.withValues(alpha: .15),
-                              width: 2,
-                            ),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(22),
-                            child: Image.asset(
-                              page.image,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                // Fallback beautifully if asset not yet generated/added.
-                                return Container(
-                                  color: themeColor.withValues(alpha: .05),
-                                  padding: const EdgeInsets.all(24),
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          widget.story.id == 'hope_sprout' ? '🌱' : '🐱',
-                                          style: const TextStyle(fontSize: 64),
-                                        ).animate(onPlay: (c) => c.repeat()).shake(
-                                              duration: const Duration(seconds: 2),
-                                            ),
-                                        const SizedBox(height: 16),
-                                        Text(
-                                          'الصفحة ${index + 1}',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                            color: themeColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Story Narrative Text (Bottom half)
-                      Expanded(
-                        flex: 4,
-                        child: Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          padding: const EdgeInsets.all(24),
-                          decoration: BoxDecoration(
-                            color: AppTheme.surface,
-                            borderRadius: BorderRadius.circular(24),
-                            boxShadow: Dt.cardShadow,
-                            border: Border.all(
-                              color: Colors.transparent,
-                              width: 0,
-                            ),
-                          ),
-                          child: SingleChildScrollView(
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Text(
-                                page.text,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.7,
-                                  color: AppTheme.textPrimary,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'استرخِ الآن واغمض عينيك، فالأحلام الجميلة تنتظرك.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xFF4A4A4A),
+              fontSize: 16,
+              height: 1.6,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 24),
+          FilledButton.icon(
+            onPressed: () => Navigator.of(context).pop(),
+            icon: const Icon(Icons.check),
+            label: const Text('أغلق القصة'),
+            style: FilledButton.styleFrom(
+              backgroundColor: themeColor,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 28,
+                vertical: 14,
               ),
             ),
-            // Bottom Controls Bar
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Previous Button
-                  Opacity(
-                    opacity: _currentPage > 0 ? 1.0 : 0.0,
-                    child: IgnorePointer(
-                      ignoring: _currentPage == 0,
-                      child: IconButton.filledTonal(
-                        onPressed: _prevPage,
-                        icon: const Icon(Icons.arrow_back_rounded),
-                        style: IconButton.styleFrom(
-                          padding: const EdgeInsets.all(14),
-                          foregroundColor: themeColor,
-                          backgroundColor: themeColor.withValues(alpha: .1),
-                        ),
-                      ),
-                    ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StoryPage extends StatelessWidget {
+  const _StoryPage({
+    required this.page,
+    required this.themeColor,
+    required this.allPages,
+  });
+
+  final StoryPage page;
+  final Color themeColor;
+  final List<StoryPage> allPages;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      child: Column(
+        children: [
+          // Parallax illustration card.
+          Expanded(
+            flex: 5,
+            child: _ParallaxImage(
+              image: page.image,
+              themeColor: themeColor,
+              emoji: allPages.firstWhere((p) => p.pageNumber == 1).image.contains('hope')
+                  ? '🌱'
+                  : '🐱',
+            ),
+          ),
+          const SizedBox(height: 12),
+          // Text card with a subtle "page paper" texture.
+          Expanded(
+            flex: 4,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(22),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFDFBF6),
+                borderRadius: BorderRadius.circular(26),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
                   ),
-                  // Page Indicator text
-                  Text(
-                    '${_currentPage + 1} / $totalPages',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                      color: themeColor,
-                    ),
-                  ),
-                  // Next / Done Button
-                  _currentPage == totalPages - 1
-                      ? FilledButton.icon(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: const Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Text('أحسنت! تمت قراءة القصة بنجاح 🎉'),
-                                ),
-                                backgroundColor: themeColor,
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.check_circle_outline_rounded),
-                          label: const Text('أنهيت القصة'),
-                          style: FilledButton.styleFrom(
-                            backgroundColor: themeColor,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 14,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                        )
-                      : IconButton.filled(
-                          onPressed: _nextPage,
-                          icon: const Icon(Icons.arrow_forward_rounded),
-                          style: IconButton.styleFrom(
-                            padding: const EdgeInsets.all(14),
-                            backgroundColor: themeColor,
-                            foregroundColor: Colors.white,
-                          ),
-                        ),
                 ],
               ),
+              child: SingleChildScrollView(
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Text(
+                    page.text,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      height: 1.85,
+                      color: Color(0xFF2D2D2D),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ParallaxImage extends StatelessWidget {
+  const _ParallaxImage({
+    required this.image,
+    required this.themeColor,
+    required this.emoji,
+  });
+  final String image;
+  final Color themeColor;
+  final String emoji;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: 'story-illustration-$image',
+      child: Container(
+        decoration: BoxDecoration(
+          color: themeColor.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(28),
+          boxShadow: [
+            BoxShadow(
+              color: themeColor.withValues(alpha: 0.25),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
             ),
           ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(28),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              image.startsWith('docs/')
+                  ? Image.network(
+                      '${AppConfig.apiBaseUrl}/$image',
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Center(
+                        child: Text(
+                          emoji,
+                          style: const TextStyle(fontSize: 120),
+                        ),
+                      ),
+                    )
+                  : Image.asset(
+                      image,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Center(
+                        child: Text(
+                          emoji,
+                          style: const TextStyle(fontSize: 120),
+                        ),
+                      ),
+                    ),
+              // Soft vignette around the illustration.
+              Container(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withValues(alpha: 0.22),
+                    ],
+                    stops: const [0.75, 1.0],
+                    radius: 1.1,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _RoundButton extends StatelessWidget {
+  const _RoundButton({
+    required this.icon,
+    required this.onTap,
+    this.filled = false,
+  });
+
+  final IconData icon;
+  final VoidCallback? onTap;
+  final bool filled;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: filled
+          ? const Color(0xFFE0D5C1)
+          : Colors.white.withValues(alpha: 0.14),
+      borderRadius: BorderRadius.circular(30),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(30),
+        onTap: onTap,
+        child: Container(
+          width: 44,
+          height: 44,
+          alignment: Alignment.center,
+          child: Icon(
+            icon,
+            color: filled ? const Color(0xFF0B3B3B) : Colors.white,
+            size: 20,
+          ),
         ),
       ),
     );
