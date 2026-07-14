@@ -69,6 +69,10 @@ android {
             // (Re-enable if you want a fat AAB; not needed for Play.)
             isMinifyEnabled = true
             isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }

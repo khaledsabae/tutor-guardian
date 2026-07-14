@@ -156,3 +156,13 @@ def test_domain_field_optional(authed_client):
               message_text="ابنتي خجولة جداً")
     assert r.status_code == 200
     assert r.json().get("domain")  # auto-detected domain must be non-empty
+
+
+def test_app_config_endpoint_is_public(client):
+    """The /api/app-config endpoint is public and returns minimum build info."""
+    r = client.get("/api/app-config")
+    assert r.status_code == 200
+    data = r.json()
+    assert "minimum_build_number" in data
+    assert "store_url" in data
+

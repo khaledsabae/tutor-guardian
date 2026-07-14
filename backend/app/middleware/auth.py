@@ -21,6 +21,7 @@ _CHILD_MODE_PREFIX = "/api/value-tracking/child-mode/"
 # Endpoints that don't require authentication
 _PUBLIC_PATHS = {
     "/api/health",
+    "/api/app-config",
     "/api/chat/sessions",  # POST (create) is public
     "/api/docs",
     "/api/openapi.json",

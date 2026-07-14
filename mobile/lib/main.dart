@@ -8,10 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'api/tg_client.dart';
+import 'state/chat_notifier.dart';
+import 'widgets/ui/bouncy_button.dart';
 import 'config/app_config.dart';
 import 'features/identity/identity_service.dart';
 import 'features/onboarding/providers/onboarding_providers.dart';
@@ -133,10 +137,109 @@ class TutorGuardianApp extends StatelessWidget {
   }
 }
 
+final appConfigProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+  final client = ref.watch(tgClientProvider);
+  return await client.fetchAppConfig();
+});
+
+final packageInfoProvider = FutureProvider<PackageInfo>((ref) async {
+  return await PackageInfo.fromPlatform();
+});
+
+class ForceUpdateScreen extends ConsumerWidget {
+  final String storeUrl;
+  const ForceUpdateScreen({super.key, required this.storeUrl});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                '🚀',
+                style: TextStyle(fontSize: 72),
+              ).animate().scale(duration: 400.ms),
+              const SizedBox(height: 24),
+              const Text(
+                'تحديث جديد وهام متاح!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  color: AppTheme.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'لقد قمنا بإضافة ميزات رائعة وإصلاحات هامة لتحسين تجربتك وضمان استقرار التطبيق. يرجى التحديث للمتابعة.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: AppTheme.textSecondary,
+                  height: 1.5,
+                ),
+              ),
+              const SizedBox(height: 32),
+              BouncyButton(
+                label: 'تحديث التطبيق الآن 🔗',
+                color: Dt.primary,
+                onTap: () async {
+                  final uri = Uri.parse(storeUrl);
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Resolves the cold-boot async chain: prefs → onboarding flag →
 /// active child re-hydration → push the right screen.
 class _AppBootstrapper extends ConsumerWidget {
   const _AppBootstrapper();
+
+  Widget _buildNormalApp(WidgetRef ref, dynamic childMode) {
+    if (childMode.active) {
+      return const HabitChildModeScreen();
+    }
+    // First, sync the onboardingCompletedProvider from disk.
+    final completed = ref.watch(onboardingCompletedProvider);
+    if (!completed) {
+      return const OnboardingScreen();
+    }
+    // Re-hydrate active child id from disk so all the existing
+    // `ref.watch(activeChildIdProvider)` consumers pick it up.
+    final profile = ref.watch(activeChildProfileProvider);
+    if (profile != null) {
+      // Push the id into the runtime provider used everywhere.
+      Future(() {
+        if (ref.read(activeChildIdProvider) != profile.id) {
+          ref.read(activeChildIdProvider.notifier).state = profile.id;
+        }
+      });
+    }
+    // Also restore child mode from secure storage if a token exists.
+    Future(() async {
+      await ref.read(childModeProvider.notifier).restore();
+    });
+    // If the user just updated the app, show the what's-new splash
+    // once before entering the main screen.
+    ref.watch(updateSplashDismissedProvider);
+    final seenVersion = ref.read(onboardingStorageProvider).lastSeenVersion;
+    if (seenVersion != updateSplashVersion) {
+      return const UpdateSplashScreen();
+    }
+    return const RootScaffold();
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -144,41 +247,29 @@ class _AppBootstrapper extends ConsumerWidget {
     final childMode = ref.watch(childModeProvider);
     return asyncPrefs.when(
       data: (_) {
-        if (childMode.active) {
-          return const HabitChildModeScreen();
-        }
-        // First, sync the onboardingCompletedProvider from disk.
-        final completed = ref.watch(onboardingCompletedProvider);
-        if (!completed) {
-          return const OnboardingScreen();
-        }
-        // Re-hydrate active child id from disk so all the existing
-        // `ref.watch(activeChildIdProvider)` consumers pick it up.
-        final profile = ref.watch(activeChildProfileProvider);
-        if (profile != null) {
-          // Push the id into the runtime provider used everywhere.
-          // Deferred out of build(): Riverpod forbids modifying a provider
-          // during the build phase. The guard prevents a rebuild loop.
-          Future(() {
-            if (ref.read(activeChildIdProvider) != profile.id) {
-              ref.read(activeChildIdProvider.notifier).state = profile.id;
-            }
-          });
-        }
-        // Also restore child mode from secure storage if a token exists.
-        Future(() async {
-          await ref.read(childModeProvider.notifier).restore();
-        });
-        // If the user just updated the app, show the what's-new splash
-        // once before entering the main screen.  The splash flips the
-        // provider below when dismissed, triggering a rebuild into the
-        // normal [RootScaffold].
-        ref.watch(updateSplashDismissedProvider);
-        final seenVersion = ref.read(onboardingStorageProvider).lastSeenVersion;
-        if (seenVersion != updateSplashVersion) {
-          return const UpdateSplashScreen();
-        }
-        return const RootScaffold();
+        final configAsync = ref.watch(appConfigProvider);
+        return configAsync.when(
+          data: (config) {
+            final minBuild = config['minimum_build_number'] as int? ?? 0;
+            final storeUrl = config['store_url'] as String? ??
+                'https://play.google.com/store/apps/details?id=com.alsaba.almorabbi';
+
+            final packageInfoAsync = ref.watch(packageInfoProvider);
+            return packageInfoAsync.when(
+              data: (packageInfo) {
+                final currentBuild = int.tryParse(packageInfo.buildNumber) ?? 0;
+                if (currentBuild < minBuild) {
+                  return ForceUpdateScreen(storeUrl: storeUrl);
+                }
+                return _buildNormalApp(ref, childMode);
+              },
+              loading: () => const _SplashScreen(),
+              error: (_, __) => _buildNormalApp(ref, childMode),
+            );
+          },
+          loading: () => const _SplashScreen(),
+          error: (_, __) => _buildNormalApp(ref, childMode),
+        );
       },
       loading: () => const _SplashScreen(),
       error: (e, _) => _BootErrorScreen(error: '$e'),

@@ -656,6 +656,17 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  /// `GET /api/app-config` (public) → `{minimum_build_number, store_url}`.
+  Future<Map<String, dynamic>> fetchAppConfig() async {
+    final resp = await _http
+        .get(Uri.parse('$_baseUrl/api/app-config'))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   /// `POST /api/referral/claim` (authed) → `{ok, already_claimed,
   /// reward_coins}`. Records this device as referred by [code].
   Future<Map<String, dynamic>> claimReferral(String code) async {
