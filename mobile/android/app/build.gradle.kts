@@ -89,4 +89,7 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    // Required by Activity.enableEdgeToEdge() for backward-compatible
+    // edge-to-edge rendering across Android versions.
+    implementation("androidx.activity:activity:1.9.3")
 }
