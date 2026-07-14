@@ -22,6 +22,7 @@ _CHILD_MODE_PREFIX = "/api/value-tracking/child-mode/"
 _PUBLIC_PATHS = {
     "/api/health",
     "/api/app-config",
+    "/health",
     "/api/chat/sessions",  # POST (create) is public
     "/api/docs",
     "/api/openapi.json",

@@ -9,6 +9,11 @@ async def health_check():
     return {"status": "ok"}
 
 
+@router.get("/api/health")
+async def api_health_check():
+    return {"status": "ok"}
+
+
 @router.get("/api/app-config")
 async def get_app_config():
     return {
