@@ -14,6 +14,8 @@ import '../onboarding/providers/onboarding_providers.dart';
 import 'coins_providers.dart';
 import 'coins_service.dart';
 
+import '../referral/invite_screen.dart';
+
 const _themes = <(String, String, String)>[
   ('honesty', '🤝', 'الصدق والأمانة'),
   ('courage', '🦁', 'الشجاعة'),
@@ -43,8 +45,32 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
     if (theme == null) return;
     final coins = ref.read(coinsProvider);
     if (coins.balance < CoinsService.storyCost) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('رصيدك من العملات لا يكفي.')),
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('عذراً، رصيدك لا يكفي 🪙'),
+          content: Text(
+            'تحتاج إلى ${CoinsService.storyCost} عملة لتأليف قصة مخصصة لطفلك. '
+            'شارك التطبيق مع أصدقائك واحصل على ${CoinsService.referralReward} عملة مجاناً عن كل صديق ينضم إلينا! 🌿',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('إلغاء'),
+            ),
+            FilledButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const InviteScreen()),
+                );
+              },
+              style: FilledButton.styleFrom(backgroundColor: AppTheme.primary),
+              child: Text('ادعُ صديقاً (+${CoinsService.referralReward} 🪙)'),
+            ),
+          ],
+        ),
       );
       return;
     }

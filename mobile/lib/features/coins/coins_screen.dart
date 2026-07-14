@@ -16,6 +16,7 @@ import 'coins_service.dart';
 import 'story_screen.dart';
 import 'exclusive_badges_screen.dart';
 import 'covenant_screen.dart';
+import '../referral/invite_screen.dart';
 
 class CoinsScreen extends ConsumerWidget {
   const CoinsScreen({super.key});
@@ -117,6 +118,14 @@ class CoinsScreen extends ConsumerWidget {
             title: 'فتح إنجاز جديد',
             detail: '+${CoinsService.badgeReward} عملة لكل شارة',
           ),
+          _EarnRow(
+            emoji: '🤝',
+            title: 'دعوة صديق للانضمام',
+            detail: '+${CoinsService.referralReward} عملة لكل صديق يحمل التطبيق',
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const InviteScreen()),
+            ),
+          ),
           const SizedBox(height: 24),
           Text(
             'استبدل عملاتك 🎁',
@@ -206,15 +215,20 @@ class _RedeemRow extends StatelessWidget {
 }
 
 class _EarnRow extends StatelessWidget {
-  const _EarnRow(
-      {required this.emoji, required this.title, required this.detail});
+  const _EarnRow({
+    required this.emoji,
+    required this.title,
+    required this.detail,
+    this.onTap,
+  });
   final String emoji;
   final String title;
   final String detail;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final card = Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -238,8 +252,18 @@ class _EarnRow extends StatelessWidget {
               ],
             ),
           ),
+          if (onTap != null)
+            const Icon(Icons.chevron_left, color: AppTheme.primary),
         ],
       ),
     );
+
+    if (onTap != null) {
+      return GestureDetector(
+        onTap: onTap,
+        child: card,
+      );
+    }
+    return card;
   }
 }

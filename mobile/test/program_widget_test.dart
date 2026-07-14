@@ -18,6 +18,7 @@ import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/program/screens/lesson_screen.dart';
 import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
 import 'package:almorabbi/features/program/screens/paths_screen.dart';
+import 'package:almorabbi/features/onboarding/screens/update_splash_screen.dart';
 import 'package:almorabbi/main.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 
@@ -436,7 +437,7 @@ void main() {
       final storage = OnboardingStorage(prefs);
       await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
       await storage.markOnboardingCompleted();
-      await storage.markUpdateSeen('1.0.25'); // skip the update splash
+      await storage.markUpdateSeen(updateSplashVersion); // skip the update splash
 
       final container = ProviderContainer(
         overrides: [
