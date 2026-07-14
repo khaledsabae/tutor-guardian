@@ -90,6 +90,16 @@ def my_referral(request: Request) -> dict:
     }
 
 
+def _get_client_ip(request: Request) -> str:
+    cf_ip = request.headers.get("cf-connecting-ip")
+    if cf_ip:
+        return cf_ip
+    x_forwarded = request.headers.get("x-forwarded-for")
+    if x_forwarded:
+        return x_forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
 @router.post("/claim")
 def claim_referral(body: ClaimRequest, request: Request) -> dict:
     """Record that this (new) device was referred by `body.code`.
@@ -101,6 +111,26 @@ def claim_referral(body: ClaimRequest, request: Request) -> dict:
     code = body.code.strip().upper()
     conn = get_conn()
     try:
+        # Check if already claimed first to avoid fingerprinting for already claimed devices
+        already = conn.execute(
+            "SELECT 1 FROM referrals WHERE referred_device = ?", (device_id,)
+        ).fetchone()
+        if already:
+            return {"ok": False, "already_claimed": True, "reward_coins": 0}
+
+        if code == "AUTO":
+            ip = _get_client_ip(request)
+            click = conn.execute(
+                "SELECT code FROM referral_clicks "
+                "WHERE ip = ? AND clicked_at > datetime('now', '-24 hours') "
+                "ORDER BY clicked_at DESC LIMIT 1",
+                (ip,)
+            ).fetchone()
+            if click:
+                code = click["code"]
+            else:
+                return {"ok": False, "already_claimed": False, "reward_coins": 0, "detail": "no_fingerprint_match"}
+
         owner = conn.execute(
             "SELECT device_id FROM referral_codes WHERE code = ?", (code,)
         ).fetchone()
@@ -109,11 +139,7 @@ def claim_referral(body: ClaimRequest, request: Request) -> dict:
         referrer = owner["device_id"]
         if referrer == device_id:
             raise HTTPException(status_code=400, detail="لا يمكن إحالة نفسك")
-        already = conn.execute(
-            "SELECT 1 FROM referrals WHERE referred_device = ?", (device_id,)
-        ).fetchone()
-        if already:
-            return {"ok": False, "already_claimed": True, "reward_coins": 0}
+
         conn.execute(
             "INSERT INTO referrals (referrer_device, referred_device, code) "
             "VALUES (?, ?, ?)",

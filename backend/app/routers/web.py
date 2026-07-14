@@ -24,8 +24,19 @@ from fastapi import APIRouter, Query, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse, Response
 
 from app import curriculum_loader as cl
+from app.db.init_db import get_conn
 
 router = APIRouter(tags=["web"])
+
+
+def _get_client_ip(request: Request) -> str:
+    cf_ip = request.headers.get("cf-connecting-ip")
+    if cf_ip:
+        return cf_ip
+    x_forwarded = request.headers.get("x-forwarded-for")
+    if x_forwarded:
+        return x_forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
 
 _PLAY = "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
 _TEAL = "#01696F"
@@ -230,6 +241,21 @@ def landing(request: Request, ref: str | None = Query(None)) -> HTMLResponse:
         html_content = f.read()
         
     install_url = _install_url(ref)
+    if ref and _CODE_RE.match(ref):
+        ip = _get_client_ip(request)
+        ua = request.headers.get("user-agent", "")
+        conn = get_conn()
+        try:
+            conn.execute(
+                "INSERT INTO referral_clicks (ip, user_agent, code) VALUES (?, ?, ?)",
+                (ip, ua, ref.upper()),
+            )
+            conn.commit()
+        except Exception:  # noqa: BLE001
+            pass
+        finally:
+            conn.close()
+
     og_image = _abs(str(request.url), "/ui/assets/banner.png")
     canonical = str(request.url)
     

@@ -59,10 +59,13 @@ class ReferralService {
       final match = _codeRe.firstMatch(raw);
       if (match != null) {
         await claimManual(match.group(1)!);
+        return;
       }
     } catch (_) {
       // not a Play install / referrer unavailable — ignore silently
     }
+    // Fallback: Try AUTO claim via web IP fingerprinting
+    await claimManual("AUTO");
   }
 
   /// Claim a referral code (from install referrer or pasted by the user).

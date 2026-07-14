@@ -148,7 +148,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 18
+SCHEMA_VERSION = 19
 
 
 def db_path() -> Path:
@@ -296,6 +296,7 @@ def init_db() -> None:
     _ensure_habit_templates_table(conn)
     _ensure_habits_value_audit_columns(conn)
     _ensure_user_backups_table(conn)
+    _ensure_referral_clicks_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -527,6 +528,30 @@ def _ensure_child_challenges_table(conn: sqlite3.Connection) -> None:
             DROP TABLE child_challenges_old;
             """
         )
+
+
+_CREATE_REFERRAL_CLICKS: str = """
+CREATE TABLE IF NOT EXISTS referral_clicks (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    ip         TEXT NOT NULL,
+    user_agent TEXT,
+    code       TEXT NOT NULL,
+    clicked_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS ix_referral_clicks_ip
+    ON referral_clicks (ip, clicked_at);
+"""
+
+
+def _ensure_referral_clicks_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the referral_clicks table."""
+    try:
+        cur = conn.execute("PRAGMA table_info(referral_clicks)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_REFERRAL_CLICKS)
 
 
 def _ensure_referrals_table(conn: sqlite3.Connection) -> None:
