@@ -976,6 +976,18 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  Future<Map<String, dynamic>> fetchParentingInsights(int childId) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/insights/parenting')
+        .replace(queryParameters: {'child_id': '$childId'});
+    final resp = await _http
+        .get(uri, headers: _authHeaders(token))
+        .timeout(const Duration(seconds: 35));
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   // ── Value tracking — ميزان العادات ────────────────────────────────────
 
   Future<Map<String, dynamic>> fetchTodayHabits(int childId) async {

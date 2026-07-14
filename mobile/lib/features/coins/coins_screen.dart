@@ -15,6 +15,7 @@ import 'coins_providers.dart';
 import 'coins_service.dart';
 import 'story_screen.dart';
 import 'exclusive_badges_screen.dart';
+import 'covenant_screen.dart';
 
 class CoinsScreen extends ConsumerWidget {
   const CoinsScreen({super.key});
@@ -131,6 +132,14 @@ class CoinsScreen extends ConsumerWidget {
             detail: 'قصة قصيرة بطلها طفلك تعلّم قيمة تختارها',
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const StoryScreen()),
+            ),
+          ),
+          _RedeemRow(
+            emoji: '📜',
+            title: 'عهد المكافآت الواقعية',
+            detail: 'استبدل العملات بمكافآت حقيقية متفق عليها مع أهلك',
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const CovenantScreen()),
             ),
           ),
           _RedeemRow(

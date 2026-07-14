@@ -129,4 +129,12 @@ class CoinsService {
     await p.setStringList(_kOwnedBadges, owned.toList());
     return true;
   }
+
+  /// Add coins to the balance. Returns the new balance.
+  Future<int> earn(int amount) async {
+    final p = await SharedPreferences.getInstance();
+    final balance = (p.getInt(_kBalance) ?? 0) + amount;
+    await p.setInt(_kBalance, balance);
+    return balance;
+  }
 }

@@ -60,7 +60,7 @@ class RoutineEventCreate(BaseModel):
     started_at: str
     ended_at: str | None = None
     feed_type: str | None = None
-    amount_ml: int | None = Field(default=None, ge=0, le=1000)
+    amount_ml: int | None = Field(default=None, ge=1, le=1000)
     side: str | None = None
     diaper_type: str | None = None
     notes: str | None = Field(default=None, max_length=500)
@@ -120,6 +120,80 @@ class RoutineEventCreate(BaseModel):
     @field_validator("notes")
     @classmethod
     def _validate_notes(cls, v: str | None) -> str | None:
+        return _no_medical_notes(v)
+
+
+class RoutineEventUpdate(BaseModel):
+    """Partial update for an existing routine event. All fields optional."""
+
+    event_type: str | None = None
+    started_at: str | None = None
+    ended_at: str | None = None
+    feed_type: str | None = None
+    amount_ml: int | None = Field(default=None, ge=1, le=1000)
+    side: str | None = None
+    diaper_type: str | None = None
+    notes: str | None = Field(default=None, max_length=500)
+    source: str | None = None
+
+    @field_validator("event_type")
+    @classmethod
+    def _validate_event_type_update(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        v = v.strip().lower()
+        if v not in EVENT_TYPES:
+            raise ValueError(f"نوع الحدث غير صالح. القيم المسموحة: {sorted(EVENT_TYPES)}")
+        return v
+
+    @field_validator("started_at", "ended_at")
+    @classmethod
+    def _validate_iso_update(cls, v: str | None) -> str | None:
+        return _parse_iso(v)
+
+    @field_validator("feed_type")
+    @classmethod
+    def _validate_feed_type_update(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        v = v.strip().lower()
+        if v not in FEED_TYPES:
+            raise ValueError(f"نوع الرضاعة غير صالح. القيم المسموحة: {sorted(FEED_TYPES)}")
+        return v
+
+    @field_validator("side")
+    @classmethod
+    def _validate_side_update(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        v = v.strip().lower()
+        if v not in SIDES:
+            raise ValueError(f"الجانب غير صالح. القيم المسموحة: {sorted(SIDES)}")
+        return v
+
+    @field_validator("diaper_type")
+    @classmethod
+    def _validate_diaper_type_update(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        v = v.strip().lower()
+        if v not in DIAPER_TYPES:
+            raise ValueError(f"نوع الحفاظ غير صالح. القيم المسموحة: {sorted(DIAPER_TYPES)}")
+        return v
+
+    @field_validator("source")
+    @classmethod
+    def _validate_source_update(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        v = v.strip().lower()
+        if v not in SOURCES:
+            raise ValueError(f"المصدر غير صالح. القيم المسموحة: {sorted(SOURCES)}")
+        return v
+
+    @field_validator("notes")
+    @classmethod
+    def _validate_notes_update(cls, v: str | None) -> str | None:
         return _no_medical_notes(v)
 
 

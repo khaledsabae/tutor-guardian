@@ -1,0 +1,10 @@
+- [ ] Extend Coins system
+  - [ ] Add `earn` to `coins_service.dart`
+  - [ ] Expose `earn` in `coins_providers.dart`
+- [ ] Create `bedtime_routine_screen.dart`
+  - [ ] Implement UI design with dark gradient, stars, and ambient music
+  - [ ] Add interactive Bedtime Adhkar counting logic
+  - [ ] Add star rise animations on touch
+  - [ ] Add coin rewards (5 coins) and integration with Riverpod
+- [ ] Integrate with bookshelf (`story_bookshelf_screen.dart`)
+- [ ] Run flutter analyze to verify compile status

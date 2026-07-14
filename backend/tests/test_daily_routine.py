@@ -88,15 +88,54 @@ def test_update_event(client):
     created = client.post(
         "/api/daily-routine/events",
         params={"child_id": cid},
-        json={"event_type": "sleep", "started_at": iso, "ended_at": iso},
+        json={"event_type": "sleep", "started_at": iso, "ended_at": iso, "notes": "initial note"},
     ).json()
     event_id = created["id"]
+
+    # True partial update: only send the field we want to change
+    r = client.patch(
+        f"/api/daily-routine/events/{event_id}",
+        json={"amount_ml": 180},
+    )
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["amount_ml"] == 180
+    assert body["event_type"] == "sleep"  # Preserved
+    assert body["started_at"] == iso  # Preserved
+    assert body["ended_at"] == iso  # Preserved
+    assert body["notes"] == "initial note"  # Preserved
+
+    # Update event type and clear ended_at with explicit null
     r = client.patch(
         f"/api/daily-routine/events/{event_id}",
         json={"event_type": "diaper", "started_at": iso, "diaper_type": "wet"},
     )
     assert r.status_code == 200
-    assert r.json()["event_type"] == "diaper"
+    body = r.json()
+    assert body["event_type"] == "diaper"
+    assert body["diaper_type"] == "wet"
+    assert body["amount_ml"] == 180  # Preserved
+    assert body["notes"] == "initial note"  # Preserved
+
+    # Clear ended_at by sending explicit null
+    r2 = client.patch(
+        f"/api/daily-routine/events/{event_id}",
+        json={"ended_at": None},
+    )
+    assert r2.status_code == 200, r2.text
+    assert r2.json()["ended_at"] is None  # Cleared!
+    assert r2.json()["notes"] == "initial note"  # Preserved!
+
+
+def test_rejects_zero_amount_ml(client):
+    cid = _create_child(client)
+    iso = datetime.now(timezone.utc).isoformat()
+    r = client.post(
+        "/api/daily-routine/events",
+        params={"child_id": cid},
+        json={"event_type": "feed", "started_at": iso, "amount_ml": 0},
+    )
+    assert r.status_code == 422
 
 
 def test_delete_event(client):

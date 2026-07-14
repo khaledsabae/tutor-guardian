@@ -27,6 +27,7 @@ import '../features/program/screens/settings_screen.dart';
 import '../features/program/screens/story_bookshelf_screen.dart';
 import '../features/feedback/feedback_screen.dart';
 import '../features/program/widgets/active_child_chip.dart';
+import '../features/routine/screens/parenting_insights_screen.dart';
 import '../features/program/widgets/coach_tip_card.dart';
 import '../features/journey/widgets/child_journey_card.dart';
 import '../features/coins/coins_providers.dart';
@@ -210,6 +211,8 @@ class HomeScreen extends ConsumerWidget {
           const ChildJourneyCard(),
           const SizedBox(height: 20),
           _QuizCard(),
+          const SizedBox(height: 20),
+          const _ParentingInsightsCard(),
           const SizedBox(height: 20),
           _AskAssistantCard(onTap: () => onGoToTab(3)),
           const SizedBox(height: 20),
@@ -600,6 +603,62 @@ class _AskAssistantCard extends StatelessWidget {
                   SizedBox(height: 2),
                   Text(
                     'اسأل المربي الذكي الآن',
+                    style: TextStyle(
+                      color: AppTheme.textSecondary,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_left, color: AppTheme.textMuted),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ParentingInsightsCard extends StatelessWidget {
+  const _ParentingInsightsCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return BouncyTap(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const ParentingInsightsScreen(),
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppTheme.surface,
+          borderRadius: BorderRadius.circular(Dt.rCard),
+          boxShadow: Dt.cardShadow,
+        ),
+        child: const Row(
+          children: [
+            EmojiHero(
+              emoji: '🧠',
+              size: 48,
+              background: Color(0x1A6366F1),
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'تحليلات وتوصيات تربوية ذكية',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    'اطلع على تحليلات عادات طفلك ونشاطه',
                     style: TextStyle(
                       color: AppTheme.textSecondary,
                       fontSize: 13,

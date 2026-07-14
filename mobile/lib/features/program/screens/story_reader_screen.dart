@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:page_flip/page_flip.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../config/app_config.dart';
@@ -10,7 +11,7 @@ import '../data/story_models.dart';
 import '../services/bedtime_audio_service.dart';
 
 /// Immersive bedtime story reader: looping ambient video background,
-/// smooth page-view navigation, parallax illustration, soft text, and a
+/// smooth 3D page-flip navigation, parallax illustration, soft text, and a
 /// gentle sleep-mode dimmer. No TTS — the parent reads to the child.
 class StoryReaderScreen extends StatefulWidget {
   final Story story;
@@ -22,29 +23,22 @@ class StoryReaderScreen extends StatefulWidget {
 }
 
 class _StoryReaderScreenState extends State<StoryReaderScreen> {
-  late final PageController _pageController;
+  late final PageFlipController _pageFlipController;
   VideoPlayerController? _bgVideoController;
 
   int _currentPage = 0;
   bool _audioMuted = false;
   bool _sleepMode = false;
   bool _audioReady = false;
+  double _fontSizeMultiplier = 1.0;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
-    _pageController.addListener(_onPageChanged);
+    _pageFlipController = PageFlipController();
     _initAudio();
     _initBackgroundVideo();
     StoryWakeLock.keepAwake();
-  }
-
-  void _onPageChanged() {
-    final page = _pageController.page?.round() ?? 0;
-    if (page != _currentPage) {
-      setState(() => _currentPage = page);
-    }
   }
 
   Future<void> _initAudio() async {
@@ -75,8 +69,6 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   @override
   void dispose() {
-    _pageController.removeListener(_onPageChanged);
-    _pageController.dispose();
     BedtimeAudioService.instance.dimForSleep();
     _bgVideoController?.dispose();
     StoryWakeLock.allowSleep();
@@ -84,24 +76,11 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   }
 
   void _nextPage() {
-    final lastPage = widget.story.pages.length;
-    if (_currentPage < lastPage) {
-      _pageController.animateToPage(
-        _currentPage + 1,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeInOut,
-      );
-    }
+    _pageFlipController.nextPage();
   }
 
   void _prevPage() {
-    if (_currentPage > 0) {
-      _pageController.animateToPage(
-        _currentPage - 1,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeInOut,
-      );
-    }
+    _pageFlipController.previousPage();
   }
 
   void _toggleAudio() {
@@ -174,6 +153,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             duration: const Duration(seconds: 2),
             child: Container(color: const Color(0xFF001F1F)),
           ),
+          // Cozy ambient fireflies in background
+          const Positioned.fill(
+            child: _FloatingFireflies(),
+          ),
           // Page reader.
           SafeArea(
             child: Column(
@@ -189,6 +172,22 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                         onTap: () => Navigator.of(context).pop(),
                       ),
                       const Spacer(),
+                      // Font size cycle button
+                      _RoundButton(
+                        icon: Icons.text_fields,
+                        onTap: () {
+                          setState(() {
+                            if (_fontSizeMultiplier == 1.0) {
+                              _fontSizeMultiplier = 1.25;
+                            } else if (_fontSizeMultiplier == 1.25) {
+                              _fontSizeMultiplier = 1.5;
+                            } else {
+                              _fontSizeMultiplier = 1.0;
+                            }
+                          });
+                        },
+                      ),
+                      const SizedBox(width: 10),
                       _RoundButton(
                         icon: _audioMuted ? Icons.volume_off : Icons.volume_up,
                         onTap: _audioReady ? _toggleAudio : null,
@@ -213,15 +212,20 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                 const SizedBox(height: 16),
                 // Story pages.
                 Expanded(
-                  child: PageView(
-                    controller: _pageController,
-                    physics: const BouncingScrollPhysics(),
+                  child: PageFlipWidget(
+                    controller: _pageFlipController,
+                    backgroundColor: Colors.transparent,
+                    isRightSwipe: true,
+                    onPageFlipped: (pageIndex) {
+                      setState(() => _currentPage = pageIndex);
+                    },
                     children: [
                       ...widget.story.pages.map(
                         (page) => _StoryPage(
                           page: page,
                           themeColor: themeColor,
                           allPages: widget.story.pages,
+                          fontSizeMultiplier: _fontSizeMultiplier,
                         ),
                       ),
                       _buildEndCard(themeColor),
@@ -328,11 +332,13 @@ class _StoryPage extends StatelessWidget {
     required this.page,
     required this.themeColor,
     required this.allPages,
+    required this.fontSizeMultiplier,
   });
 
   final StoryPage page;
   final Color themeColor;
   final List<StoryPage> allPages;
+  final double fontSizeMultiplier;
 
   @override
   Widget build(BuildContext context) {
@@ -374,11 +380,11 @@ class _StoryPage extends StatelessWidget {
                   textDirection: TextDirection.rtl,
                   child: Text(
                     page.text,
-                    style: const TextStyle(
-                      fontSize: 18,
+                    style: TextStyle(
+                      fontSize: 18 * fontSizeMultiplier,
                       fontWeight: FontWeight.w600,
                       height: 1.85,
-                      color: Color(0xFF2D2D2D),
+                      color: const Color(0xFF2D2D2D),
                     ),
                   ),
                 ),
@@ -498,4 +504,123 @@ class _RoundButton extends StatelessWidget {
       ),
     );
   }
+}
+
+class _FloatingFireflies extends StatefulWidget {
+  const _FloatingFireflies();
+
+  @override
+  State<_FloatingFireflies> createState() => _FloatingFirefliesState();
+}
+
+class _FloatingFirefliesState extends State<_FloatingFireflies>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  final List<_Firefly> _fireflies = [];
+  final Random _random = Random();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 40),
+    )..repeat();
+
+    // Create 25 fireflies
+    for (int i = 0; i < 25; i++) {
+      _fireflies.add(
+        _Firefly(
+          startX: _random.nextDouble(),
+          startY: _random.nextDouble(),
+          size: 1.5 + _random.nextDouble() * 3.5,
+          speedY: 0.1 + _random.nextDouble() * 0.2, // speed of rising
+          driftX: 0.02 + _random.nextDouble() * 0.04, // horizontal drift amplitude
+          maxOpacity: 0.2 + _random.nextDouble() * 0.45,
+          pulseSpeed: 0.5 + _random.nextDouble() * 1.0,
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return CustomPaint(
+          painter: _FirefliesPainter(_fireflies, _controller.value),
+          size: Size.infinite,
+        );
+      },
+    );
+  }
+}
+
+class _Firefly {
+  final double startX;
+  final double startY;
+  final double size;
+  final double speedY;
+  final double driftX;
+  final double maxOpacity;
+  final double pulseSpeed;
+
+  _Firefly({
+    required this.startX,
+    required this.startY,
+    required this.size,
+    required this.speedY,
+    required this.driftX,
+    required this.maxOpacity,
+    required this.pulseSpeed,
+  });
+}
+
+class _FirefliesPainter extends CustomPainter {
+  final List<_Firefly> fireflies;
+  final double progress;
+
+  _FirefliesPainter(this.fireflies, this.progress);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..style = PaintingStyle.fill;
+
+    for (var f in fireflies) {
+      // Y position moves upwards slowly
+      double y = (f.startY - progress * f.speedY) % 1.0;
+      // X position drifts side-to-side
+      double x = (f.startX + sin(progress * 2 * pi * f.pulseSpeed) * f.driftX) % 1.0;
+
+      // Pulse opacity
+      final pulse = (sin(progress * 4 * pi * f.pulseSpeed) + 1) / 2;
+      final opacity = f.maxOpacity * (0.25 + 0.75 * pulse);
+
+      final position = Offset(x * size.width, y * size.height);
+
+      // Draw soft outer glow
+      canvas.drawCircle(
+        position,
+        f.size * 2.5,
+        Paint()
+          ..color = const Color(0xFFFDE047).withValues(alpha: opacity * 0.25)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0),
+      );
+
+      // Draw inner core
+      paint.color = const Color(0xFFFDE047).withValues(alpha: opacity);
+      canvas.drawCircle(position, f.size, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _FirefliesPainter oldDelegate) =>
+      oldDelegate.progress != progress;
 }

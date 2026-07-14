@@ -17,6 +17,7 @@ from app.models.daily_routine import (
     RoutineDeleteOut,
     RoutineEventCreate,
     RoutineEventOut,
+    RoutineEventUpdate,
     RoutineSummaryOut,
 )
 
@@ -168,8 +169,8 @@ def create_event(
 
 
 @router.patch("/daily-routine/events/{event_id}", response_model=RoutineEventOut)
-def update_event(event_id: int, request: Request, payload: RoutineEventCreate):
-    """Update an existing event (must belong to the caller's device/child)."""
+def update_event(event_id: int, request: Request, payload: RoutineEventUpdate):
+    """Partially update an existing event (must belong to the caller's device/child)."""
     device_id = _require_device_id(request)
     conn = get_conn()
     try:
@@ -184,27 +185,25 @@ def update_event(event_id: int, request: Request, payload: RoutineEventCreate):
         ).fetchone()
         if row is None or row["device_id"] != device_id:
             raise HTTPException(status_code=404, detail="حدث غير موجود.")
-        conn.execute(
-            """
-            UPDATE routine_events SET
-                event_type = ?, started_at = ?, ended_at = ?, feed_type = ?,
-                amount_ml = ?, side = ?, diaper_type = ?, notes = ?, source = ?,
-                updated_at = datetime('now')
-            WHERE id = ?
-            """,
-            (
-                payload.event_type,
-                payload.started_at,
-                payload.ended_at,
-                payload.feed_type,
-                payload.amount_ml,
-                payload.side,
-                payload.diaper_type,
-                payload.notes,
-                payload.source,
-                event_id,
-            ),
-        )
+
+        allowed_columns = set(RoutineEventUpdate.model_fields)
+        updates = []
+        params = []
+        for field, value in payload.model_dump(exclude_unset=True).items():
+            if field not in allowed_columns:
+                continue
+            updates.append(f"{field} = ?")
+            params.append(value)
+
+        if not updates:
+            # Nothing changed; return current row
+            row = conn.execute("SELECT * FROM routine_events WHERE id = ?", (event_id,)).fetchone()
+            return _event_row_to_model(row)
+
+        updates.append("updated_at = datetime('now')")
+        params.append(event_id)
+        query = f"UPDATE routine_events SET {', '.join(updates)} WHERE id = ?"
+        conn.execute(query, tuple(params))
         conn.execute(
             "UPDATE child_daily_routines SET updated_at = datetime('now') WHERE id = ?",
             (row["routine_id"],),
@@ -278,7 +277,7 @@ def get_summary(
                 total_sleep += _duration_minutes(row["started_at"], row["ended_at"])
             elif et == "feed":
                 feed_count += 1
-                if row["amount_ml"]:
+                if row["amount_ml"] is not None:
                     feed_amount += row["amount_ml"]
             elif et == "diaper":
                 diaper_count += 1

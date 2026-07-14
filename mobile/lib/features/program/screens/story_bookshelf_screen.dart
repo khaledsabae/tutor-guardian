@@ -10,7 +10,7 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/skeleton.dart';
 import '../data/story_models.dart';
-import 'story_reader_screen.dart';
+import 'bedtime_routine_screen.dart';
 
 /// A magical bedtime bookshelf: 3D books, twinkling stars, and looping
 /// ambient cover videos when available. Replaces the old vertical list card.
@@ -209,7 +209,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
   void _openStory(Story story) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => StoryReaderScreen(story: story),
+        builder: (_) => BedtimeRoutineScreen(story: story),
       ),
     );
   }

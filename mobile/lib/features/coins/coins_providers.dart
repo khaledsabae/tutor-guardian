@@ -43,6 +43,12 @@ class CoinsNotifier extends StateNotifier<CoinsState> {
     return ok;
   }
 
+  /// Earn coins (e.g. from bedtime routine).
+  Future<void> earn(int amount) async {
+    await CoinsService.instance.earn(amount);
+    state = await CoinsService.instance.read();
+  }
+
   Future<void> refresh() async => _load();
 }
 
