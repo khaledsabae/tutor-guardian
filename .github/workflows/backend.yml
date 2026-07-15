@@ -3,12 +3,20 @@ name: Backend tests
 on:
   push:
     branches: [main]
+    # Superset of what production serves: Deploy is gated on this workflow
+    # (workflow_run), so every deployable path must run the tests first.
     paths:
       - 'backend/**'
       - 'knowledge_base/**'
       - 'ops/tools/**'
       - 'pytest.ini'
       - '.github/workflows/backend.yml'
+      - 'frontend/**'
+      - 'docs/lesson_index.json'
+      - 'docs/lesson_assets/**'
+      - 'docker-compose.production.yml'
+      - 'requirements*.txt'
+      - '.github/workflows/deploy.yml'
   pull_request:
     branches: [main]
     paths:

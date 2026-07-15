@@ -7,23 +7,17 @@ name: Deploy
 # fully independent of GitHub Actions billing (the previous ubuntu-latest
 # pipeline died whenever Actions billing lapsed).
 #
-# Only fires when deployable backend code changes (see paths filter) so a
-# mobile-only push (e.g. a pubspec versionCode bump) does NOT rebuild prod.
+# Gated on CI: fires only after the "Backend tests" workflow succeeds on main
+# (backend.yml carries the deployable-paths filter, so a mobile-only push does
+# NOT rebuild prod). A red test suite therefore never reaches production.
 #
 # Manual run: Actions → Deploy → "Run workflow" (workflow_dispatch).
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Backend tests"]
+    types: [completed]
     branches: [main]
-    paths:
-      - 'frontend/**'
-      - 'backend/**'
-      - 'knowledge_base/**'
-      - 'docs/lesson_index.json'
-      - 'docs/lesson_assets/**'
-      - 'docker-compose.production.yml'
-      - 'requirements*.txt'
-      - '.github/workflows/deploy.yml'
   workflow_dispatch: {}
 
 concurrency:
@@ -34,6 +28,8 @@ jobs:
   deploy:
     name: Deploy to VPS (self-hosted)
     runs-on: [self-hosted, production]
+    # workflow_run fires on failure too — only deploy when CI actually passed.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     timeout-minutes: 20
     environment:
       name: production
@@ -60,11 +56,13 @@ jobs:
           DEPLOY_SHA=$(git rev-parse --short HEAD)
           echo "Deploying SHA: $DEPLOY_SHA"
 
-          # ── 2. KB integrity check (defense in depth, non-blocking) ───
+          # ── 2. KB integrity check (defense in depth, BLOCKING) ───────
           echo "→ check_kb_integrity"
           if [ -f ops/tools/check_kb_integrity.py ]; then
-            python3 ops/tools/check_kb_integrity.py || \
-              echo "::warning::KB integrity check reported issues (continuing)"
+            python3 ops/tools/check_kb_integrity.py || {
+              echo "::error::KB integrity check failed — aborting deploy"
+              exit 1
+            }
           fi
 
           # ── 3. Build the new image ───────────────────────────────────
