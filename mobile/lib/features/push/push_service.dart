@@ -7,11 +7,21 @@ library;
 
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../api/tg_client.dart';
 import '../../core/analytics.dart';
+import '../../firebase_options.dart';
+import '../deeplink/deep_link_handler.dart';
+
+/// FCM requires the background handler to be a TOP-LEVEL entry-point
+/// function (it runs in a separate isolate while the app is terminated).
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+}
 
 class PushService {
   PushService._();
@@ -23,7 +33,7 @@ class PushService {
     try {
       // Register the top-level background handler BEFORE any other FCM call.
       // This is required for data messages to wake the app while terminated.
-      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
       // Android defaults to authorized; iOS requires explicit permission.
       // For Android we still call it safely.

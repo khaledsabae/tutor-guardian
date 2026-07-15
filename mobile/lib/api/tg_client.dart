@@ -335,16 +335,18 @@ class TgClient {
   }
 
   /// Generate a personalized children's story (a coins redeemable).
-  /// Public endpoint — runs on the local model server-side.
+  /// Currently public server-side, but we send the Bearer token so the
+  /// backend can start requiring auth once this client version is adopted.
   Future<String> generateStory({
     required String childName,
     required String ageGroup,
     required String theme,
   }) async {
+    final session = await ensureSession();
     final resp = await _http
         .post(
           Uri.parse('$_baseUrl/api/program/story'),
-          headers: const {'Content-Type': 'application/json'},
+          headers: _authHeaders(session.token),
           body: jsonEncode({
             'child_name': childName,
             'age_group': ageGroup,

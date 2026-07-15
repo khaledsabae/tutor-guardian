@@ -37,10 +37,8 @@ import 'features/quran/screens/quran_screen.dart';
 import 'theme/app_theme.dart';
 import 'theme/design_tokens.dart';
 
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-}
+// FCM background handler lives in features/push/push_service.dart
+// (registered there via FirebaseMessaging.onBackgroundMessage).
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
