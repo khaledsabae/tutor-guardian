@@ -162,6 +162,11 @@ def get_conn() -> sqlite3.Connection:
     conn = sqlite3.connect(path)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
+    # Handlers run concurrently in the threadpool: WAL lets readers proceed
+    # during a write, and busy_timeout retries instead of instantly raising
+    # "database is locked" (which used to 500 fully-generated replies).
+    conn.execute("PRAGMA journal_mode = WAL")
+    conn.execute("PRAGMA busy_timeout = 5000")
     return conn
 
 

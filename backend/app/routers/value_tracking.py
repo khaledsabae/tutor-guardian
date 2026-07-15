@@ -79,7 +79,7 @@ def _load_owned_child(conn: sqlite3.Connection, child_id: int, device_id: str) -
 
 def _today() -> str:
     """Return the local calendar date used for the habit bucket."""
-    return date.today().isoformat()
+    return datetime.now(timezone.utc).date().isoformat()
 
 
 def _event_row_to_model(row: sqlite3.Row) -> HabitEventOut:

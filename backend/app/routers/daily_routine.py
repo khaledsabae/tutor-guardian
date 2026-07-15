@@ -45,7 +45,7 @@ def _load_owned_child(conn: sqlite3.Connection, child_id: int, device_id: str) -
 
 def _today() -> str:
     """Return the local calendar date used for the daily routine bucket."""
-    return date.today().isoformat()
+    return datetime.now(timezone.utc).date().isoformat()
 
 
 def _ensure_routine_row(conn: sqlite3.Connection, device_id: str, child_id: int, routine_date: str) -> int:

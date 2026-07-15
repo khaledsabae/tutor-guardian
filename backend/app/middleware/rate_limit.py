@@ -31,7 +31,10 @@ _WINDOW = 60.0
 # — cold-start bursts, progress sync — never trips a false 429. Each scope has an
 # independent per-device bucket. Setting RATE_LIMIT_PER_MINUTE=0 disables both.
 _PROTECTED_PREFIXES = ("/api/",)
-_ASSISTANT_PREFIX = "/api/assistant"
+# Full-LLM-generation endpoints share the tight "ai" budget: the assistant
+# AND story generation (unauthenticated, so otherwise a free 120/min DoS
+# vector against the model server).
+_AI_PREFIXES = ("/api/assistant", "/api/program/story")
 _EXEMPT_PREFIXES = ("/api/health", "/api/healthz")
 _REDIS_URL = os.environ.get("REDIS_URL", "")
 
@@ -89,7 +92,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         # Two independent budgets: the AI assistant (expensive) vs the rest of the
         # API. Namespacing the key by scope keeps their buckets separate so a busy
         # chat session can't exhaust the CRUD budget or vice versa.
-        if path.startswith(_ASSISTANT_PREFIX):
+        if path.startswith(_AI_PREFIXES):
             scope, limit = "ai", _LIMIT
         else:
             scope, limit = "api", _GENERAL_LIMIT

@@ -126,7 +126,7 @@ def child_get_today(request: Request):
     device_id = _require_device_id(request)
 
     conn = get_conn()
-    today = date.today().isoformat()
+    today = datetime.now(timezone.utc).date().isoformat()
     try:
         events = _load_today_events(conn, device_id, child_id, today)
         templates = _load_active_templates(conn, device_id, child_id)
@@ -160,7 +160,7 @@ def child_record_event(request: Request, body: ChildHabitEventCreate):
         )
 
     # Submit-only: if an event already exists today, reject the second attempt.
-    today = date.today().isoformat()
+    today = datetime.now(timezone.utc).date().isoformat()
     conn = get_conn()
     try:
         existing = _load_today_events(conn, device_id, child_id, today)

@@ -357,7 +357,7 @@ def get_child_progress(
 
         streak_days, _ = _compute_streak(
             completion_dates,
-            today=date.today(),
+            today=datetime.now(timezone.utc).date(),
         )
 
         # Daily login streak (v10): counts consecutive calendar days on which
@@ -382,7 +382,7 @@ def get_child_progress(
         login_dates = [d for d in login_dates if d is not None]
         daily_login_streak, _ = _compute_streak(
             login_dates,
-            today=date.today(),
+            today=datetime.now(timezone.utc).date(),
         )
 
         return {

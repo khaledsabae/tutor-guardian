@@ -294,6 +294,31 @@ class OpenAIChatProvider:
 # ─────────────────────────────────────────────────────────────────────────────
 # Telemetry (non-fatal)
 # ─────────────────────────────────────────────────────────────────────────────
+_telemetry_schema_ready = False
+
+
+def _ensure_telemetry_schema(conn: sqlite3.Connection) -> None:
+    """Run the llm_calls DDL once per process, not on every LLM call."""
+    global _telemetry_schema_ready
+    if _telemetry_schema_ready:
+        return
+    conn.execute(
+        """CREATE TABLE IF NOT EXISTS llm_calls (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ts TEXT DEFAULT (datetime('now')),
+            provider TEXT, model TEXT, latency_ms INTEGER,
+            prompt_tokens INTEGER, completion_tokens INTEGER,
+            streamed INTEGER, ok INTEGER
+        )"""
+    )
+    for col in ("tier TEXT", "route_reason TEXT"):
+        try:
+            conn.execute(f"ALTER TABLE llm_calls ADD COLUMN {col}")
+        except sqlite3.OperationalError:
+            pass  # column already exists
+    _telemetry_schema_ready = True
+
+
 def _log_call(provider: str, model: str, latency_ms: int,
               prompt_tokens: int | None, completion_tokens: int | None,
               streamed: bool, ok: bool,
@@ -301,20 +326,9 @@ def _log_call(provider: str, model: str, latency_ms: int,
     try:
         _TELEMETRY_DB.parent.mkdir(parents=True, exist_ok=True)
         conn = sqlite3.connect(_TELEMETRY_DB)
-        conn.execute(
-            """CREATE TABLE IF NOT EXISTS llm_calls (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                ts TEXT DEFAULT (datetime('now')),
-                provider TEXT, model TEXT, latency_ms INTEGER,
-                prompt_tokens INTEGER, completion_tokens INTEGER,
-                streamed INTEGER, ok INTEGER
-            )"""
-        )
-        for col in ("tier TEXT", "route_reason TEXT"):
-            try:
-                conn.execute(f"ALTER TABLE llm_calls ADD COLUMN {col}")
-            except sqlite3.OperationalError:
-                pass  # column already exists
+        conn.execute("PRAGMA journal_mode = WAL")
+        conn.execute("PRAGMA busy_timeout = 5000")
+        _ensure_telemetry_schema(conn)
         conn.execute(
             "INSERT INTO llm_calls (provider,model,latency_ms,prompt_tokens,"
             "completion_tokens,streamed,ok,tier,route_reason) VALUES (?,?,?,?,?,?,?,?,?)",

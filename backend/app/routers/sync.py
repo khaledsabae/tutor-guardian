@@ -14,9 +14,11 @@ logger = logging.getLogger(__name__)
 router = APIRouter(tags=["sync"])
 
 class BackupUploadRequest(BaseModel):
-    salt: str = Field(..., min_length=1, description="Base64 encoded key derivation salt")
-    nonce: str = Field(..., min_length=1, description="Base64 encoded AES-GCM nonce")
-    payload: str = Field(..., min_length=1, description="Base64 encoded encrypted database bytes")
+    salt: str = Field(..., min_length=1, max_length=256, description="Base64 encoded key derivation salt")
+    nonce: str = Field(..., min_length=1, max_length=256, description="Base64 encoded AES-GCM nonce")
+    # ~37MB of encrypted DB after base64 — far above any real client DB, but
+    # bounded so a hostile client can't park unbounded blobs in server memory.
+    payload: str = Field(..., min_length=1, max_length=50_000_000, description="Base64 encoded encrypted database bytes")
 
 @router.post("/api/sync/upload")
 def upload_backup(request: Request, payload: BackupUploadRequest):  # sync on purpose: sqlite work runs in the threadpool
@@ -72,28 +74,20 @@ def download_backup(request: Request):  # sync on purpose: sqlite work runs in t
 
     conn = get_conn()
     try:
-        # 1. Try to fetch direct device backup
+        # Newest backup wins across BOTH the device's own row and any row on
+        # the linked Google account. (Previously the device's own backup was
+        # returned even when a sibling device had uploaded a newer one, so a
+        # re-linking device could restore a stale copy forever.)
         row = conn.execute(
-            "SELECT salt, nonce, payload, updated_at FROM user_backups WHERE device_id = ?",
-            (device_id,)
+            """
+            SELECT salt, nonce, payload, updated_at FROM user_backups
+            WHERE device_id = ?
+               OR (google_id IS NOT NULL AND google_id =
+                     (SELECT google_id FROM identity_links WHERE device_id = ?))
+            ORDER BY updated_at DESC LIMIT 1
+            """,
+            (device_id, device_id),
         ).fetchone()
-
-        # 2. If not found, check Google link and find newest backup for the linked Google ID
-        if not row:
-            link = conn.execute(
-                "SELECT google_id FROM identity_links WHERE device_id = ?",
-                (device_id,)
-            ).fetchone()
-            if link:
-                google_id = link["google_id"]
-                row = conn.execute(
-                    """
-                    SELECT salt, nonce, payload, updated_at FROM user_backups
-                    WHERE google_id = ?
-                    ORDER BY updated_at DESC LIMIT 1
-                    """,
-                    (google_id,)
-                ).fetchone()
 
         if not row:
             raise HTTPException(status_code=404, detail="No backup found")
