@@ -5,6 +5,8 @@ Validates the additive v1 endpoint that serves full flashcard/quiz JSON
 content to the mobile app (the lesson-assets endpoint only lists metadata).
 Mounts only the program router so the heavy RAG stack is never imported.
 """
+from pathlib import Path
+
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -23,9 +25,16 @@ def client():
 
 
 def _first_flashcard_id():
+    repo_root = Path(cl.__file__).resolve().parents[2]
     for bundle in cl._assets_cache.values():
         for entry in bundle.get("flashcards", []) or []:
             if entry.get("id"):
+                rel = entry.get("file") or ""
+                # Skip assets whose JSON file is missing: in production docs/
+                # is volume-mounted, but in a bare Docker build (CI candidate
+                # image) lesson_assets/ are excluded by .dockerignore.
+                if rel and not (repo_root / rel).exists():
+                    continue
                 return entry["id"]
     return None
 
@@ -33,7 +42,7 @@ def _first_flashcard_id():
 def test_asset_content_returns_cards(client):
     asset_id = _first_flashcard_id()
     if not asset_id:
-        pytest.skip("no flashcard assets wired in lesson_index (clean-asset regeneration in progress)")
+        pytest.skip("no flashcard assets with an on-disk file wired in lesson_index")
     r = client.get(f"/api/program/asset-content/{asset_id}")
     assert r.status_code == 200
     body = r.json()
