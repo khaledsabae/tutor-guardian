@@ -305,6 +305,10 @@ async def tap_coach_tip(
 
 class ProgressPatch(BaseModel):
     status: Literal["not_started", "in_progress", "completed"]
+    # Which child this progress belongs to. Optional for backward compat:
+    # older mobile clients don't send it and fall back to the legacy
+    # first-created-child attribution.
+    child_id: Optional[int] = None
 
 
 class ProgressResponse(BaseModel):
@@ -341,17 +345,25 @@ def patch_lesson_progress(
     if lesson is None:
         raise HTTPException(status_code=404, detail=f"الدرس '{lesson_id}' غير موجود")
     path_id = lesson["path_id"]
-    # Prefer child_id from a currently active child for this device. If no
-    # child exists, we still allow the PATCH (legacy behaviour) and store
-    # child_id = 0, which keeps the UNIQUE constraint happy without leaking
-    # a real child id.
+    # Attribute progress to the child the client names (ownership-checked).
+    # Legacy fallback when child_id is absent: first-created child, or 0 if
+    # the device has no children (keeps the UNIQUE constraint happy).
     conn = get_conn()
     try:
-        child_row = conn.execute(
-            "SELECT id FROM child_profiles WHERE device_id = ? ORDER BY created_at ASC LIMIT 1",
-            (device_id,),
-        ).fetchone()
-        child_id = child_row["id"] if child_row else 0
+        if payload.child_id is not None:
+            owned = conn.execute(
+                "SELECT id FROM child_profiles WHERE id = ? AND device_id = ?",
+                (payload.child_id, device_id),
+            ).fetchone()
+            if owned is None:
+                raise HTTPException(status_code=404, detail="الطفل غير موجود لهذا الجهاز.")
+            child_id = payload.child_id
+        else:
+            child_row = conn.execute(
+                "SELECT id FROM child_profiles WHERE device_id = ? ORDER BY created_at ASC LIMIT 1",
+                (device_id,),
+            ).fetchone()
+            child_id = child_row["id"] if child_row else 0
 
         now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         # Idempotent upsert. We re-read the existing row to preserve

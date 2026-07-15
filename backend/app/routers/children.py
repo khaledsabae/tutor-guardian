@@ -314,11 +314,14 @@ def get_child_progress(
     try:
         _load_owned_child(conn, child_id, device_id)
 
+        # Scoped to THIS child. child_id = 0 rows are legacy progress written
+        # before any child profile existed — surfaced to every child rather
+        # than lost.
         sql = (
             "SELECT lesson_id, path_id, status, started_at, completed_at "
-            "FROM lesson_progress WHERE device_id = ?"
+            "FROM lesson_progress WHERE device_id = ? AND child_id IN (?, 0)"
         )
-        params: list = [device_id]
+        params: list = [device_id, child_id]
         if path_id is not None:
             sql += " AND path_id = ?"
             params.append(path_id)
@@ -335,16 +338,16 @@ def get_child_progress(
             for r in rows
         ]
 
-        # Streak is computed across ALL completed lessons for this
-        # device (path filter doesn't apply to the streak — a child
-        # can be on multiple paths).
+        # Streak is computed across ALL completed lessons for THIS child
+        # (path filter doesn't apply to the streak — a child can be on
+        # multiple paths).
         completion_dates: list[date] = []
         last_completed_at: Optional[str] = None
         for r in conn.execute(
             "SELECT completed_at FROM lesson_progress "
-            "WHERE device_id = ? AND status = 'completed' "
+            "WHERE device_id = ? AND child_id IN (?, 0) AND status = 'completed' "
             "ORDER BY completed_at DESC",
-            (device_id,),
+            (device_id, child_id),
         ).fetchall():
             d = _parse_iso_utc_date(r["completed_at"])
             if d is not None:
@@ -600,9 +603,11 @@ def reset_child_progress(child_id: int, request: Request):
     conn = get_conn()
     try:
         _load_owned_child(conn, child_id, device_id)
+        # Only THIS child's rows (plus unattributed legacy child_id=0 rows,
+        # which the GET also surfaces for every child) — never siblings'.
         cur = conn.execute(
-            "DELETE FROM lesson_progress WHERE device_id = ?",
-            (device_id,),
+            "DELETE FROM lesson_progress WHERE device_id = ? AND child_id IN (?, 0)",
+            (device_id, child_id),
         )
         deleted = cur.rowcount
         conn.commit()
