@@ -50,11 +50,12 @@ jobs:
       - name: Build candidate image and run tests
         run: |
           set -euo pipefail
-          DEPLOY_PATH="/root/tutor-guardian"
           CANDIDATE_TAG="tutor-guardian-backend:candidate-${{ github.sha }}"
 
-          echo "=== Build candidate image ==="
-          cd "$DEPLOY_PATH"
+          echo "=== Build candidate image from checked-out workspace ==="
+          # Use $GITHUB_WORKSPACE (the commit that triggered this workflow), not
+          # /root/tutor-guardian, so tests gate the exact code being deployed.
+          cd "$GITHUB_WORKSPACE"
           docker build -f backend/Dockerfile -t "$CANDIDATE_TAG" .
 
           echo "=== Run backend tests in candidate image ==="
