@@ -56,6 +56,10 @@ class Analytics {
   static Future<void> pushReceived(String type) =>
       _log('push_received', {'type': type});
 
+  /// Push notification was tapped (background or terminated).
+  static Future<void> pushTapped(String type) =>
+      _log('push_tapped', {'type': type});
+
   /// Catch-all user property setter (best-effort).
   static Future<void> setAnalyticsUserProperty(String name, String value) async {
     try {

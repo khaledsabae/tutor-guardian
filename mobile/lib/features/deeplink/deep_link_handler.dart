@@ -19,8 +19,10 @@ class DeepLinkHandler {
   static final DeepLinkHandler instance = DeepLinkHandler._();
 
   AppLinks? _appLinks;
+  GlobalKey<NavigatorState>? _navigatorKey;
 
   Future<void> init(GlobalKey<NavigatorState> navigatorKey) async {
+    _navigatorKey = navigatorKey;
     _appLinks = AppLinks();
 
     // Handle the link that launched the app (cold start).
@@ -38,6 +40,19 @@ class DeepLinkHandler {
       (uri) => _handle(uri, navigatorKey),
       onError: (_) { /* ignore */ },
     );
+  }
+
+  /// Public dispatch entry used by push taps and other non-app-links
+  /// entry points. No-op if the navigator key is not ready.
+  Future<void> dispatch(String link) async {
+    final key = _navigatorKey;
+    if (key == null) return;
+    try {
+      final uri = Uri.parse(link);
+      _handle(uri, key);
+    } catch (_) {
+      // ignore malformed links
+    }
   }
 
   void _handle(Uri uri, GlobalKey<NavigatorState> key) {

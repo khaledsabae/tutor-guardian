@@ -27,4 +27,14 @@ knowledge_base/raw_sources/
 docs/*.mp3
 docs/*.mp4
 docs/path_videos/
-docs/lesson_assets/
+# Keep lightweight lesson-asset JSON (flashcards, quizzes, reports,
+# data_tables) inside the image so asset-content tests run without mounts.
+# Heavy infographics and any stray media stay out.
+docs/lesson_assets/infographics/
+docs/lesson_assets/**/*.png
+docs/lesson_assets/**/*.jpg
+docs/lesson_assets/**/*.jpeg
+docs/lesson_assets/**/*.webp
+docs/lesson_assets/**/*.gif
+docs/lesson_assets/**/*.mp3
+docs/lesson_assets/**/*.mp4

@@ -21,6 +21,10 @@ class PushService {
 
   Future<void> registerToken() async {
     try {
+      // Register the top-level background handler BEFORE any other FCM call.
+      // This is required for data messages to wake the app while terminated.
+      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
       // Android defaults to authorized; iOS requires explicit permission.
       // For Android we still call it safely.
       final settings = await _messaging.requestPermission(
@@ -48,6 +52,10 @@ class PushService {
       await TgClient().registerPushToken(token, platform: 'android');
       await Analytics.pushTokenRegistered();
 
+      // Handle notification taps (terminated / background).
+      FirebaseMessaging.instance.getInitialMessage().then(_handleTap);
+      FirebaseMessaging.onMessageOpenedApp.listen(_handleTap);
+
       // Listen to token refreshes and keep the backend in sync.
       _messaging.onTokenRefresh.listen(
         (newToken) async {
@@ -62,6 +70,21 @@ class PushService {
       );
     } catch (_) {
       // FCM not available on this device/build — ignore silently.
+    }
+  }
+
+  /// Route notification taps to the deep-link handler if the payload
+  /// contains a `link` field (e.g., `/go?tab=routine`).
+  Future<void> _handleTap(RemoteMessage? message) async {
+    if (message == null) return;
+    final link = message.data['link'] as String?;
+    if (link == null || link.isEmpty) return;
+    // Best-effort: analytics + deep-link dispatch.
+    try {
+      await Analytics.pushTapped(message.data['type'] ?? 'unknown');
+      await DeepLinkHandler.instance.dispatch(link);
+    } catch (_) {
+      // ignore
     }
   }
 

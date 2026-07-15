@@ -5,6 +5,18 @@ services:
       dockerfile: backend/Dockerfile
     container_name: tg_backend
     restart: unless-stopped
+    # Resource guardrails on a shared VPS (analytics_nginx runs on same host).
+    # Current steady usage ~1.2 GB; 4 GB gives headroom for model warm-up + Chroma
+    # spikes while protecting neighbouring services from OOM. Two cores keep
+    # retrieval + LLM calls from monopolising the machine.
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
     # No host-port binding needed — analytics_nginx reaches us via the shared network
     expose:
       - "8000"
