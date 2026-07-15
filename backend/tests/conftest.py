@@ -11,6 +11,7 @@ def _temp_conversations_db(monkeypatch):
     fd, path = tempfile.mkstemp(suffix=".db")
     os.close(fd)
     monkeypatch.setenv("CONVERSATIONS_DB", path)  # resolved at call time by db_path()
+    monkeypatch.setenv("CHILD_MODE_SECRET", "test-child-mode-secret")  # child_token fails closed without it
     from app.db.init_db import init_db
     init_db()
     yield

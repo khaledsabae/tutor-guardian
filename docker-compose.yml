@@ -34,6 +34,8 @@ services:
       OLLAMA_PRIMARY_MODEL: ${OLLAMA_PRIMARY_MODEL:-gemma4:e4b-it-qat}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
       RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-30}
+      # Dev-only default; prod MUST set a strong value in .env (backend fails closed without it).
+      CHILD_MODE_SECRET: ${CHILD_MODE_SECRET:-dev-only-child-mode-secret}
     ports:
       - "${BACKEND_HOST_PORT:-8000}:8000"
     volumes:

@@ -3,6 +3,7 @@ Tutor Guardian – FastAPI Application
 """
 import logging
 import os
+import secrets
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -20,6 +21,7 @@ from app.routers import (
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
     insights,
 )
+from app.services import child_token
 from app.services.push_sender import send_to_device
 from app import curriculum_loader as curriculum
 
@@ -40,6 +42,7 @@ async def lifespan(app: FastAPI):
     """Startup / shutdown lifecycle."""
 
     # ── Base startup ─────────────────────────────────────────────────────
+    child_token.assert_configured()  # fail fast: no CHILD_MODE_SECRET → no boot
     app.state.guardrails_config = load_guardrails_config()
     init_db()
     curriculum.load_curriculum()
@@ -136,7 +139,7 @@ def admin_send_push(request: Request, payload: dict) -> dict:
     # Basic auth: require a configured admin key in header.
     expected = os.environ.get("TG_ADMIN_KEY", "")
     provided = request.headers.get("x-admin-key", "")
-    if not expected or provided != expected:
+    if not expected or not secrets.compare_digest(provided, expected):
         raise HTTPException(status_code=403, detail="forbidden")
 
     result = send_to_device(

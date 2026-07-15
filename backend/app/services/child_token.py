@@ -25,9 +25,19 @@ _claim_store: dict[str, dict[str, Any]] = {}
 
 
 def _secret() -> bytes:
-    """Return the HMAC secret from env or a deterministic fallback for tests."""
-    raw = os.environ.get("CHILD_MODE_SECRET", "tg-dev-child-mode-secret-v1")
+    """Return the HMAC secret from env. Fails closed: no fallback value."""
+    raw = os.environ.get("CHILD_MODE_SECRET")
+    if not raw:
+        raise RuntimeError(
+            "CHILD_MODE_SECRET is not set — refusing to sign/verify child tokens. "
+            "Set a strong random value (e.g. `openssl rand -hex 32`) in the environment."
+        )
     return raw.encode("utf-8")
+
+
+def assert_configured() -> None:
+    """Startup guard: raise early if the child-token secret is missing."""
+    _secret()
 
 
 def _b64encode(data: bytes) -> str:
@@ -68,10 +78,11 @@ def verify_child_token(token: str, *, allow_web: bool = True) -> dict[str, Any] 
 
     Returns the payload dict on success or None on any failure.
     """
+    secret = _secret()  # outside the try: misconfiguration must not read as "invalid token"
     try:
         payload_b64, sig_b64 = token.split(".")
         payload_bytes = _b64decode(payload_b64)
-        expected_sig = hmac.new(_secret(), payload_bytes, hashlib.sha256).digest()
+        expected_sig = hmac.new(secret, payload_bytes, hashlib.sha256).digest()
         if not hmac.compare_digest(expected_sig, _b64decode(sig_b64)):
             return None
         payload = json.loads(payload_bytes.decode("utf-8"))

@@ -1,4 +1,6 @@
 # Keep the build context tiny — never ship venvs / indexes / backups.
+# Secrets must NEVER be baked into image layers (mounted :ro at runtime instead).
+backend/secrets/
 .venv/
 backend/.venv/
 venv/
