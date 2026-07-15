@@ -19,7 +19,7 @@ class BackupUploadRequest(BaseModel):
     payload: str = Field(..., min_length=1, description="Base64 encoded encrypted database bytes")
 
 @router.post("/api/sync/upload")
-async def upload_backup(request: Request, payload: BackupUploadRequest):
+def upload_backup(request: Request, payload: BackupUploadRequest):  # sync on purpose: sqlite work runs in the threadpool
     """
     Upload an encrypted database payload.
     Automatically links to the active Google identity if the device is linked.
@@ -60,7 +60,7 @@ async def upload_backup(request: Request, payload: BackupUploadRequest):
         conn.close()
 
 @router.get("/api/sync/download")
-async def download_backup(request: Request):
+def download_backup(request: Request):  # sync on purpose: sqlite work runs in the threadpool
     """
     Download the latest encrypted database payload.
     Checks the device backup first. If none exists and the device is linked to Google,

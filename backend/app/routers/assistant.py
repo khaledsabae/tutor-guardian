@@ -2,6 +2,7 @@
 Assistant router — Multi-domain ChromaDB retrieval + guardrails + LLM.
 Flow: banned check → emergency check → classify_domains → multi_retrieval → LLM → guardrails.
 """
+import asyncio
 import json
 import logging
 
@@ -67,11 +68,15 @@ async def draft_reply(request: Request, user_message: UserMessage):
     policies = request.app.state.guardrails_config
 
     # ── Session: validate + persist the incoming user message ────────
+    # NB: every sqlite / model-inference call below goes through
+    # asyncio.to_thread — this handler must never block the event loop
+    # (single uvicorn worker; a blocked loop freezes /health too).
     session_id = user_message.session_id
     if session_id:
-        if not store.session_exists(session_id):
+        if not await asyncio.to_thread(store.session_exists, session_id):
             raise HTTPException(status_code=404, detail="Session not found")
-        store.add_message(
+        await asyncio.to_thread(
+            store.add_message,
             session_id, "user",
             user_message.message_text or user_message.behavior_type or "",
         )
@@ -89,7 +94,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
             escalation_target="emergency_services",
             mode="banned",
         )
-        return _finalize(reply, session_id)
+        return await asyncio.to_thread(_finalize, reply, session_id)
 
     # ── Step 0b: Emergency keyword check ─────────────────────────────
     if check_emergency_keywords(query_input):
@@ -99,7 +104,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
     # ── Step 1: Emergency severity check ─────────────────────────────
     if is_emergency(user_message):
         logger.info("Emergency severity — returning fallback immediately")
-        return _finalize(emergency_reply(user_message, policies), session_id)
+        return await asyncio.to_thread(_finalize, emergency_reply(user_message, policies), session_id)
 
     # ── Step 2: Build query text ──────────────────────────────────────
     query_text = (user_message.message_text or "").strip()
@@ -109,30 +114,37 @@ async def draft_reply(request: Request, user_message: UserMessage):
     # ── Step 3: Auto-detect domains (من السؤال فقط — بدون دمج history) ────
     # Server owns history when a session is active; else trust the client's.
     if session_id:
-        history = store.get_history(session_id, limit=6)
+        history = await asyncio.to_thread(store.get_history, session_id, limit=6)
     else:
         history = user_message.conversation_history or []
-    detected_domains = classify_domains(query_text)
+    # classify_domains can make a sync LLM call (up to 45s) on a fast-path miss.
+    detected_domains = await asyncio.to_thread(classify_domains, query_text)
     is_general = detected_domains == ["general"]
     logger.info("Auto-detected domains: %s", detected_domains)
 
     # ── Step 4: Hybrid retrieval (vector + BM25 → RRF → rerank) ──────
     # A general/off-topic question has no parenting KB to ground on, so skip
     # retrieval entirely and go straight to the pivot.
-    _ensure_index()
     if is_general:
+        await asyncio.to_thread(_ensure_index)
         retrieved_units: list[dict] = []
     else:
-        rewritten = rewrite_query(
-            query_text, classifier_fast_path=matched_fast_path(query_text)
-        )
-        retrieved_units = retrieve_hybrid(
-            query_text=query_text,
-            domains=detected_domains,
-            age_group=user_message.age_group or "unspecified",
-            rewritten_query=rewritten,
-        )
-        log_retrieval(query_text, detected_domains, rewritten, retrieved_units)
+        def _retrieve_blocking() -> list[dict]:
+            # CPU-bound embedding + reranking + sync HTTP rewrite — one thread hop.
+            _ensure_index()
+            rewritten = rewrite_query(
+                query_text, classifier_fast_path=matched_fast_path(query_text)
+            )
+            units = retrieve_hybrid(
+                query_text=query_text,
+                domains=detected_domains,
+                age_group=user_message.age_group or "unspecified",
+                rewritten_query=rewritten,
+            )
+            log_retrieval(query_text, detected_domains, rewritten, units)
+            return units
+
+        retrieved_units = await asyncio.to_thread(_retrieve_blocking)
 
     primary_domain = detected_domains[0] if detected_domains else "medical"
 
@@ -167,11 +179,17 @@ async def draft_reply(request: Request, user_message: UserMessage):
         )
         gen_question, gen_history = query_text, history
         if tier == "cloud_quality":
-            gen_question = redact_for_cloud(query_text)
-            gen_history = [
-                t.model_copy(update={"content": redact_for_cloud(t.content)})
-                for t in history
-            ]
+            def _redact_blocking():
+                # redact_for_cloud reads child names from sqlite per call.
+                return (
+                    redact_for_cloud(query_text),
+                    [
+                        t.model_copy(update={"content": redact_for_cloud(t.content)})
+                        for t in history
+                    ],
+                )
+
+            gen_question, gen_history = await asyncio.to_thread(_redact_blocking)
         try:
             generated = await generate_reply(
                 domain=primary_domain,
@@ -212,7 +230,8 @@ async def draft_reply(request: Request, user_message: UserMessage):
         "off_topic": off_topic,
     }
 
-    log_session(
+    await asyncio.to_thread(
+        log_session,
         domain=primary_domain,
         behavior_type=user_message.behavior_type or "",
         age_group=user_message.age_group or "",
@@ -224,7 +243,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
         flag="no_results" if not retrieved_units else "",
     )
 
-    return _finalize(reply, session_id)
+    return await asyncio.to_thread(_finalize, reply, session_id)
 
 
 def _finalize(reply: AssistantReply, session_id: str | None) -> AssistantReply:

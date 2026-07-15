@@ -7,6 +7,7 @@ Optimizations (v2):
   - LRU cache for common (domain + age_group) queries
   - Higher top_k on the first query to reduce fallback need
 """
+import threading
 from functools import lru_cache
 from pathlib import Path
 from typing import Sequence, cast
@@ -202,12 +203,21 @@ def retrieve_relevant_units(
 
 # Ensure the index is built on first import
 _index_built = False
+_index_lock = threading.Lock()
 
 
 def _ensure_index() -> None:
-    """Build the ChromaDB index once on first access."""
+    """Build the ChromaDB index once on first access (thread-safe).
+
+    Handlers now run in the threadpool, so concurrent first requests could
+    otherwise race into a full re-embed of the same Chroma collection.
+    """
     global _index_built
-    if not _index_built:
+    if _index_built:
+        return
+    with _index_lock:
+        if _index_built:
+            return
         units = load_default_knowledge_units()
         index_knowledge_units(units)
         _index_built = True

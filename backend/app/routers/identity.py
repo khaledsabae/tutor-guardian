@@ -11,6 +11,7 @@ Security:
   - The server verifies the token signature/claims with Google's public
     tokeninfo endpoint before linking.
 """
+import asyncio
 import logging
 from typing import Optional
 
@@ -97,34 +98,44 @@ async def link_google_identity(request: Request, payload: dict) -> dict:
     if not google_id:
         return {"ok": False, "error": "invalid_google_id_token"}
 
-    conn = get_conn()
-    conn.execute(
-        """
-        INSERT INTO parent_identities (google_id, email, display_name)
-        VALUES (?, ?, ?)
-        ON CONFLICT(google_id) DO UPDATE SET
-            email = COALESCE(excluded.email, parent_identities.email),
-            display_name = COALESCE(excluded.display_name, parent_identities.display_name)
-        """,
-        (google_id, email or None, display_name or None),
-    )
-    conn.execute(
-        """
-        INSERT INTO identity_links (device_id, google_id, linked_at)
-        VALUES (?, ?, datetime('now'))
-        ON CONFLICT(device_id) DO UPDATE SET
-            google_id = excluded.google_id,
-            linked_at = excluded.linked_at
-        """,
-        (device_id, google_id),
-    )
-    conn.commit()
-
-    # Optional: merge data from any previously linked device_id.
-    _merge_legacy_device_data(conn, device_id, google_id)
-
-    conn.close()
+    # sqlite is blocking — keep it off the event loop.
+    await asyncio.to_thread(_link_identity, device_id, google_id, email, display_name)
     return {"ok": True, "google_id": google_id, "email": email}
+
+
+def _link_identity(device_id: str, google_id: str, email: str, display_name: str) -> None:
+    conn = get_conn()
+    try:
+        conn.execute(
+            """
+            INSERT INTO parent_identities (google_id, email, display_name)
+            VALUES (?, ?, ?)
+            ON CONFLICT(google_id) DO UPDATE SET
+                email = COALESCE(excluded.email, parent_identities.email),
+                display_name = COALESCE(excluded.display_name, parent_identities.display_name)
+            """,
+            (google_id, email or None, display_name or None),
+        )
+        conn.execute(
+            """
+            INSERT INTO identity_links (device_id, google_id, linked_at)
+            VALUES (?, ?, datetime('now'))
+            ON CONFLICT(device_id) DO UPDATE SET
+                google_id = excluded.google_id,
+                linked_at = excluded.linked_at
+            """,
+            (device_id, google_id),
+        )
+        conn.commit()
+
+        # Optional: merge data from any previously linked device_id.
+        # Best-effort by design — the link above is already committed.
+        try:
+            _merge_legacy_device_data(conn, device_id, google_id)
+        except Exception as e:
+            logger.warning("Legacy device merge failed (link kept): %s", e)
+    finally:
+        conn.close()
 
 
 @router.get("/identity/me")
@@ -171,8 +182,8 @@ def _merge_legacy_device_data(conn, current_device_id: str, google_id: str) -> N
     if not has_children:
         conn.execute(
             """
-            INSERT INTO child_profiles (device_id, name, dob, gender, avatar_emoji, created_at, updated_at)
-            SELECT ?, name, dob, gender, avatar_emoji, created_at, updated_at
+            INSERT INTO child_profiles (device_id, name, age_group, gender, avatar_emoji, created_at, updated_at)
+            SELECT ?, name, age_group, gender, avatar_emoji, created_at, updated_at
             FROM child_profiles WHERE device_id = ?
             """,
             (current_device_id, old_device),
