@@ -4,20 +4,31 @@ name: Deploy
 #
 # Runs ON the self-hosted runner (`vps-tg`) which lives on the VPS itself,
 # so it executes the deploy LOCALLY — no SSH, no GitHub-hosted minutes, and
-# fully independent of GitHub Actions billing (the previous ubuntu-latest
-# pipeline died whenever Actions billing lapsed).
+# fully independent of GitHub Actions billing.
 #
-# Gated on CI: fires only after the "Backend tests" workflow succeeds on main
-# (backend.yml carries the deployable-paths filter, so a mobile-only push does
-# NOT rebuild prod). A red test suite therefore never reaches production.
+# Previously this was gated on the "Backend tests" GitHub-hosted workflow, but
+# that workflow is disabled to avoid Actions billing. Instead, the deploy job
+# builds a *candidate* image and runs pytest + KB integrity inside it BEFORE
+# recreating the production container. A red test suite therefore never reaches
+# production.
 #
 # Manual run: Actions → Deploy → "Run workflow" (workflow_dispatch).
 
 on:
-  workflow_run:
-    workflows: ["Backend tests"]
-    types: [completed]
+  push:
     branches: [main]
+    paths:
+      - 'backend/**'
+      - 'knowledge_base/**'
+      - 'ops/tools/**'
+      - 'ops/scripts/**'
+      - 'frontend/**'
+      - 'docs/lesson_index.json'
+      - 'docs/lesson_assets/**'
+      - 'docker-compose.production.yml'
+      - 'backend/Dockerfile'
+      - '.github/workflows/deploy.yml'
+      - 'requirements*.txt'
   workflow_dispatch: {}
 
 concurrency:
@@ -28,13 +39,39 @@ jobs:
   deploy:
     name: Deploy to VPS (self-hosted)
     runs-on: [self-hosted, production]
-    # workflow_run fires on failure too — only deploy when CI actually passed.
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
-    timeout-minutes: 20
+    timeout-minutes: 30
     environment:
       name: production
       url: https://tg-api.alsaba.cloud
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build candidate image and run tests
+        run: |
+          set -euo pipefail
+          DEPLOY_PATH="/root/tutor-guardian"
+          CANDIDATE_TAG="tutor-guardian-backend:candidate-${{ github.sha }}"
+
+          echo "=== Build candidate image ==="
+          cd "$DEPLOY_PATH"
+          docker build -f backend/Dockerfile -t "$CANDIDATE_TAG" .
+
+          echo "=== Run backend tests in candidate image ==="
+          docker run --rm \
+            -e SKIP_API_SMOKE=1 \
+            -e PYTHONPATH=/app/backend \
+            "$CANDIDATE_TAG" \
+            pytest -q
+
+          echo "=== Run KB integrity check in candidate image ==="
+          docker run --rm \
+            -e PYTHONPATH=/app/backend \
+            "$CANDIDATE_TAG" \
+            python ops/tools/check_kb_integrity.py
+
+          echo "=== Candidate image passed all gates ==="
+
       - name: Deploy backend locally on the VPS
         run: |
           set -euo pipefail
@@ -56,24 +93,15 @@ jobs:
           DEPLOY_SHA=$(git rev-parse --short HEAD)
           echo "Deploying SHA: $DEPLOY_SHA"
 
-          # ── 2. KB integrity check (defense in depth, BLOCKING) ───────
-          echo "→ check_kb_integrity"
-          if [ -f ops/tools/check_kb_integrity.py ]; then
-            python3 ops/tools/check_kb_integrity.py || {
-              echo "::error::KB integrity check failed — aborting deploy"
-              exit 1
-            }
-          fi
-
-          # ── 3. Build the new image ───────────────────────────────────
+          # ── 2. Build the new image ───────────────────────────────────
           echo "→ docker compose build backend"
           docker compose -f docker-compose.production.yml build backend
 
-          # ── 4. Recreate the container ────────────────────────────────
+          # ── 3. Recreate the container ────────────────────────────────
           echo "→ docker compose up -d backend"
           docker compose -f docker-compose.production.yml up -d --remove-orphans backend
 
-          # ── 5. Wait for the new container to be healthy ──────────────
+          # ── 4. Wait for the new container to be healthy ──────────────
           # Cold start loads the embedding model weights + ChromaDB, which
           # routinely takes >60s — give it up to 180s before failing so a
           # slow-but-successful boot isn't reported as a deploy failure.
@@ -92,7 +120,7 @@ jobs:
             exit 1
           fi
 
-          # ── 6. HTTP smoke test ───────────────────────────────────────
+          # ── 5. HTTP smoke test ───────────────────────────────────────
           echo "→ HTTP smoke test: $DEPLOY_HEALTH_URL"
           HTTP_CODE=$(curl -fsS -o /dev/null -w '%{http_code}' "$DEPLOY_HEALTH_URL" || echo "fail")
           if [ "$HTTP_CODE" != "200" ]; then
@@ -101,14 +129,15 @@ jobs:
             exit 1
           fi
 
-          # ── 7. Privacy endpoint (Phase 0 regression) ─────────────────
+          # ── 6. Privacy endpoint (Phase 0 regression) ─────────────────
           PRIVACY_CODE=$(curl -fsS -o /dev/null -w '%{http_code}' "${DEPLOY_HEALTH_URL%/health}/privacy-policy" || echo "fail")
           if [ "$PRIVACY_CODE" != "200" ]; then
             echo "::error::privacy-policy returned $PRIVACY_CODE (expected 200)"
             exit 1
           fi
 
-          # ── 8. Cleanup dangling images (best-effort) ─────────────────
+          # ── 7. Cleanup candidate image and dangling images (best-effort)
+          docker image rm -f "tutor-guardian-backend:candidate-${{ github.sha }}" >/dev/null 2>&1 || true
           docker image prune -f >/dev/null 2>&1 || true
 
           echo
