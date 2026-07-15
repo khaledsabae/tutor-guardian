@@ -1,0 +1,30 @@
+{
+  "name": "remotion-reels",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "remotion studio src/Root.tsx",
+    "build": "remotion render src/Root.tsx Reel out/reel.mp4",
+    "render": "remotion render src/Root.tsx Reel out/reel.mp4",
+    "still": "remotion still src/Root.tsx Reel out/frame.png"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.489",
+    "@remotion/google-fonts": "4.0.489",
+    "@remotion/lottie": "4.0.489",
+    "@remotion/media-utils": "4.0.489",
+    "@remotion/player": "4.0.489",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.489",
+    "ts-node": "^10.9.2",
+    "typescript": "5.5.4",
+    "zod": "4.3.6"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0"
+  }
+}
