@@ -17,6 +17,13 @@ from fastapi.responses import HTMLResponse
 
 router = APIRouter(tags=["web"])
 
+@router.get("/", include_in_schema=False)
+async def _root_slash():
+    """Redirect /seo/ trailing slash to /seo without a protocol downgrade."""
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/seo", status_code=301)
+
+
 _TEAL = "#01696F"
 _CREAM = "#FAF7F2"
 _PLAY = "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
