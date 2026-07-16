@@ -54,8 +54,8 @@ class QuranMemorizationScreen extends ConsumerWidget {
         context,
         emoji: '📖',
         imageAsset: milestoneBadgeAsset('first_surah'),
-        title: 'ما شاء الله!',
-        message: '$childName حفظ أول سورة — سورة ${surahNames[surah - 1]} 🌟',
+        title: AppLocalizations.of(context).celebrationMashallah,
+        message: AppLocalizations.of(context).quranMemFirstSurahMsg(childName, surahNames[surah - 1]),
         onShare: () => ShareService.shareMomentCard(
           fileTag: 'quran_first_surah_$surah',
           message: 'ما شاء الله 📖 $childName حفظ أول سورة — '
@@ -154,7 +154,7 @@ class QuranMemorizationScreen extends ConsumerWidget {
                     ),
                   ),
                   title: Text(
-                    'سورة ${surahNames[i]}',
+                    AppLocalizations.of(context).quranMemSurahTile(surahNames[i]),
                     style: TextStyle(
                       fontWeight: done ? FontWeight.w700 : FontWeight.w500,
                       color: done ? AppTheme.textPrimary : AppTheme.textSecondary,

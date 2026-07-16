@@ -108,6 +108,9 @@ void main() {
   group('StreakChip', () {
     testWidgets('shows the day count when streak > 0', (tester) async {
       await tester.pumpWidget(const MaterialApp(
+        locale: Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(body: StreakChip(streakDays: 5)),
       ));
       // The streak text is one widget: "5 أيام متتالية"
@@ -117,6 +120,9 @@ void main() {
 
     testWidgets('shows the nudge when streak = 0', (tester) async {
       await tester.pumpWidget(const MaterialApp(
+        locale: Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(body: StreakChip(streakDays: 0)),
       ));
       expect(find.text('🔥 ابدأ سلسلتك اليوم'), findsOneWidget);
@@ -126,6 +132,9 @@ void main() {
 
     testWidgets('singular vs plural Arabic label', (tester) async {
       await tester.pumpWidget(const MaterialApp(
+        locale: Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(body: StreakChip(streakDays: 1)),
       ));
       // Singular: "1 يوم متتالي"
@@ -233,6 +242,9 @@ void main() {
     String? picked;
     await tester.pumpWidget(
       MaterialApp(
+        locale: const Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
           body: Builder(
             builder: (context) => Center(

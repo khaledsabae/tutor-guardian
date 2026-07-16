@@ -196,8 +196,8 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
           _playingVerse = null;
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('تعذّر تشغيل التلاوة. تأكد من اتصالك بالإنترنت.'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context).quranPlayError),
           ),
         );
       }
@@ -288,7 +288,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
           // Listen / pause the whole surah, ayah by ayah.
           IconButton(
             key: const Key('quran_listen_button'),
-            tooltip: isPlaying ? 'إيقاف التلاوة' : 'استماع',
+            tooltip: isPlaying ? AppLocalizations.of(context).quranStopRecitation : AppLocalizations.of(context).quranListen,
             icon: Icon(
               isPlaying
                   ? Icons.pause_circle_filled
@@ -323,8 +323,11 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                       Expanded(
                         child: Text(
                           wirdDone
-                              ? 'أكملت ورد اليوم، بارك الله فيك!'
-                              : 'ورد اليوم: ${(_currentVerse - _wirdStart).clamp(0, kDailyWirdVerses)} / $kDailyWirdVerses آيات',
+                              ? AppLocalizations.of(context).quranDailyComplete
+                              : AppLocalizations.of(context).quranDailyProgress(
+                                  (_currentVerse - _wirdStart)
+                                      .clamp(0, kDailyWirdVerses),
+                                  kDailyWirdVerses),
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
                             color: wirdDone
@@ -450,7 +453,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                             color: AppTheme.primary,
                           ),
                           label: Text(
-                            isPlaying ? 'إيقاف' : 'استماع',
+                            isPlaying ? AppLocalizations.of(context).quranStop : AppLocalizations.of(context).quranListen,
                             style: const TextStyle(color: AppTheme.primary),
                           ),
                         ),

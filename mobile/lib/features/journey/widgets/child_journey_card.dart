@@ -12,6 +12,7 @@ import '../../../theme/design_tokens.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../providers/journey_providers.dart';
 import '../screens/child_journey_screen.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ChildJourneyCard extends ConsumerWidget {
   const ChildJourneyCard({super.key});
@@ -69,7 +70,7 @@ class ChildJourneyCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'رحلة ${profile.name}',
+                      AppLocalizations.of(context).journeyCardTitle(profile.name),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -79,8 +80,8 @@ class ChildJourneyCard extends ConsumerWidget {
                     const SizedBox(height: 2),
                     Text(
                       count == 0
-                          ? 'سجّل محطات نموّه الإيمانية واحتفظ بها'
-                          : '$count محطة في رحلته — أضف المزيد',
+                          ? AppLocalizations.of(context).journeyCardEmpty
+                          : AppLocalizations.of(context).journeyCardCount(count),
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: .9),
                         fontSize: 13,

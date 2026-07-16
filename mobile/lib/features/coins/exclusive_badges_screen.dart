@@ -125,8 +125,9 @@ class _BadgeCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           if (owned)
-            const Text('مملوكة ✓',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700))
+            Text(AppLocalizations.of(context).exclusiveBadgeOwned,
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.w700))
           else
             GestureDetector(
               onTap: canAfford ? onBuy : null,

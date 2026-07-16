@@ -7,6 +7,7 @@ library;
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../l10n/app_localizations.dart';
 
 const List<String> kAvatarEmojis = [
   // Faces
@@ -42,7 +43,7 @@ class AvatarPickerSheet extends StatelessWidget {
                     color: AppTheme.primary),
                 const SizedBox(width: 8),
                 Text(
-                  'اختر صورة طفلك',
+                  AppLocalizations.of(context).onbChooseAvatar,
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium

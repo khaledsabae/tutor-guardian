@@ -147,9 +147,10 @@ class _InviteScreenState extends State<InviteScreen> {
                         child: TextField(
                           controller: _codeCtrl,
                           textCapitalization: TextCapitalization.characters,
-                          decoration: const InputDecoration(
-                            hintText: 'مثال: SMDYVE',
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            hintText:
+                                AppLocalizations.of(context).inviteCodeHint,
+                            border: const OutlineInputBorder(),
                             isDense: true,
                           ),
                         ),

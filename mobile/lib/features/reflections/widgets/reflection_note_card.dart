@@ -149,7 +149,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'ملاحظاتي',
+                  AppLocalizations.of(context).reflectionMyNotes,
                   style: theme.textTheme.titleSmall
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
@@ -172,9 +172,9 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
                 maxLines: 4,
                 minLines: 3,
                 maxLength: ReflectionStorage.kMaxNoteLength,
-                decoration: const InputDecoration(
-                  hintText: 'كيف كانت تجربتك مع هذا الدرس؟ ماذا نجحت؟ ماذا ستجربين غداً؟',
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context).reflectionHint,
+                  border: const OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 8),

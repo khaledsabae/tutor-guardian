@@ -55,14 +55,14 @@ class _IdentityScreenState extends State<IdentityScreen> {
         );
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('لم يكتمل ربط الحساب. تحقق من إعداد Google أو جرّب مرة أخرى.')),
+          SnackBar(content: Text(AppLocalizations.of(context).identityLinkIncomplete)),
         );
       }
     } catch (e) {
       if (mounted) {
         final msg = e is SocketException
-            ? 'تعذّر الاتصال بالخادم. تحقق من اتصالك بالإنترنت.'
-            : 'فشل ربط الحساب: ${e.toString()}';
+            ? AppLocalizations.of(context).identityServerUnreachable
+            : AppLocalizations.of(context).identityLinkFailed(e);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(msg)),
         );
@@ -124,10 +124,10 @@ class _IdentityScreenState extends State<IdentityScreen> {
                       ),
                     ],
                     const Spacer(),
-                    const Text(
-                      'البيانات تبقى على نفس الجهاز إلا إذا اخترت تسجيل الدخول.',
+                    Text(
+                      AppLocalizations.of(context).identityLocalNote,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12, color: Dt.inkSoft),
+                      style: const TextStyle(fontSize: 12, color: Dt.inkSoft),
                     ),
                   ],
                 ),

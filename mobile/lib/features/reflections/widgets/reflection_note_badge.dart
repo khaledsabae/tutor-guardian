@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/reflections_providers.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ReflectionNoteBadge extends ConsumerWidget {
   const ReflectionNoteBadge({super.key, required this.lessonId});
@@ -24,15 +25,15 @@ class ReflectionNoteBadge extends ConsumerWidget {
         color: const Color(0xFFFFE9C7),
         borderRadius: BorderRadius.circular(6),
       ),
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.edit_note,
+          const Icon(Icons.edit_note,
               size: 12, color: Color(0xFF8A5A0F)),
-          SizedBox(width: 2),
+          const SizedBox(width: 2),
           Text(
-            'ملاحظة',
-            style: TextStyle(
+            AppLocalizations.of(context).reflectionNoteBadge,
+            style: const TextStyle(
               color: Color(0xFF8A5A0F),
               fontSize: 10,
               fontWeight: FontWeight.w700,

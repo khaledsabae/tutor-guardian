@@ -281,7 +281,7 @@ class _ChallengeSection extends ConsumerWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('تعذّر الحفظ — تأكد من الاتصال.')),
+          SnackBar(content: Text(AppLocalizations.of(context).journeySaveError)),
         );
       }
     }
@@ -293,7 +293,7 @@ class _ChallengeSection extends ConsumerWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('تعذّر الحفظ — تأكد من الاتصال.')),
+          SnackBar(content: Text(AppLocalizations.of(context).journeySaveError)),
         );
       }
     }
@@ -590,7 +590,7 @@ class _TimelineCard extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.delete_outline,
                 color: AppTheme.textMuted, size: 20),
-            tooltip: 'حذف المحطة',
+            tooltip: AppLocalizations.of(context).journeyDeleteMilestone,
             visualDensity: VisualDensity.compact,
             onPressed: onDelete,
           ),
