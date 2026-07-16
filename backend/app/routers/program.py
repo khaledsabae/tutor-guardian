@@ -598,14 +598,27 @@ def monthly_report(child_id: int):
         (child_id, month_start_str),
     ).fetchone()
     
-    # Current streak
-    streak_row = conn.execute(
-        """SELECT streak_days FROM daily_login_streaks 
+    # Current streak (simplified - count consecutive days)
+    streak_rows = conn.execute(
+        """SELECT date FROM daily_login_streaks 
            WHERE device_id = (SELECT device_id FROM child_profiles WHERE id = ?)
-           ORDER BY date DESC LIMIT 1""",
+           ORDER BY date DESC LIMIT 30""",
         (child_id,),
-    ).fetchone()
-    streak = streak_row["streak_days"] if streak_row else 0
+    ).fetchall()
+    
+    # Calculate streak from consecutive dates
+    streak = 0
+    if streak_rows:
+        from datetime import datetime, timedelta
+        today = datetime.now(timezone.utc).date()
+        expected = today
+        for row in streak_rows:
+            row_date = datetime.strptime(row["date"], "%Y-%m-%d").date()
+            if row_date == expected:
+                streak += 1
+                expected -= timedelta(days=1)
+            else:
+                break
     
     # Achievements/Badges
     badges = conn.execute(
