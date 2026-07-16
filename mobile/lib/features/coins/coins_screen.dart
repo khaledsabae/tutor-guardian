@@ -78,7 +78,9 @@ class CoinsScreen extends ConsumerWidget {
                     await ref.read(coinsProvider.notifier).claimDaily();
                 if (context.mounted && reward > 0) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('+$reward عملة! 🪙')),
+                    SnackBar(
+                        content: Text(AppLocalizations.of(context)
+                            .coinsRewardSnack(reward))),
                   );
                 }
               },

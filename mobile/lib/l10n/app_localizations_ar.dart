@@ -1862,6 +1862,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get coinsDailyClaim => 'احصل على مكافأة اليوم 🎁';
 
   @override
+  String coinsRewardSnack(Object reward) {
+    return '+$reward عملة! 🪙';
+  }
+
+  @override
   String get coinsDailyDone => 'تم استلام مكافأة اليوم — عُد غداً!';
 
   @override
@@ -2643,4 +2648,347 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get eduGameOptionLetters => 'أ,ب,ج,د';
+
+  @override
+  String get flashcardAnswer => 'الإجابة';
+
+  @override
+  String journeyCardTitle(Object name) {
+    return 'رحلة $name';
+  }
+
+  @override
+  String get journeyCardEmpty => 'سجّل محطات نموّه الإيمانية واحتفظ بها';
+
+  @override
+  String journeyCardCount(Object count) {
+    return '$count محطة في رحلته — أضف المزيد';
+  }
+
+  @override
+  String get pathDetailStreakDay1 => 'يوم متتالي';
+
+  @override
+  String get pathDetailStreakDay2 => 'يومان متتاليان';
+
+  @override
+  String get pathDetailStreakDaysFew => 'أيام متتالية';
+
+  @override
+  String get pathDetailStreakDaysMany => 'يوم متتالٍ';
+
+  @override
+  String get pathsRefreshTooltip => 'تحديث';
+
+  @override
+  String pathsFilterSemantics(Object label) {
+    return 'تصفية: $label';
+  }
+
+  @override
+  String pathsPathSemantics(Object description, Object title) {
+    return 'مسار: $title. $description';
+  }
+
+  @override
+  String get pathsFrameworkProphetic => 'المنهج النبوي 7-7-7';
+
+  @override
+  String get pathsFrameworkGhazali => 'تزكية الغزالي';
+
+  @override
+  String get pathsFrameworkAttachment => 'الرابطة والرحمة';
+
+  @override
+  String get pathsFrameworkZpd => 'منطقة النمو القريبة';
+
+  @override
+  String lessonNumberBadge(Object order) {
+    return 'الدرس $order';
+  }
+
+  @override
+  String lessonMinutesBadge(Object count) {
+    return '⏱️ $count دقائق';
+  }
+
+  @override
+  String lessonTempScreen(Object title) {
+    return 'شاشة مؤقتة لـ $title';
+  }
+
+  @override
+  String get quizDomainAqeedah => 'العقيدة';
+
+  @override
+  String get quizDomainSkills => 'مهارات';
+
+  @override
+  String get quizDomainDevelopment => 'تنمية';
+
+  @override
+  String quizShareMessage(Object praise, Object score, Object total) {
+    return 'حصلت على $score من $total نقطة في اختبار «المربّي» 🤍\n$praise — جرّب أنت كمان:';
+  }
+
+  @override
+  String quizScorePoints(Object score, Object total) {
+    return '$score / $total نقطة';
+  }
+
+  @override
+  String quizTimeSeconds(Object seconds) {
+    return '$seconds ث';
+  }
+
+  @override
+  String quizPointsCount(Object score) {
+    return '$score نقطة';
+  }
+
+  @override
+  String quizQuestionOf(Object current, Object total) {
+    return 'سؤال $current من $total';
+  }
+
+  @override
+  String get quizNextQuestion => 'السؤال التالي';
+
+  @override
+  String get quizShowResult => 'عرض النتيجة';
+
+  @override
+  String get quizResultExcellent => 'ما شاء الله! أداء ممتاز.';
+
+  @override
+  String get quizResultGood => 'جيد. راجع الدروس التي أخطأت فيها.';
+
+  @override
+  String get quizResultReview =>
+      'لا بأس — المراجعة خير من الندم. اقرأ الدرس مرة أخرى.';
+
+  @override
+  String get quizYourResult => 'نتيجتك';
+
+  @override
+  String get quizFallbackTitle => 'اختبار';
+
+  @override
+  String get reportScreenTitle => '📄 تقرير الدرس';
+
+  @override
+  String get reportLoadError => 'تعذّر تحميل التقرير';
+
+  @override
+  String get dataTableTitle => '📋 جدول البيانات';
+
+  @override
+  String get dataTableLoadError => 'تعذّر تحميل الجدول';
+
+  @override
+  String get favoritesRemoveTooltip => 'إزالة من المفضلة';
+
+  @override
+  String get searchClearTooltip => 'مسح';
+
+  @override
+  String get searchTypeLesson => 'درس';
+
+  @override
+  String get searchTypePath => 'مسار';
+
+  @override
+  String get searchTypeTip => 'نصيحة';
+
+  @override
+  String get storyLoadError => 'تعذر تحميل القصص';
+
+  @override
+  String get storyEmpty => 'لا توجد قصص حالياً';
+
+  @override
+  String get storyEmptyDesc => 'انتظرونا، سنضيف قصصاً جديدة قريباً!';
+
+  @override
+  String get storyTapToOpen => 'اضغط لفتح القصة';
+
+  @override
+  String get storyBedtimeTitle => 'حكايات قبل النوم 🌙';
+
+  @override
+  String get storyWellDone => 'أحسنت يا بطل!';
+
+  @override
+  String get storyRelaxNow =>
+      'استرخِ الآن واغمض عينيك، فالأحلام الجميلة تنتظرك.';
+
+  @override
+  String get storyClose => 'أغلق القصة';
+
+  @override
+  String get videoMinimizeTooltip => 'تصغير';
+
+  @override
+  String get videoRotateTooltip => 'تدوير الشاشة';
+
+  @override
+  String get videoCloseTooltip => 'إغلاق';
+
+  @override
+  String get videoFullscreenTooltip => 'ملء الشاشة';
+
+  @override
+  String get infographicRotateTooltip => 'تدوير الشاشة';
+
+  @override
+  String get infographicDownloadTooltip => 'تحميل';
+
+  @override
+  String get infographicLoadError => 'تعذّر تحميل الإنفوجرافيك';
+
+  @override
+  String get podcastUnavailable =>
+      'البودكاست غير متاح حالياً. سيتاح قريباً بإذن الله.';
+
+  @override
+  String get podcastLoadError =>
+      'تعذّر تحميل البودكاست. تأكد من اتصالك بالإنترنت.';
+
+  @override
+  String podcastSpeed(Object speed) {
+    return 'السرعة: $speed×';
+  }
+
+  @override
+  String get activeChildLabel => 'طفل نشط';
+
+  @override
+  String get coachAskAboutTip => 'اسأل المربّي عن ده';
+
+  @override
+  String dailyTipShareError(Object error) {
+    return 'تعذّر مشاركة النصيحة: $error';
+  }
+
+  @override
+  String get onbChooseAvatar => 'اختر صورة طفلك';
+
+  @override
+  String get addChildNameRequired => 'الاسم مطلوب';
+
+  @override
+  String get addChildNameTooLong => 'الاسم طويل جداً (الحد الأقصى 80 حرفاً)';
+
+  @override
+  String badgesEarnedOf(Object earned, Object total) {
+    return 'حصلت على $earned من $total إنجازات';
+  }
+
+  @override
+  String badgesEarnedOfShort(Object earned, Object total) {
+    return 'حصلت على $earned من $total';
+  }
+
+  @override
+  String get badgeEarnedTapShare => 'تم الحصول عليه — اضغط للمشاركة';
+
+  @override
+  String get badgeLockedYet => 'لم يُفتح بعد';
+
+  @override
+  String get identityLinkIncomplete =>
+      'لم يكتمل ربط الحساب. تحقق من إعداد Google أو جرّب مرة أخرى.';
+
+  @override
+  String get identityServerUnreachable =>
+      'تعذّر الاتصال بالخادم. تحقق من اتصالك بالإنترنت.';
+
+  @override
+  String identityLinkFailed(Object error) {
+    return 'فشل ربط الحساب: $error';
+  }
+
+  @override
+  String get identityLocalNote =>
+      'البيانات تبقى على نفس الجهاز إلا إذا اخترت تسجيل الدخول.';
+
+  @override
+  String get exclusiveBadgeOwned => 'مملوكة ✓';
+
+  @override
+  String get reflectionNoteBadge => 'ملاحظة';
+
+  @override
+  String get reflectionMyNotes => 'ملاحظاتي';
+
+  @override
+  String get reflectionHint =>
+      'كيف كانت تجربتك مع هذا الدرس؟ ماذا نجحت؟ ماذا ستجربين غداً؟';
+
+  @override
+  String get inviteCodeHint => 'مثال: SMDYVE';
+
+  @override
+  String get celebrationMashallah => 'ما شاء الله!';
+
+  @override
+  String quranMemFirstSurahMsg(Object name, Object surah) {
+    return '$name حفظ أول سورة — سورة $surah 🌟';
+  }
+
+  @override
+  String quranMemSurahTile(Object name) {
+    return 'سورة $name';
+  }
+
+  @override
+  String get progressCompleted => 'مكتمل';
+
+  @override
+  String get progressInProgress => 'قيد التنفيذ';
+
+  @override
+  String get progressNotStarted => 'لم يبدأ';
+
+  @override
+  String get backupInvalidFile =>
+      'ملف النسخ الاحتياطي غير صالح: حقل \"version\" مفقود.';
+
+  @override
+  String backupNewerVersion(Object appVersion, Object version) {
+    return 'إصدار النسخ الاحتياطي ($version) أحدث من إصدار التطبيق ($appVersion). يرجى تحديث التطبيق.';
+  }
+
+  @override
+  String backupInvalidJson(Object error) {
+    return 'ملف JSON غير صالح: $error';
+  }
+
+  @override
+  String backupUnexpectedError(Object error) {
+    return 'حدث خطأ غير متوقع: $error';
+  }
+
+  @override
+  String get reviewPromptTitle => 'هل أعجبك «المربّي»؟ 🌟';
+
+  @override
+  String get reviewPromptBody =>
+      'تقييمك على المتجر يساعد آباءً غيرك يجدون التطبيق — وفي ميزان حسناتك إن شاء الله.';
+
+  @override
+  String get reviewPromptLater => 'لاحقًا';
+
+  @override
+  String get reviewPromptNow => 'قيّم الآن';
+
+  @override
+  String bedtimeAdhkarCounter(Object current, Object total) {
+    return 'الذكر $current من $total';
+  }
+
+  @override
+  String bedtimeTapToRepeat(Object count) {
+    return 'اضغط هنا للتكرار: $count';
+  }
 }

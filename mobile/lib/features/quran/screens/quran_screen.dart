@@ -87,7 +87,9 @@ class QuranScreen extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'سورة $surahName - آية ${lastRead.verse}',
+                                  AppLocalizations.of(context)
+                                      .quranSurahVerse(
+                                          surahName, lastRead.verse),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -172,7 +174,7 @@ class QuranScreen extends ConsumerWidget {
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(
-          child: Text('حدث خطأ أثناء تحميل المصحف: $err'),
+          child: Text(AppLocalizations.of(context).quranLoadError(err)),
         ),
       ),
     );

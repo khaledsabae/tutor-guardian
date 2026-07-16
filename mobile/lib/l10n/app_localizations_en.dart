@@ -401,7 +401,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get incompleteResponse => 'Incomplete server response.';
 
   @override
-  String get continuePath => 'استمر';
+  String get continuePath => 'Continue';
 
   @override
   String get todaySun => 'Today ☀️';
@@ -1885,6 +1885,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get coinsDailyClaim => 'Claim Today\'s Reward 🎁';
 
   @override
+  String coinsRewardSnack(Object reward) {
+    return '+$reward coins! 🪙';
+  }
+
+  @override
   String get coinsDailyDone => 'Today\'s reward claimed — come back tomorrow!';
 
   @override
@@ -2153,7 +2158,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get tapToContinue => 'Tap for heart · swipe for next';
+  String get tapToContinue => 'Tap to flip · swipe for next';
 
   @override
   String get previousCard => 'Previous';
@@ -2674,4 +2679,347 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eduGameOptionLetters => 'A,B,C,D';
+
+  @override
+  String get flashcardAnswer => 'Answer';
+
+  @override
+  String journeyCardTitle(Object name) {
+    return '$name\'s journey';
+  }
+
+  @override
+  String get journeyCardEmpty => 'Record and keep his faith milestones';
+
+  @override
+  String journeyCardCount(Object count) {
+    return '$count milestones in his journey — add more';
+  }
+
+  @override
+  String get pathDetailStreakDay1 => 'day streak';
+
+  @override
+  String get pathDetailStreakDay2 => 'days streak';
+
+  @override
+  String get pathDetailStreakDaysFew => 'days streak';
+
+  @override
+  String get pathDetailStreakDaysMany => 'days streak';
+
+  @override
+  String get pathsRefreshTooltip => 'Refresh';
+
+  @override
+  String pathsFilterSemantics(Object label) {
+    return 'Filter: $label';
+  }
+
+  @override
+  String pathsPathSemantics(Object description, Object title) {
+    return 'Path: $title. $description';
+  }
+
+  @override
+  String get pathsFrameworkProphetic => 'Prophetic 7-7-7 Method';
+
+  @override
+  String get pathsFrameworkGhazali => 'Ghazali Tazkiyah';
+
+  @override
+  String get pathsFrameworkAttachment => 'Attachment & Rahma';
+
+  @override
+  String get pathsFrameworkZpd => 'Zone of Proximal Development';
+
+  @override
+  String lessonNumberBadge(Object order) {
+    return 'Lesson $order';
+  }
+
+  @override
+  String lessonMinutesBadge(Object count) {
+    return '⏱️ $count min';
+  }
+
+  @override
+  String lessonTempScreen(Object title) {
+    return 'Placeholder screen for $title';
+  }
+
+  @override
+  String get quizDomainAqeedah => 'Aqeedah';
+
+  @override
+  String get quizDomainSkills => 'Skills';
+
+  @override
+  String get quizDomainDevelopment => 'Development';
+
+  @override
+  String quizShareMessage(Object praise, Object score, Object total) {
+    return 'I scored $score of $total points on the Al-Murabbi quiz 🤍\n$praise — try it yourself:';
+  }
+
+  @override
+  String quizScorePoints(Object score, Object total) {
+    return '$score / $total points';
+  }
+
+  @override
+  String quizTimeSeconds(Object seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String quizPointsCount(Object score) {
+    return '$score points';
+  }
+
+  @override
+  String quizQuestionOf(Object current, Object total) {
+    return 'Question $current of $total';
+  }
+
+  @override
+  String get quizNextQuestion => 'Next question';
+
+  @override
+  String get quizShowResult => 'Show result';
+
+  @override
+  String get quizResultExcellent => 'Masha\'Allah! Excellent performance.';
+
+  @override
+  String get quizResultGood => 'Good. Review the lessons you missed.';
+
+  @override
+  String get quizResultReview =>
+      'That\'s okay — review beats regret. Read the lesson again.';
+
+  @override
+  String get quizYourResult => 'Your result';
+
+  @override
+  String get quizFallbackTitle => 'Quiz';
+
+  @override
+  String get reportScreenTitle => '📄 Lesson Report';
+
+  @override
+  String get reportLoadError => 'Failed to load the report';
+
+  @override
+  String get dataTableTitle => '📋 Data Table';
+
+  @override
+  String get dataTableLoadError => 'Failed to load the table';
+
+  @override
+  String get favoritesRemoveTooltip => 'Remove from favorites';
+
+  @override
+  String get searchClearTooltip => 'Clear';
+
+  @override
+  String get searchTypeLesson => 'Lesson';
+
+  @override
+  String get searchTypePath => 'Path';
+
+  @override
+  String get searchTypeTip => 'Tip';
+
+  @override
+  String get storyLoadError => 'Failed to load stories';
+
+  @override
+  String get storyEmpty => 'No stories yet';
+
+  @override
+  String get storyEmptyDesc => 'Stay tuned — new stories are coming soon!';
+
+  @override
+  String get storyTapToOpen => 'Tap to open the story';
+
+  @override
+  String get storyBedtimeTitle => 'Bedtime Stories 🌙';
+
+  @override
+  String get storyWellDone => 'Well done, hero!';
+
+  @override
+  String get storyRelaxNow =>
+      'Relax now and close your eyes — sweet dreams await.';
+
+  @override
+  String get storyClose => 'Close the story';
+
+  @override
+  String get videoMinimizeTooltip => 'Minimize';
+
+  @override
+  String get videoRotateTooltip => 'Rotate screen';
+
+  @override
+  String get videoCloseTooltip => 'Close';
+
+  @override
+  String get videoFullscreenTooltip => 'Fullscreen';
+
+  @override
+  String get infographicRotateTooltip => 'Rotate screen';
+
+  @override
+  String get infographicDownloadTooltip => 'Download';
+
+  @override
+  String get infographicLoadError => 'Failed to load the infographic';
+
+  @override
+  String get podcastUnavailable =>
+      'The podcast is not available yet. Coming soon, insha\'Allah.';
+
+  @override
+  String get podcastLoadError =>
+      'Failed to load the podcast. Check your internet connection.';
+
+  @override
+  String podcastSpeed(Object speed) {
+    return 'Speed: $speed×';
+  }
+
+  @override
+  String get activeChildLabel => 'Active child';
+
+  @override
+  String get coachAskAboutTip => 'Ask Al-Murabbi about this';
+
+  @override
+  String dailyTipShareError(Object error) {
+    return 'Failed to share the tip: $error';
+  }
+
+  @override
+  String get onbChooseAvatar => 'Choose your child\'s photo';
+
+  @override
+  String get addChildNameRequired => 'Name is required';
+
+  @override
+  String get addChildNameTooLong => 'Name is too long (80 characters max)';
+
+  @override
+  String badgesEarnedOf(Object earned, Object total) {
+    return 'You earned $earned of $total achievements';
+  }
+
+  @override
+  String badgesEarnedOfShort(Object earned, Object total) {
+    return 'Earned $earned of $total';
+  }
+
+  @override
+  String get badgeEarnedTapShare => 'Earned — tap to share';
+
+  @override
+  String get badgeLockedYet => 'Not unlocked yet';
+
+  @override
+  String get identityLinkIncomplete =>
+      'Account linking didn\'t complete. Check your Google setup or try again.';
+
+  @override
+  String get identityServerUnreachable =>
+      'Couldn\'t reach the server. Check your internet connection.';
+
+  @override
+  String identityLinkFailed(Object error) {
+    return 'Account linking failed: $error';
+  }
+
+  @override
+  String get identityLocalNote =>
+      'Data stays on this device unless you choose to sign in.';
+
+  @override
+  String get exclusiveBadgeOwned => 'Owned ✓';
+
+  @override
+  String get reflectionNoteBadge => 'Note';
+
+  @override
+  String get reflectionMyNotes => 'My Notes';
+
+  @override
+  String get reflectionHint =>
+      'How was your experience with this lesson? What worked? What will you try tomorrow?';
+
+  @override
+  String get inviteCodeHint => 'e.g. SMDYVE';
+
+  @override
+  String get celebrationMashallah => 'Masha\'Allah!';
+
+  @override
+  String quranMemFirstSurahMsg(Object name, Object surah) {
+    return '$name memorized the first Surah — Surah $surah 🌟';
+  }
+
+  @override
+  String quranMemSurahTile(Object name) {
+    return 'Surah $name';
+  }
+
+  @override
+  String get progressCompleted => 'Completed';
+
+  @override
+  String get progressInProgress => 'In progress';
+
+  @override
+  String get progressNotStarted => 'Not started';
+
+  @override
+  String get backupInvalidFile =>
+      'Invalid backup file: missing \"version\" field.';
+
+  @override
+  String backupNewerVersion(Object appVersion, Object version) {
+    return 'Backup version ($version) is newer than the app version ($appVersion). Please update the app.';
+  }
+
+  @override
+  String backupInvalidJson(Object error) {
+    return 'Invalid JSON file: $error';
+  }
+
+  @override
+  String backupUnexpectedError(Object error) {
+    return 'An unexpected error occurred: $error';
+  }
+
+  @override
+  String get reviewPromptTitle => 'Enjoying Al-Murabbi? 🌟';
+
+  @override
+  String get reviewPromptBody =>
+      'Your store review helps other parents find the app — and counts among your good deeds, insha\'Allah.';
+
+  @override
+  String get reviewPromptLater => 'Later';
+
+  @override
+  String get reviewPromptNow => 'Rate now';
+
+  @override
+  String bedtimeAdhkarCounter(Object current, Object total) {
+    return 'Dhikr $current of $total';
+  }
+
+  @override
+  String bedtimeTapToRepeat(Object count) {
+    return 'Tap here to repeat: $count';
+  }
 }
