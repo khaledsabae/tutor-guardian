@@ -88,13 +88,13 @@ async def _generate_answer(question: str, age_group: str) -> str | None:
             units = retrieve_relevant_units(question, domain=domain, age_group=age_group, top_k=3)
             all_units.extend(units)
 
-        # Deduplicate by title
-        seen_titles = set()
+        # Deduplicate by unit_id
+        seen_ids = set()
         unique_units = []
         for u in all_units:
-            title = u.get("title", "")
-            if title not in seen_titles:
-                seen_titles.add(title)
+            uid = u.get("unit_id", "")
+            if uid and uid not in seen_ids:
+                seen_ids.add(uid)
                 unique_units.append(u)
 
         if not unique_units:
