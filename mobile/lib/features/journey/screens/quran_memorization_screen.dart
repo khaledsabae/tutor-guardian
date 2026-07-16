@@ -8,6 +8,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
@@ -79,7 +80,7 @@ class QuranMemorizationScreen extends ConsumerWidget {
           orElse: () => const <int>{},
         );
     return Scaffold(
-      appBar: AppBar(title: Text('حفظ القرآن — $childName')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).quranMemTitle(childName))),
       body: Column(
         children: [
           Container(
@@ -102,7 +103,7 @@ class QuranMemorizationScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'حفظ ${memorized.length} من 114 سورة',
+                        AppLocalizations.of(context).quranMemCount(memorized.length),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -111,7 +112,7 @@ class QuranMemorizationScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'علّم السور التي أتمّها — نحتفل بكل خطوة',
+                        AppLocalizations.of(context).quranMemHint,
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: .92),
                           fontSize: 12.5,

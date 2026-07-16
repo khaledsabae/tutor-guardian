@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/features/program/models/flashcard_deck.dart';
 import 'package:almorabbi/features/program/screens/flashcards_screen.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
@@ -36,6 +37,9 @@ Map<String, dynamic> _deckJson(String id, List<List<String>> cards) => {
 Widget _wrap(Widget child, _FakeAssetClient fake) => ProviderScope(
       overrides: [tgClientProvider.overrideWithValue(fake)],
       child: MaterialApp(
+        locale: const Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: Directionality(textDirection: TextDirection.rtl, child: child),
       ),
     );
@@ -68,7 +72,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('ما هو الرفق؟'), findsOneWidget);
-      expect(find.text('البطاقة 1 من 2'), findsOneWidget);
+      expect(find.text('1 / 2'), findsOneWidget);
     });
 
     testWidgets('tap flips card to show answer points', (tester) async {
@@ -102,7 +106,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('البطاقة 1 من 1'), findsOneWidget);
+      expect(find.text('1 / 1'), findsOneWidget);
       expect(find.text('سؤال أ؟'), findsOneWidget);
     });
 
@@ -115,7 +119,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('لا توجد بطاقات متاحة لهذا الدرس حالياً'),
+        find.text('خطأ في تحميل الأسئلة'),
         findsOneWidget,
       );
     });

@@ -11,6 +11,7 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/theme/design_tokens.dart';
 
 class HabitCustomizeScreen extends ConsumerStatefulWidget {
@@ -36,9 +37,9 @@ class _HabitCustomizeScreenState extends ConsumerState<HabitCustomizeScreen> {
     final childId = ref.watch(activeChildIdProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('تخصيص العادات')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).routineCustomize)),
       body: childId == null
-          ? const Center(child: Text('لا يوجد طفل نشط'))
+          ? Center(child: Text(AppLocalizations.of(context).routineNoHabits))
           : Column(
               children: [
                 _CategorySelector(
@@ -153,7 +154,7 @@ class _TemplateList extends ConsumerWidget {
       data: (all) {
         final templates = all.where((t) => t.category == category).toList();
         if (templates.isEmpty) {
-          return const Center(child: Text('لا توجد عادات مخصصة في هذا القسم'));
+          return Center(child: Text(AppLocalizations.of(context).routineNoHabits));
         }
         return ListView.builder(
           padding: const EdgeInsets.all(Dt.pad),
@@ -213,7 +214,7 @@ class _TemplateTile extends StatelessWidget {
             color: template.isActive ? null : Colors.grey,
           ),
         ),
-        subtitle: Text(template.isActive ? 'نشطة' : 'مؤرشفة'),
+        subtitle: Text(template.isActive ? AppLocalizations.of(context).habitChildModeDone : AppLocalizations.of(context).habitChildModeMissed),
         trailing: Switch(
           value: template.isActive,
           onChanged: (_) => onToggle(),

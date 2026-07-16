@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../config/app_config.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/skeleton.dart';
@@ -143,7 +144,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
       children: [
         const SizedBox(height: 24),
         Text(
-          'حكايات قبل النوم 🌙',
+          AppLocalizations.of(context).bedtimeStories,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white,
@@ -152,8 +153,8 @@ class _BookshelfBodyState extends State<_BookshelfBody>
               ),
         ).animate().fadeIn(duration: Dt.slow).slideY(begin: -0.1),
         const SizedBox(height: 8),
-        const Text(
-          'قصص قصيرة وهادئة تجهّز طفلك للنوم',
+        Text(
+          AppLocalizations.of(context).bedtimeStoriesDesc,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Color(0xFFE0D5C1),

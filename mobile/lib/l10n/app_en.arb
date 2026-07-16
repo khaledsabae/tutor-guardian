@@ -627,5 +627,11 @@
   "feedbackContactHint": "Email or phone number for a reply",
   "feedbackSending": "Sending…",
   "feedbackSent": "Feedback received, thank you! 🌿 (ID: {id})",
-  "feedbackSendError": "Failed to send: {error}"
+  "feedbackSendError": "Failed to send: {error}",
+  "quizTurnsCount": "{count} / {total}",
+  "cardCount": "Card {current} of {total}",
+  "tapToContinue": "Tap for heart · swipe for next",
+  "previousCard": "Previous",
+  "nextCard": "Next",
+  "finishedCards": "You finished the cards! 🎉"
 }

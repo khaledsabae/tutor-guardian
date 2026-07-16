@@ -6,6 +6,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../config/app_config.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../coins/coins_providers.dart';
 import '../data/story_models.dart';
 import '../services/bedtime_audio_service.dart';
@@ -196,8 +197,8 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                         onTap: () => Navigator.of(context).pop(),
                       ),
                       const Spacer(),
-                      const Text(
-                        'روتين النوم 🌙',
+                      Text(
+                        AppLocalizations.of(context).bedtimeStories,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -402,7 +403,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
               .scaleXY(begin: 1.1, end: 0.9, duration: 1000.ms),
           const SizedBox(height: 20),
           Text(
-            'بارك الله فيك يا بطل!',
+            AppLocalizations.of(context).lessonCelebrationTitle,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: themeColor,
@@ -411,8 +412,8 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          const Text(
-            'لقد أتممت قراءة أذكار النوم بنجاح، وحصلت على ٥ عملات ذهبية لميزان عاداتك.',
+          Text(
+            AppLocalizations.of(context).bedtimeStoriesDesc,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Color(0xFF4A4A4A),
@@ -425,8 +426,8 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
           FilledButton.icon(
             onPressed: _startStory,
             icon: const Icon(Icons.menu_book),
-            label: const Text(
-              'ابدأ القصة الآن',
+            label: Text(
+              AppLocalizations.of(context).startLearning,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             style: FilledButton.styleFrom(

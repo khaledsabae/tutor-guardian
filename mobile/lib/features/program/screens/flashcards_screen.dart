@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
@@ -26,7 +27,7 @@ class FlashcardsScreen extends ConsumerWidget {
     final decksAsync = ref.watch(flashcardDecksProvider(deckIds.join(',')));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('📇 فلاش كاردز')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).lessonFlashcards(0))),
       body: decksAsync.when(
         loading: () => const SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
@@ -34,17 +35,17 @@ class FlashcardsScreen extends ConsumerWidget {
         ),
         error: (e, _) => EmptyState(
           emoji: '📡',
-          title: 'تعذّر تحميل البطاقات',
-          actionLabel: 'إعادة المحاولة',
+          title: AppLocalizations.of(context).quizErrorLoading,
+          actionLabel: AppLocalizations.of(context).retry,
           onAction: () =>
               ref.invalidate(flashcardDecksProvider(deckIds.join(','))),
         ),
         data: (decks) {
           final cards = decks.expand((d) => d.cards).toList();
           if (cards.isEmpty) {
-            return const EmptyState(
+            return EmptyState(
               emoji: '📇',
-              title: 'لا توجد بطاقات متاحة لهذا الدرس حالياً',
+              title: AppLocalizations.of(context).quizErrorLoading,
             );
           }
           return _FlashcardPager(cards: cards);
@@ -92,7 +93,7 @@ class _FlashcardPagerState extends State<_FlashcardPager> {
         Padding(
           padding: const EdgeInsets.only(top: 16),
           child: Text(
-            'البطاقة ${_index + 1} من $total',
+            AppLocalizations.of(context).quizTurnsCount(_index + 1, total),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppTheme.textSecondary,
                   fontWeight: FontWeight.w700,
@@ -138,8 +139,8 @@ class _FlashcardPagerState extends State<_FlashcardPager> {
                 color: const Color(0xFFFFF4E0),
                 borderRadius: BorderRadius.circular(Dt.rChip),
               ),
-              child: const Text(
-                'أنهيت البطاقات! 🎉',
+              child: Text(
+                AppLocalizations.of(context).quizShowResults,
                 style: TextStyle(
                   color: Dt.accentDeep,
                   fontWeight: FontWeight.w800,

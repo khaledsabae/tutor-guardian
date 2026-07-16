@@ -2092,4 +2092,26 @@ class AppLocalizationsAr extends AppLocalizations {
   String feedbackSendError(Object error) {
     return 'تعذّر الإرسال: $error';
   }
+
+  @override
+  String quizTurnsCount(Object count, Object total) {
+    return '$count / $total';
+  }
+
+  @override
+  String cardCount(Object current, Object total) {
+    return 'البطاقة $current من $total';
+  }
+
+  @override
+  String get tapToContinue => 'اضغط للقلب · اسحب للتالي';
+
+  @override
+  String get previousCard => 'السابقة';
+
+  @override
+  String get nextCard => 'التالية';
+
+  @override
+  String get finishedCards => 'أنهيت البطاقات! 🎉';
 }

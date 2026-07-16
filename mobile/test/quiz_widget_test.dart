@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/features/program/models/quiz_deck.dart';
 import 'package:almorabbi/features/program/screens/quiz_screen.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
@@ -56,6 +57,9 @@ Map<String, dynamic> _quizJson(
 Widget _wrap(Widget child, _FakeAssetClient fake) => ProviderScope(
       overrides: [tgClientProvider.overrideWithValue(fake)],
       child: MaterialApp(
+        locale: const Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: Directionality(textDirection: TextDirection.rtl, child: child),
       ),
     );
@@ -238,7 +242,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('لا توجد أسئلة متاحة لهذا الدرس حالياً'),
+        find.text('خطأ في تحميل الأسئلة'),
         findsOneWidget,
       );
     });

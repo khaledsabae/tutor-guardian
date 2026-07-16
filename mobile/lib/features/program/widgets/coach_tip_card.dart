@@ -9,6 +9,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../../share/share_service.dart';
@@ -118,7 +119,7 @@ class _CoachCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'نصيحة اليوم لـ $childName',
+                      AppLocalizations.of(context).insightsTitle,
                       style: const TextStyle(
                         color: Color(0xFF8A5A0F),
                         fontWeight: FontWeight.w700,
@@ -186,13 +187,13 @@ class _ShareButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: const Color(0xFF8A5A0F), width: 1),
           ),
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.ios_share, color: Color(0xFF8A5A0F), size: 15),
               SizedBox(width: 5),
               Text(
-                'شارك النصيحة',
+                AppLocalizations.of(context).share,
                 style: TextStyle(
                   color: Color(0xFF8A5A0F),
                   fontWeight: FontWeight.w700,

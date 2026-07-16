@@ -8,6 +8,7 @@ import 'dart:io' show SocketException;
 
 import 'package:flutter/material.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/noor_mascot.dart';
@@ -50,7 +51,7 @@ class _IdentityScreenState extends State<IdentityScreen> {
       final ok = await IdentityService.instance.signInAndLink();
       if (ok && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('تم ربط الحساب 🤍')),
+          SnackBar(content: Text(AppLocalizations.of(context).settingsBackup)),
         );
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -79,7 +80,7 @@ class _IdentityScreenState extends State<IdentityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('احفظ تقدّمك')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).settingsBackup)),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -90,16 +91,16 @@ class _IdentityScreenState extends State<IdentityScreen> {
                   children: [
                     const NoorMascot(size: 120),
                     const SizedBox(height: 24),
-                    const Text(
-                      'احفظ جهدك وتقدّمك',
+                    Text(
+                      AppLocalizations.of(context).settingsBackup,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      'تسجيل الدخول اختياري ويخلي بيانات أطفالك وإنجازاتك محفوظة لو غيّرت الجهاز أو أعدت تثبيت التطبيق.',
+                    Text(
+                      AppLocalizations.of(context).settingsBackupDesc,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 15, color: Dt.inkSoft),
                     ),
@@ -112,13 +113,13 @@ class _IdentityScreenState extends State<IdentityScreen> {
                         Text(_email!, style: const TextStyle(fontSize: 14, color: Dt.inkSoft)),
                       const SizedBox(height: 24),
                       _Button(
-                        label: 'فك الربط',
+                        label: AppLocalizations.of(context).logout,
                         outlined: true,
                         onTap: _unlink,
                       ),
                     ] else ...[
                       _Button(
-                        label: 'سجّل بحساب Google',
+                        label: AppLocalizations.of(context).settingsImport,
                         onTap: _signIn,
                       ),
                     ],

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
 import 'coins_providers.dart';
@@ -31,7 +32,7 @@ class ExclusiveBadgesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('شارات حصرية 🏅'),
+        title: Text(AppLocalizations.of(context).coinsRedeemBadges),
         actions: [
           Center(
             child: Padding(
@@ -65,8 +66,8 @@ class ExclusiveBadgesScreen extends ConsumerWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(ok
-                          ? 'تهانينا! فتحت «$title» 🎉'
-                          : 'رصيدك لا يكفي.'),
+                          ? AppLocalizations.of(context).covenantSuccess
+                          : AppLocalizations.of(context).covenantInsufficient),
                     ),
                   );
                 }

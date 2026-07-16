@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
@@ -33,7 +34,7 @@ class QuizScreen extends ConsumerWidget {
         ref.watch(quizDecksProvider(quizIds.join(',')));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('❓ اختبر نفسك')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).lessonQuiz(0))),
       body: decksAsync.when(
         loading: () => const SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
@@ -41,17 +42,17 @@ class QuizScreen extends ConsumerWidget {
         ),
         error: (e, _) => EmptyState(
           emoji: '📡',
-          title: 'تعذّر تحميل الاختبار',
-          actionLabel: 'إعادة المحاولة',
+          title: AppLocalizations.of(context).quizErrorLoading,
+          actionLabel: AppLocalizations.of(context).retry,
           onAction: () =>
               ref.invalidate(quizDecksProvider(quizIds.join(','))),
         ),
         data: (decks) {
           final questions = decks.expand((d) => d.questions).toList();
           if (questions.isEmpty) {
-            return const EmptyState(
+            return EmptyState(
               emoji: '❓',
-              title: 'لا توجد أسئلة متاحة لهذا الدرس حالياً',
+              title: AppLocalizations.of(context).quizErrorLoading,
             );
           }
           return _QuizRunner(questions: questions);

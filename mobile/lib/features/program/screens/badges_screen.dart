@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
@@ -20,12 +21,12 @@ class BadgesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final childId = ref.watch(activeChildIdProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('إنجازاتي')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).settingsAchievements)),
       body: childId == null
-          ? const EmptyState(
+          ? EmptyState(
               emoji: '🏅',
-              title: 'اختر طفلاً أولاً',
-              subtitle: 'اختر طفلاً لعرض إنجازاته.',
+              title: AppLocalizations.of(context).chooseYourChild,
+              subtitle: AppLocalizations.of(context).settingsChildCount(0, 5),
             )
           : ref.watch(childProgressProvider(childId)).when(
                 loading: () => const SingleChildScrollView(

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
@@ -67,8 +68,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             onChanged: _onChanged,
             style:
                 const TextStyle(color: AppTheme.textPrimary, fontSize: 15),
-            decoration: const InputDecoration(
-              hintText: 'ابحث في الدروس والنصائح…',
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context).search,
               hintStyle: TextStyle(color: AppTheme.textMuted),
               prefixIcon:
                   Icon(Icons.search, color: AppTheme.textMuted, size: 20),
@@ -105,10 +106,10 @@ class _Body extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (query.trim().length < 2) {
-      return const EmptyState(
+      return EmptyState(
         emoji: '🔎',
-        title: 'ابحث في كل المنهج',
-        subtitle: 'اكتب حرفين على الأقل للبحث في الدروس والمسارات والنصائح.',
+        title: AppLocalizations.of(context).search,
+        subtitle: AppLocalizations.of(context).chatHint,
       );
     }
     final async = ref.watch(searchResultsProvider(query));
@@ -119,7 +120,7 @@ class _Body extends ConsumerWidget {
       ),
       error: (e, _) => EmptyState(
         emoji: '📡',
-        title: 'تعذّر البحث',
+        title: AppLocalizations.of(context).pathsError,
         subtitle: '$e',
       ),
       data: (results) {
@@ -127,8 +128,8 @@ class _Body extends ConsumerWidget {
           return EmptyState(
             emoji: '🤷',
             imageAsset: 'assets/images/generated/empty_search.webp',
-            title: 'لا نتائج لـ «$query»',
-            subtitle: 'جرّب كلمات أخرى أو أبسط.',
+            title: AppLocalizations.of(context).noResultsFound,
+            subtitle: AppLocalizations.of(context).chatHint,
           );
         }
         return ListView.separated(

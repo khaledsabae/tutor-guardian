@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../providers/child_mode_providers.dart';
 import '../services/child_mode_secure_storage.dart';
 
@@ -101,10 +102,10 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final title = widget.isExit ? 'إغلاق وضع الطفل' : 'دخول وضع الطفل';
+    final title = widget.isExit ? AppLocalizations.of(context).habitChildModeExitTitle : AppLocalizations.of(context).childMode;
     final subtitle = _firstSetup && !widget.isExit
-        ? 'أنشئ رمز PIN مكون من 4 أرقام لحماية وضع ${widget.childName}'
-        : 'أدخل رمز PIN الخاص بوضع ${widget.childName}';
+        ? AppLocalizations.of(context).onbAgeGroup
+        : AppLocalizations.of(context).chatOffline;
 
     return Scaffold(
       appBar: AppBar(title: Text(title)),

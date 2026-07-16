@@ -8,6 +8,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../data/reflection_storage.dart';
 import '../providers/reflections_providers.dart';
@@ -68,7 +69,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
       setState(() => _editing = false);
       _focus.unfocus();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('تم حفظ ملاحظتك.')),
+        SnackBar(content: Text(AppLocalizations.of(context).settingsShareFeedbackDesc)),
       );
     }
   }
@@ -77,17 +78,17 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('حذف الملاحظة؟'),
-        content: const Text('سيتم حذف ملاحظتك على هذا الدرس. لا يمكن التراجع.'),
+        title: Text(AppLocalizations.of(context).journeyDeleteMilestone),
+        content: Text(AppLocalizations.of(context).favoritesClearAllMsg),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('إلغاء'),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
             style: TextButton.styleFrom(foregroundColor: AppTheme.dangerFg),
-            child: const Text('حذف'),
+            child: Text(AppLocalizations.of(context).delete),
           ),
         ],
       ),
@@ -100,7 +101,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
     if (mounted) {
       setState(() => _editing = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('تم حذف الملاحظة.')),
+        SnackBar(content: Text(AppLocalizations.of(context).favoritesCleared)),
       );
     }
   }
@@ -189,13 +190,13 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
                       });
                       _focus.unfocus();
                     },
-                    child: const Text('إلغاء'),
+                    child: Text(AppLocalizations.of(context).cancel),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton.icon(
                     onPressed: _save,
                     icon: const Icon(Icons.save_outlined, size: 18),
-                    label: const Text('حفظ'),
+                    label: Text(AppLocalizations.of(context).save),
                   ),
                 ],
               ),
@@ -221,13 +222,13 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
                   TextButton.icon(
                     onPressed: _startEdit,
                     icon: const Icon(Icons.edit_outlined, size: 16),
-                    label: const Text('تعديل'),
+                    label: Text(AppLocalizations.of(context).edit),
                   ),
                   const Spacer(),
                   TextButton.icon(
                     onPressed: _delete,
                     icon: const Icon(Icons.delete_outline, size: 16),
-                    label: const Text('حذف'),
+                    label: Text(AppLocalizations.of(context).delete),
                     style: TextButton.styleFrom(
                       foregroundColor: AppTheme.dangerFg,
                     ),
@@ -236,8 +237,8 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
               ),
             ] else ...[
               // Empty state
-              const Text(
-                'احفظ ملاحظة شخصية على هذا الدرس. ستظهر لك هنا وفي صفحة المسار.',
+              Text(
+                AppLocalizations.of(context).feedbackMessageHint,
                 style: TextStyle(
                   color: AppTheme.textSecondary,
                   fontSize: 13,
@@ -248,7 +249,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
               OutlinedButton.icon(
                 onPressed: _startEdit,
                 icon: const Icon(Icons.add, size: 18),
-                label: const Text('أضف ملاحظة'),
+                label: Text(AppLocalizations.of(context).add),
                 style: OutlinedButton.styleFrom(
                   minimumSize: const Size.fromHeight(40),
                 ),

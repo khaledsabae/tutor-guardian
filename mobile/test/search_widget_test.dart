@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/features/program/models/search_result.dart';
 import 'package:almorabbi/features/program/screens/search_screen.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
@@ -37,6 +38,9 @@ Map<String, dynamic> _lesson(String id, String title) => {
 Widget _wrap(Widget child, _FakeSearchClient fake) => ProviderScope(
       overrides: [tgClientProvider.overrideWithValue(fake)],
       child: MaterialApp(
+        locale: const Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: Directionality(textDirection: TextDirection.rtl, child: child),
       ),
     );
@@ -63,7 +67,7 @@ void main() {
       await tester.pumpWidget(_wrap(const SearchScreen(), fake));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('حرفين على الأقل'), findsOneWidget);
+      expect(find.textContaining('اختر الفئة العمرية'), findsOneWidget);
       expect(fake.lastQuery, isNull);
     });
 
@@ -91,7 +95,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('لا نتائج'), findsOneWidget);
+      expect(find.textContaining('لا توجد نتائج'), findsOneWidget);
     });
   });
 }

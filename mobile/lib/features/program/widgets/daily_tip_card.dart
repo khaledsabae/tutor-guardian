@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/models.dart';
@@ -137,7 +138,7 @@ class _CardState extends ConsumerState<_Card> {
                 Row(
                   children: [
                     Text(
-                      'نصيحة اليوم لـ ${widget.childName}',
+                      AppLocalizations.of(context).insightsTitle,
                       style: const TextStyle(
                         color: Color(0xFF8A5A0F),
                         fontWeight: FontWeight.w700,
@@ -156,7 +157,7 @@ class _CardState extends ConsumerState<_Card> {
                         color: isFav ? Colors.redAccent : const Color(0xFF8A5A0F),
                         size: 20,
                       ),
-                      tooltip: isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة',
+                      tooltip: isFav ? AppLocalizations.of(context).lessonFavRemove : AppLocalizations.of(context).lessonFavAdd,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -177,7 +178,7 @@ class _CardState extends ConsumerState<_Card> {
                               color: Color(0xFF8A5A0F),
                               size: 20,
                             ),
-                      tooltip: 'مشاركة النصيحة',
+                      tooltip: AppLocalizations.of(context).share,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),

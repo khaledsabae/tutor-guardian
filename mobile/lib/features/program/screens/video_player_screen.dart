@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     if (url == null || url.isEmpty) {
       if (mounted) {
         setState(() {
-          _errorMessage = 'الفيديو غير متاح حالياً. سيتاح قريباً بإذن الله.';
+          _errorMessage = AppLocalizations.of(context).connectionTimeout;
           _ready = true;
         });
       }
@@ -85,7 +86,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage = 'تعذّر تحميل الفيديو. تأكد من اتصالك بالإنترنت.';
+          _errorMessage = AppLocalizations.of(context).noInternetConnection;
           _ready = true;
         });
       }

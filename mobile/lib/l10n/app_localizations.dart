@@ -3871,6 +3871,42 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تعذّر الإرسال: {error}'**
   String feedbackSendError(Object error);
+
+  /// No description provided for @quizTurnsCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} / {total}'**
+  String quizTurnsCount(Object count, Object total);
+
+  /// No description provided for @cardCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'البطاقة {current} من {total}'**
+  String cardCount(Object current, Object total);
+
+  /// No description provided for @tapToContinue.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط للقلب · اسحب للتالي'**
+  String get tapToContinue;
+
+  /// No description provided for @previousCard.
+  ///
+  /// In ar, this message translates to:
+  /// **'السابقة'**
+  String get previousCard;
+
+  /// No description provided for @nextCard.
+  ///
+  /// In ar, this message translates to:
+  /// **'التالية'**
+  String get nextCard;
+
+  /// No description provided for @finishedCards.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنهيت البطاقات! 🎉'**
+  String get finishedCards;
 }
 
 class _AppLocalizationsDelegate

@@ -627,5 +627,11 @@
   "feedbackContactHint": "بريد أو رقم للرد عليك",
   "feedbackSending": "جارٍ الإرسال…",
   "feedbackSent": "وصلت ملاحظتك، شكراً لك! 🌿 (ID: {id})",
-  "feedbackSendError": "تعذّر الإرسال: {error}"
+  "feedbackSendError": "تعذّر الإرسال: {error}",
+  "quizTurnsCount": "{count} / {total}",
+  "cardCount": "البطاقة {current} من {total}",
+  "tapToContinue": "اضغط للقلب · اسحب للتالي",
+  "previousCard": "السابقة",
+  "nextCard": "التالية",
+  "finishedCards": "أنهيت البطاقات! 🎉"
 }

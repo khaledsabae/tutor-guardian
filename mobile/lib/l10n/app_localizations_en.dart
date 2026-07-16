@@ -2120,4 +2120,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String feedbackSendError(Object error) {
     return 'Failed to send: $error';
   }
+
+  @override
+  String quizTurnsCount(Object count, Object total) {
+    return '$count / $total';
+  }
+
+  @override
+  String cardCount(Object current, Object total) {
+    return 'Card $current of $total';
+  }
+
+  @override
+  String get tapToContinue => 'Tap for heart · swipe for next';
+
+  @override
+  String get previousCard => 'Previous';
+
+  @override
+  String get nextCard => 'Next';
+
+  @override
+  String get finishedCards => 'You finished the cards! 🎉';
 }

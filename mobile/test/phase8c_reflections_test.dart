@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/features/reflections/data/reflection_storage.dart';
 import 'package:almorabbi/features/reflections/providers/reflections_providers.dart';
 import 'package:almorabbi/features/reflections/widgets/reflection_note_badge.dart';
@@ -176,7 +177,10 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(
+        child: MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(body: ReflectionNoteCard(lessonId: 'l')),
         ),
       ),
@@ -184,7 +188,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ملاحظاتي'), findsOneWidget);
-    expect(find.text('أضف ملاحظة'), findsOneWidget);
+    expect(find.text('إضافة'), findsOneWidget);
   });
 
   testWidgets('ReflectionNoteCard shows the saved note + edit/delete',
@@ -209,7 +213,10 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(
+        child: MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(body: ReflectionNoteCard(lessonId: 'l')),
         ),
       ),

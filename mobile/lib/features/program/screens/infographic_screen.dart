@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 /// Full-screen, zoomable viewer for a lesson infographic image.
 /// Adds a rotate-screen toggle and a download button that stamps the app
 /// logo onto the saved copy only (in-app view stays clean).
@@ -54,7 +56,7 @@ class _InfographicScreenState extends State<InfographicScreen> {
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('تعذّر تحميل الصورة')),
+          SnackBar(content: Text(AppLocalizations.of(context).quizErrorLoading)),
         );
       }
     } finally {
@@ -99,7 +101,7 @@ class _InfographicScreenState extends State<InfographicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('📊 إنفوجرافيك'),
+        title: Text(AppLocalizations.of(context).lessonInfographic),
         actions: [
           IconButton(
             tooltip: 'تدوير الشاشة',
