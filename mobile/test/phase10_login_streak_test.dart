@@ -10,6 +10,7 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/screens/home_screen.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/widgets/ui/stat_chip.dart';
@@ -48,7 +49,10 @@ void main() {
       UncontrolledProviderScope(
         container: container,
         child: MaterialApp(
+          locale: const Locale('ar'),
           home: HomeScreen(onGoToTab: (_) {}),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
         ),
       ),
     );

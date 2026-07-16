@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,7 +20,7 @@ class QuranScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'الورد اليومي',
+          AppLocalizations.of(context).quranDailyWird,
           style: GoogleFonts.amiriQuran(
             fontSize: 26,
             fontWeight: FontWeight.bold,
@@ -77,8 +78,8 @@ class QuranScreen extends ConsumerWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'إكمال القراءة',
+                                Text(
+                                  AppLocalizations.of(context).quranCompleteReading,
                                   style: TextStyle(
                                     color: Colors.white70,
                                     fontSize: 12,
@@ -144,7 +145,7 @@ class QuranScreen extends ConsumerWidget {
                         ),
                       ),
                       subtitle: Text(
-                        'آياتها: $verseCount',
+                        AppLocalizations.of(context).quranVerseCount(verseCount),
                         style: const TextStyle(
                           fontSize: 12,
                           color: AppTheme.textSecondary,

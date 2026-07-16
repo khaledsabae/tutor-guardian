@@ -1033,6 +1033,666 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اطلع على تحليلات عادات طفلك ونشاطه'**
   String get insightsDesc;
+
+  /// No description provided for @chatPreviousChats.
+  ///
+  /// In ar, this message translates to:
+  /// **'المحادثات السابقة'**
+  String get chatPreviousChats;
+
+  /// No description provided for @chatAlMurabbiTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'🛡️  المربي الذكي'**
+  String get chatAlMurabbiTitle;
+
+  /// No description provided for @chatStartNew.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدء محادثة جديدة'**
+  String get chatStartNew;
+
+  /// No description provided for @chatStartNewConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدء محادثة جديدة؟'**
+  String get chatStartNewConfirm;
+
+  /// No description provided for @chatStartNewDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم إنهاء المحادثة الحالية وبدء جلسة جديدة على الخادم.'**
+  String get chatStartNewDesc;
+
+  /// No description provided for @chatBehaviorType.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع السلوك (اختياري)'**
+  String get chatBehaviorType;
+
+  /// No description provided for @chatRetry.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة المحاولة'**
+  String get chatRetry;
+
+  /// No description provided for @chatInitSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري تهيئة الجلسة…'**
+  String get chatInitSession;
+
+  /// No description provided for @chatOffline.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متصل بالإنترنت'**
+  String get chatOffline;
+
+  /// No description provided for @chatQ_sleep.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلي يرفض النوم ويستيقظ كثيرًا بالليل'**
+  String get chatQ_sleep;
+
+  /// No description provided for @chatQ_stubborn.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابني كثير العناد ونوبات الغضب'**
+  String get chatQ_stubborn;
+
+  /// No description provided for @chatQ_eating.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلي يرفض الأكل — أعمل إيه؟'**
+  String get chatQ_eating;
+
+  /// No description provided for @chatQ_speech.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلي تأخر في الكلام — متى أقلق؟'**
+  String get chatQ_speech;
+
+  /// No description provided for @chatQ_pray5.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابني 5 سنين بيرفض الصلاة، أعمل إيه؟'**
+  String get chatQ_pray5;
+
+  /// No description provided for @chatQ_tantrums.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أتعامل مع نوبات الغضب؟'**
+  String get chatQ_tantrums;
+
+  /// No description provided for @chatQ_screens.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلي لا يترك التابلت والشاشات'**
+  String get chatQ_screens;
+
+  /// No description provided for @chatQ_study.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلي لا يحب المذاكرة'**
+  String get chatQ_study;
+
+  /// No description provided for @chatQ_prayRegular.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أعوّد طفلي على الصلاة بانتظام؟'**
+  String get chatQ_prayRegular;
+
+  /// No description provided for @chatQ_lying.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابني يكذب أحيانًا — كيف أتصرف؟'**
+  String get chatQ_lying;
+
+  /// No description provided for @chatQ_gaming.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابني مشغول بالألعاب الإلكترونية طوال اليوم'**
+  String get chatQ_gaming;
+
+  /// No description provided for @chatQ_online.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أحمي طفلي على الإنترنت؟'**
+  String get chatQ_online;
+
+  /// No description provided for @chatQ_homework.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابني يماطل في واجباته المدرسية'**
+  String get chatQ_homework;
+
+  /// No description provided for @chatQ_teenDefiant.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابني المراهق يعاند ولا يسمع الكلام'**
+  String get chatQ_teenDefiant;
+
+  /// No description provided for @chatQ_socialMedia.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابنتي مشغولة بالسوشيال ميديا والمقارنات'**
+  String get chatQ_socialMedia;
+
+  /// No description provided for @chatQ_teenPray.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أحافظ على صلاة ابني المراهق؟'**
+  String get chatQ_teenPray;
+
+  /// No description provided for @chatQ_talkOlder.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أحاور ابني الكبير دون صدام؟'**
+  String get chatQ_talkOlder;
+
+  /// No description provided for @chatQ_university.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابني مقصّر في دراسته الجامعية'**
+  String get chatQ_university;
+
+  /// No description provided for @chatQ_friends.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أناقش ابني في اختيار أصحابه؟'**
+  String get chatQ_friends;
+
+  /// No description provided for @chatWelcome.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرحباً — اسأل عن أي تحدٍّ تربوي يواجهك'**
+  String get chatWelcome;
+
+  /// No description provided for @chatHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر الفئة العمرية والشدة من الشريط أعلاه، ثم اكتب سؤالك.'**
+  String get chatHint;
+
+  /// No description provided for @chatMyChats.
+  ///
+  /// In ar, this message translates to:
+  /// **'💬 محادثاتي'**
+  String get chatMyChats;
+
+  /// No description provided for @chatNewChat.
+  ///
+  /// In ar, this message translates to:
+  /// **'محادثة جديدة'**
+  String get chatNewChat;
+
+  /// No description provided for @chatNoChats.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد محادثات سابقة بعد'**
+  String get chatNoChats;
+
+  /// No description provided for @chatAskAny.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسأل عن أي تحدٍّ تربوي'**
+  String get chatAskAny;
+
+  /// No description provided for @chatTypeQ.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب سؤالك…'**
+  String get chatTypeQ;
+
+  /// No description provided for @chatQuestion.
+  ///
+  /// In ar, this message translates to:
+  /// **'سؤال'**
+  String get chatQuestion;
+
+  /// No description provided for @chatMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'رسالة'**
+  String get chatMessage;
+
+  /// No description provided for @chatTurns.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} سؤال'**
+  String chatTurns(Object count);
+
+  /// No description provided for @chatOfflineBanner.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متصل بالإنترنت'**
+  String get chatOfflineBanner;
+
+  /// No description provided for @chatInit.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري تهيئة الجلسة…'**
+  String get chatInit;
+
+  /// No description provided for @chatOfflineMsg.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متصل — الأسئلة تحتاج اتصال بالإنترنت'**
+  String get chatOfflineMsg;
+
+  /// No description provided for @chatError.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدث خطأ. حاول مرة أخرى.'**
+  String get chatError;
+
+  /// No description provided for @chatTypeHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب سؤالك…'**
+  String get chatTypeHint;
+
+  /// No description provided for @chatBehaviorOptional.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع السلوك (اختياري)'**
+  String get chatBehaviorOptional;
+
+  /// No description provided for @chatNewConfirmTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدء محادثة جديدة؟'**
+  String get chatNewConfirmTitle;
+
+  /// No description provided for @chatNewConfirmDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم إنهاء المحادثة الحالية وبدء جلسة جديدة على الخادم.'**
+  String get chatNewConfirmDesc;
+
+  /// No description provided for @chatCancel.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get chatCancel;
+
+  /// No description provided for @chatContinue.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get chatContinue;
+
+  /// No description provided for @chatPrevChats.
+  ///
+  /// In ar, this message translates to:
+  /// **'المحادثات السابقة'**
+  String get chatPrevChats;
+
+  /// No description provided for @chatTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'🛡️  المربي الذكي'**
+  String get chatTitle;
+
+  /// No description provided for @chatTurnsCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} سؤال'**
+  String chatTurnsCount(Object count);
+
+  /// No description provided for @chatNewConversation.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدء محادثة جديدة'**
+  String get chatNewConversation;
+
+  /// No description provided for @chatNoChatsYet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد محادثات سابقة بعد'**
+  String get chatNoChatsYet;
+
+  /// No description provided for @chatNewChatBtn.
+  ///
+  /// In ar, this message translates to:
+  /// **'محادثة جديدة'**
+  String get chatNewChatBtn;
+
+  /// No description provided for @chatSessionMessages.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} رسالة'**
+  String chatSessionMessages(Object count);
+
+  /// No description provided for @chatEmptyWelcome.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرحباً — اسأل عن أي تحدٍّ تربوي يواجهك'**
+  String get chatEmptyWelcome;
+
+  /// No description provided for @chatEmptyHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر الفئة العمرية والشدة من الشريط أعلاه، ثم اكتب سؤالك.'**
+  String get chatEmptyHint;
+
+  /// No description provided for @onbSelectAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'يجب اختيار المرحلة العمرية.'**
+  String get onbSelectAge;
+
+  /// No description provided for @onbServerSlow.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخادم يستغرق وقتاً أطول من المعتاد. تأكد من الاتصال وحاول مرة أخرى.'**
+  String get onbServerSlow;
+
+  /// No description provided for @onbChildError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر إنشاء ملف الطفل: {error}'**
+  String onbChildError(Object error);
+
+  /// No description provided for @onbSaving.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري الحفظ...'**
+  String get onbSaving;
+
+  /// No description provided for @onbStartJourney.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ الرحلة'**
+  String get onbStartJourney;
+
+  /// No description provided for @onbEditLater.
+  ///
+  /// In ar, this message translates to:
+  /// **'يمكنك تعديل هذه المعلومات لاحقاً من الإعدادات.'**
+  String get onbEditLater;
+
+  /// No description provided for @onbPreparing.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري تجهيز ملف طفلك…'**
+  String get onbPreparing;
+
+  /// No description provided for @onbWelcome.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً بك 🌙'**
+  String get onbWelcome;
+
+  /// No description provided for @onbTagline1.
+  ///
+  /// In ar, this message translates to:
+  /// **'«المربّي» رحلة تربية متكاملة ترافق طفلك خطوة بخطوة —'**
+  String get onbTagline1;
+
+  /// No description provided for @onbTagline2.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليست نصائح عابرة، بل منهجٌ تعيشه معه على مدى رحلته.'**
+  String get onbTagline2;
+
+  /// No description provided for @onbFreeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'🤍 مجاني بالكامل، لوجه الله'**
+  String get onbFreeTitle;
+
+  /// No description provided for @onbFreeDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'بلا إعلانات ولا اشتراكات'**
+  String get onbFreeDesc;
+
+  /// No description provided for @onbFeature1Title.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسارات من ٢٨ يومًا'**
+  String get onbFeature1Title;
+
+  /// No description provided for @onbFeature1Desc.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلات تربوية متدرّجة لكل مرحلة عمرية — تتابعها يومًا بيوم'**
+  String get onbFeature1Desc;
+
+  /// No description provided for @onbFeature2Title.
+  ///
+  /// In ar, this message translates to:
+  /// **'دروس وبودكاست وفيديو'**
+  String get onbFeature2Title;
+
+  /// No description provided for @onbFeature2Desc.
+  ///
+  /// In ar, this message translates to:
+  /// **'محتوى غني تعيشه بطرق متعددة، لا مجرد نصوص تُقرأ'**
+  String get onbFeature2Desc;
+
+  /// No description provided for @onbFeature3Title.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلة طفلك'**
+  String get onbFeature3Title;
+
+  /// No description provided for @onbFeature3Desc.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل محطات نموّه الإيمانية وتابع تقدّمه عبر الزمن'**
+  String get onbFeature3Desc;
+
+  /// No description provided for @onbFeature4Title.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد ذكي'**
+  String get onbFeature4Title;
+
+  /// No description provided for @onbFeature4Desc.
+  ///
+  /// In ar, this message translates to:
+  /// **'إجابات موثوقة عن تحدياتك التربوية وقت ما تحتاج'**
+  String get onbFeature4Desc;
+
+  /// No description provided for @onbMoreThanReading.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكثر من مجرد قراءة'**
+  String get onbMoreThanReading;
+
+  /// No description provided for @onbCurriculumDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'منهجٌ تربوي متكامل تعيشه مع طفلك خطوة بخطوة — لا تقرؤه في دقائق:'**
+  String get onbCurriculumDesc;
+
+  /// No description provided for @onbTellUs.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدّثنا عن طفلك'**
+  String get onbTellUs;
+
+  /// No description provided for @onbPersonalize.
+  ///
+  /// In ar, this message translates to:
+  /// **'لنخصّص له تجربة تربوية مناسبة.'**
+  String get onbPersonalize;
+
+  /// No description provided for @onbChildName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم طفلك'**
+  String get onbChildName;
+
+  /// No description provided for @onbNameHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثلاً: سارة، أحمد، ليلى'**
+  String get onbNameHint;
+
+  /// No description provided for @onbNameRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم مطلوب'**
+  String get onbNameRequired;
+
+  /// No description provided for @onbNameTooLong.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم طويل جداً (الحد الأقصى 80 حرفاً)'**
+  String get onbNameTooLong;
+
+  /// No description provided for @onbAgeGroup.
+  ///
+  /// In ar, this message translates to:
+  /// **'المرحلة العمرية'**
+  String get onbAgeGroup;
+
+  /// No description provided for @onbChildAvatar.
+  ///
+  /// In ar, this message translates to:
+  /// **'صورة الطفل (اختياري)'**
+  String get onbChildAvatar;
+
+  /// No description provided for @onbTapEmoji.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط لاختيار إيموجي'**
+  String get onbTapEmoji;
+
+  /// No description provided for @onbTapChangeEmoji.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط لتغيير الإيموجي'**
+  String get onbTapChangeEmoji;
+
+  /// No description provided for @onbGender.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجنس (اختياري)'**
+  String get onbGender;
+
+  /// No description provided for @onbBoy.
+  ///
+  /// In ar, this message translates to:
+  /// **'ولد'**
+  String get onbBoy;
+
+  /// No description provided for @onbGirl.
+  ///
+  /// In ar, this message translates to:
+  /// **'بنت'**
+  String get onbGirl;
+
+  /// No description provided for @onbClear.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسح'**
+  String get onbClear;
+
+  /// No description provided for @quranDailyWird.
+  ///
+  /// In ar, this message translates to:
+  /// **'الورد اليومي'**
+  String get quranDailyWird;
+
+  /// No description provided for @quranCompleteReading.
+  ///
+  /// In ar, this message translates to:
+  /// **'إكمال القراءة'**
+  String get quranCompleteReading;
+
+  /// No description provided for @quranSurahVerse.
+  ///
+  /// In ar, this message translates to:
+  /// **'سورة {surah} - آية {verse}'**
+  String quranSurahVerse(Object surah, Object verse);
+
+  /// No description provided for @quranVerseCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'آياتها: {count}'**
+  String quranVerseCount(Object count);
+
+  /// No description provided for @quranLoadError.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدث خطأ أثناء تحميل المصحف: {error}'**
+  String quranLoadError(Object error);
+
+  /// No description provided for @quranChooseReciter.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر القارئ'**
+  String get quranChooseReciter;
+
+  /// No description provided for @quranPlayError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تشغيل التلاوة. تأكد من اتصالك بالإنترنت.'**
+  String get quranPlayError;
+
+  /// No description provided for @quranReciter.
+  ///
+  /// In ar, this message translates to:
+  /// **'القارئ'**
+  String get quranReciter;
+
+  /// No description provided for @quranStopRecitation.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف التلاوة'**
+  String get quranStopRecitation;
+
+  /// No description provided for @quranListen.
+  ///
+  /// In ar, this message translates to:
+  /// **'استماع'**
+  String get quranListen;
+
+  /// No description provided for @quranLoading.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري التحميل...'**
+  String get quranLoading;
+
+  /// No description provided for @quranDailyComplete.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكملت ورد اليوم، بارك الله فيك!'**
+  String get quranDailyComplete;
+
+  /// No description provided for @quranDailyProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'ورد اليوم: {current} / {total} آيات'**
+  String quranDailyProgress(Object current, Object total);
+
+  /// No description provided for @quranNextSurah.
+  ///
+  /// In ar, this message translates to:
+  /// **'السورة التالية'**
+  String get quranNextSurah;
+
+  /// No description provided for @quranPrevSurah.
+  ///
+  /// In ar, this message translates to:
+  /// **'السورة السابقة'**
+  String get quranPrevSurah;
+
+  /// No description provided for @quranStop.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف'**
+  String get quranStop;
+
+  /// No description provided for @quranBismillah.
+  ///
+  /// In ar, this message translates to:
+  /// **'بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ'**
+  String get quranBismillah;
 }
 
 class _AppLocalizationsDelegate

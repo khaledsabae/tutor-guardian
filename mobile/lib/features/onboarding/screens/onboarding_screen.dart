@@ -20,6 +20,7 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -84,7 +85,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final ageGroup = _ageGroup;
     if (ageGroup == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('يرجى اختيار المرحلة العمرية.')),
+        SnackBar(content: Text(AppLocalizations.of(context).onbSelectAge)),
       );
       return;
     }
@@ -123,9 +124,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     } on TimeoutException {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text(
-              'الخادم يستغرق وقتاً أطول من المعتاد. تأكد من الاتصال وحاول مرة أخرى.',
+              AppLocalizations.of(context).onbServerSlow,
             ),
             backgroundColor: AppTheme.dangerFg,
           ),
@@ -135,7 +136,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تعذّر إنشاء ملف الطفل: $e'),
+            content: Text(AppLocalizations.of(context).onbChildError('$e')),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -204,8 +205,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     const SizedBox(height: 16),
                     BouncyButton(
                       label: busy
-                          ? 'جاري الحفظ...'
-                          : (isLastPage ? 'ابدأ الرحلة' : 'التالي'),
+                          ? AppLocalizations.of(context).onbSaving
+                          : (isLastPage ? AppLocalizations.of(context).onbStartJourney : AppLocalizations.of(context).next),
                       icon: busy
                           ? const SizedBox(
                               width: 18,
@@ -223,7 +224,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     if (isLastPage) ...[
                       const SizedBox(height: 10),
                       Text(
-                        'يمكنك تعديل هذه المعلومات لاحقاً من الإعدادات.',
+                        AppLocalizations.of(context).onbEditLater,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -253,15 +254,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         color: AppTheme.surface,
                         borderRadius: BorderRadius.circular(Dt.rSheet),
                       ),
-                      child: const Column(
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('👶', style: TextStyle(fontSize: 44)),
-                          SizedBox(height: 16),
-                          CircularProgressIndicator(),
-                          SizedBox(height: 16),
+                          const Text('👶', style: TextStyle(fontSize: 44)),
+                          const SizedBox(height: 16),
+                          const CircularProgressIndicator(),
+                          const SizedBox(height: 16),
                           Text(
-                            'جاري تجهيز ملف طفلك…',
+                            AppLocalizations.of(context).onbPreparing,
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: AppTheme.textPrimary,
@@ -359,7 +360,7 @@ class _WelcomePageState extends State<_WelcomePage> {
                 .fadeIn(duration: Dt.base),
           const SizedBox(height: 24),
           Text(
-            'أهلاً بك 🌙',
+            AppLocalizations.of(context).onbWelcome,
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -368,8 +369,8 @@ class _WelcomePageState extends State<_WelcomePage> {
           ).animate(delay: 150.ms).fadeIn(duration: Dt.base).slideY(begin: .2),
           const SizedBox(height: 12),
           Text(
-            '«المربّي» رحلة تربية متكاملة ترافق طفلك خطوة بخطوة — '
-            'ليست نصائح عابرة، بل منهجٌ تعيشه معه على مدى رحلته.',
+            '${AppLocalizations.of(context).onbTagline1} '
+            '${AppLocalizations.of(context).onbTagline2}',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: AppTheme.textSecondary,
@@ -384,8 +385,8 @@ class _WelcomePageState extends State<_WelcomePage> {
               borderRadius: BorderRadius.circular(Dt.rCard),
               border: Border.all(color: Dt.primary.withValues(alpha: 0.25)),
             ),
-            child: const Text(
-              '🤍 مجاني بالكامل، لوجه الله\nبلا إعلانات ولا اشتراكات',
+            child: Text(
+              '${AppLocalizations.of(context).onbFreeTitle}\n${AppLocalizations.of(context).onbFreeDesc}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Dt.primaryDeep,
@@ -405,15 +406,16 @@ class _WelcomePageState extends State<_WelcomePage> {
 class _FeaturesPage extends StatelessWidget {
   const _FeaturesPage();
 
-  static const _features = [
-    ('🛤️', 'مسارات من ٢٨ يومًا', 'رحلات تربوية متدرّجة لكل مرحلة عمرية — تتابعها يومًا بيوم'),
-    ('🎧', 'دروس وبودكاست وفيديو', 'محتوى غني تعيشه بطرق متعددة، لا مجرد نصوص تُقرأ'),
-    ('🌟', 'رحلة طفلك', 'سجّل محطات نموّه الإيمانية وتابع تقدّمه عبر الزمن'),
-    ('💬', 'مساعد ذكي', 'إجابات موثوقة عن تحدياتك التربوية وقت ما تحتاج'),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final features = [
+      ('🛤️', l10n.onbFeature1Title, l10n.onbFeature1Desc),
+      ('🎧', l10n.onbFeature2Title, l10n.onbFeature2Desc),
+      ('🌟', l10n.onbFeature3Title, l10n.onbFeature3Desc),
+      ('💬', l10n.onbFeature4Title, l10n.onbFeature4Desc),
+    ];
+
     return Padding(
       padding: const EdgeInsets.all(28),
       child: SingleChildScrollView(
@@ -432,7 +434,7 @@ class _FeaturesPage extends StatelessWidget {
               ),
           const SizedBox(height: 16),
           Text(
-            'أكثر من مجرد قراءة',
+            l10n.onbMoreThanReading,
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -441,7 +443,7 @@ class _FeaturesPage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'منهجٌ تربوي متكامل تعيشه مع طفلك خطوة بخطوة — لا تقرؤه في دقائق:',
+            l10n.onbCurriculumDesc,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppTheme.textSecondary,
@@ -449,7 +451,7 @@ class _FeaturesPage extends StatelessWidget {
                 ),
           ),
           const SizedBox(height: 20),
-          for (var i = 0; i < _features.length; i++) ...[
+          for (var i = 0; i < features.length; i++) ...[
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -459,7 +461,7 @@ class _FeaturesPage extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Text(_features[i].$1,
+                  Text(features[i].$1,
                       style: const TextStyle(fontSize: 36)),
                   const SizedBox(width: 14),
                   Expanded(
@@ -467,7 +469,7 @@ class _FeaturesPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _features[i].$2,
+                          features[i].$2,
                           style: const TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 16,
@@ -475,7 +477,7 @@ class _FeaturesPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          _features[i].$3,
+                          features[i].$3,
                           style: const TextStyle(
                             color: AppTheme.textSecondary,
                             fontSize: 13,
@@ -491,7 +493,7 @@ class _FeaturesPage extends StatelessWidget {
                 .animate(delay: (120 * i).ms)
                 .fadeIn(duration: Dt.base)
                 .slideY(begin: .15, curve: Curves.easeOutCubic),
-            if (i < _features.length - 1) const SizedBox(height: 14),
+            if (i < features.length - 1) const SizedBox(height: 14),
           ],
         ],
       ),
@@ -546,7 +548,7 @@ class _ChildFormPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'حدّثنا عن طفلك',
+                      AppLocalizations.of(context).onbTellUs,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -554,7 +556,7 @@ class _ChildFormPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'لنخصّص له تجربة تربوية مناسبة.',
+                      AppLocalizations.of(context).onbPersonalize,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
@@ -568,7 +570,7 @@ class _ChildFormPage extends StatelessWidget {
           const SizedBox(height: 28),
           // ── Name ──
           Text(
-            'اسم طفلك',
+            AppLocalizations.of(context).onbChildName,
             style: Theme.of(context)
                 .textTheme
                 .titleSmall
@@ -578,16 +580,16 @@ class _ChildFormPage extends StatelessWidget {
           TextFormField(
             controller: nameController,
             textInputAction: TextInputAction.next,
-            decoration: const InputDecoration(
-              hintText: 'مثلاً: سارة، أحمد، ليلى',
-              prefixIcon: Icon(Icons.person_outline),
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context).onbNameHint,
+              prefixIcon: const Icon(Icons.person_outline),
             ),
             validator: (v) {
               if (v == null || v.trim().isEmpty) {
-                return 'الاسم مطلوب';
+                return AppLocalizations.of(context).onbNameRequired;
               }
               if (v.trim().length > 80) {
-                return 'الاسم طويل جداً (الحد الأقصى 80 حرفاً)';
+                return AppLocalizations.of(context).onbNameTooLong;
               }
               return null;
             },
@@ -596,7 +598,7 @@ class _ChildFormPage extends StatelessWidget {
 
           // ── Age group ──
           Text(
-            'المرحلة العمرية',
+            AppLocalizations.of(context).onbAgeGroup,
             style: Theme.of(context)
                 .textTheme
                 .titleSmall
@@ -619,7 +621,7 @@ class _ChildFormPage extends StatelessWidget {
 
           // ── Avatar ──
           Text(
-            'صورة الطفل (اختياري)',
+            AppLocalizations.of(context).onbChildAvatar,
             style: Theme.of(context)
                 .textTheme
                 .titleSmall
@@ -655,8 +657,8 @@ class _ChildFormPage extends StatelessWidget {
                   Expanded(
                     child: Text(
                       avatarEmoji == null
-                          ? 'اضغط لاختيار إيموجي'
-                          : 'اضغط لتغيير الإيموجي',
+                          ? AppLocalizations.of(context).onbTapEmoji
+                          : AppLocalizations.of(context).onbTapChangeEmoji,
                       style: TextStyle(
                         color: avatarEmoji == null
                             ? AppTheme.textMuted
@@ -673,7 +675,7 @@ class _ChildFormPage extends StatelessWidget {
 
           // ── Gender (optional) ──
           Text(
-            'الجنس (اختياري)',
+            AppLocalizations.of(context).onbGender,
             style: Theme.of(context)
                 .textTheme
                 .titleSmall
@@ -685,20 +687,20 @@ class _ChildFormPage extends StatelessWidget {
             runSpacing: 8,
             children: [
               _Pill(
-                label: 'ولد',
+                label: AppLocalizations.of(context).onbBoy,
                 icon: Icons.boy,
                 selected: gender == 'male',
                 onTap: () => onGender('male'),
               ),
               _Pill(
-                label: 'بنت',
+                label: AppLocalizations.of(context).onbGirl,
                 icon: Icons.girl,
                 selected: gender == 'female',
                 onTap: () => onGender('female'),
               ),
               if (gender != null)
                 _Pill(
-                  label: 'مسح',
+                  label: AppLocalizations.of(context).onbClear,
                   icon: Icons.close,
                   selected: false,
                   onTap: () => onGender(null),

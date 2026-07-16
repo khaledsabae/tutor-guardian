@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
@@ -133,10 +134,10 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
               child: Text(
-                'اختر القارئ',
+                AppLocalizations.of(context).quranChooseReciter,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -280,7 +281,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
           // Choose the reciter (Husary / Minshawy / Maher / Ghamdi).
           IconButton(
             key: const Key('quran_reciter_button'),
-            tooltip: 'القارئ',
+            tooltip: AppLocalizations.of(context).quranReciter,
             icon: const Icon(Icons.record_voice_over, color: AppTheme.primary),
             onPressed: _pickReciter,
           ),
@@ -300,7 +301,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
         ],
       ),
       body: verses.isEmpty
-          ? const Center(child: Text('جاري التحميل...'))
+          ? Center(child: Text(AppLocalizations.of(context).quranLoading))
           : Column(
               children: [
                 // Daily wird progress strip
@@ -436,7 +437,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                               ? () => _goToSurah(_currentChapter + 1)
                               : null,
                           icon: const Icon(Icons.arrow_back_ios, size: 16),
-                          label: const Text('السورة التالية'),
+                          label: Text(AppLocalizations.of(context).quranNextSurah),
                         ),
                         // Central listen pill mirrors the AppBar control so the
                         // "قراءة + استماع" action is reachable at the bottom too.
@@ -458,7 +459,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                               ? () => _goToSurah(_currentChapter - 1)
                               : null,
                           icon: const Icon(Icons.arrow_forward_ios, size: 16),
-                          label: const Text('السورة السابقة'),
+                          label: Text(AppLocalizations.of(context).quranPrevSurah),
                         ),
                       ],
                     ),

@@ -11,6 +11,7 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/models/api_models.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/screens/chat_screen.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 
@@ -37,7 +38,12 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(home: ChatScreen()),
+        child: MaterialApp(
+          locale: const Locale('ar'),
+          home: const ChatScreen(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+        ),
       ),
     );
     // Allow bootstrap to run; the fake client throws TgApiError which the
@@ -45,6 +51,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
     await tester.pump(const Duration(milliseconds: 100));
 
+    // The app defaults to Arabic locale, so chatTitle resolves to the Arabic string
     expect(find.text('🛡️  المربي الذكي'), findsOneWidget);
   });
 }

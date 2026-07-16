@@ -484,4 +484,375 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get insightsDesc => 'View your child\'s habit and activity analysis';
+
+  @override
+  String get chatPreviousChats => 'Previous Chats';
+
+  @override
+  String get chatAlMurabbiTitle => '🛡️ Al-Murabbi AI';
+
+  @override
+  String get chatStartNew => 'Start New Chat';
+
+  @override
+  String get chatStartNewConfirm => 'Start a new chat?';
+
+  @override
+  String get chatStartNewDesc =>
+      'This will end the current conversation and start a new session on the server.';
+
+  @override
+  String get chatBehaviorType => 'Behavior type (optional)';
+
+  @override
+  String get chatRetry => 'Retry';
+
+  @override
+  String get chatInitSession => 'Initializing session…';
+
+  @override
+  String get chatOffline => 'Not connected to the internet';
+
+  @override
+  String get chatQ_sleep =>
+      'My child refuses to sleep and wakes up a lot at night';
+
+  @override
+  String get chatQ_stubborn => 'My son is very stubborn and has anger tantrums';
+
+  @override
+  String get chatQ_eating => 'My child refuses to eat — what should I do?';
+
+  @override
+  String get chatQ_speech =>
+      'My child has delayed speech — when should I worry?';
+
+  @override
+  String get chatQ_pray5 =>
+      'My 5-year-old son refuses to pray, what should I do?';
+
+  @override
+  String get chatQ_tantrums => 'How do I deal with anger tantrums?';
+
+  @override
+  String get chatQ_screens =>
+      'My child won\'t let go of the tablet and screens';
+
+  @override
+  String get chatQ_study => 'My child doesn\'t like studying';
+
+  @override
+  String get chatQ_prayRegular => 'How do I get my child to pray regularly?';
+
+  @override
+  String get chatQ_lying => 'My son lies sometimes — how should I handle it?';
+
+  @override
+  String get chatQ_gaming => 'My son is occupied with video games all day';
+
+  @override
+  String get chatQ_online => 'How do I protect my child on the internet?';
+
+  @override
+  String get chatQ_homework => 'My son procrastinates on his homework';
+
+  @override
+  String get chatQ_teenDefiant => 'My teenage son is defiant and won\'t listen';
+
+  @override
+  String get chatQ_socialMedia =>
+      'My daughter is occupied with social media and comparisons';
+
+  @override
+  String get chatQ_teenPray => 'How do I maintain my teenage son\'s prayer?';
+
+  @override
+  String get chatQ_talkOlder =>
+      'How do I talk to my older son without conflict?';
+
+  @override
+  String get chatQ_university => 'My son is neglecting his university studies';
+
+  @override
+  String get chatQ_friends => 'How do I discuss my son\'s choice of friends?';
+
+  @override
+  String get chatWelcome =>
+      'Welcome — ask about any parenting challenge you face';
+
+  @override
+  String get chatHint =>
+      'Choose the age group and severity from the bar above, then type your question.';
+
+  @override
+  String get chatMyChats => '💬 My Chats';
+
+  @override
+  String get chatNewChat => 'New Chat';
+
+  @override
+  String get chatNoChats => 'No previous chats yet';
+
+  @override
+  String get chatAskAny => 'Ask about any parenting challenge';
+
+  @override
+  String get chatTypeQ => 'Type your question…';
+
+  @override
+  String get chatQuestion => 'question';
+
+  @override
+  String get chatMessage => 'message';
+
+  @override
+  String chatTurns(Object count) {
+    return '$count questions';
+  }
+
+  @override
+  String get chatOfflineBanner => 'No Internet Connection';
+
+  @override
+  String get chatInit => 'Initializing session…';
+
+  @override
+  String get chatOfflineMsg =>
+      'Offline — questions require internet connection';
+
+  @override
+  String get chatError => 'An error occurred. Try again.';
+
+  @override
+  String get chatTypeHint => 'Type your question…';
+
+  @override
+  String get chatBehaviorOptional => 'Behavior type (optional)';
+
+  @override
+  String get chatNewConfirmTitle => 'Start a new chat?';
+
+  @override
+  String get chatNewConfirmDesc =>
+      'This will end the current conversation and start a new session.';
+
+  @override
+  String get chatCancel => 'Cancel';
+
+  @override
+  String get chatContinue => 'Continue';
+
+  @override
+  String get chatPrevChats => 'Previous Chats';
+
+  @override
+  String get chatTitle => '🛡️ Al-Murabbi AI';
+
+  @override
+  String chatTurnsCount(Object count) {
+    return '$count questions';
+  }
+
+  @override
+  String get chatNewConversation => 'Start New Chat';
+
+  @override
+  String get chatNoChatsYet => 'No previous chats yet';
+
+  @override
+  String get chatNewChatBtn => 'New Chat';
+
+  @override
+  String chatSessionMessages(Object count) {
+    return '$count messages';
+  }
+
+  @override
+  String get chatEmptyWelcome => 'Welcome — ask about any parenting challenge';
+
+  @override
+  String get chatEmptyHint =>
+      'Choose the age group and severity from the bar above, then type your question.';
+
+  @override
+  String get onbSelectAge => 'Please select an age group.';
+
+  @override
+  String get onbServerSlow =>
+      'The server is taking longer than usual. Check your connection and try again.';
+
+  @override
+  String onbChildError(Object error) {
+    return 'Failed to create child profile: $error';
+  }
+
+  @override
+  String get onbSaving => 'Saving...';
+
+  @override
+  String get onbStartJourney => 'Start Journey';
+
+  @override
+  String get onbEditLater =>
+      'You can edit this information later from Settings.';
+
+  @override
+  String get onbPreparing => 'Preparing your child\'s profile…';
+
+  @override
+  String get onbWelcome => 'Welcome 🌙';
+
+  @override
+  String get onbTagline1 =>
+      '\"Al-Murabbi\" is a complete parenting journey that accompanies your child step by step —';
+
+  @override
+  String get onbTagline2 =>
+      'not fleeting tips, but a curriculum you live with them throughout their journey.';
+
+  @override
+  String get onbFreeTitle => '🤍 Completely free, for the sake of Allah';
+
+  @override
+  String get onbFreeDesc => 'No ads, no subscriptions';
+
+  @override
+  String get onbFeature1Title => '28-Day Paths';
+
+  @override
+  String get onbFeature1Desc =>
+      'Progressive educational journeys for each age group — followed day by day';
+
+  @override
+  String get onbFeature2Title => 'Lessons, Podcasts & Video';
+
+  @override
+  String get onbFeature2Desc =>
+      'Rich content you experience in multiple ways, not just text to read';
+
+  @override
+  String get onbFeature3Title => 'Child\'s Journey';
+
+  @override
+  String get onbFeature3Desc =>
+      'Record their faith milestones and track their progress over time';
+
+  @override
+  String get onbFeature4Title => 'Smart Assistant';
+
+  @override
+  String get onbFeature4Desc =>
+      'Trusted answers to your parenting challenges when you need them';
+
+  @override
+  String get onbMoreThanReading => 'More Than Just Reading';
+
+  @override
+  String get onbCurriculumDesc =>
+      'A complete educational curriculum you live with your child step by step — not read in minutes:';
+
+  @override
+  String get onbTellUs => 'Tell us about your child';
+
+  @override
+  String get onbPersonalize =>
+      'We\'ll personalize their educational experience.';
+
+  @override
+  String get onbChildName => 'Your child\'s name';
+
+  @override
+  String get onbNameHint => 'e.g. Sara, Ahmed, Layla';
+
+  @override
+  String get onbNameRequired => 'Name is required';
+
+  @override
+  String get onbNameTooLong => 'Name is too long (max 80 characters)';
+
+  @override
+  String get onbAgeGroup => 'Age Group';
+
+  @override
+  String get onbChildAvatar => 'Child avatar (optional)';
+
+  @override
+  String get onbTapEmoji => 'Tap to choose emoji';
+
+  @override
+  String get onbTapChangeEmoji => 'Tap to change emoji';
+
+  @override
+  String get onbGender => 'Gender (optional)';
+
+  @override
+  String get onbBoy => 'Boy';
+
+  @override
+  String get onbGirl => 'Girl';
+
+  @override
+  String get onbClear => 'Clear';
+
+  @override
+  String get quranDailyWird => 'Daily Portion';
+
+  @override
+  String get quranCompleteReading => 'Complete Reading';
+
+  @override
+  String quranSurahVerse(Object surah, Object verse) {
+    return 'Surah $surah - Verse $verse';
+  }
+
+  @override
+  String quranVerseCount(Object count) {
+    return 'Verses: $count';
+  }
+
+  @override
+  String quranLoadError(Object error) {
+    return 'Error loading Quran: $error';
+  }
+
+  @override
+  String get quranChooseReciter => 'Choose Reciter';
+
+  @override
+  String get quranPlayError =>
+      'Failed to play recitation. Check your internet connection.';
+
+  @override
+  String get quranReciter => 'Reciter';
+
+  @override
+  String get quranStopRecitation => 'Stop Recitation';
+
+  @override
+  String get quranListen => 'Listen';
+
+  @override
+  String get quranLoading => 'Loading...';
+
+  @override
+  String get quranDailyComplete =>
+      'You\'ve completed today\'s portion, may Allah bless you!';
+
+  @override
+  String quranDailyProgress(Object current, Object total) {
+    return 'Daily portion: $current / $total verses';
+  }
+
+  @override
+  String get quranNextSurah => 'Next Surah';
+
+  @override
+  String get quranPrevSurah => 'Previous Surah';
+
+  @override
+  String get quranStop => 'Stop';
+
+  @override
+  String get quranBismillah =>
+      'In the name of Allah, the Most Gracious, the Most Merciful';
 }

@@ -24,6 +24,7 @@ import '../state/connectivity_provider.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import '../widgets/message_bubble.dart';
+import '../l10n/app_localizations.dart';
 
 final chatNotifierProvider =
     StateNotifierProvider<ChatNotifier, ChatState>((ref) {
@@ -159,11 +160,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
       ),
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'المحادثات السابقة',
+          tooltip: AppLocalizations.of(context).chatPrevChats,
           icon: const Icon(Icons.menu),
           onPressed: () => _scaffoldKey.currentState?.openDrawer(),
         ),
-        title: const Text('🛡️  المربي الذكي'),
+        title: Text(AppLocalizations.of(context).chatTitle),
         actions: [
           if (state.turnCount > 0)
             Padding(
@@ -179,7 +180,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                     borderRadius: BorderRadius.circular(Dt.rChip),
                   ),
                   child: Text(
-                    '${state.turnCount} سؤال',
+                    AppLocalizations.of(context).chatTurnsCount(state.turnCount),
                     style: const TextStyle(
                       color: AppTheme.primary,
                       fontSize: 12,
@@ -190,7 +191,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
               ),
             ),
           IconButton(
-            tooltip: 'بدء محادثة جديدة',
+            tooltip: AppLocalizations.of(context).chatNewConversation,
             icon: const Icon(Icons.refresh),
             onPressed: state.phase == ChatPhase.streaming
                 ? null
@@ -198,17 +199,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                     final confirm = await showDialog<bool>(
                       context: context,
                       builder: (ctx) => AlertDialog(
-                        title: const Text('بدء محادثة جديدة؟'),
-                        content: const Text(
-                            'سيتم إنهاء المحادثة الحالية وبدء جلسة جديدة على الخادم.'),
+                        title: Text(AppLocalizations.of(context).chatNewConfirmTitle),
+                        content: Text(AppLocalizations.of(context).chatNewConfirmDesc),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(ctx, false),
-                            child: const Text('إلغاء'),
+                            child: Text(AppLocalizations.of(context).chatCancel),
                           ),
                           FilledButton(
                             onPressed: () => Navigator.pop(ctx, true),
-                            child: const Text('متابعة'),
+                            child: Text(AppLocalizations.of(context).chatContinue),
                           ),
                         ],
                       ),
@@ -312,8 +312,8 @@ class _SettingsBar extends StatelessWidget {
           Expanded(
             child: TextFormField(
               initialValue: state.behaviorType,
-              decoration: const InputDecoration(
-                labelText: 'نوع السلوك (اختياري)',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context).chatBehaviorOptional,
                 isDense: true,
               ),
               textInputAction: TextInputAction.done,
@@ -354,7 +354,7 @@ class _ErrorBanner extends StatelessWidget {
           TextButton.icon(
             onPressed: onRetry,
             icon: const Icon(Icons.refresh, size: 16),
-            label: const Text('إعادة المحاولة'),
+            label: Text(AppLocalizations.of(context).chatRetry),
             style: TextButton.styleFrom(foregroundColor: AppTheme.dangerFg),
           ),
         ],
@@ -368,14 +368,14 @@ class _BootSplash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircularProgressIndicator(strokeWidth: 2),
-          SizedBox(height: 12),
+          const CircularProgressIndicator(strokeWidth: 2),
+          const SizedBox(height: 12),
           Text(
-            'جاري تهيئة الجلسة…',
+            AppLocalizations.of(context).chatInit,
             style: TextStyle(color: AppTheme.textMuted, fontSize: 13),
           ),
         ],
@@ -393,13 +393,13 @@ class _OfflineBanner extends StatelessWidget {
       width: double.infinity,
       color: AppTheme.warningBg,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: const Row(
+      child: Row(
         children: [
-          Icon(Icons.wifi_off, color: AppTheme.warningFg, size: 18),
-          SizedBox(width: 8),
+          const Icon(Icons.wifi_off, color: AppTheme.warningFg, size: 18),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'غير متصل بالإنترنت',
+              AppLocalizations.of(context).chatOfflineBanner,
               style: TextStyle(
                 color: AppTheme.warningFg,
                 fontSize: 13,
@@ -421,51 +421,45 @@ class _EmptyState extends StatelessWidget {
   // Age-tailored pain questions. Topics deliberately match the backend's
   // curated topic seeds (صلاة/مذاكرة/شاشة/عناد/نوم/كذب/سوشيال) so the very
   // first answer lands grounded and specific.
-  static const _byAge = <String, List<String>>{
-    '0-3': [
-      'طفلي يرفض النوم ويستيقظ كثيرًا بالليل',
-      'ابني كثير العناد ونوبات الغضب',
-      'طفلي يرفض الأكل — أعمل إيه؟',
-    ],
-    '2-3': [
-      'طفلي يرفض النوم ويستيقظ كثيرًا بالليل',
-      'ابني كثير العناد ونوبات الغضب',
-      'طفلي تأخر في الكلام — متى أقلق؟',
-    ],
-    '4-6': [
-      'ابني 5 سنين بيرفض الصلاة، أعمل إيه؟',
-      'كيف أتعامل مع نوبات الغضب؟',
-      'طفلي لا يترك التابلت والشاشات',
-    ],
-    '7-9': [
-      'طفلي لا يحب المذاكرة',
-      'كيف أعوّد طفلي على الصلاة بانتظام؟',
-      'ابني يكذب أحيانًا — كيف أتصرف؟',
-    ],
-    '10-12': [
-      'ابني مشغول بالألعاب الإلكترونية طوال اليوم',
-      'كيف أحمي طفلي على الإنترنت؟',
-      'ابني يماطل في واجباته المدرسية',
-    ],
-    '13-15': [
-      'ابني المراهق يعاند ولا يسمع الكلام',
-      'ابنتي مشغولة بالسوشيال ميديا والمقارنات',
-      'كيف أحافظ على صلاة ابني المراهق؟',
-    ],
-    '16-18': [
-      'كيف أحاور ابني الكبير دون صدام؟',
-      'ابني مقصّر في دراسته الجامعية',
-      'كيف أناقش ابني في اختيار أصحابه؟',
-    ],
-  };
+  List<String> _suggestionsFor(AppLocalizations l10n) {
+    const ageMap = <String, List<String>>{
+      '0-3': ['chatQ_sleep', 'chatQ_stubborn', 'chatQ_eating'],
+      '2-3': ['chatQ_sleep', 'chatQ_stubborn', 'chatQ_speech'],
+      '4-6': ['chatQ_pray5', 'chatQ_tantrums', 'chatQ_screens'],
+      '7-9': ['chatQ_study', 'chatQ_prayRegular', 'chatQ_lying'],
+      '10-12': ['chatQ_gaming', 'chatQ_online', 'chatQ_homework'],
+      '13-15': ['chatQ_teenDefiant', 'chatQ_socialMedia', 'chatQ_teenPray'],
+      '16-18': ['chatQ_talkOlder', 'chatQ_university', 'chatQ_friends'],
+    };
+    const fallback = ['chatQ_tantrums', 'chatQ_study', 'chatQ_pray5'];
+    final keys = ageMap[ageGroup] ?? fallback;
+    return keys.map((k) => _resolveKey(l10n, k)).toList();
+  }
 
-  static const _fallback = [
-    'كيف أتعامل مع نوبات الغضب؟',
-    'طفلي لا يحب المذاكرة',
-    'كيف أعلّم طفلي الصلاة؟',
-  ];
-
-  List<String> get _suggestions => _byAge[ageGroup] ?? _fallback;
+  String _resolveKey(AppLocalizations l10n, String key) {
+    switch (key) {
+      case 'chatQ_sleep': return l10n.chatQ_sleep;
+      case 'chatQ_stubborn': return l10n.chatQ_stubborn;
+      case 'chatQ_eating': return l10n.chatQ_eating;
+      case 'chatQ_speech': return l10n.chatQ_speech;
+      case 'chatQ_pray5': return l10n.chatQ_pray5;
+      case 'chatQ_tantrums': return l10n.chatQ_tantrums;
+      case 'chatQ_screens': return l10n.chatQ_screens;
+      case 'chatQ_study': return l10n.chatQ_study;
+      case 'chatQ_prayRegular': return l10n.chatQ_prayRegular;
+      case 'chatQ_lying': return l10n.chatQ_lying;
+      case 'chatQ_gaming': return l10n.chatQ_gaming;
+      case 'chatQ_online': return l10n.chatQ_online;
+      case 'chatQ_homework': return l10n.chatQ_homework;
+      case 'chatQ_teenDefiant': return l10n.chatQ_teenDefiant;
+      case 'chatQ_socialMedia': return l10n.chatQ_socialMedia;
+      case 'chatQ_teenPray': return l10n.chatQ_teenPray;
+      case 'chatQ_talkOlder': return l10n.chatQ_talkOlder;
+      case 'chatQ_university': return l10n.chatQ_university;
+      case 'chatQ_friends': return l10n.chatQ_friends;
+      default: return key;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -483,8 +477,8 @@ class _EmptyState extends StatelessWidget {
                   curve: Curves.easeOutBack,
                 ),
             const SizedBox(height: 12),
-            const Text(
-              'مرحباً — اسأل عن أي تحدٍّ تربوي يواجهك',
+            Text(
+              AppLocalizations.of(context).chatEmptyWelcome,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
@@ -493,20 +487,22 @@ class _EmptyState extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
-            const Text(
-              'اختر الفئة العمرية والشدة من الشريط أعلاه، ثم اكتب سؤالك.',
+            Text(
+              AppLocalizations.of(context).chatEmptyHint,
               style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            Wrap(
+            Builder(builder: (context) {
+              final suggestions = _suggestionsFor(AppLocalizations.of(context));
+              return Wrap(
               spacing: 8,
               runSpacing: 8,
               alignment: WrapAlignment.center,
               children: [
-                for (var i = 0; i < _suggestions.length; i++)
+                for (var i = 0; i < suggestions.length; i++)
                   ActionChip(
-                    label: Text(_suggestions[i]),
+                    label: Text(suggestions[i]),
                     labelStyle: const TextStyle(
                       color: AppTheme.primary,
                       fontWeight: FontWeight.w700,
@@ -518,13 +514,14 @@ class _EmptyState extends StatelessWidget {
                       color: AppTheme.primary.withValues(alpha: .3),
                     ),
                     shape: const StadiumBorder(),
-                    onPressed: () => onSuggest(_suggestions[i]),
+                    onPressed: () => onSuggest(suggestions[i]),
                   )
                       .animate(delay: (100 * i).ms)
                       .fadeIn(duration: Dt.base)
                       .slideY(begin: .2, curve: Curves.easeOutCubic),
               ],
-            ),
+            );
+            }),
           ],
         ),
       ),
@@ -557,7 +554,7 @@ class _HistoryDrawer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
               child: Text(
-                '💬 محادثاتي',
+                AppLocalizations.of(context).chatMyChats,
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
@@ -569,8 +566,8 @@ class _HistoryDrawer extends StatelessWidget {
               child: ListTile(
                 leading: const Icon(Icons.add_circle_outline,
                     color: AppTheme.primary),
-                title: const Text(
-                  'محادثة جديدة',
+                title: Text(
+                  AppLocalizations.of(context).chatNewChatBtn,
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     color: AppTheme.primary,
@@ -592,11 +589,11 @@ class _HistoryDrawer extends StatelessWidget {
                   }
                   final sessions = snap.data ?? const [];
                   if (sessions.isEmpty) {
-                    return const Center(
+                    return Center(
                       child: Padding(
-                        padding: EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(24),
                         child: Text(
-                          'لا توجد محادثات سابقة بعد',
+                          AppLocalizations.of(context).chatNoChatsYet,
                           style: TextStyle(color: AppTheme.textMuted),
                         ),
                       ),
@@ -620,7 +617,7 @@ class _HistoryDrawer extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontSize: 14),
                         ),
-                        subtitle: Text('${s.messageCount} رسالة'),
+                        subtitle: Text(AppLocalizations.of(context).chatSessionMessages(s.messageCount)),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
                         ),
@@ -678,8 +675,8 @@ class _Composer extends StatelessWidget {
                   maxLines: 5,
                   textInputAction: TextInputAction.send,
                   onSubmitted: enabled ? (_) => onSend() : null,
-                  decoration: const InputDecoration(
-                    hintText: 'اكتب سؤالك…',
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context).chatTypeHint,
                     filled: false,
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,
