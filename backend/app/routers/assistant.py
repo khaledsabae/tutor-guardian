@@ -27,6 +27,7 @@ from app.services.intent_guard import check_banned_intent, check_emergency_keywo
 from app.services.domain_classifier import classify_domains, matched_fast_path
 from app.services.tier_router import choose_tier
 from app.services.privacy import redact_for_cloud
+from app.services import answer_cache
 from app.services import conversation_store as store
 
 _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
@@ -342,6 +343,13 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
     score_off_topic, _top_rerank = _off_topic(retrieved_units)
     off_topic = is_general or score_off_topic
 
+    # First question in the session? (no assistant turns yet). Only then may
+    # the answer cache serve/store — a follow-up depends on conversation the
+    # cache never saw. (§5.1 كاش الأسئلة المتكررة)
+    first_question = not any(
+        getattr(t, "role", "") == "assistant" for t in history
+    )
+
     # No relevant KB and not an off-topic pivot → non-streamed fallback
     if not retrieved_units and not off_topic:
         draft = f"لا توجد معلومات كافية حاليًا حول '{query_text}'. نوصي باستشارة مختص."
@@ -372,6 +380,21 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
                 needs_human_review=decision["needs_human_review"],
                 escalation_target=decision["escalate_to"], mode="llm_generated",
             ))
+
+        # Answer cache: an equivalent cold question already answered →
+        # serve it instantly with zero inference cost.
+        if first_question:
+            cached = answer_cache.lookup(
+                query_text, user_message.age_group or "unspecified",
+                primary_domain, severity,
+            )
+            if cached:
+                return _single(AssistantReply(
+                    reply_text=cached, domain=primary_domain, severity=severity,
+                    needs_human_review=decision["needs_human_review"],
+                    escalation_target=decision["escalate_to"],
+                    mode="llm_generated",
+                ))
 
         # ── Stream the LLM generation token-by-token ─────────────────────
         # Quality-tier routing (flag-gated). The cloud provider is tried
@@ -425,6 +448,18 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
                         mode=stream_mode, needs_human_review=decision["needs_human_review"],
                         reply_length=len(final_text), retrieved_count=len(retrieved_units),
                     )
+                    # Feed the answer cache: grounded, local, review-free,
+                    # first-question answers only (§5.1).
+                    if (
+                        stream_mode == "llm_generated"
+                        and first_question
+                        and tier != "cloud_quality"
+                        and not decision["needs_human_review"]
+                    ):
+                        answer_cache.store(
+                            query_text, user_message.age_group or "unspecified",
+                            primary_domain, severity, final_text,
+                        )
                     yield _sse("done", reply.model_dump())
                 elif chunk.delta:
                     # Filter leaked CJK tokens from the live stream too.

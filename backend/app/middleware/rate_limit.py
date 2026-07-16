@@ -10,8 +10,10 @@ Backends:
 
 Config via env:
     RATE_LIMIT_PER_MINUTE   (default 30)   0 disables limiting
+    AI_DAILY_LIMIT          (default 20)   0 disables the per-day AI quota
     REDIS_URL               (optional)     for distributed rate limiting
 """
+import datetime as _dt
 import logging
 import os
 import time
@@ -25,6 +27,12 @@ logger = logging.getLogger(__name__)
 _LIMIT = int(os.environ.get("RATE_LIMIT_PER_MINUTE", "30"))
 _GENERAL_LIMIT = int(os.environ.get("RATE_LIMIT_GENERAL_PER_MINUTE", "120"))
 _WINDOW = 60.0
+# Fair-use daily quota for LLM generation (growth plan §5.1): generous enough
+# that a real parent never feels it, tight enough that scripts/abuse can't run
+# the model bill up. Counts only mutating (POST) AI calls per device per UTC
+# day. The refusal is deliberately gentle — never «pay», always «tomorrow».
+_AI_DAILY_LIMIT = int(os.environ.get("AI_DAILY_LIMIT", "20"))
+_DAILY_MESSAGE = "وصلنا لحدّ اليوم من الأسئلة — نستكمل غدًا بإذن الله 🌙"
 # Every /api endpoint is rate-limited. The AI assistant (expensive to serve)
 # keeps the tighter _LIMIT; all other endpoints (children, progress, referral,
 # push, identity, auth) get the more generous _GENERAL_LIMIT so normal app usage
@@ -56,10 +64,40 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
         # In-memory fallback: key -> (window_start_epoch, count)
         self._buckets: dict[str, tuple[float, int]] = {}
+        # Daily AI quota fallback: "rl:aiday:{date}:{ident}" -> count
+        self._daily: dict[str, int] = {}
         self._last_cleanup = time.monotonic()
         self._redis = _get_redis_client()
         if self._redis:
             logger.info("Rate-limit using Redis: %s", _REDIS_URL)
+
+    @staticmethod
+    def _utc_today() -> str:
+        return _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%d")
+
+    @staticmethod
+    def _seconds_to_utc_midnight() -> int:
+        now = _dt.datetime.now(_dt.timezone.utc)
+        midnight = (now + _dt.timedelta(days=1)).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        return max(1, int((midnight - now).total_seconds()))
+
+    async def _check_daily(self, ident: str) -> bool:
+        """True if this device still has daily AI budget. Increments on use."""
+        key = f"rl:aiday:{self._utc_today()}:{ident}"
+        if self._redis:
+            try:
+                pipe = self._redis.pipeline()
+                pipe.incr(key)
+                pipe.expire(key, 90000)  # ~25h — outlives the UTC day
+                count, _ = await pipe.execute()
+                return int(count) <= _AI_DAILY_LIMIT
+            except Exception as e:  # noqa: BLE001
+                logger.warning("Redis daily-quota error: %s", e)
+        count = self._daily.get(key, 0) + 1
+        self._daily[key] = count
+        return count <= _AI_DAILY_LIMIT
 
     async def _check_redis(self, key: str, limit: int) -> bool | None:
         """Check rate-limit via Redis. Returns True if allowed, False if blocked, None on error."""
@@ -102,6 +140,17 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         ident = device_id or (request.client.host if request.client else "unknown")
         key = f"rl:{scope}:{ident}"
 
+        # Fair-use daily quota — AI generation POSTs only (GET catalogues like
+        # /story-themes stay free). Checked before the minute window so the
+        # user sees the gentle daily message, not the generic burst one.
+        if scope == "ai" and request.method == "POST" and _AI_DAILY_LIMIT > 0:
+            if not await self._check_daily(ident):
+                return JSONResponse(
+                    status_code=429,
+                    content={"detail": _DAILY_MESSAGE, "code": "daily_limit"},
+                    headers={"Retry-After": str(self._seconds_to_utc_midnight())},
+                )
+
         # Try Redis first, fall back to in-memory
         redis_allowed = await self._check_redis(key, limit)
         if redis_allowed is not None:
@@ -121,6 +170,10 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
             expired_keys = [k for k, (start, _) in self._buckets.items() if now - start >= _WINDOW]
             for k in expired_keys:
                 self._buckets.pop(k, None)
+            today_prefix = f"rl:aiday:{self._utc_today()}:"
+            stale_daily = [k for k in self._daily if not k.startswith(today_prefix)]
+            for k in stale_daily:
+                self._daily.pop(k, None)
             self._last_cleanup = now
 
         start, count = self._buckets.get(key, (now, 0))

@@ -239,7 +239,16 @@ class TgClient {
     }
 
     if (response.statusCode != 200) {
-      throw _wrapStreamed(response.statusCode, response.headers);
+      // Read the (small) error body so server-provided Arabic messages —
+      // e.g. the gentle daily-quota one — reach the user instead of a bare
+      // «خطأ HTTP 429».
+      String body = '';
+      try {
+        body = await response.stream
+            .bytesToString()
+            .timeout(const Duration(seconds: 3));
+      } catch (_) {/* keep empty body */}
+      throw _wrapStatus(response.statusCode, body, response.headers);
     }
 
     // Parse SSE byte-by-byte. Frame = `event: <name>\ndata: <json>\n\n`.
@@ -341,6 +350,7 @@ class TgClient {
     required String childName,
     required String ageGroup,
     required String theme,
+    int? childId,
   }) async {
     final session = await ensureSession();
     final resp = await _http
@@ -351,6 +361,9 @@ class TgClient {
             'child_name': childName,
             'age_group': ageGroup,
             'theme': theme,
+            // Lets the backend resolve the child's gender for correctly
+            // conjugated pre-generated stories (cache tier).
+            if (childId != null) 'child_id': childId,
           }),
         )
         // stories are slower (full LLM generation) — allow the SSE-style budget

@@ -470,13 +470,18 @@ class StoryRequest(BaseModel):
     child_name: str = Field(min_length=1, max_length=40)
     age_group: str
     theme: str  # key from STORY_THEMES
+    # Optional: lets the backend resolve the child's gender so a correctly
+    # conjugated pre-generated story can be served from cache (§5.1).
+    child_id: Optional[int] = None
 
 
 @router.post("/story")
-async def generate_story(req: StoryRequest):
+async def generate_story(req: StoryRequest, request: Request):
     """Generate a short, safe, value-teaching Arabic children's story
-    starring the child. Runs entirely on the local model (no cloud)."""
-    from app.services.ai_gateway import get_gateway
+    starring the child. Served from the pre-generated cache when a gendered
+    variant exists; otherwise generated live on the local model (no cloud)."""
+    from app.services import story_service
+    from app.services.ai_gateway import _log_call, get_gateway
 
     if req.theme not in STORY_THEMES:
         raise HTTPException(
@@ -492,6 +497,22 @@ async def generate_story(req: StoryRequest):
     if not safe_name:
         safe_name = "بطلنا الصغير"
     value = STORY_THEMES[req.theme]
+
+    # Cache tier: only when the child's gender is known (Arabic conjugation).
+    device_id = getattr(request.state, "device_id", None)
+    gender = story_service.resolve_child_gender(device_id, req.child_id)
+    cached = story_service.get_cached_story(req.theme, req.age_group, gender)
+    if cached:
+        _log_call("story_cache", "pregen", 0, None, None,
+                  streamed=False, ok=True, tier="local_fast",
+                  route_reason="story_cache_hit")
+        return {
+            "theme": req.theme,
+            "value": value,
+            "story": story_service.personalize(
+                cached["story"], cached["hero_name"], safe_name
+            ),
+        }
 
     prompt = (
         "أنت كاتب قصص أطفال عربي. اكتب قصة قصيرة (٣ إلى ٥ فقرات) بالعربية "

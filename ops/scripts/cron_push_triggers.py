@@ -2,9 +2,10 @@
 """
 ops/scripts/cron_push_triggers.py
 
-Re-engagement push triggers — Phase 1.1.
-Runs as a cron job on the VPS (e.g. every day at 9am and 8pm local time):
-    0 9,20 * * * cd /path/to/tutor-guardian && backend/.venv/bin/python ops/scripts/cron_push_triggers.py
+Re-engagement push triggers — Phase 1.1 (schedule tuned in growth plan §4.2).
+Runs as a VPS host cron, executing INSIDE the backend container (which has
+firebase-admin + the DB). UTC hours: 7 (morning tip) and 17 (evening nudges):
+    0 7,17 * * * docker exec -w /app tg_backend python ops/scripts/cron_push_triggers.py >> /var/log/tg-push.log 2>&1
 
 Needs env:
     FIREBASE_CREDENTIALS  (raw JSON) or backend/secrets/firebase-adminsdk.json
@@ -58,8 +59,10 @@ def _device_ids_with_tokens():
     return [r["device_id"] for r in rows]
 
 
-def streak_at_risk():
-    """Send to parents whose last lesson/login was >36h ago."""
+def streak_at_risk() -> set:
+    """Send to parents whose last lesson/login was >36h ago.
+    Returns the device_ids notified so win_back can skip them (≤1 evening
+    push per device — growth plan §4.2 anti-annoyance rule)."""
     cutoff = (datetime.utcnow() - timedelta(hours=36)).isoformat()
     rows = _query(
         """
@@ -75,6 +78,7 @@ def streak_at_risk():
         """,
         (cutoff,),
     )
+    sent: set = set()
     for r in rows:
         _send(
             device_id=r["device_id"],
@@ -82,6 +86,8 @@ def streak_at_risk():
             body="درس جديد من «المربّي» ياخد دقيقتين — ادخل الحين واستمر في رحلة تربية أولادك.",
             data={"type": "streak_at_risk", "route": "/paths"},
         )
+        sent.add(r["device_id"])
+    return sent
 
 
 def new_content_digest():
@@ -96,8 +102,10 @@ def new_content_digest():
         )
 
 
-def win_back():
-    """Reach parents who have not opened the app for 5+ days."""
+def win_back(skip: set | None = None):
+    """Reach parents who have not opened the app for 5+ days — skipping any
+    device already nudged by streak_at_risk in this run (max 1 evening push)."""
+    skip = skip or set()
     cutoff = (datetime.utcnow() - timedelta(days=5)).isoformat()
     rows = _query(
         """
@@ -110,6 +118,8 @@ def win_back():
         (cutoff,),
     )
     for r in rows:
+        if r["device_id"] in skip:
+            continue
         _send(
             device_id=r["device_id"],
             title="مشتاقين ليك 🤍",
@@ -122,15 +132,16 @@ if __name__ == "__main__":
     hour = datetime.utcnow().hour
     print(f"[{datetime.utcnow().isoformat()}] cron_push_triggers starting (UTC hour={hour})")
 
-    # Morning digest at 9am UTC
-    if 9 <= hour < 10:
+    # Morning tip at 7 UTC (≈10:00 القاهرة والرياض — صباح، ليس ظهرًا)
+    if 7 <= hour < 8:
         print("  -> new_content_digest")
         new_content_digest()
 
-    # Evening re-engagement at 8pm UTC
-    if 20 <= hour < 21:
-        print("  -> streak_at_risk + win_back")
-        streak_at_risk()
-        win_back()
+    # Evening re-engagement at 17 UTC (≈20:00 القاهرة والرياض — بعد المغرب،
+    # وليس 23:00/منتصف الليل كما كانت 20 UTC). Max 2 pushes/device/day total.
+    if 17 <= hour < 18:
+        print("  -> streak_at_risk + win_back (deduped)")
+        nudged = streak_at_risk()
+        win_back(skip=nudged)
 
     print("done")

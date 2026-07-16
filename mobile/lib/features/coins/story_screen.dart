@@ -13,6 +13,7 @@ import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
 import '../../widgets/ui/bouncy_button.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
+import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 import '../onboarding/providers/onboarding_providers.dart';
 import 'coins_providers.dart';
 import 'coins_service.dart';
@@ -87,6 +88,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
             childName: name,
             ageGroup: age,
             theme: theme,
+            childId: ref.read(activeChildIdProvider),
           );
       // Only deduct coins after a successful generation.
       await ref.read(coinsProvider.notifier).spend(CoinsService.storyCost);

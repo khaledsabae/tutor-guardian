@@ -64,6 +64,14 @@ def _embedder():
     return _embedder_instance
 
 
+def embed_query(text: str) -> list[float]:
+    """L2-normalized query embedding (e5 "query: " convention) for arbitrary
+    text — used by the semantic answer cache. Dot product == cosine sim."""
+    return _embedder()(
+        [f"query: {text}"]
+    )[0]
+
+
 def _get_collection() -> chromadb.Collection:
     """Lazy-init ChromaDB client + collection (singleton)."""
     global _collection
