@@ -2276,6 +2276,42 @@ abstract class AppLocalizations {
   /// **'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)'**
   String get settingsFamilyAdhkarDesc;
 
+  /// No description provided for @settingsEnglishMedia.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإنجليزية (بودكاست وفيديو بالإنجليزية)'**
+  String get settingsEnglishMedia;
+
+  /// No description provided for @settingsMediaLangChangedEn.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تغيير لغة الوسائط إلى الإنجليزية'**
+  String get settingsMediaLangChangedEn;
+
+  /// No description provided for @settingsLoadFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحميل الإعدادات.\n{error}'**
+  String settingsLoadFailed(Object error);
+
+  /// No description provided for @settingsMethodologyLink.
+  ///
+  /// In ar, this message translates to:
+  /// **'منهجيتنا ومصادرنا'**
+  String get settingsMethodologyLink;
+
+  /// No description provided for @settingsMethodologyDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف نختار المحتوى ومصادره العلمية والشرعية'**
+  String get settingsMethodologyDesc;
+
+  /// No description provided for @genderOther.
+  ///
+  /// In ar, this message translates to:
+  /// **'أخرى'**
+  String get genderOther;
+
   /// No description provided for @lessonTitle.
   ///
   /// In ar, this message translates to:

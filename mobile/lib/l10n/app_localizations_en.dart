@@ -1185,6 +1185,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Daily Prophetic hadith and supplications (morning and evening)';
 
   @override
+  String get settingsEnglishMedia => 'English (English audio/video)';
+
+  @override
+  String get settingsMediaLangChangedEn => 'Media language changed to English';
+
+  @override
+  String settingsLoadFailed(Object error) {
+    return 'Failed to load settings.\n$error';
+  }
+
+  @override
+  String get settingsMethodologyLink => 'Our Methodology & Sources';
+
+  @override
+  String get settingsMethodologyDesc =>
+      'How we choose our content and its scholarly sources';
+
+  @override
+  String get genderOther => 'Other';
+
+  @override
   String get lessonTitle => 'Lesson';
 
   @override

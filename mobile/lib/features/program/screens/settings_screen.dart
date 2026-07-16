@@ -42,14 +42,15 @@ class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   void _toggleLanguage(BuildContext context, WidgetRef ref, String current) {
+    final l10n = AppLocalizations.of(context);
     final newLang = current == 'ar' ? 'en' : 'ar';
     ref.read(contentLanguageProvider.notifier).setLanguage(newLang);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           newLang == 'ar'
-              ? 'تم تغيير لغة الوسائط إلى العربية'
-              : 'Media language changed to English',
+              ? l10n.settingsMediaLangChanged
+              : l10n.settingsMediaLangChangedEn,
         ),
         duration: const Duration(seconds: 2),
       ),
@@ -58,12 +59,13 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final asyncList = ref.watch(childrenListProvider);
     final profile = ref.watch(activeChildProfileProvider);
     final currentLanguage = ref.watch(contentLanguageProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context).settingsTitle)),
+      appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: SafeArea(
         child: asyncList.when(
           loading: () => const Center(child: CircularProgressIndicator()),
@@ -79,7 +81,7 @@ class SettingsScreen extends ConsumerWidget {
                 : envelope.children.firstOrNull;
             if (activeChild == null) {
               return Center(
-                child: Text(AppLocalizations.of(context).settingsNoChild),
+                child: Text(l10n.settingsNoChild),
               );
             }
             return ListView(
@@ -89,8 +91,9 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 _SettingsRow(
                   icon: Icons.swap_horiz,
-                  title: AppLocalizations.of(context).settingsSwitchChild,
-                  subtitle: 'لديك ${envelope.count} من أصل ${ChildrenListScreen.kMaxChildren} أطفال',
+                  title: l10n.settingsSwitchChild,
+                  subtitle: l10n.settingsChildCount(
+                      envelope.count, ChildrenListScreen.kMaxChildren),
                   onTap: () async {
                     await Navigator.of(context).push(
                       MaterialPageRoute(
@@ -104,8 +107,8 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.edit_outlined,
-                  title: AppLocalizations.of(context).settingsEditChild,
-                  subtitle: AppLocalizations.of(context).settingsEditChildDesc,
+                  title: l10n.settingsEditChild,
+                  subtitle: l10n.settingsEditChildDesc,
                   onTap: () async {
                     final changed = await Navigator.of(context).push<bool>(
                       MaterialPageRoute(
@@ -119,8 +122,8 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.favorite_outline,
-                  title: 'ادعُ صديقًا 🤍',
-                  subtitle: 'دلالتك على الخير صدقة — وكلاكما يكسب مكافأة',
+                  title: l10n.settingsInviteFriend,
+                  subtitle: l10n.settingsInviteDesc,
                   iconColor: AppTheme.primary,
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const InviteScreen()),
@@ -128,8 +131,8 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.cloud_sync_outlined,
-                  title: 'احفظ تقدّمك 🤍',
-                  subtitle: 'تسجيل دخول اختياري — يحفظ بياناتك لو غيّرت الجهاز',
+                  title: l10n.settingsBackup,
+                  subtitle: l10n.settingsBackupDesc,
                   iconColor: AppTheme.primary,
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const IdentityScreen()),
@@ -137,26 +140,26 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.feedback_outlined,
-                  title: AppLocalizations.of(context).settingsShareFeedback,
-                  subtitle: 'اقتراح أو مشكلة — كتابةً أو صوتاً، يصل لنا مباشرة',
+                  title: l10n.settingsShareFeedback,
+                  subtitle: l10n.settingsShareFeedbackDesc,
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const FeedbackScreen()),
                   ),
                 ),
                 _SettingsRow(
                   icon: Icons.restart_alt,
-                  title: AppLocalizations.of(context).settingsResetProgress,
-                  subtitle: 'سيتم مسح كل الدروس المكمّلة وإعادة السلسلة إلى 0',
+                  title: l10n.settingsResetProgress,
+                  subtitle: l10n.settingsResetDesc,
                   iconColor: AppTheme.dangerFg,
                   onTap: () => _confirmReset(context, ref, activeChild),
                 ),
                 const SizedBox(height: 24),
                 _SettingsRow(
                   icon: Icons.language,
-                  title: AppLocalizations.of(context).settingsMediaLang,
+                  title: l10n.settingsMediaLang,
                   subtitle: currentLanguage == 'ar'
-                      ? 'العربية (بودكاست وفيديو عربي)'
-                      : 'English (English audio/video)',
+                      ? l10n.settingsArabicMedia
+                      : l10n.settingsEnglishMedia,
                   onTap: () => _toggleLanguage(context, ref, currentLanguage),
                 ),
                 const SizedBox(height: 24),
@@ -164,8 +167,8 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 _SettingsRow(
                   icon: Icons.star_outline,
-                  title: AppLocalizations.of(context).settingsRate,
-                  subtitle: 'رأيك يساعد آباءً غيرك يجدون «المربّي»',
+                  title: l10n.settingsRate,
+                  subtitle: l10n.settingsRateDesc,
                   onTap: () async {
                     final market = Uri.parse(
                         'market://details?id=com.alsaba.almorabbi');
@@ -182,8 +185,8 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.shield_outlined,
-                  title: AppLocalizations.of(context).settingsPrivacy,
-                  subtitle: 'كيف نتعامل مع بياناتك',
+                  title: l10n.settingsPrivacy,
+                  subtitle: l10n.settingsPrivacyDesc,
                   onTap: () async {
                     final uri = Uri.parse(
                         '${AppConfig.apiBaseUrl}/privacy-policy');
@@ -194,9 +197,22 @@ class SettingsScreen extends ConsumerWidget {
                   },
                 ),
                 _SettingsRow(
+                  icon: Icons.menu_book_outlined,
+                  title: l10n.settingsMethodologyLink,
+                  subtitle: l10n.settingsMethodologyDesc,
+                  onTap: () async {
+                    final uri =
+                        Uri.parse('https://alsaba.cloud/methodology');
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri,
+                          mode: LaunchMode.externalApplication);
+                    }
+                  },
+                ),
+                _SettingsRow(
                   icon: Icons.favorite_outline,
-                  title: AppLocalizations.of(context).settingsFavorites,
-                  subtitle: 'الدروس والنصائح التي حفظتها',
+                  title: l10n.settingsFavorites,
+                  subtitle: l10n.settingsFavoritesDesc,
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -207,8 +223,8 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.emoji_events_outlined,
-                  title: AppLocalizations.of(context).settingsAchievements,
-                  subtitle: 'الشارات التي حصلت عليها',
+                  title: l10n.settingsAchievements,
+                  subtitle: l10n.settingsAchievementsDesc,
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -219,21 +235,21 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.file_download_outlined,
-                  title: AppLocalizations.of(context).settingsExport,
-                  subtitle: 'تصدير المفضلة والملاحظات كملف JSON',
+                  title: l10n.settingsExport,
+                  subtitle: l10n.settingsExportDesc,
                   onTap: () => _exportData(context, ref),
                 ),
                 _SettingsRow(
                   icon: Icons.file_upload_outlined,
-                  title: AppLocalizations.of(context).settingsImport,
-                  subtitle: 'استيراد النسخة الاحتياطية من ملف JSON',
+                  title: l10n.settingsImport,
+                  subtitle: l10n.settingsImportDesc,
                   onTap: () => _importData(context, ref),
                 ),
                 const SizedBox(height: 24),
-                const Center(
+                Center(
                   child: Text(
-                    'الإصدار ${AppConfig.appVersion}',
-                    style: TextStyle(
+                    l10n.settingsVersion(AppConfig.appVersion),
+                    style: const TextStyle(
                       color: AppTheme.textMuted,
                       fontSize: 12,
                     ),
@@ -249,12 +265,13 @@ class SettingsScreen extends ConsumerWidget {
 
   /// Export user data to JSON file and share it.
   Future<void> _exportData(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
     final backupService = ref.read(backupServiceProvider);
-    
+
     // Show loading indicator
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     scaffoldMessenger.showSnackBar(
-      SnackBar(content: Text(AppLocalizations.of(context).settingsPreparingBackup)),
+      SnackBar(content: Text(l10n.settingsPreparingBackup)),
     );
 
     try {
@@ -269,20 +286,20 @@ class SettingsScreen extends ConsumerWidget {
       // Share the file
       await Share.shareXFiles(
         [XFile(file.path)],
-        text: 'نسخة احتياطية من بيانات المربي الذكي',
-        subject: 'نسخة احتياطية - المربي الذكي',
+        text: l10n.settingsBackupTitle,
+        subject: l10n.settingsBackupName,
       );
-      
+
       if (context.mounted) {
         scaffoldMessenger.showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context).settingsExportSuccess)),
+          SnackBar(content: Text(l10n.settingsExportSuccess)),
         );
       }
     } catch (e) {
       if (context.mounted) {
         scaffoldMessenger.showSnackBar(
           SnackBar(
-            content: Text('تعذّر التصدير: $e'),
+            content: Text(l10n.settingsExportFailed(e)),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -292,14 +309,15 @@ class SettingsScreen extends ConsumerWidget {
 
   /// Import user data from JSON file.
   Future<void> _importData(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
     final backupService = ref.read(backupServiceProvider);
-    
+
     try {
       // Pick a file
       final pickerResult = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['json'],
-        dialogTitle: 'اختر ملف النسخة الاحتياطية',
+        dialogTitle: l10n.settingsImportFile,
       );
 
       if (pickerResult == null || pickerResult.files.isEmpty) return;
@@ -314,20 +332,19 @@ class SettingsScreen extends ConsumerWidget {
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('استيراد البيانات؟'),
-          content: const Text(
-            'سيتم دمج البيانات المستوردة مع بياناتك الحالية. '
-            'هذا الإجراء لا يمكن التراجع عنه بسهولة.',
+          title: Text(l10n.settingsImportConfirm),
+          content: Text(
+            '${l10n.settingsImportDesc1} ${l10n.settingsImportDesc2}',
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: Text(AppLocalizations.of(context).cancel),
+              child: Text(l10n.cancel),
             ),
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(true),
               style: TextButton.styleFrom(foregroundColor: AppTheme.primary),
-              child: Text(AppLocalizations.of(context).settingsImportBtn),
+              child: Text(l10n.settingsImportBtn),
             ),
           ],
         ),
@@ -338,7 +355,7 @@ class SettingsScreen extends ConsumerWidget {
       // Perform import
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context).settingsImporting)),
+          SnackBar(content: Text(l10n.settingsImporting)),
         );
       }
 
@@ -349,7 +366,10 @@ class SettingsScreen extends ConsumerWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'تم الاستيراد بنجاح: ${importResult.importedReflectionsCount} ملاحظة، ${importResult.importedFavoritesCount} مفضلة',
+                l10n.settingsImportSuccess(
+                  importResult.importedFavoritesCount,
+                  importResult.importedReflectionsCount,
+                ),
               ),
               backgroundColor: AppTheme.success,
             ),
@@ -357,7 +377,8 @@ class SettingsScreen extends ConsumerWidget {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('تعذّر الاستيراد: ${importResult.errorMessage}'),
+              content: Text(
+                  l10n.settingsImportFailed('${importResult.errorMessage}')),
               backgroundColor: AppTheme.dangerFg,
             ),
           );
@@ -367,7 +388,7 @@ class SettingsScreen extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تعذّر الاستيراد: $e'),
+            content: Text(l10n.settingsImportFailed(e)),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -380,23 +401,23 @@ class SettingsScreen extends ConsumerWidget {
     WidgetRef ref,
     ChildProfile child,
   ) async {
+    final l10n = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(AppLocalizations.of(context).settingsResetConfirm),
+        title: Text(l10n.settingsResetConfirm),
         content: Text(
-          'سيتم مسح كل الدروس المكمّلة لـ ${child.name} وستُعاد السلسلة إلى الصفر. '
-          'هذا الإجراء لا يمكن التراجع عنه.',
+          '${l10n.settingsResetDesc1(child.name)} ${l10n.settingsResetDesc2}',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('إلغاء'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
             style: TextButton.styleFrom(foregroundColor: AppTheme.dangerFg),
-            child: const Text('إعادة التعيين'),
+            child: Text(l10n.settingsResetBtn),
           ),
         ],
       ),
@@ -412,8 +433,8 @@ class SettingsScreen extends ConsumerWidget {
         SnackBar(
           content: Text(
             deleted == 0
-                ? AppLocalizations.of(context).settingsNoProgress
-                : 'تم مسح $deleted درس. السلسلة الآن 0.',
+                ? l10n.settingsNoProgress
+                : l10n.settingsResetDone(deleted),
           ),
         ),
       );
@@ -421,7 +442,7 @@ class SettingsScreen extends ConsumerWidget {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('تعذّر إعادة التعيين: $e'),
+          content: Text(l10n.settingsResetFailed(e)),
           backgroundColor: AppTheme.dangerFg,
         ),
       );
@@ -435,6 +456,7 @@ class _ChildHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Container(
       decoration: BoxDecoration(
         color: AppTheme.surface,
@@ -477,12 +499,12 @@ class _ChildHeader extends StatelessWidget {
                     children: [
                       _Tag(
                         icon: Icons.cake_outlined,
-                        text: _ageLabel(child.ageGroup),
+                        text: _ageLabel(l10n, child.ageGroup),
                       ),
                       if (child.gender != null)
                         _Tag(
                           icon: Icons.person_outline,
-                          text: _genderLabel(child.gender!),
+                          text: _genderLabel(l10n, child.gender!),
                         ),
                     ],
                   ),
@@ -495,35 +517,35 @@ class _ChildHeader extends StatelessWidget {
     );
   }
 
-  String _ageLabel(String wire) {
+  String _ageLabel(AppLocalizations l10n, String wire) {
     switch (wire) {
       case 'prenatal-1':
-        return 'فترة الحمل وحتى عام';
+        return l10n.ageGroupPrenatal;
       case '2-3':
-        return '2–3 سنوات';
+        return l10n.ageGroup2to3;
       case '4-6':
-        return '4–6 سنوات';
+        return l10n.ageGroup4to6;
       case '7-9':
-        return '7–9 سنوات';
+        return l10n.ageGroup7to9;
       case '10-12':
-        return '10–12 سنة';
+        return l10n.ageGroup10to12;
       case '13-15':
-        return '13–15 سنة';
+        return l10n.ageGroup13to15;
       case '16-18':
-        return '16–18 سنة';
+        return l10n.ageGroup16to18;
       default:
         return wire;
     }
   }
 
-  String _genderLabel(String wire) {
+  String _genderLabel(AppLocalizations l10n, String wire) {
     switch (wire) {
       case 'male':
-        return 'ولد';
+        return l10n.onbBoy;
       case 'female':
-        return 'بنت';
+        return l10n.onbGirl;
       case 'other':
-        return 'أخرى';
+        return l10n.genderOther;
       default:
         return wire;
     }
@@ -655,7 +677,7 @@ class _ErrorView extends StatelessWidget {
             const Icon(Icons.error_outline,
                 size: 48, color: AppTheme.dangerFg),
             const SizedBox(height: 12),
-            Text('تعذّر تحميل الإعدادات.\n$error',
+            Text(AppLocalizations.of(context).settingsLoadFailed(error),
                 textAlign: TextAlign.center),
             const SizedBox(height: 16),
             ElevatedButton.icon(
@@ -712,9 +734,9 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
           AppLocalizations.of(context).settingsFamilyAdhkar,
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
         ),
-        subtitle: const Text(
-          'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)',
-          style: TextStyle(fontSize: 12, color: AppTheme.textSecondary),
+        subtitle: Text(
+          AppLocalizations.of(context).settingsFamilyAdhkarDesc,
+          style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
         ),
         value: _enabled,
         onChanged: (val) async {

@@ -1168,6 +1168,28 @@ class AppLocalizationsAr extends AppLocalizations {
       'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)';
 
   @override
+  String get settingsEnglishMedia => 'الإنجليزية (بودكاست وفيديو بالإنجليزية)';
+
+  @override
+  String get settingsMediaLangChangedEn =>
+      'تم تغيير لغة الوسائط إلى الإنجليزية';
+
+  @override
+  String settingsLoadFailed(Object error) {
+    return 'تعذّر تحميل الإعدادات.\n$error';
+  }
+
+  @override
+  String get settingsMethodologyLink => 'منهجيتنا ومصادرنا';
+
+  @override
+  String get settingsMethodologyDesc =>
+      'كيف نختار المحتوى ومصادره العلمية والشرعية';
+
+  @override
+  String get genderOther => 'أخرى';
+
+  @override
   String get lessonTitle => 'الدرس';
 
   @override
