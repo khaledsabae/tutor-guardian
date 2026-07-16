@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Weekly metrics dashboard — sends a formatted summary to Telegram.
 
-Usage (VPS cron, every Sunday 8:00 UTC):
+Usage (VPS cron, every Friday 8:00 UTC):
     docker exec -w /app tg_backend python ops/scripts/weekly_dashboard.py
 
 Collects:
