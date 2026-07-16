@@ -142,6 +142,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     mountScrollWorld(document.getElementById('world'), {
+      journey: '/ui/assets/journey.mp4?v=20260716',
       diveScroll: 1.35, 
       connScroll: 1.0, 
       crossfade: 0.28,  
@@ -151,7 +152,8 @@
         {
           id: 'hero',
           label: 'البداية',
-          clip: '/ui/assets/hero_clip.mp4',
+          timeStart: 0.0,
+          timeEnd: 10.0,
           accent: '#8B7BB5',
           linger: 0.4,
           eyebrow: 'الذكاء التربوي الحارس',
@@ -162,7 +164,8 @@
         {
           id: 'medical',
           label: 'التوجيه النفسي',
-          clip: '/ui/assets/medical_clip.mp4',
+          timeStart: 10.0,
+          timeEnd: 20.0,
           accent: '#76A5AF',
           linger: 0.45,
           eyebrow: 'الرعاية النفسية والسلوكية',
@@ -173,7 +176,8 @@
         {
           id: 'islamic',
           label: 'التربية النبوية',
-          clip: '/ui/assets/islamic_clip.mp4',
+          timeStart: 20.0,
+          timeEnd: 30.0,
           accent: '#8FB98A',
           linger: 0.45,
           eyebrow: 'القيم والتربية الإسلامية',
@@ -184,7 +188,8 @@
         {
           id: 'cyber',
           label: 'الأمان الرقمي',
-          clip: '/ui/assets/cyber_clip.mp4',
+          timeStart: 30.0,
+          timeEnd: 40.0,
           accent: '#C88A5A',
           linger: 0.45,
           eyebrow: 'الحماية السيبرانية للأطفال',
@@ -195,7 +200,8 @@
         {
           id: 'finale',
           label: 'حمل التطبيق',
-          clip: '/ui/assets/finale_clip.mp4',
+          timeStart: 40.0,
+          timeEnd: 50.0,
           accent: '#B57BA6',
           linger: 0.5,
           eyebrow: 'مستقبل تربوي آمن لعائلتك',
