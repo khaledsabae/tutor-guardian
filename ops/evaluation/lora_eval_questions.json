@@ -1,0 +1,220 @@
+{
+  "metadata": {
+    "description": "Evaluation dataset for tg-tutor:v4 vs tg-tutor:v5 (LoRA)",
+    "created": "2026-07-16",
+    "total_questions": 30,
+    "categories": ["sleep", "tantrums", "eating", "prayer", "screen_time", "lying", "homework", "teen_defiant", "social_media", "friends"]
+  },
+  "questions": [
+    {
+      "id": 1,
+      "category": "sleep",
+      "age_group": "4-6",
+      "question": "طفلي يرفض النوم ويستيقظ كثيرًا بالليل",
+      "expected_elements": ["روتين", "هدوء", "نوم مبكر", "أذكار"]
+    },
+    {
+      "id": 2,
+      "category": "sleep",
+      "age_group": "2-3",
+      "question": "طفلي خايف من الظلام وعايز ينام معايا",
+      "expected_elements": ["أمان", "mhagab", "تدريج"]
+    },
+    {
+      "id": 3,
+      "category": "tantrums",
+      "age_group": "4-6",
+      "question": "ابني كثير العناد ونوبات الغضب",
+      "expected_elements": ["هدوء", "صبر", "اختيار", "قدوة"]
+    },
+    {
+      "id": 4,
+      "category": "tantrums",
+      "age_group": "7-9",
+      "question": "كيف أتعامل مع نوبات الغضب؟",
+      "expected_elements": ["اعتراف بالشعور", "انتظار", "بدائل"]
+    },
+    {
+      "id": 5,
+      "category": "eating",
+      "age_group": "2-3",
+      "question": "طفلي يرفض الأكل — أعمل إيه؟",
+      "expected_elements": ["صبر", "روتين", "أطعمة متنوعة", "لا إجبار"]
+    },
+    {
+      "id": 6,
+      "category": "eating",
+      "age_group": "4-6",
+      "question": "طفلي بياكل أكل قليل جدًا",
+      "expected_elements": ["شهية", "تمارين", "أطعمة صحية"]
+    },
+    {
+      "id": 7,
+      "category": "prayer",
+      "age_group": "4-6",
+      "question": "ابني 5 سنين بيرفض الصلاة، أعمل إيه؟",
+      "expected_elements": ["قدوة", "تسهيل", "تشجيع", "لا إجبار"]
+    },
+    {
+      "id": 8,
+      "category": "prayer",
+      "age_group": "7-9",
+      "question": "كيف أعوّد طفلي على الصلاة بانتظام؟",
+      "expected_elements": ["روتين", "مواعيد", "مسجد", "عائلة"]
+    },
+    {
+      "id": 9,
+      "category": "screen_time",
+      "age_group": "4-6",
+      "question": "طفلي لا يترك التابلت والشاشات",
+      "expected_elements": ["حدود", "بدائل", "ألعاب", "وقت محدد"]
+    },
+    {
+      "id": 10,
+      "category": "screen_time",
+      "age_group": "10-12",
+      "question": "ابني مشغول بالألعاب الإلكترونية طوال اليوم",
+      "expected_elements": ["اقتصاص", "نشاط بديل", "مسؤولية", "اتفاق"]
+    },
+    {
+      "id": 11,
+      "category": "lying",
+      "age_group": "7-9",
+      "question": "ابني يكذب أحيانًا — كيف أتصرف؟",
+      "expected_elements": ["صبر", "تحقيق", "قدوة", "ثناء على الصدق"]
+    },
+    {
+      "id": 12,
+      "category": "homework",
+      "age_group": "10-12",
+      "question": "ابني يماطل في واجباته المدرسية",
+      "expected_elements": ["روتين", "دافع", "مساعدة", "تنظيم"]
+    },
+    {
+      "id": 13,
+      "category": "teen_defiant",
+      "age_group": "13-15",
+      "question": "ابني المراهق يعاند ولا يسمع الكلام",
+      "expected_elements": ["احترام", "حوار", "حدود", "خصوصية"]
+    },
+    {
+      "id": 14,
+      "category": "social_media",
+      "age_group": "13-15",
+      "question": "ابنتي مشغولة بالسوشيال ميديا والمقارنات",
+      "expected_elements": ["ثقة بالنفس", "قيمة", "محتوى", "رقابة"]
+    },
+    {
+      "id": 15,
+      "category": "friends",
+      "age_group": "10-12",
+      "question": "كيف أناقش ابني في اختيار أصحابه؟",
+      "expected_elements": ["حوار", "قدوة", "قيم", "مرونة"]
+    },
+    {
+      "id": 16,
+      "category": "sleep",
+      "age_group": "7-9",
+      "question": "طفلي بينام متأخر وبيقعد على الموبايل",
+      "expected_elements": ["روتين", "نوم", "موبايل خارج الغرفة"]
+    },
+    {
+      "id": 17,
+      "category": "tantrums",
+      "age_group": "2-3",
+      "question": "طفلي بيعيط كل ما أمنعه من حاجة",
+      "expected_elements": ["عمر", "تطور", "لا إجبار", "بدائل"]
+    },
+    {
+      "id": 18,
+      "category": "eating",
+      "age_group": "7-9",
+      "question": "طفلي بياكل بس أكلات دسمة ومشاكل",
+      "expected_elements": ["توازن", "تمارين", "أطعمة صحية"]
+    },
+    {
+      "id": 19,
+      "category": "prayer",
+      "age_group": "10-12",
+      "question": "كيف أحافظ على صلاة ابني المراهق؟",
+      "expected_elements": ["قدوة", "حوار", "لا إجبار", "مسجد"]
+    },
+    {
+      "id": 20,
+      "category": "screen_time",
+      "age_group": "13-15",
+      "question": "ابني على التيك توك طول الوقت",
+      "expected_elements": ["حدود", "محتوى", "مسؤولية", "بدائل"]
+    },
+    {
+      "id": 21,
+      "category": "lying",
+      "age_group": "10-12",
+      "question": "طفلي بينكر إنه عمل حاجة وهو عملها",
+      "expected_elements": ["ثقة", "صبر", "حقيقة", "后果"]
+    },
+    {
+      "id": 22,
+      "category": "homework",
+      "age_group": "13-15",
+      "question": "ابني مش عايز يذاكر وبيقول مش مهتم",
+      "expected_elements": ["دافع", "هدف", "اهتمام", "لا إجبار"]
+    },
+    {
+      "id": 23,
+      "category": "teen_defiant",
+      "age_group": "16-18",
+      "question": "ابني كبير ومش بيسمعلنا خالص",
+      "expected_elements": ["احترام", "حوار", "مسؤولية", "حدود"]
+    },
+    {
+      "id": 24,
+      "category": "social_media",
+      "age_group": "10-12",
+      "question": "طفلي عايز يفتح حساب على إنستجرام",
+      "expected_elements": ["عمر", "محتوى", "رقابة", "اتفاق"]
+    },
+    {
+      "id": 25,
+      "category": "friends",
+      "age_group": "13-15",
+      "question": "ابني بيتأثر بأصحابه السوء",
+      "expected_elements": ["حوار", "قيم", "نشاط", "مشاركة"]
+    },
+    {
+      "id": 26,
+      "category": "sleep",
+      "age_group": "10-12",
+      "question": "طفلي بينام وأنا صاحي — أخاف عليه",
+      "expected_elements": ["أمان", "روتين", "نوم"]
+    },
+    {
+      "id": 27,
+      "category": "tantrums",
+      "age_group": "13-15",
+      "question": "ابني بيضرب الحيط لما بيزعل",
+      "expected_elements": ["عاطفة", "تعبير", "هدوء", "مساعدة"]
+    },
+    {
+      "id": 28,
+      "category": "eating",
+      "age_group": "13-15",
+      "question": "طفلي عايز ينحف وبيقصر عن الأكل",
+      "expected_elements": ["جسم", "صحة", "توازن", "أخصائي"]
+    },
+    {
+      "id": 29,
+      "category": "prayer",
+      "age_group": "16-18",
+      "question": "ابني مش بيصلي خالص من وهو صغير",
+      "expected_elements": ["حوار", "قدوة", "لا إجبار", "دعاء"]
+    },
+    {
+      "id": 30,
+      "category": "friends",
+      "age_group": "7-9",
+      "question": "طفلي بيتخانق مع أصحابه كتير",
+      "expected_elements": ["تواصل", "تحكم", "حل مشاكل", "قدوة"]
+    }
+  ]
+}
