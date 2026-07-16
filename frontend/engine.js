@@ -336,11 +336,18 @@ function mountScrollWorld(container, config) {
 
       const op = smooth(opacity);
       s.el.style.opacity = op;
-
-      const isVisible = op > 0.001;
+      
+      // In single journey mode the background video lives in the first scene
+      // and must remain visible for the entire scroll-world duration.
+      if (JOURNEY_MODE && i === 0) {
+        s.el.style.opacity = '1';
+        s.el.classList.add('is-visible');
+      }
+      
+      const isVisible = op > 0.001 || (JOURNEY_MODE && i === 0);
       s.visible = isVisible;
       s.el.classList.toggle('is-visible', isVisible);
-      s.el.style.zIndex = (i === ci) ? '120' : String(100 + Math.round(op * 10));
+      s.el.style.zIndex = (JOURNEY_MODE && i === 0) ? '200' : ((i === ci) ? '120' : String(100 + Math.round(op * 10)));
 
       if ((!s.hasClip || !s.ready) && s.img) {
         const sc = reduce ? 1.0 : 0.9 + local * 1.5;
