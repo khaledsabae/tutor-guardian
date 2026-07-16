@@ -94,7 +94,7 @@ app = FastAPI(
     lifespan=lifespan)
 
 # Trust X-Forwarded-Proto from nginx so redirects keep HTTPS
-app.add_middleware(ProxyHeadersMiddleware, forwarded_allow_ips="*")
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 
 app.add_middleware(
