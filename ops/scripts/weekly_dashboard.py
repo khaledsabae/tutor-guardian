@@ -29,14 +29,18 @@ from pathlib import Path
 _backend_root = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_backend_root))
 
+# All product tables queried below (chat_sessions, lesson_progress,
+# child_profiles, daily_login_streaks) live in conversations.db — same
+# resolution as app.db.init_db.db_path(). sessions.db only holds llm_calls
+# etc., which this script reads via the /api/stats/ops-llm endpoint instead.
 _DB = Path(os.environ.get(
-    "SESSIONS_DB",
-    str(Path(__file__).resolve().parents[2] / "ops" / "sessions.db"),
+    "CONVERSATIONS_DB",
+    str(Path(__file__).resolve().parents[2] / "ops" / "conversations.db"),
 ))
 
 
 def _query_db(sql: str, params: tuple = ()) -> list[dict]:
-    """Run a query against sessions.db and return list of dicts."""
+    """Run a query against conversations.db and return list of dicts."""
     conn = sqlite3.connect(str(_DB))
     conn.row_factory = sqlite3.Row
     try:
