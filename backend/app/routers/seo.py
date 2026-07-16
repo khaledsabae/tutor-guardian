@@ -590,7 +590,7 @@ def _page(title: str, desc: str, body: str, canonical: str, faq: list[dict] | No
                         headers={"Cache-Control": "public, max-age=3600"})
 
 
-@router.get("/seo/{slug}", include_in_schema=False)
+@router.get("/{slug}", include_in_schema=False)
 async def seo_page(request: Request, slug: str):
     """SEO page for a specific pain-point question."""
     if slug not in SEO_PAGES:
@@ -608,7 +608,7 @@ async def seo_page(request: Request, slug: str):
     )
 
 
-@router.get("/seo", include_in_schema=False)
+@router.get("", include_in_schema=False)
 async def seo_index(request: Request):
     """Index of all SEO pages."""
     base_url = str(request.base_url).rstrip("/")
