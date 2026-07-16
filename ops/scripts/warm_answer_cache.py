@@ -103,10 +103,14 @@ async def _generate_answer(question: str, age_group: str) -> str | None:
         # Build context from units
         context_parts = []
         for u in unique_units[:5]:  # Top 5 units
-            title = u.get("title", "")
-            content = u.get("content", "")
-            source = u.get("source", "")
-            context_parts.append(f"الوحدة: {title}\nالمحتوى: {content}\nالمصدر: {source}")
+            # The unit structure from retrieve_relevant_units has:
+            # - unit_id, document, metadata, distance
+            title = u.get("unit_id", "")
+            content = u.get("document", "")
+            metadata = u.get("metadata", {})
+            source = metadata.get("reference_info", "")
+            domain = metadata.get("domain", "")
+            context_parts.append(f"الوحدة ({domain}): {content}\nالمصدر: {source}")
 
         context = "\n\n".join(context_parts)
 
