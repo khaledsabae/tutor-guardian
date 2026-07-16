@@ -80,14 +80,29 @@ async def _generate_answer(question: str, age_group: str) -> str | None:
         from app.services.ai_gateway import AIGateway
         from app.services.retrieval import retrieve_relevant_units
 
-        # Retrieve relevant knowledge units
-        units = retrieve_relevant_units(question, domain="", age_group=age_group, top_k=5)
-        if not units:
+        # Try each domain to find relevant units
+        domains = ["islamic_parenting", "aqeedah", "cyber", "development", "medical"]
+        all_units = []
+
+        for domain in domains:
+            units = retrieve_relevant_units(question, domain=domain, age_group=age_group, top_k=3)
+            all_units.extend(units)
+
+        # Deduplicate by title
+        seen_titles = set()
+        unique_units = []
+        for u in all_units:
+            title = u.get("title", "")
+            if title not in seen_titles:
+                seen_titles.add(title)
+                unique_units.append(u)
+
+        if not unique_units:
             return None
 
         # Build context from units
         context_parts = []
-        for u in units:
+        for u in unique_units[:5]:  # Top 5 units
             title = u.get("title", "")
             content = u.get("content", "")
             source = u.get("source", "")
