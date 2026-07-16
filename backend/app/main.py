@@ -113,7 +113,7 @@ app.include_router(feedback.router, prefix="/api")
 app.include_router(program.router, prefix="/api")  # curriculum: paths/lessons/daily-tip
 app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
 app.include_router(methodology.router)  # /methodology (public — methodology & sources page)
-app.include_router(seo.router)  # /seo/{slug} (public — SEO pages for pain-point questions)
+app.include_router(seo.router, prefix="/seo")  # /seo/{slug} (public — SEO pages for pain-point questions)
 app.include_router(web.router)  # public SEO pages + share landing (/go, /l, /p; Phase 2)
 app.include_router(children.router, prefix="/api")  # child profiles + progress (auth)
 app.include_router(referral.router, prefix="/api")  # referral codes + attribution (auth)
