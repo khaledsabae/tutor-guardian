@@ -21,6 +21,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../../../core/analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 
@@ -107,6 +108,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         ageGroup: child.ageGroup,
       );
       await ref.read(onboardingStorageProvider).markOnboardingCompleted();
+      unawaited(Analytics.onboardingDone());
       // Flip the gate LAST: main.dart rebuilds and swaps OnboardingScreen →
       // RootScaffold. Only pop if this screen was actually pushed onto a
       // navigator; popping the ROOT route (first-run onboarding) leaves a

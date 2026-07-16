@@ -8,6 +8,7 @@
 library;
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Analytics {
   static FirebaseAnalytics get _fa => FirebaseAnalytics.instance;
@@ -15,6 +16,87 @@ class Analytics {
   static Future<void> _log(String name, [Map<String, Object>? params]) async {
     try {
       await _fa.logEvent(name: name, parameters: params);
+    } catch (_) {
+      // analytics must never affect UX
+    }
+  }
+
+  /// Log [name] at most once per install (guarded via SharedPreferences).
+  /// Used for the one-shot funnel milestones (first_chat, first_lesson…).
+  static Future<void> _logOnce(String name, [Map<String, Object>? params]) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = 'tg.analytics.once.$name';
+      if (prefs.getBool(key) == true) return;
+      await prefs.setBool(key, true);
+      await _log(name, params);
+    } catch (_) {
+      // analytics must never affect UX
+    }
+  }
+
+  // ── Activation funnel (§4.1 growth plan):
+  //    install → onboarding_done → child_added → first_chat OR first_lesson
+  //    → day2_return → habit_streak_3 ────────────────────────────────────
+
+  /// Onboarding finished — the user landed in the main app.
+  static Future<void> onboardingDone() => _logOnce('onboarding_done');
+
+  /// A child profile was successfully created on the backend.
+  static Future<void> childAdded(String ageGroup) =>
+      _log('child_added', {'age_group': ageGroup});
+
+  /// A chat message was actually submitted (first one also logs first_chat).
+  static Future<void> chatSent() async {
+    await _logOnce('first_chat');
+    await _log('chat_message_sent');
+  }
+
+  /// A lesson's content loaded on screen (first one also logs first_lesson).
+  static Future<void> lessonOpened(String lessonId) async {
+    await _logOnce('first_lesson');
+    await _log('lesson_opened', {'lesson_id': lessonId});
+  }
+
+  /// A lesson was marked completed.
+  static Future<void> lessonCompleted(String lessonId) =>
+      _log('lesson_completed', {'lesson_id': lessonId});
+
+  /// A habit was checked in for today.
+  static Future<void> habitCheckIn(String status) =>
+      _log('habit_check_in', {'status': status});
+
+  /// The child's habit streak reached 3+ days (one-shot funnel milestone).
+  static Future<void> habitStreak3(int streakDays) =>
+      _logOnce('habit_streak_3', {'streak_days': streakDays});
+
+  /// A story was successfully generated.
+  static Future<void> storyGenerated(String theme) =>
+      _log('story_generated', {'theme': theme});
+
+  /// The Quran/werd tab was selected.
+  static Future<void> quranOpened() => _log('quran_opened');
+
+  /// An educational game round was started.
+  static Future<void> gameStarted(String gameId, int level) =>
+      _log('game_started', {'game_id': gameId, 'level': level});
+
+  /// Call on every app start. Records the first-open day and emits a one-shot
+  /// day2_return when the app is opened again on the following calendar day.
+  static Future<void> appOpened() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      const key = 'tg.analytics.first_open_epoch_day';
+      final today = DateTime.now().toUtc().millisecondsSinceEpoch ~/
+          Duration.millisecondsPerDay;
+      final first = prefs.getInt(key);
+      if (first == null) {
+        await prefs.setInt(key, today);
+        return;
+      }
+      if (today - first == 1) {
+        await _logOnce('day2_return');
+      }
     } catch (_) {
       // analytics must never affect UX
     }

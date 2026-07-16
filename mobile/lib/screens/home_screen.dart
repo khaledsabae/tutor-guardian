@@ -10,9 +10,13 @@
 /// power PathsScreen / PathDetailScreen / BadgesScreen.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../core/analytics.dart';
 
 import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/data/badges.dart';
@@ -291,6 +295,9 @@ class _StatsRow extends ConsumerWidget {
             .length ??
         0;
     final streak = bundle?.dailyLoginStreak ?? 0;
+    if ((bundle?.streakDays ?? 0) >= 3) {
+      unawaited(Analytics.habitStreak3(bundle!.streakDays));
+    }
     final badges = computeBadges(bundle);
     final earned = earnedCount(badges);
 

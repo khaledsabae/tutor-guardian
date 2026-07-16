@@ -13,6 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
 
+import 'core/analytics.dart';
+
 import 'api/tg_client.dart';
 import 'state/chat_notifier.dart';
 import 'widgets/ui/bouncy_button.dart';
@@ -74,6 +76,9 @@ void main() async {
   // Phase 0.2 + Phase 1 growth loops — fire-and-forget so it never blocks
   // cold start. Order: session → push token → referral → identity.
   unawaited(_postLaunchGrowthLoop());
+
+  // Activation-funnel bookkeeping (first-open day → one-shot day2_return).
+  unawaited(Analytics.appOpened());
 }
 
 Future<void> _postLaunchGrowthLoop() async {
@@ -373,7 +378,10 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
-        onDestinationSelected: (i) => setState(() => _index = i),
+        onDestinationSelected: (i) {
+          if (i == 2) unawaited(Analytics.quranOpened());
+          setState(() => _index = i);
+        },
         destinations: [
           const NavigationDestination(
             icon: Icon(Icons.home_outlined),

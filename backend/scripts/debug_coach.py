@@ -67,7 +67,7 @@ async def run_one(child_id, name, age_group):
     topic, domain = coach_service._recent_parent_topic(DEVICE_ID, child_id=child_id)
     print(f"\n=== {name} ===")
     print(f"topic={topic} domain={domain}")
-    prompt = coach_service._build_coach_prompt(name, age_group, domain or "development", topic or "")
+    prompt = coach_service._build_coach_prompt(name, None, age_group, topic or "")
     print(f"prompt:\n{prompt}")
     result = await get_gateway().generate(
         prompt,
@@ -79,8 +79,7 @@ async def run_one(child_id, name, age_group):
     print(f"raw:\n{raw}")
     cleaned = coach_service._clean_generation(llm_service.clean_model_output(raw))
     print(f"cleaned:\n{cleaned}")
-    print(f"_is_quality_ok={coach_service._is_quality_ok(cleaned, domain, topic or '')}")
-    print(f"_core_matches_topic={coach_service._core_matches_topic(cleaned, topic or '', domain)}")
+    print(f"_is_core_ok={coach_service._is_core_ok(cleaned, topic or '', age_group, domain)}")
     tip = await coach_service.get_proactive_tip(DEVICE_ID, child_id, mark_shown=False)
     print(f"FINAL source={tip['source']}\ntext={tip['text']}")
 

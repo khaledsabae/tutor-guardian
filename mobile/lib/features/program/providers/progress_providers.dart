@@ -23,8 +23,12 @@
 /// The `activeChildId` lives in-memory for now (Phase 5+ persists it).
 library;
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/analytics.dart';
 
 import '../../../state/chat_notifier.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
@@ -185,6 +189,7 @@ class CreateChildNotifier
       // Wire up the new child as active on both runtime + disk.
       await _setActiveAndPersist(ref, child);
       state = AsyncValue.data(child);
+      unawaited(Analytics.childAdded(child.ageGroup));
       return child;
     } catch (e, st) {
       state = AsyncValue.error(e, st);

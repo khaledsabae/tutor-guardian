@@ -3,9 +3,12 @@
 /// runs on the local model server-side.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/analytics.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
 import '../../widgets/ui/bouncy_button.dart';
@@ -87,6 +90,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
           );
       // Only deduct coins after a successful generation.
       await ref.read(coinsProvider.notifier).spend(CoinsService.storyCost);
+      unawaited(Analytics.storyGenerated(theme));
       if (mounted) setState(() => _story = story);
     } catch (e) {
       if (mounted) {

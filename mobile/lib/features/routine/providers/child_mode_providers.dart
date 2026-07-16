@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../api/tg_client.dart';
+import '../../../core/analytics.dart';
 import '../../../state/chat_notifier.dart';
 import '../models/habit_models.dart';
 import '../services/child_mode_secure_storage.dart';
@@ -157,6 +158,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       state = state.copyWith(
         submittedHabits: {...state.submittedHabits, item.habitName},
       );
+      unawaited(Analytics.habitCheckIn(status));
       return true;
     } on TgApiError catch (e) {
       if (e.statusCode == 401) {

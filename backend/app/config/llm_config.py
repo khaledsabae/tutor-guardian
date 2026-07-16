@@ -45,6 +45,18 @@ class LLMConfig:
     )
     cloud_tier_timeout: int = int(os.environ.get("CLOUD_TIER_TIMEOUT", "60"))
 
+    # ── Cloud safety-valve fallback (last resort, hard-capped) ─────────────
+    # When the entire local Ollama chain is unreachable (home server down),
+    # the gateway may fall back to DeepSeek — only if explicitly enabled, a
+    # key exists, and the monthly token budget is not exhausted. The budget
+    # check fails closed: if telemetry can't be read, the valve stays shut.
+    deepseek_fallback_enabled: bool = os.environ.get(
+        "DEEPSEEK_FALLBACK_ENABLED", "false"
+    ).lower() in ("1", "true", "yes")
+    deepseek_fallback_monthly_token_cap: int = int(
+        os.environ.get("DEEPSEEK_FALLBACK_MONTHLY_TOKEN_CAP", "10000000")
+    )
+
     # ── Primary provider override (DeepSeek / generic OpenAI-compatible) ────
     # When LLM_PRIMARY_PROVIDER=deepseek and a key is present, the gateway uses
     # DeepSeek as the PRIMARY model for every call (chat + ingestion), with the

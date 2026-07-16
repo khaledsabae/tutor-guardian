@@ -3,9 +3,12 @@
 /// Lists today's sleep/feed/diaper events and lets the parent add new ones.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../../../core/analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -937,6 +940,7 @@ class _HabitCardState extends State<_HabitCard> {
           'status': status.wireName,
         },
       );
+      unawaited(Analytics.habitCheckIn(status.wireName));
       widget.onRecorded();
     } on TgApiError catch (e) {
       if (mounted) {

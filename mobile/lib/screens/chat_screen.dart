@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/api_models.dart';
 import '../models/enums.dart';
+import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/providers/program_providers.dart';
 import '../state/chat_notifier.dart';
 import '../state/connectivity_provider.dart';
@@ -234,10 +235,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                 ? const _BootSplash()
                 : state.messages.isEmpty
                     ? _EmptyState(
-                        onSuggest: (q) {
-                          _input.text = q;
-                          _inputFocus.requestFocus();
-                        },
+                        ageGroup: ref
+                            .watch(activeChildProfileProvider)
+                            ?.ageGroup,
+                        // One tap = question sent — the fastest path to the
+                        // first "wow" answer (no typing, no second tap).
+                        onSuggest: (q) => notifier.sendMessage(q),
                       )
                     : ListView.builder(
                     controller: _scroll,
@@ -412,13 +415,57 @@ class _OfflineBanner extends StatelessWidget {
 
 class _EmptyState extends StatelessWidget {
   final ValueChanged<String> onSuggest;
-  const _EmptyState({required this.onSuggest});
+  final String? ageGroup;
+  const _EmptyState({required this.onSuggest, this.ageGroup});
 
-  static const _suggestions = [
+  // Age-tailored pain questions. Topics deliberately match the backend's
+  // curated topic seeds (صلاة/مذاكرة/شاشة/عناد/نوم/كذب/سوشيال) so the very
+  // first answer lands grounded and specific.
+  static const _byAge = <String, List<String>>{
+    '0-3': [
+      'طفلي يرفض النوم ويستيقظ كثيرًا بالليل',
+      'ابني كثير العناد ونوبات الغضب',
+      'طفلي يرفض الأكل — أعمل إيه؟',
+    ],
+    '2-3': [
+      'طفلي يرفض النوم ويستيقظ كثيرًا بالليل',
+      'ابني كثير العناد ونوبات الغضب',
+      'طفلي تأخر في الكلام — متى أقلق؟',
+    ],
+    '4-6': [
+      'ابني 5 سنين بيرفض الصلاة، أعمل إيه؟',
+      'كيف أتعامل مع نوبات الغضب؟',
+      'طفلي لا يترك التابلت والشاشات',
+    ],
+    '7-9': [
+      'طفلي لا يحب المذاكرة',
+      'كيف أعوّد طفلي على الصلاة بانتظام؟',
+      'ابني يكذب أحيانًا — كيف أتصرف؟',
+    ],
+    '10-12': [
+      'ابني مشغول بالألعاب الإلكترونية طوال اليوم',
+      'كيف أحمي طفلي على الإنترنت؟',
+      'ابني يماطل في واجباته المدرسية',
+    ],
+    '13-15': [
+      'ابني المراهق يعاند ولا يسمع الكلام',
+      'ابنتي مشغولة بالسوشيال ميديا والمقارنات',
+      'كيف أحافظ على صلاة ابني المراهق؟',
+    ],
+    '16-18': [
+      'كيف أحاور ابني الكبير دون صدام؟',
+      'ابني مقصّر في دراسته الجامعية',
+      'كيف أناقش ابني في اختيار أصحابه؟',
+    ],
+  };
+
+  static const _fallback = [
     'كيف أتعامل مع نوبات الغضب؟',
     'طفلي لا يحب المذاكرة',
     'كيف أعلّم طفلي الصلاة؟',
   ];
+
+  List<String> get _suggestions => _byAge[ageGroup] ?? _fallback;
 
   @override
   Widget build(BuildContext context) {

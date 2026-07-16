@@ -18,9 +18,12 @@
 /// main chat in the Home tab.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/analytics.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
@@ -74,6 +77,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     try {
       await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
           .markProgress(ProgressStatus.completed, childId: widget.childId);
+      unawaited(Analytics.lessonCompleted(widget.lessonId));
       if (mounted) {
         // Confetti celebration, then return to path detail so the
         // progress bar refreshes immediately (same auto-pop contract
@@ -177,6 +181,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
               ref.watch(childProgressProvider(widget.childId!)).hasValue;
           if (widget.childId != null && !_markedInProgress && bundleReady) {
             _markedInProgress = true;
+            unawaited(Analytics.lessonOpened(widget.lessonId));
             if (status != ProgressStatus.completed) {
               _markInProgress();
             }

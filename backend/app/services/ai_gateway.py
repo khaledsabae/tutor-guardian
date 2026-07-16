@@ -341,6 +341,28 @@ def _log_call(provider: str, model: str, latency_ms: int,
         logger.debug("telemetry skipped: %s", e)
 
 
+def _monthly_tokens_used(provider_name: str) -> int:
+    """Total tokens logged for a provider since the start of the current month.
+
+    Fails CLOSED: if telemetry can't be read we report an impossibly large
+    number so a budget-gated caller refuses to spend.
+    """
+    try:
+        conn = sqlite3.connect(_TELEMETRY_DB)
+        conn.execute("PRAGMA busy_timeout = 5000")
+        _ensure_telemetry_schema(conn)
+        row = conn.execute(
+            "SELECT COALESCE(SUM(COALESCE(prompt_tokens,0)+COALESCE(completion_tokens,0)),0) "
+            "FROM llm_calls WHERE provider = ? AND ts >= strftime('%Y-%m-01 00:00:00','now')",
+            (provider_name,),
+        ).fetchone()
+        conn.close()
+        return int(row[0] or 0)
+    except Exception as e:
+        logger.warning("budget check unavailable (failing closed): %s", e)
+        return 1 << 62
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Gateway
 # ─────────────────────────────────────────────────────────────────────────────
@@ -404,6 +426,35 @@ class AIGateway:
         except Exception as e:
             _log_call(provider.name, model, 0, None, None, streamed=False, ok=False)
             logger.warning("%s failed: %s", label, e)
+            return None
+
+    _FALLBACK_PROVIDER_NAME = "deepseek_fallback"
+
+    def _safety_valve_provider(self) -> "OpenAIChatProvider | None":
+        """Last-resort DeepSeek provider — the «صمام الأمان» of the plan.
+
+        Returns None unless: the flag is on, a key exists, the primary isn't
+        already DeepSeek, and the monthly hard cap has headroom (fail-closed).
+        """
+        if not (LLM.deepseek_fallback_enabled and LLM.deepseek_api_key):
+            return None
+        if isinstance(self.provider, OpenAIChatProvider):
+            return None  # DeepSeek already primary — nothing to add
+        used = _monthly_tokens_used(self._FALLBACK_PROVIDER_NAME)
+        if used >= LLM.deepseek_fallback_monthly_token_cap:
+            logger.warning(
+                "cloud safety valve budget exhausted (%d/%d tokens this month) — staying local-only",
+                used, LLM.deepseek_fallback_monthly_token_cap,
+            )
+            return None
+        try:
+            return OpenAIChatProvider(
+                base_url=LLM.deepseek_base_url, api_key=LLM.deepseek_api_key,
+                model=LLM.deepseek_model, timeout=LLM.cloud_tier_timeout,
+                name=self._FALLBACK_PROVIDER_NAME,
+            )
+        except Exception as e:
+            logger.warning("cloud safety valve unavailable: %s", e)
             return None
 
     def _cloud_provider(self) -> "OpenAICompatProvider | None":
@@ -492,6 +543,32 @@ class AIGateway:
             if result:
                 return result
 
+        # 3. Cloud safety valve — only when the whole local chain is down.
+        valve = self._safety_valve_provider()
+        if valve is not None:
+            logger.warning("⚠️ local chain exhausted — trying cloud safety valve (%s)", valve.model)
+            start = time.monotonic()
+            try:
+                data = await asyncio.to_thread(valve.generate, prompt, options=opts)
+                latency = int((time.monotonic() - start) * 1000)
+                text = (data.get("response") or "").strip()
+                if text:
+                    result = LLMResult(
+                        text=text, model=valve.model, latency_ms=latency,
+                        prompt_tokens=data.get("prompt_eval_count"),
+                        completion_tokens=data.get("eval_count"),
+                    )
+                    _log_call(valve.name, valve.model, latency,
+                              result.prompt_tokens, result.completion_tokens,
+                              streamed=False, ok=True,
+                              tier=tier, route_reason=route_reason)
+                    return result
+            except Exception as e:
+                _log_call(valve.name, valve.model, 0, None, None,
+                          streamed=False, ok=False,
+                          tier=tier, route_reason=route_reason)
+                logger.warning("cloud safety valve failed: %s", e)
+
         _log_call(self.provider.name, self._provider_model(), 0, None, None,
                   streamed=False, ok=False)
         raise RuntimeError(f"LLM generation failed after all retries and fallbacks: {last_err}") from last_err
@@ -552,6 +629,11 @@ class AIGateway:
             cloud = self._cloud_provider()
             if cloud is not None:
                 candidates.insert(0, ("cloud_quality", cloud))
+        # Cloud safety valve streams LAST — reached only when every local
+        # provider fails pre-flight (e.g. home server unreachable).
+        valve = self._safety_valve_provider()
+        if valve is not None:
+            candidates.append((valve.name, valve))
 
         for label, provider in candidates:
             tokens_sent = False

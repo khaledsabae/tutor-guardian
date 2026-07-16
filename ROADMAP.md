@@ -5,29 +5,19 @@ out of scope for the current feature but must be closed before the next phase.
 
 ## Active Backlog
 
-### Daily-routine tracker («حِساب اليوم»)
-
-1. **PATCH does not zero optional fields**
-   - Current: `PATCH /api/daily-routine/events/{event_id}` replaces all columns
-     from `RoutineEventCreate`, so setting `amount_ml`/`ended_at`/`diaper_type`
-     back to `null` requires sending explicit `null` values, and the router
-     stores them as `None`. Confirm whether the mobile client can send explicit
-     `null`s; if not, implement field-level partial update semantics so omitted
-     fields preserve existing values and an explicit `null` clears them.
-   - Files: `backend/app/routers/daily_routine.py`,
-     `backend/app/models/daily_routine.py`,
-     `mobile/lib/features/routine/`.
-
-2. **Summary treats `amount_ml=0` as no amount**
-   - Current: summary aggregation only adds `amount_ml` when it is truthy:
-     `if row["amount_ml"]: feed_amount += row["amount_ml"]`. This means a
-     logged feed with `amount_ml=0` is counted in `total_feed_count` but does
-     not contribute to `total_feed_amount_ml`. Decide product behaviour:
-     either reject `amount_ml=0` at creation, or include zeroes in the sum so
-     the count/amount relationship is consistent.
-   - Files: `backend/app/routers/daily_routine.py` (`get_summary`).
+(empty — the two daily-routine items closed 2026-07-16, see Done)
 
 ## Done
+
+- **PATCH partial-update semantics** («حِساب اليوم»): the router now builds the
+  UPDATE from `RoutineEventUpdate` with `exclude_unset=True` — omitted fields
+  preserve existing values, explicit `null` clears them. Covered by
+  `backend/tests/test_daily_routine.py` (preserve-on-omit asserted).
+- **`amount_ml=0` behaviour resolved**: product decision = reject at creation
+  (`amount_ml: ge=1` in both Create and Update models) and the summary
+  aggregation uses `is not None`, keeping count/amount consistent. Covered by
+  `backend/tests/test_daily_routine.py` (422 on zero, summary sum asserted).
+  Verified 2026-07-16: 13/13 tests pass inside the production container.
 
 - `flutter test` passes with 0 failures.
 - Backend `pytest` passes with 0 failures.

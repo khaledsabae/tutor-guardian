@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../../../core/analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,6 +65,7 @@ class _EduGameShellState extends ConsumerState<EduGameShell> {
   }
 
   void _play(int level) {
+    unawaited(Analytics.gameStarted(widget.theme.id, level));
     final questions = widget.questionBuilder(level);
     Navigator.of(context).push(
       MaterialPageRoute(
