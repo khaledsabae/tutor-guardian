@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
@@ -282,7 +283,8 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
       appBar: AppBar(
         backgroundColor: widget.theme.surfaceColor,
         foregroundColor: widget.theme.textColor,
-        title: Text('${widget.theme.name} — مستوى ${widget.level}'),
+        title: Text(AppLocalizations.of(context)
+            .eduGameLevelTitle(widget.theme.name, widget.level)),
         actions: [
           IconButton(
             icon: Icon(_paused ? Icons.play_arrow : Icons.pause),
@@ -431,7 +433,8 @@ class _QuestionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final optionLetters = ['أ', 'ب', 'ج', 'د'];
+    final optionLetters =
+        AppLocalizations.of(context).eduGameOptionLetters.split(',');
 
     return Container(
       padding: const EdgeInsets.all(20),

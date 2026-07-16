@@ -2581,4 +2581,66 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shareStoreHint => '📲 مجانًا على Google Play — ابحث: «المربّي»';
+
+  @override
+  String get eduGameChooseLevel => 'اختر المستوى';
+
+  @override
+  String get eduGameAttempts => 'المحاولات';
+
+  @override
+  String get eduGamePoints => 'النقاط';
+
+  @override
+  String get eduGameStars => 'النجوم';
+
+  @override
+  String eduGameBestScore(Object score) {
+    return 'أفضل: $score';
+  }
+
+  @override
+  String get eduGamePaused => '⏸️ توقفت';
+
+  @override
+  String get eduGameResume => 'استئناف';
+
+  @override
+  String get eduGameRestartLevel => 'إعادة المستوى';
+
+  @override
+  String get eduGameQuit => 'خروج';
+
+  @override
+  String get eduGameLevelComplete => 'مستوى مكتمل! 🎉';
+
+  @override
+  String get eduGameOver => 'انتهت اللعبة';
+
+  @override
+  String eduGameCorrectAnswers(Object correct, Object total) {
+    return '$correct / $total إجابات صحيحة';
+  }
+
+  @override
+  String eduGameScore(Object score) {
+    return 'النقاط: $score';
+  }
+
+  @override
+  String get eduGameTryAgain => 'حاول تاني! كل محاولة بتعلّمك أكتر.';
+
+  @override
+  String get eduGameNextLevel => 'المستوى التالي ▶';
+
+  @override
+  String get eduGameReplay => 'إعادة';
+
+  @override
+  String eduGameLevelTitle(Object level, Object name) {
+    return '$name — مستوى $level';
+  }
+
+  @override
+  String get eduGameOptionLetters => 'أ,ب,ج,د';
 }

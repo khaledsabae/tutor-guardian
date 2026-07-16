@@ -2612,4 +2612,66 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get shareStoreHint =>
       '📲 Free on Google Play — search for “Al-Murabbi”';
+
+  @override
+  String get eduGameChooseLevel => 'Choose a level';
+
+  @override
+  String get eduGameAttempts => 'Attempts';
+
+  @override
+  String get eduGamePoints => 'Points';
+
+  @override
+  String get eduGameStars => 'Stars';
+
+  @override
+  String eduGameBestScore(Object score) {
+    return 'Best: $score';
+  }
+
+  @override
+  String get eduGamePaused => '⏸️ Paused';
+
+  @override
+  String get eduGameResume => 'Resume';
+
+  @override
+  String get eduGameRestartLevel => 'Restart level';
+
+  @override
+  String get eduGameQuit => 'Quit';
+
+  @override
+  String get eduGameLevelComplete => 'Level complete! 🎉';
+
+  @override
+  String get eduGameOver => 'Game over';
+
+  @override
+  String eduGameCorrectAnswers(Object correct, Object total) {
+    return '$correct / $total correct answers';
+  }
+
+  @override
+  String eduGameScore(Object score) {
+    return 'Score: $score';
+  }
+
+  @override
+  String get eduGameTryAgain => 'Try again! Every attempt teaches you more.';
+
+  @override
+  String get eduGameNextLevel => 'Next level ▶';
+
+  @override
+  String get eduGameReplay => 'Replay';
+
+  @override
+  String eduGameLevelTitle(Object level, Object name) {
+    return '$name — Level $level';
+  }
+
+  @override
+  String get eduGameOptionLetters => 'A,B,C,D';
 }

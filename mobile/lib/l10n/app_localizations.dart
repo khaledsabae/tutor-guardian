@@ -4735,6 +4735,114 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'📲 مجانًا على Google Play — ابحث: «المربّي»'**
   String get shareStoreHint;
+
+  /// No description provided for @eduGameChooseLevel.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر المستوى'**
+  String get eduGameChooseLevel;
+
+  /// No description provided for @eduGameAttempts.
+  ///
+  /// In ar, this message translates to:
+  /// **'المحاولات'**
+  String get eduGameAttempts;
+
+  /// No description provided for @eduGamePoints.
+  ///
+  /// In ar, this message translates to:
+  /// **'النقاط'**
+  String get eduGamePoints;
+
+  /// No description provided for @eduGameStars.
+  ///
+  /// In ar, this message translates to:
+  /// **'النجوم'**
+  String get eduGameStars;
+
+  /// No description provided for @eduGameBestScore.
+  ///
+  /// In ar, this message translates to:
+  /// **'أفضل: {score}'**
+  String eduGameBestScore(Object score);
+
+  /// No description provided for @eduGamePaused.
+  ///
+  /// In ar, this message translates to:
+  /// **'⏸️ توقفت'**
+  String get eduGamePaused;
+
+  /// No description provided for @eduGameResume.
+  ///
+  /// In ar, this message translates to:
+  /// **'استئناف'**
+  String get eduGameResume;
+
+  /// No description provided for @eduGameRestartLevel.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة المستوى'**
+  String get eduGameRestartLevel;
+
+  /// No description provided for @eduGameQuit.
+  ///
+  /// In ar, this message translates to:
+  /// **'خروج'**
+  String get eduGameQuit;
+
+  /// No description provided for @eduGameLevelComplete.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستوى مكتمل! 🎉'**
+  String get eduGameLevelComplete;
+
+  /// No description provided for @eduGameOver.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت اللعبة'**
+  String get eduGameOver;
+
+  /// No description provided for @eduGameCorrectAnswers.
+  ///
+  /// In ar, this message translates to:
+  /// **'{correct} / {total} إجابات صحيحة'**
+  String eduGameCorrectAnswers(Object correct, Object total);
+
+  /// No description provided for @eduGameScore.
+  ///
+  /// In ar, this message translates to:
+  /// **'النقاط: {score}'**
+  String eduGameScore(Object score);
+
+  /// No description provided for @eduGameTryAgain.
+  ///
+  /// In ar, this message translates to:
+  /// **'حاول تاني! كل محاولة بتعلّمك أكتر.'**
+  String get eduGameTryAgain;
+
+  /// No description provided for @eduGameNextLevel.
+  ///
+  /// In ar, this message translates to:
+  /// **'المستوى التالي ▶'**
+  String get eduGameNextLevel;
+
+  /// No description provided for @eduGameReplay.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة'**
+  String get eduGameReplay;
+
+  /// No description provided for @eduGameLevelTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'{name} — مستوى {level}'**
+  String eduGameLevelTitle(Object level, Object name);
+
+  /// No description provided for @eduGameOptionLetters.
+  ///
+  /// In ar, this message translates to:
+  /// **'أ,ب,ج,د'**
+  String get eduGameOptionLetters;
 }
 
 class _AppLocalizationsDelegate

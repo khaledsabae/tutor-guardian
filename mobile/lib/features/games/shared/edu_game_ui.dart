@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import 'edu_game_models.dart';
@@ -52,7 +53,7 @@ class EduLevelSelectionScreen extends StatelessWidget {
               _HeroCard(theme: theme, progress: progress),
               const SizedBox(height: 20),
               Text(
-                'اختر المستوى',
+                AppLocalizations.of(context).eduGameChooseLevel,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: theme.textColor,
                       fontWeight: FontWeight.bold,
@@ -136,12 +137,16 @@ borderRadius: BorderRadius.circular(Dt.rCard),
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    _MiniStat(label: 'المحاولات', value: '${progress.gamesPlayed}'),
-                    const SizedBox(width: 16),
-                    _MiniStat(label: 'النقاط', value: '${progress.totalScore}'),
+                    _MiniStat(
+                        label: AppLocalizations.of(context).eduGameAttempts,
+                        value: '${progress.gamesPlayed}'),
                     const SizedBox(width: 16),
                     _MiniStat(
-                      label: 'النجوم',
+                        label: AppLocalizations.of(context).eduGamePoints,
+                        value: '${progress.totalScore}'),
+                    const SizedBox(width: 16),
+                    _MiniStat(
+                      label: AppLocalizations.of(context).eduGameStars,
                       value: '${_totalStars(progress)}',
                     ),
                   ],
@@ -264,7 +269,7 @@ class _LevelCard extends StatelessWidget {
                 if (bestScore > 0) ...[
                   const SizedBox(height: 4),
                   Text(
-                    'أفضل: $bestScore',
+                    AppLocalizations.of(context).eduGameBestScore(bestScore),
                     style: TextStyle(
                       color: Colors.grey.withValues(alpha: 0.8),
                       fontSize: 10,
@@ -299,6 +304,7 @@ class EduPauseOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Container(
       color: Colors.black.withValues(alpha: 0.5),
       child: Center(
@@ -314,7 +320,7 @@ class EduPauseOverlay extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '⏸️ توقفت',
+                l10n.eduGamePaused,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: theme.textColor,
                       fontWeight: FontWeight.bold,
@@ -324,21 +330,21 @@ class EduPauseOverlay extends StatelessWidget {
               _PauseButton(
                 theme: theme,
                 icon: Icons.play_arrow,
-                label: 'استئناف',
+                label: l10n.eduGameResume,
                 onTap: onResume,
               ),
               const SizedBox(height: 12),
               _PauseButton(
                 theme: theme,
                 icon: Icons.replay,
-                label: 'إعادة المستوى',
+                label: l10n.eduGameRestartLevel,
                 onTap: onRestart,
               ),
               const SizedBox(height: 12),
               _PauseButton(
                 theme: theme,
                 icon: Icons.exit_to_app,
-                label: 'خروج',
+                label: l10n.eduGameQuit,
                 isDestructive: true,
                 onTap: onQuit,
               ),
@@ -405,6 +411,7 @@ class EduResultDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final hasNext = onNext != null && result.completed;
 
     return PopScope(
@@ -421,7 +428,7 @@ class EduResultDialog extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              result.completed ? 'مستوى مكتمل! 🎉' : 'انتهت اللعبة',
+              result.completed ? l10n.eduGameLevelComplete : l10n.eduGameOver,
               style: TextStyle(
                 color: theme.textColor,
                 fontWeight: FontWeight.bold,
@@ -459,12 +466,13 @@ class EduResultDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  '${result.correctAnswers} / ${result.totalQuestions} إجابات صحيحة',
+                  l10n.eduGameCorrectAnswers(
+                      result.correctAnswers, result.totalQuestions),
                   style: TextStyle(color: theme.textColor, fontSize: 18),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'النقاط: ${result.score}',
+                  l10n.eduGameScore(result.score),
                   style: TextStyle(
                     color: theme.accentColor,
                     fontSize: 24,
@@ -474,7 +482,7 @@ class EduResultDialog extends StatelessWidget {
                 const SizedBox(height: 16),
                 if (!result.completed)
                   Text(
-                    'حاول تاني! كل محاولة بتعلّمك أكتر.',
+                    l10n.eduGameTryAgain,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: theme.textColor.withValues(alpha: 0.7)),
                   ),
@@ -486,15 +494,17 @@ class EduResultDialog extends StatelessWidget {
           if (hasNext)
             TextButton(
               onPressed: onNext,
-              child: Text('المستوى التالي ▶', style: TextStyle(color: theme.accentColor, fontSize: 16)),
+              child: Text(l10n.eduGameNextLevel,
+                  style: TextStyle(color: theme.accentColor, fontSize: 16)),
             ),
           TextButton(
             onPressed: onReplay,
-            child: Text('إعادة', style: TextStyle(color: theme.textColor, fontSize: 16)),
+            child: Text(l10n.eduGameReplay,
+                style: TextStyle(color: theme.textColor, fontSize: 16)),
           ),
           TextButton(
             onPressed: onExit,
-            child: const Text('خروج', style: TextStyle(fontSize: 16)),
+            child: Text(l10n.eduGameQuit, style: const TextStyle(fontSize: 16)),
           ),
         ],
       ),
