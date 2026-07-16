@@ -1,36 +1,64 @@
 {
-  "generated_at": "2026-07-16",
-  "count": 5,
-  "reels": [
+  "rendered": [
     {
-      "file": "reel_صوت_القرآن_والأذان.mp4",
-      "title": "صوت القرآن والأذان",
-      "lesson_id": "lesson_0-3_islamic_parenting_fitrah_01",
-      "duration": 42
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "lesson_10-12_cyber_01",
+      "file": "reel_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-16T15:11:57.032824+00:00"
     },
     {
-      "file": "reel_نوبات_الغضب_برفق.mp4",
-      "title": "نوبات الغضب برفق",
-      "lesson_id": "lesson_2-3_islamic_tantrums_04",
-      "duration": 46
+      "lesson_id": "lesson_10-12_cyber_02",
+      "title": "lesson_10-12_cyber_02",
+      "file": "reel_lesson_10-12_cyber_02.mp4",
+      "rendered_at": "2026-07-16T15:13:05.711668+00:00"
     },
     {
-      "file": "reel_كم_وقت_شاشة_يناسب_طفلك.mp4",
-      "title": "كم وقت شاشة يناسب طفلك؟",
-      "lesson_id": "lesson_4-6_cyber_early_screens_01",
-      "duration": 49
+      "lesson_id": "lesson_10-12_cyber_03",
+      "title": "lesson_10-12_cyber_03",
+      "file": "reel_lesson_10-12_cyber_03.mp4",
+      "rendered_at": "2026-07-16T15:14:14.068506+00:00"
     },
     {
-      "file": "reel_التدريب_على_المرحاض.mp4",
-      "title": "التدريب على المرحاض",
-      "lesson_id": "lesson_2-3_development_independence_01",
-      "duration": 53
+      "lesson_id": "lesson_10-12_islamic_01",
+      "title": "lesson_10-12_islamic_01",
+      "file": "reel_lesson_10-12_islamic_01.mp4",
+      "rendered_at": "2026-07-16T15:15:28.516710+00:00"
     },
     {
-      "file": "reel_الصلاة_محبّةً_لا_إلزاماً.mp4",
-      "title": "الصلاة محبّةً لا إلزاماً",
-      "lesson_id": "lesson_10-12_islamic_parenting_worship_love_01",
-      "duration": 46
+      "lesson_id": "lesson_10-12_islamic_02",
+      "title": "lesson_10-12_islamic_02",
+      "file": "reel_lesson_10-12_islamic_02.mp4",
+      "rendered_at": "2026-07-16T15:16:38.884664+00:00"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "lesson_10-12_cyber_01",
+      "file": "reel_lesson_10-12_cyber_01_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-16T15:21:05.771711+00:00"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_02",
+      "title": "lesson_10-12_cyber_02",
+      "file": "reel_lesson_10-12_cyber_02_lesson_10-12_cyber_02.mp4",
+      "rendered_at": "2026-07-16T15:22:14.428018+00:00"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_03",
+      "title": "lesson_10-12_cyber_03",
+      "file": "reel_lesson_10-12_cyber_03_lesson_10-12_cyber_03.mp4",
+      "rendered_at": "2026-07-16T15:23:22.714187+00:00"
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_01",
+      "title": "lesson_10-12_islamic_01",
+      "file": "reel_lesson_10-12_islamic_01_lesson_10-12_islamic_01.mp4",
+      "rendered_at": "2026-07-16T15:24:32.729253+00:00"
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_02",
+      "title": "lesson_10-12_islamic_02",
+      "file": "reel_lesson_10-12_islamic_02_lesson_10-12_islamic_02.mp4",
+      "rendered_at": "2026-07-16T15:26:00.964150+00:00"
     }
   ]
 }

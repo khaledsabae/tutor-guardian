@@ -303,6 +303,16 @@ def pick_unrendered(n: int, output_dir: Path, manifest: dict | None = None) -> l
         if not mp3.exists() or not report.exists():
             continue
         title = lesson.get("seo_title") or lesson.get("title_ar", "") or lesson["lesson_id"]
+        if title == lesson["lesson_id"]:
+            # lesson_index lacks an Arabic title — fall back to the report H1
+            # so filenames/captions stay human-readable Arabic.
+            try:
+                for line in report.read_text(encoding="utf-8").splitlines():
+                    if line.strip().startswith("#"):
+                        title = line.strip().lstrip("# ").strip()[:60] or title
+                        break
+            except OSError:
+                pass
         slug = _slugify(title)
         if manifest and slug in manifest.get("rendered", []):
             continue
