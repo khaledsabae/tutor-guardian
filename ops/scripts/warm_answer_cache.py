@@ -74,48 +74,33 @@ _AGE_GROUPS = [
 ]
 
 
-async def _generate_answer(question: str, age_group: str) -> str | None:
-    """Generate an answer via the real AI pipeline."""
+async def _generate_answer(question: str, age_group: str) -> tuple[str, str, str] | None:
+    """Generate an answer via the real AI pipeline.
+    
+    Returns: (answer, domain, severity) or None if generation fails.
+    """
     try:
         from app.services.ai_gateway import AIGateway
         from app.services.retrieval import retrieve_relevant_units
 
-        # Try each domain to find relevant units
-        domains = ["islamic_parenting", "aqeedah", "cyber", "development", "medical"]
-        all_units = []
-
+        # Try islamic_parenting first (most relevant for parenting questions)
+        domains = ["islamic_parenting", "aqeedah", "medical", "development", "cyber"]
+        
         for domain in domains:
             units = retrieve_relevant_units(question, domain=domain, age_group=age_group, top_k=3)
-            all_units.extend(units)
+            if units:
+                # Build context from units
+                context_parts = []
+                for u in units[:3]:
+                    content = u.get("document", "")
+                    metadata = u.get("metadata", {})
+                    source = metadata.get("reference_info", "")
+                    context_parts.append(f"الوحدة: {content}\nالمصدر: {source}")
 
-        # Deduplicate by unit_id
-        seen_ids = set()
-        unique_units = []
-        for u in all_units:
-            uid = u.get("unit_id", "")
-            if uid and uid not in seen_ids:
-                seen_ids.add(uid)
-                unique_units.append(u)
+                context = "\n\n".join(context_parts)
 
-        if not unique_units:
-            return None
-
-        # Build context from units
-        context_parts = []
-        for u in unique_units[:5]:  # Top 5 units
-            # The unit structure from retrieve_relevant_units has:
-            # - unit_id, document, metadata, distance
-            title = u.get("unit_id", "")
-            content = u.get("document", "")
-            metadata = u.get("metadata", {})
-            source = metadata.get("reference_info", "")
-            domain = metadata.get("domain", "")
-            context_parts.append(f"الوحدة ({domain}): {content}\nالمصدر: {source}")
-
-        context = "\n\n".join(context_parts)
-
-        # Generate answer using AI Gateway (async)
-        prompt = f"""أنت المربي الذكي — مساعد تربوي إسلامي. أجب على سؤال الوالد بناءً على الوحدات المعرفية التالية فقط.
+                # Generate answer using AI Gateway (async)
+                prompt = f"""أنت المربي الذكي — مساعد تربوي إسلامي. أجب على سؤال الوالد بناءً على الوحدات المعرفية التالية فقط.
 
 السؤال: {question}
 عمر الطفل: {age_group}
@@ -125,19 +110,30 @@ async def _generate_answer(question: str, age_group: str) -> str | None:
 
 أجب بإجابة عملية مختصرة مناسبة لعمر الطفل، واذكر المصدر في سطر يبدأ بـ 📚 المصدر:"""
 
-        gateway = AIGateway()
-        result = await gateway.generate(prompt)
-        return result.text if hasattr(result, 'text') else str(result)
+                gateway = AIGateway()
+                result = await gateway.generate(prompt)
+                answer = result.text if hasattr(result, 'text') else str(result)
+                
+                # Determine severity from the question
+                severity = "خفيف"  # Default
+                if " refuses " in question.lower() or "يرفض" in question:
+                    severity = "خفيف"
+                elif "عناد" in question or "غضب" in question:
+                    severity = "متوسط"
+                
+                return (answer, domain, severity)
+        
+        return None
     except Exception as e:
         print(f"  Error generating answer for '{question[:30]}...' ({age_group}): {e}", file=sys.stderr)
         return None
 
 
-def _store_in_cache(question: str, age_group: str, answer: str) -> bool:
+def _store_in_cache(question: str, age_group: str, domain: str, severity: str, answer: str) -> bool:
     """Store the generated answer in the answer cache."""
     try:
         from app.services.answer_cache import store
-        store(question, age_group, answer)
+        store(question, age_group, domain, severity, answer)
         return True
     except Exception as e:
         print(f"  Error storing in cache: {e}", file=sys.stderr)
@@ -156,9 +152,10 @@ async def _main():
         for age_group in _AGE_GROUPS:
             print(f"  Processing: '{question[:40]}...' ({age_group})")
 
-            answer = await _generate_answer(question, age_group)
-            if answer:
-                if _store_in_cache(question, age_group, answer):
+            result = await _generate_answer(question, age_group)
+            if result:
+                answer, domain, severity = result
+                if _store_in_cache(question, age_group, domain, severity, answer):
                     warmed += 1
                     print(f"    ✓ Cached")
                 else:
