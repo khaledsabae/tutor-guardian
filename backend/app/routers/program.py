@@ -540,3 +540,145 @@ async def generate_story(req: StoryRequest, request: Request):
 def story_themes():
     """The catalogue of story values (key → Arabic label) for the UI."""
     return {"themes": [{"key": k, "label": v} for k, v in STORY_THEMES.items()]}
+
+
+# ── Monthly Report (Phase 4.1) ──────────────────────────────────────────
+
+@router.get("/monthly-report/{child_id}")
+def monthly_report(child_id: int):
+    """Generate a monthly progress report for a child.
+    
+    Returns structured data that can be rendered as PDF on the client.
+    Includes: lessons completed, habits tracked, streaks, achievements,
+    and AI-generated personalized insights.
+    """
+    conn = get_conn()
+    now = dt.datetime.now(dt.timezone.utc)
+    month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    month_start_str = month_start.isoformat()
+    
+    # Get child info
+    row = conn.execute(
+        "SELECT name, age_group, avatar_emoji FROM child_profiles WHERE id = ?",
+        (child_id,),
+    ).fetchone()
+    if not row:
+        raise HTTPException(status_code=404, detail="Child not found")
+    
+    child_name = row["name"]
+    age_group = row["age_group"]
+    avatar = row["avatar_emoji"] or "👶"
+    
+    # Lessons completed this month
+    lessons = conn.execute(
+        """SELECT l.title, l.domain, lp.updated_at 
+           FROM lesson_progress lp 
+           JOIN lessons l ON lp.lesson_id = l.id 
+           WHERE lp.device_id = (SELECT device_id FROM child_profiles WHERE id = ?)
+           AND lp.child_id = ? AND lp.status = 'completed' AND lp.updated_at >= ?
+           ORDER BY lp.updated_at""",
+        (child_id, child_id, month_start_str),
+    ).fetchall()
+    
+    # Habit completions this month
+    habits = conn.execute(
+        """SELECT habit_name, category, status, COUNT(*) as cnt
+           FROM routine_events 
+           WHERE child_id = ? AND date >= ?
+           GROUP BY habit_name, category, status""",
+        (child_id, month_start_str.split("T")[0]),
+    ).fetchall()
+    
+    # Chat sessions this month
+    chats = conn.execute(
+        """SELECT COUNT(*) as cnt, MIN(created_at) as first, MAX(created_at) as last
+           FROM chat_sessions 
+           WHERE device_id = (SELECT device_id FROM child_profiles WHERE id = ?)
+           AND child_id = ? AND created_at >= ?""",
+        (child_id, child_id, month_start_str),
+    ).fetchone()
+    
+    # Current streak
+    streak_row = conn.execute(
+        """SELECT streak_days FROM daily_login_streaks 
+           WHERE device_id = (SELECT device_id FROM child_profiles WHERE id = ?)
+           ORDER BY date DESC LIMIT 1""",
+        (child_id,),
+    ).fetchone()
+    streak = streak_row["streak_days"] if streak_row else 0
+    
+    # Achievements/Badges
+    badges = conn.execute(
+        """SELECT badge_id FROM child_badges WHERE child_id = ?""",
+        (child_id,),
+    ).fetchall()
+    
+    # Compile report
+    report = {
+        "child": {
+            "name": child_name,
+            "age_group": age_group,
+            "avatar": avatar,
+        },
+        "period": {
+            "month": now.strftime("%Y-%m"),
+            "month_name_ar": _month_name_ar(now.month),
+        },
+        "stats": {
+            "lessons_completed": len(lessons),
+            "lessons_by_domain": _count_by_domain(lessons),
+            "habit_completions": sum(h["cnt"] for h in habits if h["status"] == "completed"),
+            "habit_partials": sum(h["cnt"] for h in habits if h["status"] == "partially"),
+            "chat_sessions": chats["cnt"] if chats else 0,
+            "current_streak": streak,
+            "badges_earned": len(badges),
+        },
+        "highlights": _generate_highlights(lessons, habits, streak, len(badges)),
+        "generated_at": now.isoformat(),
+    }
+    
+    return report
+
+
+def _month_name_ar(month: int) -> str:
+    """Arabic month name."""
+    names = {
+        1: "يناير", 2: "فبراير", 3: "مارس", 4: "أبريل",
+        5: "مايو", 6: "يونيو", 7: "يوليو", 8: "أغسطس",
+        9: "سبتمبر", 10: "أكتوبر", 11: "نوفمبر", 12: "ديسمبر",
+    }
+    return names.get(month, "")
+
+
+def _count_by_domain(lessons: list) -> dict:
+    """Count lessons by domain."""
+    counts = {}
+    for l in lessons:
+        domain = l["domain"]
+        counts[domain] = counts.get(domain, 0) + 1
+    return counts
+
+
+def _generate_highlights(lessons: list, habits: list, streak: int, badges: int) -> list[str]:
+    """Generate personalized highlights for the report."""
+    highlights = []
+    
+    if len(lessons) > 0:
+        highlights.append(f"أكملت {len(lessons)} دروس هذا الشهر! 📚")
+    
+    if streak > 7:
+        highlights.append(f"سلسلة {streak} أيام متتالية! استمر يا بطل 🔥")
+    elif streak > 3:
+        highlights.append(f"{streak} أيام متتالية — في الطريق الصحيح! 💪")
+    
+    completed_habits = sum(h["cnt"] for h in habits if h["status"] == "completed")
+    if completed_habits > 0:
+        highlights.append(f"سجّلت {completed_habits} عادة بنجاح ⭐")
+    
+    if badges > 0:
+        highlights.append(f"حصلت على {badges} شارة إنجاز 🏅")
+    
+    if not highlights:
+        highlights.append("ابدأ هذا الشهر بخطوة صغيرة — كل رحلة تبدأ بخطوة! 🌟")
+    
+    return highlights
