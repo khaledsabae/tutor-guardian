@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../core/analytics.dart';
@@ -44,13 +45,13 @@ class ChildJourneyScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLogged = ref.watch(childJourneyProvider(childId));
     return Scaffold(
-      appBar: AppBar(title: Text('رحلة $childName')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).journeyTitle(childName))),
       body: asyncLogged.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: Text('تعذّر تحميل الرحلة.\n$e', textAlign: TextAlign.center),
+            child: Text(AppLocalizations.of(context).journeyLoading + '\n$e', textAlign: TextAlign.center),
           ),
         ),
         data: (logged) {
@@ -87,7 +88,7 @@ class ChildJourneyScreen extends ConsumerWidget {
                       .slideX(begin: .06),
               const SizedBox(height: 24),
               if (suggestions.isNotEmpty) ...[
-                const _SectionLabel('محطات إيمانية 🕌'),
+                _SectionLabel(AppLocalizations.of(context).journeyFaithMilestones),
                 const SizedBox(height: 10),
                 for (final m in suggestions)
                   _SuggestedTile(
@@ -97,7 +98,7 @@ class ChildJourneyScreen extends ConsumerWidget {
                 const SizedBox(height: 20),
               ],
               if (devSuggestions.isNotEmpty) ...[
-                const _SectionLabel('محطات نمائية 📈 (حسب العمر)'),
+                _SectionLabel(AppLocalizations.of(context).journeyDevMilestones),
                 const SizedBox(height: 10),
                 for (final m in devSuggestions)
                   _SuggestedTile(
@@ -110,7 +111,7 @@ class ChildJourneyScreen extends ConsumerWidget {
               OutlinedButton.icon(
                 onPressed: () => _showLogSheet(context, ref),
                 icon: const Icon(Icons.add_circle_outline),
-                label: const Text('سجّل محطة من عندك'),
+                label: Text(AppLocalizations.of(context).journeyMilestoneLog),
                 style: OutlinedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
                   side: BorderSide(
@@ -134,17 +135,17 @@ class ChildJourneyScreen extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('حذف المحطة'),
-        content: Text('هل تريد حذف «${entry.title}» من رحلة $childName؟'),
+        title: Text(AppLocalizations.of(context).journeyDeleteMilestone),
+        content: Text(AppLocalizations.of(context).journeyDeleteConfirm(entry.title, childName)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('إلغاء'),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
             style: TextButton.styleFrom(foregroundColor: AppTheme.dangerFg),
-            child: const Text('حذف'),
+            child: Text(AppLocalizations.of(context).delete),
           ),
         ],
       ),
@@ -191,8 +192,8 @@ class ChildJourneyScreen extends ConsumerWidget {
         context,
         emoji: emoji,
         imageAsset: milestone != null ? milestoneBadgeAsset(milestone.key) : null,
-        title: 'ما شاء الله!',
-        message: 'محطة جديدة في رحلة $childName:\n${result.title}',
+        title: AppLocalizations.of(context).lessonCelebrationTitle,
+        message: AppLocalizations.of(context).journeyNewMilestone + ' ' + childName + ':\n${result.title}',
         onShare: () => ShareService.shareMomentCard(
           fileTag: 'milestone_$key',
           message: 'ما شاء الله 🤍 سجّلت محطة جديدة في رحلة $childName:\n'
@@ -240,7 +241,7 @@ class _Header extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'رحلة $name',
+                  AppLocalizations.of(context).journeyTitle(name),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -250,8 +251,8 @@ class _Header extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   count == 0
-                      ? 'ابدأ بتسجيل أول محطة في رحلته'
-                      : 'سجّلت $count محطة — سجلّ تعتزّ به 💛',
+                      ? AppLocalizations.of(context).journeyStartFirst
+                      : AppLocalizations.of(context).journeyCount(count),
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: .92),
                     fontSize: 13,
@@ -321,7 +322,7 @@ class _ChallengeSection extends ConsumerWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'تحدّي $childName الحالي',
+                  AppLocalizations.of(context).journeyChallengeTitle(childName),
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
@@ -335,15 +336,15 @@ class _ChallengeSection extends ConsumerWidget {
                     visualDensity: VisualDensity.compact,
                     foregroundColor: AppTheme.primary,
                   ),
-                  child: const Text('تم الحل ✓'),
+                  child: Text(AppLocalizations.of(context).journeyChallengeDone),
                 ),
             ],
           ),
           const SizedBox(height: 4),
           Text(
             activeKey == null
-                ? 'اختر تحدّياً تركّز عليه الآن — وسيوجّه «المربّي» نصيحته اليومية إليه.'
-                : 'يركّز «المربّي» على هذا التحدّي في نصيحته اليومية.',
+                ? AppLocalizations.of(context).journeyChallengeDesc
+                : AppLocalizations.of(context).journeyChallengeActive,
             style: const TextStyle(
               fontSize: 12.5,
               color: AppTheme.textSecondary,
@@ -432,8 +433,8 @@ class _QuranMemoCard extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'حفظ القرآن',
+                    Text(
+                      AppLocalizations.of(context).journeyQuranTitle,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w800,
@@ -442,8 +443,8 @@ class _QuranMemoCard extends ConsumerWidget {
                     const SizedBox(height: 2),
                     Text(
                       count == 0
-                          ? 'تابع ما يحفظه — ونحتفل بأول سورة'
-                          : 'حفظ $count سورة',
+                          ? AppLocalizations.of(context).journeyQuranTrack
+                          : AppLocalizations.of(context).journeyQuranCount(count),
                       style: const TextStyle(
                         fontSize: 12.5,
                         color: AppTheme.textSecondary,
@@ -502,8 +503,8 @@ class _EmptyTimeline extends StatelessWidget {
                 const Text('🕊️', style: TextStyle(fontSize: 40)),
           ),
           const SizedBox(height: 10),
-          const Text(
-            'كل طفل رحلة فريدة. سجّل أول محطة من المحطات القادمة بالأسفل.',
+          Text(
+            AppLocalizations.of(context).journeyEmpty,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppTheme.textSecondary,
@@ -736,7 +737,7 @@ class _LogSheetState extends State<_LogSheet> {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  m?.title ?? 'محطة جديدة',
+                  m?.title ?? AppLocalizations.of(context).journeyNewMilestone,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w800,
@@ -751,10 +752,10 @@ class _LogSheetState extends State<_LogSheet> {
               controller: _titleCtrl,
               maxLength: 60,
               textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(
-                labelText: 'عنوان المحطة',
-                hintText: 'مثال: قال أول كلمة طيبة',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context).journeyMilestoneTitle,
+                hintText: AppLocalizations.of(context).journeyMilestoneHint,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 8),
@@ -763,10 +764,10 @@ class _LogSheetState extends State<_LogSheet> {
             controller: _noteCtrl,
             maxLength: JourneyStore.kMaxNoteLength,
             maxLines: 3,
-            decoration: const InputDecoration(
-              labelText: 'ملاحظة (اختياري)',
-              hintText: 'دوّن لحظة تتذكرها…',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context).journeyMilestoneNote,
+              hintText: AppLocalizations.of(context).journeyMilestoneNoteHint,
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 8),
@@ -781,7 +782,7 @@ class _LogSheetState extends State<_LogSheet> {
                 );
               },
               icon: const Icon(Icons.check),
-              label: const Text('سجّل المحطة'),
+              label: Text(AppLocalizations.of(context).journeyMilestoneSave),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
               ),

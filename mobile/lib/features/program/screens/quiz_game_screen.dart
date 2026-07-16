@@ -15,6 +15,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../../config/app_config.dart';
 import '../../../core/analytics.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
 
@@ -74,13 +75,13 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
         _startTimer();
       } else {
         setState(() {
-          _error = 'خطأ في تحميل الأسئلة';
+          _error = AppLocalizations.of(context).quizErrorLoading;
           _loading = false;
         });
       }
     } catch (e) {
       setState(() {
-        _error = 'تعذر الاتصال بالخادم';
+        _error = AppLocalizations.of(context).quizErrorConnection;
         _loading = false;
       });
     }
@@ -185,7 +186,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
     final pct = _questions.isEmpty ? 0 : (_score / total * 100).round();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🧠 اختبر معلوماتك'),
+        title: Text(AppLocalizations.of(context).quizTitleAppBar),
         centerTitle: true,
       ),
       body: Stack(
@@ -226,7 +227,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
           FilledButton.icon(
             onPressed: _fetchQuestions,
             icon: const Icon(Icons.refresh),
-            label: const Text('إعادة المحاولة'),
+            label: Text(AppLocalizations.of(context).retry),
           ),
         ],
       ),
@@ -266,13 +267,13 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
     String msg;
     if (pct >= 80) {
       emoji = '🏆';
-      msg = 'ممتاز! أنت مربي واعٍ';
+      msg = AppLocalizations.of(context).quizExcellent;
     } else if (pct >= 50) {
       emoji = '👏';
-      msg = 'جيد! واصل التعلم';
+      msg = AppLocalizations.of(context).quizGood;
     } else {
       emoji = '💪';
-      msg = 'لا بأس، كل يوم فرصة للتعلم';
+      msg = AppLocalizations.of(context).quizKeepLearning;
     }
     return Center(
       child: SingleChildScrollView(
@@ -313,7 +314,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
                           fontSize: 48,
                           fontWeight: FontWeight.w900,
                           color: AppTheme.primary)),
-                  Text('نقطة',
+                  Text(AppLocalizations.of(context).quizPoints,
                       style: TextStyle(fontSize: 16, color: Colors.grey[600])),
                 ],
               ),
@@ -324,7 +325,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
               child: FilledButton.icon(
                 onPressed: _shareResult,
                 icon: const Icon(Icons.share),
-                label: const Text('شارك نتيجتك 🤍'),
+                label: Text(AppLocalizations.of(context).quizShareResult),
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   textStyle: const TextStyle(fontSize: 18),
@@ -337,7 +338,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
               child: FilledButton.icon(
                 onPressed: _restart,
                 icon: const Icon(Icons.replay),
-                label: const Text('العب مرة أخرى'),
+                label: Text(AppLocalizations.of(context).quizPlayAgain),
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   textStyle: const TextStyle(fontSize: 18),
@@ -352,7 +353,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('العودة'),
+                child: Text(AppLocalizations.of(context).quizBack),
               ),
             ),
           ],
@@ -559,8 +560,8 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
                 ),
                 child: Text(
                   _currentIndex < _questions.length - 1
-                      ? 'السؤال التالي'
-                      : 'عرض النتائج',
+                      ? AppLocalizations.of(context).quizNext
+                      : AppLocalizations.of(context).quizShowResults,
                   style: const TextStyle(fontSize: 16),
                 ),
               ),

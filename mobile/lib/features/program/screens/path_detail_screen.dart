@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
@@ -64,7 +65,7 @@ class PathDetailScreen extends ConsumerWidget {
         title: Text(
           asyncDetail.maybeWhen(
             data: (d) => d.path.title,
-            orElse: () => 'تفاصيل المسار',
+            orElse: () => AppLocalizations.of(context).pathDetailTitle,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -82,9 +83,9 @@ class PathDetailScreen extends ConsumerWidget {
         ),
         error: (err, _) => EmptyState(
           emoji: '📡',
-          title: 'تعذّر تحميل المسار',
+          title: AppLocalizations.of(context).pathsError,
           subtitle: '$err',
-          actionLabel: 'إعادة المحاولة',
+          actionLabel: AppLocalizations.of(context).retry,
           onAction: () => ref.invalidate(pathDetailProvider(args)),
         ),
       ),
@@ -181,7 +182,7 @@ class _Body extends ConsumerWidget {
           const SizedBox(height: 20),
         ],
         Text(
-          'الدروس (${detail.lessons.length})',
+          AppLocalizations.of(context).pathDetailLessons(detail.lessons.length),
           style: Theme.of(context)
               .textTheme
               .titleMedium
@@ -189,11 +190,11 @@ class _Body extends ConsumerWidget {
         ),
         const SizedBox(height: 4),
         if (detail.lessons.isEmpty)
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24),
             child: EmptyState(
               emoji: '📭',
-              title: 'لا توجد دروس في هذا المسار بعد',
+              title: AppLocalizations.of(context).pathDetailEmpty,
             ),
           )
         else
@@ -212,7 +213,7 @@ class _Body extends ConsumerWidget {
             ),
         const SizedBox(height: 16),
         BouncyButton(
-          label: 'ابدأ المسار',
+          label: AppLocalizations.of(context).pathDetailStart,
           color: style.base,
           icon: const Icon(Icons.play_arrow, color: Colors.white),
           onTap: detail.lessons.isEmpty
@@ -222,7 +223,7 @@ class _Body extends ConsumerWidget {
         if (progressMap != null && progressMap.completedCount == total) ...[
           const SizedBox(height: 12),
           BouncyButton(
-            label: 'شارك إتمام المسار 🤍',
+            label: AppLocalizations.of(context).pathDetailShare,
             color: Colors.white,
             icon: const Icon(Icons.share, color: AppTheme.primary),
             onTap: () => _sharePathCompletion(context, detail.path),
@@ -538,7 +539,7 @@ class _ReferenceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _refTypeLabel(ref.type),
+                  _refTypeLabel(context, ref.type),
                   style: const TextStyle(
                     color: AppTheme.warningFg,
                     fontWeight: FontWeight.w800,
@@ -560,16 +561,17 @@ class _ReferenceCard extends StatelessWidget {
     );
   }
 
-  static String _refTypeLabel(String wire) {
+  static String _refTypeLabel(BuildContext context, String wire) {
+    final l10n = AppLocalizations.of(context);
     switch (wire) {
       case 'كتاب_تربوي':
-        return 'مرجع رئيسي';
+        return l10n.pathDetailRefMain;
       case 'حديث':
-        return 'حديث';
+        return l10n.pathDetailRefHadith;
       case 'بحث_علمي':
-        return 'بحث علمي';
+        return l10n.pathDetailRefResearch;
       case 'مقال_تنموي':
-        return 'مقال تنموي';
+        return l10n.pathDetailRefDevArticle;
       default:
         return wire;
     }
@@ -753,15 +755,15 @@ class _LessonNode extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                '⏱️ ${lesson.estimatedMinutes} د',
+                AppLocalizations.of(context).pathDetailMinutes(lesson.estimatedMinutes),
                 style: const TextStyle(
                   fontSize: 11,
                   color: AppTheme.textMuted,
                 ),
               ),
               if (lesson.needsProfessionalFollowup)
-                const _FlagChip(
-                  text: 'متابعة متخصصة',
+                _FlagChip(
+                  text: AppLocalizations.of(context).pathDetailFollowup,
                   color: AppTheme.dangerFg,
                   bg: AppTheme.dangerBg,
                 ),
@@ -941,8 +943,8 @@ class _PathVideoCard extends StatelessWidget {
                       size: 46, color: style.base),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  '🎥 شاهد فيديو الوحدة',
+                Text(
+                  AppLocalizations.of(context).pathDetailVideoIntro,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
