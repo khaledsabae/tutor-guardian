@@ -10,6 +10,8 @@ from pathlib import Path
 import httpx
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.config.guardrails_loader import load_guardrails_config
@@ -89,8 +91,11 @@ app = FastAPI(
     title="Tutor Guardian API",
     description="مساعد تربوي ذكي للأهل – واجهة API لنظام RAG مع Guardrails",
     version="0.1.0",
-    lifespan=lifespan,
-    redirect_slashes=False)
+    lifespan=lifespan)
+
+# Trust X-Forwarded-Proto from nginx so redirects keep HTTPS
+app.add_middleware(ProxyHeadersMiddleware, forwarded_allow_ips="*")
+
 
 app.add_middleware(
     CORSMiddleware,
