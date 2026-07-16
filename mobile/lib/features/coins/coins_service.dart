@@ -36,7 +36,7 @@ class CoinsService {
   static const streakBonusCap = 20; // +2/day up to +20
   static const badgeReward = 50;
   static const storyCost = 50;
-  static const referralReward = 50;
+  static const referralReward = 100; // Doubled temporarily for growth push (was 50)
 
   String _today() {
     final n = DateTime.now();
