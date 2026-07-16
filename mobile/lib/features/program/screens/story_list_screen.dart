@@ -8,6 +8,7 @@ import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/skeleton.dart';
 import '../data/story_models.dart';
 import 'story_reader_screen.dart';
+import '../../../l10n/app_localizations.dart';
 
 class StoryListScreen extends ConsumerWidget {
   const StoryListScreen({super.key});
@@ -18,7 +19,7 @@ class StoryListScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('حكايات قبل النوم 🌙'),
+        title: Text(AppLocalizations.of(context).storyBedtimeTitle),
       ),
       body: storiesAsync.when(
         loading: () => const SingleChildScrollView(
@@ -27,15 +28,15 @@ class StoryListScreen extends ConsumerWidget {
         ),
         error: (e, __) => EmptyState(
           emoji: '⚠️',
-          title: 'تعذر تحميل القصص',
+          title: AppLocalizations.of(context).storyLoadError,
           subtitle: e.toString(),
         ),
         data: (stories) {
           if (stories.isEmpty) {
-            return const EmptyState(
+            return EmptyState(
               emoji: '📚',
-              title: 'لا توجد قصص حالياً',
-              subtitle: 'انتظرونا، سنضيف قصصاً جديدة قريباً!',
+              title: AppLocalizations.of(context).storyEmpty,
+              subtitle: AppLocalizations.of(context).storyEmptyDesc,
             );
           }
 

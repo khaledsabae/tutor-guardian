@@ -169,7 +169,7 @@ class _Body extends ConsumerWidget {
                 MaterialPageRoute(
                   builder: (_) => VideoPlayerScreen(
                     url: url,
-                    title: '🎥 فيديو الوحدة: ${path.title}',
+                    title: AppLocalizations.of(context).pathDetailVideoUnit(path.title),
                   ),
                 ),
               );
@@ -332,13 +332,13 @@ class _Header extends ConsumerWidget {
                     const SizedBox(height: 14),
                     Row(
                       children: [
-                        _Badge(text: '⏱️ ${path.estimatedDays} يوم'),
+                        _Badge(text: AppLocalizations.of(context).pathDetailDays(path.estimatedDays)),
                         const SizedBox(width: 8),
-                        _Badge(text: '📚 ${path.lessonIds.length} دروس'),
+                        _Badge(text: AppLocalizations.of(context).pathDetailLessonsCount(path.lessonIds.length)),
                         if (path.videoMp4 != null) ...[
                           const SizedBox(width: 8),
                           _ClickableBadge(
-                            text: '🎥 فيديو تعريفي',
+                            text: AppLocalizations.of(context).pathDetailVideoIntro,
                             onTap: () {
                               final raw = path.videoMp4!;
                               final url = raw.startsWith('http')
@@ -349,7 +349,7 @@ class _Header extends ConsumerWidget {
                                 MaterialPageRoute(
                                   builder: (context) => VideoPlayerScreen(
                                     url: url,
-                                    title: '🎥 فيديو تعريفي لـ ${path.title}',
+                                    title: AppLocalizations.of(context).pathDetailVideoIntroTitle(path.title),
                                   ),
                                 ),
                               );
@@ -473,7 +473,7 @@ class StreakChip extends StatelessWidget {
           borderRadius: BorderRadius.circular(Dt.rChip),
         ),
         child: Text(
-          '🔥 ابدأ سلسلتك اليوم',
+          AppLocalizations.of(context).pathDetailStreakStart,
           style: TextStyle(
             color: dark ? Colors.white : AppTheme.textSecondary,
             fontSize: 12,
@@ -496,7 +496,7 @@ class StreakChip extends StatelessWidget {
           const Text('🔥', style: TextStyle(fontSize: 14)),
           const SizedBox(width: 4),
           Text(
-            '$streakDays ${_daysLabel(streakDays)}',
+            '$streakDays ${_daysLabel(AppLocalizations.of(context), streakDays)}',
             style: TextStyle(
               color: dark ? Colors.white : const Color(0xFF8A5A0F),
               fontSize: 12,
@@ -508,12 +508,12 @@ class StreakChip extends StatelessWidget {
     );
   }
 
-  static String _daysLabel(int n) {
+  static String _daysLabel(AppLocalizations l10n, int n) {
     // Arabic grammatical agreement for "يوم" (day).
-    if (n == 1) return 'يوم متتالي';
-    if (n == 2) return 'يومان متتاليان';
-    if (n >= 3 && n <= 10) return 'أيام متتالية';
-    return 'يوم متتالٍ';
+    if (n == 1) return l10n.pathDetailStreakDay1;
+    if (n == 2) return l10n.pathDetailStreakDay2;
+    if (n >= 3 && n <= 10) return l10n.pathDetailStreakDaysFew;
+    return l10n.pathDetailStreakDaysMany;
   }
 }
 
@@ -614,8 +614,8 @@ class _TrailRow extends StatelessWidget {
     );
     return Semantics(
       button: true,
-      label:
-          'الدرس ${index + 1}: ${lesson.title}. ${progressStatusLabel(status)}',
+      label: AppLocalizations.of(context).pathDetailTrailLesson(
+          index + 1, progressStatusLabel(status), lesson.title),
       onTap: onTap,
       excludeSemantics: true,
       child: SizedBox(

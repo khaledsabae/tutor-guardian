@@ -32,7 +32,7 @@ class FavoritesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('المفضلة'),
+        title: Text(AppLocalizations.of(context).favoritesTitle),
         actions: [
           if (lessonIds.isNotEmpty || tipIds.isNotEmpty)
             IconButton(
@@ -263,7 +263,7 @@ class _FavoriteLessonCard extends ConsumerWidget {
                 IconButton(
                   onPressed: onRemove,
                   icon: const Icon(Icons.favorite, color: Colors.redAccent),
-                  tooltip: 'إزالة من المفضلة',
+                  tooltip: AppLocalizations.of(context).favoritesRemoveTooltip,
                 ),
               ],
             ),
@@ -317,7 +317,7 @@ class _FavoriteTipCard extends ConsumerWidget {
         trailing: IconButton(
           onPressed: onRemove,
           icon: const Icon(Icons.favorite, color: Colors.redAccent),
-          tooltip: 'إزالة من المفضلة',
+          tooltip: AppLocalizations.of(context).favoritesRemoveTooltip,
         ),
       ),
     );

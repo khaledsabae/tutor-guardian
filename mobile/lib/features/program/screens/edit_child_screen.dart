@@ -139,10 +139,10 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
                 ),
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
-                    return 'الاسم مطلوب';
+                    return AppLocalizations.of(context).addChildNameRequired;
                   }
                   if (v.trim().length > 80) {
-                    return 'الاسم طويل جداً (الحد الأقصى 80 حرفاً)';
+                    return AppLocalizations.of(context).addChildNameTooLong;
                   }
                   return null;
                 },

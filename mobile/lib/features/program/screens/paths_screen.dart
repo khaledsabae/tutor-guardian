@@ -81,7 +81,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
             },
           ),
           IconButton(
-            tooltip: 'تحديث',
+            tooltip: AppLocalizations.of(context).pathsRefreshTooltip,
             onPressed: () =>
                 ref.read(pathsListProvider(args).notifier).refresh(),
             icon: const Icon(Icons.refresh),
@@ -239,7 +239,7 @@ class _Chip extends StatelessWidget {
     return Semantics(
       button: true,
       selected: isSelected,
-      label: 'تصفية: $label',
+      label: AppLocalizations.of(context).pathsFilterSemantics(label),
       excludeSemantics: true,
       child: Material(
         color: isSelected ? color : color.withValues(alpha: .10),
@@ -298,7 +298,7 @@ class _PathCard extends StatelessWidget {
     // fragmented announcements.
     return Semantics(
       button: true,
-      label: 'مسار: ${path.title}. ${path.description}',
+      label: AppLocalizations.of(context).pathsPathSemantics(path.description, path.title),
       onTap: () => _open(context),
       excludeSemantics: true,
       child: BouncyTap(
@@ -364,12 +364,12 @@ class _PathCard extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 8,
                     children: [
-                      _Pill(label: '⏱️ ${path.estimatedDays} يوم'),
-                      _Pill(label: '📚 ${path.lessonIds.length} دروس'),
+                      _Pill(label: AppLocalizations.of(context).pathDetailDays(path.estimatedDays)),
+                      _Pill(label: AppLocalizations.of(context).pathDetailLessonsCount(path.lessonIds.length)),
                       if (path.pedagogicalFramework != null)
                         _Pill(
                           label:
-                              '🧠 ${_frameworkLabel(path.pedagogicalFramework!)}',
+                              '🧠 ${_frameworkLabel(AppLocalizations.of(context), path.pedagogicalFramework!)}',
                         ),
                     ],
                   ),
@@ -382,16 +382,16 @@ class _PathCard extends StatelessWidget {
     );
   }
 
-  static String _frameworkLabel(String wire) {
+  static String _frameworkLabel(AppLocalizations l10n, String wire) {
     switch (wire) {
       case 'prophetic_7_7_7':
-        return 'المنهج النبوي 7-7-7';
+        return l10n.pathsFrameworkProphetic;
       case 'ghazali_tazkiyah':
-        return 'تزكية الغزالي';
+        return l10n.pathsFrameworkGhazali;
       case 'attachment_rahma':
-        return 'الرابطة والرحمة';
+        return l10n.pathsFrameworkAttachment;
       case 'zpd_scaffolded':
-        return 'منطقة النمو القريبة';
+        return l10n.pathsFrameworkZpd;
       default:
         return wire;
     }

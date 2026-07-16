@@ -163,10 +163,10 @@ class _FlashcardPagerState extends State<_FlashcardPager> {
               IconButton.filledTonal(
                 onPressed: _index > 0 ? () => _go(-1) : null,
                 icon: const Icon(Icons.arrow_forward),
-                tooltip: 'السابقة',
+                tooltip: AppLocalizations.of(context).previousCard,
               ),
               Text(
-                'اضغط للقلب · اسحب للتالي',
+                AppLocalizations.of(context).tapToContinue,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppTheme.textMuted,
                     ),
@@ -174,7 +174,7 @@ class _FlashcardPagerState extends State<_FlashcardPager> {
               IconButton.filledTonal(
                 onPressed: _index < total - 1 ? () => _go(1) : null,
                 icon: const Icon(Icons.arrow_back),
-                tooltip: 'التالية',
+                tooltip: AppLocalizations.of(context).nextCard,
               ),
             ],
           ),
@@ -299,7 +299,7 @@ class _CardFace extends StatelessWidget {
                       const Text('💡', style: TextStyle(fontSize: 22)),
                       const SizedBox(width: 8),
                       Text(
-                        'الإجابة',
+                        AppLocalizations.of(context).flashcardAnswer,
                         style: theme.textTheme.titleSmall?.copyWith(
                           color: AppTheme.primary,
                           fontWeight: FontWeight.w800,

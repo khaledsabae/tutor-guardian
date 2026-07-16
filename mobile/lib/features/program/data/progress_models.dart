@@ -4,6 +4,8 @@
 /// `routers/children.py` + `routers/program.py::patch_lesson_progress`.
 library;
 
+import '../../../l10n/l10n_global.dart';
+
 // reuse CurriculumPath/CurriculumLesson
 
 /// One child profile, owned by a single device.
@@ -70,11 +72,11 @@ String progressStatusToWire(ProgressStatus s) {
 String progressStatusLabel(ProgressStatus s) {
   switch (s) {
     case ProgressStatus.completed:
-      return 'مكتمل';
+      return AppL10n.current.progressCompleted;
     case ProgressStatus.inProgress:
-      return 'قيد التنفيذ';
+      return AppL10n.current.progressInProgress;
     case ProgressStatus.notStarted:
-      return 'لم يبدأ';
+      return AppL10n.current.progressNotStarted;
   }
 }
 

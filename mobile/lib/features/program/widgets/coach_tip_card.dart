@@ -142,9 +142,9 @@ class _CoachCard extends StatelessWidget {
                         // the card's "ask" onTap.
                         _ShareButton(onTap: onShare),
                         const Spacer(),
-                        const Text(
-                          'اسأل المربّي عن ده',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context).coachAskAboutTip,
+                          style: const TextStyle(
                             color: Color(0xFF8A5A0F),
                             fontWeight: FontWeight.w700,
                             fontSize: 12,

@@ -169,12 +169,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               actions: [
                 if (widget.thumbnailUrl != null)
                   IconButton(
-                    tooltip: 'تصغير',
+                    tooltip: AppLocalizations.of(context).videoMinimizeTooltip,
                     icon: const Icon(Icons.fullscreen_exit, color: Colors.white),
                     onPressed: () => Navigator.pop(context),
                   ),
                 IconButton(
-                  tooltip: 'تدوير الشاشة',
+                  tooltip: AppLocalizations.of(context).videoRotateTooltip,
                   icon: const Icon(Icons.screen_rotation, color: Colors.white),
                   onPressed: _controller != null ? _toggleOrientation : null,
                 ),
@@ -321,7 +321,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                         Row(
                                           children: [
                                             IconButton(
-                                              tooltip: 'تدوير الشاشة',
+                                              tooltip: AppLocalizations.of(context).videoRotateTooltip,
                                               icon: const Icon(Icons.screen_rotation,
                                                   color: Colors.white, size: 28),
                                               onPressed: _controller != null
@@ -329,7 +329,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                                   : null,
                                             ),
                                             IconButton(
-                                              tooltip: 'إغلاق',
+                                              tooltip: AppLocalizations.of(context).videoCloseTooltip,
                                               icon: const Icon(Icons.close,
                                                   color: Colors.white, size: 28),
                                               onPressed: () => Navigator.pop(context),
@@ -405,7 +405,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                               style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
                                             ),
                                             IconButton(
-                                              tooltip: 'ملء الشاشة',
+                                              tooltip: AppLocalizations.of(context).videoFullscreenTooltip,
                                               icon: const Icon(Icons.fullscreen, color: Colors.white, size: 24),
                                               onPressed: _controller != null ? _toggleOrientation : null,
                                             ),

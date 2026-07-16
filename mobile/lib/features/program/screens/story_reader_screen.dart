@@ -9,6 +9,7 @@ import 'package:video_player/video_player.dart';
 import '../../../config/app_config.dart';
 import '../data/story_models.dart';
 import '../services/bedtime_audio_service.dart';
+import '../../../l10n/app_localizations.dart';
 
 /// Immersive bedtime story reader: looping ambient video background,
 /// smooth 3D page-flip navigation, parallax illustration, soft text, and a
@@ -289,7 +290,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
               .scaleXY(begin: 1.1, end: 0.9, duration: 1200.ms),
           const SizedBox(height: 20),
           Text(
-            'أحسنت يا بطل!',
+            AppLocalizations.of(context).storyWellDone,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: themeColor,
@@ -298,10 +299,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          const Text(
-            'استرخِ الآن واغمض عينيك، فالأحلام الجميلة تنتظرك.',
+          Text(
+            AppLocalizations.of(context).storyRelaxNow,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF4A4A4A),
               fontSize: 16,
               height: 1.6,
@@ -312,7 +313,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           FilledButton.icon(
             onPressed: () => Navigator.of(context).pop(),
             icon: const Icon(Icons.check),
-            label: const Text('أغلق القصة'),
+            label: Text(AppLocalizations.of(context).storyClose),
             style: FilledButton.styleFrom(
               backgroundColor: themeColor,
               padding: const EdgeInsets.symmetric(

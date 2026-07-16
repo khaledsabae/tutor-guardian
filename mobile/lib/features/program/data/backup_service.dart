@@ -19,6 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'favorites_storage.dart';
 import '../../reflections/data/reflection_storage.dart';
+import '../../../l10n/l10n_global.dart';
 
 /// Result of an import operation.
 class ImportResult {
@@ -91,11 +92,11 @@ class BackupService {
       // Validate version
       final version = decoded['version'] as int?;
       if (version == null) {
-        return const ImportResult(
+        return ImportResult(
           success: false,
           importedReflectionsCount: 0,
           importedFavoritesCount: 0,
-          errorMessage: 'ملف النسخ الاحتياطي غير صالح: حقل "version" مفقود.',
+          errorMessage: AppL10n.current.backupInvalidFile,
         );
       }
       if (version > _currentVersion) {
@@ -103,7 +104,7 @@ class BackupService {
           success: false,
           importedReflectionsCount: 0,
           importedFavoritesCount: 0,
-          errorMessage: 'إصدار النسخ الاحتياطي ($version) أحدث من إصدار التطبيق ($_currentVersion). يرجى تحديث التطبيق.',
+          errorMessage: AppL10n.current.backupNewerVersion('$_currentVersion', '$version'),
         );
       }
 
@@ -178,14 +179,14 @@ class BackupService {
         success: false,
         importedReflectionsCount: 0,
         importedFavoritesCount: 0,
-        errorMessage: 'ملف JSON غير صالح: ${e.message}',
+        errorMessage: AppL10n.current.backupInvalidJson(e.message),
       );
     } catch (e) {
       return ImportResult(
         success: false,
         importedReflectionsCount: 0,
         importedFavoritesCount: 0,
-        errorMessage: 'حدث خطأ غير متوقع: $e',
+        errorMessage: AppL10n.current.backupUnexpectedError(e),
       );
 }
   }

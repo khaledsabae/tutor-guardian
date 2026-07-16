@@ -39,15 +39,15 @@ class StoryBookshelfScreen extends ConsumerWidget {
             ),
             error: (e, __) => EmptyState(
               emoji: '⚠️',
-              title: 'تعذر تحميل القصص',
+              title: AppLocalizations.of(context).storyLoadError,
               subtitle: e.toString(),
             ),
             data: (stories) {
               if (stories.isEmpty) {
-                return const EmptyState(
+                return EmptyState(
                   emoji: '📚',
-                  title: 'لا توجد قصص حالياً',
-                  subtitle: 'انتظرونا، سنضيف قصصاً جديدة قريباً!',
+                  title: AppLocalizations.of(context).storyEmpty,
+                  subtitle: AppLocalizations.of(context).storyEmptyDesc,
                 );
               }
               return _BookshelfBody(stories: stories);
@@ -358,7 +358,7 @@ class _BookCover extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Text(
-                    'اضغط لفتح القصة',
+                    AppLocalizations.of(context).storyTapToOpen,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.85),

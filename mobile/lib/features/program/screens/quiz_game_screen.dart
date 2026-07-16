@@ -148,15 +148,15 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
   String _domainLabel(String d) {
     switch (d) {
       case 'islamic_parenting':
-        return 'تربية إسلامية';
+        return AppLocalizations.of(context).islamicEducation;
       case 'aqeedah':
-        return 'العقيدة';
+        return AppLocalizations.of(context).quizDomainAqeedah;
       case 'medical':
-        return 'مهارات';
+        return AppLocalizations.of(context).quizDomainSkills;
       case 'cyber':
-        return 'أمان رقمي';
+        return AppLocalizations.of(context).digitalSafety;
       case 'development':
-        return 'تنمية';
+        return AppLocalizations.of(context).quizDomainDevelopment;
       default:
         return d;
     }
@@ -237,24 +237,28 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
   Future<void> _shareResult() async {
     final total = _questions.length * 10;
     final pct = (_score / total * 100).round();
-    String praise;
+    final l10n = AppLocalizations.of(context);
+    final String praise;
+    final String praiseBody;
     if (pct >= 80) {
-      praise = 'ممتاز! 🏆';
+      praise = l10n.quizExcellentShare;
+      praiseBody = l10n.quizPraiseExcellent;
     } else if (pct >= 50) {
-      praise = 'جيد! 👏';
+      praise = l10n.quizGoodShare;
+      praiseBody = l10n.quizPraiseGood;
     } else {
-      praise = 'واصل التعلم 💪';
+      praise = l10n.quizKeepShare;
+      praiseBody = l10n.quizPraiseKeep;
     }
     await Analytics.shareMoment('quiz');
     await ShareService.shareMomentCard(
       fileTag: 'quiz_result',
-      message: 'حصلت على $_score من $total نقطة في اختبار «المربّي» 🤍\\n'
-          '$praise — جرّب أنت كمان:',
+      message: l10n.quizShareMessage(praise, _score, total),
       card: ShareableMomentCard(
         emoji: pct >= 80 ? '🏆' : (pct >= 50 ? '👏' : '💪'),
-        eyebrow: 'نتيجة الاختبار',
-        headline: '$_score / $total نقطة',
-        body: '$praise — واصل التعلم يوميًا مع المربّي.',
+        eyebrow: l10n.quizResultTitle,
+        headline: l10n.quizScorePoints(_score, total),
+        body: praiseBody,
         icon: Icons.quiz_outlined,
       ),
     );
@@ -416,7 +420,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
           const SizedBox(height: 4),
           Align(
             alignment: Alignment.centerLeft,
-            child: Text('$_timeLeft ث',
+            child: Text(AppLocalizations.of(context).quizTimeSeconds(_timeLeft),
                 style: TextStyle(
                     fontSize: 13,
                     color: _timeLeft <= 5 ? Colors.red : Colors.grey[500])),
@@ -428,7 +432,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
               const Icon(Icons.stars_rounded,
                   color: Color(0xFFFFD700), size: 20),
               const SizedBox(width: 4),
-              Text('$_score نقطة',
+              Text(AppLocalizations.of(context).quizPointsCount(_score),
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 15)),
             ],

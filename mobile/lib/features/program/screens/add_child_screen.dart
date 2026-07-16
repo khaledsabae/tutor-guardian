@@ -128,7 +128,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
             children: [
               Text(
-                'اسم الطفل',
+                AppLocalizations.of(context).childName,
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
@@ -137,23 +137,23 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
               const SizedBox(height: 8),
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(
-                  hintText: 'مثلاً: يوسف، مريم، زياد',
-                  prefixIcon: Icon(Icons.person_outline),
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context).addChildNameHint,
+                  prefixIcon: const Icon(Icons.person_outline),
                 ),
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
-                    return 'الاسم مطلوب';
+                    return AppLocalizations.of(context).addChildNameRequired;
                   }
                   if (v.trim().length > 80) {
-                    return 'الاسم طويل جداً (الحد الأقصى 80 حرفاً)';
+                    return AppLocalizations.of(context).addChildNameTooLong;
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 24),
               Text(
-                'المرحلة العمرية',
+                AppLocalizations.of(context).onbAgeGroup,
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
@@ -184,7 +184,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
               ),
               const SizedBox(height: 24),
               Text(
-                'صورة الطفل (اختياري)',
+                AppLocalizations.of(context).onbChildAvatar,
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
@@ -220,8 +220,8 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
                       Expanded(
                         child: Text(
                           _avatarEmoji == null
-                              ? 'اضغط لاختيار إيموجي'
-                              : 'اضغط لتغيير الإيموجي',
+                              ? AppLocalizations.of(context).onbTapEmoji
+                              : AppLocalizations.of(context).onbTapChangeEmoji,
                           style: TextStyle(
                             color: _avatarEmoji == null
                                 ? AppTheme.textMuted

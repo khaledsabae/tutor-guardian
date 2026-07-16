@@ -92,7 +92,7 @@ class _CardState extends ConsumerState<_Card> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تعذّر مشاركة النصيحة: $e'),
+            content: Text(AppLocalizations.of(context).dailyTipShareError(e)),
             backgroundColor: AppTheme.dangerFg,
           ),
         );

@@ -18,6 +18,10 @@
 ///   ]
 /// }
 /// ```
+library;
+
+import '../../../l10n/l10n_global.dart';
+
 class QuizQuestion {
   final String question;
   final List<QuizOption> options;
@@ -79,7 +83,7 @@ class QuizDeck {
   factory QuizDeck.fromJson(Map<String, dynamic> json) {
     return QuizDeck(
       id: (json['id'] as String?) ?? '',
-      title: (json['title'] as String?) ?? 'اختبار',
+      title: (json['title'] as String?) ?? AppL10n.current.quizFallbackTitle,
       questions: ((json['questions'] as List?) ?? const [])
           .whereType<Map<String, dynamic>>()
           .map(QuizQuestion.fromJson)

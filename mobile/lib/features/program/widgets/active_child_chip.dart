@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../screens/children_list_screen.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ActiveChildChip extends ConsumerWidget {
   const ActiveChildChip({super.key});
@@ -56,9 +57,9 @@ class ActiveChildChip extends ConsumerWidget {
                 const Icon(Icons.unfold_more,
                     size: 14, color: Colors.white),
               ] else
-                const Text(
-                  'طفل نشط',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context).activeChildLabel,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: 13,

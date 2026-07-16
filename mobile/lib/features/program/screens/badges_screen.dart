@@ -54,9 +54,9 @@ class _BadgesGrid extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
           child: Semantics(
-            label: 'حصلت على $earned من ${badges.length} إنجازات',
+            label: AppLocalizations.of(context).badgesEarnedOf(earned, badges.length),
             child: Text(
-              'حصلت على $earned من ${badges.length}',
+              AppLocalizations.of(context).badgesEarnedOfShort(earned, badges.length),
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppTheme.primary,
@@ -114,7 +114,7 @@ class _BadgeTile extends StatelessWidget {
     final earned = badge.earned;
     return Semantics(
       label: '${badge.title}. ${badge.description}. '
-          '${earned ? "تم الحصول عليه — اضغط للمشاركة" : "لم يُفتح بعد"}',
+          '${earned ? AppLocalizations.of(context).badgeEarnedTapShare : AppLocalizations.of(context).badgeLockedYet}',
       child: GestureDetector(
         onTap: earned ? _share : null,
         child: Container(

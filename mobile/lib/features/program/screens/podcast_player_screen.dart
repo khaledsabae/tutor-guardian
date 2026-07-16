@@ -19,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../../l10n/l10n_global.dart';
 
 class PodcastPlayerScreen extends StatefulWidget {
   final String? url;
@@ -54,7 +56,7 @@ class _PodcastPlayerScreenState extends State<PodcastPlayerScreen> {
     final url = widget.url;
     if (url == null || url.isEmpty) {
       setState(() {
-        _errorMessage = 'البودكاست غير متاح حالياً. سيتاح قريباً بإذن الله.';
+        _errorMessage = AppL10n.current.podcastUnavailable;
         _ready = true;
       });
       return;
@@ -74,7 +76,7 @@ class _PodcastPlayerScreenState extends State<PodcastPlayerScreen> {
       setState(() => _ready = true);
     } catch (e) {
       setState(() {
-        _errorMessage = 'تعذّر تحميل البودكاست. تأكد من اتصالك بالإنترنت.';
+        _errorMessage = AppL10n.current.podcastLoadError;
         _ready = true;
       });
     }
@@ -309,7 +311,7 @@ class _PlayerView extends StatelessWidget {
                       key: const Key('podcast_speed_button'),
                       onPressed: onCycleSpeed,
                       icon: const Icon(Icons.speed),
-                      label: Text('السرعة: $currentSpeed×'),
+                      label: Text(AppLocalizations.of(context).podcastSpeed(currentSpeed)),
                     ),
                   ),
                 ],

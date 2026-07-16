@@ -304,7 +304,7 @@ class _ChildTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      _ageLabel(child.ageGroup),
+                      _ageLabel(AppLocalizations.of(context), child.ageGroup),
                       style: const TextStyle(
                         fontSize: 12,
                         color: AppTheme.textSecondary,
@@ -357,22 +357,22 @@ class _ChildTile extends StatelessWidget {
     );
   }
 
-  String _ageLabel(String wire) {
+  String _ageLabel(AppLocalizations l10n, String wire) {
     switch (wire) {
       case 'prenatal-1':
-        return 'فترة الحمل وحتى عام';
+        return l10n.ageGroupPrenatal;
       case '2-3':
-        return '2–3 سنوات';
+        return l10n.ageGroup2to3;
       case '4-6':
-        return '4–6 سنوات';
+        return l10n.ageGroup4to6;
       case '7-9':
-        return '7–9 سنوات';
+        return l10n.ageGroup7to9;
       case '10-12':
-        return '10–12 سنة';
+        return l10n.ageGroup10to12;
       case '13-15':
-        return '13–15 سنة';
+        return l10n.ageGroup13to15;
       case '16-18':
-        return '16–18 سنة';
+        return l10n.ageGroup16to18;
       default:
         return wire;
     }

@@ -85,7 +85,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         actions: [
           if (_controller.text.isNotEmpty)
             IconButton(
-              tooltip: 'مسح',
+              tooltip: AppLocalizations.of(context).searchClearTooltip,
               icon: const Icon(Icons.close),
               onPressed: () {
                 _controller.clear();
@@ -147,12 +147,18 @@ class _ResultTile extends ConsumerWidget {
   final SearchResult result;
   const _ResultTile({required this.result});
 
-  static const _typeLabel = {
-    SearchResultType.lesson: 'درس',
-    SearchResultType.path: 'مسار',
-    SearchResultType.tip: 'نصيحة',
-    SearchResultType.unknown: '',
-  };
+  static String _typeLabel(AppLocalizations l10n, SearchResultType type) {
+    switch (type) {
+      case SearchResultType.lesson:
+        return l10n.searchTypeLesson;
+      case SearchResultType.path:
+        return l10n.searchTypePath;
+      case SearchResultType.tip:
+        return l10n.searchTypeTip;
+      case SearchResultType.unknown:
+        return '';
+    }
+  }
 
   String get _emoji {
     switch (result.type) {
@@ -190,7 +196,7 @@ class _ResultTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tappable = result.type == SearchResultType.lesson ||
         result.type == SearchResultType.path;
-    final label = _typeLabel[result.type] ?? '';
+    final label = _typeLabel(AppLocalizations.of(context), result.type);
     // Shadow on the outer box; color on a Material so the ListTile's
     // ink renders correctly (framework assertion in debug/tests).
     return Container(

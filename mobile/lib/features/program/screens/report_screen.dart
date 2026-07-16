@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:http/http.dart' as http;
+import '../../../l10n/app_localizations.dart';
 
 /// Fetches a lesson report (markdown) and renders it.
 class ReportScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('📄 تقرير الدرس')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).reportScreenTitle)),
       body: FutureBuilder<String>(
         future: _content,
         builder: (context, snap) {
@@ -41,10 +42,11 @@ class _ReportScreenState extends State<ReportScreen> {
             return const Center(child: CircularProgressIndicator());
           }
           if (snap.hasError || (snap.data ?? '').trim().isEmpty) {
-            return const Center(
+            return Center(
               child: Padding(
-                padding: EdgeInsets.all(24),
-                child: Text('تعذّر تحميل التقرير', style: TextStyle(fontSize: 16)),
+                padding: const EdgeInsets.all(24),
+                child: Text(AppLocalizations.of(context).reportLoadError,
+                    style: const TextStyle(fontSize: 16)),
               ),
             );
           }

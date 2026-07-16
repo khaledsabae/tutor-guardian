@@ -104,14 +104,14 @@ class _InfographicScreenState extends State<InfographicScreen> {
         title: Text(AppLocalizations.of(context).lessonInfographic),
         actions: [
           IconButton(
-            tooltip: 'تدوير الشاشة',
+            tooltip: AppLocalizations.of(context).infographicRotateTooltip,
             icon: Icon(_landscape
                 ? Icons.stay_current_portrait
                 : Icons.screen_rotation),
             onPressed: _toggleRotation,
           ),
           IconButton(
-            tooltip: 'تحميل',
+            tooltip: AppLocalizations.of(context).infographicDownloadTooltip,
             icon: _saving
                 ? const SizedBox(
                     width: 18,
@@ -135,12 +135,12 @@ class _InfographicScreenState extends State<InfographicScreen> {
             loadingBuilder: (context, child, progress) => progress == null
                 ? child
                 : const Center(child: CircularProgressIndicator()),
-            errorBuilder: (context, error, stack) => const Center(
+            errorBuilder: (context, error, stack) => Center(
               child: Padding(
-                padding: EdgeInsets.all(24),
+                padding: const EdgeInsets.all(24),
                 child: Text(
-                  'تعذّر تحميل الإنفوجرافيك',
-                  style: TextStyle(color: Colors.white70, fontSize: 16),
+                  AppLocalizations.of(context).infographicLoadError,
+                  style: const TextStyle(color: Colors.white70, fontSize: 16),
                 ),
               ),
             ),

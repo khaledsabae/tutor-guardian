@@ -271,7 +271,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'الذكر ${_currentIndex + 1} من ${_adhkar.length}',
+                AppLocalizations.of(context).bedtimeAdhkarCounter(_currentIndex + 1, _adhkar.length),
                 style: TextStyle(
                   color: themeColor,
                   fontWeight: FontWeight.w800,
@@ -359,7 +359,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                 const Icon(Icons.touch_app, color: Colors.white, size: 20),
                 const SizedBox(width: 8),
                 Text(
-                  'اضغط هنا للتكرار: $_remainingCount',
+                  AppLocalizations.of(context).bedtimeTapToRepeat(_remainingCount),
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

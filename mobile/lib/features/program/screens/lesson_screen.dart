@@ -362,9 +362,9 @@ class _Hero extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      _HeroBadge(text: 'الدرس ${lesson.order}'),
+                      _HeroBadge(text: AppLocalizations.of(context).lessonNumberBadge(lesson.order)),
                       const SizedBox(width: 8),
-                      _HeroBadge(text: '⏱️ ${lesson.estimatedMinutes} دقائق'),
+                      _HeroBadge(text: AppLocalizations.of(context).lessonMinutesBadge(lesson.estimatedMinutes)),
                       const Spacer(),
                       IconButton(
                         onPressed: () {
@@ -993,7 +993,7 @@ class AssetPlaceholderScreen extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'شاشة مؤقتة لـ $title',
+          AppLocalizations.of(context).lessonTempScreen(title),
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),

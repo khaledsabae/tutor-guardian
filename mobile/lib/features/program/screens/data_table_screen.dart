@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../../l10n/app_localizations.dart';
 
 /// Fetches a lesson data-table (CSV) and renders it as a vertical list of
 /// cards (one card per row, "header: value" pairs) — readable on a phone in
@@ -77,7 +78,7 @@ class _DataTableScreenState extends State<DataTableScreen> {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('📋 جدول البيانات')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).dataTableTitle)),
       body: FutureBuilder<List<List<String>>>(
         future: _rows,
         builder: (context, snap) {
@@ -86,10 +87,11 @@ class _DataTableScreenState extends State<DataTableScreen> {
           }
           final data = snap.data ?? const [];
           if (snap.hasError || data.length < 2) {
-            return const Center(
+            return Center(
               child: Padding(
-                padding: EdgeInsets.all(24),
-                child: Text('تعذّر تحميل الجدول', style: TextStyle(fontSize: 16)),
+                padding: const EdgeInsets.all(24),
+                child: Text(AppLocalizations.of(context).dataTableLoadError,
+                    style: const TextStyle(fontSize: 16)),
               ),
             );
           }

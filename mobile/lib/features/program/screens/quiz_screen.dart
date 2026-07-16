@@ -167,7 +167,7 @@ class _QuestionView extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'سؤال ${index + 1} من $total',
+                    AppLocalizations.of(context).quizQuestionOf(index + 1, total),
                     style: const TextStyle(
                       color: AppTheme.textSecondary,
                       fontWeight: FontWeight.w600,
@@ -247,7 +247,7 @@ class _QuestionView extends StatelessWidget {
                 onPressed: onNext,
                 icon: const Icon(Icons.arrow_forward),
                 label: Text(
-                  index < total - 1 ? 'السؤال التالي' : 'عرض النتيجة',
+                  index < total - 1 ? AppLocalizations.of(context).quizNextQuestion : AppLocalizations.of(context).quizShowResult,
                 ),
                 style: FilledButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
@@ -510,10 +510,10 @@ class _SummaryState extends State<_Summary> {
             ? '🌟'
             : '💪';
     final verdict = pct >= 80
-        ? 'ما شاء الله! أداء ممتاز.'
+        ? AppLocalizations.of(context).quizResultExcellent
         : pct >= 50
-            ? 'جيد. راجع الدروس التي أخطأت فيها.'
-            : 'لا بأس — المراجعة خير من الندم. اقرأ الدرس مرة أخرى.';
+            ? AppLocalizations.of(context).quizResultGood
+            : AppLocalizations.of(context).quizResultReview;
 
     return Stack(
       alignment: Alignment.topCenter,
@@ -533,7 +533,7 @@ class _SummaryState extends State<_Summary> {
                     ),
                 const SizedBox(height: 16),
                 Text(
-                  'نتيجتك',
+                  AppLocalizations.of(context).quizYourResult,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 16),
@@ -581,7 +581,7 @@ class _SummaryState extends State<_Summary> {
                   key: const Key('quiz_retry_button'),
                   onPressed: widget.onRetry,
                   icon: const Icon(Icons.refresh),
-                  label: const Text('أعد المحاولة'),
+                  label: Text(AppLocalizations.of(context).retry),
                   style: FilledButton.styleFrom(
                     minimumSize: const Size(180, 48),
                   ),

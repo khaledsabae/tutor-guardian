@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../l10n/app_localizations.dart';
 
 /// Gentle, one-time "rate the app" prompt — shown only AFTER a few positive
 /// moments (e.g. logging a milestone), never on first use, and never twice.
@@ -41,19 +42,16 @@ class ReviewPrompt {
     final yes = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('هل أعجبك «المربّي»؟ 🌟'),
-        content: const Text(
-          'تقييمك على المتجر يساعد آباءً غيرك يجدون التطبيق — '
-          'وفي ميزان حسناتك إن شاء الله.',
-        ),
+        title: Text(AppLocalizations.of(ctx).reviewPromptTitle),
+        content: Text(AppLocalizations.of(ctx).reviewPromptBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('لاحقًا'),
+            child: Text(AppLocalizations.of(ctx).reviewPromptLater),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('قيّم الآن'),
+            child: Text(AppLocalizations.of(ctx).reviewPromptNow),
           ),
         ],
       ),
