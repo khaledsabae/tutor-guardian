@@ -552,6 +552,7 @@ def monthly_report(child_id: int):
     Includes: lessons completed, habits tracked, streaks, achievements,
     and AI-generated personalized insights.
     """
+    from app.db.init_db import get_conn
     conn = get_conn()
     now = dt.datetime.now(dt.timezone.utc)
     month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
