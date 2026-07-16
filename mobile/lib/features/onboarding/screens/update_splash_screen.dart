@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
@@ -35,15 +36,15 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
   late final VideoPlayerController _controller;
   bool _videoReady = false;
 
-  static const _features = [
-    ('📖', 'قصص قبل النوم الجديدة',
-        'أضفنا 4 قصص تربوية مصورة وهادئة جديدة (ليلى، صالح، نور، ومريم) لمساعدة طفلك على الاسترخاء والنوم بسلام.'),
-    ('📱', 'QR ويب شير للمراهقين 13-18',
-        'شارك "ميزان العادات" مع ابنك المراهق عبر رابط ويب — يدخل من متصفحه بدون تثبيت.'),
-    ('👦', 'وضع الطفل 7-12 سنة',
-        'خلّي طفلك يسجّل عاداته اليومية بنفسه تحت إشرافك — تقييم ذاتي بدون ضغط.'),
-    ('🔗', 'ثبات وسرعة',
-        'التطبيق بقى يتعامل مع انقطاع الشبكة بسلاسة — بياناتك في أمان.'),
+  static List<(String, String, String)> _features(BuildContext context) => [
+    ('📖', AppLocalizations.of(context).updateSplashFeature1,
+        AppLocalizations.of(context).updateSplashFeature1Desc),
+    ('📱', AppLocalizations.of(context).updateSplashFeature2,
+        AppLocalizations.of(context).updateSplashFeature2Desc),
+    ('👦', AppLocalizations.of(context).updateSplashFeature3,
+        AppLocalizations.of(context).updateSplashFeature3Desc),
+    ('🔗', AppLocalizations.of(context).updateSplashFeature4,
+        AppLocalizations.of(context).updateSplashFeature4Desc),
   ];
 
   @override
@@ -124,7 +125,7 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
 
               // ── Title ──
               Text(
-                'تحديث رئيسي 🎉',
+                AppLocalizations.of(context).updateSplashTitle,
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
@@ -136,7 +137,7 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
                   .slideY(begin: .2),
               const SizedBox(height: 8),
               Text(
-                'إصدار $updateSplashVersion — إيه الجديد؟',
+                AppLocalizations.of(context).updateSplashVersion(updateSplashVersion),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppTheme.primary,
@@ -148,7 +149,7 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
               const SizedBox(height: 24),
 
               // ── Feature list ──
-              for (var i = 0; i < _features.length; i++) ...[
+              for (var i = 0; i < _features(context).length; i++) ...[
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -159,7 +160,7 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(_features[i].$1,
+                      Text(_features(context)[i].$1,
                           style: const TextStyle(fontSize: 32)),
                       const SizedBox(width: 14),
                       Expanded(
@@ -167,7 +168,7 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _features[i].$2,
+                              _features(context)[i].$2,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w800,
                                 fontSize: 16,
@@ -175,7 +176,7 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              _features[i].$3,
+                              _features(context)[i].$3,
                               style: const TextStyle(
                                 color: AppTheme.textSecondary,
                                 fontSize: 13,
@@ -191,14 +192,14 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
                     .animate(delay: (300 + 100 * i).ms)
                     .fadeIn(duration: Dt.base)
                     .slideY(begin: .15, curve: Curves.easeOutCubic),
-                if (i < _features.length - 1) const SizedBox(height: 12),
+                if (i < _features(context).length - 1) const SizedBox(height: 12),
               ],
 
               const SizedBox(height: 32),
 
               // ── CTA ──
               BouncyButton(
-                label: 'ابدأ',
+                label: AppLocalizations.of(context).updateSplashStart,
                 icon: const Icon(Icons.arrow_forward, color: Colors.white),
                 onTap: _dismiss,
               )
@@ -206,7 +207,7 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
                   .fadeIn(duration: Dt.base),
               const SizedBox(height: 12),
               Text(
-                'مرّة واحدة فقط — لن تظهر هذه الشاشة مجدداً.',
+                AppLocalizations.of(context).updateSplashOnce,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppTheme.textMuted,

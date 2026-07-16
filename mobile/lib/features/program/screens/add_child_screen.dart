@@ -9,6 +9,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/ui/bouncy_button.dart';
@@ -52,7 +53,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
     final ageGroup = _ageGroup;
     if (ageGroup == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('يرجى اختيار المرحلة العمرية.')),
+        SnackBar(content: Text(AppLocalizations.of(context).addChildAgeRequired)),
       );
       return;
     }
@@ -65,7 +66,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
           );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('تمّت إضافة ${child.name}.')),
+          SnackBar(content: Text(AppLocalizations.of(context).addChildAdded(child.name))),
         );
         Navigator.of(context).pop(true);
       }
@@ -73,7 +74,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تعذّر إضافة الطفل: $e'),
+            content: Text(AppLocalizations.of(context).addChildError(e.toString())),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -88,12 +89,12 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('إضافة طفل'),
+        title: Text(AppLocalizations.of(context).addChildTitle),
         actions: [
           TextButton(
             onPressed: busy ? null : _submit,
             child: Text(
-              'إضافة',
+              AppLocalizations.of(context).add,
               style: TextStyle(
                 color: busy ? AppTheme.textMuted : AppTheme.primary,
                 fontWeight: FontWeight.w800,
@@ -107,7 +108,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
           child: BouncyButton(
-            label: busy ? 'جارٍ الإضافة…' : 'إضافة الطفل',
+            label: busy ? AppLocalizations.of(context).addChildAdding : AppLocalizations.of(context).addChildBtn,
             icon: busy
                 ? const SizedBox(
                     width: 18,

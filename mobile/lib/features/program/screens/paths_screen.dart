@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/empty_state.dart';
@@ -53,7 +54,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('مساراتي 🛤️'),
+        title: Text(AppLocalizations.of(context).pathsTitle),
         actions: [
           // Phase 8-B — active child chip (tap to switch).
           const Padding(
@@ -61,7 +62,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
             child: Center(child: ActiveChildChip()),
           ),
           IconButton(
-            tooltip: 'بحث',
+            tooltip: AppLocalizations.of(context).search,
             icon: const Icon(Icons.search),
             onPressed: () {
               Navigator.of(
@@ -71,7 +72,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
           ),
           // Phase 7 — settings is a push route, not a tab.
           IconButton(
-            tooltip: 'الإعدادات',
+            tooltip: AppLocalizations.of(context).settings,
             icon: const Icon(Icons.settings_outlined),
             onPressed: () {
               Navigator.of(
@@ -128,9 +129,9 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
         ),
         error: (err, _) => EmptyState(
           emoji: '📡',
-          title: 'تعذّر تحميل المسارات',
+          title: AppLocalizations.of(context).pathsError,
           subtitle: '$err',
-          actionLabel: 'إعادة المحاولة',
+          actionLabel: AppLocalizations.of(context).retry,
           onAction: () => ref.read(pathsListProvider(args).notifier).refresh(),
         ),
       ),
@@ -145,10 +146,10 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
     PathsListArgs args,
   ) {
     if (paths.isEmpty) {
-      return const EmptyState(
+      return EmptyState(
         emoji: '🧭',
-        title: 'لا توجد مسارات بعد',
-        subtitle: 'لا توجد مسارات لهذه المرحلة العمرية حالياً.',
+        title: AppLocalizations.of(context).pathsEmpty,
+        subtitle: AppLocalizations.of(context).pathsEmptyDesc,
       );
     }
     return RefreshIndicator(
@@ -195,7 +196,7 @@ class _DomainFilterBar extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
         children: [
           _Chip(
-            label: 'الكل',
+            label: AppLocalizations.of(context).pathsFilterAll,
             emoji: '🗂️',
             color: Theme.of(context).colorScheme.primary,
             isSelected: selected == null,

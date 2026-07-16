@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../core/analytics.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../share/share_service.dart';
 import '../share/shareable_moment_card.dart';
@@ -82,7 +83,7 @@ class _InviteScreenState extends State<InviteScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('تعذّر المشاركة: $e')),
+        SnackBar(content: Text(AppLocalizations.of(context).inviteError)),
         );
       }
     } finally {
@@ -95,11 +96,12 @@ class _InviteScreenState extends State<InviteScreen> {
     if (code.isEmpty) return;
     final outcome = await ReferralService.instance.claimManual(code);
     if (!mounted) return;
+    final l10n = AppLocalizations.of(context);
     final msg = switch (outcome) {
-      ClaimOutcome.success => 'تمّت إضافة الكود — جزى الله صديقك خيرًا 🤍 (+مكافأة)',
-      ClaimOutcome.alreadyClaimed => 'سبق استخدام كود إحالة على هذا الجهاز.',
-      ClaimOutcome.invalid => 'كود غير صالح، تأكّد منه.',
-      ClaimOutcome.error => 'تعذّر الاتصال، حاول لاحقًا.',
+      ClaimOutcome.success => l10n.inviteSuccess,
+      ClaimOutcome.alreadyClaimed => l10n.inviteAlreadyClaimed,
+      ClaimOutcome.invalid => l10n.inviteInvalidCode,
+      ClaimOutcome.error => l10n.inviteError,
     };
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     if (outcome == ClaimOutcome.success) _codeCtrl.clear();
@@ -109,7 +111,7 @@ class _InviteScreenState extends State<InviteScreen> {
   Widget build(BuildContext context) {
     final info = _info;
     return Scaffold(
-      appBar: AppBar(title: const Text('ادعُ صديقًا 🤍')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).inviteTitle)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -117,9 +119,8 @@ class _InviteScreenState extends State<InviteScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'دلالتك صديقًا على «المربّي» صدقة جارية — كل ما ينفع به '
-                    'طفله في ميزان حسناتك بإذن الله 🌿',
+                  Text(
+                    AppLocalizations.of(context).inviteDesc,
                     style: TextStyle(fontSize: 15, height: 1.7),
                   ),
                   const SizedBox(height: 24),
@@ -128,7 +129,7 @@ class _InviteScreenState extends State<InviteScreen> {
                   FilledButton.icon(
                     onPressed: info == null || _sharing ? null : _share,
                     icon: const Icon(Icons.share),
-                    label: Text(_sharing ? 'جاري التحضير…' : 'شارك الدعوة'),
+                    label: Text(_sharing ? AppLocalizations.of(context).inviteSharePreparing : AppLocalizations.of(context).inviteShareBtn),
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: AppTheme.primary,
@@ -137,7 +138,7 @@ class _InviteScreenState extends State<InviteScreen> {
                   const SizedBox(height: 32),
                   const Divider(),
                   const SizedBox(height: 12),
-                  const Text('عندك كود من صديق؟',
+                  Text(AppLocalizations.of(context).inviteHaveCode,
                       style: TextStyle(fontWeight: FontWeight.w700)),
                   const SizedBox(height: 8),
                   Row(
@@ -155,7 +156,7 @@ class _InviteScreenState extends State<InviteScreen> {
                       ),
                       const SizedBox(width: 8),
                       OutlinedButton(
-                          onPressed: _claim, child: const Text('تفعيل')),
+                          onPressed: _claim, child: Text(AppLocalizations.of(context).inviteActivate)),
                     ],
                   ),
                 ],
@@ -179,14 +180,14 @@ class _InviteScreenState extends State<InviteScreen> {
       ),
       child: Column(
         children: [
-          const Text('كود الإحالة الخاص بك',
+          Text(AppLocalizations.of(context).inviteYourCode,
               style: TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
           const SizedBox(height: 8),
           GestureDetector(
             onTap: () {
               Clipboard.setData(ClipboardData(text: info.code));
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('تم نسخ الكود')),
+                SnackBar(content: Text(AppLocalizations.of(context).inviteCodeCopied)),
               );
             },
             child: Row(
@@ -209,7 +210,7 @@ class _InviteScreenState extends State<InviteScreen> {
           if (info.invitedCount > 0) ...[
             const SizedBox(height: 12),
             Text(
-              'دعوت ${info.invitedCount} — جزاك الله خيرًا 🤍',
+              AppLocalizations.of(context).inviteCodeUsed(info.invitedCount),
               style: const TextStyle(
                   fontWeight: FontWeight.w600, color: AppTheme.primary),
             ),

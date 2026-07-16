@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../models/habit_models.dart';
 import '../providers/child_mode_providers.dart';
 import 'child_mode_lock_screen.dart';
@@ -30,7 +31,7 @@ class HabitChildModeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ميزان العادات'),
+        title: Text(AppLocalizations.of(context).habitChildModeTitle),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -66,16 +67,16 @@ class HabitChildModeScreen extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('خروج من وضع الطفل'),
-        content: const Text('هل تريد الخروج من وضع الطفل والعودة لحساب المربي؟'),
+        title: Text(AppLocalizations.of(context).habitChildModeExitTitle),
+        content: Text(AppLocalizations.of(context).habitChildModeExitConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('إلغاء'),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('خروج'),
+            child: Text(AppLocalizations.of(context).habitChildModeExit),
           ),
         ],
       ),
@@ -184,7 +185,7 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
               Center(
                 child: Chip(
                   avatar: const Icon(Icons.check_circle, color: Colors.white),
-                  label: const Text('تم التسجيل'),
+                  label: Text(AppLocalizations.of(context).habitChildModeLogged),
                   backgroundColor: theme.colorScheme.primary,
                   labelStyle: const TextStyle(color: Colors.white),
                 ),
@@ -194,22 +195,22 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _ActionButton(
-                    label: 'تم',
+                    label: AppLocalizations.of(context).habitChildModeDone,
                     icon: Icons.check,
                     color: Colors.green,
-                    onPressed: _busy ? null : () => _submit('completed', 'تمام'),
+                    onPressed: _busy ? null : () => _submit('completed', AppLocalizations.of(context).habitChildModeDone),
                   ),
                   _ActionButton(
-                    label: 'جزئي',
+                    label: AppLocalizations.of(context).habitChildModePartial,
                     icon: Icons.remove_circle_outline,
                     color: Colors.orange,
-                    onPressed: _busy ? null : () => _submit('partially', 'جزئي'),
+                    onPressed: _busy ? null : () => _submit('partially', AppLocalizations.of(context).habitChildModePartial),
                   ),
                   _ActionButton(
-                    label: 'لم يتم',
+                    label: AppLocalizations.of(context).habitChildModeMissed,
                     icon: Icons.close,
                     color: Colors.red,
-                    onPressed: _busy ? null : () => _submit('missed', 'لم يتم'),
+                    onPressed: _busy ? null : () => _submit('missed', AppLocalizations.of(context).habitChildModeMissed),
                   ),
                 ],
               ),
@@ -229,18 +230,18 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('تأكيد التسجيل'),
+        title: Text(AppLocalizations.of(context).habitChildModeConfirmTitle),
         content: Text(
-          'هل أنت متأكد من تسجيل "${widget.item.habitName}" كـ "$label"؟ لا يمكن التعديل إلا من حساب المربي.',
+          AppLocalizations.of(context).habitChildModeConfirmMsg(widget.item.habitName, label),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('إلغاء'),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('تأكيد'),
+            child: Text(AppLocalizations.of(context).confirm),
           ),
         ],
       ),
@@ -254,7 +255,7 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
       setState(() => _busy = false);
       if (!ok) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('لم يتم التسجيل. حاول مرة أخرى.')),
+          SnackBar(content: Text(AppLocalizations.of(context).habitChildModeFailed)),
         );
       }
     }

@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/bouncy_button.dart';
@@ -50,7 +51,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
         return;
       }
       if (!await _rec.hasPermission()) {
-        _snack('يلزم إذن الميكروفون لتسجيل ملاحظة صوتية.');
+        _snack(AppLocalizations.of(context).feedbackMicPermission);
         return;
       }
       // App's private docs dir — always writable (the cache/temp dir can be
@@ -64,14 +65,14 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       setState(() => _recording = true);
     } catch (e) {
       setState(() => _recording = false);
-      _snack('تعذّر التسجيل الصوتي على هذا الجهاز — يمكنك الكتابة بدلاً منه.');
+      _snack(AppLocalizations.of(context).feedbackRecordError);
     }
   }
 
   Future<void> _send() async {
     final msg = _message.text.trim();
     if (msg.isEmpty && _audioPath == null) {
-      _snack('اكتب ملاحظتك أو سجّل رسالة صوتية أولاً.');
+      _snack(AppLocalizations.of(context).feedbackEmpty);
       return;
     }
     setState(() => _sending = true);
@@ -80,7 +81,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       if (_audioPath != null) {
         final bytes = await File(_audioPath!).readAsBytes();
         if (bytes.length > 2 * 1024 * 1024) {
-          _snack('الملف الصوتي كبير جدًا (أكبر من 2 ميجا). جرّب تسجيل أقصر.');
+          _snack(AppLocalizations.of(context).feedbackAudioTooBig);
           setState(() => _sending = false);
           return;
         }
@@ -92,10 +93,10 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
             audioBase64: audioB64,
           );
       if (!mounted) return;
-      _snack('وصلت ملاحظتك، شكراً لك! 🌿 (ID: ${id.substring(0, 8)})', ok: true);
+      _snack(AppLocalizations.of(context).feedbackSent(id.substring(0, 8)), ok: true);
       Navigator.of(context).pop();
     } catch (e) {
-      _snack('تعذّر الإرسال: $e');
+      _snack(AppLocalizations.of(context).feedbackSendError(e.toString()));
     } finally {
       if (mounted) setState(() => _sending = false);
     }
@@ -112,12 +113,12 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('شاركنا رأيك')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).feedbackTitle)),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          const Text(
-            'رأيك يهمنا ويصل مباشرةً لفريق المربي الذكي. اكتب ملاحظتك أو سجّلها صوتياً.',
+          Text(
+            AppLocalizations.of(context).feedbackDesc,
             style: TextStyle(fontSize: 15, height: 1.5),
           ),
           const SizedBox(height: 20),
@@ -126,10 +127,10 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
             maxLines: 6,
             maxLength: 1000,
             textInputAction: TextInputAction.newline,
-            decoration: const InputDecoration(
-              labelText: 'ملاحظتك',
-              hintText: 'اكتب اقتراحك أو المشكلة التي واجهتك…',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context).feedbackMessageLabel,
+              hintText: AppLocalizations.of(context).feedbackMessageHint,
+              border: const OutlineInputBorder(),
               alignLabelWithHint: true,
             ),
           ),
@@ -154,10 +155,10 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
                 Expanded(
                   child: Text(
                     _recording
-                        ? 'جارٍ التسجيل… اضغط للإيقاف'
+                        ? AppLocalizations.of(context).feedbackRecording
                         : _audioPath != null
-                            ? 'تم تسجيل ملاحظة صوتية ✓'
-                            : 'سجّل ملاحظة صوتية (اختياري)',
+                            ? AppLocalizations.of(context).feedbackRecorded
+                            : AppLocalizations.of(context).feedbackRecordOptional,
                     style: const TextStyle(fontSize: 14),
                   ),
                 ),
@@ -172,15 +173,15 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
           const SizedBox(height: 16),
           TextField(
             controller: _contact,
-            decoration: const InputDecoration(
-              labelText: 'وسيلة تواصل (اختياري)',
-              hintText: 'بريد أو رقم للرد عليك',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context).feedbackContactLabel,
+              hintText: AppLocalizations.of(context).feedbackContactHint,
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 24),
           BouncyButton(
-            label: _sending ? 'جارٍ الإرسال…' : 'إرسال',
+            label: _sending ? AppLocalizations.of(context).feedbackSending : AppLocalizations.of(context).send,
             icon: const Icon(Icons.send, color: Colors.white),
             onTap: _sending ? null : _send,
           ),

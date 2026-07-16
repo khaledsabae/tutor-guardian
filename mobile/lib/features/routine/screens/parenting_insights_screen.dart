@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../state/chat_notifier.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
@@ -37,7 +38,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
       if (mounted) {
         setState(() {
           _loading = false;
-          _error = 'يرجى اختيار طفل أولاً.';
+          _error = AppLocalizations.of(context).parentingInsightsNoChild;
         });
       }
       return;
@@ -74,7 +75,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
       if (mounted) {
         setState(() {
           _loading = false;
-          _error = 'فشل تحميل البيانات. يرجى التحقق من اتصال الإنترنت.';
+          _error = AppLocalizations.of(context).parentingInsightsError;
         });
       }
     }
@@ -87,7 +88,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('تحليلات وتوصيات المربّي 🧠'),
+        title: Text(AppLocalizations.of(context).parentingInsightsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -104,7 +105,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
   }
 
   Widget _buildLoadingState() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -113,7 +114,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
           ),
           SizedBox(height: 20),
           Text(
-            'جاري تحليل نشاط طفلك وتوليد التوصيات...',
+            AppLocalizations.of(context).parentingInsightsLoading,
             style: TextStyle(
               fontSize: 16,
               color: AppTheme.textSecondary,
@@ -182,7 +183,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  'أهلاً بك في التحليلات التربوية! نقوم بتحليل الروتين الأسبوعي ورسائل المحادثات لتقديم إرشادات مخصصة لرحلة تربية $childName.',
+                  AppLocalizations.of(context).parentingInsightsWelcome(childName),
                   style: const TextStyle(
                     fontSize: 14,
                     height: 1.5,
@@ -197,8 +198,8 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
         const SizedBox(height: 20),
 
         // Section: stats summary
-        const Text(
-          'النشاط الأسبوعي الأخير 📊',
+        Text(
+          AppLocalizations.of(context).parentingInsightsWeekly,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w800,
@@ -211,7 +212,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
           children: [
             Expanded(
               child: _buildMetricTile(
-                title: 'نوم',
+                title: AppLocalizations.of(context).parentingInsightsSleep,
                 value: sleepHours > 0 ? '$sleepHours س $sleepMins د' : '$sleepMins دقيقة',
                 icon: '🌙',
                 color: Colors.indigo.shade50,
@@ -221,7 +222,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
             const SizedBox(width: 12),
             Expanded(
               child: _buildMetricTile(
-                title: 'رضاعة وتغذية',
+                title: AppLocalizations.of(context).parentingInsightsFeeds,
                 value: '$_feedCount مرات\n($_feedAmount مل)',
                 icon: '🍼',
                 color: Colors.teal.shade50,
@@ -231,7 +232,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
             const SizedBox(width: 12),
             Expanded(
               child: _buildMetricTile(
-                title: 'تغيير حفاظ',
+                title: AppLocalizations.of(context).parentingInsightsDiapers,
                 value: '$_diaperCount مرات',
                 icon: '👶',
                 color: Colors.amber.shade50,
@@ -243,8 +244,8 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
         const SizedBox(height: 24),
 
         // Section: AI recommendations
-        const Text(
-          'توصيات المربّي الذكي ✨',
+        Text(
+          AppLocalizations.of(context).parentingInsightsRecommendations,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w800,
@@ -253,11 +254,11 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
         const SizedBox(height: 12),
 
         if (_insights.isEmpty)
-          const Center(
+          Center(
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 32.0),
               child: Text(
-                'لا توجد توصيات كافية حالياً. استمر في تسجيل الروتين والمحادثات مع المساعد للحصول على توصيات مخصصة.',
+                AppLocalizations.of(context).parentingInsightsNoData,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppTheme.textSecondary,

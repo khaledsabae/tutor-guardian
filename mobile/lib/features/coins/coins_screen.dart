@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
 import '../../widgets/ui/bouncy_button.dart';
@@ -25,7 +26,7 @@ class CoinsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final coins = ref.watch(coinsProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('عملاتي 🪙')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).coinsTitle)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -50,13 +51,13 @@ class CoinsScreen extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  'عملة',
+                  AppLocalizations.of(context).coinsUnit,
                   style: TextStyle(color: Colors.white.withValues(alpha: .9)),
                 ),
                 if (coins.dailyStreak > 0) ...[
                   const SizedBox(height: 6),
                   Text(
-                    '🔥 سلسلة دخول ${coins.dailyStreak} يوم',
+                    AppLocalizations.of(context).coinsStreak(coins.dailyStreak),
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
@@ -70,7 +71,7 @@ class CoinsScreen extends ConsumerWidget {
           // Daily claim
           if (!coins.claimedToday)
             BouncyButton(
-              label: 'احصل على مكافأة اليوم 🎁',
+              label: AppLocalizations.of(context).coinsDailyClaim,
               color: Dt.primary,
               onTap: () async {
                 final reward =
@@ -90,45 +91,45 @@ class CoinsScreen extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(Dt.rButton),
                 boxShadow: Dt.cardShadow,
               ),
-              child: const Row(
+              child: Row(
                 children: [
                   Icon(Icons.check_circle, color: AppTheme.success),
                   SizedBox(width: 8),
-                  Text('تم استلام مكافأة اليوم — عُد غداً!',
+                  Text(AppLocalizations.of(context).coinsDailyDone,
                       style: TextStyle(fontWeight: FontWeight.w700)),
                 ],
               ),
             ),
           const SizedBox(height: 24),
           Text(
-            'كيف تكسب العملات؟',
+            AppLocalizations.of(context).coinsEarnHow,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
                 ?.copyWith(fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 10),
-          const _EarnRow(
+          _EarnRow(
             emoji: '📅',
-            title: 'تسجيل الدخول اليومي',
-            detail: '+${CoinsService.dailyBase} عملة كل يوم، وتزيد مع السلسلة',
+            title: AppLocalizations.of(context).coinsEarnDaily,
+            detail: AppLocalizations.of(context).coinsEarnDailyDesc(CoinsService.dailyBase),
           ),
-          const _EarnRow(
+          _EarnRow(
             emoji: '🏅',
-            title: 'فتح إنجاز جديد',
-            detail: '+${CoinsService.badgeReward} عملة لكل شارة',
+            title: AppLocalizations.of(context).coinsEarnBadge,
+            detail: AppLocalizations.of(context).coinsEarnBadgeDesc(CoinsService.badgeReward),
           ),
           _EarnRow(
             emoji: '🤝',
-            title: 'دعوة صديق للانضمام',
-            detail: '+${CoinsService.referralReward} عملة لكل صديق يحمل التطبيق',
+            title: AppLocalizations.of(context).coinsEarnInvite,
+            detail: AppLocalizations.of(context).coinsEarnInviteDesc(CoinsService.referralReward),
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const InviteScreen()),
             ),
           ),
           const SizedBox(height: 24),
           Text(
-            'استبدل عملاتك 🎁',
+            AppLocalizations.of(context).coinsRedeemTitle,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
@@ -137,24 +138,24 @@ class CoinsScreen extends ConsumerWidget {
           const SizedBox(height: 10),
           _RedeemRow(
             emoji: '📖',
-            title: 'قصة مخصصة لطفلك',
-            detail: 'قصة قصيرة بطلها طفلك تعلّم قيمة تختارها',
+            title: AppLocalizations.of(context).coinsRedeemStory,
+            detail: AppLocalizations.of(context).coinsRedeemStoryDesc,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const StoryScreen()),
             ),
           ),
           _RedeemRow(
             emoji: '📜',
-            title: 'عهد المكافآت الواقعية',
-            detail: 'استبدل العملات بمكافآت حقيقية متفق عليها مع أهلك',
+            title: AppLocalizations.of(context).coinsRedeemCovenant,
+            detail: AppLocalizations.of(context).coinsRedeemCovenantDesc,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const CovenantScreen()),
             ),
           ),
           _RedeemRow(
             emoji: '🏅',
-            title: 'شارات حصرية',
-            detail: 'افتح شارات مميزة بعملاتك',
+            title: AppLocalizations.of(context).coinsRedeemBadges,
+            detail: AppLocalizations.of(context).coinsRedeemBadgesDesc,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const ExclusiveBadgesScreen()),
             ),

@@ -8,6 +8,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/program_providers.dart';
@@ -24,7 +25,7 @@ class FavoritesScreen extends ConsumerWidget {
 
     if (lessonIds.isEmpty && tipIds.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text('المفضلة')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).favoritesTitle)),
         body: const _EmptyState(),
       );
     }
@@ -35,7 +36,7 @@ class FavoritesScreen extends ConsumerWidget {
         actions: [
           if (lessonIds.isNotEmpty || tipIds.isNotEmpty)
             IconButton(
-              tooltip: 'مسح الكل',
+              tooltip: AppLocalizations.of(context).favoritesClearAll,
               icon: const Icon(Icons.delete_sweep_outlined),
               onPressed: () => _confirmClearAll(context, ref),
             ),
@@ -46,7 +47,7 @@ class FavoritesScreen extends ConsumerWidget {
         children: [
           if (lessonIds.isNotEmpty) ...[
             _SectionHeader(
-              title: 'الدروس المحفوظة',
+              title: AppLocalizations.of(context).favoritesSavedLessons,
               count: lessonIds.length,
             ),
             const SizedBox(height: 8),
@@ -61,7 +62,7 @@ class FavoritesScreen extends ConsumerWidget {
           ],
           if (tipIds.isNotEmpty) ...[
             _SectionHeader(
-              title: 'النصائح المحفوظة',
+              title: AppLocalizations.of(context).favoritesSavedTips,
               count: tipIds.length,
             ),
             const SizedBox(height: 8),
@@ -81,18 +82,18 @@ class FavoritesScreen extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('مسح جميع المفضلة؟'),
-        content: const Text(
-            'سيتم إزالة كل الدروس والنصائح المحفوظة. لا يمكن التراجع.'),
+        title: Text(AppLocalizations.of(context).favoritesClearAll),
+        content: Text(
+            AppLocalizations.of(context).favoritesClearAllMsg),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('إلغاء'),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
             style: TextButton.styleFrom(foregroundColor: AppTheme.dangerFg),
-            child: const Text('مسح الكل'),
+            child: Text(AppLocalizations.of(context).favoritesClearAll),
           ),
         ],
       ),
@@ -101,7 +102,7 @@ class FavoritesScreen extends ConsumerWidget {
       await ref.read(favoritesProvider.notifier).clearAll();
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('تم مسح جميع المفضلة')),
+          SnackBar(content: Text(AppLocalizations.of(context).favoritesCleared)),
         );
       }
     }
@@ -126,7 +127,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'لا توجد عناصر في المفضلة بعد',
+              AppLocalizations.of(context).favoritesEmpty,
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
@@ -135,7 +136,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'اضغط أيقونة القلب ♡ على أي درس أو نصيحة\nلإضافتها هنا والوصول لها بسرعة.',
+              AppLocalizations.of(context).favoritesEmptyHint,
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
@@ -312,7 +313,7 @@ class _FavoriteTipCard extends ConsumerWidget {
           tipId,
           style: const TextStyle(fontWeight: FontWeight.w600),
         ),
-        subtitle: const Text('نصيحة يومية محفوظة'),
+        subtitle: Text(AppLocalizations.of(context).favoritesTipSaved),
         trailing: IconButton(
           onPressed: onRemove,
           icon: const Icon(Icons.favorite, color: Colors.redAccent),
@@ -366,15 +367,15 @@ class _ErrorCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(color: AppTheme.dangerFg),
       ),
-      child: const Padding(
-        padding: EdgeInsets.all(12),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
         child: Row(
           children: [
             Icon(Icons.error_outline, color: AppTheme.dangerFg),
             SizedBox(width: 12),
             Expanded(
               child: Text(
-                'تعذّر تحميل هذا العنصر المحفوظ',
+                AppLocalizations.of(context).favoritesErrorLoad,
                 style:
                     TextStyle(color: AppTheme.dangerFg, fontSize: 12),
               ),

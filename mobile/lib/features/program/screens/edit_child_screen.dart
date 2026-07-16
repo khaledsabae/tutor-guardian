@@ -5,6 +5,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/ui/bouncy_button.dart';
@@ -58,7 +59,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
           );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('تم حفظ التغييرات.')),
+          SnackBar(content: Text(AppLocalizations.of(context).editChildSaved)),
         );
         Navigator.of(context).pop(true);
       }
@@ -66,7 +67,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تعذّر الحفظ: $e'),
+            content: Text(AppLocalizations.of(context).editChildSaveError(e.toString())),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -81,12 +82,12 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('تعديل ملف الطفل'),
+        title: Text(AppLocalizations.of(context).editChildTitle),
         actions: [
           TextButton(
             onPressed: busy ? null : _submit,
             child: Text(
-              'حفظ',
+              AppLocalizations.of(context).save,
               style: TextStyle(
                 // AppBar background is the light cream — primary, not white.
                 color: busy ? AppTheme.textMuted : AppTheme.primary,
@@ -103,7 +104,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
           child: BouncyButton(
-            label: busy ? 'جارٍ الحفظ…' : 'حفظ التغييرات',
+            label: busy ? AppLocalizations.of(context).editChildSaving : AppLocalizations.of(context).editChildSaveBtn,
             icon: busy
                 ? const SizedBox(
                     width: 18,
@@ -124,7 +125,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
             children: [
               // ── Name ──
               Text(
-                'اسم الطفل',
+                AppLocalizations.of(context).editChildName,
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
@@ -150,7 +151,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
 
               // ── Age group ──
               Text(
-                'المرحلة العمرية',
+                AppLocalizations.of(context).editChildAge,
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
@@ -183,7 +184,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
 
               // ── Avatar ──
               Text(
-                'صورة الطفل',
+                AppLocalizations.of(context).editChildAvatar,
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
@@ -219,8 +220,8 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
                       Expanded(
                         child: Text(
                           _avatarEmoji == null
-                              ? 'اضغط لاختيار إيموجي'
-                              : 'اضغط لتغيير الإيموجي',
+                              ? AppLocalizations.of(context).onbTapEmoji
+                              : AppLocalizations.of(context).onbTapChangeEmoji,
                           style: TextStyle(
                             color: _avatarEmoji == null
                                 ? AppTheme.textMuted
@@ -238,7 +239,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
 
               // ── Gender ──
               Text(
-                'الجنس',
+                AppLocalizations.of(context).editChildGender,
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
@@ -250,19 +251,19 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
                 runSpacing: 8,
                 children: [
                   _GenderPill(
-                    label: 'ولد',
+                    label: AppLocalizations.of(context).onbBoy,
                     selected: _gender == 'male',
                     onTap: () => setState(() => _gender = 'male'),
                   ),
                   _GenderPill(
-                    label: 'بنت',
+                    label: AppLocalizations.of(context).onbGirl,
                     selected: _gender == 'female',
                     onTap: () => setState(() => _gender = 'female'),
                   ),
 
                   if (_gender != null)
                     _GenderPill(
-                      label: 'مسح',
+                      label: AppLocalizations.of(context).onbClear,
                       selected: false,
                       onTap: () => setState(() => _gender = null),
                     ),
