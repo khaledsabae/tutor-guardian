@@ -19,7 +19,7 @@ from app.middleware.auth import AuthMiddleware
 from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
-    insights, methodology,
+    insights, methodology, seo,
 )
 from app.services import child_token
 from app.services.push_sender import send_to_device
@@ -113,6 +113,7 @@ app.include_router(feedback.router, prefix="/api")
 app.include_router(program.router, prefix="/api")  # curriculum: paths/lessons/daily-tip
 app.include_router(privacy.router)  # /privacy-policy (no /api prefix; public)
 app.include_router(methodology.router)  # /methodology (public — methodology & sources page)
+app.include_router(seo.router)  # /seo/{slug} (public — SEO pages for pain-point questions)
 app.include_router(web.router)  # public SEO pages + share landing (/go, /l, /p; Phase 2)
 app.include_router(children.router, prefix="/api")  # child profiles + progress (auth)
 app.include_router(referral.router, prefix="/api")  # referral codes + attribution (auth)
