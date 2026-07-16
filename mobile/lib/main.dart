@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -121,8 +122,9 @@ class TutorGuardianApp extends StatelessWidget {
       theme: AppTheme.light(),
       // Arabic locale (no country code matches all Arab locales cleanly).
       locale: const Locale('ar'),
-      supportedLocales: const [Locale('ar'), Locale('en')],
+      supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -155,6 +157,7 @@ class ForceUpdateScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -167,20 +170,20 @@ class ForceUpdateScreen extends ConsumerWidget {
                 style: TextStyle(fontSize: 72),
               ).animate().scale(duration: 400.ms),
               const SizedBox(height: 24),
-              const Text(
-                'تحديث جديد وهام متاح!',
+              Text(
+                l10n.forceUpdateTitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w900,
                   color: AppTheme.textPrimary,
                 ),
               ),
               const SizedBox(height: 12),
-              const Text(
-                'لقد قمنا بإضافة ميزات رائعة وإصلاحات هامة لتحسين تجربتك وضمان استقرار التطبيق. يرجى التحديث للمتابعة.',
+              Text(
+                l10n.forceUpdateMessage,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   color: AppTheme.textSecondary,
                   height: 1.5,
@@ -188,7 +191,7 @@ class ForceUpdateScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 32),
               BouncyButton(
-                label: 'تحديث التطبيق الآن 🔗',
+                label: '${l10n.forceUpdateButton} 🔗',
                 color: Dt.primary,
                 onTap: () async {
                   final uri = Uri.parse(storeUrl);
@@ -319,6 +322,7 @@ class _BootErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -330,7 +334,7 @@ class _BootErrorScreen extends StatelessWidget {
                   size: 56, color: AppTheme.dangerFg),
               const SizedBox(height: 12),
               Text(
-                'تعذّر تشغيل التطبيق.\n$error',
+                '${l10n.bootError}\n$error',
                 textAlign: TextAlign.center,
               ),
             ],
@@ -362,6 +366,7 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final profile = ref.watch(activeChildProfileProvider);
     final fourthLabel = habitTabLabel(profile?.ageGroup ?? '');
 
@@ -383,30 +388,30 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> {
           setState(() => _index = i);
         },
         destinations: [
-          const NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home_rounded),
-            label: 'اليوم',
+          NavigationDestination(
+            icon: const Icon(Icons.home_outlined),
+            selectedIcon: const Icon(Icons.home_rounded),
+            label: l10n.navToday,
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.route_outlined),
-            selectedIcon: Icon(Icons.route),
-            label: 'مساراتي',
+          NavigationDestination(
+            icon: const Icon(Icons.route_outlined),
+            selectedIcon: const Icon(Icons.route),
+            label: l10n.navMyPaths,
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.menu_book_outlined),
-            selectedIcon: Icon(Icons.menu_book),
-            label: 'الورد',
+          NavigationDestination(
+            icon: const Icon(Icons.menu_book_outlined),
+            selectedIcon: const Icon(Icons.menu_book),
+            label: l10n.navAdhkar,
           ),
           NavigationDestination(
             icon: const Icon(Icons.child_care_outlined),
             selectedIcon: const Icon(Icons.child_care),
             label: fourthLabel,
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline),
-            selectedIcon: Icon(Icons.chat_bubble),
-            label: 'المساعد',
+          NavigationDestination(
+            icon: const Icon(Icons.chat_bubble_outline),
+            selectedIcon: const Icon(Icons.chat_bubble),
+            label: l10n.navAssistant,
           ),
         ],
       ),
