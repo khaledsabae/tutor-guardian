@@ -1693,6 +1693,276 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ'**
   String get quranBismillah;
+
+  /// No description provided for @routineTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ميزان العادات'**
+  String get routineTitle;
+
+  /// No description provided for @routineDailyTracker.
+  ///
+  /// In ar, this message translates to:
+  /// **'حساب اليوم'**
+  String get routineDailyTracker;
+
+  /// No description provided for @routineNewEvent.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدث جديد'**
+  String get routineNewEvent;
+
+  /// No description provided for @routineUnder9.
+  ///
+  /// In ar, this message translates to:
+  /// **'التتبع اليومي متاح للأطفال حتى 9 سنوات'**
+  String get routineUnder9;
+
+  /// No description provided for @routineAddChildFirst.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضف طفلك أولاً من شاشة اليوم'**
+  String get routineAddChildFirst;
+
+  /// No description provided for @routineSummary.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملخّص {days} أيام'**
+  String routineSummary(Object days);
+
+  /// No description provided for @routineSleep.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوم'**
+  String get routineSleep;
+
+  /// No description provided for @routineFeeds.
+  ///
+  /// In ar, this message translates to:
+  /// **'رضاعات'**
+  String get routineFeeds;
+
+  /// No description provided for @routineDiapers.
+  ///
+  /// In ar, this message translates to:
+  /// **'حاضات'**
+  String get routineDiapers;
+
+  /// No description provided for @routineNoEvents.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد أحداث اليوم'**
+  String get routineNoEvents;
+
+  /// No description provided for @routineTapPlus.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط + لإضافة أول حدث'**
+  String get routineTapPlus;
+
+  /// No description provided for @routineDeleteConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الحدث؟'**
+  String get routineDeleteConfirm;
+
+  /// No description provided for @routineCancel.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get routineCancel;
+
+  /// No description provided for @routineDelete.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف'**
+  String get routineDelete;
+
+  /// No description provided for @routineAddEvent.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة حدث {type}'**
+  String routineAddEvent(Object type);
+
+  /// No description provided for @routineNoteOptional.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظة (اختياري)'**
+  String get routineNoteOptional;
+
+  /// No description provided for @routineNoMedNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تكتب أدوية أو أعراض طبية'**
+  String get routineNoMedNote;
+
+  /// No description provided for @routineSave.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ'**
+  String get routineSave;
+
+  /// No description provided for @routineBreast.
+  ///
+  /// In ar, this message translates to:
+  /// **'ثدي'**
+  String get routineBreast;
+
+  /// No description provided for @routineBottle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رضّاعة'**
+  String get routineBottle;
+
+  /// No description provided for @routineSolidFood.
+  ///
+  /// In ar, this message translates to:
+  /// **'طعام صلب'**
+  String get routineSolidFood;
+
+  /// No description provided for @routineLeft.
+  ///
+  /// In ar, this message translates to:
+  /// **'يسار'**
+  String get routineLeft;
+
+  /// No description provided for @routineRight.
+  ///
+  /// In ar, this message translates to:
+  /// **'يمين'**
+  String get routineRight;
+
+  /// No description provided for @routineBoth.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلاهما'**
+  String get routineBoth;
+
+  /// No description provided for @routineQuantityMl.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكمية تقريباً (ml)'**
+  String get routineQuantityMl;
+
+  /// No description provided for @routineWet.
+  ///
+  /// In ar, this message translates to:
+  /// **'بلل'**
+  String get routineWet;
+
+  /// No description provided for @routineSolid.
+  ///
+  /// In ar, this message translates to:
+  /// **'براز'**
+  String get routineSolid;
+
+  /// No description provided for @routineEndTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'النهاية:'**
+  String get routineEndTime;
+
+  /// No description provided for @routineWakeTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر وقت الاستيقاظ'**
+  String get routineWakeTime;
+
+  /// No description provided for @routineMedicalWarning.
+  ///
+  /// In ar, this message translates to:
+  /// **'الملاحظة تحتوي على مصطلح طبي/دواء. رجاءً اكتب ملاحظة روتينية فقط.'**
+  String get routineMedicalWarning;
+
+  /// No description provided for @routineError.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدث خطأ'**
+  String get routineError;
+
+  /// No description provided for @routineQrError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر إنشاء رمز QR: {error}'**
+  String routineQrError(Object error);
+
+  /// No description provided for @routineShareBalance.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك الميزان مع المراهق'**
+  String get routineShareBalance;
+
+  /// No description provided for @routineQrInstructions.
+  ///
+  /// In ar, this message translates to:
+  /// **'امسح الرمز من هاتف الابن، أو انسخ الرابط وأرسله عبر واتساب.'**
+  String get routineQrInstructions;
+
+  /// No description provided for @routineClose.
+  ///
+  /// In ar, this message translates to:
+  /// **'إغلاق'**
+  String get routineClose;
+
+  /// No description provided for @routineLinkCopied.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم نسخ الرابط'**
+  String get routineLinkCopied;
+
+  /// No description provided for @routineCopyLink.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسخ الرابط'**
+  String get routineCopyLink;
+
+  /// No description provided for @routineCustomize.
+  ///
+  /// In ar, this message translates to:
+  /// **'تخصيص العادات'**
+  String get routineCustomize;
+
+  /// No description provided for @routineChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطفل'**
+  String get routineChild;
+
+  /// No description provided for @routineShareWeb.
+  ///
+  /// In ar, this message translates to:
+  /// **'مشاركة الميزان عبر الويب 🔗'**
+  String get routineShareWeb;
+
+  /// No description provided for @routineChildMode.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسليم الجهاز للطفل (وضع الطفل)'**
+  String get routineChildMode;
+
+  /// No description provided for @routineTodayPoints.
+  ///
+  /// In ar, this message translates to:
+  /// **'نقاط اليوم'**
+  String get routineTodayPoints;
+
+  /// No description provided for @routineNoHabits.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد عادات في هذا القسم'**
+  String get routineNoHabits;
+
+  /// No description provided for @routineRecordFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل التسجيل: {error}'**
+  String routineRecordFailed(Object error);
+
+  /// No description provided for @routineDeleteFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل الحذف: {error}'**
+  String routineDeleteFailed(Object error);
 }
 
 class _AppLocalizationsDelegate

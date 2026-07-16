@@ -6,6 +6,7 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/analytics.dart';
@@ -35,15 +36,15 @@ bool habitAgeAllowed(String ageGroup) {
   return const {'7-9', '10-12', '13-15', '16-18'}.contains(ageGroup);
 }
 
-String habitTabLabel(String ageGroup) {
+String habitTabLabel(String ageGroup, AppLocalizations l10n) {
   // Dynamic bottom nav label for the 4th tab based on active child's age.
-  if (habitAgeAllowed(ageGroup)) return 'ميزان العادات';
-  return 'حِساب اليوم';
+  if (habitAgeAllowed(ageGroup)) return l10n.routineTitle;
+  return l10n.routineDailyTracker;
 }
 
-String habitScreenTitle(String ageGroup) {
-  if (habitAgeAllowed(ageGroup)) return 'ميزان العادات ⚖️';
-  return 'حِساب اليوم 🍼';
+String habitScreenTitle(String ageGroup, AppLocalizations l10n) {
+  if (habitAgeAllowed(ageGroup)) return '${l10n.routineTitle} ⚖️';
+  return '${l10n.routineDailyTracker} 🍼';
 }
 
 List<RoutineEventType> allowedRoutineTypes(String ageGroup) {
@@ -72,7 +73,7 @@ class DailyRoutineScreen extends ConsumerWidget {
     if (isHabitAge) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(habitScreenTitle(profile.ageGroup)),
+          title: Text(habitScreenTitle(profile.ageGroup, AppLocalizations.of(context))),
           actions: const [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12),
@@ -88,14 +89,14 @@ class DailyRoutineScreen extends ConsumerWidget {
 
     if (profile != null && !routineAgeAllowed(profile.ageGroup)) {
       return Scaffold(
-        appBar: AppBar(title: Text(habitScreenTitle(profile.ageGroup))),
+        appBar: AppBar(title: Text(habitScreenTitle(profile.ageGroup, AppLocalizations.of(context)))),
         body: _RoutineAgeGate(profile: profile),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(habitScreenTitle(profile?.ageGroup ?? '')),
+        title: Text(habitScreenTitle(profile?.ageGroup ?? '', AppLocalizations.of(context))),
         actions: const [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
@@ -111,7 +112,7 @@ class DailyRoutineScreen extends ConsumerWidget {
           : FloatingActionButton.extended(
               onPressed: () => _showAddEventDialog(context, childId),
               icon: const Icon(Icons.add),
-              label: const Text('حدث جديد'),
+              label: Text(AppLocalizations.of(context).routineNewEvent),
             ),
     );
   }
@@ -146,7 +147,7 @@ class _RoutineAgeGate extends StatelessWidget {
           const Text('🍼', style: TextStyle(fontSize: 56)),
           const SizedBox(height: 12),
           Text(
-            'التتبع اليومي متاح للأطفال حتى 9 سنوات',
+            AppLocalizations.of(context).routineUnder9,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
@@ -187,7 +188,7 @@ class _NoChildState extends StatelessWidget {
           const Text('👶', style: TextStyle(fontSize: 56)),
           const SizedBox(height: 12),
           Text(
-            'أضف طفلك أولاً من شاشة اليوم',
+            AppLocalizations.of(context).routineAddChildFirst,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ],
@@ -290,9 +291,9 @@ class _EventsList extends StatelessWidget {
           children: [
             const Text('✍️', style: TextStyle(fontSize: 48)),
             const SizedBox(height: 12),
-            Text('لا توجد أحداث اليوم', style: Theme.of(context).textTheme.titleMedium),
+            Text(AppLocalizations.of(context).routineNoEvents, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
-            Text('اضغط + لإضافة أول حدث', style: Theme.of(context).textTheme.bodySmall),
+            Text(AppLocalizations.of(context).routineTapPlus, style: Theme.of(context).textTheme.bodySmall),
           ],
         ),
       );
@@ -353,7 +354,7 @@ class _EventTile extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('حذف الحدث؟'),
+        title: Text(AppLocalizations.of(context).routineDeleteConfirm),
         actions: [
           TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('إلغاء')),
           TextButton(
@@ -441,9 +442,9 @@ class _AddEventSheetState extends State<_AddEventSheet> {
           const SizedBox(height: 12),
           TextField(
             controller: _notesController,
-            decoration: const InputDecoration(
-              labelText: 'ملاحظة (اختياري)',
-              helperText: 'لا تكتب أدوية أو أعراض طبية',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context).routineNoteOptional,
+              helperText: AppLocalizations.of(context).routineNoMedNote,
             ),
             maxLength: 500,
             maxLines: 2,
@@ -509,7 +510,7 @@ class _AddEventSheetState extends State<_AddEventSheet> {
         ),
       RoutineEventType.sleep => Row(
           children: [
-            const Text('النهاية:'),
+            Text(AppLocalizations.of(context).routineEndTime),
             const SizedBox(width: 8),
             Expanded(
               child: TextButton(
@@ -580,7 +581,7 @@ class _AddEventSheetState extends State<_AddEventSheet> {
       Navigator.of(context).pop();
     }).catchError((e) {
       setState(() => _saving = false);
-      final msg = e is TgApiError ? e.message : 'حدث خطأ';
+      final msg = e is TgApiError ? e.message : AppLocalizations.of(context).routineError;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     });
   }
@@ -700,7 +701,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('إغلاق'),
+              child: Text(AppLocalizations.of(context).routineClose),
             ),
             if (claimUrl.isNotEmpty)
               FilledButton.icon(
@@ -709,12 +710,12 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                   if (ctx.mounted) Navigator.of(ctx).pop();
                   if (mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('تم نسخ الرابط')),
+                      SnackBar(content: Text(AppLocalizations.of(context).routineLinkCopied)),
                     );
                   }
                 },
                 icon: const Icon(Icons.copy),
-                label: const Text('نسخ الرابط'),
+                label: Text(AppLocalizations.of(context).routineCopyLink),
               ),
           ],
         ),
@@ -780,7 +781,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                 OutlinedButton.icon(
                   onPressed: () => _openCustomizeScreen(childId),
                   icon: const Icon(Icons.edit_note_outlined),
-                  label: const Text('تخصيص العادات'),
+                  label: Text(AppLocalizations.of(context).routineCustomize),
                 ),
                 const SizedBox(height: 8),
                 if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
@@ -790,7 +791,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                       await _showWebShareDialog(childId, profile?.name ?? 'الطفل');
                     },
                     icon: const Icon(Icons.qr_code_2),
-                    label: const Text('مشاركة الميزان عبر الويب 🔗'),
+                    label: Text(AppLocalizations.of(context).routineShareWeb),
                   ),
                 if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
                   const SizedBox(height: 8),
@@ -800,7 +801,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                     _enterChildMode(childId, profile?.name ?? 'الطفل');
                   },
                   icon: const Icon(Icons.child_care),
-                  label: const Text('تسليم الجهاز للطفل (وضع الطفل)'),
+                  label: Text(AppLocalizations.of(context).routineChildMode),
                 ),
               ],
             ),
@@ -831,7 +832,7 @@ class _HabitSummaryCard extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                'نقاط اليوم',
+                AppLocalizations.of(context).routineTodayPoints,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
@@ -873,7 +874,7 @@ class _HabitCategoryList extends ConsumerWidget {
             const Text('🌱', style: TextStyle(fontSize: 48)),
             const SizedBox(height: 12),
             Text(
-              'لا توجد عادات في هذا القسم',
+              AppLocalizations.of(context).routineNoHabits,
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],

@@ -855,4 +855,153 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get quranBismillah =>
       'In the name of Allah, the Most Gracious, the Most Merciful';
+
+  @override
+  String get routineTitle => 'Habit Balance';
+
+  @override
+  String get routineDailyTracker => 'Daily Tracker';
+
+  @override
+  String get routineNewEvent => 'New Event';
+
+  @override
+  String get routineUnder9 =>
+      'Daily tracking is available for children up to 9 years old';
+
+  @override
+  String get routineAddChildFirst =>
+      'Add your child first from the Today screen';
+
+  @override
+  String routineSummary(Object days) {
+    return '$days-day summary';
+  }
+
+  @override
+  String get routineSleep => 'Sleep';
+
+  @override
+  String get routineFeeds => 'Feeds';
+
+  @override
+  String get routineDiapers => 'Diapers';
+
+  @override
+  String get routineNoEvents => 'No events today';
+
+  @override
+  String get routineTapPlus => 'Tap + to add your first event';
+
+  @override
+  String get routineDeleteConfirm => 'Delete event?';
+
+  @override
+  String get routineCancel => 'Cancel';
+
+  @override
+  String get routineDelete => 'Delete';
+
+  @override
+  String routineAddEvent(Object type) {
+    return 'Add $type event';
+  }
+
+  @override
+  String get routineNoteOptional => 'Note (optional)';
+
+  @override
+  String get routineNoMedNote => 'Don\'t write medications or medical symptoms';
+
+  @override
+  String get routineSave => 'Save';
+
+  @override
+  String get routineBreast => 'Breast';
+
+  @override
+  String get routineBottle => 'Bottle';
+
+  @override
+  String get routineSolidFood => 'Solid food';
+
+  @override
+  String get routineLeft => 'Left';
+
+  @override
+  String get routineRight => 'Right';
+
+  @override
+  String get routineBoth => 'Both';
+
+  @override
+  String get routineQuantityMl => 'Quantity approximately (ml)';
+
+  @override
+  String get routineWet => 'Wet';
+
+  @override
+  String get routineSolid => 'Solid';
+
+  @override
+  String get routineEndTime => 'End:';
+
+  @override
+  String get routineWakeTime => 'Choose wake time';
+
+  @override
+  String get routineMedicalWarning =>
+      'The note contains medical terminology/medication. Please write a routine note only.';
+
+  @override
+  String get routineError => 'An error occurred';
+
+  @override
+  String routineQrError(Object error) {
+    return 'Failed to create QR code: $error';
+  }
+
+  @override
+  String get routineShareBalance => 'Share the balance with the teen';
+
+  @override
+  String get routineQrInstructions =>
+      'Scan the code from your son\'s phone, or copy the link and send it via WhatsApp.';
+
+  @override
+  String get routineClose => 'Close';
+
+  @override
+  String get routineLinkCopied => 'Link copied';
+
+  @override
+  String get routineCopyLink => 'Copy link';
+
+  @override
+  String get routineCustomize => 'Customize Habits';
+
+  @override
+  String get routineChild => 'Child';
+
+  @override
+  String get routineShareWeb => 'Share balance via Web 🔗';
+
+  @override
+  String get routineChildMode => 'Hand device to child (Child Mode)';
+
+  @override
+  String get routineTodayPoints => 'Today\'s Points';
+
+  @override
+  String get routineNoHabits => 'No habits in this section';
+
+  @override
+  String routineRecordFailed(Object error) {
+    return 'Failed to record: $error';
+  }
+
+  @override
+  String routineDeleteFailed(Object error) {
+    return 'Failed to delete: $error';
+  }
 }

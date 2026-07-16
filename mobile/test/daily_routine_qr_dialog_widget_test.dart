@@ -10,6 +10,7 @@ import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
 import 'package:almorabbi/features/routine/screens/daily_routine_screen.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 
 void main() {
@@ -52,8 +53,11 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(
-          home: DailyRoutineScreen(),
+        child: MaterialApp(
+          locale: const Locale('ar'),
+          home: const DailyRoutineScreen(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
         ),
       ),
     );

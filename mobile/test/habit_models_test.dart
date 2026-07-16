@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/screens/daily_routine_screen.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
+import 'package:almorabbi/l10n/app_localizations_ar.dart';
 
 void main() {
   group('habitAgeAllowed (7-18)', () {
@@ -197,15 +199,16 @@ void main() {
   });
 
   group('habitTabLabel', () {
-    test('0-6 -> حِساب اليوم', () {
-      expect(habitTabLabel('4-6'), 'حِساب اليوم');
+    final l10n = AppLocalizationsAr();
+    test('0-6 -> حساب اليوم', () {
+      expect(habitTabLabel('4-6', l10n), l10n.routineDailyTracker);
     });
     test('7-18 -> ميزان العادات', () {
-      expect(habitTabLabel('7-9'), 'ميزان العادات');
-      expect(habitTabLabel('10-12'), 'ميزان العادات');
+      expect(habitTabLabel('7-9', l10n), l10n.routineTitle);
+      expect(habitTabLabel('10-12', l10n), l10n.routineTitle);
     });
-    test('empty/unknown -> حِساب اليوم', () {
-      expect(habitTabLabel(''), 'حِساب اليوم');
+    test('empty/unknown -> حساب اليوم', () {
+      expect(habitTabLabel('', l10n), l10n.routineDailyTracker);
     });
   });
 }

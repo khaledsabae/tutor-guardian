@@ -841,4 +841,151 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quranBismillah => 'بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ';
+
+  @override
+  String get routineTitle => 'ميزان العادات';
+
+  @override
+  String get routineDailyTracker => 'حساب اليوم';
+
+  @override
+  String get routineNewEvent => 'حدث جديد';
+
+  @override
+  String get routineUnder9 => 'التتبع اليومي متاح للأطفال حتى 9 سنوات';
+
+  @override
+  String get routineAddChildFirst => 'أضف طفلك أولاً من شاشة اليوم';
+
+  @override
+  String routineSummary(Object days) {
+    return 'ملخّص $days أيام';
+  }
+
+  @override
+  String get routineSleep => 'نوم';
+
+  @override
+  String get routineFeeds => 'رضاعات';
+
+  @override
+  String get routineDiapers => 'حاضات';
+
+  @override
+  String get routineNoEvents => 'لا توجد أحداث اليوم';
+
+  @override
+  String get routineTapPlus => 'اضغط + لإضافة أول حدث';
+
+  @override
+  String get routineDeleteConfirm => 'حذف الحدث؟';
+
+  @override
+  String get routineCancel => 'إلغاء';
+
+  @override
+  String get routineDelete => 'حذف';
+
+  @override
+  String routineAddEvent(Object type) {
+    return 'إضافة حدث $type';
+  }
+
+  @override
+  String get routineNoteOptional => 'ملاحظة (اختياري)';
+
+  @override
+  String get routineNoMedNote => 'لا تكتب أدوية أو أعراض طبية';
+
+  @override
+  String get routineSave => 'حفظ';
+
+  @override
+  String get routineBreast => 'ثدي';
+
+  @override
+  String get routineBottle => 'رضّاعة';
+
+  @override
+  String get routineSolidFood => 'طعام صلب';
+
+  @override
+  String get routineLeft => 'يسار';
+
+  @override
+  String get routineRight => 'يمين';
+
+  @override
+  String get routineBoth => 'كلاهما';
+
+  @override
+  String get routineQuantityMl => 'الكمية تقريباً (ml)';
+
+  @override
+  String get routineWet => 'بلل';
+
+  @override
+  String get routineSolid => 'براز';
+
+  @override
+  String get routineEndTime => 'النهاية:';
+
+  @override
+  String get routineWakeTime => 'اختر وقت الاستيقاظ';
+
+  @override
+  String get routineMedicalWarning =>
+      'الملاحظة تحتوي على مصطلح طبي/دواء. رجاءً اكتب ملاحظة روتينية فقط.';
+
+  @override
+  String get routineError => 'حدث خطأ';
+
+  @override
+  String routineQrError(Object error) {
+    return 'تعذر إنشاء رمز QR: $error';
+  }
+
+  @override
+  String get routineShareBalance => 'شارك الميزان مع المراهق';
+
+  @override
+  String get routineQrInstructions =>
+      'امسح الرمز من هاتف الابن، أو انسخ الرابط وأرسله عبر واتساب.';
+
+  @override
+  String get routineClose => 'إغلاق';
+
+  @override
+  String get routineLinkCopied => 'تم نسخ الرابط';
+
+  @override
+  String get routineCopyLink => 'نسخ الرابط';
+
+  @override
+  String get routineCustomize => 'تخصيص العادات';
+
+  @override
+  String get routineChild => 'الطفل';
+
+  @override
+  String get routineShareWeb => 'مشاركة الميزان عبر الويب 🔗';
+
+  @override
+  String get routineChildMode => 'تسليم الجهاز للطفل (وضع الطفل)';
+
+  @override
+  String get routineTodayPoints => 'نقاط اليوم';
+
+  @override
+  String get routineNoHabits => 'لا توجد عادات في هذا القسم';
+
+  @override
+  String routineRecordFailed(Object error) {
+    return 'فشل التسجيل: $error';
+  }
+
+  @override
+  String routineDeleteFailed(Object error) {
+    return 'فشل الحذف: $error';
+  }
 }

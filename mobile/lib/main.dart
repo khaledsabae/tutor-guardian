@@ -368,7 +368,7 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final profile = ref.watch(activeChildProfileProvider);
-    final fourthLabel = habitTabLabel(profile?.ageGroup ?? '');
+    final fourthLabel = habitTabLabel(profile?.ageGroup ?? '', l10n);
 
     return Scaffold(
       body: IndexedStack(

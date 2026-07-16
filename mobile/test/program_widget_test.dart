@@ -20,6 +20,7 @@ import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
 import 'package:almorabbi/features/program/screens/paths_screen.dart';
 import 'package:almorabbi/features/onboarding/screens/update_splash_screen.dart';
 import 'package:almorabbi/main.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 
 void main() {
@@ -122,7 +123,12 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(home: PathsScreen()),
+          child: MaterialApp(
+            locale: const Locale('ar'),
+            home: PathsScreen(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -167,7 +173,12 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(home: PathsScreen()),
+          child: MaterialApp(
+            locale: const Locale('ar'),
+            home: PathsScreen(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -206,12 +217,15 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
+          child: MaterialApp(
+            locale: const Locale('ar'),
             home: LessonScreen(
               lessonId: 'lesson_4-6_islamic_parenting_adab_01',
               ageGroup: '4-6',
               childId: 1,
             ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),
       );
@@ -275,12 +289,15 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
+          child: MaterialApp(
+            locale: const Locale('ar'),
             home: LessonScreen(
               lessonId: 'lesson_4-6_islamic_parenting_adab_01',
               ageGroup: '4-6',
               childId: 1,
             ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),
       );
@@ -333,12 +350,15 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
+          child: MaterialApp(
+            locale: const Locale('ar'),
             home: LessonScreen(
               lessonId: 'lesson_4-6_islamic_parenting_adab_01',
               ageGroup: '4-6',
               childId: 1,
             ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),
       );
@@ -385,11 +405,14 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
+          child: MaterialApp(
+            locale: const Locale('ar'),
             home: PathDetailScreen(
               pathId: 'path_4-6_islamic_parenting_adab',
               ageGroup: '4-6',
             ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),
       );
@@ -472,7 +495,7 @@ void main() {
       final navBar = tester.widget<NavigationBar>(find.byType(NavigationBar));
       expect(navBar.destinations.length, 5);
 
-      expect(find.text('حِساب اليوم'), findsOneWidget);
+      expect(find.text('حساب اليوم'), findsOneWidget);
 
       // Actually switch to the مساراتي (paths) tab. IndexedStack keeps the
       // non-active tab offstage, so its content isn't findable until selected.
