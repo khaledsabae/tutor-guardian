@@ -90,7 +90,6 @@ app = FastAPI(
     description="مساعد تربوي ذكي للأهل – واجهة API لنظام RAG مع Guardrails",
     version="0.1.0",
     lifespan=lifespan,
-,
     redirect_slashes=False)
 
 app.add_middleware(
