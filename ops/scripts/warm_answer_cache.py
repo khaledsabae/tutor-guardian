@@ -76,21 +76,38 @@ _AGE_GROUPS = [
 def _generate_answer(question: str, age_group: str) -> str | None:
     """Generate an answer via the real AI pipeline."""
     try:
-        from app.services.ai_gateway import generate_answer
+        from app.services.ai_gateway import AIGateway
         from app.services.retrieval import retrieve_relevant_units
 
         # Retrieve relevant knowledge units
-        units = retrieve_relevant_units(question, top_k=5)
+        units = retrieve_relevant_units(question, domain="", age_group=age_group, top_k=5)
         if not units:
             return None
 
-        # Generate answer
-        answer = generate_answer(
-            question=question,
-            age_group=age_group,
-            context_units=units,
-        )
-        return answer
+        # Build context from units
+        context_parts = []
+        for u in units:
+            title = u.get("title", "")
+            content = u.get("content", "")
+            source = u.get("source", "")
+            context_parts.append(f"الوحدة: {title}\nالمحتوى: {content}\nالمصدر: {source}")
+
+        context = "\n\n".join(context_parts)
+
+        # Generate answer using AI Gateway
+        prompt = f"""أنت المربي الذكي — مساعد تربوي إسلامي. أجب على سؤال الوالد بناءً على الوحدات المعرفية التالية فقط.
+
+السؤال: {question}
+عمر الطفل: {age_group}
+
+الوحدات المعرفية:
+{context}
+
+أجب بإجابة عملية مختصرة مناسبة لعمر الطفل، واذكر المصدر في سطر يبدأ بـ 📚 المصدر:"""
+
+        gateway = AIGateway()
+        result = gateway.generate(prompt)
+        return result.text if hasattr(result, 'text') else str(result)
     except Exception as e:
         print(f"  Error generating answer for '{question[:30]}...' ({age_group}): {e}", file=sys.stderr)
         return None
@@ -99,13 +116,8 @@ def _generate_answer(question: str, age_group: str) -> str | None:
 def _store_in_cache(question: str, age_group: str, answer: str) -> bool:
     """Store the generated answer in the answer cache."""
     try:
-        from app.services.answer_cache import AnswerCache
-        cache = AnswerCache()
-        cache.store(
-            question=question,
-            age_group=age_group,
-            answer=answer,
-        )
+        from app.services.answer_cache import store
+        store(question, age_group, answer)
         return True
     except Exception as e:
         print(f"  Error storing in cache: {e}", file=sys.stderr)
