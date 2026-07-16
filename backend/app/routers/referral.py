@@ -26,7 +26,9 @@ from app.db.init_db import get_conn
 router = APIRouter(prefix="/referral", tags=["referral"])
 
 # Coins each side earns; credited client-side (no server ledger).
-REWARD_COINS = 50
+# Doubled 2026-07-16 (growth plan §6.4 — temporary referral campaign);
+# revert to 50 when the campaign ends.
+REWARD_COINS = 100
 # Unambiguous alphabet (no 0/O/1/I) for codes that get typed/read aloud.
 _ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 _CODE_LEN = 6

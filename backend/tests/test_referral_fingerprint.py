@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 import sqlite3
 from app.main import app
 from app.db.init_db import db_path, get_conn
+from app.routers.referral import REWARD_COINS
 
 
 @pytest.fixture
@@ -49,7 +50,7 @@ def test_referral_fingerprint_happy_path(client):
     res = r_claim.json()
     assert res["ok"] is True
     assert res["already_claimed"] is False
-    assert res["reward_coins"] == 50
+    assert res["reward_coins"] == REWARD_COINS
 
     # Verify that the referral was correctly recorded in the referrals table
     conn = get_conn()
