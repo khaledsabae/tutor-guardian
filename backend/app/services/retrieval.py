@@ -14,7 +14,6 @@ from typing import Sequence, cast
 
 import chromadb
 from chromadb import Documents, EmbeddingFunction, Embeddings
-from sentence_transformers import SentenceTransformer
 
 from app.core.taxonomy import canonical_domain, age_equivalents
 from app.models.knowledge import KnowledgeUnit
@@ -42,6 +41,9 @@ class MultilingualEmbedding(EmbeddingFunction):
 
     def _lazy_load(self) -> None:
         if self._model is None:
+            # deferred so the app can import without the heavy torch stack
+            from sentence_transformers import SentenceTransformer
+
             self._model = SentenceTransformer(self._model_name)
 
     def __call__(self, input: Documents) -> Embeddings:

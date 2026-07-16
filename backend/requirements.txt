@@ -11,7 +11,13 @@ pyyaml>=6.0
 httpx>=0.27
 requests>=2.32
 
+# ── Crypto (E2E sync payloads — crypto_sync.py imports it directly) ──
+cryptography>=42
+
 # ── AI / Vector DB ──
+# ⚠️ HOLD at <1: the prod tg_chroma volume is 0.6-format. Bumping to 1.x must
+# be its own planned migration (volume backup + reindex verify in candidate
+# image) — never a drive-by change. See OPERATIONS_LOG 2026-07-16.
 chromadb>=0.5,<1
 onnxruntime>=1.18
 sentence-transformers>=3.0

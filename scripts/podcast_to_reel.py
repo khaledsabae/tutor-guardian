@@ -20,8 +20,10 @@ ROOT = Path(__file__).resolve().parent.parent
 TEAL = "#01696F"
 AMBER = "#F59E0B"
 DEFAULT_SCREENSHOT = ROOT / "docs" / "marketing" / "screenshots" / "final" / "01_02_onboarding_welcome.png"
-WATERMARK_TEXT = "المربّي الذكي — مجاني 100%"
-CTA_LINES = ["التطبيق مجاني 100%", "بلا إعلانات · بلا اشتراكات", "رابط التحميل في البايو 👇"]
+# NOTE: Noto Sans Arabic has no emoji/middle-dot glyphs — they render as
+# tofu boxes in drawtext. Stick to Arabic-script punctuation only.
+WATERMARK_TEXT = "المربّي الذكي — مجاني ١٠٠٪"
+CTA_LINES = ["التطبيق مجاني ١٠٠٪", "بلا إعلانات، بلا اشتراكات", "رابط التحميل في الوصف"]
 
 
 def _slugify(name: str) -> str:
@@ -165,7 +167,16 @@ def build_timed_lines(takeaways: list[str], audio_dur: float, transcript: list[d
 
 
 def _escape(s: str) -> str:
-    return s.replace("\\", "\\\\").replace(":", "\\:").replace("'", "\\'")
+    # ASCII '%' triggers drawtext expansion and NO escaping variant survives
+    # the filter parser ("Stray %") — the whole line silently fails to render
+    # (bit us on «مجاني 100%»). The Arabic percent sign ٪ renders perfectly
+    # in Noto Sans Arabic, so substitute it.
+    return (
+        s.replace("\\", "\\\\")
+        .replace(":", "\\:")
+        .replace("'", "\\'")
+        .replace("%", "٪")
+    )
 
 
 def _wrap(text: str, max_chars: int = 34) -> list[str]:
@@ -380,5 +391,3 @@ def import_time() -> str:
 
 if __name__ == "__main__":
     main()
-    # satisfy import ordering if needed
-    import_time()

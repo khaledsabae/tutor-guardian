@@ -65,6 +65,9 @@ def _is_protected(path: str, method: str) -> bool:
     # silently hides on error, never renders.
     if path.startswith("/api/program/coach-tip"):
         return True
+    # Monthly report exposes a child's name and progress — device-owned data.
+    if path.startswith("/api/program/monthly-report"):
+        return True
     for prefix in _PROTECTED_PREFIXES:
         if path.startswith(prefix):
             return True

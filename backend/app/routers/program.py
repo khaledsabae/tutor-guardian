@@ -545,90 +545,90 @@ def story_themes():
 # ── Monthly Report (Phase 4.1) ──────────────────────────────────────────
 
 @router.get("/monthly-report/{child_id}")
-def monthly_report(child_id: int):
-    """Generate a monthly progress report for a child.
-    
-    Returns structured data that can be rendered as PDF on the client.
-    Includes: lessons completed, habits tracked, streaks, achievements,
-    and AI-generated personalized insights.
+def monthly_report(child_id: int, request: Request):
+    """Generate a monthly progress report for a child (auth-required).
+
+    Returns structured data the client renders as a shareable report/PDF.
+    The child must belong to the caller's device — a child's name and
+    progress are private family data, never publicly enumerable.
     """
-    from app.db.init_db import get_conn
-    conn = get_conn()
+    device_id = getattr(request.state, "device_id", None)
+    if not device_id:
+        raise HTTPException(status_code=401, detail="مطلوب توثيق.")
+
     now = dt.datetime.now(dt.timezone.utc)
     month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     month_start_str = month_start.isoformat()
-    
-    # Get child info
-    row = conn.execute(
-        "SELECT name, age_group, avatar_emoji FROM child_profiles WHERE id = ?",
-        (child_id,),
-    ).fetchone()
-    if not row:
-        raise HTTPException(status_code=404, detail="Child not found")
-    
-    child_name = row["name"]
-    age_group = row["age_group"]
-    avatar = row["avatar_emoji"] or "👶"
-    
-    # Lessons completed this month
-    lessons = conn.execute(
-        """SELECT lesson_id, status, updated_at 
-           FROM lesson_progress 
-           WHERE device_id = (SELECT device_id FROM child_profiles WHERE id = ?)
-           AND child_id = ? AND status = 'completed' AND updated_at >= ?
-           ORDER BY updated_at""",
-        (child_id, child_id, month_start_str),
-    ).fetchall()
-    
-    # Habit completions this month (simplified - routine_events has event_type)
-    habits = conn.execute(
-        """SELECT event_type, COUNT(*) as cnt
-           FROM routine_events 
-           WHERE routine_id IN (SELECT id FROM child_daily_routines WHERE child_id = ? AND routine_date >= ?)
-           GROUP BY event_type""",
-        (child_id, month_start_str.split("T")[0]),
-    ).fetchall()
-    
-    # Chat sessions this month (simplified - no child_id column)
-    chats = conn.execute(
-        """SELECT COUNT(*) as cnt, MIN(created_at) as first, MAX(created_at) as last
-           FROM chat_sessions 
-           WHERE device_id = (SELECT device_id FROM child_profiles WHERE id = ?)
-           AND created_at >= ?""",
-        (child_id, month_start_str),
-    ).fetchone()
-    
-    # Current streak (simplified - count consecutive days)
-    streak_rows = conn.execute(
-        """SELECT date FROM daily_login_streaks 
-           WHERE device_id = (SELECT device_id FROM child_profiles WHERE id = ?)
-           ORDER BY date DESC LIMIT 30""",
-        (child_id,),
-    ).fetchall()
-    
-    # Calculate streak from consecutive dates
+
+    conn = get_conn()
+    try:
+        child = conn.execute(
+            "SELECT name, age_group, avatar_emoji, device_id "
+            "FROM child_profiles WHERE id = ?",
+            (child_id,),
+        ).fetchone()
+        if child is None or child["device_id"] != device_id:
+            raise HTTPException(status_code=404, detail="طفل غير موجود.")
+
+        # Lessons completed this month
+        lessons = conn.execute(
+            """SELECT lesson_id, status, updated_at
+               FROM lesson_progress
+               WHERE device_id = ? AND child_id = ?
+               AND status = 'completed' AND updated_at >= ?
+               ORDER BY updated_at""",
+            (device_id, child_id, month_start_str),
+        ).fetchall()
+
+        # Habit/value check-ins this month («ميزان العادات» — the real habits
+        # table, not the baby routine tracker).
+        habit_counts = {
+            r["status"]: int(r["cnt"])
+            for r in conn.execute(
+                """SELECT status, COUNT(*) AS cnt FROM habits_value_events
+                   WHERE device_id = ? AND child_id = ? AND created_at >= ?
+                   GROUP BY status""",
+                (device_id, child_id, month_start_str),
+            )
+        }
+
+        chats = conn.execute(
+            """SELECT COUNT(*) AS cnt FROM chat_sessions
+               WHERE device_id = ? AND created_at >= ?""",
+            (device_id, month_start_str),
+        ).fetchone()
+
+        streak_rows = conn.execute(
+            """SELECT date FROM daily_login_streaks
+               WHERE device_id = ? ORDER BY date DESC LIMIT 30""",
+            (device_id,),
+        ).fetchall()
+    finally:
+        conn.close()
+
+    # Current streak: consecutive days ending today (or yesterday — an
+    # unfinished today shouldn't zero the streak).
     streak = 0
     if streak_rows:
-        from datetime import datetime, timedelta
-        today = datetime.now(timezone.utc).date()
-        expected = today
-        for row in streak_rows:
-            row_date = datetime.strptime(row["date"], "%Y-%m-%d").date()
-            if row_date == expected:
+        dates = [dt.date.fromisoformat(r["date"]) for r in streak_rows]
+        expected = now.date()
+        if dates[0] == expected - dt.timedelta(days=1):
+            expected = dates[0]
+        for d in dates:
+            if d == expected:
                 streak += 1
-                expected -= timedelta(days=1)
+                expected -= dt.timedelta(days=1)
             else:
                 break
-    
-    # Achievements/Badges (simplified - count from coins table)
-    badges = []  # Not tracked in current schema
-    
-    # Compile report
-    report = {
+
+    completed_habits = habit_counts.get("completed", 0)
+    partial_habits = habit_counts.get("partial", 0)
+
+    return {
         "child": {
-            "name": child_name,
-            "age_group": age_group,
-            "avatar": avatar,
+            "name": child["name"],
+            "age_group": child["age_group"],
+            "avatar": child["avatar_emoji"] or "👶",
         },
         "period": {
             "month": now.strftime("%Y-%m"),
@@ -637,17 +637,17 @@ def monthly_report(child_id: int):
         "stats": {
             "lessons_completed": len(lessons),
             "lessons_by_domain": _count_by_domain(lessons),
-            "habit_completions": sum(h["cnt"] for h in habits),
-            "habit_partials": 0,  # Not tracked in simplified query
+            "habit_completions": completed_habits,
+            "habit_partials": partial_habits,
             "chat_sessions": chats["cnt"] if chats else 0,
             "current_streak": streak,
-            "badges_earned": len(badges),
+            "badges_earned": 0,  # client-side badges — not tracked server-side
         },
-        "highlights": _generate_highlights(lessons, habits, streak, len(badges)),
+        "highlights": _generate_highlights(
+            len(lessons), completed_habits, streak
+        ),
         "generated_at": now.isoformat(),
     }
-    
-    return report
 
 
 def _month_name_ar(month: int) -> str:
@@ -661,31 +661,26 @@ def _month_name_ar(month: int) -> str:
 
 
 def _count_by_domain(lessons: list) -> dict:
-    """Count lessons by domain (simplified - no domain in query)."""
-    # Since we don't have domain in the simplified query, return empty dict
-    return {}
+    """Count completed lessons per domain via the curriculum index."""
+    counts: dict[str, int] = {}
+    for row in lessons:
+        lesson = cl.get_lesson(row["lesson_id"])
+        domain = (lesson or {}).get("domain") or "other"
+        counts[domain] = counts.get(domain, 0) + 1
+    return counts
 
 
-def _generate_highlights(lessons: list, habits: list, streak: int, badges: int) -> list[str]:
+def _generate_highlights(lessons_done: int, habits_done: int, streak: int) -> list[str]:
     """Generate personalized highlights for the report."""
     highlights = []
-    
-    if len(lessons) > 0:
-        highlights.append(f"أكملت {len(lessons)} دروس هذا الشهر! 📚")
-    
+    if lessons_done > 0:
+        highlights.append(f"أكملت {lessons_done} دروس هذا الشهر! 📚")
     if streak > 7:
         highlights.append(f"سلسلة {streak} أيام متتالية! استمر يا بطل 🔥")
     elif streak > 3:
         highlights.append(f"{streak} أيام متتالية — في الطريق الصحيح! 💪")
-    
-    completed_habits = sum(h["cnt"] for h in habits if h["status"] == "completed")
-    if completed_habits > 0:
-        highlights.append(f"سجّلت {completed_habits} عادة بنجاح ⭐")
-    
-    if badges > 0:
-        highlights.append(f"حصلت على {badges} شارة إنجاز 🏅")
-    
+    if habits_done > 0:
+        highlights.append(f"سجّلت {habits_done} عادة بنجاح ⭐")
     if not highlights:
         highlights.append("ابدأ هذا الشهر بخطوة صغيرة — كل رحلة تبدأ بخطوة! 🌟")
-    
     return highlights
