@@ -580,12 +580,12 @@ def monthly_report(child_id: int):
         (child_id, child_id, month_start_str),
     ).fetchall()
     
-    # Habit completions this month
+    # Habit completions this month (simplified - routine_events has event_type)
     habits = conn.execute(
-        """SELECT habit_name, category, status, COUNT(*) as cnt
+        """SELECT event_type, COUNT(*) as cnt
            FROM routine_events 
-           WHERE child_id = ? AND date >= ?
-           GROUP BY habit_name, category, status""",
+           WHERE routine_id IN (SELECT id FROM child_daily_routines WHERE child_id = ? AND routine_date >= ?)
+           GROUP BY event_type""",
         (child_id, month_start_str.split("T")[0]),
     ).fetchall()
     
@@ -627,8 +627,8 @@ def monthly_report(child_id: int):
         "stats": {
             "lessons_completed": len(lessons),
             "lessons_by_domain": _count_by_domain(lessons),
-            "habit_completions": sum(h["cnt"] for h in habits if h["status"] == "completed"),
-            "habit_partials": sum(h["cnt"] for h in habits if h["status"] == "partially"),
+            "habit_completions": sum(h["cnt"] for h in habits),
+            "habit_partials": 0,  # Not tracked in simplified query
             "chat_sessions": chats["cnt"] if chats else 0,
             "current_streak": streak,
             "badges_earned": len(badges),
