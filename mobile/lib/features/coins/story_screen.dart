@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/analytics.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
 import '../../widgets/ui/bouncy_button.dart';
@@ -52,15 +53,14 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('عذراً، رصيدك لا يكفي 🪙'),
+          title: Text(AppLocalizations.of(context).storyInsufficient),
           content: Text(
-            'تحتاج إلى ${CoinsService.storyCost} عملة لتأليف قصة مخصصة لطفلك. '
-            'شارك التطبيق مع أصدقائك واحصل على ${CoinsService.referralReward} عملة مجاناً عن كل صديق ينضم إلينا! 🌿',
+            AppLocalizations.of(context).storyInsufficientMsg(CoinsService.storyCost, CoinsService.referralReward),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('إلغاء'),
+              child: Text(AppLocalizations.of(context).cancel),
             ),
             FilledButton(
               onPressed: () {
@@ -71,7 +71,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
                 );
               },
               style: FilledButton.styleFrom(backgroundColor: AppTheme.primary),
-              child: Text('ادعُ صديقاً (+${CoinsService.referralReward} 🪙)'),
+              child: Text(AppLocalizations.of(context).storyInviteBtn(CoinsService.referralReward)),
             ),
           ],
         ),
@@ -98,7 +98,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تعذّر توليد القصة: $e'),
+            content: Text(AppLocalizations.of(context).storyError(e.toString())),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -113,7 +113,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
     final coins = ref.watch(coinsProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('قصة مخصصة 📖'),
+        title: Text(AppLocalizations.of(context).storyTitle),
         actions: [
           Center(
             child: Padding(
@@ -130,7 +130,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
         children: [
           if (_story == null) ...[
             Text(
-              'اختر قيمة تربوية، وسنؤلّف قصة قصيرة بطلها طفلك 🌟',
+              AppLocalizations.of(context).storyThemeIntro,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     height: 1.5,
@@ -157,8 +157,8 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
             const SizedBox(height: 24),
             BouncyButton(
               label: _loading
-                  ? 'جارٍ تأليف القصة…'
-                  : 'توليد قصة (${CoinsService.storyCost} 🪙)',
+                  ? AppLocalizations.of(context).storyGenerating
+                  : AppLocalizations.of(context).storyCost(CoinsService.storyCost),
               color: Dt.accent,
               onTap: (_theme == null || _loading) ? null : _generate,
             ),
@@ -166,8 +166,8 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
               const SizedBox(height: 24),
               const Center(child: CircularProgressIndicator()),
               const SizedBox(height: 8),
-              const Center(
-                child: Text('قد يستغرق هذا لحظات…',
+              Center(
+                child: Text(AppLocalizations.of(context).storyLoading,
                     style: TextStyle(color: AppTheme.textMuted)),
               ),
             ],
@@ -186,7 +186,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
             ),
             const SizedBox(height: 16),
             BouncyButton(
-              label: 'قصة أخرى',
+              label: AppLocalizations.of(context).storyAnother,
               onTap: () => setState(() {
                 _story = null;
                 _theme = null;

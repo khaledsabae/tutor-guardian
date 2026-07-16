@@ -8,6 +8,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../journey/providers/journey_providers.dart';
 import '../../journey/screens/child_journey_screen.dart';
@@ -29,7 +30,7 @@ class ChildrenListScreen extends ConsumerWidget {
     final activeId = ref.watch(activeChildIdProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('إدارة الأطفال')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).childrenTitle)),
       body: SafeArea(
         child: asyncList.when(
           loading: () => const Center(child: CircularProgressIndicator()),
@@ -52,8 +53,8 @@ class ChildrenListScreen extends ConsumerWidget {
                       errorBuilder: (_, __, ___) => const SizedBox.shrink(),
                     ),
                       const SizedBox(height: 12),
-                      const Text(
-                        'لا يوجد أطفال على هذا الجهاز. ابدأ بإضافة أول طفل.',
+                      Text(
+                        AppLocalizations.of(context).childrenEmpty,
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -80,7 +81,7 @@ class ChildrenListScreen extends ConsumerWidget {
                   OutlinedButton.icon(
                     onPressed: () => _addChild(context, ref),
                     icon: const Icon(Icons.add_circle_outline),
-                    label: const Text('إضافة طفل جديد'),
+                    label: Text(AppLocalizations.of(context).childrenAddNew),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(50),
                       side: BorderSide(
@@ -96,14 +97,14 @@ class ChildrenListScreen extends ConsumerWidget {
                       color: AppTheme.surfaceAlt,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
                         Icon(Icons.info_outline,
                             size: 18, color: AppTheme.textMuted),
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'وصلت للحد الأقصى ($kMaxChildren أطفال). احذف طفلاً لإضافة طفل جديد.',
+                            AppLocalizations.of(context).childrenMaxReached(kMaxChildren),
                             style: TextStyle(
                               color: AppTheme.textSecondary,
                               fontSize: 12,
@@ -136,7 +137,7 @@ class ChildrenListScreen extends ConsumerWidget {
       await ref.read(switchActiveChildProvider.notifier).call(child);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('تم التبديل إلى ${child.name}.')),
+          SnackBar(content: Text(AppLocalizations.of(context).childrenSwitchTo(child.name))),
         );
         Navigator.of(context).pop();
       }
@@ -144,7 +145,7 @@ class ChildrenListScreen extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تعذّر التبديل: $e'),
+            content: Text(AppLocalizations.of(context).childrenSwitchError(e.toString())),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -181,19 +182,19 @@ class ChildrenListScreen extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('حذف الطفل'),
+        title: Text(AppLocalizations.of(context).childrenDelete),
         content: Text(
-          'هل أنت متأكد من حذف «${child.name}»؟ سيُحذف ملفه نهائيًا.',
+          AppLocalizations.of(context).childrenDeleteConfirm(child.name),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('إلغاء'),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
             style: TextButton.styleFrom(foregroundColor: AppTheme.dangerFg),
-            child: const Text('حذف'),
+            child: Text(AppLocalizations.of(context).delete),
           ),
         ],
       ),
@@ -203,14 +204,14 @@ class ChildrenListScreen extends ConsumerWidget {
       await ref.read(deleteChildProvider.notifier).call(child.id);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('تم حذف ${child.name}.')),
+          SnackBar(content: Text(AppLocalizations.of(context).childrenDeleted(child.name))),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تعذّر الحذف: $e'),
+            content: Text(AppLocalizations.of(context).childrenDeleteError(e.toString())),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -229,7 +230,7 @@ class _ChildCount extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       child: Text(
-        'لديك $count من أصل $max أطفال',
+        AppLocalizations.of(context).childrenCount(count, max),
         style: const TextStyle(
           color: AppTheme.textSecondary,
           fontSize: 12,
@@ -320,8 +321,8 @@ class _ChildTile extends StatelessWidget {
                     color: AppTheme.primary,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Text(
-                    'نشط',
+                  child: Text(
+                    AppLocalizations.of(context).childrenActive,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 11,
@@ -338,14 +339,14 @@ class _ChildTile extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.auto_stories_outlined,
                       color: AppTheme.primary, size: 20),
-                  tooltip: 'رحلة الطفل',
+                  tooltip: AppLocalizations.of(context).childrenJourney,
                   visualDensity: VisualDensity.compact,
                   onPressed: onJourney,
                 ),
               IconButton(
                 icon: const Icon(Icons.delete_outline,
                     color: AppTheme.textMuted, size: 20),
-                tooltip: 'حذف الطفل',
+                tooltip: AppLocalizations.of(context).childrenDelete,
                 visualDensity: VisualDensity.compact,
                 onPressed: onDelete,
               ),
@@ -394,13 +395,13 @@ class _ErrorView extends StatelessWidget {
             const Icon(Icons.error_outline,
                 size: 48, color: AppTheme.dangerFg),
             const SizedBox(height: 12),
-            Text('تعذّر تحميل قائمة الأطفال.\n$error',
+            Text(AppLocalizations.of(context).childrenErrorLoading + '\n$error',
                 textAlign: TextAlign.center),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('إعادة المحاولة'),
+              label: Text(AppLocalizations.of(context).retry),
             ),
           ],
         ),

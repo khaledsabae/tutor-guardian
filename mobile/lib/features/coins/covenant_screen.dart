@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
 import '../../widgets/ui/bouncy_button.dart';
@@ -54,7 +55,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
     final balance = ref.read(coinsProvider).balance;
     if (balance < cov.cost) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('عذراً، رصيدك من العملات غير كافٍ! 🪙')),
+        SnackBar(content: Text(AppLocalizations.of(context).covenantInsufficient)),
       );
       return;
     }
@@ -67,12 +68,12 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('🎉 تم الاستبدال بنجاح!'),
-            content: Text('لقد قمت بطلب: "${cov.title}" مقابل ${cov.cost} عملة. أخبر والديك ليقدماها لك بالواقع!'),
+            title: Text(AppLocalizations.of(context).covenantSuccess),
+            content: Text(AppLocalizations.of(context).covenantSuccessMsg(cov.title, cov.cost)),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(),
-                child: const Text('حسناً'),
+                child: Text(AppLocalizations.of(context).ok),
               ),
             ],
           ),
@@ -86,7 +87,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
     await _loadCovenants();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('تم تسجيل تقديم المكافأة بنجاح! ✅')),
+        SnackBar(content: Text(AppLocalizations.of(context).covenantDelivered)),
       );
     }
   }
@@ -102,15 +103,15 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('عهد المكافآت الواقعية 📜'),
+        title: Text(AppLocalizations.of(context).covenantTitle),
         bottom: TabBar(
           controller: _tabController,
           labelColor: Dt.accentDeep,
           unselectedLabelColor: AppTheme.textMuted,
           indicatorColor: Dt.accent,
-          tabs: const [
-            Tab(text: 'استبدال العملات 🪙'),
-            Tab(text: 'بوابة الأهل 🔑'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context).covenantTabRedeem),
+            Tab(text: AppLocalizations.of(context).covenantTabParent),
           ],
         ),
       ),
@@ -143,16 +144,16 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'رصيد عملاتك الحالي',
+                    AppLocalizations.of(context).covenantBalanceLabel,
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'استبدل العملات بمكافآت واقعية متفق عليها مع أهلك.',
+                    AppLocalizations.of(context).covenantBalanceHint,
                     style: TextStyle(color: Colors.white70, fontSize: 11),
                   ),
                 ],
@@ -177,11 +178,11 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
         const SizedBox(height: 20),
 
         if (available.isEmpty)
-          const Center(
+          Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 40),
+              padding: const EdgeInsets.symmetric(vertical: 40),
               child: Text(
-                'لا توجد مكافآت متاحة حالياً. اطلب من والديك إضافتها!',
+                AppLocalizations.of(context).covenantEmpty,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary),
               ),
@@ -220,7 +221,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'التكلفة: ${cov.cost} عملة 🪙',
+                            AppLocalizations.of(context).covenantCost(cov.cost),
                             style: const TextStyle(
                               color: Dt.accentDeep,
                               fontWeight: FontWeight.bold,
@@ -243,7 +244,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
                         ),
                       ),
                       child: Text(
-                        canAfford ? 'استبدال' : 'يتبقى ${cov.cost - balance}',
+                        canAfford ? AppLocalizations.of(context).covenantRedeem : AppLocalizations.of(context).covenantRemaining(cov.cost - balance),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -272,13 +273,13 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
             borderRadius: BorderRadius.circular(Dt.rCard),
             border: Border.all(color: Colors.deepPurple.shade100),
           ),
-          child: const Row(
+          child: Row(
             children: [
               Text('🔑', style: TextStyle(fontSize: 24)),
               SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  'بوابة الأهل: أضف مكافآت حقيقية يلتزم بها الأهل بالواقع (مثل رحلات أو هدايا)، وتابع طلبات طفلك لتسليمها.',
+                  AppLocalizations.of(context).covenantParentWelcome,
                   style: TextStyle(
                     fontSize: 12.5,
                     fontWeight: FontWeight.w600,
@@ -293,22 +294,22 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
 
         // Action: Add new custom reward
         BouncyButton(
-          label: 'إضافة مكافأة جديدة ➕',
+          label: AppLocalizations.of(context).covenantAddNew,
           color: Colors.deepPurple,
           onTap: _showAddRewardDialog,
         ),
         const SizedBox(height: 24),
 
         // Section: Pending Deliveries
-        const Text(
-          'طلبات استبدال بانتظار تسليمها بالواقع ⏳',
+        Text(
+          AppLocalizations.of(context).covenantPending,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.amber),
         ),
         const SizedBox(height: 10),
         if (pending.isEmpty)
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Text('لا توجد طلبات معلقة حالياً.', style: TextStyle(color: AppTheme.textMuted)),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(AppLocalizations.of(context).covenantPendingEmpty, style: TextStyle(color: AppTheme.textMuted)),
           )
         else
           ListView.separated(
@@ -333,7 +334,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
                         children: [
                           Text(cov.title, style: const TextStyle(fontWeight: FontWeight.w800)),
                           const SizedBox(height: 4),
-                          Text('استبدلها طفلك مقابل ${cov.cost} عملة 🪙', style: const TextStyle(fontSize: 12)),
+                          Text(AppLocalizations.of(context).covenantPendingRedeemed(cov.cost), style: TextStyle(fontSize: 12)),
                         ],
                       ),
                     ),
@@ -341,7 +342,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
                     FilledButton(
                       onPressed: () => _deliver(cov),
                       style: FilledButton.styleFrom(backgroundColor: AppTheme.success),
-                      child: const Text('تم تقديمها ✅', style: TextStyle(fontWeight: FontWeight.bold)),
+                      child: Text(AppLocalizations.of(context).covenantDeliver, style: TextStyle(fontWeight: FontWeight.bold)),
                     ),
                   ],
                 ),
@@ -351,13 +352,13 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
         const SizedBox(height: 24),
 
         // Section: Custom rewards manager list
-        const Text(
-          'قائمة المكافآت المتاحة وإدارتها ⚙️',
+        Text(
+          AppLocalizations.of(context).covenantManage,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: 10),
         if (customRewards.isEmpty)
-          const Text('لا توجد مكافآت مضافة.', style: TextStyle(color: AppTheme.textMuted))
+          Text(AppLocalizations.of(context).covenantManageEmpty, style: TextStyle(color: AppTheme.textMuted))
         else
           ListView.separated(
             shrinkWrap: true,
@@ -376,7 +377,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
                 child: ListTile(
                   leading: const Text('🎁', style: TextStyle(fontSize: 22)),
                   title: Text(cov.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text('القيمة: ${cov.cost} عملة 🪙'),
+                  subtitle: Text(AppLocalizations.of(context).covenantCost(cov.cost)),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete_outline, color: Colors.red),
                     onPressed: () => _delete(cov),
@@ -387,13 +388,13 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
           ),
         const SizedBox(height: 24),
         // Section: Delivered History
-        const Text(
-          'المكافآت التي تم تسليمها سابقاً ✅',
+        Text(
+          AppLocalizations.of(context).covenantHistory,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppTheme.success),
         ),
         const SizedBox(height: 10),
         if (delivered.isEmpty)
-          const Text('لا توجد مكافآت مسلّمة سابقاً.', style: TextStyle(color: AppTheme.textMuted))
+          Text(AppLocalizations.of(context).covenantHistoryEmpty, style: TextStyle(color: AppTheme.textMuted))
         else
           ListView.separated(
             shrinkWrap: true,
@@ -427,7 +428,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            'استُبدلت بـ ${cov.cost} عملة',
+                            AppLocalizations.of(context).covenantHistoryRedeemed(cov.cost),
                             style: TextStyle(color: Colors.grey.shade500, fontSize: 11),
                           ),
                         ],
@@ -449,22 +450,22 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('إضافة مكافأة واقعية جديدة'),
+        title: Text(AppLocalizations.of(context).covenantAddTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: titleController,
-              decoration: const InputDecoration(
-                labelText: 'اسم المكافأة بالواقع (مثال: نزهة عائلية 🍦)',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context).covenantAddNameLabel,
               ),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: costController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'تكلفة العملات 🪙',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context).covenantAddCostLabel,
               ),
             ),
           ],
@@ -472,7 +473,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('إلغاء'),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -480,7 +481,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
               _addReward(titleController.text, cost);
               Navigator.of(ctx).pop();
             },
-            child: const Text('إضافة'),
+            child: Text(AppLocalizations.of(context).add),
           ),
         ],
       ),

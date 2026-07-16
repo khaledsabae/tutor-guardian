@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/features/program/data/progress_models.dart';
@@ -213,7 +214,12 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(home: ChildrenListScreen()),
+        child: MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: ChildrenListScreen(),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -252,7 +258,12 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(home: ChildrenListScreen()),
+        child: MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: ChildrenListScreen(),
+        ),
       ),
     );
     await tester.pumpAndSettle();
