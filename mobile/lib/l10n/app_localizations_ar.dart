@@ -988,4 +988,182 @@ class AppLocalizationsAr extends AppLocalizations {
   String routineDeleteFailed(Object error) {
     return 'فشل الحذف: $error';
   }
+
+  @override
+  String get settingsMediaLangChanged => 'تم تغيير لغة الوسائط إلى العربية';
+
+  @override
+  String get settingsTitle => 'الإعدادات';
+
+  @override
+  String get settingsNoChild => 'لا يوجد ملف طفل نشط.';
+
+  @override
+  String get settingsSwitchChild => 'تبديل الطفل النشط';
+
+  @override
+  String settingsChildCount(Object count, Object max) {
+    return 'لديك $count من أصل $max أطفال';
+  }
+
+  @override
+  String get settingsEditChild => 'تعديل معلومات الطفل';
+
+  @override
+  String get settingsEditChildDesc => 'الاسم، المرحلة العمرية، الصورة، الجنس';
+
+  @override
+  String get settingsInviteFriend => 'ادعُ صديقاً 🤍';
+
+  @override
+  String get settingsInviteDesc =>
+      'دلالتك على الخير صدقة — وكلاكما يكسب مكافأة';
+
+  @override
+  String get settingsBackup => 'احفظ تقدمك 🤍';
+
+  @override
+  String get settingsBackupDesc =>
+      'تسجيل دخول اختياري — يحفظ بياناتك لو غيّرت الجهاز';
+
+  @override
+  String get settingsShareFeedback => 'شاركنا رأيك';
+
+  @override
+  String get settingsShareFeedbackDesc =>
+      'اقتراح أو مشكلة — كتابةً أو صوتاً، يصل لنا مباشرة';
+
+  @override
+  String get settingsResetProgress => 'إعادة تعيين التقدم';
+
+  @override
+  String get settingsResetDesc =>
+      'سيتم مسح كل الدروس المكمّلة وإعادة السلسلة إلى 0';
+
+  @override
+  String get settingsMediaLang => 'لغة الوسائط التعليمية';
+
+  @override
+  String get settingsArabicMedia => 'العربية (بودكاست وفيديو عربي)';
+
+  @override
+  String get settingsRate => 'قيّم التطبيق';
+
+  @override
+  String get settingsRateDesc => 'رأيك يساعد آباءً غيرك يجدون «المربّي»';
+
+  @override
+  String get settingsPrivacy => 'سياسة الخصوصية';
+
+  @override
+  String get settingsPrivacyDesc => 'كيف نتعامل مع بياناتك';
+
+  @override
+  String get settingsFavorites => 'المفضلة';
+
+  @override
+  String get settingsFavoritesDesc => 'الدروس والنصائح التي حفظتها';
+
+  @override
+  String get settingsAchievements => 'إنجازاتي';
+
+  @override
+  String get settingsAchievementsDesc => 'الشعارات التي حصلت عليها';
+
+  @override
+  String get settingsExport => 'تصدير بياناتي';
+
+  @override
+  String get settingsExportDesc => 'تصدير المفضلة والملاحظات كملف JSON';
+
+  @override
+  String get settingsImport => 'استيراد بياناتي';
+
+  @override
+  String get settingsImportDesc => 'استيراد النسخة الاحتياطية من ملف JSON';
+
+  @override
+  String settingsVersion(Object version) {
+    return 'الإصدار $version';
+  }
+
+  @override
+  String get settingsPreparingBackup => 'جاري تجهيز النسخة الاحتياطية...';
+
+  @override
+  String get settingsBackupTitle => 'نسخة احتياطية من بيانات المربي الذكي';
+
+  @override
+  String get settingsBackupName => 'نسخة احتياطية - المربي الذكي';
+
+  @override
+  String get settingsExportSuccess => 'تم تصدير البيانات بنجاح';
+
+  @override
+  String settingsExportFailed(Object error) {
+    return 'تعذّر التصدير: $error';
+  }
+
+  @override
+  String get settingsImportFile => 'اختر ملف النسخة الاحتياطية';
+
+  @override
+  String get settingsImportConfirm => 'استيراد البيانات؟';
+
+  @override
+  String get settingsImportDesc1 =>
+      'سيتم دمج البيانات المستوردة مع بياناتك الحالية.';
+
+  @override
+  String get settingsImportDesc2 => 'هذا الإجراء لا يمكن التراجع عنه بسهولة.';
+
+  @override
+  String get settingsImportBtn => 'استيراد';
+
+  @override
+  String get settingsImporting => 'جاري استيراد البيانات...';
+
+  @override
+  String settingsImportSuccess(Object favorites, Object reflections) {
+    return 'تم الاستيراد بنجاح: $reflections ملاحظة، $favorites مفضلة';
+  }
+
+  @override
+  String settingsImportFailed(Object error) {
+    return 'تعذّر الاستيراد: $error';
+  }
+
+  @override
+  String get settingsResetConfirm => 'إعادة تعيين التقدم؟';
+
+  @override
+  String settingsResetDesc1(Object name) {
+    return 'سيتم مسح كل الدروس المكمّلة لـ $name وستُعاد السلسلة إلى الصفر.';
+  }
+
+  @override
+  String get settingsResetDesc2 => 'هذا الإجراء لا يمكن التراجع عنه.';
+
+  @override
+  String get settingsResetBtn => 'إعادة التعيين';
+
+  @override
+  String get settingsNoProgress => 'لا يوجد تقدم لإعادة تعيينه.';
+
+  @override
+  String settingsResetDone(Object count) {
+    return 'تم مسح $count درس. السلسلة الآن 0.';
+  }
+
+  @override
+  String settingsResetFailed(Object error) {
+    return 'تعذّر إعادة التعيين: $error';
+  }
+
+  @override
+  String get settingsFamilyAdhkar => 'إشعارات أذكار الأسرة';
+
+  @override
+  String get settingsFamilyAdhkarDesc =>
+      'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)';
 }

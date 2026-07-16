@@ -1963,6 +1963,318 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'فشل الحذف: {error}'**
   String routineDeleteFailed(Object error);
+
+  /// No description provided for @settingsMediaLangChanged.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تغيير لغة الوسائط إلى العربية'**
+  String get settingsMediaLangChanged;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعدادات'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsNoChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد ملف طفل نشط.'**
+  String get settingsNoChild;
+
+  /// No description provided for @settingsSwitchChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'تبديل الطفل النشط'**
+  String get settingsSwitchChild;
+
+  /// No description provided for @settingsChildCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'لديك {count} من أصل {max} أطفال'**
+  String settingsChildCount(Object count, Object max);
+
+  /// No description provided for @settingsEditChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل معلومات الطفل'**
+  String get settingsEditChild;
+
+  /// No description provided for @settingsEditChildDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم، المرحلة العمرية، الصورة، الجنس'**
+  String get settingsEditChildDesc;
+
+  /// No description provided for @settingsInviteFriend.
+  ///
+  /// In ar, this message translates to:
+  /// **'ادعُ صديقاً 🤍'**
+  String get settingsInviteFriend;
+
+  /// No description provided for @settingsInviteDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'دلالتك على الخير صدقة — وكلاكما يكسب مكافأة'**
+  String get settingsInviteDesc;
+
+  /// No description provided for @settingsBackup.
+  ///
+  /// In ar, this message translates to:
+  /// **'احفظ تقدمك 🤍'**
+  String get settingsBackup;
+
+  /// No description provided for @settingsBackupDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل دخول اختياري — يحفظ بياناتك لو غيّرت الجهاز'**
+  String get settingsBackupDesc;
+
+  /// No description provided for @settingsShareFeedback.
+  ///
+  /// In ar, this message translates to:
+  /// **'شاركنا رأيك'**
+  String get settingsShareFeedback;
+
+  /// No description provided for @settingsShareFeedbackDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'اقتراح أو مشكلة — كتابةً أو صوتاً، يصل لنا مباشرة'**
+  String get settingsShareFeedbackDesc;
+
+  /// No description provided for @settingsResetProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة تعيين التقدم'**
+  String get settingsResetProgress;
+
+  /// No description provided for @settingsResetDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم مسح كل الدروس المكمّلة وإعادة السلسلة إلى 0'**
+  String get settingsResetDesc;
+
+  /// No description provided for @settingsMediaLang.
+  ///
+  /// In ar, this message translates to:
+  /// **'لغة الوسائط التعليمية'**
+  String get settingsMediaLang;
+
+  /// No description provided for @settingsArabicMedia.
+  ///
+  /// In ar, this message translates to:
+  /// **'العربية (بودكاست وفيديو عربي)'**
+  String get settingsArabicMedia;
+
+  /// No description provided for @settingsRate.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيّم التطبيق'**
+  String get settingsRate;
+
+  /// No description provided for @settingsRateDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'رأيك يساعد آباءً غيرك يجدون «المربّي»'**
+  String get settingsRateDesc;
+
+  /// No description provided for @settingsPrivacy.
+  ///
+  /// In ar, this message translates to:
+  /// **'سياسة الخصوصية'**
+  String get settingsPrivacy;
+
+  /// No description provided for @settingsPrivacyDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف نتعامل مع بياناتك'**
+  String get settingsPrivacyDesc;
+
+  /// No description provided for @settingsFavorites.
+  ///
+  /// In ar, this message translates to:
+  /// **'المفضلة'**
+  String get settingsFavorites;
+
+  /// No description provided for @settingsFavoritesDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدروس والنصائح التي حفظتها'**
+  String get settingsFavoritesDesc;
+
+  /// No description provided for @settingsAchievements.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنجازاتي'**
+  String get settingsAchievements;
+
+  /// No description provided for @settingsAchievementsDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'الشعارات التي حصلت عليها'**
+  String get settingsAchievementsDesc;
+
+  /// No description provided for @settingsExport.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصدير بياناتي'**
+  String get settingsExport;
+
+  /// No description provided for @settingsExportDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصدير المفضلة والملاحظات كملف JSON'**
+  String get settingsExportDesc;
+
+  /// No description provided for @settingsImport.
+  ///
+  /// In ar, this message translates to:
+  /// **'استيراد بياناتي'**
+  String get settingsImport;
+
+  /// No description provided for @settingsImportDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'استيراد النسخة الاحتياطية من ملف JSON'**
+  String get settingsImportDesc;
+
+  /// No description provided for @settingsVersion.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإصدار {version}'**
+  String settingsVersion(Object version);
+
+  /// No description provided for @settingsPreparingBackup.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري تجهيز النسخة الاحتياطية...'**
+  String get settingsPreparingBackup;
+
+  /// No description provided for @settingsBackupTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسخة احتياطية من بيانات المربي الذكي'**
+  String get settingsBackupTitle;
+
+  /// No description provided for @settingsBackupName.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسخة احتياطية - المربي الذكي'**
+  String get settingsBackupName;
+
+  /// No description provided for @settingsExportSuccess.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تصدير البيانات بنجاح'**
+  String get settingsExportSuccess;
+
+  /// No description provided for @settingsExportFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر التصدير: {error}'**
+  String settingsExportFailed(Object error);
+
+  /// No description provided for @settingsImportFile.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر ملف النسخة الاحتياطية'**
+  String get settingsImportFile;
+
+  /// No description provided for @settingsImportConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'استيراد البيانات؟'**
+  String get settingsImportConfirm;
+
+  /// No description provided for @settingsImportDesc1.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم دمج البيانات المستوردة مع بياناتك الحالية.'**
+  String get settingsImportDesc1;
+
+  /// No description provided for @settingsImportDesc2.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الإجراء لا يمكن التراجع عنه بسهولة.'**
+  String get settingsImportDesc2;
+
+  /// No description provided for @settingsImportBtn.
+  ///
+  /// In ar, this message translates to:
+  /// **'استيراد'**
+  String get settingsImportBtn;
+
+  /// No description provided for @settingsImporting.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري استيراد البيانات...'**
+  String get settingsImporting;
+
+  /// No description provided for @settingsImportSuccess.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الاستيراد بنجاح: {reflections} ملاحظة، {favorites} مفضلة'**
+  String settingsImportSuccess(Object favorites, Object reflections);
+
+  /// No description provided for @settingsImportFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر الاستيراد: {error}'**
+  String settingsImportFailed(Object error);
+
+  /// No description provided for @settingsResetConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة تعيين التقدم؟'**
+  String get settingsResetConfirm;
+
+  /// No description provided for @settingsResetDesc1.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم مسح كل الدروس المكمّلة لـ {name} وستُعاد السلسلة إلى الصفر.'**
+  String settingsResetDesc1(Object name);
+
+  /// No description provided for @settingsResetDesc2.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الإجراء لا يمكن التراجع عنه.'**
+  String get settingsResetDesc2;
+
+  /// No description provided for @settingsResetBtn.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة التعيين'**
+  String get settingsResetBtn;
+
+  /// No description provided for @settingsNoProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد تقدم لإعادة تعيينه.'**
+  String get settingsNoProgress;
+
+  /// No description provided for @settingsResetDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم مسح {count} درس. السلسلة الآن 0.'**
+  String settingsResetDone(Object count);
+
+  /// No description provided for @settingsResetFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر إعادة التعيين: {error}'**
+  String settingsResetFailed(Object error);
+
+  /// No description provided for @settingsFamilyAdhkar.
+  ///
+  /// In ar, this message translates to:
+  /// **'إشعارات أذكار الأسرة'**
+  String get settingsFamilyAdhkar;
+
+  /// No description provided for @settingsFamilyAdhkarDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)'**
+  String get settingsFamilyAdhkarDesc;
 }
 
 class _AppLocalizationsDelegate

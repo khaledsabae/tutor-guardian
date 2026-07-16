@@ -14,6 +14,7 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart'
     show launchUrl, canLaunchUrl, LaunchMode;
@@ -62,7 +63,7 @@ class SettingsScreen extends ConsumerWidget {
     final currentLanguage = ref.watch(contentLanguageProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('الإعدادات')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).settingsTitle)),
       body: SafeArea(
         child: asyncList.when(
           loading: () => const Center(child: CircularProgressIndicator()),
@@ -77,8 +78,8 @@ class SettingsScreen extends ConsumerWidget {
                     .firstOrNull
                 : envelope.children.firstOrNull;
             if (activeChild == null) {
-              return const Center(
-                child: Text('لا يوجد ملف طفل نشط.'),
+              return Center(
+                child: Text(AppLocalizations.of(context).settingsNoChild),
               );
             }
             return ListView(
@@ -88,7 +89,7 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 _SettingsRow(
                   icon: Icons.swap_horiz,
-                  title: 'تبديل الطفل النشط',
+                  title: AppLocalizations.of(context).settingsSwitchChild,
                   subtitle: 'لديك ${envelope.count} من أصل ${ChildrenListScreen.kMaxChildren} أطفال',
                   onTap: () async {
                     await Navigator.of(context).push(
@@ -103,8 +104,8 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.edit_outlined,
-                  title: 'تعديل معلومات الطفل',
-                  subtitle: 'الاسم، المرحلة العمرية، الصورة، الجنس',
+                  title: AppLocalizations.of(context).settingsEditChild,
+                  subtitle: AppLocalizations.of(context).settingsEditChildDesc,
                   onTap: () async {
                     final changed = await Navigator.of(context).push<bool>(
                       MaterialPageRoute(
@@ -136,7 +137,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.feedback_outlined,
-                  title: 'شاركنا رأيك',
+                  title: AppLocalizations.of(context).settingsShareFeedback,
                   subtitle: 'اقتراح أو مشكلة — كتابةً أو صوتاً، يصل لنا مباشرة',
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const FeedbackScreen()),
@@ -144,7 +145,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.restart_alt,
-                  title: 'إعادة تعيين التقدّم',
+                  title: AppLocalizations.of(context).settingsResetProgress,
                   subtitle: 'سيتم مسح كل الدروس المكمّلة وإعادة السلسلة إلى 0',
                   iconColor: AppTheme.dangerFg,
                   onTap: () => _confirmReset(context, ref, activeChild),
@@ -152,7 +153,7 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 _SettingsRow(
                   icon: Icons.language,
-                  title: 'لغة الوسائط التعليمية',
+                  title: AppLocalizations.of(context).settingsMediaLang,
                   subtitle: currentLanguage == 'ar'
                       ? 'العربية (بودكاست وفيديو عربي)'
                       : 'English (English audio/video)',
@@ -163,7 +164,7 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 _SettingsRow(
                   icon: Icons.star_outline,
-                  title: 'قيّم التطبيق',
+                  title: AppLocalizations.of(context).settingsRate,
                   subtitle: 'رأيك يساعد آباءً غيرك يجدون «المربّي»',
                   onTap: () async {
                     final market = Uri.parse(
@@ -181,7 +182,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.shield_outlined,
-                  title: 'سياسة الخصوصية',
+                  title: AppLocalizations.of(context).settingsPrivacy,
                   subtitle: 'كيف نتعامل مع بياناتك',
                   onTap: () async {
                     final uri = Uri.parse(
@@ -194,7 +195,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.favorite_outline,
-                  title: 'المفضلة',
+                  title: AppLocalizations.of(context).settingsFavorites,
                   subtitle: 'الدروس والنصائح التي حفظتها',
                   onTap: () {
                     Navigator.of(context).push(
@@ -206,7 +207,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.emoji_events_outlined,
-                  title: 'إنجازاتي',
+                  title: AppLocalizations.of(context).settingsAchievements,
                   subtitle: 'الشارات التي حصلت عليها',
                   onTap: () {
                     Navigator.of(context).push(
@@ -218,13 +219,13 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsRow(
                   icon: Icons.file_download_outlined,
-                  title: 'تصدير بياناتي',
+                  title: AppLocalizations.of(context).settingsExport,
                   subtitle: 'تصدير المفضلة والملاحظات كملف JSON',
                   onTap: () => _exportData(context, ref),
                 ),
                 _SettingsRow(
                   icon: Icons.file_upload_outlined,
-                  title: 'استيراد بياناتي',
+                  title: AppLocalizations.of(context).settingsImport,
                   subtitle: 'استيراد النسخة الاحتياطية من ملف JSON',
                   onTap: () => _importData(context, ref),
                 ),
@@ -253,7 +254,7 @@ class SettingsScreen extends ConsumerWidget {
     // Show loading indicator
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     scaffoldMessenger.showSnackBar(
-      const SnackBar(content: Text('جاري تجهيز النسخة الاحتياطية...')),
+      SnackBar(content: Text(AppLocalizations.of(context).settingsPreparingBackup)),
     );
 
     try {
@@ -274,7 +275,7 @@ class SettingsScreen extends ConsumerWidget {
       
       if (context.mounted) {
         scaffoldMessenger.showSnackBar(
-          const SnackBar(content: Text('تم تصدير البيانات بنجاح')),
+          SnackBar(content: Text(AppLocalizations.of(context).settingsExportSuccess)),
         );
       }
     } catch (e) {
@@ -321,12 +322,12 @@ class SettingsScreen extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: const Text('إلغاء'),
+              child: Text(AppLocalizations.of(context).cancel),
             ),
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(true),
               style: TextButton.styleFrom(foregroundColor: AppTheme.primary),
-              child: const Text('استيراد'),
+              child: Text(AppLocalizations.of(context).settingsImportBtn),
             ),
           ],
         ),
@@ -337,7 +338,7 @@ class SettingsScreen extends ConsumerWidget {
       // Perform import
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('جاري استيراد البيانات...')),
+          SnackBar(content: Text(AppLocalizations.of(context).settingsImporting)),
         );
       }
 
@@ -382,7 +383,7 @@ class SettingsScreen extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('إعادة تعيين التقدّم؟'),
+        title: Text(AppLocalizations.of(context).settingsResetConfirm),
         content: Text(
           'سيتم مسح كل الدروس المكمّلة لـ ${child.name} وستُعاد السلسلة إلى الصفر. '
           'هذا الإجراء لا يمكن التراجع عنه.',
@@ -411,7 +412,7 @@ class SettingsScreen extends ConsumerWidget {
         SnackBar(
           content: Text(
             deleted == 0
-                ? 'لا يوجد تقدّم لإعادة تعيينه.'
+                ? AppLocalizations.of(context).settingsNoProgress
                 : 'تم مسح $deleted درس. السلسلة الآن 0.',
           ),
         ),
@@ -660,7 +661,7 @@ class _ErrorView extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text('إعادة المحاولة'),
+              label: Text(AppLocalizations.of(context).retry),
             ),
           ],
         ),
@@ -707,8 +708,8 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
         borderRadius: BorderRadius.circular(18),
         clipBehavior: Clip.antiAlias,
         child: SwitchListTile(
-        title: const Text(
-          'إشعارات أذكار الأسرة',
+        title: Text(
+          AppLocalizations.of(context).settingsFamilyAdhkar,
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
         ),
         subtitle: const Text(

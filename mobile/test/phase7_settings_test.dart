@@ -16,6 +16,7 @@ import 'package:almorabbi/features/program/data/progress_models.dart';
 import 'package:almorabbi/features/program/data/settings_repository.dart';
 import 'package:almorabbi/features/program/screens/edit_child_screen.dart';
 import 'package:almorabbi/features/program/screens/settings_screen.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 
 void main() {
@@ -111,7 +112,12 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(home: SettingsScreen()),
+          child: MaterialApp(
+            locale: const Locale('ar'),
+            home: const SettingsScreen(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -119,7 +125,7 @@ void main() {
       expect(find.text('الإعدادات'), findsOneWidget);
       expect(find.text('سارة'), findsOneWidget);
       expect(find.text('تعديل معلومات الطفل'), findsOneWidget);
-      expect(find.text('إعادة تعيين التقدّم'), findsOneWidget);
+      expect(find.text('إعادة تعيين التقدم'), findsOneWidget);
       // Scroll to the language row and privacy row below it.
       await tester.scrollUntilVisible(
         find.text('لغة الوسائط التعليمية'),
@@ -154,7 +160,12 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(home: SettingsScreen()),
+          child: MaterialApp(
+            locale: const Locale('ar'),
+            home: const SettingsScreen(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -177,6 +188,7 @@ void main() {
             sharedPreferencesProvider.overrideWith((_) async => prefs),
           ],
           child: MaterialApp(
+            locale: const Locale('ar'),
             home: EditChildScreen(
               child: ChildProfile.fromJson(_childJson(
                 id: 5,
@@ -184,6 +196,8 @@ void main() {
                 ageGroup: '4-6',
               )),
             ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),
       );
@@ -212,6 +226,7 @@ void main() {
             sharedPreferencesProvider.overrideWith((_) async => prefs),
           ],
           child: MaterialApp(
+            locale: const Locale('ar'),
             home: EditChildScreen(
               child: ChildProfile.fromJson(_childJson(
                 id: 5,
@@ -219,6 +234,8 @@ void main() {
                 ageGroup: '4-6',
               )),
             ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),
       );

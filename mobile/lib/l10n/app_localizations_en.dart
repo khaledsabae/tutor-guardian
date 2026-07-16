@@ -1004,4 +1004,183 @@ class AppLocalizationsEn extends AppLocalizations {
   String routineDeleteFailed(Object error) {
     return 'Failed to delete: $error';
   }
+
+  @override
+  String get settingsMediaLangChanged => 'Media language changed to Arabic';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsNoChild => 'No active child profile.';
+
+  @override
+  String get settingsSwitchChild => 'Switch active child';
+
+  @override
+  String settingsChildCount(Object count, Object max) {
+    return 'You have $count of $max children';
+  }
+
+  @override
+  String get settingsEditChild => 'Edit child info';
+
+  @override
+  String get settingsEditChildDesc => 'Name, age group, avatar, gender';
+
+  @override
+  String get settingsInviteFriend => 'Invite a friend 🤍';
+
+  @override
+  String get settingsInviteDesc =>
+      'Your guidance is charity — both of you earn a reward';
+
+  @override
+  String get settingsBackup => 'Save your progress 🤍';
+
+  @override
+  String get settingsBackupDesc =>
+      'Optional login — saves your data if you change devices';
+
+  @override
+  String get settingsShareFeedback => 'Share your feedback';
+
+  @override
+  String get settingsShareFeedbackDesc =>
+      'A suggestion or issue — written or voice, reaches us directly';
+
+  @override
+  String get settingsResetProgress => 'Reset progress';
+
+  @override
+  String get settingsResetDesc =>
+      'All completed lessons will be cleared and streak reset to 0';
+
+  @override
+  String get settingsMediaLang => 'Educational media language';
+
+  @override
+  String get settingsArabicMedia => 'Arabic (Arabic podcasts and video)';
+
+  @override
+  String get settingsRate => 'Rate the app';
+
+  @override
+  String get settingsRateDesc =>
+      'Your review helps other parents find Al-Murabbi';
+
+  @override
+  String get settingsPrivacy => 'Privacy Policy';
+
+  @override
+  String get settingsPrivacyDesc => 'How we handle your data';
+
+  @override
+  String get settingsFavorites => 'Favorites';
+
+  @override
+  String get settingsFavoritesDesc => 'Lessons and tips you\'ve saved';
+
+  @override
+  String get settingsAchievements => 'My Achievements';
+
+  @override
+  String get settingsAchievementsDesc => 'Badges you\'ve earned';
+
+  @override
+  String get settingsExport => 'Export my data';
+
+  @override
+  String get settingsExportDesc => 'Export favorites and notes as JSON file';
+
+  @override
+  String get settingsImport => 'Import my data';
+
+  @override
+  String get settingsImportDesc => 'Import backup from JSON file';
+
+  @override
+  String settingsVersion(Object version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get settingsPreparingBackup => 'Preparing backup...';
+
+  @override
+  String get settingsBackupTitle => 'Al-Murabbi Data Backup';
+
+  @override
+  String get settingsBackupName => 'Backup - Al-Murabbi';
+
+  @override
+  String get settingsExportSuccess => 'Data exported successfully';
+
+  @override
+  String settingsExportFailed(Object error) {
+    return 'Export failed: $error';
+  }
+
+  @override
+  String get settingsImportFile => 'Choose backup file';
+
+  @override
+  String get settingsImportConfirm => 'Import data?';
+
+  @override
+  String get settingsImportDesc1 =>
+      'Imported data will be merged with your current data.';
+
+  @override
+  String get settingsImportDesc2 => 'This action cannot be easily undone.';
+
+  @override
+  String get settingsImportBtn => 'Import';
+
+  @override
+  String get settingsImporting => 'Importing data...';
+
+  @override
+  String settingsImportSuccess(Object favorites, Object reflections) {
+    return 'Imported successfully: $reflections notes, $favorites favorites';
+  }
+
+  @override
+  String settingsImportFailed(Object error) {
+    return 'Import failed: $error';
+  }
+
+  @override
+  String get settingsResetConfirm => 'Reset progress?';
+
+  @override
+  String settingsResetDesc1(Object name) {
+    return 'All completed lessons for $name will be cleared and streak reset to zero.';
+  }
+
+  @override
+  String get settingsResetDesc2 => 'This action cannot be undone.';
+
+  @override
+  String get settingsResetBtn => 'Reset';
+
+  @override
+  String get settingsNoProgress => 'No progress to reset.';
+
+  @override
+  String settingsResetDone(Object count) {
+    return '$count lessons cleared. Streak is now 0.';
+  }
+
+  @override
+  String settingsResetFailed(Object error) {
+    return 'Reset failed: $error';
+  }
+
+  @override
+  String get settingsFamilyAdhkar => 'Family Adhkar Notifications';
+
+  @override
+  String get settingsFamilyAdhkarDesc =>
+      'Daily Prophetic hadith and supplications (morning and evening)';
 }
