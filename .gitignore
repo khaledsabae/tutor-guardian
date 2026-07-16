@@ -103,3 +103,6 @@ docs/path_videos/
 logs/
 memory/
 .agents/
+# Reels output large media
+docs/marketing/reels_output/*.mp4
+docs/marketing/reels_output/*_thumb.jpg
