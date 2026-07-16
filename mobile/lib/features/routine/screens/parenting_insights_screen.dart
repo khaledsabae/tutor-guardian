@@ -84,7 +84,8 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
   @override
   Widget build(BuildContext context) {
     final activeChild = ref.watch(activeChildProfileProvider);
-    final childName = activeChild?.name ?? 'طفلك';
+    final childName =
+        activeChild?.name ?? AppLocalizations.of(context).childYourChild;
 
     return Scaffold(
       appBar: AppBar(
@@ -139,7 +140,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
             ),
             const SizedBox(height: 16),
             Text(
-              _error ?? 'حدث خطأ غير متوقع',
+              _error ?? AppLocalizations.of(context).unexpectedError,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 16,
@@ -150,7 +151,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
             FilledButton.icon(
               onPressed: _loadData,
               icon: const Icon(Icons.refresh),
-              label: const Text('إعادة المحاولة'),
+              label: Text(AppLocalizations.of(context).retry),
               style: FilledButton.styleFrom(
                 backgroundColor: Dt.accent,
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -213,7 +214,10 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
             Expanded(
               child: _buildMetricTile(
                 title: AppLocalizations.of(context).parentingInsightsSleep,
-                value: sleepHours > 0 ? '$sleepHours س $sleepMins د' : '$sleepMins دقيقة',
+                value: sleepHours > 0
+                    ? AppLocalizations.of(context)
+                        .insightHoursMinutes('$sleepHours', '$sleepMins')
+                    : AppLocalizations.of(context).insightMinutes('$sleepMins'),
                 icon: '🌙',
                 color: Colors.indigo.shade50,
                 textColor: Colors.indigo.shade900,
@@ -223,7 +227,8 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
             Expanded(
               child: _buildMetricTile(
                 title: AppLocalizations.of(context).parentingInsightsFeeds,
-                value: '$_feedCount مرات\n($_feedAmount مل)',
+                value: AppLocalizations.of(context)
+                    .insightTimesWithMl('$_feedCount', '$_feedAmount'),
                 icon: '🍼',
                 color: Colors.teal.shade50,
                 textColor: Colors.teal.shade900,
@@ -233,7 +238,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
             Expanded(
               child: _buildMetricTile(
                 title: AppLocalizations.of(context).parentingInsightsDiapers,
-                value: '$_diaperCount مرات',
+                value: AppLocalizations.of(context).insightTimes('$_diaperCount'),
                 icon: '👶',
                 color: Colors.amber.shade50,
                 textColor: Colors.amber.shade900,
@@ -327,9 +332,12 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
   }
 
   Widget _buildInsightCard(Map<String, dynamic> insight) {
+    final l10n = AppLocalizations.of(context);
     final type = insight['type'] as String? ?? 'tip';
     final title = insight['title'] as String? ?? '';
     final desc = insight['description'] as String? ?? '';
+    // NOTE: `category` is backend-generated Arabic content; the substring
+    // matches below classify that content and must stay Arabic (not UI text).
     final category = insight['category'] as String? ?? 'أخرى';
 
     Color cardBg;
@@ -341,17 +349,17 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
       cardBg = const Color(0xFFE8F5E9).withValues(alpha: 0.6);
       borderCol = const Color(0xFFC8E6C9);
       accentColor = const Color(0xFF2E7D32);
-      badgeText = '✅ إيجابي';
+      badgeText = l10n.insightBadgePositive;
     } else if (type == 'warning') {
       cardBg = const Color(0xFFFFF3E0).withValues(alpha: 0.6);
       borderCol = const Color(0xFFFFE0B2);
       accentColor = const Color(0xFFE65100);
-      badgeText = '⚠️ تنبيه';
+      badgeText = l10n.insightBadgeWarning;
     } else {
       cardBg = const Color(0xFFE0F2F1).withValues(alpha: 0.6);
       borderCol = const Color(0xFFB2DFDB);
       accentColor = const Color(0xFF00796B);
-      badgeText = '💡 نصيحة';
+      badgeText = l10n.insightBadgeTip;
     }
 
     String catEmoji = '💡';

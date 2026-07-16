@@ -3907,6 +3907,390 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أنهيت البطاقات! 🎉'**
   String get finishedCards;
+
+  /// No description provided for @habitCategoryWorship.
+  ///
+  /// In ar, this message translates to:
+  /// **'العبادات'**
+  String get habitCategoryWorship;
+
+  /// No description provided for @habitCategorySelfBuilding.
+  ///
+  /// In ar, this message translates to:
+  /// **'بناء الذات'**
+  String get habitCategorySelfBuilding;
+
+  /// No description provided for @habitCategoryStudy.
+  ///
+  /// In ar, this message translates to:
+  /// **'المذاكرة'**
+  String get habitCategoryStudy;
+
+  /// No description provided for @habitPrayerFajr.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلاة الفجر'**
+  String get habitPrayerFajr;
+
+  /// No description provided for @habitPrayerDhuhr.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلاة الظهر'**
+  String get habitPrayerDhuhr;
+
+  /// No description provided for @habitPrayerAsr.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلاة العصر'**
+  String get habitPrayerAsr;
+
+  /// No description provided for @habitPrayerMaghrib.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلاة المغرب'**
+  String get habitPrayerMaghrib;
+
+  /// No description provided for @habitPrayerIsha.
+  ///
+  /// In ar, this message translates to:
+  /// **'صلاة العشاء'**
+  String get habitPrayerIsha;
+
+  /// No description provided for @habitQuranWerd.
+  ///
+  /// In ar, this message translates to:
+  /// **'ورد القرآن'**
+  String get habitQuranWerd;
+
+  /// No description provided for @habitQuranReading.
+  ///
+  /// In ar, this message translates to:
+  /// **'قراءة القرآن'**
+  String get habitQuranReading;
+
+  /// No description provided for @habitHonoringParents.
+  ///
+  /// In ar, this message translates to:
+  /// **'بر الوالدين'**
+  String get habitHonoringParents;
+
+  /// No description provided for @habitHonesty.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصدق'**
+  String get habitHonesty;
+
+  /// No description provided for @habitRespectElders.
+  ///
+  /// In ar, this message translates to:
+  /// **'احترام الكبار'**
+  String get habitRespectElders;
+
+  /// No description provided for @habitTidyRoom.
+  ///
+  /// In ar, this message translates to:
+  /// **'ترتيب الغرفة'**
+  String get habitTidyRoom;
+
+  /// No description provided for @habitEarlySleep.
+  ///
+  /// In ar, this message translates to:
+  /// **'النوم المبكر'**
+  String get habitEarlySleep;
+
+  /// No description provided for @habitAngerControl.
+  ///
+  /// In ar, this message translates to:
+  /// **'التحكم بالغضب'**
+  String get habitAngerControl;
+
+  /// No description provided for @habitHomework.
+  ///
+  /// In ar, this message translates to:
+  /// **'أداء الواجب'**
+  String get habitHomework;
+
+  /// No description provided for @habitRevision.
+  ///
+  /// In ar, this message translates to:
+  /// **'المراجعة'**
+  String get habitRevision;
+
+  /// No description provided for @habitReading.
+  ///
+  /// In ar, this message translates to:
+  /// **'القراءة'**
+  String get habitReading;
+
+  /// No description provided for @routineEventSleep.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوم'**
+  String get routineEventSleep;
+
+  /// No description provided for @routineEventFeed.
+  ///
+  /// In ar, this message translates to:
+  /// **'رضاعة'**
+  String get routineEventFeed;
+
+  /// No description provided for @routineEventDiaper.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفاظ'**
+  String get routineEventDiaper;
+
+  /// No description provided for @routineStatFeeds.
+  ///
+  /// In ar, this message translates to:
+  /// **'رضاعات'**
+  String get routineStatFeeds;
+
+  /// No description provided for @routineStatDiapers.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفاظات'**
+  String get routineStatDiapers;
+
+  /// No description provided for @routineChildStage.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطفل {name} في مرحلة {stage}'**
+  String routineChildStage(Object name, Object stage);
+
+  /// No description provided for @errorGeneric.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطأ: {error}'**
+  String errorGeneric(Object error);
+
+  /// No description provided for @routineSummaryDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملخّص {days} أيام'**
+  String routineSummaryDays(Object days);
+
+  /// No description provided for @routineFieldType.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع'**
+  String get routineFieldType;
+
+  /// No description provided for @routineFieldSide.
+  ///
+  /// In ar, this message translates to:
+  /// **'جانب'**
+  String get routineFieldSide;
+
+  /// No description provided for @routineFieldDuration.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة'**
+  String get routineFieldDuration;
+
+  /// No description provided for @routineAddEventTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة حدث {type}'**
+  String routineAddEventTitle(Object type);
+
+  /// No description provided for @routineFeedBreast.
+  ///
+  /// In ar, this message translates to:
+  /// **'ثدي'**
+  String get routineFeedBreast;
+
+  /// No description provided for @routineFeedBottle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رضّاعة'**
+  String get routineFeedBottle;
+
+  /// No description provided for @routineFeedSolid.
+  ///
+  /// In ar, this message translates to:
+  /// **'طعام صلب'**
+  String get routineFeedSolid;
+
+  /// No description provided for @routineSideLeft.
+  ///
+  /// In ar, this message translates to:
+  /// **'يسار'**
+  String get routineSideLeft;
+
+  /// No description provided for @routineSideRight.
+  ///
+  /// In ar, this message translates to:
+  /// **'يمين'**
+  String get routineSideRight;
+
+  /// No description provided for @routineAmountApprox.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكمية تقريباً (ml)'**
+  String get routineAmountApprox;
+
+  /// No description provided for @routineDiaperWet.
+  ///
+  /// In ar, this message translates to:
+  /// **'بلل'**
+  String get routineDiaperWet;
+
+  /// No description provided for @routineDiaperDirty.
+  ///
+  /// In ar, this message translates to:
+  /// **'براز'**
+  String get routineDiaperDirty;
+
+  /// No description provided for @routinePickWakeTime.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر وقت الاستيقاظ'**
+  String get routinePickWakeTime;
+
+  /// No description provided for @routineMedicalNoteBlocked.
+  ///
+  /// In ar, this message translates to:
+  /// **'الملاحظة تحتوي على مصطلح طبي/دواء. رجاءً اكتب ملاحظة روتينية فقط.'**
+  String get routineMedicalNoteBlocked;
+
+  /// No description provided for @routineQrFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر إنشاء رمز QR: {error}'**
+  String routineQrFailed(Object error);
+
+  /// No description provided for @routineShareTeenTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك الميزان مع المراهق'**
+  String get routineShareTeenTitle;
+
+  /// No description provided for @routineShareScanHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'امسح الرمز من هاتف الابن، أو انسخ الرابط وأرسله عبر واتساب.'**
+  String get routineShareScanHint;
+
+  /// No description provided for @childFallbackName.
+  ///
+  /// In ar, this message translates to:
+  /// **'الطفل'**
+  String get childFallbackName;
+
+  /// No description provided for @childYourChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلك'**
+  String get childYourChild;
+
+  /// No description provided for @childModePinRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'يجب تحديد رمز PIN.'**
+  String get childModePinRequired;
+
+  /// No description provided for @childModePinIncorrect.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز غير صحيح.'**
+  String get childModePinIncorrect;
+
+  /// No description provided for @childModePinMismatch.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرقم غير متطابق. حاول مرة أخرى.'**
+  String get childModePinMismatch;
+
+  /// No description provided for @childModeSessionExpired.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.'**
+  String get childModeSessionExpired;
+
+  /// No description provided for @childModeEnterFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل الدخول لوضع الطفل.'**
+  String get childModeEnterFailed;
+
+  /// No description provided for @habitCustomizeNameLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم العادة الجديدة'**
+  String get habitCustomizeNameLabel;
+
+  /// No description provided for @habitCustomizeNameHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثال: تمرين السباحة'**
+  String get habitCustomizeNameHint;
+
+  /// No description provided for @habitCustomizeNameLength.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم العادة يجب أن يكون بين 2 و 60 حرفاً'**
+  String get habitCustomizeNameLength;
+
+  /// No description provided for @habitCustomizeAdded.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمت إضافة العادة'**
+  String get habitCustomizeAdded;
+
+  /// No description provided for @habitCustomizeAddFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل الإضافة: {error}'**
+  String habitCustomizeAddFailed(Object error);
+
+  /// No description provided for @habitCustomizeUpdateFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل التحديث: {error}'**
+  String habitCustomizeUpdateFailed(Object error);
+
+  /// No description provided for @insightHoursMinutes.
+  ///
+  /// In ar, this message translates to:
+  /// **'{h} س {m} د'**
+  String insightHoursMinutes(Object h, Object m);
+
+  /// No description provided for @insightMinutes.
+  ///
+  /// In ar, this message translates to:
+  /// **'{m} دقيقة'**
+  String insightMinutes(Object m);
+
+  /// No description provided for @insightTimesWithMl.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} مرات\n({ml} مل)'**
+  String insightTimesWithMl(Object count, Object ml);
+
+  /// No description provided for @insightTimes.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} مرات'**
+  String insightTimes(Object count);
+
+  /// No description provided for @insightBadgePositive.
+  ///
+  /// In ar, this message translates to:
+  /// **'✅ إيجابي'**
+  String get insightBadgePositive;
+
+  /// No description provided for @insightBadgeWarning.
+  ///
+  /// In ar, this message translates to:
+  /// **'⚠️ تنبيه'**
+  String get insightBadgeWarning;
+
+  /// No description provided for @insightBadgeTip.
+  ///
+  /// In ar, this message translates to:
+  /// **'💡 نصيحة'**
+  String get insightBadgeTip;
 }
 
 class _AppLocalizationsDelegate

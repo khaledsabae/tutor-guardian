@@ -53,9 +53,9 @@ class _HabitCustomizeScreenState extends ConsumerState<HabitCustomizeScreen> {
                       Expanded(
                         child: TextField(
                           controller: _nameController,
-                          decoration: const InputDecoration(
-                            labelText: 'اسم العادة الجديدة',
-                            hintText: 'مثال: تمرين السباحة',
+                          decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context).habitCustomizeNameLabel,
+                            hintText: AppLocalizations.of(context).habitCustomizeNameHint,
                           ),
                           maxLength: 60,
                         ),
@@ -70,7 +70,7 @@ class _HabitCustomizeScreenState extends ConsumerState<HabitCustomizeScreen> {
                                 child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                               )
                             : const Icon(Icons.add),
-                        label: const Text('إضافة'),
+                        label: Text(AppLocalizations.of(context).add),
                       ),
                     ],
                   ),
@@ -87,9 +87,10 @@ class _HabitCustomizeScreenState extends ConsumerState<HabitCustomizeScreen> {
   }
 
   Future<void> _addTemplate(int childId) async {
+    final l10n = AppLocalizations.of(context);
     final name = _nameController.text.trim();
     if (name.isEmpty || name.length < 2 || name.length > 60) {
-      _showSnack('اسم العادة يجب أن يكون بين 2 و 60 حرفاً');
+      _showSnack(l10n.habitCustomizeNameLength);
       return;
     }
     setState(() => _saving = true);
@@ -103,9 +104,9 @@ class _HabitCustomizeScreenState extends ConsumerState<HabitCustomizeScreen> {
       );
       _nameController.clear();
       ref.invalidate(habitTemplatesProvider(childId));
-      _showSnack('تمت إضافة العادة');
+      _showSnack(l10n.habitCustomizeAdded);
     } on TgApiError catch (e) {
-      _showSnack('فشل الإضافة: ${e.message}');
+      _showSnack(l10n.habitCustomizeAddFailed(e.message));
     } finally {
       if (mounted) setState(() => _saving = false);
     }
@@ -131,7 +132,7 @@ class _CategorySelector extends StatelessWidget {
       segments: HabitCategory.values
           .map((c) => ButtonSegment(
                 value: c,
-                label: Text('${c.icon} ${c.label}'),
+                label: Text('${c.icon} ${c.label(AppLocalizations.of(context))}'),
               ))
           .toList(),
       selected: {selected},
@@ -169,7 +170,7 @@ class _TemplateList extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text('خطأ: $e')),
+      error: (e, _) => Center(child: Text(AppLocalizations.of(context).errorGeneric(e.toString()))),
     );
   }
 
@@ -178,6 +179,8 @@ class _TemplateList extends ConsumerWidget {
     WidgetRef ref,
     HabitTemplate template,
   ) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
     try {
       await TgClient().updateHabitTemplate(
         template.id,
@@ -185,8 +188,8 @@ class _TemplateList extends ConsumerWidget {
       );
       ref.invalidate(habitTemplatesProvider(template.childId));
     } on TgApiError catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('فشل التحديث: ${e.message}')),
+      messenger.showSnackBar(
+        SnackBar(content: Text(l10n.habitCustomizeUpdateFailed(e.message))),
       );
     }
   }

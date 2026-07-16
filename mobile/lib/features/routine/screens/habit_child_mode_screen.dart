@@ -25,7 +25,7 @@ class HabitChildModeScreen extends ConsumerWidget {
     // an explicit expiry message, take the child back to the lock screen so
     // the parent can re-issue a token. This avoids leaving the child in a
     // hung screen or showing a raw HTTP error.
-    if (state.error == 'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.') {
+    if (state.error == kChildModeErrorSessionExpired) {
       return _ExpiredGuard(childId: state.childId);
     }
 
@@ -36,7 +36,7 @@ class HabitChildModeScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            tooltip: 'خروج',
+            tooltip: AppLocalizations.of(context).habitChildModeExit,
             onPressed: () => _askExit(context, ref),
           ),
         ],
@@ -87,7 +87,7 @@ class HabitChildModeScreen extends ConsumerWidget {
       MaterialPageRoute(
         builder: (_) => ChildModeLockScreen(
           childId: childId,
-          childName: 'الطفل',
+          childName: AppLocalizations.of(context).childFallbackName,
           isExit: true,
         ),
       ),
@@ -114,17 +114,18 @@ class _ExpiredGuardState extends State<_ExpiredGuard> {
   Future<void> _redirect() async {
     if (!mounted) return;
     final childId = widget.childId;
+    final l10n = AppLocalizations.of(context);
     await Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => childId == null
-            ? const Scaffold(
+            ? Scaffold(
                 body: Center(
-                  child: Text('انتهى وقت الجلسة. يُرجى العودة للمربي.'),
+                  child: Text(l10n.habitChildModeExpired),
                 ),
               )
             : ChildModeLockScreen(
                 childId: childId,
-                childName: 'الطفل',
+                childName: l10n.childFallbackName,
                 isExit: false,
               ),
       ),
@@ -174,7 +175,7 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    widget.item.habitName,
+                    habitDisplayName(widget.item.habitName, AppLocalizations.of(context)),
                     style: theme.textTheme.titleMedium,
                   ),
                 ),
@@ -232,7 +233,8 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
       builder: (ctx) => AlertDialog(
         title: Text(AppLocalizations.of(context).habitChildModeConfirmTitle),
         content: Text(
-          AppLocalizations.of(context).habitChildModeConfirmMsg(widget.item.habitName, label),
+          AppLocalizations.of(context).habitChildModeConfirmMsg(
+              habitDisplayName(widget.item.habitName, AppLocalizations.of(context)), label),
         ),
         actions: [
           TextButton(

@@ -1,6 +1,8 @@
 /// Daily routine models for «حِساب اليوم».
 library;
 
+import 'package:almorabbi/l10n/app_localizations.dart';
+
 enum RoutineEventType { sleep, feed, diaper }
 
 extension RoutineEventTypeX on RoutineEventType {
@@ -15,14 +17,14 @@ extension RoutineEventTypeX on RoutineEventType {
     }
   }
 
-  String get label {
+  String label(AppLocalizations l10n) {
     switch (this) {
       case RoutineEventType.sleep:
-        return 'نوم';
+        return l10n.routineEventSleep;
       case RoutineEventType.feed:
-        return 'رضاعة';
+        return l10n.routineEventFeed;
       case RoutineEventType.diaper:
-        return 'حفاظ';
+        return l10n.routineEventDiaper;
     }
   }
 

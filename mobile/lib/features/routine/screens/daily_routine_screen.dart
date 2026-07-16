@@ -152,7 +152,8 @@ class _RoutineAgeGate extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'الطفل ${profile.name} في مرحلة ${profile.ageGroup}',
+            AppLocalizations.of(context)
+                .routineChildStage(profile.name, profile.ageGroup),
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
@@ -214,7 +215,7 @@ class _RoutineBody extends ConsumerWidget {
           child: routineAsync.when(
             data: (day) => _EventsList(day: day),
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (e, _) => Center(child: Text('خطأ: ${e.toString()}')),
+            error: (e, _) => Center(child: Text(AppLocalizations.of(context).errorGeneric(e.toString()))),
           ),
         ),
       ],
@@ -240,14 +241,14 @@ class _SummaryCard extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('ملخّص ${s.days} أيام', style: Theme.of(context).textTheme.titleSmall),
+                    Text(AppLocalizations.of(context).routineSummaryDays(s.days), style: Theme.of(context).textTheme.titleSmall),
                     const SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _Stat(icon: '🌙', value: '${(s.totalSleepMinutes / 60).floor()}h', label: 'نوم'),
-                        _Stat(icon: '🍼', value: '${s.totalFeedCount}', label: 'رضاعات'),
-                        _Stat(icon: '👶', value: '${s.diaperCount}', label: 'حفاظات'),
+                        _Stat(icon: '🌙', value: '${(s.totalSleepMinutes / 60).floor()}h', label: AppLocalizations.of(context).routineEventSleep),
+                        _Stat(icon: '🍼', value: '${s.totalFeedCount}', label: AppLocalizations.of(context).routineStatFeeds),
+                        _Stat(icon: '👶', value: '${s.diaperCount}', label: AppLocalizations.of(context).routineStatDiapers),
                       ],
                     ),
                   ],
@@ -315,28 +316,29 @@ class _EventTile extends StatelessWidget {
   const _EventTile({required this.event});
   final RoutineEvent event;
 
-  String _subtitle() {
+  String _subtitle(AppLocalizations l10n) {
     final parts = <String>[];
-    if (event.feedType != null) parts.add('نوع: ${event.feedType}');
+    if (event.feedType != null) parts.add('${l10n.routineFieldType}: ${event.feedType}');
     if (event.amountMl != null) parts.add('${event.amountMl} ml');
-    if (event.side != null) parts.add('جانب: ${event.side}');
+    if (event.side != null) parts.add('${l10n.routineFieldSide}: ${event.side}');
     if (event.diaperType != null) parts.add('${event.diaperType}');
     if (event.endedAt != null && event.eventType == RoutineEventType.sleep) {
       final mins = event.endedAt!.difference(event.startedAt).inMinutes;
-      parts.add('مدة: ${mins ~/ 60}h ${mins % 60}m');
+      parts.add('${l10n.routineFieldDuration}: ${mins ~/ 60}h ${mins % 60}m');
     }
     return parts.join(' · ');
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: Text(event.eventType.icon, style: const TextStyle(fontSize: 28)),
-        title: Text(event.eventType.label),
+        title: Text(event.eventType.label(l10n)),
         subtitle: Text(
-          '${_formatTime(event.startedAt)}${_subtitle().isEmpty ? '' : '\n${_subtitle()}'}',
+          '${_formatTime(event.startedAt)}${_subtitle(l10n).isEmpty ? '' : '\n${_subtitle(l10n)}'}',
         ),
         trailing: IconButton(
           icon: const Icon(Icons.delete_outline, color: AppTheme.dangerFg),
@@ -351,24 +353,26 @@ class _EventTile extends StatelessWidget {
 
   void _delete(BuildContext context, int? eventId) {
     if (eventId == null) return;
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(AppLocalizations.of(context).routineDeleteConfirm),
+        title: Text(l10n.routineDeleteConfirm),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
           TextButton(
             onPressed: () async {
               Navigator.of(ctx).pop();
               try {
                 await TgClient().deleteRoutineEvent(eventId);
               } on TgApiError catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('فشل الحذف: ${e.message}')),
+                messenger.showSnackBar(
+                  SnackBar(content: Text(l10n.routineDeleteFailed(e.message))),
                 );
               }
             },
-            child: const Text('حذف', style: TextStyle(color: AppTheme.dangerFg)),
+            child: Text(l10n.delete, style: const TextStyle(color: AppTheme.dangerFg)),
           ),
         ],
       ),
@@ -419,7 +423,7 @@ class _AddEventSheetState extends State<_AddEventSheet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'إضافة حدث ${_type.label}',
+            AppLocalizations.of(context).routineAddEventTitle(_type.label(AppLocalizations.of(context))),
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
@@ -428,7 +432,7 @@ class _AddEventSheetState extends State<_AddEventSheet> {
             segments: _allowedTypes
                 .map((t) => ButtonSegment(
                       value: t,
-                      label: Text('${t.icon} ${t.label}'),
+                      label: Text('${t.icon} ${t.label(AppLocalizations.of(context))}'),
                     ))
                 .toList(),
             selected: {_type},
@@ -458,7 +462,7 @@ class _AddEventSheetState extends State<_AddEventSheet> {
                     width: 20,
                     child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                   )
-                : const Text('حفظ'),
+                : Text(AppLocalizations.of(context).save),
           ),
         ],
       ),
@@ -466,14 +470,15 @@ class _AddEventSheetState extends State<_AddEventSheet> {
   }
 
   Widget _typeFields() {
+    final l10n = AppLocalizations.of(context);
     return switch (_type) {
       RoutineEventType.feed => Column(
           children: [
             SegmentedButton<String>(
-              segments: const [
-                ButtonSegment(value: 'breast', label: Text('ثدي')),
-                ButtonSegment(value: 'bottle', label: Text('رضّاعة')),
-                ButtonSegment(value: 'solid', label: Text('طعام صلب')),
+              segments: [
+                ButtonSegment(value: 'breast', label: Text(l10n.routineFeedBreast)),
+                ButtonSegment(value: 'bottle', label: Text(l10n.routineFeedBottle)),
+                ButtonSegment(value: 'solid', label: Text(l10n.routineFeedSolid)),
               ],
               selected: {_feedType ?? 'breast'},
               onSelectionChanged: (s) => setState(() => _feedType = s.first),
@@ -481,10 +486,10 @@ class _AddEventSheetState extends State<_AddEventSheet> {
             const SizedBox(height: 8),
             if ((_feedType ?? 'breast') == 'breast')
               SegmentedButton<String>(
-                segments: const [
-                  ButtonSegment(value: 'left', label: Text('يسار')),
-                  ButtonSegment(value: 'right', label: Text('يمين')),
-                  ButtonSegment(value: 'both', label: Text('كلاهما')),
+                segments: [
+                  ButtonSegment(value: 'left', label: Text(l10n.routineSideLeft)),
+                  ButtonSegment(value: 'right', label: Text(l10n.routineSideRight)),
+                  ButtonSegment(value: 'both', label: Text(l10n.routineBoth)),
                 ],
                 selected: {_side ?? 'left'},
                 onSelectionChanged: (s) => setState(() => _side = s.first),
@@ -492,18 +497,18 @@ class _AddEventSheetState extends State<_AddEventSheet> {
             if ((_feedType ?? 'breast') != 'breast')
               TextField(
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'الكمية تقريباً (ml)',
+                decoration: InputDecoration(
+                  labelText: l10n.routineAmountApprox,
                 ),
                 onChanged: (v) => _amountMl = int.tryParse(v),
               ),
           ],
         ),
       RoutineEventType.diaper => SegmentedButton<String>(
-          segments: const [
-            ButtonSegment(value: 'wet', label: Text('بلل')),
-            ButtonSegment(value: 'dirty', label: Text('براز')),
-            ButtonSegment(value: 'both', label: Text('كلاهما')),
+          segments: [
+            ButtonSegment(value: 'wet', label: Text(l10n.routineDiaperWet)),
+            ButtonSegment(value: 'dirty', label: Text(l10n.routineDiaperDirty)),
+            ButtonSegment(value: 'both', label: Text(l10n.routineBoth)),
           ],
           selected: {_diaperType ?? 'wet'},
           onSelectionChanged: (s) => setState(() => _diaperType = s.first),
@@ -517,7 +522,7 @@ class _AddEventSheetState extends State<_AddEventSheet> {
                 onPressed: _pickEndTime,
                 child: Text(
                   _endedAt == null
-                      ? 'اختر وقت الاستيقاظ'
+                      ? l10n.routinePickWakeTime
                       : '${_endedAt!.hour.toString().padLeft(2, '0')}:${_endedAt!.minute.toString().padLeft(2, '0')}',
                 ),
               ),
@@ -549,11 +554,12 @@ class _AddEventSheetState extends State<_AddEventSheet> {
   }
 
   void _submit() {
+    final l10n = AppLocalizations.of(context);
     final notes = _notesController.text.trim();
     if (notes.isNotEmpty && _medicalTerms.hasMatch(notes)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('الملاحظة تحتوي على مصطلح طبي/دواء. رجاءً اكتب ملاحظة روتينية فقط.'),
+        SnackBar(
+          content: Text(l10n.routineMedicalNoteBlocked),
         ),
       );
       return;
@@ -575,14 +581,16 @@ class _AddEventSheetState extends State<_AddEventSheet> {
     );
 
     setState(() => _saving = true);
+    final navigator = Navigator.of(context);
+    final messenger = ScaffoldMessenger.of(context);
     TgClient()
         .createRoutineEvent(widget.childId, body: event.toJson())
         .then((_) {
-      Navigator.of(context).pop();
+      navigator.pop();
     }).catchError((e) {
-      setState(() => _saving = false);
-      final msg = e is TgApiError ? e.message : AppLocalizations.of(context).routineError;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      if (mounted) setState(() => _saving = false);
+      final msg = e is TgApiError ? e.message : l10n.routineError;
+      messenger.showSnackBar(SnackBar(content: Text(msg)));
     });
   }
 
@@ -646,7 +654,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
       if (!mounted) return;
       Navigator.of(context, rootNavigator: true).pop();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('تعذر إنشاء رمز QR: $e')),
+        SnackBar(content: Text(AppLocalizations.of(context).routineQrFailed(e.toString()))),
       );
       return;
     }
@@ -660,7 +668,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
       context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
-          title: const Text('شارك الميزان مع المراهق'),
+          title: Text(AppLocalizations.of(context).routineShareTeenTitle),
           content: SizedBox(
             width: double.maxFinite,
             child: SingleChildScrollView(
@@ -683,8 +691,8 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                   ),
                   const SizedBox(height: 16),
                 ],
-                const Text(
-                  'امسح الرمز من هاتف الابن، أو انسخ الرابط وأرسله عبر واتساب.',
+                Text(
+                  AppLocalizations.of(context).routineShareScanHint,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
@@ -746,7 +754,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
         TabBar(
           controller: _tabController,
           tabs: categories
-              .map((c) => Tab(text: '${c.icon} ${c.label}'))
+              .map((c) => Tab(text: '${c.icon} ${c.label(AppLocalizations.of(context))}'))
               .toList(),
           onTap: (i) => setState(() => _selectedTab = i),
         ),
@@ -769,7 +777,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
               ],
             ),
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (e, _) => Center(child: Text('خطأ: $e')),
+            error: (e, _) => Center(child: Text(AppLocalizations.of(context).errorGeneric(e.toString()))),
           ),
         ),
         SafeArea(
@@ -788,7 +796,10 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                   OutlinedButton.icon(
                     onPressed: () async {
                       final profile = ref.read(activeChildProfileProvider);
-                      await _showWebShareDialog(childId, profile?.name ?? 'الطفل');
+                      await _showWebShareDialog(
+                          childId,
+                          profile?.name ??
+                              AppLocalizations.of(context).childFallbackName);
                     },
                     icon: const Icon(Icons.qr_code_2),
                     label: Text(AppLocalizations.of(context).routineShareWeb),
@@ -798,7 +809,8 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                 FilledButton.icon(
                   onPressed: () {
                     final profile = ref.read(activeChildProfileProvider);
-                    _enterChildMode(childId, profile?.name ?? 'الطفل');
+                    _enterChildMode(childId,
+                        profile?.name ?? AppLocalizations.of(context).childFallbackName);
                   },
                   icon: const Icon(Icons.child_care),
                   label: Text(AppLocalizations.of(context).routineChildMode),
@@ -946,7 +958,7 @@ class _HabitCardState extends State<_HabitCard> {
     } on TgApiError catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('فشل التسجيل: ${e.message}')),
+          SnackBar(content: Text(AppLocalizations.of(context).routineRecordFailed(e.message))),
         );
       }
     } finally {
@@ -965,7 +977,7 @@ class _HabitCardState extends State<_HabitCard> {
           children: [
             Expanded(
               child: Text(
-                widget.habitName,
+                habitDisplayName(widget.habitName, AppLocalizations.of(context)),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
@@ -982,7 +994,7 @@ class _HabitCardState extends State<_HabitCard> {
                   final isSelected = current == s;
                   return IconButton(
                     icon: Text(s.icon, style: const TextStyle(fontSize: 24)),
-                    tooltip: s.label,
+                    tooltip: s.label(AppLocalizations.of(context)),
                     style: isSelected
                         ? IconButton.styleFrom(
                             backgroundColor: Dt.primary.withValues(alpha: .15),

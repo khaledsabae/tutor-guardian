@@ -2142,4 +2142,222 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get finishedCards => 'You finished the cards! 🎉';
+
+  @override
+  String get habitCategoryWorship => 'Worship';
+
+  @override
+  String get habitCategorySelfBuilding => 'Self-building';
+
+  @override
+  String get habitCategoryStudy => 'Study';
+
+  @override
+  String get habitPrayerFajr => 'Fajr Salah';
+
+  @override
+  String get habitPrayerDhuhr => 'Dhuhr Salah';
+
+  @override
+  String get habitPrayerAsr => 'Asr Salah';
+
+  @override
+  String get habitPrayerMaghrib => 'Maghrib Salah';
+
+  @override
+  String get habitPrayerIsha => 'Isha Salah';
+
+  @override
+  String get habitQuranWerd => 'Quran Werd';
+
+  @override
+  String get habitQuranReading => 'Quran reading';
+
+  @override
+  String get habitHonoringParents => 'Honoring parents';
+
+  @override
+  String get habitHonesty => 'Honesty';
+
+  @override
+  String get habitRespectElders => 'Respecting elders';
+
+  @override
+  String get habitTidyRoom => 'Tidying the room';
+
+  @override
+  String get habitEarlySleep => 'Early bedtime';
+
+  @override
+  String get habitAngerControl => 'Managing anger';
+
+  @override
+  String get habitHomework => 'Doing homework';
+
+  @override
+  String get habitRevision => 'Revision';
+
+  @override
+  String get habitReading => 'Reading';
+
+  @override
+  String get routineEventSleep => 'Sleep';
+
+  @override
+  String get routineEventFeed => 'Feeding';
+
+  @override
+  String get routineEventDiaper => 'Diaper';
+
+  @override
+  String get routineStatFeeds => 'Feeds';
+
+  @override
+  String get routineStatDiapers => 'Diapers';
+
+  @override
+  String routineChildStage(Object name, Object stage) {
+    return '$name is in the $stage stage';
+  }
+
+  @override
+  String errorGeneric(Object error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String routineSummaryDays(Object days) {
+    return '$days-day summary';
+  }
+
+  @override
+  String get routineFieldType => 'Type';
+
+  @override
+  String get routineFieldSide => 'Side';
+
+  @override
+  String get routineFieldDuration => 'Duration';
+
+  @override
+  String routineAddEventTitle(Object type) {
+    return 'Add $type event';
+  }
+
+  @override
+  String get routineFeedBreast => 'Breast';
+
+  @override
+  String get routineFeedBottle => 'Bottle';
+
+  @override
+  String get routineFeedSolid => 'Solid food';
+
+  @override
+  String get routineSideLeft => 'Left';
+
+  @override
+  String get routineSideRight => 'Right';
+
+  @override
+  String get routineAmountApprox => 'Approximate amount (ml)';
+
+  @override
+  String get routineDiaperWet => 'Wet';
+
+  @override
+  String get routineDiaperDirty => 'Soiled';
+
+  @override
+  String get routinePickWakeTime => 'Pick wake-up time';
+
+  @override
+  String get routineMedicalNoteBlocked =>
+      'The note contains a medical or medication term. Please keep notes routine-only.';
+
+  @override
+  String routineQrFailed(Object error) {
+    return 'Could not create QR code: $error';
+  }
+
+  @override
+  String get routineShareTeenTitle => 'Share the balance with your teen';
+
+  @override
+  String get routineShareScanHint =>
+      'Scan the code from your child\'s phone, or copy the link and send it via WhatsApp.';
+
+  @override
+  String get childFallbackName => 'Your child';
+
+  @override
+  String get childYourChild => 'your child';
+
+  @override
+  String get childModePinRequired => 'A PIN is required.';
+
+  @override
+  String get childModePinIncorrect => 'Incorrect PIN.';
+
+  @override
+  String get childModePinMismatch => 'The PINs do not match. Try again.';
+
+  @override
+  String get childModeSessionExpired =>
+      'The secure session has ended. Please hand the phone back to the parent.';
+
+  @override
+  String get childModeEnterFailed => 'Could not enter child mode.';
+
+  @override
+  String get habitCustomizeNameLabel => 'New habit name';
+
+  @override
+  String get habitCustomizeNameHint => 'e.g. Swimming practice';
+
+  @override
+  String get habitCustomizeNameLength =>
+      'The habit name must be between 2 and 60 characters';
+
+  @override
+  String get habitCustomizeAdded => 'Habit added';
+
+  @override
+  String habitCustomizeAddFailed(Object error) {
+    return 'Could not add: $error';
+  }
+
+  @override
+  String habitCustomizeUpdateFailed(Object error) {
+    return 'Update failed: $error';
+  }
+
+  @override
+  String insightHoursMinutes(Object h, Object m) {
+    return '$h h $m m';
+  }
+
+  @override
+  String insightMinutes(Object m) {
+    return '$m min';
+  }
+
+  @override
+  String insightTimesWithMl(Object count, Object ml) {
+    return '$count times\n($ml ml)';
+  }
+
+  @override
+  String insightTimes(Object count) {
+    return '$count times';
+  }
+
+  @override
+  String get insightBadgePositive => '✅ Positive';
+
+  @override
+  String get insightBadgeWarning => '⚠️ Alert';
+
+  @override
+  String get insightBadgeTip => '💡 Tip';
 }

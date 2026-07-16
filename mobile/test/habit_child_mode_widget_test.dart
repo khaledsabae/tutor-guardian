@@ -182,7 +182,7 @@ void main() {
       container.read(childModeProvider.notifier).state = ChildModeState(
         active: true,
         childId: 7,
-        error: 'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.',
+        error: kChildModeErrorSessionExpired,
         day: HabitDay(childId: 7, date: '2026-07-07', habits: [], events: []),
       );
 

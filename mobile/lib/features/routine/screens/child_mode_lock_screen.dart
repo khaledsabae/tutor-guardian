@@ -22,6 +22,16 @@ class ChildModeLockScreen extends ConsumerStatefulWidget {
   ConsumerState<ChildModeLockScreen> createState() => _ChildModeLockScreenState();
 }
 
+String _localizedChildModeError(String? code, AppLocalizations l10n) {
+  return switch (code) {
+    kChildModeErrorPinRequired => l10n.childModePinRequired,
+    kChildModeErrorPinIncorrect => l10n.childModePinIncorrect,
+    kChildModeErrorSessionExpired => l10n.childModeSessionExpired,
+    null => l10n.childModeEnterFailed,
+    _ => code,
+  };
+}
+
 class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
   final _pin = <String>[];
   String? _error;
@@ -57,7 +67,7 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
           _confirmPin = '';
           setState(() {
             _pin.clear();
-            _error = 'الرقم غير متطابق. حاول مرة أخرى.';
+            _error = AppLocalizations.of(context).childModePinMismatch;
           });
         }
       } else {
@@ -67,6 +77,7 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
   }
 
   Future<void> _finish(String pin) async {
+    final l10n = AppLocalizations.of(context);
     final notifier = ref.read(childModeProvider.notifier);
     if (widget.isExit) {
       final ok = await notifier.exit(pin);
@@ -76,7 +87,7 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
         } else {
           setState(() {
             _pin.clear();
-            _error = 'الرمز غير صحيح.';
+            _error = l10n.childModePinIncorrect;
           });
         }
       }
@@ -88,7 +99,8 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
         } else {
           setState(() {
             _pin.clear();
-            _error = ref.read(childModeProvider).error ?? 'فشل الدخول لوضع الطفل.';
+            _error = _localizedChildModeError(
+                ref.read(childModeProvider).error, l10n);
           });
         }
       }

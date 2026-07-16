@@ -1,6 +1,8 @@
 /// Habit models for «ميزان العادات» — age-dynamic habit tracker.
 library;
 
+import 'package:almorabbi/l10n/app_localizations.dart';
+
 enum HabitCategory { worship, selfBuilding, study }
 
 extension HabitCategoryX on HabitCategory {
@@ -22,14 +24,14 @@ extension HabitCategoryX on HabitCategory {
     }
   }
 
-  String get label {
+  String label(AppLocalizations l10n) {
     switch (this) {
       case HabitCategory.worship:
-        return 'العبادات';
+        return l10n.habitCategoryWorship;
       case HabitCategory.selfBuilding:
-        return 'بناء الذات';
+        return l10n.habitCategorySelfBuilding;
       case HabitCategory.study:
-        return 'المذاكرة';
+        return l10n.habitCategoryStudy;
     }
   }
 
@@ -59,14 +61,14 @@ extension HabitStatusX on HabitStatus {
     }
   }
 
-  String get label {
+  String label(AppLocalizations l10n) {
     switch (this) {
       case HabitStatus.completed:
-        return 'تم';
+        return l10n.habitChildModeDone;
       case HabitStatus.partially:
-        return 'جزئي';
+        return l10n.habitChildModePartial;
       case HabitStatus.missed:
-        return 'لم يتم';
+        return l10n.habitChildModeMissed;
     }
   }
 
@@ -313,3 +315,48 @@ Map<HabitCategory, List<String>> habitsForAge(String ageGroup) {
 @Deprecated('Use habitsForAge(ageGroup) instead')
 Map<HabitCategory, List<String>> get kDefaultHabits =>
     kAgeBandedHabits['10-18']!;
+
+/// Resolves the display name for a habit.
+///
+/// Default habit names are Arabic wire values (part of the backend
+/// value-tracking contract — never translate the wire strings themselves).
+/// This maps the known defaults to localized labels; custom, user-entered
+/// habit names fall through unchanged.
+String habitDisplayName(String habitName, AppLocalizations l10n) {
+  switch (habitName) {
+    case 'صلاة الفجر':
+      return l10n.habitPrayerFajr;
+    case 'صلاة الظهر':
+      return l10n.habitPrayerDhuhr;
+    case 'صلاة العصر':
+      return l10n.habitPrayerAsr;
+    case 'صلاة المغرب':
+      return l10n.habitPrayerMaghrib;
+    case 'صلاة العشاء':
+      return l10n.habitPrayerIsha;
+    case 'ورد القرآن':
+      return l10n.habitQuranWerd;
+    case 'قراءة القرآن':
+      return l10n.habitQuranReading;
+    case 'بر الوالدين':
+      return l10n.habitHonoringParents;
+    case 'الصدق':
+      return l10n.habitHonesty;
+    case 'احترام الكبار':
+      return l10n.habitRespectElders;
+    case 'ترتيب الغرفة':
+      return l10n.habitTidyRoom;
+    case 'النوم المبكر':
+      return l10n.habitEarlySleep;
+    case 'التحكم بالغضب':
+      return l10n.habitAngerControl;
+    case 'أداء الواجب':
+      return l10n.habitHomework;
+    case 'المراجعة':
+      return l10n.habitRevision;
+    case 'القراءة':
+      return l10n.habitReading;
+    default:
+      return habitName;
+  }
+}

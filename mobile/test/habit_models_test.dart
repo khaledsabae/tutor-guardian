@@ -3,10 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/screens/daily_routine_screen.dart';
-import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/l10n/app_localizations_ar.dart';
 
 void main() {
+  final l10n = AppLocalizationsAr();
+
   group('habitAgeAllowed (7-18)', () {
     test('returns true for 7-9', () {
       expect(habitAgeAllowed('7-9'), isTrue);
@@ -51,9 +52,9 @@ void main() {
       expect(HabitCategory.study.wireName, 'study');
     });
     test('labels are Arabic', () {
-      expect(HabitCategory.worship.label, 'العبادات');
-      expect(HabitCategory.selfBuilding.label, 'بناء الذات');
-      expect(HabitCategory.study.label, 'المذاكرة');
+      expect(HabitCategory.worship.label(l10n), 'العبادات');
+      expect(HabitCategory.selfBuilding.label(l10n), 'بناء الذات');
+      expect(HabitCategory.study.label(l10n), 'المذاكرة');
     });
   });
 
@@ -64,9 +65,9 @@ void main() {
       expect(HabitStatus.missed.wireName, 'missed');
     });
     test('labels are Arabic', () {
-      expect(HabitStatus.completed.label, 'تم');
-      expect(HabitStatus.partially.label, 'جزئي');
-      expect(HabitStatus.missed.label, 'لم يتم');
+      expect(HabitStatus.completed.label(l10n), 'تم');
+      expect(HabitStatus.partially.label(l10n), 'جزئي');
+      expect(HabitStatus.missed.label(l10n), 'لم يتم');
     });
   });
 
@@ -199,7 +200,6 @@ void main() {
   });
 
   group('habitTabLabel', () {
-    final l10n = AppLocalizationsAr();
     test('0-6 -> حساب اليوم', () {
       expect(habitTabLabel('4-6', l10n), l10n.routineDailyTracker);
     });

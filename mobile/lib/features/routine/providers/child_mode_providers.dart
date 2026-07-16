@@ -13,6 +13,12 @@ final childModeProvider = StateNotifierProvider<ChildModeNotifier, ChildModeStat
   (ref) => ChildModeNotifier(ref.read(tgClientProvider)),
 );
 
+/// Stable error codes surfaced through [ChildModeState.error].
+/// The UI maps these to localized messages; anything else is shown raw.
+const kChildModeErrorPinRequired = 'child_mode_pin_required';
+const kChildModeErrorPinIncorrect = 'child_mode_pin_incorrect';
+const kChildModeErrorSessionExpired = 'child_mode_session_expired';
+
 class ChildModeState {
   const ChildModeState({
     this.active = false,
@@ -68,7 +74,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
     state = state.copyWith(loading: true, error: null);
     try {
       if (pin == null || pin.isEmpty) {
-        state = state.copyWith(loading: false, error: 'يجب تحديد رمز PIN.');
+        state = state.copyWith(loading: false, error: kChildModeErrorPinRequired);
         return false;
       }
       final hasPin = await hasChildModePin();
@@ -77,7 +83,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
         if (!ok) {
           state = state.copyWith(
             loading: false,
-            error: 'الرمز غير صحيح.',
+            error: kChildModeErrorPinIncorrect,
           );
           return false;
         }
@@ -133,7 +139,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       if (e.statusCode == 401) {
         await clearChildMode();
         await _clearChildId();
-        state = const ChildModeState(error: 'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.');
+        state = const ChildModeState(error: kChildModeErrorSessionExpired);
       } else {
         state = state.copyWith(loading: false, error: e.toString());
       }
@@ -164,7 +170,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       if (e.statusCode == 401) {
         await clearChildMode();
         await _clearChildId();
-        state = const ChildModeState(error: 'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.');
+        state = const ChildModeState(error: kChildModeErrorSessionExpired);
       } else {
         state = state.copyWith(error: e.toString());
       }

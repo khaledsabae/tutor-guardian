@@ -2114,4 +2114,222 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get finishedCards => 'أنهيت البطاقات! 🎉';
+
+  @override
+  String get habitCategoryWorship => 'العبادات';
+
+  @override
+  String get habitCategorySelfBuilding => 'بناء الذات';
+
+  @override
+  String get habitCategoryStudy => 'المذاكرة';
+
+  @override
+  String get habitPrayerFajr => 'صلاة الفجر';
+
+  @override
+  String get habitPrayerDhuhr => 'صلاة الظهر';
+
+  @override
+  String get habitPrayerAsr => 'صلاة العصر';
+
+  @override
+  String get habitPrayerMaghrib => 'صلاة المغرب';
+
+  @override
+  String get habitPrayerIsha => 'صلاة العشاء';
+
+  @override
+  String get habitQuranWerd => 'ورد القرآن';
+
+  @override
+  String get habitQuranReading => 'قراءة القرآن';
+
+  @override
+  String get habitHonoringParents => 'بر الوالدين';
+
+  @override
+  String get habitHonesty => 'الصدق';
+
+  @override
+  String get habitRespectElders => 'احترام الكبار';
+
+  @override
+  String get habitTidyRoom => 'ترتيب الغرفة';
+
+  @override
+  String get habitEarlySleep => 'النوم المبكر';
+
+  @override
+  String get habitAngerControl => 'التحكم بالغضب';
+
+  @override
+  String get habitHomework => 'أداء الواجب';
+
+  @override
+  String get habitRevision => 'المراجعة';
+
+  @override
+  String get habitReading => 'القراءة';
+
+  @override
+  String get routineEventSleep => 'نوم';
+
+  @override
+  String get routineEventFeed => 'رضاعة';
+
+  @override
+  String get routineEventDiaper => 'حفاظ';
+
+  @override
+  String get routineStatFeeds => 'رضاعات';
+
+  @override
+  String get routineStatDiapers => 'حفاظات';
+
+  @override
+  String routineChildStage(Object name, Object stage) {
+    return 'الطفل $name في مرحلة $stage';
+  }
+
+  @override
+  String errorGeneric(Object error) {
+    return 'خطأ: $error';
+  }
+
+  @override
+  String routineSummaryDays(Object days) {
+    return 'ملخّص $days أيام';
+  }
+
+  @override
+  String get routineFieldType => 'نوع';
+
+  @override
+  String get routineFieldSide => 'جانب';
+
+  @override
+  String get routineFieldDuration => 'مدة';
+
+  @override
+  String routineAddEventTitle(Object type) {
+    return 'إضافة حدث $type';
+  }
+
+  @override
+  String get routineFeedBreast => 'ثدي';
+
+  @override
+  String get routineFeedBottle => 'رضّاعة';
+
+  @override
+  String get routineFeedSolid => 'طعام صلب';
+
+  @override
+  String get routineSideLeft => 'يسار';
+
+  @override
+  String get routineSideRight => 'يمين';
+
+  @override
+  String get routineAmountApprox => 'الكمية تقريباً (ml)';
+
+  @override
+  String get routineDiaperWet => 'بلل';
+
+  @override
+  String get routineDiaperDirty => 'براز';
+
+  @override
+  String get routinePickWakeTime => 'اختر وقت الاستيقاظ';
+
+  @override
+  String get routineMedicalNoteBlocked =>
+      'الملاحظة تحتوي على مصطلح طبي/دواء. رجاءً اكتب ملاحظة روتينية فقط.';
+
+  @override
+  String routineQrFailed(Object error) {
+    return 'تعذر إنشاء رمز QR: $error';
+  }
+
+  @override
+  String get routineShareTeenTitle => 'شارك الميزان مع المراهق';
+
+  @override
+  String get routineShareScanHint =>
+      'امسح الرمز من هاتف الابن، أو انسخ الرابط وأرسله عبر واتساب.';
+
+  @override
+  String get childFallbackName => 'الطفل';
+
+  @override
+  String get childYourChild => 'طفلك';
+
+  @override
+  String get childModePinRequired => 'يجب تحديد رمز PIN.';
+
+  @override
+  String get childModePinIncorrect => 'الرمز غير صحيح.';
+
+  @override
+  String get childModePinMismatch => 'الرقم غير متطابق. حاول مرة أخرى.';
+
+  @override
+  String get childModeSessionExpired =>
+      'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.';
+
+  @override
+  String get childModeEnterFailed => 'فشل الدخول لوضع الطفل.';
+
+  @override
+  String get habitCustomizeNameLabel => 'اسم العادة الجديدة';
+
+  @override
+  String get habitCustomizeNameHint => 'مثال: تمرين السباحة';
+
+  @override
+  String get habitCustomizeNameLength =>
+      'اسم العادة يجب أن يكون بين 2 و 60 حرفاً';
+
+  @override
+  String get habitCustomizeAdded => 'تمت إضافة العادة';
+
+  @override
+  String habitCustomizeAddFailed(Object error) {
+    return 'فشل الإضافة: $error';
+  }
+
+  @override
+  String habitCustomizeUpdateFailed(Object error) {
+    return 'فشل التحديث: $error';
+  }
+
+  @override
+  String insightHoursMinutes(Object h, Object m) {
+    return '$h س $m د';
+  }
+
+  @override
+  String insightMinutes(Object m) {
+    return '$m دقيقة';
+  }
+
+  @override
+  String insightTimesWithMl(Object count, Object ml) {
+    return '$count مرات\n($ml مل)';
+  }
+
+  @override
+  String insightTimes(Object count) {
+    return '$count مرات';
+  }
+
+  @override
+  String get insightBadgePositive => '✅ إيجابي';
+
+  @override
+  String get insightBadgeWarning => '⚠️ تنبيه';
+
+  @override
+  String get insightBadgeTip => '💡 نصيحة';
 }
