@@ -287,10 +287,26 @@ def load_lesson_index() -> dict:
     return {l["lesson_id"]: l for l in idx["lessons"]}
 
 
+def _report_title(report: Path) -> str:
+    """Extract first H1 from a markdown report as a content fingerprint."""
+    try:
+        for line in report.read_text(encoding="utf-8").splitlines():
+            if line.strip().startswith("#"):
+                return line.strip().lstrip("# ").strip()[:80]
+    except OSError:
+        pass
+    return ""
+
+
 def pick_unrendered(n: int, output_dir: Path, manifest: dict | None = None) -> list[tuple[str, Path, Path, str]]:
-    """Return up to n (lesson_id, mp3, report, title) that are not in manifest."""
+    """Return up to n (lesson_id, mp3, report, title) that are not in manifest.
+
+    Deduplicates by report H1 so the same generic report template does not
+    produce multiple visually-identical reels.
+    """
     lookup = load_lesson_index()
     out = []
+    seen_report_titles: set[str] = set()
     for lid, lesson in lookup.items():
         if len(out) >= n:
             break
@@ -303,19 +319,17 @@ def pick_unrendered(n: int, output_dir: Path, manifest: dict | None = None) -> l
         if not mp3.exists() or not report.exists():
             continue
         title = lesson.get("seo_title") or lesson.get("title_ar", "") or lesson["lesson_id"]
-        if title == lesson["lesson_id"]:
-            # lesson_index lacks an Arabic title — fall back to the report H1
-            # so filenames/captions stay human-readable Arabic.
-            try:
-                for line in report.read_text(encoding="utf-8").splitlines():
-                    if line.strip().startswith("#"):
-                        title = line.strip().lstrip("# ").strip()[:60] or title
-                        break
-            except OSError:
-                pass
+        report_title = _report_title(report)
+        if title == lesson["lesson_id"] and report_title:
+            title = report_title[:60]
         slug = _slugify(title)
         if manifest and slug in manifest.get("rendered", []):
             continue
+        # Skip duplicate-content reports so each reel covers a distinct topic.
+        if report_title and report_title in seen_report_titles:
+            continue
+        if report_title:
+            seen_report_titles.add(report_title)
         out.append((lid, mp3, report, title))
     return out
 
