@@ -2275,6 +2275,1602 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)'**
   String get settingsFamilyAdhkarDesc;
+
+  /// No description provided for @lessonTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرس'**
+  String get lessonTitle;
+
+  /// No description provided for @lessonCompleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكتمل ✓'**
+  String get lessonCompleted;
+
+  /// No description provided for @lessonMarking.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ التسجيل…'**
+  String get lessonMarking;
+
+  /// No description provided for @lessonMarkComplete.
+  ///
+  /// In ar, this message translates to:
+  /// **'أتممت هذا الدرس'**
+  String get lessonMarkComplete;
+
+  /// No description provided for @lessonSummary.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملخص الدرس'**
+  String get lessonSummary;
+
+  /// No description provided for @lessonTryThis.
+  ///
+  /// In ar, this message translates to:
+  /// **'جرّب هذا'**
+  String get lessonTryThis;
+
+  /// No description provided for @lessonReflections.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسئلة للتأمل'**
+  String get lessonReflections;
+
+  /// No description provided for @lessonUnitRefs.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرتبط بـ {count} وحدات من قاعدة المعرفة'**
+  String lessonUnitRefs(Object count);
+
+  /// No description provided for @lessonWarningFollowup.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الدرس يحتوي على توجيهات تستحق المتابعة مع متخصص. لا تتردد في استشارة طبيب أو أخصائي تنموي إذا شعرت بالحاجة.'**
+  String get lessonWarningFollowup;
+
+  /// No description provided for @lessonErrorLoading.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحميل الدرس'**
+  String get lessonErrorLoading;
+
+  /// No description provided for @lessonErrorMarking.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تسجيل الإكمال: {error}'**
+  String lessonErrorMarking(Object error);
+
+  /// No description provided for @lessonCelebrationTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما شاء الله!'**
+  String get lessonCelebrationTitle;
+
+  /// No description provided for @lessonCelebrationMsg.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تسجيل إكمال الدرس'**
+  String get lessonCelebrationMsg;
+
+  /// No description provided for @lessonFavAdd.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة للمفضلة'**
+  String get lessonFavAdd;
+
+  /// No description provided for @lessonFavRemove.
+  ///
+  /// In ar, this message translates to:
+  /// **'إزالة من المفضلة'**
+  String get lessonFavRemove;
+
+  /// No description provided for @lessonStatusCompleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكتمل'**
+  String get lessonStatusCompleted;
+
+  /// No description provided for @lessonStatusInProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'قيد التنفيذ'**
+  String get lessonStatusInProgress;
+
+  /// No description provided for @lessonStatusNotStarted.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يبدأ بعد'**
+  String get lessonStatusNotStarted;
+
+  /// No description provided for @lessonStartInteractive.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ بالمحتوى التفاعلي'**
+  String get lessonStartInteractive;
+
+  /// No description provided for @lessonListenPodcast.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎧 استمع للبودكاست'**
+  String get lessonListenPodcast;
+
+  /// No description provided for @lessonWatchVideo.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎥 الفيديو التعليمي'**
+  String get lessonWatchVideo;
+
+  /// No description provided for @lessonFlashcards.
+  ///
+  /// In ar, this message translates to:
+  /// **'📇 فلاش كاردز ({count} بطاقة)'**
+  String lessonFlashcards(Object count);
+
+  /// No description provided for @lessonQuiz.
+  ///
+  /// In ar, this message translates to:
+  /// **'❓ اختبر نفسك ({count} سؤال)'**
+  String lessonQuiz(Object count);
+
+  /// No description provided for @lessonInfographic.
+  ///
+  /// In ar, this message translates to:
+  /// **'📊 إنفوجرافيك الدرس'**
+  String get lessonInfographic;
+
+  /// No description provided for @lessonReport.
+  ///
+  /// In ar, this message translates to:
+  /// **'📄 تقرير الدرس'**
+  String get lessonReport;
+
+  /// No description provided for @lessonDataTable.
+  ///
+  /// In ar, this message translates to:
+  /// **'📋 جدول البيانات'**
+  String get lessonDataTable;
+
+  /// No description provided for @lessonPlayCyber.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎮 العب وتعلم (حارس البيانات)'**
+  String get lessonPlayCyber;
+
+  /// No description provided for @lessonPlayMedical.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎮 العب وتعلم'**
+  String get lessonPlayMedical;
+
+  /// No description provided for @lessonPlayIslamic.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎮 العب وتعلم (شجرة الأخلاق)'**
+  String get lessonPlayIslamic;
+
+  /// No description provided for @lessonPlayDev.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎮 العب وتعلم (متاهة المشاعر)'**
+  String get lessonPlayDev;
+
+  /// No description provided for @lessonVideoTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎥 شاهد الفيديو التعليمي'**
+  String get lessonVideoTitle;
+
+  /// No description provided for @lessonPodcastTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎧 البودكاست'**
+  String get lessonPodcastTitle;
+
+  /// No description provided for @lessonVideoUnitTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎥 فيديو الوحدة: {title}'**
+  String lessonVideoUnitTitle(Object title);
+
+  /// No description provided for @lessonInteractiveHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'استمع، شاهد، والعب — ثم اقرأ الملخص بالأسفل'**
+  String get lessonInteractiveHint;
+
+  /// No description provided for @journeyTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلة {name}'**
+  String journeyTitle(Object name);
+
+  /// No description provided for @journeyLoading.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحميل الرحلة.'**
+  String get journeyLoading;
+
+  /// No description provided for @journeyStartFirst.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ بتسجيل أول محطة في رحلته'**
+  String get journeyStartFirst;
+
+  /// No description provided for @journeyCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّلت {count} محطة — سجّل تعتزّ به 💛'**
+  String journeyCount(Object count);
+
+  /// No description provided for @journeyMilestoneLog.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل محطة من عندك'**
+  String get journeyMilestoneLog;
+
+  /// No description provided for @journeyDeleteMilestone.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف المحطة'**
+  String get journeyDeleteMilestone;
+
+  /// No description provided for @journeyDeleteConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل تريد حذف «{title}» من رحلة {name}؟'**
+  String journeyDeleteConfirm(Object name, Object title);
+
+  /// No description provided for @journeyFaithMilestones.
+  ///
+  /// In ar, this message translates to:
+  /// **'محطات إيمانية 🕌'**
+  String get journeyFaithMilestones;
+
+  /// No description provided for @journeyDevMilestones.
+  ///
+  /// In ar, this message translates to:
+  /// **'محطات نمائية 📈 (حسب العمر)'**
+  String get journeyDevMilestones;
+
+  /// No description provided for @journeyEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل طفل رحلة فريدة. سجّل أول محطة من المحطات القادمة بالأسفل.'**
+  String get journeyEmpty;
+
+  /// No description provided for @journeyNewMilestone.
+  ///
+  /// In ar, this message translates to:
+  /// **'محطة جديدة'**
+  String get journeyNewMilestone;
+
+  /// No description provided for @journeyMilestoneTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عنوان المحطة'**
+  String get journeyMilestoneTitle;
+
+  /// No description provided for @journeyMilestoneHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثال: قال أول كلمة طيبة'**
+  String get journeyMilestoneHint;
+
+  /// No description provided for @journeyMilestoneNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظة (اختياري)'**
+  String get journeyMilestoneNote;
+
+  /// No description provided for @journeyMilestoneNoteHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'دوّن لحظة تتذكرها…'**
+  String get journeyMilestoneNoteHint;
+
+  /// No description provided for @journeyMilestoneSave.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل المحطة'**
+  String get journeyMilestoneSave;
+
+  /// No description provided for @journeyChallengeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحدّي {name} الحالي'**
+  String journeyChallengeTitle(Object name);
+
+  /// No description provided for @journeyChallengeDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الحل ✓'**
+  String get journeyChallengeDone;
+
+  /// No description provided for @journeyChallengeDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر تحدّياً تركّز عليه الآن — وسيوجّه «المربّي» نصيحته اليومية إليه.'**
+  String get journeyChallengeDesc;
+
+  /// No description provided for @journeyChallengeActive.
+  ///
+  /// In ar, this message translates to:
+  /// **'يركّز «المربّي» على هذا التحدّي في نصيحته اليومية.'**
+  String get journeyChallengeActive;
+
+  /// No description provided for @journeySaveError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر الحفظ — تأكد من الاتصال.'**
+  String get journeySaveError;
+
+  /// No description provided for @journeyQuranTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ القرآن'**
+  String get journeyQuranTitle;
+
+  /// No description provided for @journeyQuranTrack.
+  ///
+  /// In ar, this message translates to:
+  /// **'تابع ما يحفظه — ونحتفل بأول سورة'**
+  String get journeyQuranTrack;
+
+  /// No description provided for @journeyQuranCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ {count} سورة'**
+  String journeyQuranCount(Object count);
+
+  /// No description provided for @pathDetailTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفاصيل المسار'**
+  String get pathDetailTitle;
+
+  /// No description provided for @pathDetailLessons.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدروس ({count})'**
+  String pathDetailLessons(Object count);
+
+  /// No description provided for @pathDetailEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد دروس في هذا المسار بعد'**
+  String get pathDetailEmpty;
+
+  /// No description provided for @pathDetailStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ المسار'**
+  String get pathDetailStart;
+
+  /// No description provided for @pathDetailShare.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك إتمام المسار 🤍'**
+  String get pathDetailShare;
+
+  /// No description provided for @pathDetailVideoUnit.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎥 فيديو الوحدة: {title}'**
+  String pathDetailVideoUnit(Object title);
+
+  /// No description provided for @pathDetailVideoIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎥 فيديو تعريفي'**
+  String get pathDetailVideoIntro;
+
+  /// No description provided for @pathDetailVideoIntroTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎥 فيديو تعريفي لـ {title}'**
+  String pathDetailVideoIntroTitle(Object title);
+
+  /// No description provided for @pathDetailDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'⏱️ {count} يوم'**
+  String pathDetailDays(Object count);
+
+  /// No description provided for @pathDetailLessonsCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'📚 {count} دروس'**
+  String pathDetailLessonsCount(Object count);
+
+  /// No description provided for @pathDetailStreakStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'🔥 ابدأ سلسلتك اليوم'**
+  String get pathDetailStreakStart;
+
+  /// No description provided for @pathDetailStreakDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'🔥 {count} يوم متتالي'**
+  String pathDetailStreakDays(Object count);
+
+  /// No description provided for @pathDetailRefMain.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرجع رئيسي'**
+  String get pathDetailRefMain;
+
+  /// No description provided for @pathDetailRefHadith.
+  ///
+  /// In ar, this message translates to:
+  /// **'حديث'**
+  String get pathDetailRefHadith;
+
+  /// No description provided for @pathDetailRefResearch.
+  ///
+  /// In ar, this message translates to:
+  /// **'بحث علمي'**
+  String get pathDetailRefResearch;
+
+  /// No description provided for @pathDetailRefDevArticle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مقال تنموي'**
+  String get pathDetailRefDevArticle;
+
+  /// No description provided for @pathDetailTrailLesson.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدرس {order}: {title}. {status}'**
+  String pathDetailTrailLesson(Object order, Object status, Object title);
+
+  /// No description provided for @pathDetailMinutes.
+  ///
+  /// In ar, this message translates to:
+  /// **'⏱️ {count} د'**
+  String pathDetailMinutes(Object count);
+
+  /// No description provided for @pathDetailFollowup.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة متخصصة'**
+  String get pathDetailFollowup;
+
+  /// No description provided for @quizTitleAppBar.
+  ///
+  /// In ar, this message translates to:
+  /// **'🧠 اختبر معلوماتك'**
+  String get quizTitleAppBar;
+
+  /// No description provided for @quizErrorLoading.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطأ في تحميل الأسئلة'**
+  String get quizErrorLoading;
+
+  /// No description provided for @quizErrorConnection.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذر الاتصال بالخادم'**
+  String get quizErrorConnection;
+
+  /// No description provided for @quizExcellent.
+  ///
+  /// In ar, this message translates to:
+  /// **'ممتاز! أنت مربي واعٍ'**
+  String get quizExcellent;
+
+  /// No description provided for @quizGood.
+  ///
+  /// In ar, this message translates to:
+  /// **'جيد! واصل التعلم'**
+  String get quizGood;
+
+  /// No description provided for @quizKeepLearning.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا بأس، كل يوم فرصة للتعلم'**
+  String get quizKeepLearning;
+
+  /// No description provided for @quizPoints.
+  ///
+  /// In ar, this message translates to:
+  /// **'نقطة'**
+  String get quizPoints;
+
+  /// No description provided for @quizShareResult.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك نتيجتك 🤍'**
+  String get quizShareResult;
+
+  /// No description provided for @quizPlayAgain.
+  ///
+  /// In ar, this message translates to:
+  /// **'العب مرة أخرى'**
+  String get quizPlayAgain;
+
+  /// No description provided for @quizBack.
+  ///
+  /// In ar, this message translates to:
+  /// **'العودة'**
+  String get quizBack;
+
+  /// No description provided for @quizNext.
+  ///
+  /// In ar, this message translates to:
+  /// **'السؤال التالي'**
+  String get quizNext;
+
+  /// No description provided for @quizShowResults.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض النتائج'**
+  String get quizShowResults;
+
+  /// No description provided for @quizExcellentShare.
+  ///
+  /// In ar, this message translates to:
+  /// **'ممتاز! 🏆'**
+  String get quizExcellentShare;
+
+  /// No description provided for @quizGoodShare.
+  ///
+  /// In ar, this message translates to:
+  /// **'جيد! 👏'**
+  String get quizGoodShare;
+
+  /// No description provided for @quizKeepShare.
+  ///
+  /// In ar, this message translates to:
+  /// **'واصل التعلم 💪'**
+  String get quizKeepShare;
+
+  /// No description provided for @quizResultTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'نتيجة الاختبار'**
+  String get quizResultTitle;
+
+  /// No description provided for @quizPraiseExcellent.
+  ///
+  /// In ar, this message translates to:
+  /// **'ممتاز! — واصل التعلم يوميًا مع المربّي.'**
+  String get quizPraiseExcellent;
+
+  /// No description provided for @quizPraiseGood.
+  ///
+  /// In ar, this message translates to:
+  /// **'جيد! — واصل التعلم يوميًا مع المربّي.'**
+  String get quizPraiseGood;
+
+  /// No description provided for @quizPraiseKeep.
+  ///
+  /// In ar, this message translates to:
+  /// **'واصل التعلم — كل يوم فرصة مع المربّي.'**
+  String get quizPraiseKeep;
+
+  /// No description provided for @covenantTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عهد المكافآت الواقعية 📜'**
+  String get covenantTitle;
+
+  /// No description provided for @covenantTabRedeem.
+  ///
+  /// In ar, this message translates to:
+  /// **'استبدال العملات 🪙'**
+  String get covenantTabRedeem;
+
+  /// No description provided for @covenantTabParent.
+  ///
+  /// In ar, this message translates to:
+  /// **'بوابة الأهل 🔑'**
+  String get covenantTabParent;
+
+  /// No description provided for @covenantBalanceLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'رصيد عملاتك الحالي'**
+  String get covenantBalanceLabel;
+
+  /// No description provided for @covenantBalanceHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'استبدل العملات بمكافآت واقعية متفق عليها مع أهلك.'**
+  String get covenantBalanceHint;
+
+  /// No description provided for @covenantEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مكافآت متاحة حالياً. اطلب من والديك إضافتها!'**
+  String get covenantEmpty;
+
+  /// No description provided for @covenantCost.
+  ///
+  /// In ar, this message translates to:
+  /// **'التكلفة: {count} عملة 🪙'**
+  String covenantCost(Object count);
+
+  /// No description provided for @covenantRedeem.
+  ///
+  /// In ar, this message translates to:
+  /// **'استبدال'**
+  String get covenantRedeem;
+
+  /// No description provided for @covenantRemaining.
+  ///
+  /// In ar, this message translates to:
+  /// **'يتبقى {count}'**
+  String covenantRemaining(Object count);
+
+  /// No description provided for @covenantInsufficient.
+  ///
+  /// In ar, this message translates to:
+  /// **'عذراً، رصيدك من العملات غير كافٍ! 🪙'**
+  String get covenantInsufficient;
+
+  /// No description provided for @covenantSuccess.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎉 تم الاستبدال بنجاح!'**
+  String get covenantSuccess;
+
+  /// No description provided for @covenantSuccessMsg.
+  ///
+  /// In ar, this message translates to:
+  /// **'لقد قمت بطلب: \"{title}\" مقابل {cost} عملة. أخبر والديك ليقدماها لك بالواقع!'**
+  String covenantSuccessMsg(Object cost, Object title);
+
+  /// No description provided for @covenantDelivered.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تسجيل تقديم المكافأة بنجاح! ✅'**
+  String get covenantDelivered;
+
+  /// No description provided for @covenantParentWelcome.
+  ///
+  /// In ar, this message translates to:
+  /// **'بوابة الأهل: أضف مكافآت حقيقية يلتزم بها الأهل بالواقع (مثل رحلات أو هدايا)، وتابع طلبات طفلك لتسليمها.'**
+  String get covenantParentWelcome;
+
+  /// No description provided for @covenantAddNew.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة مكافأة جديدة ➕'**
+  String get covenantAddNew;
+
+  /// No description provided for @covenantPending.
+  ///
+  /// In ar, this message translates to:
+  /// **'طلبات استبدال بانتظار تسليمها بالواقع ⏳'**
+  String get covenantPending;
+
+  /// No description provided for @covenantPendingEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد طلبات معلقة حالياً.'**
+  String get covenantPendingEmpty;
+
+  /// No description provided for @covenantPendingRedeemed.
+  ///
+  /// In ar, this message translates to:
+  /// **'استبدلها طفلك مقابل {cost} عملة 🪙'**
+  String covenantPendingRedeemed(Object cost);
+
+  /// No description provided for @covenantDeliver.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تقديمها ✅'**
+  String get covenantDeliver;
+
+  /// No description provided for @covenantManage.
+  ///
+  /// In ar, this message translates to:
+  /// **'قائمة المكافآت المتاحة وإدارتها ⚙️'**
+  String get covenantManage;
+
+  /// No description provided for @covenantManageEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مكافآت مضافة.'**
+  String get covenantManageEmpty;
+
+  /// No description provided for @covenantHistory.
+  ///
+  /// In ar, this message translates to:
+  /// **'المكافآت التي تم تسليمها سابقاً ✅'**
+  String get covenantHistory;
+
+  /// No description provided for @covenantHistoryEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مكافآت مسلّمة سابقاً.'**
+  String get covenantHistoryEmpty;
+
+  /// No description provided for @covenantHistoryRedeemed.
+  ///
+  /// In ar, this message translates to:
+  /// **'استُبدلت بـ {cost} عملة'**
+  String covenantHistoryRedeemed(Object cost);
+
+  /// No description provided for @covenantAddTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة مكافأة واقعية جديدة'**
+  String get covenantAddTitle;
+
+  /// No description provided for @covenantAddNameLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم المكافأة بالواقع (مثال: نزهة عائلية 🍦)'**
+  String get covenantAddNameLabel;
+
+  /// No description provided for @covenantAddCostLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'تكلفة العملات 🪙'**
+  String get covenantAddCostLabel;
+
+  /// No description provided for @inviteTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ادعُ صديقًا 🤍'**
+  String get inviteTitle;
+
+  /// No description provided for @inviteDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'دلالتك صديقًا على «المربّي» صدقة جارية — كل ما ينفع به طفله في ميزان حسناتك بإذن الله 🌿'**
+  String get inviteDesc;
+
+  /// No description provided for @inviteSharePreparing.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري التحضير…'**
+  String get inviteSharePreparing;
+
+  /// No description provided for @inviteShareBtn.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك الدعوة'**
+  String get inviteShareBtn;
+
+  /// No description provided for @inviteHaveCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'عندك كود من صديق؟'**
+  String get inviteHaveCode;
+
+  /// No description provided for @inviteActivate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفعيل'**
+  String get inviteActivate;
+
+  /// No description provided for @inviteCodeCopied.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم نسخ الكود'**
+  String get inviteCodeCopied;
+
+  /// No description provided for @inviteYourCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود الإحالة الخاص بك'**
+  String get inviteYourCode;
+
+  /// No description provided for @inviteCodeUsed.
+  ///
+  /// In ar, this message translates to:
+  /// **'دعوت {count} — جزاك الله خيرًا 🤍'**
+  String inviteCodeUsed(Object count);
+
+  /// No description provided for @inviteSuccess.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمّت إضافة الكود — جزى الله صديقك خيرًا 🤍 (+مكافأة)'**
+  String get inviteSuccess;
+
+  /// No description provided for @inviteAlreadyClaimed.
+  ///
+  /// In ar, this message translates to:
+  /// **'سبق استخدام كود إحالة على هذا الجهاز.'**
+  String get inviteAlreadyClaimed;
+
+  /// No description provided for @inviteInvalidCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'كود غير صالح، تأكّد منه.'**
+  String get inviteInvalidCode;
+
+  /// No description provided for @inviteError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر الاتصال، حاول لاحقًا.'**
+  String get inviteError;
+
+  /// No description provided for @childrenTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إدارة الأطفال'**
+  String get childrenTitle;
+
+  /// No description provided for @childrenEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد أطفال على هذا الجهاز. ابدأ بإضافة أول طفل.'**
+  String get childrenEmpty;
+
+  /// No description provided for @childrenAddNew.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة طفل جديد'**
+  String get childrenAddNew;
+
+  /// No description provided for @childrenMaxReached.
+  ///
+  /// In ar, this message translates to:
+  /// **'وصلت للحد الأقصى ({count} أطفال). احذف طفلاً لإضافة طفل جديد.'**
+  String childrenMaxReached(Object count);
+
+  /// No description provided for @childrenCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'لديك {count} من أصل {max} أطفال'**
+  String childrenCount(Object count, Object max);
+
+  /// No description provided for @childrenSwitchTo.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم التبديل إلى {name}.'**
+  String childrenSwitchTo(Object name);
+
+  /// No description provided for @childrenSwitchError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر التبديل: {error}'**
+  String childrenSwitchError(Object error);
+
+  /// No description provided for @childrenActive.
+  ///
+  /// In ar, this message translates to:
+  /// **'نشط'**
+  String get childrenActive;
+
+  /// No description provided for @childrenJourney.
+  ///
+  /// In ar, this message translates to:
+  /// **'رحلة الطفل'**
+  String get childrenJourney;
+
+  /// No description provided for @childrenDelete.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الطفل'**
+  String get childrenDelete;
+
+  /// No description provided for @childrenDeleteConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد من حذف «{name}»؟ سيُحذف ملفه نهائيًا.'**
+  String childrenDeleteConfirm(Object name);
+
+  /// No description provided for @childrenDeleted.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حذف {name}.'**
+  String childrenDeleted(Object name);
+
+  /// No description provided for @childrenDeleteError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر الحذف: {error}'**
+  String childrenDeleteError(Object error);
+
+  /// No description provided for @childrenErrorLoading.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحميل قائمة الأطفال.'**
+  String get childrenErrorLoading;
+
+  /// No description provided for @childrenAgePrenatal.
+  ///
+  /// In ar, this message translates to:
+  /// **'فترة الحمل وحتى عام'**
+  String get childrenAgePrenatal;
+
+  /// No description provided for @parentingInsightsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحليلات وتوصيات المربّي 🧠'**
+  String get parentingInsightsTitle;
+
+  /// No description provided for @parentingInsightsLoading.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري تحليل نشاط طفلك وتوليد التوصيات...'**
+  String get parentingInsightsLoading;
+
+  /// No description provided for @parentingInsightsNoChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'يرجى اختيار طفل أولاً.'**
+  String get parentingInsightsNoChild;
+
+  /// No description provided for @parentingInsightsError.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل تحميل البيانات. يرجى التحقق من اتصال الإنترنت.'**
+  String get parentingInsightsError;
+
+  /// No description provided for @parentingInsightsWelcome.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً بك في التحليلات التربوية! نقوم بتحليل الروتين الأسبوعي ورسائل المحادثات لتقديم إرشادات مخصصة لرحلة تربية {name}.'**
+  String parentingInsightsWelcome(Object name);
+
+  /// No description provided for @parentingInsightsWeekly.
+  ///
+  /// In ar, this message translates to:
+  /// **'النشاط الأسبوعي الأخير 📊'**
+  String get parentingInsightsWeekly;
+
+  /// No description provided for @parentingInsightsSleep.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوم'**
+  String get parentingInsightsSleep;
+
+  /// No description provided for @parentingInsightsFeeds.
+  ///
+  /// In ar, this message translates to:
+  /// **'رضاعة وتغذية'**
+  String get parentingInsightsFeeds;
+
+  /// No description provided for @parentingInsightsDiapers.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير حفاظ'**
+  String get parentingInsightsDiapers;
+
+  /// No description provided for @parentingInsightsRecommendations.
+  ///
+  /// In ar, this message translates to:
+  /// **'توصيات المربّي الذكي ✨'**
+  String get parentingInsightsRecommendations;
+
+  /// No description provided for @parentingInsightsNoData.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد توصيات كافية حالياً. استمر في تسجيل الروتين والمحادثات مع المساعد للحصول على توصيات مخصصة.'**
+  String get parentingInsightsNoData;
+
+  /// No description provided for @habitChildModeTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ميزان العادات'**
+  String get habitChildModeTitle;
+
+  /// No description provided for @habitChildModeExit.
+  ///
+  /// In ar, this message translates to:
+  /// **'خروج'**
+  String get habitChildModeExit;
+
+  /// No description provided for @habitChildModeExitTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'خروج من وضع الطفل'**
+  String get habitChildModeExitTitle;
+
+  /// No description provided for @habitChildModeExitConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل تريد الخروج من وضع الطفل والعودة لحساب المربي؟'**
+  String get habitChildModeExitConfirm;
+
+  /// No description provided for @habitChildModeLogged.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم التسجيل'**
+  String get habitChildModeLogged;
+
+  /// No description provided for @habitChildModeDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم'**
+  String get habitChildModeDone;
+
+  /// No description provided for @habitChildModePartial.
+  ///
+  /// In ar, this message translates to:
+  /// **'جزئي'**
+  String get habitChildModePartial;
+
+  /// No description provided for @habitChildModeMissed.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يتم'**
+  String get habitChildModeMissed;
+
+  /// No description provided for @habitChildModeConfirmTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد التسجيل'**
+  String get habitChildModeConfirmTitle;
+
+  /// No description provided for @habitChildModeConfirmMsg.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد من تسجيل \"{name}\" كـ \"{label}\"؟ لا يمكن التعديل إلا من حساب المربي.'**
+  String habitChildModeConfirmMsg(Object label, Object name);
+
+  /// No description provided for @habitChildModeFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يتم التسجيل. حاول مرة أخرى.'**
+  String get habitChildModeFailed;
+
+  /// No description provided for @habitChildModeExpired.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهى وقت الجلسة. يُرجى العودة للمربي.'**
+  String get habitChildModeExpired;
+
+  /// No description provided for @storyTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'قصة مخصصة 📖'**
+  String get storyTitle;
+
+  /// No description provided for @storyThemeIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر قيمة تربوية، وسنؤلّف قصة قصيرة بطلها طفلك 🌟'**
+  String get storyThemeIntro;
+
+  /// No description provided for @storyGenerating.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ تأليف القصة…'**
+  String get storyGenerating;
+
+  /// No description provided for @storyCost.
+  ///
+  /// In ar, this message translates to:
+  /// **'توليد قصة ({count} 🪙)'**
+  String storyCost(Object count);
+
+  /// No description provided for @storyLoading.
+  ///
+  /// In ar, this message translates to:
+  /// **'قد يستغرق هذا لحظات…'**
+  String get storyLoading;
+
+  /// No description provided for @storyAnother.
+  ///
+  /// In ar, this message translates to:
+  /// **'قصة أخرى'**
+  String get storyAnother;
+
+  /// No description provided for @storyInsufficient.
+  ///
+  /// In ar, this message translates to:
+  /// **'عذراً، رصيدك لا يكفي 🪙'**
+  String get storyInsufficient;
+
+  /// No description provided for @storyInsufficientMsg.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحتاج إلى {count} عملة لتأليف قصة مخصصة لطفلك. شارك التطبيق مع أصدقائك واحصل على {reward} عملة مجاناً عن كل صديق ينضم إلينا! 🌿'**
+  String storyInsufficientMsg(Object count, Object reward);
+
+  /// No description provided for @storyInviteBtn.
+  ///
+  /// In ar, this message translates to:
+  /// **'ادعُ صديقاً (+{reward} 🪙)'**
+  String storyInviteBtn(Object reward);
+
+  /// No description provided for @storyError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر توليد القصة: {error}'**
+  String storyError(Object error);
+
+  /// No description provided for @pathsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساراتي 🛤️'**
+  String get pathsTitle;
+
+  /// No description provided for @pathsFilterAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكل'**
+  String get pathsFilterAll;
+
+  /// No description provided for @pathsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مسارات بعد'**
+  String get pathsEmpty;
+
+  /// No description provided for @pathsEmptyDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد مسارات لهذه المرحلة العمرية حالياً.'**
+  String get pathsEmptyDesc;
+
+  /// No description provided for @pathsError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحميل المسارات'**
+  String get pathsError;
+
+  /// No description provided for @coinsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عملاتي 🪙'**
+  String get coinsTitle;
+
+  /// No description provided for @coinsUnit.
+  ///
+  /// In ar, this message translates to:
+  /// **'عملة'**
+  String get coinsUnit;
+
+  /// No description provided for @coinsStreak.
+  ///
+  /// In ar, this message translates to:
+  /// **'🔥 سلسلة دخول {count} يوم'**
+  String coinsStreak(Object count);
+
+  /// No description provided for @coinsDailyClaim.
+  ///
+  /// In ar, this message translates to:
+  /// **'احصل على مكافأة اليوم 🎁'**
+  String get coinsDailyClaim;
+
+  /// No description provided for @coinsDailyDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم استلام مكافأة اليوم — عُد غداً!'**
+  String get coinsDailyDone;
+
+  /// No description provided for @coinsEarnHow.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف تكسب العملات؟'**
+  String get coinsEarnHow;
+
+  /// No description provided for @coinsEarnDaily.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول اليومي'**
+  String get coinsEarnDaily;
+
+  /// No description provided for @coinsEarnDailyDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'+{count} عملة كل يوم، وتزيد مع السلسلة'**
+  String coinsEarnDailyDesc(Object count);
+
+  /// No description provided for @coinsEarnBadge.
+  ///
+  /// In ar, this message translates to:
+  /// **'فتح إنجاز جديد'**
+  String get coinsEarnBadge;
+
+  /// No description provided for @coinsEarnBadgeDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'+{count} عملة لكل شارة'**
+  String coinsEarnBadgeDesc(Object count);
+
+  /// No description provided for @coinsEarnInvite.
+  ///
+  /// In ar, this message translates to:
+  /// **'دعوة صديق للانضمام'**
+  String get coinsEarnInvite;
+
+  /// No description provided for @coinsEarnInviteDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'+{count} عملة لكل صديق يحمل التطبيق'**
+  String coinsEarnInviteDesc(Object count);
+
+  /// No description provided for @coinsRedeemTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'استبدل عملاتك 🎁'**
+  String get coinsRedeemTitle;
+
+  /// No description provided for @coinsRedeemStory.
+  ///
+  /// In ar, this message translates to:
+  /// **'قصة مخصصة لطفلك'**
+  String get coinsRedeemStory;
+
+  /// No description provided for @coinsRedeemStoryDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'قصة قصيرة بطلها طفلك تعلّم قيمة تختارها'**
+  String get coinsRedeemStoryDesc;
+
+  /// No description provided for @coinsRedeemCovenant.
+  ///
+  /// In ar, this message translates to:
+  /// **'عهد المكافآت الواقعية'**
+  String get coinsRedeemCovenant;
+
+  /// No description provided for @coinsRedeemCovenantDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'استبدل العملات بمكافآت حقيقية متفق عليها مع أهلك'**
+  String get coinsRedeemCovenantDesc;
+
+  /// No description provided for @coinsRedeemBadges.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارات حصرية'**
+  String get coinsRedeemBadges;
+
+  /// No description provided for @coinsRedeemBadgesDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح شارات مميزة بعملاتك'**
+  String get coinsRedeemBadgesDesc;
+
+  /// No description provided for @favoritesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المفضلة'**
+  String get favoritesTitle;
+
+  /// No description provided for @favoritesClearAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسح جميع المفضلة؟'**
+  String get favoritesClearAll;
+
+  /// No description provided for @favoritesClearAllMsg.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم إزالة كل الدروس والنصائح المحفوظة. لا يمكن التراجع.'**
+  String get favoritesClearAllMsg;
+
+  /// No description provided for @favoritesCleared.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم مسح جميع المفضلة'**
+  String get favoritesCleared;
+
+  /// No description provided for @favoritesSavedLessons.
+  ///
+  /// In ar, this message translates to:
+  /// **'الدروس المحفوظة'**
+  String get favoritesSavedLessons;
+
+  /// No description provided for @favoritesSavedTips.
+  ///
+  /// In ar, this message translates to:
+  /// **'النصائح المحفوظة'**
+  String get favoritesSavedTips;
+
+  /// No description provided for @favoritesEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد عناصر في المفضلة بعد'**
+  String get favoritesEmpty;
+
+  /// No description provided for @favoritesEmptyHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط أيقونة القلب ♡ على أي درس أو نصيحة\nلإضافتها هنا والوصول لها بسرعة.'**
+  String get favoritesEmptyHint;
+
+  /// No description provided for @favoritesErrorLoad.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحميل هذا العنصر المحفوظ'**
+  String get favoritesErrorLoad;
+
+  /// No description provided for @favoritesTipSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'نصيحة يومية محفوظة'**
+  String get favoritesTipSaved;
+
+  /// No description provided for @editChildTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعديل ملف الطفل'**
+  String get editChildTitle;
+
+  /// No description provided for @editChildSaving.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ الحفظ…'**
+  String get editChildSaving;
+
+  /// No description provided for @editChildSaveBtn.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ التغييرات'**
+  String get editChildSaveBtn;
+
+  /// No description provided for @editChildSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حفظ التغييرات.'**
+  String get editChildSaved;
+
+  /// No description provided for @editChildSaveError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر الحفظ: {error}'**
+  String editChildSaveError(Object error);
+
+  /// No description provided for @editChildName.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسم الطفل'**
+  String get editChildName;
+
+  /// No description provided for @editChildAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'المرحلة العمرية'**
+  String get editChildAge;
+
+  /// No description provided for @editChildAvatar.
+  ///
+  /// In ar, this message translates to:
+  /// **'صورة الطفل'**
+  String get editChildAvatar;
+
+  /// No description provided for @editChildGender.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجنس'**
+  String get editChildGender;
+
+  /// No description provided for @addChildTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة طفل'**
+  String get addChildTitle;
+
+  /// No description provided for @addChildAdding.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ الإضافة…'**
+  String get addChildAdding;
+
+  /// No description provided for @addChildBtn.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة الطفل'**
+  String get addChildBtn;
+
+  /// No description provided for @addChildAdded.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمّت إضافة {name}.'**
+  String addChildAdded(Object name);
+
+  /// No description provided for @addChildError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر إضافة الطفل: {error}'**
+  String addChildError(Object error);
+
+  /// No description provided for @addChildNameHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثلاً: يوسف، مريم، زياد'**
+  String get addChildNameHint;
+
+  /// No description provided for @addChildAgeRequired.
+  ///
+  /// In ar, this message translates to:
+  /// **'يرجى اختيار المرحلة العمرية.'**
+  String get addChildAgeRequired;
+
+  /// No description provided for @updateSplashTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحديث رئيسي 🎉'**
+  String get updateSplashTitle;
+
+  /// No description provided for @updateSplashVersion.
+  ///
+  /// In ar, this message translates to:
+  /// **'إصدار {version} — إيه الجديد؟'**
+  String updateSplashVersion(Object version);
+
+  /// No description provided for @updateSplashStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ'**
+  String get updateSplashStart;
+
+  /// No description provided for @updateSplashOnce.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرّة واحدة فقط — لن تظهر هذه الشاشة مجدداً.'**
+  String get updateSplashOnce;
+
+  /// No description provided for @updateSplashFeature1.
+  ///
+  /// In ar, this message translates to:
+  /// **'قصص قبل النوم الجديدة'**
+  String get updateSplashFeature1;
+
+  /// No description provided for @updateSplashFeature1Desc.
+  ///
+  /// In ar, this message translates to:
+  /// **'أضفنا 4 قصص تربوية مصورة وهادئة جديدة (ليلى، صالح، نور، ومريم) لمساعدة طفلك على الاسترخاء والنوم بسلام.'**
+  String get updateSplashFeature1Desc;
+
+  /// No description provided for @updateSplashFeature2.
+  ///
+  /// In ar, this message translates to:
+  /// **'QR ويب شير للمراهقين 13-18'**
+  String get updateSplashFeature2;
+
+  /// No description provided for @updateSplashFeature2Desc.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك \"ميزان العادات\" مع ابنك المراهق عبر رابط ويب — يدخل من متصفحه بدون تثبيت.'**
+  String get updateSplashFeature2Desc;
+
+  /// No description provided for @updateSplashFeature3.
+  ///
+  /// In ar, this message translates to:
+  /// **'وضع الطفل 7-12 سنة'**
+  String get updateSplashFeature3;
+
+  /// No description provided for @updateSplashFeature3Desc.
+  ///
+  /// In ar, this message translates to:
+  /// **'خلّي طفلك يسجّل عاداته اليومية بنفسه تحت إشرافك — تقييم ذاتي بدون ضغط.'**
+  String get updateSplashFeature3Desc;
+
+  /// No description provided for @updateSplashFeature4.
+  ///
+  /// In ar, this message translates to:
+  /// **'ثبات وسرعة'**
+  String get updateSplashFeature4;
+
+  /// No description provided for @updateSplashFeature4Desc.
+  ///
+  /// In ar, this message translates to:
+  /// **'التطبيق بقى يتعامل مع انقطاع الشبكة بسلاسة — بياناتك في أمان.'**
+  String get updateSplashFeature4Desc;
+
+  /// No description provided for @quranMemTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ القرآن — {name}'**
+  String quranMemTitle(Object name);
+
+  /// No description provided for @quranMemCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ {count} من 114 سورة'**
+  String quranMemCount(Object count);
+
+  /// No description provided for @quranMemHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'علّم السور التي أتمّها — نحتفل بكل خطوة'**
+  String get quranMemHint;
+
+  /// No description provided for @quranMemFirstSurah.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ أول سورة — سورة {surah}'**
+  String quranMemFirstSurah(Object surah);
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'شاركنا رأيك'**
+  String get feedbackTitle;
+
+  /// No description provided for @feedbackDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'رأيك يهمنا ويصل مباشرةً لفريق المربي الذكي. اكتب ملاحظتك أو سجّلها صوتياً.'**
+  String get feedbackDesc;
+
+  /// No description provided for @feedbackMessageLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظتك'**
+  String get feedbackMessageLabel;
+
+  /// No description provided for @feedbackMessageHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب اقتراحك أو المشكلة التي واجهتك…'**
+  String get feedbackMessageHint;
+
+  /// No description provided for @feedbackRecording.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ التسجيل… اضغط للإيقاف'**
+  String get feedbackRecording;
+
+  /// No description provided for @feedbackRecorded.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم تسجيل ملاحظة صوتية ✓'**
+  String get feedbackRecorded;
+
+  /// No description provided for @feedbackRecordOptional.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل ملاحظة صوتية (اختياري)'**
+  String get feedbackRecordOptional;
+
+  /// No description provided for @feedbackMicPermission.
+  ///
+  /// In ar, this message translates to:
+  /// **'يلزم إذن الميكروفون لتسجيل ملاحظة صوتية.'**
+  String get feedbackMicPermission;
+
+  /// No description provided for @feedbackRecordError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر التسجيل الصوتي على هذا الجهاز — يمكنك الكتابة بدلاً منه.'**
+  String get feedbackRecordError;
+
+  /// No description provided for @feedbackEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب ملاحظتك أو سجّل رسالة صوتية أولاً.'**
+  String get feedbackEmpty;
+
+  /// No description provided for @feedbackAudioTooBig.
+  ///
+  /// In ar, this message translates to:
+  /// **'الملف الصوتي كبير جدًا (أكبر من 2 ميجا). جرّب تسجيل أقصر.'**
+  String get feedbackAudioTooBig;
+
+  /// No description provided for @feedbackContactLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'وسيلة تواصل (اختياري)'**
+  String get feedbackContactLabel;
+
+  /// No description provided for @feedbackContactHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'بريد أو رقم للرد عليك'**
+  String get feedbackContactHint;
+
+  /// No description provided for @feedbackSending.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ الإرسال…'**
+  String get feedbackSending;
+
+  /// No description provided for @feedbackSent.
+  ///
+  /// In ar, this message translates to:
+  /// **'وصلت ملاحظتك، شكراً لك! 🌿 (ID: {id})'**
+  String feedbackSent(Object id);
+
+  /// No description provided for @feedbackSendError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر الإرسال: {error}'**
+  String feedbackSendError(Object error);
 }
 
 class _AppLocalizationsDelegate

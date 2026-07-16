@@ -1166,4 +1166,930 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get settingsFamilyAdhkarDesc =>
       'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)';
+
+  @override
+  String get lessonTitle => 'الدرس';
+
+  @override
+  String get lessonCompleted => 'مكتمل ✓';
+
+  @override
+  String get lessonMarking => 'جارٍ التسجيل…';
+
+  @override
+  String get lessonMarkComplete => 'أتممت هذا الدرس';
+
+  @override
+  String get lessonSummary => 'ملخص الدرس';
+
+  @override
+  String get lessonTryThis => 'جرّب هذا';
+
+  @override
+  String get lessonReflections => 'أسئلة للتأمل';
+
+  @override
+  String lessonUnitRefs(Object count) {
+    return 'مرتبط بـ $count وحدات من قاعدة المعرفة';
+  }
+
+  @override
+  String get lessonWarningFollowup =>
+      'هذا الدرس يحتوي على توجيهات تستحق المتابعة مع متخصص. لا تتردد في استشارة طبيب أو أخصائي تنموي إذا شعرت بالحاجة.';
+
+  @override
+  String get lessonErrorLoading => 'تعذّر تحميل الدرس';
+
+  @override
+  String lessonErrorMarking(Object error) {
+    return 'تعذّر تسجيل الإكمال: $error';
+  }
+
+  @override
+  String get lessonCelebrationTitle => 'ما شاء الله!';
+
+  @override
+  String get lessonCelebrationMsg => 'تم تسجيل إكمال الدرس';
+
+  @override
+  String get lessonFavAdd => 'إضافة للمفضلة';
+
+  @override
+  String get lessonFavRemove => 'إزالة من المفضلة';
+
+  @override
+  String get lessonStatusCompleted => 'مكتمل';
+
+  @override
+  String get lessonStatusInProgress => 'قيد التنفيذ';
+
+  @override
+  String get lessonStatusNotStarted => 'لم يبدأ بعد';
+
+  @override
+  String get lessonStartInteractive => 'ابدأ بالمحتوى التفاعلي';
+
+  @override
+  String get lessonListenPodcast => '🎧 استمع للبودكاست';
+
+  @override
+  String get lessonWatchVideo => '🎥 الفيديو التعليمي';
+
+  @override
+  String lessonFlashcards(Object count) {
+    return '📇 فلاش كاردز ($count بطاقة)';
+  }
+
+  @override
+  String lessonQuiz(Object count) {
+    return '❓ اختبر نفسك ($count سؤال)';
+  }
+
+  @override
+  String get lessonInfographic => '📊 إنفوجرافيك الدرس';
+
+  @override
+  String get lessonReport => '📄 تقرير الدرس';
+
+  @override
+  String get lessonDataTable => '📋 جدول البيانات';
+
+  @override
+  String get lessonPlayCyber => '🎮 العب وتعلم (حارس البيانات)';
+
+  @override
+  String get lessonPlayMedical => '🎮 العب وتعلم';
+
+  @override
+  String get lessonPlayIslamic => '🎮 العب وتعلم (شجرة الأخلاق)';
+
+  @override
+  String get lessonPlayDev => '🎮 العب وتعلم (متاهة المشاعر)';
+
+  @override
+  String get lessonVideoTitle => '🎥 شاهد الفيديو التعليمي';
+
+  @override
+  String get lessonPodcastTitle => '🎧 البودكاست';
+
+  @override
+  String lessonVideoUnitTitle(Object title) {
+    return '🎥 فيديو الوحدة: $title';
+  }
+
+  @override
+  String get lessonInteractiveHint =>
+      'استمع، شاهد، والعب — ثم اقرأ الملخص بالأسفل';
+
+  @override
+  String journeyTitle(Object name) {
+    return 'رحلة $name';
+  }
+
+  @override
+  String get journeyLoading => 'تعذّر تحميل الرحلة.';
+
+  @override
+  String get journeyStartFirst => 'ابدأ بتسجيل أول محطة في رحلته';
+
+  @override
+  String journeyCount(Object count) {
+    return 'سجّلت $count محطة — سجّل تعتزّ به 💛';
+  }
+
+  @override
+  String get journeyMilestoneLog => 'سجّل محطة من عندك';
+
+  @override
+  String get journeyDeleteMilestone => 'حذف المحطة';
+
+  @override
+  String journeyDeleteConfirm(Object name, Object title) {
+    return 'هل تريد حذف «$title» من رحلة $name؟';
+  }
+
+  @override
+  String get journeyFaithMilestones => 'محطات إيمانية 🕌';
+
+  @override
+  String get journeyDevMilestones => 'محطات نمائية 📈 (حسب العمر)';
+
+  @override
+  String get journeyEmpty =>
+      'كل طفل رحلة فريدة. سجّل أول محطة من المحطات القادمة بالأسفل.';
+
+  @override
+  String get journeyNewMilestone => 'محطة جديدة';
+
+  @override
+  String get journeyMilestoneTitle => 'عنوان المحطة';
+
+  @override
+  String get journeyMilestoneHint => 'مثال: قال أول كلمة طيبة';
+
+  @override
+  String get journeyMilestoneNote => 'ملاحظة (اختياري)';
+
+  @override
+  String get journeyMilestoneNoteHint => 'دوّن لحظة تتذكرها…';
+
+  @override
+  String get journeyMilestoneSave => 'سجّل المحطة';
+
+  @override
+  String journeyChallengeTitle(Object name) {
+    return 'تحدّي $name الحالي';
+  }
+
+  @override
+  String get journeyChallengeDone => 'تم الحل ✓';
+
+  @override
+  String get journeyChallengeDesc =>
+      'اختر تحدّياً تركّز عليه الآن — وسيوجّه «المربّي» نصيحته اليومية إليه.';
+
+  @override
+  String get journeyChallengeActive =>
+      'يركّز «المربّي» على هذا التحدّي في نصيحته اليومية.';
+
+  @override
+  String get journeySaveError => 'تعذّر الحفظ — تأكد من الاتصال.';
+
+  @override
+  String get journeyQuranTitle => 'حفظ القرآن';
+
+  @override
+  String get journeyQuranTrack => 'تابع ما يحفظه — ونحتفل بأول سورة';
+
+  @override
+  String journeyQuranCount(Object count) {
+    return 'حفظ $count سورة';
+  }
+
+  @override
+  String get pathDetailTitle => 'تفاصيل المسار';
+
+  @override
+  String pathDetailLessons(Object count) {
+    return 'الدروس ($count)';
+  }
+
+  @override
+  String get pathDetailEmpty => 'لا توجد دروس في هذا المسار بعد';
+
+  @override
+  String get pathDetailStart => 'ابدأ المسار';
+
+  @override
+  String get pathDetailShare => 'شارك إتمام المسار 🤍';
+
+  @override
+  String pathDetailVideoUnit(Object title) {
+    return '🎥 فيديو الوحدة: $title';
+  }
+
+  @override
+  String get pathDetailVideoIntro => '🎥 فيديو تعريفي';
+
+  @override
+  String pathDetailVideoIntroTitle(Object title) {
+    return '🎥 فيديو تعريفي لـ $title';
+  }
+
+  @override
+  String pathDetailDays(Object count) {
+    return '⏱️ $count يوم';
+  }
+
+  @override
+  String pathDetailLessonsCount(Object count) {
+    return '📚 $count دروس';
+  }
+
+  @override
+  String get pathDetailStreakStart => '🔥 ابدأ سلسلتك اليوم';
+
+  @override
+  String pathDetailStreakDays(Object count) {
+    return '🔥 $count يوم متتالي';
+  }
+
+  @override
+  String get pathDetailRefMain => 'مرجع رئيسي';
+
+  @override
+  String get pathDetailRefHadith => 'حديث';
+
+  @override
+  String get pathDetailRefResearch => 'بحث علمي';
+
+  @override
+  String get pathDetailRefDevArticle => 'مقال تنموي';
+
+  @override
+  String pathDetailTrailLesson(Object order, Object status, Object title) {
+    return 'الدرس $order: $title. $status';
+  }
+
+  @override
+  String pathDetailMinutes(Object count) {
+    return '⏱️ $count د';
+  }
+
+  @override
+  String get pathDetailFollowup => 'متابعة متخصصة';
+
+  @override
+  String get quizTitleAppBar => '🧠 اختبر معلوماتك';
+
+  @override
+  String get quizErrorLoading => 'خطأ في تحميل الأسئلة';
+
+  @override
+  String get quizErrorConnection => 'تعذر الاتصال بالخادم';
+
+  @override
+  String get quizExcellent => 'ممتاز! أنت مربي واعٍ';
+
+  @override
+  String get quizGood => 'جيد! واصل التعلم';
+
+  @override
+  String get quizKeepLearning => 'لا بأس، كل يوم فرصة للتعلم';
+
+  @override
+  String get quizPoints => 'نقطة';
+
+  @override
+  String get quizShareResult => 'شارك نتيجتك 🤍';
+
+  @override
+  String get quizPlayAgain => 'العب مرة أخرى';
+
+  @override
+  String get quizBack => 'العودة';
+
+  @override
+  String get quizNext => 'السؤال التالي';
+
+  @override
+  String get quizShowResults => 'عرض النتائج';
+
+  @override
+  String get quizExcellentShare => 'ممتاز! 🏆';
+
+  @override
+  String get quizGoodShare => 'جيد! 👏';
+
+  @override
+  String get quizKeepShare => 'واصل التعلم 💪';
+
+  @override
+  String get quizResultTitle => 'نتيجة الاختبار';
+
+  @override
+  String get quizPraiseExcellent => 'ممتاز! — واصل التعلم يوميًا مع المربّي.';
+
+  @override
+  String get quizPraiseGood => 'جيد! — واصل التعلم يوميًا مع المربّي.';
+
+  @override
+  String get quizPraiseKeep => 'واصل التعلم — كل يوم فرصة مع المربّي.';
+
+  @override
+  String get covenantTitle => 'عهد المكافآت الواقعية 📜';
+
+  @override
+  String get covenantTabRedeem => 'استبدال العملات 🪙';
+
+  @override
+  String get covenantTabParent => 'بوابة الأهل 🔑';
+
+  @override
+  String get covenantBalanceLabel => 'رصيد عملاتك الحالي';
+
+  @override
+  String get covenantBalanceHint =>
+      'استبدل العملات بمكافآت واقعية متفق عليها مع أهلك.';
+
+  @override
+  String get covenantEmpty =>
+      'لا توجد مكافآت متاحة حالياً. اطلب من والديك إضافتها!';
+
+  @override
+  String covenantCost(Object count) {
+    return 'التكلفة: $count عملة 🪙';
+  }
+
+  @override
+  String get covenantRedeem => 'استبدال';
+
+  @override
+  String covenantRemaining(Object count) {
+    return 'يتبقى $count';
+  }
+
+  @override
+  String get covenantInsufficient => 'عذراً، رصيدك من العملات غير كافٍ! 🪙';
+
+  @override
+  String get covenantSuccess => '🎉 تم الاستبدال بنجاح!';
+
+  @override
+  String covenantSuccessMsg(Object cost, Object title) {
+    return 'لقد قمت بطلب: \"$title\" مقابل $cost عملة. أخبر والديك ليقدماها لك بالواقع!';
+  }
+
+  @override
+  String get covenantDelivered => 'تم تسجيل تقديم المكافأة بنجاح! ✅';
+
+  @override
+  String get covenantParentWelcome =>
+      'بوابة الأهل: أضف مكافآت حقيقية يلتزم بها الأهل بالواقع (مثل رحلات أو هدايا)، وتابع طلبات طفلك لتسليمها.';
+
+  @override
+  String get covenantAddNew => 'إضافة مكافأة جديدة ➕';
+
+  @override
+  String get covenantPending => 'طلبات استبدال بانتظار تسليمها بالواقع ⏳';
+
+  @override
+  String get covenantPendingEmpty => 'لا توجد طلبات معلقة حالياً.';
+
+  @override
+  String covenantPendingRedeemed(Object cost) {
+    return 'استبدلها طفلك مقابل $cost عملة 🪙';
+  }
+
+  @override
+  String get covenantDeliver => 'تم تقديمها ✅';
+
+  @override
+  String get covenantManage => 'قائمة المكافآت المتاحة وإدارتها ⚙️';
+
+  @override
+  String get covenantManageEmpty => 'لا توجد مكافآت مضافة.';
+
+  @override
+  String get covenantHistory => 'المكافآت التي تم تسليمها سابقاً ✅';
+
+  @override
+  String get covenantHistoryEmpty => 'لا توجد مكافآت مسلّمة سابقاً.';
+
+  @override
+  String covenantHistoryRedeemed(Object cost) {
+    return 'استُبدلت بـ $cost عملة';
+  }
+
+  @override
+  String get covenantAddTitle => 'إضافة مكافأة واقعية جديدة';
+
+  @override
+  String get covenantAddNameLabel =>
+      'اسم المكافأة بالواقع (مثال: نزهة عائلية 🍦)';
+
+  @override
+  String get covenantAddCostLabel => 'تكلفة العملات 🪙';
+
+  @override
+  String get inviteTitle => 'ادعُ صديقًا 🤍';
+
+  @override
+  String get inviteDesc =>
+      'دلالتك صديقًا على «المربّي» صدقة جارية — كل ما ينفع به طفله في ميزان حسناتك بإذن الله 🌿';
+
+  @override
+  String get inviteSharePreparing => 'جاري التحضير…';
+
+  @override
+  String get inviteShareBtn => 'شارك الدعوة';
+
+  @override
+  String get inviteHaveCode => 'عندك كود من صديق؟';
+
+  @override
+  String get inviteActivate => 'تفعيل';
+
+  @override
+  String get inviteCodeCopied => 'تم نسخ الكود';
+
+  @override
+  String get inviteYourCode => 'كود الإحالة الخاص بك';
+
+  @override
+  String inviteCodeUsed(Object count) {
+    return 'دعوت $count — جزاك الله خيرًا 🤍';
+  }
+
+  @override
+  String get inviteSuccess =>
+      'تمّت إضافة الكود — جزى الله صديقك خيرًا 🤍 (+مكافأة)';
+
+  @override
+  String get inviteAlreadyClaimed => 'سبق استخدام كود إحالة على هذا الجهاز.';
+
+  @override
+  String get inviteInvalidCode => 'كود غير صالح، تأكّد منه.';
+
+  @override
+  String get inviteError => 'تعذّر الاتصال، حاول لاحقًا.';
+
+  @override
+  String get childrenTitle => 'إدارة الأطفال';
+
+  @override
+  String get childrenEmpty =>
+      'لا يوجد أطفال على هذا الجهاز. ابدأ بإضافة أول طفل.';
+
+  @override
+  String get childrenAddNew => 'إضافة طفل جديد';
+
+  @override
+  String childrenMaxReached(Object count) {
+    return 'وصلت للحد الأقصى ($count أطفال). احذف طفلاً لإضافة طفل جديد.';
+  }
+
+  @override
+  String childrenCount(Object count, Object max) {
+    return 'لديك $count من أصل $max أطفال';
+  }
+
+  @override
+  String childrenSwitchTo(Object name) {
+    return 'تم التبديل إلى $name.';
+  }
+
+  @override
+  String childrenSwitchError(Object error) {
+    return 'تعذّر التبديل: $error';
+  }
+
+  @override
+  String get childrenActive => 'نشط';
+
+  @override
+  String get childrenJourney => 'رحلة الطفل';
+
+  @override
+  String get childrenDelete => 'حذف الطفل';
+
+  @override
+  String childrenDeleteConfirm(Object name) {
+    return 'هل أنت متأكد من حذف «$name»؟ سيُحذف ملفه نهائيًا.';
+  }
+
+  @override
+  String childrenDeleted(Object name) {
+    return 'تم حذف $name.';
+  }
+
+  @override
+  String childrenDeleteError(Object error) {
+    return 'تعذّر الحذف: $error';
+  }
+
+  @override
+  String get childrenErrorLoading => 'تعذّر تحميل قائمة الأطفال.';
+
+  @override
+  String get childrenAgePrenatal => 'فترة الحمل وحتى عام';
+
+  @override
+  String get parentingInsightsTitle => 'تحليلات وتوصيات المربّي 🧠';
+
+  @override
+  String get parentingInsightsLoading =>
+      'جاري تحليل نشاط طفلك وتوليد التوصيات...';
+
+  @override
+  String get parentingInsightsNoChild => 'يرجى اختيار طفل أولاً.';
+
+  @override
+  String get parentingInsightsError =>
+      'فشل تحميل البيانات. يرجى التحقق من اتصال الإنترنت.';
+
+  @override
+  String parentingInsightsWelcome(Object name) {
+    return 'أهلاً بك في التحليلات التربوية! نقوم بتحليل الروتين الأسبوعي ورسائل المحادثات لتقديم إرشادات مخصصة لرحلة تربية $name.';
+  }
+
+  @override
+  String get parentingInsightsWeekly => 'النشاط الأسبوعي الأخير 📊';
+
+  @override
+  String get parentingInsightsSleep => 'نوم';
+
+  @override
+  String get parentingInsightsFeeds => 'رضاعة وتغذية';
+
+  @override
+  String get parentingInsightsDiapers => 'تغيير حفاظ';
+
+  @override
+  String get parentingInsightsRecommendations => 'توصيات المربّي الذكي ✨';
+
+  @override
+  String get parentingInsightsNoData =>
+      'لا توجد توصيات كافية حالياً. استمر في تسجيل الروتين والمحادثات مع المساعد للحصول على توصيات مخصصة.';
+
+  @override
+  String get habitChildModeTitle => 'ميزان العادات';
+
+  @override
+  String get habitChildModeExit => 'خروج';
+
+  @override
+  String get habitChildModeExitTitle => 'خروج من وضع الطفل';
+
+  @override
+  String get habitChildModeExitConfirm =>
+      'هل تريد الخروج من وضع الطفل والعودة لحساب المربي؟';
+
+  @override
+  String get habitChildModeLogged => 'تم التسجيل';
+
+  @override
+  String get habitChildModeDone => 'تم';
+
+  @override
+  String get habitChildModePartial => 'جزئي';
+
+  @override
+  String get habitChildModeMissed => 'لم يتم';
+
+  @override
+  String get habitChildModeConfirmTitle => 'تأكيد التسجيل';
+
+  @override
+  String habitChildModeConfirmMsg(Object label, Object name) {
+    return 'هل أنت متأكد من تسجيل \"$name\" كـ \"$label\"؟ لا يمكن التعديل إلا من حساب المربي.';
+  }
+
+  @override
+  String get habitChildModeFailed => 'لم يتم التسجيل. حاول مرة أخرى.';
+
+  @override
+  String get habitChildModeExpired => 'انتهى وقت الجلسة. يُرجى العودة للمربي.';
+
+  @override
+  String get storyTitle => 'قصة مخصصة 📖';
+
+  @override
+  String get storyThemeIntro =>
+      'اختر قيمة تربوية، وسنؤلّف قصة قصيرة بطلها طفلك 🌟';
+
+  @override
+  String get storyGenerating => 'جارٍ تأليف القصة…';
+
+  @override
+  String storyCost(Object count) {
+    return 'توليد قصة ($count 🪙)';
+  }
+
+  @override
+  String get storyLoading => 'قد يستغرق هذا لحظات…';
+
+  @override
+  String get storyAnother => 'قصة أخرى';
+
+  @override
+  String get storyInsufficient => 'عذراً، رصيدك لا يكفي 🪙';
+
+  @override
+  String storyInsufficientMsg(Object count, Object reward) {
+    return 'تحتاج إلى $count عملة لتأليف قصة مخصصة لطفلك. شارك التطبيق مع أصدقائك واحصل على $reward عملة مجاناً عن كل صديق ينضم إلينا! 🌿';
+  }
+
+  @override
+  String storyInviteBtn(Object reward) {
+    return 'ادعُ صديقاً (+$reward 🪙)';
+  }
+
+  @override
+  String storyError(Object error) {
+    return 'تعذّر توليد القصة: $error';
+  }
+
+  @override
+  String get pathsTitle => 'مساراتي 🛤️';
+
+  @override
+  String get pathsFilterAll => 'الكل';
+
+  @override
+  String get pathsEmpty => 'لا توجد مسارات بعد';
+
+  @override
+  String get pathsEmptyDesc => 'لا توجد مسارات لهذه المرحلة العمرية حالياً.';
+
+  @override
+  String get pathsError => 'تعذّر تحميل المسارات';
+
+  @override
+  String get coinsTitle => 'عملاتي 🪙';
+
+  @override
+  String get coinsUnit => 'عملة';
+
+  @override
+  String coinsStreak(Object count) {
+    return '🔥 سلسلة دخول $count يوم';
+  }
+
+  @override
+  String get coinsDailyClaim => 'احصل على مكافأة اليوم 🎁';
+
+  @override
+  String get coinsDailyDone => 'تم استلام مكافأة اليوم — عُد غداً!';
+
+  @override
+  String get coinsEarnHow => 'كيف تكسب العملات؟';
+
+  @override
+  String get coinsEarnDaily => 'تسجيل الدخول اليومي';
+
+  @override
+  String coinsEarnDailyDesc(Object count) {
+    return '+$count عملة كل يوم، وتزيد مع السلسلة';
+  }
+
+  @override
+  String get coinsEarnBadge => 'فتح إنجاز جديد';
+
+  @override
+  String coinsEarnBadgeDesc(Object count) {
+    return '+$count عملة لكل شارة';
+  }
+
+  @override
+  String get coinsEarnInvite => 'دعوة صديق للانضمام';
+
+  @override
+  String coinsEarnInviteDesc(Object count) {
+    return '+$count عملة لكل صديق يحمل التطبيق';
+  }
+
+  @override
+  String get coinsRedeemTitle => 'استبدل عملاتك 🎁';
+
+  @override
+  String get coinsRedeemStory => 'قصة مخصصة لطفلك';
+
+  @override
+  String get coinsRedeemStoryDesc => 'قصة قصيرة بطلها طفلك تعلّم قيمة تختارها';
+
+  @override
+  String get coinsRedeemCovenant => 'عهد المكافآت الواقعية';
+
+  @override
+  String get coinsRedeemCovenantDesc =>
+      'استبدل العملات بمكافآت حقيقية متفق عليها مع أهلك';
+
+  @override
+  String get coinsRedeemBadges => 'شارات حصرية';
+
+  @override
+  String get coinsRedeemBadgesDesc => 'افتح شارات مميزة بعملاتك';
+
+  @override
+  String get favoritesTitle => 'المفضلة';
+
+  @override
+  String get favoritesClearAll => 'مسح جميع المفضلة؟';
+
+  @override
+  String get favoritesClearAllMsg =>
+      'سيتم إزالة كل الدروس والنصائح المحفوظة. لا يمكن التراجع.';
+
+  @override
+  String get favoritesCleared => 'تم مسح جميع المفضلة';
+
+  @override
+  String get favoritesSavedLessons => 'الدروس المحفوظة';
+
+  @override
+  String get favoritesSavedTips => 'النصائح المحفوظة';
+
+  @override
+  String get favoritesEmpty => 'لا توجد عناصر في المفضلة بعد';
+
+  @override
+  String get favoritesEmptyHint =>
+      'اضغط أيقونة القلب ♡ على أي درس أو نصيحة\nلإضافتها هنا والوصول لها بسرعة.';
+
+  @override
+  String get favoritesErrorLoad => 'تعذّر تحميل هذا العنصر المحفوظ';
+
+  @override
+  String get favoritesTipSaved => 'نصيحة يومية محفوظة';
+
+  @override
+  String get editChildTitle => 'تعديل ملف الطفل';
+
+  @override
+  String get editChildSaving => 'جارٍ الحفظ…';
+
+  @override
+  String get editChildSaveBtn => 'حفظ التغييرات';
+
+  @override
+  String get editChildSaved => 'تم حفظ التغييرات.';
+
+  @override
+  String editChildSaveError(Object error) {
+    return 'تعذّر الحفظ: $error';
+  }
+
+  @override
+  String get editChildName => 'اسم الطفل';
+
+  @override
+  String get editChildAge => 'المرحلة العمرية';
+
+  @override
+  String get editChildAvatar => 'صورة الطفل';
+
+  @override
+  String get editChildGender => 'الجنس';
+
+  @override
+  String get addChildTitle => 'إضافة طفل';
+
+  @override
+  String get addChildAdding => 'جارٍ الإضافة…';
+
+  @override
+  String get addChildBtn => 'إضافة الطفل';
+
+  @override
+  String addChildAdded(Object name) {
+    return 'تمّت إضافة $name.';
+  }
+
+  @override
+  String addChildError(Object error) {
+    return 'تعذّر إضافة الطفل: $error';
+  }
+
+  @override
+  String get addChildNameHint => 'مثلاً: يوسف، مريم، زياد';
+
+  @override
+  String get addChildAgeRequired => 'يرجى اختيار المرحلة العمرية.';
+
+  @override
+  String get updateSplashTitle => 'تحديث رئيسي 🎉';
+
+  @override
+  String updateSplashVersion(Object version) {
+    return 'إصدار $version — إيه الجديد؟';
+  }
+
+  @override
+  String get updateSplashStart => 'ابدأ';
+
+  @override
+  String get updateSplashOnce => 'مرّة واحدة فقط — لن تظهر هذه الشاشة مجدداً.';
+
+  @override
+  String get updateSplashFeature1 => 'قصص قبل النوم الجديدة';
+
+  @override
+  String get updateSplashFeature1Desc =>
+      'أضفنا 4 قصص تربوية مصورة وهادئة جديدة (ليلى، صالح، نور، ومريم) لمساعدة طفلك على الاسترخاء والنوم بسلام.';
+
+  @override
+  String get updateSplashFeature2 => 'QR ويب شير للمراهقين 13-18';
+
+  @override
+  String get updateSplashFeature2Desc =>
+      'شارك \"ميزان العادات\" مع ابنك المراهق عبر رابط ويب — يدخل من متصفحه بدون تثبيت.';
+
+  @override
+  String get updateSplashFeature3 => 'وضع الطفل 7-12 سنة';
+
+  @override
+  String get updateSplashFeature3Desc =>
+      'خلّي طفلك يسجّل عاداته اليومية بنفسه تحت إشرافك — تقييم ذاتي بدون ضغط.';
+
+  @override
+  String get updateSplashFeature4 => 'ثبات وسرعة';
+
+  @override
+  String get updateSplashFeature4Desc =>
+      'التطبيق بقى يتعامل مع انقطاع الشبكة بسلاسة — بياناتك في أمان.';
+
+  @override
+  String quranMemTitle(Object name) {
+    return 'حفظ القرآن — $name';
+  }
+
+  @override
+  String quranMemCount(Object count) {
+    return 'حفظ $count من 114 سورة';
+  }
+
+  @override
+  String get quranMemHint => 'علّم السور التي أتمّها — نحتفل بكل خطوة';
+
+  @override
+  String quranMemFirstSurah(Object surah) {
+    return 'حفظ أول سورة — سورة $surah';
+  }
+
+  @override
+  String get feedbackTitle => 'شاركنا رأيك';
+
+  @override
+  String get feedbackDesc =>
+      'رأيك يهمنا ويصل مباشرةً لفريق المربي الذكي. اكتب ملاحظتك أو سجّلها صوتياً.';
+
+  @override
+  String get feedbackMessageLabel => 'ملاحظتك';
+
+  @override
+  String get feedbackMessageHint => 'اكتب اقتراحك أو المشكلة التي واجهتك…';
+
+  @override
+  String get feedbackRecording => 'جارٍ التسجيل… اضغط للإيقاف';
+
+  @override
+  String get feedbackRecorded => 'تم تسجيل ملاحظة صوتية ✓';
+
+  @override
+  String get feedbackRecordOptional => 'سجّل ملاحظة صوتية (اختياري)';
+
+  @override
+  String get feedbackMicPermission =>
+      'يلزم إذن الميكروفون لتسجيل ملاحظة صوتية.';
+
+  @override
+  String get feedbackRecordError =>
+      'تعذّر التسجيل الصوتي على هذا الجهاز — يمكنك الكتابة بدلاً منه.';
+
+  @override
+  String get feedbackEmpty => 'اكتب ملاحظتك أو سجّل رسالة صوتية أولاً.';
+
+  @override
+  String get feedbackAudioTooBig =>
+      'الملف الصوتي كبير جدًا (أكبر من 2 ميجا). جرّب تسجيل أقصر.';
+
+  @override
+  String get feedbackContactLabel => 'وسيلة تواصل (اختياري)';
+
+  @override
+  String get feedbackContactHint => 'بريد أو رقم للرد عليك';
+
+  @override
+  String get feedbackSending => 'جارٍ الإرسال…';
+
+  @override
+  String feedbackSent(Object id) {
+    return 'وصلت ملاحظتك، شكراً لك! 🌿 (ID: $id)';
+  }
+
+  @override
+  String feedbackSendError(Object error) {
+    return 'تعذّر الإرسال: $error';
+  }
 }

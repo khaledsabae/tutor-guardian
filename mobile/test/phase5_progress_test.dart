@@ -18,6 +18,7 @@ import 'package:almorabbi/features/program/data/progress_repository.dart';
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/program/screens/lesson_screen.dart';
 import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 
 void main() {
@@ -219,8 +220,11 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
-            home: LessonScreen(
+          child: MaterialApp(
+            locale: const Locale('ar'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const LessonScreen(
               lessonId: 'lesson_4-6_islamic_parenting_adab_01',
               ageGroup: '4-6',
               childId: 1,

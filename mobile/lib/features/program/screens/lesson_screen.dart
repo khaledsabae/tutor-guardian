@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/analytics.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
@@ -86,8 +87,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           context,
           emoji: '🎉',
           imageAsset: 'assets/images/generated/mascot_celebrate.webp',
-          title: 'ما شاء الله!',
-          message: 'تم تسجيل إكمال الدرس',
+          title: AppLocalizations.of(context).lessonCelebrationTitle,
+          message: AppLocalizations.of(context).lessonCelebrationMsg,
         );
         if (mounted) Navigator.of(context).pop();
       }
@@ -95,7 +96,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تعذّر تسجيل الإكمال: $e'),
+            content: Text(AppLocalizations.of(context).lessonErrorMarking(e.toString())),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -135,7 +136,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         title: Text(
           asyncLesson.maybeWhen(
             data: (l) => l.title,
-            orElse: () => 'الدرس',
+            orElse: () => AppLocalizations.of(context).lessonTitle,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -149,8 +150,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
                 child: BouncyButton(
                   label: status == ProgressStatus.completed
-                      ? 'مكتمل ✓'
-                      : (_marking ? 'جارٍ التسجيل…' : 'أتممت هذا الدرس'),
+                      ? AppLocalizations.of(context).lessonCompleted
+                      : (_marking ? AppLocalizations.of(context).lessonMarking : AppLocalizations.of(context).lessonMarkComplete),
                   color: status == ProgressStatus.completed
                       ? AppTheme.success
                       : Dt.accent,
@@ -199,9 +200,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         ),
         error: (err, _) => EmptyState(
           emoji: '📡',
-          title: 'تعذّر تحميل الدرس',
+          title: AppLocalizations.of(context).lessonErrorLoading,
           subtitle: '$err',
-          actionLabel: 'إعادة المحاولة',
+          actionLabel: AppLocalizations.of(context).retry,
           onAction: () => ref.invalidate(lessonProvider(widget.lessonId)),
         ),
       ),
@@ -238,13 +239,13 @@ class _Body extends ConsumerWidget {
         const SizedBox(height: 16),
         _Section(
           emoji: '📖',
-          title: 'ملخص الدرس',
+          title: AppLocalizations.of(context).lessonSummary,
           body: lesson.summary,
         ),
         const SizedBox(height: 16),
         _Section(
           emoji: '💡',
-          title: 'جرّب هذا',
+          title: AppLocalizations.of(context).lessonTryThis,
           body: lesson.tryThis,
           accent: Dt.accentDeep,
           background: const Color(0xFFFFF4E0),
@@ -259,9 +260,8 @@ class _Body extends ConsumerWidget {
         _UnitIdsCard(lesson: lesson),
         if (lesson.needsProfessionalFollowup) ...[
           const SizedBox(height: 16),
-          const _WarningCard(
-            text: 'هذا الدرس يحتوي على توجيهات تستحق المتابعة مع متخصص. '
-                'لا تتردد في استشارة طبيب أو أخصائي تنموي إذا شعرت بالحاجة.',
+          _WarningCard(
+            text: AppLocalizations.of(context).lessonWarningFollowup,
           ),
         ],
       ],
@@ -278,19 +278,19 @@ class _StatusChip extends StatelessWidget {
     final (icon, label, color, bg) = switch (status) {
       ProgressStatus.completed => (
           Icons.check_circle,
-          'مكتمل',
+          AppLocalizations.of(context).lessonStatusCompleted,
           AppTheme.success,
           const Color(0xFFD4EDDA),
         ),
       ProgressStatus.inProgress => (
           Icons.play_circle_outline,
-          'قيد التنفيذ',
+          AppLocalizations.of(context).lessonStatusInProgress,
           AppTheme.primary,
           AppTheme.surfaceAlt,
         ),
       ProgressStatus.notStarted => (
           Icons.circle_outlined,
-          'لم يبدأ بعد',
+          AppLocalizations.of(context).lessonStatusNotStarted,
           AppTheme.textSecondary,
           AppTheme.surfaceAlt,
         ),
@@ -377,7 +377,7 @@ class _Hero extends ConsumerWidget {
                           color: isFav ? Colors.redAccent : Colors.white,
                           size: 22,
                         ),
-                        tooltip: isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة',
+                        tooltip: isFav ? AppLocalizations.of(context).lessonFavRemove : AppLocalizations.of(context).lessonFavAdd,
                       ),
                     ],
                   ),
@@ -498,12 +498,12 @@ class _ReflectionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
               Text('🧠', style: TextStyle(fontSize: 20)),
               SizedBox(width: 8),
               Text(
-                'أسئلة للتأمل',
+                AppLocalizations.of(context).lessonReflections,
                 style: TextStyle(
                   color: violet,
                   fontWeight: FontWeight.w800,
@@ -575,7 +575,7 @@ class _UnitIdsCard extends StatelessWidget {
           const SizedBox(width: 6),
           Expanded(
             child: Text(
-              'مرتبط بـ ${lesson.unitIds.length} وحدات من قاعدة المعرفة',
+              AppLocalizations.of(context).lessonUnitRefs(lesson.unitIds.length),
               style: const TextStyle(color: AppTheme.textSecondary),
             ),
           ),
@@ -649,14 +649,14 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           buttons.add(
             _AssetButton(
               icon: Icons.headset,
-              label: '🎧 استمع للبودكاست',
+              label: AppLocalizations.of(context).lessonListenPodcast,
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => PodcastPlayerScreen(
                       url: url,
-                      title: '🎧 البودكاست',
+                      title: AppLocalizations.of(context).lessonPodcastTitle,
                     ),
                   ),
                 );
@@ -678,7 +678,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
                   MaterialPageRoute(
                     builder: (context) => VideoPlayerScreen(
                       url: url,
-                      title: '🎥 الفيديو التعليمي',
+                      title: AppLocalizations.of(context).lessonWatchVideo,
                     ),
                   ),
                 );
@@ -702,7 +702,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           buttons.add(
             _AssetButton(
               icon: Icons.style,
-              label: '📇 فلاش كاردز ($flashcardsCount بطاقة)',
+              label: AppLocalizations.of(context).lessonFlashcards(flashcardsCount),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -730,7 +730,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           buttons.add(
             _AssetButton(
               icon: Icons.quiz,
-              label: '❓ اختبر نفسك ($quizzesCount سؤال)',
+              label: AppLocalizations.of(context).lessonQuiz(quizzesCount),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -750,7 +750,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               raw.startsWith('http') ? raw : '${AppConfig.apiBaseUrl}/$raw';
           buttons.add(_AssetButton(
             icon: Icons.image,
-            label: '📊 إنفوجرافيك الدرس',
+            label: AppLocalizations.of(context).lessonInfographic,
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => InfographicScreen(url: url)),
@@ -764,7 +764,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               raw.startsWith('http') ? raw : '${AppConfig.apiBaseUrl}/$raw';
           buttons.add(_AssetButton(
             icon: Icons.description,
-            label: '📄 تقرير الدرس',
+            label: AppLocalizations.of(context).lessonReport,
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => ReportScreen(url: url)),
@@ -778,7 +778,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               raw.startsWith('http') ? raw : '${AppConfig.apiBaseUrl}/$raw';
           buttons.add(_AssetButton(
             icon: Icons.table_chart,
-            label: '📋 جدول البيانات',
+            label: AppLocalizations.of(context).lessonDataTable,
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => DataTableScreen(url: url)),
@@ -793,7 +793,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           buttons.add(
             _AssetButton(
               icon: Icons.videogame_asset,
-              label: '🎮 العب وتعلم (حارس البيانات)',
+              label: AppLocalizations.of(context).lessonPlayCyber,
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const DataDefenderGameScreen()),
@@ -804,7 +804,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           buttons.add(
             _AssetButton(
               icon: Icons.videogame_asset_rounded,
-              label: '🎮 العب وتعلم',
+              label: AppLocalizations.of(context).lessonPlayMedical,
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const HealthyHeroGameScreen()),
@@ -815,7 +815,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           buttons.add(
             _AssetButton(
               icon: Icons.nature_people,
-              label: '🎮 العب وتعلم (شجرة الأخلاق)',
+              label: AppLocalizations.of(context).lessonPlayIslamic,
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const TreeOfDeedsGameScreen()),
@@ -826,7 +826,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
           buttons.add(
             _AssetButton(
               icon: Icons.psychology,
-              label: '🎮 العب وتعلم (متاهة المشاعر)',
+              label: AppLocalizations.of(context).lessonPlayDev,
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const EmotionMazeGameScreen()),
@@ -847,7 +847,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'ابدأ بالمحتوى التفاعلي',
+                    AppLocalizations.of(context).lessonStartInteractive,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w800,
                         ),
@@ -857,7 +857,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'استمع، شاهد، والعب — ثم اقرأ الملخص بالأسفل',
+              AppLocalizations.of(context).lessonInteractiveHint,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: AppTheme.textMuted,
                   ),
@@ -915,11 +915,11 @@ class _VideoCard extends StatelessWidget {
                     color: Colors.white, size: 38),
               ),
             ),
-            const PositionedDirectional(
+            PositionedDirectional(
               start: 16,
               bottom: 12,
               child: Text(
-                '🎥 شاهد الفيديو التعليمي',
+                AppLocalizations.of(context).lessonVideoTitle,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w800,
