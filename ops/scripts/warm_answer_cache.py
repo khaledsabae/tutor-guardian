@@ -12,6 +12,7 @@ Requires: Ollama on tg-home + answer_cache.py in the backend.
 """
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 import sys
@@ -73,7 +74,7 @@ _AGE_GROUPS = [
 ]
 
 
-def _generate_answer(question: str, age_group: str) -> str | None:
+async def _generate_answer(question: str, age_group: str) -> str | None:
     """Generate an answer via the real AI pipeline."""
     try:
         from app.services.ai_gateway import AIGateway
@@ -94,7 +95,7 @@ def _generate_answer(question: str, age_group: str) -> str | None:
 
         context = "\n\n".join(context_parts)
 
-        # Generate answer using AI Gateway
+        # Generate answer using AI Gateway (async)
         prompt = f"""أنت المربي الذكي — مساعد تربوي إسلامي. أجب على سؤال الوالد بناءً على الوحدات المعرفية التالية فقط.
 
 السؤال: {question}
@@ -106,7 +107,7 @@ def _generate_answer(question: str, age_group: str) -> str | None:
 أجب بإجابة عملية مختصرة مناسبة لعمر الطفل، واذكر المصدر في سطر يبدأ بـ 📚 المصدر:"""
 
         gateway = AIGateway()
-        result = gateway.generate(prompt)
+        result = await gateway.generate(prompt)
         return result.text if hasattr(result, 'text') else str(result)
     except Exception as e:
         print(f"  Error generating answer for '{question[:30]}...' ({age_group}): {e}", file=sys.stderr)
@@ -124,7 +125,7 @@ def _store_in_cache(question: str, age_group: str, answer: str) -> bool:
         return False
 
 
-def main():
+async def _main():
     """Warm the answer cache with pre-computed answers."""
     print(f"Starting cache warming: {len(_QUESTIONS)} questions × {len(_AGE_GROUPS)} age groups")
     print(f"Maximum possible entries: {len(_QUESTIONS) * len(_AGE_GROUPS)}")
@@ -136,7 +137,7 @@ def main():
         for age_group in _AGE_GROUPS:
             print(f"  Processing: '{question[:40]}...' ({age_group})")
 
-            answer = _generate_answer(question, age_group)
+            answer = await _generate_answer(question, age_group)
             if answer:
                 if _store_in_cache(question, age_group, answer):
                     warmed += 1
@@ -149,10 +150,15 @@ def main():
                 print(f"    ✗ No answer generated")
 
             # Small delay to avoid overwhelming the pipeline
-            time.sleep(0.5)
+            await asyncio.sleep(0.5)
 
     print(f"\nCache warming complete: {warmed} entries cached, {errors} errors")
     return 0 if errors == 0 else 1
+
+
+def main():
+    """Synchronous entry point."""
+    return asyncio.run(_main())
 
 
 if __name__ == "__main__":
