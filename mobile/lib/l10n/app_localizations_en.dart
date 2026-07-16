@@ -402,4 +402,86 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continuePath => 'استمر';
+
+  @override
+  String get todaySun => 'Today ☀️';
+
+  @override
+  String get shareOpinion => 'Share your opinion';
+
+  @override
+  String get searchTooltip => 'Search';
+
+  @override
+  String get settingsTooltip => 'Settings';
+
+  @override
+  String get greetingPeace => 'Peace be upon you';
+
+  @override
+  String greetingWithName(Object name) {
+    return 'Peace be upon you\n$name\'s journey continues';
+  }
+
+  @override
+  String get feedbackMessage =>
+      'Your opinion matters! Share any feedback or issue — written or voice.';
+
+  @override
+  String get bedtimeStories => 'Bedtime Stories';
+
+  @override
+  String get bedtimeStoriesDesc =>
+      'Short, calm stories with natural sleep sounds 🐦';
+
+  @override
+  String get consecutiveDays => 'Consecutive Days';
+
+  @override
+  String get completedLesson => 'Completed Lesson';
+
+  @override
+  String get achievements => 'Achievements';
+
+  @override
+  String get startFirstPath => 'Start Your First Path';
+
+  @override
+  String get startFirstPathDesc =>
+      'Choose a short educational journey designed for your child\'s age and start today.';
+
+  @override
+  String get browsePaths => 'Browse Paths';
+
+  @override
+  String get continueJourney => 'Continue Your Journey';
+
+  @override
+  String get lessonsRemaining_one => '🏆 1 lesson remaining!';
+
+  @override
+  String lessonsRemaining_other(Object count) {
+    return '🏆 $count lessons remaining';
+  }
+
+  @override
+  String get continueBtn => 'Continue';
+
+  @override
+  String get quizTitle => 'Test Your Knowledge';
+
+  @override
+  String get quizDesc => '10 quick questions • Learn while you play';
+
+  @override
+  String get askQuestion => 'Have a parenting question?';
+
+  @override
+  String get askAlMurabbiNow => 'Ask Al-Murabbi Now';
+
+  @override
+  String get insightsTitle => 'Smart Parenting Insights';
+
+  @override
+  String get insightsDesc => 'View your child\'s habit and activity analysis';
 }

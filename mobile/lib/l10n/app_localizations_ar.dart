@@ -402,4 +402,85 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get continuePath => 'استمر';
+
+  @override
+  String get todaySun => 'اليوم ☀️';
+
+  @override
+  String get shareOpinion => 'شاركنا رأيك';
+
+  @override
+  String get searchTooltip => 'بحث';
+
+  @override
+  String get settingsTooltip => 'الإعدادات';
+
+  @override
+  String get greetingPeace => 'السلام عليكم';
+
+  @override
+  String greetingWithName(Object name) {
+    return 'السلام عليكم\nرحلة $name مستمرة';
+  }
+
+  @override
+  String get feedbackMessage =>
+      'رأيك يهمنا! شاركنا أي ملاحظة أو مشكلة — كتابةً أو صوتاً.';
+
+  @override
+  String get bedtimeStories => 'حكايات قبل النوم';
+
+  @override
+  String get bedtimeStoriesDesc => 'قصص قصيرة وهادئة مع صوت طبيعي للنوم 🐦';
+
+  @override
+  String get consecutiveDays => 'أيام متتالية';
+
+  @override
+  String get completedLesson => 'درس مكتمل';
+
+  @override
+  String get achievements => 'إنجازات';
+
+  @override
+  String get startFirstPath => 'ابدأ مسارك الأول';
+
+  @override
+  String get startFirstPathDesc =>
+      'اختر رحلة تربوية قصيرة مصممة لعمر طفلك وابدأ اليوم.';
+
+  @override
+  String get browsePaths => 'استعرض المسارات';
+
+  @override
+  String get continueJourney => 'أكمل رحلتك';
+
+  @override
+  String get lessonsRemaining_one => '🏆 درس واحد باقٍ!';
+
+  @override
+  String lessonsRemaining_other(Object count) {
+    return '🏆 $count دروس باقية';
+  }
+
+  @override
+  String get continueBtn => 'متابعة';
+
+  @override
+  String get quizTitle => 'اختبر معلوماتك التربوية';
+
+  @override
+  String get quizDesc => '10 أسئلة سريعة • تعلّم وأنت تلعب';
+
+  @override
+  String get askQuestion => 'عندك سؤال تربوي؟';
+
+  @override
+  String get askAlMurabbiNow => 'اسأل المربي الذكي الآن';
+
+  @override
+  String get insightsTitle => 'تحليلات وتوصيات تربوية ذكية';
+
+  @override
+  String get insightsDesc => 'اطلع على تحليلات عادات طفلك ونشاطه';
 }

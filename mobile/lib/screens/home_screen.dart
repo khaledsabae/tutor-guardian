@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../l10n/app_localizations.dart';
+
 import '../core/analytics.dart';
 
 import '../features/onboarding/providers/onboarding_providers.dart';
@@ -80,9 +82,10 @@ class HomeScreen extends ConsumerWidget {
     });
     final coins = ref.watch(coinsProvider);
 
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('اليوم ☀️'),
+        title: Text(l10n.todaySun),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
@@ -122,21 +125,21 @@ class HomeScreen extends ConsumerWidget {
             child: Center(child: ActiveChildChip()),
           ),
           IconButton(
-            tooltip: 'شاركنا رأيك',
+            tooltip: l10n.shareOpinion,
             icon: const Icon(Icons.feedback, color: Dt.accent),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const FeedbackScreen()),
             ),
           ),
           IconButton(
-            tooltip: 'بحث',
+            tooltip: l10n.searchTooltip,
             icon: const Icon(Icons.search),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const SearchScreen()),
             ),
           ),
           IconButton(
-            tooltip: 'الإعدادات',
+            tooltip: l10n.settingsTooltip,
             icon: const Icon(Icons.settings_outlined),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const SettingsScreen()),
@@ -161,8 +164,8 @@ class HomeScreen extends ConsumerWidget {
               Expanded(
                 child: Text(
                   profile == null
-                      ? 'السلام عليكم'
-                      : 'السلام عليكم\nرحلة ${profile.name} مستمرة',
+                      ? l10n.greetingPeace
+                      : l10n.greetingWithName(profile.name),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppTheme.textSecondary,
                         fontWeight: FontWeight.w600,
@@ -185,19 +188,19 @@ class HomeScreen extends ConsumerWidget {
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const FeedbackScreen()),
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 child: Row(
                   children: [
-                    Text('💬', style: TextStyle(fontSize: 22)),
-                    SizedBox(width: 10),
+                    const Text('💬', style: TextStyle(fontSize: 22)),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        'رأيك يهمنا! شاركنا أي ملاحظة أو مشكلة — كتابةً أو صوتاً.',
-                        style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
+                        l10n.feedbackMessage,
+                        style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
                       ),
                     ),
-                    Icon(Icons.arrow_back_ios_new, size: 14, color: Dt.accent),
+                    const Icon(Icons.arrow_back_ios_new, size: 14, color: Dt.accent),
                   ],
                 ),
               ),
@@ -232,6 +235,7 @@ class _BedtimeStoriesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Material(
       color: const Color(0xFF0B3B3B),
       borderRadius: BorderRadius.circular(Dt.rCard),
@@ -260,16 +264,16 @@ class _BedtimeStoriesCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'حكايات قبل النوم',
+                      l10n.bedtimeStories,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                           ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
-                      'قصص قصيرة وهادئة مع صوت طبيعي للنوم 🐦',
-                      style: TextStyle(color: Color(0xFFE0D5C1), fontSize: 12.5),
+                    Text(
+                      l10n.bedtimeStoriesDesc,
+                      style: const TextStyle(color: Color(0xFFE0D5C1), fontSize: 12.5),
                     ),
                   ],
                 ),
@@ -290,6 +294,7 @@ class _StatsRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final completed = bundle?.lessons
             .where((l) => l.status == ProgressStatus.completed)
             .length ??
@@ -307,7 +312,7 @@ class _StatsRow extends ConsumerWidget {
           child: StatChip(
             emoji: '🔥',
             value: CountUpText(streak),
-            label: 'أيام متتالية',
+            label: l10n.consecutiveDays,
             color: Dt.accent,
             pulse: streak > 0,
           ),
@@ -317,7 +322,7 @@ class _StatsRow extends ConsumerWidget {
           child: StatChip(
             emoji: '📚',
             value: CountUpText(completed),
-            label: 'درس مكتمل',
+            label: l10n.completedLesson,
             color: Dt.primary,
           ),
         ),
@@ -326,7 +331,7 @@ class _StatsRow extends ConsumerWidget {
           child: StatChip(
             emoji: '🏅',
             value: CountUpText(earned),
-            label: 'إنجازات',
+            label: l10n.achievements,
             color: const Color(0xFF8B5CF6),
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const BadgesScreen()),
@@ -350,6 +355,7 @@ class _ContinueJourneyCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final asyncPaths =
         ref.watch(pathsListProvider(PathsListArgs(ageGroup: ageGroup)));
     final paths = asyncPaths.maybeWhen(
@@ -390,14 +396,14 @@ class _ContinueJourneyCard extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                EmojiHero(emoji: '🚀', size: 48),
-                SizedBox(width: 12),
+                const EmojiHero(emoji: '🚀', size: 48),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'ابدأ مسارك الأول',
-                    style: TextStyle(
+                    l10n.startFirstPath,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
@@ -408,7 +414,7 @@ class _ContinueJourneyCard extends ConsumerWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'اختر رحلة تربوية قصيرة مصممة لعمر طفلك وابدأ اليوم.',
+              l10n.startFirstPathDesc,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: .92),
                 height: 1.5,
@@ -416,7 +422,7 @@ class _ContinueJourneyCard extends ConsumerWidget {
             ),
             const SizedBox(height: 14),
             BouncyButton(
-              label: 'استعرض المسارات',
+              label: l10n.browsePaths,
               color: Dt.accent,
               onTap: onStartFirstPath,
             ),
@@ -449,7 +455,7 @@ class _ContinueJourneyCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'أكمل رحلتك',
+                      l10n.continueJourney,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: .85),
                         fontSize: 12,
@@ -496,7 +502,7 @@ class _ContinueJourneyCard extends ConsumerWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            remaining == 1 ? '🏆 درس واحد باقٍ!' : '🏆 $remaining دروس باقية',
+            remaining == 1 ? l10n.lessonsRemaining_one : l10n.lessonsRemaining_other(remaining),
             style: TextStyle(
               color: Colors.white.withValues(alpha: .9),
               fontSize: 12,
@@ -505,7 +511,7 @@ class _ContinueJourneyCard extends ConsumerWidget {
           ),
           const SizedBox(height: 14),
           BouncyButton(
-            label: 'متابعة',
+            label: l10n.continueBtn,
             color: Colors.white.withValues(alpha: .22),
             edgeColor: Colors.white.withValues(alpha: .35),
             onTap: () => Navigator.of(context).push(
@@ -539,35 +545,35 @@ class _QuizCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(Dt.rCard),
           boxShadow: Dt.softShadow(const Color(0xFF6A1B9A)),
         ),
-        child: const Row(
+        child: Row(
           children: [
-            EmojiHero(
+            const EmojiHero(
               emoji: '🧠',
               size: 48,
               background: Color(0x33FFFFFF),
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'اختبر معلوماتك التربوية',
-                    style: TextStyle(
+                    AppLocalizations.of(context).quizTitle,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 15,
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 2),
                   Text(
-                    '10 أسئلة سريعة • تعلّم وأنت تلعب',
-                    style: TextStyle(color: Colors.white70, fontSize: 13),
+                    AppLocalizations.of(context).quizDesc,
+                    style: const TextStyle(color: Colors.white70, fontSize: 13),
                   ),
                 ],
               ),
             ),
-            Icon(Icons.play_arrow_rounded, color: Colors.white70, size: 28),
+            const Icon(Icons.play_arrow_rounded, color: Colors.white70, size: 28),
           ],
         ),
       ),
@@ -581,6 +587,7 @@ class _AskAssistantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return BouncyTap(
       onTap: onTap,
       child: Container(
@@ -590,27 +597,27 @@ class _AskAssistantCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(Dt.rCard),
           boxShadow: Dt.cardShadow,
         ),
-        child: const Row(
+        child: Row(
           children: [
-            EmojiHero(
+            const EmojiHero(
               emoji: '💬',
               size: 48,
               background: Color(0x1A0D9488),
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'عندك سؤال تربوي؟',
+                    l10n.askQuestion,
                     style:
-                        TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+                        const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 2),
                   Text(
-                    'اسأل المربي الذكي الآن',
-                    style: TextStyle(
+                    l10n.askAlMurabbiNow,
+                    style: const TextStyle(
                       color: AppTheme.textSecondary,
                       fontSize: 13,
                     ),
@@ -618,7 +625,7 @@ class _AskAssistantCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.chevron_left, color: AppTheme.textMuted),
+            const Icon(Icons.chevron_left, color: AppTheme.textMuted),
           ],
         ),
       ),
@@ -631,6 +638,7 @@ class _ParentingInsightsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return BouncyTap(
       onTap: () {
         Navigator.of(context).push(
@@ -646,27 +654,27 @@ class _ParentingInsightsCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(Dt.rCard),
           boxShadow: Dt.cardShadow,
         ),
-        child: const Row(
+        child: Row(
           children: [
-            EmojiHero(
+            const EmojiHero(
               emoji: '🧠',
               size: 48,
               background: Color(0x1A6366F1),
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'تحليلات وتوصيات تربوية ذكية',
+                    l10n.insightsTitle,
                     style:
-                        TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+                        const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 2),
                   Text(
-                    'اطلع على تحليلات عادات طفلك ونشاطه',
-                    style: TextStyle(
+                    l10n.insightsDesc,
+                    style: const TextStyle(
                       color: AppTheme.textSecondary,
                       fontSize: 13,
                     ),
@@ -674,7 +682,7 @@ class _ParentingInsightsCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.chevron_left, color: AppTheme.textMuted),
+            const Icon(Icons.chevron_left, color: AppTheme.textMuted),
           ],
         ),
       ),

@@ -883,6 +883,156 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'استمر'**
   String get continuePath;
+
+  /// No description provided for @todaySun.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم ☀️'**
+  String get todaySun;
+
+  /// No description provided for @shareOpinion.
+  ///
+  /// In ar, this message translates to:
+  /// **'شاركنا رأيك'**
+  String get shareOpinion;
+
+  /// No description provided for @searchTooltip.
+  ///
+  /// In ar, this message translates to:
+  /// **'بحث'**
+  String get searchTooltip;
+
+  /// No description provided for @settingsTooltip.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعدادات'**
+  String get settingsTooltip;
+
+  /// No description provided for @greetingPeace.
+  ///
+  /// In ar, this message translates to:
+  /// **'السلام عليكم'**
+  String get greetingPeace;
+
+  /// No description provided for @greetingWithName.
+  ///
+  /// In ar, this message translates to:
+  /// **'السلام عليكم\nرحلة {name} مستمرة'**
+  String greetingWithName(Object name);
+
+  /// No description provided for @feedbackMessage.
+  ///
+  /// In ar, this message translates to:
+  /// **'رأيك يهمنا! شاركنا أي ملاحظة أو مشكلة — كتابةً أو صوتاً.'**
+  String get feedbackMessage;
+
+  /// No description provided for @bedtimeStories.
+  ///
+  /// In ar, this message translates to:
+  /// **'حكايات قبل النوم'**
+  String get bedtimeStories;
+
+  /// No description provided for @bedtimeStoriesDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'قصص قصيرة وهادئة مع صوت طبيعي للنوم 🐦'**
+  String get bedtimeStoriesDesc;
+
+  /// No description provided for @consecutiveDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'أيام متتالية'**
+  String get consecutiveDays;
+
+  /// No description provided for @completedLesson.
+  ///
+  /// In ar, this message translates to:
+  /// **'درس مكتمل'**
+  String get completedLesson;
+
+  /// No description provided for @achievements.
+  ///
+  /// In ar, this message translates to:
+  /// **'إنجازات'**
+  String get achievements;
+
+  /// No description provided for @startFirstPath.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ مسارك الأول'**
+  String get startFirstPath;
+
+  /// No description provided for @startFirstPathDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر رحلة تربوية قصيرة مصممة لعمر طفلك وابدأ اليوم.'**
+  String get startFirstPathDesc;
+
+  /// No description provided for @browsePaths.
+  ///
+  /// In ar, this message translates to:
+  /// **'استعرض المسارات'**
+  String get browsePaths;
+
+  /// No description provided for @continueJourney.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكمل رحلتك'**
+  String get continueJourney;
+
+  /// No description provided for @lessonsRemaining_one.
+  ///
+  /// In ar, this message translates to:
+  /// **'🏆 درس واحد باقٍ!'**
+  String get lessonsRemaining_one;
+
+  /// No description provided for @lessonsRemaining_other.
+  ///
+  /// In ar, this message translates to:
+  /// **'🏆 {count} دروس باقية'**
+  String lessonsRemaining_other(Object count);
+
+  /// No description provided for @continueBtn.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get continueBtn;
+
+  /// No description provided for @quizTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختبر معلوماتك التربوية'**
+  String get quizTitle;
+
+  /// No description provided for @quizDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'10 أسئلة سريعة • تعلّم وأنت تلعب'**
+  String get quizDesc;
+
+  /// No description provided for @askQuestion.
+  ///
+  /// In ar, this message translates to:
+  /// **'عندك سؤال تربوي؟'**
+  String get askQuestion;
+
+  /// No description provided for @askAlMurabbiNow.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسأل المربي الذكي الآن'**
+  String get askAlMurabbiNow;
+
+  /// No description provided for @insightsTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحليلات وتوصيات تربوية ذكية'**
+  String get insightsTitle;
+
+  /// No description provided for @insightsDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'اطلع على تحليلات عادات طفلك ونشاطه'**
+  String get insightsDesc;
 }
 
 class _AppLocalizationsDelegate
