@@ -589,13 +589,13 @@ def monthly_report(child_id: int):
         (child_id, month_start_str.split("T")[0]),
     ).fetchall()
     
-    # Chat sessions this month
+    # Chat sessions this month (simplified - no child_id column)
     chats = conn.execute(
         """SELECT COUNT(*) as cnt, MIN(created_at) as first, MAX(created_at) as last
            FROM chat_sessions 
            WHERE device_id = (SELECT device_id FROM child_profiles WHERE id = ?)
-           AND child_id = ? AND created_at >= ?""",
-        (child_id, child_id, month_start_str),
+           AND created_at >= ?""",
+        (child_id, month_start_str),
     ).fetchone()
     
     # Current streak
