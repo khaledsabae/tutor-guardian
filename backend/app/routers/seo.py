@@ -17,12 +17,6 @@ from fastapi.responses import HTMLResponse
 
 router = APIRouter(tags=["web"])
 
-@router.get("/", include_in_schema=False)
-async def _root_slash(request: Request):
-    """Serve the same landing page for /seo/ as for /seo."""
-    return await seo_landing(request)
-
-
 _TEAL = "#01696F"
 _CREAM = "#FAF7F2"
 _PLAY = "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
@@ -608,7 +602,7 @@ async def seo_page(request: Request, slug: str):
     )
 
 
-@router.get("", include_in_schema=False)
+@router.get("/", include_in_schema=False)
 async def seo_index(request: Request):
     """Index of all SEO pages."""
     base_url = str(request.base_url).rstrip("/")
