@@ -18,10 +18,9 @@ from fastapi.responses import HTMLResponse
 router = APIRouter(tags=["web"])
 
 @router.get("/", include_in_schema=False)
-async def _root_slash():
-    """Redirect /seo/ trailing slash to /seo without a protocol downgrade."""
-    from fastapi.responses import RedirectResponse
-    return RedirectResponse(url="/seo", status_code=301)
+async def _root_slash(request: Request):
+    """Serve the same landing page for /seo/ as for /seo."""
+    return await seo_landing(request)
 
 
 _TEAL = "#01696F"
