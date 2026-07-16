@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/features/program/data/models.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/features/program/widgets/shareable_tip_card.dart';
 
 DailyTip _tip(String text) => DailyTip(
@@ -28,14 +29,20 @@ void main() {
       addTearDown(tester.view.resetDevicePixelRatio);
 
       await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.rtl,
-          child: ShareableTipCard(
-            tip: _tip('اقرأ لطفلك كل ليلة قبل النوم'),
-            childName: 'سارة',
+        MaterialApp(
+          locale: const Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Directionality(
+            textDirection: TextDirection.rtl,
+            child: ShareableTipCard(
+              tip: _tip('اقرأ لطفلك كل ليلة قبل النوم'),
+              childName: 'سارة',
+            ),
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('اقرأ لطفلك كل ليلة قبل النوم'), findsOneWidget);
       expect(find.text('المربي الذكي'), findsOneWidget);

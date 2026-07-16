@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import 'bouncy_button.dart';
 
@@ -15,10 +16,10 @@ Future<void> showCelebration(
   required String emoji,
   required String title,
   required String message,
-  String buttonLabel = 'متابعة',
+  String? buttonLabel,
   String? imageAsset,
   Future<void> Function()? onShare,
-  String shareLabel = 'شارك هذه اللحظة 🤍',
+  String? shareLabel,
 }) {
   return showGeneralDialog<void>(
     context: context,
@@ -46,10 +47,10 @@ class _CelebrationDialog extends StatefulWidget {
   final String emoji;
   final String title;
   final String message;
-  final String buttonLabel;
+  final String? buttonLabel;
   final String? imageAsset;
   final Future<void> Function()? onShare;
-  final String shareLabel;
+  final String? shareLabel;
 
   const _CelebrationDialog({
     required this.emoji,
@@ -58,7 +59,7 @@ class _CelebrationDialog extends StatefulWidget {
     required this.buttonLabel,
     this.imageAsset,
     this.onShare,
-    this.shareLabel = 'شارك هذه اللحظة 🤍',
+    this.shareLabel,
   });
 
   @override
@@ -151,14 +152,18 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                   const SizedBox(height: 24),
                   if (widget.onShare != null) ...[
                     BouncyButton(
-                      label: _sharing ? 'جاري التحضير…' : widget.shareLabel,
+                      label: _sharing
+                          ? AppLocalizations.of(context).sharePreparing
+                          : widget.shareLabel ??
+                              AppLocalizations.of(context).shareThisMoment,
                       color: Dt.primary,
                       onTap: _sharing ? () {} : _handleShare,
                     ),
                     const SizedBox(height: 10),
                   ],
                   BouncyButton(
-                    label: widget.buttonLabel,
+                    label: widget.buttonLabel ??
+                        AppLocalizations.of(context).continueBtn,
                     color: Dt.accent,
                     onTap: () => Navigator.of(context).pop(),
                   ),

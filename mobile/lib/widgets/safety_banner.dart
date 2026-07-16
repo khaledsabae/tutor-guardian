@@ -6,6 +6,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/api_models.dart';
 import '../models/enums.dart';
 import '../theme/app_theme.dart';
@@ -19,37 +20,38 @@ class SafetyBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final r = reply;
     if (r == null) return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context);
 
     // Priority: emergency > needs_human_review > banned notice.
     if (r.isEmergency) {
-      return const _Banner(
+      return _Banner(
         color: AppTheme.dangerBg,
         textColor: AppTheme.dangerFg,
         icon: Icons.warning_amber_rounded,
-        text: 'حالة طارئة — يرجى التواصل مع الجهات المختصة فوراً.',
-        cta: 'اتصال بالطوارئ',
+        text: l10n.safetyEmergencyText,
+        cta: l10n.safetyEmergencyCta,
         ctaUri: 'tel:112',
       );
     }
     if (r.mode == ReplyMode.banned) {
-      return const _Banner(
+      return _Banner(
         color: AppTheme.warningBg,
         textColor: AppTheme.warningFg,
         icon: Icons.info_outline,
-        text: 'هذا الموضوع خارج نطاق ما يمكنني مساعدتك فيه.',
+        text: l10n.safetyBannedText,
       );
     }
     if (r.needsHumanReview) {
       final hint = r.escalationTarget == EscalationTarget.pediatrician
-          ? 'استشر طبيب أطفال.'
+          ? l10n.safetyConsultPediatrician
           : r.escalationTarget == EscalationTarget.cybersecuritySpecialist
-              ? 'استشر متخصصاً في الأمان الرقمي.'
-              : 'من الأفضل مراجعة مختص بشري.';
+              ? l10n.safetyConsultCyberSpecialist
+              : l10n.safetyConsultHuman;
       return _Banner(
         color: AppTheme.warningBg,
         textColor: AppTheme.warningFg,
         icon: Icons.medical_services_outlined,
-        text: 'هذا التوجيه عام — $hint',
+        text: l10n.safetyGeneralGuidance(hint),
       );
     }
     return const SizedBox.shrink();

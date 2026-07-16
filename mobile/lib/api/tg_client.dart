@@ -26,6 +26,7 @@ import 'package:uuid/uuid.dart';
 
 import '../config/app_config.dart';
 import '../models/api_models.dart';
+import 'package:almorabbi/l10n/l10n_global.dart';
 
 /// Raised for any non-recoverable HTTP failure the UI should display.
 class TgApiError implements Exception {
@@ -219,7 +220,7 @@ class TgClient {
   Stream<TgStreamEvent> streamQuery(AssistantQuery q) async* {
     final (sid, tok) = await _auth.readSession();
     if (sid == null || tok == null) {
-      throw const TgApiError(401, 'لا توجد جلسة نشطة. أنشئ جلسة أولاً.');
+      throw TgApiError(401, AppL10n.current.noActiveSession);
     }
 
     final uri = Uri.parse('$_baseUrl/api/assistant/stream');
@@ -233,9 +234,9 @@ class TgClient {
     try {
       response = await _http.send(request).timeout(AppConfig.streamTimeout);
     } on TimeoutException {
-      throw const TgApiError(null, 'انتهت مهلة الاتصال بالخادم.');
+      throw TgApiError(null, AppL10n.current.apiTimeout);
     } on SocketException catch (e) {
-      throw TgApiError(null, 'تعذّر الاتصال بالخادم: ${e.message}');
+      throw TgApiError(null, AppL10n.current.apiConnectionFailed('${e.message}'));
     }
 
     if (response.statusCode != 200) {
@@ -297,7 +298,7 @@ class TgClient {
   Future<AssistantReply> query(AssistantQuery q) async {
     final (sid, tok) = await _auth.readSession();
     if (sid == null || tok == null) {
-      throw const TgApiError(401, 'لا توجد جلسة نشطة. أنشئ جلسة أولاً.');
+      throw TgApiError(401, AppL10n.current.noActiveSession);
     }
     final resp = await _http
         .post(
@@ -320,7 +321,7 @@ class TgClient {
   Future<SessionHistory> getHistory(String sessionId) async {
     final (sid, tok) = await _auth.readSession();
     if (tok == null) {
-      throw const TgApiError(401, 'لا توجد جلسة نشطة.');
+      throw TgApiError(401, AppL10n.current.apiNoSession);
     }
     final resp = await _http
         .get(
@@ -333,7 +334,7 @@ class TgClient {
       // The session was removed server-side; clear local copy so the
       // caller can re-create transparently.
       await _auth.clearSession();
-      throw const TgApiError(404, 'الجلسة غير موجودة على الخادم.');
+      throw TgApiError(404, AppL10n.current.apiSessionNotFound);
     }
     if (resp.statusCode != 200) {
       throw _wrap(resp);
@@ -431,7 +432,7 @@ class TgClient {
   }) async {
     final (sid, tok) = await _auth.readSession();
     if (tok == null) {
-      throw const TgApiError(401, 'لا توجد جلسة نشطة.');
+      throw TgApiError(401, AppL10n.current.apiNoSession);
     }
     final body = <String, dynamic>{
       'rating': rating,
@@ -450,7 +451,7 @@ class TgClient {
       // The stored token expired; clear it so the next call creates a
       // fresh session.
       await _auth.clearSession();
-      throw const TgApiError(401, 'انتهت صلاحية الجلسة.');
+      throw TgApiError(401, AppL10n.current.apiSessionExpired);
     }
     if (resp.statusCode != 201) {
       throw _wrapStreamed(resp.statusCode, const {});
@@ -725,7 +726,7 @@ class TgClient {
     }
     final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
     if (body['ok'] != true) {
-      throw TgApiError(400, body['error']?.toString() ?? 'فشل ربط حساب Google');
+      throw TgApiError(400, body['error']?.toString() ?? AppL10n.current.apiGoogleLinkFailed);
     }
     return body;
   }
@@ -1137,10 +1138,10 @@ class TgClient {
 
   /// Thrown when a child-mode request cannot be refreshed and the UI should
   /// return to the lock screen so the parent can re-issue a token.
-  static const childSessionExpired = TgApiError(
-    401,
-    'انتهى وقت جلسة الطفل الآمنة. يُرجى إعادة الهاتف للمربي.',
-  );
+  static TgApiError get childSessionExpired => TgApiError(
+        401,
+        AppL10n.current.apiChildSessionExpired,
+      );
 
   Future<Map<String, dynamic>> createChildSession(int childId) async {
     final session = await ensureSession();
@@ -1265,11 +1266,11 @@ class TgClient {
         try {
           return TgDoneEvent(AssistantReply.fromJson(m));
         } catch (_) {
-          return const TgStreamError('استجابة الخادم غير مكتملة.');
+          return TgStreamError(AppL10n.current.apiIncompleteResponse);
         }
       case 'error':
         return TgStreamError(
-          (m['detail'] ?? 'حدث خطأ في الخادم.') as String,
+          (m['detail'] as String?) ?? AppL10n.current.apiServerError,
         );
       default:
         return null;
@@ -1291,10 +1292,10 @@ class TgClient {
       if (j is Map && j['detail'] is String) {
         message = j['detail'] as String;
       } else {
-        message = 'خطأ HTTP $status';
+        message = AppL10n.current.apiHttpError('$status');
       }
     } catch (_) {
-      message = body.isEmpty ? 'خطأ HTTP $status' : body;
+      message = body.isEmpty ? AppL10n.current.apiHttpError('$status') : body;
     }
 
     Duration? retryAfter;

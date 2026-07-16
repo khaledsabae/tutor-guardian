@@ -28,10 +28,6 @@ class AppConfig {
   /// SSE read timeout (must be larger than the LLM's worst-case generation).
   static const Duration streamTimeout = Duration(minutes: 5);
 
-  /// App display labels.
-  static const String appName = 'المربي الذكي';
-  static const String appShortName = 'المربي';
-
   /// App version (kept in sync with `pubspec.yaml` — bump on every release).
   static const String appVersion = '1.0.26+70';
 }

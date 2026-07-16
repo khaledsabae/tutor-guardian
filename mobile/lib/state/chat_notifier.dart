@@ -24,6 +24,7 @@ import '../config/app_config.dart';
 import '../features/program/providers/progress_providers.dart';
 import '../models/api_models.dart';
 import '../models/enums.dart';
+import 'package:almorabbi/l10n/l10n_global.dart';
 
 /// Single bubble rendered by `MessageBubble`.
 class ChatMessageUI {
@@ -211,7 +212,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
     } on TgApiError catch (e) {
       state = state.copyWith(
         phase: ChatPhase.error,
-        errorBanner: 'تعذّر بدء جلسة: ${e.message}',
+        errorBanner: AppL10n.current.chatSessionStartFailed('${e.message}'),
       );
     }
   }
@@ -237,7 +238,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
     } on TgApiError catch (e) {
       state = state.copyWith(
         phase: ChatPhase.error,
-        errorBanner: 'تعذّر بدء محادثة جديدة: ${e.message}',
+        errorBanner: AppL10n.current.chatNewChatFailed('${e.message}'),
       );
     }
   }
@@ -277,7 +278,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
     if (!isOnline()) {
       state = state.copyWith(
         phase: ChatPhase.error,
-        errorBanner: 'غير متصل بالإنترنت. تحقّق من الاتصال وأعد المحاولة.',
+        errorBanner: AppL10n.current.chatOfflineRetry,
       );
       return;
     }
@@ -347,7 +348,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       }
       _failLastTurn(e.message);
     } catch (e) {
-      _failLastTurn('خطأ غير متوقع: $e');
+      _failLastTurn(AppL10n.current.chatUnexpectedError('$e'));
     }
   }
 
@@ -395,7 +396,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       onDone: () {
         // Stream closed without a terminal event → connection drop.
         if (state.phase == ChatPhase.streaming) {
-          _failLastTurn('انقطع الاتصال قبل اكتمال الرد.',
+          _failLastTurn(AppL10n.current.chatConnectionInterrupted,
               assistantId: assistantId);
         }
         _finishStream();
@@ -425,7 +426,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       _updateAssistant(id, (m) {
         m
           ..isStreaming = false
-          ..content = m.content.isEmpty ? '⏹️ تم إيقاف الرد.' : m.content
+          ..content = m.content.isEmpty ? AppL10n.current.chatResponseStopped : m.content
           ..error = null;
       });
     }
@@ -476,7 +477,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       _updateAssistant(assistantId, (m) {
         m
           ..feedback = null
-          ..error = 'تعذّر حفظ التقييم: ${e.message}';
+          ..error = AppL10n.current.chatRatingSaveFailed('${e.message}');
       });
     }
   }
@@ -532,7 +533,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
     } on TgApiError catch (e) {
       state = state.copyWith(
         phase: ChatPhase.error,
-        errorBanner: 'تعذّر فتح المحادثة: ${e.message}',
+        errorBanner: AppL10n.current.chatOpenFailed('${e.message}'),
       );
     }
   }

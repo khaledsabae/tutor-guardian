@@ -192,7 +192,7 @@ class _CardState extends ConsumerState<_Card> {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        widget.tip.timeOfDayLabel,
+                        widget.tip.timeOfDayLabel(AppLocalizations.of(context)),
                         style: const TextStyle(
                           color: Color(0xFF8A5A0F),
                           fontSize: 10,

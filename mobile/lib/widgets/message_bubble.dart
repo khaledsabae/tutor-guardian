@@ -14,6 +14,7 @@ import '../state/chat_notifier.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'safety_banner.dart';
+import '../l10n/app_localizations.dart';
 
 class MessageBubble extends StatelessWidget {
   final ChatMessageUI message;
@@ -247,10 +248,11 @@ class _MetadataChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final chips = <String>[
-      reply.domain.labelAr,
-      reply.mode.labelAr,
-      reply.severity.label,
+      reply.domain.label(l10n),
+      reply.mode.label(l10n),
+      reply.severity.label(l10n),
     ];
     return Wrap(
       spacing: 6,
@@ -297,9 +299,9 @@ class _FeedbackRow extends StatelessWidget {
             color: AppTheme.success,
           ),
           const SizedBox(width: 4),
-          const Text(
-            'شكراً على تقييمك',
-            style: TextStyle(fontSize: 12, color: AppTheme.textMuted),
+          Text(
+            AppLocalizations.of(context).feedbackThanks,
+            style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
           ),
         ],
       );
@@ -310,13 +312,13 @@ class _FeedbackRow extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.thumb_up_outlined, size: 18),
           color: AppTheme.textMuted,
-          tooltip: 'إجابة مفيدة',
+          tooltip: AppLocalizations.of(context).feedbackHelpful,
           onPressed: () => onFeedback('up'),
         ),
         IconButton(
           icon: const Icon(Icons.thumb_down_outlined, size: 18),
           color: AppTheme.textMuted,
-          tooltip: 'إجابة غير مفيدة',
+          tooltip: AppLocalizations.of(context).feedbackNotHelpful,
           onPressed: () => onFeedback('down'),
         ),
       ],

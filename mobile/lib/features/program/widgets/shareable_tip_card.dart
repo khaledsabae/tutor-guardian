@@ -14,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../theme/app_theme.dart';
 import '../data/models.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 
 /// A shareable daily tip card widget.
 ///
@@ -91,7 +92,7 @@ class ShareableTipCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 28),
                     Text(
-                      'نصيحة اليوم لـ $childName',
+                      AppLocalizations.of(context).shareTipOfDayFor(childName),
                       textAlign: TextAlign.center,
                       style: GoogleFonts.cairo(
                         fontSize: 28,
@@ -108,7 +109,7 @@ class ShareableTipCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        tip.timeOfDayLabel,
+                        tip.timeOfDayLabel(AppLocalizations.of(context)),
                         style: GoogleFonts.cairo(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.primary),
                       ),
                     ),
@@ -139,12 +140,12 @@ class ShareableTipCard extends StatelessWidget {
                           child: const Icon(Icons.psychology_outlined, color: Colors.white, size: 28),
                         ),
                         const SizedBox(height: 16),
-                        Text('المربي الذكي', style: GoogleFonts.cairo(fontSize: 22, fontWeight: FontWeight.w700, color: AppTheme.primary)),
+                        Text(AppLocalizations.of(context).appTitle, style: GoogleFonts.cairo(fontSize: 22, fontWeight: FontWeight.w700, color: AppTheme.primary)),
                         const SizedBox(height: 4),
-                        Text('شريكك في رحلة التربية', style: GoogleFonts.cairo(fontSize: 14, fontWeight: FontWeight.w400, color: AppTheme.textSecondary)),
+                        Text(AppLocalizations.of(context).shareTagline, style: GoogleFonts.cairo(fontSize: 14, fontWeight: FontWeight.w400, color: AppTheme.textSecondary)),
                         const SizedBox(height: 8),
                         Text(
-                          '📲 مجانًا على Google Play — ابحث: «المربّي»',
+                          AppLocalizations.of(context).shareStoreHint,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.cairo(
                             fontSize: 12,

@@ -205,7 +205,7 @@ class _DomainFilterBar extends StatelessWidget {
           const SizedBox(width: 8),
           for (final d in domains) ...[
             _Chip(
-              label: CurriculumPath.labelForDomain(d),
+              label: CurriculumPath.labelForDomain(d, AppLocalizations.of(context)),
               emoji: styleFor(d).emoji,
               color: styleFor(d).base,
               isSelected: selected == d,
@@ -337,7 +337,7 @@ class _PathCard extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '${path.ageLabel} · ${path.domainLabel}',
+                              '${path.ageLabel(AppLocalizations.of(context))} · ${path.domainLabel(AppLocalizations.of(context))}',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.white.withValues(alpha: .85),

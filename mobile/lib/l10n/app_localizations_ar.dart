@@ -2332,4 +2332,231 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get insightBadgeTip => '💡 نصيحة';
+
+  @override
+  String get ageGroupPrenatal => 'فترة الحمل وحتى عام';
+
+  @override
+  String get ageGroup2to3 => '2–3 سنوات';
+
+  @override
+  String get ageGroup4to6 => '4–6 سنوات';
+
+  @override
+  String get ageGroup7to9 => '7–9 سنوات';
+
+  @override
+  String get ageGroup10to12 => '10–12 سنة';
+
+  @override
+  String get ageGroup13to15 => '13–15 سنة';
+
+  @override
+  String get ageGroup16to18 => '16–18 سنة';
+
+  @override
+  String get unspecified => 'غير محدد';
+
+  @override
+  String get severityLight => 'خفيف';
+
+  @override
+  String get severityModerate => 'متوسط';
+
+  @override
+  String get severitySevere => 'شديد';
+
+  @override
+  String get severityEmergency => 'طارئ';
+
+  @override
+  String get domainMedical => 'العادات والمهارات الحياتية';
+
+  @override
+  String get domainCyber => 'الأمان الرقمي';
+
+  @override
+  String get domainIslamicParenting => 'التربية الإسلامية';
+
+  @override
+  String get domainAqeedah => 'العقيدة';
+
+  @override
+  String get domainDevelopment => 'تطور الطفل';
+
+  @override
+  String get replyModeRetrieval => 'بحث فقط';
+
+  @override
+  String get replyModeAi => 'ذكاء اصطناعي';
+
+  @override
+  String get replyModeBanned => 'خارج النطاق';
+
+  @override
+  String get replyModeEmergency => 'حالة طارئة';
+
+  @override
+  String get escalationPediatrician => 'طبيب أطفال';
+
+  @override
+  String get escalationCyberSpecialist => 'متخصص بالأمان الرقمي';
+
+  @override
+  String get escalationEmergencyServices => 'خدمات الطوارئ';
+
+  @override
+  String get apiTimeout => 'انتهت مهلة الاتصال بالخادم.';
+
+  @override
+  String apiConnectionFailed(Object error) {
+    return 'تعذّر الاتصال بالخادم: $error';
+  }
+
+  @override
+  String get apiNoSession => 'لا توجد جلسة نشطة.';
+
+  @override
+  String get apiSessionNotFound => 'الجلسة غير موجودة على الخادم.';
+
+  @override
+  String get apiSessionExpired => 'انتهت صلاحية الجلسة.';
+
+  @override
+  String get apiGoogleLinkFailed => 'فشل ربط حساب Google';
+
+  @override
+  String get apiChildSessionExpired =>
+      'انتهى وقت جلسة الطفل الآمنة. يُرجى إعادة الهاتف للمربي.';
+
+  @override
+  String get apiIncompleteResponse => 'استجابة الخادم غير مكتملة.';
+
+  @override
+  String get apiServerError => 'حدث خطأ في الخادم.';
+
+  @override
+  String apiHttpError(Object status) {
+    return 'خطأ HTTP $status';
+  }
+
+  @override
+  String chatSessionStartFailed(Object error) {
+    return 'تعذّر بدء جلسة: $error';
+  }
+
+  @override
+  String chatNewChatFailed(Object error) {
+    return 'تعذّر بدء محادثة جديدة: $error';
+  }
+
+  @override
+  String get chatOfflineRetry =>
+      'غير متصل بالإنترنت. تحقّق من الاتصال وأعد المحاولة.';
+
+  @override
+  String chatUnexpectedError(Object error) {
+    return 'خطأ غير متوقع: $error';
+  }
+
+  @override
+  String get chatConnectionInterrupted => 'انقطع الاتصال قبل اكتمال الرد.';
+
+  @override
+  String get chatResponseStopped => '⏹️ تم إيقاف الرد.';
+
+  @override
+  String chatRatingSaveFailed(Object error) {
+    return 'تعذّر حفظ التقييم: $error';
+  }
+
+  @override
+  String chatOpenFailed(Object error) {
+    return 'تعذّر فتح المحادثة: $error';
+  }
+
+  @override
+  String get chatFallbackTitle => 'محادثة';
+
+  @override
+  String get safetyEmergencyText =>
+      'حالة طارئة — يرجى التواصل مع الجهات المختصة فوراً.';
+
+  @override
+  String get safetyEmergencyCta => 'اتصال بالطوارئ';
+
+  @override
+  String get safetyBannedText => 'هذا الموضوع خارج نطاق ما يمكنني مساعدتك فيه.';
+
+  @override
+  String get safetyConsultPediatrician => 'استشر طبيب أطفال.';
+
+  @override
+  String get safetyConsultCyberSpecialist => 'استشر متخصصاً في الأمان الرقمي.';
+
+  @override
+  String get safetyConsultHuman => 'من الأفضل مراجعة مختص بشري.';
+
+  @override
+  String safetyGeneralGuidance(Object hint) {
+    return 'هذا التوجيه عام — $hint';
+  }
+
+  @override
+  String get feedbackThanks => 'شكراً على تقييمك';
+
+  @override
+  String get feedbackHelpful => 'إجابة مفيدة';
+
+  @override
+  String get feedbackNotHelpful => 'إجابة غير مفيدة';
+
+  @override
+  String get sharePreparing => 'جاري التحضير…';
+
+  @override
+  String get shareThisMoment => 'شارك هذه اللحظة 🤍';
+
+  @override
+  String communityProof(Object count) {
+    return '$count أبٍ وأمٍّ يربّون بثقة مع «المربّي» — لست وحدك في الرحلة';
+  }
+
+  @override
+  String get pathDomainIslamic => 'تربية إسلامية';
+
+  @override
+  String get pathDomainAqeedah => 'العقيدة';
+
+  @override
+  String get pathDomainDevelopment => 'تنمية';
+
+  @override
+  String get pathDomainSkills => 'مهارات';
+
+  @override
+  String get pathDomainCyber => 'أمان رقمي';
+
+  @override
+  String get timeOfDayMorning => 'صباحاً';
+
+  @override
+  String get timeOfDayEvening => 'مساءً';
+
+  @override
+  String get timeOfDayBedtime => 'قبل النوم';
+
+  @override
+  String get timeOfDayAnytime => 'أي وقت';
+
+  @override
+  String shareTipOfDayFor(Object name) {
+    return 'نصيحة اليوم لـ $name';
+  }
+
+  @override
+  String get shareTagline => 'شريكك في رحلة التربية';
+
+  @override
+  String get shareStoreHint => '📲 مجانًا على Google Play — ابحث: «المربّي»';
 }

@@ -5,6 +5,7 @@
 library;
 
 import 'enums.dart';
+import 'package:almorabbi/l10n/l10n_global.dart';
 
 /// Reply returned by `/api/assistant/{query,stream,draft}` (also the
 /// payload of the `event: done` SSE frame).
@@ -174,7 +175,7 @@ class ChatSessionSummary {
   factory ChatSessionSummary.fromJson(Map<String, dynamic> json) {
     return ChatSessionSummary(
       id: json['id'] as String,
-      title: (json['title'] as String?) ?? 'محادثة',
+      title: (json['title'] as String?) ?? AppL10n.current.chatFallbackTitle,
       messageCount: (json['message_count'] as num?)?.toInt() ?? 0,
       updatedAt: json['updated_at'] is String
           ? DateTime.tryParse(json['updated_at'] as String)

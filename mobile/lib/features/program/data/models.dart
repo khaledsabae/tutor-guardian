@@ -10,6 +10,7 @@
 library;
 
 import '../../../models/enums.dart';
+import 'package:almorabbi/l10n/app_localizations.dart';
 
 /// A "journey" — 3-10 lessons over 1-30 days for a specific age+domain.
 class CurriculumPath {
@@ -71,30 +72,31 @@ class CurriculumPath {
 
   /// Human-readable age label (uses the same mapping as `models/enums.dart`
   /// for the canonical enums; falls back to the raw wire value).
-  String get ageLabel {
+  String ageLabel(AppLocalizations l10n) {
     final ag = AgeGroup.fromWire(ageGroup);
-    return ag == AgeGroup.unspecified ? ageGroup : ag.label;
+    return ag == AgeGroup.unspecified ? ageGroup : ag.label(l10n);
   }
 
   /// Human-readable domain label.
-  String get domainLabel => _domainLabel(domain);
+  String domainLabel(AppLocalizations l10n) => _domainLabel(domain, l10n);
 
   /// Human-readable label for a canonical domain wire value (no instance
   /// needed — used by the domain filter chips on the paths screen).
-  static String labelForDomain(String wire) => _domainLabel(wire);
+  static String labelForDomain(String wire, AppLocalizations l10n) =>
+      _domainLabel(wire, l10n);
 
-  static String _domainLabel(String wire) {
+  static String _domainLabel(String wire, AppLocalizations l10n) {
     switch (wire) {
       case 'islamic_parenting':
-        return 'تربية إسلامية';
+        return l10n.pathDomainIslamic;
       case 'aqeedah':
-        return 'العقيدة';
+        return l10n.pathDomainAqeedah;
       case 'development':
-        return 'تنمية';
+        return l10n.pathDomainDevelopment;
       case 'medical':
-        return 'مهارات';
+        return l10n.pathDomainSkills;
       case 'cyber':
-        return 'أمان رقمي';
+        return l10n.pathDomainCyber;
       default:
         return wire;
     }
@@ -226,16 +228,16 @@ class DailyTip {
     );
   }
 
-  String get timeOfDayLabel {
+  String timeOfDayLabel(AppLocalizations l10n) {
     switch (timeOfDay) {
       case 'morning':
-        return 'صباحاً';
+        return l10n.timeOfDayMorning;
       case 'evening':
-        return 'مساءً';
+        return l10n.timeOfDayEvening;
       case 'bedtime':
-        return 'قبل النوم';
+        return l10n.timeOfDayBedtime;
       default:
-        return 'أي وقت';
+        return l10n.timeOfDayAnytime;
     }
   }
 }

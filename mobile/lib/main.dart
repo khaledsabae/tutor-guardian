@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'l10n/app_localizations.dart';
+import 'l10n/l10n_global.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,7 +20,6 @@ import 'core/analytics.dart';
 import 'api/tg_client.dart';
 import 'state/chat_notifier.dart';
 import 'widgets/ui/bouncy_button.dart';
-import 'config/app_config.dart';
 import 'features/identity/identity_service.dart';
 import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
@@ -117,7 +117,7 @@ class TutorGuardianApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: appNavigatorKey,
-      title: AppConfig.appName,
+      onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       // Arabic locale (no country code matches all Arab locales cleanly).
@@ -130,6 +130,9 @@ class TutorGuardianApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       builder: (context, child) {
+        // Keep the global l10n handle (used by contextless services such as
+        // TgClient and state notifiers) in sync with the app locale.
+        AppL10n.current = AppLocalizations.of(context);
         // Force RTL at the framework level so every widget inherits it,
         // including platform-routed transitions.
         return Directionality(
@@ -301,9 +304,9 @@ class _SplashScreen extends StatelessWidget {
                   curve: Curves.easeOutBack,
                 ),
             const SizedBox(height: 12),
-            const Text(
-              AppConfig.appName,
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context).appTitle,
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w800,
                 color: AppTheme.primary,

@@ -166,7 +166,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
                 children: AgeGroup.values
                     .where((a) => a != AgeGroup.unspecified)
                     .map((a) => ChoiceChip(
-                          label: Text(a.label),
+                          label: Text(a.label(AppLocalizations.of(context))),
                           selected: _ageGroup == a.wire,
                           selectedColor: AppTheme.primary,
                           labelStyle: TextStyle(

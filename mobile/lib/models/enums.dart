@@ -3,6 +3,8 @@
 /// never localizes them — UI may map them to display labels separately.
 library;
 
+import 'package:almorabbi/l10n/app_localizations.dart';
+
 /// Age bands accepted by `/api/assistant/*`.
 enum AgeGroup {
   prenatalOne('prenatal-1'),
@@ -18,17 +20,17 @@ enum AgeGroup {
   final String wire;
   const AgeGroup(this.wire);
 
-  /// Human label for the dropdown (Arabic UI).
-  String get label {
+  /// Human label for the dropdown.
+  String label(AppLocalizations l10n) {
     switch (this) {
-      case AgeGroup.prenatalOne: return 'فترة الحمل وحتى عام';
-      case AgeGroup.twoThree: return '2–3 سنوات';
-      case AgeGroup.fourSix: return '4–6 سنوات';
-      case AgeGroup.sevenNine: return '7–9 سنوات';
-      case AgeGroup.tenTwelve: return '10–12 سنة';
-      case AgeGroup.thirteenFifteen: return '13–15 سنة';
-      case AgeGroup.sixteenEighteen: return '16–18 سنة';
-      case AgeGroup.unspecified: return 'غير محدد';
+      case AgeGroup.prenatalOne: return l10n.ageGroupPrenatal;
+      case AgeGroup.twoThree: return l10n.ageGroup2to3;
+      case AgeGroup.fourSix: return l10n.ageGroup4to6;
+      case AgeGroup.sevenNine: return l10n.ageGroup7to9;
+      case AgeGroup.tenTwelve: return l10n.ageGroup10to12;
+      case AgeGroup.thirteenFifteen: return l10n.ageGroup13to15;
+      case AgeGroup.sixteenEighteen: return l10n.ageGroup16to18;
+      case AgeGroup.unspecified: return l10n.unspecified;
     }
   }
 
@@ -56,11 +58,11 @@ enum Severity {
   final String wire;
   const Severity(this.wire);
 
-  String get label => switch (this) {
-    Severity.light => 'خفيف',
-    Severity.moderate => 'متوسط',
-    Severity.severe => 'شديد',
-    Severity.emergency => 'طارئ',
+  String label(AppLocalizations l10n) => switch (this) {
+    Severity.light => l10n.severityLight,
+    Severity.moderate => l10n.severityModerate,
+    Severity.severe => l10n.severitySevere,
+    Severity.emergency => l10n.severityEmergency,
   };
 
   static Severity fromWire(String? s) {
@@ -76,16 +78,24 @@ enum Severity {
 
 /// Domains returned by the server (canonical, post-alias resolution).
 enum Domain {
-  medical('medical', 'العادات والمهارات الحياتية'),
-  cyber('cyber', 'الأمان الرقمي'),
-  islamicParenting('islamic_parenting', 'التربية الإسلامية'),
-  aqeedah('aqeedah', 'العقيدة'),
-  development('development', 'تطور الطفل'),
-  unknown('', 'غير محدد');
+  medical('medical'),
+  cyber('cyber'),
+  islamicParenting('islamic_parenting'),
+  aqeedah('aqeedah'),
+  development('development'),
+  unknown('');
 
   final String wire;
-  final String labelAr;
-  const Domain(this.wire, this.labelAr);
+  const Domain(this.wire);
+
+  String label(AppLocalizations l10n) => switch (this) {
+    Domain.medical => l10n.domainMedical,
+    Domain.cyber => l10n.domainCyber,
+    Domain.islamicParenting => l10n.domainIslamicParenting,
+    Domain.aqeedah => l10n.domainAqeedah,
+    Domain.development => l10n.domainDevelopment,
+    Domain.unknown => l10n.unspecified,
+  };
 
   static Domain fromWire(String? s) {
     if (s == null) return Domain.unknown;
@@ -98,15 +108,22 @@ enum Domain {
 
 /// Response mode (returned in `AssistantReply.mode`).
 enum ReplyMode {
-  retrievalOnly('retrieval_only', 'بحث فقط'),
-  llmGenerated('llm_generated', 'ذكاء اصطناعي'),
-  banned('banned', 'خارج النطاق'),
-  emergency('emergency', 'حالة طارئة'),
-  unknown('', 'غير محدد');
+  retrievalOnly('retrieval_only'),
+  llmGenerated('llm_generated'),
+  banned('banned'),
+  emergency('emergency'),
+  unknown('');
 
   final String wire;
-  final String labelAr;
-  const ReplyMode(this.wire, this.labelAr);
+  const ReplyMode(this.wire);
+
+  String label(AppLocalizations l10n) => switch (this) {
+    ReplyMode.retrievalOnly => l10n.replyModeRetrieval,
+    ReplyMode.llmGenerated => l10n.replyModeAi,
+    ReplyMode.banned => l10n.replyModeBanned,
+    ReplyMode.emergency => l10n.replyModeEmergency,
+    ReplyMode.unknown => l10n.unspecified,
+  };
 
   static ReplyMode fromWire(String? s) {
     if (s == null) return ReplyMode.unknown;
@@ -119,14 +136,20 @@ enum ReplyMode {
 
 /// Where the parent should be directed to.
 enum EscalationTarget {
-  pediatrician('pediatrician', 'طبيب أطفال'),
-  cybersecuritySpecialist('cybersecurity_specialist', 'متخصص بالأمان الرقمي'),
-  emergencyServices('emergency_services', 'خدمات الطوارئ'),
-  none(null, '');
+  pediatrician('pediatrician'),
+  cybersecuritySpecialist('cybersecurity_specialist'),
+  emergencyServices('emergency_services'),
+  none(null);
 
   final String? wire;
-  final String labelAr;
-  const EscalationTarget(this.wire, this.labelAr);
+  const EscalationTarget(this.wire);
+
+  String label(AppLocalizations l10n) => switch (this) {
+    EscalationTarget.pediatrician => l10n.escalationPediatrician,
+    EscalationTarget.cybersecuritySpecialist => l10n.escalationCyberSpecialist,
+    EscalationTarget.emergencyServices => l10n.escalationEmergencyServices,
+    EscalationTarget.none => '',
+  };
 
   static EscalationTarget fromWire(Object? s) {
     if (s == null) return EscalationTarget.none;

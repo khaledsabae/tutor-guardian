@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../../api/tg_client.dart';
 import '../../theme/app_theme.dart';
+import '../../l10n/app_localizations.dart';
 
 class CommunityProofCard extends StatefulWidget {
   const CommunityProofCard({super.key});
@@ -60,7 +61,7 @@ class _CommunityProofCardState extends State<CommunityProofCard> {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              '$f أبٍ وأمٍّ يربّون بثقة مع «المربّي» — لست وحدك في الرحلة',
+              AppLocalizations.of(context).communityProof(f),
               style: const TextStyle(
                 color: AppTheme.primary,
                 fontWeight: FontWeight.w700,

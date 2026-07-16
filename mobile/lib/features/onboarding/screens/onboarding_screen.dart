@@ -611,7 +611,7 @@ class _ChildFormPage extends StatelessWidget {
             children: AgeGroup.values
                 .where((a) => a != AgeGroup.unspecified)
                 .map((a) => _AgeChip(
-                      label: a.label,
+                      label: a.label(AppLocalizations.of(context)),
                       selected: ageGroup == a.wire,
                       onTap: () => onAgeGroup(a.wire),
                     ))

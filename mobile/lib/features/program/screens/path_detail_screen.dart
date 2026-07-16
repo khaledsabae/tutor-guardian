@@ -303,9 +303,9 @@ class _Header extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        _Badge(text: path.ageLabel),
+                        _Badge(text: path.ageLabel(AppLocalizations.of(context))),
                         const SizedBox(width: 8),
-                        _Badge(text: path.domainLabel),
+                        _Badge(text: path.domainLabel(AppLocalizations.of(context))),
                         const Spacer(),
                         if (childId != null)
                           StreakChip(streakDays: streak, dark: true),

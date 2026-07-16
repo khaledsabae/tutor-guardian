@@ -2360,4 +2360,235 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get insightBadgeTip => '💡 Tip';
+
+  @override
+  String get ageGroupPrenatal => 'Pregnancy to one year';
+
+  @override
+  String get ageGroup2to3 => '2–3 years';
+
+  @override
+  String get ageGroup4to6 => '4–6 years';
+
+  @override
+  String get ageGroup7to9 => '7–9 years';
+
+  @override
+  String get ageGroup10to12 => '10–12 years';
+
+  @override
+  String get ageGroup13to15 => '13–15 years';
+
+  @override
+  String get ageGroup16to18 => '16–18 years';
+
+  @override
+  String get unspecified => 'Unspecified';
+
+  @override
+  String get severityLight => 'Mild';
+
+  @override
+  String get severityModerate => 'Moderate';
+
+  @override
+  String get severitySevere => 'Severe';
+
+  @override
+  String get severityEmergency => 'Emergency';
+
+  @override
+  String get domainMedical => 'Life habits & skills';
+
+  @override
+  String get domainCyber => 'Digital safety';
+
+  @override
+  String get domainIslamicParenting => 'Islamic upbringing';
+
+  @override
+  String get domainAqeedah => 'Aqeedah';
+
+  @override
+  String get domainDevelopment => 'Child development';
+
+  @override
+  String get replyModeRetrieval => 'Retrieval only';
+
+  @override
+  String get replyModeAi => 'AI-generated';
+
+  @override
+  String get replyModeBanned => 'Out of scope';
+
+  @override
+  String get replyModeEmergency => 'Emergency';
+
+  @override
+  String get escalationPediatrician => 'Pediatrician';
+
+  @override
+  String get escalationCyberSpecialist => 'Digital-safety specialist';
+
+  @override
+  String get escalationEmergencyServices => 'Emergency services';
+
+  @override
+  String get apiTimeout => 'The connection to the server timed out.';
+
+  @override
+  String apiConnectionFailed(Object error) {
+    return 'Could not reach the server: $error';
+  }
+
+  @override
+  String get apiNoSession => 'No active session.';
+
+  @override
+  String get apiSessionNotFound => 'The session was not found on the server.';
+
+  @override
+  String get apiSessionExpired => 'The session has expired.';
+
+  @override
+  String get apiGoogleLinkFailed => 'Failed to link the Google account';
+
+  @override
+  String get apiChildSessionExpired =>
+      'The child\'s secure session has ended. Please hand the phone back to the parent.';
+
+  @override
+  String get apiIncompleteResponse => 'The server response was incomplete.';
+
+  @override
+  String get apiServerError => 'A server error occurred.';
+
+  @override
+  String apiHttpError(Object status) {
+    return 'HTTP error $status';
+  }
+
+  @override
+  String chatSessionStartFailed(Object error) {
+    return 'Could not start a session: $error';
+  }
+
+  @override
+  String chatNewChatFailed(Object error) {
+    return 'Could not start a new chat: $error';
+  }
+
+  @override
+  String get chatOfflineRetry =>
+      'You are offline. Check your connection and try again.';
+
+  @override
+  String chatUnexpectedError(Object error) {
+    return 'Unexpected error: $error';
+  }
+
+  @override
+  String get chatConnectionInterrupted =>
+      'The connection dropped before the reply finished.';
+
+  @override
+  String get chatResponseStopped => '⏹️ Reply stopped.';
+
+  @override
+  String chatRatingSaveFailed(Object error) {
+    return 'Could not save the rating: $error';
+  }
+
+  @override
+  String chatOpenFailed(Object error) {
+    return 'Could not open the conversation: $error';
+  }
+
+  @override
+  String get chatFallbackTitle => 'Conversation';
+
+  @override
+  String get safetyEmergencyText =>
+      'Emergency — please contact the relevant authorities immediately.';
+
+  @override
+  String get safetyEmergencyCta => 'Call emergency services';
+
+  @override
+  String get safetyBannedText =>
+      'This topic is outside what I can help you with.';
+
+  @override
+  String get safetyConsultPediatrician => 'Consult a pediatrician.';
+
+  @override
+  String get safetyConsultCyberSpecialist =>
+      'Consult a digital-safety specialist.';
+
+  @override
+  String get safetyConsultHuman => 'It is best to consult a human specialist.';
+
+  @override
+  String safetyGeneralGuidance(Object hint) {
+    return 'This guidance is general — $hint';
+  }
+
+  @override
+  String get feedbackThanks => 'Thanks for your feedback';
+
+  @override
+  String get feedbackHelpful => 'Helpful answer';
+
+  @override
+  String get feedbackNotHelpful => 'Unhelpful answer';
+
+  @override
+  String get sharePreparing => 'Preparing…';
+
+  @override
+  String get shareThisMoment => 'Share this moment 🤍';
+
+  @override
+  String communityProof(Object count) {
+    return '$count moms and dads raising kids confidently with Al-Murabbi — you are not alone on this journey';
+  }
+
+  @override
+  String get pathDomainIslamic => 'Islamic upbringing';
+
+  @override
+  String get pathDomainAqeedah => 'Aqeedah';
+
+  @override
+  String get pathDomainDevelopment => 'Development';
+
+  @override
+  String get pathDomainSkills => 'Life skills';
+
+  @override
+  String get pathDomainCyber => 'Digital safety';
+
+  @override
+  String get timeOfDayMorning => 'Morning';
+
+  @override
+  String get timeOfDayEvening => 'Evening';
+
+  @override
+  String get timeOfDayBedtime => 'Bedtime';
+
+  @override
+  String get timeOfDayAnytime => 'Anytime';
+
+  @override
+  String shareTipOfDayFor(Object name) {
+    return 'Today\'s tip for $name';
+  }
+
+  @override
+  String get shareTagline => 'Your partner on the parenting journey';
+
+  @override
+  String get shareStoreHint =>
+      '📲 Free on Google Play — search for “Al-Murabbi”';
 }

@@ -41,6 +41,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
   }
 
   Future<void> _toggleRecord() async {
+    final l10n = AppLocalizations.of(context);
     try {
       if (_recording) {
         final path = await _rec.stop();
@@ -51,7 +52,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
         return;
       }
       if (!await _rec.hasPermission()) {
-        _snack(AppLocalizations.of(context).feedbackMicPermission);
+        _snack(l10n.feedbackMicPermission);
         return;
       }
       // App's private docs dir — always writable (the cache/temp dir can be
@@ -65,11 +66,12 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       setState(() => _recording = true);
     } catch (e) {
       setState(() => _recording = false);
-      _snack(AppLocalizations.of(context).feedbackRecordError);
+      _snack(l10n.feedbackRecordError);
     }
   }
 
   Future<void> _send() async {
+    final l10n = AppLocalizations.of(context);
     final msg = _message.text.trim();
     if (msg.isEmpty && _audioPath == null) {
       _snack(AppLocalizations.of(context).feedbackEmpty);
@@ -81,7 +83,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       if (_audioPath != null) {
         final bytes = await File(_audioPath!).readAsBytes();
         if (bytes.length > 2 * 1024 * 1024) {
-          _snack(AppLocalizations.of(context).feedbackAudioTooBig);
+          _snack(l10n.feedbackAudioTooBig);
           setState(() => _sending = false);
           return;
         }
@@ -93,10 +95,10 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
             audioBase64: audioB64,
           );
       if (!mounted) return;
-      _snack(AppLocalizations.of(context).feedbackSent(id.substring(0, 8)), ok: true);
+      _snack(l10n.feedbackSent(id.substring(0, 8)), ok: true);
       Navigator.of(context).pop();
     } catch (e) {
-      _snack(AppLocalizations.of(context).feedbackSendError(e.toString()));
+      _snack(l10n.feedbackSendError(e.toString()));
     } finally {
       if (mounted) setState(() => _sending = false);
     }

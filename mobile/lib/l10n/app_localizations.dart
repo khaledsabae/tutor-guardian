@@ -4291,6 +4291,414 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'💡 نصيحة'**
   String get insightBadgeTip;
+
+  /// No description provided for @ageGroupPrenatal.
+  ///
+  /// In ar, this message translates to:
+  /// **'فترة الحمل وحتى عام'**
+  String get ageGroupPrenatal;
+
+  /// No description provided for @ageGroup2to3.
+  ///
+  /// In ar, this message translates to:
+  /// **'2–3 سنوات'**
+  String get ageGroup2to3;
+
+  /// No description provided for @ageGroup4to6.
+  ///
+  /// In ar, this message translates to:
+  /// **'4–6 سنوات'**
+  String get ageGroup4to6;
+
+  /// No description provided for @ageGroup7to9.
+  ///
+  /// In ar, this message translates to:
+  /// **'7–9 سنوات'**
+  String get ageGroup7to9;
+
+  /// No description provided for @ageGroup10to12.
+  ///
+  /// In ar, this message translates to:
+  /// **'10–12 سنة'**
+  String get ageGroup10to12;
+
+  /// No description provided for @ageGroup13to15.
+  ///
+  /// In ar, this message translates to:
+  /// **'13–15 سنة'**
+  String get ageGroup13to15;
+
+  /// No description provided for @ageGroup16to18.
+  ///
+  /// In ar, this message translates to:
+  /// **'16–18 سنة'**
+  String get ageGroup16to18;
+
+  /// No description provided for @unspecified.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير محدد'**
+  String get unspecified;
+
+  /// No description provided for @severityLight.
+  ///
+  /// In ar, this message translates to:
+  /// **'خفيف'**
+  String get severityLight;
+
+  /// No description provided for @severityModerate.
+  ///
+  /// In ar, this message translates to:
+  /// **'متوسط'**
+  String get severityModerate;
+
+  /// No description provided for @severitySevere.
+  ///
+  /// In ar, this message translates to:
+  /// **'شديد'**
+  String get severitySevere;
+
+  /// No description provided for @severityEmergency.
+  ///
+  /// In ar, this message translates to:
+  /// **'طارئ'**
+  String get severityEmergency;
+
+  /// No description provided for @domainMedical.
+  ///
+  /// In ar, this message translates to:
+  /// **'العادات والمهارات الحياتية'**
+  String get domainMedical;
+
+  /// No description provided for @domainCyber.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأمان الرقمي'**
+  String get domainCyber;
+
+  /// No description provided for @domainIslamicParenting.
+  ///
+  /// In ar, this message translates to:
+  /// **'التربية الإسلامية'**
+  String get domainIslamicParenting;
+
+  /// No description provided for @domainAqeedah.
+  ///
+  /// In ar, this message translates to:
+  /// **'العقيدة'**
+  String get domainAqeedah;
+
+  /// No description provided for @domainDevelopment.
+  ///
+  /// In ar, this message translates to:
+  /// **'تطور الطفل'**
+  String get domainDevelopment;
+
+  /// No description provided for @replyModeRetrieval.
+  ///
+  /// In ar, this message translates to:
+  /// **'بحث فقط'**
+  String get replyModeRetrieval;
+
+  /// No description provided for @replyModeAi.
+  ///
+  /// In ar, this message translates to:
+  /// **'ذكاء اصطناعي'**
+  String get replyModeAi;
+
+  /// No description provided for @replyModeBanned.
+  ///
+  /// In ar, this message translates to:
+  /// **'خارج النطاق'**
+  String get replyModeBanned;
+
+  /// No description provided for @replyModeEmergency.
+  ///
+  /// In ar, this message translates to:
+  /// **'حالة طارئة'**
+  String get replyModeEmergency;
+
+  /// No description provided for @escalationPediatrician.
+  ///
+  /// In ar, this message translates to:
+  /// **'طبيب أطفال'**
+  String get escalationPediatrician;
+
+  /// No description provided for @escalationCyberSpecialist.
+  ///
+  /// In ar, this message translates to:
+  /// **'متخصص بالأمان الرقمي'**
+  String get escalationCyberSpecialist;
+
+  /// No description provided for @escalationEmergencyServices.
+  ///
+  /// In ar, this message translates to:
+  /// **'خدمات الطوارئ'**
+  String get escalationEmergencyServices;
+
+  /// No description provided for @apiTimeout.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت مهلة الاتصال بالخادم.'**
+  String get apiTimeout;
+
+  /// No description provided for @apiConnectionFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر الاتصال بالخادم: {error}'**
+  String apiConnectionFailed(Object error);
+
+  /// No description provided for @apiNoSession.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد جلسة نشطة.'**
+  String get apiNoSession;
+
+  /// No description provided for @apiSessionNotFound.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجلسة غير موجودة على الخادم.'**
+  String get apiSessionNotFound;
+
+  /// No description provided for @apiSessionExpired.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت صلاحية الجلسة.'**
+  String get apiSessionExpired;
+
+  /// No description provided for @apiGoogleLinkFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'فشل ربط حساب Google'**
+  String get apiGoogleLinkFailed;
+
+  /// No description provided for @apiChildSessionExpired.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهى وقت جلسة الطفل الآمنة. يُرجى إعادة الهاتف للمربي.'**
+  String get apiChildSessionExpired;
+
+  /// No description provided for @apiIncompleteResponse.
+  ///
+  /// In ar, this message translates to:
+  /// **'استجابة الخادم غير مكتملة.'**
+  String get apiIncompleteResponse;
+
+  /// No description provided for @apiServerError.
+  ///
+  /// In ar, this message translates to:
+  /// **'حدث خطأ في الخادم.'**
+  String get apiServerError;
+
+  /// No description provided for @apiHttpError.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطأ HTTP {status}'**
+  String apiHttpError(Object status);
+
+  /// No description provided for @chatSessionStartFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر بدء جلسة: {error}'**
+  String chatSessionStartFailed(Object error);
+
+  /// No description provided for @chatNewChatFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر بدء محادثة جديدة: {error}'**
+  String chatNewChatFailed(Object error);
+
+  /// No description provided for @chatOfflineRetry.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متصل بالإنترنت. تحقّق من الاتصال وأعد المحاولة.'**
+  String get chatOfflineRetry;
+
+  /// No description provided for @chatUnexpectedError.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطأ غير متوقع: {error}'**
+  String chatUnexpectedError(Object error);
+
+  /// No description provided for @chatConnectionInterrupted.
+  ///
+  /// In ar, this message translates to:
+  /// **'انقطع الاتصال قبل اكتمال الرد.'**
+  String get chatConnectionInterrupted;
+
+  /// No description provided for @chatResponseStopped.
+  ///
+  /// In ar, this message translates to:
+  /// **'⏹️ تم إيقاف الرد.'**
+  String get chatResponseStopped;
+
+  /// No description provided for @chatRatingSaveFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر حفظ التقييم: {error}'**
+  String chatRatingSaveFailed(Object error);
+
+  /// No description provided for @chatOpenFailed.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر فتح المحادثة: {error}'**
+  String chatOpenFailed(Object error);
+
+  /// No description provided for @chatFallbackTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'محادثة'**
+  String get chatFallbackTitle;
+
+  /// No description provided for @safetyEmergencyText.
+  ///
+  /// In ar, this message translates to:
+  /// **'حالة طارئة — يرجى التواصل مع الجهات المختصة فوراً.'**
+  String get safetyEmergencyText;
+
+  /// No description provided for @safetyEmergencyCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتصال بالطوارئ'**
+  String get safetyEmergencyCta;
+
+  /// No description provided for @safetyBannedText.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الموضوع خارج نطاق ما يمكنني مساعدتك فيه.'**
+  String get safetyBannedText;
+
+  /// No description provided for @safetyConsultPediatrician.
+  ///
+  /// In ar, this message translates to:
+  /// **'استشر طبيب أطفال.'**
+  String get safetyConsultPediatrician;
+
+  /// No description provided for @safetyConsultCyberSpecialist.
+  ///
+  /// In ar, this message translates to:
+  /// **'استشر متخصصاً في الأمان الرقمي.'**
+  String get safetyConsultCyberSpecialist;
+
+  /// No description provided for @safetyConsultHuman.
+  ///
+  /// In ar, this message translates to:
+  /// **'من الأفضل مراجعة مختص بشري.'**
+  String get safetyConsultHuman;
+
+  /// No description provided for @safetyGeneralGuidance.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا التوجيه عام — {hint}'**
+  String safetyGeneralGuidance(Object hint);
+
+  /// No description provided for @feedbackThanks.
+  ///
+  /// In ar, this message translates to:
+  /// **'شكراً على تقييمك'**
+  String get feedbackThanks;
+
+  /// No description provided for @feedbackHelpful.
+  ///
+  /// In ar, this message translates to:
+  /// **'إجابة مفيدة'**
+  String get feedbackHelpful;
+
+  /// No description provided for @feedbackNotHelpful.
+  ///
+  /// In ar, this message translates to:
+  /// **'إجابة غير مفيدة'**
+  String get feedbackNotHelpful;
+
+  /// No description provided for @sharePreparing.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري التحضير…'**
+  String get sharePreparing;
+
+  /// No description provided for @shareThisMoment.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك هذه اللحظة 🤍'**
+  String get shareThisMoment;
+
+  /// No description provided for @communityProof.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} أبٍ وأمٍّ يربّون بثقة مع «المربّي» — لست وحدك في الرحلة'**
+  String communityProof(Object count);
+
+  /// No description provided for @pathDomainIslamic.
+  ///
+  /// In ar, this message translates to:
+  /// **'تربية إسلامية'**
+  String get pathDomainIslamic;
+
+  /// No description provided for @pathDomainAqeedah.
+  ///
+  /// In ar, this message translates to:
+  /// **'العقيدة'**
+  String get pathDomainAqeedah;
+
+  /// No description provided for @pathDomainDevelopment.
+  ///
+  /// In ar, this message translates to:
+  /// **'تنمية'**
+  String get pathDomainDevelopment;
+
+  /// No description provided for @pathDomainSkills.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهارات'**
+  String get pathDomainSkills;
+
+  /// No description provided for @pathDomainCyber.
+  ///
+  /// In ar, this message translates to:
+  /// **'أمان رقمي'**
+  String get pathDomainCyber;
+
+  /// No description provided for @timeOfDayMorning.
+  ///
+  /// In ar, this message translates to:
+  /// **'صباحاً'**
+  String get timeOfDayMorning;
+
+  /// No description provided for @timeOfDayEvening.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساءً'**
+  String get timeOfDayEvening;
+
+  /// No description provided for @timeOfDayBedtime.
+  ///
+  /// In ar, this message translates to:
+  /// **'قبل النوم'**
+  String get timeOfDayBedtime;
+
+  /// No description provided for @timeOfDayAnytime.
+  ///
+  /// In ar, this message translates to:
+  /// **'أي وقت'**
+  String get timeOfDayAnytime;
+
+  /// No description provided for @shareTipOfDayFor.
+  ///
+  /// In ar, this message translates to:
+  /// **'نصيحة اليوم لـ {name}'**
+  String shareTipOfDayFor(Object name);
+
+  /// No description provided for @shareTagline.
+  ///
+  /// In ar, this message translates to:
+  /// **'شريكك في رحلة التربية'**
+  String get shareTagline;
+
+  /// No description provided for @shareStoreHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'📲 مجانًا على Google Play — ابحث: «المربّي»'**
+  String get shareStoreHint;
 }
 
 class _AppLocalizationsDelegate
