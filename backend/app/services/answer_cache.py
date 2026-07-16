@@ -99,7 +99,12 @@ def _embed(text: str) -> list[float] | None:
     """Embed via the RAG embedder (lazy import — heavy model)."""
     try:
         from app.services.retrieval import embed_query
-        return embed_query(normalize(text))
+        vec = embed_query(normalize(text))
+        if vec is None:
+            return None
+        # chromadb may wrap the embedder and hand back a numpy array — force
+        # a plain float list so truthiness/json behave.
+        return [float(x) for x in vec]
     except Exception as exc:  # noqa: BLE001 — cache degrades to exact-match only
         logger.debug("answer-cache embedding unavailable: %s", exc)
         return None
