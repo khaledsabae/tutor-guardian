@@ -7,6 +7,8 @@ import 'package:page_flip/page_flip.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../config/app_config.dart';
+import '../../../core/analytics.dart';
+import '../../referral/invite_screen.dart';
 import '../data/story_models.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../l10n/app_localizations.dart';
@@ -319,6 +321,26 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 28,
                 vertical: 14,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          // §6.4 — a quiet pride-moment referral ask: the story just ended
+          // well, so this is the one place a «دلّ أسرة أخرى» nudge belongs.
+          TextButton(
+            onPressed: () {
+              unawaited(Analytics.prideInviteTapped('story_end'));
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const InviteScreen()),
+              );
+            },
+            child: Text(
+              AppLocalizations.of(context).prideStoryInvite,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Color(0xFF4A4A4A),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

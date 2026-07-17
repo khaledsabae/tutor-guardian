@@ -859,6 +859,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onbChangeAge => 'Change age';
 
   @override
+  String prideStreakTitle(int days) {
+    return 'MashaAllah — $days days in a row! 🔥';
+  }
+
+  @override
+  String get prideStreakBody =>
+      'This consistency is a blessing worth sharing. Know a family who would love the same? Guiding others to good is an ongoing charity.';
+
+  @override
+  String get prideInviteCta => 'Invite a friend';
+
+  @override
+  String get prideLater => 'Later';
+
+  @override
+  String get prideStoryInvite =>
+      'Did the story delight your child? Share it with another family 🤍';
+
+  @override
   String get quranDailyWird => 'Daily Portion';
 
   @override

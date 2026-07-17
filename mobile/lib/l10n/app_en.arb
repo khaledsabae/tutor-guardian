@@ -270,6 +270,16 @@
   "onbDefaultChildName": "My child",
   "onbDeferredHint": "You can add your child's name and photo later from Settings.",
   "onbChangeAge": "Change age",
+  "prideStreakTitle": "MashaAllah — {days} days in a row! 🔥",
+  "@prideStreakTitle": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "prideStreakBody": "This consistency is a blessing worth sharing. Know a family who would love the same? Guiding others to good is an ongoing charity.",
+  "prideInviteCta": "Invite a friend",
+  "prideLater": "Later",
+  "prideStoryInvite": "Did the story delight your child? Share it with another family 🤍",
   "quranDailyWird": "Daily Portion",
   "quranCompleteReading": "Complete Reading",
   "quranSurahVerse": "Surah {surah} - Verse {verse}",

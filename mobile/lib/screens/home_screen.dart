@@ -33,6 +33,7 @@ import '../features/program/screens/settings_screen.dart';
 import '../features/program/screens/story_bookshelf_screen.dart';
 import '../features/feedback/feedback_screen.dart';
 import '../features/program/widgets/active_child_chip.dart';
+import '../features/referral/pride_invite_card.dart';
 import '../features/routine/screens/parenting_insights_screen.dart';
 import '../features/program/widgets/coach_tip_card.dart';
 import '../features/journey/widgets/child_journey_card.dart';
@@ -177,6 +178,9 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           _StatsRow(bundle: bundle),
+          // §6.4 — the referral ask fires only at a pride moment (≥7-day
+          // streak), once per 7-day tier.
+          PrideInviteCard(streakDays: bundle?.dailyLoginStreak ?? 0),
           const CommunityProofCard(),
           const SizedBox(height: 14),
           // Feedback nudge — extra-visible during the testing phase.

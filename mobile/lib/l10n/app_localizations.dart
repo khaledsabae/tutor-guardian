@@ -1694,6 +1694,36 @@ abstract class AppLocalizations {
   /// **'تغيير العمر'**
   String get onbChangeAge;
 
+  /// No description provided for @prideStreakTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما شاء الله — {days} أيام متواصلة! 🔥'**
+  String prideStreakTitle(int days);
+
+  /// No description provided for @prideStreakBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'استمراركم هذا نعمة تستحق أن تُشارك. هل تعرف أسرة تتمنى لها نفس الخير؟ الدلالة على الخير صدقة جارية.'**
+  String get prideStreakBody;
+
+  /// No description provided for @prideInviteCta.
+  ///
+  /// In ar, this message translates to:
+  /// **'ادعُ صديقًا'**
+  String get prideInviteCta;
+
+  /// No description provided for @prideLater.
+  ///
+  /// In ar, this message translates to:
+  /// **'لاحقًا'**
+  String get prideLater;
+
+  /// No description provided for @prideStoryInvite.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسعدت طفلك القصة؟ دلّ أسرة أخرى عليها 🤍'**
+  String get prideStoryInvite;
+
   /// No description provided for @quranDailyWird.
   ///
   /// In ar, this message translates to:

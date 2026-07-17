@@ -270,6 +270,16 @@
   "onbDefaultChildName": "طفلي",
   "onbDeferredHint": "يمكنك إضافة اسم طفلك وصورته لاحقًا من الإعدادات.",
   "onbChangeAge": "تغيير العمر",
+  "prideStreakTitle": "ما شاء الله — {days} أيام متواصلة! 🔥",
+  "@prideStreakTitle": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "prideStreakBody": "استمراركم هذا نعمة تستحق أن تُشارك. هل تعرف أسرة تتمنى لها نفس الخير؟ الدلالة على الخير صدقة جارية.",
+  "prideInviteCta": "ادعُ صديقًا",
+  "prideLater": "لاحقًا",
+  "prideStoryInvite": "أسعدت طفلك القصة؟ دلّ أسرة أخرى عليها 🤍",
   "quranDailyWird": "الورد اليومي",
   "quranCompleteReading": "إكمال القراءة",
   "quranSurahVerse": "سورة {surah} - آية {verse}",

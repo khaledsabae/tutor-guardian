@@ -118,6 +118,15 @@ class Analytics {
   static Future<void> referralClaimed(String outcome) =>
       _log('referral_claimed', {'outcome': outcome});
 
+  /// A pride-moment invite surface was shown / tapped. [source] = streak /
+  /// story_end — measures whether asking at the right moment (§6.4) beats
+  /// the passive settings/coins entry points.
+  static Future<void> prideInviteShown(String source) =>
+      _log('pride_invite_shown', {'source': source});
+
+  static Future<void> prideInviteTapped(String source) =>
+      _log('pride_invite_tapped', {'source': source});
+
   /// A child-journey milestone was logged — a key "first value" signal.
   static Future<void> milestoneLogged() => _log('milestone_logged');
 

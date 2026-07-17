@@ -846,6 +846,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbChangeAge => 'تغيير العمر';
 
   @override
+  String prideStreakTitle(int days) {
+    return 'ما شاء الله — $days أيام متواصلة! 🔥';
+  }
+
+  @override
+  String get prideStreakBody =>
+      'استمراركم هذا نعمة تستحق أن تُشارك. هل تعرف أسرة تتمنى لها نفس الخير؟ الدلالة على الخير صدقة جارية.';
+
+  @override
+  String get prideInviteCta => 'ادعُ صديقًا';
+
+  @override
+  String get prideLater => 'لاحقًا';
+
+  @override
+  String get prideStoryInvite => 'أسعدت طفلك القصة؟ دلّ أسرة أخرى عليها 🤍';
+
+  @override
   String get quranDailyWird => 'الورد اليومي';
 
   @override
