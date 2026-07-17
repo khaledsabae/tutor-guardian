@@ -795,6 +795,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onbClear => 'Clear';
 
   @override
+  String get onbAgeQuestion => 'How old is your child?';
+
+  @override
+  String get onbAgeQuestionSub =>
+      'Just one question — and we\'ll tailor the experience for you right away.';
+
+  @override
+  String get onbFirstTipTitle => 'Your first personalized tip 🎁';
+
+  @override
+  String onbTipForAge(String ageLabel) {
+    return 'For ages $ageLabel';
+  }
+
+  @override
+  String get onbTip_prenatal =>
+      'Your voice is your child\'s first school: let adhkar and Quran be the calm soundtrack of their day — the serenity they hear today becomes their safety tomorrow.';
+
+  @override
+  String get onbTip_2to3 =>
+      'At this age, “no” isn\'t defiance — it\'s self-discovery. Offer two choices you\'re happy with either way: they feel in control, and you get what you need.';
+
+  @override
+  String get onbTip_4to6 =>
+      'Make your child love prayer before you ask it of them: let them lay their mat beside yours and copy you with no commands — at this age, example beats a hundred instructions.';
+
+  @override
+  String get onbTip_7to9 =>
+      'This is the age of “teach your children the prayer” — start with encouragement, not punishment, and anchor one daily prayer together before expecting all five.';
+
+  @override
+  String get onbTip_10to12 =>
+      'These are the trust-building years before adolescence: give your child 10 minutes a day of listening with no interruptions and no advice — a child who finds an ear at home won\'t go looking for one outside.';
+
+  @override
+  String get onbTip_13to15 =>
+      'Teenagers don\'t hear lectures, but they watch actions. Treat them as a partner: ask their opinion and discuss instead of command — respect opens what orders shut.';
+
+  @override
+  String get onbTip_16to18 =>
+      'Your child is on the doorstep of independence: shift from “supervisor” to “advisor”, and start big decisions with “what do you think?” before “do this”.';
+
+  @override
+  String get onbReadyForYou => 'Waiting for you inside the app:';
+
+  @override
+  String get onbReadyPath =>
+      'A step-by-step parenting path tailored to this stage';
+
+  @override
+  String get onbReadyChat =>
+      'A smart mentor that answers your questions, like:';
+
+  @override
+  String get onbDefaultChildName => 'My child';
+
+  @override
+  String get onbDeferredHint =>
+      'You can add your child\'s name and photo later from Settings.';
+
+  @override
+  String get onbChangeAge => 'Change age';
+
+  @override
   String get quranDailyWird => 'Daily Portion';
 
   @override

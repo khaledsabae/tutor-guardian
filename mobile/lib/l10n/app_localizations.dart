@@ -1592,6 +1592,108 @@ abstract class AppLocalizations {
   /// **'مسح'**
   String get onbClear;
 
+  /// No description provided for @onbAgeQuestion.
+  ///
+  /// In ar, this message translates to:
+  /// **'كم عمر طفلك؟'**
+  String get onbAgeQuestion;
+
+  /// No description provided for @onbAgeQuestionSub.
+  ///
+  /// In ar, this message translates to:
+  /// **'سؤال واحد فقط — ونجهّز لك تجربة مخصّصة فورًا.'**
+  String get onbAgeQuestionSub;
+
+  /// No description provided for @onbFirstTipTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أول نصيحة مخصّصة لك 🎁'**
+  String get onbFirstTipTitle;
+
+  /// No description provided for @onbTipForAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'لمرحلة {ageLabel}'**
+  String onbTipForAge(String ageLabel);
+
+  /// No description provided for @onbTip_prenatal.
+  ///
+  /// In ar, this message translates to:
+  /// **'صوتك أول مدرسة لطفلك: اجعل الأذكار والقرآن خلفية هادئة ليومه — فالسكينة التي يسمعها اليوم تصير أمانه غدًا.'**
+  String get onbTip_prenatal;
+
+  /// No description provided for @onbTip_2to3.
+  ///
+  /// In ar, this message translates to:
+  /// **'في هذا العمر «لا» ليست عنادًا بل اكتشاف للذات. أعطِ طفلك خيارين كلاهما مقبول لك — يشعر هو بالتحكم، وتصل أنت لما تريد.'**
+  String get onbTip_2to3;
+
+  /// No description provided for @onbTip_4to6.
+  ///
+  /// In ar, this message translates to:
+  /// **'حبّب طفلك في الصلاة قبل أن تطالبه بها: دعه يفرش سجادته بجوارك ويقلّدك بلا أوامر — القدوة في هذا العمر أقوى من مئة تعليمة.'**
+  String get onbTip_4to6;
+
+  /// No description provided for @onbTip_7to9.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا عمر «مُروا أولادكم بالصلاة» — ابدأ بالتشجيع لا بالعقاب، وثبّتا معًا صلاة واحدة يوميًا قبل أن تطلب الخمس.'**
+  String get onbTip_7to9;
+
+  /// No description provided for @onbTip_10to12.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه سنوات بناء الثقة قبل المراهقة: خصّص 10 دقائق يوميًا تسمع فيها طفلك دون مقاطعة ولا نصائح — من يجد أذنًا في البيت لا يبحث عنها خارجه.'**
+  String get onbTip_10to12;
+
+  /// No description provided for @onbTip_13to15.
+  ///
+  /// In ar, this message translates to:
+  /// **'المراهق لا يسمع المحاضرات لكنه يراقب الأفعال. عامله كشريك: اطلب رأيه وناقشه بدل أن تأمره — الاحترام يفتح ما تغلقه الأوامر.'**
+  String get onbTip_13to15;
+
+  /// No description provided for @onbTip_16to18.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابنك على أعتاب الاستقلال: انتقل من دور «الرقيب» إلى دور «المستشار»، وابدأ قراراته المصيرية بسؤال «ما رأيك؟» قبل «افعل».'**
+  String get onbTip_16to18;
+
+  /// No description provided for @onbReadyForYou.
+  ///
+  /// In ar, this message translates to:
+  /// **'وفي انتظارك داخل التطبيق:'**
+  String get onbReadyForYou;
+
+  /// No description provided for @onbReadyPath.
+  ///
+  /// In ar, this message translates to:
+  /// **'مسار تربوي متدرّج مخصّص لهذه المرحلة'**
+  String get onbReadyPath;
+
+  /// No description provided for @onbReadyChat.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرشد ذكي يجيب عن أسئلتك، مثل:'**
+  String get onbReadyChat;
+
+  /// No description provided for @onbDefaultChildName.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلي'**
+  String get onbDefaultChildName;
+
+  /// No description provided for @onbDeferredHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'يمكنك إضافة اسم طفلك وصورته لاحقًا من الإعدادات.'**
+  String get onbDeferredHint;
+
+  /// No description provided for @onbChangeAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير العمر'**
+  String get onbChangeAge;
+
   /// No description provided for @quranDailyWird.
   ///
   /// In ar, this message translates to:

@@ -147,92 +147,95 @@ void main() {
   // ── Onboarding screen render ───────────────────────────────────────────
 
   group('OnboardingScreen', () {
-    // The redesigned onboarding is a 3-page PageView (welcome → features →
-    // child form). Advance to the form page by tapping "التالي" twice.
-    Future<void> goToFormPage(WidgetTester tester) async {
-      for (var i = 0; i < 2; i++) {
-        if (find.text('التالي').evaluate().isEmpty) break;
-        await tester.tap(find.text('التالي'));
-        await tester.pumpAndSettle();
-      }
+    // The <90s onboarding is a 2-page PageView: one question (age chips)
+    // → instant local value (curated tip + CTA). Picking an age advances.
+    Future<void> pumpOnboarding(
+      WidgetTester tester, {
+      required _FakeTgClient fake,
+    }) async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            tgClientProvider.overrideWithValue(fake),
+            sharedPreferencesProvider.overrideWith((_) async => prefs),
+          ],
+          child: MaterialApp(
+            locale: const Locale('ar'),
+            home: const OnboardingScreen(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
     }
 
-    testWidgets('renders all required fields', (tester) async {
-      // Override the client with a fake that returns a child.
+    testWidgets('page 1 asks the single age question', (tester) async {
+      await pumpOnboarding(tester, fake: _FakeTgClient());
+
+      expect(find.text('كم عمر طفلك؟'), findsOneWidget);
+      // All 7 age chips render.
+      expect(find.text('4–6 سنوات'), findsOneWidget);
+      expect(find.text('فترة الحمل وحتى عام'), findsOneWidget);
+      expect(find.text('2–3 سنوات'), findsOneWidget);
+      // Nothing else is asked on page 1 — no name field, no CTA yet.
+      expect(find.text('اسم طفلك'), findsNothing);
+      expect(find.text('ابدأ الرحلة'), findsNothing);
+    });
+
+    testWidgets('picking an age shows the instant tip + CTA', (tester) async {
+      await pumpOnboarding(tester, fake: _FakeTgClient());
+
+      await tester.tap(find.text('4–6 سنوات'));
+      await tester.pumpAndSettle();
+
+      // Instant value page: curated tip for 4-6 + what's-inside preview.
+      expect(find.text('أول نصيحة مخصّصة لك 🎁'), findsOneWidget);
+      expect(find.textContaining('حبّب طفلك في الصلاة'), findsOneWidget);
+      // Sample mentor question matches the age band.
+      expect(
+        find.textContaining('بيرفض الصلاة'),
+        findsOneWidget,
+      );
+      expect(find.text('ابدأ الرحلة'), findsOneWidget);
+      // Deferred-details hint (name/avatar can be added later).
+      expect(
+        find.text('يمكنك إضافة اسم طفلك وصورته لاحقًا من الإعدادات.'),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('CTA creates the child with the default deferred name',
+        (tester) async {
       final fake = _FakeTgClient();
       fake.createChildJson = {
         'id': 1,
-        'name': 'سارة',
+        'name': 'طفلي',
         'age_group': '4-6',
         'gender': null,
-        'avatar_emoji': '👧',
+        'avatar_emoji': null,
         'created_at': '2026-06-08T12:00:00',
         'updated_at': '2026-06-08T12:00:00',
       };
+      await pumpOnboarding(tester, fake: fake);
 
-      SharedPreferences.setMockInitialValues({});
-      final prefs = await SharedPreferences.getInstance();
-
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            tgClientProvider.overrideWithValue(fake),
-            sharedPreferencesProvider.overrideWith((_) async => prefs),
-          ],
-          child: MaterialApp(
-            locale: const Locale('ar'),
-            home: const OnboardingScreen(),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-          ),
-        ),
-      );
+      await tester.tap(find.text('4–6 سنوات'));
       await tester.pumpAndSettle();
-
-      // Advance the PageView to the child form (page 3).
-      await goToFormPage(tester);
-
-      expect(find.text('اسم طفلك'), findsOneWidget);
-      expect(find.text('المرحلة العمرية'), findsOneWidget);
-      expect(find.text('صورة الطفل (اختياري)'), findsOneWidget);
-      expect(find.text('ابدأ الرحلة'), findsOneWidget);
-      // Age chips render
-      expect(find.text('4–6 سنوات'), findsOneWidget);
-      // 0-3 band was split → "فترة الحمل وحتى عام" + "2–3 سنوات".
-      expect(find.text('فترة الحمل وحتى عام'), findsOneWidget);
-      expect(find.text('2–3 سنوات'), findsOneWidget);
-    });
-
-    testWidgets('shows validation error when name is empty', (tester) async {
-      final fake = _FakeTgClient();
-      SharedPreferences.setMockInitialValues({});
-      final prefs = await SharedPreferences.getInstance();
-
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            tgClientProvider.overrideWithValue(fake),
-            sharedPreferencesProvider.overrideWith((_) async => prefs),
-          ],
-          child: MaterialApp(
-            locale: const Locale('ar'),
-            home: const OnboardingScreen(),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      // Advance the PageView to the child form (page 3).
-      await goToFormPage(tester);
-
-      // Tap submit without entering name or age group
       await tester.tap(find.text('ابدأ الرحلة'));
       await tester.pumpAndSettle();
 
-      // Form validation error
-      expect(find.text('الاسم مطلوب'), findsOneWidget);
+      // The create call went out with the deferred default name + age.
+      expect(fake.lastCreateChildBody?['name'], 'طفلي');
+      expect(fake.lastCreateChildBody?['age_group'], '4-6');
+
+      // Onboarding persisted as completed with the new child active.
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      expect(storage.onboardingCompleted, isTrue);
+      expect(storage.activeChildId, 1);
     });
   });
 
@@ -369,6 +372,7 @@ class _FakeTgClient extends TgClient {
   Map<String, dynamic>? childProgressJson;
   Map<String, dynamic>? pathDetailJson;
   Map<String, dynamic>? dailyTipJson;
+  Map<String, dynamic>? lastCreateChildBody;
 
   @override
   Future<Map<String, dynamic>> createChild({
@@ -376,8 +380,15 @@ class _FakeTgClient extends TgClient {
     required String ageGroup,
     String? gender,
     String? avatarEmoji,
-  }) async =>
-      createChildJson ?? {};
+  }) async {
+    lastCreateChildBody = {
+      'name': name,
+      'age_group': ageGroup,
+      'gender': gender,
+      'avatar_emoji': avatarEmoji,
+    };
+    return createChildJson ?? {};
+  }
 
   @override
   Future<Map<String, dynamic>> getChildProgress(

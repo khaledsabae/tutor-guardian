@@ -248,6 +248,28 @@
   "onbBoy": "Boy",
   "onbGirl": "Girl",
   "onbClear": "Clear",
+  "onbAgeQuestion": "How old is your child?",
+  "onbAgeQuestionSub": "Just one question — and we'll tailor the experience for you right away.",
+  "onbFirstTipTitle": "Your first personalized tip 🎁",
+  "onbTipForAge": "For ages {ageLabel}",
+  "@onbTipForAge": {
+    "placeholders": {
+      "ageLabel": {"type": "String"}
+    }
+  },
+  "onbTip_prenatal": "Your voice is your child's first school: let adhkar and Quran be the calm soundtrack of their day — the serenity they hear today becomes their safety tomorrow.",
+  "onbTip_2to3": "At this age, “no” isn't defiance — it's self-discovery. Offer two choices you're happy with either way: they feel in control, and you get what you need.",
+  "onbTip_4to6": "Make your child love prayer before you ask it of them: let them lay their mat beside yours and copy you with no commands — at this age, example beats a hundred instructions.",
+  "onbTip_7to9": "This is the age of “teach your children the prayer” — start with encouragement, not punishment, and anchor one daily prayer together before expecting all five.",
+  "onbTip_10to12": "These are the trust-building years before adolescence: give your child 10 minutes a day of listening with no interruptions and no advice — a child who finds an ear at home won't go looking for one outside.",
+  "onbTip_13to15": "Teenagers don't hear lectures, but they watch actions. Treat them as a partner: ask their opinion and discuss instead of command — respect opens what orders shut.",
+  "onbTip_16to18": "Your child is on the doorstep of independence: shift from “supervisor” to “advisor”, and start big decisions with “what do you think?” before “do this”.",
+  "onbReadyForYou": "Waiting for you inside the app:",
+  "onbReadyPath": "A step-by-step parenting path tailored to this stage",
+  "onbReadyChat": "A smart mentor that answers your questions, like:",
+  "onbDefaultChildName": "My child",
+  "onbDeferredHint": "You can add your child's name and photo later from Settings.",
+  "onbChangeAge": "Change age",
   "quranDailyWird": "Daily Portion",
   "quranCompleteReading": "Complete Reading",
   "quranSurahVerse": "Surah {surah} - Verse {verse}",

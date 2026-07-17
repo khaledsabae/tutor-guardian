@@ -784,6 +784,68 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onbClear => 'مسح';
 
   @override
+  String get onbAgeQuestion => 'كم عمر طفلك؟';
+
+  @override
+  String get onbAgeQuestionSub =>
+      'سؤال واحد فقط — ونجهّز لك تجربة مخصّصة فورًا.';
+
+  @override
+  String get onbFirstTipTitle => 'أول نصيحة مخصّصة لك 🎁';
+
+  @override
+  String onbTipForAge(String ageLabel) {
+    return 'لمرحلة $ageLabel';
+  }
+
+  @override
+  String get onbTip_prenatal =>
+      'صوتك أول مدرسة لطفلك: اجعل الأذكار والقرآن خلفية هادئة ليومه — فالسكينة التي يسمعها اليوم تصير أمانه غدًا.';
+
+  @override
+  String get onbTip_2to3 =>
+      'في هذا العمر «لا» ليست عنادًا بل اكتشاف للذات. أعطِ طفلك خيارين كلاهما مقبول لك — يشعر هو بالتحكم، وتصل أنت لما تريد.';
+
+  @override
+  String get onbTip_4to6 =>
+      'حبّب طفلك في الصلاة قبل أن تطالبه بها: دعه يفرش سجادته بجوارك ويقلّدك بلا أوامر — القدوة في هذا العمر أقوى من مئة تعليمة.';
+
+  @override
+  String get onbTip_7to9 =>
+      'هذا عمر «مُروا أولادكم بالصلاة» — ابدأ بالتشجيع لا بالعقاب، وثبّتا معًا صلاة واحدة يوميًا قبل أن تطلب الخمس.';
+
+  @override
+  String get onbTip_10to12 =>
+      'هذه سنوات بناء الثقة قبل المراهقة: خصّص 10 دقائق يوميًا تسمع فيها طفلك دون مقاطعة ولا نصائح — من يجد أذنًا في البيت لا يبحث عنها خارجه.';
+
+  @override
+  String get onbTip_13to15 =>
+      'المراهق لا يسمع المحاضرات لكنه يراقب الأفعال. عامله كشريك: اطلب رأيه وناقشه بدل أن تأمره — الاحترام يفتح ما تغلقه الأوامر.';
+
+  @override
+  String get onbTip_16to18 =>
+      'ابنك على أعتاب الاستقلال: انتقل من دور «الرقيب» إلى دور «المستشار»، وابدأ قراراته المصيرية بسؤال «ما رأيك؟» قبل «افعل».';
+
+  @override
+  String get onbReadyForYou => 'وفي انتظارك داخل التطبيق:';
+
+  @override
+  String get onbReadyPath => 'مسار تربوي متدرّج مخصّص لهذه المرحلة';
+
+  @override
+  String get onbReadyChat => 'مرشد ذكي يجيب عن أسئلتك، مثل:';
+
+  @override
+  String get onbDefaultChildName => 'طفلي';
+
+  @override
+  String get onbDeferredHint =>
+      'يمكنك إضافة اسم طفلك وصورته لاحقًا من الإعدادات.';
+
+  @override
+  String get onbChangeAge => 'تغيير العمر';
+
+  @override
   String get quranDailyWird => 'الورد اليومي';
 
   @override
