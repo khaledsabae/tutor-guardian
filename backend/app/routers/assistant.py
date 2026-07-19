@@ -123,6 +123,31 @@ async def draft_reply(request: Request, user_message: UserMessage):
     is_general = detected_domains == ["general"]
     logger.info("Auto-detected domains: %s", detected_domains)
 
+    primary_domain = detected_domains[0] if detected_domains else "medical"
+    severity = user_message.severity or "خفيف"
+
+    # ── Step 3b: Pre-cache check ─────────────────────────────────────
+    first_question = not any(
+        getattr(t, "role", "") == "assistant" for t in history
+    )
+    if first_question and not is_general:
+        decision = evaluate_guardrails(primary_domain, severity, policies)
+        if not decision["force_fallback"]:
+            cached = await asyncio.to_thread(
+                answer_cache.lookup,
+                query_text, user_message.age_group or "unspecified",
+                primary_domain, severity
+            )
+            if cached:
+                logger.info("Cache hit! Serving pre-cached answer.")
+                reply = AssistantReply(
+                    reply_text=cached, domain=primary_domain, severity=severity,
+                    needs_human_review=decision["needs_human_review"],
+                    escalation_target=decision["escalate_to"],
+                    mode="llm_generated",
+                )
+                return await asyncio.to_thread(_finalize, reply, session_id)
+
     # ── Step 4: Hybrid retrieval (vector + BM25 → RRF → rerank) ──────
     # A general/off-topic question has no parenting KB to ground on, so skip
     # retrieval entirely and go straight to the pivot.
@@ -146,8 +171,6 @@ async def draft_reply(request: Request, user_message: UserMessage):
             return units
 
         retrieved_units = await asyncio.to_thread(_retrieve_blocking)
-
-    primary_domain = detected_domains[0] if detected_domains else "medical"
 
     # ── Step 5: LLM generation → fallback to retrieval_only ──────────
     mode: str = "retrieval_only"
@@ -220,11 +243,24 @@ async def draft_reply(request: Request, user_message: UserMessage):
             f"نوصي باستشارة مختص."
         )
 
+    # Determine intervention type from retrieved units for guardrails
+    intervention_type = None
+    if retrieved_units:
+        for unit in retrieved_units:
+            if unit.get("intervention_type") == "إحالة_لطبيب":
+                intervention_type = "إحالة_لطبيب"
+                break
+        if not intervention_type:
+            intervention_type = retrieved_units[0].get("intervention_type")
+
     # ── Step 6: Apply guardrails ──────────────────────────────────────
     user_message_for_guardrails = user_message.model_copy(
         update={"domain": primary_domain}
     )
-    reply = apply_guardrails(user_message_for_guardrails, draft, policies, mode=mode)
+    reply = apply_guardrails(
+        user_message_for_guardrails, draft, policies, mode=mode,
+        intervention_type=intervention_type
+    )
     reply.metadata = {
         **(reply.metadata or {}),
         "top_rerank": round(top_rerank, 2) if top_rerank is not None else None,
@@ -266,7 +302,7 @@ async def query_reply(request: Request, user_message: UserMessage):
 
 
 @router.post("/stream")
-def stream_reply(request: Request, user_message: UserMessage) -> StreamingResponse:
+async def stream_reply(request: Request, user_message: UserMessage) -> StreamingResponse:
     """
     SSE streaming variant of /draft (mobile-ready).
 
@@ -318,30 +354,15 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
     # ── Build query + history + retrieve ─────────────────────────────
     query_text = (user_message.message_text or "").strip() or \
         f"{user_message.behavior_type} {user_message.age_group}"
-    history = (
-        store.get_history(session_id, limit=6)
-        if session_id else (user_message.conversation_history or [])
-    )
-    detected_domains = classify_domains(query_text)
-    is_general = detected_domains == ["general"]
-    _ensure_index()
-    if is_general:
-        retrieved_units: list[dict] = []
+    if session_id:
+        history = await asyncio.to_thread(store.get_history, session_id, limit=6)
     else:
-        rewritten = rewrite_query(
-            query_text, classifier_fast_path=matched_fast_path(query_text)
-        )
-        retrieved_units = retrieve_hybrid(
-            query_text=query_text, domains=detected_domains,
-            age_group=user_message.age_group or "unspecified",
-            rewritten_query=rewritten,
-        )
-        log_retrieval(query_text, detected_domains, rewritten, retrieved_units)
+        history = user_message.conversation_history or []
+    detected_domains = await asyncio.to_thread(classify_domains, query_text)
+    is_general = detected_domains == ["general"]
+
     primary_domain = detected_domains[0] if detected_domains else "medical"
     severity = user_message.severity or "خفيف"
-
-    score_off_topic, _top_rerank = _off_topic(retrieved_units)
-    off_topic = is_general or score_off_topic
 
     # First question in the session? (no assistant turns yet). Only then may
     # the answer cache serve/store — a follow-up depends on conversation the
@@ -349,6 +370,46 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
     first_question = not any(
         getattr(t, "role", "") == "assistant" for t in history
     )
+
+    # ── Step 3b: Pre-cache check ─────────────────────────────────────
+    if first_question and not is_general:
+        decision = evaluate_guardrails(primary_domain, severity, policies)
+        if not decision["force_fallback"]:
+            cached = await asyncio.to_thread(
+                answer_cache.lookup,
+                query_text, user_message.age_group or "unspecified",
+                primary_domain, severity
+            )
+            if cached:
+                logger.info("Cache hit in stream! Serving pre-cached answer.")
+                return _single(AssistantReply(
+                    reply_text=cached, domain=primary_domain, severity=severity,
+                    needs_human_review=decision["needs_human_review"],
+                    escalation_target=decision["escalate_to"],
+                    mode="llm_generated",
+                ))
+
+    # Cache missed, proceed with index assurance and hybrid retrieval
+    if is_general:
+        await asyncio.to_thread(_ensure_index)
+        retrieved_units: list[dict] = []
+    else:
+        def _retrieve_blocking() -> list[dict]:
+            _ensure_index()
+            rewritten = rewrite_query(
+                query_text, classifier_fast_path=matched_fast_path(query_text)
+            )
+            units = retrieve_hybrid(
+                query_text=query_text, domains=detected_domains,
+                age_group=user_message.age_group or "unspecified",
+                rewritten_query=rewritten,
+            )
+            log_retrieval(query_text, detected_domains, rewritten, units)
+            return units
+        retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+
+    score_off_topic, _top_rerank = _off_topic(retrieved_units)
+    off_topic = is_general or score_off_topic
 
     # No relevant KB and not an off-topic pivot → non-streamed fallback
     if not retrieved_units and not off_topic:
@@ -368,8 +429,18 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
             query_text, user_message.age_group or "unspecified"
         )
     else:
+        # Determine intervention type from retrieved units for guardrails
+        intervention_type = None
+        if retrieved_units:
+            for unit in retrieved_units:
+                if unit.get("intervention_type") == "إحالة_لطبيب":
+                    intervention_type = "إحالة_لطبيب"
+                    break
+            if not intervention_type:
+                intervention_type = retrieved_units[0].get("intervention_type")
+
         # Guardrails would replace the whole text → don't stream, send fallback
-        decision = evaluate_guardrails(primary_domain, severity, policies)
+        decision = evaluate_guardrails(primary_domain, severity, policies, intervention_type)
         if decision["force_fallback"]:
             draft = _build_fallback_message(
                 primary_domain, user_message.behavior_type or "",
@@ -380,21 +451,6 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
                 needs_human_review=decision["needs_human_review"],
                 escalation_target=decision["escalate_to"], mode="llm_generated",
             ))
-
-        # Answer cache: an equivalent cold question already answered →
-        # serve it instantly with zero inference cost.
-        if first_question:
-            cached = answer_cache.lookup(
-                query_text, user_message.age_group or "unspecified",
-                primary_domain, severity,
-            )
-            if cached:
-                return _single(AssistantReply(
-                    reply_text=cached, domain=primary_domain, severity=severity,
-                    needs_human_review=decision["needs_human_review"],
-                    escalation_target=decision["escalate_to"],
-                    mode="llm_generated",
-                ))
 
         # ── Stream the LLM generation token-by-token ─────────────────────
         # Quality-tier routing (flag-gated). The cloud provider is tried
@@ -419,51 +475,76 @@ def stream_reply(request: Request, user_message: UserMessage) -> StreamingRespon
             conversation_history=stream_history, tier=tier,
         )
 
-    def event_stream():
+    async def event_stream():
+        import queue
+        loop = asyncio.get_event_loop()
+        q: asyncio.Queue = asyncio.Queue()
+
+        def run_sync_stream():
+            try:
+                for chunk in get_gateway().stream(
+                    full_prompt, tier=tier, route_reason=route_reason
+                ):
+                    loop.call_soon_threadsafe(q.put_nowait, ("chunk", chunk))
+                loop.call_soon_threadsafe(q.put_nowait, ("done", None))
+            except Exception as e:
+                loop.call_soon_threadsafe(q.put_nowait, ("error", e))
+
+        # Offload the blocking stream reader loop to a background worker thread
+        asyncio.create_task(asyncio.to_thread(run_sync_stream))
+
         try:
-            for chunk in get_gateway().stream(
-                full_prompt, tier=tier, route_reason=route_reason
-            ):
-                if chunk.done:
-                    final_text = (chunk.result.text if chunk.result else "").strip()
-                    if stream_mode == "general_pivot":
-                        final_text = strip_pivot_citation(final_text)
-                    final_text = clean_model_output(final_text)
-                    reply = AssistantReply(
-                        reply_text=final_text, domain=primary_domain, severity=severity,
-                        needs_human_review=decision["needs_human_review"],
-                        escalation_target=decision["escalate_to"],
-                        mode=stream_mode, session_id=session_id,
-                    )
-                    if session_id:
-                        store.add_message(
-                            session_id, "assistant", final_text,
-                            domain=primary_domain, severity=severity,
-                            mode=stream_mode,
+            while True:
+                msg_type, val = await q.get()
+                if msg_type == "done":
+                    break
+                elif msg_type == "error":
+                    raise val
+                else:
+                    chunk = val
+                    if chunk.done:
+                        final_text = (chunk.result.text if chunk.result else "").strip()
+                        if stream_mode == "general_pivot":
+                            final_text = strip_pivot_citation(final_text)
+                        final_text = clean_model_output(final_text)
+                        reply = AssistantReply(
+                            reply_text=final_text, domain=primary_domain, severity=severity,
                             needs_human_review=decision["needs_human_review"],
+                            escalation_target=decision["escalate_to"],
+                            mode=stream_mode, session_id=session_id,
                         )
-                    log_session(
-                        domain=primary_domain, behavior_type=user_message.behavior_type or "",
-                        age_group=user_message.age_group or "", severity=severity,
-                        mode=stream_mode, needs_human_review=decision["needs_human_review"],
-                        reply_length=len(final_text), retrieved_count=len(retrieved_units),
-                    )
-                    # Feed the answer cache: grounded, local, review-free,
-                    # first-question answers only (§5.1).
-                    if (
-                        stream_mode == "llm_generated"
-                        and first_question
-                        and tier != "cloud_quality"
-                        and not decision["needs_human_review"]
-                    ):
-                        answer_cache.store(
-                            query_text, user_message.age_group or "unspecified",
-                            primary_domain, severity, final_text,
+                        if session_id:
+                            await asyncio.to_thread(
+                                store.add_message,
+                                session_id, "assistant", final_text,
+                                domain=primary_domain, severity=severity,
+                                mode=stream_mode,
+                                needs_human_review=decision["needs_human_review"],
+                            )
+                        await asyncio.to_thread(
+                            log_session,
+                            domain=primary_domain, behavior_type=user_message.behavior_type or "",
+                            age_group=user_message.age_group or "", severity=severity,
+                            mode=stream_mode, needs_human_review=decision["needs_human_review"],
+                            reply_length=len(final_text), retrieved_count=len(retrieved_units),
                         )
-                    yield _sse("done", reply.model_dump())
-                elif chunk.delta:
-                    # Filter leaked CJK tokens from the live stream too.
-                    yield _sse("token", {"delta": _CJK_RE.sub("", chunk.delta)})
+                        # Feed the answer cache: grounded, local, review-free,
+                        # first-question answers only (§5.1).
+                        if (
+                            stream_mode == "llm_generated"
+                            and first_question
+                            and tier != "cloud_quality"
+                            and not decision["needs_human_review"]
+                        ):
+                            await asyncio.to_thread(
+                                answer_cache.store,
+                                query_text, user_message.age_group or "unspecified",
+                                primary_domain, severity, final_text,
+                            )
+                        yield _sse("done", reply.model_dump())
+                    elif chunk.delta:
+                        # Filter leaked CJK tokens from the live stream too.
+                        yield _sse("token", {"delta": _CJK_RE.sub("", chunk.delta)})
         except Exception as e:
             logger.warning("Stream generation failed: %s", e)
             yield _sse("error", {"detail": "تعذّر توليد الرد، يُرجى المحاولة لاحقاً."})

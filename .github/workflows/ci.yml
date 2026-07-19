@@ -1,31 +1,22 @@
-name: CI
+# ⚠️  THIS WORKFLOW IS INTENTIONALLY DISABLED — use backend.yml instead.
+#
+# backend.yml covers the same KB integrity + pytest tasks with:
+#   - Path filtering (doesn't run on mobile-only changes)
+#   - cancel-in-progress concurrency control
+#   - A separate fast KB integrity job
+#
+# To re-enable, restore the `on:` block below. We keep this file only to
+# avoid breaking any existing branch protection rule that references "CI".
+
+name: CI (disabled — see backend.yml)
 
 on:
-  push:
-    branches: [main, master]
-  pull_request:
+  workflow_dispatch:  # Manual trigger only — not automatic
 
 jobs:
-  test:
-    name: KB integrity + tests
+  redirect:
+    name: Use backend.yml
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: pip
-
-      - name: Install dependencies
-        run: pip install -r backend/requirements.txt
-
-      # The drift-detector gate (analytics-platform's "verify schema sync" lesson):
-      # fails the build if any unit / the schema / taxonomy.py have drifted apart.
-      - name: Knowledge-base integrity check
-        run: python ops/tools/check_kb_integrity.py
-
-      - name: Run tests
-        run: python -m pytest
+      - name: Notice
+        run: echo "This workflow is disabled. Use backend.yml for CI."

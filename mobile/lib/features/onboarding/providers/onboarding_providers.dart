@@ -13,6 +13,7 @@
 /// `OnboardingStorage.setActiveChild` via this provider.
 library;
 
+import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,3 +71,37 @@ final activeChildProfileProvider = Provider<ActiveChildProfile?>((ref) {
   if (id == null || name == null || age == null) return null;
   return ActiveChildProfile(id: id, name: name, ageGroup: age, avatarEmoji: avatar);
 });
+
+class AppLocaleNotifier extends StateNotifier<Locale?> {
+  final SharedPreferences? _prefs;
+  AppLocaleNotifier(this._prefs) : super(null) {
+    _init();
+  }
+
+  void _init() {
+    if (_prefs != null) {
+      final code = _prefs.getString('tg.ui_language');
+      if (code != null) {
+        state = Locale(code);
+      }
+    }
+  }
+
+  Future<void> setLocale(String languageCode) async {
+    state = Locale(languageCode);
+    if (_prefs != null) {
+      await _prefs.setString('tg.ui_language', languageCode);
+    }
+  }
+}
+
+final appLocaleProvider =
+    StateNotifierProvider<AppLocaleNotifier, Locale?>((ref) {
+  final prefsAsync = ref.watch(sharedPreferencesProvider);
+  final prefs = prefsAsync.maybeWhen(
+    data: (p) => p,
+    orElse: () => null,
+  );
+  return AppLocaleNotifier(prefs);
+});
+

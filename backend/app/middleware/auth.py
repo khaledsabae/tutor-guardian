@@ -1,7 +1,7 @@
 """
 Auth middleware — Bearer token validation for the Tutor Guardian API.
 
-Protects /api/assistant/* and /api/chat/* endpoints.
+Protects /api/assistant/*, /api/chat/*, /api/insights/* and other auth-gated endpoints.
 The session-creation endpoint itself (POST /api/chat/sessions) is public.
 """
 import logging
@@ -35,6 +35,7 @@ _PROTECTED_PREFIXES = (
     "/api/chat",
     "/api/feedback",
     "/api/children",
+    "/api/insights",
     "/api/referral",
     "/api/push",
     "/api/identity",

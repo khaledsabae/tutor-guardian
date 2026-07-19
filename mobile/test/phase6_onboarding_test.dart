@@ -176,6 +176,10 @@ void main() {
     testWidgets('page 1 asks the single age question', (tester) async {
       await pumpOnboarding(tester, fake: _FakeTgClient());
 
+      // Language selection page is shown first. Tap 'العربية' to go to age page.
+      await tester.tap(find.text('العربية'));
+      await tester.pumpAndSettle();
+
       expect(find.text('كم عمر طفلك؟'), findsOneWidget);
       // All 7 age chips render.
       expect(find.text('4–6 سنوات'), findsOneWidget);
@@ -188,6 +192,10 @@ void main() {
 
     testWidgets('picking an age shows the instant tip + CTA', (tester) async {
       await pumpOnboarding(tester, fake: _FakeTgClient());
+
+      // Language selection page is shown first. Tap 'العربية' to go to age page.
+      await tester.tap(find.text('العربية'));
+      await tester.pumpAndSettle();
 
       await tester.tap(find.text('4–6 سنوات'));
       await tester.pumpAndSettle();
@@ -221,6 +229,10 @@ void main() {
         'updated_at': '2026-06-08T12:00:00',
       };
       await pumpOnboarding(tester, fake: fake);
+
+      // Language selection page is shown first. Tap 'العربية' to go to age page.
+      await tester.tap(find.text('العربية'));
+      await tester.pumpAndSettle();
 
       await tester.tap(find.text('4–6 سنوات'));
       await tester.pumpAndSettle();

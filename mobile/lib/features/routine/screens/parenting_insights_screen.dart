@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../api/tg_client.dart';
 import '../../../state/chat_notifier.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
@@ -50,25 +51,23 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
     });
 
     try {
-      final client = ref.read(tgClientProvider);
-      
-      // Load both stats summary and AI insights concurrently
-      final results = await Future.wait<Map<String, dynamic>>([
-        client.fetchRoutineSummary(childId, days: 7),
-        client.fetchParentingInsights(childId),
-      ]);
-
-      final summary = results[0];
-      final insightsData = results[1];
-
+      await _fetchInsights(childId);
+    } on TgApiError catch (e) {
+      if (e.statusCode == 401) {
+        // Token expired — clear session and retry once
+        final client = ref.read(tgClientProvider);
+        await client.endSession();
+        try {
+          await _fetchInsights(childId);
+          return; // Success after session refresh
+        } catch (_) {
+          // Fall through to show error
+        }
+      }
       if (mounted) {
         setState(() {
-          _sleepMinutes = summary['total_sleep_minutes'] as int? ?? 0;
-          _feedCount = summary['total_feed_count'] as int? ?? 0;
-          _feedAmount = summary['total_feed_amount_ml'] as int? ?? 0;
-          _diaperCount = summary['diaper_count'] as int? ?? 0;
-          _insights = insightsData['insights'] as List<dynamic>? ?? [];
           _loading = false;
+          _error = AppLocalizations.of(context).parentingInsightsError;
         });
       }
     } catch (e) {
@@ -78,6 +77,28 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
           _error = AppLocalizations.of(context).parentingInsightsError;
         });
       }
+    }
+  }
+
+  Future<void> _fetchInsights(int childId) async {
+    final client = ref.read(tgClientProvider);
+    final results = await Future.wait<Map<String, dynamic>>([
+      client.fetchRoutineSummary(childId, days: 7),
+      client.fetchParentingInsights(childId),
+    ]);
+
+    final summary = results[0];
+    final insightsData = results[1];
+
+    if (mounted) {
+      setState(() {
+        _sleepMinutes = summary['total_sleep_minutes'] as int? ?? 0;
+        _feedCount = summary['total_feed_count'] as int? ?? 0;
+        _feedAmount = summary['total_feed_amount_ml'] as int? ?? 0;
+        _diaperCount = summary['diaper_count'] as int? ?? 0;
+        _insights = insightsData['insights'] as List<dynamic>? ?? [];
+        _loading = false;
+      });
     }
   }
 

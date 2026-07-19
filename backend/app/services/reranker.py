@@ -46,6 +46,15 @@ def _get_model():
     return _model
 
 
+def eager_load_model():
+    """Trigger model loading on startup."""
+    try:
+        if RERANK_ENABLED and not _disabled:
+            _get_model()
+    except Exception as e:
+        logger.warning("Failed to eager-load reranker: %s", e)
+
+
 def rerank(query: str, candidates: list[dict], top_n: int = 4) -> list[dict]:
     """Score candidates against the query; return the best `top_n`.
 

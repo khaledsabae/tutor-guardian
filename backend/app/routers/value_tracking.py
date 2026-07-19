@@ -195,7 +195,7 @@ def _build_today_habits(
 ) -> list[TodayHabitItem]:
     """Merge defaults + active custom templates and attach today's status."""
     event_by_name: dict[str, sqlite3.Row] = {
-        r["habit_name"]: r for r in today_events if r["status"] != "missed"
+        r["habit_name"]: r for r in today_events
     }
     seen: set[str] = set()
     items: list[TodayHabitItem] = []

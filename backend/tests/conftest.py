@@ -6,6 +6,15 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
+def mock_domain_classifier_llm(monkeypatch):
+    """Globally mock domain classifier LLM calls to prevent tests from hitting live Ollama."""
+    monkeypatch.setattr(
+        "app.services.domain_classifier._call_llm",
+        lambda *args, **kwargs: ["tarbiyah"]
+    )
+
+
+@pytest.fixture(autouse=True)
 def _temp_conversations_db(monkeypatch):
     """Point every test at a throwaway SQLite DB so tests don't touch ops/."""
     fd, path = tempfile.mkstemp(suffix=".db")

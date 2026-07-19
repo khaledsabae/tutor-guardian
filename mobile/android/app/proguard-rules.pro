@@ -1,46 +1,57 @@
-# Flutter default rules
--keep class io.flutter.app.** { *; }
--keep class io.flutter.plugin.** { *; }
--keep class io.flutter.util.** { *; }
--keep class io.flutter.view.** { *; }
--keep class io.flutter.** { *; }
--keep class io.flutter.plugins.** { *; }
+# ──────────────────────────────────────────────────────────────
+# Tutor Guardian — Narrowed R8 rules
+#
+# What we removed and why:
+#   - io.flutter.**     → flutter_proguard_rules.pro (in Flutter SDK) already
+#                          keeps FlutterPlugin impls. The AOT-compiled Dart
+#                          kernel is untouched by R8. Consumer rules from the
+#                          Gradle plugin cover the rest.
+#   - com.google.firebase/gms.** → Firebase AARs ship their own consumer-rules.
+#                          The broad -keep { *; } was the #1 reason R8 could
+#                          not shrink/optimize (~20 MB dex that should be ~4 MB).
+#   - com.google.gson.** broad → replaced with targeted rules below.
+#   - com.squareup.** broad → OkHttp/Retrofit ship their own consumer rules.
+#   - extends Application/Receiver/Service → AAPT manifest rules + plugin
+#                          manifest entries already preserve these.
+#
+# What we keep:
+#   1. Gson runtime reflection — flutter_local_notifications bundles
+#      gson:2.8.9 but ships NO consumer rules. It uses TypeToken and
+#      @SerializedName for serializing NotificationDetails to JSON.
+#   2. Crashlytics line numbers — SourceFile + LineNumberTable for readable
+#      stack traces in Firebase Crashlytics.
+#   3. Native methods — standard JNI keep.
+#   4. dontwarn — harmless desugaring / Play Core / BackEvent warnings.
+# ──────────────────────────────────────────────────────────────
 
-# Keep Dart entry points used by reflection
--keepattributes *Annotation*
+# --- Gson (flutter_local_notifications:2.8.9 has no consumer rules) ---
 -keepattributes Signature
--keepattributes Exceptions
--keepattributes InnerClasses
--keepattributes EnclosingMethod
+-keepattributes *Annotation*
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
+-keepclassmembers,allowobfuscation class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+-keep,allowobfuscation,allowshrinking class com.google.gson.reflect.TypeToken
+-keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
 
-# Firebase
--keep class com.google.firebase.** { *; }
--keep class com.google.android.gms.** { *; }
--dontwarn com.google.firebase.**
--dontwarn com.google.android.gms.**
+# --- Firebase Crashlytics (no consumer rules in AAR) ---
+# Firebase Crashlytics registers via ComponentRegistrar SPI and its internal
+# classes are only reachable through reflection. Keep the full package to
+# prevent R8 from stripping the component registration chain.
+-keep class com.google.firebase.crashlytics.** { *; }
+-keep class * implements com.google.firebase.components.ComponentRegistrar { *; }
 
-# JSON / Retrofit / Dio / http clients
--keep class com.google.gson.** { *; }
--keep class com.squareup.** { *; }
--dontwarn com.squareup.**
--dontwarn okio.**
+# --- Crashlytics: readable stack traces ---
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
 
-# Keep native methods
+# --- Native methods ---
 -keepclasseswithmembernames class * {
     native <methods>;
 }
 
-# Keep Application class
--keep public class * extends android.app.Application
-
-# Keep Flutter Local Notifications
--keep class com.dexterous.flutterlocalnotifications.** { *; }
-
-# Keep Riverpod/Provider generated code (if any reflection)
--keep class * extends android.content.BroadcastReceiver
--keep class * extends android.app.Service
-
-# Suppress harmless warnings for desugaring and Play Core split install
+# --- Suppress harmless warnings ---
 -dontwarn java.lang.invoke.**
 -dontwarn javax.annotation.**
 -dontwarn org.conscrypt.**

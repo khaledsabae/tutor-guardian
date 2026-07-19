@@ -46,7 +46,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   int _page = 0;
   String? _ageGroup;
 
-  static const _pageCount = 2;
+  static const _pageCount = 3;
 
   @override
   void dispose() {
@@ -64,7 +64,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   void _pickAge(String wire) {
     setState(() => _ageGroup = wire);
-    _goTo(1);
+    _goTo(2);
   }
 
   Future<void> _submit() async {
@@ -73,7 +73,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(AppLocalizations.of(context).onbSelectAge)),
       );
-      _goTo(0);
+      _goTo(1);
       return;
     }
     final defaultName = AppLocalizations.of(context).onbDefaultChildName;
@@ -147,13 +147,19 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       controller: _pageController,
                       onPageChanged: (i) => setState(() => _page = i),
                       children: [
+                        _LanguageSelectionPage(
+                          onChoose: (lang) {
+                            ref.read(appLocaleProvider.notifier).setLocale(lang);
+                            _goTo(1);
+                          },
+                        ),
                         _AgeQuestionPage(
                           selected: _ageGroup,
                           onPick: _pickAge,
                         ),
                         _InstantValuePage(
                           ageGroup: _ageGroup,
-                          onChangeAge: () => _goTo(0),
+                          onChangeAge: () => _goTo(1),
                         ),
                       ],
                     ),
@@ -163,24 +169,27 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            for (var i = 0; i < _pageCount; i++)
-                              AnimatedContainer(
-                                duration: Dt.fast,
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 3),
-                                width: _page == i ? 24 : 8,
-                                height: 8,
-                                decoration: BoxDecoration(
-                                  color: _page == i
-                                      ? AppTheme.primary
-                                      : Dt.track,
-                                  borderRadius: BorderRadius.circular(8),
+                        Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              for (var i = 0; i < _pageCount; i++)
+                                AnimatedContainer(
+                                  duration: Dt.fast,
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 3),
+                                  width: _page == i ? 24 : 8,
+                                  height: 8,
+                                  decoration: BoxDecoration(
+                                    color: _page == i
+                                        ? AppTheme.primary
+                                        : Dt.track,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
-                              ),
-                          ],
+                            ],
+                          ),
                         ),
                         // The CTA only appears on the value page — page 1's
                         // only action is the age chips themselves.
@@ -613,6 +622,69 @@ class _AgeChip extends StatelessWidget {
     );
   }
 }
+
+class _LanguageSelectionPage extends StatelessWidget {
+  const _LanguageSelectionPage({required this.onChoose});
+
+  final ValueChanged<String> onChoose;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(28),
+      child: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                '🌍',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 64),
+              ).animate().fadeIn(duration: Dt.base).scale(
+                    begin: const Offset(.9, .9),
+                    curve: Curves.easeOutBack,
+                  ),
+              const SizedBox(height: 24),
+              const Text(
+                'اختر لغة التطبيق',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.textPrimary,
+                ),
+              ).animate(delay: 100.ms).fadeIn(duration: Dt.base),
+              const Text(
+                'Choose App Language',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: AppTheme.textSecondary,
+                ),
+              ).animate(delay: 150.ms).fadeIn(duration: Dt.base),
+              const SizedBox(height: 36),
+              BouncyButton(
+                label: 'العربية',
+                color: AppTheme.primary,
+                onTap: () => onChoose('ar'),
+              ).animate(delay: 200.ms).fadeIn(duration: Dt.base),
+              const SizedBox(height: 16),
+              BouncyButton(
+                label: 'English',
+                color: AppTheme.accent,
+                onTap: () => onChoose('en'),
+              ).animate(delay: 250.ms).fadeIn(duration: Dt.base),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 // Note: we don't import `progress_providers.dart` from the form code
 // — the create call is the only side effect. The exports come

@@ -1,12 +1,19 @@
 # Tutor Guardian backend — FastAPI + ChromaDB (ONNX, CPU). Build context = repo root.
 FROM python:3.11-slim
 
+# Create a non-root user — running as root in production is a security risk.
+RUN groupadd -g 10001 appgroup && \
+    useradd -u 10001 -g appgroup -m -s /bin/bash appuser
+
 WORKDIR /app
 
 # onnxruntime needs libgomp1; curl for healthcheck
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libgomp1 curl \
     && rm -rf /var/lib/apt/lists/*
+
+# Point HF model cache to a path inside /app so appuser can write to it.
+ENV HF_HOME=/app/.cache/huggingface
 
 COPY backend/requirements.txt ./backend/requirements.txt
 RUN pip install --no-cache-dir -r backend/requirements.txt
@@ -25,10 +32,16 @@ COPY frontend/ ./frontend/
 COPY docs/ ./docs/
 COPY .well-known/ ./.well-known/
 
+# Transfer ownership before switching user
+RUN chown -R appuser:appgroup /app
+
 ENV PROJECT_ROOT=/app \
     PYTHONPATH=/app/backend \
     PYTHONUNBUFFERED=1 \
     CONVERSATIONS_DB=/app/ops/conversations.db
+
+# Drop to non-root user for security
+USER appuser
 
 EXPOSE 8000
 

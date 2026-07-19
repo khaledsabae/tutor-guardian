@@ -29,14 +29,29 @@ _PROMPT = (
 )
 
 
-def _cache_get(qhash: str) -> str | None:
-    try:
-        conn = sqlite3.connect(_CACHE_DB)
+_schema_initialized = False
+
+
+def _get_conn() -> sqlite3.Connection:
+    """Open a WAL-mode connection with a busy timeout to prevent lock errors."""
+    global _schema_initialized
+    conn = sqlite3.connect(_CACHE_DB, timeout=5.0)
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA busy_timeout=5000")
+    if not _schema_initialized:
         conn.execute(
             """CREATE TABLE IF NOT EXISTS query_rewrites (
                 question_hash TEXT PRIMARY KEY, rewritten TEXT,
                 ts TEXT DEFAULT (datetime('now')))"""
         )
+        conn.commit()
+        _schema_initialized = True
+    return conn
+
+
+def _cache_get(qhash: str) -> str | None:
+    try:
+        conn = _get_conn()
         row = conn.execute(
             "SELECT rewritten FROM query_rewrites WHERE question_hash=?", (qhash,)
         ).fetchone()
@@ -48,7 +63,7 @@ def _cache_get(qhash: str) -> str | None:
 
 def _cache_put(qhash: str, rewritten: str) -> None:
     try:
-        conn = sqlite3.connect(_CACHE_DB)
+        conn = _get_conn()
         conn.execute(
             "INSERT OR REPLACE INTO query_rewrites (question_hash, rewritten) VALUES (?,?)",
             (qhash, rewritten),
@@ -57,6 +72,7 @@ def _cache_put(qhash: str, rewritten: str) -> None:
         conn.close()
     except Exception:  # noqa: BLE001
         pass
+
 
 
 @lru_cache(maxsize=256)

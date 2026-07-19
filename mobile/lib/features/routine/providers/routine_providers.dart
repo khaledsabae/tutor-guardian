@@ -1,4 +1,6 @@
 /// Riverpod providers for the daily routine tracker.
+library;
+
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -57,7 +57,12 @@ def emergency_reply(user_message: UserMessage, policies: dict) -> AssistantReply
     )
 
 
-def evaluate_guardrails(domain: str, severity: str, policies: dict) -> dict:
+def evaluate_guardrails(
+    domain: str,
+    severity: str,
+    policies: dict,
+    intervention_type: str | None = None,
+) -> dict:
     """Compute the guardrail decision for a (domain, severity) pair WITHOUT a
     draft text. Lets the streaming endpoint decide — before sending any token —
     whether it must force a fallback (which would replace the whole reply).
@@ -79,9 +84,14 @@ def evaluate_guardrails(domain: str, severity: str, policies: dict) -> dict:
         escalate_to = None
 
     intervention_overrides = domain_policies.get("intervention_overrides", {})
-    force_fallback = bool(
-        intervention_overrides.get(severity, {}).get("force_fallback_message")
-    )
+    force_fallback = False
+    
+    # Bug Fix: Look up force_fallback_message using intervention_type if provided
+    lookup_key = intervention_type if intervention_type else severity
+    if lookup_key in intervention_overrides:
+        force_fallback = bool(
+            intervention_overrides[lookup_key].get("force_fallback_message", False)
+        )
 
     return {
         "needs_human_review": needs_human_review,
@@ -95,6 +105,7 @@ def apply_guardrails(
     draft_reply: str,
     policies: dict,
     mode: str = "retrieval_only",
+    intervention_type: str | None = None,
 ) -> AssistantReply:
     """
     Apply domain-specific guardrails policy to a draft assistant reply.
@@ -109,7 +120,7 @@ def apply_guardrails(
     if severity == EMERGENCY_SEVERITY:
         return emergency_reply(user_message, policies)
 
-    decision = evaluate_guardrails(domain, severity, policies)
+    decision = evaluate_guardrails(domain, severity, policies, intervention_type)
     if decision["force_fallback"]:
         draft_reply = _build_fallback_message(
             domain, user_message.behavior_type, user_message.age_group, policies

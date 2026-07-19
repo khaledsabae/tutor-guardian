@@ -22,6 +22,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../config/app_config.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
@@ -163,6 +164,20 @@ class SettingsScreen extends ConsumerWidget {
                   onTap: () => _toggleLanguage(context, ref, currentLanguage),
                 ),
                 const SizedBox(height: 24),
+                _SettingsRow(
+                  icon: Icons.translate,
+                  title: l10n.language,
+                  subtitle: Localizations.localeOf(context).languageCode == 'ar'
+                      ? l10n.arabic
+                      : l10n.english,
+                  onTap: () {
+                    final currentLocale = ref.read(appLocaleProvider);
+                    final currentCode = currentLocale?.languageCode ?? Localizations.localeOf(context).languageCode;
+                    final nextCode = currentCode == 'ar' ? 'en' : 'ar';
+                    ref.read(appLocaleProvider.notifier).setLocale(nextCode);
+                  },
+                ),
+                const SizedBox(height: 24),
                 const _AdhkarSettingsRow(),
                 const SizedBox(height: 24),
                 _SettingsRow(
@@ -247,12 +262,20 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 24),
                 Center(
-                  child: Text(
-                    l10n.settingsVersion(AppConfig.appVersion),
-                    style: const TextStyle(
-                      color: AppTheme.textMuted,
-                      fontSize: 12,
-                    ),
+                  child: FutureBuilder<PackageInfo>(
+                    future: PackageInfo.fromPlatform(),
+                    builder: (context, snap) {
+                      final version = snap.hasData
+                          ? '${snap.data!.version}+${snap.data!.buildNumber}'
+                          : '—';
+                      return Text(
+                        l10n.settingsVersion(version),
+                        style: const TextStyle(
+                          color: AppTheme.textMuted,
+                          fontSize: 12,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

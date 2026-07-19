@@ -87,22 +87,35 @@ jobs:
 
           cd "$DEPLOY_PATH"
 
-          # ── 1. Pull the latest main ──────────────────────────────────
+          # ── 1. Record previous SHA for rollback ──────────────────────
+          PREVIOUS_SHA=$(git rev-parse HEAD)
+          echo "Previous SHA: $PREVIOUS_SHA"
+
+          # ── 2. Pull the latest main ──────────────────────────────────
           echo "→ git fetch + reset --hard origin/main"
           git fetch origin main
           git reset --hard origin/main
           DEPLOY_SHA=$(git rev-parse --short HEAD)
           echo "Deploying SHA: $DEPLOY_SHA"
 
-          # ── 2. Build the new image ───────────────────────────────────
+          # ── 3. Build the new image ───────────────────────────────────
           echo "→ docker compose build backend"
           docker compose -f docker-compose.production.yml build backend
 
-          # ── 3. Recreate the container ────────────────────────────────
+          # ── 4. Recreate the container ────────────────────────────────
           echo "→ docker compose up -d backend"
           docker compose -f docker-compose.production.yml up -d --remove-orphans backend
 
-          # ── 4. Wait for the new container to be healthy ──────────────
+          # ── Helper: rollback to previous SHA ─────────────────────────
+          _rollback() {
+            echo "::warning::Rolling back to SHA: $PREVIOUS_SHA ..."
+            git reset --hard "$PREVIOUS_SHA"
+            docker compose -f docker-compose.production.yml build backend
+            docker compose -f docker-compose.production.yml up -d --remove-orphans backend
+            echo "::warning::Rollback complete."
+          }
+
+          # ── 5. Wait for the new container to be healthy ──────────────
           # Cold start loads the embedding model weights + ChromaDB, which
           # routinely takes >60s — give it up to 180s before failing so a
           # slow-but-successful boot isn't reported as a deploy failure.
@@ -116,28 +129,31 @@ jobs:
           done
 
           if [ "$STATUS" != "healthy" ]; then
-            echo "::error::tg_backend is not healthy after 180s"
+            echo "::error::tg_backend is not healthy after 180s — triggering rollback"
             docker logs --tail 50 tg_backend 2>&1 || true
+            _rollback
             exit 1
           fi
 
-          # ── 5. HTTP smoke test ───────────────────────────────────────
+          # ── 6. HTTP smoke test ───────────────────────────────────────
           echo "→ HTTP smoke test: $DEPLOY_HEALTH_URL"
           HTTP_CODE=$(curl -fsS -o /dev/null -w '%{http_code}' "$DEPLOY_HEALTH_URL" || echo "fail")
           if [ "$HTTP_CODE" != "200" ]; then
-            echo "::error::Health URL returned $HTTP_CODE (expected 200)"
+            echo "::error::Health URL returned $HTTP_CODE (expected 200) — triggering rollback"
             docker logs --tail 50 tg_backend 2>&1 || true
+            _rollback
             exit 1
           fi
 
-          # ── 6. Privacy endpoint (Phase 0 regression) ─────────────────
+          # ── 7. Privacy endpoint (Phase 0 regression) ─────────────────
           PRIVACY_CODE=$(curl -fsS -o /dev/null -w '%{http_code}' "${DEPLOY_HEALTH_URL%/health}/privacy-policy" || echo "fail")
           if [ "$PRIVACY_CODE" != "200" ]; then
-            echo "::error::privacy-policy returned $PRIVACY_CODE (expected 200)"
+            echo "::error::privacy-policy returned $PRIVACY_CODE (expected 200) — triggering rollback"
+            _rollback
             exit 1
           fi
 
-          # ── 7. Cleanup candidate image and dangling images (best-effort)
+          # ── 8. Cleanup candidate image and dangling images (best-effort)
           docker image rm -f "tutor-guardian-backend:candidate-${{ github.sha }}" >/dev/null 2>&1 || true
           docker image prune -f >/dev/null 2>&1 || true
 

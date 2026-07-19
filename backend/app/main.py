@@ -61,8 +61,13 @@ async def lifespan(app: FastAPI):
         _ensure_index()
         logger.info("🔥 Warm-up: ChromaDB index ready (%s units loaded)", 
                      len(__import__('app.services.knowledge_loader', fromlist=['load_default_knowledge_units']).load_default_knowledge_units()))
+        
+        # Warm-up the Cross-Encoder Reranker
+        from app.services.reranker import eager_load_model as _warmup_reranker
+        logger.info("🔥 Warm-up: loading Cross-Encoder reranker...")
+        _warmup_reranker()
     except Exception as e:
-        logger.warning("Warm-up (embeddings): %s", e)
+        logger.warning("Warm-up (embeddings/reranker): %s", e)
 
     # ── Warm-up: pre-load Ollama models ──────────────────────────────────
     # Sends a tiny request to each model to get them into GPU memory.

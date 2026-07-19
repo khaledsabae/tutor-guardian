@@ -28,6 +28,11 @@ class AppConfig {
   /// SSE read timeout (must be larger than the LLM's worst-case generation).
   static const Duration streamTimeout = Duration(minutes: 5);
 
-  /// App version (kept in sync with `pubspec.yaml` — bump on every release).
-  static const String appVersion = '1.0.26+70';
+  /// App version — read dynamically at runtime via:
+  ///   final info = await PackageInfo.fromPlatform();
+  ///   final version = '${info.version}+${info.buildNumber}';
+  ///
+  /// DO NOT hardcode a version string here — it will drift from pubspec.yaml.
+  /// Use `package_info_plus` (already in pubspec.yaml) wherever a version string
+  /// is needed in the UI or when reporting to the API backend.
 }

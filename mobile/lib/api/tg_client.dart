@@ -1010,7 +1010,7 @@ class TgClient {
         .replace(queryParameters: {'child_id': '$childId'});
     final resp = await _http
         .get(uri, headers: _authHeaders(token))
-        .timeout(const Duration(seconds: 35));
+        .timeout(const Duration(seconds: 90));
     if (resp.statusCode != 200) throw _wrap(resp);
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }

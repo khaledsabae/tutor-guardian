@@ -34,13 +34,13 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     final isUser = message.role == 'user';
     final align =
-        isUser ? Alignment.centerRight : Alignment.centerLeft;
+        isUser ? AlignmentDirectional.centerEnd : AlignmentDirectional.centerStart;
 
-    final radius = BorderRadius.only(
-      topLeft: const Radius.circular(20),
-      topRight: const Radius.circular(20),
-      bottomLeft: Radius.circular(isUser || isLastInGroup ? 20 : 6),
-      bottomRight: Radius.circular(!isUser || isLastInGroup ? 20 : 6),
+    final radius = BorderRadiusDirectional.only(
+      topStart: const Radius.circular(20),
+      topEnd: const Radius.circular(20),
+      bottomStart: Radius.circular(isUser || isLastInGroup ? 20 : 6),
+      bottomEnd: Radius.circular(!isUser || isLastInGroup ? 20 : 6),
     );
 
     final bubble = Container(

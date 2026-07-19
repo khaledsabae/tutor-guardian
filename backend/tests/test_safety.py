@@ -55,3 +55,49 @@ def test_evaluate_guardrails_reads_policy():
     d = evaluate_guardrails("medical", "شديد", policies)
     assert d["needs_human_review"] is True
     assert d["escalate_to"] == "pediatrician"
+
+
+def test_evaluate_guardrails_force_fallback_on_referral_intervention():
+    """Critical regression: force_fallback must be True when a retrieved unit
+    has intervention_type='إحالة_لطبيب' in the medical domain.
+    Previously this was broken because the code was looking up severity
+    in intervention_overrides instead of intervention_type.
+    """
+    policies = {
+        "domains": {
+            "medical": {
+                "intervention_overrides": {
+                    "إحالة_لطبيب": {"force_fallback_message": True}
+                }
+            }
+        }
+    }
+    # With the correct intervention_type passed, force_fallback should be True
+    d = evaluate_guardrails(
+        "medical", "متوسط", policies, intervention_type="إحالة_لطبيب"
+    )
+    assert d["force_fallback"] is True, (
+        "force_fallback must be True when intervention_type='إحالة_لطبيب'"
+    )
+
+    # Without intervention_type (old broken behavior would give False too), now also False
+    d_no_intervention = evaluate_guardrails("medical", "متوسط", policies)
+    assert d_no_intervention["force_fallback"] is False
+
+
+def test_evaluate_guardrails_force_fallback_not_triggered_by_severity():
+    """Severity alone must NOT trigger force_fallback via intervention_overrides."""
+    policies = {
+        "domains": {
+            "medical": {
+                "intervention_overrides": {
+                    "إحالة_لطبيب": {"force_fallback_message": True}
+                }
+            }
+        }
+    }
+    # Passing severity 'شديد' (not an intervention type) must not trigger force_fallback
+    d = evaluate_guardrails("medical", "شديد", policies)
+    assert d["force_fallback"] is False, (
+        "severity string must not accidentally match intervention_overrides keys"
+    )

@@ -20,6 +20,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/tg_client.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../config/app_config.dart';
 import '../features/program/providers/progress_providers.dart';
 import '../models/api_models.dart';
@@ -218,8 +219,15 @@ class ChatNotifier extends StateNotifier<ChatState> {
   }
 
   Future<void> _newSession() async {
+    String appVersion;
+    try {
+      final info = await PackageInfo.fromPlatform();
+      appVersion = '${info.version}+${info.buildNumber}';
+    } catch (_) {
+      appVersion = 'unknown';
+    }
     final s = await _client.createSession(
-      metadata: {'app_version': 'mobile-${AppConfig.appVersion}'},
+      metadata: {'app_version': 'mobile-$appVersion'},
     );
     state = state.copyWith(
       sessionId: s.sessionId,

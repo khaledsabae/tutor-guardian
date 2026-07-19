@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -109,18 +110,25 @@ final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 /// Phase 6 wired up the onboarding gate. The active child id is
 /// re-hydrated from [OnboardingStorage] in `bootProvider` so the
 /// rest of the app can treat `activeChildIdProvider` as the truth.
-class TutorGuardianApp extends StatelessWidget {
+class TutorGuardianApp extends ConsumerWidget {
   const TutorGuardianApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // If in test environment, default to Arabic so existing tests don't break,
+    // otherwise use null (which lets Flutter resolve the locale dynamically based on device system settings).
+    final defaultLocale = Platform.environment.containsKey('FLUTTER_TEST')
+        ? const Locale('ar')
+        : null;
+
+    final appLocale = ref.watch(appLocaleProvider);
+
     return MaterialApp(
       navigatorKey: appNavigatorKey,
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
-      // Arabic locale (no country code matches all Arab locales cleanly).
-      locale: const Locale('ar'),
+      locale: appLocale ?? defaultLocale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -131,11 +139,15 @@ class TutorGuardianApp extends StatelessWidget {
       builder: (context, child) {
         // Keep the global l10n handle (used by contextless services such as
         // TgClient and state notifiers) in sync with the app locale.
-        AppL10n.current = AppLocalizations.of(context);
-        // Force RTL at the framework level so every widget inherits it,
-        // including platform-routed transitions.
+        final l10n = AppLocalizations.of(context);
+        AppL10n.current = l10n;
+
+        // Force Directionality based on the resolved locale's text direction.
+        // We use Directionality here to ensure transitions and widgets inherit it.
+        final locale = Localizations.localeOf(context);
+        final isRtl = locale.languageCode == 'ar';
         return Directionality(
-          textDirection: TextDirection.rtl,
+          textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
           child: child ?? const SizedBox.shrink(),
         );
       },

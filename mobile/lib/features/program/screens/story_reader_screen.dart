@@ -47,7 +47,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   Future<void> _initAudio() async {
     await BedtimeAudioService.instance.initialize(
       assetPath: 'assets/audio/nature_ambient.mp3',
-      initialVolume: 0.18,
+      initialVolume: 0.45,
     );
     await BedtimeAudioService.instance.play();
     if (mounted) setState(() => _audioReady = true);
@@ -100,7 +100,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     if (_sleepMode) {
       BedtimeAudioService.instance.dimForSleep();
     } else {
-      BedtimeAudioService.instance.setVolume(0.18);
+      BedtimeAudioService.instance.setVolume(0.45);
     }
   }
 
@@ -150,12 +150,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
               ),
             ),
           ),
-          // Sleep-mode overlay.
-          AnimatedOpacity(
-            opacity: _sleepMode ? 0.55 : 0,
-            duration: const Duration(seconds: 2),
-            child: Container(color: const Color(0xFF001F1F)),
-          ),
+
           // Cozy ambient fireflies in background
           const Positioned.fill(
             child: _FloatingFireflies(),
@@ -164,47 +159,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           SafeArea(
             child: Column(
               children: [
-                const SizedBox(height: 12),
-                // Top bar.
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      _RoundButton(
-                        icon: Icons.arrow_back,
-                        onTap: () => Navigator.of(context).pop(),
-                      ),
-                      const Spacer(),
-                      // Font size cycle button
-                      _RoundButton(
-                        icon: Icons.text_fields,
-                        onTap: () {
-                          setState(() {
-                            if (_fontSizeMultiplier == 1.0) {
-                              _fontSizeMultiplier = 1.25;
-                            } else if (_fontSizeMultiplier == 1.25) {
-                              _fontSizeMultiplier = 1.5;
-                            } else {
-                              _fontSizeMultiplier = 1.0;
-                            }
-                          });
-                        },
-                      ),
-                      const SizedBox(width: 10),
-                      _RoundButton(
-                        icon: _audioMuted ? Icons.volume_off : Icons.volume_up,
-                        onTap: _audioReady ? _toggleAudio : null,
-                      ),
-                      const SizedBox(width: 10),
-                      _RoundButton(
-                        icon: Icons.brightness_2,
-                        filled: _sleepMode,
-                        onTap: _toggleSleepMode,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 68), // Spacer to leave room for floating top bar (12 + 44 + 12 = 68)
                 // Progress.
                 LinearProgressIndicator(
                   value: (_currentPage + 1) / pageCount,
@@ -235,35 +190,100 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 12),
-                // Bottom controls.
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _RoundButton(
-                        icon: Icons.arrow_back_ios,
-                        onTap: _currentPage > 0 ? _prevPage : null,
-                      ),
-                      Text(
-                        '${min(_currentPage + 1, pageCount)} / $pageCount',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      _RoundButton(
-                        icon: Icons.arrow_forward_ios,
-                        onTap: _currentPage < pageCount - 1
-                            ? _nextPage
-                            : null,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 84), // Spacer to leave room for floating bottom controls (20 + 44 + 20 = 84)
               ],
+            ),
+          ),
+          // Floating Top Bar (placed at the end of the Stack list to guarantee clickability)
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  children: [
+                    _RoundButton(
+                      icon: Icons.arrow_back,
+                      onTap: () => Navigator.of(context).pop(),
+                    ),
+                    const Spacer(),
+                    // Font size cycle button
+                    _RoundButton(
+                      icon: Icons.text_fields,
+                      onTap: () {
+                        setState(() {
+                          if (_fontSizeMultiplier == 1.0) {
+                            _fontSizeMultiplier = 1.25;
+                          } else if (_fontSizeMultiplier == 1.25) {
+                            _fontSizeMultiplier = 1.5;
+                          } else {
+                            _fontSizeMultiplier = 1.0;
+                          }
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 10),
+                    _RoundButton(
+                      icon: _audioMuted ? Icons.volume_off : Icons.volume_up,
+                      onTap: _audioReady ? _toggleAudio : null,
+                    ),
+                    const SizedBox(width: 10),
+                    _RoundButton(
+                      icon: Icons.brightness_2,
+                      filled: _sleepMode,
+                      onTap: _toggleSleepMode,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Floating Bottom Controls
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _RoundButton(
+                      icon: Icons.arrow_back_ios,
+                      onTap: _currentPage > 0 ? _prevPage : null,
+                    ),
+                    Text(
+                      '${min(_currentPage + 1, pageCount)} / $pageCount',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    _RoundButton(
+                      icon: Icons.arrow_forward_ios,
+                      onTap: _currentPage < pageCount - 1
+                          ? _nextPage
+                          : null,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Sleep-mode overlay (covers everything to dim the screen, but ignored for touches)
+          Positioned.fill(
+            child: IgnorePointer(
+              ignoring: true,
+              child: AnimatedOpacity(
+                opacity: _sleepMode ? 0.55 : 0,
+                duration: const Duration(seconds: 2),
+                child: Container(color: const Color(0xFF001F1F)),
+              ),
             ),
           ),
         ],
