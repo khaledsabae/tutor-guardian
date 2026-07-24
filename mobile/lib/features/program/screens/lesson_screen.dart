@@ -981,23 +981,3 @@ class _AssetButton extends StatelessWidget {
   }
 }
 
-class AssetPlaceholderScreen extends StatelessWidget {
-  final String title;
-  const AssetPlaceholderScreen({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text(
-          AppLocalizations.of(context).lessonTempScreen(title),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-      ),
-    );
-  }
-}
-
