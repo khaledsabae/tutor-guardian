@@ -6,12 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../config/app_config.dart';
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/skeleton.dart';
 import '../data/story_models.dart';
-import 'bedtime_routine_screen.dart';
 
 /// A magical bedtime bookshelf: 3D books, twinkling stars, and looping
 /// ambient cover videos when available. Replaces the old vertical list card.
@@ -208,11 +208,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
   }
 
   void _openStory(Story story) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => BedtimeRoutineScreen(story: story),
-      ),
-    );
+    Navigator.of(context).push(AppRoutes.bedtimeRoutine(story));
   }
 }
 

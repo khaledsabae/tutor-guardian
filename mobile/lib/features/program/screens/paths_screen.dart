@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
@@ -21,9 +22,6 @@ import '../../../widgets/ui/skeleton.dart';
 import '../data/models.dart';
 import '../providers/program_providers.dart';
 import '../widgets/active_child_chip.dart';
-import 'path_detail_screen.dart';
-import 'search_screen.dart';
-import 'settings_screen.dart';
 
 /// Canonical display order for the domain filter chips. Any domain not
 /// listed here is appended after these, in first-seen order.
@@ -65,9 +63,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
             tooltip: AppLocalizations.of(context).search,
             icon: const Icon(Icons.search),
             onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
+              Navigator.of(context).push(AppRoutes.search());
             },
           ),
           // Phase 7 — settings is a push route, not a tab.
@@ -75,9 +71,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
             tooltip: AppLocalizations.of(context).settings,
             icon: const Icon(Icons.settings_outlined),
             onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
+              Navigator.of(context).push(AppRoutes.settings());
             },
           ),
           IconButton(
@@ -283,11 +277,7 @@ class _PathCard extends StatelessWidget {
   final String ageGroup;
 
   void _open(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => PathDetailScreen(pathId: path.id, ageGroup: ageGroup),
-      ),
-    );
+    Navigator.of(context).push(AppRoutes.pathDetail(path.id, ageGroup));
   }
 
   @override

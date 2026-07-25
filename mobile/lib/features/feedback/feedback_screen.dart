@@ -15,6 +15,7 @@ import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/bouncy_button.dart';
+import 'widgets/feedback_replies_section.dart';
 
 class FeedbackScreen extends ConsumerStatefulWidget {
   const FeedbackScreen({super.key});
@@ -119,6 +120,9 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          // Answers first. Someone returning to this screen after being
+          // notified is here to read, not to write again.
+          const FeedbackRepliesSection(),
           Text(
             AppLocalizations.of(context).feedbackDesc,
             style: TextStyle(fontSize: 15, height: 1.5),

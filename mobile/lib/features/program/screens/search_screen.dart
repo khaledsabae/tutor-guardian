@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
@@ -11,8 +12,6 @@ import '../../../widgets/ui/skeleton.dart';
 import '../models/search_result.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
-import 'lesson_screen.dart';
-import 'path_detail_screen.dart';
 
 /// Curriculum-wide search results for a query (≥2 chars). Empty for shorter.
 final searchResultsProvider = FutureProvider.autoDispose
@@ -177,17 +176,11 @@ class _ResultTile extends ConsumerWidget {
     final age = result.ageGroup ?? '';
     if (result.type == SearchResultType.lesson) {
       final childId = ref.read(activeChildIdProvider);
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => LessonScreen(
-          lessonId: result.id,
-          ageGroup: age,
-          childId: childId,
-        ),
-      ));
+      Navigator.of(context).push(
+        AppRoutes.lesson(result.id, age, childId: childId),
+      );
     } else if (result.type == SearchResultType.path) {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => PathDetailScreen(pathId: result.id, ageGroup: age),
-      ));
+      Navigator.of(context).push(AppRoutes.pathDetail(result.id, age));
     }
     // tips are informational — no destination screen.
   }

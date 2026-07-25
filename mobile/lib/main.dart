@@ -16,6 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'core/analytics.dart';
+import 'core/nav_observer.dart';
 
 import 'api/tg_client.dart';
 import 'state/chat_notifier.dart';
@@ -25,18 +26,15 @@ import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
 import 'features/onboarding/screens/update_splash_screen.dart';
 import 'features/program/providers/progress_providers.dart';
-import 'features/program/screens/paths_screen.dart';
 import 'features/deeplink/deep_link_handler.dart';
 import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
 import 'features/routine/providers/child_mode_providers.dart';
-import 'features/routine/screens/daily_routine_screen.dart';
 import 'features/routine/screens/habit_child_mode_screen.dart';
 import 'features/adhkar/services/notification_service.dart';
-import 'screens/home_screen.dart';
-import 'screens/chat_screen.dart';
-import 'features/quran/screens/quran_screen.dart';
+import 'features/shell/root_scaffold.dart';
+import 'features/tour/tour_overlay.dart';
 import 'theme/app_theme.dart';
 import 'theme/design_tokens.dart';
 
@@ -98,6 +96,10 @@ Future<void> _postLaunchGrowthLoop() async {
 // Global navigator key for deep links/pushes that fire before a context exists.
 final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
+// Names every screen visit and classifies how it ended, so we can find where
+// users actually get lost instead of guessing. See core/nav_observer.dart.
+final TgNavObserver tgNavObserver = TgNavObserver();
+
 /// Root widget.
 ///
 /// MaterialApp is configured for Arabic + RTL out of the box. The
@@ -125,6 +127,7 @@ class TutorGuardianApp extends ConsumerWidget {
 
     return MaterialApp(
       navigatorKey: appNavigatorKey,
+      navigatorObservers: [tgNavObserver, tourRouteObserver],
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
@@ -148,7 +151,14 @@ class TutorGuardianApp extends ConsumerWidget {
         final isRtl = locale.languageCode == 'ar';
         return Directionality(
           textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-          child: child ?? const SizedBox.shrink(),
+          // Translucent so it observes taps without consuming any: this feeds
+          // TgNavObserver's idle detection, which otherwise cannot tell
+          // "reading the screen" from "stuck on the screen".
+          child: Listener(
+            behavior: HitTestBehavior.translucent,
+            onPointerDown: TgNavObserver.recordTap,
+            child: child ?? const SizedBox.shrink(),
+          ),
         );
       },
       home: const _AppBootstrapper(),
@@ -354,80 +364,6 @@ class _BootErrorScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// The 5-tab bottom navigation shell: اليوم / مساراتي / الورد / حساب اليوم|ميزان العادات / المساعد.
-///
-/// Note: each tab keeps its own state via the [IndexedStack] so that
-/// switching between tabs does not lose scroll position or in-flight
-/// streaming tokens.
-///
-/// The label of the 4th tab changes based on the active child's age group:
-///   * 0-6 years → «حِساب اليوم» (biological routine tracker)
-///   * 7-18 years → «ميزان العادات» (habit/value tracker)
-class RootScaffold extends ConsumerStatefulWidget {
-  const RootScaffold({super.key});
-
-  @override
-  ConsumerState<RootScaffold> createState() => _RootScaffoldState();
-}
-
-class _RootScaffoldState extends ConsumerState<RootScaffold> {
-  int _index = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final profile = ref.watch(activeChildProfileProvider);
-    final fourthLabel = habitTabLabel(profile?.ageGroup ?? '', l10n);
-
-    return Scaffold(
-      body: IndexedStack(
-        index: _index,
-        children: [
-          HomeScreen(onGoToTab: (i) => setState(() => _index = i)),
-          const PathsScreen(),
-          const QuranScreen(),
-          const DailyRoutineScreen(),
-          const ChatScreen(),
-        ],
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _index,
-        onDestinationSelected: (i) {
-          if (i == 2) unawaited(Analytics.quranOpened());
-          setState(() => _index = i);
-        },
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.home_outlined),
-            selectedIcon: const Icon(Icons.home_rounded),
-            label: l10n.navToday,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.route_outlined),
-            selectedIcon: const Icon(Icons.route),
-            label: l10n.navMyPaths,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.menu_book_outlined),
-            selectedIcon: const Icon(Icons.menu_book),
-            label: l10n.navAdhkar,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.child_care_outlined),
-            selectedIcon: const Icon(Icons.child_care),
-            label: fourthLabel,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.chat_bubble_outline),
-            selectedIcon: const Icon(Icons.chat_bubble),
-            label: l10n.navAssistant,
-          ),
-        ],
       ),
     );
   }

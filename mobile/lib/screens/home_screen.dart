@@ -1,16 +1,13 @@
-/// Home tab — "اليوم". Pure composition over existing providers:
+/// Home tab — "اليوم". Pure composition over existing providers.
 ///
-///   * Greeting + active child chip
-///   * Stats row: 🔥 streak / 📚 completed lessons / 🏅 badges
-///   * "Continue your journey" card (first path with an in-progress
-///     lesson, falls back to a "start your first path" nudge)
-///   * Daily tip card (moved here from the chat tab)
+/// Ordering is the point of this screen: the primary action ([TodayFocusCard])
+/// comes first, then the daily rituals, then stats, then the secondary
+/// destinations. It used to be nine equally-weighted full-width cards with the
+/// primary action buried fifth, which gave the eye nothing to follow.
 ///
 /// No new business logic — everything reads providers that already
 /// power PathsScreen / PathDetailScreen / BadgesScreen.
 library;
-
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -18,44 +15,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../l10n/app_localizations.dart';
 
-import '../core/analytics.dart';
-
+import '../features/home/widgets/home_app_bar.dart';
+import '../features/home/widgets/home_shortcuts_grid.dart';
+import '../features/home/widgets/home_stats_row.dart';
+import '../features/home/widgets/today_focus_card.dart';
+import '../features/home/widgets/today_rituals_row.dart';
 import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/data/badges.dart';
-import '../features/program/data/models.dart';
-import '../features/program/data/progress_models.dart';
 import '../features/program/providers/program_providers.dart';
 import '../features/program/providers/progress_providers.dart';
-import '../features/program/screens/badges_screen.dart';
-import '../features/program/screens/path_detail_screen.dart';
-import '../features/program/screens/search_screen.dart';
-import '../features/program/screens/settings_screen.dart';
-import '../features/program/screens/story_bookshelf_screen.dart';
-import '../features/feedback/feedback_screen.dart';
-import '../features/program/widgets/active_child_chip.dart';
 import '../features/referral/pride_invite_card.dart';
-import '../features/routine/screens/parenting_insights_screen.dart';
 import '../features/program/widgets/coach_tip_card.dart';
 import '../features/journey/widgets/child_journey_card.dart';
 import '../features/coins/coins_providers.dart';
-import '../features/coins/coins_screen.dart';
-import '../features/program/screens/quiz_game_screen.dart';
+import '../features/shell/root_tab.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
-import '../widgets/ui/animated_progress_bar.dart';
-import '../widgets/ui/bouncy_button.dart';
-import '../widgets/ui/community_proof_card.dart';
-import '../widgets/ui/count_up_text.dart';
-import '../widgets/ui/emoji_hero.dart';
 import '../widgets/ui/noor_mascot.dart';
-import '../widgets/ui/stat_chip.dart';
 
 class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key, required this.onGoToTab});
+  const HomeScreen({super.key, required this.onGoToTab, this.focusCardKey});
 
-  /// Switches the root scaffold tab.
-  /// Indices: 0 = اليوم, 1 = مساراتي, 2 = الورد (Quran), 3 = حساب اليوم, 4 = المساعد (chat).
+  /// Switches the root scaffold tab. Always pass a [RootTab] constant — a
+  /// hard-coded index here is how both assistant buttons ended up opening the
+  /// infant routine tracker.
   final ValueChanged<int> onGoToTab;
+
+  /// Attached to [TodayFocusCard] so the first-run tour can measure it.
+  final Key? focusCardKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -81,79 +68,16 @@ class HomeScreen extends ConsumerWidget {
         ref.read(coinsProvider.notifier).creditBadges(earnedBadgeIds);
       }
     });
-    final coins = ref.watch(coinsProvider);
 
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.todaySun),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
-            child: Center(
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const CoinsScreen()),
-                ),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: Dt.accent.withValues(alpha: .15),
-                    borderRadius: BorderRadius.circular(Dt.rChip),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text('🪙', style: TextStyle(fontSize: 15)),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${coins.balance}',
-                        style: const TextStyle(
-                          color: Dt.accentDeep,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-            child: Center(child: ActiveChildChip()),
-          ),
-          IconButton(
-            tooltip: l10n.shareOpinion,
-            icon: const Icon(Icons.feedback, color: Dt.accent),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const FeedbackScreen()),
-            ),
-          ),
-          IconButton(
-            tooltip: l10n.searchTooltip,
-            icon: const Icon(Icons.search),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SearchScreen()),
-            ),
-          ),
-          IconButton(
-            tooltip: l10n.settingsTooltip,
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SettingsScreen()),
-            ),
-          ),
-        ],
-      ),
+      appBar: const HomeAppBar(),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
           Row(
             children: [
-              const NoorMascot(size: 56)
+              const NoorMascot(size: 44)
                   .animate()
                   .fadeIn(duration: Dt.slow)
                   .scale(
@@ -177,518 +101,28 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 16),
-          _StatsRow(bundle: bundle),
-          // §6.4 — the referral ask fires only at a pride moment (≥7-day
-          // streak), once per 7-day tier.
-          PrideInviteCard(streakDays: bundle?.dailyLoginStreak ?? 0),
-          const CommunityProofCard(),
-          const SizedBox(height: 14),
-          // Feedback nudge — extra-visible during the testing phase.
-          Material(
-            color: Dt.accent.withValues(alpha: .12),
-            borderRadius: BorderRadius.circular(Dt.rCard),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(Dt.rCard),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const FeedbackScreen()),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                child: Row(
-                  children: [
-                    const Text('💬', style: TextStyle(fontSize: 22)),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        l10n.feedbackMessage,
-                        style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    const Icon(Icons.arrow_back_ios_new, size: 14, color: Dt.accent),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          _ContinueJourneyCard(
+          TodayFocusCard(
+            key: focusCardKey,
             bundle: bundle,
             ageGroup: ageGroup,
-            onStartFirstPath: () => onGoToTab(1),
+            onStartFirstPath: () => onGoToTab(RootTab.learn),
           ),
+          const SizedBox(height: 16),
+          TodayRitualsRow(ageGroup: ageGroup),
+          const SizedBox(height: 16),
+          HomeStatsRow(bundle: bundle),
           const SizedBox(height: 20),
-          CoachTipCard(onAsk: () => onGoToTab(3)),
+          CoachTipCard(onAsk: () => onGoToTab(RootTab.assistant)),
+          const SizedBox(height: 20),
+          const HomeShortcutsGrid(),
           const SizedBox(height: 20),
           const ChildJourneyCard(),
           const SizedBox(height: 20),
-          _QuizCard(),
-          const SizedBox(height: 20),
-          const _ParentingInsightsCard(),
-          const SizedBox(height: 20),
-          _AskAssistantCard(onTap: () => onGoToTab(3)),
-          const SizedBox(height: 20),
-          const _BedtimeStoriesCard(),
+          // §6.4 — the referral ask fires only at a pride moment (≥7-day
+          // streak), once per 7-day tier. Last, so it never outranks the
+          // parent's own next step.
+          PrideInviteCard(streakDays: bundle?.dailyLoginStreak ?? 0),
         ],
-      ),
-    );
-  }
-}
-
-class _BedtimeStoriesCard extends StatelessWidget {
-  const _BedtimeStoriesCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return Material(
-      color: const Color(0xFF0B3B3B),
-      borderRadius: BorderRadius.circular(Dt.rCard),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(Dt.rCard),
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const StoryBookshelfScreen()),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-          child: Row(
-            children: [
-              Container(
-                width: 54,
-                height: 54,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: .12),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Text('🌙', style: TextStyle(fontSize: 26)),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.bedtimeStories,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      l10n.bedtimeStoriesDesc,
-                      style: const TextStyle(color: Color(0xFFE0D5C1), fontSize: 12.5),
-                    ),
-                  ],
-                ),
-              ),
-              const Icon(Icons.arrow_back_ios_new,
-                  size: 14, color: Color(0xFFE0D5C1)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _StatsRow extends ConsumerWidget {
-  const _StatsRow({required this.bundle});
-  final ChildProgressBundle? bundle;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final completed = bundle?.lessons
-            .where((l) => l.status == ProgressStatus.completed)
-            .length ??
-        0;
-    final streak = bundle?.dailyLoginStreak ?? 0;
-    if ((bundle?.streakDays ?? 0) >= 3) {
-      unawaited(Analytics.habitStreak3(bundle!.streakDays));
-    }
-    final badges = computeBadges(bundle);
-    final earned = earnedCount(badges);
-
-    return Row(
-      children: [
-        Expanded(
-          child: StatChip(
-            emoji: '🔥',
-            value: CountUpText(streak),
-            label: l10n.consecutiveDays,
-            color: Dt.accent,
-            pulse: streak > 0,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: StatChip(
-            emoji: '📚',
-            value: CountUpText(completed),
-            label: l10n.completedLesson,
-            color: Dt.primary,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: StatChip(
-            emoji: '🏅',
-            value: CountUpText(earned),
-            label: l10n.achievements,
-            color: const Color(0xFF8B5CF6),
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const BadgesScreen()),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ContinueJourneyCard extends ConsumerWidget {
-  const _ContinueJourneyCard({
-    required this.bundle,
-    required this.ageGroup,
-    required this.onStartFirstPath,
-  });
-  final ChildProgressBundle? bundle;
-  final String ageGroup;
-  final VoidCallback onStartFirstPath;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    final asyncPaths =
-        ref.watch(pathsListProvider(PathsListArgs(ageGroup: ageGroup)));
-    final paths = asyncPaths.maybeWhen(
-      data: (env) => env.paths,
-      orElse: () => const <CurriculumPath>[],
-    );
-
-    // The path to resume: most recently touched non-completed path.
-    CurriculumPath? resume;
-    int done = 0;
-    if (bundle != null && paths.isNotEmpty) {
-      for (final lesson in bundle!.lessons.reversed) {
-        final match =
-            paths.where((p) => p.id == lesson.pathId).toList();
-        if (match.isEmpty) continue;
-        final p = match.first;
-        final completedInPath = bundle!.lessons
-            .where((l) =>
-                l.pathId == p.id && l.status == ProgressStatus.completed)
-            .length;
-        if (completedInPath < p.lessonIds.length) {
-          resume = p;
-          done = completedInPath;
-          break;
-        }
-      }
-    }
-
-    if (resume == null) {
-      // Nudge: no in-progress path yet.
-      return Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: Dt.primaryGradient,
-          borderRadius: BorderRadius.circular(Dt.rCard),
-          boxShadow: Dt.softShadow(Dt.primary),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const EmojiHero(emoji: '🚀', size: 48),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    l10n.startFirstPath,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Text(
-              l10n.startFirstPathDesc,
-              style: TextStyle(
-                color: Colors.white.withValues(alpha: .92),
-                height: 1.5,
-              ),
-            ),
-            const SizedBox(height: 14),
-            BouncyButton(
-              label: l10n.browsePaths,
-              color: Dt.accent,
-              onTap: onStartFirstPath,
-            ),
-          ],
-        ),
-      ).animate().fadeIn(duration: Dt.base).slideY(begin: .06);
-    }
-
-    final style = styleFor(resume.domain);
-    final total = resume.lessonIds.length;
-    final fraction = total == 0 ? 0.0 : done / total;
-    final remaining = total - done;
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: style.gradient,
-        borderRadius: BorderRadius.circular(Dt.rCard),
-        boxShadow: Dt.softShadow(style.base),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              EmojiHero(emoji: style.emoji, size: 48),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.continueJourney,
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: .85),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      resume.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w800,
-                        height: 1.3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: AnimatedProgressBar(
-                  value: fraction,
-                  color: Colors.white,
-                  trackColor: Colors.white.withValues(alpha: .25),
-                  height: 12,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Text(
-                '$done/$total',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Text(
-            remaining == 1 ? l10n.lessonsRemaining_one : l10n.lessonsRemaining_other(remaining),
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: .9),
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 14),
-          BouncyButton(
-            label: l10n.continueBtn,
-            color: Colors.white.withValues(alpha: .22),
-            edgeColor: Colors.white.withValues(alpha: .35),
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => PathDetailScreen(
-                  pathId: resume!.id,
-                  ageGroup: ageGroup,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(duration: Dt.base).slideY(begin: .06);
-  }
-}
-
-class _QuizCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BouncyTap(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const QuizGameScreen()),
-      ),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF6A1B9A), Color(0xFF8E24AA)],
-          ),
-          borderRadius: BorderRadius.circular(Dt.rCard),
-          boxShadow: Dt.softShadow(const Color(0xFF6A1B9A)),
-        ),
-        child: Row(
-          children: [
-            const EmojiHero(
-              emoji: '🧠',
-              size: 48,
-              background: Color(0x33FFFFFF),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context).quizTitle,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 15,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    AppLocalizations.of(context).quizDesc,
-                    style: const TextStyle(color: Colors.white70, fontSize: 13),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(Icons.play_arrow_rounded, color: Colors.white70, size: 28),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AskAssistantCard extends StatelessWidget {
-  const _AskAssistantCard({required this.onTap});
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return BouncyTap(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppTheme.surface,
-          borderRadius: BorderRadius.circular(Dt.rCard),
-          boxShadow: Dt.cardShadow,
-        ),
-        child: Row(
-          children: [
-            const EmojiHero(
-              emoji: '💬',
-              size: 48,
-              background: Color(0x1A0D9488),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.askQuestion,
-                    style:
-                        const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    l10n.askAlMurabbiNow,
-                    style: const TextStyle(
-                      color: AppTheme.textSecondary,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(Icons.chevron_left, color: AppTheme.textMuted),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ParentingInsightsCard extends StatelessWidget {
-  const _ParentingInsightsCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return BouncyTap(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => const ParentingInsightsScreen(),
-          ),
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppTheme.surface,
-          borderRadius: BorderRadius.circular(Dt.rCard),
-          boxShadow: Dt.cardShadow,
-        ),
-        child: Row(
-          children: [
-            const EmojiHero(
-              emoji: '🧠',
-              size: 48,
-              background: Color(0x1A6366F1),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.insightsTitle,
-                    style:
-                        const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    l10n.insightsDesc,
-                    style: const TextStyle(
-                      color: AppTheme.textSecondary,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(Icons.chevron_left, color: AppTheme.textMuted),
-          ],
-        ),
       ),
     );
   }

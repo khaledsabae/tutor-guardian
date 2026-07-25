@@ -8,7 +8,7 @@ import 'package:video_player/video_player.dart';
 
 import '../../../config/app_config.dart';
 import '../../../core/analytics.dart';
-import '../../referral/invite_screen.dart';
+import '../../../core/app_routes.dart';
 import '../data/story_models.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../l10n/app_localizations.dart';
@@ -350,9 +350,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           TextButton(
             onPressed: () {
               unawaited(Analytics.prideInviteTapped('story_end'));
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const InviteScreen()),
-              );
+              Navigator.of(context).push(AppRoutes.invite());
             },
             child: Text(
               AppLocalizations.of(context).prideStoryInvite,

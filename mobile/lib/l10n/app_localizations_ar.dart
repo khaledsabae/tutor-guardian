@@ -27,6 +27,78 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navAssistant => 'المساعد';
 
   @override
+  String get navLearn => 'التعلّم';
+
+  @override
+  String get navMore => 'المزيد';
+
+  @override
+  String get hubTitle => 'المزيد';
+
+  @override
+  String get hubGroupChild => 'طفلي';
+
+  @override
+  String get hubGroupAchievements => 'الإنجازات';
+
+  @override
+  String get hubGroupLibrary => 'المكتبة';
+
+  @override
+  String get hubGroupGames => 'الألعاب';
+
+  @override
+  String get hubGroupHelp => 'الإعدادات والمساعدة';
+
+  @override
+  String get hubMyChildren => 'أطفالي';
+
+  @override
+  String get hubCustomizeHabits => 'تخصيص العادات';
+
+  @override
+  String get hubInsights => 'رؤى تربوية';
+
+  @override
+  String get hubCreateStory => 'اصنع قصة';
+
+  @override
+  String get hubAccount => 'حسابي';
+
+  @override
+  String get helpTitle => 'أين أجد…؟';
+
+  @override
+  String get helpSubtitle => 'اضغط على سؤالك ونوصّلك فورًا';
+
+  @override
+  String get helpWhereGames => 'أين ألعاب طفلي؟';
+
+  @override
+  String get helpWhereStories => 'أين قصص ما قبل النوم؟';
+
+  @override
+  String get helpHowAddChild => 'كيف أضيف طفلًا آخر؟';
+
+  @override
+  String get helpWhereQuran => 'أين الورد والقرآن؟';
+
+  @override
+  String get helpWhereProgress => 'أين متابعة يوم طفلي؟';
+
+  @override
+  String get helpWhereBadges => 'أين الشعارات والإنجازات؟';
+
+  @override
+  String get helpHowBackup => 'كيف أحفظ تقدمي؟';
+
+  @override
+  String get helpHowContact => 'كيف أراسلكم؟';
+
+  @override
+  String get helpTooltip => 'مساعدة';
+
+  @override
   String get navDailyTracker => 'حساب اليوم';
 
   @override
@@ -2148,6 +2220,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get feedbackTitle => 'شاركنا رأيك';
 
   @override
+  String get feedbackRepliesTitle => 'ردودنا عليك 💬';
+
+  @override
+  String get feedbackReplyFrom => 'فريق المربّي';
+
+  @override
   String get feedbackDesc =>
       'رأيك يهمنا ويصل مباشرةً لفريق المربي الذكي. اكتب ملاحظتك أو سجّلها صوتياً.';
 
@@ -3071,4 +3149,52 @@ class AppLocalizationsAr extends AppLocalizations {
   String bedtimeTapToRepeat(Object count) {
     return 'اضغط هنا للتكرار: $count';
   }
+
+  @override
+  String get tourNext => 'التالي';
+
+  @override
+  String get tourSkip => 'تخطّي';
+
+  @override
+  String get tourDone => 'تمام';
+
+  @override
+  String get tourTodayTitle => 'اليوم';
+
+  @override
+  String get tourTodayBody => 'من هنا يبدأ يومك.';
+
+  @override
+  String get tourLearnTitle => 'التعلّم';
+
+  @override
+  String get tourLearnBody => 'المسارات والدروس كلّها هنا.';
+
+  @override
+  String get tourAssistantTitle => 'المساعد';
+
+  @override
+  String get tourAssistantBody => 'اسأل في أي وقت، ونحن معك.';
+
+  @override
+  String get tourMoreTitle => 'المزيد';
+
+  @override
+  String get tourMoreBody => 'كل شيء آخر تلاقيه هنا.';
+
+  @override
+  String get tourFocusTitle => 'خطوتك التالية';
+
+  @override
+  String get tourFocusBody => 'خطوتك التالية دائمًا هنا.';
+
+  @override
+  String get tourReplay => 'الجولة التعريفية';
+
+  @override
+  String get tourReplayDesc => 'أعِد عرض الجولة عند العودة للشاشة الرئيسية';
+
+  @override
+  String get tourReplayQueued => 'الجولة هتظهر لما ترجع للشاشة الرئيسية.';
 }

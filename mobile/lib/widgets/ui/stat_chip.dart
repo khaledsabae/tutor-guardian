@@ -36,23 +36,29 @@ class StatChip extends StatelessWidget {
         children: [
           Text(emoji, style: const TextStyle(fontSize: 20)),
           const SizedBox(width: 6),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DefaultTextStyle(
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w800,
-                  color: Color.lerp(color, Colors.black, .35),
+          // Flexible + ellipsis: four chips share one row, so on narrow
+          // phones the label must give way rather than overflow the pill.
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: Color.lerp(color, Colors.black, .35),
+                  ),
+                  child: value,
                 ),
-                child: value,
-              ),
-              Text(
-                label,
-                style: const TextStyle(fontSize: 11, color: Dt.inkSoft),
-              ),
-            ],
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 11, color: Dt.inkSoft),
+                ),
+              ],
+            ),
           ),
         ],
       ),

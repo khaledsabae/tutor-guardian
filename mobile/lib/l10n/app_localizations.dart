@@ -134,6 +134,150 @@ abstract class AppLocalizations {
   /// **'المساعد'**
   String get navAssistant;
 
+  /// No description provided for @navLearn.
+  ///
+  /// In ar, this message translates to:
+  /// **'التعلّم'**
+  String get navLearn;
+
+  /// No description provided for @navMore.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزيد'**
+  String get navMore;
+
+  /// No description provided for @hubTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزيد'**
+  String get hubTitle;
+
+  /// No description provided for @hubGroupChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلي'**
+  String get hubGroupChild;
+
+  /// No description provided for @hubGroupAchievements.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإنجازات'**
+  String get hubGroupAchievements;
+
+  /// No description provided for @hubGroupLibrary.
+  ///
+  /// In ar, this message translates to:
+  /// **'المكتبة'**
+  String get hubGroupLibrary;
+
+  /// No description provided for @hubGroupGames.
+  ///
+  /// In ar, this message translates to:
+  /// **'الألعاب'**
+  String get hubGroupGames;
+
+  /// No description provided for @hubGroupHelp.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعدادات والمساعدة'**
+  String get hubGroupHelp;
+
+  /// No description provided for @hubMyChildren.
+  ///
+  /// In ar, this message translates to:
+  /// **'أطفالي'**
+  String get hubMyChildren;
+
+  /// No description provided for @hubCustomizeHabits.
+  ///
+  /// In ar, this message translates to:
+  /// **'تخصيص العادات'**
+  String get hubCustomizeHabits;
+
+  /// No description provided for @hubInsights.
+  ///
+  /// In ar, this message translates to:
+  /// **'رؤى تربوية'**
+  String get hubInsights;
+
+  /// No description provided for @hubCreateStory.
+  ///
+  /// In ar, this message translates to:
+  /// **'اصنع قصة'**
+  String get hubCreateStory;
+
+  /// No description provided for @hubAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابي'**
+  String get hubAccount;
+
+  /// No description provided for @helpTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين أجد…؟'**
+  String get helpTitle;
+
+  /// No description provided for @helpSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط على سؤالك ونوصّلك فورًا'**
+  String get helpSubtitle;
+
+  /// No description provided for @helpWhereGames.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين ألعاب طفلي؟'**
+  String get helpWhereGames;
+
+  /// No description provided for @helpWhereStories.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين قصص ما قبل النوم؟'**
+  String get helpWhereStories;
+
+  /// No description provided for @helpHowAddChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أضيف طفلًا آخر؟'**
+  String get helpHowAddChild;
+
+  /// No description provided for @helpWhereQuran.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين الورد والقرآن؟'**
+  String get helpWhereQuran;
+
+  /// No description provided for @helpWhereProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين متابعة يوم طفلي؟'**
+  String get helpWhereProgress;
+
+  /// No description provided for @helpWhereBadges.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين الشعارات والإنجازات؟'**
+  String get helpWhereBadges;
+
+  /// No description provided for @helpHowBackup.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أحفظ تقدمي؟'**
+  String get helpHowBackup;
+
+  /// No description provided for @helpHowContact.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أراسلكم؟'**
+  String get helpHowContact;
+
+  /// No description provided for @helpTooltip.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعدة'**
+  String get helpTooltip;
+
   /// No description provided for @navDailyTracker.
   ///
   /// In ar, this message translates to:
@@ -3956,6 +4100,18 @@ abstract class AppLocalizations {
   /// **'شاركنا رأيك'**
   String get feedbackTitle;
 
+  /// No description provided for @feedbackRepliesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ردودنا عليك 💬'**
+  String get feedbackRepliesTitle;
+
+  /// No description provided for @feedbackReplyFrom.
+  ///
+  /// In ar, this message translates to:
+  /// **'فريق المربّي'**
+  String get feedbackReplyFrom;
+
   /// No description provided for @feedbackDesc.
   ///
   /// In ar, this message translates to:
@@ -5551,6 +5707,102 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اضغط هنا للتكرار: {count}'**
   String bedtimeTapToRepeat(Object count);
+
+  /// No description provided for @tourNext.
+  ///
+  /// In ar, this message translates to:
+  /// **'التالي'**
+  String get tourNext;
+
+  /// No description provided for @tourSkip.
+  ///
+  /// In ar, this message translates to:
+  /// **'تخطّي'**
+  String get tourSkip;
+
+  /// No description provided for @tourDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمام'**
+  String get tourDone;
+
+  /// No description provided for @tourTodayTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get tourTodayTitle;
+
+  /// No description provided for @tourTodayBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'من هنا يبدأ يومك.'**
+  String get tourTodayBody;
+
+  /// No description provided for @tourLearnTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'التعلّم'**
+  String get tourLearnTitle;
+
+  /// No description provided for @tourLearnBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'المسارات والدروس كلّها هنا.'**
+  String get tourLearnBody;
+
+  /// No description provided for @tourAssistantTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المساعد'**
+  String get tourAssistantTitle;
+
+  /// No description provided for @tourAssistantBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسأل في أي وقت، ونحن معك.'**
+  String get tourAssistantBody;
+
+  /// No description provided for @tourMoreTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزيد'**
+  String get tourMoreTitle;
+
+  /// No description provided for @tourMoreBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل شيء آخر تلاقيه هنا.'**
+  String get tourMoreBody;
+
+  /// No description provided for @tourFocusTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوتك التالية'**
+  String get tourFocusTitle;
+
+  /// No description provided for @tourFocusBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوتك التالية دائمًا هنا.'**
+  String get tourFocusBody;
+
+  /// No description provided for @tourReplay.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجولة التعريفية'**
+  String get tourReplay;
+
+  /// No description provided for @tourReplayDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'أعِد عرض الجولة عند العودة للشاشة الرئيسية'**
+  String get tourReplayDesc;
+
+  /// No description provided for @tourReplayQueued.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجولة هتظهر لما ترجع للشاشة الرئيسية.'**
+  String get tourReplayQueued;
 }
 
 class _AppLocalizationsDelegate

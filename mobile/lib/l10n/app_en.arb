@@ -5,6 +5,30 @@
   "navMyPaths": "My Paths",
   "navAdhkar": "Adhkar",
   "navAssistant": "Assistant",
+  "navLearn": "Learn",
+  "navMore": "More",
+  "hubTitle": "More",
+  "hubGroupChild": "My child",
+  "hubGroupAchievements": "Achievements",
+  "hubGroupLibrary": "Library",
+  "hubGroupGames": "Games",
+  "hubGroupHelp": "Settings & help",
+  "hubMyChildren": "My children",
+  "hubCustomizeHabits": "Customize habits",
+  "hubInsights": "Parenting insights",
+  "hubCreateStory": "Create a story",
+  "hubAccount": "My account",
+  "helpTitle": "Where do I find…?",
+  "helpSubtitle": "Tap your question and we will take you there",
+  "helpWhereGames": "Where are my child’s games?",
+  "helpWhereStories": "Where are the bedtime stories?",
+  "helpHowAddChild": "How do I add another child?",
+  "helpWhereQuran": "Where is the Quran and daily wird?",
+  "helpWhereProgress": "Where is my child’s daily tracking?",
+  "helpWhereBadges": "Where are the badges and achievements?",
+  "helpHowBackup": "How do I back up my progress?",
+  "helpHowContact": "How do I contact you?",
+  "helpTooltip": "Help",
   "navDailyTracker": "Daily Tracker",
   "navHabitBalance": "Habit Balance",
   "save": "Save",
@@ -254,7 +278,9 @@
   "onbTipForAge": "For ages {ageLabel}",
   "@onbTipForAge": {
     "placeholders": {
-      "ageLabel": {"type": "String"}
+      "ageLabel": {
+        "type": "String"
+      }
     }
   },
   "onbTip_prenatal": "Your voice is your child's first school: let adhkar and Quran be the calm soundtrack of their day — the serenity they hear today becomes their safety tomorrow.",
@@ -273,7 +299,9 @@
   "prideStreakTitle": "MashaAllah — {days} days in a row! 🔥",
   "@prideStreakTitle": {
     "placeholders": {
-      "days": {"type": "int"}
+      "days": {
+        "type": "int"
+      }
     }
   },
   "prideStreakBody": "This consistency is a blessing worth sharing. Know a family who would love the same? Guiding others to good is an ongoing charity.",
@@ -652,6 +680,8 @@
   "quranMemHint": "Mark completed surahs — we celebrate every step",
   "quranMemFirstSurah": "First Surah Memorized — {surah}",
   "feedbackTitle": "Share Your Feedback",
+  "feedbackRepliesTitle": "Replies to you 💬",
+  "feedbackReplyFrom": "The Almorabbi team",
   "feedbackDesc": "Your opinion matters and goes straight to the Al-Murabbi team. Write your note or record it as a voice message.",
   "feedbackMessageLabel": "Your Feedback",
   "feedbackMessageHint": "Write your suggestion or the issue you encountered…",
@@ -917,5 +947,21 @@
   "reviewPromptLater": "Later",
   "reviewPromptNow": "Rate now",
   "bedtimeAdhkarCounter": "Dhikr {current} of {total}",
-  "bedtimeTapToRepeat": "Tap here to repeat: {count}"
+  "bedtimeTapToRepeat": "Tap here to repeat: {count}",
+  "tourNext": "Next",
+  "tourSkip": "Skip",
+  "tourDone": "Done",
+  "tourTodayTitle": "Today",
+  "tourTodayBody": "Your day starts here.",
+  "tourLearnTitle": "Learn",
+  "tourLearnBody": "All the paths and lessons live here.",
+  "tourAssistantTitle": "Assistant",
+  "tourAssistantBody": "Ask anything, anytime — we're with you.",
+  "tourMoreTitle": "More",
+  "tourMoreBody": "Everything else is right here.",
+  "tourFocusTitle": "Your next step",
+  "tourFocusBody": "Your next step is always here.",
+  "tourReplay": "Guided tour",
+  "tourReplayDesc": "Replay the tour when you return to the home screen",
+  "tourReplayQueued": "The tour will appear when you go back to the home screen."
 }

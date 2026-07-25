@@ -5,6 +5,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/app_routes.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../screens/children_list_screen.dart';
 import '../../../l10n/app_localizations.dart';
@@ -20,11 +21,7 @@ class ActiveChildChip extends ConsumerWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => const ChildrenListScreen(),
-            ),
-          );
+          Navigator.of(context).push(AppRoutes.childrenList());
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

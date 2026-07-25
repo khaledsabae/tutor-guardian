@@ -19,6 +19,7 @@ import 'package:almorabbi/features/program/screens/lesson_screen.dart';
 import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
 import 'package:almorabbi/features/program/screens/paths_screen.dart';
 import 'package:almorabbi/features/onboarding/screens/update_splash_screen.dart';
+import 'package:almorabbi/features/shell/root_tab.dart';
 import 'package:almorabbi/main.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
@@ -493,13 +494,27 @@ void main() {
 
       expect(find.byType(NavigationBar), findsOneWidget);
       final navBar = tester.widget<NavigationBar>(find.byType(NavigationBar));
-      expect(navBar.destinations.length, 5);
+      expect(navBar.destinations.length, RootTab.count);
 
-      expect(find.text('حساب اليوم'), findsOneWidget);
+      // The IndexedStack must have exactly one child per destination. When the
+      // shell went from five tabs to four, HomeScreen was still asking for
+      // index 4 — which is not a wrong screen, it is a range crash.
+      final stack = tester.widget<IndexedStack>(find.byType(IndexedStack).first);
+      expect(stack.children.length, RootTab.count);
+      for (final index in [RootTab.today, RootTab.learn, RootTab.assistant, RootTab.more]) {
+        expect(index, lessThan(RootTab.count));
+      }
 
-      // Actually switch to the مساراتي (paths) tab. IndexedStack keeps the
+      // Every label is static. The old 4th tab renamed itself by child age
+      // («حساب اليوم» / «ميزان العادات»), which is why it no longer lives here.
+      expect(find.text('اليوم'), findsOneWidget);
+      expect(find.text('التعلّم'), findsOneWidget);
+      expect(find.text('المساعد'), findsOneWidget);
+      expect(find.text('المزيد'), findsOneWidget);
+
+      // Actually switch to the التعلّم (paths) tab. IndexedStack keeps the
       // non-active tab offstage, so its content isn't findable until selected.
-      await tester.tap(find.text('مساراتي'));
+      await tester.tap(find.text('التعلّم'));
       for (int i = 0; i < 12; i++) {
         await tester.pump(const Duration(milliseconds: 300));
         if (find.text('تأسيس الآداب الإسلامية').evaluate().isNotEmpty) break;

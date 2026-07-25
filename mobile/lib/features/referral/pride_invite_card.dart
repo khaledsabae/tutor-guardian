@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/analytics.dart';
+import '../../core/app_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
@@ -73,9 +74,7 @@ class _PrideInviteCardState extends State<PrideInviteCard> {
     setState(() => _visible = false);
     if (openInvite) {
       unawaited(Analytics.prideInviteTapped('streak'));
-      await Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const InviteScreen()),
-      );
+      await Navigator.of(context).push(AppRoutes.invite());
     }
   }
 

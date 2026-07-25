@@ -44,6 +44,8 @@ Migration v16: added habit_templates table for custom parent-defined habits
                with soft-delete via is_active and unique (child_id, custom_name).
 Migration v17: added submitted_by + device_timestamp columns to
                habits_value_events to track entry source and device time.
+Migration v20: added feedback_replies table so a reply written in Telegram can
+               be delivered back to the device that sent the feedback.
 """
 import os
 import sqlite3
@@ -148,7 +150,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 19
+SCHEMA_VERSION = 20
 
 
 def db_path() -> Path:
@@ -302,6 +304,7 @@ def init_db() -> None:
     _ensure_habits_value_audit_columns(conn)
     _ensure_user_backups_table(conn)
     _ensure_referral_clicks_table(conn)
+    _ensure_feedback_replies_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -399,6 +402,25 @@ CREATE INDEX IF NOT EXISTS ix_habit_templates_device_child_active
     ON habit_templates (device_id, child_id, is_active);
 """
 
+# No foreign key to app_feedback: that table is created lazily by the feedback
+# router rather than here, so it may not exist yet. The route is the only
+# writer and only ever inserts a feedback_id it has just looked up.
+_CREATE_FEEDBACK_REPLIES: str = """
+CREATE TABLE IF NOT EXISTS feedback_replies (
+    id           TEXT PRIMARY KEY,
+    feedback_id  TEXT NOT NULL,
+    device_id    TEXT,
+    reply_text   TEXT NOT NULL,
+    created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    delivered_at TEXT,
+    read_at      TEXT
+);
+CREATE INDEX IF NOT EXISTS ix_feedback_replies_device
+    ON feedback_replies (device_id, read_at);
+CREATE INDEX IF NOT EXISTS ix_feedback_replies_feedback
+    ON feedback_replies (feedback_id);
+"""
+
 
 def _ensure_daily_routines_table(conn: sqlite3.Connection) -> None:
     """Idempotent migration helper for the v14 daily routines tables."""
@@ -442,6 +464,17 @@ def _ensure_habit_templates_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_HABIT_TEMPLATES)
+
+
+def _ensure_feedback_replies_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v20 feedback_replies table."""
+    try:
+        cur = conn.execute("PRAGMA table_info(feedback_replies)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_FEEDBACK_REPLIES)
 
 
 def _ensure_habits_value_audit_columns(conn: sqlite3.Connection) -> None:

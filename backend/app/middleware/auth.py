@@ -58,6 +58,14 @@ def _is_protected(path: str, method: str) -> bool:
     if (path == "/api/feedback/app" or path.startswith("/api/feedback/app/")
             or path == "/api/feedback/digest"):
         return False
+    # Telegram calls this webhook; it has no device token and never will.
+    # It is NOT unguarded: the route verifies a shared secret sent in the
+    # X-Telegram-Bot-Api-Secret-Token header and rejects any chat other than
+    # the configured one. It fails closed when that secret is unset.
+    # Everything else under /api/feedback (including /replies, which reads the
+    # caller's device id from its token) stays protected by the prefix below.
+    if path == "/api/feedback/telegram/webhook":
+        return False
     if path in _PUBLIC_PATHS:
         return False
     # Coach tip (GET fetch + POST {id}/tap) both read the device identity from

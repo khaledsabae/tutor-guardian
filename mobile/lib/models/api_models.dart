@@ -209,3 +209,31 @@ class AssistantQuery {
         if (sessionId != null) 'session_id': sessionId,
       };
 }
+
+/// A reply Khaled wrote back to a piece of in-app feedback.
+///
+/// Closes the loop: before this existed a parent could report a problem and
+/// never hear anything, which teaches people that reporting is pointless.
+class FeedbackReply {
+  final String id;
+  final String feedbackId;
+  final String text;
+  final DateTime? createdAt;
+  final bool read;
+
+  const FeedbackReply({
+    required this.id,
+    required this.feedbackId,
+    required this.text,
+    this.createdAt,
+    this.read = false,
+  });
+
+  factory FeedbackReply.fromJson(Map<String, dynamic> json) => FeedbackReply(
+        id: json['id'] as String? ?? '',
+        feedbackId: json['feedback_id'] as String? ?? '',
+        text: json['reply_text'] as String? ?? '',
+        createdAt: DateTime.tryParse(json['created_at'] as String? ?? ''),
+        read: json['read_at'] != null,
+      );
+}

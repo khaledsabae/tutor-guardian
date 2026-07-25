@@ -3,11 +3,11 @@ import '../../../l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../core/app_routes.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../models/surah_names.dart';
 import '../providers/quran_providers.dart';
-import 'surah_reading_screen.dart';
 
 class QuranScreen extends ConsumerWidget {
   const QuranScreen({super.key});
@@ -51,12 +51,10 @@ class QuranScreen extends ConsumerWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (_) => SurahReadingScreen(
-                            chapterNumber: lastRead.chapter,
-                            initialVerse: lastRead.verse,
-                            quranData: quranData,
-                          ),
+                        AppRoutes.surahReading(
+                          chapterNumber: lastRead.chapter,
+                          initialVerse: lastRead.verse,
+                          quranData: quranData,
                         ),
                       );
                     },
@@ -156,12 +154,10 @@ class QuranScreen extends ConsumerWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (_) => SurahReadingScreen(
-                              chapterNumber: chapterNum,
-                              initialVerse: 1,
-                              quranData: quranData,
-                            ),
+                          AppRoutes.surahReading(
+                            chapterNumber: chapterNum,
+                            initialVerse: 1,
+                            quranData: quranData,
                           ),
                         );
                       },

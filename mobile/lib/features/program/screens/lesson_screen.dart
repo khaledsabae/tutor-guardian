@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/analytics.dart';
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
@@ -37,17 +38,6 @@ import '../data/progress_models.dart';
 import '../models/lesson_assets.dart';
 import '../providers/lesson_assets_provider.dart';
 import '../providers/favorites_provider.dart';
-import 'flashcards_screen.dart';
-import 'quiz_screen.dart';
-import 'podcast_player_screen.dart';
-import 'video_player_screen.dart';
-import 'infographic_screen.dart';
-import 'report_screen.dart';
-import 'data_table_screen.dart';
-import '../../games/data_defender/game_screen.dart';
-import '../../games/healthy_hero/game_screen.dart';
-import '../../games/tree_of_deeds/game_screen.dart';
-import '../../games/emotion_maze/game_screen.dart';
 import '../../../config/app_config.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
@@ -653,11 +643,9 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => PodcastPlayerScreen(
-                      url: url,
-                      title: AppLocalizations.of(context).lessonPodcastTitle,
-                    ),
+                  AppRoutes.podcast(
+                    url,
+                    AppLocalizations.of(context).lessonPodcastTitle,
                   ),
                 );
               },
@@ -675,11 +663,9 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => VideoPlayerScreen(
-                      url: url,
-                      title: AppLocalizations.of(context).lessonWatchVideo,
-                    ),
+                  AppRoutes.video(
+                    url,
+                    AppLocalizations.of(context).lessonWatchVideo,
                   ),
                 );
               },
@@ -704,12 +690,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               icon: Icons.style,
               label: AppLocalizations.of(context).lessonFlashcards(flashcardsCount),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FlashcardsScreen(deckIds: deckIds),
-                  ),
-                );
+                Navigator.push(context, AppRoutes.flashcards(deckIds));
               },
             ),
           );
@@ -732,12 +713,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               icon: Icons.quiz,
               label: AppLocalizations.of(context).lessonQuiz(quizzesCount),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QuizScreen(quizIds: quizIds),
-                  ),
-                );
+                Navigator.push(context, AppRoutes.quiz(quizIds));
               },
             ),
           );
@@ -753,7 +729,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
             label: AppLocalizations.of(context).lessonInfographic,
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => InfographicScreen(url: url)),
+              AppRoutes.infographic(url),
             ),
           ));
         }
@@ -767,7 +743,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
             label: AppLocalizations.of(context).lessonReport,
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => ReportScreen(url: url)),
+              AppRoutes.report(url),
             ),
           ));
         }
@@ -781,7 +757,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
             label: AppLocalizations.of(context).lessonDataTable,
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => DataTableScreen(url: url)),
+              AppRoutes.dataTable(url),
             ),
           ));
         }
@@ -796,7 +772,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               label: AppLocalizations.of(context).lessonPlayCyber,
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const DataDefenderGameScreen()),
+                AppRoutes.gameDataDefender(),
               ),
             ),
           );
@@ -807,7 +783,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               label: AppLocalizations.of(context).lessonPlayMedical,
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const HealthyHeroGameScreen()),
+                AppRoutes.gameHealthyHero(),
               ),
             ),
           );
@@ -818,7 +794,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               label: AppLocalizations.of(context).lessonPlayIslamic,
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const TreeOfDeedsGameScreen()),
+                AppRoutes.gameTreeOfDeeds(),
               ),
             ),
           );
@@ -829,7 +805,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               label: AppLocalizations.of(context).lessonPlayDev,
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const EmotionMazeGameScreen()),
+                AppRoutes.gameEmotionMaze(),
               ),
             ),
           );
@@ -975,26 +951,6 @@ class _AssetButton extends StatelessWidget {
             ),
             const Icon(Icons.chevron_left, color: AppTheme.textMuted),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class AssetPlaceholderScreen extends StatelessWidget {
-  final String title;
-  const AssetPlaceholderScreen({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text(
-          AppLocalizations.of(context).lessonTempScreen(title),
-          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );

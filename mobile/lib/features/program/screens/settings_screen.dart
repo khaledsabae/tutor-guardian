@@ -22,6 +22,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../config/app_config.dart';
+import '../../../core/app_routes.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
@@ -30,14 +31,8 @@ import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
 import '../providers/backup_provider.dart';
 import 'children_list_screen.dart';
-import 'edit_child_screen.dart';
-import 'badges_screen.dart';
-import 'favorites_screen.dart';
 import '../providers/lesson_assets_provider.dart';
 import '../../adhkar/services/notification_service.dart';
-import '../../feedback/feedback_screen.dart';
-import '../../referral/invite_screen.dart';
-import '../../identity/identity_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -54,6 +49,22 @@ class SettingsScreen extends ConsumerWidget {
               : l10n.settingsMediaLangChangedEn,
         ),
         duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  /// Re-arms the first-run tour by rewinding the stored version to 0. It can't
+  /// play here — it points at the root scaffold's nav bar, which this modal
+  /// route covers — so we say where it will show up instead.
+  Future<void> _replayTour(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    await ref.read(onboardingStorageProvider).markTourSeen(0);
+    ref.invalidate(tourVersionProvider);
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(l10n.tourReplayQueued),
+        duration: const Duration(seconds: 3),
       ),
     );
   }
@@ -96,11 +107,7 @@ class SettingsScreen extends ConsumerWidget {
                   subtitle: l10n.settingsChildCount(
                       envelope.count, ChildrenListScreen.kMaxChildren),
                   onTap: () async {
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const ChildrenListScreen(),
-                      ),
-                    );
+                    await Navigator.of(context).push(AppRoutes.childrenList());
                     if (context.mounted) {
                       ref.invalidate(childrenListProvider);
                     }
@@ -111,41 +118,35 @@ class SettingsScreen extends ConsumerWidget {
                   title: l10n.settingsEditChild,
                   subtitle: l10n.settingsEditChildDesc,
                   onTap: () async {
-                    final changed = await Navigator.of(context).push<bool>(
-                      MaterialPageRoute(
-                        builder: (_) => EditChildScreen(child: activeChild),
-                      ),
+                    final changed = await Navigator.of(context).push(
+                      AppRoutes.editChild(activeChild),
                     );
                     if (changed == true) {
                       ref.invalidate(childrenListProvider);
                     }
                   },
                 ),
-                _SettingsRow(
-                  icon: Icons.favorite_outline,
-                  title: l10n.settingsInviteFriend,
-                  subtitle: l10n.settingsInviteDesc,
-                  iconColor: AppTheme.primary,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const InviteScreen()),
-                  ),
-                ),
+                // «ادعُ صديقًا» now lives in the hub under الإعدادات والمساعدة.
+                // Settings is for settings; content and rewards belong in the
+                // index, not buried behind a gear icon.
                 _SettingsRow(
                   icon: Icons.cloud_sync_outlined,
                   title: l10n.settingsBackup,
                   subtitle: l10n.settingsBackupDesc,
                   iconColor: AppTheme.primary,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const IdentityScreen()),
-                  ),
+                  onTap: () => Navigator.of(context).push(AppRoutes.identity()),
                 ),
                 _SettingsRow(
                   icon: Icons.feedback_outlined,
                   title: l10n.settingsShareFeedback,
                   subtitle: l10n.settingsShareFeedbackDesc,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const FeedbackScreen()),
-                  ),
+                  onTap: () => Navigator.of(context).push(AppRoutes.feedback()),
+                ),
+                _SettingsRow(
+                  icon: Icons.explore_outlined,
+                  title: l10n.tourReplay,
+                  subtitle: l10n.tourReplayDesc,
+                  onTap: () => _replayTour(context, ref),
                 ),
                 _SettingsRow(
                   icon: Icons.restart_alt,
@@ -224,30 +225,9 @@ class SettingsScreen extends ConsumerWidget {
                     }
                   },
                 ),
-                _SettingsRow(
-                  icon: Icons.favorite_outline,
-                  title: l10n.settingsFavorites,
-                  subtitle: l10n.settingsFavoritesDesc,
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const FavoritesScreen(),
-                      ),
-                    );
-                  },
-                ),
-                _SettingsRow(
-                  icon: Icons.emoji_events_outlined,
-                  title: l10n.settingsAchievements,
-                  subtitle: l10n.settingsAchievementsDesc,
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const BadgesScreen(),
-                      ),
-                    );
-                  },
-                ),
+                // المفضلة and إنجازاتي moved to the hub (المكتبة / الإنجازات).
+                // Content people go looking for should be in the index, not
+                // findable only by someone who thought to open settings.
                 _SettingsRow(
                   icon: Icons.file_download_outlined,
                   title: l10n.settingsExport,

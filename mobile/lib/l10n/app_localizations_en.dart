@@ -27,6 +27,78 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navAssistant => 'Assistant';
 
   @override
+  String get navLearn => 'Learn';
+
+  @override
+  String get navMore => 'More';
+
+  @override
+  String get hubTitle => 'More';
+
+  @override
+  String get hubGroupChild => 'My child';
+
+  @override
+  String get hubGroupAchievements => 'Achievements';
+
+  @override
+  String get hubGroupLibrary => 'Library';
+
+  @override
+  String get hubGroupGames => 'Games';
+
+  @override
+  String get hubGroupHelp => 'Settings & help';
+
+  @override
+  String get hubMyChildren => 'My children';
+
+  @override
+  String get hubCustomizeHabits => 'Customize habits';
+
+  @override
+  String get hubInsights => 'Parenting insights';
+
+  @override
+  String get hubCreateStory => 'Create a story';
+
+  @override
+  String get hubAccount => 'My account';
+
+  @override
+  String get helpTitle => 'Where do I find…?';
+
+  @override
+  String get helpSubtitle => 'Tap your question and we will take you there';
+
+  @override
+  String get helpWhereGames => 'Where are my child’s games?';
+
+  @override
+  String get helpWhereStories => 'Where are the bedtime stories?';
+
+  @override
+  String get helpHowAddChild => 'How do I add another child?';
+
+  @override
+  String get helpWhereQuran => 'Where is the Quran and daily wird?';
+
+  @override
+  String get helpWhereProgress => 'Where is my child’s daily tracking?';
+
+  @override
+  String get helpWhereBadges => 'Where are the badges and achievements?';
+
+  @override
+  String get helpHowBackup => 'How do I back up my progress?';
+
+  @override
+  String get helpHowContact => 'How do I contact you?';
+
+  @override
+  String get helpTooltip => 'Help';
+
+  @override
   String get navDailyTracker => 'Daily Tracker';
 
   @override
@@ -2176,6 +2248,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedbackTitle => 'Share Your Feedback';
 
   @override
+  String get feedbackRepliesTitle => 'Replies to you 💬';
+
+  @override
+  String get feedbackReplyFrom => 'The Almorabbi team';
+
+  @override
   String get feedbackDesc =>
       'Your opinion matters and goes straight to the Al-Murabbi team. Write your note or record it as a voice message.';
 
@@ -3105,4 +3183,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String bedtimeTapToRepeat(Object count) {
     return 'Tap here to repeat: $count';
   }
+
+  @override
+  String get tourNext => 'Next';
+
+  @override
+  String get tourSkip => 'Skip';
+
+  @override
+  String get tourDone => 'Done';
+
+  @override
+  String get tourTodayTitle => 'Today';
+
+  @override
+  String get tourTodayBody => 'Your day starts here.';
+
+  @override
+  String get tourLearnTitle => 'Learn';
+
+  @override
+  String get tourLearnBody => 'All the paths and lessons live here.';
+
+  @override
+  String get tourAssistantTitle => 'Assistant';
+
+  @override
+  String get tourAssistantBody => 'Ask anything, anytime — we\'re with you.';
+
+  @override
+  String get tourMoreTitle => 'More';
+
+  @override
+  String get tourMoreBody => 'Everything else is right here.';
+
+  @override
+  String get tourFocusTitle => 'Your next step';
+
+  @override
+  String get tourFocusBody => 'Your next step is always here.';
+
+  @override
+  String get tourReplay => 'Guided tour';
+
+  @override
+  String get tourReplayDesc =>
+      'Replay the tour when you return to the home screen';
+
+  @override
+  String get tourReplayQueued =>
+      'The tour will appear when you go back to the home screen.';
 }

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/app_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
@@ -14,10 +15,6 @@ import '../../widgets/ui/bouncy_button.dart';
 import '../../widgets/ui/count_up_text.dart';
 import 'coins_providers.dart';
 import 'coins_service.dart';
-import 'story_screen.dart';
-import 'exclusive_badges_screen.dart';
-import 'covenant_screen.dart';
-import '../referral/invite_screen.dart';
 
 class CoinsScreen extends ConsumerWidget {
   const CoinsScreen({super.key});
@@ -125,9 +122,7 @@ class CoinsScreen extends ConsumerWidget {
             emoji: '🤝',
             title: AppLocalizations.of(context).coinsEarnInvite,
             detail: AppLocalizations.of(context).coinsEarnInviteDesc(CoinsService.referralReward),
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const InviteScreen()),
-            ),
+            onTap: () => Navigator.of(context).push(AppRoutes.invite()),
           ),
           const SizedBox(height: 24),
           Text(
@@ -142,25 +137,20 @@ class CoinsScreen extends ConsumerWidget {
             emoji: '📖',
             title: AppLocalizations.of(context).coinsRedeemStory,
             detail: AppLocalizations.of(context).coinsRedeemStoryDesc,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const StoryScreen()),
-            ),
+            onTap: () => Navigator.of(context).push(AppRoutes.storyGenerator()),
           ),
           _RedeemRow(
             emoji: '📜',
             title: AppLocalizations.of(context).coinsRedeemCovenant,
             detail: AppLocalizations.of(context).coinsRedeemCovenantDesc,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const CovenantScreen()),
-            ),
+            onTap: () => Navigator.of(context).push(AppRoutes.covenant()),
           ),
           _RedeemRow(
             emoji: '🏅',
             title: AppLocalizations.of(context).coinsRedeemBadges,
             detail: AppLocalizations.of(context).coinsRedeemBadgesDesc,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const ExclusiveBadgesScreen()),
-            ),
+            onTap: () =>
+                Navigator.of(context).push(AppRoutes.exclusiveBadges()),
           ),
         ].animate(interval: 60.ms).fadeIn(duration: Dt.base).slideY(begin: .05),
       ),

@@ -5,14 +5,14 @@
 /// may arrive before MaterialApp is fully built.
 library;
 
+import 'dart:async';
+
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 
 import '../../api/tg_client.dart';
-import '../../features/program/screens/lesson_screen.dart';
-import '../../features/program/screens/path_detail_screen.dart';
+import '../../core/app_routes.dart';
 import '../../features/referral/referral_service.dart';
-import '../../main.dart';
 
 class DeepLinkHandler {
   DeepLinkHandler._();
@@ -70,10 +70,20 @@ class DeepLinkHandler {
           await ReferralService.instance.claimManual(code);
         }));
       }
-      navigator.pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const RootScaffold()),
-        (route) => false,
-      );
+      // The root route is already a RootScaffold built by _AppBootstrapper.
+      // Pushing another one would bypass the onboarding / child-mode /
+      // force-update gates and reset every tab's state, so just unwind back
+      // to it.
+      navigator.popUntil((route) => route.isFirst);
+      return;
+    }
+
+    // Feedback reply: /inbox — sent as `data.link` on the push that fires when
+    // Khaled answers a piece of feedback. The replies render at the top of the
+    // feedback screen, so that is where the notification lands.
+    if (path == '/inbox') {
+      navigator.popUntil((route) => route.isFirst);
+      navigator.push(AppRoutes.feedback());
       return;
     }
 
@@ -81,9 +91,8 @@ class DeepLinkHandler {
     final lessonMatch = RegExp(r'^/l/([^/]+)$').firstMatch(path);
     if (lessonMatch != null) {
       final lessonId = lessonMatch.group(1)!;
-      navigator.push(
-        MaterialPageRoute(builder: (_) => LessonScreen(lessonId: lessonId, ageGroup: '0-1')),
-      );
+      navigator.popUntil((route) => route.isFirst);
+      navigator.push(AppRoutes.lesson(lessonId, '0-1'));
       return;
     }
 
@@ -92,15 +101,9 @@ class DeepLinkHandler {
     if (pathMatch != null) {
       final pathId = pathMatch.group(1)!;
       // Default age group; the screen can adapt if not found.
-      navigator.push(
-        MaterialPageRoute(
-          builder: (_) => PathDetailScreen(pathId: pathId, ageGroup: '0-1'),
-        ),
-      );
+      navigator.popUntil((route) => route.isFirst);
+      navigator.push(AppRoutes.pathDetail(pathId, '0-1'));
       return;
     }
   }
 }
-
-// Best-effort wrapper so we never have to import dart:async just for this.
-void unawaited(Future<void> future) {}

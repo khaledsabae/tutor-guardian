@@ -21,7 +21,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/tg_client.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import '../config/app_config.dart';
 import '../features/program/providers/progress_providers.dart';
 import '../models/api_models.dart';
 import '../models/enums.dart';

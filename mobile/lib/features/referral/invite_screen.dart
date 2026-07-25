@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import '../../core/analytics.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/ui/community_proof_card.dart';
 import '../share/share_service.dart';
 import '../share/shareable_moment_card.dart';
 import 'referral_service.dart';
@@ -123,6 +124,12 @@ class _InviteScreenState extends State<InviteScreen> {
                     AppLocalizations.of(context).inviteDesc,
                     style: TextStyle(fontSize: 15, height: 1.7),
                   ),
+                  const SizedBox(height: 16),
+                  // Social proof persuades someone deciding whether to vouch
+                  // for the app — it did nothing on the home screen, where the
+                  // reader is already a user. It hides itself until the numbers
+                  // are large enough to be persuasive.
+                  const CommunityProofCard(),
                   const SizedBox(height: 24),
                   if (info != null) _codeCard(info),
                   const SizedBox(height: 24),

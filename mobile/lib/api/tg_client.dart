@@ -22,6 +22,7 @@ import 'dart:io' show SocketException;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:uuid/uuid.dart';
 
 import '../config/app_config.dart';
@@ -377,12 +378,23 @@ class TgClient {
   }
 
   /// Send general in-app feedback (text and/or a base64 voice note) to Khaled.
+  ///
+  /// The device id and app version are resolved here rather than passed in by
+  /// the caller. They used to be optional parameters, and the one call site
+  /// never supplied them — so every stored row had `device_id = NULL`, which
+  /// made it impossible to deliver a reply back to whoever wrote the feedback.
+  /// Identity is this client's job, not a UI screen's.
+  ///
+  /// This endpoint is deliberately unauthenticated (a user whose session is
+  /// broken must still be able to report that), so the device id travels in the
+  /// body rather than coming from a token.
   Future<String> sendAppFeedback({
     String message = '',
     String? contact,
     String? audioBase64,
-    String? deviceId,
   }) async {
+    final deviceId = await _auth.getOrCreateDeviceId();
+    final appVersion = await _appVersion();
     final resp = await _http
         .post(
           Uri.parse('$_baseUrl/api/feedback/app'),
@@ -391,7 +403,8 @@ class TgClient {
             'message': message,
             if (contact != null && contact.isNotEmpty) 'contact': contact,
             if (audioBase64 != null) 'audio_base64': audioBase64,
-            if (deviceId != null) 'device_id': deviceId,
+            'device_id': deviceId,
+            if (appVersion != null) 'app_version': appVersion,
           }),
         )
         .timeout(AppConfig.httpTimeout);
@@ -400,6 +413,62 @@ class TgClient {
     }
     final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
     return body['id'] as String;
+  }
+
+  /// Replies Khaled has written back to this device's feedback.
+  ///
+  /// Authenticated: the server reads the device id from the token, so there is
+  /// no parameter to spoof. Returns [] rather than throwing when there is no
+  /// session yet — an empty inbox and a broken session look the same to the
+  /// user, and neither is worth an error banner on a screen they opened to
+  /// complain about something else.
+  Future<List<FeedbackReply>> listFeedbackReplies() async {
+    final (_, tok) = await _auth.readSession();
+    if (tok == null) return const [];
+    try {
+      final resp = await _http
+          .get(
+            Uri.parse('$_baseUrl/api/feedback/replies'),
+            headers: {'Authorization': 'Bearer $tok'},
+          )
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) return const [];
+      final body =
+          jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      return (body['items'] as List<dynamic>? ?? const [])
+          .map((e) => FeedbackReply.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } catch (_) {
+      return const [];
+    }
+  }
+
+  /// Best-effort "I've seen it". Never throws: failing to clear a badge must
+  /// not surface as an error.
+  Future<void> markFeedbackReplyRead(String replyId) async {
+    final (_, tok) = await _auth.readSession();
+    if (tok == null) return;
+    try {
+      await _http
+          .post(
+            Uri.parse('$_baseUrl/api/feedback/replies/$replyId/read'),
+            headers: {'Authorization': 'Bearer $tok'},
+          )
+          .timeout(AppConfig.httpTimeout);
+    } catch (_) {
+      // ignore
+    }
+  }
+
+  /// "1.0.28+73", or null if the platform channel is unavailable (tests).
+  /// Never throws — a missing version must not block a bug report.
+  Future<String?> _appVersion() async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      return '${info.version}+${info.buildNumber}';
+    } catch (_) {
+      return null;
+    }
   }
 
   /// List the device's past conversations (for the history drawer).

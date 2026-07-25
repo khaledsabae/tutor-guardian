@@ -6,11 +6,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../config/app_config.dart';
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../coins/coins_providers.dart';
 import '../data/story_models.dart';
 import '../services/bedtime_audio_service.dart';
-import 'story_reader_screen.dart';
 
 class BedtimeRoutineScreen extends ConsumerStatefulWidget {
   final Story story;
@@ -132,9 +132,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
 
   void _startStory() {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => StoryReaderScreen(story: widget.story),
-      ),
+      AppRoutes.storyReader(widget.story),
     );
   }
 

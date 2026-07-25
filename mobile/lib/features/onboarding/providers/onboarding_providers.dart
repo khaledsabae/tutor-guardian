@@ -46,6 +46,13 @@ final onboardingCompletedProvider =
   return OnboardingCompletedNotifier(() => storage.onboardingCompleted);
 });
 
+/// Which guided-tour version the user has completed (0 = none). Read once at
+/// launch by `RootScaffold`; `ref.invalidate` it after `markTourSeen` so the
+/// settings replay row takes effect without a restart.
+final tourVersionProvider = Provider<int>((ref) {
+  return ref.watch(onboardingStorageProvider).tourVersion;
+});
+
 /// The active child profile, derived from disk. Returns null when the
 /// user hasn't completed onboarding OR has explicitly cleared the
 /// child (e.g. in a debug flow).
