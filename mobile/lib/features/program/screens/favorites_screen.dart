@@ -8,11 +8,11 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/program_providers.dart';
-import 'lesson_screen.dart';
 
 class FavoritesScreen extends ConsumerWidget {
   const FavoritesScreen({super.key});
@@ -212,13 +212,7 @@ class _FavoriteLessonCard extends ConsumerWidget {
           borderRadius: BorderRadius.circular(12),
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => LessonScreen(
-                  lessonId: lesson.id,
-                  ageGroup: lesson.ageGroup,
-                  childId: null,
-                ),
-              ),
+              AppRoutes.lesson(lesson.id, lesson.ageGroup, childId: null),
             );
           },
           child: Padding(

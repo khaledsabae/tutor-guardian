@@ -24,9 +24,9 @@ import '../data/progress_models.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
 import 'lesson_screen.dart';
-import 'video_player_screen.dart';
 import '../../../config/app_config.dart';
 import '../../../core/analytics.dart';
+import '../../../core/app_routes.dart';
 import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
 
@@ -126,13 +126,7 @@ class _Body extends ConsumerWidget {
 
     void openLesson(String lessonId) {
       Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => LessonScreen(
-            lessonId: lessonId,
-            ageGroup: ageGroup,
-            childId: childId,
-          ),
-        ),
+        AppRoutes.lesson(lessonId, ageGroup, childId: childId),
       );
     }
 
@@ -166,11 +160,9 @@ class _Body extends ConsumerWidget {
                   : '${AppConfig.apiBaseUrl}/$raw';
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => VideoPlayerScreen(
-                    url: url,
-                    title: AppLocalizations.of(context).pathDetailVideoUnit(path.title),
-                  ),
+                AppRoutes.video(
+                  url,
+                  AppLocalizations.of(context).pathDetailVideoUnit(path.title),
                 ),
               );
             },
@@ -346,11 +338,10 @@ class _Header extends ConsumerWidget {
                                   : '${AppConfig.apiBaseUrl}/$raw';
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => VideoPlayerScreen(
-                                    url: url,
-                                    title: AppLocalizations.of(context).pathDetailVideoIntroTitle(path.title),
-                                  ),
+                                AppRoutes.video(
+                                  url,
+                                  AppLocalizations.of(context)
+                                      .pathDetailVideoIntroTitle(path.title),
                                 ),
                               );
                             },

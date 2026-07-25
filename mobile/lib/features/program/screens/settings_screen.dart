@@ -22,6 +22,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../config/app_config.dart';
+import '../../../core/app_routes.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
@@ -30,14 +31,8 @@ import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
 import '../providers/backup_provider.dart';
 import 'children_list_screen.dart';
-import 'edit_child_screen.dart';
-import 'badges_screen.dart';
-import 'favorites_screen.dart';
 import '../providers/lesson_assets_provider.dart';
 import '../../adhkar/services/notification_service.dart';
-import '../../feedback/feedback_screen.dart';
-import '../../referral/invite_screen.dart';
-import '../../identity/identity_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -96,11 +91,7 @@ class SettingsScreen extends ConsumerWidget {
                   subtitle: l10n.settingsChildCount(
                       envelope.count, ChildrenListScreen.kMaxChildren),
                   onTap: () async {
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const ChildrenListScreen(),
-                      ),
-                    );
+                    await Navigator.of(context).push(AppRoutes.childrenList());
                     if (context.mounted) {
                       ref.invalidate(childrenListProvider);
                     }
@@ -111,10 +102,8 @@ class SettingsScreen extends ConsumerWidget {
                   title: l10n.settingsEditChild,
                   subtitle: l10n.settingsEditChildDesc,
                   onTap: () async {
-                    final changed = await Navigator.of(context).push<bool>(
-                      MaterialPageRoute(
-                        builder: (_) => EditChildScreen(child: activeChild),
-                      ),
+                    final changed = await Navigator.of(context).push(
+                      AppRoutes.editChild(activeChild),
                     );
                     if (changed == true) {
                       ref.invalidate(childrenListProvider);
@@ -126,26 +115,20 @@ class SettingsScreen extends ConsumerWidget {
                   title: l10n.settingsInviteFriend,
                   subtitle: l10n.settingsInviteDesc,
                   iconColor: AppTheme.primary,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const InviteScreen()),
-                  ),
+                  onTap: () => Navigator.of(context).push(AppRoutes.invite()),
                 ),
                 _SettingsRow(
                   icon: Icons.cloud_sync_outlined,
                   title: l10n.settingsBackup,
                   subtitle: l10n.settingsBackupDesc,
                   iconColor: AppTheme.primary,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const IdentityScreen()),
-                  ),
+                  onTap: () => Navigator.of(context).push(AppRoutes.identity()),
                 ),
                 _SettingsRow(
                   icon: Icons.feedback_outlined,
                   title: l10n.settingsShareFeedback,
                   subtitle: l10n.settingsShareFeedbackDesc,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const FeedbackScreen()),
-                  ),
+                  onTap: () => Navigator.of(context).push(AppRoutes.feedback()),
                 ),
                 _SettingsRow(
                   icon: Icons.restart_alt,
@@ -229,11 +212,7 @@ class SettingsScreen extends ConsumerWidget {
                   title: l10n.settingsFavorites,
                   subtitle: l10n.settingsFavoritesDesc,
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const FavoritesScreen(),
-                      ),
-                    );
+                    Navigator.of(context).push(AppRoutes.favorites());
                   },
                 ),
                 _SettingsRow(
@@ -241,11 +220,7 @@ class SettingsScreen extends ConsumerWidget {
                   title: l10n.settingsAchievements,
                   subtitle: l10n.settingsAchievementsDesc,
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const BadgesScreen(),
-                      ),
-                    );
+                    Navigator.of(context).push(AppRoutes.badges());
                   },
                 ),
                 _SettingsRow(

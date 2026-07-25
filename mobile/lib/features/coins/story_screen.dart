@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/analytics.dart';
+import '../../core/app_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
@@ -18,8 +19,6 @@ import '../program/providers/progress_providers.dart' show activeChildIdProvider
 import '../onboarding/providers/onboarding_providers.dart';
 import 'coins_providers.dart';
 import 'coins_service.dart';
-
-import '../referral/invite_screen.dart';
 
 const _themes = <(String, String, String)>[
   ('honesty', '🤝', 'الصدق والأمانة'),
@@ -65,10 +64,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
             FilledButton(
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const InviteScreen()),
-                );
+                Navigator.push(context, AppRoutes.invite());
               },
               style: FilledButton.styleFrom(backgroundColor: AppTheme.primary),
               child: Text(AppLocalizations.of(context).storyInviteBtn(CoinsService.referralReward)),

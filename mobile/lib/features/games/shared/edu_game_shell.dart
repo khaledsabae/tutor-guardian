@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/analytics.dart';
+import '../../../core/app_routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,21 +70,19 @@ class _EduGameShellState extends ConsumerState<EduGameShell> {
     unawaited(Analytics.gameStarted(widget.theme.id, level));
     final questions = widget.questionBuilder(level);
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => EduGameRunner(
-          theme: widget.theme,
-          level: level,
-          questions: questions,
-          onComplete: (result) async {
-            final newProgress = _progress.recordGame(level, result);
-            await _save(newProgress);
+      AppRoutes.gameRunner(
+        theme: widget.theme,
+        level: level,
+        questions: questions,
+        onComplete: (result) async {
+          final newProgress = _progress.recordGame(level, result);
+          await _save(newProgress);
 
-            // Award coins for correct answers + completion bonus.
-            final coinsNotifier = ref.read(coinsProvider.notifier);
-            final earned = result.score;
-            await coinsNotifier.creditGameEarnings(earned);
-          },
-        ),
+          // Award coins for correct answers + completion bonus.
+          final coinsNotifier = ref.read(coinsProvider.notifier);
+          final earned = result.score;
+          await coinsNotifier.creditGameEarnings(earned);
+        },
       ),
     );
   }

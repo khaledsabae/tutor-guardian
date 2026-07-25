@@ -19,6 +19,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 
 import '../core/analytics.dart';
+import '../core/app_routes.dart';
 
 import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/data/badges.dart';
@@ -26,20 +27,11 @@ import '../features/program/data/models.dart';
 import '../features/program/data/progress_models.dart';
 import '../features/program/providers/program_providers.dart';
 import '../features/program/providers/progress_providers.dart';
-import '../features/program/screens/badges_screen.dart';
-import '../features/program/screens/path_detail_screen.dart';
-import '../features/program/screens/search_screen.dart';
-import '../features/program/screens/settings_screen.dart';
-import '../features/program/screens/story_bookshelf_screen.dart';
-import '../features/feedback/feedback_screen.dart';
 import '../features/program/widgets/active_child_chip.dart';
 import '../features/referral/pride_invite_card.dart';
-import '../features/routine/screens/parenting_insights_screen.dart';
 import '../features/program/widgets/coach_tip_card.dart';
 import '../features/journey/widgets/child_journey_card.dart';
 import '../features/coins/coins_providers.dart';
-import '../features/coins/coins_screen.dart';
-import '../features/program/screens/quiz_game_screen.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import '../widgets/ui/animated_progress_bar.dart';
@@ -92,9 +84,7 @@ class HomeScreen extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
             child: Center(
               child: GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const CoinsScreen()),
-                ),
+                onTap: () => Navigator.of(context).push(AppRoutes.coins()),
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -128,23 +118,17 @@ class HomeScreen extends ConsumerWidget {
           IconButton(
             tooltip: l10n.shareOpinion,
             icon: const Icon(Icons.feedback, color: Dt.accent),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const FeedbackScreen()),
-            ),
+            onPressed: () => Navigator.of(context).push(AppRoutes.feedback()),
           ),
           IconButton(
             tooltip: l10n.searchTooltip,
             icon: const Icon(Icons.search),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SearchScreen()),
-            ),
+            onPressed: () => Navigator.of(context).push(AppRoutes.search()),
           ),
           IconButton(
             tooltip: l10n.settingsTooltip,
             icon: const Icon(Icons.settings_outlined),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SettingsScreen()),
-            ),
+            onPressed: () => Navigator.of(context).push(AppRoutes.settings()),
           ),
         ],
       ),
@@ -189,9 +173,7 @@ class HomeScreen extends ConsumerWidget {
             borderRadius: BorderRadius.circular(Dt.rCard),
             child: InkWell(
               borderRadius: BorderRadius.circular(Dt.rCard),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const FeedbackScreen()),
-              ),
+              onTap: () => Navigator.of(context).push(AppRoutes.feedback()),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 child: Row(
@@ -245,9 +227,7 @@ class _BedtimeStoriesCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(Dt.rCard),
       child: InkWell(
         borderRadius: BorderRadius.circular(Dt.rCard),
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const StoryBookshelfScreen()),
-        ),
+        onTap: () => Navigator.of(context).push(AppRoutes.storyBookshelf()),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
           child: Row(
@@ -337,9 +317,7 @@ class _StatsRow extends ConsumerWidget {
             value: CountUpText(earned),
             label: l10n.achievements,
             color: const Color(0xFF8B5CF6),
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const BadgesScreen()),
-            ),
+            onTap: () => Navigator.of(context).push(AppRoutes.badges()),
           ),
         ),
       ],
@@ -519,12 +497,7 @@ class _ContinueJourneyCard extends ConsumerWidget {
             color: Colors.white.withValues(alpha: .22),
             edgeColor: Colors.white.withValues(alpha: .35),
             onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => PathDetailScreen(
-                  pathId: resume!.id,
-                  ageGroup: ageGroup,
-                ),
-              ),
+              AppRoutes.pathDetail(resume!.id, ageGroup),
             ),
           ),
         ],
@@ -537,9 +510,7 @@ class _QuizCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BouncyTap(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const QuizGameScreen()),
-      ),
+      onTap: () => Navigator.of(context).push(AppRoutes.quizGame()),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -645,11 +616,7 @@ class _ParentingInsightsCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return BouncyTap(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => const ParentingInsightsScreen(),
-          ),
-        );
+        Navigator.of(context).push(AppRoutes.parentingInsights());
       },
       child: Container(
         padding: const EdgeInsets.all(16),

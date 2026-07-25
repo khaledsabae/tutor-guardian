@@ -11,8 +11,7 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 
 import '../../api/tg_client.dart';
-import '../../features/program/screens/lesson_screen.dart';
-import '../../features/program/screens/path_detail_screen.dart';
+import '../../core/app_routes.dart';
 import '../../features/referral/referral_service.dart';
 
 class DeepLinkHandler {
@@ -84,9 +83,7 @@ class DeepLinkHandler {
     if (lessonMatch != null) {
       final lessonId = lessonMatch.group(1)!;
       navigator.popUntil((route) => route.isFirst);
-      navigator.push(
-        MaterialPageRoute(builder: (_) => LessonScreen(lessonId: lessonId, ageGroup: '0-1')),
-      );
+      navigator.push(AppRoutes.lesson(lessonId, '0-1'));
       return;
     }
 
@@ -96,11 +93,7 @@ class DeepLinkHandler {
       final pathId = pathMatch.group(1)!;
       // Default age group; the screen can adapt if not found.
       navigator.popUntil((route) => route.isFirst);
-      navigator.push(
-        MaterialPageRoute(
-          builder: (_) => PathDetailScreen(pathId: pathId, ageGroup: '0-1'),
-        ),
-      );
+      navigator.push(AppRoutes.pathDetail(pathId, '0-1'));
       return;
     }
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../models/habit_models.dart';
 import '../providers/child_mode_providers.dart';
-import 'child_mode_lock_screen.dart';
 
 /// The child-facing self-reporting screen.
 /// Very simple, large buttons, confirmation dialogs, no edit/delete.
@@ -84,12 +84,10 @@ class HabitChildModeScreen extends ConsumerWidget {
     if (ok != true && context.mounted) return;
     if (!context.mounted) return;
     await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => ChildModeLockScreen(
-          childId: childId,
-          childName: AppLocalizations.of(context).childFallbackName,
-          isExit: true,
-        ),
+      AppRoutes.childModeLock<void>(
+        childId: childId,
+        childName: AppLocalizations.of(context).childFallbackName,
+        isExit: true,
       ),
     );
   }
@@ -115,20 +113,17 @@ class _ExpiredGuardState extends State<_ExpiredGuard> {
     if (!mounted) return;
     final childId = widget.childId;
     final l10n = AppLocalizations.of(context);
+    // Two genuinely different destinations, so they get two named routes
+    // rather than one route that switches its own body — otherwise both
+    // report as the same screen in analytics.
     await Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => childId == null
-            ? Scaffold(
-                body: Center(
-                  child: Text(l10n.habitChildModeExpired),
-                ),
-              )
-            : ChildModeLockScreen(
-                childId: childId,
-                childName: l10n.childFallbackName,
-                isExit: false,
-              ),
-      ),
+      childId == null
+          ? AppRoutes.childModeExpired<void>(l10n.habitChildModeExpired)
+          : AppRoutes.childModeLock<void>(
+              childId: childId,
+              childName: l10n.childFallbackName,
+              isExit: false,
+            ),
     );
   }
 

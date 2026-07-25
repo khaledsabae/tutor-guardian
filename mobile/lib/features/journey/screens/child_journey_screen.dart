@@ -14,6 +14,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../core/analytics.dart';
+import '../../../core/app_routes.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../coins/coins_providers.dart';
 import '../../program/data/review_prompt.dart';
@@ -24,7 +25,6 @@ import '../data/journey_milestones.dart';
 import '../data/journey_store.dart';
 import '../providers/journey_providers.dart';
 import '../widgets/milestone_icon.dart';
-import 'quran_memorization_screen.dart';
 
 class ChildJourneyScreen extends ConsumerWidget {
   const ChildJourneyScreen({
@@ -401,11 +401,9 @@ class _QuranMemoCard extends ConsumerWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => QuranMemorizationScreen(
-              childId: childId,
-              childName: childName,
-            ),
+          AppRoutes.quranMemorization(
+            childId: childId,
+            childName: childName,
           ),
         ),
         borderRadius: BorderRadius.circular(Dt.rCard),

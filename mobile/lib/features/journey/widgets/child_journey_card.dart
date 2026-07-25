@@ -8,10 +8,10 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/app_routes.dart';
 import '../../../theme/design_tokens.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../providers/journey_providers.dart';
-import '../screens/child_journey_screen.dart';
 import '../../../l10n/app_localizations.dart';
 
 class ChildJourneyCard extends ConsumerWidget {
@@ -32,12 +32,10 @@ class ChildJourneyCard extends ConsumerWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => ChildJourneyScreen(
-              childId: profile.id,
-              childName: profile.name,
-              ageGroup: profile.ageGroup,
-            ),
+          AppRoutes.childJourney(
+            childId: profile.id,
+            childName: profile.name,
+            ageGroup: profile.ageGroup,
           ),
         ),
         borderRadius: BorderRadius.circular(Dt.rCard),

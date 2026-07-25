@@ -151,6 +151,90 @@ class Analytics {
   static Future<void> pushTapped(String type) =>
       _log('push_tapped', {'type': type});
 
+  // ── Navigation & "lostness" ──────────────────────────────────────────────
+  // Multiple users reported getting lost inside the app. These events exist to
+  // locate *where*, rather than guessing. All screen identifiers must come from
+  // `Screens.*` in core/app_routes.dart — free-text names would blow up
+  // Firebase's event cardinality and make the funnels unusable.
+  //
+  // Most of these are emitted centrally by `TgNavObserver`; only the tab and
+  // hub events are called by hand, because switching an IndexedStack index is
+  // not a route change and so is invisible to a NavigatorObserver.
+
+  /// A screen was pushed. [depth] is the resulting navigation-stack depth.
+  static Future<void> screenView(String screen, int depth) =>
+      _log('screen_view', {'screen': screen, 'nav_depth': depth});
+
+  /// Opened and backed straight out again — the user looked and left.
+  /// [from] is the screen they came from, which is where the misleading
+  /// affordance lives.
+  static Future<void> screenBounce(String screen, int dwellMs, String from) =>
+      _log('screen_bounce',
+          {'screen': screen, 'dwell_ms': dwellMs, 'from': from});
+
+  /// Stayed a while but never navigated onward before backing out — the screen
+  /// offered nothing actionable. The highest-signal event in this set.
+  static Future<void> deadEnd(String screen, int dwellMs) =>
+      _log('dead_end', {'screen': screen, 'dwell_ms': dwellMs});
+
+  /// On screen but not touching anything — reading, or stuck. Sampled.
+  static Future<void> idleDwell(String screen, int dwellMs) =>
+      _log('idle_dwell', {'screen': screen, 'dwell_ms': dwellMs});
+
+  /// Back-hammered from a deep stack to the root, usually meaning "get me out".
+  static Future<void> backToRoot(int fromDepth) =>
+      _log('nav_back_to_root', {'from_depth': fromDepth});
+
+  /// A bottom-navigation destination was selected.
+  static Future<void> tabSelected(String tab) =>
+      _log('tab_selected', {'tab': tab});
+
+  /// Rapid back-and-forth between tabs — hunting for something.
+  /// [pattern] is the recent tab sequence, e.g. "tab_today>tab_more>tab_today".
+  static Future<void> tabThrash(int switches, int windowMs, String pattern) =>
+      _log('tab_thrash',
+          {'switches': switches, 'window_ms': windowMs, 'pattern': pattern});
+
+  // ── Restructure validation ───────────────────────────────────────────────
+
+  /// A card on the rebuilt home screen was tapped — tells us whether the new
+  /// visual hierarchy actually directs attention where it was meant to.
+  static Future<void> homeCardTapped(String card) =>
+      _log('home_card_tapped', {'card': card});
+
+  /// The «المزيد» hub was opened.
+  static Future<void> hubOpened() => _log('hub_opened');
+
+  /// An entry inside the hub was tapped. If one group takes nearly all the
+  /// taps, the grouping is wrong.
+  static Future<void> hubItemTapped(String group, String item) =>
+      _log('hub_item_tapped', {'group': group, 'item': item});
+
+  /// A search returned nothing. Only the query *length* is recorded — never
+  /// the query itself, which can contain a child's name.
+  static Future<void> searchNoResult(int queryLen) =>
+      _log('search_no_result', {'query_len': queryLen});
+
+  /// The help sheet was opened, from [fromScreen].
+  static Future<void> helpOpened(String fromScreen) =>
+      _log('help_opened', {'screen': fromScreen});
+
+  /// An "أين أجد…؟" intent was tapped. Cheapest possible lostness probe: it
+  /// reports what people cannot find, in their own words, without a survey.
+  static Future<void> helpIntentTapped(String intent) =>
+      _log('help_intent_tapped', {'intent': intent});
+
+  // ── Guided tour ──────────────────────────────────────────────────────────
+
+  /// [action] = next / back / skip.
+  static Future<void> tourStep(int step, String action) =>
+      _log('tour_step', {'step': step, 'action': action});
+
+  static Future<void> tourCompleted() => _logOnce('tour_completed');
+
+  static Future<void> tourSkipped(int atStep) =>
+      _logOnce('tour_skipped', {'at_step': atStep});
+
   /// Catch-all user property setter (best-effort).
   static Future<void> setAnalyticsUserProperty(String name, String value) async {
     try {

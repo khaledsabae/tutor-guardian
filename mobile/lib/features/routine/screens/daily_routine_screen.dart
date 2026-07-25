@@ -23,8 +23,7 @@ import 'package:almorabbi/features/routine/providers/routine_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
-import 'package:almorabbi/features/routine/screens/child_mode_lock_screen.dart';
-import 'package:almorabbi/features/routine/screens/habit_customize_screen.dart';
+import 'package:almorabbi/core/app_routes.dart';
 
 bool routineAgeAllowed(String ageGroup) {
   // Daily routine (sleep/feed/diaper) is for babies/toddlers 0–6 years.
@@ -625,11 +624,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
   }
 
   Future<void> _openCustomizeScreen(int childId) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => const HabitCustomizeScreen(),
-      ),
-    );
+    await Navigator.of(context).push(AppRoutes.habitCustomize());
   }
 
   Future<void> _showWebShareDialog(int childId, String childName) async {
@@ -732,12 +727,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
 
   Future<void> _enterChildMode(int childId, String childName) async {
     await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => ChildModeLockScreen(
-          childId: childId,
-          childName: childName,
-        ),
-      ),
+      AppRoutes.childModeLock<void>(childId: childId, childName: childName),
     );
   }
 

@@ -8,14 +8,13 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../journey/providers/journey_providers.dart';
-import '../../journey/screens/child_journey_screen.dart';
 import '../data/progress_models.dart';
 import '../providers/progress_providers.dart';
 import '../providers/settings_providers.dart';
-import 'add_child_screen.dart';
 
 class ChildrenListScreen extends ConsumerWidget {
   const ChildrenListScreen({super.key});
@@ -155,20 +154,16 @@ class ChildrenListScreen extends ConsumerWidget {
 
   void _openJourney(BuildContext context, ChildProfile child) {
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => ChildJourneyScreen(
-          childId: child.id,
-          childName: child.name,
-          ageGroup: child.ageGroup,
-        ),
+      AppRoutes.childJourney(
+        childId: child.id,
+        childName: child.name,
+        ageGroup: child.ageGroup,
       ),
     );
   }
 
   Future<void> _addChild(BuildContext context, WidgetRef ref) async {
-    final added = await Navigator.of(context).push<bool>(
-      MaterialPageRoute(builder: (_) => const AddChildScreen()),
-    );
+    final added = await Navigator.of(context).push(AppRoutes.addChild());
     if (added == true) {
       ref.invalidate(childrenListProvider);
     }

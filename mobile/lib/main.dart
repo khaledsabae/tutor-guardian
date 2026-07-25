@@ -16,6 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'core/analytics.dart';
+import 'core/nav_observer.dart';
 
 import 'api/tg_client.dart';
 import 'state/chat_notifier.dart';
@@ -98,6 +99,10 @@ Future<void> _postLaunchGrowthLoop() async {
 // Global navigator key for deep links/pushes that fire before a context exists.
 final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
+// Names every screen visit and classifies how it ended, so we can find where
+// users actually get lost instead of guessing. See core/nav_observer.dart.
+final TgNavObserver tgNavObserver = TgNavObserver();
+
 /// Root widget.
 ///
 /// MaterialApp is configured for Arabic + RTL out of the box. The
@@ -125,6 +130,7 @@ class TutorGuardianApp extends ConsumerWidget {
 
     return MaterialApp(
       navigatorKey: appNavigatorKey,
+      navigatorObservers: [tgNavObserver],
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
@@ -148,7 +154,14 @@ class TutorGuardianApp extends ConsumerWidget {
         final isRtl = locale.languageCode == 'ar';
         return Directionality(
           textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-          child: child ?? const SizedBox.shrink(),
+          // Translucent so it observes taps without consuming any: this feeds
+          // TgNavObserver's idle detection, which otherwise cannot tell
+          // "reading the screen" from "stuck on the screen".
+          child: Listener(
+            behavior: HitTestBehavior.translucent,
+            onPointerDown: TgNavObserver.recordTap,
+            child: child ?? const SizedBox.shrink(),
+          ),
         );
       },
       home: const _AppBootstrapper(),
