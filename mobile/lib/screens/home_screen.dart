@@ -32,6 +32,7 @@ import '../features/referral/pride_invite_card.dart';
 import '../features/program/widgets/coach_tip_card.dart';
 import '../features/journey/widgets/child_journey_card.dart';
 import '../features/coins/coins_providers.dart';
+import '../features/shell/root_tab.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import '../widgets/ui/animated_progress_bar.dart';
@@ -45,8 +46,9 @@ import '../widgets/ui/stat_chip.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key, required this.onGoToTab});
 
-  /// Switches the root scaffold tab.
-  /// Indices: 0 = اليوم, 1 = مساراتي, 2 = الورد (Quran), 3 = حساب اليوم, 4 = المساعد (chat).
+  /// Switches the root scaffold tab. Always pass a [RootTab] constant — a
+  /// hard-coded index here is how both assistant buttons ended up opening the
+  /// infant routine tracker.
   final ValueChanged<int> onGoToTab;
 
   @override
@@ -196,10 +198,10 @@ class HomeScreen extends ConsumerWidget {
           _ContinueJourneyCard(
             bundle: bundle,
             ageGroup: ageGroup,
-            onStartFirstPath: () => onGoToTab(1),
+            onStartFirstPath: () => onGoToTab(RootTab.learn),
           ),
           const SizedBox(height: 20),
-          CoachTipCard(onAsk: () => onGoToTab(4)),
+          CoachTipCard(onAsk: () => onGoToTab(RootTab.assistant)),
           const SizedBox(height: 20),
           const ChildJourneyCard(),
           const SizedBox(height: 20),
@@ -207,7 +209,7 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           const _ParentingInsightsCard(),
           const SizedBox(height: 20),
-          _AskAssistantCard(onTap: () => onGoToTab(4)),
+          _AskAssistantCard(onTap: () => onGoToTab(RootTab.assistant)),
           const SizedBox(height: 20),
           const _BedtimeStoriesCard(),
         ],

@@ -5,6 +5,19 @@
   "navMyPaths": "مساراتي",
   "navAdhkar": "الورد",
   "navAssistant": "المساعد",
+  "navLearn": "التعلّم",
+  "navMore": "المزيد",
+  "hubTitle": "المزيد",
+  "hubGroupChild": "طفلي",
+  "hubGroupAchievements": "الإنجازات",
+  "hubGroupLibrary": "المكتبة",
+  "hubGroupGames": "الألعاب",
+  "hubGroupHelp": "الإعدادات والمساعدة",
+  "hubMyChildren": "أطفالي",
+  "hubCustomizeHabits": "تخصيص العادات",
+  "hubInsights": "رؤى تربوية",
+  "hubCreateStory": "اصنع قصة",
+  "hubAccount": "حسابي",
   "navDailyTracker": "حساب اليوم",
   "navHabitBalance": "ميزان العادات",
   "save": "حفظ",
@@ -254,7 +267,9 @@
   "onbTipForAge": "لمرحلة {ageLabel}",
   "@onbTipForAge": {
     "placeholders": {
-      "ageLabel": {"type": "String"}
+      "ageLabel": {
+        "type": "String"
+      }
     }
   },
   "onbTip_prenatal": "صوتك أول مدرسة لطفلك: اجعل الأذكار والقرآن خلفية هادئة ليومه — فالسكينة التي يسمعها اليوم تصير أمانه غدًا.",
@@ -273,7 +288,9 @@
   "prideStreakTitle": "ما شاء الله — {days} أيام متواصلة! 🔥",
   "@prideStreakTitle": {
     "placeholders": {
-      "days": {"type": "int"}
+      "days": {
+        "type": "int"
+      }
     }
   },
   "prideStreakBody": "استمراركم هذا نعمة تستحق أن تُشارك. هل تعرف أسرة تتمنى لها نفس الخير؟ الدلالة على الخير صدقة جارية.",

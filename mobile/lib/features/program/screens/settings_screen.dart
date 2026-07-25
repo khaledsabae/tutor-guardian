@@ -110,13 +110,9 @@ class SettingsScreen extends ConsumerWidget {
                     }
                   },
                 ),
-                _SettingsRow(
-                  icon: Icons.favorite_outline,
-                  title: l10n.settingsInviteFriend,
-                  subtitle: l10n.settingsInviteDesc,
-                  iconColor: AppTheme.primary,
-                  onTap: () => Navigator.of(context).push(AppRoutes.invite()),
-                ),
+                // «ادعُ صديقًا» now lives in the hub under الإعدادات والمساعدة.
+                // Settings is for settings; content and rewards belong in the
+                // index, not buried behind a gear icon.
                 _SettingsRow(
                   icon: Icons.cloud_sync_outlined,
                   title: l10n.settingsBackup,
@@ -207,22 +203,9 @@ class SettingsScreen extends ConsumerWidget {
                     }
                   },
                 ),
-                _SettingsRow(
-                  icon: Icons.favorite_outline,
-                  title: l10n.settingsFavorites,
-                  subtitle: l10n.settingsFavoritesDesc,
-                  onTap: () {
-                    Navigator.of(context).push(AppRoutes.favorites());
-                  },
-                ),
-                _SettingsRow(
-                  icon: Icons.emoji_events_outlined,
-                  title: l10n.settingsAchievements,
-                  subtitle: l10n.settingsAchievementsDesc,
-                  onTap: () {
-                    Navigator.of(context).push(AppRoutes.badges());
-                  },
-                ),
+                // المفضلة and إنجازاتي moved to the hub (المكتبة / الإنجازات).
+                // Content people go looking for should be in the index, not
+                // findable only by someone who thought to open settings.
                 _SettingsRow(
                   icon: Icons.file_download_outlined,
                   title: l10n.settingsExport,

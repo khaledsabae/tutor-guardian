@@ -134,6 +134,84 @@ abstract class AppLocalizations {
   /// **'المساعد'**
   String get navAssistant;
 
+  /// No description provided for @navLearn.
+  ///
+  /// In ar, this message translates to:
+  /// **'التعلّم'**
+  String get navLearn;
+
+  /// No description provided for @navMore.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزيد'**
+  String get navMore;
+
+  /// No description provided for @hubTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزيد'**
+  String get hubTitle;
+
+  /// No description provided for @hubGroupChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلي'**
+  String get hubGroupChild;
+
+  /// No description provided for @hubGroupAchievements.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإنجازات'**
+  String get hubGroupAchievements;
+
+  /// No description provided for @hubGroupLibrary.
+  ///
+  /// In ar, this message translates to:
+  /// **'المكتبة'**
+  String get hubGroupLibrary;
+
+  /// No description provided for @hubGroupGames.
+  ///
+  /// In ar, this message translates to:
+  /// **'الألعاب'**
+  String get hubGroupGames;
+
+  /// No description provided for @hubGroupHelp.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعدادات والمساعدة'**
+  String get hubGroupHelp;
+
+  /// No description provided for @hubMyChildren.
+  ///
+  /// In ar, this message translates to:
+  /// **'أطفالي'**
+  String get hubMyChildren;
+
+  /// No description provided for @hubCustomizeHabits.
+  ///
+  /// In ar, this message translates to:
+  /// **'تخصيص العادات'**
+  String get hubCustomizeHabits;
+
+  /// No description provided for @hubInsights.
+  ///
+  /// In ar, this message translates to:
+  /// **'رؤى تربوية'**
+  String get hubInsights;
+
+  /// No description provided for @hubCreateStory.
+  ///
+  /// In ar, this message translates to:
+  /// **'اصنع قصة'**
+  String get hubCreateStory;
+
+  /// No description provided for @hubAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابي'**
+  String get hubAccount;
+
   /// No description provided for @navDailyTracker.
   ///
   /// In ar, this message translates to:

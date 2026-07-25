@@ -32,12 +32,9 @@ import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
 import 'features/routine/providers/child_mode_providers.dart';
-import 'features/routine/screens/daily_routine_screen.dart';
 import 'features/routine/screens/habit_child_mode_screen.dart';
 import 'features/adhkar/services/notification_service.dart';
-import 'screens/home_screen.dart';
-import 'screens/chat_screen.dart';
-import 'features/quran/screens/quran_screen.dart';
+import 'features/shell/root_scaffold.dart';
 import 'theme/app_theme.dart';
 import 'theme/design_tokens.dart';
 
@@ -367,80 +364,6 @@ class _BootErrorScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// The 5-tab bottom navigation shell: اليوم / مساراتي / الورد / حساب اليوم|ميزان العادات / المساعد.
-///
-/// Note: each tab keeps its own state via the [IndexedStack] so that
-/// switching between tabs does not lose scroll position or in-flight
-/// streaming tokens.
-///
-/// The label of the 4th tab changes based on the active child's age group:
-///   * 0-6 years → «حِساب اليوم» (biological routine tracker)
-///   * 7-18 years → «ميزان العادات» (habit/value tracker)
-class RootScaffold extends ConsumerStatefulWidget {
-  const RootScaffold({super.key});
-
-  @override
-  ConsumerState<RootScaffold> createState() => _RootScaffoldState();
-}
-
-class _RootScaffoldState extends ConsumerState<RootScaffold> {
-  int _index = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final profile = ref.watch(activeChildProfileProvider);
-    final fourthLabel = habitTabLabel(profile?.ageGroup ?? '', l10n);
-
-    return Scaffold(
-      body: IndexedStack(
-        index: _index,
-        children: [
-          HomeScreen(onGoToTab: (i) => setState(() => _index = i)),
-          const PathsScreen(),
-          const QuranScreen(),
-          const DailyRoutineScreen(),
-          const ChatScreen(),
-        ],
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _index,
-        onDestinationSelected: (i) {
-          if (i == 2) unawaited(Analytics.quranOpened());
-          setState(() => _index = i);
-        },
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.home_outlined),
-            selectedIcon: const Icon(Icons.home_rounded),
-            label: l10n.navToday,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.route_outlined),
-            selectedIcon: const Icon(Icons.route),
-            label: l10n.navMyPaths,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.menu_book_outlined),
-            selectedIcon: const Icon(Icons.menu_book),
-            label: l10n.navAdhkar,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.child_care_outlined),
-            selectedIcon: const Icon(Icons.child_care),
-            label: fourthLabel,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.chat_bubble_outline),
-            selectedIcon: const Icon(Icons.chat_bubble),
-            label: l10n.navAssistant,
-          ),
-        ],
       ),
     );
   }

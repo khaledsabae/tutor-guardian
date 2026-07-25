@@ -5,6 +5,19 @@
   "navMyPaths": "My Paths",
   "navAdhkar": "Adhkar",
   "navAssistant": "Assistant",
+  "navLearn": "Learn",
+  "navMore": "More",
+  "hubTitle": "More",
+  "hubGroupChild": "My child",
+  "hubGroupAchievements": "Achievements",
+  "hubGroupLibrary": "Library",
+  "hubGroupGames": "Games",
+  "hubGroupHelp": "Settings & help",
+  "hubMyChildren": "My children",
+  "hubCustomizeHabits": "Customize habits",
+  "hubInsights": "Parenting insights",
+  "hubCreateStory": "Create a story",
+  "hubAccount": "My account",
   "navDailyTracker": "Daily Tracker",
   "navHabitBalance": "Habit Balance",
   "save": "Save",
@@ -254,7 +267,9 @@
   "onbTipForAge": "For ages {ageLabel}",
   "@onbTipForAge": {
     "placeholders": {
-      "ageLabel": {"type": "String"}
+      "ageLabel": {
+        "type": "String"
+      }
     }
   },
   "onbTip_prenatal": "Your voice is your child's first school: let adhkar and Quran be the calm soundtrack of their day — the serenity they hear today becomes their safety tomorrow.",
@@ -273,7 +288,9 @@
   "prideStreakTitle": "MashaAllah — {days} days in a row! 🔥",
   "@prideStreakTitle": {
     "placeholders": {
-      "days": {"type": "int"}
+      "days": {
+        "type": "int"
+      }
     }
   },
   "prideStreakBody": "This consistency is a blessing worth sharing. Know a family who would love the same? Guiding others to good is an ongoing charity.",

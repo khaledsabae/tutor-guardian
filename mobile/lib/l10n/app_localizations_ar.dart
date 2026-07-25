@@ -27,6 +27,45 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navAssistant => 'المساعد';
 
   @override
+  String get navLearn => 'التعلّم';
+
+  @override
+  String get navMore => 'المزيد';
+
+  @override
+  String get hubTitle => 'المزيد';
+
+  @override
+  String get hubGroupChild => 'طفلي';
+
+  @override
+  String get hubGroupAchievements => 'الإنجازات';
+
+  @override
+  String get hubGroupLibrary => 'المكتبة';
+
+  @override
+  String get hubGroupGames => 'الألعاب';
+
+  @override
+  String get hubGroupHelp => 'الإعدادات والمساعدة';
+
+  @override
+  String get hubMyChildren => 'أطفالي';
+
+  @override
+  String get hubCustomizeHabits => 'تخصيص العادات';
+
+  @override
+  String get hubInsights => 'رؤى تربوية';
+
+  @override
+  String get hubCreateStory => 'اصنع قصة';
+
+  @override
+  String get hubAccount => 'حسابي';
+
+  @override
   String get navDailyTracker => 'حساب اليوم';
 
   @override

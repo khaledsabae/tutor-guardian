@@ -27,6 +27,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navAssistant => 'Assistant';
 
   @override
+  String get navLearn => 'Learn';
+
+  @override
+  String get navMore => 'More';
+
+  @override
+  String get hubTitle => 'More';
+
+  @override
+  String get hubGroupChild => 'My child';
+
+  @override
+  String get hubGroupAchievements => 'Achievements';
+
+  @override
+  String get hubGroupLibrary => 'Library';
+
+  @override
+  String get hubGroupGames => 'Games';
+
+  @override
+  String get hubGroupHelp => 'Settings & help';
+
+  @override
+  String get hubMyChildren => 'My children';
+
+  @override
+  String get hubCustomizeHabits => 'Customize habits';
+
+  @override
+  String get hubInsights => 'Parenting insights';
+
+  @override
+  String get hubCreateStory => 'Create a story';
+
+  @override
+  String get hubAccount => 'My account';
+
+  @override
   String get navDailyTracker => 'Daily Tracker';
 
   @override
