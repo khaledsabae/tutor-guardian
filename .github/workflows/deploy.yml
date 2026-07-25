@@ -102,6 +102,22 @@ jobs:
           echo "→ docker compose build backend"
           docker compose -f docker-compose.production.yml build backend
 
+          # ── 3b. Make the data volumes writable by the container user ──
+          # The image runs as `appuser` (uid 10001) but Docker creates volume
+          # contents as root, so SQLite could read the DB and not write it —
+          # `PRAGMA journal_mode = WAL` then fails and the container crashloops
+          # on startup. That took production down on 2026-07-25 and had already
+          # failed the 2026-07-19 deploy; prod had been surviving on a single
+          # container that could never be restarted. Idempotent, so it also
+          # covers any freshly created volume.
+          echo "→ ensuring volume ownership (uid 10001)"
+          for _vol in tutor-guardian_tg_sessions tutor-guardian_tg_chroma; do
+            _path=$(docker volume inspect "$_vol" --format '{{.Mountpoint}}' 2>/dev/null || true)
+            if [ -n "$_path" ] && [ -d "$_path" ]; then
+              chown -R 10001:10001 "$_path" || echo "::warning::chown failed for $_vol"
+            fi
+          done
+
           # ── 4. Recreate the container ────────────────────────────────
           echo "→ docker compose up -d backend"
           docker compose -f docker-compose.production.yml up -d --remove-orphans backend
