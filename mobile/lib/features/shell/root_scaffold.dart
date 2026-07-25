@@ -26,7 +26,11 @@ import '../../l10n/app_localizations.dart';
 import '../../screens/chat_screen.dart';
 import '../../screens/home_screen.dart';
 import '../hub/screens/hub_screen.dart';
+import '../onboarding/providers/onboarding_providers.dart';
 import '../program/screens/paths_screen.dart';
+import '../tour/tour_controller.dart';
+import '../tour/tour_overlay.dart';
+import '../tour/tour_step.dart';
 import 'root_tab.dart';
 
 /// How many switches inside [_thrashWindow] read as hunting rather than
@@ -41,7 +45,7 @@ class RootScaffold extends ConsumerStatefulWidget {
   ConsumerState<RootScaffold> createState() => _RootScaffoldState();
 }
 
-class _RootScaffoldState extends ConsumerState<RootScaffold> {
+class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
   int _index = RootTab.today;
 
   /// Recent tab switches, for thrash detection.
@@ -53,6 +57,56 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> {
     Screens.tabAssistant,
     Screens.tabMore,
   ];
+
+  /// Tour targets. The destination keys are attached to the destinations
+  /// themselves (via [KeyedSubtree]) rather than derived by slicing the nav
+  /// bar's width into quarters. Slicing would force us to flip the index by
+  /// hand under RTL — precisely the direction-assuming arithmetic that makes
+  /// the off-the-shelf tour packages misfire in this app. Letting the
+  /// framework's own `Row` place each destination and then reading back its
+  /// `localToGlobal` rect means mirroring is already correct, and it stays
+  /// correct if the destination count or their padding ever changes.
+  final List<GlobalKey> _tabKeys = List.generate(4, (_) => GlobalKey());
+  final GlobalKey _focusCardKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    // Post-frame, not in `_AppBootstrapper`: the tour measures the laid-out
+    // NavigationBar, which does not exist until this scaffold's first frame.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeStartTour());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!kTourEnabled) return;
+    final route = ModalRoute.of(context);
+    if (route is ModalRoute<void>) tourRouteObserver.subscribe(this, route);
+  }
+
+  @override
+  void dispose() {
+    if (kTourEnabled) tourRouteObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  /// Back on top — e.g. settings just popped after rewinding the tour version.
+  @override
+  void didPopNext() => _maybeStartTour();
+
+  void _maybeStartTour() {
+    if (!kTourEnabled || !mounted) return;
+    if (ref.read(tourControllerProvider).active) return;
+    final onboarded = ref.read(onboardingCompletedProvider);
+    if (!onboarded) return;
+    if (ref.read(tourVersionProvider) >= kTourVersion) return;
+    showTour(
+      context,
+      ref,
+      buildTourSteps(tabKeys: _tabKeys, focusKey: _focusCardKey),
+    );
+  }
 
   void _onSelect(int i) {
     if (i != _index) _recordSwitch(i);
@@ -89,7 +143,7 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> {
       body: IndexedStack(
         index: _index,
         children: [
-          HomeScreen(onGoToTab: _onSelect),
+          HomeScreen(onGoToTab: _onSelect, focusCardKey: _focusCardKey),
           const PathsScreen(),
           const ChatScreen(),
           const HubScreen(),
@@ -98,29 +152,31 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: _onSelect,
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.home_outlined),
-            selectedIcon: const Icon(Icons.home_rounded),
-            label: l10n.navToday,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.route_outlined),
-            selectedIcon: const Icon(Icons.route),
-            label: l10n.navLearn,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.chat_bubble_outline),
-            selectedIcon: const Icon(Icons.chat_bubble),
-            label: l10n.navAssistant,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.grid_view_outlined),
-            selectedIcon: const Icon(Icons.grid_view_rounded),
-            label: l10n.navMore,
-          ),
-        ],
+        destinations: _destinations(l10n),
       ),
     );
+  }
+
+  /// Each destination is wrapped in a [KeyedSubtree]: inert layout-wise —
+  /// NavigationBar still receives one widget per destination — but it gives
+  /// the destination an element whose render object the tour can measure.
+  List<Widget> _destinations(AppLocalizations l10n) {
+    final specs = <(IconData, IconData, String)>[
+      (Icons.home_outlined, Icons.home_rounded, l10n.navToday),
+      (Icons.route_outlined, Icons.route, l10n.navLearn),
+      (Icons.chat_bubble_outline, Icons.chat_bubble, l10n.navAssistant),
+      (Icons.grid_view_outlined, Icons.grid_view_rounded, l10n.navMore),
+    ];
+    return [
+      for (var i = 0; i < specs.length; i++)
+        KeyedSubtree(
+          key: _tabKeys[i],
+          child: NavigationDestination(
+            icon: Icon(specs[i].$1),
+            selectedIcon: Icon(specs[i].$2),
+            label: specs[i].$3,
+          ),
+        ),
+    ];
   }
 }

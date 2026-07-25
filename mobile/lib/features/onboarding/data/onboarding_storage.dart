@@ -17,6 +17,12 @@ class OnboardingStorage {
   static const keyActiveChildAgeGroup = 'tg.active_child_age_group';
   static const keyActiveChildAvatar = 'tg.active_child_avatar';
 
+  /// Which version of the guided tour the user has finished. An `int`, not a
+  /// bool: a later restructure can raise `kTourVersion` and re-run a short
+  /// "what moved" tour for people who already saw version 1 — the same shape
+  /// as [lastSeenVersion] / `UpdateSplashScreen`.
+  static const keyTourVersion = 'tg.tour.completed_version';
+
   static const _kOnboardingCompleted = keyOnboardingCompleted;
   static const _kActiveChildId = keyActiveChildId;
   static const _kActiveChildName = keyActiveChildName;
@@ -72,6 +78,12 @@ class OnboardingStorage {
   Future<void> markUpdateSeen(String version) async {
     await _prefs.setString(_kLastSeenVersion, version);
   }
+
+  /// 0 means "never toured".
+  int get tourVersion => _prefs.getInt(keyTourVersion) ?? 0;
+
+  /// Pass 0 to re-arm the tour (the «الجولة التعريفية» row in settings).
+  Future<void> markTourSeen(int v) => _prefs.setInt(keyTourVersion, v);
 
   /// Clear everything — useful for "switch device" debug flows.
   Future<void> clearAll() async {

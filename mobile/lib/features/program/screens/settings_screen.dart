@@ -53,6 +53,22 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
+  /// Re-arms the first-run tour by rewinding the stored version to 0. It can't
+  /// play here — it points at the root scaffold's nav bar, which this modal
+  /// route covers — so we say where it will show up instead.
+  Future<void> _replayTour(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    await ref.read(onboardingStorageProvider).markTourSeen(0);
+    ref.invalidate(tourVersionProvider);
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(l10n.tourReplayQueued),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -125,6 +141,12 @@ class SettingsScreen extends ConsumerWidget {
                   title: l10n.settingsShareFeedback,
                   subtitle: l10n.settingsShareFeedbackDesc,
                   onTap: () => Navigator.of(context).push(AppRoutes.feedback()),
+                ),
+                _SettingsRow(
+                  icon: Icons.explore_outlined,
+                  title: l10n.tourReplay,
+                  subtitle: l10n.tourReplayDesc,
+                  onTap: () => _replayTour(context, ref),
                 ),
                 _SettingsRow(
                   icon: Icons.restart_alt,

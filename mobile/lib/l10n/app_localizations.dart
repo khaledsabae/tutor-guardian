@@ -5707,6 +5707,102 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اضغط هنا للتكرار: {count}'**
   String bedtimeTapToRepeat(Object count);
+
+  /// No description provided for @tourNext.
+  ///
+  /// In ar, this message translates to:
+  /// **'التالي'**
+  String get tourNext;
+
+  /// No description provided for @tourSkip.
+  ///
+  /// In ar, this message translates to:
+  /// **'تخطّي'**
+  String get tourSkip;
+
+  /// No description provided for @tourDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمام'**
+  String get tourDone;
+
+  /// No description provided for @tourTodayTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get tourTodayTitle;
+
+  /// No description provided for @tourTodayBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'من هنا يبدأ يومك.'**
+  String get tourTodayBody;
+
+  /// No description provided for @tourLearnTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'التعلّم'**
+  String get tourLearnTitle;
+
+  /// No description provided for @tourLearnBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'المسارات والدروس كلّها هنا.'**
+  String get tourLearnBody;
+
+  /// No description provided for @tourAssistantTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المساعد'**
+  String get tourAssistantTitle;
+
+  /// No description provided for @tourAssistantBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسأل في أي وقت، ونحن معك.'**
+  String get tourAssistantBody;
+
+  /// No description provided for @tourMoreTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزيد'**
+  String get tourMoreTitle;
+
+  /// No description provided for @tourMoreBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل شيء آخر تلاقيه هنا.'**
+  String get tourMoreBody;
+
+  /// No description provided for @tourFocusTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوتك التالية'**
+  String get tourFocusTitle;
+
+  /// No description provided for @tourFocusBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوتك التالية دائمًا هنا.'**
+  String get tourFocusBody;
+
+  /// No description provided for @tourReplay.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجولة التعريفية'**
+  String get tourReplay;
+
+  /// No description provided for @tourReplayDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'أعِد عرض الجولة عند العودة للشاشة الرئيسية'**
+  String get tourReplayDesc;
+
+  /// No description provided for @tourReplayQueued.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجولة هتظهر لما ترجع للشاشة الرئيسية.'**
+  String get tourReplayQueued;
 }
 
 class _AppLocalizationsDelegate

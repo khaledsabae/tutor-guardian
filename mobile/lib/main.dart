@@ -34,6 +34,7 @@ import 'features/routine/providers/child_mode_providers.dart';
 import 'features/routine/screens/habit_child_mode_screen.dart';
 import 'features/adhkar/services/notification_service.dart';
 import 'features/shell/root_scaffold.dart';
+import 'features/tour/tour_overlay.dart';
 import 'theme/app_theme.dart';
 import 'theme/design_tokens.dart';
 
@@ -126,7 +127,7 @@ class TutorGuardianApp extends ConsumerWidget {
 
     return MaterialApp(
       navigatorKey: appNavigatorKey,
-      navigatorObservers: [tgNavObserver],
+      navigatorObservers: [tgNavObserver, tourRouteObserver],
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),

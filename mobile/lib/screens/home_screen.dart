@@ -34,12 +34,15 @@ import '../theme/design_tokens.dart';
 import '../widgets/ui/noor_mascot.dart';
 
 class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key, required this.onGoToTab});
+  const HomeScreen({super.key, required this.onGoToTab, this.focusCardKey});
 
   /// Switches the root scaffold tab. Always pass a [RootTab] constant — a
   /// hard-coded index here is how both assistant buttons ended up opening the
   /// infant routine tracker.
   final ValueChanged<int> onGoToTab;
+
+  /// Attached to [TodayFocusCard] so the first-run tour can measure it.
+  final Key? focusCardKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -99,6 +102,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           TodayFocusCard(
+            key: focusCardKey,
             bundle: bundle,
             ageGroup: ageGroup,
             onStartFirstPath: () => onGoToTab(RootTab.learn),

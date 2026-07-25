@@ -947,5 +947,21 @@
   "reviewPromptLater": "لاحقًا",
   "reviewPromptNow": "قيّم الآن",
   "bedtimeAdhkarCounter": "الذكر {current} من {total}",
-  "bedtimeTapToRepeat": "اضغط هنا للتكرار: {count}"
+  "bedtimeTapToRepeat": "اضغط هنا للتكرار: {count}",
+  "tourNext": "التالي",
+  "tourSkip": "تخطّي",
+  "tourDone": "تمام",
+  "tourTodayTitle": "اليوم",
+  "tourTodayBody": "من هنا يبدأ يومك.",
+  "tourLearnTitle": "التعلّم",
+  "tourLearnBody": "المسارات والدروس كلّها هنا.",
+  "tourAssistantTitle": "المساعد",
+  "tourAssistantBody": "اسأل في أي وقت، ونحن معك.",
+  "tourMoreTitle": "المزيد",
+  "tourMoreBody": "كل شيء آخر تلاقيه هنا.",
+  "tourFocusTitle": "خطوتك التالية",
+  "tourFocusBody": "خطوتك التالية دائمًا هنا.",
+  "tourReplay": "الجولة التعريفية",
+  "tourReplayDesc": "أعِد عرض الجولة عند العودة للشاشة الرئيسية",
+  "tourReplayQueued": "الجولة هتظهر لما ترجع للشاشة الرئيسية."
 }

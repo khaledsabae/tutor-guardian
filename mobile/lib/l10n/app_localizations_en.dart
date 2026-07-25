@@ -3183,4 +3183,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String bedtimeTapToRepeat(Object count) {
     return 'Tap here to repeat: $count';
   }
+
+  @override
+  String get tourNext => 'Next';
+
+  @override
+  String get tourSkip => 'Skip';
+
+  @override
+  String get tourDone => 'Done';
+
+  @override
+  String get tourTodayTitle => 'Today';
+
+  @override
+  String get tourTodayBody => 'Your day starts here.';
+
+  @override
+  String get tourLearnTitle => 'Learn';
+
+  @override
+  String get tourLearnBody => 'All the paths and lessons live here.';
+
+  @override
+  String get tourAssistantTitle => 'Assistant';
+
+  @override
+  String get tourAssistantBody => 'Ask anything, anytime — we\'re with you.';
+
+  @override
+  String get tourMoreTitle => 'More';
+
+  @override
+  String get tourMoreBody => 'Everything else is right here.';
+
+  @override
+  String get tourFocusTitle => 'Your next step';
+
+  @override
+  String get tourFocusBody => 'Your next step is always here.';
+
+  @override
+  String get tourReplay => 'Guided tour';
+
+  @override
+  String get tourReplayDesc =>
+      'Replay the tour when you return to the home screen';
+
+  @override
+  String get tourReplayQueued =>
+      'The tour will appear when you go back to the home screen.';
 }

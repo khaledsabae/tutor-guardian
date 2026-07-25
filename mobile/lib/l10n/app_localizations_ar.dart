@@ -3149,4 +3149,52 @@ class AppLocalizationsAr extends AppLocalizations {
   String bedtimeTapToRepeat(Object count) {
     return 'اضغط هنا للتكرار: $count';
   }
+
+  @override
+  String get tourNext => 'التالي';
+
+  @override
+  String get tourSkip => 'تخطّي';
+
+  @override
+  String get tourDone => 'تمام';
+
+  @override
+  String get tourTodayTitle => 'اليوم';
+
+  @override
+  String get tourTodayBody => 'من هنا يبدأ يومك.';
+
+  @override
+  String get tourLearnTitle => 'التعلّم';
+
+  @override
+  String get tourLearnBody => 'المسارات والدروس كلّها هنا.';
+
+  @override
+  String get tourAssistantTitle => 'المساعد';
+
+  @override
+  String get tourAssistantBody => 'اسأل في أي وقت، ونحن معك.';
+
+  @override
+  String get tourMoreTitle => 'المزيد';
+
+  @override
+  String get tourMoreBody => 'كل شيء آخر تلاقيه هنا.';
+
+  @override
+  String get tourFocusTitle => 'خطوتك التالية';
+
+  @override
+  String get tourFocusBody => 'خطوتك التالية دائمًا هنا.';
+
+  @override
+  String get tourReplay => 'الجولة التعريفية';
+
+  @override
+  String get tourReplayDesc => 'أعِد عرض الجولة عند العودة للشاشة الرئيسية';
+
+  @override
+  String get tourReplayQueued => 'الجولة هتظهر لما ترجع للشاشة الرئيسية.';
 }

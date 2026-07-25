@@ -947,5 +947,21 @@
   "reviewPromptLater": "Later",
   "reviewPromptNow": "Rate now",
   "bedtimeAdhkarCounter": "Dhikr {current} of {total}",
-  "bedtimeTapToRepeat": "Tap here to repeat: {count}"
+  "bedtimeTapToRepeat": "Tap here to repeat: {count}",
+  "tourNext": "Next",
+  "tourSkip": "Skip",
+  "tourDone": "Done",
+  "tourTodayTitle": "Today",
+  "tourTodayBody": "Your day starts here.",
+  "tourLearnTitle": "Learn",
+  "tourLearnBody": "All the paths and lessons live here.",
+  "tourAssistantTitle": "Assistant",
+  "tourAssistantBody": "Ask anything, anytime — we're with you.",
+  "tourMoreTitle": "More",
+  "tourMoreBody": "Everything else is right here.",
+  "tourFocusTitle": "Your next step",
+  "tourFocusBody": "Your next step is always here.",
+  "tourReplay": "Guided tour",
+  "tourReplayDesc": "Replay the tour when you return to the home screen",
+  "tourReplayQueued": "The tour will appear when you go back to the home screen."
 }
