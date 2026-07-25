@@ -30,9 +30,10 @@ class NotificationService {
   static const _kNextMorningIndex = 'tg.adhkar_next_morning';
   static const _kNextEveningIndex = 'tg.adhkar_next_evening';
 
-  static const _morningId = 1001;
-  static const _eveningId = 1002;
-  static const _wirdId = 1003;
+  static const _morningBaseId = 1000;
+  static const _eveningBaseId = 2000;
+  static const _wirdId = 3000;
+  static const _daysToSchedule = 14;
 
   bool _initialized = false;
   String? pendingPayload;
@@ -176,11 +177,32 @@ class NotificationService {
     prefs ??= await SharedPreferences.getInstance();
     final hour = prefs.getInt(_kWirdHour) ?? 17;
     await _plugin.cancel(_wirdId);
-    await _scheduleOne(
-      id: _wirdId,
-      hour: hour,
-      title: '📖 ورد اليوم — المربي الذكي',
-      bodyOverride: 'حان وقت وردك اليومي من القرآن الكريم. تابع من حيث توقفت 🌿',
+    
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduled = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour);
+    if (scheduled.isBefore(now)) {
+      scheduled = scheduled.add(const Duration(days: 1));
+    }
+
+    const androidDetails = AndroidNotificationDetails(
+      'parenting_content_channel',
+      'تذكيرات تربوية',
+      channelDescription: 'آيات وأحاديث ونصائح تربوية يومية',
+      importance: Importance.high,
+      priority: Priority.high,
+      styleInformation: BigTextStyleInformation(''),
+    );
+
+    await _plugin.zonedSchedule(
+      _wirdId,
+      '📖 ورد اليوم — المربي الذكي',
+      'حان وقت وردك اليومي من القرآن الكريم. تابع من حيث توقفت 🌿',
+      scheduled,
+      const NotificationDetails(android: androidDetails),
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
     );
   }
 
@@ -207,70 +229,92 @@ class NotificationService {
     return await android.requestNotificationsPermission() ?? false;
   }
 
-  /// Schedule morning + evening parenting-content notifications.
+  /// Schedule morning + evening parenting-content notifications for the next [_daysToSchedule] days.
   Future<void> scheduleDaily({SharedPreferences? prefs}) async {
     prefs ??= await SharedPreferences.getInstance();
     final morningHour = prefs.getInt(_kMorningHour) ?? 6;
     final eveningHour = prefs.getInt(_kEveningHour) ?? 19;
 
-    // Morning: hadith or verse (inspirational). Evening: hadith or tip (practical).
-    final morning = _pickSequentialContent(prefs, allowedKinds: {'hadith', 'verse'}, prefKey: _kNextMorningIndex);
-    final evening = _pickSequentialContent(prefs, allowedKinds: {'hadith', 'tip'}, prefKey: _kNextEveningIndex);
-
-    // Cancel existing before re-scheduling.
-    await _plugin.cancel(_morningId);
-    await _plugin.cancel(_eveningId);
-
-    await _scheduleOne(
-      id: _morningId,
-      hour: morningHour,
-      content: morning,
-      title: '🌅 نصيحة تربوية — المربي الذكي',
-    );
-
-    await _scheduleOne(
-      id: _eveningId,
-      hour: eveningHour,
-      content: evening,
-      title: '🌙 تذكير تربوي — المربي الذكي',
-    );
-  }
-
-  /// Pick an item of [allowedKinds] sequentially to avoid any repetition until all are shown.
-  ParentingContent _pickSequentialContent(SharedPreferences prefs, {required Set<String> allowedKinds, required String prefKey}) {
-    final candidates = familyAdhkar
+    final morningCandidates = familyAdhkar
         .asMap()
         .entries
-        .where((e) => allowedKinds.contains(e.value.kind))
+        .where((e) => e.value.kind == 'hadith' || e.value.kind == 'verse')
         .map((e) => e.key)
         .toList();
 
-    int currentIndex = prefs.getInt(prefKey) ?? 0;
-    if (currentIndex >= candidates.length) {
-      currentIndex = 0; // Reset once we've gone through all
+    final eveningCandidates = familyAdhkar
+        .asMap()
+        .entries
+        .where((e) => e.value.kind == 'hadith' || e.value.kind == 'tip')
+        .map((e) => e.key)
+        .toList();
+
+    if (morningCandidates.isEmpty || eveningCandidates.isEmpty) return;
+
+    // Seed only — kept so existing installs don't jump position.
+    final morningSeed = prefs.getInt(_kNextMorningIndex) ?? 0;
+    final eveningSeed = prefs.getInt(_kNextEveningIndex) ?? 0;
+
+    // Cancel existing scheduled slots up to 30 days
+    for (int i = 0; i < 30; i++) {
+      await _plugin.cancel(_morningBaseId + i);
+      await _plugin.cancel(_eveningBaseId + i);
     }
 
-    final selectedIdx = candidates[currentIndex];
+    final now = tz.TZDateTime.now(tz.local);
 
-    // Increment index for the next time
-    prefs.setInt(prefKey, currentIndex + 1);
+    // Rotation is anchored to the calendar day, not to a stored counter.
+    // The counter version read the index but never wrote it back, so every
+    // reschedule restarted at the same place and only the first 14 items of
+    // each pool were ever delivered — 96% of the 731 items were unreachable.
+    // Day-anchoring also means opening the app ten times in a day changes
+    // nothing, and each day maps to exactly one item.
+    final epochDay = DateTime(now.year, now.month, now.day)
+        .difference(DateTime.utc(2020, 1, 1))
+        .inDays;
 
-    return familyAdhkar[selectedIdx];
+    // Compute each series' first slot once. Adding dayOffset to "today at H"
+    // and then pushing day 0 to tomorrow when H has passed made day 0 and
+    // day 1 land on the same instant — two morning notifications tomorrow.
+    var mBase = tz.TZDateTime(tz.local, now.year, now.month, now.day, morningHour);
+    if (mBase.isBefore(now)) mBase = mBase.add(const Duration(days: 1));
+    var eBase = tz.TZDateTime(tz.local, now.year, now.month, now.day, eveningHour);
+    if (eBase.isBefore(now)) eBase = eBase.add(const Duration(days: 1));
+
+    for (int dayOffset = 0; dayOffset < _daysToSchedule; dayOffset++) {
+      final mIdx = morningCandidates[
+          (morningSeed + epochDay + dayOffset) % morningCandidates.length];
+      final eIdx = eveningCandidates[
+          (eveningSeed + epochDay + dayOffset) % eveningCandidates.length];
+
+      final morningContent = familyAdhkar[mIdx];
+      final eveningContent = familyAdhkar[eIdx];
+
+      final mDate = mBase.add(Duration(days: dayOffset));
+      final eDate = eBase.add(Duration(days: dayOffset));
+
+      await _scheduleSpecific(
+        id: _morningBaseId + dayOffset,
+        scheduledDate: mDate,
+        title: '🌅 نصيحة تربوية — المربي الذكي',
+        content: morningContent,
+      );
+
+      await _scheduleSpecific(
+        id: _eveningBaseId + dayOffset,
+        scheduledDate: eDate,
+        title: '🌙 تذكير تربوي — المربي الذكي',
+        content: eveningContent,
+      );
+    }
   }
 
-  Future<void> _scheduleOne({
+  Future<void> _scheduleSpecific({
     required int id,
-    required int hour,
+    required tz.TZDateTime scheduledDate,
     required String title,
-    ParentingContent? content,
-    String? bodyOverride,
+    required ParentingContent content,
   }) async {
-    final now = tz.TZDateTime.now(tz.local);
-    var scheduled = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour);
-    if (scheduled.isBefore(now)) {
-      scheduled = scheduled.add(const Duration(days: 1));
-    }
-
     const androidDetails = AndroidNotificationDetails(
       'parenting_content_channel',
       'تذكيرات تربوية',
@@ -280,19 +324,17 @@ class NotificationService {
       styleInformation: BigTextStyleInformation(''),
     );
 
-    final body =
-        bodyOverride ?? '${content?.text ?? ''}\n— ${content?.source ?? ''}';
+    final body = '${content.text}\n— ${content.source}';
     await _plugin.zonedSchedule(
       id,
       title,
       body,
-      scheduled,
+      scheduledDate,
       const NotificationDetails(android: androidDetails),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
-      payload: content != null ? 'adhkar_${familyAdhkar.indexOf(content)}' : null,
+      payload: 'adhkar_${familyAdhkar.indexOf(content)}',
     );
   }
 
@@ -304,8 +346,10 @@ class NotificationService {
       await _requestPermission();
       await scheduleDaily(prefs: prefs);
     } else {
-      await _plugin.cancel(_morningId);
-      await _plugin.cancel(_eveningId);
+      for (int i = 0; i < 30; i++) {
+        await _plugin.cancel(_morningBaseId + i);
+        await _plugin.cancel(_eveningBaseId + i);
+      }
     }
   }
 
