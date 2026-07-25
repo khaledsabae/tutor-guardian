@@ -43,6 +43,12 @@ _PROTECTED_PREFIXES = ("/api/",)
 # AND story generation (unauthenticated, so otherwise a free 120/min DoS
 # vector against the model server).
 _AI_PREFIXES = ("/api/assistant", "/api/program/story")
+# App feedback is unauthenticated (a user whose session is broken must still be
+# able to report it) and accepts an 8MB voice note, so the general 120/min would
+# allow ~1GB/min of DB writes per IP — and, once Telegram alerts are on, 120
+# notifications a minute. A human writes feedback a handful of times at most.
+_FEEDBACK_PREFIXES = ("/api/feedback/app",)
+_FEEDBACK_LIMIT = int(os.environ.get("RATE_LIMIT_FEEDBACK_PER_MINUTE", "5"))
 _EXEMPT_PREFIXES = ("/api/health", "/api/healthz")
 _REDIS_URL = os.environ.get("REDIS_URL", "")
 
@@ -132,6 +138,9 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         # chat session can't exhaust the CRUD budget or vice versa.
         if path.startswith(_AI_PREFIXES):
             scope, limit = "ai", _LIMIT
+        elif path.startswith(_FEEDBACK_PREFIXES) and request.method == "POST":
+            # Reads (the admin listing) stay on the general budget.
+            scope, limit = "feedback", _FEEDBACK_LIMIT
         else:
             scope, limit = "api", _GENERAL_LIMIT
 
