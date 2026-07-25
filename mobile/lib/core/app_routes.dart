@@ -33,6 +33,7 @@ import '../features/games/data_defender/game_screen.dart';
 import '../features/games/emotion_maze/game_screen.dart';
 import '../features/games/healthy_hero/game_screen.dart';
 import '../features/games/shared/edu_game_models.dart';
+import '../features/games/screens/games_screen.dart';
 import '../features/games/shared/edu_game_shell.dart';
 import '../features/games/tree_of_deeds/game_screen.dart';
 import '../features/identity/identity_screen.dart';
@@ -106,6 +107,7 @@ abstract final class Screens {
   static const gameTreeOfDeeds = 'game_tree_of_deeds';
   static const gameEmotionMaze = 'game_emotion_maze';
   static const gameRunner = 'game_runner';
+  static const games = 'games';
 
   // Stories
   static const storyBookshelf = 'story_bookshelf';
@@ -211,6 +213,11 @@ abstract final class AppRoutes {
       _r(Screens.dataTable, (_) => DataTableScreen(url: url));
 
   // ── Games ───────────────────────────────────────────────────────────────
+  /// The games index. They were previously reachable only from inside a lesson
+  /// of the matching domain, which made them invisible to a parent who just
+  /// wanted to hand their child something to play.
+  static Route<void> games() => _r(Screens.games, (_) => const GamesScreen());
+
   static Route<void> gameDataDefender() =>
       _r(Screens.gameDataDefender, (_) => const DataDefenderGameScreen());
 

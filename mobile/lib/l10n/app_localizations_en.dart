@@ -66,6 +66,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hubAccount => 'My account';
 
   @override
+  String get helpTitle => 'Where do I find…?';
+
+  @override
+  String get helpSubtitle => 'Tap your question and we will take you there';
+
+  @override
+  String get helpWhereGames => 'Where are my child’s games?';
+
+  @override
+  String get helpWhereStories => 'Where are the bedtime stories?';
+
+  @override
+  String get helpHowAddChild => 'How do I add another child?';
+
+  @override
+  String get helpWhereQuran => 'Where is the Quran and daily wird?';
+
+  @override
+  String get helpWhereProgress => 'Where is my child’s daily tracking?';
+
+  @override
+  String get helpWhereBadges => 'Where are the badges and achievements?';
+
+  @override
+  String get helpHowBackup => 'How do I back up my progress?';
+
+  @override
+  String get helpHowContact => 'How do I contact you?';
+
+  @override
+  String get helpTooltip => 'Help';
+
+  @override
   String get navDailyTracker => 'Daily Tracker';
 
   @override

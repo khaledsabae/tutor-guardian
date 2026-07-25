@@ -46,11 +46,14 @@ class HomeShortcutsGrid extends StatelessWidget {
           analyticsId: 'shortcut_insights',
           route: AppRoutes.parentingInsights,
         ),
+        // Games rather than favourites: this is the thing a parent most often
+        // opens the app to hand over, and it used to be three levels deep
+        // inside a lesson. Favourites stay in the hub.
         _ShortcutTile(
-          emoji: '⭐',
-          label: l10n.favoritesTitle,
-          analyticsId: 'shortcut_favorites',
-          route: AppRoutes.favorites,
+          emoji: '🎮',
+          label: l10n.educationalGames,
+          analyticsId: 'shortcut_games',
+          route: AppRoutes.games,
         ),
       ],
     );

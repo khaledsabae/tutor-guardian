@@ -66,6 +66,39 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hubAccount => 'حسابي';
 
   @override
+  String get helpTitle => 'أين أجد…؟';
+
+  @override
+  String get helpSubtitle => 'اضغط على سؤالك ونوصّلك فورًا';
+
+  @override
+  String get helpWhereGames => 'أين ألعاب طفلي؟';
+
+  @override
+  String get helpWhereStories => 'أين قصص ما قبل النوم؟';
+
+  @override
+  String get helpHowAddChild => 'كيف أضيف طفلًا آخر؟';
+
+  @override
+  String get helpWhereQuran => 'أين الورد والقرآن؟';
+
+  @override
+  String get helpWhereProgress => 'أين متابعة يوم طفلي؟';
+
+  @override
+  String get helpWhereBadges => 'أين الشعارات والإنجازات؟';
+
+  @override
+  String get helpHowBackup => 'كيف أحفظ تقدمي؟';
+
+  @override
+  String get helpHowContact => 'كيف أراسلكم؟';
+
+  @override
+  String get helpTooltip => 'مساعدة';
+
+  @override
   String get navDailyTracker => 'حساب اليوم';
 
   @override

@@ -11,9 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/analytics.dart';
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../program/providers/program_providers.dart';
 import '../data/hub_catalog.dart';
+import '../widgets/help_sheet.dart';
 import '../widgets/hub_group_card.dart';
 
 class HubScreen extends ConsumerStatefulWidget {
@@ -39,7 +41,18 @@ class _HubScreenState extends ConsumerState<HubScreen> {
     final ageGroup = ref.watch(selectedAgeGroupProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.hubTitle)),
+      appBar: AppBar(
+        title: Text(l10n.hubTitle),
+        actions: [
+          // The hub is always one tap away, so help is always two — without
+          // costing an action slot on the home screen.
+          IconButton(
+            tooltip: l10n.helpTooltip,
+            icon: const Icon(Icons.help_outline),
+            onPressed: () => showHelpSheet(context, Screens.hub),
+          ),
+        ],
+      ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
         children: [

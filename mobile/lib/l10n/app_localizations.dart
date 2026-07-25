@@ -212,6 +212,72 @@ abstract class AppLocalizations {
   /// **'حسابي'**
   String get hubAccount;
 
+  /// No description provided for @helpTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين أجد…؟'**
+  String get helpTitle;
+
+  /// No description provided for @helpSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط على سؤالك ونوصّلك فورًا'**
+  String get helpSubtitle;
+
+  /// No description provided for @helpWhereGames.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين ألعاب طفلي؟'**
+  String get helpWhereGames;
+
+  /// No description provided for @helpWhereStories.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين قصص ما قبل النوم؟'**
+  String get helpWhereStories;
+
+  /// No description provided for @helpHowAddChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أضيف طفلًا آخر؟'**
+  String get helpHowAddChild;
+
+  /// No description provided for @helpWhereQuran.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين الورد والقرآن؟'**
+  String get helpWhereQuran;
+
+  /// No description provided for @helpWhereProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين متابعة يوم طفلي؟'**
+  String get helpWhereProgress;
+
+  /// No description provided for @helpWhereBadges.
+  ///
+  /// In ar, this message translates to:
+  /// **'أين الشعارات والإنجازات؟'**
+  String get helpWhereBadges;
+
+  /// No description provided for @helpHowBackup.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أحفظ تقدمي؟'**
+  String get helpHowBackup;
+
+  /// No description provided for @helpHowContact.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أراسلكم؟'**
+  String get helpHowContact;
+
+  /// No description provided for @helpTooltip.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعدة'**
+  String get helpTooltip;
+
   /// No description provided for @navDailyTracker.
   ///
   /// In ar, this message translates to:

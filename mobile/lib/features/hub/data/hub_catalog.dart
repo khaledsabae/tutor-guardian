@@ -152,33 +152,18 @@ final List<HubGroup> kHubGroups = [
       ),
     ],
   ),
+  // The individual games live behind one entry rather than five tiles: the hub
+  // is an index, and five near-identical rows here crowded out everything else
+  // in it. GamesScreen is the index for the games themselves.
   HubGroup(
     id: 'games',
     title: (l10n) => l10n.hubGroupGames,
     items: [
       HubItem(
-        id: 'game_data_defender',
-        emoji: '🛡️',
-        label: (l10n, _) => l10n.dataDefender,
-        route: AppRoutes.gameDataDefender,
-      ),
-      HubItem(
-        id: 'game_healthy_hero',
-        emoji: '🥗',
-        label: (l10n, _) => l10n.healthyHero,
-        route: AppRoutes.gameHealthyHero,
-      ),
-      HubItem(
-        id: 'game_tree_of_deeds',
-        emoji: '🌳',
-        label: (l10n, _) => l10n.treeOfDeeds,
-        route: AppRoutes.gameTreeOfDeeds,
-      ),
-      HubItem(
-        id: 'game_emotion_maze',
-        emoji: '🎭',
-        label: (l10n, _) => l10n.emotionMaze,
-        route: AppRoutes.gameEmotionMaze,
+        id: 'games',
+        emoji: '🎮',
+        label: (l10n, _) => l10n.educationalGames,
+        route: AppRoutes.games,
       ),
       HubItem(
         id: 'quiz_game',
