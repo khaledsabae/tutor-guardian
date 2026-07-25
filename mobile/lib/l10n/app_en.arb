@@ -669,6 +669,8 @@
   "quranMemHint": "Mark completed surahs — we celebrate every step",
   "quranMemFirstSurah": "First Surah Memorized — {surah}",
   "feedbackTitle": "Share Your Feedback",
+  "feedbackRepliesTitle": "Replies to you 💬",
+  "feedbackReplyFrom": "The Almorabbi team",
   "feedbackDesc": "Your opinion matters and goes straight to the Al-Murabbi team. Write your note or record it as a voice message.",
   "feedbackMessageLabel": "Your Feedback",
   "feedbackMessageHint": "Write your suggestion or the issue you encountered…",

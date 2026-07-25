@@ -2187,6 +2187,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get feedbackTitle => 'شاركنا رأيك';
 
   @override
+  String get feedbackRepliesTitle => 'ردودنا عليك 💬';
+
+  @override
+  String get feedbackReplyFrom => 'فريق المربّي';
+
+  @override
   String get feedbackDesc =>
       'رأيك يهمنا ويصل مباشرةً لفريق المربي الذكي. اكتب ملاحظتك أو سجّلها صوتياً.';
 

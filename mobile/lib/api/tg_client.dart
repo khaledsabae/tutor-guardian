@@ -415,6 +415,51 @@ class TgClient {
     return body['id'] as String;
   }
 
+  /// Replies Khaled has written back to this device's feedback.
+  ///
+  /// Authenticated: the server reads the device id from the token, so there is
+  /// no parameter to spoof. Returns [] rather than throwing when there is no
+  /// session yet — an empty inbox and a broken session look the same to the
+  /// user, and neither is worth an error banner on a screen they opened to
+  /// complain about something else.
+  Future<List<FeedbackReply>> listFeedbackReplies() async {
+    final (_, tok) = await _auth.readSession();
+    if (tok == null) return const [];
+    try {
+      final resp = await _http
+          .get(
+            Uri.parse('$_baseUrl/api/feedback/replies'),
+            headers: {'Authorization': 'Bearer $tok'},
+          )
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) return const [];
+      final body =
+          jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      return (body['items'] as List<dynamic>? ?? const [])
+          .map((e) => FeedbackReply.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } catch (_) {
+      return const [];
+    }
+  }
+
+  /// Best-effort "I've seen it". Never throws: failing to clear a badge must
+  /// not surface as an error.
+  Future<void> markFeedbackReplyRead(String replyId) async {
+    final (_, tok) = await _auth.readSession();
+    if (tok == null) return;
+    try {
+      await _http
+          .post(
+            Uri.parse('$_baseUrl/api/feedback/replies/$replyId/read'),
+            headers: {'Authorization': 'Bearer $tok'},
+          )
+          .timeout(AppConfig.httpTimeout);
+    } catch (_) {
+      // ignore
+    }
+  }
+
   /// "1.0.28+73", or null if the platform channel is unavailable (tests).
   /// Never throws — a missing version must not block a bug report.
   Future<String?> _appVersion() async {

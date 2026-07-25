@@ -4034,6 +4034,18 @@ abstract class AppLocalizations {
   /// **'شاركنا رأيك'**
   String get feedbackTitle;
 
+  /// No description provided for @feedbackRepliesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ردودنا عليك 💬'**
+  String get feedbackRepliesTitle;
+
+  /// No description provided for @feedbackReplyFrom.
+  ///
+  /// In ar, this message translates to:
+  /// **'فريق المربّي'**
+  String get feedbackReplyFrom;
+
   /// No description provided for @feedbackDesc.
   ///
   /// In ar, this message translates to:

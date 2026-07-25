@@ -669,6 +669,8 @@
   "quranMemHint": "علّم السور التي أتمّها — نحتفل بكل خطوة",
   "quranMemFirstSurah": "حفظ أول سورة — سورة {surah}",
   "feedbackTitle": "شاركنا رأيك",
+  "feedbackRepliesTitle": "ردودنا عليك 💬",
+  "feedbackReplyFrom": "فريق المربّي",
   "feedbackDesc": "رأيك يهمنا ويصل مباشرةً لفريق المربي الذكي. اكتب ملاحظتك أو سجّلها صوتياً.",
   "feedbackMessageLabel": "ملاحظتك",
   "feedbackMessageHint": "اكتب اقتراحك أو المشكلة التي واجهتك…",

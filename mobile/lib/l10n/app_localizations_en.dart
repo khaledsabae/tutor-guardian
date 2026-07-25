@@ -2215,6 +2215,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedbackTitle => 'Share Your Feedback';
 
   @override
+  String get feedbackRepliesTitle => 'Replies to you 💬';
+
+  @override
+  String get feedbackReplyFrom => 'The Almorabbi team';
+
+  @override
   String get feedbackDesc =>
       'Your opinion matters and goes straight to the Al-Murabbi team. Write your note or record it as a voice message.';
 

@@ -78,6 +78,15 @@ class DeepLinkHandler {
       return;
     }
 
+    // Feedback reply: /inbox — sent as `data.link` on the push that fires when
+    // Khaled answers a piece of feedback. The replies render at the top of the
+    // feedback screen, so that is where the notification lands.
+    if (path == '/inbox') {
+      navigator.popUntil((route) => route.isFirst);
+      navigator.push(AppRoutes.feedback());
+      return;
+    }
+
     // Lesson deep link: /l/{lesson_id}
     final lessonMatch = RegExp(r'^/l/([^/]+)$').firstMatch(path);
     if (lessonMatch != null) {
