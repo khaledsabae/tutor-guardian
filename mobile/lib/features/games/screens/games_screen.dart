@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../core/analytics.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/directional_chevron.dart';
 import '../games_catalog.dart';
 
 class GamesScreen extends StatelessWidget {
@@ -72,7 +73,7 @@ class _GameCard extends StatelessWidget {
                       ),
                 ),
               ),
-              const Icon(Icons.chevron_left, color: Dt.inkSoft),
+              const DirectionalChevron(size: 22),
             ],
           ),
         ),

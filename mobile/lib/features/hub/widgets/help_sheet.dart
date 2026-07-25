@@ -19,6 +19,7 @@ import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/directional_chevron.dart';
 
 class _Intent {
   const _Intent(this.id, this.emoji, this.question, this.route);
@@ -132,7 +133,7 @@ class _IntentRow extends StatelessWidget {
                   ),
                 ),
               ),
-              const Icon(Icons.chevron_left, size: 18, color: Dt.inkSoft),
+              const DirectionalChevron(),
             ],
           ),
         ),
