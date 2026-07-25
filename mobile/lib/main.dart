@@ -26,7 +26,6 @@ import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
 import 'features/onboarding/screens/update_splash_screen.dart';
 import 'features/program/providers/progress_providers.dart';
-import 'features/program/screens/paths_screen.dart';
 import 'features/deeplink/deep_link_handler.dart';
 import 'features/push/push_service.dart';
 import 'features/referral/referral_service.dart';
