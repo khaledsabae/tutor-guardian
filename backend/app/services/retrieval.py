@@ -7,6 +7,9 @@ Optimizations (v2):
   - LRU cache for common (domain + age_group) queries
   - Higher top_k on the first query to reduce fallback need
 """
+import hashlib
+import logging
+import shutil
 import threading
 from functools import lru_cache
 from pathlib import Path
@@ -19,11 +22,17 @@ from app.core.taxonomy import canonical_domain, age_equivalents
 from app.models.knowledge import KnowledgeUnit
 from app.services.knowledge_loader import load_default_knowledge_units
 
+logger = logging.getLogger(__name__)
+
 CHROMA_PERSIST_DIR = (
     Path(__file__).resolve().parents[3] / "knowledge_base" / "chroma_db"
 )
 
 COLLECTION_NAME = "knowledge_units"
+
+# Purge and rebuild when the HNSW graph carries this many times more vectors
+# than the collection has live documents (tombstones are never reclaimed).
+_HNSW_BLOAT_FACTOR = 3
 
 # Multilingual embedding — supports Arabic out of the box (~250MB)
 EMBEDDING_MODEL = "intfloat/multilingual-e5-small"
@@ -110,20 +119,118 @@ def _unit_metadata(unit: KnowledgeUnit) -> dict:
     }
 
 
-def index_knowledge_units(units: list[KnowledgeUnit] | None = None) -> None:
+def _fingerprint(units: list[KnowledgeUnit]) -> str:
+    """Content hash of the unit set — lets us skip a rebuild when nothing changed."""
+    h = hashlib.sha256()
+    for unit in sorted(units, key=lambda u: u.id):
+        h.update(unit.id.encode())
+        h.update(b"\0")
+        h.update(unit.text_simplified.encode())
+        h.update(b"\0")
+        h.update(repr(sorted(_unit_metadata(unit).items())).encode())
+        h.update(b"\x01")
+    return h.hexdigest()
+
+
+def _fingerprint_path() -> Path:
+    return CHROMA_PERSIST_DIR / "_content_fingerprint"
+
+
+def _hnsw_is_bloated(collection: chromadb.Collection) -> bool:
+    """True when the HNSW graph holds far more vectors than the collection has
+    documents.
+
+    `collection.delete()` only tombstones vectors — the graph never reclaims
+    them. Re-indexing on every process start therefore grew the graph without
+    bound (observed in prod: 1,122 documents against 245,557 graph elements).
+    Once the live fraction gets small enough, filtered KNN can no longer reach
+    `n_results` reachable neighbours within `ef` and hnswlib raises
+    "Cannot return the results in a contigious 2D array", which surfaced to
+    parents as "لا توجد معلومات كافية".
+    """
+    try:
+        from chromadb.segment import VectorReader
+
+        seg = collection._client._manager.get_segment(collection.id, VectorReader)
+        graph_elements = seg._index.get_current_count()
+    except Exception:  # noqa: BLE001 — introspection is best-effort
+        return False
+    live = collection.count()
+    if not live or not graph_elements:
+        return False
+    if graph_elements > live * _HNSW_BLOAT_FACTOR:
+        logger.warning(
+            "HNSW graph bloated: %d elements for %d documents — purging index",
+            graph_elements, live,
+        )
+        return True
+    return False
+
+
+def _index_matches(
+    collection: chromadb.Collection, units: list[KnowledgeUnit], fingerprint: str
+) -> bool:
+    """True when the persisted index already holds exactly these units."""
+    path = _fingerprint_path()
+    if not path.exists() or collection.count() != len(units):
+        return False
+    try:
+        return path.read_text().strip() == fingerprint
+    except OSError:
+        return False
+
+
+def _purge_persist_dir() -> None:
+    """Empty the on-disk index so the next build starts from a fresh graph.
+
+    Clears the directory's *contents* rather than the directory itself — in
+    production it is a docker volume mount point, and rmdir on it fails with
+    EBUSY.
+    """
+    global _collection
+    _collection = None
+    if not CHROMA_PERSIST_DIR.exists():
+        CHROMA_PERSIST_DIR.mkdir(parents=True, exist_ok=True)
+        return
+    for entry in CHROMA_PERSIST_DIR.iterdir():
+        if entry.is_dir() and not entry.is_symlink():
+            shutil.rmtree(entry)
+        else:
+            entry.unlink()
+
+
+def index_knowledge_units(
+    units: list[KnowledgeUnit] | None = None, *, force: bool = False
+) -> None:
     """
     Embed and store knowledge units in ChromaDB.
-    Clears and rebuilds the collection each call (idempotent).
+
+    Skips the rebuild entirely when the on-disk index already matches the
+    content fingerprint. This is what keeps the HNSW graph from growing on
+    every process start — see `_hnsw_is_bloated`. Pass force=True to rebuild
+    from a clean graph regardless.
     """
     if units is None:
         units = load_default_knowledge_units()
 
+    fingerprint = _fingerprint(units)
     collection = _get_collection()
 
-    # Clear existing data
-    existing_ids = collection.get()["ids"]
-    if existing_ids:
-        collection.delete(ids=existing_ids)
+    if not force:
+        if _hnsw_is_bloated(collection):
+            force = True
+        elif _index_matches(collection, units, fingerprint):
+            logger.info("Knowledge index up to date (%d units) — skipping rebuild", len(units))
+            return
+
+    if force:
+        # A tombstoned graph can't be repaired in place; start from empty disk.
+        _purge_persist_dir()
+        collection = _get_collection()
+    else:
+        existing_ids = collection.get()["ids"]
+        if existing_ids:
+            collection.delete(ids=existing_ids)
 
     # Batch insert — embedding happens automatically via the collection's EF
     ids = [unit.id for unit in units]
@@ -136,6 +243,8 @@ def index_knowledge_units(units: list[KnowledgeUnit] | None = None) -> None:
         documents=documents,
         metadatas=metadatas,
     )
+    _fingerprint_path().write_text(fingerprint)
+    logger.info("Knowledge index built: %d units", len(units))
 
 
 def _query(collection, query_text: str, where_filter: dict, top_k: int) -> list[dict]:
@@ -156,7 +265,15 @@ def _query(collection, query_text: str, where_filter: dict, top_k: int) -> list[
             {"unit_id": i, "document": d, "metadata": m, "distance": dist}
             for i, d, m, dist in zip(ids, docs, metas, dists)
         ]
-    except Exception:
+    except Exception as exc:  # noqa: BLE001 — a broken leg must not kill the request
+        # Never swallow this silently: an empty list here is indistinguishable
+        # from "no matching knowledge", and the router turns that into
+        # "لا توجد معلومات كافية" — a plausible-looking wrong answer that hid a
+        # corrupt HNSW graph in production for weeks.
+        logger.error(
+            "Vector query failed (filter=%s, top_k=%d): %s",
+            where_filter, top_k, exc, exc_info=True,
+        )
         return []
 
 

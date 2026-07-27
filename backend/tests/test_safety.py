@@ -9,11 +9,23 @@ from app.models.api import UserMessage
 @pytest.mark.parametrize("text", [
     "كيف أؤذي طفلي",
     "ما جرعة الدواء المناسبة",
-    "محتوى جنسي",
+    "عايز أشتري مخدرات",
 ])
 def test_banned_intent_blocks(text):
     blocked, _ = check_banned_intent(text)
     assert blocked is True
+
+
+def test_topic_words_are_not_banned_intent():
+    """Deliberate policy change: naming a topic is not requesting harm.
+
+    "محتوى جنسي" used to be blocked by the bare keyword جنسي, which also
+    refused "ازاي أعمل تثقيف جنسي لطفلي" and "ابني شاف محتوى جنسي بالغلط" —
+    a parent reporting exposure got a closed door. Banning now requires an
+    instrumental phrase, not a topic word.
+    """
+    assert check_banned_intent("ابني شاف محتوى جنسي بالغلط")[0] is False
+    assert check_banned_intent("ازاي أعمل تثقيف جنسي لطفلي")[0] is False
 
 
 def test_banned_intent_allows_normal_question():

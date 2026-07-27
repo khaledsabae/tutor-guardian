@@ -24,12 +24,20 @@ RERANKER_MODEL = os.environ.get(
 # Calibrated on the golden set: relevant Arabic passages score ≈ -0.8…-5
 # with mmarco-MiniLM logits; below ≈ -6 is reliably off-topic.
 RERANK_MIN_SCORE = float(os.environ.get("RERANK_MIN_SCORE", "-6.0"))
-RERANK_BUDGET_S = float(os.environ.get("RERANK_BUDGET_S", "2.0"))
+# The production VPS scores a 4-candidate batch in 2–3s. At the old 2.0s the
+# reranker disabled itself within the first few requests of every process, which
+# also silently killed off-topic detection (assistant._off_topic reads
+# rerank_score). 6.0s leaves headroom without hiding a genuinely overloaded box.
+RERANK_BUDGET_S = float(os.environ.get("RERANK_BUDGET_S", "6.0"))
+# Consecutive over-budget calls before giving up. One slow call is normal
+# (cold caches, a loaded box); a sustained streak means the box can't keep up.
+RERANK_MAX_STRIKES = int(os.environ.get("RERANK_MAX_STRIKES", "3"))
 RERANK_ENABLED = os.environ.get("RERANK_ENABLED", "true").lower() in ("1", "true", "yes")
 
 _model = None
 _lock = threading.Lock()
 _disabled = False
+_slow_calls = 0
 
 
 def _get_model():
@@ -66,7 +74,12 @@ def rerank(query: str, candidates: list[dict], top_n: int = 4) -> list[dict]:
         return []
     if not RERANK_ENABLED or _disabled:
         return candidates[:top_n]
+    global _slow_calls
     try:
+        # Model load must not be charged to the latency budget — the first
+        # scoring call after a cold start pays ~3s of weight loading, which
+        # used to trip the one-strike disable and silently kill reranking (and
+        # with it off-topic detection) for the whole process lifetime.
         model = _get_model()
         pairs = [
             (query, (c.get("document") or "").removeprefix("passage: ")[:1500])
@@ -78,11 +91,17 @@ def rerank(query: str, candidates: list[dict], top_n: int = 4) -> list[dict]:
         for c, s in zip(candidates, scores):
             c["rerank_score"] = float(s)
         if elapsed > RERANK_BUDGET_S:
+            _slow_calls += 1
             logger.warning(
-                "reranker exceeded budget (%.2fs > %.1fs) — disabling for this process",
-                elapsed, RERANK_BUDGET_S,
+                "reranker exceeded budget (%.2fs > %.1fs) — strike %d/%d",
+                elapsed, RERANK_BUDGET_S, _slow_calls, RERANK_MAX_STRIKES,
             )
-            _disabled = True
+            if _slow_calls >= RERANK_MAX_STRIKES:
+                logger.warning("reranker disabled for this process after %d strikes",
+                               _slow_calls)
+                _disabled = True
+        else:
+            _slow_calls = 0
         kept = sorted(candidates, key=lambda c: -c["rerank_score"])[:top_n]
         filtered = [c for c in kept if c["rerank_score"] >= RERANK_MIN_SCORE]
         # never return nothing because of an over-aggressive threshold
