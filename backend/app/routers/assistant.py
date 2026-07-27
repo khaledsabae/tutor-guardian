@@ -24,7 +24,9 @@ from app.services.llm_service import (
 from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
 from app.services.intent_guard import check_banned_intent, check_emergency_keywords
-from app.services.domain_classifier import classify_domains, matched_fast_path
+from app.services.domain_classifier import (
+    classify_domains, is_uncertain, matched_fast_path,
+)
 from app.services.tier_router import choose_tier
 from app.services.privacy import redact_for_cloud
 from app.services import answer_cache
@@ -44,6 +46,21 @@ _PIVOT_FALLBACK = (
     "اجعله نشاطاً تستكشفانه معاً، فالمشاركة في أي نشاط يومي تقوّي الرابطة بينكما "
     "وتنمّي فضوله ومهاراته."
 )
+
+
+def _label_domain(domains: list[str], units: list[dict]) -> str:
+    """The domain the reply is labelled (and guardrailed) with.
+
+    Normally the classifier's top domain. But when classification FAILED we
+    deliberately searched every domain instead of guessing one, so domains[0]
+    carries no information — the label must come from the evidence we actually
+    retrieved (the best reranked unit), never from an arbitrary list position.
+    """
+    if not domains:
+        return "medical"
+    if is_uncertain(domains) and units:
+        return units[0].get("source_domain") or domains[0]
+    return domains[0]
 
 
 def _off_topic(units: list[dict]) -> tuple[bool, float | None]:
@@ -118,19 +135,21 @@ async def draft_reply(request: Request, user_message: UserMessage):
         history = await asyncio.to_thread(store.get_history, session_id, limit=6)
     else:
         history = user_message.conversation_history or []
-    # classify_domains can make a sync LLM call (up to 45s) on a fast-path miss.
+    # classify_domains can make a sync LLM call (seconds) on a fast-path miss.
     detected_domains = await asyncio.to_thread(classify_domains, query_text)
     is_general = detected_domains == ["general"]
     logger.info("Auto-detected domains: %s", detected_domains)
 
-    primary_domain = detected_domains[0] if detected_domains else "medical"
+    primary_domain = _label_domain(detected_domains, [])
     severity = user_message.severity or "خفيف"
 
     # ── Step 3b: Pre-cache check ─────────────────────────────────────
+    # Skipped when classification failed: the cache key contains the domain,
+    # so looking up under a guessed one can only mislead.
     first_question = not any(
         getattr(t, "role", "") == "assistant" for t in history
     )
-    if first_question and not is_general:
+    if first_question and not is_general and not is_uncertain(detected_domains):
         decision = evaluate_guardrails(primary_domain, severity, policies)
         if not decision["force_fallback"]:
             cached = await asyncio.to_thread(
@@ -171,6 +190,9 @@ async def draft_reply(request: Request, user_message: UserMessage):
             return units
 
         retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+
+    # Re-label from the retrieved evidence when classification was uncertain.
+    primary_domain = _label_domain(detected_domains, retrieved_units)
 
     # ── Step 5: LLM generation → fallback to retrieval_only ──────────
     mode: str = "retrieval_only"
@@ -361,7 +383,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     detected_domains = await asyncio.to_thread(classify_domains, query_text)
     is_general = detected_domains == ["general"]
 
-    primary_domain = detected_domains[0] if detected_domains else "medical"
+    primary_domain = _label_domain(detected_domains, [])
     severity = user_message.severity or "خفيف"
 
     # First question in the session? (no assistant turns yet). Only then may
@@ -371,8 +393,8 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         getattr(t, "role", "") == "assistant" for t in history
     )
 
-    # ── Step 3b: Pre-cache check ─────────────────────────────────────
-    if first_question and not is_general:
+    # ── Step 3b: Pre-cache check (skipped on a guessed domain — see /draft) ──
+    if first_question and not is_general and not is_uncertain(detected_domains):
         decision = evaluate_guardrails(primary_domain, severity, policies)
         if not decision["force_fallback"]:
             cached = await asyncio.to_thread(
@@ -407,6 +429,9 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             log_retrieval(query_text, detected_domains, rewritten, units)
             return units
         retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+
+    # Re-label from the retrieved evidence when classification was uncertain.
+    primary_domain = _label_domain(detected_domains, retrieved_units)
 
     score_off_topic, _top_rerank = _off_topic(retrieved_units)
     off_topic = is_general or score_off_topic

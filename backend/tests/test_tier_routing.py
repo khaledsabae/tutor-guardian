@@ -51,8 +51,7 @@ def _cloud_on(monkeypatch):
                         azure_endpoint="https://x", azure_api_key="k"),
     )
     # reset breaker state
-    tier_router._consecutive_failures = 0
-    tier_router._circuit_open_until = 0.0
+    tier_router._cloud_breaker.reset()
     yield
 
 
@@ -93,7 +92,7 @@ def test_circuit_breaker_opens_after_failures(_cloud_on):
     tier, reason = tier_router.choose_tier("سؤال", ["fiqh"], "شديد", [])
     assert (tier, reason) == ("local_fast", "cloud_circuit_open")
     # success resets after cool-down — simulate by clearing the window
-    tier_router._circuit_open_until = 0.0
+    tier_router._cloud_breaker.reset()
     tier_router.record_cloud_result(True)
     tier, _ = tier_router.choose_tier("سؤال", ["fiqh"], "شديد", [])
     assert tier == "cloud_quality"

@@ -23,6 +23,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import os
 import sqlite3
 import time
 from dataclasses import dataclass
@@ -32,6 +33,7 @@ from typing import Iterator, Protocol
 import requests
 
 from app.config.llm_config import LLM
+from app.core.circuit_breaker import CircuitBreaker
 
 logger = logging.getLogger(__name__)
 
@@ -385,6 +387,106 @@ def _monthly_tokens_used_cached(provider_name: str) -> int:
     return used
 
 
+def primary_budget_available(provider_name: str) -> bool:
+    """Soft monthly spend ceiling on the PAID primary provider.
+
+    Shared by the chat path (AIGateway._primary_within_budget) and the
+    auxiliary path (aux_cloud_provider) so both spend from ONE wallet against
+    ONE ceiling — a classifier that had its own budget would be an invisible
+    second bill.
+
+    Fails OPEN on an unreadable telemetry DB: unlike the optional safety valve
+    (which fails closed), the primary is the app's main way of answering at
+    all, and broken telemetry must not silence it.
+    """
+    cap = LLM.deepseek_primary_monthly_token_cap
+    if cap <= 0:
+        return True  # 0 disables the ceiling
+    used = _monthly_tokens_used_cached(provider_name)
+    if used >= _BUDGET_UNKNOWN:
+        return True  # telemetry unreadable — fail OPEN, see docstring
+    if used >= cap:
+        logger.warning(
+            "primary provider budget exhausted (%d/%d tokens this month) — "
+            "falling back to the local chain",
+            used, cap,
+        )
+        return False
+    return True
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Auxiliary (non-chat) call sites — classifier, query rewriter
+# ─────────────────────────────────────────────────────────────────────────────
+# Both make ONE short sync LLM call each. They must follow the configured
+# primary provider — a call site pinned to Ollama keeps hammering a host the
+# main path has already abandoned (that is exactly how a dead home server cost
+# 45s per classification while generation itself ran on DeepSeek in 5s) — but
+# they must NOT go through AIGateway.generate(): it is async, retries with
+# backoff, and walks a fallback chain whose timeouts total minutes. For a
+# 60-token side call the right shape is one attempt, short timeout, no
+# fallback: failing fast beats answering slowly.
+AUX_TIMEOUT_S = int(os.environ.get("AUX_LLM_TIMEOUT_S", "8"))
+
+# ONE breaker for the whole auxiliary tier: the classifier and the rewriter
+# talk to the same host, so once either has proved it dead the other must not
+# pay the timeout again to re-prove it. Short cool-down — a home server that
+# just woke up should be picked up again within minutes, not half an hour.
+aux_breaker = CircuitBreaker("auxiliary LLM", failure_threshold=2, cooldown_seconds=120)
+
+# Deliberately the SAME telemetry identity as the gateway primary: auxiliary
+# tokens then count against the same monthly cap and show up in the same bill.
+# The `tier` column is what tells the call sites apart.
+_AUX_PRIMARY_NAME = "deepseek"
+
+
+def aux_cloud_provider(*, timeout: int = AUX_TIMEOUT_S) -> "OpenAIChatProvider | None":
+    """The paid primary for a short auxiliary call, or None to stay local.
+
+    None means: DeepSeek isn't the configured primary, or the shared monthly
+    ceiling is spent, or the client can't be built — in every case the caller
+    falls back to its own local Ollama path.
+    """
+    if not (LLM.primary_provider == "deepseek" and LLM.deepseek_api_key):
+        return None
+    if not primary_budget_available(_AUX_PRIMARY_NAME):
+        return None
+    try:
+        return OpenAIChatProvider(
+            base_url=LLM.deepseek_base_url, api_key=LLM.deepseek_api_key,
+            model=LLM.deepseek_model, timeout=timeout, name=_AUX_PRIMARY_NAME,
+        )
+    except Exception as e:  # missing openai pkg / bad config — degrade to local
+        logger.warning("auxiliary cloud provider unavailable: %s", e)
+        return None
+
+
+def aux_generate(provider: LLMProvider, prompt: str, *,
+                 options: dict, tier: str) -> str | None:
+    """Run ONE auxiliary call. Returns the text, or None on any failure.
+
+    Never raises and never retries — the caller's own degraded path is cheaper
+    than a second attempt. Every call is logged to llm_calls (paid auxiliary
+    spend is as visible as chat spend) and reported to `aux_breaker`.
+    """
+    model = getattr(provider, "model", "unknown")
+    start = time.monotonic()
+    try:
+        data = provider.generate(prompt, options=options)
+    except Exception as e:
+        _log_call(provider.name, model, int((time.monotonic() - start) * 1000),
+                  None, None, streamed=False, ok=False, tier=tier)
+        aux_breaker.record(False)
+        logger.warning("auxiliary %s call failed: %s", tier, e)
+        return None
+    latency = int((time.monotonic() - start) * 1000)
+    _log_call(provider.name, model, latency,
+              data.get("prompt_eval_count"), data.get("eval_count"),
+              streamed=False, ok=True, tier=tier)
+    aux_breaker.record(True)
+    return (data.get("response") or "").strip()
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Gateway
 # ─────────────────────────────────────────────────────────────────────────────
@@ -480,36 +582,18 @@ class AIGateway:
             return None
 
     def _primary_within_budget(self) -> bool:
-        """Soft monthly spend ceiling on the PAID primary provider.
+        """Is the paid primary still under its monthly ceiling?
 
         Checked per call — never in _default_provider() — because the gateway
         is a module-level singleton built once at startup: a construction-time
         check would be evaluated exactly once and the cap would never bite.
 
-        The asymmetry with the safety valve is deliberate. _monthly_tokens_used
-        fails CLOSED so the *optional* valve never spends against an unknown
-        budget; that is right for an extra we can simply do without. The
-        primary path is the app's main way of answering at all, so an
-        unreadable telemetry DB must NOT silence it — here we fail OPEN. Worst
-        case we overspend for as long as telemetry stays broken; the
-        alternative is every user getting nothing.
+        The asymmetry with the safety valve is deliberate; see
+        primary_budget_available(), which the auxiliary tier shares.
         """
         if not isinstance(self.provider, OpenAIChatProvider):
             return True  # local primary — nothing is being billed
-        cap = LLM.deepseek_primary_monthly_token_cap
-        if cap <= 0:
-            return True  # 0 disables the ceiling
-        used = _monthly_tokens_used_cached(self.provider.name)
-        if used >= _BUDGET_UNKNOWN:
-            return True  # telemetry unreadable — fail OPEN, see docstring
-        if used >= cap:
-            logger.warning(
-                "primary provider budget exhausted (%d/%d tokens this month) — "
-                "falling back to the local chain",
-                used, cap,
-            )
-            return False
-        return True
+        return primary_budget_available(self.provider.name)
 
     def _cloud_provider(self) -> "OpenAICompatProvider | None":
         """Build the Azure quality-tier provider if fully configured."""

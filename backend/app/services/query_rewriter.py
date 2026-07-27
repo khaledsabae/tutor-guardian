@@ -8,13 +8,17 @@ used as an EXTRA retrieval query (the raw question is always kept).
 Skipped when the domain classifier already matched via its keyword
 fast-path (the question is clearly KB-aligned — latency not worth it).
 Results cached in ops/sessions.db so repeated questions are free.
+
+The call goes through the gateway's auxiliary helpers, so it follows the
+configured primary provider (with its telemetry and monthly ceiling) and
+shares the classifier's circuit breaker — once one of them has found the
+host dead, the other doesn't pay the timeout to rediscover it.
 """
 from __future__ import annotations
 
 import hashlib
 import logging
 import sqlite3
-import time
 from functools import lru_cache
 from pathlib import Path
 
@@ -75,6 +79,14 @@ def _cache_put(qhash: str, rewritten: str) -> None:
 
 
 
+class _RewriteUnavailable(Exception):
+    """The provider call itself failed — as opposed to succeeding with an
+    unusable answer. Kept as an exception so neither cache layer memoises it:
+    lru_cache doesn't store exceptions, and the sqlite write is skipped, so a
+    transient outage doesn't permanently disable rewriting for a question.
+    """
+
+
 @lru_cache(maxsize=256)
 def _rewrite_cached(question: str) -> str:
     qhash = hashlib.sha256(question.encode()).hexdigest()[:24]
@@ -82,32 +94,32 @@ def _rewrite_cached(question: str) -> str:
     if cached is not None:
         return cached
 
-    try:
-        import requests
-        from app.config.llm_config import LLM
+    from app.config.llm_config import LLM
+    from app.services.ai_gateway import (
+        OllamaProvider, aux_breaker, aux_cloud_provider, aux_generate,
+    )
 
-        t0 = time.monotonic()
-        resp = requests.post(
-            f"{LLM.local_base_url}/api/generate",
-            json={
-                "model": LLM.local_fast_model,
-                "prompt": _PROMPT.format(question=question[:400]),
-                "stream": False,
-                "options": {"temperature": 0.1, "num_predict": 40},
-            },
-            timeout=_REWRITE_TIMEOUT_S,
-        )
-        resp.raise_for_status()
-        rewritten = (resp.json().get("response") or "").strip()
-        # sanity: keep it short and single-line, else discard
-        rewritten = rewritten.splitlines()[0].strip() if rewritten else ""
-        if not (2 <= len(rewritten.split()) <= 8):
-            rewritten = ""
-        logger.debug("query rewrite %.2fs: %r → %r",
-                     time.monotonic() - t0, question[:40], rewritten)
-    except Exception as exc:  # noqa: BLE001 — best-effort
-        logger.debug("query rewrite skipped: %s", exc)
+    if aux_breaker.is_open():
+        raise _RewriteUnavailable("auxiliary circuit open")
+
+    provider = aux_cloud_provider(timeout=_REWRITE_TIMEOUT_S) or OllamaProvider(
+        base_url=LLM.local_base_url, model=LLM.local_fast_model,
+        timeout=_REWRITE_TIMEOUT_S,
+    )
+    raw = aux_generate(
+        provider, _PROMPT.format(question=question[:400]),
+        options={"temperature": 0.1, "num_predict": 40},
+        tier="query_rewrite",
+    )
+    if raw is None:
+        raise _RewriteUnavailable("provider call failed")
+
+    # sanity: keep it short and single-line, else discard. The call worked, so
+    # an unusable answer IS cacheable — asking again would waste the same call.
+    rewritten = raw.splitlines()[0].strip() if raw else ""
+    if not (2 <= len(rewritten.split()) <= 8):
         rewritten = ""
+    logger.debug("query rewrite: %r → %r", question[:40], rewritten)
 
     _cache_put(qhash, rewritten)
     return rewritten
@@ -121,4 +133,8 @@ def rewrite_query(question: str, *, classifier_fast_path: bool) -> str:
     """
     if classifier_fast_path or not question or len(question) < 12:
         return ""
-    return _rewrite_cached(question.strip())
+    try:
+        return _rewrite_cached(question.strip())
+    except _RewriteUnavailable as exc:
+        logger.debug("query rewrite skipped: %s", exc)
+        return ""  # best-effort: the raw question is always searched anyway

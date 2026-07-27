@@ -41,6 +41,31 @@ domains:
       إحالة_لطبيب:
         force_fallback_message: true
 
+  development:
+    description: >-
+      "النمو الجسدي والحركي واللغوي ومراحل الطفولة الطبيعية والتأخر النمائي.
+      مجال يُرجعه المصنّف (VALID_DOMAINS) ولا يجوز تركه بلا سياسة، وإلا مرّت
+      أسئلة التأخر النمائي الشديدة بلا مراجعة بشرية ولا جهة تصعيد."
+    default_policy:
+      allow_diagnosis: false
+      allow_medication_names: false
+      allow_lifestyle_advice: true
+      require_human_review: true
+    severity_overrides:
+      خفيف:
+        require_human_review: false
+      متوسط:
+        require_human_review: true
+      شديد:
+        require_human_review: true
+        escalate_to: "developmental_pediatrician"
+      طارئ:
+        require_human_review: true
+        escalate_to: "emergency_services"
+    intervention_overrides:
+      إحالة_لطبيب:
+        force_fallback_message: true
+
   fiqh:
     description: "فتاوى وضوابط شرعية عامة (لن تُستخدم لإصدار فتاوى شخصية ملزِمة)."
     default_policy:

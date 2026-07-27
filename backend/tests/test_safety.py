@@ -1,9 +1,21 @@
 """Safety-layer unit tests — the project's most important behavior."""
 import pytest
 
+from app.config.guardrails_loader import load_guardrails_config
+from app.services.domain_classifier import VALID_DOMAINS
 from app.services.intent_guard import check_banned_intent, check_emergency_keywords
 from app.services.guardrails import evaluate_guardrails, is_emergency
 from app.models.api import UserMessage
+
+
+@pytest.fixture(scope="module")
+def shipped_policies():
+    """The real guardrails/policies.v1.yaml, not a hand-built dict.
+
+    The tests below exist to catch a *missing* policy block, which an inline
+    dict fixture can never do — it would just encode the block we forgot.
+    """
+    return load_guardrails_config()
 
 
 @pytest.mark.parametrize("text", [
@@ -112,4 +124,43 @@ def test_evaluate_guardrails_force_fallback_not_triggered_by_severity():
     d = evaluate_guardrails("medical", "شديد", policies)
     assert d["force_fallback"] is False, (
         "severity string must not accidentally match intervention_overrides keys"
+    )
+
+
+def test_severe_development_question_is_flagged_for_human_review(shipped_policies):
+    """Regression: `development` was a classifier domain with no policy block.
+
+    evaluate_guardrails() falls back to `{}` for an unknown domain, so every
+    development reply came back needs_human_review=False with no escalation
+    target — including شديد developmental-delay questions, which the same
+    parent would have had escalated to a pediatrician had the classifier
+    labelled them medical instead.
+    """
+    d = evaluate_guardrails("development", "شديد", shipped_policies)
+    assert d["needs_human_review"] is True
+    assert d["escalate_to"] == "developmental_pediatrician"
+
+
+def test_development_severity_ladder(shipped_policies):
+    """خفيف stays self-serve; طارئ reaches emergency services."""
+    light = evaluate_guardrails("development", "خفيف", shipped_policies)
+    assert light["needs_human_review"] is False
+    assert light["escalate_to"] is None
+
+    assert evaluate_guardrails(
+        "development", "متوسط", shipped_policies
+    )["needs_human_review"] is True
+
+    urgent = evaluate_guardrails("development", "طارئ", shipped_policies)
+    assert urgent["needs_human_review"] is True
+    assert urgent["escalate_to"] == "emergency_services"
+
+
+@pytest.mark.parametrize("domain", sorted(VALID_DOMAINS))
+def test_every_classifier_domain_has_a_policy(domain, shipped_policies):
+    """A domain the classifier can return but the YAML doesn't cover degrades
+    silently to «no review, no escalation» — so the two lists must not drift.
+    """
+    assert domain in shipped_policies["domains"], (
+        f"domain '{domain}' is in VALID_DOMAINS but has no policies.v1.yaml entry"
     )

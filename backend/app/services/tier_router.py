@@ -17,40 +17,22 @@ cool-down window. The gateway reports outcomes via record_cloud_result().
 from __future__ import annotations
 
 import logging
-import threading
-import time
 
 from app.config.llm_config import LLM
+from app.core.circuit_breaker import CircuitBreaker
 
 logger = logging.getLogger(__name__)
 
-_FAILURE_THRESHOLD = 2
-_COOLDOWN_SECONDS = 300
-
-_lock = threading.Lock()
-_consecutive_failures = 0
-_circuit_open_until = 0.0
+_cloud_breaker = CircuitBreaker("cloud tier", failure_threshold=2, cooldown_seconds=300)
 
 
 def record_cloud_result(ok: bool) -> None:
     """Called by the gateway after each cloud-provider attempt."""
-    global _consecutive_failures, _circuit_open_until
-    with _lock:
-        if ok:
-            _consecutive_failures = 0
-            return
-        _consecutive_failures += 1
-        if _consecutive_failures >= _FAILURE_THRESHOLD:
-            _circuit_open_until = time.monotonic() + _COOLDOWN_SECONDS
-            logger.warning(
-                "cloud tier circuit OPEN for %ds after %d consecutive failures",
-                _COOLDOWN_SECONDS, _consecutive_failures,
-            )
+    _cloud_breaker.record(ok)
 
 
 def circuit_open() -> bool:
-    with _lock:
-        return time.monotonic() < _circuit_open_until
+    return _cloud_breaker.is_open()
 
 
 def cloud_available() -> bool:

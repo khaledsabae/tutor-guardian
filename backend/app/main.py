@@ -15,6 +15,7 @@ from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.config.guardrails_loader import load_guardrails_config
+from app.config.llm_config import LLM
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
@@ -71,22 +72,32 @@ async def lifespan(app: FastAPI):
 
     # ── Warm-up: pre-load Ollama models ──────────────────────────────────
     # Sends a tiny request to each model to get them into GPU memory.
-    _local_base = os.environ.get("OLLAMA_LOCAL_BASE_URL") or os.environ.get("OLLAMA_BASE_URL", "http://100.109.163.64:11434")
-    ollama_url = f"{_local_base.rstrip('/')}/api/generate"
-    fast_model = os.environ.get("OLLAMA_LOCAL_FAST_MODEL", "qwen2.5:3b")
+    #
+    # Only worth doing when Ollama actually serves traffic. With a cloud
+    # primary the local models are a cold fallback, and warming them costs
+    # every start — including every rollback — the full timeout below when
+    # the host is unreachable, which is exactly when a rollback is urgent.
+    if LLM.primary_provider != "ollama":
+        logger.info("Warm-up: skipping Ollama (primary provider is %s)", LLM.primary_provider)
+    else:
+        _local_base = os.environ.get("OLLAMA_LOCAL_BASE_URL") or os.environ.get("OLLAMA_BASE_URL", "http://100.109.163.64:11434")
+        ollama_url = f"{_local_base.rstrip('/')}/api/generate"
+        fast_model = os.environ.get("OLLAMA_LOCAL_FAST_MODEL", "qwen2.5:3b")
 
-    warmup_payload = {
-        "model": fast_model,
-        "prompt": "مرحباً",
-        "stream": False,
-        "options": {"num_predict": 1},
-    }
-    try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            r = await client.post(ollama_url, json=warmup_payload)
-            logger.info("🔥 Warm-up: Ollama %s ready (%s)", fast_model, r.status_code)
-    except Exception as e:
-        logger.warning("Warm-up (Ollama %s): %s", fast_model, e)
+        warmup_payload = {
+            "model": fast_model,
+            "prompt": "مرحباً",
+            "stream": False,
+            "options": {"num_predict": 1},
+        }
+        try:
+            # Short timeout on purpose: an unreachable host must not hold the
+            # app's startup — and therefore the container's health — hostage.
+            async with httpx.AsyncClient(timeout=5) as client:
+                r = await client.post(ollama_url, json=warmup_payload)
+                logger.info("🔥 Warm-up: Ollama %s ready (%s)", fast_model, r.status_code)
+        except Exception as e:
+            logger.warning("Warm-up (Ollama %s): %s", fast_model, e)
 
     yield
     # Shutdown: nothing to clean up

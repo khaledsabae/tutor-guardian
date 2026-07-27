@@ -7,6 +7,7 @@ import json
 import pytest
 
 from app.services.domain_classifier import (
+    UNCERTAIN_DOMAINS,
     _keyword_fast_path,
     classify_domains,
 )
@@ -120,10 +121,11 @@ def test_cache_hits(monkeypatch):
     )
 
 
-def test_empty_question_returns_medical():
-    """Empty or whitespace questions default to medical."""
-    assert classify_domains("") == ["medical"]
-    assert classify_domains("   ") == ["medical"]
+def test_empty_question_searches_every_domain():
+    """An empty question carries no signal, so it must not be labelled with a
+    single guessed domain — it gets the broad uncertain fallback."""
+    assert classify_domains("") == list(UNCERTAIN_DOMAINS)
+    assert classify_domains("   ") == list(UNCERTAIN_DOMAINS)
 
 
 # ── P0.4 expansion tests (target: ≥80% fast-path coverage) ──────────────
