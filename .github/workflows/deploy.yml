@@ -144,6 +144,20 @@ jobs:
             fi
           done
 
+          # ── 3c. Make read-only bind mounts readable by the container user ──
+          # Same uid mismatch as 3b, other direction: these are host dirs, not
+          # volumes. docs/ is rsynced from the dev machine and arrives owned by
+          # uid 1000 mode 0600, which uid 10001 cannot read. On 2026-07-27 that
+          # left 421 of 1594 docs files unreadable, so /privacy-policy answered
+          # 200 with an empty body and Cloudflare turned it into a 520 — the
+          # deploy smoke test then rolled back with no usable diagnosis.
+          # These three mounts are public content, so a+rX is the right state;
+          # backend/secrets is deliberately excluded — it must stay 0600.
+          echo "→ ensuring bind-mount readability (docs, ops/scripts, mobile/assets)"
+          for _dir in docs ops/scripts mobile/assets; do
+            [ -d "$_dir" ] && { chmod -R a+rX "$_dir" || echo "::warning::chmod failed for $_dir"; }
+          done
+
           # ── 4. Recreate the container ────────────────────────────────
           echo "→ docker compose up -d --no-build backend"
           docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend
@@ -190,8 +204,12 @@ jobs:
           fi
 
           # ── 6. HTTP smoke test ───────────────────────────────────────
+          # No -f: it makes curl exit non-zero on an HTTP error, so the old
+          # `|| echo "fail"` *appended* to the code already on stdout and
+          # reported nonsense like "520fail". Without -f curl exits 0 and
+          # %{http_code} is the code on its own.
           echo "→ HTTP smoke test: $DEPLOY_HEALTH_URL"
-          HTTP_CODE=$(curl -fsS -o /dev/null -w '%{http_code}' "$DEPLOY_HEALTH_URL" || echo "fail")
+          HTTP_CODE=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "$DEPLOY_HEALTH_URL" || echo "000")
           if [ "$HTTP_CODE" != "200" ]; then
             echo "::error::Health URL returned $HTTP_CODE (expected 200) — triggering rollback"
             docker logs --tail 50 tg_backend 2>&1 || true
@@ -200,9 +218,15 @@ jobs:
           fi
 
           # ── 7. Privacy endpoint (Phase 0 regression) ─────────────────
-          PRIVACY_CODE=$(curl -fsS -o /dev/null -w '%{http_code}' "${DEPLOY_HEALTH_URL%/health}/privacy-policy" || echo "fail")
-          if [ "$PRIVACY_CODE" != "200" ]; then
-            echo "::error::privacy-policy returned $PRIVACY_CODE (expected 200) — triggering rollback"
+          # -w also reports the body size: this endpoint once answered 200 with
+          # zero bytes (unreadable bind-mounted file), which Cloudflare masked
+          # as a 520, so an empty body is itself a failure worth naming.
+          PRIVACY_OUT=$(curl -sS -o /dev/null -w '%{http_code} %{size_download}' --max-time 30 "${DEPLOY_HEALTH_URL%/health}/privacy-policy" || echo "000 0")
+          PRIVACY_CODE=${PRIVACY_OUT%% *}
+          PRIVACY_BYTES=${PRIVACY_OUT##* }
+          if [ "$PRIVACY_CODE" != "200" ] || [ "$PRIVACY_BYTES" -eq 0 ]; then
+            echo "::error::privacy-policy returned $PRIVACY_CODE with $PRIVACY_BYTES bytes (expected 200, non-empty) — triggering rollback"
+            docker logs --tail 50 tg_backend 2>&1 || true
             _rollback
             exit 1
           fi
