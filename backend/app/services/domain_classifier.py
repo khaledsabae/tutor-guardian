@@ -82,10 +82,10 @@ CLASSIFY_PROMPT = """صنّف سؤال الوالد/الوالدة في مجال
 اقرأ السؤال بعناية واختر المجال الأنسب للمحتوى الفعلي، وليس للكلمات المفتاحية فقط.
 
 - fiqh: أي سؤال عن التربية الإسلامية، أخلاق، قيم، دين، شريعة، القرآن، السنة النبوية، الصلاة، الصيام، تربية البنات أو الأولاد من منظور إسلامي، الحلال والحرام في التربية
-- medical: صحة نفسية، سلوكيات مقلقة، قلق، اكتئاب، توحد، فرط حركة، تأخر نمائي، استشارة طبيب أو أخصائي نفسي، علاج نفسي
+- medical: الصحة النفسية والسلوك — سواء كان سلوكًا يوميًا عاديًا أو حالة تحتاج مختصًا. يشمل: القلق، الاكتئاب، التوحد، فرط الحركة، التأخر النمائي، استشارة طبيب أو أخصائي نفسي؛ **وكذلك** السلوك اليومي والمشاعر والعلاقات: الخلافات مع الأصدقاء، الانطواء والانسحاب، رفض المدرسة أو البكاء عند الذهاب، الغيرة بين الإخوة، الثقة بالنفس، الحزن، الخجل، العناد، إدارة الوقت والمذاكرة
 - cyber: شاشات، إدمان ألعاب فيديو إلكترونية، هاتف ذكي، إنترنت، يوتيوب، تيك توك، تنمر إلكتروني عبر الإنترنت، أمان رقمي، مواقع التواصل الاجتماعي
 - development: نمو جسدي، مراحل عمرية طبيعية، مشي، أسنان، مهارات حركية، إعاقة، تدخل مبكر، كلام وتطور اللغة
-- general: أي سؤال عام لا علاقة له بالتربية أو الأطفال (مثل وصفة طعام، رياضة، طقس، أخبار، معلومة عامة، برمجة). استخدمه فقط عندما لا ينطبق أي مجال تربوي.
+- general: أسئلة لا علاقة لها بالطفل أصلًا (وصفة طعام، رياضة، طقس، أخبار، برمجة). لا تستخدمه أبدًا لسؤال يتحدث عن ابن الوالد أو ابنته أو عن سلوكهما أو مشاعرهما أو علاقاتهما أو مدرستهما — مهما بدا السؤال عاديًا أو بسيطًا، فله مجال تربوي.
 
 السؤال: {question}
 
@@ -127,6 +127,22 @@ def _classifier_provider():
     )
 
 
+# Possessive forms a parent uses for their own child. Deliberately first-person
+# only: «الأطفال ياكلوا إيه» is a general question, «ابني مابياكلش» is not.
+_OWN_CHILD_RE = re.compile(
+    r"(ابن|إبن|بنت|طفل|طفلت|ولد|ابنت|إبنت|عيل|عيال|أولاد|اولاد|بنات|صغير|صغيرت)"
+    r"(ي|ه?ي|تي)\b|\b(ابني|بنتي|طفلي|طفلتي|ولدي|ابنتي|عيالي|أولادي|اولادي|بناتي)\b"
+)
+
+
+def _mentions_own_child(question: str) -> bool:
+    """True when the parent is asking about their own child.
+
+    Used to veto a "general" (off-topic) verdict — see _parse_domains.
+    """
+    return bool(_OWN_CHILD_RE.search(question))
+
+
 def _parse_domains(raw: str, question: str) -> Optional[List[str]]:
     """Extract the domain list from the model's JSON answer, or None."""
     start = raw.find("{")
@@ -147,6 +163,20 @@ def _parse_domains(raw: str, question: str) -> Optional[List[str]]:
             logger.debug("LLM classified '%s...' as %s", question[:40], filtered)
             return filtered
         if any(d == "general" for d in domains):
+            # "general" skips retrieval entirely and answers from nothing, so a
+            # false positive costs a parent the whole knowledge base. Measured
+            # on production: the model called «بنتي اتخانقت مع صاحبتها وقافلة
+            # على نفسها» and «ابني مابيحبش يروح المدرسة وبيعيط» off-topic —
+            # both ordinary parenting questions. The prompt now pushes back on
+            # that, but a prompt is guidance, not a guarantee. When the parent
+            # is plainly talking about their own child we refuse the verdict
+            # and search broadly instead: a diluted answer beats none.
+            if _mentions_own_child(question):
+                logger.info(
+                    "Overriding 'general' — question is about the parent's child: '%s...'",
+                    question[:40],
+                )
+                return list(UNCERTAIN_DOMAINS)
             logger.debug("LLM classified '%s...' as general (off-topic)", question[:40])
             return ["general"]
 
