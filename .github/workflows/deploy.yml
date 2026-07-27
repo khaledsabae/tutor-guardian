@@ -158,6 +158,16 @@ jobs:
             [ -d "$_dir" ] && { chmod -R a+rX "$_dir" || echo "::warning::chmod failed for $_dir"; }
           done
 
+          # Secrets get the opposite treatment: owned by the container user and
+          # readable by nobody else. Same 0600 root:root symptom as docs/ — it
+          # made _load_credentials() raise PermissionError, so push notifications
+          # were dead in production — but a+rX would be the wrong cure here.
+          if [ -d backend/secrets ]; then
+            echo "→ ensuring secrets are container-readable and private (0400, uid 10001)"
+            chown -R 10001:10001 backend/secrets || echo "::warning::chown failed for backend/secrets"
+            find backend/secrets -type f -exec chmod 400 {} + || echo "::warning::chmod failed for backend/secrets"
+          fi
+
           # ── 4. Recreate the container ────────────────────────────────
           echo "→ docker compose up -d --no-build backend"
           docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend

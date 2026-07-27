@@ -9,6 +9,7 @@ Provides thin helpers to send notifications to a device by device_id.
 Cron scripts live outside this module (ops/scripts/) and call these helpers.
 """
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Optional
@@ -18,10 +19,39 @@ from firebase_admin import credentials, messaging
 
 from app.db.init_db import get_conn
 
+logger = logging.getLogger(__name__)
+
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
-_CREDENTIALS_PATH = _PROJECT_ROOT / "secrets" / "firebase-adminsdk.json"
+# …/backend/secrets/, matching the docstring above and the compose bind mount.
+# This used to be _PROJECT_ROOT / "secrets", i.e. /app/secrets in the container
+# and <repo>/secrets in dev — neither of which is where the file actually lives,
+# so the file fallback could never fire.
+_CREDENTIALS_PATH = _PROJECT_ROOT / "backend" / "secrets" / "firebase-adminsdk.json"
 
 _app: firebase_admin.App | None = None
+
+
+def _read_service_account(path: Path) -> Optional[dict]:
+    """Load service-account JSON from a path, or None if it is unusable.
+
+    `exists()` was not enough: secrets/ is bind-mounted from the host and the
+    file arrives 0600 root:root while the container runs as uid 10001, so the
+    read raised PermissionError straight out of _ensure_app() and took the whole
+    push path down with it. Push is an optional feature, so an unreadable or
+    malformed credential disables it instead of raising.
+
+    Only the exception *type* is logged — a JSONDecodeError message can quote
+    the surrounding bytes, which here would be service-account material.
+    """
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        logger.error(
+            "Firebase credentials at %s are unusable (%s) — push disabled",
+            path,
+            type(exc).__name__,
+        )
+        return None
 
 
 def _load_credentials() -> Optional[dict]:
@@ -31,14 +61,15 @@ def _load_credentials() -> Optional[dict]:
         try:
             return json.loads(raw)
         except json.JSONDecodeError:
+            logger.error("FIREBASE_CREDENTIALS is set but is not valid JSON — push disabled")
             return None
     path_env = os.environ.get("FIREBASE_CREDENTIALS_PATH", "").strip()
     if path_env:
         p = Path(path_env)
-        if p.exists():
-            return json.loads(p.read_text(encoding="utf-8"))
-    if _CREDENTIALS_PATH.exists():
-        return json.loads(_CREDENTIALS_PATH.read_text(encoding="utf-8"))
+        if p.is_file():
+            return _read_service_account(p)
+    if _CREDENTIALS_PATH.is_file():
+        return _read_service_account(_CREDENTIALS_PATH)
     return None
 
 
