@@ -73,6 +73,20 @@ jobs:
 
           echo "=== Candidate image passed all gates ==="
 
+          # Promote the tested candidate to the tag compose resolves for this
+          # service. Compose derives `<project>-<service>` from the deploy dir,
+          # i.e. tutor-guardian-backend:latest, and the service declares no
+          # explicit `image:` key — so tagging here lets the deploy step start
+          # the *already tested* image instead of rebuilding it.
+          #
+          # This used to be a second `docker compose build backend` run from
+          # /root/tutor-guardian. Different build context = no layer cache reuse,
+          # so a ~5.7GB image was built twice per run; "exporting layers" alone
+          # measured 238s. Three deploys in a row blew timeout-minutes: 30 and
+          # were cancelled mid-export (2026-07-27).
+          echo "=== Tag candidate as tutor-guardian-backend:latest ==="
+          docker tag "$CANDIDATE_TAG" tutor-guardian-backend:latest
+
       - name: Deploy backend locally on the VPS
         run: |
           set -euo pipefail
@@ -87,9 +101,17 @@ jobs:
 
           cd "$DEPLOY_PATH"
 
-          # ── 1. Record previous SHA for rollback ──────────────────────
+          # ── 1. Record previous SHA + image for rollback ──────────────
           PREVIOUS_SHA=$(git rev-parse HEAD)
           echo "Previous SHA: $PREVIOUS_SHA"
+
+          # The running container pins its image by ID, so this still resolves
+          # to the *old* image even though the previous step already moved the
+          # :latest tag onto the new candidate. Capturing it lets rollback
+          # restore the exact image that was last verified healthy in
+          # production, with no rebuild — see _rollback() below.
+          PREVIOUS_IMAGE=$(docker inspect tg_backend --format '{{.Image}}' 2>/dev/null || true)
+          echo "Previous image: ${PREVIOUS_IMAGE:-<none>}"
 
           # ── 2. Pull the latest main ──────────────────────────────────
           echo "→ git fetch + reset --hard origin/main"
@@ -98,9 +120,13 @@ jobs:
           DEPLOY_SHA=$(git rev-parse --short HEAD)
           echo "Deploying SHA: $DEPLOY_SHA"
 
-          # ── 3. Build the new image ───────────────────────────────────
-          echo "→ docker compose build backend"
-          docker compose -f docker-compose.production.yml build backend
+          # ── 3. Verify the tested image is present ────────────────────
+          # No build here: the previous step already built, tested and tagged
+          # tutor-guardian-backend:latest. The checkout above still has to be
+          # current because the compose file bind-mounts ./docs,
+          # ./backend/secrets, ./ops/scripts and ./mobile/assets from this dir.
+          echo "→ verifying tutor-guardian-backend:latest exists"
+          docker image inspect tutor-guardian-backend:latest >/dev/null
 
           # ── 3b. Make the data volumes writable by the container user ──
           # The image runs as `appuser` (uid 10001) but Docker creates volume
@@ -119,15 +145,27 @@ jobs:
           done
 
           # ── 4. Recreate the container ────────────────────────────────
-          echo "→ docker compose up -d backend"
-          docker compose -f docker-compose.production.yml up -d --remove-orphans backend
+          echo "→ docker compose up -d --no-build backend"
+          docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend
 
           # ── Helper: rollback to previous SHA ─────────────────────────
           _rollback() {
             echo "::warning::Rolling back to SHA: $PREVIOUS_SHA ..."
             git reset --hard "$PREVIOUS_SHA"
-            docker compose -f docker-compose.production.yml build backend
-            docker compose -f docker-compose.production.yml up -d --remove-orphans backend
+            # Prefer re-tagging the image that was actually running and healthy
+            # before this deploy — it needs no rebuild (a rebuild here would hit
+            # the same multi-minute export that caused the timeouts, so a slow
+            # rollback is a rollback that gets cancelled). Fall back to building
+            # only when there was no prior container, e.g. first-ever deploy.
+            if [ -n "$PREVIOUS_IMAGE" ] && docker image inspect "$PREVIOUS_IMAGE" >/dev/null 2>&1; then
+              echo "::warning::Restoring previous image $PREVIOUS_IMAGE"
+              docker tag "$PREVIOUS_IMAGE" tutor-guardian-backend:latest
+              docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend
+            else
+              echo "::warning::No previous image available — rebuilding from $PREVIOUS_SHA"
+              docker compose -f docker-compose.production.yml build backend
+              docker compose -f docker-compose.production.yml up -d --remove-orphans backend
+            fi
             echo "::warning::Rollback complete."
           }
 
@@ -169,14 +207,22 @@ jobs:
             exit 1
           fi
 
-          # ── 8. Cleanup candidate image and dangling images (best-effort)
-          docker image rm -f "tutor-guardian-backend:candidate-${{ github.sha }}" >/dev/null 2>&1 || true
-          docker image prune -f >/dev/null 2>&1 || true
-
           echo
           echo "=== Deploy complete ==="
           echo "SHA:  $DEPLOY_SHA"
           echo "Time: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      # Runs on cancellation and failure too, not just success. Cleanup used to
+      # be the last block of the deploy step, so the three runs cancelled at the
+      # 30-minute mark each stranded a ~13GB candidate image on the VPS.
+      - name: Cleanup candidate image
+        if: always()
+        run: |
+          # Untags only — after a successful deploy this image is also tagged
+          # :latest and backs the running container, so it survives as :latest.
+          docker image rm "tutor-guardian-backend:candidate-${{ github.sha }}" >/dev/null 2>&1 || true
+          docker image prune -f >/dev/null 2>&1 || true
+          docker images tutor-guardian-backend --format '  {{.Repository}}:{{.Tag}} {{.ID}} {{.Size}}'
 
       - name: Post-deploy log tail
         if: always()
