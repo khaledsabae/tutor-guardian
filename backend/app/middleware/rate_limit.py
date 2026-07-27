@@ -1,8 +1,36 @@
 """
-Rate limiter — per-device (or per-IP fallback) fixed-window
+Rate limiter — per-identity (device / token / IP) fixed-window
 =============================================================
-Extracts device_id from request.state (set by AuthMiddleware) for accurate
-per-device rate limiting behind NAT. Falls back to client IP if no auth.
+The bucket identity is resolved HERE, inside this middleware, with no DB hit,
+in this order:
+
+  1. ``request.state.device_id`` — the honest first choice, used whenever
+     something upstream has already authenticated the request.
+  2. a truncated SHA-256 of the raw ``Authorization`` token. Both schemes the
+     app uses are recognised: ``Bearer`` (parent device session) and
+     ``Child-Bearer`` (scoped child-mode token) — see app/middleware/auth.py.
+  3. the client IP, as before.
+
+Why (2) has to exist: Starlette's ``add_middleware`` PREPENDS, so the last
+middleware registered runs FIRST. In app/main.py RateLimitMiddleware is
+registered after AuthMiddleware and therefore runs *before* it, which means
+``request.state.device_id`` is still unset by the time we look. Every request
+used to collapse to its IP — so one household on one wifi, or an entire
+carrier CGNAT pool, shared a single AI_DAILY_LIMIT bucket. Reordering the
+middleware is NOT the fix: making auth outermost would let an unauthenticated
+flood reach ``store.validate_token`` (a sqlite read per request) with no rate
+limit in front of it.
+
+The token is deliberately NOT validated here — validating means exactly that
+sqlite read we are trying to protect. Keying on an *unvalidated* token is fine
+because this quota is fair use, not a security boundary: the key only has to be
+stable and hard to collide with. A forged token buys its owner a private
+bucket, which is what an honest caller gets anyway, and the request still has
+to survive AuthMiddleware one step later. Nothing downstream reads this key,
+and only the hash — never the token — reaches Redis, memory or logs.
+
+Keys carry an identity-kind prefix ("dev:" / "tok:" / "ip:") so the three
+namespaces can never collide.
 
 Backends:
   1. Redis (if REDIS_URL is set) — multi-instance compatible
@@ -14,6 +42,7 @@ Config via env:
     REDIS_URL               (optional)     for distributed rate limiting
 """
 import datetime as _dt
+import hashlib
 import logging
 import os
 import time
@@ -29,7 +58,7 @@ _GENERAL_LIMIT = int(os.environ.get("RATE_LIMIT_GENERAL_PER_MINUTE", "120"))
 _WINDOW = 60.0
 # Fair-use daily quota for LLM generation (growth plan §5.1): generous enough
 # that a real parent never feels it, tight enough that scripts/abuse can't run
-# the model bill up. Counts only mutating (POST) AI calls per device per UTC
+# the model bill up. Counts only mutating (POST) AI calls, per identity per UTC
 # day. The refusal is deliberately gentle — never «pay», always «tomorrow».
 _AI_DAILY_LIMIT = int(os.environ.get("AI_DAILY_LIMIT", "20"))
 _DAILY_MESSAGE = "وصلنا لحدّ اليوم من الأسئلة — نستكمل غدًا بإذن الله 🌙"
@@ -37,7 +66,7 @@ _DAILY_MESSAGE = "وصلنا لحدّ اليوم من الأسئلة — نست�
 # keeps the tighter _LIMIT; all other endpoints (children, progress, referral,
 # push, identity, auth) get the more generous _GENERAL_LIMIT so normal app usage
 # — cold-start bursts, progress sync — never trips a false 429. Each scope has an
-# independent per-device bucket. Setting RATE_LIMIT_PER_MINUTE=0 disables both.
+# independent bucket per identity. Setting RATE_LIMIT_PER_MINUTE=0 disables both.
 _PROTECTED_PREFIXES = ("/api/",)
 # Full-LLM-generation endpoints share the tight "ai" budget: the assistant
 # AND story generation (unauthenticated, so otherwise a free 120/min DoS
@@ -51,6 +80,42 @@ _FEEDBACK_PREFIXES = ("/api/feedback/app",)
 _FEEDBACK_LIMIT = int(os.environ.get("RATE_LIMIT_FEEDBACK_PER_MINUTE", "5"))
 _EXEMPT_PREFIXES = ("/api/health", "/api/healthz")
 _REDIS_URL = os.environ.get("REDIS_URL", "")
+# Both auth schemes in use carry a token we can key on. Kept scheme-aware on
+# purpose: a child-mode token and a device token are different identities even
+# in the (impossible) case of an identical token string.
+_TOKEN_SCHEMES = ("Bearer ", "Child-Bearer ")
+# 16 hex chars = 64 bits. Astronomically collision-free for a per-day quota,
+# and short enough to stay readable in a Redis key.
+_TOKEN_KEY_LEN = 16
+
+
+def _token_identity(auth_header: str) -> str | None:
+    """Stable bucket key derived from the raw Authorization token.
+
+    Returns None when the header is absent, uses an unknown scheme, or carries
+    an empty token — the caller then falls back to the client IP. The token is
+    never validated (that would cost a sqlite read on every request); see the
+    module docstring for why an unvalidated key is acceptable here.
+    """
+    for scheme in _TOKEN_SCHEMES:
+        if auth_header.startswith(scheme):
+            token = auth_header[len(scheme):].strip()
+            if not token:
+                return None
+            raw = f"{scheme.strip()}:{token}".encode("utf-8", "replace")
+            return hashlib.sha256(raw).hexdigest()[:_TOKEN_KEY_LEN]
+    return None
+
+
+def _client_identity(request: Request) -> str:
+    """Resolve the rate-limit identity for a request (prefixed by kind)."""
+    device_id = getattr(request.state, "device_id", None)
+    if device_id:
+        return f"dev:{device_id}"
+    token_key = _token_identity(request.headers.get("Authorization", ""))
+    if token_key:
+        return f"tok:{token_key}"
+    return f"ip:{request.client.host if request.client else 'unknown'}"
 
 
 def _get_redis_client():
@@ -90,7 +155,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         return max(1, int((midnight - now).total_seconds()))
 
     async def _check_daily(self, ident: str) -> bool:
-        """True if this device still has daily AI budget. Increments on use."""
+        """True if this identity still has daily AI budget. Increments on use."""
         key = f"rl:aiday:{self._utc_today()}:{ident}"
         if self._redis:
             try:
@@ -144,9 +209,8 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         else:
             scope, limit = "api", _GENERAL_LIMIT
 
-        # Per-device if auth token present, otherwise per-IP
-        device_id = getattr(request.state, "device_id", None)
-        ident = device_id or (request.client.host if request.client else "unknown")
+        # device_id → token hash → IP, resolved without touching the DB.
+        ident = _client_identity(request)
         key = f"rl:{scope}:{ident}"
 
         # Fair-use daily quota — AI generation POSTs only (GET catalogues like

@@ -113,7 +113,10 @@ app.add_middleware(
 # Auth middleware — validates Bearer tokens on protected endpoints.
 app.add_middleware(AuthMiddleware)
 
-# Lightweight per-device rate limiting (falls back to per-IP if no token).
+# Lightweight rate limiting. Registered LAST so it runs FIRST (add_middleware
+# prepends) — an unauthenticated flood must be throttled before it can reach
+# AuthMiddleware's token lookup. It therefore cannot rely on request.state and
+# resolves its own identity from the Authorization header; see rate_limit.py.
 app.add_middleware(RateLimitMiddleware)
 
 app.include_router(health.router)

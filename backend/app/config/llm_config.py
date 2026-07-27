@@ -66,6 +66,15 @@ class LLMConfig:
     deepseek_api_key: str = os.environ.get("DEEPSEEK_API_KEY", "")
     deepseek_base_url: str = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
     deepseek_model: str = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+    # Monthly spend ceiling for the PRIMARY path. The app is free forever (no
+    # ads, no subscriptions), so every primary token is paid out of the owner's
+    # own pocket — without a ceiling the bill is unbounded. Unlike the
+    # safety-valve cap this is a SOFT budget: once exhausted the gateway simply
+    # falls through to the local Ollama chain, exactly as if the provider had
+    # failed, so the app keeps answering. 0 disables the ceiling.
+    deepseek_primary_monthly_token_cap: int = int(
+        os.environ.get("DEEPSEEK_PRIMARY_MONTHLY_TOKEN_CAP", "100000000")
+    )
 
     # backward-compat shim: older code reads .model
     @property

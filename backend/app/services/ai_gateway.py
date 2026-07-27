@@ -341,11 +341,22 @@ def _log_call(provider: str, model: str, latency_ms: int,
         logger.debug("telemetry skipped: %s", e)
 
 
+# Sentinel returned when the telemetry DB can't be read. Callers that must not
+# spend blind (the safety valve) compare it against their cap and lose; callers
+# that must not go mute (the primary path) test for it explicitly and proceed.
+_BUDGET_UNKNOWN = 1 << 62
+# A sqlite SUM per request is pure overhead for a soft monthly budget, so the
+# total is memoised. A staleness window this short can overshoot the ceiling by
+# at most one minute of traffic — noise against a cap counted in millions.
+_BUDGET_CACHE_TTL = 60.0
+_budget_cache: dict[str, tuple[float, int]] = {}
+
+
 def _monthly_tokens_used(provider_name: str) -> int:
     """Total tokens logged for a provider since the start of the current month.
 
-    Fails CLOSED: if telemetry can't be read we report an impossibly large
-    number so a budget-gated caller refuses to spend.
+    Fails CLOSED: if telemetry can't be read we report _BUDGET_UNKNOWN, an
+    impossibly large number, so a budget-gated caller refuses to spend.
     """
     try:
         conn = sqlite3.connect(_TELEMETRY_DB)
@@ -360,7 +371,18 @@ def _monthly_tokens_used(provider_name: str) -> int:
         return int(row[0] or 0)
     except Exception as e:
         logger.warning("budget check unavailable (failing closed): %s", e)
-        return 1 << 62
+        return _BUDGET_UNKNOWN
+
+
+def _monthly_tokens_used_cached(provider_name: str) -> int:
+    """_monthly_tokens_used memoised for _BUDGET_CACHE_TTL seconds."""
+    now = time.monotonic()
+    cached = _budget_cache.get(provider_name)
+    if cached is not None and now - cached[0] < _BUDGET_CACHE_TTL:
+        return cached[1]
+    used = _monthly_tokens_used(provider_name)
+    _budget_cache[provider_name] = (now, used)
+    return used
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -457,6 +479,38 @@ class AIGateway:
             logger.warning("cloud safety valve unavailable: %s", e)
             return None
 
+    def _primary_within_budget(self) -> bool:
+        """Soft monthly spend ceiling on the PAID primary provider.
+
+        Checked per call — never in _default_provider() — because the gateway
+        is a module-level singleton built once at startup: a construction-time
+        check would be evaluated exactly once and the cap would never bite.
+
+        The asymmetry with the safety valve is deliberate. _monthly_tokens_used
+        fails CLOSED so the *optional* valve never spends against an unknown
+        budget; that is right for an extra we can simply do without. The
+        primary path is the app's main way of answering at all, so an
+        unreadable telemetry DB must NOT silence it — here we fail OPEN. Worst
+        case we overspend for as long as telemetry stays broken; the
+        alternative is every user getting nothing.
+        """
+        if not isinstance(self.provider, OpenAIChatProvider):
+            return True  # local primary — nothing is being billed
+        cap = LLM.deepseek_primary_monthly_token_cap
+        if cap <= 0:
+            return True  # 0 disables the ceiling
+        used = _monthly_tokens_used_cached(self.provider.name)
+        if used >= _BUDGET_UNKNOWN:
+            return True  # telemetry unreadable — fail OPEN, see docstring
+        if used >= cap:
+            logger.warning(
+                "primary provider budget exhausted (%d/%d tokens this month) — "
+                "falling back to the local chain",
+                used, cap,
+            )
+            return False
+        return True
+
     def _cloud_provider(self) -> "OpenAICompatProvider | None":
         """Build the Azure quality-tier provider if fully configured."""
         if not (LLM.cloud_tier_enabled and LLM.azure_endpoint and LLM.azure_api_key):
@@ -507,7 +561,12 @@ class AIGateway:
                               tier=tier, route_reason=route_reason)
                     logger.warning("cloud quality tier failed, using local: %s", e)
 
-        # 1. Try primary model with retries
+        # 1. Try primary model with retries — unless the paid primary has burnt
+        #    its monthly ceiling, in which case we skip the loop outright
+        #    (range(1, 1) is empty) and drop into the local fallback chain
+        #    below, exactly as if the provider had failed.
+        if not self._primary_within_budget():
+            retries = 0
         for attempt in range(1, retries + 1):
             start = time.monotonic()
             try:
@@ -623,7 +682,8 @@ class AIGateway:
         ]
         # Primary OpenAI-compatible provider (DeepSeek) streams first; the
         # local Ollama chain above stays behind it as automatic fallback.
-        if isinstance(self.provider, OpenAIChatProvider):
+        # Dropped from the candidate list once the monthly ceiling is spent.
+        if isinstance(self.provider, OpenAIChatProvider) and self._primary_within_budget():
             candidates.insert(0, (self.provider.name, self.provider))
         if tier == "cloud_quality":
             cloud = self._cloud_provider()
