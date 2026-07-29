@@ -38,6 +38,17 @@ _HNSW_BLOAT_FACTOR = 3
 EMBEDDING_MODEL = "intfloat/multilingual-e5-small"
 
 _collection: chromadb.Collection | None = None
+
+# Raised when the handle outlives the collection it points at. The class moved
+# between chromadb versions and is absent in some, so this is resolved by name
+# with a ValueError floor — older builds raise that instead, and matching too
+# widely here would swallow real errors behind a pointless second attempt.
+_STALE_COLLECTION_ERRORS: tuple[type[BaseException], ...] = tuple(
+    exc for exc in (
+        getattr(chromadb.errors, "InvalidCollectionException", None),
+        getattr(chromadb.errors, "NotFoundError", None),
+    ) if isinstance(exc, type)
+) or (ValueError,)
 _embedder_instance = None
 
 
@@ -81,6 +92,34 @@ def embed_query(text: str) -> list[float]:
     return _embedder()(
         [f"query: {text}"]
     )[0]
+
+
+def _reset_collection_handle() -> None:
+    """Forget the cached handle so the next call re-acquires it."""
+    global _collection
+    _collection = None
+
+
+def with_live_collection(operation):
+    """Run `operation(collection)`, re-acquiring the handle once if it went stale.
+
+    `_collection` is a process-wide singleton, but the collection it points at
+    can be deleted and recreated underneath it. The rebuild path below does
+    exactly that, and so does any other process opening the same persist
+    directory — a diagnostic `docker exec … python -c "_ensure_index()"` is
+    enough. Chroma then raises InvalidCollectionException on every subsequent
+    call in this process, and the assistant answers 500 to every parent until
+    someone restarts the container.
+
+    That is not hypothetical: it took production down on 2026-07-29. The data
+    was never at risk — only the handle — so re-acquiring it is the entire fix.
+    """
+    try:
+        return operation(_get_collection())
+    except _STALE_COLLECTION_ERRORS:
+        logger.warning("Chroma collection handle went stale — re-acquiring")
+        _reset_collection_handle()
+        return operation(_get_collection())
 
 
 def _get_collection() -> chromadb.Collection:
@@ -214,10 +253,12 @@ def index_knowledge_units(
         units = load_default_knowledge_units()
 
     fingerprint = _fingerprint(units)
-    collection = _get_collection()
+    # Both probes read the collection, so a handle stranded by another process
+    # would surface here first — as it did in production.
+    collection = with_live_collection(lambda c: c)
 
     if not force:
-        if _hnsw_is_bloated(collection):
+        if with_live_collection(_hnsw_is_bloated):
             force = True
         elif _index_matches(collection, units, fingerprint):
             logger.info("Knowledge index up to date (%d units) — skipping rebuild", len(units))
@@ -245,6 +286,17 @@ def index_knowledge_units(
     )
     _fingerprint_path().write_text(fingerprint)
     logger.info("Knowledge index built: %d units", len(units))
+
+    # Every cached answer is a frozen copy of what these units used to say,
+    # citation line included. Reaching this point means they no longer say it.
+    # Imported here rather than at module scope: answer_cache reaches back into
+    # this module for embed_query.
+    try:
+        from app.services import answer_cache
+
+        answer_cache.purge(reason="knowledge index rebuilt")
+    except Exception as exc:  # noqa: BLE001 — indexing must not fail on this
+        logger.warning("could not purge answer cache after rebuild: %s", exc)
 
 
 def _query(collection, query_text: str, where_filter: dict, top_k: int) -> list[dict]:
@@ -303,7 +355,7 @@ def retrieve_relevant_units(
     The key insight: calling ChromaDB with broader filters and higher top_k
     is cheaper than 4 separate pinpoint queries, and returns richer results.
     """
-    collection = _get_collection()
+    collection = with_live_collection(lambda c: c)
     db_domain = canonical_domain(domain)
 
     # ── Query 1: domain + age_group (broad, higher top_k) ────────────────

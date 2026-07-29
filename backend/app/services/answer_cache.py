@@ -176,6 +176,38 @@ def lookup(question: str, age_group: str, domain: str, severity: str) -> str | N
         return None
 
 
+def purge(reason: str = "") -> int:
+    """Drop every cached answer. Returns how many were removed.
+
+    A cached answer is a frozen copy of what the knowledge base said at the
+    moment it was generated — including the «📚 المصادر» line. When the units
+    change underneath it, the cache keeps serving the old text: after the
+    citation repairs on 2026-07-29 a parent asking about ADHD was still shown
+    the pre-fix source line, and would have been for the 45-day TTL.
+
+    So the cache is dropped whenever the index is actually rebuilt. A miss
+    costs one generation (~$0.0005 and a couple of seconds); a stale hit costs
+    a wrong citation, which is the thing this app promises not to do.
+    """
+    if not ANSWER_CACHE_ENABLED:
+        return 0
+    try:
+        conn = _conn()
+        try:
+            removed = conn.execute("SELECT COUNT(*) FROM answer_cache").fetchone()[0]
+            conn.execute("DELETE FROM answer_cache")
+            conn.commit()
+        finally:
+            conn.close()
+        if removed:
+            logger.info("answer cache purged (%d entries)%s",
+                        removed, f" — {reason}" if reason else "")
+        return int(removed)
+    except Exception as exc:  # noqa: BLE001 — the cache must never break chat
+        logger.warning("answer-cache purge failed: %s", exc)
+        return 0
+
+
 def store(question: str, age_group: str, domain: str, severity: str, answer: str) -> bool:
     """Store a freshly generated first-question answer. Best-effort."""
     if not ANSWER_CACHE_ENABLED:
