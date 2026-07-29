@@ -192,6 +192,33 @@ def main() -> int:
         except Exception as e:
             warnings.append(f"CJK: could not read {fp}: {e}")
 
+    # Backend source — the gate covered the knowledge base but not the code, and
+    # a leak got through there instead: the public /methodology page shipped
+    # «ولا ن给出 فتاوى بدون سند» to readers. Arabic copy written with model help
+    # can pick up CJK the same way a unit can, so the same gate applies.
+    #
+    # Three modules legitimately contain CJK: llm_service, coach_service and
+    # coach_safety each define a filter that strips leaked CJK out of model
+    # output. Those definitions are the cure, not the disease — skip them by
+    # path rather than by pattern, so a leak elsewhere in the same file still
+    # trips the gate.
+    cjk_exempt = {
+        "backend/app/services/llm_service.py",
+        "backend/app/services/coach_service.py",
+        "backend/app/services/coach_safety.py",
+    }
+    backend_dir = ROOT / "backend" / "app"
+    for fp in backend_dir.rglob("*.py"):
+        rel = fp.relative_to(ROOT).as_posix()
+        if rel in cjk_exempt:
+            continue
+        try:
+            matches = CJK_RE.findall(fp.read_text(encoding="utf-8"))
+            if matches:
+                cjk_errors.append(f"{rel}: {len(matches)} CJK chars (e.g., {matches[0]!r})")
+        except Exception as e:
+            warnings.append(f"CJK: could not read {fp}: {e}")
+
     if cjk_errors:
         print(f"\n🔴  CJK VIOLATIONS ({len(cjk_errors)}):")
         for v in cjk_errors:
