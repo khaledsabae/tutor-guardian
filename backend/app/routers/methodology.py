@@ -90,11 +90,11 @@ async def methodology_page(request: Request):
 <h2>قاعدة المعرفة</h2>
 <div class="stat-grid">
   <div class="stat">
-    <div class="stat-num">١٬١٢٢</div>
+    <div class="stat-num">١٬١١٩</div>
     <div class="stat-label">وحدة معرفة</div>
   </div>
   <div class="stat">
-    <div class="stat-num">٥٥٥</div>
+    <div class="stat-num">٥٥٤</div>
     <div class="stat-label">وحدة شرعية</div>
   </div>
   <div class="stat">
@@ -102,7 +102,7 @@ async def methodology_page(request: Request):
     <div class="stat-label">وحدة سيبرانية</div>
   </div>
   <div class="stat">
-    <div class="stat-num">٢٥٩</div>
+    <div class="stat-num">٢٥٧</div>
     <div class="stat-label">وحدة طبية</div>
   </div>
 </div>
@@ -158,7 +158,7 @@ async def methodology_page(request: Request):
 
     return _page(
         title="منهجيتنا ومصادرنا",
-        desc="كيف يضمن المربي الذكي أن إجاباته موثوقة ومبنية على مصادر شرعية وعلمية — قاعدة معرفة ١٬١٢٢ وحدة مع ضوابط أمان صارمة",
+        desc="كيف يضمن المربي الذكي أن إجاباته موثوقة ومبنية على مصادر شرعية وعلمية — قاعدة معرفة ١٬١١٩ وحدة مع ضوابط أمان صارمة",
         body=body,
         canonical=canonical,
     )
