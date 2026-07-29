@@ -6,7 +6,7 @@
   "intervention_type": "إرشادي",
   "severity": "متوسط",
   "reference_type": "DSM-5",
-  "reference_info": "ADHD — National Institute of Mental Health (NIMH) 2024",
+  "reference_info": "NIMH — Attention-Deficit/Hyperactivity Disorder: What You Need to Know (2024)",
   "text_original": "ADHD is a common disorder in children that makes it hard to focus, sit still, and control behavior. Symptoms include forgetfulness, fidgeting, talking too much, difficulty waiting turns, and making careless mistakes.",
   "text_simplified": "ADHD هي حالة تتعلق بضعف التركيز والنشاط، وهي مفهومة من قبل مؤسسة الصحة النفسية الوطنية. هذه الحالة قد تكون خفيفة أو متوسطة الخطورة ويحتاج بعض الأشخاص إلى التدخل الطبي أو العلاج.",
   "labels": [
@@ -15,7 +15,7 @@
     "ADHD_NIMH"
   ],
   "created_at": "2026-06-06T13:31:35.757597Z",
-  "updated_at": "2026-06-10T19:30:00Z",
+  "updated_at": "2026-07-27",
   "version": "1.0.0",
   "keywords": [
     "ADHD",

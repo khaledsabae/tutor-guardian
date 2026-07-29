@@ -44,6 +44,11 @@ _NON_SOURCE_DOMAIN_WORDS = frozenset({
 _NON_SOURCE_EXACT = frozenset({
     "أصل المصدر غير محدد",
     "العنوان المفقود للنص الأصلي",
+    # This one is the app's OWN fallback string for "we have no source". A unit
+    # storing it as its reference would render «📚 المصدر: مصدر غير مذكور» —
+    # the absence of a source dressed up as one.
+    "غير مذكور",
+    "مصدر غير مذكور",
 })
 _PROMPT_LEFTOVER_RE = re.compile(
     r"(شرح عربي واضح|يذكر الأعراض|للأهل في \d|\d\s*-\s*\d\s*جمل|بأسلوب مبسط|صياغة عربية)"
