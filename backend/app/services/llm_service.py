@@ -20,6 +20,50 @@ _CJK_RE = re.compile(
     r"가-힯＀-￯]+"
 )
 
+# ── Source-line hygiene ──────────────────────────────────────────────────────
+# 33 of the 1,122 knowledge units carry a reference_info that is not a source:
+# 26 hold a bare domain name ("medical"), 4 are empty, 1 holds leftover
+# generation instructions ("شرح عربي واضح للأهل في 3-5 جمل…"), and 2 are
+# placeholders. The value is rendered to the parent as «📚 المصدر», so left
+# alone the app answers a question about a five-month-old and attributes it to
+# "medical".
+#
+# Filtered here rather than repaired in the data, because repairing it is an
+# editorial job, not a mechanical one: one of these units describes normal 4-6
+# month development while its source_file says Autism_CDC.pdf. Deriving the
+# citation from that field would hand a worried parent a citation to an autism
+# document — worse than showing no source at all. The passages themselves stay
+# in the context; only the false attribution is withheld.
+_NON_SOURCE_DOMAIN_WORDS = frozenset({
+    "medical", "cyber", "fiqh", "development",
+    "islamic_parenting", "aqeedah", "tarbiyah", "general",
+})
+# Matched exactly, never as a substring: «Children and Mental Health — NIMH,
+# (غير محددة)» is a real citation that merely lacks a date, and a contains-check
+# on "غير محدد" would throw it away.
+_NON_SOURCE_EXACT = frozenset({
+    "أصل المصدر غير محدد",
+    "العنوان المفقود للنص الأصلي",
+})
+_PROMPT_LEFTOVER_RE = re.compile(
+    r"(شرح عربي واضح|يذكر الأعراض|للأهل في \d|\d\s*-\s*\d\s*جمل|بأسلوب مبسط|صياغة عربية)"
+)
+
+
+def usable_reference(ref: str | None) -> str | None:
+    """The citation to show a parent, or None when the stored value is not one."""
+    cleaned = (ref or "").strip()
+    if not cleaned:
+        return None
+    if cleaned.lower() in _NON_SOURCE_DOMAIN_WORDS:
+        return None
+    if cleaned in _NON_SOURCE_EXACT:
+        return None
+    if _PROMPT_LEFTOVER_RE.search(cleaned):
+        return None
+    return cleaned
+
+
 # Latin letters glued directly to an Arabic letter (no space), e.g. "بness".
 # Conservative: only strips Latin runs touching Arabic, so standalone source
 # names like "CDC" or "AAP" (which are space-separated) are preserved.
@@ -128,10 +172,13 @@ def _build_prompt(
     for n, unit in enumerate(retrieved_units, 1):
         doc = unit.get("document", "") or unit.get("metadata", {}).get("text_simplified", "")
         doc = doc.removeprefix("passage: ")
-        ref = unit.get("metadata", {}).get("reference_info", "مصدر غير مذكور")
+        ref = usable_reference(unit.get("metadata", {}).get("reference_info"))
         src_domain = unit.get("source_domain") or unit.get("metadata", {}).get("domain", domain)
         domain_label = _DOMAIN_LABELS.get(src_domain, src_domain)
-        parts.append(f"【{n}】 ({domain_label}) {doc}\nالمرجع: {ref}")
+        # Say so in the context too, not just in the source line — otherwise the
+        # model invents an attribution for a passage it can see has none.
+        ref_line = ref or "غير موثّق — لا تنسب هذه الفقرة إلى أي مصدر"
+        parts.append(f"【{n}】 ({domain_label}) {doc}\nالمرجع: {ref_line}")
         if ref and ref not in sources:
             sources.append(ref)
 
