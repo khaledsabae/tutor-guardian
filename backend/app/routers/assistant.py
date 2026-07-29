@@ -77,6 +77,28 @@ def _off_topic(units: list[dict]) -> tuple[bool, float | None]:
     top = max(scores)
     return top < RERANK_MIN_SCORE, top
 
+async def _classify_and_rewrite(query_text: str) -> tuple[list[str], str]:
+    """The two pre-retrieval model calls, run concurrently.
+
+    Neither depends on the other: the rewriter is gated on matched_fast_path(),
+    the cheap keyword check, not on the classifier's verdict. Running them back
+    to back put both round-trips on the critical path before the first token.
+    Measured on production, that is the whole gap between a question the
+    keyword list catches (1.8s to first token) and one that needs the model
+    (4.75s) — each call is roughly a second.
+
+    A question the classifier then calls off-topic skips retrieval, so its
+    rewrite was wasted work. That is one small call, accepted knowingly to keep
+    the common case a full round-trip shorter.
+    """
+    fast_path = matched_fast_path(query_text)
+    domains, rewritten = await asyncio.gather(
+        asyncio.to_thread(classify_domains, query_text),
+        asyncio.to_thread(rewrite_query, query_text, classifier_fast_path=fast_path),
+    )
+    return domains, rewritten
+
+
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assistant", tags=["assistant"])
 
@@ -135,8 +157,9 @@ async def draft_reply(request: Request, user_message: UserMessage):
         history = await asyncio.to_thread(store.get_history, session_id, limit=6)
     else:
         history = user_message.conversation_history or []
-    # classify_domains can make a sync LLM call (seconds) on a fast-path miss.
-    detected_domains = await asyncio.to_thread(classify_domains, query_text)
+    # Both can make a model call (seconds) on a keyword fast-path miss, and
+    # they are independent — so they run together, not one after the other.
+    detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
     is_general = detected_domains == ["general"]
     logger.info("Auto-detected domains: %s", detected_domains)
 
@@ -175,18 +198,16 @@ async def draft_reply(request: Request, user_message: UserMessage):
         retrieved_units: list[dict] = []
     else:
         def _retrieve_blocking() -> list[dict]:
-            # CPU-bound embedding + reranking + sync HTTP rewrite — one thread hop.
+            # CPU-bound embedding + reranking — one thread hop. The rewrite has
+            # already happened alongside classification (_classify_and_rewrite).
             _ensure_index()
-            rewritten = rewrite_query(
-                query_text, classifier_fast_path=matched_fast_path(query_text)
-            )
             units = retrieve_hybrid(
                 query_text=query_text,
                 domains=detected_domains,
                 age_group=user_message.age_group or "unspecified",
-                rewritten_query=rewritten,
+                rewritten_query=rewritten_query,
             )
-            log_retrieval(query_text, detected_domains, rewritten, units)
+            log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units
 
         retrieved_units = await asyncio.to_thread(_retrieve_blocking)
@@ -380,7 +401,9 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         history = await asyncio.to_thread(store.get_history, session_id, limit=6)
     else:
         history = user_message.conversation_history or []
-    detected_domains = await asyncio.to_thread(classify_domains, query_text)
+    # Concurrent, not sequential — see _classify_and_rewrite. This is the path
+    # the mobile app uses, so the round-trip saved here is one the user feels.
+    detected_domains, rewritten_query = await _classify_and_rewrite(query_text)
     is_general = detected_domains == ["general"]
 
     primary_domain = _label_domain(detected_domains, [])
@@ -417,16 +440,14 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         retrieved_units: list[dict] = []
     else:
         def _retrieve_blocking() -> list[dict]:
+            # The rewrite already ran alongside classification above.
             _ensure_index()
-            rewritten = rewrite_query(
-                query_text, classifier_fast_path=matched_fast_path(query_text)
-            )
             units = retrieve_hybrid(
                 query_text=query_text, domains=detected_domains,
                 age_group=user_message.age_group or "unspecified",
-                rewritten_query=rewritten,
+                rewritten_query=rewritten_query,
             )
-            log_retrieval(query_text, detected_domains, rewritten, units)
+            log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units
         retrieved_units = await asyncio.to_thread(_retrieve_blocking)
 
