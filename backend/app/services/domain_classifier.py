@@ -45,7 +45,7 @@ CLASSIFIER_MODEL = (
 # answer even started being generated.
 CLASSIFIER_TIMEOUT_S = int(os.environ.get("CLASSIFIER_TIMEOUT_S", str(AUX_TIMEOUT_S)))
 
-VALID_DOMAINS = {"fiqh", "medical", "cyber", "development"}
+VALID_DOMAINS = {"fiqh", "medical", "cyber", "development", "aqeedah"}
 
 # What we return when classification is impossible (LLM unreachable/garbage).
 # Returning ONE arbitrary domain — this used to be ["medical"] — scopes
@@ -57,7 +57,9 @@ VALID_DOMAINS = {"fiqh", "medical", "cyber", "development"}
 # precision, but a diluted answer is recoverable and a silently wrong domain
 # is not. Callers detect this list via is_uncertain() and must not treat
 # UNCERTAIN_DOMAINS[0] as a real classification.
-UNCERTAIN_DOMAINS: Tuple[str, ...] = ("medical", "cyber", "fiqh", "development")
+UNCERTAIN_DOMAINS: Tuple[str, ...] = (
+    "medical", "cyber", "fiqh", "development", "aqeedah",
+)
 
 # ── Keyword Fast-Path ──────────────────────────────────────────────────────────
 # Maps clear Arabic keywords directly to domains. The key insight:
@@ -78,6 +80,28 @@ KEYWORD_RULES: List[Tuple[str, str]] = [
     # LLM tier, which classifies it properly. Widening one is what mis-routes
     # silently.
     (r"صلاة|صيام|زكاة|حج|عمرة|قرآن|السنة النبوية|سنة النبي|سنن النبي|حديث|دعاء|أذكار|مسجد|وضوء|الغسل|غسل\s*الجنابة|غسل\s*الجمعة|حلال|حرام|بدعة|شرك|توحيد|إيمان|عبادة|فقه|سورة|آية|أخلاق|قيم|بر الوالدين|صفات المؤمن|تربية إسلامية|تعليم.*دين|تحفيظ.*قرآن|حفظ.*قرآن|مصحف|جزاء|ثواب|إثم|ذنب|توبة|استغفار|يصل[يي]|يصوم|يزكي|يحج|يدعو|يتوضأ|يغتسل|يتوب|يستغفر|الصلوات|الفجر|الظهر|العصر|المغرب|العشاء|الوضوء|الصيام|الزكاة|الحج|العمرة|القرآن|الحديث|الدعاء|الأذكار|المسجد|كذب|يكذب|كذب\s*أطفال|يسرق|يسرقون|يحب\s*الموسيقى|لبس\s*الذهب|يدخن|يسخر\s*من\s*الدين|يحبب|أح[ب]+ب|يحب\s*الغناء|أصلي\s*عن\s*طفلي|أصلي\s*مع\s*طفلي|أفلام\s*غير\s*مناسبة|سنن\s*الفطرة|حقوق\s*الطفل|عناد|يأثم|كذب\s*أبيض|آداب\s*المسجد|آداب\s*الدعاء|قواعد\s*إسلامية|يحرم\s*تعليم|يحرم|يسب\s*الدين|يدعو\s*أبنائي", "fiqh"),
+    # Aqeedah — a child's questions about the Creator, the unseen, and the
+    # hereafter. Ten units exist for these (7-9) but were unreachable: the
+    # classifier never emitted `aqeedah`, so «بنتي بقت تسأل عن الموت» — a
+    # question the app itself suggests — could not retrieve «ما بعد الموت؟».
+    #
+    # PHRASES ONLY, never bare tokens. «الله» is the most common word in
+    # everyday Arabic (الحمد لله، إن شاء الله، ماشاء الله) and a bare rule on it
+    # would route almost every question here — the same substring failure that
+    # made «سم» match «يسمع» and answer ordinary questions with «اتصل بالطوارئ».
+    # Each alternative below has to carry a question ABOUT belief to fire.
+    (r"من\s*هو\s*الله|أين\s*الله|شكل\s*الله|وين\s*ربنا|مين\s*ربنا"
+     r"|يسأل\s*عن\s*(الله|ربنا|الدين)|بتسأل\s*عن\s*(الله|ربنا|الدين)"
+     r"|تسأل\s*عن\s*(الله|ربنا)|بيسأل\s*عن\s*(الله|ربنا)"
+     r"|بعد\s*الموت|الحياة\s*الآخرة|يوم\s*القيامة|الجنة\s*والنار"
+     # «بنتي بقت تسأل عن الموت» — the app's own suggested question. Anchored on
+     # a child ASKING about death (a creed question) so it can't catch a
+     # bereavement or a medical question that merely mentions the word.
+     r"|(يسأل|تسأل|بيسأل|بتسأل|سألني|سألتني)\s*عن\s*(ال)?موت"
+     r"|أركان\s*الإيمان|القضاء\s*والقدر|أسماء\s*الله|صفات\s*الله"
+     r"|ليه\s*خلقنا|لماذا\s*خلقنا|مين\s*خلق|من\s*خلق\s*(الله|الكون|الناس)"
+     r"|وجود\s*الله|يشك\s*في\s*(الله|الدين)|تشك\s*في\s*(الله|الدين)"
+     r"|الملائكة|شبهات|إلحاد|ملحد|مراقبة\s*الله|يراقبنا", "aqeedah"),
     # Cyber — digital/screen/gaming terms (expanded: streaming, social, platform names)
     (r"إدمان\s*(ألعاب|إنترنت|شاشة|هاتف|موبايل|تيك\s*توك|يوتيوب|فيديو|بلاي\s*ستيشن|xbox|نيتفلكس|نتفلكس|يوتيوب|سوشال|ألعاب)|تيك\s*توك|يوتيوب|شاشة|هاتف|موبايل|إنترنت|سوشيال|سوشال\s*ميديا|فيسبوك|واتساب|سناب|تويتر|إنستغرام|انستقرام|انستا|فايبر|فكونتاكت|واتس\s*اب|تليجرام|تلجرام|تويت|ريلز|لايك|followers|تنمر\s*إلكتروني|تنمر\s*رقمي|أمان\s*رقمي|خصوصية|محتوى\s*غير\s*لائق|محتويات\s*إباحية|إباحية|العاب\s*إلكترونية|بلايستيشن|screen|تلفزيون|أندرويد|ios|تطبيقات|porn|محتوى.*رقمي|رقمي|سيبراني|إلكتروني|محتوى\s*عنيف|ألعاب\s*مخيفة|قناة\s*سيئة|مواقع|أونلاين|تواصل\s*مع\s*غريب|غريب\s*على\s*النت|إرسال\s*صور|ترسل\s*صور|رسائل\s*لولد|حدود\s*لاستخدام\s*الشاشة|ساعات\s*على\s*الموبايل|كلمات\s*من\s*النت|إنستغرام|يسكرولين|فيس\s*بوك|واتس\s*أب", "cyber"),
     # Medical — clear health/psychological terms (incl. verb forms) (expanded: more clinical terms)
@@ -95,6 +119,7 @@ CLASSIFY_PROMPT = """صنّف سؤال الوالد/الوالدة في مجال
 
 - fiqh: أي سؤال عن التربية الإسلامية، أخلاق، قيم، دين، شريعة، القرآن، السنة النبوية، الصلاة، الصيام، تربية البنات أو الأولاد من منظور إسلامي، الحلال والحرام في التربية
 - medical: الصحة النفسية والسلوك — سواء كان سلوكًا يوميًا عاديًا أو حالة تحتاج مختصًا. يشمل: القلق، الاكتئاب، التوحد، فرط الحركة، التأخر النمائي، استشارة طبيب أو أخصائي نفسي؛ **وكذلك** السلوك اليومي والمشاعر والعلاقات: الخلافات مع الأصدقاء، الانطواء والانسحاب، رفض المدرسة أو البكاء عند الذهاب، الغيرة بين الإخوة، الثقة بالنفس، الحزن، الخجل، العناد، إدارة الوقت والمذاكرة
+- aqeedah: أسئلة الطفل عن الخالق والغيب: من هو الله، أين الله، لماذا خلقنا، ما بعد الموت، الجنة والنار، الملائكة، أركان الإيمان، القضاء والقدر، الشك أو الشبهات حول الدين. (يختلف عن fiqh: هذا عن **الاعتقاد** لا عن الأحكام والعبادات العملية.)
 - cyber: شاشات، إدمان ألعاب فيديو إلكترونية، هاتف ذكي، إنترنت، يوتيوب، تيك توك، تنمر إلكتروني عبر الإنترنت، أمان رقمي، مواقع التواصل الاجتماعي
 - development: نمو جسدي، مراحل عمرية طبيعية، مشي، أسنان، مهارات حركية، إعاقة، تدخل مبكر، كلام وتطور اللغة
 - general: أسئلة لا علاقة لها بالطفل أصلًا (وصفة طعام، رياضة، طقس، أخبار، برمجة). لا تستخدمه أبدًا لسؤال يتحدث عن ابن الوالد أو ابنته أو عن سلوكهما أو مشاعرهما أو علاقاتهما أو مدرستهما — مهما بدا السؤال عاديًا أو بسيطًا، فله مجال تربوي.

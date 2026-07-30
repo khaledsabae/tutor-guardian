@@ -66,6 +66,27 @@ domains:
       إحالة_لطبيب:
         force_fallback_message: true
 
+  aqeedah:
+    description: >-
+      "أسئلة الاعتقاد: من هو الله، ما بعد الموت، الجنة والنار، أركان الإيمان،
+      القضاء والقدر، والشبهات. مجال يُرجعه المصنّف ولا يجوز تركه بلا سياسة —
+      وحداته العشر كانت غير قابلة للوصول قبل 2026-07-30، فلما وُصلت لزم أن
+      تُحكَم مثل بقية المجالات لا أن تمرّ بسياسة فارغة."
+    default_policy:
+      allow_strict_rulings: false
+      require_human_review: true
+    severity_overrides:
+      شديد:
+        require_human_review: true
+        escalate_to: "scholar"
+      طارئ:
+        require_human_review: true
+        escalate_to: "emergency_services"
+    notes: >-
+      "تُصاغ الإجابة كتعليم عقدي مبسّط مناسب لعمر الطفل ومأخوذ من المتون
+      المعتمدة، لا كفتوى ولا كجدل كلامي. عند الشك أو الشبهة المركّبة يُشجَّع
+      الوالد على الرجوع لعالم موثوق."
+
   fiqh:
     description: "فتاوى وضوابط شرعية عامة (لن تُستخدم لإصدار فتاوى شخصية ملزِمة)."
     default_policy:
