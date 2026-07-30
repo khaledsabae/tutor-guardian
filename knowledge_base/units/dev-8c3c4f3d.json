@@ -1,0 +1,28 @@
+{
+  "id": "dev-8c3c4f3d",
+  "domain": "development",
+  "age_group": "16-18",
+  "behavior_type": "التردد في اختيار التخصص الجامعي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "title": "اضغط عليه علشان ياخد تخصص معين ولا أسيبه يستكشف؟",
+  "language": "mixed",
+  "reference_type": "مقال_تنموي",
+  "reference_info": "Carnevale, A. P. & Landis-Santos, J. — Beyond Career Assessment: Preparing Students for Life After High School، Career Convergence، National Career Development Association (NCDA)، 2017",
+  "text_original": "What you major in matters more than the prestige of the college you attend. Counseling that pairs self-reflection on skills and values with concrete data on job outlooks and pathways — including routes beyond a traditional four-year degree — helps students choose realistically, rather than by 'follow your passion' alone or by family pressure toward a prestigious name. — Carnevale & Landis-Santos, Beyond Career Assessment, NCDA Career Convergence, 2017.",
+  "text_simplified": "اختيار ابنك لتخصصه أهم من اسم الجامعة أو مكانتها، بحسب دراسة أمريكية في التوجيه المهني. لا تفرض عليه تخصصًا لسمعته أو رغبتك القديمة، ولا تتركه يختار بمزاج اللحظة فقط؛ اجمعا معًا معلومات واقعية عن فرص العمل ومسارات كل تخصص، فالقرار المبني على معرفة أفضل من الحماس وحده أو ضغط الأهل.",
+  "labels": [
+    "اختيار التخصص",
+    "ضغط الأهل",
+    "التوجيه المهني",
+    "المراهقة المتأخرة"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Beyond Career Assessment: Preparing Students for Life After High School",
+    "source_author": "Anthony P. Carnevale & Jennifer Landis-Santos — NCDA Career Convergence",
+    "source_year": 2017,
+    "source_url": "https://www.ncda.org/"
+  }
+}

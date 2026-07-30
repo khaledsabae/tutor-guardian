@@ -1,0 +1,30 @@
+{
+  "id": "med-8db73fe2",
+  "domain": "medical",
+  "source_file": "NIMH_Teen_Brain_2023.pdf",
+  "title": "ابني صحابه بيدخنوا وأنا خايف عليه",
+  "language": "mixed",
+  "age_group": "13-15",
+  "behavior_type": "ضغط الأقران والتدخين",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — The Teen Brain: 7 Things to Know (2023)؛ HealthyChildren.org (AAP) — Helping Teens Resist Pressure to Try Drugs",
+  "text_original": "Changes to the areas of the brain responsible for social processes can lead teens to focus more on peer relationships and social experiences. The emphasis on peer relationships, along with ongoing prefrontal cortex development, might lead teens to take more risks because the social benefits outweigh the possible consequences of a decision. — NIMH, The Teen Brain: 7 Things to Know, 2023. | Practice refusal responses together and encourage your teen to reject the behavior itself, not label the friend as a 'bad person.' — HealthyChildren.org (AAP), Helping Teens Resist Pressure to Try Drugs.",
+  "text_simplified": "ضغط الأصدقاء نحو التدخين يبلغ ذروته في المراهقة لأن دماغ المراهق يتغيّر ليركّز أكثر على قبول أصدقائه، فيقل وزن التفكير بالعواقب أمام رغبته في الانتماء. معرفة الأضرار وحدها لا تكفي لمنعه؛ تمرّنا معًا على رفض ودود دون وصف صديقه بـ«الشخص السيئ»، واجعلا الحوار مستمرًا لا تحذيرًا لمرة واحدة.",
+  "labels": [
+    "ضغط الأقران",
+    "التدخين",
+    "الحوار مع المراهق",
+    "المراهقة",
+    "علم نمو الدماغ"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "The Teen Brain: 7 Things to Know / Helping Teens Resist Pressure to Try Drugs",
+    "source_author": "NIMH; American Academy of Pediatrics (HealthyChildren.org)",
+    "source_year": 2023,
+    "source_url": "https://www.nimh.nih.gov/health/publications/the-teen-brain-7-things-to-know"
+  }
+}

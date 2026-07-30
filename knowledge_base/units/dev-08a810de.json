@@ -1,0 +1,28 @@
+{
+  "id": "dev-08a810de",
+  "domain": "development",
+  "age_group": "16-18",
+  "behavior_type": "التردد في اختيار التخصص الجامعي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "title": "ابني في الجامعة مش عارف يختار تخصصه",
+  "language": "mixed",
+  "reference_type": "إرشاد_مهني",
+  "reference_info": "American School Counselor Association (ASCA) — Mindsets & Behaviors for Student Success: K-12 College- and Career-Readiness Standards for Every Student (2014)",
+  "text_original": "Students achieve college and career readiness through structured self-exploration of their strengths, interests, and values, connected to real information about fields and pathways — not a single quiz or one conversation. Ruling out an unsuitable path is treated as real progress, not failure, on the way to a decision. — ASCA, Mindsets & Behaviors for Student Success: K-12 College- and Career-Readiness Standards, 2014.",
+  "text_simplified": "تردد ابنك (١٦-١٨ سنة) في اختيار تخصصه الجامعي طبيعي ولا يعني تقصيرًا. توصي المعايير المهنية الأمريكية (ASCA) بالاستكشاف المنظم: يتعرف على نقاط قوته واهتماماته، ويجمع معلومات حقيقية عن كل تخصص بدل اختبار واحد أو نصيحة قريب. واستبعاده تخصصًا لا يناسبه تقدّم حقيقي، لا فشل يلام عليه.",
+  "labels": [
+    "اختيار التخصص",
+    "التوجيه المهني",
+    "المراهقة المتأخرة",
+    "القلق الأكاديمي"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ASCA Mindsets & Behaviors for Student Success",
+    "source_author": "American School Counselor Association",
+    "source_year": 2014,
+    "source_url": "https://www.schoolcounselor.org/"
+  }
+}

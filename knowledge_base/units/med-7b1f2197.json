@@ -1,0 +1,28 @@
+{
+  "id": "med-7b1f2197",
+  "domain": "medical",
+  "source_file": "HealthyChildren_Teens_Smoking.pdf",
+  "title": "علامات إدمان النيكوتين السريع عند المراهق ومتى تطلب مساعدة",
+  "language": "mixed",
+  "age_group": "16-18",
+  "behavior_type": "التدخين وإدمان النيكوتين",
+  "intervention_type": "علاجي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "HealthyChildren.org (الأكاديمية الأمريكية لطب الأطفال) — For Teens: Straight Talk about Smoking",
+  "text_original": "Nicotine in tobacco causes people to become addicted much sooner than they expect after they start using. Signs of addiction include craving cigarettes or tobacco products, feeling nervous without them, and trying to quit but finding it hard to succeed. Most people need more than one quit attempt to succeed. — HealthyChildren.org, Teens and Smoking.",
+  "text_simplified": "إدمان النيكوتين عند المراهقين يحدث أسرع مما يتوقعون بعد أول تجربة. علامات الإدمان: رغبة ملحّة في السيجارة، توتر بدونها، ومحاولة إقلاع فاشلة. إذا لاحظت هذه العلامات على ابنك، اطلب مساعدة طبيب أو مختص فورًا؛ أغلب من يقلعون يحتاجون أكثر من محاولة، والدعم المتخصص يرفع فرصة النجاح كثيرًا.",
+  "labels": [
+    "التدخين",
+    "إدمان النيكوتين",
+    "الإقلاع عن التدخين",
+    "المراهقة المتأخرة"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "For Teens: Straight Talk about Smoking",
+    "source_author": "American Academy of Pediatrics (HealthyChildren.org)",
+    "source_url": "https://www.healthychildren.org/English/ages-stages/teen/substance-abuse/Pages/Teens-and-Smoking.aspx"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "dev-a6be8275",
+  "domain": "development",
+  "age_group": "4-6",
+  "behavior_type": "رفض تنظيف الأسنان",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "كيف تجعل تنظيف الأسنان ممتعًا لطفلك",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "HealthyChildren.org (الأكاديمية الأمريكية لطب الأطفال) — Toothbrushing Tips for Young Children (تحديث 2025)؛ NHS — Children's teeth (nhs.uk)",
+  "text_original": "Keep it fun: brush along to a favorite song, take turns letting your child brush your teeth, or follow a children's brushing app on your phone. Let your child pick their own toothbrush and toothpaste flavor — offering limited choices that all lead to clean teeth. Toddlers mimic their parents, so brushing together makes the routine feel normal rather than imposed. — HealthyChildren.org, Toothbrushing Tips for Young Children, AAP, 2025. Supervise brushing up to age 7. — NHS, Children's teeth.",
+  "text_simplified": "مقاومة تنظيف الأسنان بين ٤-٦ سنين تقل إذا حوّلته للعب لا لأمر. نظّف أسنانك على أغنية مفضلة، وخلّي طفلك ينظف أسنانك بالدور، ودعه يختار فرشاته ونكهة معجونه (اختيار محدود يوصل لنفس الهدف: أسنان نظيفة). طفلك يقلّدك فيشعر أنها عادة طبيعية لا أمر مفروض، واستمر بالإشراف حتى سن السابعة.",
+  "labels": [
+    "تنظيف الأسنان",
+    "اللعب التربوي",
+    "صحة الفم",
+    "الطفولة المبكرة"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Toothbrushing Tips for Young Children",
+    "source_author": "American Academy of Pediatrics — HealthyChildren.org",
+    "source_year": 2025,
+    "source_url": "https://www.healthychildren.org/English/healthy-living/oral-health/Pages/Toothbrushing-Tips-for-Young-Children.aspx"
+  }
+}

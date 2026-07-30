@@ -1,0 +1,28 @@
+{
+  "id": "med-bc0d8492",
+  "domain": "medical",
+  "age_group": "13-15",
+  "behavior_type": "مقارنة الأقران في الفلوس والمظهر",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "title": "ابني بيقارن نفسه بأصحابه في الفلوس",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — The Teen Brain: 7 Things to Know (NIH Publication No. 23-MH-8078, revised 2023)",
+  "text_original": "Changes to the areas of the brain responsible for social processes lead teens to focus more on peer relationships and social standing than before, making comparisons with friends — in possessions, money, or status — feel unusually urgent and important during this stage. — NIMH, The Teen Brain: 7 Things to Know, 2023.",
+  "text_simplified": "مقارنة ابنك المراهق (١٣-١٥ سنة) نفسه بأصحابه في الفلوس والمظهر ليست مادية زائدة، بل لأن دماغه الآن يركّز أكثر على مكانته بين أصحابه فتصير المقارنة أثقل وقعًا. لا تُقلّل من شعوره بجملة «فلوس مش كل حاجة»؛ ناقش معه ما يميزه من صفات ومهارات لا تُقاس بالمظهر أو المصروف.",
+  "labels": [
+    "مقارنة الأقران",
+    "الفلوس",
+    "المراهقة",
+    "علم نمو الدماغ"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "The Teen Brain: 7 Things to Know",
+    "source_author": "National Institute of Mental Health (NIMH)",
+    "source_year": 2023,
+    "source_url": "https://www.nimh.nih.gov/health/publications/the-teen-brain-7-things-to-know"
+  }
+}

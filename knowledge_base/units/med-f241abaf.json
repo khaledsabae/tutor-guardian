@@ -1,0 +1,29 @@
+{
+  "id": "med-f241abaf",
+  "domain": "medical",
+  "source_file": "NIMH_Teen_Brain_2023.pdf",
+  "title": "لماذا يخاطر المراهق الأكبر سنًا رغم إدراكه ضرر التدخين",
+  "language": "mixed",
+  "age_group": "16-18",
+  "behavior_type": "ضغط الأقران والتدخين",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — The Teen Brain: 7 Things to Know (NIH Publication No. 23-MH-8078, revised 2023)",
+  "text_original": "The emphasis on peer relationships, along with ongoing prefrontal cortex development, might lead teens to take more risks because the social benefits outweigh the possible consequences of a decision. Brain development continues into the mid-to-late 20s. — NIMH, The Teen Brain: 7 Things to Know, 2023.",
+  "text_simplified": "المراهق في السادسة عشرة أو السابعة عشرة يعرف أضرار التدخين جيدًا، لكن دماغه لم يكتمل نموه بعد (يستمر حتى منتصف العشرينات)، فتبقى الرغبة في قبول الأصدقاء أقوى من إدراك الخطر لحظة الضغط الفعلي. لا تعتبر قرب سن الرشد ضمانًا لمناعته من الضغط؛ استمر في الحوار المفتوح لا التوبيخ فقط.",
+  "labels": [
+    "ضغط الأقران",
+    "التدخين",
+    "نمو الدماغ",
+    "المراهقة المتأخرة"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "The Teen Brain: 7 Things to Know",
+    "source_author": "National Institute of Mental Health (NIMH)",
+    "source_year": 2023,
+    "source_url": "https://www.nimh.nih.gov/health/publications/the-teen-brain-7-things-to-know"
+  }
+}

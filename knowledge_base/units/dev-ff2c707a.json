@@ -1,0 +1,28 @@
+{
+  "id": "dev-ff2c707a",
+  "domain": "development",
+  "age_group": "2-3",
+  "behavior_type": "رفض تنظيف الأسنان",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "title": "طفلي الصغير يرفض تنظيف أسنانه",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "HealthyChildren.org (الأكاديمية الأمريكية لطب الأطفال) — Ask the Pediatrician: How do I get my preschooler to let me brush her teeth? بقلم د. J. Shahangian، DDS (2017)",
+  "text_original": "Establish a predictable sequence such as 'bath, book, brush, bed' so the child knows what comes next and feels some control. A sticker calendar for successful brushing sessions builds motivation through visible progress. When resistance is high, bring the toothbrush to the child — in bed or in the car seat — rather than turning the bathroom into a battleground. Brushing after breakfast, rather than before, keeps teeth cleaner through the day. — HealthyChildren.org, Ask the Pediatrician, J. Shahangian, DDS, 2017.",
+  "text_simplified": "رفض الطفل الصغير (٢-٣ سنين) تنظيف أسنانه أمر شائع ومتوقع في هذا العمر. اجعل التنظيف جزءًا من روتين ثابت مثل «حمام، قصة، تنظيف أسنان، نوم» ليعرف طفلك الترتيب ويشعر بشيء من التحكم. استخدم تقويم ملصقات لتحفيزه، وإن قاوم في الحمام نظّفها وهو في سريره أو مقعد السيارة بدل معركة يومية.",
+  "labels": [
+    "تنظيف الأسنان",
+    "الروتين اليومي",
+    "الطفولة المبكرة",
+    "مقاومة الأوامر"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "How do I get my preschooler to let me brush her teeth?",
+    "source_author": "J. Shahangian, DDS — HealthyChildren.org (AAP)",
+    "source_year": 2017,
+    "source_url": "https://www.healthychildren.org/English/tips-tools/ask-the-pediatrician/Pages/How-do-I-get-my-preschooler-to-let-me-brush-her-teeth.aspx"
+  }
+}

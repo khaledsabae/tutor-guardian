@@ -1,0 +1,28 @@
+{
+  "id": "med-c0eb2588",
+  "domain": "medical",
+  "age_group": "10-12",
+  "behavior_type": "مقارنة الأقران في الملابس والمقتنيات",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "title": "بنتي بتقارن نفسها بصحابها في اللبس",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "HealthyChildren.org (الأكاديمية الأمريكية لطب الأطفال) — Kids & Money: Help Your Child Learn Good Financial Habits (تحديث 2026)",
+  "text_original": "A regular allowance breaks the cycle of instant gratification: it gives children practice deciding whether something is truly important to them, rather than wanting it simply because a friend has it or it is in front of them. — HealthyChildren.org, Kids & Money, AAP.",
+  "text_simplified": "مقارنة بنتك (١٠-١٢ سنة) نفسها بصاحباتها في الملابس شائعة في هذا العمر. بدل الرفض المباشر أو الشراء الفوري لإرضائها، امنحها مصروفًا منتظمًا تتصرف فيه بنفسها؛ هذا يدرّبها على التمييز بين شيء تريده فعلًا وشيء تريده لأن صاحبتها تملكه، فيقل اعتمادها على المقارنة كمقياس لقيمتها.",
+  "labels": [
+    "مقارنة الأقران",
+    "إدارة المصروف",
+    "الطفولة المتوسطة",
+    "الثقة بالنفس"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kids & Money: Help Your Child Learn Good Financial Habits",
+    "source_author": "American Academy of Pediatrics — HealthyChildren.org",
+    "source_year": 2026,
+    "source_url": "https://www.healthychildren.org/English/family-life/family-dynamics/communication-discipline/Pages/Money-Matters-Helping-Your-Kids-Create-Good-Habits.aspx"
+  }
+}
