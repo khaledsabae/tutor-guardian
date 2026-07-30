@@ -155,16 +155,22 @@ def _unit_metadata(unit: KnowledgeUnit) -> dict:
         "severity": unit.severity,
         "labels": ", ".join(unit.labels) if unit.labels else "",
         "reference_info": unit.reference_info,
+        "title": unit.title,
     }
 
 
 def _fingerprint(units: list[KnowledgeUnit]) -> str:
-    """Content hash of the unit set — lets us skip a rebuild when nothing changed."""
+    """Content hash of the unit set — lets us skip a rebuild when nothing changed.
+
+    Hashes `embedding_text`, not `text_simplified`: the vector is built from the
+    topic header plus the body, so a change to either — or to the composition
+    rule itself — has to invalidate the index.
+    """
     h = hashlib.sha256()
     for unit in sorted(units, key=lambda u: u.id):
         h.update(unit.id.encode())
         h.update(b"\0")
-        h.update(unit.text_simplified.encode())
+        h.update(unit.embedding_text.encode())
         h.update(b"\0")
         h.update(repr(sorted(_unit_metadata(unit).items())).encode())
         h.update(b"\x01")
@@ -225,9 +231,24 @@ def _purge_persist_dir() -> None:
     Clears the directory's *contents* rather than the directory itself — in
     production it is a docker volume mount point, and rmdir on it fails with
     EBUSY.
+
+    Dropping our own handle is not enough: chromadb caches one System per
+    persist path, so the next PersistentClient(path=…) hands back the same
+    process-wide object still holding an open descriptor on the sqlite file we
+    just unlinked. It then reports the deleted collection as present and the
+    first write fails with SQLITE_READONLY_DBMOVED (code 1032) — i.e. the
+    bloat-triggered rebuild would delete the index and then be unable to
+    rewrite it, leaving the app with nothing. Clearing chroma's cache too
+    makes the next client genuinely new.
     """
     global _collection
     _collection = None
+    try:
+        from chromadb.api.shared_system_client import SharedSystemClient
+
+        SharedSystemClient.clear_system_cache()
+    except Exception as exc:  # noqa: BLE001 — private-ish API, never fatal
+        logger.warning("could not clear chroma's system cache: %s", exc)
     if not CHROMA_PERSIST_DIR.exists():
         CHROMA_PERSIST_DIR.mkdir(parents=True, exist_ok=True)
         return
@@ -273,16 +294,23 @@ def index_knowledge_units(
         if existing_ids:
             collection.delete(ids=existing_ids)
 
-    # Batch insert — embedding happens automatically via the collection's EF
     ids = [unit.id for unit in units]
-    # multilingual-e5 expects "passage: " prefix for indexed documents
+    # The stored document stays the authored prose — it is what the generation
+    # prompt and the parent-facing fallback quote. The VECTOR is built from
+    # `embedding_text`, which prepends the unit's own topic fields (title,
+    # behaviour type, labels, keywords). Embedding the body alone made a unit's
+    # subject invisible to semantic search: prose about olive oil never says
+    # "this is a nutrition unit", so it competed for questions about shyness.
     documents = [f"passage: {unit.text_simplified}" for unit in units]
     metadatas = [_unit_metadata(unit) for unit in units]
+    # Guarded: an empty rebuild must not drag the ~250MB embedder into memory.
+    embeddings = _embedder()([unit.embedding_text for unit in units]) if units else []
 
     collection.add(
         ids=ids,
         documents=documents,
         metadatas=metadatas,
+        embeddings=embeddings,
     )
     _fingerprint_path().write_text(fingerprint)
     logger.info("Knowledge index built: %d units", len(units))

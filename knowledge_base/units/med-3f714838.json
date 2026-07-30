@@ -5,7 +5,7 @@
   "title": "الحفاظ على وزن الطفل وتجنب أمراض السمنة والسكري والقلب",
   "language": "ar",
   "age_group": "4-6",
-  "behavior_type": "فرط حركة",
+  "behavior_type": "تغذية صحية",
   "intervention_type": "إرشادي",
   "severity": "متوسط",
   "reference_type": "تقرير_طبي",
@@ -19,7 +19,7 @@
     "أمراض القلب والأوعية الدموية"
   ],
   "created_at": "2026-06-22T11:59:23Z",
-  "updated_at": "2026-06-22T11:59:23Z",
+  "updated_at": "2026-07-30",
   "version": "1.0.0",
   "source_meta": {
     "source_title": "Saudi_MOH_Child_Nutrition_Guide",

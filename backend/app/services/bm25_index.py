@@ -50,10 +50,11 @@ class _Bm25Index:
         self.meta: list[dict] = []
         corpus: list[list[str]] = []
         for u in units:
-            blob = " ".join(
-                filter(None, [u.text_simplified, u.behavior_type,
-                              " ".join(u.labels or [])])
-            )
+            # Same text the vector leg embeds, so both legs of the hybrid see
+            # the unit through the same words. Over the previous blob this adds
+            # `title` and `keywords` and drops provenance tags («english»,
+            # «nimh») that no parent's question will ever contain.
+            blob = " ".join(filter(None, [u.topic_header, u.text_simplified]))
             corpus.append(_tokenize(blob))
             self.meta.append({
                 "unit_id": u.id,
@@ -67,6 +68,7 @@ class _Bm25Index:
                     "severity": u.severity,
                     "labels": ", ".join(u.labels) if u.labels else "",
                     "reference_info": u.reference_info,
+                    "title": u.title,
                 },
             })
         self.bm25 = BM25Okapi(corpus)
