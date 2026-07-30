@@ -1,0 +1,27 @@
+{
+  "id": "dev-7d8eb92d",
+  "domain": "development",
+  "age_group": "7-9",
+  "behavior_type": "النمو الجسدي والحركي في سن المدرسة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "نمو طفلي الجسدي والحركي في المرحلة الابتدائية (٦-٨ سنوات)",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "مركز السيطرة على الأمراض الأمريكي (CDC) — Positive Parenting Tips: Middle Childhood (6–8 years old)، Child Development، تحديث 2024",
+  "text_original": "By this age children can dress themselves, catch a ball reliably with their hands, and tie their shoes as physical, social, and mental skills develop quickly. Children need 1 hour or more of daily physical activity and 9–12 hours of sleep per 24 hours. — CDC, Positive Parenting Tips: Middle Childhood (6–8 years old), 2024.",
+  "text_simplified": "في عمر ٦-٨ سنوات يقدر طفلك يلبس نفسه، ويمسك الكرة بثقة بيديه، ويربط رباط حذائه، لأن مهاراته الجسدية والحركية تتطور بسرعة. يوصي مركز السيطرة على الأمراض الأمريكي بساعة نشاط بدني يوميًا على الأقل و٩-١٢ ساعة نوم كل يوم لدعم هذا النمو الطبيعي في هذه المرحلة.",
+  "labels": [
+    "النمو الحركي",
+    "سن المدرسة",
+    "النشاط البدني"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Positive Parenting Tips: Middle Childhood (6–8 years old)",
+    "source_author": "CDC",
+    "source_year": 2024,
+    "source_url": "https://www.cdc.gov/child-development/positive-parenting-tips/middle-childhood-6-8-years.html"
+  }
+}

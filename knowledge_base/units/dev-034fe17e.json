@@ -1,0 +1,27 @@
+{
+  "id": "dev-034fe17e",
+  "domain": "development",
+  "age_group": "2-3",
+  "behavior_type": "تدريب استخدام الحمام",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "علامات استعداد طفلي لتدريب الحمام",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "الأكاديمية الأمريكية لطب الأطفال (AAP) — Toilet Training Guidelines: The Role of the Parents, Pediatrics, 1999;103(Supplement 3):1362",
+  "text_original": "Readiness markers include the ability to walk to the bathroom, awareness of a full bladder or rectum, expressed desire to use the toilet or wear 'big kid' underwear, and imitation of toileting behavior. Training should not be forced before these signs appear. — AAP, Toilet Training Guidelines: The Role of the Parents, Pediatrics, 1999;103(Suppl 3):1362.",
+  "text_simplified": "تدريب استخدام الحمام مهارة نمائية لا سباق بين الأطفال. توصي الأكاديمية الأمريكية لطب الأطفال بعدم إجبار الطفل قبل ظهور علامات الاستعداد: مشيه للحمام بنفسه، شعوره بامتلاء المثانة، ورغبته في تقليد الكبار أو ارتداء ملابس داخلية «زي الكبار». البدء القسري المبكر يعطّل التدريب لا يسرّعه.",
+  "labels": [
+    "تدريب الحمام",
+    "الاستعداد النمائي",
+    "الطفولة المبكرة"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Toilet Training Guidelines: The Role of the Parents",
+    "source_author": "American Academy of Pediatrics",
+    "source_year": 1999,
+    "source_url": "https://publications.aap.org/pediatrics/article/103/Supplement_3/1362/28228/"
+  }
+}

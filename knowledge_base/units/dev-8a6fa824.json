@@ -1,0 +1,27 @@
+{
+  "id": "dev-8a6fa824",
+  "domain": "development",
+  "age_group": "2-3",
+  "behavior_type": "تدريب استخدام الحمام",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "title": "طفلي بيرفض الحمام ومعظم اليوم بيبلل نفسه",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "الأكاديمية الأمريكية لطب الأطفال (AAP) — Toilet Training Guidelines: The Role of the Parents, Pediatrics, 1999;103(Supplement 3):1362؛ HealthyChildren.org — Toilet Training Age by Age",
+  "text_original": "The AAP recommends starting no earlier than 24 months and expects accidents to continue until close to age 3. Power struggles over toileting should be avoided; praise attempts rather than punishing accidents, and pause training for a few weeks if resistance is strong. — AAP, Toilet Training Guidelines, Pediatrics, 1999;103(Suppl 3):1362.",
+  "text_simplified": "رفض طفلك (٢-٣ سنين) الحمام وتبليله المتكرر أمر متوقع، فالأكاديمية الأمريكية لطب الأطفال توصي بعدم البدء قبل ٢٤ شهرًا وتتوقع حوادث تبليل حتى قرب سن الثالثة. تجنّب معركة يومية معه: امدحه على المحاولة بدل عقابه على الحادثة، وأوقف التدريب أسابيع لو قاوم بشدة ثم أعد المحاولة لاحقًا.",
+  "labels": [
+    "تدريب الحمام",
+    "مقاومة الطفل",
+    "الطفولة المبكرة"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Toilet Training Guidelines: The Role of the Parents",
+    "source_author": "American Academy of Pediatrics",
+    "source_year": 1999,
+    "source_url": "https://publications.aap.org/pediatrics/article/103/Supplement_3/1362/28228/"
+  }
+}

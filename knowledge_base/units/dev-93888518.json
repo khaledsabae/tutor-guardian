@@ -1,0 +1,27 @@
+{
+  "id": "dev-93888518",
+  "domain": "development",
+  "age_group": "2-3",
+  "behavior_type": "تطور الكلام واللغة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "متى يبدأ طفلي الكلام؟ مراحل تطور اللغة حتى ١٨ شهرًا",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "مركز السيطرة على الأمراض الأمريكي (CDC) — Learn the Signs. Act Early.: Milestones by 18 Months، تحديث 2022",
+  "text_original": "By 18 months, most children say several single words, point to show someone something interesting, and follow one-step directions without gestures, such as 'sit down'. Facing the child at eye level while talking supports language development. — CDC, Learn the Signs. Act Early., Milestones by 18 Months, 2022.",
+  "text_simplified": "بحلول ١٨ شهرًا يقول معظم الأطفال عدة كلمات مفردة، ويُشيرون ليروك شيئًا يثيرهم، وينفذون توجيهًا من خطوة واحدة بلا إيماءة مثل «اقعد». هذه علامات تطور طبيعي وفق مركز السيطرة على الأمراض الأمريكي، لا مؤشر تفوق أو تأخر بذاتها. تحدّث مع طفلك وجهًا لوجه وعلى مستوى نظره ليدعم تطور لغته.",
+  "labels": [
+    "تطور اللغة",
+    "الكلمات الأولى",
+    "الطفولة المبكرة"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Milestones by 18 Months",
+    "source_author": "CDC — Learn the Signs. Act Early.",
+    "source_year": 2022,
+    "source_url": "https://www.cdc.gov/act-early/milestones/18-months.html"
+  }
+}

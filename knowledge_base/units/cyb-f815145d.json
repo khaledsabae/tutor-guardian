@@ -1,0 +1,27 @@
+{
+  "id": "cyb-f815145d",
+  "domain": "cyber",
+  "age_group": "16-18",
+  "behavior_type": "الأثر الرقمي والخصوصية قبل التقديم للجامعات",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "أثر السوشيال ميديا على قبول ابني في الجامعة",
+  "language": "mixed",
+  "reference_type": "تقرير_سيبراني",
+  "reference_info": "Common Sense Media — Who's Looking at Your Digital Footprint? (Common Sense Education, Digital Citizenship Curriculum)؛ استطلاع Kaplan Test Prep، 2021",
+  "text_original": "According to a 2021 Kaplan Test Prep survey, 36% of college admissions officers checked applicants' social media pages; of those, 38% reported a positive impact on their impression and 57% reported a negative one. Teens should recognize that anything posted online can help or hurt future opportunities. — Common Sense Media, Who's Looking at Your Digital Footprint?; Kaplan Test Prep survey, 2021.",
+  "text_simplified": "أكثر من ثلث مسؤولي القبول الجامعي الأمريكيين يراجعون حسابات المتقدمين على السوشيال ميديا، وأغلب الأثر عند المراجعة سلبي لا إيجابي، بحسب استطلاع Kaplan لعام ٢٠٢١. ساعد ابنك (١٦-١٨ سنة) يفهم إن كل منشور قديم أو جديد جزء من صورته أمام الجامعات، لا حاجة يمحو حضوره، لكن يراجعه بوعي.",
+  "labels": [
+    "الأثر الرقمي",
+    "الخصوصية",
+    "المراهقة المتأخرة",
+    "التقديم الجامعي"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Who's Looking at Your Digital Footprint?",
+    "source_author": "Common Sense Education",
+    "source_url": "https://www.commonsense.org/education/digital-citizenship/lesson/whos-looking-at-your-digital-footprint"
+  }
+}

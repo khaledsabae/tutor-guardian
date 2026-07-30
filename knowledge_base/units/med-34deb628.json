@@ -1,0 +1,27 @@
+{
+  "id": "med-34deb628",
+  "domain": "medical",
+  "age_group": "16-18",
+  "behavior_type": "تأخر النوم المزمن (Delayed Sleep Phase)",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "title": "ابني المراهق مش قادر ينام بدري ولا يصحى الصبح... هل ده كسل؟",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "الأكاديمية الأمريكية لطب الأطفال (AAP) — Policy Statement: School Start Times for Adolescents, Pediatrics, 2014;134(3):642-649",
+  "text_original": "Around puberty onset, most adolescents experience a sleep-wake phase delay of up to two hours due to delayed nocturnal melatonin secretion, making it biologically difficult to fall asleep before 11 PM, while teens still need 8.5–9.5 hours of sleep. — AAP, Policy Statement: School Start Times for Adolescents, Pediatrics, 2014;134(3):642-649.",
+  "text_simplified": "عدم قدرة ابنك المراهق (١٦-١٨ سنة) على النوم مبكرًا والاستيقاظ صباحًا ليس كسلًا، بل تأخر بيولوجي في ساعته الداخلية يصل لساعتين بعد البلوغ، بسبب تأخر إفراز الميلاتونين ليلًا. تقرر الأكاديمية الأمريكية لطب الأطفال أن جسمه فعليًا لا يقدر ينام قبل الحادية عشرة مساءً رغم حاجته لنوم كافٍ.",
+  "labels": [
+    "اضطراب النوم",
+    "المراهقة المتأخرة",
+    "الساعة البيولوجية"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Policy Statement: School Start Times for Adolescents",
+    "source_author": "American Academy of Pediatrics",
+    "source_year": 2014,
+    "source_url": "https://publications.aap.org/pediatrics/article/134/3/642/74175/"
+  }
+}

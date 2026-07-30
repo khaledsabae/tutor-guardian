@@ -1,0 +1,27 @@
+{
+  "id": "med-408796d1",
+  "domain": "medical",
+  "age_group": "16-18",
+  "behavior_type": "اضطرابات الأكل المبكرة",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "title": "لاحظت تغيرات مقلقة في أكل ابنتي المراهقة... هل ده اضطراب أكل؟",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "المعهد الوطني الأمريكي للصحة النفسية (NIMH) — Eating Disorders: About More Than Food، nimh.nih.gov",
+  "text_original": "Warning signs include abrupt changes in weight, preoccupation with calories or weight, altered eating habits, excessive exercise, and a distorted perception of body size. Eating disorders occur in nearly 3% of adolescents aged 13–18 and are not a choice; anorexia carries an especially high mortality risk from medical complications. — NIMH, Eating Disorders: About More Than Food.",
+  "text_simplified": "تغيّر مفاجئ في وزن ابنتك (١٦-١٨ سنة)، انشغالها الدائم بالسعرات، تقييد أكلها بشدة، إفراطها في الرياضة، أو تشويه صورتها لجسدها علامات إنذار لاضطراب أكل، بحسب المعهد الوطني الأمريكي للصحة النفسية. هذا ليس اختيارًا، بل حالة قد تهدد الحياة وتستدعي عرضها فورًا على طبيب مختص لا الانتظار.",
+  "labels": [
+    "اضطرابات الأكل",
+    "إحالة طبية",
+    "المراهقة المتأخرة",
+    "حالة طارئة"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Eating Disorders: About More Than Food",
+    "source_author": "National Institute of Mental Health (NIMH)",
+    "source_url": "https://www.nimh.nih.gov/health/publications/eating-disorders"
+  }
+}

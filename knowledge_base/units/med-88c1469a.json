@@ -1,0 +1,27 @@
+{
+  "id": "med-88c1469a",
+  "domain": "medical",
+  "age_group": "7-9",
+  "behavior_type": "البلوغ المبكر (Precocious Puberty)",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "متوسط",
+  "title": "علامات بلوغ ظهرت على بنتي قبل سن الثامنة",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "الأكاديمية الأمريكية لطب الأطفال (AAP) — Evaluation and Referral of Children With Signs of Early Puberty, Pediatrics, 2016;137(1):e20153732",
+  "text_original": "Precocious puberty has traditionally been defined as pubertal changes occurring before age 8 years in girls and 9 years in boys, warranting clinical evaluation and referral to a pediatric endocrinologist to determine the cause and appropriate management. — AAP, Evaluation and Referral of Children With Signs of Early Puberty, Pediatrics, 2016;137(1):e20153732.",
+  "text_simplified": "ظهور علامات بلوغ عند بنتك قبل سن الثامنة (أو قبل التاسعة عند الولد) يُعرَّف طبيًا بـ«البلوغ المبكر» ويحتاج تقييم طبيب أطفال أو أخصائي غدد صماء لتحديد السبب، بحسب الأكاديمية الأمريكية لطب الأطفال. لا تنتظري أو تكتفي بالملاحظة المنزلية؛ الإحالة المبكرة تحدد العلاج المناسب إن وُجد.",
+  "labels": [
+    "البلوغ المبكر",
+    "إحالة طبية",
+    "الغدد الصماء"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Evaluation and Referral of Children With Signs of Early Puberty",
+    "source_author": "American Academy of Pediatrics",
+    "source_year": 2016,
+    "source_url": "https://publications.aap.org/pediatrics/article/137/1/e20153732/52918/"
+  }
+}

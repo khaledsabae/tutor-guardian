@@ -1,0 +1,28 @@
+{
+  "id": "dev-10a2fcc0",
+  "domain": "development",
+  "age_group": "7-9",
+  "behavior_type": "تطور الصداقات والمهارات الاجتماعية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "title": "طفلي بقى مهتم بصحابه أكتر مني... طبيعي؟ (٩-١١ سنة)",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "مركز السيطرة على الأمراض الأمريكي (CDC) — Positive Parenting Tips: Middle Childhood (9–11 years old)، Child Development، تحديث 2024",
+  "text_original": "Children begin forming stronger, more complex friendships that become emotionally important, especially with peers of the same sex. Growing independence from family and interest in friends is normal, and peer pressure becomes stronger; children who feel good about themselves resist negative pressure better. — CDC, Positive Parenting Tips: Middle Childhood (9–11 years old), 2024.",
+  "text_simplified": "اهتمام طفلك (٩-١١ سنة) بأصدقائه أكتر من الأهل مرحلة نمو طبيعية لا ابتعاد عنك، فصداقاته بقت أعمق وأهم له عاطفيًا. ضغط الأصدقاء بيزيد في هذه المرحلة أيضًا، والطفل الواثق من نفسه أقدر يقاوم الضغط السلبي. رافق استقلاليته المتنامية بدل مقاومتها، بحسب مركز السيطرة على الأمراض الأمريكي.",
+  "labels": [
+    "الصداقات",
+    "الاستقلالية",
+    "ضغط الأقران",
+    "سن المدرسة"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Positive Parenting Tips: Middle Childhood (9–11 years old)",
+    "source_author": "CDC",
+    "source_year": 2024,
+    "source_url": "https://www.cdc.gov/child-development/positive-parenting-tips/middle-childhood-9-11-years-old.html"
+  }
+}

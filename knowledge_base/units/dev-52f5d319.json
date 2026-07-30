@@ -1,0 +1,27 @@
+{
+  "id": "dev-52f5d319",
+  "domain": "development",
+  "age_group": "16-18",
+  "behavior_type": "تعلم القيادة والاستقلالية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "اتفاقية القيادة الآمنة بينك وبين ابنك المراهق",
+  "language": "mixed",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "الإدارة الوطنية لسلامة المرور الأمريكية (NHTSA) بالتعاون مع HealthyChildren.org (AAP) — Parent-Teen Driving Agreement، تحديث 2023",
+  "text_original": "A written parent-teen driving agreement sets specific rules on curfews, passengers, phone use while driving, and weather conditions, along with clear consequences. It signals that driving is a privilege both parties take seriously, and parents are best positioned to enforce these limits. — NHTSA / HealthyChildren.org, Parent-Teen Driving Agreement, 2023.",
+  "text_simplified": "اتفاقية قيادة مكتوبة بينك وبين ابنك المراهق (١٦-١٨ سنة) تحدد قواعد واضحة: مواعيد العودة، عدد الركاب المسموح، منع الهاتف أثناء القيادة، وقيود الطقس السيئ، مع نتائج معروفة عند المخالفة. توصي بها إدارة سلامة المرور الأمريكية لأن الأهل أقدر طرف على تطبيق هذه القيود بثبات في هذه المرحلة.",
+  "labels": [
+    "القيادة الآمنة",
+    "المراهقة المتأخرة",
+    "الاستقلالية"
+  ],
+  "created_at": "2026-07-30T14:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Parent-Teen Driving Agreement",
+    "source_author": "NHTSA / American Academy of Pediatrics — HealthyChildren.org",
+    "source_year": 2023,
+    "source_url": "https://www.healthychildren.org/English/ages-stages/teen/safety/Pages/teen-driving-agreement.aspx"
+  }
+}
