@@ -11,7 +11,8 @@
       "reports": "156/170",
       "data_tables": "156/170",
       "infographics": "156/170",
-      "podcasts": "169/170"
+      "podcasts": "169/170",
+      "videos": "101/170"
     },
     "lessons_by_age": {
       "0-3": 6,
@@ -23,7 +24,7 @@
       "7-9": 31,
       "prenatal-1": 14
     },
-    "total_videos": 88,
+    "total_videos": 101,
     "video_languages": [
       "ar"
     ],
@@ -10691,6 +10692,15 @@
             "language": "ar",
             "size_bytes": 38615782
           }
+        ],
+        "videos": [
+          {
+            "source_id": "eb9479c7-a5dd-4a59-a6ba-d340a5d218e8",
+            "file": "docs/lesson_10-12_islamic_peer_difference_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "الشعور بالاختلاف عن الأصدقاء بسبب الالتزام"
+          }
         ]
       }
     },
@@ -10746,6 +10756,15 @@
             "language": "ar",
             "size_bytes": 29703353
           }
+        ],
+        "videos": [
+          {
+            "source_id": "46102778-bb29-49a0-9d80-910d28ecdebd",
+            "file": "docs/lesson_13-15_medical_peer_pressure_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "ضغط الأقران نحو التدخين"
+          }
         ]
       }
     },
@@ -10777,6 +10796,15 @@
             "file": "docs/lesson_16-18_cyber_privacy_college_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 25853965
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "4bf5d122-e6d7-48f9-be22-7bfccd2c8b37",
+            "file": "docs/lesson_16-18_cyber_privacy_college_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "الأثر الرقمي والخصوصية قبل التقديم للجامعات"
           }
         ]
       }
@@ -10810,6 +10838,15 @@
             "language": "ar",
             "size_bytes": 26053540
           }
+        ],
+        "videos": [
+          {
+            "source_id": "de701711-c7ac-45c8-885c-465ab3bbfb41",
+            "file": "docs/lesson_16-18_development_driving_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "تعلم القيادة والاستقلالية"
+          }
         ]
       }
     },
@@ -10841,6 +10878,15 @@
             "file": "docs/lesson_16-18_development_major_choice_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 46372079
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "b3b246d9-d260-4f34-b656-818da5f30727",
+            "file": "docs/lesson_16-18_development_major_choice_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "اختيار التخصص الجامعي"
           }
         ]
       }
@@ -10874,6 +10920,15 @@
             "language": "ar",
             "size_bytes": 19486877
           }
+        ],
+        "videos": [
+          {
+            "source_id": "42547a2a-3596-461f-a36d-3aed8075ce37",
+            "file": "docs/lesson_16-18_islamic_daughter_work_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "عمل الفتاة والخروج للعمل"
+          }
         ]
       }
     },
@@ -10905,6 +10960,15 @@
             "file": "docs/lesson_16-18_islamic_independence_boundaries_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 29142095
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "aba5519a-eb84-409f-8725-858a0e2f85c3",
+            "file": "docs/lesson_16-18_islamic_independence_boundaries_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "الاستقلالية المتنامية وبر الوالدين"
           }
         ]
       }
@@ -10938,6 +11002,15 @@
             "language": "ar",
             "size_bytes": 35103425
           }
+        ],
+        "videos": [
+          {
+            "source_id": "d510d329-5e81-430f-a4da-4cddaff063b9",
+            "file": "docs/lesson_16-18_medical_nicotine_risk_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "إدمان النيكوتين والتدخين"
+          }
         ]
       }
     },
@@ -10969,6 +11042,15 @@
             "file": "docs/lesson_16-18_medical_precollege_wellbeing_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 47038670
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "9218ccf0-4301-47cf-8bf3-577931be52f4",
+            "file": "docs/lesson_16-18_medical_precollege_wellbeing_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "القلق من المستقبل قبل الجامعة"
           }
         ]
       }
@@ -11002,6 +11084,15 @@
             "language": "ar",
             "size_bytes": 32594689
           }
+        ],
+        "videos": [
+          {
+            "source_id": "95876512-7f97-403b-aeef-fe0668d30aec",
+            "file": "docs/lesson_2-3_development_toddler_habits_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "نوبات الغضب كمرحلة نمائية طبيعية"
+          }
         ]
       }
     },
@@ -11033,6 +11124,15 @@
             "file": "docs/lesson_2-3_medical_separation_anxiety_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 40853228
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "6eccce2f-63a8-4692-97fa-adc094d35a82",
+            "file": "docs/lesson_2-3_medical_separation_anxiety_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "قلق الانفصال عند الحضانة"
           }
         ]
       }
@@ -11066,6 +11166,15 @@
             "language": "ar",
             "size_bytes": 39527513
           }
+        ],
+        "videos": [
+          {
+            "source_id": "f9be5769-c368-4e47-a28e-46701428d3d2",
+            "file": "docs/lesson_4-6_islamic_street_language_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "ألفاظ بذيئة من الشارع"
+          }
         ]
       }
     },
@@ -11097,6 +11206,15 @@
             "file": "docs/lesson_7-9_development_middle_childhood_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 20426252
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "2500106b-057a-47ad-8430-3aca5e0c2ee9",
+            "file": "docs/lesson_7-9_development_middle_childhood_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "النمو الجسدي والاجتماعي في سن المدرسة"
           }
         ]
       }
