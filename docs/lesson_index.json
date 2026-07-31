@@ -2,29 +2,33 @@
   "metadata": {
     "version": "1.0",
     "generated_at": "2026-06-09",
-    "total_lessons": 45,
+    "total_lessons": 170,
     "notebook_id": "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287",
     "total_source_pdfs": 44,
     "coverage": {
-      "flashcards": "88/88",
-      "quizzes": "88/88",
-      "reports": "156/156",
-      "data_tables": "156/156",
-      "infographics": "155/156"
+      "flashcards": "156/170",
+      "quizzes": "156/170",
+      "reports": "156/170",
+      "data_tables": "156/170",
+      "infographics": "156/170",
+      "podcasts": "169/170"
     },
     "lessons_by_age": {
-      "10-12": 10,
-      "13-15": 14,
-      "16-18": 5,
-      "4-6": 8,
-      "7-9": 8
+      "0-3": 6,
+      "10-12": 24,
+      "13-15": 23,
+      "16-18": 25,
+      "2-3": 22,
+      "4-6": 25,
+      "7-9": 31,
+      "prenatal-1": 14
     },
-    "total_videos": 9,
+    "total_videos": 88,
     "video_languages": [
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-07-12T20:04:32.905426Z"
+    "updated_at": "2026-07-31T14:51:31.447918Z"
   },
   "lessons": [
     {
@@ -10654,6 +10658,445 @@
             "file": "docs/lesson_assets/data_tables/ccc89cad-7f68-4894-8576-f6a4c05bf3c2_data_table_lesson_4-6_aqeedah_seeds_04.csv",
             "title": "جدول بيانات بذور العقيدة (4-6)",
             "item_count": 5
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_islamic_peer_difference_01",
+      "age_group": "10-12",
+      "topic_path": "islamic_peer_difference",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_10-12_islamic_peer_difference_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_10-12_islamic_peer_difference_01_fc.json",
+            "title": "الشعور بالاختلاف عن الأصدقاء والثبات على الالتزام — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_10-12_islamic_peer_difference_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_10-12_islamic_peer_difference_01_qz.json",
+            "title": "الشعور بالاختلاف عن الأصدقاء والثبات على الالتزام — اختبار",
+            "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_10-12_islamic_peer_difference_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_10-12_islamic_peer_difference_01_podcast.mp3",
+            "file": "docs/lesson_10-12_islamic_peer_difference_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 38615782
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_islamic_mockery_01",
+      "age_group": "13-15",
+      "topic_path": "islamic_mockery",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_islamic_mockery_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_islamic_mockery_01_fc.json",
+            "title": "الثبات على الطاعة والصلاة رغم سخرية الأصدقاء — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_islamic_mockery_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_mockery_01_qz.json",
+            "title": "الثبات على الطاعة والصلاة رغم سخرية الأصدقاء — اختبار",
+            "item_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_medical_peer_pressure_01",
+      "age_group": "13-15",
+      "topic_path": "medical_peer_pressure",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_13-15_medical_peer_pressure_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_13-15_medical_peer_pressure_01_fc.json",
+            "title": "ضغط الأقران في المراهقة المبكرة: التدخين والمقارنة المادية — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_13-15_medical_peer_pressure_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_medical_peer_pressure_01_qz.json",
+            "title": "ضغط الأقران في المراهقة المبكرة: التدخين والمقارنة المادية — اختبار",
+            "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_13-15_medical_peer_pressure_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_13-15_medical_peer_pressure_01_podcast.mp3",
+            "file": "docs/lesson_13-15_medical_peer_pressure_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 29703353
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_cyber_privacy_college_01",
+      "age_group": "16-18",
+      "topic_path": "cyber_privacy_college",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_cyber_privacy_college_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_cyber_privacy_college_01_fc.json",
+            "title": "الخصوصية الرقمية والأثر الاجتماعي قبل التقديم الجامعي — بطاقات",
+            "item_count": 3
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_cyber_privacy_college_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_cyber_privacy_college_01_qz.json",
+            "title": "الخصوصية الرقمية والأثر الاجتماعي قبل التقديم الجامعي — اختبار",
+            "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_cyber_privacy_college_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_cyber_privacy_college_01_podcast.mp3",
+            "file": "docs/lesson_16-18_cyber_privacy_college_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 25853965
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_development_driving_01",
+      "age_group": "16-18",
+      "topic_path": "development_driving",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_development_driving_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_development_driving_01_fc.json",
+            "title": "اتفاقية القيادة الآمنة: ثقة واستقلالية تدريجية — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_development_driving_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_development_driving_01_qz.json",
+            "title": "اتفاقية القيادة الآمنة: ثقة واستقلالية تدريجية — اختبار",
+            "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_development_driving_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_development_driving_01_podcast.mp3",
+            "file": "docs/lesson_16-18_development_driving_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 26053540
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_development_major_choice_01",
+      "age_group": "16-18",
+      "topic_path": "development_major_choice",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_development_major_choice_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_development_major_choice_01_fc.json",
+            "title": "اختيار التخصص الجامعي: بين التوجيه والاستكشاف — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_development_major_choice_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_development_major_choice_01_qz.json",
+            "title": "اختيار التخصص الجامعي: بين التوجيه والاستكشاف — اختبار",
+            "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_development_major_choice_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_development_major_choice_01_podcast.mp3",
+            "file": "docs/lesson_16-18_development_major_choice_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 46372079
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_islamic_daughter_work_01",
+      "age_group": "16-18",
+      "topic_path": "islamic_daughter_work",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_islamic_daughter_work_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_islamic_daughter_work_01_fc.json",
+            "title": "خلاف الأهل مع رغبة الفتاة في العمل: بين رأيين فقهيين — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_islamic_daughter_work_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_islamic_daughter_work_01_qz.json",
+            "title": "خلاف الأهل مع رغبة الفتاة في العمل: بين رأيين فقهيين — اختبار",
+            "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_islamic_daughter_work_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_islamic_daughter_work_01_podcast.mp3",
+            "file": "docs/lesson_16-18_islamic_daughter_work_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 19486877
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_islamic_independence_boundaries_01",
+      "age_group": "16-18",
+      "topic_path": "islamic_independence_boundaries",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_islamic_independence_boundaries_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_islamic_independence_boundaries_01_fc.json",
+            "title": "استقلالية الشاب الجامعي: حدود العلاقات وبر الوالدين — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_islamic_independence_boundaries_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_islamic_independence_boundaries_01_qz.json",
+            "title": "استقلالية الشاب الجامعي: حدود العلاقات وبر الوالدين — اختبار",
+            "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_islamic_independence_boundaries_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_islamic_independence_boundaries_01_podcast.mp3",
+            "file": "docs/lesson_16-18_islamic_independence_boundaries_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 29142095
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_medical_nicotine_risk_01",
+      "age_group": "16-18",
+      "topic_path": "medical_nicotine_risk",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_medical_nicotine_risk_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_nicotine_risk_01_fc.json",
+            "title": "إدمان النيكوتين ومخاطرة المراهق الكبير رغم الإدراك — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_medical_nicotine_risk_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_nicotine_risk_01_qz.json",
+            "title": "إدمان النيكوتين ومخاطرة المراهق الكبير رغم الإدراك — اختبار",
+            "item_count": 2
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_medical_nicotine_risk_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_medical_nicotine_risk_01_podcast.mp3",
+            "file": "docs/lesson_16-18_medical_nicotine_risk_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 35103425
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_16-18_medical_precollege_wellbeing_01",
+      "age_group": "16-18",
+      "topic_path": "medical_precollege_wellbeing",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_16-18_medical_precollege_wellbeing_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_16-18_medical_precollege_wellbeing_01_fc.json",
+            "title": "الصحة النفسية والجسدية للمراهق الكبير قبل الجامعة — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_16-18_medical_precollege_wellbeing_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_16-18_medical_precollege_wellbeing_01_qz.json",
+            "title": "الصحة النفسية والجسدية للمراهق الكبير قبل الجامعة — اختبار",
+            "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_16-18_medical_precollege_wellbeing_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_16-18_medical_precollege_wellbeing_01_podcast.mp3",
+            "file": "docs/lesson_16-18_medical_precollege_wellbeing_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 47038670
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_development_toddler_habits_01",
+      "age_group": "2-3",
+      "topic_path": "development_toddler_habits",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_development_toddler_habits_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_development_toddler_habits_01_fc.json",
+            "title": "نمو طفلي الصغير: عادات ذاتية وأول الكلمات — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_development_toddler_habits_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_development_toddler_habits_01_qz.json",
+            "title": "نمو طفلي الصغير: عادات ذاتية وأول الكلمات — اختبار",
+            "item_count": 2
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_development_toddler_habits_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_development_toddler_habits_01_podcast.mp3",
+            "file": "docs/lesson_2-3_development_toddler_habits_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 32594689
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_medical_separation_anxiety_01",
+      "age_group": "2-3",
+      "topic_path": "medical_separation_anxiety",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_2-3_medical_separation_anxiety_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_2-3_medical_separation_anxiety_01_fc.json",
+            "title": "قلق الانفصال عند الحضانة والنادي: من الحضانة الصغيرة إلى ما قبل المدرسة — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_2-3_medical_separation_anxiety_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_2-3_medical_separation_anxiety_01_qz.json",
+            "title": "قلق الانفصال عند الحضانة والنادي: من الحضانة الصغيرة إلى ما قبل المدرسة — اختبار",
+            "item_count": 1
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_2-3_medical_separation_anxiety_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_2-3_medical_separation_anxiety_01_podcast.mp3",
+            "file": "docs/lesson_2-3_medical_separation_anxiety_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 40853228
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_4-6_islamic_street_language_01",
+      "age_group": "4-6",
+      "topic_path": "islamic_street_language",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_4-6_islamic_street_language_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_4-6_islamic_street_language_01_fc.json",
+            "title": "ابني يقلّد ألفاظًا وحشة من الشارع: من الحضانة إلى الابتدائي — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_4-6_islamic_street_language_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_4-6_islamic_street_language_01_qz.json",
+            "title": "ابني يقلّد ألفاظًا وحشة من الشارع: من الحضانة إلى الابتدائي — اختبار",
+            "item_count": 2
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_4-6_islamic_street_language_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_4-6_islamic_street_language_01_podcast.mp3",
+            "file": "docs/lesson_4-6_islamic_street_language_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 39527513
+          }
+        ]
+      }
+    },
+    {
+      "lesson_id": "lesson_7-9_development_middle_childhood_01",
+      "age_group": "7-9",
+      "topic_path": "development_middle_childhood",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_7-9_development_middle_childhood_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_7-9_development_middle_childhood_01_fc.json",
+            "title": "نمو طفلي جسديًا واجتماعيًا من المرحلة الابتدائية إلى ما قبل البلوغ — بطاقات",
+            "item_count": 4
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_7-9_development_middle_childhood_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_7-9_development_middle_childhood_01_qz.json",
+            "title": "نمو طفلي جسديًا واجتماعيًا من المرحلة الابتدائية إلى ما قبل البلوغ — اختبار",
+            "item_count": 3
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_7-9_development_middle_childhood_01_podcast",
+            "url": "https://tg-api.alsaba.cloud/static/docs/lesson_7-9_development_middle_childhood_01_podcast.mp3",
+            "file": "docs/lesson_7-9_development_middle_childhood_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 20426252
           }
         ]
       }
