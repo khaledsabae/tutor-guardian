@@ -1,0 +1,27 @@
+{
+  "id": "dev-7ad61095",
+  "domain": "development",
+  "age_group": "16-18",
+  "behavior_type": "اتخاذ القرار والتخطيط طويل المدى",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "تطور اتخاذ القرار والتخطيط للمستقبل عند سن ١٥-١٧ سنة",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "مراكز مكافحة الأمراض والوقاية الأمريكية (CDC) — Positive Parenting Tips, Teenagers (15-17 years of age)",
+  "text_original": "Developmental Milestones (15-17 years): Have more ability to set goals and think about the future. Have more concerns about school and their future plans. Are better able to give reasons for their own choices. — CDC, Positive Parenting Tips, Teenagers (15-17 years).",
+  "text_simplified": "قدرة ابنك المراهق (١٥-١٧ سنة) على وضع أهداف بعيدة المدى وتبرير قراراته بمنطق أوضح معلم نمو معرفي طبيعي في هذه المرحلة، بحسب مراكز مكافحة الأمراض الأمريكية. اهتمامه المتزايد بمستقبله الدراسي والمهني جزء من هذا النضج، وحواره معك عن أسباب اختياراته فرصة لا مواجهة.",
+  "labels": [
+    "اتخاذ القرار",
+    "التخطيط للمستقبل",
+    "المراهقة المتأخرة"
+  ],
+  "created_at": "2026-07-31T10:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Positive Parenting Tips — Teenagers (15-17 years of age)",
+    "source_author": "CDC — National Center on Birth Defects and Developmental Disabilities",
+    "source_year": 2022,
+    "source_url": "https://www.cdc.gov/ncbddd/childdevelopment/positiveparenting/adolescence2.html"
+  }
+}

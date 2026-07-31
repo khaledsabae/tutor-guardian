@@ -1,0 +1,27 @@
+{
+  "id": "dev-326d137b",
+  "domain": "development",
+  "age_group": "7-9",
+  "behavior_type": "التفكير المنطقي والتوجه نحو المستقبل",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "بدايات التفكير المنطقي والتخطيط للمستقبل عند سن ٦-٨ سنوات",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "مراكز مكافحة الأمراض والوقاية الأمريكية (CDC) — Positive Parenting Tips, Middle Childhood (6-8 years of age)",
+  "text_original": "Developmental Milestones (6-8 years): Show more independence from parents and family. Start to think about the future. Understand more about their place in the world. Pay more attention to friendships and teamwork. — CDC, Positive Parenting Tips, Middle Childhood (6-8 years).",
+  "text_simplified": "بدء طفلك (٦-٨ سنوات) في التفكير بطريقة أكثر منطقية والتساؤل عن المستقبل ومكانه بين أصدقائه معلم نمو معرفي طبيعي، بحسب مراكز مكافحة الأمراض الأمريكية. يصاحب ذلك اهتمام أكبر بالعمل الجماعي والعدالة بين الأصدقاء، واستقلالية تدريجية عن الأهل ضمن حدود آمنة.",
+  "labels": [
+    "التفكير المنطقي",
+    "منتصف الطفولة",
+    "المعالم التطورية"
+  ],
+  "created_at": "2026-07-31T10:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Positive Parenting Tips — Middle Childhood (6-8 years of age)",
+    "source_author": "CDC — National Center on Birth Defects and Developmental Disabilities",
+    "source_year": 2022,
+    "source_url": "https://www.cdc.gov/ncbddd/childdevelopment/positiveparenting/middle.html"
+  }
+}

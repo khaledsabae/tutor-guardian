@@ -1,0 +1,27 @@
+{
+  "id": "dev-be19314d",
+  "domain": "development",
+  "age_group": "prenatal-1",
+  "behavior_type": "التطور الحركي المبكر",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "الجلوس بدون مساندة عند عمر تسعة أشهر",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "مراكز مكافحة الأمراض والوقاية الأمريكية (CDC) — برنامج Learn the Signs. Act Early.، قائمة المعالم التطورية لعمر تسعة أشهر، مراجعة 2022",
+  "text_original": "Movement/Physical milestones at 9 months: Gets to a sitting position by themselves. Sits without support. Moves things from one hand to another hand. Uses fingers to 'rake' food towards themselves. — CDC, Learn the Signs. Act Early., 9-month milestone checklist, 2022 revision.",
+  "text_simplified": "جلوس طفلك بدون مساندة والوصول لوضعية الجلوس بمفرده عند تسعة أشهر معلم حركي طبيعي في هذه المرحلة. بحسب مراكز مكافحة الأمراض الأمريكية يُتوقع أيضًا نقل الأشياء بين يديه واستخدام أصابعه لالتقاط الطعام. تأخر الجلوس وحده بعد هذا العمر يستدعي استشارة الطبيب.",
+  "labels": [
+    "نمو الرضيع",
+    "المهارات الحركية",
+    "المعالم التطورية"
+  ],
+  "created_at": "2026-07-31T10:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Learn the Signs. Act Early. — Developmental Milestones (9 months)",
+    "source_author": "CDC — National Center on Birth Defects and Developmental Disabilities",
+    "source_year": 2022,
+    "source_url": "https://www.cdc.gov/ncbddd/actearly/index.html"
+  }
+}

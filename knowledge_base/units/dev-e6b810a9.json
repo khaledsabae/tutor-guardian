@@ -1,0 +1,27 @@
+{
+  "id": "dev-e6b810a9",
+  "domain": "development",
+  "age_group": "prenatal-1",
+  "behavior_type": "تطور الكلام واللغة المبكرة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "المناغاة وبدايات التواصل الصوتي بين ستة وتسعة أشهر",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "مراكز مكافحة الأمراض والوقاية الأمريكية (CDC) — برنامج Learn the Signs. Act Early.، قائمتا المعالم التطورية لعمري ستة وتسعة أشهر، مراجعة 2022",
+  "text_original": "Language/Communication milestones: 6 months — Makes sounds like 'mmmm' and 'bah'. Takes turns making sounds with you. 9 months — Makes different sounds like 'mamamama' and 'bababababa'. Lifts arms up to be picked up. — CDC, Learn the Signs. Act Early., 6- and 9-month milestone checklists, 2022 revision.",
+  "text_simplified": "مناغاة طفلك بمقاطع متكررة مثل «بابا» أو «مامامام» بين ستة وتسعة أشهر خطوة أساسية نحو الكلام لا مجرد أصوات عشوائية. بحسب مراكز مكافحة الأمراض الأمريكية يتبادل الرضيع الأصوات معك في حوار مبكر، ورفع ذراعيه ليُحمل إشارة تواصل مصاحبة. غياب المناغاة تمامًا يستدعي فحص السمع.",
+  "labels": [
+    "المناغاة",
+    "تطور اللغة",
+    "المعالم التطورية"
+  ],
+  "created_at": "2026-07-31T10:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Learn the Signs. Act Early. — Developmental Milestones (6 and 9 months)",
+    "source_author": "CDC — National Center on Birth Defects and Developmental Disabilities",
+    "source_year": 2022,
+    "source_url": "https://www.cdc.gov/ncbddd/actearly/index.html"
+  }
+}

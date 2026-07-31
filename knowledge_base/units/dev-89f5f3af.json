@@ -1,0 +1,27 @@
+{
+  "id": "dev-89f5f3af",
+  "domain": "development",
+  "age_group": "prenatal-1",
+  "behavior_type": "القلق من الغرباء وثبات الشيء",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "title": "القلق من الغرباء وفهم ثبات الشيء عند تسعة أشهر",
+  "language": "mixed",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "مراكز مكافحة الأمراض والوقاية الأمريكية (CDC) — برنامج Learn the Signs. Act Early.، قائمة المعالم التطورية لعمر تسعة أشهر، مراجعة 2022",
+  "text_original": "Social/Emotional milestones at 9 months: Is shy, clingy, or fearful around strangers. Reacts when you leave (looks, reaches for you, or cries). Smiles or laughs when you play peek-a-boo. Cognitive: Watches the path of something as it falls. Looks for things they see you hide. — CDC, Learn the Signs. Act Early., 9-month milestone checklist, 2022 revision.",
+  "text_simplified": "خوف طفلك من الغرباء وتعلقه الشديد بك عند تسعة أشهر ليس دلالًا زائدًا بل معلم نمائي طبيعي، مرتبط بإدراكه الجديد أن الأشياء والأشخاص تبقى موجودة حتى لو اختفت عن نظره. بحسب CDC يظهر ذلك في بحثه عن شيء أخفيته أو بكائه عند مغادرتك الغرفة، ويزول تدريجيًا مع الشهور.",
+  "labels": [
+    "القلق من الغرباء",
+    "ثبات الشيء",
+    "المعالم التطورية"
+  ],
+  "created_at": "2026-07-31T10:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Learn the Signs. Act Early. — Developmental Milestones (9 months)",
+    "source_author": "CDC — National Center on Birth Defects and Developmental Disabilities",
+    "source_year": 2022,
+    "source_url": "https://www.cdc.gov/ncbddd/actearly/index.html"
+  }
+}
