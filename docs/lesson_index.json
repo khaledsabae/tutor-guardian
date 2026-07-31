@@ -12,7 +12,7 @@
       "data_tables": "156/170",
       "infographics": "156/170",
       "podcasts": "169/170",
-      "videos": "101/170"
+      "videos": "102/170"
     },
     "lessons_by_age": {
       "0-3": 6,
@@ -24,7 +24,7 @@
       "7-9": 31,
       "prenatal-1": 14
     },
-    "total_videos": 101,
+    "total_videos": 102,
     "video_languages": [
       "ar"
     ],
@@ -10723,6 +10723,15 @@
             "file": "docs/lesson_assets/quizzes/gen_lesson_13-15_islamic_mockery_01_qz.json",
             "title": "الثبات على الطاعة والصلاة رغم سخرية الأصدقاء — اختبار",
             "item_count": 1
+          }
+        ],
+        "videos": [
+          {
+            "source_id": "d69fadba-e131-4344-b8c0-0d0c39ff2cc0",
+            "file": "docs/lesson_13-15_islamic_mockery_01_video.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "التعامل مع سخرية الأصدقاء من الالتزام الديني"
           }
         ]
       }
