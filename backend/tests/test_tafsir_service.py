@@ -352,6 +352,40 @@ def test_search_quran_uses_items_key(monkeypatch, tmp_path):
     assert results[0]["ayah"] == 255
 
 
+def test_search_quran_uses_structured_content(monkeypatch, tmp_path):
+    """Production MCP returns results under structuredContent.result."""
+    import app.services.tafsir_service as svc
+    monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_search_struct.db")
+
+    search_response = {
+        "jsonrpc": "2.0", "id": 5,
+        "result": {
+            "content": [
+                {"type": "text", "text": json.dumps({"surah": 55, "ayah": 1, "text": "الرحمن", "snippet": "الرحمن"})},
+                {"type": "text", "text": json.dumps({"surah": 1, "ayah": 3, "text": "الرحمن الرحيم", "snippet": "الرحمن الرحيم"})},
+            ],
+            "structuredContent": {
+                "result": [
+                    {"surah": 55, "ayah": 1, "text": "الرحمن", "snippet": "الرحمن"},
+                    {"surah": 1, "ayah": 3, "text": "الرحمن الرحيم", "snippet": "الرحمن الرحيم"},
+                    {"surah": 1, "ayah": 1, "text": "بسم الله الرحمن الرحيم", "snippet": "بسم الله الرحمن الرحيم"},
+                ],
+            },
+            "isError": False,
+        },
+    }
+
+    with patch(
+        "app.services.tafsir_service._mcp_call",
+        new_callable=AsyncMock,
+        return_value=search_response["result"],
+    ):
+        results = asyncio.run(search_quran("الرحمن", limit=5))
+
+    assert len(results) == 3
+    assert results[0]["surah"] == 55
+
+
 # ── search_in_tafsir ───────────────────────────────────────────────────────
 
 def test_search_in_tafsir_uses_items_key(monkeypatch, tmp_path):
@@ -388,6 +422,38 @@ def test_search_in_tafsir_uses_items_key(monkeypatch, tmp_path):
 
     assert len(results) == 1
     assert results[0]["surah"] == 1
+    assert results[0]["tafsir_excerpt"] == "تفسير بسم الله"
+
+
+def test_search_in_tafsir_uses_structured_content(monkeypatch, tmp_path):
+    """Production MCP returns tafsir search results under structuredContent.result."""
+    import app.services.tafsir_service as svc
+    monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_search_tafsir_struct.db")
+
+    search_response = {
+        "jsonrpc": "2.0", "id": 6,
+        "result": {
+            "content": [
+                {"type": "text", "text": json.dumps({"surah": 1, "ayah": 1, "tafsir_excerpt": "A", "source_attribution": "x"})},
+            ],
+            "structuredContent": {
+                "result": [
+                    {"surah": 1, "ayah": 1, "tafsir_excerpt": "تفسير بسم الله", "source_attribution": "السعدي"},
+                    {"surah": 1, "ayah": 3, "tafsir_excerpt": "تفسير الرحمن", "source_attribution": "السعدي"},
+                ],
+            },
+            "isError": False,
+        },
+    }
+
+    with patch(
+        "app.services.tafsir_service._mcp_call",
+        new_callable=AsyncMock,
+        return_value=search_response["result"],
+    ):
+        results = asyncio.run(search_in_tafsir("الرحمن", source="saadi", limit=5))
+
+    assert len(results) == 2
     assert results[0]["tafsir_excerpt"] == "تفسير بسم الله"
 
 

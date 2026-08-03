@@ -219,6 +219,49 @@ def _extract_tafsir_entry(raw_text: str) -> dict:
         return {}
 
 
+def _extract_search_results(result: dict) -> list[dict]:
+    """Extract result list from MCP search tools.
+
+    Search tools return either:
+      - structuredContent.result (observed in production)
+      - a single content item whose text is {result: [...]} or {items: [...]}
+      - multiple content items each containing a single JSON object
+    """
+    if not isinstance(result, dict):
+        return []
+
+    structured = result.get("structuredContent")
+    if isinstance(structured, dict):
+        data = structured.get("result", structured.get("items"))
+        if isinstance(data, list):
+            return data
+
+    content = result.get("content", [])
+    if not content:
+        return []
+
+    # Single wrapped payload in the first content item
+    inner = _extract_tafsir_entry(content[0].get("text", ""))
+    if isinstance(inner, list):
+        return inner
+    if isinstance(inner, dict):
+        for key in ("result", "items"):
+            data = inner.get(key)
+            if isinstance(data, list):
+                return data
+
+    # Multiple content items each holding a single result JSON object
+    results: list[dict] = []
+    for item in content:
+        text = item.get("text", "")
+        if not text:
+            continue
+        parsed = _extract_tafsir_entry(text)
+        if isinstance(parsed, dict):
+            results.append(parsed)
+    return results
+
+
 # ── Public API ──────────────────────────────────────────────────────────────
 
 FALLBACK_MESSAGE = (
@@ -349,11 +392,7 @@ async def search_quran(query: str, limit: int = 10) -> list[dict]:
     if mcp_result.get("isError") or not content:
         return []
 
-    inner = _extract_tafsir_entry(content[0].get("text", ""))
-    # search_quran_text returns {result: [...]} or {items: [...]} via outputSchema
-    if isinstance(inner, list):
-        return inner
-    return inner.get("result", inner.get("items", []))
+    return _extract_search_results(mcp_result)
 
 
 async def search_in_tafsir(
@@ -375,11 +414,7 @@ async def search_in_tafsir(
     if mcp_result.get("isError") or not content:
         return []
 
-    inner = _extract_tafsir_entry(content[0].get("text", ""))
-    # search_in_tafsir returns {result: [...]} or {items: [...]} via outputSchema
-    if isinstance(inner, list):
-        return inner
-    return inner.get("result", inner.get("items", []))
+    return _extract_search_results(mcp_result)
 
 
 async def fetch_nuzool_reason(
