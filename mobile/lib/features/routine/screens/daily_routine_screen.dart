@@ -761,7 +761,10 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                     category: categories[_selectedTab],
                     day: day,
                     childId: childId,
-                    onRefresh: () => ref.refresh(todayHabitsProvider(childId)),
+                    onRefresh: () async {
+                      if (!mounted) return;
+                      return ref.refresh(todayHabitsProvider(childId));
+                    },
                   ),
                 ),
               ],

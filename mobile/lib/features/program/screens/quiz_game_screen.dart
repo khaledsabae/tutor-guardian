@@ -53,26 +53,30 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
   }
 
   Future<void> _fetchQuestions() async {
+    if (!mounted) return;
     setState(() {
       _loading = true;
       _error = null;
+      _questions = [];
     });
     try {
       final uri =
           Uri.parse('${AppConfig.apiBaseUrl}/api/program/quiz?count=10');
       final resp = await http.get(uri).timeout(const Duration(seconds: 15));
+      if (!mounted) return;
       if (resp.statusCode == 200) {
         final data = json.decode(resp.body) as Map<String, dynamic>;
-        final list = (data['questions'] as List)
-            .map((e) => e as Map<String, dynamic>)
-            .toList();
+        final list = (data['questions'] as List?)
+                ?.map((e) => e as Map<String, dynamic>)
+                .toList() ??
+            [];
         setState(() {
           _questions = list;
           _loading = false;
           _currentIndex = 0;
           _score = 0;
         });
-        _startTimer();
+        if (list.isNotEmpty) _startTimer();
       } else {
         setState(() {
           _error = AppLocalizations.of(context).quizErrorLoading;
@@ -80,6 +84,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
         });
       }
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _error = AppLocalizations.of(context).quizErrorConnection;
         _loading = false;
@@ -105,9 +110,10 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
   }
 
   void _onAnswer(int index) {
-    if (_answered) return;
+    if (_answered || _currentIndex >= _questions.length) return;
     _timer?.cancel();
-    final correct = _questions[_currentIndex]['answer'] as int;
+    final correct = _questions[_currentIndex]['answer'] as int?;
+    if (correct == null) return;
     setState(() {
       _selectedAnswer = index;
       _answered = true;

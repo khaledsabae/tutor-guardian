@@ -554,6 +554,8 @@ class _Star {
   late final AnimationController _controller;
   late final Animation<double> animation;
 
+  bool _disposed = false;
+
   _Star({
     required this.x,
     required this.y,
@@ -570,12 +572,16 @@ class _Star {
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
     Future.delayed(Duration(milliseconds: (delay * 1000).round()), () {
-      if (_controller.isAnimating || _controller.isCompleted) return;
-      _controller.repeat(reverse: true);
+      if (!_disposed && !_controller.isAnimating && !_controller.isCompleted) {
+        _controller.repeat(reverse: true);
+      }
     });
   }
 
-  void dispose() => _controller.dispose();
+  void dispose() {
+    _disposed = true;
+    _controller.dispose();
+  }
 }
 
 class _FloatingFireflies extends StatefulWidget {

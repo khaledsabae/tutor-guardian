@@ -55,6 +55,7 @@ class _PodcastPlayerScreenState extends State<PodcastPlayerScreen> {
   Future<void> _init() async {
     final url = widget.url;
     if (url == null || url.isEmpty) {
+      if (!mounted) return;
       setState(() {
         _errorMessage = AppL10n.current.podcastUnavailable;
         _ready = true;
@@ -64,7 +65,6 @@ class _PodcastPlayerScreenState extends State<PodcastPlayerScreen> {
 
     _stateSub = _player.playerStateStream.listen((state) {
       if (state.processingState == ProcessingState.completed) {
-        // Auto-pause at the end so the UI doesn't flicker.
         _player.pause();
       }
       if (mounted) setState(() {});
@@ -73,8 +73,10 @@ class _PodcastPlayerScreenState extends State<PodcastPlayerScreen> {
     try {
       await _player.setUrl(url);
       await _player.setSpeed(_speeds[_speedIndex]);
+      if (!mounted) return;
       setState(() => _ready = true);
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _errorMessage = AppL10n.current.podcastLoadError;
         _ready = true;

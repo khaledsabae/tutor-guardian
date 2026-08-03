@@ -684,6 +684,9 @@ class TgClient {
   }
 
   /// `POST /api/program/coach-tip/{id}/tap` (authed) — light engagement log.
+  /// Since v1.0.30 the server returns 200 for stale/missing tips; older server
+  /// versions may still return 404. Swallow 404 so older backends don't crash
+  /// the app on stale tap IDs.
   Future<void> recordCoachTipTap(int tipId) async {
     final session = await ensureSession();
     final token = session.token;
@@ -691,7 +694,7 @@ class TgClient {
         .post(Uri.parse('$_baseUrl/api/program/coach-tip/$tipId/tap'),
             headers: _authHeaders(token))
         .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) {
+    if (resp.statusCode != 200 && resp.statusCode != 404) {
       throw _wrap(resp);
     }
   }

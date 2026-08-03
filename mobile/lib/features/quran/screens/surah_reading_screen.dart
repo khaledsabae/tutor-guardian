@@ -71,6 +71,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
 
     // Jump to the saved verse once the list is laid out, then persist.
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       if (_currentVerse > 1 && _itemScroll.isAttached) {
         _itemScroll.jumpTo(index: _currentVerse - 1);
       }
@@ -79,6 +80,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
   }
 
   void _onScroll() {
+    if (!mounted) return;
     final positions = _positions.itemPositions.value;
     if (positions.isEmpty) return;
     // The first item whose leading edge is at/after the top of the viewport.
@@ -96,6 +98,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
   }
 
   void _persist() {
+    if (!mounted) return;
     ref
         .read(lastReadProvider.notifier)
         .saveProgress(_currentChapter, _currentVerse);
@@ -195,11 +198,9 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
         setState(() {
           _playingVerse = null;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context).quranPlayError),
-          ),
-        );
+        final messenger = ScaffoldMessenger.maybeOf(context);
+        final msg = AppLocalizations.of(context).quranPlayError;
+        messenger?.showSnackBar(SnackBar(content: Text(msg)));
       }
     }
   }
