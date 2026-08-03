@@ -6,7 +6,9 @@ live Tafsir MCP server. They verify:
   - Cache hit/miss lifecycle
   - Graceful fallback when the server is unreachable
   - Display formatting
+  - Ayah reference detection in user questions
 """
+import asyncio
 import json
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -22,8 +24,6 @@ from app.services.tafsir_service import (
     FALLBACK_MESSAGE,
     _parse_sse_response,
     _cache_key,
-    _cache_put,
-    _cache_get,
 )
 
 
@@ -104,25 +104,28 @@ def _mock_sse_text(data: dict) -> str:
     return f'event: message\r\ndata: {json.dumps(data, ensure_ascii=False)}\r\n'
 
 
-@pytest.mark.asyncio
-async def test_fetch_tafsir_success(monkeypatch, tmp_path):
-    """Live fetch parses attribution + text + footnotes from MCP response."""
-    # Point cache at temp DB
-    import app.services.tafsir_service as svc
-    monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_tafsir.db")
-
-    # Mock httpx.AsyncClient.post
+def _mock_httpx_client(sse_text: str):
+    """Build a mock httpx.AsyncClient that returns the given SSE text."""
     mock_response = MagicMock()
     mock_response.status_code = 200
-    mock_response.text = _mock_sse_text(_MCP_TAFSIR_RESPONSE)
+    mock_response.text = sse_text
 
     mock_client = AsyncMock()
     mock_client.__aenter__ = AsyncMock(return_value=mock_client)
     mock_client.__aexit__ = AsyncMock(return_value=None)
     mock_client.post = AsyncMock(return_value=mock_response)
+    return mock_client
+
+
+def test_fetch_tafsir_success(monkeypatch, tmp_path):
+    """Live fetch parses attribution + text + footnotes from MCP response."""
+    import app.services.tafsir_service as svc
+    monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_tafsir.db")
+
+    mock_client = _mock_httpx_client(_mock_sse_text(_MCP_TAFSIR_RESPONSE))
 
     with patch("app.services.tafsir_service.httpx.AsyncClient", return_value=mock_client):
-        results = await fetch_tafsir(1, 1, ["saadi"])
+        results = asyncio.run(fetch_tafsir(1, 1, ["saadi"]))
 
     assert len(results) == 1
     r = results[0]
@@ -134,37 +137,27 @@ async def test_fetch_tafsir_success(monkeypatch, tmp_path):
     assert not r.cached  # first call — not cached
 
 
-@pytest.mark.asyncio
-async def test_fetch_tafsir_cache_hit(monkeypatch, tmp_path):
+def test_fetch_tafsir_cache_hit(monkeypatch, tmp_path):
     """Second call with same params should hit cache (no HTTP call)."""
     import app.services.tafsir_service as svc
     monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_tafsir_cache.db")
 
-    # First call: mock HTTP
-    mock_response = MagicMock()
-    mock_response.status_code = 200
-    mock_response.text = _mock_sse_text(_MCP_TAFSIR_RESPONSE)
-
-    mock_client = AsyncMock()
-    mock_client.__aenter__ = AsyncMock(return_value=mock_client)
-    mock_client.__aexit__ = AsyncMock(return_value=None)
-    mock_client.post = AsyncMock(return_value=mock_response)
+    mock_client = _mock_httpx_client(_mock_sse_text(_MCP_TAFSIR_RESPONSE))
 
     with patch("app.services.tafsir_service.httpx.AsyncClient", return_value=mock_client):
-        results1 = await fetch_tafsir(1, 1, ["saadi"])
+        results1 = asyncio.run(fetch_tafsir(1, 1, ["saadi"]))
         # Second call — should NOT make an HTTP request
         mock_client.post = AsyncMock(
             side_effect=AssertionError("Should not call HTTP on cache hit")
         )
-        results2 = await fetch_tafsir(1, 1, ["saadi"])
+        results2 = asyncio.run(fetch_tafsir(1, 1, ["saadi"]))
 
     assert results1[0].ok and not results1[0].cached
     assert results2[0].ok and results2[0].cached
     assert results1[0].text == results2[0].text
 
 
-@pytest.mark.asyncio
-async def test_fetch_tafsir_server_down(monkeypatch, tmp_path):
+def test_fetch_tafsir_server_down(monkeypatch, tmp_path):
     """When MCP returns None (unreachable), result carries the error."""
     import app.services.tafsir_service as svc
     monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_tafsir_down.db")
@@ -174,7 +167,7 @@ async def test_fetch_tafsir_server_down(monkeypatch, tmp_path):
         new_callable=AsyncMock,
         return_value=None,
     ):
-        results = await fetch_tafsir(1, 1, ["saadi"])
+        results = asyncio.run(fetch_tafsir(1, 1, ["saadi"]))
 
     assert len(results) == 1
     assert not results[0].ok
@@ -182,8 +175,7 @@ async def test_fetch_tafsir_server_down(monkeypatch, tmp_path):
     assert results[0].text == ""
 
 
-@pytest.mark.asyncio
-async def test_fetch_tafsir_mcp_error(monkeypatch, tmp_path):
+def test_fetch_tafsir_mcp_error(monkeypatch, tmp_path):
     """When MCP returns isError=True, result carries the error."""
     import app.services.tafsir_service as svc
     monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_tafsir_err.db")
@@ -198,15 +190,14 @@ async def test_fetch_tafsir_mcp_error(monkeypatch, tmp_path):
         new_callable=AsyncMock,
         return_value=error_response["result"],
     ):
-        results = await fetch_tafsir(1, 1, ["saadi"])
+        results = asyncio.run(fetch_tafsir(1, 1, ["saadi"]))
 
     assert len(results) == 1
     assert not results[0].ok
     assert results[0].error == "mcp_error"
 
 
-@pytest.mark.asyncio
-async def test_fetch_tafsir_no_data(monkeypatch, tmp_path):
+def test_fetch_tafsir_no_data(monkeypatch, tmp_path):
     """When MCP returns empty tafsirs, result carries no_data error."""
     import app.services.tafsir_service as svc
     monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_tafsir_nodata.db")
@@ -227,7 +218,7 @@ async def test_fetch_tafsir_no_data(monkeypatch, tmp_path):
         new_callable=AsyncMock,
         return_value=empty_response["result"],
     ):
-        results = await fetch_tafsir(1, 1, ["saadi"])
+        results = asyncio.run(fetch_tafsir(1, 1, ["saadi"]))
 
     assert len(results) == 1
     assert not results[0].ok
@@ -236,8 +227,7 @@ async def test_fetch_tafsir_no_data(monkeypatch, tmp_path):
 
 # ── fetch_ayah_text ────────────────────────────────────────────────────────
 
-@pytest.mark.asyncio
-async def test_fetch_ayah_text_success(monkeypatch, tmp_path):
+def test_fetch_ayah_text_success(monkeypatch, tmp_path):
     import app.services.tafsir_service as svc
     monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_ayah.db")
 
@@ -260,14 +250,13 @@ async def test_fetch_ayah_text_success(monkeypatch, tmp_path):
         new_callable=AsyncMock,
         return_value=ayah_response["result"],
     ):
-        text = await fetch_ayah_text(1, 1)
+        text = asyncio.run(fetch_ayah_text(1, 1))
 
     assert text is not None
     assert "بسم" in text or "بِسْم" in text
 
 
-@pytest.mark.asyncio
-async def test_fetch_ayah_text_failure_returns_none(monkeypatch, tmp_path):
+def test_fetch_ayah_text_failure_returns_none(monkeypatch, tmp_path):
     import app.services.tafsir_service as svc
     monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_ayah_fail.db")
 
@@ -276,15 +265,14 @@ async def test_fetch_ayah_text_failure_returns_none(monkeypatch, tmp_path):
         new_callable=AsyncMock,
         return_value=None,
     ):
-        text = await fetch_ayah_text(1, 1)
+        text = asyncio.run(fetch_ayah_text(1, 1))
 
     assert text is None
 
 
 # ── search_quran ───────────────────────────────────────────────────────────
 
-@pytest.mark.asyncio
-async def test_search_quran_success(monkeypatch, tmp_path):
+def test_search_quran_success(monkeypatch, tmp_path):
     import app.services.tafsir_service as svc
     monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_search.db")
 
@@ -309,14 +297,13 @@ async def test_search_quran_success(monkeypatch, tmp_path):
         new_callable=AsyncMock,
         return_value=search_response["result"],
     ):
-        results = await search_quran("رحمن", limit=5)
+        results = asyncio.run(search_quran("رحمن", limit=5))
 
     assert len(results) == 2
     assert results[0]["surah"] == 1
 
 
-@pytest.mark.asyncio
-async def test_search_quran_failure_returns_empty(monkeypatch, tmp_path):
+def test_search_quran_failure_returns_empty(monkeypatch, tmp_path):
     import app.services.tafsir_service as svc
     monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_search_fail.db")
 
@@ -325,7 +312,7 @@ async def test_search_quran_failure_returns_empty(monkeypatch, tmp_path):
         new_callable=AsyncMock,
         return_value=None,
     ):
-        results = await search_quran("anything")
+        results = asyncio.run(search_quran("anything"))
 
     assert results == []
 
