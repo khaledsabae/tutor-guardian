@@ -31,6 +31,9 @@ from app.services.tier_router import choose_tier
 from app.services.privacy import redact_for_cloud
 from app.services import answer_cache
 from app.services import conversation_store as store
+from app.services.tafsir_service import (
+    detect_ayah_reference, fetch_tafsir, format_tafsir_for_context,
+)
 
 _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
 
@@ -210,7 +213,41 @@ async def draft_reply(request: Request, user_message: UserMessage):
             log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units
 
-        retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+        # ── Step 4b: Tafsir MCP — if the question references a specific ayah, ──
+        # fetch its tafsir concurrently with KB retrieval. The tafsir text is
+        # injected as an extra context block in the generation prompt, NOT as a
+        # replacement for KB retrieval — the parenting advice still comes from
+        # the KB. This is a one-shot best-effort enrichment: if the MCP server
+        # is unreachable, the tafsir block is silently empty and the answer is
+        # built from KB units alone, exactly as before.
+        ayah_ref = detect_ayah_reference(query_text)
+        if ayah_ref:
+            tafsir_task = asyncio.create_task(
+                fetch_tafsir(ayah_ref[0], ayah_ref[1])
+            )
+            retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+            tafsir_results = await tafsir_task
+            tafsir_context = format_tafsir_for_context(tafsir_results)
+            if tafsir_context:
+                logger.info(
+                    "Tafsir MCP enriched answer for %s:%d",
+                    ayah_ref[0], ayah_ref[1],
+                )
+                # Inject as a synthetic retrieved unit so the prompt builder
+                # and the merge fallback both carry it.
+                retrieved_units.insert(0, {
+                    "unit_id": f"tafsir_{ayah_ref[0]}_{ayah_ref[1]}",
+                    "document": f"passage: {tafsir_context}",
+                    "metadata": {
+                        "domain": "fiqh",
+                        "reference_info": "Tafsir MCP — مركز تفسير",
+                        "title": "تفسير آية قرآنية",
+                    },
+                    "rerank_score": 1.0,  # authoritative — always included
+                    "source_domain": "fiqh",
+                })
+        else:
+            retrieved_units = await asyncio.to_thread(_retrieve_blocking)
 
     # Re-label from the retrieved evidence when classification was uncertain.
     primary_domain = _label_domain(detected_domains, retrieved_units)
@@ -449,7 +486,34 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             )
             log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units
-        retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+
+        # ── Tafsir MCP enrichment (same logic as /draft) ────────────────
+        ayah_ref = detect_ayah_reference(query_text)
+        if ayah_ref:
+            tafsir_task = asyncio.create_task(
+                fetch_tafsir(ayah_ref[0], ayah_ref[1])
+            )
+            retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+            tafsir_results = await tafsir_task
+            tafsir_context = format_tafsir_for_context(tafsir_results)
+            if tafsir_context:
+                logger.info(
+                    "Tafsir MCP enriched stream for %s:%d",
+                    ayah_ref[0], ayah_ref[1],
+                )
+                retrieved_units.insert(0, {
+                    "unit_id": f"tafsir_{ayah_ref[0]}_{ayah_ref[1]}",
+                    "document": f"passage: {tafsir_context}",
+                    "metadata": {
+                        "domain": "fiqh",
+                        "reference_info": "Tafsir MCP — مركز تفسير",
+                        "title": "تفسير آية قرآنية",
+                    },
+                    "rerank_score": 1.0,
+                    "source_domain": "fiqh",
+                })
+        else:
+            retrieved_units = await asyncio.to_thread(_retrieve_blocking)
 
     # Re-label from the retrieved evidence when classification was uncertain.
     primary_domain = _label_domain(detected_domains, retrieved_units)

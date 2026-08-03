@@ -22,7 +22,7 @@ from app.middleware.auth import AuthMiddleware
 from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
-    insights, methodology, seo,
+    insights, methodology, seo, tafsir,
 )
 from app.services import child_token
 from app.services.push_sender import send_to_device
@@ -151,6 +151,7 @@ app.include_router(habit_templates.router, prefix="/api")  # قوالب العا
 app.include_router(child_mode.router, prefix="/api")  # وضع الطفل للتقرير الذاتي (child auth)
 app.include_router(child_mode_web.router, prefix="/api")  # QR Web App للمراهقين (child auth)
 app.include_router(insights.router, prefix="/api")  # AI parenting insights (auth)
+app.include_router(tafsir.router, prefix="/api")  # Tafsir MCP — تفسير موثّق (public)
 
 # ── Phase 4: static teen web UI served directly by the backend. ─────────
 _CHILD_WEB_DIR = PROJECT_ROOT / "backend" / "static" / "child_mode"
