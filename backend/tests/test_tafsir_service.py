@@ -19,6 +19,8 @@ from app.services.tafsir_service import (
     fetch_tafsir,
     fetch_ayah_text,
     search_quran,
+    search_in_tafsir,
+    list_tafsir_sources,
     format_tafsir_for_display,
     format_tafsir_for_context,
     FALLBACK_MESSAGE,
@@ -315,6 +317,114 @@ def test_search_quran_failure_returns_empty(monkeypatch, tmp_path):
         results = asyncio.run(search_quran("anything"))
 
     assert results == []
+
+
+def test_search_quran_uses_items_key(monkeypatch, tmp_path):
+    """Production MCP returns {items: [...]}; search_quran must fall back to it."""
+    import app.services.tafsir_service as svc
+    monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_search_items.db")
+
+    search_response = {
+        "jsonrpc": "2.0", "id": 5,
+        "result": {
+            "content": [{
+                "type": "text",
+                "text": json.dumps({
+                    "total": 2,
+                    "items": [
+                        {"surah": 2, "ayah": 255, "text": "الله لا إله إلا هو", "snippet": "الله"},
+                    ],
+                }),
+            }],
+            "isError": False,
+        },
+    }
+
+    with patch(
+        "app.services.tafsir_service._mcp_call",
+        new_callable=AsyncMock,
+        return_value=search_response["result"],
+    ):
+        results = asyncio.run(search_quran("الله", limit=5))
+
+    assert len(results) == 1
+    assert results[0]["surah"] == 2
+    assert results[0]["ayah"] == 255
+
+
+# ── search_in_tafsir ───────────────────────────────────────────────────────
+
+def test_search_in_tafsir_uses_items_key(monkeypatch, tmp_path):
+    """Production MCP returns {items: [...]} for search_in_tafsir too."""
+    import app.services.tafsir_service as svc
+    monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_search_tafsir_items.db")
+
+    search_response = {
+        "jsonrpc": "2.0", "id": 6,
+        "result": {
+            "content": [{
+                "type": "text",
+                "text": json.dumps({
+                    "total": 1,
+                    "items": [
+                        {
+                            "surah": 1, "ayah": 1,
+                            "tafsir_excerpt": "تفسير بسم الله",
+                            "source_attribution": "السعدي",
+                        },
+                    ],
+                }),
+            }],
+            "isError": False,
+        },
+    }
+
+    with patch(
+        "app.services.tafsir_service._mcp_call",
+        new_callable=AsyncMock,
+        return_value=search_response["result"],
+    ):
+        results = asyncio.run(search_in_tafsir("الرحمن", source="saadi", limit=5))
+
+    assert len(results) == 1
+    assert results[0]["surah"] == 1
+    assert results[0]["tafsir_excerpt"] == "تفسير بسم الله"
+
+
+# ── list_tafsir_sources ───────────────────────────────────────────────────
+
+def test_list_tafsir_sources_uses_items_key(monkeypatch, tmp_path):
+    """Production MCP returns {total, items: [...]} for sources list."""
+    import app.services.tafsir_service as svc
+    monkeypatch.setattr(svc, "_TELEMETRY_DB", tmp_path / "test_sources_items.db")
+
+    sources_response = {
+        "jsonrpc": "2.0", "id": 7,
+        "result": {
+            "content": [{
+                "type": "text",
+                "text": json.dumps({
+                    "total": 2,
+                    "items": [
+                        {"slug": "saadi", "name": "تيسير الكريم الرحمن", "author": "السعدي"},
+                        {"slug": "moyassar", "name": "الميسر", "author": "الملك سلمان"},
+                    ],
+                }),
+            }],
+            "isError": False,
+        },
+    }
+
+    with patch(
+        "app.services.tafsir_service._mcp_call",
+        new_callable=AsyncMock,
+        return_value=sources_response["result"],
+    ):
+        sources = asyncio.run(list_tafsir_sources())
+
+    assert len(sources) == 2
+    assert sources[0]["slug"] == "saadi"
+    assert sources[1]["slug"] == "moyassar"
 
 
 # ── Display formatting ──────────────────────────────────────────────────────

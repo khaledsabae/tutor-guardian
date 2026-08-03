@@ -350,8 +350,10 @@ async def search_quran(query: str, limit: int = 10) -> list[dict]:
         return []
 
     inner = _extract_tafsir_entry(content[0].get("text", ""))
-    # search_quran_text returns {result: [...]} via outputSchema
-    return inner.get("result", [])
+    # search_quran_text returns {result: [...]} or {items: [...]} via outputSchema
+    if isinstance(inner, list):
+        return inner
+    return inner.get("result", inner.get("items", []))
 
 
 async def search_in_tafsir(
@@ -374,7 +376,10 @@ async def search_in_tafsir(
         return []
 
     inner = _extract_tafsir_entry(content[0].get("text", ""))
-    return inner.get("result", [])
+    # search_in_tafsir returns {result: [...]} or {items: [...]} via outputSchema
+    if isinstance(inner, list):
+        return inner
+    return inner.get("result", inner.get("items", []))
 
 
 async def fetch_nuzool_reason(
@@ -423,10 +428,12 @@ async def list_tafsir_sources() -> list[dict]:
         return []
 
     inner = _extract_tafsir_entry(content[0].get("text", ""))
-    # Could be a list directly or nested
+    # Could be a list directly or nested under sources/result/items
     if isinstance(inner, list):
         return inner
-    return inner.get("sources", inner.get("result", []))
+    if isinstance(inner, dict):
+        return inner.get("sources", inner.get("result", inner.get("items", [])))
+    return []
 
 
 def format_tafsir_for_display(result: TafsirResult) -> str:
