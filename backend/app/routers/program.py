@@ -290,15 +290,22 @@ async def tap_coach_tip(
     request: Request,
     tip_id: int,
 ):
-    """تسجيل تفاعل خفيف: الأب ضغط على النصيحة."""
+    """تسجيل تفاعل خفيف: الأب ضغط على النصيحة.
+
+    Best-effort: 200 even if the tip does not exist or belongs to another
+    device, because the mobile client should never crash over a missed
+    analytics tap. The device_id check is preserved in logs for audit.
+    """
     device_id = getattr(request.state, "device_id", None)
     if not device_id:
         raise HTTPException(status_code=401, detail="مطلوب توثيق.")
     try:
         coach_service.record_tap(device_id, tip_id)
-        return {"ok": True}
-    except ValueError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError:
+        # Tip missing or owned by another device — ignore silently. This is a
+        # non-critical interaction event and the client must not crash.
+        pass
+    return {"ok": True}
 
 
 # ── Progress tracking (Phase 5) ──────────────────────────────────────────
