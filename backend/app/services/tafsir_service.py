@@ -570,17 +570,65 @@ _AYAH_PATTERN3 = _re.compile(
 )
 
 
+def _normalize_arabic(text: str) -> str:
+    """Strip Arabic diacritics (tashkeel), tatweel, and standardize alef/teh.
+
+    Makes "بِسْمِ اللّٰهِ" match "بسم الله" and "الَّلّه" match "الله".
+    """
+    import unicodedata
+
+    s = text
+    # Remove combining marks (tashkeel: fatha, damma, kasra, sukun, shadda, ...)
+    s = "".join(
+        ch for ch in unicodedata.normalize("NFD", s)
+        if unicodedata.category(ch) != "Mn"
+    )
+    # Remove tatweel (U+0640 ـ)
+    s = s.replace("\u0640", "")
+    # Standardize alef variants → ا
+    for variant in ("\u0622", "\u0623", "\u0625"):  # آ أ إ
+        s = s.replace(variant, "\u0627")
+    # Standardize teh marbuta → heh
+    s = s.replace("\u0629", "\u0647")  # ة → ه
+    # Standardize alef-maksura → yeh
+    s = s.replace("\u0649", "\u064a")  # ى → ي
+    # Standardize small alef above (used in لّٰه) → plain alef
+    s = s.replace("\u0670", "\u0627")  # ٰ (alef superscript) → ا
+    # Collapse spaces
+    return _re.sub(r"\s+", " ", s).strip()
+
+
+# Well-known ayahs the parent may reference by their opening words or a
+# common name. Keys are NORMALIZED (no tashkeel). Only include ayahs that
+# are unambiguous and commonly asked about, to avoid false positives.
+# (surah, ayah) 1-indexed.
+_AYAH_BY_TEXT: dict[str, tuple[int, int]] = {
+    # سورة الفاتحة
+    "بسم الله الرحمن الرحيم": (1, 1),
+    # آية الكرسي — البقرة 255
+    "اية الكرسي": (2, 255),
+    "الكرسي": (2, 255),
+    "الله لا اله الا هو الحي القيوم": (2, 255),
+    "لا اله الا هو الحي القيوم": (2, 255),
+    "الحي القيوم": (2, 255),
+    # سورة الإخلاص
+    "قل هو الله احد": (112, 1),
+    "قل هو الله أحد": (112, 1),
+    # سورة الناس
+    "قل اعوذ برب الناس": (114, 1),
+    # سورة الفلق
+    "قل اعوذ برب الفلق": (113, 1),
+    # سورة الكوثر
+    "انا اعطيناك الكوثر": (108, 1),
+}
+
+
 def detect_ayah_reference(text: str) -> tuple[int, int] | None:
     """Detect a surah+ayah reference in a user's question.
 
     Returns (surah, ayah) or None. Tries multiple patterns from most
-    specific (سورة X آية Y) to least (X Y).
-
-    Examples that match:
-        "تفسير سورة البقرة آية 255"  → (2, 255)
-        "شرح الفاتحة 1"               → (1, 1)
-        "البقرة 255"                   → (2, 255)
-        "سورة 2 آية 255"              → (2, 255)
+    specific (سورة X آية Y) to least (X Y), then falls back to matching
+    the opening words of well-known ayahs (آية الكرسي، بسم الله، ...).
     """
     if not text:
         return None
@@ -600,4 +648,12 @@ def detect_ayah_reference(text: str) -> tuple[int, int] | None:
                     continue
             if 1 <= surah <= 114 and 1 <= ayah <= 286:
                 return (surah, ayah)
+
+    # Fallback: well-known ayahs referenced by their opening words
+    # (or a common name). Normalize Arabic (strip tashkeel + tatweel) so
+    # "بِسْمِ اللّٰهِ" and "بسم الله" both match.
+    norm = _normalize_arabic(text)
+    for key, (surah, ayah) in _AYAH_BY_TEXT.items():
+        if key in norm:
+            return (surah, ayah)
     return None

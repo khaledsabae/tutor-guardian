@@ -621,3 +621,21 @@ def test_detect_ayah_alkursi_verse():
     from app.services.tafsir_service import detect_ayah_reference
     text = "ابني حافظ آية الكرسي، شرح سورة البقرة آية 255"
     assert detect_ayah_reference(text) == (2, 255)
+
+
+def test_detect_ayah_by_opening_text_bismillah():
+    """تفسير بسم الله الرحمن الرحيم → (1, 1) — آية بلا رقم، بفتحتها."""
+    from app.services.tafsir_service import detect_ayah_reference
+    assert detect_ayah_reference("تفسير بسم الله الرحمن الرحيم") == (1, 1)
+
+
+def test_detect_ayah_by_opening_text_ikhlas():
+    """تفسير قل هو الله أحد → (112, 1) — نص آية بلا رقم."""
+    from app.services.tafsir_service import detect_ayah_reference
+    assert detect_ayah_reference("تفسير قل هو الله أحد") == (112, 1)
+
+
+def test_detect_ayah_by_name_kursi():
+    """ما تفسير آية الكرسي → (2, 255) — الاسم المشهور بلا رقم."""
+    from app.services.tafsir_service import detect_ayah_reference
+    assert detect_ayah_reference("ما تفسير آية الكرسي") == (2, 255)
