@@ -691,3 +691,16 @@ def test_resolve_ayah_reference_rejects_generic_question_sharing_a_word():
     with patch.object(svc, "search_quran", AsyncMock(return_value=fake_hits)):
         got = asyncio.run(svc.resolve_ayah_reference(q))
     assert got is None
+
+
+def test_detect_ayah_long_verse_adyan_via_dict():
+    """آية الدين (2,282) — طويلة فـ overlap ratio بيفشل، بتتلتقط بالقاموس."""
+    from app.services.tafsir_service import detect_ayah_reference
+    q = "يا أيها الذين آمنوا إذا تداينتم بدين إلى أجل مسمى"
+    assert detect_ayah_reference(q) == (2, 282)
+
+
+def test_detect_ayah_ikhlas_via_dict():
+    """قل هو الله أحد → (112, 1) من القاموس (نص صريح)."""
+    from app.services.tafsir_service import detect_ayah_reference
+    assert detect_ayah_reference("تفسير قل هو الله أحد") == (112, 1)
