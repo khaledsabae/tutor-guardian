@@ -569,6 +569,22 @@ _AYAH_PATTERN3 = _re.compile(
     _re.UNICODE,
 )
 
+# High-frequency Arabic function words excluded from the ayah/query overlap
+# check (they appear in nearly every verse and don't discriminate).
+_ARABIC_STOPWORDS: frozenset[str] = frozenset({
+    "الذي", "التي", "الذين", "الذى", "التى", "الا", "إلا", "هو", "هي", "هم",
+    "هما", "هن", "لا", "ما", "من", "في", "على", "الى", "إلى", "عن", "ان",
+    "أن", "او", "أو", "ثم", "و", "والذي", "بين", "يا", "قد", "كان", "هؤلاء",
+    "انه", "إنه", "لهم", "ولهم", "فهم", "عنه", "عنهم",
+})
+
+# Minimum fraction of the ayah's content words that must appear in the user's
+# question to accept the full-Quran match. Calibrated live: a quoted ayah
+# fragment scores ~0.3-1.0; generic parenting questions that merely share a
+# phrase score 0.0. Combined with a minimum match count to reject short ayahs.
+_AYAH_OVERLAP_THRESHOLD = 0.30
+_AYAH_MIN_MATCH = 4
+
 
 def _normalize_arabic(text: str) -> str:
     """Strip Arabic diacritics (tashkeel), tatweel, and standardize alef/teh.
@@ -668,20 +684,20 @@ async def resolve_ayah_reference(text: str) -> tuple[int, int] | None:
       2. Well-known ayahs by opening words (bismillah, etc.).
       3. **Full-Quran fallback**: if the question quotes ayah text, search
          the entire Quran via the MCP search_quran_text tool and confirm
-         the matched ayah's opening words actually appear in the question.
-         Returns None (no enrichment) if the search fails or is inconclusive,
-         so a generic parenting question is never misattributed to an ayah.
+         the match by word-overlap between the question and the ayah's
+         content words (stopwords excluded) at a high threshold. Returns
+         None (no enrichment) if the search fails or is inconclusive, so a
+         generic parenting question is never misattributed to an ayah.
     """
     # Fast path: explicit reference / well-known ayah (no network).
     ref = detect_ayah_reference(text)
     if ref:
         return ref
 
-    # Full-Quran path: normalize the query, then search. Only trust a hit
-    # whose opening words appear in the question — users usually quote the
-    # start of the ayah. We check the opening anchor (first ~4 words) of the
-    # matched ayah is a substring of the normalized question. This guards
-    # against a generic parenting question matching a short ayah.
+    # Full-Quran path: normalize the query, then search. Accept a hit only
+    # if enough of the ayah's meaningful (non-stopword) words appear in the
+    # question — this tolerates spelling/tashkeel differences while still
+    # rejecting generic parenting questions that merely share a phrase.
     norm_query = _normalize_arabic(text)
     # A quoted ayah in a question is usually a few words to ~1 line. Skip
     # the expensive network search for very short / non-ayah questions.
@@ -696,15 +712,17 @@ async def resolve_ayah_reference(text: str) -> tuple[int, int] | None:
         hits = await search_quran(search_text, limit=5)
     except Exception:  # noqa: BLE001 — network failure must not break the call
         return None
+    query_words = set(norm_query.split())
     for hit in hits:
-        ayah_text = _normalize_arabic(str(hit.get("text") or ""))
-        if not ayah_text:
+        ayah_norm = _normalize_arabic(str(hit.get("text") or ""))
+        if not ayah_norm:
             continue
-        # Opening anchor of the ayah (first 4 words). If that appears in the
-        # question, the user was quoting this ayah.
-        anchor_words = ayah_text.split()
-        anchor = " ".join(anchor_words[:4])
-        if anchor and anchor in norm_query:
+        # Content words of the ayah (drop high-frequency stopwords).
+        content = [w for w in ayah_norm.split() if w not in _ARABIC_STOPWORDS]
+        if not content:
+            continue
+        matched = sum(1 for w in content if w in query_words)
+        if matched >= _AYAH_MIN_MATCH and matched / len(content) >= _AYAH_OVERLAP_THRESHOLD:
             try:
                 return (int(hit["surah"]), int(hit["ayah"]))
             except (KeyError, TypeError, ValueError):

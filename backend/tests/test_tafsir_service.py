@@ -665,4 +665,29 @@ def test_resolve_ayah_reference_no_match_returns_none():
     with patch.object(svc, "search_quran", AsyncMock(return_value=[])) as m:
         got = asyncio.run(svc.resolve_ayah_reference("كيف أربي طفلي على الصدق؟"))
     assert got is None
-    m.assert_called_once()
+
+
+def test_resolve_ayah_reference_matches_loose_spelling_of_hashr():
+    """صيغة المستخدم المرنة لآية الحشر 22 → (59, 22) عبر overlap مش anchor صارم."""
+    from app.services import tafsir_service as svc
+    q = "الله لا اله الا هو عالم الغيب والشهادة هو الرحمن الرحيم"
+    fake_hits = [{
+        "surah": 59, "ayah": 22,
+        "text": "هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ هُوَ الرَّحْمَٰنُ الرَّحِيمُ",
+    }]
+    with patch.object(svc, "search_quran", AsyncMock(return_value=fake_hits)):
+        got = asyncio.run(svc.resolve_ayah_reference(q))
+    assert got == (59, 22)
+
+
+def test_resolve_ayah_reference_rejects_generic_question_sharing_a_word():
+    """سؤال عام فيه كلمة من آية (مش اقتباس آية) → None، ضد الـ false positive."""
+    from app.services import tafsir_service as svc
+    q = "بنتي بتحب تقرا عن سبيل ربك في القصص"  # shares 'سبيل ربك' but not an ayah
+    fake_hits = [{
+        "surah": 16, "ayah": 125,
+        "text": "ادْعُ إِلَىٰ سَبِيلِ رَبِّكَ بِالْحِكْمَةِ وَالْمَوْعِظَةِ الْحَسَنَةِ",
+    }]
+    with patch.object(svc, "search_quran", AsyncMock(return_value=fake_hits)):
+        got = asyncio.run(svc.resolve_ayah_reference(q))
+    assert got is None
