@@ -658,6 +658,9 @@ _AYAH_BY_TEXT: dict[str, tuple[int, int]] = {
     "قل للمومنين يغضوا من ابصارهم": (24, 30),
     # الأنفال 61 — السلم
     "وان جنحوا للسلم فاجنح لها": (8, 61),
+    # إبراهيم 7 — الشكر (مشهورة بجملتها، جزء قصير من آية طويلة)
+    "لين شكرتم لازيدنكم": (14, 7),
+    "شكرتم لازيدنكم": (14, 7),
 }
 
 
@@ -743,8 +746,14 @@ async def resolve_ayah_reference(text: str) -> tuple[int, int] | None:
         content = [w for w in ayah_norm.split() if w not in _ARABIC_STOPWORDS]
         if not content:
             continue
+        # Adaptive overlap threshold. The MCP search already filters the query
+        # to the right ayah (generic questions return 0 hits), so this is a
+        # confirmation guard, not the only gate.
+        #   - Short ayahs (<=3 content words, e.g. "الله الصمد") need ~all.
+        #   - Long ayahs (آية الدين 2:282 ~100 words) need _AYAH_MIN_MATCH.
         matched = sum(1 for w in content if w in query_words)
-        if matched >= _AYAH_MIN_MATCH and matched / len(content) >= _AYAH_OVERLAP_THRESHOLD:
+        threshold = _AYAH_MIN_MATCH if len(content) > 3 else 2
+        if matched >= threshold:
             try:
                 return (int(hit["surah"]), int(hit["ayah"]))
             except (KeyError, TypeError, ValueError):

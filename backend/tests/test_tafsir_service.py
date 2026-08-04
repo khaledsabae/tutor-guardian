@@ -704,3 +704,29 @@ def test_detect_ayah_ikhlas_via_dict():
     """قل هو الله أحد → (112, 1) من القاموس (نص صريح)."""
     from app.services.tafsir_service import detect_ayah_reference
     assert detect_ayah_reference("تفسير قل هو الله أحد") == (112, 1)
+
+
+def test_resolve_long_ayah_via_adaptive_overlap():
+    """آية طويلة مش في القاموس (آل عمران 190) بتتلتقط بالـ overlap المتكيف."""
+    from app.services import tafsir_service as svc
+    q = "إن في خلق السماوات والأرض واختلاف الليل والنهار لآيات لأولي الألباب"
+    fake_hits = [{
+        "surah": 3, "ayah": 190,
+        "text": "إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِأُولِي الْأَلْبَابِ",
+    }]
+    with patch.object(svc, "search_quran", AsyncMock(return_value=fake_hits)):
+        got = asyncio.run(svc.resolve_ayah_reference(q))
+    assert got == (3, 190)
+
+
+def test_resolve_short_ayah_via_lower_overlap_threshold():
+    """آية قصيرة (إبراهيم 7، كلمات محتوى قليلة) بتتلتقط بحد أدنى أخف."""
+    from app.services import tafsir_service as svc
+    q = "لئن شكرتم لأزيدنكم"
+    fake_hits = [{
+        "surah": 14, "ayah": 7,
+        "text": "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِنْ شَكَرْتُمْ لَأَزِيدَنَّكُمْ",
+    }]
+    with patch.object(svc, "search_quran", AsyncMock(return_value=fake_hits)):
+        got = asyncio.run(svc.resolve_ayah_reference(q))
+    assert got == (14, 7)
