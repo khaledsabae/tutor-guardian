@@ -639,3 +639,30 @@ def test_detect_ayah_by_name_kursi():
     """ما تفسير آية الكرسي → (2, 255) — الاسم المشهور بلا رقم."""
     from app.services.tafsir_service import detect_ayah_reference
     assert detect_ayah_reference("ما تفسير آية الكرسي") == (2, 255)
+
+
+def test_resolve_ayah_reference_quoted_text_uses_full_quran_search():
+    """اقتباس آية عشوائية → يبحث في القرآن كله ويرجع (سورة، آية)."""
+    from app.services import tafsir_service as svc
+    # A verse not in the well-known map: سورة النحل آية 125 (ادْعُ إِلَىٰ سَبِيلِ رَبِّكَ)
+    q = "تفسير ادْعُ إِلَىٰ سَبِيلِ رَبِّكَ بِالْحِكْمَةِ وَالْمَوْعِظَةِ الْحَسَنَةِ"
+    fake_hits = [
+        {
+            "surah": 16,
+            "ayah": 125,
+            "text": "ادْعُ إِلَىٰ سَبِيلِ رَبِّكَ بِالْحِكْمَةِ وَالْمَوْعِظَةِ الْحَسَنَةِ",
+            "snippet": "ادْعُ إِلَىٰ سَبِيلِ رَبِّكَ",
+        },
+    ]
+    with patch.object(svc, "search_quran", AsyncMock(return_value=fake_hits)):
+        got = asyncio.run(svc.resolve_ayah_reference(q))
+    assert got == (16, 125)
+
+
+def test_resolve_ayah_reference_no_match_returns_none():
+    """سؤال تربوي عام من غير اقتباس آية → None (مفيش بحث مضلل)."""
+    from app.services import tafsir_service as svc
+    with patch.object(svc, "search_quran", AsyncMock(return_value=[])) as m:
+        got = asyncio.run(svc.resolve_ayah_reference("كيف أربي طفلي على الصدق؟"))
+    assert got is None
+    m.assert_called_once()

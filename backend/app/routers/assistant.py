@@ -32,7 +32,7 @@ from app.services.privacy import redact_for_cloud
 from app.services import answer_cache
 from app.services import conversation_store as store
 from app.services.tafsir_service import (
-    detect_ayah_reference, fetch_tafsir, format_tafsir_for_context,
+    resolve_ayah_reference, fetch_tafsir, format_tafsir_for_context,
 )
 
 _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
@@ -220,12 +220,13 @@ async def draft_reply(request: Request, user_message: UserMessage):
         # the KB. This is a one-shot best-effort enrichment: if the MCP server
         # is unreachable, the tafsir block is silently empty and the answer is
         # built from KB units alone, exactly as before.
-        ayah_ref = detect_ayah_reference(query_text)
+        ayah_task = asyncio.create_task(resolve_ayah_reference(query_text))
+        retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+        ayah_ref = await ayah_task
         if ayah_ref:
             tafsir_task = asyncio.create_task(
                 fetch_tafsir(ayah_ref[0], ayah_ref[1])
             )
-            retrieved_units = await asyncio.to_thread(_retrieve_blocking)
             tafsir_results = await tafsir_task
             tafsir_context = format_tafsir_for_context(tafsir_results)
             if tafsir_context:
@@ -488,12 +489,13 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             return units
 
         # ── Tafsir MCP enrichment (same logic as /draft) ────────────────
-        ayah_ref = detect_ayah_reference(query_text)
+        ayah_task = asyncio.create_task(resolve_ayah_reference(query_text))
+        retrieved_units = await asyncio.to_thread(_retrieve_blocking)
+        ayah_ref = await ayah_task
         if ayah_ref:
             tafsir_task = asyncio.create_task(
                 fetch_tafsir(ayah_ref[0], ayah_ref[1])
             )
-            retrieved_units = await asyncio.to_thread(_retrieve_blocking)
             tafsir_results = await tafsir_task
             tafsir_context = format_tafsir_for_context(tafsir_results)
             if tafsir_context:

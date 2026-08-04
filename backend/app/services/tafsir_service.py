@@ -657,3 +657,56 @@ def detect_ayah_reference(text: str) -> tuple[int, int] | None:
         if key in norm:
             return (surah, ayah)
     return None
+
+
+async def resolve_ayah_reference(text: str) -> tuple[int, int] | None:
+    """Resolve an ayah reference from a question, covering the FULL Quran.
+
+    Priority:
+      1. Explicit surah+ayah number ("سورة البقرة آية 255") or common
+         name ("آية الكرسي") via detect_ayah_reference.
+      2. Well-known ayahs by opening words (bismillah, etc.).
+      3. **Full-Quran fallback**: if the question quotes ayah text, search
+         the entire Quran via the MCP search_quran_text tool and confirm
+         the matched ayah's opening words actually appear in the question.
+         Returns None (no enrichment) if the search fails or is inconclusive,
+         so a generic parenting question is never misattributed to an ayah.
+    """
+    # Fast path: explicit reference / well-known ayah (no network).
+    ref = detect_ayah_reference(text)
+    if ref:
+        return ref
+
+    # Full-Quran path: normalize the query, then search. Only trust a hit
+    # whose opening words appear in the question — users usually quote the
+    # start of the ayah. We check the opening anchor (first ~4 words) of the
+    # matched ayah is a substring of the normalized question. This guards
+    # against a generic parenting question matching a short ayah.
+    norm_query = _normalize_arabic(text)
+    # A quoted ayah in a question is usually a few words to ~1 line. Skip
+    # the expensive network search for very short / non-ayah questions.
+    if len(norm_query) < 10:
+        return None
+    try:
+        # Strip a leading request word ("تفسير/شرح/ما معنى/ايه معنى") so the
+        # search is run against the quoted ayah text alone. The MCP search is
+        # exact-ish; extra words pollute it.
+        search_text = _re.sub(r"^(تفسير|شرح|معنى|ما معنى|ايه معنى|ما تفسير|وش معنى)\s*[:؟؟]?\s*",
+                              "", text, flags=_re.UNICODE).strip()
+        hits = await search_quran(search_text, limit=5)
+    except Exception:  # noqa: BLE001 — network failure must not break the call
+        return None
+    for hit in hits:
+        ayah_text = _normalize_arabic(str(hit.get("text") or ""))
+        if not ayah_text:
+            continue
+        # Opening anchor of the ayah (first 4 words). If that appears in the
+        # question, the user was quoting this ayah.
+        anchor_words = ayah_text.split()
+        anchor = " ".join(anchor_words[:4])
+        if anchor and anchor in norm_query:
+            try:
+                return (int(hit["surah"]), int(hit["ayah"]))
+            except (KeyError, TypeError, ValueError):
+                continue
+    return None
