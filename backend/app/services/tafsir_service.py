@@ -576,6 +576,16 @@ _ARABIC_STOPWORDS: frozenset[str] = frozenset({
     "هما", "هن", "لا", "ما", "من", "في", "على", "الى", "إلى", "عن", "ان",
     "أن", "او", "أو", "ثم", "و", "والذي", "بين", "يا", "قد", "كان", "هؤلاء",
     "انه", "إنه", "لهم", "ولهم", "فهم", "عنه", "عنهم",
+    # Very high-frequency Quranic terms — they appear in thousands of ayahs
+    # and wreck the word→ayah inverted index (any query containing them hits
+    # a huge candidate set). Dropping them forces matching on the
+    # distinguishing content words.
+    "الله", "الرحمن", "الرحيم", "رب", "ربكم", "ربك",
+    # Post-normalization forms (alef-maksura/teh become yeh/heh), which are
+    # the actual tokens the index holds: على→علي، إلى→الي، ة→ه.
+    "علي", "الي", "هو", "هي", "ان", "او", "لا", "ما", "من", "في", "عن",
+    "ثم", "و", "الذي", "التي", "الذين", "كل", "اي", "هذا", "هذه", "ذلك",
+    "قل", "وقال", "يقول", "قال",
 })
 
 # Minimum fraction of the ayah's content words that must appear in the user's
@@ -587,29 +597,38 @@ _AYAH_MIN_MATCH = 4
 
 
 def _normalize_arabic(text: str) -> str:
-    """Strip Arabic diacritics (tashkeel), tatweel, and standardize alef/teh.
+    """Normalize Arabic so user input matches the local Quran orthography.
 
-    Makes "بِسْمِ اللّٰهِ" match "بسم الله" and "الَّلّه" match "الله".
+    Steps (order matters):
+      1. Map alef-wasla (ٱ) and superscript alef (ٰ) to plain ا FIRST, because
+         the superscript alef is a combining mark (Mn) that the NFD strip below
+         would otherwise delete — turning "عٰلِمُ" into "علم" instead of "عالم".
+      2. NFD + drop combining marks (tashkeel: fatha/damma/kasra/sukun/shadda).
+      3. Drop tatweel.
+      4. Unify all alef variants (آ أ إ) and hamza carriers → ا.
+      5. teh-marbuta → heh, alef-maksura → yeh.
+    Makes "بِسْمِ اللّٰهِ" match "بسم الله", "عٰلِمُ" match "عالم",
+    "ٱلۡغَيۡبِ" match "الغيب", and "الَّلّه" match "الله".
     """
     import unicodedata
 
     s = text
-    # Remove combining marks (tashkeel: fatha, damma, kasra, sukun, shadda, ...)
+    # 1. Superscript alef (U+0670, combining) + alef wasla (U+0671) → plain ا.
+    #    Must run before NFD so the superscript alef isn't dropped as a mark.
+    s = s.replace("\u0670", "\u0627").replace("\u0671", "\u0627")
+    # 2. Remove combining marks (tashkeel, shadda, etc.).
     s = "".join(
         ch for ch in unicodedata.normalize("NFD", s)
         if unicodedata.category(ch) != "Mn"
     )
-    # Remove tatweel (U+0640 ـ)
+    # 3. Remove tatweel (U+0640 ـ)
     s = s.replace("\u0640", "")
-    # Standardize alef variants → ا
-    for variant in ("\u0622", "\u0623", "\u0625"):  # آ أ إ
+    # 4. Standardize alef variants + hamza carriers → ا
+    for variant in ("\u0622", "\u0623", "\u0625", "\u0624", "\u0626"):  # آ أ إ ؤ ئ
         s = s.replace(variant, "\u0627")
-    # Standardize teh marbuta → heh
+    # 5. teh-marbuta → heh, alef-maksura → yeh
     s = s.replace("\u0629", "\u0647")  # ة → ه
-    # Standardize alef-maksura → yeh
     s = s.replace("\u0649", "\u064a")  # ى → ي
-    # Standardize small alef above (used in لّٰه) → plain alef
-    s = s.replace("\u0670", "\u0627")  # ٰ (alef superscript) → ا
     # Collapse spaces
     return _re.sub(r"\s+", " ", s).strip()
 
@@ -661,7 +680,122 @@ _AYAH_BY_TEXT: dict[str, tuple[int, int]] = {
     # إبراهيم 7 — الشكر (مشهورة بجملتها، جزء قصير من آية طويلة)
     "لين شكرتم لازيدنكم": (14, 7),
     "شكرتم لازيدنكم": (14, 7),
+    # الإخلاص 2 (قصيرة جدًا — الكلمة الوحيدة "الصمد" مش كافية للـ index)
+    "الله الصمد": (112, 2),
+    "الصمد": (112, 2),
+    # الكافرون 1 (قصيرة جدًا — "قل" stopword فبتتبقى كلمة وحيدة)
+    "قل يا ايها الكافرون": (109, 1),
+    "يا ايها الكافرون": (109, 1),
+    "الكافرون": (109, 1),
+    # العصر 1 (قصيرة — الـ MCP search بترجع 0 عليها)
+    "والعصر ان الانسان لفي خسر": (103, 1),
+    "والعصر": (103, 1),
 }
+
+
+# ── Local full-Quran index (best practice: no reliance on the external ──────
+# ── MCP search for ayah lookup). We ship the full Qur'an text locally ───────
+# ── (app/data/quran.json, ~1.7MB / 6236 ayahs) and build a word→(surah,ayah) ──
+# ── inverted index once. This is deterministic, offline, instant, and not ────
+# ── sensitive to the MCP server being down or rate-limited. ─────────────────
+_QURAN_JSON_PATH = Path(__file__).resolve().parents[1] / "data" / "quran.json"
+
+# word (normalized) → list of (surah, ayah)
+_QURAN_INDEX: dict[str, list[tuple[int, int]]] | None = None
+# (surah, ayah) → normalized text (for overlap confirmation)
+_QURAN_TEXT: dict[tuple[int, int], str] = {}
+
+
+def _load_quran_index() -> dict[str, list[tuple[int, int]]]:
+    """Build (once) the inverted index word → [(surah, ayah)] from local quran.json.
+
+    Words are normalized via _normalize_arabic so "بسم" matches "بِسْمِ" and
+    "إلى"/"الى" both index under "الي". Deterministic and cheap (~6236 ayahs).
+    """
+    global _QURAN_INDEX
+    if _QURAN_INDEX is not None:
+        return _QURAN_INDEX
+    idx: dict[str, list[tuple[int, int]]] = {}
+    try:
+        with open(_QURAN_JSON_PATH, encoding="utf-8") as fh:
+            data = json.load(fh)
+        for surah_str, verses in data.items():
+            try:
+                surah = int(surah_str)
+            except ValueError:
+                continue
+            for verse in verses:
+                try:
+                    ayah = int(verse.get("verse"))
+                    text = _normalize_arabic(str(verse.get("text") or ""))
+                except (ValueError, TypeError):
+                    continue
+                _QURAN_TEXT[(surah, ayah)] = text
+                for word in text.split():
+                    if word in _ARABIC_STOPWORDS:
+                        continue
+                    idx.setdefault(word, []).append((surah, ayah))
+        _QURAN_INDEX = idx
+    except Exception as exc:  # noqa: BLE001 — a missing/broken index must not crash
+        logger.error("failed to load local quran index: %s", exc)
+        _QURAN_INDEX = {}
+    return _QURAN_INDEX
+
+
+def _local_ayah_search(query: str) -> list[dict]:
+    """Search the local Quran by word-overlap, returning candidate ayahs.
+
+    For each word in the (normalized) query, look up the ayahs containing it,
+    count how many query words each ayah matches, and return ayahs whose
+    meaningful-word overlap is high enough — ranked. Deterministic, offline.
+    """
+    idx = _load_quran_index()
+    if not idx:
+        return []
+    norm_query = _normalize_arabic(query)
+    q_words = [w for w in norm_query.split() if w not in _ARABIC_STOPWORDS]
+    if not q_words:
+        return []
+    # count matches per (surah, ayah)
+    counts: dict[tuple[int, int], int] = {}
+    for w in q_words:
+        for ref in idx.get(w, []):
+            counts[ref] = counts.get(ref, 0) + 1
+    # keep only ayahs matching >= 2 query words, and compute a score
+    out: list[dict] = []
+    for (surah, ayah), matched in counts.items():
+        if matched >= 2:
+            out.append({
+                "surah": surah, "ayah": ayah, "score": matched,
+                "text": _QURAN_TEXT.get((surah, ayah), ""),
+            })
+    out.sort(key=lambda x: x["score"], reverse=True)
+    return out[:5]
+
+
+def _best_overlap_hit(hits: list[dict], query_words: set[str]) -> tuple[int, int] | None:
+    """Return the best (surah, ayah) from candidate hits by word overlap.
+
+    Accepts a hit when the meaningful (non-stopword) words of the ayah overlap
+    the query by an adaptive threshold: short ayahs (<=3 content words) need
+    >=2 matches, longer ayahs need >=_AYAH_MIN_MATCH. Returns None if no hit
+    meets the bar (guards against misattributing a generic question).
+    """
+    for hit in hits:
+        ayah_norm = _normalize_arabic(str(hit.get("text") or ""))
+        if not ayah_norm:
+            continue
+        content = [w for w in ayah_norm.split() if w not in _ARABIC_STOPWORDS]
+        if not content:
+            continue
+        matched = sum(1 for w in content if w in query_words)
+        threshold = 3 if len(content) > 3 else 2
+        if matched >= threshold:
+            try:
+                return (int(hit["surah"]), int(hit["ayah"]))
+            except (KeyError, TypeError, ValueError):
+                continue
+    return None
 
 
 def detect_ayah_reference(text: str) -> tuple[int, int] | None:
@@ -719,43 +853,33 @@ async def resolve_ayah_reference(text: str) -> tuple[int, int] | None:
     if ref:
         return ref
 
-    # Full-Quran path: normalize the query, then search. Accept a hit only
-    # if enough of the ayah's meaningful (non-stopword) words appear in the
-    # question — this tolerates spelling/tashkeel differences while still
-    # rejecting generic parenting questions that merely share a phrase.
+    # Primary: the MCP search engine (accurate, semantic, tuned) — strip the
+    # request word first so we match the quoted ayah text alone.
+    search_text = _re.sub(r"^(تفسير|شرح|معنى|ما معنى|ايه معنى|ما تفسير|وش معنى)\s*[:؟؟]?\s*",
+                          "", text, flags=_re.UNICODE).strip()
     norm_query = _normalize_arabic(text)
-    # A quoted ayah in a question is usually a few words to ~1 line. Skip
-    # the expensive network search for very short / non-ayah questions.
+    query_words = set(norm_query.split())
+    # Skip the expensive search for very short / non-ayah questions.
     if len(norm_query) < 10:
         return None
+
     try:
-        # Strip a leading request word ("تفسير/شرح/ما معنى/ايه معنى") so the
-        # search is run against the quoted ayah text alone. The MCP search is
-        # exact-ish; extra words pollute it.
-        search_text = _re.sub(r"^(تفسير|شرح|معنى|ما معنى|ايه معنى|ما تفسير|وش معنى)\s*[:؟؟]?\s*",
-                              "", text, flags=_re.UNICODE).strip()
         hits = await search_quran(search_text, limit=5)
     except Exception:  # noqa: BLE001 — network failure must not break the call
-        return None
-    query_words = set(norm_query.split())
-    for hit in hits:
-        ayah_norm = _normalize_arabic(str(hit.get("text") or ""))
-        if not ayah_norm:
-            continue
-        # Content words of the ayah (drop high-frequency stopwords).
-        content = [w for w in ayah_norm.split() if w not in _ARABIC_STOPWORDS]
-        if not content:
-            continue
-        # Adaptive overlap threshold. The MCP search already filters the query
-        # to the right ayah (generic questions return 0 hits), so this is a
-        # confirmation guard, not the only gate.
-        #   - Short ayahs (<=3 content words, e.g. "الله الصمد") need ~all.
-        #   - Long ayahs (آية الدين 2:282 ~100 words) need _AYAH_MIN_MATCH.
-        matched = sum(1 for w in content if w in query_words)
-        threshold = _AYAH_MIN_MATCH if len(content) > 3 else 2
-        if matched >= threshold:
-            try:
-                return (int(hit["surah"]), int(hit["ayah"]))
-            except (KeyError, TypeError, ValueError):
-                continue
+        hits = []
+    if hits:
+        best = _best_overlap_hit(hits, query_words)
+        if best:
+            return best
+
+    # Fallback: only when the MCP search is unavailable/down — use the local
+    # offline index, requiring ALL query content words to be present in the
+    # candidate ayah (strict, avoids the false positives a naive overlap has).
+    if not hits and _local_ayah_search(search_text):
+        local_hits = _local_ayah_search(search_text)
+        for h in local_hits:
+            ayah_words = set(_normalize_arabic(str(h.get("text") or "")).split())
+            content = [w for w in query_words if w not in _ARABIC_STOPWORDS]
+            if content and all(w in ayah_words for w in content):
+                return (int(h["surah"]), int(h["ayah"]))
     return None

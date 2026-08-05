@@ -730,3 +730,19 @@ def test_resolve_short_ayah_via_lower_overlap_threshold():
     with patch.object(svc, "search_quran", AsyncMock(return_value=fake_hits)):
         got = asyncio.run(svc.resolve_ayah_reference(q))
     assert got == (14, 7)
+
+
+def test_normalize_arabic_quran_superscript_alef():
+    """عٰلِمُ (alef superscript combining) → عالم، مش علم. الـ bug الجوهري."""
+    from app.services.tafsir_service import _normalize_arabic
+    assert _normalize_arabic("عٰلِمُ") == "عالم"
+    assert _normalize_arabic("ٱلۡغَيۡبِ") == "الغيب"
+    assert _normalize_arabic("بِسْمِ ٱللَّهِ") == "بسم الله"
+
+
+def test_local_quran_index_builds():
+    """الـ index المحلي بيتحمّل من quran.json ويغطي كل الآيات."""
+    from app.services.tafsir_service import _load_quran_index, _QURAN_TEXT
+    idx = _load_quran_index()
+    assert len(idx) > 10000  # words
+    assert len(_QURAN_TEXT) >= 6200  # ayahs
