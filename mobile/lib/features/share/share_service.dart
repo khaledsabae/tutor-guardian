@@ -32,6 +32,14 @@ class ShareService {
           ? installUrl
           : '$installUrl?ref=$referralCode';
 
+  /// The wa.me deep link carrying [text] as the pre-filled message.
+  ///
+  /// Kept separate so a test can assert the message actually survives into the
+  /// URL: this was once built with an escaped `$`, which sent the literal
+  /// interpolation source to WhatsApp and silently broke every invite.
+  static Uri whatsAppUri(String text) =>
+      Uri.parse('https://wa.me/?text=${Uri.encodeComponent(text)}');
+
   /// Open WhatsApp directly with a pre-filled text + install link.
   /// Falls back to the system share sheet if WhatsApp is not installed.
   static Future<bool> shareWhatsApp(String message, {String? referralCode}) async {
@@ -41,7 +49,7 @@ class ShareService {
       ..write('\n\n📲 «المربّي» مجانًا لوجه الله:\n')
       ..write(installUrlFor(referralCode: referralCode));
     final text = buffer.toString();
-    final uri = Uri.parse('https://wa.me/?text=\${Uri.encodeComponent(text)}');
+    final uri = whatsAppUri(text);
     if (await canLaunchUrl(uri)) {
       return await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
