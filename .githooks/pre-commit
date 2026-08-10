@@ -14,7 +14,7 @@ PY="backend/.venv/bin/python"
 echo ""
 echo "🔍 [pre-commit] Knowledge-base integrity check..."
 if "$PY" ops/tools/check_kb_integrity.py; then
-    echo "✅ [pre-commit] KB in sync — committing."
+    echo "✅ [pre-commit] KB in sync."
 else
     echo ""
     echo "❌ [pre-commit] DRIFT DETECTED — commit blocked."
@@ -23,4 +23,29 @@ else
     echo "   Bypass (discouraged): git commit --no-verify"
     echo ""
     exit 1
+fi
+
+# ruff — أربع قواعد بتمسك باج مش أسلوب (السبب مكتوب في pyproject.toml).
+# هنا مش في CI: workflow «Backend tests» مطفي يدويًا لتفادي فاتورة Actions،
+# فأي وظيفة تتضاف هناك مش هتشتغل. وأول تشغيلة لـruff مسكت اسم غير معرّف
+# ومفتاح مكرر في dict — الاتنين كانوا في الطريق للإنتاج.
+RUFF=""
+for candidate in "$HOME/.local/bin/ruff" "$(command -v ruff || true)"; do
+    [ -x "$candidate" ] && RUFF="$candidate" && break
+done
+if [ -z "$RUFF" ]; then
+    echo "⚠️  [pre-commit] ruff غير مثبّت — تخطّي فحص اللينت (pip install --user ruff)."
+    echo "✅ [pre-commit] committing."
+else
+    echo "🔍 [pre-commit] ruff..."
+    if "$RUFF" check backend/ ops/ scripts/; then
+        echo "✅ [pre-commit] ruff نضيف — committing."
+    else
+        echo ""
+        echo "❌ [pre-commit] ruff رصد مشكلة — commit متوقف."
+        echo "   معظمها بتتصلح آليًا: ruff check --fix backend/ ops/ scripts/"
+        echo "   تخطّي (غير محبّذ): git commit --no-verify"
+        echo ""
+        exit 1
+    fi
 fi

@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# pre-push — يشغّل حارس الموبايل قبل ما الشغل يوصل main.
+# تفعيل لمرة واحدة:  git config core.hooksPath .githooks
+#
+# ليه هنا مش في CI: workflow «Flutter» في GitHub مطفي يدويًا (disabled_manually)
+# لتفادي فاتورة Actions، والـrunner الذاتي على الـVPS مافيهوش Flutter أصلًا.
+# فالمكان الوحيد اللي الفحص ده يقدر يشتغل فيه فعليًا هو الجهاز ده.
+#
+# ثمن ده إن أول crash في شاشة الكويز (0/0 → NaN.round()) اتشحن في ريليز
+# v1.0.30+75 من غير ما حاجة تعترض — مافيش تست كان بيغطيه، ومافيش بوابة كانت شغالة.
+#
+# بيشتغل بس لما الدفعة تلمس mobile/ — فمش بتدفع تمنه وإنت بتعدّل الباكند.
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+if [ "${SKIP_MOBILE_CHECKS:-0}" = "1" ]; then
+    echo "⏭️  [pre-push] تخطّي فحص الموبايل (SKIP_MOBILE_CHECKS=1)"
+    exit 0
+fi
+
+remote_ref="$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null || echo '')"
+if [ -n "$remote_ref" ] && git rev-parse --verify --quiet "$remote_ref" >/dev/null; then
+    range="$remote_ref..HEAD"
+else
+    range="origin/main..HEAD"
+fi
+
+if ! git diff --name-only "$range" 2>/dev/null | grep -q '^mobile/'; then
+    exit 0
+fi
+
+FLUTTER=""
+for candidate in "$HOME/flutter/bin/flutter" /opt/flutter/bin/flutter "$(command -v flutter || true)"; do
+    [ -x "$candidate" ] && FLUTTER="$candidate" && break
+done
+if [ -z "$FLUTTER" ]; then
+    echo "⚠️  [pre-push] Flutter غير موجود — تخطّي فحص الموبايل."
+    exit 0
+fi
+
+echo ""
+echo "🔍 [pre-push] الدفعة بتلمس mobile/ — تشغيل analyze + tests..."
+
+cd mobile
+if ! "$FLUTTER" analyze --fatal-infos --fatal-warnings; then
+    echo ""
+    echo "❌ [pre-push] analyze فشل — الدفع متوقف."
+    echo "   معظم النتائج بتتصلح آليًا: cd mobile && dart fix --apply"
+    echo "   تخطّي (غير محبّذ): SKIP_MOBILE_CHECKS=1 git push"
+    echo ""
+    exit 1
+fi
+
+if ! "$FLUTTER" test; then
+    echo ""
+    echo "❌ [pre-push] تست فشل — الدفع متوقف."
+    echo "   تخطّي (غير محبّذ): SKIP_MOBILE_CHECKS=1 git push"
+    echo ""
+    exit 1
+fi
+
+echo "✅ [pre-push] الموبايل نضيف — الدفع مكمّل."

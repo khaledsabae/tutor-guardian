@@ -123,6 +123,10 @@ jobs:
         run: pip install ruff
 
       # Narrow on purpose — see the rule list and reasoning in pyproject.toml.
-      # It found a NameError and a duplicate dict key on the first run.
+      #
+      # NOTE: this whole workflow is disabled_manually in GitHub to avoid
+      # Actions billing, so nothing here actually runs today. The gate that
+      # does run is the same ruff invocation in .githooks/pre-commit. Keep the
+      # two in step, so re-enabling this workflow needs no other change.
       - name: Run ruff
         run: ruff check backend/ ops/ scripts/
