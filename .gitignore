@@ -65,29 +65,39 @@ Thumbs.db
 *.tmp
 
 # ── Generated fine-tune dataset artifacts (built locally, uploaded to Kaggle) ──
-ops/data/qa_dataset.jsonl
-ops/data/qa_collected.jsonl
-ops/data/qa_*.log
-ops/data/qa_*.pid
-ops/data/qa_checkpoint.json
-ops/data/qa_collected_checkpoint.json
+# Matched by shape, not by exact name. Every rule here used to name one file, so
+# each new variant (_v3, _premium_25k, _final, tg_train_*) escaped and sat
+# untracked and unignored — 12GB one `git add -A` away from being committed.
+ops/data/*.jsonl
+ops/data/*.ckpt.json
+ops/data/*.log
+ops/data/*.pid
+ops/data/*checkpoint.json
 
-# ── Generated lesson media (AI-generated, ~1.1GB — host on CDN/MinIO, not git) ──
+# ── Generated lesson media (AI-generated, multi-GB — served from the VPS) ──
+# Media reaches production by rsync, never through git. docs/lesson_videos/ was
+# ignored as a directory, but gen_lesson_videos.py writes docs/<id>_video.mp4 at
+# the root, so 274MB of it escaped the rule.
 docs/*.mp3
+docs/*.mp4
 docs/lesson_videos/
+docs/podcast_artifacts/
+docs/screenshots/
 docs/lesson_assets/infographics/
 
-# ── Kaggle training artifacts (9.4GB output incl. GGUF — never in git) ──
+# ── Model weights and training output (12GB — never in git) ──
 kaggle_logs*.txt
-ops/data/kaggle_output/
-ops/data/kaggle_upload/
+ops/data/kaggle_output*/
+ops/data/kaggle_upload*/
+ops/data/v3gguf/
+tg-tutor-commandr-lora/
+*.safetensors
+*.gguf
 
 # Eval harness artifacts
 ops/eval/runs/
 ops/eval/_eval_*.db
 ops/eval/golden_candidates.jsonl
-ops/data/qa_dataset_v2.jsonl
-ops/data/qa_dataset_v2.ckpt.json
 
 backend/secrets/
 *firebase-adminsdk*.json
@@ -98,6 +108,12 @@ backend/secrets/
 docs/marketing/watermarked_infographics/
 docs/research/aqidah_library/
 docs/path_videos/
+
+# ── Marketing render intermediates and QA frames ──────────────────────────
+docs/marketing/reel_scratch/
+docs/marketing/shorts/
+docs/marketing/screenshots/raw*/
+docs/marketing/screenshots/preview/
 
 # ── Local development / agent scratch dirs ─────────────────────────────────
 logs/
