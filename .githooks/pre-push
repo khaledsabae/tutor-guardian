@@ -13,6 +13,12 @@
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
+# git exports GIT_DIR and friends into hooks, and Flutter shells out to git to
+# read its own version. Inherited, those point at THIS repo, so Flutter reports
+# "0.0.0-unknown" and pub refuses to resolve — every mobile push blocked by a
+# problem that is not in the code. Drop them before calling anything else.
+unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_PREFIX GIT_COMMON_DIR
+
 if [ "${SKIP_MOBILE_CHECKS:-0}" = "1" ]; then
     echo "⏭️  [pre-push] تخطّي فحص الموبايل (SKIP_MOBILE_CHECKS=1)"
     exit 0
