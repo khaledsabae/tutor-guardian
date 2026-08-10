@@ -120,6 +120,18 @@ jobs:
           DEPLOY_SHA=$(git rev-parse --short HEAD)
           echo "Deploying SHA: $DEPLOY_SHA"
 
+          # ── 2b. Does this host actually hold what the index promises? ─
+          # Media is gitignored and arrives by rsync, so the candidate image
+          # cannot check it — .dockerignore strips docs/*.mp3 and *.mp4. This
+          # path is the only place both the index and the real files exist.
+          # It caught nothing before it was written, which is the point: on
+          # 2026-08-10 the index named 7 path videos that were never generated
+          # (18 lessons served dead links) and one MP3 that three different
+          # lessons played. Warn-only for now; flip to blocking once a deploy
+          # has come through clean.
+          echo "→ checking served assets against docs/"
+          python3 ops/tools/check_served_assets.py --warn-only || true
+
           # ── 3. Verify the tested image is present ────────────────────
           # No build here: the previous step already built, tested and tagged
           # tutor-guardian-backend:latest. The checkout above still has to be
