@@ -8,30 +8,11 @@
 /// try.
 library;
 
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import '../../api/tg_client.dart';
+import '../../core/failures.dart';
 import '../../l10n/app_localizations.dart';
 import 'empty_state.dart';
-
-/// What the reader can do about a failure — not what threw it.
-enum FailureKind { offline, server, unknown }
-
-/// Classify [error] into something worth saying out loud.
-FailureKind classifyFailure(Object error) {
-  if (error is SocketException || error is HttpException) return FailureKind.offline;
-  if (error is TimeoutException) return FailureKind.offline;
-  if (error is TgApiError) {
-    final code = error.statusCode;
-    if (code == null) return FailureKind.offline;
-    if (code >= 500) return FailureKind.server;
-    return FailureKind.unknown;
-  }
-  return FailureKind.unknown;
-}
 
 class ErrorRetryView extends StatelessWidget {
   const ErrorRetryView({super.key, required this.error, this.onRetry});

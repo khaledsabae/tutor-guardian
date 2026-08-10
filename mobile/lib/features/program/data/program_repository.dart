@@ -4,23 +4,63 @@
 /// `routers/program.py` wire format. Screens and providers consume
 /// [CurriculumPath] / [CurriculumLesson] / [DailyTip] typed objects.
 ///
-/// The repository is intentionally thin — it does no caching (Riverpod's
-/// `AsyncNotifier` + `keepAlive` handles that) and no aggregation (the
-/// detail screen fans out via [getPathDetail] which returns a
-/// [PathDetail] bundle when the caller asks for `?include=lessons`).
+/// Riverpod's `AsyncNotifier` + `keepAlive` caches within a session; this
+/// layer adds the part that survives one — a last-known-good copy on disk, so
+/// a parent with no signal still sees the curriculum instead of an error.
+/// Reads go to the network first and fall back only when the failure says
+/// nothing about the content (see [staleDataBeatsError]).
+///
+/// No aggregation here: the detail screen fans out via [getPathDetail], which
+/// returns a [PathDetail] bundle when the caller asks for `?include=lessons`.
 library;
 
 import '../../../api/tg_client.dart';
+import '../../../core/failures.dart';
 import '../models/flashcard_deck.dart';
 import '../models/lesson_assets.dart';
 import '../models/quiz_deck.dart';
 import '../models/search_result.dart';
+import 'curriculum_cache.dart';
 import 'models.dart';
 
 class ProgramRepository {
-  ProgramRepository(this._client);
+  ProgramRepository(this._client, {CurriculumCache? cache})
+      : _cache = cache ?? CurriculumCache();
 
   final TgClient _client;
+  final CurriculumCache _cache;
+
+  /// Fetch [key] from the network, remembering the answer; on a failure that
+  /// says nothing about the content, serve the remembered one.
+  ///
+  /// [parse] runs before the write, so a response this version cannot read is
+  /// never cached, and again on the cached copy, so one written by an older
+  /// version that no longer parses is treated as absent rather than thrown at
+  /// the caller — they get the real network error instead.
+  Future<T> _cached<T>(
+    String key,
+    Future<Map<String, dynamic>> Function() fetch,
+    T Function(Map<String, dynamic>) parse,
+  ) async {
+    try {
+      final json = await fetch();
+      final value = parse(json);
+      await _cache.write(key, json);
+      return value;
+    } catch (networkError, networkStack) {
+      if (!staleDataBeatsError(networkError)) rethrow;
+      final cached = await _cache.read(key);
+      if (cached == null) rethrow;
+      try {
+        return parse(cached);
+      } catch (_) {
+        // Written by a version that shaped the response differently. The
+        // caller asked the network a question and the network is what failed —
+        // surface that, not a parse error from a fallback they never asked for.
+        Error.throwWithStackTrace(networkError, networkStack);
+      }
+    }
+  }
 
   /// `GET /api/program/paths?age_group=&domain=`
   ///
@@ -30,8 +70,11 @@ class ProgramRepository {
     String? ageGroup,
     String? domain,
   }) async {
-    final json = await _client.getPathsList(ageGroup: ageGroup, domain: domain);
-    return PathListEnvelope.fromJson(json);
+    return _cached(
+      'paths.${ageGroup ?? 'all'}.${domain ?? 'all'}',
+      () => _client.getPathsList(ageGroup: ageGroup, domain: domain),
+      PathListEnvelope.fromJson,
+    );
   }
 
   /// `GET /api/program/paths/{id}` (no lessons) or
@@ -43,26 +86,31 @@ class ProgramRepository {
     String pathId, {
     bool includeLessons = true,
   }) async {
-    final json = await _client.getPathDetail(
-      pathId,
-      includeLessons: includeLessons,
+    return _cached(
+      'path.$pathId.${includeLessons ? 'full' : 'flat'}',
+      () => _client.getPathDetail(pathId, includeLessons: includeLessons),
+      (json) {
+        // API returns path fields at root level — no "path" wrapper key.
+        final path = CurriculumPath.fromJson(json);
+        final lessons = includeLessons
+            ? ((json['lessons'] as List?) ?? const [])
+                .map(
+                  (e) => CurriculumLesson.fromJson(e as Map<String, dynamic>),
+                )
+                .toList()
+            : const <CurriculumLesson>[];
+        return PathDetail(path: path, lessons: lessons);
+      },
     );
-    // API returns path fields at root level — no "path" wrapper key.
-    final path = CurriculumPath.fromJson(json);
-    final lessons = includeLessons
-        ? ((json['lessons'] as List?) ?? const [])
-            .map(
-              (e) => CurriculumLesson.fromJson(e as Map<String, dynamic>),
-            )
-            .toList()
-        : const <CurriculumLesson>[];
-    return PathDetail(path: path, lessons: lessons);
   }
 
   /// `GET /api/program/lessons/{id}`
   Future<CurriculumLesson> getLesson(String lessonId) async {
-    final json = await _client.getLesson(lessonId);
-    return CurriculumLesson.fromJson(json);
+    return _cached(
+      'lesson.$lessonId',
+      () => _client.getLesson(lessonId),
+      CurriculumLesson.fromJson,
+    );
   }
 
   /// `GET /api/program/lesson-assets/{id}`

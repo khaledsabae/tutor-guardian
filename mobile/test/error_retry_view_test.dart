@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
+import 'package:almorabbi/core/failures.dart';
 import 'package:almorabbi/widgets/ui/error_retry_view.dart';
 
 Widget _host(Object error, {VoidCallback? onRetry}) => MaterialApp(
