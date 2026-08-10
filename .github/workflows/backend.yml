@@ -40,7 +40,12 @@ jobs:
   pytest:
     name: pytest
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    # 12 was not enough: the first run after re-enabling this workflow was
+    # cancelled at 12m12s. Installing backend/requirements.txt (torch, ONNX
+    # Runtime, ChromaDB, sentence-transformers) dominates on a cold pip cache,
+    # and the suite then runs twice on purpose — see the second pytest step.
+    # Free on a public repo, so the ceiling is generous rather than tight.
+    timeout-minutes: 30
     env:
       # Force tests to skip the network-bound RAG smoke test.
       SKIP_API_SMOKE: '1'
