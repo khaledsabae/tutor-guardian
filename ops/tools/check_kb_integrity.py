@@ -223,13 +223,26 @@ def main() -> int:
         except Exception as e:
             warnings.append(f"CJK: could not read {fp}: {e}")
 
+    # docs/ markdown — the third place LLM-written Arabic lands, and the one
+    # the public can read: docs/ is mounted at /docs, so anything here is a URL
+    # away. QA-REPORT.md carried «而不是» mid-sentence and was world-readable.
+    for fp in (ROOT / "docs").rglob("*.md"):
+        rel = fp.relative_to(ROOT).as_posix()
+        try:
+            matches = CJK_RE.findall(fp.read_text(encoding="utf-8"))
+            if matches:
+                cjk_errors.append(f"{rel}: {len(matches)} CJK chars (e.g., {matches[0]!r})")
+        except Exception as e:
+            warnings.append(f"CJK: could not read {fp}: {e}")
+
     if cjk_errors:
         print(f"\n🔴  CJK VIOLATIONS ({len(cjk_errors)}):")
         for v in cjk_errors:
             print(f"     ✗ {v}")
         errors.append(f"CJK GATE FAILED: {len(cjk_errors)} file(s) contain CJK characters — remove them before committing")
     else:
-        print(f"  ✅  CJK PURITY OK — 0 files with CJK characters (curriculum + all 292 units)")
+        print("  ✅  CJK PURITY OK — 0 files with CJK characters "
+              "(curriculum, units, backend source, docs markdown)")
 
     # ── REPORT FORMAT GATE: check generated reports under docs/lesson_assets/reports/ ──
     print("=" * 67)

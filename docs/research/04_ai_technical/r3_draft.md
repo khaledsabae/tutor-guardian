@@ -553,7 +553,7 @@ if __name__ == "__main__":
 نمط معماري مقترح عند الانتقال إلى TEE:
 
 1. **Local Gateway (On-Prem / Home Server):**
-   - FastAPI يعمل كبوابة惟惟:
+   - FastAPI يعمل كبوابة:
      - يستقبل طلبات التطبيق (Flutter).
      - يجري RAG المحلي والتخصيص (state machine في القسم 3).
      - يُنفّذ الـ prompt scrubbing وإخفاء الهوية.[استدلال]
