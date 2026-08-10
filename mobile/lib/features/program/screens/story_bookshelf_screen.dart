@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -12,6 +11,7 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/skeleton.dart';
 import '../data/story_models.dart';
+import '../../../widgets/ui/night_sky.dart';
 
 /// A magical bedtime bookshelf: 3D books, twinkling stars, and looping
 /// ambient cover videos when available. Replaces the old vertical list card.
@@ -59,6 +59,27 @@ class StoryBookshelfScreen extends ConsumerWidget {
   }
 }
 
+/// Which story indices should hold a live video controller.
+///
+/// Every story used to get one the moment the shelf opened: with ten stories
+/// that is ten concurrent network decoders, each holding a MediaCodec instance
+/// and a surface texture, all downloading and looping at once — more than
+/// low-end Android devices allow, for books the reader cannot see. Only the
+/// centred book and its immediate neighbours are worth keeping warm.
+///
+/// Pure so the policy can be tested without mounting the shelf, whose shimmer
+/// animation never settles.
+Set<int> videoWindowFor({
+  required int centered,
+  required List<Story> stories,
+  int radius = 1,
+}) {
+  return {
+    for (var i = centered - radius; i <= centered + radius; i++)
+      if (i >= 0 && i < stories.length && stories[i].hasVideo) i,
+  };
+}
+
 class _BookshelfBody extends StatefulWidget {
   const _BookshelfBody({required this.stories});
   final List<Story> stories;
@@ -71,53 +92,72 @@ class _BookshelfBodyState extends State<_BookshelfBody>
     with SingleTickerProviderStateMixin {
   late final PageController _controller;
   double _currentPage = 0;
-  final List<VideoPlayerController?> _videoControllers = [];
+  int _centeredPage = 0;
+  final Map<int, VideoPlayerController> _videoControllers = {};
 
   @override
   void initState() {
     super.initState();
     _controller = PageController(viewportFraction: 0.55);
     _controller.addListener(_onScroll);
-    _initVideos();
+    _syncVideoWindow(0);
   }
 
-  void _initVideos() {
-    for (final story in widget.stories) {
-      if (story.hasVideo) {
-        final file = story.videoFile!;
-        final controller = file.startsWith('docs/')
-            ? VideoPlayerController.networkUrl(
-                Uri.parse('${AppConfig.apiBaseUrl}/$file'),
-              )
-            : VideoPlayerController.asset(file);
-        controller
-          ..setLooping(true)
-          ..setVolume(0)
-          ..initialize().then((_) {
-            if (mounted) setState(() {});
-            controller.play();
-          }).catchError((_) {
-            // A cover video that will not load is cosmetic — the shelf falls
-            // back to the cover image. Without this, the failure escapes as an
-            // unhandled async error instead of being ignored.
-          });
-        _videoControllers.add(controller);
-      } else {
-        _videoControllers.add(null);
+  /// Create controllers inside the window around [centered], drop the rest.
+  void _syncVideoWindow(int centered) {
+    final wanted = videoWindowFor(centered: centered, stories: widget.stories);
+
+    for (final index in _videoControllers.keys.toList()) {
+      if (!wanted.contains(index)) {
+        _videoControllers.remove(index)!.dispose();
       }
+    }
+
+    for (final index in wanted) {
+      if (_videoControllers.containsKey(index)) continue;
+      final file = widget.stories[index].videoFile!;
+      final controller = file.startsWith('docs/')
+          ? VideoPlayerController.networkUrl(
+              Uri.parse('${AppConfig.apiBaseUrl}/$file'),
+            )
+          : VideoPlayerController.asset(file);
+      _videoControllers[index] = controller;
+      controller
+        ..setLooping(true)
+        ..setVolume(0)
+        ..initialize().then((_) {
+          // The window may have moved on, or the screen closed, while this
+          // was loading.
+          if (!mounted || _videoControllers[index] != controller) return;
+          setState(() {});
+          if (index == _centeredPage) controller.play();
+        }).catchError((_) {
+          // A cover video that will not load is cosmetic — the shelf falls
+          // back to the cover image. Without this, the failure escapes as an
+          // unhandled async error instead of being ignored.
+        });
     }
   }
 
   void _onScroll() {
-    setState(() => _currentPage = _controller.page ?? 0);
-    // Only the centered book plays its cover video.
-    final centered = (_currentPage + 0.5).floor();
-    for (var i = 0; i < _videoControllers.length; i++) {
-      final vc = _videoControllers[i];
-      if (vc == null || !vc.value.isInitialized) continue;
-      if (i == centered && vc.value.isPlaying == false) {
+    final page = _controller.page ?? 0;
+    final centered = (page + 0.5).floor();
+    final windowMoved = centered != _centeredPage;
+
+    setState(() {
+      _currentPage = page;
+      _centeredPage = centered;
+    });
+
+    if (windowMoved) _syncVideoWindow(centered);
+
+    // Only the centred book plays.
+    for (final entry in _videoControllers.entries) {
+      final vc = entry.value;
+      if (!vc.value.isInitialized) continue;
+      if (entry.key == centered && !vc.value.isPlaying) {
         vc.play();
-      } else if (i != centered && vc.value.isPlaying) {
+      } else if (entry.key != centered && vc.value.isPlaying) {
         vc.pause();
       }
     }
@@ -127,8 +167,8 @@ class _BookshelfBodyState extends State<_BookshelfBody>
   void dispose() {
     _controller.removeListener(_onScroll);
     _controller.dispose();
-    for (final vc in _videoControllers) {
-      vc?.dispose();
+    for (final vc in _videoControllers.values) {
+      vc.dispose();
     }
     super.dispose();
   }
@@ -162,7 +202,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
         Expanded(
           child: Stack(
             children: [
-              const Positioned.fill(child: _TwinklingStars()),
+              const Positioned.fill(child: TwinklingStars(count: 55)),
               PageView.builder(
                 controller: _controller,
                 itemCount: widget.stories.length,
@@ -172,9 +212,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
                   final distance = (_currentPage - index).abs();
                   final scale = 1 - (distance * 0.18).clamp(0.0, 0.45);
                   final angle = (index - _currentPage) * 0.18;
-                  final videoController = index < _videoControllers.length
-                      ? _videoControllers[index]
-                      : null;
+                  final videoController = _videoControllers[index];
                   return Center(
                     child: Transform.scale(
                       scale: scale,
@@ -375,113 +413,6 @@ class _BookCover extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _TwinklingStars extends StatefulWidget {
-  const _TwinklingStars();
-
-  @override
-  State<_TwinklingStars> createState() => _TwinklingStarsState();
-}
-
-class _TwinklingStarsState extends State<_TwinklingStars>
-    with TickerProviderStateMixin {
-  late final List<_Star> _stars;
-
-  @override
-  void initState() {
-    super.initState();
-    final rng = Random();
-    _stars = List.generate(
-      55,
-      (_) => _Star(
-        x: rng.nextDouble(),
-        y: rng.nextDouble(),
-        size: 1.2 + rng.nextDouble() * 2.2,
-        delay: rng.nextDouble() * 3,
-        duration: 2 + rng.nextDouble() * 2,
-        vsync: this,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    for (final star in _stars) {
-      star.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: _stars
-          .map(
-            (s) => Positioned(
-              left: s.x * MediaQuery.of(context).size.width,
-              top: s.y * MediaQuery.of(context).size.height * 0.85,
-              child: FadeTransition(
-                opacity: s.animation,
-                child: Container(
-                  width: s.size,
-                  height: s.size,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(s.size / 2),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withValues(alpha: 0.6),
-                        blurRadius: s.size * 1.5,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-}
-
-class _Star {
-  final double x;
-  final double y;
-  final double size;
-  final double delay;
-  final double duration;
-  late final AnimationController _controller;
-  late final Animation<double> animation;
-
-  bool _disposed = false;
-
-  _Star({
-    required this.x,
-    required this.y,
-    required this.size,
-    required this.delay,
-    required this.duration,
-    required TickerProvider vsync,
-  }) {
-    _controller = AnimationController(
-      vsync: vsync,
-      duration: Duration(milliseconds: (duration * 1000).round()),
-    );
-    animation = Tween<double>(begin: 0.15, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
-    Future.delayed(Duration(milliseconds: (delay * 1000).round()), () {
-      if (!_disposed && !_controller.isAnimating && !_controller.isCompleted) {
-        _controller.repeat(reverse: true);
-      }
-    });
-  }
-
-  void dispose() {
-    _disposed = true;
-    _controller.dispose();
   }
 }
 
