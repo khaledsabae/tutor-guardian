@@ -12,6 +12,7 @@ import '../../../core/app_routes.dart';
 import '../data/story_models.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../widgets/ui/night_sky.dart';
 
 /// Immersive bedtime story reader: looping ambient video background,
 /// smooth 3D page-flip navigation, parallax illustration, soft text, and a
@@ -153,7 +154,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
           // Cozy ambient fireflies in background
           const Positioned.fill(
-            child: _FloatingFireflies(),
+            child: FloatingFireflies(count: 25),
           ),
           // Page reader.
           SafeArea(
@@ -545,123 +546,4 @@ class _RoundButton extends StatelessWidget {
       ),
     );
   }
-}
-
-class _FloatingFireflies extends StatefulWidget {
-  const _FloatingFireflies();
-
-  @override
-  State<_FloatingFireflies> createState() => _FloatingFirefliesState();
-}
-
-class _FloatingFirefliesState extends State<_FloatingFireflies>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  final List<_Firefly> _fireflies = [];
-  final Random _random = Random();
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 40),
-    )..repeat();
-
-    // Create 25 fireflies
-    for (int i = 0; i < 25; i++) {
-      _fireflies.add(
-        _Firefly(
-          startX: _random.nextDouble(),
-          startY: _random.nextDouble(),
-          size: 1.5 + _random.nextDouble() * 3.5,
-          speedY: 0.1 + _random.nextDouble() * 0.2, // speed of rising
-          driftX: 0.02 + _random.nextDouble() * 0.04, // horizontal drift amplitude
-          maxOpacity: 0.2 + _random.nextDouble() * 0.45,
-          pulseSpeed: 0.5 + _random.nextDouble() * 1.0,
-        ),
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return CustomPaint(
-          painter: _FirefliesPainter(_fireflies, _controller.value),
-          size: Size.infinite,
-        );
-      },
-    );
-  }
-}
-
-class _Firefly {
-  final double startX;
-  final double startY;
-  final double size;
-  final double speedY;
-  final double driftX;
-  final double maxOpacity;
-  final double pulseSpeed;
-
-  _Firefly({
-    required this.startX,
-    required this.startY,
-    required this.size,
-    required this.speedY,
-    required this.driftX,
-    required this.maxOpacity,
-    required this.pulseSpeed,
-  });
-}
-
-class _FirefliesPainter extends CustomPainter {
-  final List<_Firefly> fireflies;
-  final double progress;
-
-  _FirefliesPainter(this.fireflies, this.progress);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..style = PaintingStyle.fill;
-
-    for (var f in fireflies) {
-      // Y position moves upwards slowly
-      double y = (f.startY - progress * f.speedY) % 1.0;
-      // X position drifts side-to-side
-      double x = (f.startX + sin(progress * 2 * pi * f.pulseSpeed) * f.driftX) % 1.0;
-
-      // Pulse opacity
-      final pulse = (sin(progress * 4 * pi * f.pulseSpeed) + 1) / 2;
-      final opacity = f.maxOpacity * (0.25 + 0.75 * pulse);
-
-      final position = Offset(x * size.width, y * size.height);
-
-      // Draw soft outer glow
-      canvas.drawCircle(
-        position,
-        f.size * 2.5,
-        Paint()
-          ..color = const Color(0xFFFDE047).withValues(alpha: opacity * 0.25)
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0),
-      );
-
-      // Draw inner core
-      paint.color = const Color(0xFFFDE047).withValues(alpha: opacity);
-      canvas.drawCircle(position, f.size, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _FirefliesPainter oldDelegate) =>
-      oldDelegate.progress != progress;
 }
