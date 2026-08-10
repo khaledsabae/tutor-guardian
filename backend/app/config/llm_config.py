@@ -6,6 +6,14 @@ defaults, so deployments (Docker, mobile-backend) can override without code edit
 import os
 from dataclasses import dataclass
 
+# The home server, reached over Tailscale. Five modules read this address from
+# the environment, each carrying its own copy of the literal as the fallback,
+# so moving the machine meant finding all five. One copy now — the per-module
+# OLLAMA_* variables still override it.
+DEFAULT_HOME_OLLAMA_URL = os.environ.get(
+    "OLLAMA_HOME_SERVER_URL", "http://100.109.163.64:11434"
+)
+
 
 @dataclass(frozen=True)
 class LLMConfig:
@@ -17,7 +25,7 @@ class LLMConfig:
     fallback_model: str = os.environ.get("OLLAMA_FALLBACK_MODEL", "gemma4:e4b")
 
     # Local LLM server (Home Server via Tailscale) configuration
-    local_base_url: str = os.environ.get("OLLAMA_LOCAL_BASE_URL", "http://100.109.163.64:11434")
+    local_base_url: str = os.environ.get("OLLAMA_LOCAL_BASE_URL", DEFAULT_HOME_OLLAMA_URL)
     local_fallback_model: str = os.environ.get("OLLAMA_LOCAL_FALLBACK_MODEL", "gemma4:e4b")
     local_fast_model: str = os.environ.get("OLLAMA_LOCAL_FAST_MODEL", "qwen2.5:3b")
 

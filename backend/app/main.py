@@ -15,7 +15,7 @@ from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.config.guardrails_loader import load_guardrails_config
-from app.config.llm_config import LLM
+from app.config.llm_config import LLM, DEFAULT_HOME_OLLAMA_URL
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
@@ -80,7 +80,7 @@ async def lifespan(app: FastAPI):
     if LLM.primary_provider != "ollama":
         logger.info("Warm-up: skipping Ollama (primary provider is %s)", LLM.primary_provider)
     else:
-        _local_base = os.environ.get("OLLAMA_LOCAL_BASE_URL") or os.environ.get("OLLAMA_BASE_URL", "http://100.109.163.64:11434")
+        _local_base = os.environ.get("OLLAMA_LOCAL_BASE_URL") or os.environ.get("OLLAMA_BASE_URL", DEFAULT_HOME_OLLAMA_URL)
         ollama_url = f"{_local_base.rstrip('/')}/api/generate"
         fast_model = os.environ.get("OLLAMA_LOCAL_FAST_MODEL", "qwen2.5:3b")
 

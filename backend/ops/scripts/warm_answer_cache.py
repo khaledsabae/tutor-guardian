@@ -25,6 +25,8 @@ from pathlib import Path
 _backend_root = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_backend_root))
 
+from app.config.llm_config import DEFAULT_HOME_OLLAMA_URL  # noqa: E402
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("warm_cache")
 
@@ -33,7 +35,7 @@ log = logging.getLogger("warm_cache")
 # Each entry: (question, age_group, domain, severity)
 QUESTIONS: list[tuple[str, str, str, str]] = [
     # === screens / digital ===
-    ("ابني م沉迷 بالموبايل ومش بيسيبه", "7-9", "cyber", "medium"),
+    ("ابني مدمن الموبايل ومش بيسيبه", "7-9", "cyber", "medium"),
     ("بنتي بتقضي كل وقتها على التيك توك", "10-12", "cyber", "medium"),
     ("طفلي ما بيركّز في المذاكرة بسبب الموبايل", "7-9", "cyber", "medium"),
     ("ولادي بيلعبوا ألعاب عنيفة على النت", "4-6", "cyber", "medium"),
@@ -160,7 +162,7 @@ def main() -> None:
     # Enable cache for this script
     answer_cache.ANSWER_CACHE_ENABLED = True
 
-    base_url = os.environ.get("OLLAMA_BASE_URL", "http://100.109.163.64:11434")
+    base_url = os.environ.get("OLLAMA_BASE_URL", DEFAULT_HOME_OLLAMA_URL)
     model = os.environ.get("OLLAMA_MODEL", "tg-tutor:v4")
 
     log.info("Warming answer cache: model=%s, base_url=%s, max=%d", model, base_url, args.max)

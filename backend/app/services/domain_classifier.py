@@ -22,6 +22,7 @@ import re
 from functools import lru_cache
 from typing import List, Optional, Sequence, Tuple
 
+from app.config.llm_config import DEFAULT_HOME_OLLAMA_URL
 from app.services.ai_gateway import (
     AUX_TIMEOUT_S, OllamaProvider, aux_breaker, aux_cloud_provider, aux_generate,
 )
@@ -34,7 +35,7 @@ logger = logging.getLogger(__name__)
 # On home server, OLLAMA_LOCAL_BASE_URL takes precedence for local-only models.
 _OLLAMA_ENDPOINT = (
     os.environ.get("OLLAMA_LOCAL_BASE_URL") or
-    os.environ.get("OLLAMA_BASE_URL", "http://100.109.163.64:11434")
+    os.environ.get("OLLAMA_BASE_URL", DEFAULT_HOME_OLLAMA_URL)
 )
 CLASSIFIER_MODEL = (
     os.environ.get("OLLAMA_LOCAL_FAST_MODEL") or
