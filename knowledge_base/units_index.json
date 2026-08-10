@@ -1,11 +1,11 @@
 {
-  "total_units": 1122,
-  "generated_at": "2026-07-12T18:24:24.671078+00:00",
+  "total_units": 1168,
+  "generated_at": "2026-08-10T14:43:05.532250+00:00",
   "by_domain": {
-    "medical": 259,
-    "cyber": 251,
-    "islamic_parenting": 545,
-    "development": 57,
+    "medical": 270,
+    "cyber": 253,
+    "islamic_parenting": 556,
+    "development": 79,
     "aqeedah": 10
   },
   "units": [
@@ -267,8 +267,8 @@
       "title": "Your child at 2 years*",
       "source_file": "CDC_Milestones_2_Years_Checklist.pdf",
       "language": "en",
-      "original_age_group": "prenatal-1",
-      "normalized_age_group": "prenatal-1",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
       "behavior_type": "التطور_الطبيعي",
       "needs_ocr": false,
       "size_chars": 5645
@@ -1301,7 +1301,7 @@
       "language": "en",
       "original_age_group": "prenatal-1",
       "normalized_age_group": "prenatal-1",
-      "behavior_type": "الصحة_النفسية",
+      "behavior_type": "معالم النمو",
       "needs_ocr": false,
       "size_chars": 63871
     },
@@ -2369,7 +2369,7 @@
       "language": "ar",
       "original_age_group": "10-12",
       "normalized_age_group": "10-12",
-      "behavior_type": "إدمان ألعاب",
+      "behavior_type": "سلامة رقمية",
       "needs_ocr": false,
       "size_chars": 1464
     },
@@ -2597,7 +2597,7 @@
       "language": "ar",
       "original_age_group": "10-12",
       "normalized_age_group": "10-12",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "تنمر إلكتروني",
       "needs_ocr": false,
       "size_chars": 1459
     },
@@ -2729,7 +2729,7 @@
       "language": "ar",
       "original_age_group": "13-15",
       "normalized_age_group": "13-15",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "تنمر إلكتروني",
       "needs_ocr": false,
       "size_chars": 1505
     },
@@ -3617,7 +3617,7 @@
       "language": "ar",
       "original_age_group": "prenatal-1",
       "normalized_age_group": "prenatal-1",
-      "behavior_type": "قلق, إدمان ألعاب",
+      "behavior_type": "وقت الشاشة",
       "needs_ocr": false,
       "size_chars": 1590
     },
@@ -3692,6 +3692,18 @@
       "behavior_type": "استخدام الإنترنت المبكر",
       "needs_ocr": false,
       "size_chars": 1579
+    },
+    {
+      "id": "cyb-e2c8532b",
+      "domain": "cyber",
+      "title": "خطوات عملية تحمي خصوصية ابنك المراهق قبل التقديم للجامعات",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "الأثر الرقمي والخصوصية قبل التقديم للجامعات",
+      "needs_ocr": false,
+      "size_chars": 306
     },
     {
       "id": "cyb-e2e3fcf5",
@@ -3934,6 +3946,18 @@
       "size_chars": 1662
     },
     {
+      "id": "cyb-f815145d",
+      "domain": "cyber",
+      "title": "أثر السوشيال ميديا على قبول ابني في الجامعة",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "الأثر الرقمي والخصوصية قبل التقديم للجامعات",
+      "needs_ocr": false,
+      "size_chars": 398
+    },
+    {
       "id": "cyb-f84469fa",
       "domain": "cyber",
       "title": "إرشادات صناعة التكنولوجيا لحماية الأطفال على الإنترنت",
@@ -3989,7 +4013,7 @@
       "language": "ar",
       "original_age_group": "prenatal-1",
       "normalized_age_group": "prenatal-1",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "وقت الشاشة",
       "needs_ocr": false,
       "size_chars": 824
     },
@@ -4059,8 +4083,8 @@
       "title": "Your baby at 12 months",
       "source_file": "CDC_Milestones_12_Months_Checklist.pdf",
       "language": "en",
-      "original_age_group": "10-12",
-      "normalized_age_group": "10-12",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
       "behavior_type": "النمو_البدني",
       "needs_ocr": false,
       "size_chars": 5215
@@ -4150,6 +4174,30 @@
       "size_chars": 145394
     },
     {
+      "id": "dev-034fe17e",
+      "domain": "development",
+      "title": "علامات استعداد طفلي لتدريب الحمام",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "تدريب استخدام الحمام",
+      "needs_ocr": false,
+      "size_chars": 355
+    },
+    {
+      "id": "dev-08a810de",
+      "domain": "development",
+      "title": "ابني في الجامعة مش عارف يختار تخصصه",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "التردد في اختيار التخصص الجامعي",
+      "needs_ocr": false,
+      "size_chars": 421
+    },
+    {
       "id": "dev-0a5739fc",
       "domain": "development",
       "title": "فهم القلق من خلال الفن التعبيري",
@@ -4162,6 +4210,18 @@
       "size_chars": 1628
     },
     {
+      "id": "dev-10a2fcc0",
+      "domain": "development",
+      "title": "طفلي بقى مهتم بصحابه أكتر مني... طبيعي؟ (٩-١١ سنة)",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تطور الصداقات والمهارات الاجتماعية",
+      "needs_ocr": false,
+      "size_chars": 381
+    },
+    {
       "id": "dev-180034e5",
       "domain": "development",
       "title": "تعزيز إمكانات الشباب من خلال التعلم الاجتماعي والتأمل وتحسين",
@@ -4169,7 +4229,7 @@
       "language": "ar",
       "original_age_group": "10-12",
       "normalized_age_group": "10-12",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "صحة نفسية",
       "needs_ocr": false,
       "size_chars": 1780
     },
@@ -4234,6 +4294,30 @@
       "size_chars": 1799
     },
     {
+      "id": "dev-326d137b",
+      "domain": "development",
+      "title": "بدايات التفكير المنطقي والتخطيط للمستقبل عند سن ٦-٨ سنوات",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "التفكير المنطقي والتوجه نحو المستقبل",
+      "needs_ocr": false,
+      "size_chars": 276
+    },
+    {
+      "id": "dev-35865ddb",
+      "domain": "development",
+      "title": "نوبات الغضب كمرحلة نمائية طبيعية عند سن ٢-٣ سنين",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "نوبات الغضب",
+      "needs_ocr": false,
+      "size_chars": 299
+    },
+    {
       "id": "dev-3b7d4a62",
       "domain": "development",
       "title": "تقبل التحديات الأكاديمية وفهم الآخرين في سن المراهقة",
@@ -4244,6 +4328,18 @@
       "behavior_type": "التطور_الطبيعي",
       "needs_ocr": false,
       "size_chars": 1435
+    },
+    {
+      "id": "dev-40436851",
+      "domain": "development",
+      "title": "بنتي بدأت علامات البلوغ... في أي سن ده طبيعي؟",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "علامات البلوغ عند البنات",
+      "needs_ocr": false,
+      "size_chars": 314
     },
     {
       "id": "dev-49a18746",
@@ -4270,6 +4366,18 @@
       "size_chars": 1171
     },
     {
+      "id": "dev-52f5d319",
+      "domain": "development",
+      "title": "اتفاقية القيادة الآمنة بينك وبين ابنك المراهق",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "تعلم القيادة والاستقلالية",
+      "needs_ocr": false,
+      "size_chars": 356
+    },
+    {
       "id": "dev-586b39f9",
       "domain": "development",
       "title": "الفن والذكاء: نمو الدماغ لدى المراهقين وتأثير الفقر",
@@ -4277,9 +4385,21 @@
       "language": "ar",
       "original_age_group": "13-15",
       "normalized_age_group": "13-15",
-      "behavior_type": "قلق, إدمان الألعاب",
+      "behavior_type": "نمو دماغ المراهق",
       "needs_ocr": false,
       "size_chars": 1674
+    },
+    {
+      "id": "dev-5eb8959c",
+      "domain": "development",
+      "title": "الابتسامة الاجتماعية وتتبع الوجوه عند عمر شهرين",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "التطور الاجتماعي والعاطفي المبكر",
+      "needs_ocr": false,
+      "size_chars": 271
     },
     {
       "id": "dev-7117419a",
@@ -4318,6 +4438,18 @@
       "size_chars": 1698
     },
     {
+      "id": "dev-7ad61095",
+      "domain": "development",
+      "title": "تطور اتخاذ القرار والتخطيط للمستقبل عند سن ١٥-١٧ سنة",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "اتخاذ القرار والتخطيط طويل المدى",
+      "needs_ocr": false,
+      "size_chars": 266
+    },
+    {
       "id": "dev-7b2f411e",
       "domain": "development",
       "title": "تجنب العقاب الجسدي وأسس التربية الإيجابية",
@@ -4340,6 +4472,18 @@
       "behavior_type": "تحسين العلاقة الأسرية",
       "needs_ocr": false,
       "size_chars": 1438
+    },
+    {
+      "id": "dev-7d8eb92d",
+      "domain": "development",
+      "title": "نمو طفلي الجسدي والحركي في المرحلة الابتدائية (٦-٨ سنوات)",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "النمو الجسدي والحركي في سن المدرسة",
+      "needs_ocr": false,
+      "size_chars": 324
     },
     {
       "id": "dev-7e549737",
@@ -4378,6 +4522,54 @@
       "size_chars": 1551
     },
     {
+      "id": "dev-89f5f3af",
+      "domain": "development",
+      "title": "القلق من الغرباء وفهم ثبات الشيء عند تسعة أشهر",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "القلق من الغرباء وثبات الشيء",
+      "needs_ocr": false,
+      "size_chars": 356
+    },
+    {
+      "id": "dev-8a6fa824",
+      "domain": "development",
+      "title": "طفلي بيرفض الحمام ومعظم اليوم بيبلل نفسه",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "تدريب استخدام الحمام",
+      "needs_ocr": false,
+      "size_chars": 339
+    },
+    {
+      "id": "dev-8ad4980e",
+      "domain": "development",
+      "title": "بناء الشعور بالمسؤولية عند أطفال منتصف الطفولة (٦-٨ سنوات)",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الاستقلالية والمسؤولية المنزلية",
+      "needs_ocr": false,
+      "size_chars": 357
+    },
+    {
+      "id": "dev-8c3c4f3d",
+      "domain": "development",
+      "title": "اضغط عليه علشان ياخد تخصص معين ولا أسيبه يستكشف؟",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "التردد في اختيار التخصص الجامعي",
+      "needs_ocr": false,
+      "size_chars": 456
+    },
+    {
       "id": "dev-8fdf563b",
       "domain": "development",
       "title": "نصائح لرعاية أطفال الصغار في مرحلة الفرط الحركة",
@@ -4385,9 +4577,21 @@
       "language": "ar",
       "original_age_group": "prenatal-1",
       "normalized_age_group": "prenatal-1",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "تربية إيجابية",
       "needs_ocr": false,
       "size_chars": 1366
+    },
+    {
+      "id": "dev-93888518",
+      "domain": "development",
+      "title": "متى يبدأ طفلي الكلام؟ مراحل تطور اللغة حتى ١٨ شهرًا",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "تطور الكلام واللغة",
+      "needs_ocr": false,
+      "size_chars": 309
     },
     {
       "id": "dev-97d2f1d2",
@@ -4433,7 +4637,7 @@
       "language": "ar",
       "original_age_group": "13-15",
       "normalized_age_group": "13-15",
-      "behavior_type": "قلق, إدمان ألعاب, اضطرابات نفسية",
+      "behavior_type": "تطور مرحلة البلوغ",
       "needs_ocr": false,
       "size_chars": 1774
     },
@@ -4457,9 +4661,21 @@
       "language": "ar",
       "original_age_group": "10-12",
       "normalized_age_group": "10-12",
-      "behavior_type": "قلق",
+      "behavior_type": "تنمية الطفل",
       "needs_ocr": false,
       "size_chars": 1660
+    },
+    {
+      "id": "dev-a6be8275",
+      "domain": "development",
+      "title": "كيف تجعل تنظيف الأسنان ممتعًا لطفلك",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "رفض تنظيف الأسنان",
+      "needs_ocr": false,
+      "size_chars": 495
     },
     {
       "id": "dev-a869552f",
@@ -4505,7 +4721,7 @@
       "language": "ar",
       "original_age_group": "7-9",
       "normalized_age_group": "7-9",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "تربية إيجابية",
       "needs_ocr": false,
       "size_chars": 852
     },
@@ -4529,7 +4745,7 @@
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "تربية إيجابية",
       "needs_ocr": false,
       "size_chars": 1424
     },
@@ -4580,6 +4796,18 @@
       "behavior_type": "تنمية الطفل والصحة العامة",
       "needs_ocr": false,
       "size_chars": 1818
+    },
+    {
+      "id": "dev-be19314d",
+      "domain": "development",
+      "title": "الجلوس بدون مساندة عند عمر تسعة أشهر",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "التطور الحركي المبكر",
+      "needs_ocr": false,
+      "size_chars": 277
     },
     {
       "id": "dev-c5e6f09a",
@@ -4654,6 +4882,42 @@
       "size_chars": 1447
     },
     {
+      "id": "dev-e49bf55e",
+      "domain": "development",
+      "title": "تكوين الهوية الذاتية والاستقلالية في المراهقة المتأخرة (١٥-١",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "تكوين الهوية الذاتية",
+      "needs_ocr": false,
+      "size_chars": 311
+    },
+    {
+      "id": "dev-e6b810a9",
+      "domain": "development",
+      "title": "المناغاة وبدايات التواصل الصوتي بين ستة وتسعة أشهر",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "تطور الكلام واللغة المبكرة",
+      "needs_ocr": false,
+      "size_chars": 304
+    },
+    {
+      "id": "dev-eb83fae6",
+      "domain": "development",
+      "title": "صورة الجسد وبدايات التفكير المجرد في المراهقة المبكرة (١٢-١٤",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "صورة الجسد والتفكير المجرد",
+      "needs_ocr": false,
+      "size_chars": 270
+    },
+    {
       "id": "dev-ef1087c3",
       "domain": "development",
       "title": "فرصة ثانية للتأثير في نمو دماغ الطفل",
@@ -4666,6 +4930,18 @@
       "size_chars": 1660
     },
     {
+      "id": "dev-f5759fee",
+      "domain": "development",
+      "title": "ابني بدأ القيادة... إزاي أوازن بين ثقتي فيه وحمايته؟",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "تعلم القيادة والاستقلالية",
+      "needs_ocr": false,
+      "size_chars": 342
+    },
+    {
       "id": "dev-fa7db881",
       "domain": "development",
       "title": "نصائح للتربية الإيجابية أثناء الجائحة",
@@ -4676,6 +4952,18 @@
       "behavior_type": "تربية إيجابية",
       "needs_ocr": false,
       "size_chars": 1371
+    },
+    {
+      "id": "dev-ff2c707a",
+      "domain": "development",
+      "title": "طفلي الصغير يرفض تنظيف أسنانه",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "رفض تنظيف الأسنان",
+      "needs_ocr": false,
+      "size_chars": 517
     },
     {
       "id": "dev-ff344c8a",
@@ -5036,6 +5324,18 @@
       "behavior_type": "تربية الأبناء",
       "needs_ocr": false,
       "size_chars": 1345
+    },
+    {
+      "id": "isl-047ad111",
+      "domain": "islamic_parenting",
+      "title": "شاب نشأ في عبادة الله رغم سخرية أصدقائه",
+      "source_file": "sahih_bukhari_1423.txt",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "الثبات على الطاعة رغم السخرية",
+      "needs_ocr": false,
+      "size_chars": 328
     },
     {
       "id": "isl-05aa623c",
@@ -6089,7 +6389,7 @@
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "تربية أخلاقية",
       "needs_ocr": false,
       "size_chars": 1400
     },
@@ -6449,9 +6749,21 @@
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "الرفق في التربية",
       "needs_ocr": false,
       "size_chars": 1217
+    },
+    {
+      "id": "isl-44227dfe",
+      "domain": "islamic_parenting",
+      "title": "اكتشفت علاقة عاطفية مبكرة لابنتي المراهقة... أعمل إيه؟",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "العلاقات العاطفية المبكرة قبل الزواج",
+      "needs_ocr": false,
+      "size_chars": 291
     },
     {
       "id": "isl-44443cd2",
@@ -6874,6 +7186,18 @@
       "size_chars": 1293
     },
     {
+      "id": "isl-59686545",
+      "domain": "islamic_parenting",
+      "title": "بنتي عايزة تشتغل وأنا مش موافق",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "خلاف الأهل مع رغبة الفتاة في العمل",
+      "needs_ocr": false,
+      "size_chars": 298
+    },
+    {
       "id": "isl-597a1018",
       "domain": "islamic_parenting",
       "title": "أهمية اصطحاب الأطفال إلى المسجد لحضور الصلاة",
@@ -7114,6 +7438,18 @@
       "size_chars": 1047
     },
     {
+      "id": "isl-624104ea",
+      "domain": "islamic_parenting",
+      "title": "ابني بقى يستخدم ألفاظ وحشة اتعلمها من ولاد الشارع",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تقليد ألفاظ بذيئة من الشارع",
+      "needs_ocr": false,
+      "size_chars": 121
+    },
+    {
       "id": "isl-642d3763",
       "domain": "islamic_parenting",
       "title": "حقوق الأطفال وتربيتهم على القيم",
@@ -7349,7 +7685,7 @@
       "language": "ar",
       "original_age_group": "unspecified",
       "normalized_age_group": "unspecified",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "آداب السلام",
       "needs_ocr": false,
       "size_chars": 528
     },
@@ -7472,6 +7808,18 @@
       "behavior_type": "عنف ضد الأطفال",
       "needs_ocr": false,
       "size_chars": 1254
+    },
+    {
+      "id": "isl-71d65f43",
+      "domain": "islamic_parenting",
+      "title": "رأي أكثر تحفظًا: ابن عثيمين وضوابط أشد لعمل المرأة",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "خلاف الأهل مع رغبة الفتاة في العمل",
+      "needs_ocr": false,
+      "size_chars": 366
     },
     {
       "id": "isl-72259d18",
@@ -7990,6 +8338,18 @@
       "size_chars": 1475
     },
     {
+      "id": "isl-85efb0a3",
+      "domain": "islamic_parenting",
+      "title": "ابني الجامعي بقى مستقل... هل ده معناه إنه هيقصر في برّي؟",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "الاستقلالية المتنامية وبر الوالدين",
+      "needs_ocr": false,
+      "size_chars": 310
+    },
+    {
       "id": "isl-85fcbc9d",
       "domain": "islamic_parenting",
       "title": "تعليم الأطفال الحقوق الدينية والأخلاقية",
@@ -8422,6 +8782,18 @@
       "size_chars": 1346
     },
     {
+      "id": "isl-9933c64e",
+      "domain": "islamic_parenting",
+      "title": "ابني بيقول كلمات وحشة سمعها من الشارع",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "تقليد ألفاظ بذيئة من الشارع",
+      "needs_ocr": false,
+      "size_chars": 132
+    },
+    {
       "id": "isl-995b1515",
       "domain": "islamic_parenting",
       "title": "تعليم الأطفال حقوق الآخرين",
@@ -8681,7 +9053,7 @@
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "مداعبة الأطفال",
       "needs_ocr": false,
       "size_chars": 657
     },
@@ -8816,6 +9188,18 @@
       "behavior_type": "تربية الأبناء",
       "needs_ocr": false,
       "size_chars": 1220
+    },
+    {
+      "id": "isl-ac979c60",
+      "domain": "islamic_parenting",
+      "title": "ضحك المؤمنين على من سخر منهم يوم القيامة",
+      "source_file": "quran_al_mutaffifin_29_34.txt",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "التعامل مع سخرية الأصدقاء من الالتزام",
+      "needs_ocr": false,
+      "size_chars": 256
     },
     {
       "id": "isl-ad149e0b",
@@ -9454,6 +9838,18 @@
       "size_chars": 726
     },
     {
+      "id": "isl-c4b3fccc",
+      "domain": "islamic_parenting",
+      "title": "بدأ الإسلام غريبًا فطوبى للغرباء",
+      "source_file": "sahih_muslim_145.txt",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "الشعور بالاختلاف عن الأصدقاء بسبب الالتزام",
+      "needs_ocr": false,
+      "size_chars": 99
+    },
+    {
       "id": "isl-c4d83813",
       "domain": "islamic_parenting",
       "title": "تعليم الأطفال الصلاة وأهمية التوجيه الحكيم",
@@ -9922,6 +10318,18 @@
       "size_chars": 1039
     },
     {
+      "id": "isl-d7b55818",
+      "domain": "islamic_parenting",
+      "title": "ابني بيحب بنت... إيه الضابط الشرعي؟",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "العلاقات العاطفية المبكرة قبل الزواج",
+      "needs_ocr": false,
+      "size_chars": 319
+    },
+    {
       "id": "isl-d7c56adc",
       "domain": "islamic_parenting",
       "title": "المنهج التربوي النبوي ووسائله",
@@ -9932,18 +10340,6 @@
       "behavior_type": "تربية إسلامية",
       "needs_ocr": false,
       "size_chars": 1477
-    },
-    {
-      "id": "isl-d7fe058f",
-      "domain": "islamic_parenting",
-      "title": "علاج الطفل بالدواء غير التقليدي",
-      "source_file": "Rakaiz_Tarbiya.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "اضطراب سلوكي مقاوم للعلاج",
-      "needs_ocr": false,
-      "size_chars": 640
     },
     {
       "id": "isl-d8ac2c78",
@@ -10028,6 +10424,18 @@
       "behavior_type": "تربية دينية",
       "needs_ocr": false,
       "size_chars": 1746
+    },
+    {
+      "id": "isl-dcb6d4e8",
+      "domain": "islamic_parenting",
+      "title": "النهي عن السخرية بمن يلتزم بالصلاة",
+      "source_file": "quran_al_hujurat_11.txt",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "التعامل مع سخرية الآخرين من الالتزام الديني",
+      "needs_ocr": false,
+      "size_chars": 187
     },
     {
       "id": "isl-dd395fbb",
@@ -10472,6 +10880,18 @@
       "behavior_type": "تربية دينية وأخلاقية",
       "needs_ocr": false,
       "size_chars": 804
+    },
+    {
+      "id": "isl-f2bef952",
+      "domain": "islamic_parenting",
+      "title": "مروا أولادكم بالصلاة: الثبات عليها رغم سخرية الأصدقاء",
+      "source_file": "sahih_abi_dawud_495.txt",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "الثبات على الصلاة رغم ضغط الأصدقاء",
+      "needs_ocr": false,
+      "size_chars": 164
     },
     {
       "id": "isl-f2ccdca6",
@@ -10995,9 +11415,9 @@
       "title": "التطور والسلوك لدى الأطفال الرضع من عمر 4 إلى 6 أشهر",
       "source_file": "Autism_CDC.pdf",
       "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "معالم النمو",
       "needs_ocr": false,
       "size_chars": 1358
     },
@@ -11072,6 +11492,18 @@
       "behavior_type": "صحة نفسية",
       "needs_ocr": false,
       "size_chars": 1761
+    },
+    {
+      "id": "med-0b65e4b5",
+      "domain": "medical",
+      "title": "بنتي بتعيط لما أسيبها في الحضانة",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "قلق الانفصال عند الحضانة",
+      "needs_ocr": false,
+      "size_chars": 415
     },
     {
       "id": "med-0dddd9c1",
@@ -11230,6 +11662,18 @@
       "size_chars": 1723
     },
     {
+      "id": "med-2bf09c13",
+      "domain": "medical",
+      "title": "طفلي بيتعلق بيا وبيرفض يدخل الحضانة أو النادي",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "قلق الانفصال عند الحضانة",
+      "needs_ocr": false,
+      "size_chars": 412
+    },
+    {
       "id": "med-2c4ef43e",
       "domain": "medical",
       "title": "حقوق نشر منشورات منظمة الصحة العالمية",
@@ -11249,7 +11693,7 @@
       "language": "ar",
       "original_age_group": "prenatal-1",
       "normalized_age_group": "prenatal-1",
-      "behavior_type": "قلق, فرط حركة",
+      "behavior_type": "نوم آمن وتغذية الرضيع",
       "needs_ocr": false,
       "size_chars": 1383
     },
@@ -11312,6 +11756,18 @@
       "behavior_type": "تخطيط الصحة النفسية",
       "needs_ocr": false,
       "size_chars": 1619
+    },
+    {
+      "id": "med-34deb628",
+      "domain": "medical",
+      "title": "ابني المراهق مش قادر ينام بدري ولا يصحى الصبح... هل ده كسل؟",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "تأخر النوم المزمن (Delayed Sleep Phase)",
+      "needs_ocr": false,
+      "size_chars": 342
     },
     {
       "id": "med-34e1fc29",
@@ -11393,7 +11849,7 @@
       "language": "ar",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "تغذية صحية",
       "needs_ocr": false,
       "size_chars": 584
     },
@@ -11432,6 +11888,18 @@
       "behavior_type": "قلق, إدمان ألعاب",
       "needs_ocr": false,
       "size_chars": 1743
+    },
+    {
+      "id": "med-408796d1",
+      "domain": "medical",
+      "title": "لاحظت تغيرات مقلقة في أكل ابنتي المراهقة... هل ده اضطراب أكل",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "اضطرابات الأكل المبكرة",
+      "needs_ocr": false,
+      "size_chars": 381
     },
     {
       "id": "med-42b42bcb",
@@ -11480,6 +11948,18 @@
       "behavior_type": "إدارة الدواء",
       "needs_ocr": false,
       "size_chars": 1731
+    },
+    {
+      "id": "med-49fe15eb",
+      "domain": "medical",
+      "title": "كيف يرفض ابنك المراهق عرض التدخين من صديقه",
+      "source_file": "HealthyChildren_Resist_Drug_Pressure.pdf",
+      "language": "mixed",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "ضغط الأقران والتدخين",
+      "needs_ocr": false,
+      "size_chars": 363
     },
     {
       "id": "med-4be8ef40",
@@ -11777,7 +12257,7 @@
       "language": "ar",
       "original_age_group": "prenatal-1",
       "normalized_age_group": "prenatal-1",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "تنمية مبكرة",
       "needs_ocr": false,
       "size_chars": 1362
     },
@@ -11864,6 +12344,18 @@
       "behavior_type": "قلق",
       "needs_ocr": false,
       "size_chars": 1775
+    },
+    {
+      "id": "med-7b1f2197",
+      "domain": "medical",
+      "title": "علامات إدمان النيكوتين السريع عند المراهق ومتى تطلب مساعدة",
+      "source_file": "HealthyChildren_Teens_Smoking.pdf",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "التدخين وإدمان النيكوتين",
+      "needs_ocr": false,
+      "size_chars": 351
     },
     {
       "id": "med-7d68867a",
@@ -12034,6 +12526,18 @@
       "size_chars": 1608
     },
     {
+      "id": "med-88c1469a",
+      "domain": "medical",
+      "title": "علامات بلوغ ظهرت على بنتي قبل سن الثامنة",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "البلوغ المبكر (Precocious Puberty)",
+      "needs_ocr": false,
+      "size_chars": 361
+    },
+    {
       "id": "med-895d3705",
       "domain": "medical",
       "title": "كيف تتعامل مع القلق حول طفلك الصغير؟",
@@ -12094,6 +12598,18 @@
       "size_chars": 1570
     },
     {
+      "id": "med-8db73fe2",
+      "domain": "medical",
+      "title": "ابني صحابه بيدخنوا وأنا خايف عليه",
+      "source_file": "NIMH_Teen_Brain_2023.pdf",
+      "language": "mixed",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "ضغط الأقران والتدخين",
+      "needs_ocr": false,
+      "size_chars": 595
+    },
+    {
       "id": "med-8e4f76c8",
       "domain": "medical",
       "title": "تطوير استراتيجيات الصحة النفسية للأطفال والمراهقين",
@@ -12152,6 +12668,18 @@
       "behavior_type": "قلق وفرط حركة",
       "needs_ocr": false,
       "size_chars": 1469
+    },
+    {
+      "id": "med-974f2776",
+      "domain": "medical",
+      "title": "كيف أساعد ابني المراهق ينظّم نومه المتأخر",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "تأخر النوم المزمن (Delayed Sleep Phase)",
+      "needs_ocr": false,
+      "size_chars": 351
     },
     {
       "id": "med-976cff98",
@@ -12502,6 +13030,18 @@
       "size_chars": 1590
     },
     {
+      "id": "med-bc0d8492",
+      "domain": "medical",
+      "title": "ابني بيقارن نفسه بأصحابه في الفلوس",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "مقارنة الأقران في الفلوس والمظهر",
+      "needs_ocr": false,
+      "size_chars": 318
+    },
+    {
       "id": "med-bd3d7c16",
       "domain": "medical",
       "title": "إدارة اضطرابات نفسية حادة لدى الأطفال والمراهقين",
@@ -12548,6 +13088,30 @@
       "behavior_type": "دعم الصحة النفسية",
       "needs_ocr": false,
       "size_chars": 1609
+    },
+    {
+      "id": "med-c0eb2588",
+      "domain": "medical",
+      "title": "بنتي بتقارن نفسها بصحابها في اللبس",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "مقارنة الأقران في الملابس والمقتنيات",
+      "needs_ocr": false,
+      "size_chars": 267
+    },
+    {
+      "id": "med-c17d9930",
+      "domain": "medical",
+      "title": "بنتي قلقانة جدًا من دخول الجامعة والمستقبل",
+      "source_file": "",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "القلق من المستقبل قبل الجامعة",
+      "needs_ocr": false,
+      "size_chars": 367
     },
     {
       "id": "med-c1e47264",
@@ -12610,18 +13174,6 @@
       "size_chars": 1646
     },
     {
-      "id": "med-c61d44e1",
-      "domain": "medical",
-      "title": "استخدام العقاقير في علاج اضطراب القلق المزمن",
-      "source_file": "ADHD_NIMH.pdf",
-      "language": "ar",
-      "original_age_group": "unspecified",
-      "normalized_age_group": "unspecified",
-      "behavior_type": "اضطراب القلق المزمن",
-      "needs_ocr": false,
-      "size_chars": 1754
-    },
-    {
       "id": "med-c70fe6a2",
       "domain": "medical",
       "title": "تحليل عوامل الانتحار لدى الشباب في رعاية الأسرة",
@@ -12641,7 +13193,7 @@
       "language": "ar",
       "original_age_group": "prenatal-1",
       "normalized_age_group": "prenatal-1",
-      "behavior_type": "فرط حركة",
+      "behavior_type": "معالم النمو",
       "needs_ocr": false,
       "size_chars": 1380
     },
@@ -12675,9 +13227,9 @@
       "title": "التطور التدريجي للطفل الرضيع وخطوات الإرشاد",
       "source_file": "Autism_CDC.pdf",
       "language": "ar",
-      "original_age_group": "4-6",
-      "normalized_age_group": "4-6",
-      "behavior_type": "فرط حركة",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "معالم النمو",
       "needs_ocr": false,
       "size_chars": 1371
     },
@@ -12960,12 +13512,12 @@
     {
       "id": "med-e64897f2",
       "domain": "medical",
-      "title": "تشخيص وعلاج اضطراب الهلوسة لدى البالغين",
+      "title": "كيف يظهر اضطراب فرط الحركة ونقص الانتباه (ADHD) في الأعمار ا",
       "source_file": "ADHD_NIMH.pdf",
       "language": "ar",
       "original_age_group": "13-15",
       "normalized_age_group": "13-15",
-      "behavior_type": "اضطراب الهلوسة",
+      "behavior_type": "اضطراب فرط الحركة ونقص الانتباه",
       "needs_ocr": false,
       "size_chars": 1671
     },
@@ -13001,7 +13553,7 @@
       "language": "ar",
       "original_age_group": "prenatal-1",
       "normalized_age_group": "prenatal-1",
-      "behavior_type": "الفرط الحركة",
+      "behavior_type": "تدخل مبكر",
       "needs_ocr": false,
       "size_chars": 1370
     },
@@ -13102,6 +13654,18 @@
       "size_chars": 1574
     },
     {
+      "id": "med-f241abaf",
+      "domain": "medical",
+      "title": "لماذا يخاطر المراهق الأكبر سنًا رغم إدراكه ضرر التدخين",
+      "source_file": "NIMH_Teen_Brain_2023.pdf",
+      "language": "mixed",
+      "original_age_group": "16-18",
+      "normalized_age_group": "16-18",
+      "behavior_type": "ضغط الأقران والتدخين",
+      "needs_ocr": false,
+      "size_chars": 301
+    },
+    {
       "id": "med-f337d698",
       "domain": "medical",
       "title": "الوصم والتمييز ضد الأطفال والمراهقين ذوي الاضطرابات النفسية",
@@ -13148,18 +13712,6 @@
       "behavior_type": "صحة نفسية",
       "needs_ocr": false,
       "size_chars": 1587
-    },
-    {
-      "id": "med-f9bbdeb5",
-      "domain": "medical",
-      "title": "استخدام الأدوية في علاج القلق والإدمان لدى الأطفال",
-      "source_file": "DMDD.pdf",
-      "language": "ar",
-      "original_age_group": "13-15",
-      "normalized_age_group": "13-15",
-      "behavior_type": "قلق, إدمان ألعاب",
-      "needs_ocr": false,
-      "size_chars": 1755
     },
     {
       "id": "med-fb24deba",

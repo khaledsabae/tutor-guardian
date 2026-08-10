@@ -123,16 +123,20 @@ def main() -> int:
                 warnings.append(f"DATA: {fp.name} missing optional `{opt}`")
 
     # ── units_index.json freshness ─────────────────────────────────────────
+    # Blocking: this is the one drift the guard could see and let through, and
+    # it drifted by 46 units for weeks while every run reported "IN SYNC". The
+    # index is a derived file — a mismatch always means someone forgot to run
+    # build_vector_db.py, and the fix is one command.
     if INDEX_JSON.exists():
         try:
             idx = json.loads(INDEX_JSON.read_text(encoding="utf-8"))
             if idx.get("total_units") != len(files):
-                warnings.append(
+                errors.append(
                     f"INDEX: units_index.json total_units={idx.get('total_units')} "
                     f"but {len(files)} units on disk — run build_vector_db.py"
                 )
         except Exception as e:
-            warnings.append(f"INDEX: could not read units_index.json: {e}")
+            errors.append(f"INDEX: could not read units_index.json: {e}")
 
     # ── INDEX: ChromaDB ↔ disk (optional, slower) ──────────────────────────
     if args.check_index:
