@@ -10,6 +10,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import '../../api/tg_client.dart';
 import '../../core/analytics.dart';
@@ -72,8 +73,15 @@ class PushService {
           try {
             await TgClient().ensureSession();
             await TgClient().registerPushToken(newToken, platform: 'android');
-          } catch (_) {
-            // best-effort
+          } catch (e, s) {
+            // Not fatal, but not harmless either: the device keeps running with
+            // a token the backend no longer knows, so every future reminder
+            // silently goes nowhere. Swallowing this made it invisible.
+            await FirebaseCrashlytics.instance.recordError(
+              e, s,
+              reason: 'push token refresh not registered',
+              fatal: false,
+            );
           }
         },
         onError: (_) { /* ignore */ },

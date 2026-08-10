@@ -13,6 +13,7 @@ library;
 
 import 'package:play_install_referrer/play_install_referrer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import '../../api/tg_client.dart';
 import '../../core/analytics.dart';
@@ -91,7 +92,15 @@ class ReferralService {
         return ClaimOutcome.alreadyClaimed;
       }
       return ClaimOutcome.invalid;
-    } catch (_) {
+    } catch (e, st) {
+      // The caller shows a generic failure, so a broken claim path would look
+      // like an invalid code forever: the invitee loses their reward and the
+      // referrer never gets credited.
+      await FirebaseCrashlytics.instance.recordError(
+        e, st,
+        reason: 'referral claim failed',
+        fatal: false,
+      );
       return ClaimOutcome.error;
     }
   }
