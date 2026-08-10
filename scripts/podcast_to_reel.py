@@ -307,9 +307,19 @@ def pick_unrendered(n: int, output_dir: Path, manifest: dict | None = None) -> l
     lookup = load_lesson_index()
     out = []
     seen_report_titles: set[str] = set()
+    # `rendered` holds dicts, so the old `slug in manifest["rendered"]` test was
+    # always False: the daily cron re-rendered and re-posted the same three
+    # lessons every day. Match on lesson_id, which is what an entry is keyed by.
+    already_rendered = {
+        entry.get("lesson_id")
+        for entry in (manifest or {}).get("rendered", [])
+        if isinstance(entry, dict) and entry.get("lesson_id")
+    }
     for lid, lesson in lookup.items():
         if len(out) >= n:
             break
+        if lid in already_rendered:
+            continue
         podcasts = lesson["assets"].get("podcasts", [])
         reports = lesson["assets"].get("reports", [])
         if not podcasts or not reports:
@@ -322,9 +332,6 @@ def pick_unrendered(n: int, output_dir: Path, manifest: dict | None = None) -> l
         report_title = _report_title(report)
         if title == lesson["lesson_id"] and report_title:
             title = report_title[:60]
-        slug = _slugify(title)
-        if manifest and slug in manifest.get("rendered", []):
-            continue
         # Skip duplicate-content reports so each reel covers a distinct topic.
         if report_title and report_title in seen_report_titles:
             continue

@@ -4,61 +4,769 @@
       "lesson_id": "lesson_10-12_cyber_01",
       "title": "lesson_10-12_cyber_01",
       "file": "reel_lesson_10-12_cyber_01.mp4",
-      "rendered_at": "2026-07-16T15:11:57.032824+00:00"
+      "rendered_at": "2026-07-16T15:11:57.032824+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-21T05:09:33.736218+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a5eff0bff844812f8acfbe1",
+        "6a42ac555ab6d2f1068603eb": "6a5eff0c37639f65b4a1a167",
+        "6a42af1a5ab6d2f106860e11": "6a5eff0dcf581292a89ded44"
+      }
     },
     {
       "lesson_id": "lesson_10-12_cyber_02",
       "title": "lesson_10-12_cyber_02",
       "file": "reel_lesson_10-12_cyber_02.mp4",
-      "rendered_at": "2026-07-16T15:13:05.711668+00:00"
+      "rendered_at": "2026-07-16T15:13:05.711668+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-21T08:05:33.969938+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a5f284b37639f65b4a388e0",
+        "6a42ac555ab6d2f1068603eb": "6a5f284c008558bc7ca7030a",
+        "6a42af1a5ab6d2f106860e11": "6a5f284d152a96754d7c52e1"
+      }
     },
     {
       "lesson_id": "lesson_10-12_cyber_03",
       "title": "lesson_10-12_cyber_03",
       "file": "reel_lesson_10-12_cyber_03.mp4",
-      "rendered_at": "2026-07-16T15:14:14.068506+00:00"
+      "rendered_at": "2026-07-16T15:14:14.068506+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-22T08:26:02.053353+00:00",
+      "buffer_results": {
+        "6a42af1a5ab6d2f106860e11": "6a607e97fe7545d452612a1d",
+        "6a429fd25ab6d2f10685bb4f": "6a607e98305c40d8f7db9475",
+        "6a42ac555ab6d2f1068603eb": "6a607e99ce8289633fc39414"
+      }
     },
     {
       "lesson_id": "lesson_10-12_islamic_01",
       "title": "lesson_10-12_islamic_01",
       "file": "reel_lesson_10-12_islamic_01.mp4",
-      "rendered_at": "2026-07-16T15:15:28.516710+00:00"
+      "rendered_at": "2026-07-16T15:15:28.516710+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-23T08:04:58.206534+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a61cb287a753b58b5e71b47",
+        "6a42ac555ab6d2f1068603eb": "6a61cb2987cae2c4ddabac07",
+        "6a42af1a5ab6d2f106860e11": "6a61cb29d6a806b8348e6ec0"
+      }
     },
     {
       "lesson_id": "lesson_10-12_islamic_02",
       "title": "lesson_10-12_islamic_02",
       "file": "reel_lesson_10-12_islamic_02.mp4",
-      "rendered_at": "2026-07-16T15:16:38.884664+00:00"
+      "rendered_at": "2026-07-16T15:16:38.884664+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-24T08:05:41.827940+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a631cd34908e1eb016c3a65",
+        "6a42ac555ab6d2f1068603eb": "6a631cd440e3813577f78c8e",
+        "6a42af1a5ab6d2f106860e11": "6a631cd53d70829df36c5d59"
+      }
     },
     {
       "lesson_id": "lesson_10-12_cyber_01",
       "title": "lesson_10-12_cyber_01",
       "file": "reel_lesson_10-12_cyber_01_lesson_10-12_cyber_01.mp4",
-      "rendered_at": "2026-07-16T15:21:05.771711+00:00"
+      "rendered_at": "2026-07-16T15:21:05.771711+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-25T08:05:10.318994+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a646e3422bc282b886b01a1",
+        "6a42ac555ab6d2f1068603eb": "6a646e359d853f3987825f3d",
+        "6a42af1a5ab6d2f106860e11": "6a646e36351863828ce3dca6"
+      }
     },
     {
       "lesson_id": "lesson_10-12_cyber_02",
       "title": "lesson_10-12_cyber_02",
       "file": "reel_lesson_10-12_cyber_02_lesson_10-12_cyber_02.mp4",
-      "rendered_at": "2026-07-16T15:22:14.428018+00:00"
+      "rendered_at": "2026-07-16T15:22:14.428018+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-26T08:05:17.109234+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a65bfbb22bc282b88779809",
+        "6a42ac555ab6d2f1068603eb": "6a65bfbc12fafbaf49ddc33a",
+        "6a42af1a5ab6d2f106860e11": "6a65bfbc2df0a0f1fdd005d9"
+      }
     },
     {
       "lesson_id": "lesson_10-12_cyber_03",
       "title": "lesson_10-12_cyber_03",
       "file": "reel_lesson_10-12_cyber_03_lesson_10-12_cyber_03.mp4",
-      "rendered_at": "2026-07-16T15:23:22.714187+00:00"
+      "rendered_at": "2026-07-16T15:23:22.714187+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-27T08:05:19.410850+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a67113d1013b53e44908cfc",
+        "6a42ac555ab6d2f1068603eb": "6a67113ed409808b35e01765",
+        "6a42af1a5ab6d2f106860e11": "6a67113fecc0d2ee0dbaeb78"
+      }
     },
     {
       "lesson_id": "lesson_10-12_islamic_01",
       "title": "lesson_10-12_islamic_01",
       "file": "reel_lesson_10-12_islamic_01_lesson_10-12_islamic_01.mp4",
-      "rendered_at": "2026-07-16T15:24:32.729253+00:00"
+      "rendered_at": "2026-07-16T15:24:32.729253+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-28T08:04:31.857043+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a68628dbb5622ef19c3ab83",
+        "6a42ac555ab6d2f1068603eb": "6a68628ee5c592e15fea3fb7",
+        "6a42af1a5ab6d2f106860e11": "6a68628fe5c592e15fea3fdc"
+      }
     },
     {
       "lesson_id": "lesson_10-12_islamic_02",
       "title": "lesson_10-12_islamic_02",
       "file": "reel_lesson_10-12_islamic_02_lesson_10-12_islamic_02.mp4",
-      "rendered_at": "2026-07-16T15:26:00.964150+00:00"
+      "rendered_at": "2026-07-16T15:26:00.964150+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-29T08:04:34.699274+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a69b410525fdedde70a3564",
+        "6a42ac555ab6d2f1068603eb": "6a69b41134a0a0955d7777d8",
+        "6a42af1a5ab6d2f106860e11": "6a69b41223997da158d1741c"
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo.mp4",
+      "rendered_at": "2026-07-20T21:52:22.358060+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-30T08:05:47.279000+00:00",
+      "buffer_results": {
+        "6a42af1a5ab6d2f106860e11": "6a6b05d9afd55acc4fb58fc4",
+        "6a429fd25ab6d2f10685bb4f": "6a6b05da624551d661c3b02d",
+        "6a42ac555ab6d2f1068603eb": "6a6b05db1fcf1719519e1bd0"
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12.mp4",
+      "rendered_at": "2026-07-20T21:54:14.957073+00:00",
+      "status": "posted",
+      "posted_at": "2026-07-31T08:08:21.805045+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a6c57f3a7a516cf4d2f7ef9",
+        "6a42ac555ab6d2f1068603eb": "6a6c57f4a7a516cf4d2f7f20",
+        "6a42af1a5ab6d2f106860e11": "6a6c57f5961582f29ff40a60"
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15.mp4",
+      "rendered_at": "2026-07-20T21:56:12.667858+00:00",
+      "status": "posted",
+      "posted_at": "2026-08-01T08:05:55.921427+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a6da8e12bbc9e05872fa7c2",
+        "6a42ac555ab6d2f1068603eb": "6a6da8e2e4816623867bc5f6",
+        "6a42af1a5ab6d2f106860e11": "6a6da8e34c4e74ba2a3467ee"
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-21T08:01:13.950254+00:00",
+      "status": "posted",
+      "posted_at": "2026-08-03T08:04:57.863367+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a704ba7cdbb36147461fca3",
+        "6a42ac555ab6d2f1068603eb": "6a704ba8ae46efb18cfa1fbb",
+        "6a42af1a5ab6d2f106860e11": "6a704ba9414da3b4be851b44"
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-21T08:03:10.188732+00:00",
+      "status": "posted",
+      "posted_at": "2026-08-04T08:06:18.890496+00:00",
+      "buffer_results": {
+        "6a42af1a5ab6d2f106860e11": "6a719d787f33754afb71fdd5",
+        "6a429fd25ab6d2f10685bb4f": "6a719d79de1bc0c3b9f942fc",
+        "6a42ac555ab6d2f1068603eb": "6a719d7a7b78e4abc83e6ca1"
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-21T08:05:24.174016+00:00",
+      "status": "posted",
+      "posted_at": "2026-08-05T08:06:15.566283+00:00",
+      "buffer_results": {
+        "6a42af1a5ab6d2f106860e11": "6a72eeef3ba907de71b61e00",
+        "6a429fd25ab6d2f10685bb4f": "6a72eef1a6453094890e5c7e",
+        "6a42ac555ab6d2f1068603eb": "6a72eef73ba907de71b61e44"
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-22T08:22:31.469515+00:00",
+      "status": "posted",
+      "posted_at": "2026-08-06T08:05:06.022917+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a74402f39affac48782b476",
+        "6a42ac555ab6d2f1068603eb": "6a744030e1cbc9821a310886",
+        "6a42af1a5ab6d2f106860e11": "6a744031e1cbc9821a3108ab"
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-22T08:24:14.570814+00:00",
+      "status": "posted",
+      "posted_at": "2026-08-07T08:04:55.514829+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a7591a5d445a81af5f0b6ef",
+        "6a42ac555ab6d2f1068603eb": "6a7591a6ab236f0ec58b5277",
+        "6a42af1a5ab6d2f106860e11": "6a7591a78b39b04b79f4e9f2"
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-22T08:25:52.244401+00:00",
+      "status": "posted",
+      "posted_at": "2026-08-08T08:08:57.853344+00:00",
+      "buffer_results": {
+        "6a42af1a5ab6d2f106860e11": "6a76e412018a9e80fc8a7266",
+        "6a429fd25ab6d2f10685bb4f": "6a76e413eb086b1202d3e52c",
+        "6a42ac555ab6d2f1068603eb": "Invalid post: Video could not be read from its URL."
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-23T08:01:09.587352+00:00",
+      "status": "posted",
+      "posted_at": "2026-08-09T08:06:18.095561+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a7834f6529955fa9035cfeb",
+        "6a42ac555ab6d2f1068603eb": "6a7834f79c08137afa280def",
+        "6a42af1a5ab6d2f106860e11": "6a7834fa13d01138ced81c80"
+      }
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-23T08:02:56.421442+00:00",
+      "status": "posted",
+      "posted_at": "2026-08-10T08:06:34.172967+00:00",
+      "buffer_results": {
+        "6a429fd25ab6d2f10685bb4f": "6a798680efdf818865f5ffe1",
+        "6a42ac555ab6d2f1068603eb": "6a798687472e1a5200f1be60",
+        "6a42af1a5ab6d2f106860e11": "6a798689249ab9327d97b86d"
+      }
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-23T08:04:48.001066+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-24T08:01:21.623453+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-24T08:03:26.082468+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-24T08:05:32.695702+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-25T08:01:13.184731+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-25T08:03:07.802054+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-25T08:05:01.266311+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-26T08:01:13.695734+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-26T08:03:10.774649+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-26T08:05:08.005039+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-27T08:01:17.830612+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-27T08:03:13.218760+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-27T08:05:10.164484+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-28T08:01:04.357243+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-28T08:02:42.854610+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-28T08:04:22.455029+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-29T08:01:04.166850+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-29T08:02:42.486608+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-29T08:04:22.996752+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-30T08:01:23.138220+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-30T08:03:31.565174+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-30T08:05:37.238571+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-07-31T08:01:58.660069+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-07-31T08:05:02.529413+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-07-31T08:08:10.545348+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-01T08:01:23.029615+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-01T08:03:34.852320+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-01T08:05:46.026197+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-02T08:01:14.828740+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-02T08:03:09.650606+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-02T08:05:09.488175+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-03T08:01:08.641612+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-03T08:02:57.299232+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-03T08:04:48.184174+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-04T08:01:30.014027+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-04T08:03:50.974980+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-04T08:06:07.925282+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-05T08:01:32.532775+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-05T08:03:49.347452+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-05T08:05:58.583639+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-06T08:01:10.878665+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-06T08:03:02.381007+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-06T08:04:55.624670+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-07T08:01:10.442476+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-07T08:02:58.687909+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-07T08:04:46.074982+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-08T08:02:04.770539+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-08T08:05:16.260787+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-08T08:08:41.090915+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-09T08:01:26.448455+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-09T08:03:50.063870+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-09T08:06:01.366634+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_cyber_01",
+      "title": "Confidence and Identity: You are His Child and Allah Sees Yo",
+      "file": "reel_Confidence_and_Identity__You_are_His_Child_and_Allah_Sees_Yo_lesson_10-12_cyber_01.mp4",
+      "rendered_at": "2026-08-10T08:01:09.850201+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_10-12_medical_03",
+      "title": "تقرير تربوي عملي: البلوغ والرفاه (10-12)",
+      "file": "reel_تقرير_تربوي_عملي__البلوغ_والرفاه__10-12_lesson_10-12_medical_03.mp4",
+      "rendered_at": "2026-08-10T08:03:24.291676+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
+    },
+    {
+      "lesson_id": "lesson_13-15_development_01",
+      "title": "تقرير تربوي عملي: الدماغ والهوية (13-15)",
+      "file": "reel_تقرير_تربوي_عملي__الدماغ_والهوية__13-15_lesson_13-15_development_01.mp4",
+      "rendered_at": "2026-08-10T08:05:32.150837+00:00",
+      "status": "posted",
+      "superseded": true,
+      "note": "duplicate re-render; this lesson was already published"
     }
   ]
 }
