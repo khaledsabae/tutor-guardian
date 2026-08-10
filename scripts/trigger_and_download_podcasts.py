@@ -10,6 +10,7 @@ Rate-limit aware:
   - Exponential backoff between trigger requests to spread load.
 """
 
+import argparse
 import json
 import os
 import subprocess
@@ -29,6 +30,7 @@ RATE_LIMIT_COOLDOWN_HOURS = float(os.environ.get("NOTEBOOKLM_COOLDOWN_HOURS", "3
 MAX_TRIGGER_PER_RUN = int(os.environ.get("PODCAST_MAX_TRIGGER_PER_RUN", "0"))  # 0 = unlimited
 MIN_DELAY = float(os.environ.get("PODCAST_MIN_DELAY", "1.0"))
 MAX_DELAY = float(os.environ.get("PODCAST_MAX_DELAY", "30.0"))
+VPS_HOST = os.environ.get("TG_VPS_HOST", "72.62.44.131")
 
 
 def _now() -> str:
@@ -119,7 +121,7 @@ def download_podcast(source_id, lesson_id, task_id, notebook_id=""):
 def update_index(lesson_id, file_path):
     with open(INDEX_FILE) as f:
         data = json.load(f)
-    base_url = "https://tg-api.alsaba.cloud/static/docs"
+    base_url = "https://tg-api.alsaba.cloud/docs"
     filename = Path(file_path).name
     for lesson in data["lessons"]:
         if lesson.get("lesson_id") == lesson_id:
@@ -147,25 +149,46 @@ def podcast_exists_on_disk(lesson_id: str, min_bytes: int = 10000) -> Path | Non
     return None
 
 
-def commit_and_sync(downloaded, index_updated=False):
+def commit_and_sync(downloaded, index_updated=False, push=False, sync=False):
+    """Publish this run's results — only when explicitly asked to.
+
+    A push to main triggers a production deploy, and the rsync writes into the
+    live docs mount as root. Both used to happen unconditionally, so a content
+    run that nobody was watching could deploy the backend. They are opt-in now.
+    """
     if downloaded == 0 and not index_updated:
         return
-    print("\nCommitting updates to git...")
-    os.system(
-        f"cd /home/khalednew/projects/tutor-guardian "
-        f"&& git add docs/lesson_index.json "
-        f"&& git commit -q -m 'feat: add podcasts for {downloaded} lessons' "
-        f"&& git push origin main"
-    )
+
+    if push:
+        print("\nCommitting updates to git...")
+        subprocess.run(["git", "add", "docs/lesson_index.json"], cwd=BASE_DIR, check=True)
+        subprocess.run(
+            ["git", "commit", "-q", "-m", f"feat: add podcasts for {downloaded} lessons"],
+            cwd=BASE_DIR,
+            check=True,
+        )
+        subprocess.run(["git", "push", "origin", "main"], cwd=BASE_DIR, check=True)
+    else:
+        print("\nSkipping git commit/push (pass --push to publish; it deploys prod).")
 
     if downloaded == 0:
         return
-    print("\nSyncing MP3 files to VPS...")
-    os.system(
-        "rsync -a --include='*.mp3' --exclude='*' "
-        "/home/khalednew/projects/tutor-guardian/docs/ "
-        "root@72.62.44.131:/root/tutor-guardian/docs/"
-    )
+
+    if sync:
+        print("\nSyncing MP3 files to VPS...")
+        subprocess.run(
+            [
+                "rsync",
+                "-a",
+                "--include=*.mp3",
+                "--exclude=*",
+                f"{BASE_DIR}/docs/",
+                f"root@{VPS_HOST}:/root/tutor-guardian/docs/",
+            ],
+            check=True,
+        )
+    else:
+        print("Skipping VPS sync (pass --sync to upload the new MP3s).")
 
 
 def exponential_delay(consecutive_rate_limits: int) -> float:
@@ -173,7 +196,7 @@ def exponential_delay(consecutive_rate_limits: int) -> float:
     return min(MIN_DELAY * (2 ** consecutive_rate_limits), MAX_DELAY)
 
 
-def main():
+def main(push=False, sync=False):
     state = load_state()
     state["last_run_at"] = _now()
     state["last_run_triggered"] = 0
@@ -225,7 +248,7 @@ def main():
         existing = podcast_exists_on_disk(lid)
         if existing:
             print(f"  ⏭ {lid} already exists on disk ({existing.stat().st_size // 1024} KB); syncing index.")
-            base_url = "https://tg-api.alsaba.cloud/static/docs"
+            base_url = "https://tg-api.alsaba.cloud/docs"
             l.setdefault("assets", {})["podcasts"] = [{
                 "id": f"{lid}_podcast",
                 "url": f"{base_url}/{existing.name}",
@@ -380,7 +403,7 @@ def main():
     state["pending_podcast_tasks"] = remaining
     save_state(state)
 
-    commit_and_sync(downloaded, index_dirty)
+    commit_and_sync(downloaded, index_dirty, push=push, sync=sync)
 
     # Self-retire: when every sourced lesson has a podcast and nothing is in
     # flight, this agent's mission is complete — disable via PCC (records the
@@ -400,4 +423,16 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--push",
+        action="store_true",
+        help="commit lesson_index.json and push to main (this deploys production)",
+    )
+    parser.add_argument(
+        "--sync",
+        action="store_true",
+        help="rsync the downloaded MP3s to the production docs mount",
+    )
+    args = parser.parse_args()
+    main(push=args.push, sync=args.sync)
