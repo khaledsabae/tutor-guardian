@@ -25,7 +25,9 @@ dependencies:
   crypto: ^3.0.3
 
   # Markdown rendering of assistant replies
-  flutter_markdown: ^0.7.3
+  # flutter_markdown was discontinued upstream; flutter_markdown_plus is the
+  # maintained fork the pub listing points to, with the same API.
+  flutter_markdown_plus: ^1.0.1
 
   # Arabic-friendly fonts
   google_fonts: ^6.2.1
