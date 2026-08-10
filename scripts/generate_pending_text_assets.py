@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import sys
 import json
 import asyncio
 import argparse
@@ -7,6 +8,10 @@ import argparse
 # Configuration
 NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 OUTPUT_DIR = "/home/khalednew/projects/tutor-guardian/docs"
+
+# A real section runs to thousands of characters. Anything this short is a
+# truncated or failed answer, not content worth overwriting a lesson with.
+MIN_SECTION_CHARS = 200
 
 # Remaining source IDs that need text assets generation
 PENDING_SOURCES = [
@@ -71,8 +76,12 @@ async def run_query(prompt, prompt_type, source_id):
     if process.returncode != 0:
         error_msg = stderr.decode().strip()
         print(f"❌ Error: {error_msg[:100]}")
-        return f"### Error generating {prompt_type}\n{error_msg}"
-    
+        # Never hand the error text back as content. On 2026-07-27 an expired
+        # NotebookLM session did exactly that, and the caller wrote it straight
+        # to disk — nine finished lesson files became the words
+        # "Authentication expired". Returning None makes the caller skip.
+        return None
+
     print("✅")
     return stdout.decode().strip()
 
@@ -92,7 +101,19 @@ async def generate_text_assets(source_info):
     
     # 3. Generate Slides
     slides = await run_query(SLIDES_PROMPT, "Slides", source_id)
-    
+
+    # A partial run must not overwrite a finished file. Every section has to be
+    # real content before anything touches disk.
+    missing = [
+        label
+        for label, value in (("Summary", summary), ("Flashcards", flashcards), ("Slides", slides))
+        if not value or len(value.strip()) < MIN_SECTION_CHARS
+    ]
+    if missing:
+        raise RuntimeError(
+            f"{name}: refusing to write — missing/too-short sections: {', '.join(missing)}"
+        )
+
     # Assemble report
     report = f"""# مخرجات الدرس: {name}
 
@@ -130,6 +151,7 @@ async def main():
     
     print(f"Starting text assets generation for {len(PENDING_SOURCES)} source IDs...")
     
+    failures = []
     for source_info in PENDING_SOURCES:
         try:
             await generate_text_assets(source_info)
@@ -137,8 +159,16 @@ async def main():
             await asyncio.sleep(2)
         except Exception as e:
             print(f"❌ Failed for {source_info['name']}: {e}")
-    
+            failures.append(source_info["name"])
+
+    if failures:
+        print(f"\n❌ {len(failures)}/{len(PENDING_SOURCES)} failed, nothing written for:")
+        for name in failures:
+            print(f"   - {name}")
+        return 1
+
     print(f"\n✅ All text generation complete!")
+    return 0
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    sys.exit(asyncio.run(main()))
