@@ -225,7 +225,7 @@
     "description": "قصة إيمانية تربوية تعلم الأطفال أهمية إسباغ الوضوء والمحافظة على الصلاة في وقتها بشغف وخشوع.",
     "coverImage": "docs/stories/omar_prayer_cover.png",
     "themeColor": "0xFF059669",
-    "videoFile": null,
+    "videoFile": "docs/stories/omar_prayer_cover.mp4",
     "pages": [
       {
         "pageNumber": 1,
@@ -265,7 +265,7 @@
     "description": "قصة إسلامية دافئة تعلم الأطفال خلق الإحسان إلى الجيران ومشاركتهم الطعام والود اقتداءً بالسنة النبوية.",
     "coverImage": "docs/stories/khadija_neighbor_cover.png",
     "themeColor": "0xFFD97706",
-    "videoFile": null,
+    "videoFile": "docs/stories/khadija_neighbor_cover.mp4",
     "pages": [
       {
         "pageNumber": 1,
@@ -305,7 +305,7 @@
     "description": "قصة تربوية مشوقة تروّخ الآداب الشرعية في الطعام والشراب كالتسمية والأكل باليمين وحمد الله.",
     "coverImage": "docs/stories/abdullah_bismillah_cover.png",
     "themeColor": "0xFF2563EB",
-    "videoFile": null,
+    "videoFile": "docs/stories/abdullah_bismillah_cover.mp4",
     "pages": [
       {
         "pageNumber": 1,
@@ -336,46 +336,6 @@
         "pageNumber": 6,
         "text": "صارت التسمية والحمد عادة جليلة يلتزم بها عبد الله في كل وجبة، وأصبحت البركة والسعادة تملآن مائدة عائلته الكريمة كل يوم.",
         "image": "docs/stories/abdullah_bismillah_6.png"
-      }
-    ]
-  },
-  {
-    "id": "hamza_truth",
-    "title": "حمزة وأمانة الكلمة",
-    "description": "قصة إسلامية ملهمة تعلم الأطفال أهمية الصدق وحفظ اللسان عن السخرية والغيبة اقتداءً بأخلاق القرآن.",
-    "coverImage": "docs/stories/hamza_truth_cover.png",
-    "themeColor": "0xFF7C3AED",
-    "videoFile": null,
-    "pages": [
-      {
-        "pageNumber": 1,
-        "text": "كان حمزة يلعب مع أصدقائه في الملعب، وأثناء اللعب سقط أحد الأطفال واختل توازنه بطريقة مضحكة. بدأ بعض الأطفال يضحكون ويسخرون منه، وشعر الطفل بالخجل والحزن.",
-        "image": "docs/stories/hamza_truth_1.png"
-      },
-      {
-        "pageNumber": 2,
-        "text": "تردد حمزة للحظة وتذكر الآية الكريمة التي حفظها في حلقته القرآنية: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَر قَوْمٌ مِّن قَوْمٍ عَىٰ أَن يَكُونُوا خَيْرًا مِّنْهُمْ﴾.",
-        "image": "docs/stories/hamza_truth_2.png"
-      },
-      {
-        "pageNumber": 3,
-        "text": "تقدم حمزة بثبات وقال لأصدقائه برفق ولين: «يا أصدقائي، المسلم لا يسخر من أخيه، والكلمة الطيبة صدقة». ثم مد يده للطفل وساعده على النهوض ومسح الغبار عن ثيابه.",
-        "image": "docs/stories/hamza_truth_3.png"
-      },
-      {
-        "pageNumber": 4,
-        "text": "خجل الأطفال من تصرفهم وأدركوا خطأهم، فأسرعوا واعتذروا لصديقهم، وانضموا جميعاً للعب معاً بروح التعاون والمحبة.",
-        "image": "docs/stories/hamza_truth_4.png"
-      },
-      {
-        "pageNumber": 5,
-        "text": "عاد حمزة إلى المنزل وهو يشعر بالفخر، فقد دافع عن أخيه وحفظ لسانه، وعلم أن الشرع الإسلامي يعلمنا أن نكون بلساننا وأفعالنا مفاتيح للخير مغاليق للشر.",
-        "image": "docs/stories/hamza_truth_5.png"
-      },
-      {
-        "pageNumber": 6,
-        "text": "أصبح حمزة وأصدقاؤه قدوة طيبة في المدرسة، ينشرون الكلام الطيب ويحرصون على التناصح بالحق والرفق، فغدت صداقتهم مثالاً رائعاً للأخوة الإيمانية.",
-        "image": "docs/stories/hamza_truth_6.png"
       }
     ]
   }
