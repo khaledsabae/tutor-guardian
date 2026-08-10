@@ -153,8 +153,8 @@
         ],
         "podcasts": [
           {
-            "file": "docs/lesson_10-12_cyber_digital_citizenship_02_podcast.mp3",
-            "size_bytes": 45864608,
+            "file": "docs/lesson_10-12_cyber_02_podcast.mp3",
+            "size_bytes": 18605023,
             "language": "ar"
           }
         ],
@@ -824,8 +824,8 @@
         ],
         "podcasts": [
           {
-            "file": "docs/lesson_13-15_cyber_digital_maturity_02_podcast.mp3",
-            "size_bytes": 24982570,
+            "file": "docs/lesson_13-15_cyber_02_podcast.mp3",
+            "size_bytes": 42870181,
             "language": "ar"
           }
         ],
@@ -1318,8 +1318,8 @@
         ],
         "podcasts": [
           {
-            "file": "docs/lesson_13-15_islamic_parenting_teen_identity_03_podcast.mp3",
-            "size_bytes": 30188297,
+            "file": "docs/lesson_13-15_islamic_03_podcast.mp3",
+            "size_bytes": 27193869,
             "language": "ar"
           }
         ],
@@ -3361,10 +3361,10 @@
         "videos": [
           {
             "source_id": "3b1bc4d0-0bbc-4e6b-bf5b-56d88cf5591a",
-            "file": "docs/path_videos/path_prenatal-1_cyber_screen_foundations_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_cyber_screen_foundations_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_cyber_screen_foundations"
+            "description": "Path intro video for path_0-3_cyber_screen_foundations"
           }
         ]
       }
@@ -3440,10 +3440,10 @@
         "videos": [
           {
             "source_id": "688a3b81-7e0f-4245-9427-724219cb9aac",
-            "file": "docs/path_videos/path_prenatal-1_cyber_screen_foundations_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_cyber_screen_foundations_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_cyber_screen_foundations"
+            "description": "Path intro video for path_0-3_cyber_screen_foundations"
           }
         ]
       }
@@ -3513,10 +3513,10 @@
         "videos": [
           {
             "source_id": "424206c3-c35b-4e26-834b-90ce2cde12bc",
-            "file": "docs/path_videos/path_prenatal-1_cyber_screen_foundations_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_cyber_screen_foundations_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_cyber_screen_foundations"
+            "description": "Path intro video for path_0-3_cyber_screen_foundations"
           }
         ]
       }
@@ -3586,10 +3586,10 @@
         "videos": [
           {
             "source_id": "d54a286a-dbd0-4047-8cfb-016026f26020",
-            "file": "docs/path_videos/path_prenatal-1_development_early_moments_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_development_early_moments_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_development_early_moments"
+            "description": "Path intro video for path_0-3_development_early_moments"
           }
         ]
       }
@@ -3659,10 +3659,10 @@
         "videos": [
           {
             "source_id": "f31a7e1b-b4b9-423e-b362-03138496c2bf",
-            "file": "docs/path_videos/path_prenatal-1_development_early_moments_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_development_early_moments_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_development_early_moments"
+            "description": "Path intro video for path_0-3_development_early_moments"
           }
         ]
       }
@@ -3732,10 +3732,10 @@
         "videos": [
           {
             "source_id": "6e81f215-6501-4e8d-aec6-e54b720532eb",
-            "file": "docs/path_videos/path_prenatal-1_development_early_moments_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_development_early_moments_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_development_early_moments"
+            "description": "Path intro video for path_0-3_development_early_moments"
           }
         ]
       }
@@ -3805,10 +3805,10 @@
         "videos": [
           {
             "source_id": "b9bc7171-c5ed-4663-bb13-48d9d227dd2e",
-            "file": "docs/path_videos/path_prenatal-1_islamic_parenting_attachment_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_islamic_parenting_attachment_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_islamic_parenting_attachment"
+            "description": "Path intro video for path_0-3_islamic_parenting_attachment"
           }
         ]
       }
@@ -3878,10 +3878,10 @@
         "videos": [
           {
             "source_id": "145fc9e8-bc71-4fdb-95f7-87dccb24a345",
-            "file": "docs/path_videos/path_prenatal-1_islamic_parenting_attachment_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_islamic_parenting_attachment_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_islamic_parenting_attachment"
+            "description": "Path intro video for path_0-3_islamic_parenting_attachment"
           }
         ]
       }
@@ -3951,10 +3951,10 @@
         "videos": [
           {
             "source_id": "4812d67a-00e6-4fa2-a04f-cbfd17123b49",
-            "file": "docs/path_videos/path_prenatal-1_islamic_parenting_attachment_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_islamic_parenting_attachment_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_islamic_parenting_attachment"
+            "description": "Path intro video for path_0-3_islamic_parenting_attachment"
           }
         ]
       }
@@ -4024,10 +4024,10 @@
         "videos": [
           {
             "source_id": "9810e949-9163-4386-9cdd-37cf11bbc055",
-            "file": "docs/path_videos/path_prenatal-1_islamic_parenting_attachment_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_islamic_parenting_attachment_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_islamic_parenting_attachment"
+            "description": "Path intro video for path_0-3_islamic_parenting_attachment"
           }
         ]
       }
@@ -4097,10 +4097,10 @@
         "videos": [
           {
             "source_id": "69bfedda-8b9a-4bc8-9b5a-aca294ac78f0",
-            "file": "docs/path_videos/path_prenatal-1_medical_early_milestones_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_medical_early_milestones_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_medical_early_milestones"
+            "description": "Path intro video for path_0-3_medical_early_milestones"
           }
         ]
       }
@@ -4170,10 +4170,10 @@
         "videos": [
           {
             "source_id": "628dc078-3da1-4c1a-a3bc-450b00249b91",
-            "file": "docs/path_videos/path_prenatal-1_medical_early_milestones_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_medical_early_milestones_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_medical_early_milestones"
+            "description": "Path intro video for path_0-3_medical_early_milestones"
           }
         ]
       }
@@ -4243,10 +4243,10 @@
         "videos": [
           {
             "source_id": "5fa352a9-d762-43cc-874c-0ac6e7dcaa0f",
-            "file": "docs/path_videos/path_prenatal-1_medical_early_milestones_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_medical_early_milestones_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_medical_early_milestones"
+            "description": "Path intro video for path_0-3_medical_early_milestones"
           }
         ]
       }
@@ -4316,10 +4316,10 @@
         "videos": [
           {
             "source_id": "39974153-9cac-4f6e-ae0c-89670bbfa93e",
-            "file": "docs/path_videos/path_prenatal-1_medical_early_milestones_ar_eg.mp4",
+            "file": "docs/path_videos/path_0-3_medical_early_milestones_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_prenatal-1_medical_early_milestones"
+            "description": "Path intro video for path_0-3_medical_early_milestones"
           }
         ]
       }
@@ -4389,10 +4389,10 @@
         "videos": [
           {
             "source_id": "02a935ab-8fe5-4d04-a77b-0faaf59c6553",
-            "file": "docs/path_videos/path_2-3_development_early_moments_ar_eg.mp4",
+            "file": "docs/path_videos/path_2-3_development_growth_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_2-3_development_early_moments"
+            "description": "Path intro video for path_2-3_development_growth"
           }
         ]
       }
@@ -4462,10 +4462,10 @@
         "videos": [
           {
             "source_id": "939414c0-68d3-40f4-8a91-31c9f2f2f4f6",
-            "file": "docs/path_videos/path_2-3_cyber_screen_foundations_ar_eg.mp4",
+            "file": "docs/path_videos/path_2-3_cyber_routine_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_2-3_cyber_screen_foundations"
+            "description": "Path intro video for path_2-3_cyber_routine"
           }
         ]
       }
@@ -4535,10 +4535,10 @@
         "videos": [
           {
             "source_id": "407b5539-eee6-4574-ad06-78245cdb791a",
-            "file": "docs/path_videos/path_2-3_development_early_moments_ar_eg.mp4",
+            "file": "docs/path_videos/path_2-3_development_growth_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_2-3_development_early_moments"
+            "description": "Path intro video for path_2-3_development_growth"
           }
         ]
       }
@@ -4608,10 +4608,10 @@
         "videos": [
           {
             "source_id": "8d5b520e-e613-4bb8-af0c-fb5c4800a678",
-            "file": "docs/path_videos/path_2-3_islamic_parenting_attachment_ar_eg.mp4",
+            "file": "docs/path_videos/path_2-3_islamic_attachment_ar_eg.mp4",
             "type": "video/mp4",
             "language": "ar_eg",
-            "description": "Path intro video for path_2-3_islamic_parenting_attachment"
+            "description": "Path intro video for path_2-3_islamic_attachment"
           }
         ]
       }
