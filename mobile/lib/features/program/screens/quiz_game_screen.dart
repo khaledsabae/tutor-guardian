@@ -22,7 +22,11 @@ import '../../share/shareable_moment_card.dart';
 import '../../../theme/app_theme.dart';
 
 class QuizGameScreen extends ConsumerStatefulWidget {
-  const QuizGameScreen({super.key});
+  const QuizGameScreen({super.key, this.client});
+
+  /// Injected by tests so the empty and malformed payload paths can be
+  /// exercised without a network. Production leaves it null.
+  final http.Client? client;
 
   @override
   ConsumerState<QuizGameScreen> createState() => _QuizGameScreenState();
@@ -62,19 +66,34 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
     try {
       final uri =
           Uri.parse('${AppConfig.apiBaseUrl}/api/program/quiz?count=10');
-      final resp = await http.get(uri).timeout(const Duration(seconds: 15));
+      final client = widget.client;
+      final resp = await (client == null ? http.get(uri) : client.get(uri))
+          .timeout(const Duration(seconds: 15));
       if (!mounted) return;
       if (resp.statusCode == 200) {
         final data = json.decode(resp.body) as Map<String, dynamic>;
+        // _buildQuestion casts choices/answer/domain without guards, so a
+        // half-formed entry would throw during build — a red screen the user
+        // cannot retry out of. Drop such entries here instead; an empty result
+        // then takes the load-failure path below.
         final list = (data['questions'] as List?)
-                ?.map((e) => e as Map<String, dynamic>)
+                ?.whereType<Map<String, dynamic>>()
+                .where(_isRenderable)
                 .toList() ??
             [];
         setState(() {
-          _questions = list;
+          if (list.isEmpty) {
+            // A 200 carrying no questions is a failed load, not a finished
+            // quiz. Leaving _questions empty makes _currentIndex >= length
+            // true, which routes straight to the results screen and divides
+            // the score by a zero total.
+            _error = AppLocalizations.of(context).quizErrorLoading;
+          } else {
+            _questions = list;
+            _currentIndex = 0;
+            _score = 0;
+          }
           _loading = false;
-          _currentIndex = 0;
-          _score = 0;
         });
         if (list.isNotEmpty) _startTimer();
       } else {
@@ -90,6 +109,17 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
         _loading = false;
       });
     }
+  }
+
+  /// Every field _buildQuestion reads unconditionally must be present and of
+  /// the right type, or rendering the question throws.
+  static bool _isRenderable(Map<String, dynamic> q) {
+    final choices = q['choices'];
+    return q['question'] is String &&
+        q['domain'] is String &&
+        q['answer'] is int &&
+        choices is List &&
+        choices.isNotEmpty;
   }
 
   void _startTimer() {
@@ -242,7 +272,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
 
   Future<void> _shareResult() async {
     final total = _questions.length * 10;
-    final pct = (_score / total * 100).round();
+    final pct = _questions.isEmpty ? 0 : (_score / total * 100).round();
     final l10n = AppLocalizations.of(context);
     final String praise;
     final String praiseBody;
@@ -272,7 +302,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
 
   Widget _buildResults() {
     final total = _questions.length * 10;
-    final pct = (_score / total * 100).round();
+    final pct = _questions.isEmpty ? 0 : (_score / total * 100).round();
     String emoji;
     String msg;
     if (pct >= 80) {
