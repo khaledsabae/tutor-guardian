@@ -210,18 +210,37 @@ def main() -> int:
         "backend/app/services/llm_service.py",
         "backend/app/services/coach_service.py",
         "backend/app/services/coach_safety.py",
+        # Same reasoning for the tooling: these define the strippers, and this
+        # file quotes past leaks so the comments explain what to look for.
+        "ops/tools/check_kb_integrity.py",
+        "ops/tools/build_final_corpus.py",
+        "ops/tools/normalize_units.py",
+        "scripts/gen_flashcards_quizzes.py",
+        "scripts/generate_clean_assets.py",
     }
-    backend_dir = ROOT / "backend" / "app"
-    for fp in backend_dir.rglob("*.py"):
-        rel = fp.relative_to(ROOT).as_posix()
-        if rel in cjk_exempt:
+    # Scripts were outside the gate, and a leak got in there too:
+    # warm_answer_cache.py seeded the answer cache with "ابني م沉迷 بالموبايل",
+    # so a corrupted question was being sent to the model on every warm run.
+    cjk_scan_dirs = [
+        ROOT / "backend" / "app",
+        ROOT / "backend" / "ops",
+        ROOT / "backend" / "scripts",
+        ROOT / "ops" / "tools",
+        ROOT / "scripts",
+    ]
+    for scan_dir in cjk_scan_dirs:
+        if not scan_dir.is_dir():
             continue
-        try:
-            matches = CJK_RE.findall(fp.read_text(encoding="utf-8"))
-            if matches:
-                cjk_errors.append(f"{rel}: {len(matches)} CJK chars (e.g., {matches[0]!r})")
-        except Exception as e:
-            warnings.append(f"CJK: could not read {fp}: {e}")
+        for fp in scan_dir.rglob("*.py"):
+            rel = fp.relative_to(ROOT).as_posix()
+            if rel in cjk_exempt or "__pycache__" in rel:
+                continue
+            try:
+                matches = CJK_RE.findall(fp.read_text(encoding="utf-8"))
+                if matches:
+                    cjk_errors.append(f"{rel}: {len(matches)} CJK chars (e.g., {matches[0]!r})")
+            except Exception as e:
+                warnings.append(f"CJK: could not read {fp}: {e}")
 
     # docs/ markdown — the third place LLM-written Arabic lands, and the one
     # the public can read: docs/ is mounted at /docs, so anything here is a URL
