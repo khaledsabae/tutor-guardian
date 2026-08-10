@@ -1,3 +1,7 @@
+> **مغلق — 2026-08-10.** الصفر بودكاست تحت 2MB على القرص، فكل المدخلات المعلّمة **BAD**
+> في هذا التقرير أُعيد توليدها. نُقل من `docs/` (المُقدَّم للعامة على `/docs`) إلى هنا لأنه كان
+> يقول لأي زائر إن المنتج فيه ٥٣ حلقة مكسورة، وهذا لم يعد صحيحًا. مُبقى كسجل لا كقائمة عمل.
+
 # 🎙️ Podcast Regeneration TODO — NotebookLM audit
 
 Auto-generated audit. **BAD** = short 48kbps clip (not a real NotebookLM podcast).

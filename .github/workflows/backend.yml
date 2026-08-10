@@ -123,10 +123,8 @@ jobs:
         run: pip install ruff
 
       # Narrow on purpose — see the rule list and reasoning in pyproject.toml.
-      #
-      # NOTE: this whole workflow is disabled_manually in GitHub to avoid
-      # Actions billing, so nothing here actually runs today. The gate that
-      # does run is the same ruff invocation in .githooks/pre-commit. Keep the
-      # two in step, so re-enabling this workflow needs no other change.
+      # The same invocation runs in .githooks/pre-commit for an instant local
+      # answer; this one catches whatever a --no-verify or another machine
+      # skipped. Keep the two in step.
       - name: Run ruff
         run: ruff check backend/ ops/ scripts/

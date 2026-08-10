@@ -26,9 +26,10 @@ else
 fi
 
 # ruff — أربع قواعد بتمسك باج مش أسلوب (السبب مكتوب في pyproject.toml).
-# هنا مش في CI: workflow «Backend tests» مطفي يدويًا لتفادي فاتورة Actions،
-# فأي وظيفة تتضاف هناك مش هتشتغل. وأول تشغيلة لـruff مسكت اسم غير معرّف
-# ومفتاح مكرر في dict — الاتنين كانوا في الطريق للإنتاج.
+# نفس الأمر بيشتغل في workflow «Backend tests»؛ هنا عشان الرد يبقى فوري وبلا
+# شبكة، وهناك عشان يمسك اللي اتخطّى بـ--no-verify أو اتدفع من جهاز تاني.
+# أول تشغيلة لـruff مسكت اسم غير معرّف ومفتاح مكرر في dict — الاتنين كانوا
+# في الطريق للإنتاج.
 RUFF=""
 for candidate in "$HOME/.local/bin/ruff" "$(command -v ruff || true)"; do
     [ -x "$candidate" ] && RUFF="$candidate" && break

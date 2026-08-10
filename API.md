@@ -6,7 +6,22 @@ The real client is a native mobile app (Android/iOS) consuming this API.
 Base URL (local): `http://localhost:8000`
 
 ## Auth
-None yet. Mobile auth (device/user) will attach to `chat_sessions.device_id`.
+
+Bearer token, enforced by `backend/app/middleware/auth.py` on these prefixes:
+
+```
+/api/assistant  /api/chat            /api/feedback         /api/children
+/api/insights   /api/referral        /api/push             /api/identity
+/api/daily-routine   /api/value-tracking   /api/habit-templates
+```
+
+Everything else is public on purpose: the curriculum is readable without an
+account. Two mutations are carved out of otherwise-public prefixes and do
+require a token — `PATCH /api/program/lessons/{id}/progress` and
+`/api/program/monthly-report` — while the read-only GETs beside them stay open.
+
+Child Mode issues its own short-lived token, and admin endpoints use an
+`X-Admin-Key` header compared with `secrets.compare_digest`.
 
 ## Endpoints
 

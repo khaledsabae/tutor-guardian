@@ -116,22 +116,30 @@ Cloudflare ──► analytics_nginx (على الـVPS) ──► tg_backend (Fa
 
 **تحذير:** كل push لـ`main` يمر بهذه البوابة = نشر فعلي على الإنتاج. لا تدمج في `main` ما لست مستعدًا لرؤيته live.
 
-**🚨 `deploy.yml` هو الـworkflow الوحيد الذي يعمل.** أربعة غيره — `Flutter` و`Backend tests`
-و`Docker` و`CI` — حالتها `disabled_manually` في GitHub لتفادي فاتورة Actions (تحقق:
-`gh workflow list --all`). فأي وظيفة تُضاف إليها **لن تعمل**، وآخر تشغيلة مسجَّلة لـ`Flutter`
-كانت 2026-06-16 وفشلت. هذه ليست بوابة.
+### البوابات — من يحرس ماذا
 
-النتيجة العملية: crash شاشة الكويز (قسمة 0/0 → `NaN.round()`) شُحن في ريليز v1.0.30+75 دون
-أن يعترض شيء. البوابات الحقيقية اليوم تعمل **محليًا** عبر `git config core.hooksPath .githooks`:
+`Flutter` و`Backend tests` كانا `disabled_manually` من يونيو **لتفادي فاتورة Actions —
+والفاتورة غير موجودة**: المستودع **عام**، وActions مجاني بلا حدود على المستودعات العامة
+(`gh repo view --json visibility`). أُعيد تفعيلهما 2026-08-10 بعد تنظيف اللينت، وأول تشغيلة
+بعدها خضراء. `Docker` يبقى مطفأً (مكرر مع بناء الصورة في النشر) و`CI` مُلغى عمدًا لصالح
+`backend.yml`.
+
+ثمن غيابهما كان ملموسًا: crash شاشة الكويز (قسمة 0/0 → `NaN.round()`) شُحن في ريليز
+v1.0.30+75 دون أن يعترض شيء — لا لأن بوابة فشلت، بل لأنها لم تكن موجودة.
 
 | الحارس | متى | ماذا يفحص |
 |---|---|---|
 | `.githooks/pre-commit` | كل commit | سلامة قاعدة المعرفة + `ruff` (٤ قواعد تمسك باج) |
 | `.githooks/pre-push` | الدفعات التي تلمس `mobile/` فقط | `flutter analyze --fatal-infos --fatal-warnings` + `flutter test` |
-| `deploy.yml` | كل نشر | pytest + سلامة قاعدة المعرفة داخل الصورة المرشّحة + `check_served_assets` |
+| `Flutter` (CI) | دفعات `mobile/**` | نفس الفحصين على runner نظيف |
+| `Backend tests` (CI) | دفعات الباكند/KB | pytest ×2 + سلامة قاعدة المعرفة + `ruff` |
+| `deploy.yml` | كل نشر | pytest + سلامة KB داخل الصورة المرشّحة + `check_served_assets` (يوقف النشر) |
 
-الـVPS لا يوجد به Flutter، لذا فحص الموبايل لا يمكن أن يعمل على الـrunner الذاتي — الجهاز
-المحلي هو المكان الوحيد الممكن. التخطّي: `SKIP_MOBILE_CHECKS=1 git push` (غير محبّذ).
+التداخل بين الهوكس والـCI متعمَّد: الهوك يردّ فورًا ويعمل بلا شبكة، والـCI يمسك ما تخطّاه
+أحدهم بـ`--no-verify` أو دفعه من جهاز آخر. تحقق من الحالة: `gh workflow list --all`.
+
+الـVPS لا يوجد به Flutter، لذا فحص الموبايل لا يمكن أن يعمل على الـrunner الذاتي.
+التخطّي محليًا: `SKIP_MOBILE_CHECKS=1 git push` (غير محبّذ — الـCI سيمسكه على أي حال).
 
 **فترة الإحماء:** بعد إقلاع الحاوية، تحميل الـembedders (ONNX) وفهرس Chroma يأخذ **~30–90 ثانية** (الـhealthcheck نفسه بـ`start_period: 90s`). خلالها `/seo` والـAPI يرجعان **502 من nginx — هذا طبيعي**، لا تتسرع بإعادة تشغيل ثانية. انتظر حتى `docker ps` يظهر `(healthy)`.
 
