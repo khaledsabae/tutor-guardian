@@ -155,14 +155,25 @@ def curriculum_stats() -> dict:
     }
 
 
+def media_exists(relative_path: Optional[str]) -> bool:
+    """True if a repo-relative media path resolves to a real file.
+
+    Media is gitignored and reaches production by rsync, so a rename on one side
+    leaves lesson_index.json naming a file that is not there. Callers use this to
+    drop the reference instead of handing the app a URL that 404s silently.
+    """
+    if not relative_path:
+        return False
+    return (Path(__file__).resolve().parents[2] / relative_path).is_file()
+
+
 def _add_path_video(path: dict) -> dict:
     path_id = path.get("id")
     if not path_id:
         return path
     out = dict(path)
     video_relative_path = f"docs/path_videos/{path_id}_ar_eg.mp4"
-    video_file = Path(__file__).resolve().parents[2] / video_relative_path
-    if video_file.exists():
+    if media_exists(video_relative_path):
         out["video_mp4"] = video_relative_path
     return out
 

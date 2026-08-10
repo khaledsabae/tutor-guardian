@@ -194,9 +194,24 @@ async def get_lesson_assets(
     def _first_file(items):
         return items[0].get("file") if items else None
 
+    def _served(relative_path, kind):
+        """Drop a media reference whose file is not on this host.
+
+        Media is gitignored and arrives by rsync, so the index can name a file
+        that was renamed or never synced. Returning it anyway hands the app a
+        URL that 404s inside the player; returning None lets the app render the
+        lesson without that medium, and the warning makes the gap visible.
+        """
+        if relative_path and not cl.media_exists(relative_path):
+            logger.warning(
+                "lesson %s: %s references missing file %s", lesson_id, kind, relative_path
+            )
+            return None
+        return relative_path
+
     return {
-        "podcast_mp3": podcast_mp3,
-        "video_mp4": video_mp4,
+        "podcast_mp3": _served(podcast_mp3, "podcast"),
+        "video_mp4": _served(video_mp4, "video"),
         "infographic": _first_file(assets.get("infographics", [])),
         "report": _first_file(assets.get("reports", [])),
         "data_table": _first_file(assets.get("data_tables", [])),

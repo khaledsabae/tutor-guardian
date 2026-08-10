@@ -251,8 +251,32 @@ def test_get_lesson_assets_success(client):
     assert "video_mp4" in body
     assert "flashcards" in body
     assert "quizzes" in body
-    # Specifically, it has podcast
-    assert body["podcast_mp3"] == "docs/lesson_01_podcast.mp3"
+    # The endpoint drops media that is not on this host. In prod docs/ is
+    # volume-mounted so the file is there; in a bare Docker build (CI candidate
+    # image) .dockerignore excludes docs/*.mp3, so None is the correct answer.
+    assert body["podcast_mp3"] in ("docs/lesson_01_podcast.mp3", None)
+
+
+def test_lesson_assets_drops_media_missing_from_this_host(client, monkeypatch):
+    """A referenced file that is not on disk must come back as None.
+
+    Media is gitignored and arrives by rsync, so lesson_index.json can name a
+    file that was renamed or never synced. Passing the path through anyway gave
+    the app a URL that 404s inside the player, with nothing logged.
+    """
+    monkeypatch.setattr(cl, "media_exists", lambda _p: False)
+    r = client.get("/api/program/lesson-assets/lesson_10-12_cyber_digital_citizenship_01")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["podcast_mp3"] is None
+    assert body["video_mp4"] is None
+
+
+def test_lesson_assets_keeps_media_present_on_this_host(client, monkeypatch):
+    monkeypatch.setattr(cl, "media_exists", lambda _p: True)
+    r = client.get("/api/program/lesson-assets/lesson_10-12_cyber_digital_citizenship_01")
+    assert r.status_code == 200
+    assert r.json()["podcast_mp3"] == "docs/lesson_01_podcast.mp3"
 
 
 def test_get_lesson_assets_not_found(client):
