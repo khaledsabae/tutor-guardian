@@ -5803,6 +5803,42 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الجولة هتظهر لما ترجع للشاشة الرئيسية.'**
   String get tourReplayQueued;
+
+  /// No description provided for @errorOfflineTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يوجد اتصال بالإنترنت'**
+  String get errorOfflineTitle;
+
+  /// No description provided for @errorOfflineBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكّد من اتصالك وحاول مرة أخرى.'**
+  String get errorOfflineBody;
+
+  /// No description provided for @errorServerTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخدمة لا تستجيب الآن'**
+  String get errorServerTitle;
+
+  /// No description provided for @errorServerBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'المشكلة من عندنا لا من عندك. حاول بعد قليل.'**
+  String get errorServerBody;
+
+  /// No description provided for @errorUnknownTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحميل البيانات'**
+  String get errorUnknownTitle;
+
+  /// No description provided for @errorUnknownBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة.'**
+  String get errorUnknownBody;
 }
 
 class _AppLocalizationsDelegate

@@ -3197,4 +3197,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tourReplayQueued => 'الجولة هتظهر لما ترجع للشاشة الرئيسية.';
+
+  @override
+  String get errorOfflineTitle => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get errorOfflineBody => 'تأكّد من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String get errorServerTitle => 'الخدمة لا تستجيب الآن';
+
+  @override
+  String get errorServerBody => 'المشكلة من عندنا لا من عندك. حاول بعد قليل.';
+
+  @override
+  String get errorUnknownTitle => 'تعذّر تحميل البيانات';
+
+  @override
+  String get errorUnknownBody =>
+      'حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة.';
 }

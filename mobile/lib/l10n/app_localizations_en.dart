@@ -3233,4 +3233,24 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tourReplayQueued =>
       'The tour will appear when you go back to the home screen.';
+
+  @override
+  String get errorOfflineTitle => 'No internet connection';
+
+  @override
+  String get errorOfflineBody => 'Check your connection and try again.';
+
+  @override
+  String get errorServerTitle => 'The service is not responding';
+
+  @override
+  String get errorServerBody =>
+      'This is on our side, not yours. Please try again shortly.';
+
+  @override
+  String get errorUnknownTitle => 'Could not load this';
+
+  @override
+  String get errorUnknownBody =>
+      'Try again — if it keeps happening, send us a note.';
 }

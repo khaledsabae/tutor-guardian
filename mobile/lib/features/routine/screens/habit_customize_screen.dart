@@ -13,6 +13,7 @@ import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/theme/design_tokens.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 
 class HabitCustomizeScreen extends ConsumerStatefulWidget {
   const HabitCustomizeScreen({super.key});
@@ -170,7 +171,10 @@ class _TemplateList extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text(AppLocalizations.of(context).errorGeneric(e.toString()))),
+      error: (e, _) => ErrorRetryView(
+        error: e,
+        onRetry: () => ref.invalidate(habitTemplatesProvider(childId)),
+      ),
     );
   }
 

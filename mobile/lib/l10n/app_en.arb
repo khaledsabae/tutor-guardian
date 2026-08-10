@@ -963,5 +963,11 @@
   "tourFocusBody": "Your next step is always here.",
   "tourReplay": "Guided tour",
   "tourReplayDesc": "Replay the tour when you return to the home screen",
-  "tourReplayQueued": "The tour will appear when you go back to the home screen."
+  "tourReplayQueued": "The tour will appear when you go back to the home screen.",
+  "errorOfflineTitle": "No internet connection",
+  "errorOfflineBody": "Check your connection and try again.",
+  "errorServerTitle": "The service is not responding",
+  "errorServerBody": "This is on our side, not yours. Please try again shortly.",
+  "errorUnknownTitle": "Could not load this",
+  "errorUnknownBody": "Try again — if it keeps happening, send us a note."
 }

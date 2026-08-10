@@ -963,5 +963,11 @@
   "tourFocusBody": "خطوتك التالية دائمًا هنا.",
   "tourReplay": "الجولة التعريفية",
   "tourReplayDesc": "أعِد عرض الجولة عند العودة للشاشة الرئيسية",
-  "tourReplayQueued": "الجولة هتظهر لما ترجع للشاشة الرئيسية."
+  "tourReplayQueued": "الجولة هتظهر لما ترجع للشاشة الرئيسية.",
+  "errorOfflineTitle": "لا يوجد اتصال بالإنترنت",
+  "errorOfflineBody": "تأكّد من اتصالك وحاول مرة أخرى.",
+  "errorServerTitle": "الخدمة لا تستجيب الآن",
+  "errorServerBody": "المشكلة من عندنا لا من عندك. حاول بعد قليل.",
+  "errorUnknownTitle": "تعذّر تحميل البيانات",
+  "errorUnknownBody": "حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة."
 }
