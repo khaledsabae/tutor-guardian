@@ -296,14 +296,14 @@ class NotificationService {
       await _scheduleSpecific(
         id: _morningBaseId + dayOffset,
         scheduledDate: mDate,
-        title: '🌅 نصيحة تربوية — المربي الذكي',
+        title: '🌅 أذكار الصباح — المربي الذكي',
         content: morningContent,
       );
 
       await _scheduleSpecific(
         id: _eveningBaseId + dayOffset,
         scheduledDate: eDate,
-        title: '🌙 تذكير تربوي — المربي الذكي',
+        title: '🌙 أذكار المساء — المربي الذكي',
         content: eveningContent,
       );
     }

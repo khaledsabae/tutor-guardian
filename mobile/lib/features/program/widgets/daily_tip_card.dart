@@ -7,11 +7,8 @@
 /// that competes with the chat for attention.
 library;
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:screenshot/screenshot.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
@@ -20,6 +17,7 @@ import '../data/models.dart';
 import '../providers/program_providers.dart';
 import '../providers/favorites_provider.dart';
 import '../widgets/shareable_tip_card.dart';
+import '../../share/share_service.dart';
 
 class DailyTipCard extends ConsumerWidget {
   const DailyTipCard({super.key});
@@ -53,7 +51,6 @@ class _Card extends ConsumerStatefulWidget {
 }
 
 class _CardState extends ConsumerState<_Card> {
-  final ScreenshotController _screenshotController = ScreenshotController();
   bool _isSharing = false;
 
   @override
@@ -66,28 +63,18 @@ class _CardState extends ConsumerState<_Card> {
     setState(() => _isSharing = true);
 
     try {
-      // Capture the shareable tip card as PNG
-      final shareableCard = ShareableTipCard(
-        tip: widget.tip,
-        childName: widget.childName,
+      // Route through ShareService so the tip carries the install link and
+      // this device's referral code. Sharing the text alone gave whoever
+      // received it no way to reach the app — on the one screen most likely
+      // to be shared.
+      await ShareService.shareMomentCard(
+        fileTag: 'tip_${widget.tip.id}',
+        message: 'نصيحة اليوم من المربي الذكي: ${widget.tip.text}',
+        card: ShareableTipCard(
+          tip: widget.tip,
+          childName: widget.childName,
+        ),
       );
-
-      final image = await _screenshotController.captureFromWidget(
-        shareableCard,
-        pixelRatio: 2.0, // High-res capture (2160x2160)
-      );
-
-      // Save to temporary file
-      final tempDir = await Directory.systemTemp.createTemp('tg_share_');
-      final file = File('${tempDir.path}/tip_${widget.tip.id}.png');
-      await file.writeAsBytes(image);
-
-      // Share the image
-      await SharePlus.instance.share(ShareParams(
-        files: [XFile(file.path)],
-        text: 'نصيحة اليوم من المربي الذكي: ${widget.tip.text}',
-        subject: 'نصيحة اليوم - المربي الذكي',
-      ));
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
