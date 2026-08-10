@@ -131,13 +131,13 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(
+          const CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation(Dt.accent),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             AppLocalizations.of(context).parentingInsightsLoading,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               color: AppTheme.textSecondary,
               fontWeight: FontWeight.w600,
@@ -222,7 +222,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
         // Section: stats summary
         Text(
           AppLocalizations.of(context).parentingInsightsWeekly,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w800,
           ),
@@ -272,7 +272,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
         // Section: AI recommendations
         Text(
           AppLocalizations.of(context).parentingInsightsRecommendations,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w800,
           ),
@@ -282,11 +282,11 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
         if (_insights.isEmpty)
           Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 32.0),
+              padding: const EdgeInsets.symmetric(vertical: 32.0),
               child: Text(
                 AppLocalizations.of(context).parentingInsightsNoData,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppTheme.textSecondary,
                   fontWeight: FontWeight.w500,
                 ),

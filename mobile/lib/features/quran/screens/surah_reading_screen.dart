@@ -141,7 +141,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
               child: Text(
                 AppLocalizations.of(context).quranChooseReciter,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary,

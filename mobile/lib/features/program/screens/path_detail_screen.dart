@@ -936,7 +936,7 @@ class _PathVideoCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   AppLocalizations.of(context).pathDetailVideoIntro,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w800,

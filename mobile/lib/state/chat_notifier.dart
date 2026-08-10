@@ -212,7 +212,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
     } on TgApiError catch (e) {
       state = state.copyWith(
         phase: ChatPhase.error,
-        errorBanner: AppL10n.current.chatSessionStartFailed('${e.message}'),
+        errorBanner: AppL10n.current.chatSessionStartFailed(e.message),
       );
     }
   }
@@ -245,7 +245,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
     } on TgApiError catch (e) {
       state = state.copyWith(
         phase: ChatPhase.error,
-        errorBanner: AppL10n.current.chatNewChatFailed('${e.message}'),
+        errorBanner: AppL10n.current.chatNewChatFailed(e.message),
       );
     }
   }
@@ -484,7 +484,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       _updateAssistant(assistantId, (m) {
         m
           ..feedback = null
-          ..error = AppL10n.current.chatRatingSaveFailed('${e.message}');
+          ..error = AppL10n.current.chatRatingSaveFailed(e.message);
       });
     }
   }
@@ -540,7 +540,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
     } on TgApiError catch (e) {
       state = state.copyWith(
         phase: ChatPhase.error,
-        errorBanner: AppL10n.current.chatOpenFailed('${e.message}'),
+        errorBanner: AppL10n.current.chatOpenFailed(e.message),
       );
     }
   }

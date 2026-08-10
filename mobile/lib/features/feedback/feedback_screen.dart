@@ -125,7 +125,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
           const FeedbackRepliesSection(),
           Text(
             AppLocalizations.of(context).feedbackDesc,
-            style: TextStyle(fontSize: 15, height: 1.5),
+            style: const TextStyle(fontSize: 15, height: 1.5),
           ),
           const SizedBox(height: 20),
           TextField(

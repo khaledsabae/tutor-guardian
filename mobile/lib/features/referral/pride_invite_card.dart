@@ -111,7 +111,7 @@ class _PrideInviteCardState extends State<PrideInviteCard> {
           const SizedBox(height: 8),
           Text(
             l10n.prideStreakBody,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppTheme.textSecondary,
               fontSize: 13.5,
               height: 1.6,
@@ -132,7 +132,7 @@ class _PrideInviteCardState extends State<PrideInviteCard> {
                 onPressed: () => _act(openInvite: false),
                 child: Text(
                   l10n.prideLater,
-                  style: TextStyle(color: AppTheme.textMuted),
+                  style: const TextStyle(color: AppTheme.textMuted),
                 ),
               ),
             ],

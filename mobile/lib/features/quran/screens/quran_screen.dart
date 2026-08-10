@@ -78,7 +78,7 @@ class QuranScreen extends ConsumerWidget {
                               children: [
                                 Text(
                                   AppLocalizations.of(context).quranCompleteReading,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white70,
                                     fontSize: 12,
                                   ),

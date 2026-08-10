@@ -41,7 +41,7 @@ void main() {
 
     test('anything else is unknown', () {
       expect(classifyFailure(StateError('boom')), FailureKind.unknown);
-      expect(classifyFailure(FormatException('bad json')), FailureKind.unknown);
+      expect(classifyFailure(const FormatException('bad json')), FailureKind.unknown);
     });
   });
 

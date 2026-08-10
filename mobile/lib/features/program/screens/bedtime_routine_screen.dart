@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -198,7 +197,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                       const Spacer(),
                       Text(
                         AppLocalizations.of(context).bedtimeStories,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w800,
@@ -414,7 +413,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
           Text(
             AppLocalizations.of(context).bedtimeStoriesDesc,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF4A4A4A),
               fontSize: 16,
               height: 1.6,
@@ -427,7 +426,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
             icon: const Icon(Icons.menu_book),
             label: Text(
               AppLocalizations.of(context).startLearning,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             style: FilledButton.styleFrom(
               backgroundColor: themeColor,

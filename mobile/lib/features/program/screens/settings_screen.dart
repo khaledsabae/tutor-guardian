@@ -735,7 +735,7 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
         child: SwitchListTile(
         title: Text(
           AppLocalizations.of(context).settingsFamilyAdhkar,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
         ),
         subtitle: Text(
           AppLocalizations.of(context).settingsFamilyAdhkarDesc,

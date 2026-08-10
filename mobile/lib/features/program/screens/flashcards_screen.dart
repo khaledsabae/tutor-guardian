@@ -141,7 +141,7 @@ class _FlashcardPagerState extends State<_FlashcardPager> {
               ),
               child: Text(
                 AppLocalizations.of(context).quizShowResults,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Dt.accentDeep,
                   fontWeight: FontWeight.w800,
                 ),

@@ -38,9 +38,9 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: MaterialApp(
-          locale: const Locale('ar'),
-          home: const ChatScreen(),
+        child: const MaterialApp(
+          locale: Locale('ar'),
+          home: ChatScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),

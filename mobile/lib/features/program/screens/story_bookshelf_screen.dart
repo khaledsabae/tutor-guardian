@@ -192,7 +192,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
         Text(
           AppLocalizations.of(context).bedtimeStoriesDesc,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFFE0D5C1),
             fontSize: 14,
             fontWeight: FontWeight.w600,

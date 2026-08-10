@@ -92,10 +92,10 @@ class CoinsScreen extends ConsumerWidget {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.check_circle, color: AppTheme.success),
-                  SizedBox(width: 8),
+                  const Icon(Icons.check_circle, color: AppTheme.success),
+                  const SizedBox(width: 8),
                   Text(AppLocalizations.of(context).coinsDailyDone,
-                      style: TextStyle(fontWeight: FontWeight.w700)),
+                      style: const TextStyle(fontWeight: FontWeight.w700)),
                 ],
               ),
             ),

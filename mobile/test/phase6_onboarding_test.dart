@@ -162,9 +162,9 @@ void main() {
             tgClientProvider.overrideWithValue(fake),
             sharedPreferencesProvider.overrideWith((_) async => prefs),
           ],
-          child: MaterialApp(
-            locale: const Locale('ar'),
-            home: const OnboardingScreen(),
+          child: const MaterialApp(
+            locale: Locale('ar'),
+            home: OnboardingScreen(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
           ),
@@ -358,8 +358,8 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: MaterialApp(
-          locale: const Locale('ar'),
+        child: const MaterialApp(
+          locale: Locale('ar'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: PathDetailScreen(

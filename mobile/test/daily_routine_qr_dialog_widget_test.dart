@@ -45,7 +45,7 @@ void main() {
             ageGroup: '13-15',
           ),
         ),
-        todayHabitsProvider.overrideWithProvider(todayHabits),
+        todayHabitsProvider.overrideWithProvider(todayHabits.call),
       ],
     );
     addTearDown(container.dispose);
@@ -53,9 +53,9 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: MaterialApp(
-          locale: const Locale('ar'),
-          home: const DailyRoutineScreen(),
+        child: const MaterialApp(
+          locale: Locale('ar'),
+          home: DailyRoutineScreen(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),

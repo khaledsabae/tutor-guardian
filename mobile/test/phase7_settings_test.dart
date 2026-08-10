@@ -112,9 +112,9 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(
-            locale: const Locale('ar'),
-            home: const SettingsScreen(),
+          child: const MaterialApp(
+            locale: Locale('ar'),
+            home: SettingsScreen(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
           ),
@@ -160,9 +160,9 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(
-            locale: const Locale('ar'),
-            home: const SettingsScreen(),
+          child: const MaterialApp(
+            locale: Locale('ar'),
+            home: SettingsScreen(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
           ),

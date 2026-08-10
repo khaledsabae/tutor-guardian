@@ -237,7 +237,7 @@ class TgClient {
     } on TimeoutException {
       throw TgApiError(null, AppL10n.current.apiTimeout);
     } on SocketException catch (e) {
-      throw TgApiError(null, AppL10n.current.apiConnectionFailed('${e.message}'));
+      throw TgApiError(null, AppL10n.current.apiConnectionFailed(e.message));
     }
 
     if (response.statusCode != 200) {

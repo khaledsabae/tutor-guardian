@@ -98,13 +98,13 @@ class ChildrenListScreen extends ConsumerWidget {
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.info_outline,
+                        const Icon(Icons.info_outline,
                             size: 18, color: AppTheme.textMuted),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             AppLocalizations.of(context).childrenMaxReached(kMaxChildren),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: AppTheme.textSecondary,
                               fontSize: 12,
                             ),
@@ -318,7 +318,7 @@ class _ChildTile extends StatelessWidget {
                   ),
                   child: Text(
                     AppLocalizations.of(context).childrenActive,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
@@ -390,7 +390,7 @@ class _ErrorView extends StatelessWidget {
             const Icon(Icons.error_outline,
                 size: 48, color: AppTheme.dangerFg),
             const SizedBox(height: 12),
-            Text(AppLocalizations.of(context).childrenErrorLoading + '\n$error',
+            Text('${AppLocalizations.of(context).childrenErrorLoading}\n$error',
                 textAlign: TextAlign.center),
             const SizedBox(height: 16),
             ElevatedButton.icon(

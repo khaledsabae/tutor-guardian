@@ -93,7 +93,7 @@ class _IdentityScreenState extends State<IdentityScreen> {
                     const SizedBox(height: 24),
                     Text(
                       AppLocalizations.of(context).settingsBackup,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
                       ),
@@ -102,7 +102,7 @@ class _IdentityScreenState extends State<IdentityScreen> {
                     Text(
                       AppLocalizations.of(context).settingsBackupDesc,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 15, color: Dt.inkSoft),
+                      style: const TextStyle(fontSize: 15, color: Dt.inkSoft),
                     ),
                     const SizedBox(height: 32),
                     if (_linked) ...[

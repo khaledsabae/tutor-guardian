@@ -20,7 +20,7 @@ void main() {
 
   group('ChildModeState', () {
     test('tracks submitted habits excluding missed', () {
-      final state = ChildModeState(
+      const state = ChildModeState(
         submittedHabits: {'صلاة الفجر', 'أداء الواجب'},
       );
       expect(state.isSubmitted('صلاة الفجر'), isTrue);

@@ -376,7 +376,7 @@ class _BootSplash extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             AppLocalizations.of(context).chatInit,
-            style: TextStyle(color: AppTheme.textMuted, fontSize: 13),
+            style: const TextStyle(color: AppTheme.textMuted, fontSize: 13),
           ),
         ],
       ),
@@ -400,7 +400,7 @@ class _OfflineBanner extends StatelessWidget {
           Expanded(
             child: Text(
               AppLocalizations.of(context).chatOfflineBanner,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppTheme.warningFg,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -479,7 +479,7 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               AppLocalizations.of(context).chatEmptyWelcome,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
                 color: AppTheme.textPrimary,
@@ -489,7 +489,7 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               AppLocalizations.of(context).chatEmptyHint,
-              style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
+              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 14),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -568,7 +568,7 @@ class _HistoryDrawer extends StatelessWidget {
                     color: AppTheme.primary),
                 title: Text(
                   AppLocalizations.of(context).chatNewChatBtn,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     color: AppTheme.primary,
                   ),
@@ -594,7 +594,7 @@ class _HistoryDrawer extends StatelessWidget {
                         padding: const EdgeInsets.all(24),
                         child: Text(
                           AppLocalizations.of(context).chatNoChatsYet,
-                          style: TextStyle(color: AppTheme.textMuted),
+                          style: const TextStyle(color: AppTheme.textMuted),
                         ),
                       ),
                     );
@@ -682,7 +682,7 @@ class _Composer extends StatelessWidget {
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     contentPadding:
-                        EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                        const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                     isDense: true,
                   ),
                   inputFormatters: [

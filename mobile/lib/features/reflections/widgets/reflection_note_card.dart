@@ -239,7 +239,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
               // Empty state
               Text(
                 AppLocalizations.of(context).feedbackMessageHint,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppTheme.textSecondary,
                   fontSize: 13,
                   height: 1.5,

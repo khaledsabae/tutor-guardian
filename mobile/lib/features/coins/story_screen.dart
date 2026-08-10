@@ -164,7 +164,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
               const SizedBox(height: 8),
               Center(
                 child: Text(AppLocalizations.of(context).storyLoading,
-                    style: TextStyle(color: AppTheme.textMuted)),
+                    style: const TextStyle(color: AppTheme.textMuted)),
               ),
             ],
           ] else ...[

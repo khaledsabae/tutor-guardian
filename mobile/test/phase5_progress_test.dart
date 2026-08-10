@@ -173,8 +173,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(
-            locale: const Locale('ar'),
+          child: const MaterialApp(
+            locale: Locale('ar'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: PathDetailScreen(
@@ -223,11 +223,11 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(
-            locale: const Locale('ar'),
+          child: const MaterialApp(
+            locale: Locale('ar'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
-            home: const LessonScreen(
+            home: LessonScreen(
               lessonId: 'lesson_4-6_islamic_parenting_adab_01',
               ageGroup: '4-6',
               childId: 1,

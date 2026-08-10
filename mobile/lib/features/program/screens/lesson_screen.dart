@@ -490,11 +490,11 @@ class _ReflectionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('🧠', style: TextStyle(fontSize: 20)),
-              SizedBox(width: 8),
+              const Text('🧠', style: TextStyle(fontSize: 20)),
+              const SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context).lessonReflections,
-                style: TextStyle(
+                style: const TextStyle(
                   color: violet,
                   fontWeight: FontWeight.w800,
                 ),
@@ -896,7 +896,7 @@ class _VideoCard extends StatelessWidget {
               bottom: 12,
               child: Text(
                 AppLocalizations.of(context).lessonVideoTitle,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w800,
                   fontSize: 15,

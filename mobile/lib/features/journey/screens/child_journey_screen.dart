@@ -51,7 +51,7 @@ class ChildJourneyScreen extends ConsumerWidget {
         error: (e, _) => Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: Text(AppLocalizations.of(context).journeyLoading + '\n$e', textAlign: TextAlign.center),
+            child: Text('${AppLocalizations.of(context).journeyLoading}\n$e', textAlign: TextAlign.center),
           ),
         ),
         data: (logged) {
@@ -193,7 +193,7 @@ class ChildJourneyScreen extends ConsumerWidget {
         emoji: emoji,
         imageAsset: milestone != null ? milestoneBadgeAsset(milestone.key) : null,
         title: AppLocalizations.of(context).lessonCelebrationTitle,
-        message: AppLocalizations.of(context).journeyNewMilestone + ' ' + childName + ':\n${result.title}',
+        message: '${AppLocalizations.of(context).journeyNewMilestone} $childName:\n${result.title}',
         onShare: () => ShareService.shareMomentCard(
           fileTag: 'milestone_$key',
           message: 'ما شاء الله 🤍 سجّلت محطة جديدة في رحلة $childName:\n'
@@ -433,7 +433,7 @@ class _QuranMemoCard extends ConsumerWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context).journeyQuranTitle,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w800,
                       ),
@@ -504,7 +504,7 @@ class _EmptyTimeline extends StatelessWidget {
           Text(
             AppLocalizations.of(context).journeyEmpty,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppTheme.textSecondary,
               fontSize: 13,
               height: 1.5,

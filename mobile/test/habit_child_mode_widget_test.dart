@@ -14,7 +14,7 @@ import 'package:almorabbi/features/routine/services/child_mode_secure_storage.da
 import 'package:almorabbi/state/chat_notifier.dart';
 
 void main() {
-  final fakeToken =
+  const fakeToken =
       'eyJhbG...TURE';
 
   setUp(() {
@@ -77,8 +77,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(
-            locale: const Locale('ar'),
+          child: const MaterialApp(
+            locale: Locale('ar'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: HabitChildModeScreen(),
@@ -91,7 +91,7 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
       // Manually set the day so the list renders.
-      container.read(childModeProvider.notifier).state = ChildModeState(
+      container.read(childModeProvider.notifier).state = const ChildModeState(
         active: true,
         childId: 7,
         day: HabitDay(
@@ -141,7 +141,7 @@ void main() {
 
       await saveChildToken(fakeToken);
       await setChildModeActive(true);
-      container.read(childModeProvider.notifier).state = ChildModeState(
+      container.read(childModeProvider.notifier).state = const ChildModeState(
         active: true,
         childId: 7,
         day: HabitDay(childId: 7, date: '2026-07-07', habits: [], events: []),
@@ -150,8 +150,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(
-            locale: const Locale('ar'),
+          child: const MaterialApp(
+            locale: Locale('ar'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: HabitChildModeScreen(),
@@ -179,7 +179,7 @@ void main() {
 
       await saveChildToken(fakeToken);
       await setChildModeActive(true);
-      container.read(childModeProvider.notifier).state = ChildModeState(
+      container.read(childModeProvider.notifier).state = const ChildModeState(
         active: true,
         childId: 7,
         error: kChildModeErrorSessionExpired,
@@ -189,8 +189,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(
-            locale: const Locale('ar'),
+          child: const MaterialApp(
+            locale: Locale('ar'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: HabitChildModeScreen(),

@@ -399,7 +399,7 @@ class _AddEventSheet extends StatefulWidget {
 class _AddEventSheetState extends State<_AddEventSheet> {
   late RoutineEventType _type = allowedRoutineTypes(widget.ageGroup).first;
   late final List<RoutineEventType> _allowedTypes = allowedRoutineTypes(widget.ageGroup);
-  DateTime _startedAt = DateTime.now();
+  final DateTime _startedAt = DateTime.now();
   DateTime? _endedAt;
   String? _feedType;
   int? _amountMl;
@@ -743,7 +743,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
     if (childId == null) return const SizedBox.shrink();
 
     final habitsAsync = ref.watch(todayHabitsProvider(childId));
-    final categories = HabitCategory.values;
+    const categories = HabitCategory.values;
 
     return Column(
       children: [

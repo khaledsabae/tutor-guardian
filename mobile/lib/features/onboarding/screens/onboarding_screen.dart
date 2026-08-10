@@ -252,7 +252,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           const SizedBox(height: 16),
                           Text(
                             AppLocalizations.of(context).onbPreparing,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               color: AppTheme.textPrimary,
                             ),
@@ -320,7 +320,7 @@ class _AgeQuestionPage extends StatelessWidget {
               child: Text(
                 '${l10n.onbFreeTitle} — ${l10n.onbFreeDesc}',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Dt.primaryDeep,
                   fontWeight: FontWeight.w700,
                   height: 1.5,
@@ -461,7 +461,7 @@ class _InstantValuePage extends StatelessWidget {
                     ),
                     child: Text(
                       l10n.onbTipForAge(ageLabel),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Dt.primaryDeep,
                         fontWeight: FontWeight.w700,
                         fontSize: 13,

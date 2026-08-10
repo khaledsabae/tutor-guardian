@@ -365,13 +365,13 @@ class _ErrorCard extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            Icon(Icons.error_outline, color: AppTheme.dangerFg),
-            SizedBox(width: 12),
+            const Icon(Icons.error_outline, color: AppTheme.dangerFg),
+            const SizedBox(width: 12),
             Expanded(
               child: Text(
                 AppLocalizations.of(context).favoritesErrorLoad,
                 style:
-                    TextStyle(color: AppTheme.dangerFg, fontSize: 12),
+                    const TextStyle(color: AppTheme.dangerFg, fontSize: 12),
               ),
             ),
           ],

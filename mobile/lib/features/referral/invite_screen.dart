@@ -122,7 +122,7 @@ class _InviteScreenState extends State<InviteScreen> {
                 children: [
                   Text(
                     AppLocalizations.of(context).inviteDesc,
-                    style: TextStyle(fontSize: 15, height: 1.7),
+                    style: const TextStyle(fontSize: 15, height: 1.7),
                   ),
                   const SizedBox(height: 16),
                   // Social proof persuades someone deciding whether to vouch
@@ -146,7 +146,7 @@ class _InviteScreenState extends State<InviteScreen> {
                   const Divider(),
                   const SizedBox(height: 12),
                   Text(AppLocalizations.of(context).inviteHaveCode,
-                      style: TextStyle(fontWeight: FontWeight.w700)),
+                      style: const TextStyle(fontWeight: FontWeight.w700)),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -189,7 +189,7 @@ class _InviteScreenState extends State<InviteScreen> {
       child: Column(
         children: [
           Text(AppLocalizations.of(context).inviteYourCode,
-              style: TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
+              style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
           const SizedBox(height: 8),
           GestureDetector(
             onTap: () {

@@ -69,15 +69,15 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 const TextStyle(color: AppTheme.textPrimary, fontSize: 15),
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context).search,
-              hintStyle: TextStyle(color: AppTheme.textMuted),
+              hintStyle: const TextStyle(color: AppTheme.textMuted),
               prefixIcon:
-                  Icon(Icons.search, color: AppTheme.textMuted, size: 20),
+                  const Icon(Icons.search, color: AppTheme.textMuted, size: 20),
               filled: false,
               border: InputBorder.none,
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
               isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 12),
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
             ),
           ),
         ),
