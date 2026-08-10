@@ -3,8 +3,11 @@ name: Backend tests
 on:
   push:
     branches: [main]
-    # Superset of what production serves: Deploy is gated on this workflow
-    # (workflow_run), so every deployable path must run the tests first.
+    # Superset of what production serves. Deploy is NOT gated on this workflow
+    # — the workflow_run gate was removed to avoid Actions billing. deploy.yml
+    # runs pytest and the KB integrity check inside the candidate image instead,
+    # before the production container is recreated, so a red suite still never
+    # reaches production. This job is the GitHub-hosted second opinion.
     paths:
       - 'backend/**'
       - 'knowledge_base/**'

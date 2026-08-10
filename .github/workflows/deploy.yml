@@ -127,10 +127,12 @@ jobs:
           # It caught nothing before it was written, which is the point: on
           # 2026-08-10 the index named 7 path videos that were never generated
           # (18 lessons served dead links) and one MP3 that three different
-          # lessons played. Warn-only for now; flip to blocking once a deploy
-          # has come through clean.
+          # lessons played. Blocking since run 31396853692 came through clean
+          # ("every referenced file is on this host", "no podcast is shared").
+          # A failure here stops the deploy before the container is touched, so
+          # production keeps serving the last good index.
           echo "→ checking served assets against docs/"
-          python3 ops/tools/check_served_assets.py --warn-only || true
+          python3 ops/tools/check_served_assets.py
 
           # ── 3. Verify the tested image is present ────────────────────
           # No build here: the previous step already built, tested and tagged

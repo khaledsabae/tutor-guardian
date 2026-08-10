@@ -106,12 +106,13 @@ Cloudflare ──► analytics_nginx (على الـVPS) ──► tg_backend (Fa
 
 ### 4.1 الباكند — الصورة مخبوزة، النشر = rebuild على الـVPS
 
-المسار الطبيعي (مؤتمت): push إلى `main` → CI (pytest + kb-integrity + flutter + docker) → عند نجاح الكل، `deploy.yml` يعمل SSH للـVPS وينفّذ:
+المسار الطبيعي (مؤتمت): push إلى `main` → `deploy.yml` يعمل على **runner ذاتي الاستضافة داخل الـVPS نفسه** (لا SSH، ولا بوابة `workflow_run` — أُزيلت لتفادي فاتورة Actions). الوظيفة تبني صورة **مرشّحة** وتشغّل بداخلها pytest + فحص سلامة قاعدة المعرفة **قبل** لمس حاوية الإنتاج، فالسويت الحمراء لا تصل للإنتاج:
 
-1. `git fetch origin main && git reset --hard origin/main` في `/root/tutor-guardian`
-2. `docker compose -f docker-compose.production.yml build backend`
-3. `docker compose -f docker-compose.production.yml up -d --remove-orphans backend`
-4. انتظار `tg_backend` حتى `healthy` ثم فحص `/health` و`/privacy-policy`
+1. بناء `tutor-guardian-backend:candidate-<sha>` وتشغيل التستات بداخلها
+2. `git fetch origin main && git reset --hard origin/main` في `/root/tutor-guardian`
+3. `python3 ops/tools/check_served_assets.py` — يوقف النشر لو الفهرس يشير لملف غير موجود على الجهاز أو لبودكاست يتشاركه أكثر من درس
+4. إعادة إنشاء الحاوية من الصورة المختبَرة (بلا بناء جديد)
+5. انتظار `tg_backend` حتى `healthy` ثم فحص `/health` و`/privacy-policy` — وعند الفشل **رجوع تلقائي** لآخر صورة كانت سليمة
 
 **تحذير:** كل push لـ`main` يمر بهذه البوابة = نشر فعلي على الإنتاج. لا تدمج في `main` ما لست مستعدًا لرؤيته live.
 
