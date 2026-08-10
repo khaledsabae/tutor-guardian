@@ -105,3 +105,24 @@ jobs:
         run: |
           cd "$GITHUB_WORKSPACE"
           python ops/tools/check_kb_integrity.py
+
+  lint:
+    name: ruff
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install ruff
+        run: pip install ruff
+
+      # Narrow on purpose — see the rule list and reasoning in pyproject.toml.
+      # It found a NameError and a duplicate dict key on the first run.
+      - name: Run ruff
+        run: ruff check backend/ ops/ scripts/

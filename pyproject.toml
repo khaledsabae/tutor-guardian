@@ -1,0 +1,25 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = [
+    ".venv",
+    "backend/.venv",
+    "notebooklm_env",
+    "ops/data",
+    "ops/colab",
+    "ops/kaggle",
+    "scripts/archive",
+    "remotion-reels",
+    "_archive",
+]
+
+[tool.ruff.lint]
+# Deliberately narrow: only the rules that catch a bug, not a style opinion.
+# The wider set flags ~130 unused imports and placeholder-free f-strings, which
+# would make the gate noise and get ignored. Tighten once those are cleaned up.
+#
+#   E9   syntax errors and runtime-fatal constructs
+#   F601 a dict literal with a repeated key — one value is silently dropped
+#   F811 a name redefined before use — usually a duplicated import or a typo
+#   F821 an undefined name — a NameError the moment that line runs
+select = ["E9", "F601", "F811", "F821"]

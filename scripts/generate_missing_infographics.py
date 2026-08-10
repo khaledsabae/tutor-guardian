@@ -60,7 +60,6 @@ def reverse_source_map() -> dict[str, str]:
     return rev
 
 
-from scripts.infographic_prompts_lib import buildable_targets
 
 def missing_infographic_lessons() -> list[dict]:
     lessons, _ = buildable_targets()
