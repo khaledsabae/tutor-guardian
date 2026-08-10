@@ -9,6 +9,7 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../../program/providers/progress_providers.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 
 class ParentingInsightsScreen extends ConsumerStatefulWidget {
   const ParentingInsightsScreen({super.key});
@@ -20,6 +21,11 @@ class ParentingInsightsScreen extends ConsumerStatefulWidget {
 class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScreen> {
   bool _loading = true;
   String? _error;
+
+  /// The failure itself, so ErrorRetryView can say which of the three things
+  /// went wrong. [_error] stays for the cases that are not exceptions — no
+  /// active child, for one.
+  Object? _failure;
 
   int _sleepMinutes = 0;
   int _feedCount = 0;
@@ -48,6 +54,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
     setState(() {
       _loading = true;
       _error = null;
+      _failure = null;
     });
 
     try {
@@ -67,14 +74,14 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
       if (mounted) {
         setState(() {
           _loading = false;
-          _error = AppLocalizations.of(context).parentingInsightsError;
+          _failure = e;
         });
       }
     } catch (e) {
       if (mounted) {
         setState(() {
           _loading = false;
-          _error = AppLocalizations.of(context).parentingInsightsError;
+          _failure = e;
         });
       }
     }
@@ -120,9 +127,11 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
       ),
       body: _loading
           ? _buildLoadingState()
-          : _error != null
-              ? _buildErrorState()
-              : _buildContent(childName),
+          : _failure != null
+              ? ErrorRetryView(error: _failure!, onRetry: _loadData)
+              : _error != null
+                  ? _buildErrorState()
+                  : _buildContent(childName),
     );
   }
 
