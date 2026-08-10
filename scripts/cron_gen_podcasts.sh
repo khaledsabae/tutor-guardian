@@ -5,6 +5,11 @@
 # Refreshes auth each run, rsyncs finished podcasts to the VPS, and self-removes
 # its crontab line once all are present.
 set -u
+# Generators create media 0600. The container runs as uid 10001 and docs/ is a
+# host bind mount, so 0600 files are unreadable in production — that is the
+# 2026-07-27 outage. umask fixes what this script creates; --chmod fixes what
+# lands on the VPS regardless of the local mode.
+umask 022
 REPO="/home/khalednew/projects/tutor-guardian"
 LOG="/tmp/gen_podcasts_cron.log"
 VPS="root@72.62.44.131"
@@ -21,7 +26,7 @@ timeout 1800 "$REPO/backend/.venv/bin/python" scripts/gen_podcasts_cron.py >> "$
 echo "----- gen exit $? -----" >> "$LOG"
 
 # Push finished podcasts (>=500KB) to the VPS (static bind-mount = no restart).
-rsync -av --min-size=512000 --include='*_podcast.mp3' --exclude='*' \
+rsync -av --chmod=F644 --min-size=512000 --include='*_podcast.mp3' --exclude='*' \
     -e "ssh -i /home/khalednew/.ssh/id_ed25519 -o BatchMode=yes -o ConnectTimeout=15" \
     docs/ "$VPS:$VPS_DOCS" >> "$LOG" 2>&1
 echo "----- rsync exit $? -----" >> "$LOG"

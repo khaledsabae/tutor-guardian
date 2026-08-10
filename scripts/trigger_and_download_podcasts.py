@@ -180,6 +180,10 @@ def commit_and_sync(downloaded, index_updated=False, push=False, sync=False):
             [
                 "rsync",
                 "-a",
+                # NotebookLM writes downloads 0600; the container runs as uid
+                # 10001 against a bind mount, so 0600 arrives unreadable. That
+                # is the 2026-07-27 outage.
+                "--chmod=F644",
                 "--include=*.mp3",
                 "--exclude=*",
                 f"{BASE_DIR}/docs/",

@@ -7,6 +7,11 @@
 # the VPS (idempotent, static bind-mount = no restart). Safe to leave scheduled
 # — remove the crontab line when validate_podcasts.py reports 0 bad.
 set -u
+# Generators create media 0600. The container runs as uid 10001 and docs/ is a
+# host bind mount, so 0600 files are unreadable in production — that is the
+# 2026-07-27 outage. umask fixes what this script creates; --chmod fixes what
+# lands on the VPS regardless of the local mode.
+umask 022
 REPO="/home/khalednew/projects/tutor-guardian"
 LOG="/tmp/regen_podcasts_cron.log"
 cd "$REPO" || exit 1
@@ -20,7 +25,7 @@ echo "----- regen exit $? -----" >> "$LOG"
 # the ones the VPS lacks; static bind-mount means the app serves them with no
 # restart. No-op once everything is already in sync.
 echo "----- rsync to VPS $(date '+%H:%M:%S') -----" >> "$LOG"
-rsync -av --min-size=2097152 --include='*_podcast.mp3' --exclude='*' \
+rsync -av --chmod=F644 --min-size=2097152 --include='*_podcast.mp3' --exclude='*' \
     -e "ssh -o BatchMode=yes -o ConnectTimeout=15" \
     docs/ "$VPS:$VPS_DOCS" >> "$LOG" 2>&1
 echo "----- rsync exit $? -----" >> "$LOG"

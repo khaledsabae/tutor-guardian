@@ -6,6 +6,11 @@
 # (static bind-mount = no restart). Self-removes its own crontab line once all
 # 12 videos exist. Safe to leave scheduled.
 set -u
+# Generators create media 0600. The container runs as uid 10001 and docs/ is a
+# host bind mount, so 0600 files are unreadable in production — that is the
+# 2026-07-27 outage. umask fixes what this script creates; --chmod fixes what
+# lands on the VPS regardless of the local mode.
+umask 022
 REPO="/home/khalednew/projects/tutor-guardian"
 LOG="/tmp/gen_path_videos_cron.log"
 VPS="root@72.62.44.131"
@@ -25,7 +30,7 @@ timeout 1800 "$REPO/backend/.venv/bin/python" scripts/gen_path_videos_cron.py >>
 echo "----- gen exit $? -----" >> "$LOG"
 
 # Push finished videos (>5MB) to the VPS — rsync only transfers the new ones.
-rsync -av --min-size=5242880 --include='*_ar_eg.mp4' --include='*/' --exclude='*' \
+rsync -av --chmod=F644 --min-size=5242880 --include='*_ar_eg.mp4' --include='*/' --exclude='*' \
     -e "ssh -o BatchMode=yes -o ConnectTimeout=15" \
     docs/path_videos/ "$VPS:${VPS_DOCS}path_videos/" >> "$LOG" 2>&1
 echo "----- rsync exit $? -----" >> "$LOG"
