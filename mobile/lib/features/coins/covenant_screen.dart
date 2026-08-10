@@ -193,7 +193,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: available.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            separatorBuilder: (_, _) => const SizedBox(height: 12),
             itemBuilder: (ctx, idx) {
               final cov = available[idx];
               final canAfford = balance >= cov.cost;
@@ -316,7 +316,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: pending.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            separatorBuilder: (_, _) => const SizedBox(height: 10),
             itemBuilder: (ctx, idx) {
               final cov = pending[idx];
               return Container(
@@ -364,7 +364,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: customRewards.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            separatorBuilder: (_, _) => const SizedBox(height: 8),
             itemBuilder: (ctx, idx) {
               final cov = customRewards[idx];
               return Card(
@@ -400,7 +400,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: delivered.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            separatorBuilder: (_, _) => const SizedBox(height: 8),
             itemBuilder: (ctx, idx) {
               final cov = delivered[idx];
               return Container(

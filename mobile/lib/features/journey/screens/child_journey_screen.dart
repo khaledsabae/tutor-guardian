@@ -497,7 +497,7 @@ class _EmptyTimeline extends StatelessWidget {
             'assets/images/generated/empty_journey.webp',
             height: 130,
             fit: BoxFit.contain,
-            errorBuilder: (_, __, ___) =>
+            errorBuilder: (_, _, _) =>
                 const Text('🕊️', style: TextStyle(fontSize: 40)),
           ),
           const SizedBox(height: 10),

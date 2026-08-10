@@ -34,7 +34,7 @@ class BadgesScreen extends ConsumerWidget {
                   child: SkeletonList(count: 3, itemHeight: 150),
                 ),
                 // Badges are encouragement — on error just show them all locked.
-                error: (_, __) => _BadgesGrid(badges: computeBadges(null)),
+                error: (_, _) => _BadgesGrid(badges: computeBadges(null)),
                 data: (bundle) =>
                     _BadgesGrid(badges: computeBadges(bundle)),
               ),

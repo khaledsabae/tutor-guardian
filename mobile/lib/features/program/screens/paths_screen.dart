@@ -152,7 +152,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
         itemCount: paths.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 16),
+        separatorBuilder: (_, _) => const SizedBox(height: 16),
         itemBuilder: (context, i) {
           final card = _PathCard(path: paths[i], ageGroup: ageGroup);
           if (i >= Dt.maxStaggeredItems) return card;

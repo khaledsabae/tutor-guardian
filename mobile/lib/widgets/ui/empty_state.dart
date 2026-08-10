@@ -40,7 +40,7 @@ class EmptyState extends StatelessWidget {
                         imageAsset!,
                         height: 160,
                         fit: BoxFit.contain,
-                        errorBuilder: (_, __, ___) =>
+                        errorBuilder: (_, _, _) =>
                             Text(emoji, style: const TextStyle(fontSize: 72)),
                       )
                     : Text(emoji, style: const TextStyle(fontSize: 72)))

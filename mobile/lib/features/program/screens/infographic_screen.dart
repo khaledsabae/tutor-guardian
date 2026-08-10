@@ -49,10 +49,10 @@ class _InfographicScreenState extends State<InfographicScreen> {
       final path =
           '${dir.path}/almorabbi_infographic_${DateTime.now().millisecondsSinceEpoch}.png';
       await File(path).writeAsBytes(bytes);
-      await Share.shareXFiles(
-        [XFile(path, mimeType: 'image/png')],
+      await SharePlus.instance.share(ShareParams(
+        files: [XFile(path, mimeType: 'image/png')],
         text: 'إنفوجراف من تطبيق المربّي 🌿',
-      );
+      ));
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

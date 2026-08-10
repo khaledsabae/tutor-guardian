@@ -265,7 +265,7 @@ class _FavoriteLessonCard extends ConsumerWidget {
         ),
       ),
       loading: () => const _SkeletonCard(),
-      error: (_, __) => const _ErrorCard(),
+      error: (_, _) => const _ErrorCard(),
     );
   }
 }

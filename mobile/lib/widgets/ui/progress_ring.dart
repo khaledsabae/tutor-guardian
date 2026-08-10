@@ -45,7 +45,7 @@ class ProgressRing extends StatelessWidget {
                   strokeWidth: strokeWidth,
                 ),
               ),
-              if (center != null) center!,
+              ?center,
             ],
           ),
         );

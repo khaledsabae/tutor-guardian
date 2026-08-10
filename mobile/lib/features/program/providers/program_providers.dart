@@ -5,7 +5,7 @@
 ///   tgClientProvider        ── (existing)  global, from chat_notifier
 ///       │
 ///       ▼
-///   programRepositoryProvider        ── Provider<ProgramRepository>
+///   programRepositoryProvider        ── `Provider<ProgramRepository>`
 ///       │
 ///       ├──► pathsListProvider       ── AsyncNotifierProvider<...>
 ///       │       args: (ageGroup, domain) — null = "all"

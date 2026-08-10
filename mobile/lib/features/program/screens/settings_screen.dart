@@ -287,11 +287,11 @@ class SettingsScreen extends ConsumerWidget {
       await file.writeAsString(jsonString);
       
       // Share the file
-      await Share.shareXFiles(
-        [XFile(file.path)],
+      await SharePlus.instance.share(ShareParams(
+        files: [XFile(file.path)],
         text: l10n.settingsBackupTitle,
         subject: l10n.settingsBackupName,
-      );
+      ));
 
       if (context.mounted) {
         scaffoldMessenger.showSnackBar(

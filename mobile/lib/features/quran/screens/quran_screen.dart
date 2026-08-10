@@ -39,7 +39,7 @@ class QuranScreen extends ConsumerWidget {
                   'assets/images/generated/milestone_first_surah.webp',
                   height: 120,
                   fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  errorBuilder: (_, _, _) => const SizedBox.shrink(),
                 ),
               ),
               // Last Read Banner
@@ -104,7 +104,7 @@ class QuranScreen extends ConsumerWidget {
                   );
                 },
                 loading: () => const SizedBox.shrink(),
-                error: (_, __) => const SizedBox.shrink(),
+                error: (_, _) => const SizedBox.shrink(),
               ),
 
               // Surah List
@@ -112,7 +112,7 @@ class QuranScreen extends ConsumerWidget {
                 child: ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   itemCount: 114,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  separatorBuilder: (_, _) => const Divider(height: 1),
                   itemBuilder: (context, index) {
                     final chapterNum = index + 1;
                     final surahName = surahNames[index];

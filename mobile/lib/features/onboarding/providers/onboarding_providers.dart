@@ -2,8 +2,8 @@
 ///
 /// Providers:
 ///   * sharedPreferencesProvider   (FutureProvider — boot once, cached)
-///   * onboardingStorageProvider  (Provider<OnboardingStorage>)
-///   * onboardingCompletedProvider (StateProvider<bool> — initialized
+///   * onboardingStorageProvider  (`Provider<OnboardingStorage>`)
+///   * onboardingCompletedProvider (`StateProvider<bool>` — initialized
 ///     from disk on first build)
 ///   * activeChildProfileProvider (derived — {id, name, ageGroup} or
 ///     null when the user has not finished onboarding)

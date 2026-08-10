@@ -4,9 +4,9 @@
 ///   tgClientProvider (existing)
 ///       │
 ///       ▼
-///   progressRepositoryProvider   ── Provider<ProgressRepository>
+///   progressRepositoryProvider   ── `Provider<ProgressRepository>`
 ///       │
-///       ├──► activeChildIdProvider       (StateProvider<int?>) — null = no
+///       ├──► activeChildIdProvider       (`StateProvider<int?>`) — null = no
 ///       │                                                   child selected
 ///       │
 ///       ├──► childProgressProvider       (FutureProvider.family(...)

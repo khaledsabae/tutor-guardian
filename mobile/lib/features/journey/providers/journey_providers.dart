@@ -4,11 +4,11 @@
 ///   sharedPreferencesProvider      (existing, onboarding_providers)
 ///       │
 ///       ▼
-///   journeyStoreProvider           (Provider<JourneyStore>)
+///   journeyStoreProvider           (`Provider<JourneyStore>`)
 ///       │
 ///       ▼
 ///   childJourneyProvider(childId)  (family AsyncNotifier —
-///                                   Map<milestoneKey, MilestoneEntry>)
+///                                   `Map<milestoneKey, MilestoneEntry>`)
 library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';

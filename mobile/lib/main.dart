@@ -294,11 +294,11 @@ class _AppBootstrapper extends ConsumerWidget {
                 return _buildNormalApp(ref, childMode);
               },
               loading: () => const _SplashScreen(),
-              error: (_, __) => _buildNormalApp(ref, childMode),
+              error: (_, _) => _buildNormalApp(ref, childMode),
             );
           },
           loading: () => const _SplashScreen(),
-          error: (_, __) => _buildNormalApp(ref, childMode),
+          error: (_, _) => _buildNormalApp(ref, childMode),
         );
       },
       loading: () => const _SplashScreen(),

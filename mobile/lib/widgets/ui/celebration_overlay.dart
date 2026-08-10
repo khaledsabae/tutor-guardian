@@ -27,7 +27,7 @@ Future<void> showCelebration(
     barrierDismissible: false,
     barrierLabel: title,
     transitionDuration: Dt.base,
-    pageBuilder: (dialogContext, _, __) => _CelebrationDialog(
+    pageBuilder: (dialogContext, _, _) => _CelebrationDialog(
       emoji: emoji,
       title: title,
       message: message,
@@ -36,7 +36,7 @@ Future<void> showCelebration(
       onShare: onShare,
       shareLabel: shareLabel,
     ),
-    transitionBuilder: (_, anim, __, child) => ScaleTransition(
+    transitionBuilder: (_, anim, _, child) => ScaleTransition(
       scale: CurvedAnimation(parent: anim, curve: Curves.easeOutBack),
       child: FadeTransition(opacity: anim, child: child),
     ),
@@ -116,7 +116,7 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                               height: 110,
                               fit: BoxFit.contain,
                               filterQuality: FilterQuality.medium,
-                              errorBuilder: (_, __, ___) => Text(
+                              errorBuilder: (_, _, _) => Text(
                                 widget.emoji,
                                 style: const TextStyle(fontSize: 80),
                               ),

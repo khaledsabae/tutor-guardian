@@ -127,12 +127,12 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                     ? Image.network(
                         '${AppConfig.apiBaseUrl}/${widget.story.coverImage}',
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
                       )
                     : Image.asset(
                         widget.story.coverImage,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
                       )),
           ),
           // Dark scrim so text always readable.
@@ -474,7 +474,7 @@ class _ParallaxImage extends StatelessWidget {
                   ? Image.network(
                       '${AppConfig.apiBaseUrl}/$image',
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Center(
+                      errorBuilder: (_, _, _) => Center(
                         child: Text(
                           emoji,
                           style: const TextStyle(fontSize: 120),
@@ -484,7 +484,7 @@ class _ParallaxImage extends StatelessWidget {
                   : Image.asset(
                       image,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Center(
+                      errorBuilder: (_, _, _) => Center(
                         child: Text(
                           emoji,
                           style: const TextStyle(fontSize: 120),

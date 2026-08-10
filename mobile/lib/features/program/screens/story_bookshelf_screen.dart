@@ -37,7 +37,7 @@ class StoryBookshelfScreen extends ConsumerWidget {
               physics: NeverScrollableScrollPhysics(),
               child: SkeletonList(count: 3, itemHeight: 220),
             ),
-            error: (e, __) => EmptyState(
+            error: (e, _) => EmptyState(
               emoji: '⚠️',
               title: AppLocalizations.of(context).storyLoadError,
               subtitle: e.toString(),
@@ -342,7 +342,7 @@ class _BookCover extends StatelessWidget {
                                 width: 130,
                                 height: 130,
                                 fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => Text(
+                                errorBuilder: (_, _, _) => Text(
                                   story.id == 'hope_sprout' ? '🌱' : 
                                   story.id == 'kitten_kindness' ? '🐱' :
                                   story.id == 'layla_star' ? '⭐' :
@@ -361,7 +361,7 @@ class _BookCover extends StatelessWidget {
                                 width: 130,
                                 height: 130,
                                 fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => Text(
+                                errorBuilder: (_, _, _) => Text(
                                   story.id == 'hope_sprout' ? '🌱' : 
                                   story.id == 'kitten_kindness' ? '🐱' :
                                   story.id == 'layla_star' ? '⭐' :

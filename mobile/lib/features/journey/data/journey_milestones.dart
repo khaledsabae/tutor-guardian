@@ -93,7 +93,7 @@ String journeyRewardId(int childId, String milestoneKey) =>
     'journey:$childId:$milestoneKey';
 
 /// The 9 spiritual milestones that ship with a custom badge illustration
-/// (assets/images/milestones/<key>.png). Developmental + custom milestones
+/// (assets/images/milestones/`<key>`.png). Developmental + custom milestones
 /// have no badge and fall back to their emoji.
 const Set<String> _badgeMilestoneKeys = {
   'shahada',

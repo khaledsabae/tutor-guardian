@@ -290,7 +290,7 @@ class _AgeQuestionPage extends StatelessWidget {
               'assets/images/generated/mascot_reading.webp',
               height: 120,
               fit: BoxFit.contain,
-              errorBuilder: (_, __, ___) => const Text(
+              errorBuilder: (_, _, _) => const Text(
                 '🌙',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 64),

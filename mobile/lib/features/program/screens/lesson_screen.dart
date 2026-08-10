@@ -850,7 +850,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
         padding: EdgeInsets.symmetric(vertical: 24.0),
         child: Center(child: CircularProgressIndicator()),
       ),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
     );
   }
 }

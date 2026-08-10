@@ -4,9 +4,9 @@
 ///   sharedPreferencesProvider        (existing, in onboarding_providers)
 ///       │
 ///       ▼
-///   reflectionStorageProvider       (Provider<ReflectionStorage>)
+///   reflectionStorageProvider       (`Provider<ReflectionStorage>`)
 ///       │
-///       ├── reflectionsMapProvider  (AsyncNotifier<Map<lessonId, entry>>)
+///       ├── reflectionsMapProvider  (`AsyncNotifier<Map<lessonId, entry>>`)
 ///       │     │
 ///       │     ▼
 ///       │     lessonReflectionProvider  (Provider.family<ReflectionEntry?,

@@ -5,7 +5,7 @@
 ///   progressRepositoryProvider ── (existing, in progress_providers)
 ///       │
 ///       ▼
-///   settingsRepositoryProvider   ── Provider<SettingsRepository>
+///   settingsRepositoryProvider   ── `Provider<SettingsRepository>`
 ///       │
 ///       ├── childrenListProvider       ── AsyncNotifier (manual refresh)
 ///       ├── updateChildProvider        ── AsyncNotifier

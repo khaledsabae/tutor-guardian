@@ -74,7 +74,7 @@ class ShareableMomentCard extends StatelessWidget {
                   child: Image.asset(
                     'assets/images/generated/share_bg_celebration.webp',
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => CustomPaint(
+                    errorBuilder: (_, _, _) => CustomPaint(
                       painter: _PatternPainter(),
                       size: size,
                     ),

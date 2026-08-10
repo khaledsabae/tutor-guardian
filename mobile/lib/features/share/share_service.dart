@@ -53,7 +53,7 @@ class ShareService {
     if (await canLaunchUrl(uri)) {
       return await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
-    final result = await Share.share(text);
+    final result = await SharePlus.instance.share(ShareParams(text: text));
     return result.status == ShareResultStatus.success;
   }
 
@@ -90,7 +90,8 @@ class ShareService {
       final text = '$message\n\n📲 «المربّي» مجانًا لوجه الله:\n'
           '${installUrlFor(referralCode: referralCode)}';
 
-      final result = await Share.shareXFiles([XFile(file.path)], text: text);
+      final result = await SharePlus.instance.share(
+          ShareParams(files: [XFile(file.path)], text: text));
       final ok = result.status == ShareResultStatus.success;
       if (ok) {
         // fileTag like "milestone_<id>" / "quran_<n>" / "invite_<code>".

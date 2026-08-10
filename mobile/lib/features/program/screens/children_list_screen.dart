@@ -49,7 +49,7 @@ class ChildrenListScreen extends ConsumerWidget {
                       'assets/images/generated/empty_children.webp',
                       height: 150,
                       fit: BoxFit.contain,
-                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      errorBuilder: (_, _, _) => const SizedBox.shrink(),
                     ),
                       const SizedBox(height: 12),
                       Text(

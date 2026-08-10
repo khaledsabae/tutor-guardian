@@ -155,13 +155,13 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                         '${AppConfig.apiBaseUrl}/${widget.story.coverImage}',
                         fit: BoxFit.cover,
                         opacity: const AlwaysStoppedAnimation(0.2),
-                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
                       )
                     : Image.asset(
                         widget.story.coverImage,
                         fit: BoxFit.cover,
                         opacity: const AlwaysStoppedAnimation(0.2),
-                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                        errorBuilder: (_, _, _) => const SizedBox.shrink(),
                       )),
           ),
           Positioned.fill(

@@ -189,7 +189,7 @@ class TgClient {
     final deviceId = await _auth.getOrCreateDeviceId();
     final body = <String, dynamic>{
       'device_id': deviceId,
-      if (metadata != null) 'metadata': metadata,
+      'metadata': ?metadata,
     };
 
     final resp = await _http
@@ -365,7 +365,7 @@ class TgClient {
             'theme': theme,
             // Lets the backend resolve the child's gender for correctly
             // conjugated pre-generated stories (cache tier).
-            if (childId != null) 'child_id': childId,
+            'child_id': ?childId,
           }),
         )
         // stories are slower (full LLM generation) — allow the SSE-style budget
@@ -402,9 +402,9 @@ class TgClient {
           body: jsonEncode({
             'message': message,
             if (contact != null && contact.isNotEmpty) 'contact': contact,
-            if (audioBase64 != null) 'audio_base64': audioBase64,
+            'audio_base64': ?audioBase64,
             'device_id': deviceId,
-            if (appVersion != null) 'app_version': appVersion,
+            'app_version': ?appVersion,
           }),
         )
         .timeout(AppConfig.httpTimeout);
@@ -506,7 +506,7 @@ class TgClient {
     final body = <String, dynamic>{
       'rating': rating,
       if (comment != null && comment.isNotEmpty) 'comment': comment,
-      if (sessionId != null) 'session_id': sessionId,
+      'session_id': ?sessionId,
     };
     final resp = await _http
         .post(
@@ -867,8 +867,8 @@ class TgClient {
     final body = <String, dynamic>{
       'name': name,
       'age_group': ageGroup,
-      if (gender != null) 'gender': gender,
-      if (avatarEmoji != null) 'avatar_emoji': avatarEmoji,
+      'gender': ?gender,
+      'avatar_emoji': ?avatarEmoji,
     };
     final resp = await _http
         .post(

@@ -30,7 +30,7 @@ class MilestoneIcon extends StatelessWidget {
       height: size,
       fit: BoxFit.contain,
       filterQuality: FilterQuality.medium,
-      errorBuilder: (_, __, ___) =>
+      errorBuilder: (_, _, _) =>
           Text(emoji, style: TextStyle(fontSize: size * 0.62)),
     );
   }

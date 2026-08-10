@@ -144,7 +144,7 @@ class _Body extends ConsumerWidget {
           Image.asset(
             _domainIllustration(path.domain)!,
             fit: BoxFit.contain,
-            errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+            errorBuilder: (_, _, _) => const SizedBox.shrink(),
           ),
           const SizedBox(height: 16),
         ],

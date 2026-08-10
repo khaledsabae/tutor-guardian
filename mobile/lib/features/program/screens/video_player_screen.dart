@@ -233,7 +233,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             child: Image.network(
                               widget.thumbnailUrl!,
                               fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Container(
+                              errorBuilder: (_, _, _) => Container(
                                 color: Colors.black,
                                 child: const Center(child: Icon(Icons.videocam, size: 64, color: Colors.white54)),
                               ),

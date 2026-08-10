@@ -37,7 +37,7 @@ class DailyTipCard extends ConsumerWidget {
       child: asyncTip.when(
         data: (tip) => _Card(tip: tip, childName: profile.name),
         loading: () => const SizedBox.shrink(),
-        error: (_, __) => const SizedBox.shrink(),
+        error: (_, _) => const SizedBox.shrink(),
       ),
     );
   }
@@ -83,11 +83,11 @@ class _CardState extends ConsumerState<_Card> {
       await file.writeAsBytes(image);
 
       // Share the image
-      await Share.shareXFiles(
-        [XFile(file.path)],
+      await SharePlus.instance.share(ShareParams(
+        files: [XFile(file.path)],
         text: 'نصيحة اليوم من المربي الذكي: ${widget.tip.text}',
         subject: 'نصيحة اليوم - المربي الذكي',
-      );
+      ));
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

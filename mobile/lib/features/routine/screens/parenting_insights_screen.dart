@@ -298,7 +298,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: _insights.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
+            separatorBuilder: (_, _) => const SizedBox(height: 14),
             itemBuilder: (context, idx) {
               final insight = _insights[idx] as Map<String, dynamic>;
               return _buildInsightCard(insight)

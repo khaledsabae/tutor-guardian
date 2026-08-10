@@ -134,7 +134,7 @@ class _Body extends ConsumerWidget {
         return ListView.separated(
           padding: const EdgeInsets.all(12),
           itemCount: results.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          separatorBuilder: (_, _) => const SizedBox(height: 8),
           itemBuilder: (_, i) => _ResultTile(result: results[i]),
         );
       },
