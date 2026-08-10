@@ -84,27 +84,23 @@ class _BookshelfBodyState extends State<_BookshelfBody>
   void _initVideos() {
     for (final story in widget.stories) {
       if (story.hasVideo) {
-        late final VideoPlayerController controller;
         final file = story.videoFile!;
-        if (file.startsWith('docs/')) {
-          controller = VideoPlayerController.networkUrl(
-            Uri.parse('${AppConfig.apiBaseUrl}/$file'),
-          )
-            ..setLooping(true)
-            ..setVolume(0)
-            ..initialize().then((_) {
-              if (mounted) setState(() {});
-              controller.play();
-            });
-        } else {
-          controller = VideoPlayerController.asset(file)
-            ..setLooping(true)
-            ..setVolume(0)
-            ..initialize().then((_) {
-              if (mounted) setState(() {});
-              controller.play();
-            });
-        }
+        final controller = file.startsWith('docs/')
+            ? VideoPlayerController.networkUrl(
+                Uri.parse('${AppConfig.apiBaseUrl}/$file'),
+              )
+            : VideoPlayerController.asset(file);
+        controller
+          ..setLooping(true)
+          ..setVolume(0)
+          ..initialize().then((_) {
+            if (mounted) setState(() {});
+            controller.play();
+          }).catchError((_) {
+            // A cover video that will not load is cosmetic — the shelf falls
+            // back to the cover image. Without this, the failure escapes as an
+            // unhandled async error instead of being ignored.
+          });
         _videoControllers.add(controller);
       } else {
         _videoControllers.add(null);
@@ -313,7 +309,12 @@ class _BookCover extends StatelessWidget {
                                   story.id == 'kitten_kindness' ? '🐱' :
                                   story.id == 'layla_star' ? '⭐' :
                                   story.id == 'saleh_bird' ? '🐦' :
-                                  story.id == 'noor_clean' ? '🌳' : '🎁',
+                                  story.id == 'noor_clean' ? '🌳' :
+                                  story.id == 'maryam_toys' ? '🎁' :
+                                  story.id == 'omar_prayer' ? '🕌' :
+                                  story.id == 'khadija_neighbor' ? '🍲' :
+                                  story.id == 'abdullah_bismillah' ? '🍇' :
+                                  story.id == 'hamza_truth' ? '💬' : '📖',
                                   style: const TextStyle(fontSize: 72),
                                 ),
                               )
@@ -327,7 +328,12 @@ class _BookCover extends StatelessWidget {
                                   story.id == 'kitten_kindness' ? '🐱' :
                                   story.id == 'layla_star' ? '⭐' :
                                   story.id == 'saleh_bird' ? '🐦' :
-                                  story.id == 'noor_clean' ? '🌳' : '🎁',
+                                  story.id == 'noor_clean' ? '🌳' :
+                                  story.id == 'maryam_toys' ? '🎁' :
+                                  story.id == 'omar_prayer' ? '🕌' :
+                                  story.id == 'khadija_neighbor' ? '🍲' :
+                                  story.id == 'abdullah_bismillah' ? '🍇' :
+                                  story.id == 'hamza_truth' ? '💬' : '📖',
                                   style: const TextStyle(fontSize: 72),
                                 ),
                               )).animate(onPlay: (c) => c.repeat()).shimmer(
