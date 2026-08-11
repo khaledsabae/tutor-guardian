@@ -63,10 +63,6 @@ class PushService {
       await TgClient().registerPushToken(token, platform: 'android');
       await Analytics.pushTokenRegistered();
 
-      // Handle notification taps (terminated / background).
-      FirebaseMessaging.instance.getInitialMessage().then(_handleTap);
-      FirebaseMessaging.onMessageOpenedApp.listen(_handleTap);
-
       // Listen to token refreshes and keep the backend in sync.
       _messaging.onTokenRefresh.listen(
         (newToken) async {
@@ -91,15 +87,46 @@ class PushService {
     }
   }
 
-  /// Route notification taps to the deep-link handler if the payload
-  /// contains a `link` field (e.g., `/go?tab=routine`).
+  /// Start listening for notification taps.
+  ///
+  /// Deliberately separate from [registerToken] and called unconditionally
+  /// from `main()`. It used to live at the end of that method, behind
+  /// `requestPermission`, `ensureSession` and `registerPushToken` — and
+  /// `_postLaunchGrowthLoop` skips the whole call when `ensureSession`
+  /// throws. So a cold start from a notification tap with no connectivity
+  /// lost the navigation entirely: the user tapped, the app opened at home,
+  /// and nothing explained why. Tap handling needs no session and no token.
+  Future<void> listenTaps() async {
+    try {
+      FirebaseMessaging.instance.getInitialMessage().then(_handleTap);
+      FirebaseMessaging.onMessageOpenedApp.listen(_handleTap);
+    } catch (_) {
+      // FCM not available on this device/build — ignore silently.
+    }
+  }
+
+  /// Route notification taps to the deep-link handler.
+  ///
+  /// `link` is the contract; `route` is accepted only because the cron sent
+  /// that key until 2026-08-11 and notifications already queued on devices
+  /// still carry it. Drop the fallback once those have aged out.
   Future<void> _handleTap(RemoteMessage? message) async {
     if (message == null) return;
-    final link = message.data['link'] as String?;
-    if (link == null || link.isEmpty) return;
-    // Best-effort: analytics + deep-link dispatch.
+    final type = message.data['type'] ?? 'unknown';
+
+    // Logged before the early return below. When this sat after it, a payload
+    // the client could not route registered as no tap at all — which is how
+    // 29,194 delivered notifications came to show 810 opens and a tap-through
+    // rate that looked like apathy rather than a broken wire.
     try {
-      await Analytics.pushTapped(message.data['type'] ?? 'unknown');
+      await Analytics.pushTapped(type);
+    } catch (_) {
+      // ignore
+    }
+
+    final link = (message.data['link'] ?? message.data['route']) as String?;
+    if (link == null || link.isEmpty) return;
+    try {
       await DeepLinkHandler.instance.dispatch(link);
     } catch (_) {
       // ignore

@@ -162,8 +162,23 @@ class Analytics {
   // not a route change and so is invisible to a NavigatorObserver.
 
   /// A screen was pushed. [depth] is the resulting navigation-stack depth.
-  static Future<void> screenView(String screen, int depth) =>
-      _log('screen_view', {'screen': screen, 'nav_depth': depth});
+  ///
+  /// Two calls on purpose:
+  ///
+  /// 1. `logScreenView` writes the reserved `firebase_screen` params, which is
+  ///    the only thing that fills GA4's `unifiedScreenName`. Passing the name
+  ///    as a plain `screen` param under the reserved `screen_view` event left
+  ///    65,848 of 66,772 views reported as `(not set)` — every built-in screen
+  ///    report was blank, and our custom events collided with the SDK's own
+  ///    auto-collected `screen_view` in the same bucket.
+  /// 2. A non-reserved event keeps `nav_depth`, which no built-in event
+  ///    carries and which is what makes a bounce readable.
+  static Future<void> screenView(String screen, int depth) async {
+    try {
+      await _fa.logScreenView(screenName: screen, screenClass: screen);
+    } catch (_) {}
+    await _log('tg_screen_view', {'screen': screen, 'nav_depth': depth});
+  }
 
   /// Opened and backed straight out again — the user looked and left.
   /// [from] is the screen they came from, which is where the misleading
@@ -202,8 +217,10 @@ class Analytics {
   static Future<void> homeCardTapped(String card) =>
       _log('home_card_tapped', {'card': card});
 
-  /// The «المزيد» hub was opened.
-  static Future<void> hubOpened() => _log('hub_opened');
+  // hubOpened() removed 2026-08-11. It was called from HubScreen.initState,
+  // but RootScaffold's IndexedStack mounts every child at once, so it fired on
+  // cold start for every user rather than on first reveal. Use `tab_selected`
+  // filtered to tab='tab_more' instead.
 
   /// An entry inside the hub was tapped. If one group takes nearly all the
   /// taps, the grouping is wrong.

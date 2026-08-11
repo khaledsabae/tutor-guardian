@@ -16,6 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'core/analytics.dart';
+import 'core/crash_triage.dart';
 import 'core/nav_observer.dart';
 
 import 'api/tg_client.dart';
@@ -54,10 +55,31 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Crashlytics — funnel all Flutter errors to Firebase in release builds.
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  // Crashlytics. Everything that lands here is non-fatal by definition — the
+  // app is still running — so nothing below reports as a crash. See
+  // core/crash_triage.dart for why, and promote to fatal only at the two
+  // sites where the app genuinely cannot continue.
+  //
+  // Collection is off outside release so debug runs, emulators and CI stop
+  // filing reports against production.
+  unawaited(
+    FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(kReleaseMode),
+  );
+
+  FlutterError.onError = (details) {
+    // Keep the red screen in debug and the console dump everywhere.
+    FlutterError.presentError(details);
+    if (severityForFlutterError(details) == CrashSeverity.nonFatal) {
+      FirebaseCrashlytics.instance.recordFlutterError(details, fatal: false);
+    }
+  };
+
+  // No runZonedGuarded here: on this SDK it overlaps PlatformDispatcher.onError
+  // and every async error would be reported twice.
   PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    if (severityFor(error) == CrashSeverity.nonFatal) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: false);
+    }
     return true;
   };
 
@@ -71,6 +93,11 @@ void main() async {
     DeepLinkHandler.instance.init(appNavigatorKey);
     NotificationService.instance.processPendingTap();
   });
+
+  // Notification taps need neither a session nor a token, so they are handled
+  // here rather than inside _postLaunchGrowthLoop — which returns early when
+  // ensureSession() throws, silently dropping the tap that opened the app.
+  unawaited(PushService.instance.listenTaps());
 
   // Phase 0.2 + Phase 1 growth loops — fire-and-forget so it never blocks
   // cold start. Order: session → push token → referral → identity.

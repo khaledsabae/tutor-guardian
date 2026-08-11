@@ -249,6 +249,108 @@ void main() {
       expect(find.textContaining('متابعة متخصصة'), findsNothing);
     });
 
+    // Regression: a lesson reached by deep link or from favourites is built
+    // with childId: null and no age band. That used to hide the completion
+    // button with no explanation, so every notification landing on a lesson
+    // produced a page the parent could read but never finish — and
+    // lesson_opened never fired for it either.
+    testWidgets('LessonScreen falls back to the active child when none is passed',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.lessonJson = _lessonJson(
+        id: 'lesson_4-6_islamic_parenting_adab_01',
+        order: 1,
+        summary: 'ملخص تجريبي للدرس.',
+        tryThis: 'جرّب هذا النص في أسبوعك.',
+        reflectionPrompts: const [],
+        withWarning: false,
+      );
+
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 7, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 7;
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            locale: Locale('ar'),
+            // Exactly what deep_link_handler.dart builds: no child, no age.
+            home: LessonScreen(
+              lessonId: 'lesson_4-6_islamic_parenting_adab_01',
+              ageGroup: '',
+              childId: null,
+            ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('أتممت هذا الدرس'), findsOneWidget,
+          reason: 'the completion CTA must resolve the active child itself');
+      expect(find.text('أضف طفلك'), findsNothing);
+    });
+
+    testWidgets('LessonScreen offers add-child when there is genuinely no child',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.lessonJson = _lessonJson(
+        id: 'lesson_4-6_islamic_parenting_adab_01',
+        order: 1,
+        summary: 'ملخص تجريبي للدرس.',
+        tryThis: 'جرّب هذا النص في أسبوعك.',
+        reflectionPrompts: const [],
+        withWarning: false,
+      );
+
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            locale: Locale('ar'),
+            home: LessonScreen(
+              lessonId: 'lesson_4-6_islamic_parenting_adab_01',
+              ageGroup: '',
+              childId: null,
+            ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // A way forward, rather than a silently missing button.
+      expect(find.text('أضف طفلك'), findsOneWidget);
+      expect(find.text('أتممت هذا الدرس'), findsNothing);
+    });
+
     testWidgets('LessonScreen shows interactive content section when assets are present',
         (WidgetTester tester) async {
       final fake = _FakeTgClient();

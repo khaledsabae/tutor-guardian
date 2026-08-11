@@ -61,13 +61,28 @@ class LessonScreen extends ConsumerStatefulWidget {
 class _LessonScreenState extends ConsumerState<LessonScreen> {
   bool _marking = false;
   bool _markedInProgress = false; // guard against re-firing on every rebuild
+  bool _loggedOpen = false; // analytics fires once, independently of progress
+
+  /// The child this lesson is being read for.
+  ///
+  /// [LessonScreen.childId] arrives null from every entry point except the
+  /// path detail screen — notification deep links (deep_link_handler.dart) and
+  /// the favourites list both passed null. A null child hides the completion
+  /// button entirely, so those lessons could be read but never finished, and
+  /// the screen never explained why. Resolving the active child here fixes all
+  /// callers at once and immunises the ones added later.
+  ///
+  /// `ref.read`, because this is only reached from event handlers; `build`
+  /// watches the provider directly so it still rebuilds on a child switch.
+  int? get _childId => widget.childId ?? ref.read(activeChildIdProvider);
 
   Future<void> _markComplete() async {
-    if (widget.childId == null) return;
+    final childId = _childId;
+    if (childId == null) return;
     setState(() => _marking = true);
     try {
       await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
-          .markProgress(ProgressStatus.completed, childId: widget.childId);
+          .markProgress(ProgressStatus.completed, childId: childId);
       unawaited(Analytics.lessonCompleted(widget.lessonId));
       if (mounted) {
         // Confetti celebration, then return to path detail so the
@@ -97,18 +112,19 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   }
 
   Future<void> _markInProgress() async {
-    if (widget.childId == null) return;
+    final childId = _childId;
+    if (childId == null) return;
     try {
       await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
-          .markProgress(ProgressStatus.inProgress, childId: widget.childId);
+          .markProgress(ProgressStatus.inProgress, childId: childId);
     } catch (_) {
       // Silent — the in_progress marker is best-effort.
     }
   }
 
-  ProgressStatus _statusOf(String lessonId) {
-    if (widget.childId == null) return ProgressStatus.notStarted;
-    final asyncBundle = ref.watch(childProgressProvider(widget.childId!));
+  ProgressStatus _statusOf(String lessonId, int? childId) {
+    if (childId == null) return ProgressStatus.notStarted;
+    final asyncBundle = ref.watch(childProgressProvider(childId));
     return asyncBundle.maybeWhen(
           data: (b) => b.forLesson(lessonId)?.status,
           orElse: () => null,
@@ -119,8 +135,17 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   @override
   Widget build(BuildContext context) {
     final asyncLesson = ref.watch(lessonProvider(widget.lessonId));
-    final status = _statusOf(widget.lessonId);
-    final showCta = widget.childId != null && asyncLesson.hasValue;
+    // Watched, not read, so switching the active child refreshes the status.
+    final childId = widget.childId ?? ref.watch(activeChildIdProvider);
+    // Deep links carry no age band, so fall back to the selected child's.
+    final ageGroup = widget.ageGroup.isEmpty
+        ? ref.watch(selectedAgeGroupProvider)
+        : widget.ageGroup;
+    final status = _statusOf(widget.lessonId, childId);
+    final showCta = childId != null && asyncLesson.hasValue;
+    // No child at all means onboarding never finished. Say so, instead of
+    // rendering a lesson with no way to finish it and no explanation.
+    final showAddChild = childId == null && asyncLesson.hasValue;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -133,7 +158,18 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         ),
       ),
       // Sticky CTA — always reachable without scrolling to the bottom.
-      bottomNavigationBar: !showCta
+      bottomNavigationBar: showAddChild
+          ? SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                child: BouncyButton(
+                  label: AppLocalizations.of(context).addChild,
+                  color: Dt.accent,
+                  onTap: () => Navigator.of(context).push(AppRoutes.addChild()),
+                ),
+              ),
+            )
+          : !showCta
           ? null
           : SafeArea(
               child: Padding(
@@ -163,24 +199,33 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             ),
       body: asyncLesson.when(
         data: (lesson) {
-          // Fire-and-forget "in progress" exactly once when the lesson
-          // data first loads. Guard prevents re-firing on subsequent
-          // rebuilds. We wait for the progress bundle so a re-opened
-          // COMPLETED lesson is never downgraded back to in_progress
-          // (that was silently zeroing the path progress on the server).
-          final bundleReady = widget.childId == null ||
-              ref.watch(childProgressProvider(widget.childId!)).hasValue;
-          if (widget.childId != null && !_markedInProgress && bundleReady) {
-            _markedInProgress = true;
+          // The lesson is on screen — that is the whole event. It used to be
+          // logged alongside the progress write below, so it inherited both of
+          // that write's guards: no child, or a progress bundle that failed to
+          // load (offline), meant the lesson rendered and counted as never
+          // opened. lesson_opened at 31% of child_added is therefore a floor,
+          // not a measurement.
+          if (!_loggedOpen) {
+            _loggedOpen = true;
             unawaited(Analytics.lessonOpened(widget.lessonId));
+          }
+
+          // The progress write keeps both guards, and they are load-bearing:
+          // waiting for the bundle is what stops a re-opened COMPLETED lesson
+          // being downgraded to in_progress, which was silently zeroing path
+          // progress on the server.
+          final bundleReady = childId == null ||
+              ref.watch(childProgressProvider(childId)).hasValue;
+          if (childId != null && !_markedInProgress && bundleReady) {
+            _markedInProgress = true;
             if (status != ProgressStatus.completed) {
               _markInProgress();
             }
           }
           return _Body(
             lesson: lesson,
-            ageGroup: widget.ageGroup,
-            childId: widget.childId,
+            ageGroup: ageGroup,
+            childId: childId,
             status: status,
           );
         },

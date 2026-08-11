@@ -5,12 +5,9 @@
 /// thing I saw once": a single flat, grouped index, always one tap away.
 library;
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../program/providers/program_providers.dart';
@@ -26,14 +23,13 @@ class HubScreen extends ConsumerStatefulWidget {
 }
 
 class _HubScreenState extends ConsumerState<HubScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // The hub lives in an IndexedStack, so it is built once and `initState`
-    // fires on first reveal rather than on every tab switch — which is the
-    // number we want (did they ever find it at all?).
-    unawaited(Analytics.hubOpened());
-  }
+  // No initState analytics. The comment that used to live here claimed
+  // IndexedStack builds this screen on first reveal; it does not — it mounts
+  // every child immediately and only controls which one is painted. So
+  // `hub_opened` fired once per cold start for every user, including the ones
+  // who never tapped «المزيد», and its 2,678 users was a session count wearing
+  // a discovery label. `tab_selected` with tab='tab_more'
+  // (root_scaffold.dart) already measures the real thing.
 
   @override
   Widget build(BuildContext context) {

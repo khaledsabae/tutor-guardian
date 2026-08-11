@@ -92,7 +92,11 @@ class DeepLinkHandler {
     if (lessonMatch != null) {
       final lessonId = lessonMatch.group(1)!;
       navigator.popUntil((route) => route.isFirst);
-      navigator.push(AppRoutes.lesson(lessonId, '0-1'));
+      // Empty age band, not a made-up one. '0-1' is not a valid group at all
+      // — the backend accepts prenatal-1, 0-3, 2-3, 4-6, 7-9, 10-12, 13-15,
+      // 16-18 — so every deep-linked lesson showed a fabricated age chip.
+      // Empty makes the screen fall back to the active child's own band.
+      navigator.push(AppRoutes.lesson(lessonId, ''));
       return;
     }
 
@@ -100,9 +104,8 @@ class DeepLinkHandler {
     final pathMatch = RegExp(r'^/p/([^/]+)$').firstMatch(path);
     if (pathMatch != null) {
       final pathId = pathMatch.group(1)!;
-      // Default age group; the screen can adapt if not found.
       navigator.popUntil((route) => route.isFirst);
-      navigator.push(AppRoutes.pathDetail(pathId, '0-1'));
+      navigator.push(AppRoutes.pathDetail(pathId, ''));
       return;
     }
   }
