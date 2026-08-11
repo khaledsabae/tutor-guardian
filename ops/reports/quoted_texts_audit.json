@@ -1,0 +1,38 @@
+{
+  "checked": 894,
+  "flagged": [
+    {
+      "quote": "شابًا نشأ في عبادة الله",
+      "files": [
+        "knowledge_base/curriculum/lessons/lesson_13-15_islamic_mockery_01.json"
+      ],
+      "kind": "hadith",
+      "finder_why": "The wording is incomplete and slightly altered. The established hadith begins with 'كُنْ' and is usually narrated as 'كُنْ شَابًّا نَشَأَ فِي عِبَادَةِ اللَّهِ' (Be a youth who grows up in the worship of Allah).",
+      "confirmer_why": "The word 'شابًا' is incorrectly in the accusative case; it should be nominative: 'شابٌ' or simply 'شاب'.",
+      "suggested": "شاب نشأ في عبادة الله",
+      "confidence": "high"
+    },
+    {
+      "quote": "يرحمنا أكثر من أمّنا،",
+      "files": [
+        "knowledge_base/curriculum/lessons/lesson_7-9_aqeedah_fundamentals_05.json"
+      ],
+      "kind": "hadith",
+      "finder_why": "The wording is truncated and altered; the established hadith mentions 'God's mercy on a servant who shows mercy to people' and compares it to a mother's mercy for her child.",
+      "confirmer_why": "The standard hadith uses 'أرحم' (more merciful) not 'يرحمنا أكثر' (has mercy on us more).",
+      "suggested": "لله أرحم بنا من أمنا",
+      "confidence": "medium"
+    },
+    {
+      "quote": "يرزق كل مخلوق حتى النملة،",
+      "files": [
+        "knowledge_base/curriculum/lessons/lesson_7-9_aqeedah_fundamentals_05.json"
+      ],
+      "kind": "hadith",
+      "finder_why": "The wording is altered; the established hadith does not specify 'even the ant' in this phrasing, though the meaning is implied in broader narrations.",
+      "confirmer_why": "The established hadith mentions providing for the ant in its hole, not 'كل مخلوق حتى النملة'.",
+      "suggested": "إن الله يرزق النملة في جحرها",
+      "confidence": "medium"
+    }
+  ]
+}
