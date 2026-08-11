@@ -122,3 +122,9 @@ memory/
 # Reels output large media
 docs/marketing/reels_output/*.mp4
 docs/marketing/reels_output/*_thumb.jpg
+
+# ── Play Developer API service account (upload + review replies) ──────────
+# Same class as backend/secrets: a private key that must never be committed.
+scripts/play_service_account.json
+**/play_service_account.json
+**/*service_account*.json
