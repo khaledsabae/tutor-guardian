@@ -32,6 +32,7 @@ void main() {
       // A copy-paste that leaves an Instagram URL under the Facebook chip is
       // invisible in review and obvious to a user.
       const expected = {
+        'Telegram': 't.me',
         'Facebook': 'facebook.com',
         'Instagram': 'instagram.com',
         'TikTok': 'tiktok.com',
@@ -41,6 +42,14 @@ void main() {
         expect(host, isNotNull, reason: '${l.name}: no expected host declared');
         expect(Uri.parse(l.url).host, endsWith(host!), reason: l.name);
       }
+    });
+
+    test('Telegram uses the public username, not an invite link', () {
+      // t.me/+HASH links are revocable. A shipped app cannot be updated when
+      // one is, so it would keep sending parents to a dead page.
+      final tg = kSocialLinks.firstWhere((l) => l.name == 'Telegram');
+      expect(tg.url, isNot(contains('/+')));
+      expect(tg.url, isNot(contains('joinchat')));
     });
 
     test('no link is a bare profile root', () {

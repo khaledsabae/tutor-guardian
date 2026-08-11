@@ -26,6 +26,16 @@ class SocialLink {
 }
 
 const kSocialLinks = <SocialLink>[
+  // First, deliberately: it is the one channel a parent can subscribe to and
+  // then keep receiving from without an algorithm deciding whether they see it.
+  SocialLink(
+    name: 'Telegram',
+    // The public @username, not the invite link the autoposter's numeric chat
+    // id would suggest — an invite link can be revoked and then leads nowhere,
+    // while a shipped app keeps pointing at it.
+    url: 'https://t.me/almorabii',
+    colour: Color(0xFF229ED9),
+  ),
   SocialLink(
     name: 'Facebook',
     url: 'https://www.facebook.com/1162484030288659',

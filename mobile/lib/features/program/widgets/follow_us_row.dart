@@ -119,6 +119,8 @@ class _Mark extends StatelessWidget {
         return Icon(Icons.facebook, size: 18, color: link.colour);
       case 'Instagram':
         return _InstagramGlyph(colour: link.colour);
+      case 'Telegram':
+        return Icon(Icons.send_rounded, size: 17, color: link.colour);
       default:
         return Icon(Icons.music_note_rounded, size: 18, color: link.colour);
     }
