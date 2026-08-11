@@ -41,7 +41,7 @@ DB_PATH = db_path()
 
 def _send(device_id: str, title: str, body: str, data: dict):
     if DRY_RUN:
-        print(f"  [dry-run] would send to {device_id}: {title}")
+        print(f"  [dry-run] would send to {device_id}: {title}  data={data}")
         return {"ok": True, "dry_run": True}
     return send_to_device(device_id, title, body, data)
 
@@ -59,14 +59,61 @@ def _device_ids_with_tokens():
     return [r["device_id"] for r in rows]
 
 
+# ── Deep links ───────────────────────────────────────────────────────────
+#
+# The installed client reads `data['link']` (push_service.dart) and only
+# understands four shapes: /go, /inbox, /l/{id}, /p/{id}. Sending anything
+# else — as this file did with "route": "/paths" — makes the tap a no-op AND
+# skips Analytics.pushTapped, which is why push_tapped has never once fired.
+#
+# We link to /p/{path_id} rather than /l/{lesson_id} on purpose:
+# PathDetailScreen resolves the real active child (path_detail_screen.dart:78)
+# and passes it on to the lesson (:129), so the completion button appears and
+# lesson_opened fires. A bare /l/ link does neither until the client fix for
+# the null childId ships and is widely adopted.
+
+# One curated entry path per age band. Deliberately hand-picked: the generic
+# listing sorts by (age_group, domain, id), i.e. alphabetical domain, which is
+# not a content decision and would greet a returning parent with whatever
+# domain happens to sort first.
+STARTER_PATHS = {
+    "prenatal-1": "path_0-3_islamic_parenting_attachment",
+    "0-3": "path_0-3_islamic_parenting_attachment",
+    "2-3": "path_2-3_islamic_attachment",
+    "4-6": "path_4-6_islamic_parenting_bond",
+    "7-9": "path_7-9_islamic_parenting_akhlaq",
+    "10-12": "path_10-12_islamic_parenting_identity",
+    "13-15": "path_13-15_islamic_parenting_teen_identity",
+    "16-18": "path_16-18_islamic_parenting_adult_faith",
+}
+
+# Unwinds to the home tab, where the daily tip already lives.
+HOME_LINK = "/go"
+
+
+def _deep_link_for(age_group: str | None) -> str:
+    """A tappable destination for this device, falling back to home."""
+    path_id = STARTER_PATHS.get((age_group or "").strip())
+    return f"/p/{path_id}" if path_id else HOME_LINK
+
+
+# Newest child on the device decides the destination; a device with several
+# children gets the most recently touched one.
+_LATEST_AGE_GROUP = """
+    (SELECT c2.age_group FROM child_profiles c2
+      WHERE c2.device_id = cp.device_id
+      ORDER BY c2.updated_at DESC LIMIT 1)
+"""
+
+
 def streak_at_risk() -> set:
     """Send to parents whose last lesson/login was >36h ago.
     Returns the device_ids notified so win_back can skip them (≤1 evening
     push per device — growth plan §4.2 anti-annoyance rule)."""
     cutoff = (datetime.utcnow() - timedelta(hours=36)).isoformat()
     rows = _query(
-        """
-        SELECT DISTINCT cp.device_id
+        f"""
+        SELECT cp.device_id, {_LATEST_AGE_GROUP} AS age_group
         FROM child_profiles cp
         LEFT JOIN lesson_progress lp
             ON lp.device_id = cp.device_id
@@ -84,7 +131,7 @@ def streak_at_risk() -> set:
             device_id=r["device_id"],
             title="سلسلتك في انتظارك 🤍",
             body="درس جديد من «المربّي» ياخد دقيقتين — ادخل الحين واستمر في رحلة تربية أولادك.",
-            data={"type": "streak_at_risk", "route": "/paths"},
+            data={"type": "streak_at_risk", "link": _deep_link_for(r["age_group"])},
         )
         sent.add(r["device_id"])
     return sent
@@ -98,7 +145,7 @@ def new_content_digest():
             device_id=device_id,
             title="نصيحة اليوم 🌙",
             body="افتح المربّي واقرأ نصيحة اليوم — صدقة جارية لو شاركتها مع أحد الوالدين.",
-            data={"type": "daily_tip", "route": "/"},
+            data={"type": "daily_tip", "link": HOME_LINK},
         )
 
 
@@ -108,12 +155,13 @@ def win_back(skip: set | None = None):
     skip = skip or set()
     cutoff = (datetime.utcnow() - timedelta(days=5)).isoformat()
     rows = _query(
-        """
-        SELECT DISTINCT device_id FROM child_profiles
-        WHERE device_id IN (
+        f"""
+        SELECT DISTINCT cp.device_id, {_LATEST_AGE_GROUP} AS age_group
+        FROM child_profiles cp
+        WHERE cp.device_id IN (
             SELECT device_id FROM push_tokens WHERE token IS NOT NULL AND token != ''
         )
-        AND (updated_at IS NULL OR updated_at < ?)
+        AND (cp.updated_at IS NULL OR cp.updated_at < ?)
         """,
         (cutoff,),
     )
@@ -124,7 +172,7 @@ def win_back(skip: set | None = None):
             device_id=r["device_id"],
             title="مشتاقين ليك 🤍",
             body="رحلة تربية أولادك مستمرة — ادخل المربّي دلوقتي واكمل من حيث وقفت.",
-            data={"type": "win_back", "route": "/paths"},
+            data={"type": "win_back", "link": _deep_link_for(r["age_group"])},
         )
 
 
