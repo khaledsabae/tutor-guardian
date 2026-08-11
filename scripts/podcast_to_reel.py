@@ -234,7 +234,7 @@ def render_reel(mp3_path: str, output_path: str, title: str, timed_lines: list[d
     # Watermark (bottom center, hidden in last 6s)
     wm_end = max(0.0, duration - 6.0)
     chains.append(
-        f"{last}drawtext=text='{_escape(WATERMARK_TEXT)}':fontfile=/usr/share/fonts/truetype/noto/NotoSansArabic.ttf:"
+        f"{last}drawtext=text='{_escape(WATERMARK_TEXT)}':fontfile=/usr/share/fonts/truetype/noto/NotoSansArabic-Regular.ttf:"
         f"fontsize=38:fontcolor=white@0.9:borderw=2:bordercolor=black:x=(w-tw)/2:y=h-th-155:"
         f"enable='between(t\\,0\\,{wm_end})'[wm]"
     )
