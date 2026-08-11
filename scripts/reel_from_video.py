@@ -33,6 +33,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "docs" / "marketing" / "reels_v2"
+HOOKS_FILE = ROOT / "docs" / "marketing" / "reel_hooks.json"
 FONT_BOLD = "/usr/share/fonts/truetype/noto/NotoSansArabic-Bold.ttf"
 FONT_REG = "/usr/share/fonts/truetype/noto/NotoSansArabic-Regular.ttf"
 
@@ -145,6 +146,19 @@ def curriculum_copy(video: Path) -> tuple[str, list[str]]:
             if t:
                 lessons.append(t)
     return title, lessons
+
+
+def hook_for(video: Path) -> str:
+    """The written hook for this path, if there is one.
+
+    The first two seconds decide whether a parent keeps watching, and that is
+    marketing copy — not something to derive from a title. They live in
+    reel_hooks.json so they can be rewritten without touching code.
+    """
+    if not HOOKS_FILE.exists():
+        return ""
+    hooks = json.loads(HOOKS_FILE.read_text(encoding="utf-8"))
+    return hooks.get(video.stem.replace("_ar_eg", ""), "")
 
 
 def pick_segment(video: Path, duration: float) -> float:
@@ -339,17 +353,40 @@ def main() -> int:
     ap.add_argument("--captions", choices=["off","base","small","medium"], default="off",
                     help="ترجمة محروقة. base رديء جدًا مع العربي — small فما فوق أو off")
     ap.add_argument("--out", help="مسار الناتج")
+    ap.add_argument("--batch", type=int, default=0,
+                    help="ولّد هذا العدد من الريلز — يتخطّى ما وُلّد سابقًا")
     ap.add_argument("--montage", type=int, default=0,
                     help="عدد القصّات — يمنع وقوع الريل على شريحة واحدة ثابتة")
     args = ap.parse_args()
 
     srcs = sources()
-    if args.list or not args.source:
+    if args.list or (not args.source and not args.batch):
         print(f"مصادر مسرودة متاحة: {len(srcs)}\n")
         for p in srcs[:15]:
             print(f"  {probe_duration(p):6.0f}s  {p.relative_to(ROOT)}")
         if not args.source:
             return 0
+        return 0
+
+    if args.batch:
+        made, skipped = 0, 0
+        for src in srcs:
+            if made >= args.batch:
+                break
+            out = OUT_DIR / f"reel_{src.stem}.mp4"
+            if out.exists():
+                skipped += 1
+                continue
+            hk = hook_for(src)
+            if not hk:
+                print(f"  ⊘ {src.stem}: لا خطّاف مكتوب — تخطّي")
+                continue
+            print(f"\n[{made + 1}/{args.batch}] {src.stem}")
+            print(f"  خطّاف: {hk}")
+            if render_montage(src, args.duration, hk, out, args.montage or 6):
+                print(f"  ✅ {out.name}  ({out.stat().st_size / 1048576:.1f} MB)")
+                made += 1
+        print(f"\nتم: {made} ريل جديد · {skipped} موجود مسبقًا")
         return 0
 
     video = Path(args.source)
@@ -360,7 +397,7 @@ def main() -> int:
         return 1
 
     start = args.start if args.start is not None else pick_segment(video, args.duration)
-    hook = args.hook or "دقيقة واحدة تفرق في تربية ابنك"
+    hook = args.hook or hook_for(video) or "دقيقة واحدة تفرق في تربية ابنك"
     out = Path(args.out) if args.out else OUT_DIR / f"reel_{video.stem}_{int(start)}.mp4"
 
     print(f"المصدر : {video.name}")
