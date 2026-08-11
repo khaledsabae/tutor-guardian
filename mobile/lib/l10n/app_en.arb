@@ -427,6 +427,8 @@
   "settingsLoadFailed": "Failed to load settings.\n{error}",
   "settingsMethodologyLink": "Our Methodology & Sources",
   "settingsMethodologyDesc": "How we choose our content and its scholarly sources",
+  "settingsFollowUs": "Follow us",
+  "settingsFollowUsDesc": "Short clips and tips, as they go out",
   "genderOther": "Other",
   "lessonTitle": "Lesson",
   "lessonCompleted": "Completed ✓",

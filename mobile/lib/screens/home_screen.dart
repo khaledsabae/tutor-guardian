@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../l10n/app_localizations.dart';
 
 import '../features/home/widgets/home_app_bar.dart';
+import '../features/home/widgets/home_community_note.dart';
 import '../features/home/widgets/home_shortcuts_grid.dart';
 import '../features/home/widgets/home_stats_row.dart';
 import '../features/home/widgets/today_focus_card.dart';
@@ -122,6 +123,9 @@ class HomeScreen extends ConsumerWidget {
           // streak), once per 7-day tier. Last, so it never outranks the
           // parent's own next step.
           PrideInviteCard(streakDays: bundle?.dailyLoginStreak ?? 0),
+          // Type, not a card, and last: a closing "you're not alone" that the
+          // eye reaches only after the day's work.
+          const HomeCommunityNote(),
         ],
       ),
     );

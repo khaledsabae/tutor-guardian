@@ -7,44 +7,22 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../api/tg_client.dart';
+import '../../features/referral/community_providers.dart';
 import '../../theme/app_theme.dart';
 import '../../l10n/app_localizations.dart';
 
-class CommunityProofCard extends StatefulWidget {
+class CommunityProofCard extends ConsumerWidget {
   const CommunityProofCard({super.key});
 
-  /// Only surface once the community is large enough to be persuasive.
-  static const int _minFamilies = 10;
-
   @override
-  State<CommunityProofCard> createState() => _CommunityProofCardState();
-}
-
-class _CommunityProofCardState extends State<CommunityProofCard> {
-  int? _families;
-
-  @override
-  void initState() {
-    super.initState();
-    _load();
-  }
-
-  Future<void> _load() async {
-    try {
-      final s = await TgClient().getCommunityStats();
-      final f = (s['families'] as num?)?.toInt() ?? 0;
-      if (mounted) setState(() => _families = f);
-    } catch (_) {
-      // stay hidden on any failure
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final f = _families;
-    if (f == null || f < CommunityProofCard._minFamilies) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Shared with Home's quieter line, so the two surfaces cannot disagree
+    // about the count or fetch it twice. The card treatment stays here: this
+    // screen is *about* inviting, so the line has earned its box.
+    final f = ref.watch(communityFamiliesProvider).valueOrNull;
+    if (f == null) {
       return const SizedBox.shrink();
     }
     return Container(

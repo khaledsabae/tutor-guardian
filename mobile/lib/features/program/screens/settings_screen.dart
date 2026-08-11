@@ -33,6 +33,7 @@ import '../providers/backup_provider.dart';
 import 'children_list_screen.dart';
 import '../providers/lesson_assets_provider.dart';
 import '../../adhkar/services/notification_service.dart';
+import '../widgets/follow_us_row.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -225,6 +226,9 @@ class SettingsScreen extends ConsumerWidget {
                     }
                   },
                 ),
+                const SizedBox(height: 20),
+                const FollowUsRow(),
+                const SizedBox(height: 20),
                 // المفضلة and إنجازاتي moved to the hub (المكتبة / الإنجازات).
                 // Content people go looking for should be in the index, not
                 // findable only by someone who thought to open settings.

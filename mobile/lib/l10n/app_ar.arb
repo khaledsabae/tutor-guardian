@@ -427,6 +427,8 @@
   "settingsLoadFailed": "تعذّر تحميل الإعدادات.\n{error}",
   "settingsMethodologyLink": "منهجيتنا ومصادرنا",
   "settingsMethodologyDesc": "كيف نختار المحتوى ومصادره العلمية والشرعية",
+  "settingsFollowUs": "تابعنا",
+  "settingsFollowUsDesc": "نصائح ومقاطع قصيرة أول بأول على صفحاتنا",
   "genderOther": "أخرى",
   "lessonTitle": "الدرس",
   "lessonCompleted": "مكتمل ✓",
