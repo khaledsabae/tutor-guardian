@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# reel — اختصار لمصنع الريلز، يشتغل من أي مكان.
+#
+# لأن الأمر الطويل يحتاج مسار الـvenv ومسار السكريبت معًا، وتشغيله من مجلد
+# آخر يفشل بـ"No such file or directory" دون أن يوضّح السبب.
+#
+#   scripts/reel --list
+#   scripts/reel --source docs/path_videos/path_4-6_islamic_parenting_adab_ar_eg.mp4 --montage 6
+#
+# اجعله متاحًا بالاسم من أي مكان (مرة واحدة):
+#   ln -sf /home/khalednew/projects/tutor-guardian/scripts/reel ~/.local/bin/reel
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+PY="$ROOT/backend/.venv/bin/python"
+[ -x "$PY" ] || PY="$(command -v python3)"
+[ -x "$PY" ] || { echo "لا يوجد بايثون صالح" >&2; exit 1; }
+
+for bin in ffmpeg ffprobe; do
+    command -v "$bin" >/dev/null || { echo "ناقص: $bin" >&2; exit 1; }
+done
+
+cd "$ROOT"
+exec "$PY" "$ROOT/scripts/reel_from_video.py" "$@"

@@ -62,9 +62,15 @@ def sources() -> list[Path]:
 
 
 def _escape(text: str) -> str:
-    """drawtext eats these; '%' has no working escape so it goes."""
+    """drawtext eats these; '%' has no working escape so it goes.
+
+    Parentheses render as tofu in NotoSansArabic at these sizes, and every path
+    title ends with an age band in them — "(10-12 سنة)" came out as a box on
+    screen. Arabic-script brackets have glyphs, so swap rather than drop.
+    """
     return (text.replace("\\", "").replace("%", "").replace(":", "\\:")
-                .replace("'", "’").replace(",", "\\,"))
+                .replace("'", "’").replace(",", "\\,")
+                .replace("(", "﴿").replace(")", "﴾"))
 
 
 def _wrap(text: str, width: int) -> list[str]:
@@ -111,6 +117,34 @@ def transcribe(video: Path, start: float, duration: float, workdir: Path, model:
             "text": " ".join(lines[2:]).strip(),
         })
     return out
+
+
+def curriculum_copy(video: Path) -> tuple[str, list[str]]:
+    """The path title and its lesson titles, as already written by a human.
+
+    The frame is 9:16 and the footage is 16:9, so roughly 40% of the screen is
+    letterbox. Filling it with machine transcription was worse than silence —
+    whisper produced "لو المفتاح ضداء كل حاجة" — but this text already exists
+    in the curriculum, written properly, and describes exactly what is on
+    screen.
+    """
+    stem = video.stem.replace("_ar_eg", "")
+    base = ROOT / "knowledge_base" / "curriculum"
+    title, lessons = "", []
+
+    path_file = base / "paths" / f"{stem}.json"
+    if path_file.exists():
+        data = json.loads(path_file.read_text(encoding="utf-8"))
+        title = data.get("title", "")
+        for lid in data.get("lesson_ids", []):
+            lf = base / "lessons" / f"{lid}.json"
+            if not lf.exists():
+                continue
+            ld = json.loads(lf.read_text(encoding="utf-8"))
+            t = (ld.get("title_ar") or ld.get("title") or "").strip()
+            if t:
+                lessons.append(t)
+    return title, lessons
 
 
 def pick_segment(video: Path, duration: float) -> float:
@@ -200,7 +234,8 @@ def render(video: Path, start: float, duration: float, hook: str, out: Path, cap
 
 
 
-def montage_filter(cuts: list[tuple[float, float]], hook: str, duration: float) -> str:
+def montage_filter(cuts: list[tuple[float, float]], hook: str, duration: float,
+                   title: str = "", points: list[str] | None = None) -> str:
     """Cross-cut several moments so the frame changes every few seconds.
 
     A single 30s window lands on one slide: these videos hold each slide for
@@ -230,6 +265,30 @@ def montage_filter(cuts: list[tuple[float, float]], hook: str, duration: float) 
                       f"x=(w-tw)/2:y={250 + i * 96}:enable='between(t\\,0\\,3.0)'[hk{i}]")
         last = f"[hk{i}]"
 
+    # Upper letterbox: the path title, once the hook has cleared.
+    for i, line in enumerate(_wrap(title, 26)):
+        chains.append(f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD}:"
+                      f"fontsize=58:fontcolor=white:borderw=5:bordercolor=0x111111:"
+                      f"x=(w-tw)/2:y={300 + i * 74}:enable='gt(t\\,3.2)'[ttl{i}]")
+        last = f"[ttl{i}]"
+
+    # Lower letterbox: one lesson title at a time, so the empty band carries
+    # the actual curriculum instead of blurred grey.
+    pts = points or []
+    if pts:
+        window = max(3.0, (duration - 4.0) / len(pts))
+        for i, pt in enumerate(pts):
+            st, en = 3.2 + i * window, min(duration - 4.0, 3.2 + (i + 1) * window)
+            if st >= en:
+                break
+            for idx, line in enumerate(_wrap(pt, 24)):
+                chains.append(
+                    f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD}:"
+                    f"fontsize=60:fontcolor=0xFDE68A:borderw=5:bordercolor=0x111111:"
+                    f"x=(w-tw)/2:y={int(H * 0.755) + idx * 78}:"
+                    f"enable='between(t\\,{st:.2f}\\,{en:.2f})'[pt{i}_{idx}]")
+                last = f"[pt{i}_{idx}]"
+
     cta_from = max(0.0, duration - 4.0)
     for i, line in enumerate(CTA_LINES):
         chains.append(f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD if i == 0 else FONT_REG}:"
@@ -255,7 +314,8 @@ def render_montage(video: Path, duration: float, hook: str, out: Path, n_cuts: i
         cmd += ["-ss", f"{st:.2f}", "-t", f"{dur:.2f}", "-i", str(video)]
     # Narration from one continuous stretch — chopped audio would be unlistenable.
     cmd += ["-ss", f"{lo:.2f}", "-t", f"{duration:.2f}", "-i", str(video)]
-    cmd += ["-filter_complex", montage_filter(cuts, hook, duration),
+    title, points = curriculum_copy(video)
+    cmd += ["-filter_complex", montage_filter(cuts, hook, duration, title, points),
             "-map", "[v]", "-map", f"{len(cuts)}:a?",
             "-c:v", "libx264", "-preset", "medium", "-crf", "20",
             "-pix_fmt", "yuv420p", "-r", "30", "-c:a", "aac", "-b:a", "128k",
@@ -264,7 +324,8 @@ def render_montage(video: Path, duration: float, hook: str, out: Path, n_cuts: i
     if r.returncode != 0:
         print("  \u2717 ffmpeg:", r.stderr[-700:])
         return False
-    print(f"  مونتاج: {n_cuts} قصّات، تغيّر كل {per:.1f}s")
+    print(f"  مونتاج: {n_cuts} قصّات، تغيّر كل {per:.1f}s"
+          + (f" · نص المنهج: {len(points)} نقطة" if points else " · بلا نص منهج"))
     return True
 
 def main() -> int:
