@@ -436,7 +436,7 @@ def render(video: Path, start: float, duration: float, hook: str, out: Path, cap
         fc = build_filter(caps, hook, duration, domain_look(video), frame_band(video), logo_idx)
         cmd += ["-filter_complex", fc, "-map", "[v]", "-map", "0:a?",
                "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-               "-pix_fmt", "yuv420p", "-r", "30",
+               "-pix_fmt", "yuv420p", "-r", "30", "-movflags", "+faststart",
                "-c:a", "aac", "-b:a", "128k", "-shortest", str(out)]
         r = _run(cmd)
         if r.returncode != 0:
@@ -564,6 +564,11 @@ def render_montage(video: Path, duration: float, hook: str, out: Path, n_cuts: i
             "-map", "[v]", "-map", f"{len(cuts)}:a?",
             "-c:v", "libx264", "-preset", "medium", "-crf", "20",
             "-pix_fmt", "yuv420p", "-r", "30", "-c:a", "aac", "-b:a", "128k",
+            # Without this the moov atom lands after mdat, so anything reading
+            # the file over HTTP has to fetch all of it before it knows what it
+            # is. Buffer gives up and reports "Video could not be read from its
+            # URL" — a message that points at the URL, which is fine.
+            "-movflags", "+faststart",
             "-shortest", str(out)]
     r = _run(cmd)
     if r.returncode != 0:
