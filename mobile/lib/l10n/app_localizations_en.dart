@@ -2212,32 +2212,32 @@ class AppLocalizationsEn extends AppLocalizations {
       'One-time only — this screen won\'t appear again.';
 
   @override
-  String get updateSplashFeature1 => 'New Bedtime Stories';
+  String get updateSplashFeature1 => 'Your First Lesson, One Tap Away';
 
   @override
   String get updateSplashFeature1Desc =>
-      'Added 4 new illustrated, calming bedtime stories (Layla, Salih, Noor, and Maryam) to help your child relax and sleep peacefully.';
+      'Instead of searching the list, the home screen now opens a lesson picked for your child\'s age.';
 
   @override
-  String get updateSplashFeature2 => 'QR Web Share for Teens 13–18';
+  String get updateSplashFeature2 => 'Reminders Now Take You Somewhere';
 
   @override
   String get updateSplashFeature2Desc =>
-      'Share the Habit Tracker with your teen via a web link — they open it in their browser, no install needed.';
+      'Tapping a reminder opens the path you actually left off in, not just the home screen.';
 
   @override
-  String get updateSplashFeature3 => 'Child Mode for Ages 7–12';
+  String get updateSplashFeature3 => 'Lessons From Reminders Can Be Completed';
 
   @override
   String get updateSplashFeature3Desc =>
-      'Let your child log their daily habits independently under your supervision — self-reporting without pressure.';
+      'Any lesson opened from a notification or your favourites now has the same \"I completed this lesson\" button as the rest.';
 
   @override
-  String get updateSplashFeature4 => 'Stability & Speed';
+  String get updateSplashFeature4 => 'Quieter Under the Hood';
 
   @override
   String get updateSplashFeature4Desc =>
-      'The app now handles network interruptions smoothly — your data is safe.';
+      'We cleaned up a background noise source that was needlessly eating into the app\'s stability.';
 
   @override
   String quranMemTitle(Object name) {

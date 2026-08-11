@@ -4049,49 +4049,49 @@ abstract class AppLocalizations {
   /// No description provided for @updateSplashFeature1.
   ///
   /// In ar, this message translates to:
-  /// **'قصص قبل النوم الجديدة'**
+  /// **'درسك الأول على بُعد ضغطة'**
   String get updateSplashFeature1;
 
   /// No description provided for @updateSplashFeature1Desc.
   ///
   /// In ar, this message translates to:
-  /// **'أضفنا 4 قصص تربوية مصورة وهادئة جديدة (ليلى، صالح، نور، ومريم) لمساعدة طفلك على الاسترخاء والنوم بسلام.'**
+  /// **'بدل ما تدوّر في القائمة، الصفحة الرئيسية بتفتح لك درسًا مختارًا لعمر طفلك مباشرة.'**
   String get updateSplashFeature1Desc;
 
   /// No description provided for @updateSplashFeature2.
   ///
   /// In ar, this message translates to:
-  /// **'QR ويب شير للمراهقين 13-18'**
+  /// **'الإشعارات بقت توصّلك للمكان الصح'**
   String get updateSplashFeature2;
 
   /// No description provided for @updateSplashFeature2Desc.
   ///
   /// In ar, this message translates to:
-  /// **'شارك \"ميزان العادات\" مع ابنك المراهق عبر رابط ويب — يدخل من متصفحه بدون تثبيت.'**
+  /// **'ضغطة على التذكير بتفتح المسار اللي وقفت عنده فعلًا، مش الصفحة الرئيسية.'**
   String get updateSplashFeature2Desc;
 
   /// No description provided for @updateSplashFeature3.
   ///
   /// In ar, this message translates to:
-  /// **'وضع الطفل 7-12 سنة'**
+  /// **'الدروس من التذكيرات بقت تتقفل'**
   String get updateSplashFeature3;
 
   /// No description provided for @updateSplashFeature3Desc.
   ///
   /// In ar, this message translates to:
-  /// **'خلّي طفلك يسجّل عاداته اليومية بنفسه تحت إشرافك — تقييم ذاتي بدون ضغط.'**
+  /// **'أي درس تفتحه من إشعار أو من المفضّلة بقى فيه زر «أتممت هذا الدرس» زي أي درس تاني.'**
   String get updateSplashFeature3Desc;
 
   /// No description provided for @updateSplashFeature4.
   ///
   /// In ar, this message translates to:
-  /// **'ثبات وسرعة'**
+  /// **'هدوء تحت الغطاء'**
   String get updateSplashFeature4;
 
   /// No description provided for @updateSplashFeature4Desc.
   ///
   /// In ar, this message translates to:
-  /// **'التطبيق بقى يتعامل مع انقطاع الشبكة بسلاسة — بياناتك في أمان.'**
+  /// **'نظّفنا مصدر إزعاج في الخلفية كان بيستهلك من ثبات التطبيق دون داعٍ.'**
   String get updateSplashFeature4Desc;
 
   /// No description provided for @quranMemTitle.

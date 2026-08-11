@@ -2183,32 +2183,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get updateSplashOnce => 'مرّة واحدة فقط — لن تظهر هذه الشاشة مجدداً.';
 
   @override
-  String get updateSplashFeature1 => 'قصص قبل النوم الجديدة';
+  String get updateSplashFeature1 => 'درسك الأول على بُعد ضغطة';
 
   @override
   String get updateSplashFeature1Desc =>
-      'أضفنا 4 قصص تربوية مصورة وهادئة جديدة (ليلى، صالح، نور، ومريم) لمساعدة طفلك على الاسترخاء والنوم بسلام.';
+      'بدل ما تدوّر في القائمة، الصفحة الرئيسية بتفتح لك درسًا مختارًا لعمر طفلك مباشرة.';
 
   @override
-  String get updateSplashFeature2 => 'QR ويب شير للمراهقين 13-18';
+  String get updateSplashFeature2 => 'الإشعارات بقت توصّلك للمكان الصح';
 
   @override
   String get updateSplashFeature2Desc =>
-      'شارك \"ميزان العادات\" مع ابنك المراهق عبر رابط ويب — يدخل من متصفحه بدون تثبيت.';
+      'ضغطة على التذكير بتفتح المسار اللي وقفت عنده فعلًا، مش الصفحة الرئيسية.';
 
   @override
-  String get updateSplashFeature3 => 'وضع الطفل 7-12 سنة';
+  String get updateSplashFeature3 => 'الدروس من التذكيرات بقت تتقفل';
 
   @override
   String get updateSplashFeature3Desc =>
-      'خلّي طفلك يسجّل عاداته اليومية بنفسه تحت إشرافك — تقييم ذاتي بدون ضغط.';
+      'أي درس تفتحه من إشعار أو من المفضّلة بقى فيه زر «أتممت هذا الدرس» زي أي درس تاني.';
 
   @override
-  String get updateSplashFeature4 => 'ثبات وسرعة';
+  String get updateSplashFeature4 => 'هدوء تحت الغطاء';
 
   @override
   String get updateSplashFeature4Desc =>
-      'التطبيق بقى يتعامل مع انقطاع الشبكة بسلاسة — بياناتك في أمان.';
+      'نظّفنا مصدر إزعاج في الخلفية كان بيستهلك من ثبات التطبيق دون داعٍ.';
 
   @override
   String quranMemTitle(Object name) {
