@@ -2582,6 +2582,18 @@ abstract class AppLocalizations {
   /// **'كيف نختار المحتوى ومصادره العلمية والشرعية'**
   String get settingsMethodologyDesc;
 
+  /// No description provided for @settingsFollowUs.
+  ///
+  /// In ar, this message translates to:
+  /// **'تابعنا'**
+  String get settingsFollowUs;
+
+  /// No description provided for @settingsFollowUsDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'نصائح ومقاطع قصيرة أول بأول على صفحاتنا'**
+  String get settingsFollowUsDesc;
+
   /// No description provided for @genderOther.
   ///
   /// In ar, this message translates to:

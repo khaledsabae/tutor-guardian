@@ -1339,6 +1339,12 @@ class AppLocalizationsAr extends AppLocalizations {
       'كيف نختار المحتوى ومصادره العلمية والشرعية';
 
   @override
+  String get settingsFollowUs => 'تابعنا';
+
+  @override
+  String get settingsFollowUsDesc => 'نصائح ومقاطع قصيرة أول بأول على صفحاتنا';
+
+  @override
   String get genderOther => 'أخرى';
 
   @override

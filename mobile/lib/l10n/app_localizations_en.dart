@@ -1358,6 +1358,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'How we choose our content and its scholarly sources';
 
   @override
+  String get settingsFollowUs => 'Follow us';
+
+  @override
+  String get settingsFollowUsDesc => 'Short clips and tips, as they go out';
+
+  @override
   String get genderOther => 'Other';
 
   @override
