@@ -234,6 +234,124 @@ _EMERGENCY_KEYWORDS = {
     "تجرح نفسها",
     "ينهي حياته",
     "يقتل نفسه",
+    # ── English ──────────────────────────────────────────────────────────
+    #
+    # 🚨 Not hypothetical. GA4, 28 days: 881 users (27%) run the app on an
+    # English device and 129 of them sent 331 messages to the assistant;
+    # another 71 on French devices sent 145. The UI already ships in English
+    # to any `locale=en` device. Until now this whole set was Arabic, so an
+    # English "she is not breathing" never escalated — it went to the normal
+    # parenting path and came back as advice.
+    #
+    # Same discipline as the Arabic entries above: multi-word where a single
+    # word is ambiguous, because the failure this file already survived once
+    # was over-matching, not under-matching. "choking hazard", "poison
+    # prevention", "drowning prevention" and "burn safety" are ordinary
+    # questions a careful parent asks, and answering them with "call an
+    # ambulance" teaches parents the assistant is broken.
+    #
+    # No digits: `_FRANCO` maps 9→ص and 3→ع, so "call 911" normalizes to
+    # "call ص11" and a digit keyword can never match.
+    #
+    # Airway / breathing
+    "not breathing",
+    "stopped breathing",
+    "cant breathe",
+    "cannot breathe",
+    "is choking",
+    "choked on",
+    # Consciousness
+    "unconscious",
+    "passed out",
+    "lost consciousness",
+    "wont wake up",
+    "will not wake up",
+    "not waking up",
+    # Seizure
+    "having a seizure",
+    "had a seizure",
+    "is convulsing",
+    # Ingestion — the verb is what separates an incident from a safety question
+    "swallowed bleach",
+    "swallowed poison",
+    "swallowed a battery",
+    "swallowed batteries",
+    "swallowed detergent",
+    "swallowed pills",
+    "drank bleach",
+    "drank poison",
+    "ate rat poison",
+    "took too many pills",
+    "overdosed",
+    "overdose",
+    # Trauma
+    "severe bleeding",
+    "bleeding heavily",
+    "wont stop bleeding",
+    "is drowning",
+    "electric shock",
+    "electrocuted",
+    "badly burned",
+    "third degree burn",
+    # Summoning help
+    "call an ambulance",
+    "need an ambulance",
+    "call emergency services",
+    # Self-harm and suicide. Deliberately including the bare nouns, matching
+    # the Arabic side (انتحار/ينتحر): a false escalation here costs a parent
+    # one unhelpful reply, and the alternative cost is not symmetric.
+    "suicide",
+    "suicidal",
+    "kill himself",
+    "kill herself",
+    "kill myself",
+    "hurt himself",
+    "hurt herself",
+    "hurting himself",
+    "hurting herself",
+    "harm himself",
+    "harm herself",
+    "self harm",
+    "cutting herself",
+    "cutting himself",
+    "end his life",
+    "end her life",
+    # ── French ───────────────────────────────────────────────────────────
+    #
+    # 353 users (11%) on French devices; 71 of them sent 145 messages to the
+    # assistant. Deliberately narrower than the English set: only phrasings
+    # where the emergency is unambiguous, because I can verify English parent
+    # idiom against the app's own data and cannot do the same here.
+    # ⚠️ Wants a native-speaker pass before it is treated as complete —
+    # what is here should not fire wrongly, but it certainly misses cases.
+    "ne respire plus",
+    "ne respire pas",
+    # s'étouffe → "setouffe": the normalizer strips the apostrophe *inside* the
+    # whitespace token, so the elided pronoun stays glued to the verb. One
+    # token covers every subject. (My first guess here was "stouffe", which
+    # would never have matched anything — the test caught it, not review.)
+    "setouffe",
+    "inconscient",
+    "inconsciente",
+    "perdu connaissance",
+    "ne se reveille pas",
+    "crise convulsive",
+    "convulsions",
+    "a avale de leau de javel",
+    "a avale une pile",
+    "a bu de leau de javel",
+    "a avale du poison",
+    "empoisonne",
+    "hemorragie",
+    "saigne beaucoup",
+    "electrocute",
+    "appelez une ambulance",
+    "appeler une ambulance",
+    "se suicider",
+    "suicide",           # مشترك مع الإنجليزية، والتطبيع يوحّدهما
+    "se fait du mal",
+    "se scarifie",
+    "veut mourir",
 }
 
 # Emergency keywords whose meaning flips when a specific word follows.

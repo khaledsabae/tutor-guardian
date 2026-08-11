@@ -154,3 +154,127 @@ def test_self_harm_escalates_instead_of_being_refused(text):
     out of scope. They belong in the emergency lane."""
     assert check_banned_intent(text)[0] is False, f"{text!r} refused at a crisis moment"
     assert check_emergency_keywords(text) is True, f"{text!r} did not escalate"
+
+
+# --- English: same guard, same two failure modes ----------------------------
+#
+# 27% of active users run the app on an English device and 129 of them have
+# sent messages to the assistant. Until this set gained English entries, every
+# one of these emergencies was answered as an ordinary parenting question.
+
+EN_EMERGENCY = [
+    "my baby is not breathing",
+    "she stopped breathing what do I do",
+    "my son cant breathe",
+    "my daughter is choking",
+    "he choked on a grape",
+    "my toddler is unconscious",
+    "she passed out and I cant wake her",
+    "my son wont wake up",
+    "my daughter is having a seizure right now",
+    "he had a seizure this morning",
+    "my son swallowed bleach",
+    "my baby swallowed a battery",
+    "she drank bleach from under the sink",
+    "he ate rat poison",
+    "my teen took too many pills",
+    "I think she overdosed",
+    "there is severe bleeding from his head",
+    "the cut wont stop bleeding",
+    "my child got an electric shock",
+    "he was badly burned by hot water",
+    "I need an ambulance for my son",
+    "my teenage son talks about suicide and I am terrified",
+    "my daughter is cutting herself",
+    "he said he wants to kill himself",
+    "she keeps hurting herself on purpose",
+]
+
+
+@pytest.mark.parametrize("text", EN_EMERGENCY)
+def test_english_emergency_escalates(text):
+    assert check_emergency_keywords(text) is True, f"{text!r} did not escalate"
+
+
+@pytest.mark.parametrize("text", EN_EMERGENCY)
+def test_english_crisis_is_never_refused(text):
+    """A refusal at a crisis moment is worse than a wrong answer. Whatever the
+    language, the banned check must not swallow these before the emergency
+    lane sees them."""
+    assert check_banned_intent(text)[0] is False, f"{text!r} refused at a crisis moment"
+
+
+# Ordinary English parenting questions. These share vocabulary with the list
+# above on purpose — a safety-conscious parent asks about exactly the same
+# hazards, in the calm. Answering them with "call an ambulance" is how a guard
+# teaches people to ignore it.
+EN_NOT_EMERGENCY = [
+    "what foods are a choking hazard for toddlers",
+    "how do I childproof against poison at home",
+    "drowning prevention tips for a two year old",
+    "burn safety in the kitchen with kids around",
+    "how do I teach my child about fire safety",
+    "should I take a first aid course as a new mother",
+    "my son is 3 years old and still not talking much",
+    "how much sleep does a 5 year old need",
+    "my daughter is scared of the dark at bedtime",
+    "how do I get my teenager to listen to me",
+    "what are good bedtime stories for a 4 year old",
+    "my son refuses to eat vegetables",
+    "how do I explain death to a young child",
+    "my child bites other kids at nursery",
+    "screen time limits for a 7 year old",
+]
+
+
+@pytest.mark.parametrize("text", EN_NOT_EMERGENCY)
+def test_english_ordinary_questions_are_not_emergencies(text):
+    assert check_emergency_keywords(text) is False, f"{text!r} falsely escalated"
+
+
+@pytest.mark.parametrize("text", EN_NOT_EMERGENCY)
+def test_english_ordinary_questions_are_not_banned(text):
+    assert check_banned_intent(text)[0] is False, f"{text!r} was wrongly refused"
+
+
+# --- French: narrower set, same two directions ------------------------------
+
+FR_EMERGENCY = [
+    "mon bebe ne respire plus",
+    "ma fille ne respire pas",
+    "il s'etouffe avec un raisin",
+    "mon fils est inconscient",
+    "elle a perdu connaissance",
+    "mon enfant ne se reveille pas",
+    "il fait des convulsions",
+    "mon fils a avale de l'eau de javel",
+    "mon bebe a avale une pile",
+    "il y a une hemorragie",
+    "la plaie saigne beaucoup",
+    "mon fils s'est electrocute",
+    "appelez une ambulance vite",
+    "mon adolescent veut se suicider",
+    "ma fille se scarifie",
+]
+
+
+@pytest.mark.parametrize("text", FR_EMERGENCY)
+def test_french_emergency_escalates(text):
+    assert check_emergency_keywords(text) is True, f"{text!r} did not escalate"
+
+
+FR_NOT_EMERGENCY = [
+    "comment proteger mon enfant a la maison",
+    "mon fils de 3 ans ne parle pas beaucoup",
+    "combien d'heures de sommeil pour un enfant de 5 ans",
+    "ma fille a peur du noir le soir",
+    "comment gerer les crises de colere de mon enfant",
+    "quels livres pour un enfant de 4 ans",
+    "mon fils refuse de manger des legumes",
+    "le temps d'ecran pour un enfant de 7 ans",
+]
+
+
+@pytest.mark.parametrize("text", FR_NOT_EMERGENCY)
+def test_french_ordinary_questions_are_not_emergencies(text):
+    assert check_emergency_keywords(text) is False, f"{text!r} falsely escalated"
