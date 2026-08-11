@@ -169,6 +169,8 @@
   "startFirstPath": "ابدأ مسارك الأول",
   "startFirstPathDesc": "اختر رحلة تربوية قصيرة مصممة لعمر طفلك وابدأ اليوم.",
   "browsePaths": "استعرض المسارات",
+  "startThisLesson": "ابدأ هذا الدرس",
+  "startFirstLessonDesc": "درس قصير مختار لعمر طفلك — يبدأ من هنا.",
   "continueJourney": "أكمل رحلتك",
   "lessonsRemaining_one": "🏆 درس واحد باقٍ!",
   "lessonsRemaining_other": "🏆 {count} دروس باقية",

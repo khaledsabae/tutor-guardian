@@ -271,6 +271,39 @@ class CoachTip {
   }
 }
 
+/// The single lesson the home screen should open, from
+/// `GET /api/program/next-lesson`.
+class NextLesson {
+  final String lessonId;
+  final String pathId;
+  final String pathTitle;
+  final String title;
+  final int order;
+
+  /// False on the parent's very first lesson — "ابدأ" rather than "أكمل".
+  final bool resumed;
+
+  const NextLesson({
+    required this.lessonId,
+    required this.pathId,
+    required this.pathTitle,
+    required this.title,
+    required this.order,
+    required this.resumed,
+  });
+
+  factory NextLesson.fromJson(Map<String, dynamic> json) {
+    return NextLesson(
+      lessonId: json['lesson_id'] as String? ?? '',
+      pathId: json['path_id'] as String? ?? '',
+      pathTitle: json['path_title'] as String? ?? '',
+      title: json['title'] as String? ?? '',
+      order: (json['order'] as num?)?.toInt() ?? 1,
+      resumed: json['resumed'] as bool? ?? false,
+    );
+  }
+}
+
 /// Bundle returned by `GET /api/program/paths/{id}?include=lessons`.
 class PathDetail {
   final CurriculumPath path;

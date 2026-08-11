@@ -282,3 +282,65 @@ def test_lesson_assets_keeps_media_present_on_this_host(client, monkeypatch):
 def test_get_lesson_assets_not_found(client):
     r = client.get("/api/program/lesson-assets/nonexistent_lesson")
     assert r.status_code == 404
+
+
+# ── 6. Next lesson (first-lesson fast path) ─────────────────────────────
+
+def test_next_lesson_returns_the_first_lesson_of_the_curated_path(client):
+    r = client.get("/api/program/next-lesson", params={"age_group": "4-6"})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["path_id"] == "path_4-6_islamic_parenting_bond"
+    assert body["order"] == 1
+    assert body["title"]
+    assert body["resumed"] is False
+    # The point of the endpoint: a lesson the client can open directly.
+    assert cl.get_lesson(body["lesson_id"]) is not None
+
+
+def test_next_lesson_curated_path_matches_the_requested_age_band(client):
+    """Every curated id must resolve, and to the band it is filed under.
+
+    A typo here would silently hand a parent of a teenager the toddler
+    curriculum — the fallback would not fire, because the id still exists.
+    """
+    from app.routers.program import _STARTER_PATHS
+
+    for age, path_id in _STARTER_PATHS.items():
+        path = cl.get_path(path_id)
+        assert path is not None, f"{age} points at a path that does not exist"
+        assert path["age_group"] in cl.age_equivalents(age), (
+            f"{age} is curated to {path_id}, which is filed under "
+            f"{path['age_group']}"
+        )
+        assert cl.get_lessons_for_path(path_id), f"{path_id} has no lessons"
+
+
+def test_next_lesson_falls_back_when_the_band_is_uncurated(client, monkeypatch):
+    import app.routers.program as prog
+
+    monkeypatch.setitem(prog._STARTER_PATHS, "4-6", "path_that_does_not_exist")
+    r = client.get("/api/program/next-lesson", params={"age_group": "4-6"})
+    assert r.status_code == 200
+    # Any real 4-6 path beats a 404 on the home screen's primary CTA.
+    assert r.json()["path_id"] != "path_that_does_not_exist"
+    assert cl.get_path(r.json()["path_id"]) is not None
+
+
+def test_next_lesson_rejects_an_invalid_age_group(client):
+    r = client.get("/api/program/next-lesson", params={"age_group": "0-1"})
+    assert r.status_code in (400, 422)
+
+
+def test_next_lesson_requires_an_age_group(client):
+    r = client.get("/api/program/next-lesson")
+    assert r.status_code == 422
+
+
+def test_next_lesson_ignores_progress_for_an_unauthenticated_caller(client):
+    """No device on the request means no progress lookup, never a 500."""
+    r = client.get(
+        "/api/program/next-lesson", params={"age_group": "7-9", "child_id": 999}
+    )
+    assert r.status_code == 200
+    assert r.json()["resumed"] is False

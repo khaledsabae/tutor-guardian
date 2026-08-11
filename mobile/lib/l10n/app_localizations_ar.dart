@@ -525,6 +525,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get browsePaths => 'استعرض المسارات';
 
   @override
+  String get startThisLesson => 'ابدأ هذا الدرس';
+
+  @override
+  String get startFirstLessonDesc => 'درس قصير مختار لعمر طفلك — يبدأ من هنا.';
+
+  @override
   String get continueJourney => 'أكمل رحلتك';
 
   @override

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
@@ -17,6 +18,7 @@ import '../../../widgets/ui/emoji_hero.dart';
 import '../../program/data/models.dart';
 import '../../program/data/progress_models.dart';
 import '../../program/providers/program_providers.dart';
+import '../../program/providers/progress_providers.dart';
 
 class TodayFocusCard extends ConsumerWidget {
   const TodayFocusCard({
@@ -61,7 +63,20 @@ class TodayFocusCard extends ConsumerWidget {
     }
 
     if (resume == null) {
-      // Nudge: no in-progress path yet.
+      // First run. This used to be a "browse" button that switched to the
+      // Learn tab and dropped the parent into a filterable list of 39 paths —
+      // four taps between finishing onboarding and reading a single line of
+      // the curriculum. 86% of installs add a child; 31% ever open a lesson.
+      // So: ask the server which lesson to open, and open it.
+      final childId = ref.watch(activeChildIdProvider);
+      final asyncNext = ref.watch(
+        nextLessonProvider(NextLessonArgs(ageGroup: ageGroup, childId: childId)),
+      );
+      // Only the happy path changes. While loading, or if the endpoint is
+      // missing (older backend) or unreachable, the original browse nudge
+      // stands — a slow network must never leave this card with no action.
+      final next = asyncNext.valueOrNull;
+
       return Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -78,19 +93,23 @@ class TodayFocusCard extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    l10n.startFirstPath,
+                    next?.title ?? l10n.startFirstPath,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 10),
             Text(
-              l10n.startFirstPathDesc,
+              next == null
+                  ? l10n.startFirstPathDesc
+                  : l10n.startFirstLessonDesc,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: .92),
                 height: 1.5,
@@ -98,10 +117,37 @@ class TodayFocusCard extends ConsumerWidget {
             ),
             const SizedBox(height: 14),
             BouncyButton(
-              label: l10n.browsePaths,
+              label: next == null ? l10n.browsePaths : l10n.startThisLesson,
               color: Dt.accent,
-              onTap: onStartFirstPath,
+              onTap: next == null
+                  ? onStartFirstPath
+                  : () {
+                      Analytics.homeCardTapped('focus_first_lesson');
+                      Navigator.of(context).push(
+                        AppRoutes.lesson(
+                          next.lessonId,
+                          ageGroup,
+                          childId: childId,
+                        ),
+                      );
+                    },
             ),
+            // Browsing stays reachable — demoted, not removed.
+            if (next != null)
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: TextButton(
+                  onPressed: onStartFirstPath,
+                  child: Text(
+                    l10n.browsePaths,
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: .92),
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.white.withValues(alpha: .6),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ).animate().fadeIn(duration: Dt.base).slideY(begin: .06);

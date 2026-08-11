@@ -169,6 +169,8 @@
   "startFirstPath": "Start Your First Path",
   "startFirstPathDesc": "Choose a short educational journey designed for your child's age and start today.",
   "browsePaths": "Browse Paths",
+  "startThisLesson": "Start This Lesson",
+  "startFirstLessonDesc": "A short lesson picked for your child's age — it starts here.",
   "continueJourney": "Continue Your Journey",
   "lessonsRemaining_one": "🏆 1 lesson remaining!",
   "lessonsRemaining_other": "🏆 {count} lessons remaining",

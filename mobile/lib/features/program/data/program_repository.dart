@@ -182,4 +182,10 @@ class ProgramRepository {
   /// `POST /api/program/coach-tip/{id}/tap` — light engagement signal.
   Future<void> recordCoachTipTap(int tipId) =>
       _client.recordCoachTipTap(tipId);
+
+  /// `GET /api/program/next-lesson` — the lesson the home CTA should open.
+  Future<NextLesson> getNextLesson(String ageGroup, {int? childId}) async {
+    final json = await _client.getNextLesson(ageGroup, childId: childId);
+    return NextLesson.fromJson(json);
+  }
 }

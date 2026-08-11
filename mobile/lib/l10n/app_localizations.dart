@@ -1118,6 +1118,18 @@ abstract class AppLocalizations {
   /// **'استعرض المسارات'**
   String get browsePaths;
 
+  /// No description provided for @startThisLesson.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ هذا الدرس'**
+  String get startThisLesson;
+
+  /// No description provided for @startFirstLessonDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'درس قصير مختار لعمر طفلك — يبدأ من هنا.'**
+  String get startFirstLessonDesc;
+
   /// No description provided for @continueJourney.
   ///
   /// In ar, this message translates to:

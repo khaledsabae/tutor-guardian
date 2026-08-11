@@ -683,6 +683,30 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  /// `GET /api/program/next-lesson?age_group=&child_id=` — the one lesson to
+  /// put in front of this parent now, so the home CTA can open content rather
+  /// than hand them a 39-item list to browse.
+  Future<Map<String, dynamic>> getNextLesson(
+    String ageGroup, {
+    int? childId,
+  }) async {
+    final session = await ensureSession();
+    final token = session.token;
+    final uri = Uri.parse('$_baseUrl/api/program/next-lesson').replace(
+      queryParameters: {
+        'age_group': ageGroup,
+        if (childId != null) 'child_id': '$childId',
+      },
+    );
+    final resp = await _http
+        .get(uri, headers: _authHeaders(token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   /// `POST /api/program/coach-tip/{id}/tap` (authed) — light engagement log.
   /// Since v1.0.30 the server returns 200 for stale/missing tips; older server
   /// versions may still return 404. Swallow 404 so older backends don't crash

@@ -122,6 +122,113 @@ async def get_path_detail(
     return body
 
 
+# One curated entry path per age band.
+#
+# `get_paths` sorts by (age_group, domain, id) — alphabetical domain, which is
+# a stable order, not a content decision. Left to it, a new parent's very first
+# impression of the curriculum is whichever domain happens to sort first
+# ('aqeedah' or 'cyber'), rather than the relationship material that actually
+# earns the second visit.
+#
+# Mirrored in ops/scripts/cron_push_triggers.py (STARTER_PATHS) — the
+# re-engagement push aims at the same door. Keep the two in step.
+_STARTER_PATHS = {
+    "prenatal-1": "path_0-3_islamic_parenting_attachment",
+    "0-3": "path_0-3_islamic_parenting_attachment",
+    "2-3": "path_2-3_islamic_attachment",
+    "4-6": "path_4-6_islamic_parenting_bond",
+    "7-9": "path_7-9_islamic_parenting_akhlaq",
+    "10-12": "path_10-12_islamic_parenting_identity",
+    "13-15": "path_13-15_islamic_parenting_teen_identity",
+    "16-18": "path_16-18_islamic_parenting_adult_faith",
+}
+
+
+class NextLessonResponse(BaseModel):
+    lesson_id: str
+    path_id: str
+    path_title: str
+    title: str
+    order: int
+    # False on a parent's very first lesson — lets the client say "ابدأ" rather
+    # than "أكمل", which is a different promise.
+    resumed: bool
+
+
+@router.get("/next-lesson", response_model=NextLessonResponse)
+async def get_next_lesson(
+    request: Request,
+    age_group: str = Query(..., description="الفئة العمرية للطفل"),
+    child_id: Optional[int] = Query(None, description="لتخطّي ما أُنجز"),
+):
+    """The single lesson to put in front of this parent right now.
+
+    Exists because the home screen's primary call to action used to hand a
+    newly-onboarded parent a filterable list of 39 paths: four taps between
+    finishing onboarding and reading a single line of the curriculum. 86% of
+    installs add a child; 31% ever open a lesson. This endpoint is what lets
+    that CTA open one.
+
+    Deliberately server-side: which lesson greets a new parent becomes a
+    tunable we can change without shipping an app release.
+    """
+    age = _validate_age_group(age_group)
+    if age is None:
+        raise HTTPException(status_code=422, detail="age_group مطلوب.")
+
+    path_id = _STARTER_PATHS.get(age)
+    if path_id is None or cl.get_path(path_id) is None:
+        # An age band we have not curated, or a curated id that no longer
+        # resolves after a curriculum edit. Falling back beats a 404.
+        candidates = cl.get_paths(age_group=age)
+        if not candidates:
+            raise HTTPException(
+                status_code=404, detail=f"لا توجد مسارات للفئة '{age}'."
+            )
+        path_id = candidates[0]["id"]
+
+    lessons = cl.get_lessons_for_path(path_id)
+    if not lessons:
+        raise HTTPException(
+            status_code=404, detail=f"المسار '{path_id}' بلا دروس منشورة."
+        )
+
+    # Scoped by device as well as child, so an id that is not the caller's
+    # simply matches nothing and they get lesson one — no ownership check
+    # needed, and no way to probe another family's progress.
+    done: set[str] = set()
+    device_id = getattr(request.state, "device_id", None)
+    if child_id is not None and device_id:
+        conn = get_conn()
+        try:
+            done = {
+                r["lesson_id"]
+                for r in conn.execute(
+                    "SELECT lesson_id FROM lesson_progress "
+                    "WHERE device_id = ? AND child_id = ? AND status = 'completed'",
+                    (device_id, child_id),
+                )
+            }
+        finally:
+            conn.close()
+
+    nxt = next((le for le in lessons if le.get("id") not in done), None)
+    # Every lesson done: send them back to the last one rather than nowhere.
+    resumed = bool(done)
+    if nxt is None:
+        nxt = lessons[-1]
+
+    path = cl.get_path(path_id) or {}
+    return NextLessonResponse(
+        lesson_id=nxt["id"],
+        path_id=path_id,
+        path_title=path.get("title", ""),
+        title=nxt.get("title", ""),
+        order=int(nxt.get("order", 1)),
+        resumed=resumed,
+    )
+
+
 @router.get("/lessons/{lesson_id}")
 async def get_lesson_detail(lesson_id: str):
     """تفاصيل درس واحد. يرجع الـ unit_ids لكن لا يحمّل الـ units الكاملة —

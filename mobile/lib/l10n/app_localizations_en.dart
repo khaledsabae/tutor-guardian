@@ -526,6 +526,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get browsePaths => 'Browse Paths';
 
   @override
+  String get startThisLesson => 'Start This Lesson';
+
+  @override
+  String get startFirstLessonDesc =>
+      'A short lesson picked for your child\'s age — it starts here.';
+
+  @override
   String get continueJourney => 'Continue Your Journey';
 
   @override

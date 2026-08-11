@@ -167,6 +167,40 @@ class CoachTipNotifier extends AutoDisposeFamilyAsyncNotifier<CoachTip, int> {
   }
 }
 
+// ── nextLessonProvider ───────────────────────────────────────────────────
+// The one lesson the home CTA opens. Server-side choice on purpose: which
+// lesson greets a newly-onboarded parent is a content decision we can retune
+// without shipping an app release.
+
+class NextLessonArgs {
+  final String ageGroup;
+  final int? childId;
+  const NextLessonArgs({required this.ageGroup, this.childId});
+
+  @override
+  bool operator ==(Object other) =>
+      other is NextLessonArgs &&
+      other.ageGroup == ageGroup &&
+      other.childId == childId;
+
+  @override
+  int get hashCode => Object.hash(ageGroup, childId);
+}
+
+class NextLessonNotifier
+    extends AutoDisposeFamilyAsyncNotifier<NextLesson, NextLessonArgs> {
+  @override
+  Future<NextLesson> build(NextLessonArgs arg) {
+    final repo = ref.watch(programRepositoryProvider);
+    return repo.getNextLesson(arg.ageGroup, childId: arg.childId);
+  }
+}
+
+final nextLessonProvider = AsyncNotifierProvider.autoDispose.family<
+    NextLessonNotifier, NextLesson, NextLessonArgs>(
+  NextLessonNotifier.new,
+);
+
 final coachTipProvider = AsyncNotifierProvider.autoDispose.family<
     CoachTipNotifier, CoachTip, int>(
   CoachTipNotifier.new,
