@@ -151,6 +151,21 @@ class Analytics {
   static Future<void> pushTapped(String type) =>
       _log('push_tapped', {'type': type});
 
+  /// An on-device notification was tapped — adhkar or the Qur'an wird.
+  ///
+  /// Separate from [pushTapped] because these come from a different system
+  /// entirely: three a day, scheduled locally, no server involved. They had
+  /// no instrumentation at all, so every notification figure we had described
+  /// FCM only while the larger, unmeasured half sat underneath it.
+  static Future<void> localNotificationOpen(String slot) =>
+      _log('local_notification_open', {'slot': slot});
+
+  /// A notification preference was changed. [slot] is which one, [enabled] the
+  /// new state — the only signal that says whether the volume is welcome.
+  static Future<void> notificationPrefChanged(String slot, bool enabled) =>
+      _log('notification_pref_changed',
+          {'slot': slot, 'granted': enabled ? 'true' : 'false'});
+
   // ── Navigation & "lostness" ──────────────────────────────────────────────
   // Multiple users reported getting lost inside the app. These events exist to
   // locate *where*, rather than guessing. All screen identifiers must come from

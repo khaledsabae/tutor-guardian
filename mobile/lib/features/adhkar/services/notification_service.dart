@@ -5,12 +5,16 @@
 /// No server needed — runs entirely on-device.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../../../core/analytics.dart';
+import '../../../core/app_routes.dart';
 import '../../../main.dart';
 import '../data/family_adhkar.dart';
 
@@ -34,6 +38,12 @@ class NotificationService {
   static const _eveningBaseId = 2000;
   static const _wirdId = 3000;
   static const _daysToSchedule = 14;
+
+  /// The wird reminder used to be scheduled with no payload at all, so
+  /// `_handleNotificationTap` returned on its first line and tapping
+  /// «حان وقت وردك اليومي» did nothing — the one notification whose text
+  /// makes an explicit promise about where it leads.
+  static const _wirdPayload = 'wird';
 
   bool _initialized = false;
   String? pendingPayload;
@@ -80,7 +90,22 @@ class NotificationService {
 
   void _handleNotificationTap(String? payload) {
     if (payload == null) return;
+
+    // Three of these go out a day and none of them emitted a single event, so
+    // every notification number we had was FCM-only — the local ones are the
+    // larger share and were entirely unmeasured.
+    if (payload == _wirdPayload) {
+      unawaited(Analytics.localNotificationOpen('wird'));
+      // It says "carry on from where you stopped". So carry them there.
+      final context = appNavigatorKey.currentContext;
+      if (context != null) {
+        Navigator.of(context).push(AppRoutes.quran());
+      }
+      return;
+    }
+
     if (payload.startsWith('adhkar_')) {
+      unawaited(Analytics.localNotificationOpen('adhkar'));
       final idx = int.tryParse(payload.substring(7));
       if (idx != null && idx >= 0 && idx < familyAdhkar.length) {
         final content = familyAdhkar[idx];
@@ -89,11 +114,22 @@ class NotificationService {
     }
   }
 
-  void _showTipDialog(ParentingContent content) {
+  /// Bounded: the retry below used to recurse forever at 500ms. A navigator
+  /// that never materialises — the app being killed mid-launch, a cold start
+  /// that fails before the first frame — meant a timer chain running for the
+  /// life of the process, holding this content and firing twice a second
+  /// against nothing. Ten attempts is five seconds; if the UI is not up by
+  /// then it is not coming.
+  static const _maxDialogRetries = 10;
+
+  void _showTipDialog(ParentingContent content, {int attempt = 0}) {
     final context = appNavigatorKey.currentContext;
     if (context == null) {
-      // Retry in a bit if context isn't ready
-      Future.delayed(const Duration(milliseconds: 500), () => _showTipDialog(content));
+      if (attempt >= _maxDialogRetries) return;
+      Future.delayed(
+        const Duration(milliseconds: 500),
+        () => _showTipDialog(content, attempt: attempt + 1),
+      );
       return;
     }
 
@@ -203,12 +239,14 @@ class NotificationService {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
+      payload: _wirdPayload,
     );
   }
 
   Future<void> setWirdEnabled(bool enabled) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_kWirdEnabled, enabled);
+    unawaited(Analytics.notificationPrefChanged('wird', enabled));
     if (enabled) {
       await _requestPermission();
       await scheduleWirdReminder(prefs: prefs);
@@ -342,6 +380,7 @@ class NotificationService {
   Future<void> setEnabled(bool enabled) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_kEnabled, enabled);
+    unawaited(Analytics.notificationPrefChanged('adhkar', enabled));
     if (enabled) {
       await _requestPermission();
       await scheduleDaily(prefs: prefs);
