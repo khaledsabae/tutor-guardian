@@ -29,6 +29,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -183,6 +184,61 @@ def hook_for(video: Path) -> str:
         return ""
     hooks = json.loads(HOOKS_FILE.read_text(encoding="utf-8"))
     return hooks.get(video.stem.replace("_ar_eg", ""), "")
+
+
+PLAY_URL = "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
+HASHTAGS = "#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+
+
+def caption_for(video: Path, hook: str, title: str, age: str) -> str:
+    """The post text that travels with the reel.
+
+    Built here rather than left to the publisher's generic fallback: every reel
+    posted so far carried the same "نصيحة تربوية" boilerplate, which told a
+    reader nothing about the reel they had just watched.
+    """
+    lines = [hook, ""]
+    lines.append(f"{title} — {age}" if age else title)
+    lines += [
+        "من مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،",
+        "من الولادة إلى 18 سنة.",
+        "",
+        "حمّله مجانًا — بلا إعلانات ولا اشتراكات:",
+        PLAY_URL,
+        "",
+        HASHTAGS,
+    ]
+    return "\n".join(lines)
+
+
+def record(video: Path, out: Path, hook: str, title: str, age: str) -> None:
+    """Append this reel to the manifest the publisher reads.
+
+    Status starts at "new" and nothing publishes it: the publisher is a separate
+    command, deliberately, so no run both makes a reel and posts it before a
+    human has seen it.
+    """
+    manifest = OUT_DIR / "manifest.json"
+    data = json.loads(manifest.read_text(encoding="utf-8")) if manifest.exists() else {"rendered": []}
+    rendered = data.setdefault("rendered", [])
+    entry = {
+        "path_id": video.stem.replace("_ar_eg", ""),
+        "title": title,
+        "age": age,
+        "hook": hook,
+        "file": out.name,
+        "rendered_at": datetime.now(timezone.utc).isoformat(),
+        "status": "new",
+        "caption": caption_for(video, hook, title, age),
+    }
+    for i, e in enumerate(rendered):
+        if e.get("file") == out.name:
+            entry["status"] = e.get("status", "new")
+            rendered[i] = entry
+            break
+    else:
+        rendered.append(entry)
+    manifest.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def domain_look(video: Path) -> tuple[str, int, float]:
@@ -386,6 +442,7 @@ def render(video: Path, start: float, duration: float, hook: str, out: Path, cap
         if r.returncode != 0:
             print("  ✗ ffmpeg:", r.stderr[-700:])
             return False
+    record(video, out, hook, *split_age(curriculum_copy(video)[0]))
     return True
 
 
@@ -515,6 +572,7 @@ def render_montage(video: Path, duration: float, hook: str, out: Path, n_cuts: i
     print(f"  مونتاج: {n_cuts} قصّات، تغيّر كل {per:.1f}s · لون {look[0]}"
           + (f" · نص المنهج: {len(points)} نقطة" if points else " · بلا نص منهج")
           + ("" if logo_idx is not None else " · بلا شعار"))
+    record(video, out, hook, *split_age(title))
     return True
 
 def main() -> int:

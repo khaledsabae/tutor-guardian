@@ -26,7 +26,10 @@ REELS_DIR = ROOT / "docs" / "marketing" / "reels_output"
 CAPTIONS_FILE = REELS_DIR / "captions.md"
 MANIFEST_FILE = REELS_DIR / "manifest.json"
 REMOTE_HOST = os.environ.get("TUTOR_VPS_HOST", "root@72.62.44.131")
-REMOTE_DIR = "/root/tutor-guardian/docs/marketing/reels_output"
+# The public URL is built from this too, so the two can never drift apart and
+# hand Buffer a link to a file that was uploaded somewhere else.
+REMOTE_REL = "docs/marketing/reels_output"
+REMOTE_DIR = f"/root/tutor-guardian/{REMOTE_REL}"
 PUBLIC_BASE_URL = os.environ.get("API_BASE_URL", "https://tg-api.alsaba.cloud")
 
 def load_env() -> dict:
@@ -124,7 +127,7 @@ def sync_to_vps(local_path: Path) -> str:
         ["scp", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10", str(local_path), f"{REMOTE_HOST}:{remote_path}"],
         check=True,
     )
-    return f"{PUBLIC_BASE_URL}/docs/marketing/reels_output/{local_path.name}"
+    return f"{PUBLIC_BASE_URL}/{REMOTE_REL}/{local_path.name}"
 
 def publish_to_buffer(video_url: str, caption: str, channels: list[dict], dry_run: bool = False) -> dict[str, str]:
     if dry_run:
@@ -176,14 +179,33 @@ def publish_to_buffer(video_url: str, caption: str, channels: list[dict], dry_ru
             results[ch["id"]] = f"error: {e}"
     return results
 
+def use_dir(d: Path) -> None:
+    """Point every path at another reels directory.
+
+    The remote path mirrors the local one so the public URL keeps matching the
+    file that was actually uploaded.
+    """
+    global REELS_DIR, CAPTIONS_FILE, MANIFEST_FILE, REMOTE_DIR, REMOTE_REL
+    REELS_DIR = d
+    CAPTIONS_FILE = d / "captions.md"
+    MANIFEST_FILE = d / "manifest.json"
+    REMOTE_REL = d.relative_to(ROOT).as_posix()
+    REMOTE_DIR = f"/root/tutor-guardian/{REMOTE_REL}"
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--limit", type=int, default=1, help="Max reels to publish per run")
+    parser.add_argument("--dir", type=Path, help="مجلد الريلز (افتراضي: reels_output)")
     args = parser.parse_args()
 
+    if args.dir:
+        use_dir(args.dir if args.dir.is_absolute() else ROOT / args.dir)
+
     if not MANIFEST_FILE.exists():
-        print("No reels manifest found; run podcast_to_reel.py first.")
+        print(f"لا يوجد مانيفست في {REELS_DIR} — ولّد ريلًا أولًا:"
+              f"\n  scripts/reel --batch 3 --montage 6 --duration 30")
         return
 
     manifest = json.loads(MANIFEST_FILE.read_text(encoding="utf-8"))
@@ -206,17 +228,20 @@ def main():
         if not local_path.exists():
             print(f"SKIP: {filename} not found locally")
             continue
+        # The generator writes a caption naming the reel's actual subject. Only
+        # fall back to the boilerplate when there isn't one — every reel posted
+        # before carried the same generic text regardless of its content.
         cap = find_caption_for_reel(filename, captions)
-        caption_text = build_caption(cap) if cap else (
+        caption_text = entry.get("caption") or (build_caption(cap) if cap else (
             "💡 نصيحة تربوية من «المربّي الذكي»\n\n"
             "حمّل «المربّي الذكي» مجانًا على Google Play 🤍\n"
             "👉 https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
-        )
+        ))
         print(f"Publishing: {filename}")
         if not args.dry_run:
             video_url = sync_to_vps(local_path)
         else:
-            video_url = f"{PUBLIC_BASE_URL}/docs/marketing/reels_output/{filename}"
+            video_url = f"{PUBLIC_BASE_URL}/{REMOTE_REL}/{filename}"
         results = publish_to_buffer(video_url, caption_text, channels, dry_run=args.dry_run)
         print(f"Results: {results}")
 

@@ -122,6 +122,9 @@ memory/
 # Reels output large media
 docs/marketing/reels_output/*.mp4
 docs/marketing/reels_output/*_thumb.jpg
+# The v2 factory's output. The manifest is tracked — it records what was
+# generated and what was published — but the renders themselves are not.
+docs/marketing/reels_v2/*.mp4
 
 # ── Play Developer API service account (upload + review replies) ──────────
 # Same class as backend/secrets: a private key that must never be committed.
