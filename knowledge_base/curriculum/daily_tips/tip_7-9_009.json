@@ -5,5 +5,6 @@
   "text": "اسأل طفلك: \"لو طلب منك صديق فعل خطأ، ماذا تفعل؟\" — ناقشوا السيناريوهات، ابنِ ثقته لقول \"لا\".",
   "unit_id": "dev-e601788b",
   "day_of_week": 1,
-  "time_of_day": "morning"
+  "time_of_day": "morning",
+  "approved_by": null
 }

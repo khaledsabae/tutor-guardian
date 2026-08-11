@@ -5,5 +5,6 @@
   "text": "لا شاشات قبل النوم بساعة. قراءة، استنشاق زهرة، تدليك خفيف — هذه طقوس تهدئ الدماغ للنوم العميق.",
   "unit_id": "36081e1a-c41f-4787-a38c-85d50dc9aa2a",
   "day_of_week": 3,
-  "time_of_day": "evening"
+  "time_of_day": "evening",
+  "approved_by": null
 }

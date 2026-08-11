@@ -5,5 +5,6 @@
   "text": "مقياس مزاج أسبوعي (1-10 للمزاج/طاقة/نوم). انحدار >أسبوعين = زيارة مختص. الرسم يصنع الوعي المبكر.",
   "unit_id": "85d5303f-da97-49ab-985a-8c31901d84a2",
   "day_of_week": 3,
-  "time_of_day": "evening"
+  "time_of_day": "evening",
+  "approved_by": null
 }

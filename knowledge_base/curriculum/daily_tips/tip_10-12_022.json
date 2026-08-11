@@ -5,5 +5,6 @@
   "text": "حزن >أسبوعين + عزلة + تراجع دراسي = زيارة طبيب أطفال/أخصائي نفسي. الطلب المبكر ينقذ سنوات.",
   "unit_id": "8dc21832-df8b-4123-95a3-e0ec75ab9263",
   "day_of_week": 5,
-  "time_of_day": "morning"
+  "time_of_day": "morning",
+  "approved_by": null
 }

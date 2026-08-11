@@ -5,5 +5,6 @@
   "text": "سجل نوبات الغضب (متى، محفز، مدة، شدة 1-10) — أسبوع من البيانات يساعد الطبيب على التشخيص الدقيق.",
   "unit_id": "9816082f-6564-42fd-a37b-5b38083a94a8",
   "day_of_week": 2,
-  "time_of_day": "evening"
+  "time_of_day": "evening",
+  "approved_by": null
 }

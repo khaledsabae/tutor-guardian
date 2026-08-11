@@ -134,6 +134,14 @@
       "type": "string",
       "format": "date-time",
       "description": "تاريخ آخر تعديل (ISO 8601)."
+    },
+    "approved_by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "اسم المراجع الشرعي الذي أجاز هذا المحتوى. null = غير مراجَع، لا يُنشر للإنجليزية.",
+      "default": null
     }
   }
 }

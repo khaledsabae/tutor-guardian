@@ -6,8 +6,14 @@
   "unit_id": "dea6683e-62be-4f02-8bfe-a426ef123631",
   "day_of_week": 4,
   "time_of_day": "anytime",
-  "tags": ["ارتباط", "استجابة", "أمان", "دماغ"],
+  "tags": [
+    "ارتباط",
+    "استجابة",
+    "أمان",
+    "دماغ"
+  ],
   "is_published": true,
   "version": "1.0.0",
-  "created_at": "2026-06-10T20:00:00"
+  "created_at": "2026-06-10T20:00:00",
+  "approved_by": null
 }

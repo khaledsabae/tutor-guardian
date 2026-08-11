@@ -5,5 +5,6 @@
   "text": "مخطط المزاج الأسبوعي (1-10): مزاج/طاقة/نوم. انحدار >أسبوعين = زيارة مختص. الرسم يصنع الوعي.",
   "unit_id": "med-e64897f2",
   "day_of_week": 5,
-  "time_of_day": "evening"
+  "time_of_day": "evening",
+  "approved_by": null
 }

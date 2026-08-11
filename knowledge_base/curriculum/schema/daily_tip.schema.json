@@ -89,6 +89,14 @@
     "created_at": {
       "type": "string",
       "format": "date-time"
+    },
+    "approved_by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "اسم المراجع الشرعي الذي أجاز هذا المحتوى. null = غير مراجَع، لا يُنشر للإنجليزية.",
+      "default": null
     }
   }
 }

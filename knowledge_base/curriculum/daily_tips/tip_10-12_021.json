@@ -5,5 +5,6 @@
   "text": "مقياس المزاج الأسبوعي: ارسموا معاً (1-10) للمزاج/الطاقة/النوم. انحدار >أسبوعين = زيارة مختص.",
   "unit_id": "8295e748-32d6-4f5a-9ced-e63307cde035",
   "day_of_week": 4,
-  "time_of_day": "evening"
+  "time_of_day": "evening",
+  "approved_by": null
 }

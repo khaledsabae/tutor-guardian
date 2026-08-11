@@ -5,5 +5,6 @@
   "text": "أمان المعلومات: كلمات مرور فريدة، مدير كلمات مرور (Bitwarden)، 2FA على كل الحسابات، تشفير، نسخ احتياطية. أنت مسؤول.",
   "unit_id": "cyb-db2bb48f",
   "day_of_week": 3,
-  "time_of_day": "morning"
+  "time_of_day": "morning",
+  "approved_by": null
 }
