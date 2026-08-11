@@ -76,4 +76,54 @@ void main() {
       expect(kBackHammerWindowMs, greaterThan(0));
     });
   });
+
+
+  // --- v2: a finished task is not a dead end -------------------------------
+  //
+  // The old classifier had only childPushCount, so every leaf screen in the
+  // app scored as a trap: a lesson read to the end, a habit ticked, a surah
+  // closed. 2,129 users — 66% — were labelled lost by ordinary use.
+
+  group('classifyExit — productive visits', () {
+    test('a long visit that opened a dialog is not a dead end', () {
+      // Dialogs and sheets are how a leaf screen offers its action, and the
+      // observer never saw them because they are not PageRoutes.
+      expect(
+        classifyExit(dwellMs: 30000, childPushCount: 0, productiveCount: 1),
+        ExitKind.none,
+      );
+    });
+
+    test('a long visit where the user completed something is not a dead end',
+        () {
+      expect(
+        classifyExit(dwellMs: 120000, childPushCount: 0, productiveCount: 3),
+        ExitKind.none,
+      );
+    });
+
+    test('a long visit with nothing at all is still a dead end', () {
+      expect(
+        classifyExit(dwellMs: 30000, childPushCount: 0, productiveCount: 0),
+        ExitKind.deadEnd,
+      );
+    });
+
+    test('a bounce stays a bounce even when productive', () {
+      // Ordering matters: under three seconds is a bounce whatever else
+      // happened, otherwise a screen that fires a beacon on open would
+      // reclassify every quick visit as healthy.
+      expect(
+        classifyExit(dwellMs: 500, childPushCount: 0, productiveCount: 5),
+        ExitKind.bounce,
+      );
+    });
+
+    test('productiveCount defaults to zero so old call sites behave', () {
+      expect(
+        classifyExit(dwellMs: 30000, childPushCount: 0),
+        ExitKind.deadEnd,
+      );
+    });
+  });
 }

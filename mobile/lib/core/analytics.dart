@@ -10,6 +10,8 @@ library;
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'engagement_signal.dart';
+
 class Analytics {
   static FirebaseAnalytics get _fa => FirebaseAnalytics.instance;
 
@@ -58,28 +60,45 @@ class Analytics {
     await _log('lesson_opened', {'lesson_id': lessonId});
   }
 
+  // The methods below also raise [EngagementSignal] — see its doc for why.
+  // In short: TgNavObserver could only tell "found a way onward" from "found
+  // nothing", so finishing a task on a leaf screen and hitting a wall scored
+  // identically. Marking them here rather than at each screen keeps it to one
+  // line and leaves the feature code untouched.
+
   /// A lesson was marked completed.
-  static Future<void> lessonCompleted(String lessonId) =>
-      _log('lesson_completed', {'lesson_id': lessonId});
+  static Future<void> lessonCompleted(String lessonId) {
+    EngagementSignal.mark();
+    return _log('lesson_completed', {'lesson_id': lessonId});
+  }
 
   /// A habit was checked in for today.
-  static Future<void> habitCheckIn(String status) =>
-      _log('habit_check_in', {'status': status});
+  static Future<void> habitCheckIn(String status) {
+    EngagementSignal.mark();
+    return _log('habit_check_in', {'status': status});
+  }
 
   /// The child's habit streak reached 3+ days (one-shot funnel milestone).
   static Future<void> habitStreak3(int streakDays) =>
       _logOnce('habit_streak_3', {'streak_days': streakDays});
 
   /// A story was successfully generated.
-  static Future<void> storyGenerated(String theme) =>
-      _log('story_generated', {'theme': theme});
+  static Future<void> storyGenerated(String theme) {
+    EngagementSignal.mark();
+    return _log('story_generated', {'theme': theme});
+  }
 
   /// The Quran/werd tab was selected.
-  static Future<void> quranOpened() => _log('quran_opened');
+  static Future<void> quranOpened() {
+    EngagementSignal.mark();
+    return _log('quran_opened');
+  }
 
   /// An educational game round was started.
-  static Future<void> gameStarted(String gameId, int level) =>
-      _log('game_started', {'game_id': gameId, 'level': level});
+  static Future<void> gameStarted(String gameId, int level) {
+    EngagementSignal.mark();
+    return _log('game_started', {'game_id': gameId, 'level': level});
+  }
 
   /// Call on every app start. Records the first-open day and emits a one-shot
   /// day2_return when the app is opened again on the following calendar day.
@@ -202,10 +221,16 @@ class Analytics {
       _log('screen_bounce',
           {'screen': screen, 'dwell_ms': dwellMs, 'from': from});
 
-  /// Stayed a while but never navigated onward before backing out — the screen
-  /// offered nothing actionable. The highest-signal event in this set.
+  /// Stayed a while, did nothing that counted, and backed out — the screen
+  /// offered nothing actionable.
+  ///
+  /// Emitted as `dead_end_v2`, not `dead_end`. The old event fired whenever a
+  /// screen pushed no named route, so every leaf screen in the app qualified
+  /// and 66% of users looked lost. Reusing the name would average two
+  /// different definitions into one unreadable series; the old one stops here
+  /// and its history stays interpretable as what it actually measured.
   static Future<void> deadEnd(String screen, int dwellMs) =>
-      _log('dead_end', {'screen': screen, 'dwell_ms': dwellMs});
+      _log('dead_end_v2', {'screen': screen, 'dwell_ms': dwellMs});
 
   /// On screen but not touching anything — reading, or stuck. Sampled.
   static Future<void> idleDwell(String screen, int dwellMs) =>

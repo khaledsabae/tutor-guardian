@@ -22,6 +22,7 @@ import 'package:flutter/widgets.dart';
 
 import 'analytics.dart';
 import 'app_routes.dart';
+import 'engagement_signal.dart';
 
 /// How a screen visit ended.
 enum ExitKind { bounce, deadEnd, none }
@@ -41,10 +42,25 @@ const kBackHammerWindowMs = 2000;
 
 /// Classifies how a visit ended. Pure — the unit tests drive this directly
 /// with synthetic timings rather than a real Navigator.
-ExitKind classifyExit({required int dwellMs, required int childPushCount}) {
+///
+/// [childPushCount] counts named routes opened from this screen.
+/// [productiveCount] counts everything else that means the visit worked: a
+/// dialog or bottom sheet opened, or an explicit success beacon
+/// ([EngagementSignal]) raised by finishing a lesson, a habit check-in, a
+/// game, a story.
+///
+/// The old version had only `childPushCount`, so any screen whose whole job
+/// ends on itself scored as a dead end — a lesson read to the end, a habit
+/// ticked, a surah closed. That is why 66% of users appeared to be lost: the
+/// signal was measuring leaf screens, which is most of the app.
+ExitKind classifyExit({
+  required int dwellMs,
+  required int childPushCount,
+  int productiveCount = 0,
+}) {
   if (dwellMs < kBounceThresholdMs) return ExitKind.bounce;
-  if (childPushCount == 0) return ExitKind.deadEnd;
-  return ExitKind.none;
+  if (childPushCount > 0 || productiveCount > 0) return ExitKind.none;
+  return ExitKind.deadEnd;
 }
 
 class _Visit {
@@ -57,6 +73,17 @@ class _Visit {
   /// How many screens were opened *from* this one. Zero on exit means the user
   /// found no way forward.
   int childPushCount = 0;
+
+  /// Dialogs and bottom sheets opened from this screen. They are not
+  /// destinations, so they never counted — but they are the main way a leaf
+  /// screen offers an action, which made "opened no route" a bad proxy for
+  /// "found nothing to do".
+  int popupCount = 0;
+
+  /// [EngagementSignal.count] as it stood when this screen opened. Compared on
+  /// exit; any movement means something worthwhile happened while it was up.
+  final int engagementAtEntry = EngagementSignal.count;
+
   Timer? idleTimer;
 }
 
@@ -130,6 +157,8 @@ class TgNavObserver extends NavigatorObserver {
     final kind = classifyExit(
       dwellMs: dwellMs,
       childPushCount: visit.childPushCount,
+      productiveCount: visit.popupCount +
+          (EngagementSignal.count - visit.engagementAtEntry),
     );
     switch (kind) {
       case ExitKind.bounce:
@@ -162,7 +191,13 @@ class TgNavObserver extends NavigatorObserver {
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     try {
       final name = _nameOf(route);
-      if (name != null) _enter(route, name);
+      if (name != null) {
+        _enter(route, name);
+      } else if (route is ModalRoute && _stack.isNotEmpty) {
+        // A dialog or bottom sheet. Still not a destination — but the screen
+        // underneath just did something, which is the opposite of a dead end.
+        _stack.last.popupCount++;
+      }
     } catch (_) {
       // never let instrumentation break navigation
     }
