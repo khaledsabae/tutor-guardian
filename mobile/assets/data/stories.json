@@ -338,5 +338,205 @@
         "image": "docs/stories/abdullah_bismillah_6.png"
       }
     ]
+  },
+  {
+    "id": "aisha_permission",
+    "title": "عائشة وأدب الاستئذان",
+    "description": "قصة إيمانية تربوية تعلم الأطفال خلق الاستئذان وحفظ خصوصية البيوت اقتداءً بالهدي القرآني.",
+    "coverImage": "docs/stories/aisha_permission_cover.png",
+    "themeColor": "0xFFEC4899",
+    "videoFile": "docs/stories/aisha_permission_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "في عصر يوم جميل، أرادت عائشة الدخول إلى غرفة والدتها لتأخذ كتاب القراءة. ركضت عائشة ورفعت يدها لتدفع الباب فجأة.",
+        "image": "docs/stories/aisha_permission_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "تذكرت عائشة كلام أبيها عندما حفظت معه قوله تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾.",
+        "image": "docs/stories/aisha_permission_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "وقفت عائشة عند الباب بطمأنينة، وطرقته ثلاث طرقات خفيفة وأديبة، وقالت بصوت واضح ولطيف: «السلام عليكم، هل أستطيع الدخول يا أمي؟».",
+        "image": "docs/stories/aisha_permission_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "أذنت الأم لـ عائشة بابتسامة دافئة وقالت: «تفضلي يا بنيتي، بارك الله فيكِ وفي أدبكِ»، فدخلت عائشة بوقار وسرور.",
+        "image": "docs/stories/aisha_permission_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "علمت الأم عائشة أن الاستئذان حفظ للخصوصية وعلامة على الأدب الإسلامي الرفيع الذي يحمي القلوب ويزيد المحبة بين الأهل.",
+        "image": "docs/stories/aisha_permission_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "صارت عائشة تستأذن دائماً قبل الدخول على أي غرفة أو بيت، وأصبحت قدوة لأخواتها وأقرانها في تطبيق خلق الاستئذان الجميل.",
+        "image": "docs/stories/aisha_permission_6.png"
+      }
+    ]
+  },
+  {
+    "id": "yaseen_creation",
+    "title": "ياسين وعجائب الخالق",
+    "description": "قصة إيمانية تدعو الأطفال للتأمل في جمال الطبيعة وعظمة خلق الله لترسيخ العقيدة والتوحيد.",
+    "coverImage": "docs/stories/yaseen_creation_cover.png",
+    "themeColor": "0xFF0EA5E9",
+    "videoFile": "docs/stories/yaseen_creation_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "خرج ياسين مع والده في نزهة إلى الحديقة الخضراء، ورأى نملة صغيرة تحمل حبة قمح أكبر من حجمها وتتسلق بها غصناً بثبات.",
+        "image": "docs/stories/yaseen_creation_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "تعجب ياسين وقال: «يا أبي، كيف تملك هذه النملة الصغيرة كل هذه القوة والتنظيم؟».",
+        "image": "docs/stories/yaseen_creation_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "ابتسم الوالد وقال: «يا ياسين، هذا صنع الله الذي أتقن كل شيء، تذكر قول الله تعالى: ﴿صُنْعَ اللَّهِ الَّذِي أَتْقَنَ كُلَّ شَيْءٍ﴾».",
+        "image": "docs/stories/yaseen_creation_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "نظر ياسين إلى النجوم والأشجار والأزهار الملونة، واستشعر في قلبه قدرة الخالق العظيم الذي ينظم هذا الكون البديع بدقة وحكمة.",
+        "image": "docs/stories/yaseen_creation_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "رفع ياسين يديه الصغيرتين وقال: «سبحان الله والحمد لله»، وعلم أن كل مخلوق في الطبيعة يسبح بحمد الله ويدل على وحدانيته.",
+        "image": "docs/stories/yaseen_creation_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "أصبح ياسين يحب التأمل في مخلوقات الله، ويكثر من التسبيح والذكر، ليزداد إيمانه وحبه للخالق سبحانه في كل يوم.",
+        "image": "docs/stories/yaseen_creation_6.png"
+      }
+    ]
+  },
+  {
+    "id": "fatima_parents",
+    "title": "فاطمة وزهرة البر",
+    "description": "قصة تربوية إسلامية تغرس في نفوس الأطفال بر الوالدين وطاعتهما بالمعروف وإدخال السرور عليهما.",
+    "coverImage": "docs/stories/fatima_parents_cover.png",
+    "themeColor": "0xFF8B5CF6",
+    "videoFile": "docs/stories/fatima_parents_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "عادت والدة فاطمة من العمل متعبة بعد يوم حافل، فجلست على الأريكة لتستريح قليلاً.",
+        "image": "docs/stories/fatima_parents_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "لاحظت فاطمة تعب أمها، فتذكرت الآية الكريمة: ﴿وَبِالْوَالِدَيْنِ إِحْسَانًا﴾، وقررت أن تدخل السرور على قلب أمها.",
+        "image": "docs/stories/fatima_parents_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "أسرعت فاطمة وأحضرت كوب ماء دافئ، وساعدت في ترتيب ألعابها وتنظيف صالة المعيشة بهمة ونشاط دون أن يطلب منها أحد.",
+        "image": "docs/stories/fatima_parents_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "عندما فتحت الأم عينها ورأت ترتيب الغرفة ولطف فاطمة، ابتسمت بفرح وضمت فاطمة إلى صدرها بحنان ودعت لها بالبركة.",
+        "image": "docs/stories/fatima_parents_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "شعر والد فاطمة بالفخر بها وقدم لها زهرة جوري جميلة تقديراً لإحسانها وبرها بوالدتها.",
+        "image": "docs/stories/fatima_parents_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "علمت فاطمة أن بر الوالدين هو أعظم طريق لرضا الله تعالى وجنته، وواصلت إحسانها لطاعة أبيها وأمها بابتسامة دائمة.",
+        "image": "docs/stories/fatima_parents_6.png"
+      }
+    ]
+  },
+  {
+    "id": "bilal_forgiveness",
+    "title": "بلال وقلب التسامح",
+    "description": "قصة إسلامية ملهمة تعلم الأطفال خلق العفو والتسامح ومقابلة السيئة بالقدوة الحسنة.",
+    "coverImage": "docs/stories/bilal_forgiveness_cover.png",
+    "themeColor": "0xFF10B981",
+    "videoFile": "docs/stories/bilal_forgiveness_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "بينما كان بلال يرسم لوحته الملونة بشغف في فصل الرسم، تعثر زميله طارق وأسقط العصير بالخطأ على لوحة بلال الجميلة.",
+        "image": "docs/stories/bilal_forgiveness_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "حزن بلال للحظة وخاف أن يغضب، لكن طارق أسرع خائفاً ومعتذراً بصوت مرتجف: «أسف يا بلال، لم أقصد ذلك!».",
+        "image": "docs/stories/bilal_forgiveness_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "تذكر بلال وصف القرآن للمتقين: ﴿وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ﴾.",
+        "image": "docs/stories/bilal_forgiveness_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "ابتسم بلال بصفاء وقال: «لا بأس يا طارق، الحمد لله، المسلم يعفو ويسامح، يمكننا رسم لوحة جديدة أجمل معاً!».",
+        "image": "docs/stories/bilal_forgiveness_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "تفاجأ طارق من لطف بلال وتساهله، وقاما بتنظيف الطاولة معاً وتشاركا الألوان لرسم لوحة جديدة أروع.",
+        "image": "docs/stories/bilal_forgiveness_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "شعر بلال برضا كبير في قلبه، وعلم أن العفو يرفع صاحب القدر والمنزلة، ويعمر القلوب بالمحبة والسلام.",
+        "image": "docs/stories/bilal_forgiveness_6.png"
+      }
+    ]
+  },
+  {
+    "id": "hamza_truth",
+    "title": "حمزة وأمانة الكلمة",
+    "description": "قصة إسلامية ملهمة تعلم الأطفال أهمية الصدق وحفظ اللسان عن السخرية والغيبة اقتداءً بأخلاق القرآن.",
+    "coverImage": "docs/stories/hamza_truth_cover.png",
+    "themeColor": "0xFF7C3AED",
+    "videoFile": "docs/stories/hamza_truth_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "كان حمزة يلعب مع أصدقائه في الملعب، وأثناء اللعب سقط أحد الأطفال واختل توازنه بطريقة مضحكة. بدأ بعض الأطفال يضحكون ويسخرون منه، وشعر الطفل بالخجل والحزن.",
+        "image": "docs/stories/hamza_truth_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "تردد حمزة للحظة وتذكر الآية الكريمة التي حفظها في حلقته القرآنية: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَر قَوْمٌ مِّن قَوْمٍ عَسَىٰ أَن يَكُونُوا خَيْرًا مِّنْهُمْ﴾.",
+        "image": "docs/stories/hamza_truth_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "تقدم حمزة بثبات وقال لأصدقائه برفق ولين: «يا أصدقائي، المسلم لا يسخر من أخيه، والكلمة الطيبة صدقة». ثم مد يده للطفل وساعده على النهوض ومسح الغبار عن ثيابه.",
+        "image": "docs/stories/hamza_truth_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "خجل الأطفال من تصرفهم وأدركوا خطأهم، فأسرعوا واعتذروا لصديقهم، وانضموا جميعاً للعب معاً بروح التعاون والمحبة.",
+        "image": "docs/stories/hamza_truth_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "عاد حمزة إلى المنزل وهو يشعر بالفخر، فقد دافع عن أخيه وحفظ لسانه، وعلم أن الشرع الإسلامي يعلمنا أن نكون بلساننا وأفعالنا مفاتيح للخير مغاليق للشر.",
+        "image": "docs/stories/hamza_truth_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "أصبح حمزة وأصدقاؤه قدوة طيبة في المدرسة، ينشرون الكلام الطيب ويحرصون على التناصح بالحق والرفق، فغدت صداقتهم مثالاً رائعاً للأخوة الإيمانية.",
+        "image": "docs/stories/hamza_truth_6.png"
+      }
+    ]
   }
 ]

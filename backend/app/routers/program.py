@@ -596,6 +596,10 @@ STORY_THEMES: dict[str, str] = {
     "table_manners": "آداب الطعام والتسمية والأكل باليمين",
     "speech_guard": "حفظ اللسان والنهي عن السخرية",
     "quran_love": "تعظيم القرآن وتدبره",
+    "permission_adab": "أدب الاستئذان وحفظ الخصوصية",
+    "creation_contemplation": "التأمل في خلق الله وعظمته",
+    "parents_respect": "بر الوالدين وإدخال السرور عليهما",
+    "forgiveness_morals": "العفو والتسامح والقدوة الحسنة",
 }
 
 

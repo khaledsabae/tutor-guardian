@@ -352,7 +352,11 @@ class _BookCover extends StatelessWidget {
                                   story.id == 'omar_prayer' ? '🕌' :
                                   story.id == 'khadija_neighbor' ? '🍲' :
                                   story.id == 'abdullah_bismillah' ? '🍇' :
-                                  story.id == 'hamza_truth' ? '💬' : '📖',
+                                  story.id == 'hamza_truth' ? '💬' :
+                                  story.id == 'aisha_permission' ? '🚪' :
+                                  story.id == 'yaseen_creation' ? '🌿' :
+                                  story.id == 'fatima_parents' ? '🌹' :
+                                  story.id == 'bilal_forgiveness' ? '🤝' : '📖',
                                   style: const TextStyle(fontSize: 72),
                                 ),
                               )
@@ -371,7 +375,11 @@ class _BookCover extends StatelessWidget {
                                   story.id == 'omar_prayer' ? '🕌' :
                                   story.id == 'khadija_neighbor' ? '🍲' :
                                   story.id == 'abdullah_bismillah' ? '🍇' :
-                                  story.id == 'hamza_truth' ? '💬' : '📖',
+                                  story.id == 'hamza_truth' ? '💬' :
+                                  story.id == 'aisha_permission' ? '🚪' :
+                                  story.id == 'yaseen_creation' ? '🌿' :
+                                  story.id == 'fatima_parents' ? '🌹' :
+                                  story.id == 'bilal_forgiveness' ? '🤝' : '📖',
                                   style: const TextStyle(fontSize: 72),
                                 ),
                               )).animate(onPlay: (c) => c.repeat()).shimmer(
