@@ -166,7 +166,12 @@ def publish_to_buffer(video_url: str, caption: str, channels: list[dict], dry_ru
                 results[ch["id"]] = f"error: {data['errors'][0]['message']}"
             else:
                 res = data.get("data", {}).get("createPost", {})
-                results[ch["id"]] = res.get("post", {}).get("id") or res.get("message", "unknown")
+                post_id = (res.get("post") or {}).get("id")
+                # A MutationError comes back inside a 200 with a `message`
+                # instead of a post — treat it as the failure it is rather
+                # than storing the sentence as if it were an id.
+                results[ch["id"]] = post_id or f"error: {res.get('message', 'no post id returned')}"
+
         except Exception as e:
             results[ch["id"]] = f"error: {e}"
     return results
@@ -188,8 +193,11 @@ def main():
     print(f"Buffer channels: {[(c['service'], c.get('name')) for c in channels]}")
 
     posted_count = 0
+    failures: list[str] = []
     for entry in rendered:
-        if entry.get("status") == "posted":
+        # "posted" is the historical value; "queued" is what a successful run
+        # writes now. A "failed" entry is deliberately retried.
+        if entry.get("status") in ("posted", "queued"):
             continue
         if posted_count >= args.limit:
             break
@@ -211,14 +219,36 @@ def main():
             video_url = f"{PUBLIC_BASE_URL}/docs/marketing/reels_output/{filename}"
         results = publish_to_buffer(video_url, caption_text, channels, dry_run=args.dry_run)
         print(f"Results: {results}")
+
+        # Which channels actually accepted it. Anything that is not a post id
+        # is a failure, however politely Buffer phrased it.
+        accepted = {k: v for k, v in results.items() if not str(v).startswith("error:")}
+        refused = {k: v for k, v in results.items() if str(v).startswith("error:")}
+        for ch_id, msg in refused.items():
+            name = next((c.get("name") or c["service"] for c in channels if c["id"] == ch_id), ch_id)
+            print(f"  ✗ {name}: {msg}")
+
         if not args.dry_run:
-            entry["status"] = "posted"
-            entry["posted_at"] = datetime.now(timezone.utc).isoformat()
+            # "queued", not "posted": Buffer accepting a post means it entered
+            # the queue, not that the network published it. Recording "posted"
+            # here is why 21 manifest entries claimed success while Buffer's
+            # queue held 31 failures nobody saw for six weeks.
+            entry["status"] = "queued" if accepted else "failed"
+            entry["queued_at"] = datetime.now(timezone.utc).isoformat()
             entry["buffer_results"] = results
             MANIFEST_FILE.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
-            print(f"Marked {filename} as posted")
+            print(f"  {filename}: {len(accepted)}/{len(results)} channels accepted → {entry['status']}")
+            if not accepted:
+                failures.append(filename)
         posted_count += 1
 
+    if failures:
+        print(f"\n{len(failures)} reel(s) refused by every channel:")
+        for f in failures:
+            print(f"  - {f}")
+        return 1
+    return 0
+
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
 
