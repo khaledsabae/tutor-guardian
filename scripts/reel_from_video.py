@@ -34,12 +34,36 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "docs" / "marketing" / "reels_v2"
 HOOKS_FILE = ROOT / "docs" / "marketing" / "reel_hooks.json"
+LOGO = ROOT / "mobile" / "assets" / "images" / "logo.png"
 FONT_BOLD = "/usr/share/fonts/truetype/noto/NotoSansArabic-Bold.ttf"
 FONT_REG = "/usr/share/fonts/truetype/noto/NotoSansArabic-Regular.ttf"
 
 W, H = 1080, 1920
 BRAND = "المربّي الذكي"
-CTA_LINES = ["حمّل «المربّي الذكي» مجانًا", "بلا إعلانات ولا اشتراكات"]
+CTA_LINES = ["حمّل التطبيق مجانًا", "بلا إعلانات ولا اشتراكات"]
+# بالعربية عمدًا: خط نوتو العربي بلا محارف لاتينية، و"Google Play" تخرج مربّعات.
+CTA_STORE = "متاح على جوجل بلاي"
+END_CARD = 4.6  # آخر ثوانٍ يحجبها كارت الهوية
+
+# مصادر المنهج مولَّدة بـNotebookLM وتحمل علامته أسفل اليسار — قصّ الشريط
+# السفلي يمنع نشر إعلان لمنتج آخر مع كل ريل.
+SRC_KEEP = 0.90
+
+# ألوان الهوية — منقولة من mobile/lib/theme/design_tokens.dart لتطابق ما يراه
+# الأب داخل التطبيق. كارت النهاية يبقى بلون العلامة دائمًا مهما كان المجال.
+BRAND_TEAL, BRAND_DEEP = "0x0D9488", "0x0F766E"
+GOLD = "0xFBBF24"
+
+# (لون التمييز، درجة اللون للخلفية، تشبّعها) — الدرجة محسوبة من نفس اللون.
+DOMAIN_LOOK = {
+    "aqeedah":           ("0x01696F", 183, 0.80),
+    "islamic_parenting": ("0x10B981", 160, 0.78),
+    "islamic":           ("0x10B981", 160, 0.78),
+    "development":       ("0x8B5CF6", 263, 0.70),
+    "medical":           ("0xFBBF24", 43, 0.80),
+    "cyber":             ("0x3B82F6", 224, 0.76),
+}
+FALLBACK_LOOK = (BRAND_TEAL, 175, 0.78)
 
 
 def _run(cmd, **kw):
@@ -161,6 +185,112 @@ def hook_for(video: Path) -> str:
     return hooks.get(video.stem.replace("_ar_eg", ""), "")
 
 
+def domain_look(video: Path) -> tuple[str, int, float]:
+    """The app's colour for this path's domain.
+
+    Every path name carries its domain — `path_7-9_islamic_parenting_akhlaq`.
+    Tinting the frame with the same colour the app uses for that domain means a
+    parent who has seen the app recognises it, and it gives a feed of reels
+    variety without anyone picking colours per video.
+    """
+    rest = re.sub(r"^path_[\d\-]+_", "", video.stem.replace("_ar_eg", ""))
+    for key in ("aqeedah", "islamic_parenting", "islamic", "development", "medical", "cyber"):
+        if rest.startswith(key):
+            return DOMAIN_LOOK[key]
+    return FALLBACK_LOOK
+
+
+def frame_band(video: Path) -> tuple[int, int]:
+    """Where the footage sits once scaled to the frame width.
+
+    Needed to draw the accent rules exactly on its edges: a hairline that misses
+    by a few pixels reads as a rendering fault, not a border.
+    """
+    r = _run(["ffprobe", "-v", "error", "-select_streams", "v:0",
+              "-show_entries", "stream=width,height", "-of", "csv=p=0", str(video)])
+    try:
+        w, h = (int(x) for x in r.stdout.strip().split(",")[:2])
+    except ValueError:
+        w, h = 16, 9
+    scaled = int(round(W * (h * SRC_KEEP) / w)) // 2 * 2
+    top = max(0, (H - scaled) // 2)
+    return top, min(H, top + scaled)
+
+
+def _circle(idx: str, size: int, label: str) -> str:
+    """The square app icon as a round badge — a hard-edged square over footage
+    reads as a pasted-on screenshot."""
+    r = size / 2
+    return (f"[{idx}]scale={size}:{size},format=rgba,"
+            f"geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':"
+            f"a='if(lte(hypot(X-{r:.1f}\\,Y-{r:.1f})\\,{r - 1:.1f})\\,255\\,0)'[{label}]")
+
+
+def _chrome(last: str, accent: str, band: tuple[int, int]) -> tuple[list[str], str]:
+    """Accent bar, rules on the footage edges, and the brand name."""
+    top, bot = band
+    chains = [
+        f"{last}drawbox=x=0:y=0:w={W}:h=14:color={accent}:t=fill,"
+        f"drawbox=x=0:y={max(0, top - 4)}:w={W}:h=4:color={accent}@0.85:t=fill,"
+        f"drawbox=x=0:y={bot}:w={W}:h=4:color={accent}@0.85:t=fill[chrome]",
+        f"[chrome]drawtext=text='{_escape(BRAND)}':fontfile={FONT_BOLD}:"
+        f"fontsize=46:fontcolor=white:borderw=3:bordercolor=black@0.6:"
+        f"x=w-tw-196:y=62[brand]",
+    ]
+    return chains, "[brand]"
+
+
+def split_age(title: str) -> tuple[str, str]:
+    """Lift the age band out of the title and onto its own line.
+
+    Every curriculum title ends in one — "تزكية الأخلاق… (7-9 سنوات)". Left
+    inline it wrapped mid-bracket, so a line came out reading "﴾سنوات". It also
+    deserves its own line: a parent scanning the feed decides on the age first.
+    """
+    m = re.search(r"[(﴿]([^)﴾]*)[)﴾]\s*$", title)
+    if not m:
+        return title.strip(), ""
+    return title[:m.start()].strip(), m.group(1).strip()
+
+
+def _hook_layers(last: str, hook: str) -> tuple[list[str], str]:
+    chains = []
+    for i, line in enumerate(_wrap(hook, 24)):
+        chains.append(f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD}:"
+                      f"fontsize=76:fontcolor={GOLD}:borderw=6:bordercolor=0x0B1220:"
+                      f"box=1:boxcolor=0x0B1220@0.34:boxborderw=20:"
+                      f"x=(w-tw)/2:y={266 + i * 100}:enable='between(t\\,0\\,3.0)'[hk{i}]")
+        last = f"[hk{i}]"
+    return chains, last
+
+
+def _end_card(last: str, duration: float, big_logo: str | None) -> tuple[list[str], str]:
+    """The last seconds belong to the brand, not to a caption over footage.
+
+    A wash in the brand colour, the app mark, and where to get it — so the frame
+    someone screenshots or pauses on says what the app is called and where it is.
+    """
+    at = max(0.0, duration - END_CARD)
+    on = f"enable='gte(t\\,{at:.2f})'"
+    # Opaque, not a wash: at 95% the source slide's page number showed through
+    # the card as a large ghosted numeral.
+    chains = [f"{last}drawbox=x=0:y=0:w={W}:h={H}:color={BRAND_DEEP}:t=fill:{on},"
+              f"drawbox=x=0:y=0:w={W}:h=14:color={BRAND_TEAL}:t=fill:{on}[wash]"]
+    last = "[wash]"
+    if big_logo:
+        chains.append(f"{last}[{big_logo}]overlay=x=(W-w)/2:y=520:{on}[mark]")
+        last = "[mark]"
+    rows = [(BRAND, FONT_BOLD, 86, "white", 900),
+            (CTA_LINES[0], FONT_BOLD, 62, GOLD, 1046),
+            (CTA_LINES[1], FONT_REG, 50, "white", 1140),
+            (CTA_STORE, FONT_BOLD, 46, "white", 1268)]
+    for i, (text, font, size, colour, y) in enumerate(rows):
+        chains.append(f"{last}drawtext=text='{_escape(text)}':fontfile={font}:"
+                      f"fontsize={size}:fontcolor={colour}:x=(w-tw)/2:y={y}:{on}[ct{i}]")
+        last = f"[ct{i}]"
+    return chains, last
+
+
 def pick_segment(video: Path, duration: float) -> float:
     """Start offset that skips the title card and lands mid-explanation."""
     total = probe_duration(video)
@@ -170,58 +300,66 @@ def pick_segment(video: Path, duration: float) -> float:
     return min(hi, max(lo, total * 0.33))
 
 
-def build_filter(caps: list[dict], hook: str, duration: float) -> str:
+def build_filter(caps: list[dict], hook: str, duration: float,
+                 look: tuple[str, int, float] = FALLBACK_LOOK,
+                 band: tuple[int, int] = (656, 1264),
+                 logo_idx: int | None = None) -> str:
+    """The single-window renderer, kept for burnt-in captions.
+
+    It shares every branding layer with the montage so this path cannot quietly
+    publish an off-brand reel; only the middle differs — captions here, rotating
+    curriculum text there.
+    """
+    accent, hue, sat = look
     chains = []
-    # The source is 16:9. Fill the vertical frame with a blurred, darkened copy
-    # of itself, and lay the real footage across the middle — so the motion the
+    # The source is 16:9. Fill the vertical frame with a blurred, tinted copy of
+    # itself, and lay the real footage across the middle — so the motion the
     # video already has is what the viewer sees, not a frozen still.
-    chains.append(f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
-                  f"crop={W}:{H},boxblur=26:26,eq=brightness=-0.42:contrast=1.06[bg]")
-    chains.append(f"[0:v]scale={W}:-2[fg]")
+    keep = f"crop=iw:ih*{SRC_KEEP}:0:0"
+    chains.append(f"[0:v]{keep},scale={W}:{H}:force_original_aspect_ratio=increase,"
+                  f"crop={W}:{H},boxblur=34:34,"
+                  f"colorize=hue={hue}:saturation={sat}:lightness=0.30,"
+                  f"eq=contrast=1.12,vignette=PI/4[bg]")
+    chains.append(f"[0:v]{keep},scale={W}:-2[fg]")
     chains.append("[bg][fg]overlay=(W-w)/2:(H-h)/2[base]")
     last = "[base]"
 
-    chains.append(f"{last}drawbox=y=0:x=0:width={W}:height=10:color=0xF59E0B:t=fill[bar]")
-    last = "[bar]"
-    chains.append(f"{last}drawtext=text='{_escape(BRAND)}':fontfile={FONT_BOLD}:"
-                  f"fontsize=48:fontcolor=white:borderw=3:bordercolor=black:"
-                  f"x=w-tw-48:y=42[brand]")
-    last = "[brand]"
+    badge = big = None
+    if logo_idx is not None:
+        chains.append(f"[{logo_idx}:v]split=2[lgA][lgB]")
+        chains.append(_circle("lgA", 116, "badge"))
+        chains.append(_circle("lgB", 300, "bigmark"))
+        badge, big = "badge", "bigmark"
 
-    # Hook — the first two seconds decide whether anyone stays.
-    for i, line in enumerate(_wrap(hook, 24)):
-        y = 250 + i * 96
-        chains.append(f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD}:"
-                      f"fontsize=76:fontcolor=0xFDE68A:borderw=6:bordercolor=0x111111:"
-                      f"x=(w-tw)/2:y={y}:enable='between(t\\,0\\,3.2)'[hook{i}]")
-        last = f"[hook{i}]"
+    add, last = _chrome(last, accent, band)
+    chains += add
+    if badge:
+        chains.append(f"{last}[{badge}]overlay=x={W - 116 - 52}:y=44[hdr]")
+        last = "[hdr]"
+
+    add, last = _hook_layers(last, hook)
+    chains += add
 
     # Captions, low in the frame so the footage stays visible.
     n = 0
-    cta_from = max(0.0, duration - 4.0)
+    until = max(0.0, duration - END_CARD)
     for cap in caps:
-        # Captions stop before the CTA so the two never share the frame.
-        if cap["start"] >= min(duration, cta_from):
+        # Captions stop before the end card so the two never share the frame.
+        if cap["start"] >= min(duration, until):
             break
         for idx, line in enumerate(_wrap(cap["text"], 26)):
             y = int(H * 0.66) + idx * 88
             chains.append(
                 f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD}:"
-                f"fontsize=64:fontcolor=white:borderw=6:bordercolor=0x111111:"
+                f"fontsize=64:fontcolor=white:borderw=6:bordercolor=0x0B1220:"
                 f"box=1:boxcolor=0x000000@0.35:boxborderw=18:"
                 f"x=(w-tw)/2:y={y}:"
-                f"enable='between(t\\,{cap['start']:.2f}\\,{min(cap['end'], cta_from):.2f})'[c{n}]")
+                f"enable='between(t\\,{cap['start']:.2f}\\,{min(cap['end'], until):.2f})'[c{n}]")
             last = f"[c{n}]"
             n += 1
 
-    # CTA over the final seconds.
-    for i, line in enumerate(CTA_LINES):
-        y = int(H * 0.40) + i * 84
-        size = 66 if i == 0 else 52
-        chains.append(f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD if i == 0 else FONT_REG}:"
-                      f"fontsize={size}:fontcolor=white:borderw=5:bordercolor=0x111111:"
-                      f"x=(w-tw)/2:y={y}:enable='gte(t\\,{cta_from:.2f})'[cta{i}]")
-        last = f"[cta{i}]"
+    add, last = _end_card(last, duration, big)
+    chains += add
 
     chains.append(f"{last}null[v]")
     return ";".join(chains)
@@ -233,10 +371,14 @@ def render(video: Path, start: float, duration: float, hook: str, out: Path, cap
         work = Path(td)
         caps = transcribe(video, start, duration, work, captions) if captions != "off" else []
         print(f"  ترجمة: {len(caps)} سطر" if caps else "  ترجمة: مطفية")
-        fc = build_filter(caps, hook, duration)
         cmd = ["ffmpeg", "-nostdin", "-loglevel", "error", "-y",
-               "-ss", str(start), "-t", str(duration), "-i", str(video),
-               "-filter_complex", fc, "-map", "[v]", "-map", "0:a?",
+               "-ss", str(start), "-t", str(duration), "-i", str(video)]
+        logo_idx = None
+        if LOGO.exists():
+            logo_idx = 1
+            cmd += ["-i", str(LOGO)]
+        fc = build_filter(caps, hook, duration, domain_look(video), frame_band(video), logo_idx)
+        cmd += ["-filter_complex", fc, "-map", "[v]", "-map", "0:a?",
                "-c:v", "libx264", "-preset", "medium", "-crf", "20",
                "-pix_fmt", "yuv420p", "-r", "30",
                "-c:a", "aac", "-b:a", "128k", "-shortest", str(out)]
@@ -249,7 +391,10 @@ def render(video: Path, start: float, duration: float, hook: str, out: Path, cap
 
 
 def montage_filter(cuts: list[tuple[float, float]], hook: str, duration: float,
-                   title: str = "", points: list[str] | None = None) -> str:
+                   title: str = "", points: list[str] | None = None,
+                   look: tuple[str, int, float] = FALLBACK_LOOK,
+                   band: tuple[int, int] = (656, 1264),
+                   logo_idx: int | None = None) -> str:
     """Cross-cut several moments so the frame changes every few seconds.
 
     A single 30s window lands on one slide: these videos hold each slide for
@@ -257,58 +402,80 @@ def montage_filter(cuts: list[tuple[float, float]], hook: str, duration: float,
     it — which is the problem the old generator had. Sampling across the whole
     video means a new illustration every few seconds instead.
     """
+    accent, hue, sat = look
     chains, segs = [], []
     for i, (st, dur) in enumerate(cuts):
-        chains.append(f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
-                      f"crop={W}:{H},boxblur=26:26,eq=brightness=-0.42:contrast=1.06[bg{i}]")
-        chains.append(f"[{i}:v]scale={W}:-2[fg{i}]")
+        # The footage is 16:9 inside a 9:16 frame, so two thirds of the screen
+        # is filler. Blurring the footage into it left that filler a muddy
+        # grey; tinting the blur to the domain's own colour makes it read as a
+        # deliberate backdrop, and it still moves with the video.
+        keep = f"crop=iw:ih*{SRC_KEEP}:0:0"
+        chains.append(f"[{i}:v]{keep},scale={W}:{H}:force_original_aspect_ratio=increase,"
+                      f"crop={W}:{H},boxblur=34:34,"
+                      f"colorize=hue={hue}:saturation={sat}:lightness=0.30,"
+                      f"eq=contrast=1.12,vignette=PI/4[bg{i}]")
+        chains.append(f"[{i}:v]{keep},scale={W}:-2[fg{i}]")
         chains.append(f"[bg{i}][fg{i}]overlay=(W-w)/2:(H-h)/2,setsar=1[s{i}]")
         segs.append(f"[s{i}]")
     chains.append("".join(segs) + f"concat=n={len(cuts)}:v=1:a=0[joined]")
     last = "[joined]"
 
-    chains.append(f"{last}drawbox=y=0:x=0:width={W}:height=10:color=0xF59E0B:t=fill[bar]")
-    last = "[bar]"
-    chains.append(f"{last}drawtext=text='{_escape(BRAND)}':fontfile={FONT_BOLD}:"
-                  f"fontsize=48:fontcolor=white:borderw=3:bordercolor=black:x=w-tw-48:y=42[brand]")
-    last = "[brand]"
+    badge = big = None
+    if logo_idx is not None:
+        chains.append(f"[{logo_idx}:v]split=2[lgA][lgB]")
+        chains.append(_circle("lgA", 116, "badge"))
+        chains.append(_circle("lgB", 300, "bigmark"))
+        badge, big = "badge", "bigmark"
 
-    for i, line in enumerate(_wrap(hook, 24)):
-        chains.append(f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD}:"
-                      f"fontsize=76:fontcolor=0xFDE68A:borderw=6:bordercolor=0x111111:"
-                      f"x=(w-tw)/2:y={250 + i * 96}:enable='between(t\\,0\\,3.0)'[hk{i}]")
-        last = f"[hk{i}]"
+    add, last = _chrome(last, accent, band)
+    chains += add
+    if badge:
+        chains.append(f"{last}[{badge}]overlay=x={W - 116 - 52}:y=44[hdr]")
+        last = "[hdr]"
 
-    # Upper letterbox: the path title, once the hook has cleared.
-    for i, line in enumerate(_wrap(title, 26)):
+    add, last = _hook_layers(last, hook)
+    chains += add
+
+    # The bands carry curriculum text, so neither may run under the end card.
+    until = max(0.0, duration - END_CARD)
+
+    # Upper band: the age first — a parent scanning the feed decides on that
+    # before anything else — then the path title.
+    headline, age = split_age(title)
+    if age:
+        chains.append(f"{last}drawtext=text='{_escape(age)}':fontfile={FONT_BOLD}:"
+                      f"fontsize=46:fontcolor=white:borderw=4:bordercolor=0x0B1220:"
+                      f"box=1:boxcolor={accent}@0.75:boxborderw=16:"
+                      f"x=(w-tw)/2:y=232:enable='between(t\\,3.2\\,{until:.2f})'[age]")
+        last = "[age]"
+    for i, line in enumerate(_wrap(headline, 26)):
         chains.append(f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD}:"
-                      f"fontsize=58:fontcolor=white:borderw=5:bordercolor=0x111111:"
-                      f"x=(w-tw)/2:y={300 + i * 74}:enable='gt(t\\,3.2)'[ttl{i}]")
+                      f"fontsize=58:fontcolor=white:borderw=5:bordercolor=0x0B1220:"
+                      f"x=(w-tw)/2:y={324 + i * 74}:"
+                      f"enable='between(t\\,3.2\\,{until:.2f})'[ttl{i}]")
         last = f"[ttl{i}]"
 
-    # Lower letterbox: one lesson title at a time, so the empty band carries
-    # the actual curriculum instead of blurred grey.
+    # Lower band: one lesson title at a time, so the filler carries the actual
+    # curriculum instead of nothing.
     pts = points or []
     if pts:
-        window = max(3.0, (duration - 4.0) / len(pts))
+        window = max(3.0, (until - 3.2) / len(pts))
         for i, pt in enumerate(pts):
-            st, en = 3.2 + i * window, min(duration - 4.0, 3.2 + (i + 1) * window)
+            st, en = 3.2 + i * window, min(until, 3.2 + (i + 1) * window)
             if st >= en:
                 break
-            for idx, line in enumerate(_wrap(pt, 24)):
+            # 27, not 24: at 24 "ضبط الغضب على هدي النبي ﷺ" dropped the ﷺ onto
+            # a line of its own.
+            for idx, line in enumerate(_wrap(pt, 27)):
                 chains.append(
                     f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD}:"
-                    f"fontsize=60:fontcolor=0xFDE68A:borderw=5:bordercolor=0x111111:"
+                    f"fontsize=60:fontcolor={GOLD}:borderw=5:bordercolor=0x0B1220:"
                     f"x=(w-tw)/2:y={int(H * 0.755) + idx * 78}:"
                     f"enable='between(t\\,{st:.2f}\\,{en:.2f})'[pt{i}_{idx}]")
                 last = f"[pt{i}_{idx}]"
 
-    cta_from = max(0.0, duration - 4.0)
-    for i, line in enumerate(CTA_LINES):
-        chains.append(f"{last}drawtext=text='{_escape(line)}':fontfile={FONT_BOLD if i == 0 else FONT_REG}:"
-                      f"fontsize={66 if i == 0 else 52}:fontcolor=white:borderw=5:bordercolor=0x111111:"
-                      f"x=(w-tw)/2:y={int(H * 0.40) + i * 84}:enable='gte(t\\,{cta_from:.2f})'[ct{i}]")
-        last = f"[ct{i}]"
+    add, last = _end_card(last, duration, big)
+    chains += add
 
     chains.append(f"{last}null[v]")
     return ";".join(chains)
@@ -328,8 +495,15 @@ def render_montage(video: Path, duration: float, hook: str, out: Path, n_cuts: i
         cmd += ["-ss", f"{st:.2f}", "-t", f"{dur:.2f}", "-i", str(video)]
     # Narration from one continuous stretch — chopped audio would be unlistenable.
     cmd += ["-ss", f"{lo:.2f}", "-t", f"{duration:.2f}", "-i", str(video)]
+    logo_idx = None
+    if LOGO.exists():
+        logo_idx = len(cuts) + 1
+        cmd += ["-i", str(LOGO)]
+
     title, points = curriculum_copy(video)
-    cmd += ["-filter_complex", montage_filter(cuts, hook, duration, title, points),
+    look, band = domain_look(video), frame_band(video)
+    cmd += ["-filter_complex",
+            montage_filter(cuts, hook, duration, title, points, look, band, logo_idx),
             "-map", "[v]", "-map", f"{len(cuts)}:a?",
             "-c:v", "libx264", "-preset", "medium", "-crf", "20",
             "-pix_fmt", "yuv420p", "-r", "30", "-c:a", "aac", "-b:a", "128k",
@@ -338,8 +512,9 @@ def render_montage(video: Path, duration: float, hook: str, out: Path, n_cuts: i
     if r.returncode != 0:
         print("  \u2717 ffmpeg:", r.stderr[-700:])
         return False
-    print(f"  مونتاج: {n_cuts} قصّات، تغيّر كل {per:.1f}s"
-          + (f" · نص المنهج: {len(points)} نقطة" if points else " · بلا نص منهج"))
+    print(f"  مونتاج: {n_cuts} قصّات، تغيّر كل {per:.1f}s · لون {look[0]}"
+          + (f" · نص المنهج: {len(points)} نقطة" if points else " · بلا نص منهج")
+          + ("" if logo_idx is not None else " · بلا شعار"))
     return True
 
 def main() -> int:
