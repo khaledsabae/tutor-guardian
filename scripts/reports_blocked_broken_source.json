@@ -1,0 +1,34 @@
+[
+  {
+    "lesson_id": "lesson_2-3_development_independence_01",
+    "age_group": "2-3",
+    "topic_path": "development_early_moments",
+    "source_id": "7f442885-f7b8-4c8d-bd1f-c0c19a9332bf",
+    "title_ar": "التدريب على استخدام المرحاض والاعتماد على النفس",
+    "blocker": "notebooklm source returns empty (needs re-ingest)"
+  },
+  {
+    "lesson_id": "lesson_2-3_cyber_routine_02",
+    "age_group": "2-3",
+    "topic_path": "cyber_screen_foundations",
+    "source_id": "77faf382-1cf8-4100-b6c8-52b86cc741d4",
+    "title_ar": "تنظيم النوم والتعامل الصحي مع الشاشات",
+    "blocker": "notebooklm source returns empty (needs re-ingest)"
+  },
+  {
+    "lesson_id": "lesson_2-3_development_language_03",
+    "age_group": "2-3",
+    "topic_path": "development_early_moments",
+    "source_id": "fd6d2b2e-eebb-424a-84eb-c22501a24d5e",
+    "title_ar": "التطور اللغوي والمعرفي من خلال اللعب التخيلي",
+    "blocker": "notebooklm source returns empty (needs re-ingest)"
+  },
+  {
+    "lesson_id": "lesson_2-3_islamic_tantrums_04",
+    "age_group": "2-3",
+    "topic_path": "islamic_parenting_attachment",
+    "source_id": "050f2c4a-85df-4d6d-8cc7-e32049d5bf1c",
+    "title_ar": "الرابطة الآمنة والتعامل مع نوبات الغضب برفق",
+    "blocker": "notebooklm source returns empty (needs re-ingest)"
+  }
+]

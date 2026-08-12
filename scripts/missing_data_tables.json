@@ -1,0 +1,478 @@
+[
+  {
+    "lesson_id": "lesson_0-3_islamic_parenting_fitrah_01",
+    "age_group": "0-3",
+    "topic_path": "islamic_parenting_fitrah",
+    "source_id": "fea88841-da5f-4434-b5a9-d4000929b36f",
+    "title_ar": "صوت القرآن والأذان: أول ما تطرق أذنه"
+  },
+  {
+    "lesson_id": "lesson_0-3_islamic_parenting_fitrah_02",
+    "age_group": "0-3",
+    "topic_path": "islamic_parenting_fitrah",
+    "source_id": "748b6af3-dd65-48a5-8caf-76e0f4b09620",
+    "title_ar": "الدعاء والتحنيك: سنن استقبال المولود"
+  },
+  {
+    "lesson_id": "lesson_0-3_islamic_parenting_fitrah_03",
+    "age_group": "0-3",
+    "topic_path": "islamic_parenting_fitrah",
+    "source_id": "fec99dc8-ee24-4818-800c-f1be304fe18b",
+    "title_ar": "جوٌّ إيماني هادئ: البيتُ الذي يربّي"
+  },
+  {
+    "lesson_id": "lesson_0-3_islamic_parenting_fitrah_04",
+    "age_group": "0-3",
+    "topic_path": "islamic_parenting_fitrah",
+    "source_id": "7b209dd7-f40d-4937-909e-cb43350a17bb",
+    "title_ar": "لمسة الرحمة: الحبُّ أساس التديّن"
+  },
+  {
+    "lesson_id": "lesson_10-12_development_pre_teen_01",
+    "age_group": "10-12",
+    "topic_path": "development_pre_teen",
+    "source_id": "4ffd1532-529b-4b91-b96f-7dfe00c766de",
+    "title_ar": "بوادر البلوغ: حوار الجسد المتغيّر بثقة"
+  },
+  {
+    "lesson_id": "lesson_10-12_development_pre_teen_02",
+    "age_group": "10-12",
+    "topic_path": "development_pre_teen",
+    "source_id": "fa931e68-9a58-4eb5-b579-62e4c82fef17",
+    "title_ar": "الاستقلال المتدرّج والمسؤولية"
+  },
+  {
+    "lesson_id": "lesson_10-12_development_pre_teen_03",
+    "age_group": "10-12",
+    "topic_path": "development_pre_teen",
+    "source_id": "0222e0ba-bee8-45be-8cdb-38d8e38e615f",
+    "title_ar": "الصداقة وضغط الأقران: بوصلة القيم"
+  },
+  {
+    "lesson_id": "lesson_10-12_development_pre_teen_04",
+    "age_group": "10-12",
+    "topic_path": "development_pre_teen",
+    "source_id": "a48a147f-8802-45b8-a959-87184a328074",
+    "title_ar": "تنظيم الوقت بين الدراسة واللعب والشاشة"
+  },
+  {
+    "lesson_id": "lesson_10-12_islamic_parenting_worship_love_01",
+    "age_group": "10-12",
+    "topic_path": "islamic_parenting_worship_love",
+    "source_id": "72ac293d-0780-49c7-a761-b7c2fcaa188e",
+    "title_ar": "الصلاة محبّةً لا إلزاماً"
+  },
+  {
+    "lesson_id": "lesson_10-12_islamic_parenting_worship_love_02",
+    "age_group": "10-12",
+    "topic_path": "islamic_parenting_worship_love",
+    "source_id": "b2a45a45-3a51-4f28-9708-016e2a45ff83",
+    "title_ar": "أول صيام رمضان: تدرّجٌ وتحفيز"
+  },
+  {
+    "lesson_id": "lesson_10-12_islamic_parenting_worship_love_03",
+    "age_group": "10-12",
+    "topic_path": "islamic_parenting_worship_love",
+    "source_id": "f94d77f8-54ea-4ed5-9c17-24f629df1cac",
+    "title_ar": "علاقة حيّة بالقرآن: حفظٌ وفهم"
+  },
+  {
+    "lesson_id": "lesson_10-12_islamic_parenting_worship_love_04",
+    "age_group": "10-12",
+    "topic_path": "islamic_parenting_worship_love",
+    "source_id": "b1abab7b-7567-4b77-ae47-b548b19f5723",
+    "title_ar": "الدعاء: تعليمه مناجاة الله"
+  },
+  {
+    "lesson_id": "lesson_13-15_islamic_parenting_steadfast_01",
+    "age_group": "13-15",
+    "topic_path": "islamic_parenting_steadfast",
+    "source_id": "ee8a5f5f-1af0-4a06-b348-ab14ebcb1c48",
+    "title_ar": "العفّة وبدايات الغريزة: حوارٌ مبكر"
+  },
+  {
+    "lesson_id": "lesson_13-15_islamic_parenting_steadfast_02",
+    "age_group": "13-15",
+    "topic_path": "islamic_parenting_steadfast",
+    "source_id": "f9f42aea-b04d-4968-ba28-93a153a767e1",
+    "title_ar": "الصحبة في زمن السوشيال ميديا"
+  },
+  {
+    "lesson_id": "lesson_13-15_islamic_parenting_steadfast_03",
+    "age_group": "13-15",
+    "topic_path": "islamic_parenting_steadfast",
+    "source_id": "d8861ed5-fec2-4cc5-b4a2-170ef107f557",
+    "title_ar": "الإخلاص: العمل لله لا للناس"
+  },
+  {
+    "lesson_id": "lesson_13-15_islamic_parenting_steadfast_04",
+    "age_group": "13-15",
+    "topic_path": "islamic_parenting_steadfast",
+    "source_id": "52c1c070-b2be-4ba4-9b40-b9bf8e6e3fc8",
+    "title_ar": "القدوة الداخلية: ضميرٌ يراقب الله"
+  },
+  {
+    "lesson_id": "lesson_16-18_development_adult_readiness_01",
+    "age_group": "16-18",
+    "topic_path": "development_adult_readiness",
+    "source_id": "974faceb-753e-47b7-b629-ec1a42128fe8",
+    "title_ar": "دماغ شابك يكتمل: قرارٌ واعٍ بدل اندفاع"
+  },
+  {
+    "lesson_id": "lesson_16-18_development_adult_readiness_02",
+    "age_group": "16-18",
+    "topic_path": "development_adult_readiness",
+    "source_id": "f4de3214-a45e-4b66-abd0-58c826fb0408",
+    "title_ar": "مهارات الحياة المستقلة: المال والوقت وتدبير الذات"
+  },
+  {
+    "lesson_id": "lesson_16-18_development_adult_readiness_03",
+    "age_group": "16-18",
+    "topic_path": "development_adult_readiness",
+    "source_id": "0cb5f954-5ab8-46dc-b137-2deec55af6de",
+    "title_ar": "الصحة النفسية وضغط المستقبل: القلق من الغد"
+  },
+  {
+    "lesson_id": "lesson_16-18_development_adult_readiness_04",
+    "age_group": "16-18",
+    "topic_path": "development_adult_readiness",
+    "source_id": "eb5067b4-eb12-4028-b135-8b74b3e79859",
+    "title_ar": "العلاقات الناضجة والحدود: صداقاتٌ وشراكاتٌ سليمة"
+  },
+  {
+    "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_01",
+    "age_group": "16-18",
+    "topic_path": "islamic_parenting_adult_faith",
+    "source_id": "69cb6991-c63d-4e9b-9fbb-1496c63a4083",
+    "title_ar": "إيمانٌ بقناعة: حين يواجه شابك العالم وحده"
+  },
+  {
+    "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_02",
+    "age_group": "16-18",
+    "topic_path": "islamic_parenting_adult_faith",
+    "source_id": "1955ad55-60d2-46bb-90c6-d9812abf2f2f",
+    "title_ar": "العفّة والاستعداد للزواج: حوارٌ صريحٌ بلا خجل"
+  },
+  {
+    "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_03",
+    "age_group": "16-18",
+    "topic_path": "islamic_parenting_adult_faith",
+    "source_id": "d3f04832-4537-424f-a17d-b4c43a577715",
+    "title_ar": "رسالةٌ لا وظيفة: أن يحيا شابك لغايةٍ أكبر"
+  },
+  {
+    "lesson_id": "lesson_16-18_islamic_parenting_adult_faith_04",
+    "age_group": "16-18",
+    "topic_path": "islamic_parenting_adult_faith",
+    "source_id": "0488261d-8c1c-4ada-89ce-365074f5e759",
+    "title_ar": "إطلاقٌ آمن: من الإشراف إلى الثقة والاستقلال"
+  },
+  {
+    "lesson_id": "lesson_2-3_islamic_first_words_01",
+    "age_group": "2-3",
+    "topic_path": "islamic_first_words",
+    "source_id": "81adac3c-57f0-44d0-9faa-b0c0b813e66c",
+    "title_ar": "بسم الله والحمد لله: ذكرٌ في كل لحظة"
+  },
+  {
+    "lesson_id": "lesson_2-3_islamic_first_words_02",
+    "age_group": "2-3",
+    "topic_path": "islamic_first_words",
+    "source_id": "9d6ef7ea-cfe8-4707-9bd7-c9dc3375a7da",
+    "title_ar": "السلام والكلمة الطيّبة"
+  },
+  {
+    "lesson_id": "lesson_2-3_islamic_first_words_03",
+    "age_group": "2-3",
+    "topic_path": "islamic_first_words",
+    "source_id": "ab4bf1c0-84af-4b25-8647-cca10200a370",
+    "title_ar": "أول الآداب: الأكل باليمين والدعاء"
+  },
+  {
+    "lesson_id": "lesson_2-3_islamic_first_words_04",
+    "age_group": "2-3",
+    "topic_path": "islamic_first_words",
+    "source_id": "c5a48cd3-cbac-48af-b52b-08f3569f9068",
+    "title_ar": "القدوة لا التلقين: يقلّد ما يرى"
+  },
+  {
+    "lesson_id": "lesson_2-3_medical_early_wellbeing_01",
+    "age_group": "2-3",
+    "topic_path": "medical_early_wellbeing",
+    "source_id": "b3ac3dab-5aba-42a9-9e2f-b7f95c5303e1",
+    "title_ar": "التغذية بعد الفطام: من الحليب إلى المائدة"
+  },
+  {
+    "lesson_id": "lesson_2-3_medical_early_wellbeing_02",
+    "age_group": "2-3",
+    "topic_path": "medical_early_wellbeing",
+    "source_id": "b1f0139a-aa21-4011-8912-e2a842f76960",
+    "title_ar": "نوم الدارج ونوبات الليل"
+  },
+  {
+    "lesson_id": "lesson_2-3_medical_early_wellbeing_03",
+    "age_group": "2-3",
+    "topic_path": "medical_early_wellbeing",
+    "source_id": "a7a8d28d-bdf8-4628-88d6-07d89a1f73b9",
+    "title_ar": "علامات النمو والتطور (ومتى تقلق)"
+  },
+  {
+    "lesson_id": "lesson_2-3_medical_early_wellbeing_04",
+    "age_group": "2-3",
+    "topic_path": "medical_early_wellbeing",
+    "source_id": "f6a37ec5-5aec-49dd-9006-d505c0c429f2",
+    "title_ar": "السلامة المنزلية والوقاية من الحوادث"
+  },
+  {
+    "lesson_id": "lesson_4-6_cyber_early_screens_01",
+    "age_group": "4-6",
+    "topic_path": "cyber_early_screens",
+    "source_id": "ae027c4e-5eea-459d-b319-552fc6a6ea6a",
+    "title_ar": "كم وقت شاشة يناسب طفلك؟ القاعدة والبديل"
+  },
+  {
+    "lesson_id": "lesson_4-6_cyber_early_screens_02",
+    "age_group": "4-6",
+    "topic_path": "cyber_early_screens",
+    "source_id": "edf0d955-453b-4454-a2cf-46a2159cad61",
+    "title_ar": "اختيار المحتوى الآمن: ماذا يشاهد ومع من"
+  },
+  {
+    "lesson_id": "lesson_4-6_cyber_early_screens_03",
+    "age_group": "4-6",
+    "topic_path": "cyber_early_screens",
+    "source_id": "afd8166b-1e82-40b4-88c0-e702f6e48d4b",
+    "title_ar": "الشاشة المشتركة لا المنفردة: المشاهدة حواراً"
+  },
+  {
+    "lesson_id": "lesson_4-6_cyber_early_screens_04",
+    "age_group": "4-6",
+    "topic_path": "cyber_early_screens",
+    "source_id": "fba81554-adb8-4dc5-9d4a-37bad4e33cb5",
+    "title_ar": "فطامٌ لطيف عن الشاشة: روتينٌ بلا معارك"
+  },
+  {
+    "lesson_id": "lesson_4-6_medical_healthy_growth_01",
+    "age_group": "4-6",
+    "topic_path": "medical_healthy_growth",
+    "source_id": "80b89dff-6126-4121-a534-7975c0176efb",
+    "title_ar": "النوم الكافي: كم يحتاج طفلك ولماذا"
+  },
+  {
+    "lesson_id": "lesson_4-6_medical_healthy_growth_02",
+    "age_group": "4-6",
+    "topic_path": "medical_healthy_growth",
+    "source_id": "76d29441-28e9-4ef3-9797-a47144887a60",
+    "title_ar": "التغذية المتوازنة ورفض الطعام"
+  },
+  {
+    "lesson_id": "lesson_4-6_medical_healthy_growth_03",
+    "age_group": "4-6",
+    "topic_path": "medical_healthy_growth",
+    "source_id": "676a4e60-5692-424a-b975-3479f1c906e5",
+    "title_ar": "علاماتٌ نمائية يجب ملاحظتها (ومتى تستشير)"
+  },
+  {
+    "lesson_id": "lesson_4-6_medical_healthy_growth_04",
+    "age_group": "4-6",
+    "topic_path": "medical_healthy_growth",
+    "source_id": "4d589f71-a3e8-441c-b074-91b6c5feab64",
+    "title_ar": "النظافة والوقاية: عاداتٌ صحية مبكرة"
+  },
+  {
+    "lesson_id": "lesson_7-9_cyber_digital_basics_01",
+    "age_group": "7-9",
+    "topic_path": "cyber_digital_basics",
+    "source_id": "48fc1841-fe27-47a5-8b82-46894431dc5f",
+    "title_ar": "عقد الشاشة العائلي: قواعدُ متفقٌ عليها"
+  },
+  {
+    "lesson_id": "lesson_7-9_cyber_digital_basics_02",
+    "age_group": "7-9",
+    "topic_path": "cyber_digital_basics",
+    "source_id": "e215ff99-18c3-4fdb-aa78-38bb24d8a4ef",
+    "title_ar": "الألعاب الإلكترونية: المفيد والضارّ"
+  },
+  {
+    "lesson_id": "lesson_7-9_cyber_digital_basics_03",
+    "age_group": "7-9",
+    "topic_path": "cyber_digital_basics",
+    "source_id": "5b125e2f-2c81-42a9-ac5b-e791d04bde6e",
+    "title_ar": "خصوصية الطفل: ما لا يُشارَك على الإنترنت"
+  },
+  {
+    "lesson_id": "lesson_7-9_cyber_digital_basics_04",
+    "age_group": "7-9",
+    "topic_path": "cyber_digital_basics",
+    "source_id": "b15e60e3-a604-42a8-940f-df292e64c688",
+    "title_ar": "التنمّر الإلكتروني: كيف يحمي نفسه ومتى يخبرك"
+  },
+  {
+    "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_01",
+    "age_group": "7-9",
+    "topic_path": "islamic_parenting_akhlaq",
+    "source_id": "ab604dea-b233-4ecd-b344-6e0ca7100f39",
+    "title_ar": "الصدق: كيف تربّي طفلاً لا يكذب"
+  },
+  {
+    "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_02",
+    "age_group": "7-9",
+    "topic_path": "islamic_parenting_akhlaq",
+    "source_id": "a0b8cec2-c352-4c50-95ff-f7fc2a3a2334",
+    "title_ar": "الرحمة بالإخوة والناس"
+  },
+  {
+    "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_03",
+    "age_group": "7-9",
+    "topic_path": "islamic_parenting_akhlaq",
+    "source_id": "d5a0c2e3-b327-49eb-86e1-f6965c157ae1",
+    "title_ar": "الأمانة والمسؤولية الصغيرة"
+  },
+  {
+    "lesson_id": "lesson_7-9_islamic_parenting_akhlaq_04",
+    "age_group": "7-9",
+    "topic_path": "islamic_parenting_akhlaq",
+    "source_id": "8dbfa18c-62de-4a8f-8e63-11b539d235ed",
+    "title_ar": "ضبط الغضب على هدي النبي ﷺ"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_01",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "10011f1d-09fa-45dd-8353-4a428aac89be",
+    "title_ar": "من هو الله؟"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_02",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "90dcfc91-c257-4194-9a43-b323d40bf010",
+    "title_ar": "الله يحبنا ويرعانا"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_03",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "fe9cc021-c7d6-4111-b7ca-5981b133e5dd",
+    "title_ar": "لماذا خلقنا الله؟"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_04",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "fd5a6991-6472-4a6a-add0-f046a2826532",
+    "title_ar": "أين الله؟ وكيف يراقبنا؟"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_05",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "81b7e6ed-c4e4-45ff-b3e5-02951a2dc1bc",
+    "title_ar": "أسماء الله الحسنى"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_06",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "24eac383-d924-4734-8656-2fdc243a0353",
+    "title_ar": "أركان الإيمان الستة"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_07",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "3d6c8606-7b8a-4ee3-9e08-106bbc7419d2",
+    "title_ar": "محمد ﷺ قدوتنا"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_08",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "43e3ae83-54d2-444e-b4e8-1bdfb0454da9",
+    "title_ar": "الملائكة والكتب والرسل"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_09",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "5ade71a0-e514-4306-ac7a-86751e055a56",
+    "title_ar": "ما بعد الموت؟"
+  },
+  {
+    "lesson_id": "lesson_7-9_aqeedah_fundamentals_10",
+    "age_group": "7-9",
+    "topic_path": "aqeedah_fundamentals",
+    "source_id": "7147234b-379c-43b2-bb32-2efa3fee72b4",
+    "title_ar": "العقيدة في سلوكي"
+  },
+  {
+    "lesson_id": "lesson_10-12_aqeedah_growth_01",
+    "age_group": "10-12",
+    "topic_path": "aqeedah_growth",
+    "source_id": "e4927d0f-2fc4-4f28-b0a1-d6c6a62df79e",
+    "title_ar": "أركان الإيمان بعمق: ماذا نؤمن ولماذا"
+  },
+  {
+    "lesson_id": "lesson_10-12_aqeedah_growth_02",
+    "age_group": "10-12",
+    "topic_path": "aqeedah_growth",
+    "source_id": "ff9f854e-bbae-450a-abd2-1cb8b035f061",
+    "title_ar": "المراقبة والإخلاص: أعمل لله لا للناس"
+  },
+  {
+    "lesson_id": "lesson_10-12_aqeedah_growth_03",
+    "age_group": "10-12",
+    "topic_path": "aqeedah_growth",
+    "source_id": "fb429811-5be1-4142-973c-e144de07bc83",
+    "title_ar": "القضاء والقدر: الرضا والتوكل"
+  },
+  {
+    "lesson_id": "lesson_13-15_aqeedah_certainty_01",
+    "age_group": "13-15",
+    "topic_path": "aqeedah_certainty",
+    "source_id": "db22eb75-65be-40cc-b064-9d7f78172f11",
+    "title_ar": "دلائل الإيمان: كيف نعرف أن الله موجود وأن القرآن حق"
+  },
+  {
+    "lesson_id": "lesson_16-18_aqeedah_conviction_01",
+    "age_group": "16-18",
+    "topic_path": "aqeedah_conviction",
+    "source_id": "3d2b3fd0-0bf9-423d-9df5-ea179280bd9c",
+    "title_ar": "مواجهة الإلحاد والشبهات المعاصرة"
+  },
+  {
+    "lesson_id": "lesson_16-18_aqeedah_conviction_02",
+    "age_group": "16-18",
+    "topic_path": "aqeedah_conviction",
+    "source_id": "b6f98a1c-db8a-47ea-9681-27dfe56fe4bc",
+    "title_ar": "العقيدة بوصلة القرارات: ثبات القلب"
+  },
+  {
+    "lesson_id": "lesson_4-6_aqeedah_seeds_01",
+    "age_group": "4-6",
+    "topic_path": "aqeedah_seeds",
+    "source_id": "60f46f61-d19d-4945-943e-f1b87a853f9a",
+    "title_ar": "الله ربي وخالقي"
+  },
+  {
+    "lesson_id": "lesson_4-6_aqeedah_seeds_02",
+    "age_group": "4-6",
+    "topic_path": "aqeedah_seeds",
+    "source_id": "1d9aa069-e359-44e1-8450-4508483c8dc4",
+    "title_ar": "الله يحبني ويراني"
+  },
+  {
+    "lesson_id": "lesson_4-6_aqeedah_seeds_03",
+    "age_group": "4-6",
+    "topic_path": "aqeedah_seeds",
+    "source_id": "e4feec4e-4795-4505-b845-b862fccbe132",
+    "title_ar": "الله أنعم علينا بكل شيء"
+  },
+  {
+    "lesson_id": "lesson_4-6_aqeedah_seeds_04",
+    "age_group": "4-6",
+    "topic_path": "aqeedah_seeds",
+    "source_id": "74f841e1-bbef-4abf-be05-be46681feb81",
+    "title_ar": "أحب الله وأحب نبيه ﷺ"
+  }
+]

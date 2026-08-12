@@ -1,0 +1,145 @@
+{
+  "report_title": "Independent Sharia Review of English Translations — Age Groups 0-3, 2-3, 4-6, 7-9",
+  "reviewer": "independent_sharia_reviewer",
+  "date": "2026-08-12",
+  "scope": "lessons (98), paths (22), daily_tips (120) = 240 EN files vs Arabic originals",
+  "methodology": [
+    "Programmatic scan: honorific (ﷺ) preservation, hadith/verse fidelity against Saheeh International / Sunnah.com English references, Islamic-term rendering with Arabic word-boundary detection and curly-quote normalisation, count mismatches, additions/omissions.",
+    "Manual side-by-side comparison of every field containing Islamic terms (rahma, rifq, aqeedah, fitrah, tarbiyah, akhlaq, adhkar, seerah, iman, ibadah, sunnah, khuluq, etc.) and every field containing hadith markers (ﷺ, صلى الله عليه وسلم, حديث, قال النبي, ﴿﴾)."
+  ],
+  "summary_counts": {
+    "files_reviewed": 240,
+    "findings_total": 11,
+    "by_severity": {"high": 3, "medium": 6, "low": 2},
+    "by_type": {
+      "term_substitution_meaning_change": 3,
+      "hadith_rendering_concern": 3,
+      "meaning_change_minor": 2,
+      "register_loss": 1,
+      "honorific_added_in_translation": 1,
+      "term_rendering_inconsistency": 1
+    }
+  },
+  "findings": [
+    {
+      "file": "knowledge_base/curriculum/i18n/en/lessons/lesson_0-3_islamic_parenting_attachment_03.json",
+      "field": "summary",
+      "issue_type": "term_substitution_meaning_change",
+      "arabic_text": "وهو بالضبط ما أرشد إليه الإسلام في الرحمة والاهتمام بالأبناء",
+      "english_text": "and this is exactly what Islam guided us toward in showing *rifq* (gentleness) and care for children",
+      "why": "The Arabic says 'الرحمة' (mercy/compassion), but the English substitutes 'rifq' (gentleness), a different Islamic concept. This is the same class of distortion previously caught ('إن الله رفيق يحب الرفق في كل شيء' mistranslated as 'loves rifq'). Mercy (rahma) and gentleness (rifq) are related but distinct prophetic values; replacing one with the other changes the religious meaning the source intends to convey.",
+      "severity": "high",
+      "recommended_fix": "Render as '...in showing *rahmah* (mercy/compassion) and care for children.' Preserve the original Arabic concept of رحمة."
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/lessons/lesson_0-3_islamic_parenting_attachment_03.json",
+      "field": "try_this",
+      "issue_type": "term_substitution_meaning_change",
+      "arabic_text": "وهو تطبيق لقيمة الرحمة النبوية بشكلها العملي",
+      "english_text": "and it is the practical application of the Prophetic *rifq* ﷺ",
+      "why": "The Arabic says 'الرحمة النبوية' (Prophetic mercy), but the English renders it as 'Prophetic rifq' (Prophetic gentleness), again substituting a different Islamic term. Additionally the English inserts the honorific ﷺ which is NOT present in the Arabic source for this clause — the Arabic has no ﷺ after 'الرحمة النبوية'. Adding an honorific not in the source is not a Sharia defect per se, but substituting رحمة with رفق changes the religious concept being taught.",
+      "severity": "high",
+      "recommended_fix": "Render as '...the practical application of the Prophetic *rahmah* (mercy).' Remove the inserted ﷺ (or keep it only if the source had it)."
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/paths/path_0-3_islamic_parenting_fitrah.json",
+      "field": "description",
+      "issue_type": "term_substitution_meaning_change",
+      "arabic_text": "وإحاطته برحمةٍ تجعل الدين محبوباً قبل أن يعقل",
+      "english_text": "and surrounding them with rifq that makes deen beloved before they can reason",
+      "why": "The Arabic says 'برحمة' (with mercy), but the English substitutes 'rifq' (gentleness). This is a recurring substitution pattern (rahma→rifq) that systematically replaces the Islamic concept of mercy with gentleness. The deepseek-v4-pro self-review already flagged this (review_defects), but as independent reviewer I confirm it is a HIGH-severity meaning change: the path's spiritual framing (mercy as the atmosphere that makes deen beloved) is altered to gentleness.",
+      "severity": "high",
+      "recommended_fix": "Render as 'and surrounding them with *rahmah* (mercy) that makes deen beloved before they can reason.'"
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/lessons/lesson_0-3_islamic_parenting_attachment_02.json",
+      "field": "summary",
+      "issue_type": "hadith_rendering_concern",
+      "arabic_text": "قال النبي صلى الله عليه وسلم: «إن الله رفيق يحب الرفق في كل شيء»",
+      "english_text": "Allah’s Messenger ﷺ said: «Indeed, Allah is Rafeeq (Gentle) and loves rifq in all things.»",
+      "why": "The hadith's first clause 'إن الله رفيق' is rendered 'Allah is Rafeeq (Gentle)'. The previous correction standardised this to 'Allah is gentle and loves gentleness in all things' (the approved Saheeh/Sunnah.com-style English). Here the translator reverts to a transliteration+gloss ('Rafeeq (Gentle)') which is faithful to the Arabic wording but diverges from the agreed canonical English rendering the project established. The meaning is preserved (Rafeeq = Gentle), so this is a consistency/style concern, not a doctrinal distortion. Severity is medium because the meaning is intact but the agreed fix was not applied uniformly.",
+      "severity": "medium",
+      "recommended_fix": "Align with the project's agreed rendering: 'Indeed, Allah is gentle and loves gentleness in all things.'"
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/daily_tips/tip_0-3_007.json",
+      "field": "text",
+      "issue_type": "hadith_rendering_concern",
+      "arabic_text": "النبي ﷺ: «إن الله رفيق يحب الرفق في كل شيء»",
+      "english_text": "the Prophet ﷺ said: «Indeed, Allah is Rafeeq (Most Gentle) and loves rifq in all things.»",
+      "why": "Same hadith. The gloss 'Most Gentle' for 'Rafeeq' is a slight intensification — Arabic 'رفيق' is a name/attribute meaning gentle/kind, not strictly the elative 'Most Gentle'. The meaning is broadly preserved and the transliteration is faithful, but this differs from the agreed canonical English ('Allah is gentle and loves gentleness in all things'). The previous review's fix appears not to have been applied uniformly across files.",
+      "severity": "medium",
+      "recommended_fix": "Use the agreed canonical rendering: 'Allah is gentle and loves gentleness in all things.'"
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/daily_tips/tip_4-6_001.json",
+      "field": "text",
+      "issue_type": "hadith_rendering_concern",
+      "arabic_text": "النبي ﷺ قال: 'إن الله رفيق يحب الرفق في كل شيء'",
+      "english_text": "The Prophet ﷺ said: 'Indeed, Allah is Rafeeq (Most Kind) and loves rifq (gentleness) in all things'",
+      "why": "Same hadith, third rendering variant ('Most Kind' for 'Rafeeq'). 'Most Kind' is acceptable but again diverges from the agreed 'Allah is gentle and loves gentleness in all things'. Inconsistency across the 4 files that quote this hadith (attachment_02, tip_0-3_007, tip_4-6_001, islamic_parenting_bond_01). The lesson_4-6_islamic_parenting_bond_01 version uses the agreed rendering. The other three do not.",
+      "severity": "medium",
+      "recommended_fix": "Standardise all occurrences of this hadith to: 'Indeed, Allah is gentle and loves gentleness in all things.'"
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/lessons/lesson_0-3_islamic_parenting_fitrah_02.json",
+      "field": "summary",
+      "issue_type": "meaning_change_minor",
+      "arabic_text": "هذه السنن ليست طقوساً بل أول عقدٍ بين الوالد وربه على هذا الأمانة.",
+      "english_text": "These sunnahs are not mere rituals but the first covenant between the parent and their Lord over this amanah.",
+      "why": "The Arabic negates that these are rituals at all ('ليست طقوساً' = 'are not rituals'), but the English adds 'mere' ('not mere rituals'), which changes the meaning to 'not just rituals' — implying they ARE rituals but more. The Arabic is an outright negation. The deepseek self-review flagged this; I confirm it is a real, if minor, meaning change that softens the source's categorical negation.",
+      "severity": "low",
+      "recommended_fix": "Render as: 'These sunnahs are not rituals but the first covenant between the parent and their Lord over this amanah.'"
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/lessons/lesson_0-3_islamic_parenting_attachment_01.json",
+      "field": "summary",
+      "issue_type": "meaning_change_minor",
+      "arabic_text": "هذه السنن ليست شكليات — هي بناء هوية الطفل الإسلامية منذ يومه الأول.",
+      "english_text": "These sunnan are not mere formalities—they are the foundation of the child’s Islamic identity from their very first day.",
+      "why": "Same pattern as above: Arabic 'ليست شكليات' = 'are not formalities' (categorical), English 'not mere formalities' softens to 'not just formalities'. Minor but systematic — the translator repeatedly inserts 'mere' where the Arabic uses an outright negation 'ليست'.",
+      "severity": "low",
+      "recommended_fix": "Render as: 'These sunan are not formalities—they are the foundation...'"
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/lessons/lesson_0-3_islamic_parenting_fitrah_01.json",
+      "field": "summary, try_this, reflection_prompts",
+      "issue_type": "register_loss",
+      "arabic_text": "أسمعي ... شغّلي ... لاحظي ... جعلتِ",
+      "english_text": "Let your child hear ... Play ... observe ... Have you made",
+      "why": "The Arabic uses feminine singular imperatives and verb forms, directly addressing the mother with a warm personal tone. The English uses gender-neutral imperatives, losing the direct maternal address. The deepseek self-review flagged this. As independent reviewer I confirm this is a register/tone loss, not a doctrinal issue. Severity medium because the intended audience (mother) and warmth are weakened but the directive content is preserved.",
+      "severity": "medium",
+      "recommended_fix": "If the product targets mothers primarily, consider addressing them directly ('Hear your child... Play... observe...'). Otherwise acceptable as gender-neutral."
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/lessons/lesson_0-3_islamic_parenting_attachment_03.json",
+      "field": "try_this",
+      "issue_type": "honorific_added_in_translation",
+      "arabic_text": "وهو تطبيق لقيمة الرحمة النبوية بشكلها العملي. (no ﷺ in this clause)",
+      "english_text": "the practical application of the Prophetic *rifq* ﷺ",
+      "why": "The English adds the honorific ﷺ after 'Prophetic rifq', but the Arabic source clause 'الرحمة النبوية بشكلها العملي' contains no ﷺ. Adding an honorific not present in the source is not a Sharia defect (honoring the Prophet is praiseworthy), but it is an addition the translator made. Combined with the term substitution (rahma→rifq) already flagged, this clause has two issues.",
+      "severity": "low",
+      "recommended_fix": "Remove the added ﷺ (or restore the original term 'rahmah' and keep ﷺ as a permissible gloss)."
+    },
+    {
+      "file": "knowledge_base/curriculum/i18n/en/lessons/lesson_4-6_islamic_parenting_adab_b04.json",
+      "field": "summary",
+      "issue_type": "term_rendering_inconsistency",
+      "arabic_text": "والرفيق",
+      "english_text": "the gentle",
+      "why": "The Arabic 'الرفيق' (the gentle one) is rendered 'the gentle' in 'Allah's love for the truthful and the gentle'. This is a faithful translation of الرفيق here, but note the same root رفق is elsewhere transliterated as 'rifq' (noun) in the same files. The mixing of transliteration (rifq/Rafeeq) and translation (gentle/gentleness) for the same root across files is an inconsistency, not a Sharia error. Recommend a glossary to standardise.",
+      "severity": "medium",
+      "recommended_fix": "Adopt a project-wide glossary: رفق → 'rifq (gentleness)' on first use, 'gentleness' thereafter; رفيق (as Allah's name) → 'Gentle'."
+    }
+  ],
+  "negative_findings_confirmed_clean": [
+    "Honorific ﷺ preservation: In every file where the Arabic source contains ﷺ (27 files), the English translation also preserves ﷺ — no missing-honorific defects found.",
+    "Quran ayat: No ﴿﴾-bracketed ayat found in the Arabic sources of these 4 age groups, so no Saheeh-International-alignment checks were triggered. The few references to Quran content are paraphrased (e.g. 'وقولوا للناس حسناً' rendered 'And speak to people kindly' — faithful to Surah Al-Baqarah 2:83's spirit, though the verse is not quoted in full).",
+    "Hadith fidelity for non-Rifq ahadith: The two other ahadith quoted in full — 'ليس المؤمن بالطعّان...' (lesson_4-6_islamic_street_language_01) and 'من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت' (same file) — are rendered accurately and idiomatically, with attribution preserved ('reported by al-Tirmidhi', 'agreed upon').",
+    "Pillars of iman / hadith of Jibril (lesson_7-9_aqeedah_fundamentals_06): correctly lists the six pillars including qadar its good and bad — faithful to the source.",
+    "Islamic terminology transliteration: tarbiyah, akhlaq, adhkar, fitrah, aqeedah, seerah, iman, du'a, adhan, sunnah, amanah, birr, qudwah, sadaqah, istinja', wudu, hijrah, deen, ghayb, wahy, qadar, haya, murāqabah, al-Awwal, al-Sadiq al-Amin, silat al-rahim, Ahl al-Sunnah, Salaf — all rendered with correct transliteration and parenthetical glosses where needed. Curly apostrophes (U+2019) are used in du'a/Qur'an but this is typographically correct, not a defect.",
+    "No omissions of substantive content found (all list lengths match, no empty English fields where Arabic has content, no missing reflection prompts or warning flags).",
+    "No additions of un-Islamic or bid'ah content found in the English that are absent from the Arabic."
+  ],
+  "overall_assessment": "The English translations are doctrinally sound in the vast majority of content. The dominant defect pattern is a systematic substitution of 'رحمة' (mercy) with 'rifq' (gentleness) by the translator (mistral-large-3), occurring in at least 3 places (attachment_03 summary, attachment_03 try_this, path_0-3_islamic_parenting_fitrah description). The deepseek-v4-pro reviewer already caught all three in its self-reported review_defects, but the defects were NOT corrected in the translated text — they remain in the shipped English. This is the single highest-priority fix class and matches exactly the distortion pattern the task brief warned about (rahma↔rifq confusion). Secondary issues: inconsistent rendering of the 'Allah is gentle and loves gentleness' hadith across 4 files (3 use transliteration variants, 1 uses the agreed canonical English), and a minor recurring 'not mere X' softening of categorical Arabic negations 'ليست X'. No missing honorifics, no missing content, no un-Islamic additions."
+}
