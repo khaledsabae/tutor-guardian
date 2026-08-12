@@ -2,7 +2,7 @@
   "id": "tip_0-3_017",
   "age_group": "0-3",
   "domain": "development",
-  "text": "Respond to your child’s crying within seconds—not as indulgence, but as building their neurological amanah (trust). Research confirms: swift response = a calm brain, high confidence, better learning. Ignoring = chronic stress.",
+  "text": "Respond to your child’s crying within seconds—not as indulgence, but as building their neurological security. Research confirms: swift response = a calm brain, high confidence, better learning. Ignoring = chronic stress.",
   "unit_id": "dea6683e-62be-4f02-8bfe-a426ef123631",
   "day_of_week": 4,
   "time_of_day": "anytime",
@@ -39,5 +39,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }

@@ -3,7 +3,7 @@
   "title": "Establishing Islamic Adab and Moral Conscience (Ages 4-6)",
   "age_group": "4-6",
   "domain": "islamic_parenting",
-  "description": "A 14-day tarbiyah journey to establish foundational Islamic akhlaq values (truthfulness, amanah, mercy, respect) during the preoperational stage (Piaget). Focuses on transforming concepts from theoretical knowledge into heart-based behavioral habits through compassionate parental modeling, Prophetic seerah stories, and daily dialogue. Avoids coercive methods, relying instead on the Prophetic principle of gradualism and qudwah (exemplary conduct) as the tool for moral development in this sensitive stage.",
+  "description": "A 14-day tarbiyah journey to establish foundational Islamic akhlaq values (truthfulness, amanah, mercy, respect) during the preoperational stage (Piaget). Focuses on transforming concepts from theoretical knowledge into heart-based behavioral habits through compassionate parental modeling, Prophetic stories, and daily dialogue. Avoids coercive methods, relying instead on the Prophetic principle of gradualism and qudwah (exemplary conduct) as the tool for moral development in this sensitive stage.",
   "lesson_ids": [
     "lesson_4-6_islamic_parenting_adab_01",
     "lesson_4-6_islamic_parenting_adab_02",
@@ -69,5 +69,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }
