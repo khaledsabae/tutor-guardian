@@ -3,7 +3,7 @@
   "title": "The Prophetic Embrace: Tarbiyah of the Child upon the Guidance of the Messenger in the First Year",
   "age_group": "0-3",
   "domain": "islamic_parenting",
-  "description": "A 12-day Islamic tarbiyah curriculum covering the most important Islamic milestones in caring for the newborn: the sunnahs of birth, naming, and the aqiqah (sacrifice for the newborn), rifq (gentleness) and mercy in dealing with the infant, building secure communication between parent and their little one, and how to plant the seeds of iman (faith) in the tiny heart from the earliest months. Based on *Tarbiyat al-Awlad fil-Islam* by Abdullah Nasih Ulwan and the Prophetic methodology in tarbiyah.",
+  "description": "A 12-day Islamic tarbiyah curriculum covering the most important Islamic milestones in caring for the newborn: the sunnahs of birth, naming, and the aqiqah (sacrifice for the newborn), rifq (gentleness) and mercy in dealing with the infant, building secure communication between parent and their little one, and how to plant the seeds of iman (faith) in the tiny heart from the earliest months. Based on Tarbiyat al-Awlad fil-Islam by Abdullah Nasih Ulwan and the Prophetic methodology in tarbiyah.",
   "lesson_ids": [
     "lesson_0-3_islamic_parenting_attachment_01",
     "lesson_0-3_islamic_parenting_attachment_02",
@@ -53,5 +53,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }

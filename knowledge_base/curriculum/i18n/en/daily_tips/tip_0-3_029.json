@@ -2,7 +2,7 @@
   "id": "tip_0-3_029",
   "age_group": "0-3",
   "domain": "islamic_parenting",
-  "text": "Make your home a tranquil place where the good word prevails; the infant absorbs the *sakīnah* (tranquility) of his home before he understands its speech.",
+  "text": "Make your home a tranquil place where the good word prevails; the infant absorbs the sakīnah (tranquility) of his home before he understands its speech.",
   "unit_id": null,
   "day_of_week": 2,
   "time_of_day": "anytime",
@@ -25,5 +25,6 @@
     "review_verdict": "clean",
     "review_defects": [],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }
