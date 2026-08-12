@@ -98,6 +98,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         if (mounted) Navigator.of(context).pop();
       }
     } catch (e) {
+      // 13eea10 decoupled lesson_opened from the progress write and unhid the
+      // completion button, but left this path behind the same network call:
+      // a failed PATCH still produced no event at all, so every tap lost to a
+      // bad connection looked identical to never tapping. Log the miss.
+      unawaited(Analytics.lessonCompleteFailed(widget.lessonId));
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

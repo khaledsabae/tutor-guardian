@@ -72,6 +72,18 @@ class Analytics {
     return _log('lesson_completed', {'lesson_id': lessonId});
   }
 
+  /// A completion tap whose progress write failed — the user meant to finish
+  /// the lesson but nothing was recorded.
+  ///
+  /// Kept as its own event rather than folded into [lessonCompleted] so that
+  /// series keeps meaning "completed *and* persisted" and stays comparable
+  /// across the whole history. Without this the failures are invisible: the
+  /// PATCH is a single shot with no retry, so a bad network turns a finished
+  /// lesson into a snackbar and completion reads low for a reason nobody can
+  /// see in the numbers.
+  static Future<void> lessonCompleteFailed(String lessonId) =>
+      _log('lesson_complete_failed', {'lesson_id': lessonId});
+
   /// A habit was checked in for today.
   static Future<void> habitCheckIn(String status) {
     EngagementSignal.mark();
