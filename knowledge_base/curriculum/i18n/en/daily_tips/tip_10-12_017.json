@@ -1,0 +1,25 @@
+{
+  "id": "tip_10-12_017",
+  "age_group": "10-12",
+  "domain": "medical",
+  "text": "Puberty changes: height, voice, hair, menstruation/wet dreams. Say to them: \"This is natural; we all went through it.\" — reassurance is the first remedy.",
+  "unit_id": "3cc4fbe0-25f9-4366-b9a6-3893795bec75",
+  "day_of_week": 1,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

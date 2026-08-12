@@ -1,0 +1,51 @@
+{
+  "id": "tip_0-3_018",
+  "age_group": "0-3",
+  "domain": "development",
+  "text": "Teach your new little one step by step (Vygotsky: ZPD): you begin → he completes → he does it alone → you encourage him. Do not do it for him, nor leave him to drown. Gradual progression builds itqan (mastery) and confidence.",
+  "unit_id": "2b2d1fdd-1a30-40f3-aa2b-0dbadea2ce2c",
+  "day_of_week": 5,
+  "time_of_day": "evening",
+  "tags": [
+    "تعلم_مدرج",
+    "ZPD",
+    "سقالات",
+    "ثقة"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T20:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "طفلك الجديد",
+        "english": "your new little one",
+        "why": "The Arabic likely means 'your child who is new to this' not 'your new little one' which implies a new baby. The translation could mislead.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "text",
+        "arabic": "الإتقان",
+        "english": "itqan (mastery)",
+        "why": "The English adds a transliteration 'itqan' that is not present in the source. The source simply says 'mastery'. This introduces an Arabic term unnecessarily and may be inconsistent with the rest of the document.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

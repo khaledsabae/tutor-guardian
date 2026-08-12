@@ -1,0 +1,48 @@
+{
+  "id": "lesson_7-9_islamic_parenting_worship_03",
+  "path_id": "path_7-9_islamic_parenting_worship",
+  "title": "Al-Qur'an: The Lifelong Companion",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "f414d4fc-4ee9-4385-b7d6-4496c1ee9aaa",
+    "b1bd26fc-3144-4928-9bb4-ce2b30f95876"
+  ],
+  "summary": "At this age, the child begins to read fluently. The goal: for the Qur'an to be his daily companion—memorising short surahs, understanding simplified meanings, and connecting verses to his daily behavior.",
+  "try_this": "Choose a short surah (Ad-Duha, Ash-Sharh, Al-'Adiyat)—memorise one verse together daily, and discuss: What does it mean to you?",
+  "order": 3,
+  "estimated_minutes": 5,
+  "reflection_prompts": [
+    "Which verse does your child love the most? And why?",
+    "Have you noticed a change in his behavior after memorisation?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[0]",
+        "arabic": "أي آية أحبها طفلك أكثر؟ ولماذا؟",
+        "english": "Which verse does your child love the most? And why?",
+        "why": "The Arabic uses the past tense 'أحبها' (loved), referring to the child's preference during the memorisation process. The English uses the present tense 'does love', shifting the meaning to a general, timeless preference.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

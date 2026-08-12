@@ -1,0 +1,78 @@
+{
+  "id": "lesson_7-9_development_middle_childhood_01",
+  "path_id": "path_7-9_development_middle_childhood",
+  "title": "My Child’s Physical and Social Growth from Primary Stage to Pre-Bulugh",
+  "age_group": "7-9",
+  "domain": "development",
+  "unit_ids": [
+    "dev-7d8eb92d",
+    "dev-10a2fcc0",
+    "med-88c1469a",
+    "dev-40436851",
+    "med-c0eb2588"
+  ],
+  "summary": "At the age of 6-8 years, your child can dress themselves, catch a ball confidently with their hands, and tie their shoelaces, because their physical and motor skills are developing rapidly. The American CDC recommends at least one hour of physical activity daily and 9-12 hours of sleep each day to support this natural growth. Your child’s (9-11 years) increased interest in their friends over family is a normal stage of growth, not a distancing from you, as their friendships become deeper and more emotionally significant. Peer pressure also increases at this stage, and a child who is confident in themselves is better able to resist negative pressure. Accompany their growing independence instead of resisting it, as also advised by the American CDC. The appearance of signs of bulugh before the age of eight (for girls) or before nine (for boys) is medically defined as \"precocious puberty\" and requires evaluation by a pediatrician or endocrinologist to determine the cause, according to the American Academy of Pediatrics (AAP). Do not wait or rely solely on home observation; early referral determines the appropriate treatment if needed. However, the onset of signs of bulugh in girls between the ages of 8 and 13 is completely normal. The first sign is often a small bump the size of a coin under the nipple, and it may appear in one breast before the other, so there is no need to worry about asymmetry. Prepare her psychologically with a calm conversation before the signs appear, not after. Your daughter’s (10-12 years) comparison of herself to her friends in terms of clothing is common at this age. Instead of outright refusal or immediately buying what she wants to please her, give her a regular allowance to manage on her own; this trains her to distinguish between what she truly wants and what she wants because her friend has it.",
+  "try_this": "This week: Monitor your child’s growth without direct comment in just three areas: their daily physical activity, how close they are becoming to their friends, and any early or expected signs of bulugh. If you see a sign of bulugh before the age of eight (girl) or nine (boy), book an appointment with a pediatrician this week instead of waiting.",
+  "order": 1,
+  "estimated_minutes": 10,
+  "reflection_prompts": [
+    "Do you view your child’s closeness to their friends as a threat to you, or as a natural growth that deserves accompaniment?",
+    "Do you distinguish between a normal sign of bulugh at its proper time and an early sign that requires a doctor?",
+    "How do you handle your daughter’s comparison of herself to her friends in terms of clothing?"
+  ],
+  "warning_flags": [
+    "ظهور علامات بلوغ قبل سن الثامنة عند البنت (أو التاسعة عند الولد) يحتاج تقييم طبيب أطفال أو أخصائي غدد صماء، لا مجرد ملاحظة منزلية"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "أما بدء علامات البلوغ عند بنتك بين 8 و13 سنة فطبيعي تمامًا",
+        "english": "However, the onset of signs of bulugh in girls between the ages of 8 and 13 is completely normal.",
+        "why": "The Arabic addresses the mother about her daughter specifically (عند بنتك), while the English generalizes to 'in girls', losing the personal and direct tone.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "الإحالة المبكرة تحدد العلاج المناسب إن وُجد",
+        "english": "early referral determines the appropriate treatment if needed.",
+        "why": "The Arabic 'إن وُجد' means 'if it exists' (the treatment may or may not be available), while 'if needed' implies the treatment is needed, shifting the condition.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "«البلوغ المبكر»",
+        "english": "\"precocious puberty\"",
+        "why": "The Islamic term 'bulugh' is transliterated elsewhere (title, 'signs of bulugh'), but here the medical term 'precocious puberty' is used instead of a consistent transliteration like 'precocious bulugh', creating inconsistency.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts",
+        "arabic": "هل تعامل اقتراب طفلك من أصدقائه كخطر عليك",
+        "english": "Do you view your child’s closeness to their friends as a threat to you",
+        "why": "The Arabic verb 'تعامل' means 'treat' or 'deal with', implying action; 'view' is about perception, slightly altering the question's focus.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "lesson_4-6_development_positive_parenting_01",
+  "path_id": "path_4-6_development_positive_parenting",
+  "title": "Specific Praise: Building His Self-Confidence Without Comparison",
+  "age_group": "4-6",
+  "domain": "development",
+  "unit_ids": [
+    "a1d7697e-c8d5-45c3-89b8-6c89954ce9b0",
+    "d3b5e4e6-bc8e-4eca-b9b4-0541171ab326"
+  ],
+  "summary": "At this stage, the child begins to form his self-image based on the words of those around him (Erikson: Industry vs. Inferiority). General praise ('You’re smart') has less impact than specific, detailed praise ('I liked how you arranged your books from largest to smallest'). Early praise instills 'competence' in the child, while delayed praise instills 'shame over mistakes.' According to CDC guidelines on positive tarbiyah, specific praise builds stronger internal motivation than external rewards. This lesson teaches the parent when to praise, what exactly to say, and when to remain silent.",
+  "try_this": "This week: Each day, choose one specific behavior your child has done (not 'You were excellent today'). Describe it precisely: 'I noticed you helped your sister carry her bag without being asked—that’s true generosity.' Write 5 of these observations in a small notebook. At the end of the week, read them aloud to your child.",
+  "order": 4,
+  "estimated_minutes": 5,
+  "reflection_prompts": [
+    "How does your way of praising differ between effort made and the outcome?",
+    "When do you praise your child, and when do you feel he doesn’t need praise?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T19:00:00",
+  "updated_at": "2026-06-08T19:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "للتربية الإيجابية",
+        "english": "positive tarbiyah",
+        "why": "The Arabic uses the general word 'التربية' (parenting/upbringing), not the Islamic term 'tarbiyah'. Transliterating it as 'tarbiyah' adds an unintended religious connotation.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

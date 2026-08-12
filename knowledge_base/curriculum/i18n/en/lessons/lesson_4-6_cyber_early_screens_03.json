@@ -1,0 +1,36 @@
+{
+  "id": "lesson_4-6_cyber_early_screens_03",
+  "path_id": "path_4-6_cyber_early_screens",
+  "title": "Shared Screen, Not Solo: Watching as Dialogue",
+  "age_group": "4-6",
+  "domain": "cyber",
+  "unit_ids": [],
+  "summary": "A child learns many times more when they watch with you instead of being left alone in front of the device. Keep the screen in a shared space, not in their room. Watch with them sometimes, and afterward ask, «What did you like? What did you learn?» to turn passive watching into interaction and language.",
+  "try_this": "This week: Watch a full episode with your child, then discuss it afterward with three simple questions.",
+  "order": 3,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Where is the device usually located in the home?",
+    "How did your child interact when you watched with them?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

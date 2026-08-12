@@ -1,0 +1,38 @@
+{
+  "id": "lesson_7-9_development_digital_wellbeing_03",
+  "path_id": "path_7-9_development_digital_wellbeing",
+  "title": "Violent Games: A Hidden Impact on Behaviour",
+  "age_group": "7-9",
+  "domain": "development",
+  "unit_ids": [
+    "2dd953f6-aafe-4a67-9571-ba214533f43f"
+  ],
+  "summary": "Children who play violent games excessively display aggressive behaviour (fighting, shouting, bullying). Monitor what your child plays, and set alternatives that build skills without destroying their character.",
+  "try_this": "Review your child’s games this week—remove any game containing violence or blood, and suggest alternatives: Minecraft (creativity), puzzle games, sports games.",
+  "order": 3,
+  "estimated_minutes": 5,
+  "reflection_prompts": [
+    "Which games did you remove?",
+    "How did your child react to the alternatives?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_01",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "Who is Allah?",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "aqe-b1e103fc"
+  ],
+  "summary": "The first foundation of a child’s iman is knowing their Lord with a knowledge that is loving, simplified, and endearing. Introduce your child to Allah through the signs of His power that they see and touch: Who created the bird that flies? Who made the tree grow from a seed? Allah is *al-Awwal* (the First), before Whom there is nothing; He created everything and needs no creator. Always begin by saying that Allah is Generous, Merciful, and loves us—before any talk of punishment. For the small heart opens with love, not fear, and this was the guidance of the Prophet ﷺ with children.",
+  "try_this": "This week: On every outing, ask your child, *\"Meen khalaq dah?\"* (Who created this?) about something beautiful in front of you (a flower, a star, a butterfly). Let them answer, *\"Allah,\"* then say together, *\"Allahu Akbar.\"*",
+  "order": 1,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "If your child asks you, *\"Meen khalaq Allah?\"* (Who created Allah?), how would you answer calmly without making them feel the question is wrong?",
+    "What is the difference between introducing Allah with love first and beginning with fear?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "معرفةً محبَّبةً مبسَّطة",
+        "english": "knowledge that is loving, simplified, and endearing",
+        "why": "The Arabic 'محبَّبة' means 'made beloved' or 'endearing' (the knowledge is presented in a way that makes it beloved to the child), not 'loving' (which would describe the knowledge itself as having the quality of love). The translation shifts the attribute from the method of teaching to the knowledge itself.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "وهذا هدي النبي ﷺ مع الصغار",
+        "english": "and this was the guidance of the Prophet ﷺ with children",
+        "why": "The Arabic uses a nominal sentence ('وهذا هدي') indicating a timeless present ('this is the guidance'), while the English uses past tense ('was'). This could imply the guidance is only historical, not ongoing.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "العصفور الذي يطير",
+        "english": "the bird that flies",
+        "why": "The Arabic specifies 'العصفور' (the sparrow), a concrete example, while the English generalizes to 'bird'. This loses the vivid, specific imagery of the original.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

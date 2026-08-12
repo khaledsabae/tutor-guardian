@@ -1,0 +1,36 @@
+{
+  "id": "lesson_4-6_aqeedah_seeds_01",
+  "path_id": "path_4-6_aqeedah_seeds",
+  "title": "Allah is My Lord and Creator",
+  "age_group": "4-6",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "At this age, the child learns through tangible things. Introduce him to Allah through what he sees: «Who created the bird that flies? Who created the moon? Who created Mama and Baba? — Allah.» Repeat the beloved phrase, «Allah created us, and Allah is Generous.» Do not introduce abstract details; it is enough for the child to connect everything beautiful to Allah as its Creator, so the first seed is planted in his heart: that he has a Great Lord who created everything.",
+  "try_this": "This week: Play the game «Who created this?» with your child—point to something beautiful, and he answers, «Allah,» then you both say together, «Allahu Akbar.»",
+  "order": 1,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you use your child’s curiosity about the things around him to introduce him to Allah, the Creator?",
+    "What simple phrase of faith do you love for your child to repeat daily?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

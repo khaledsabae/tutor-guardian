@@ -1,0 +1,49 @@
+{
+  "id": "path_0-3_development_early_moments",
+  "title": "Critical Early Moments: Foundations of a Child’s Development up to One Year",
+  "age_group": "0-3",
+  "domain": "development",
+  "description": "A 10-day developmental pathway covering the most important principles of early development: sensory and motor sensitivities, attachment theory, Piaget’s sensorimotor stages, and the significance of parental responsiveness in building cognitive and emotional foundations. Based on UNICEF’s 'Early Moments Matter' report and CDC’s Act Early guidelines.",
+  "lesson_ids": [
+    "lesson_0-3_development_early_moments_01",
+    "lesson_0-3_development_early_moments_02",
+    "lesson_0-3_development_early_moments_03",
+    "lesson_0-3_development_early_moments_b04"
+  ],
+  "estimated_days": 10,
+  "pedagogical_framework": "zpd_scaffolded",
+  "primary_reference": {
+    "type": "مقال_تنموي",
+    "info": "UNICEF Early Moments Matter (2017) + CDC Developmental Milestones + Vygotsky ZPD + Piaget Sensorimotor Stage"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T20:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "أسس التطور والنمو للطفل حتى عام",
+        "english": "Foundations of a Child’s Development up to One Year",
+        "why": "The Arabic includes 'والنمو' (and growth), which is omitted in the English translation. 'Development' alone may not fully capture the dual concept of 'تطور ونمو'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

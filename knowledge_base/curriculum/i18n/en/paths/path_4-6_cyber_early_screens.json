@@ -1,0 +1,63 @@
+{
+  "id": "path_4-6_cyber_early_screens",
+  "title": "Foundations of Healthy Screen Use in the Pre-School Years (4-6)",
+  "age_group": "4-6",
+  "domain": "cyber",
+  "description": "A path to help parents build a healthy relationship between their child and screens at a sensitive age: setting appropriate time limits, choosing safe content, making viewing a shared and interactive experience, and weaning from excess without conflict.",
+  "lesson_ids": [
+    "lesson_4-6_cyber_early_screens_01",
+    "lesson_4-6_cyber_early_screens_02",
+    "lesson_4-6_cyber_early_screens_03",
+    "lesson_4-6_cyber_early_screens_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "مرجع_علمي",
+    "info": "توصيات وقت الشاشة للأطفال — AAP + منظمة الصحة العالمية"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "بين طفلهم والشاشة",
+        "english": "between their child and screens",
+        "why": "Arabic uses singular 'الشاشة' (the screen), English uses plural 'screens'. While generic, it's a slight shift.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "تحديد الوقت المناسب",
+        "english": "setting appropriate time limits",
+        "why": "Arabic says 'determining the appropriate time' (no mention of limits), English adds 'limits' and changes verb to 'setting'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "جعل المشاهدة مشتركةً وحواراً",
+        "english": "making viewing a shared and interactive experience",
+        "why": "Arabic says 'shared and a dialogue', English uses 'interactive experience' which is broader than 'dialogue'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

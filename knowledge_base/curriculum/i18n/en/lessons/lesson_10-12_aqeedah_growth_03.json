@@ -1,0 +1,45 @@
+{
+  "id": "lesson_10-12_aqeedah_growth_03",
+  "path_id": "path_10-12_aqeedah_growth",
+  "title": "Al-Qada' wal-Qadar: Al-Rida wal-Tawakkul",
+  "age_group": "10-12",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "Belief in al-qadar (divine decree) grants your child a psychological fortress in a stage filled with frustrations—grades, friendships, comparisons. Teach him a Prophetic principle ﷺ: we take the means first (we study, we strive), then we place our tawakkul (trust) in Allah and accept what He has decreed. If something he dislikes befalls him, he exercises patience, says, 'Qaddar Allahu wa ma sha’a fa’al (Allah has decreed, and He does what He wills),' and seeks the alternative good. If he succeeds, he praises Allah and does not grow arrogant. This balance between taking the means and contentment with al-qadar shapes a well-adjusted personality that does not collapse at the first shock.",
+  "try_this": "This week: When your child faces a disappointment (a result, a friend’s disagreement), teach him to say, 'Qaddar Allah,' and ask, 'What do I do now?' instead of drowning in regret.",
+  "order": 4,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How do you balance teaching your child to take the means and being content with Allah’s decree?",
+    "What is the impact of belief in al-qadar on your child’s psychological steadiness during frustration?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "نرضى بما قدّر",
+        "english": "accept what He has decreed",
+        "why": "The Arabic uses 'نرضى' (we are content/pleased), which is the specific Islamic concept of rida. The English 'accept' weakens this to mere acquiescence, losing the spiritual nuance of contentment that is central to the title and the principle.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

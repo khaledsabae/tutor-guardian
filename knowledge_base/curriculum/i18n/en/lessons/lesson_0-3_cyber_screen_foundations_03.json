@@ -1,0 +1,50 @@
+{
+  "id": "lesson_0-3_cyber_screen_foundations_03",
+  "path_id": "path_0-3_cyber_screen_foundations",
+  "title": "Protecting Sleep and Avoiding the Trap of Early Gaming: Digital Boundaries from Day One",
+  "age_group": "0-3",
+  "domain": "cyber",
+  "unit_ids": [
+    "cyb-9802937c"
+  ],
+  "summary": "Screen time before sleep suppresses melatonin and delays sleep—and a child up to one year old needs 11-14 hours of sleep for brain development. Studies show: increased electronic gaming time since 2011 has been linked to sleep problems, obesity, and behavioral issues. 'Educational' games at this age often deceive parents—there is no evidence of benefit. Better alternatives: a bedtime story, massage, du'a/adhkar (remembrances). If you must use a screen (e.g., a call with grandparents), keep it short, in good lighting, and at least one hour away from bedtime. The rule: bedrooms = screen-free zones, for everyone (lead by example first).",
+  "try_this": "This week: a 'zero screens' bedtime routine—one hour before sleep: a warm bath, a short story/Qur'anic verse, a light massage, and dimming bright lights. No phone at the dinner table, no device in the bedroom. Observe: does your child fall asleep faster? Do they wake up less at night?",
+  "order": 3,
+  "estimated_minutes": 33,
+  "reflection_prompts": [
+    "What is the hardest screen habit to change in your child’s bedtime routine? How will you replace it?",
+    "Do you (as a parent) adhere to 'no screens in the bedroom'? If not, how will you start with yourself?"
+  ],
+  "warning_flags": [
+    "developmental_red_flag"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T18:00:00",
+  "updated_at": "2026-06-10T18:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "إطفاء الأضواء القوية",
+        "english": "dimming bright lights",
+        "why": "Arabic says 'turning off strong lights', not 'dimming'. Dimming implies reducing brightness, not extinguishing.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

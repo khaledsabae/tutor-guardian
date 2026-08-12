@@ -1,0 +1,43 @@
+{
+  "id": "tip_0-3_013",
+  "age_group": "0-3",
+  "domain": "cyber",
+  "text": "Screen Alternative: Weekly Exploration Basket — plastic kitchen tools, fabrics, natural elements (paper, rocks). Let him explore freely — he is learning physics, textures, cause/effect without a screen.",
+  "unit_id": "cyb-d830c514",
+  "day_of_week": 0,
+  "time_of_day": "anytime",
+  "tags": [
+    "لعب_حر",
+    "استكشاف",
+    "بديل",
+    "حواس"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T18:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "الفيزياء، الأنسجة، القوام، السبب/النتيجة",
+        "english": "physics, textures, cause/effect",
+        "why": "The Arabic lists four items: physics, tissues, textures, cause/effect. The English omits 'tissues' (الأنسجة) and merges 'textures' (القوام) into one, losing the distinction.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

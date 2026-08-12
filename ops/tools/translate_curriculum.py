@@ -65,6 +65,7 @@ REVIEWER_MODEL = "deepseek-v4-pro"
 # الترتيب تبقى كما هي — ترجمتها تكسر الربط بالقاعدة والتطبيق.
 LESSON_FIELDS = ("title", "summary", "try_this", "reflection_prompts")
 PATH_FIELDS = ("title", "description")
+TIP_FIELDS = ("text",)
 
 # مصطلحات تُنقل صوتيًا لا تُترجم. الترجمة الحرفية تُفقدها معناها الشرعي:
 # «tarbiyah» ليست parenting، و«fitrah» ليست instinct.
@@ -317,6 +318,8 @@ def collect(path_id: str | None, do_all: bool, limit: int | None) -> list:
                  for f in sorted((CURRICULUM / "paths").glob("*.json"))]
         jobs += [(f, LESSON_FIELDS)
                  for f in sorted((CURRICULUM / "lessons").glob("*.json"))]
+        jobs += [(f, TIP_FIELDS)
+                 for f in sorted((CURRICULUM / "daily_tips").glob("*.json"))]
     else:
         sys.exit("❌ مرّر --path أو --all")
     return jobs[:limit] if limit else jobs

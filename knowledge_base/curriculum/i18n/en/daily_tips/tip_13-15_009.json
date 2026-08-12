@@ -1,0 +1,25 @@
+{
+  "id": "tip_13-15_009",
+  "age_group": "13-15",
+  "domain": "cyber",
+  "text": "Gaming addiction: signs (WHO) — loss of control, prioritising gaming, continuation despite harm. Striking a balance: time, priorities, alternatives.",
+  "unit_id": "1a79f159-fcad-5a0e-8af3-1e1a8bc90bec",
+  "day_of_week": 0,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

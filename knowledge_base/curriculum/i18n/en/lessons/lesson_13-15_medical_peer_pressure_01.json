@@ -1,0 +1,57 @@
+{
+  "id": "lesson_13-15_medical_peer_pressure_01",
+  "path_id": "path_13-15_medical_peer_pressure",
+  "title": "Peer Pressure in Early Adolescence: Smoking and Material Comparison",
+  "age_group": "13-15",
+  "domain": "medical",
+  "unit_ids": [
+    "med-49fe15eb",
+    "med-8db73fe2",
+    "med-bc0d8492"
+  ],
+  "summary": "Refusing an offer of smoking from a friend is a skill that needs practice, not just advice. Practice with your child ready-made phrases: a friendly refusal without judging the friend (\"No, thanks\"), changing the subject, suggesting an alternative activity, or calmly repeating the refusal if pressed. The important thing is to reject the action, not to label the friend as a \"bad person,\" as this preserves the friendship and strengthens their stance, according to HealthyChildren.org. Peer pressure toward smoking peaks in adolescence because the teenage brain changes to focus more on acceptance by friends, reducing the weight of thinking about consequences in the face of their desire to belong. Knowing the harms alone is not enough to prevent it; practice together a friendly refusal without labeling the friend as a \"bad person,\" and keep the dialogue ongoing rather than a one-time warning, according to NIMH. Comparing themselves to their friends in terms of money and appearance is not just excessive materialism; it is because their brain now focuses more on their status among peers, making the comparison feel heavier. Do not dismiss their feelings with a phrase like \"money isn’t everything\"; discuss with them the qualities and skills that distinguish them, which are not measured by appearance or spending money.",
+  "try_this": "This week: Practice one role-play scenario with your child (a friend offering them a cigarette or comparing their spending), and ask them to try their response out loud in front of you before they actually face the situation.",
+  "order": 1,
+  "estimated_minutes": 9,
+  "reflection_prompts": [
+    "Do you have a ready-made phrase you teach your child to refuse without losing their friendship?",
+    "Do you discuss with your child the qualities that distinguish them, or do you just downplay their material comparisons?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary, try_this, reflection_prompts",
+        "arabic": "ابنك (your son) used consistently throughout",
+        "english": "your child / they / them (gender-neutral)",
+        "why": "The Arabic specifically addresses parents of a son (ابنك) and uses masculine singular pronouns. The English translation generalizes to 'your child' and uses gender-neutral pronouns, changing the intended audience and potentially the cultural context.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "ليست مادية زائدة، بل لأن دماغه الآن يركّز أكثر...",
+        "english": "is not just excessive materialism; it is because their brain now focuses more...",
+        "why": "The Arabic denies that it is excessive materialism at all (ليست مادية زائدة), then gives the reason. The English 'not just' implies it is partly excessive materialism, which softens the denial and changes the meaning.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

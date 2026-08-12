@@ -1,0 +1,42 @@
+{
+  "id": "tip_13-15_026",
+  "age_group": "13-15",
+  "domain": "medical",
+  "text": "Aptitude tests (planning, decision-making, visual skills) help in understanding the adolescent’s brain and supporting it.",
+  "unit_id": "med-e64897f2",
+  "day_of_week": 4,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "ودعمه",
+        "english": "and supporting it",
+        "why": "The Arabic pronoun 'ه' refers to the adolescent, not the brain. The English 'it' refers to the brain, changing the meaning from supporting the adolescent to supporting the brain.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "قرارات",
+        "english": "decision-making",
+        "why": "The Arabic lists 'decisions' as a type of aptitude test, while the English uses 'decision-making', which is a process rather than a discrete skill.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

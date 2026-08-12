@@ -1,0 +1,25 @@
+{
+  "id": "tip_10-12_022",
+  "age_group": "10-12",
+  "domain": "medical",
+  "text": "Sadness > two weeks + withdrawal + academic decline = visit to a pediatrician/mental-health specialist. Early action saves years.",
+  "unit_id": "8dc21832-df8b-4123-95a3-e0ec75ab9263",
+  "day_of_week": 5,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

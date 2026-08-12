@@ -1,0 +1,41 @@
+{
+  "id": "lesson_7-9_medical_emotional_health_b03",
+  "path_id": "path_7-9_medical_emotional_health",
+  "title": "Fear and Anxiety: From Monsters to Real-World Worries",
+  "age_group": "7-9",
+  "domain": "medical",
+  "unit_ids": [
+    "seed-fear-79",
+    "seed-fear-46",
+    "b25fcddc-6765-4e00-9d40-1ac90f97f3b4"
+  ],
+  "summary": "At this age, your child’s fears shift from monsters to more realistic anxieties: fear of failure, of tests, of being separated from you, of illness. Listen to their fears without mockery, and help them name and express them in words. Correct their exaggerated thoughts with simple, reassuring information, and teach them tools for calming down (deep breathing, breaking the problem into parts, thinking of the worst-case scenario and then its real likelihood). Encourage them to face what scares them gradually, and praise their courage. Maintain a routine and sufficient sleep to reduce anxiety. If the anxiety starts disrupting their sleep, studies, or daily life for an extended period, consult a specialist.",
+  "try_this": "This week: When your child feels afraid, listen and name their fear, then teach them one deep breath and one realistic, reassuring thought. Notice whether they start using the tool on their own.",
+  "order": 3,
+  "estimated_minutes": 5,
+  "reflection_prompts": [
+    "What real-world fears have started to appear in your child at this age?",
+    "How do you reassure them without belittling their fear or overprotecting them from it?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T00:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

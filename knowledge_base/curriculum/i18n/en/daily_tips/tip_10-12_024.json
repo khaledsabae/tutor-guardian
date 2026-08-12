@@ -1,0 +1,34 @@
+{
+  "id": "tip_10-12_024",
+  "age_group": "10-12",
+  "domain": "medical",
+  "text": "Today’s habits shape tomorrow’s health: 9–11 hours of sleep, 60 minutes of movement, real food, screens <2 hours, no screens in the bedroom.",
+  "unit_id": "med-40813af4",
+  "day_of_week": 6,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "no screens in the bedroom",
+        "arabic": "لا شاشات في الغرفة",
+        "english": "no screens in the bedroom",
+        "why": "The Arabic says 'الغرفة' (the room) without specifying which room; the English adds 'bedroom', narrowing the meaning unnecessarily.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

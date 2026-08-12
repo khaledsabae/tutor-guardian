@@ -1,0 +1,61 @@
+{
+  "id": "lesson_10-12_islamic_parenting_worship_love_04",
+  "path_id": "path_10-12_islamic_parenting_worship_love",
+  "title": "Du'a: Teaching the Art of Intimate Conversation with Allah",
+  "age_group": "10-12",
+  "domain": "islamic_parenting",
+  "unit_ids": [],
+  "summary": "Du'a connects the heart directly to Allah. Teach your child to supplicate in their own words, in their worries and joys, not just through memorised phrases. When they find Allah close and responsive, their faith is anchored in living certainty.",
+  "try_this": "This week: Encourage your child to make du'a to Allah about something personal to them, in their own words, and observe together the impact of that du'a.",
+  "order": 4,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "Does your child make du'a from the heart, or only through memorised phrases?",
+    "How have you encouraged them?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "الدعاء: تعليمه مناجاة الله",
+        "english": "Du'a: Teaching the Art of Intimate Conversation with Allah",
+        "why": "The English adds 'the Art of', which is not present in the Arabic. The Arabic simply says 'Teaching it (as) intimate conversation with Allah'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "حين يجد الله قريباً يجيب",
+        "english": "When they find Allah close and responsive",
+        "why": "The Arabic verb 'يجيب' (He answers) is an action of Allah, but the translation turns it into an adjective 'responsive', losing the active sense of Allah answering the supplication.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "يثبت إيمانه على يقينٍ حيّ",
+        "english": "their faith is anchored in living certainty",
+        "why": "The Arabic 'يثبت' means 'becomes firm/established', not 'anchored'. The metaphor is changed from a simple verb to a nautical metaphor, slightly altering the imagery.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

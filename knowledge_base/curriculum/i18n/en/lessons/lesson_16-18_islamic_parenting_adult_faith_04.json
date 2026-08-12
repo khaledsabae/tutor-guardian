@@ -1,0 +1,53 @@
+{
+  "id": "lesson_16-18_islamic_parenting_adult_faith_04",
+  "path_id": "path_16-18_islamic_parenting_adult_faith",
+  "title": "A Safe Launch: From Supervision to Trust and Independence",
+  "age_group": "16-18",
+  "domain": "islamic_parenting",
+  "unit_ids": [],
+  "summary": "Before your child leaves your home, your task is to transition them from control to trust: they make their own decisions, bear their consequences, and know you are a support, not a watcher. Entrust them with real responsibilities in money, time, and commitments, and keep your door and heart open no matter how they err; for the youth who finds a home that embraces them will not seek acceptance in the wrong places.",
+  "try_this": "This week: Hand over to your child a decision that was in your hands (managing an amount of money, organizing time, a commitment), agree on its boundaries, then give them the space to execute and learn from the outcome without interference.",
+  "order": 4,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "What real responsibility did you hand over to your child this week?",
+    "How did they handle it, and what did you learn from it?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary, try_this, reflection_prompts",
+        "arabic": "ابنك (your son) and masculine singular pronouns/verbs throughout",
+        "english": "your child, they, them (gender-neutral)",
+        "why": "The Arabic consistently addresses parents of sons using 'ابنك' and masculine singular forms. The English translation neutralizes the gender, losing the original's specific focus on boys.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[1]",
+        "arabic": "وبماذا تعلّم منها؟",
+        "english": "and what did you learn from it?",
+        "why": "The Arabic asks what the son learned (تعلّم is third-person masculine singular). The English asks what the parent learned, completely changing the subject of the question.",
+        "severity": "high"
+      }
+    ],
+    "approved_by": null
+  }
+}

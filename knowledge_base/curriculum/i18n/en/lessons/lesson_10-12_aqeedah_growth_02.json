@@ -1,0 +1,61 @@
+{
+  "id": "lesson_10-12_aqeedah_growth_02",
+  "path_id": "path_10-12_aqeedah_growth",
+  "title": "Al-Muraqabah and Ikhlas: Act for Allah, Not for People",
+  "age_group": "10-12",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "As puberty approaches, the influence of people’s opinions grows stronger. Plant in your child the seed of *ikhlas* (sincerity): that he does good because Allah sees him and is pleased, not because people see him and praise him. Teach him the difference between praying or giving charity only in front of others, and doing so in secret where no one sees him but Allah. This *muraqabah* (awareness of Allah’s constant observation) is his guardian when you are not with him, and the most precious protection in an age of temptations.",
+  "try_this": "This week: Encourage your child to do a *‘amal sirri* (secret deed) that no one knows about (hidden charity, helping without praise), and talk about how Allah alone sees him and suffices him.",
+  "order": 3,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How do you teach your child to do good for Allah’s sake, not for people’s approval?",
+    "In what situations does your child need to remember *muraqabah* at this age?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "لا ليراه الناس ويمدحوه",
+        "english": "not because people see him and praise him",
+        "why": "Arabic uses the purpose particle 'li' (so that), emphasizing intention; English uses 'because', which shifts the meaning to a reason rather than a goal.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[0]",
+        "arabic": "للنظرة الناس",
+        "english": "for people’s approval",
+        "why": "Arabic 'نظرة الناس' means 'people's gaze' (being seen), not 'approval' (being praised). The nuance of visibility vs. validation is lost.",
+        "severity": "medium"
+      },
+      {
+        "type": "structure",
+        "field": "summary",
+        "arabic": "هذه «المراقبة» — أن يستحضر أن الله مطّلع عليه — هي حارسه",
+        "english": "This *muraqabah* (awareness of Allah’s constant observation) is his guardian",
+        "why": "The Arabic includes a dash and an explanatory clause describing the active process of bringing to mind; the English replaces it with a parenthetical definition, omitting the dynamic aspect.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

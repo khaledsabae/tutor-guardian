@@ -1,0 +1,36 @@
+{
+  "id": "lesson_4-6_cyber_early_screens_04",
+  "path_id": "path_4-6_cyber_early_screens",
+  "title": "Gentle Weaning from the Screen: A Routine Without Battles",
+  "age_group": "4-6",
+  "domain": "cyber",
+  "unit_ids": [],
+  "summary": "Tantrums when turning off the screen are natural because the child has not yet developed self-control. Warn them a few minutes before turning it off, and transition to a beloved activity rather than leaving a void. Consistency with the rule in a calm manner gradually reduces battles.",
+  "try_this": "This week: Before turning off the screen, give a warning («five minutes left»), then immediately transition to an activity they love.",
+  "order": 4,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "How does your child react when screen time ends?",
+    "Did the prior warning help?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

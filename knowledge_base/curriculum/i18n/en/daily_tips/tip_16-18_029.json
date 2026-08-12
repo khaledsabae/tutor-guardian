@@ -1,0 +1,25 @@
+{
+  "id": "tip_16-18_029",
+  "age_group": "16-18",
+  "domain": "medical",
+  "text": "Safety Card: 3 Warning Signs + 3 Calming Steps + 3 People + 937. Make it, memorise it, share it with a friend you trust. You deserve safety.",
+  "unit_id": "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
+  "day_of_week": 4,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

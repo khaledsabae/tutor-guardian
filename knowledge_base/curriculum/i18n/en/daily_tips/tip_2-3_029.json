@@ -1,0 +1,38 @@
+{
+  "id": "tip_2-3_029",
+  "age_group": "2-3",
+  "domain": "islamic_parenting",
+  "text": "Let your child see you praying; the silent qudwah (example) is more powerful than a thousand commands.",
+  "unit_id": null,
+  "day_of_week": 2,
+  "time_of_day": "anytime",
+  "tags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-19T12:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "اجعلي طفلك يراك تصلّين",
+        "english": "Let your child see you praying",
+        "why": "The Arabic imperative 'اجعلي' means 'make' (actively cause), while 'let' implies permission; the nuance of actively ensuring the child sees is lost.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

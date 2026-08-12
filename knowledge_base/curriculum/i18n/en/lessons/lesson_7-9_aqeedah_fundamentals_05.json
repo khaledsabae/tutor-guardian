@@ -1,0 +1,47 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_05",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "Al-Asma' al-Husna (The Most Beautiful Names of Allah)",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "aqe-d4f44453"
+  ],
+  "summary": "Allah has the Most Beautiful Names (al-Asma' al-Husna). Introduce your child to his Lord through them and endear Him to his heart. Choose names that resonate with him and link each name to its effect: \"Al-Rahman (The Most Merciful), Al-Rahim (The Especially Merciful)\" show mercy to us more than our mother; \"Al-Razzaq (The Provider)\" provides for every creature, even the ant; \"Al-Sami' (The All-Hearing), Al-Basir (The All-Seeing)\" hear our du'a and see everything; \"Al-Ghafur (The Forgiving)\" forgives when we err and repent. Teach him to call upon Allah by His Names: \"Ya Rahman (O Most Merciful), have mercy on me; Ya Razzaq (O Provider), provide for me.\" Knowing the Names makes the child’s relationship with his Lord a living, close bond—not just a distant idea.",
+  "try_this": "This week: Memorize three of Allah’s Names (Al-Rahman, Al-Razzaq, Al-Sami') with your child, and ask him to call upon Allah by each Name in a suitable situation during the day.",
+  "order": 5,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you connect one of Allah’s Names to a situation your child is experiencing so he feels its effect?",
+    "Which Name of Allah do you wish your child’s heart to become attached to first, and why?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "structure",
+        "field": "title",
+        "arabic": "أسماء الله الحسنى",
+        "english": "Al-Asma' al-Husna (The Most Beautiful Names of Allah)",
+        "why": "English title adds a transliteration not present in the Arabic title.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

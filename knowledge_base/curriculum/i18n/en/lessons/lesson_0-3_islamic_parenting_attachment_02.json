@@ -1,0 +1,56 @@
+{
+  "id": "lesson_0-3_islamic_parenting_attachment_02",
+  "path_id": "path_0-3_islamic_parenting_attachment",
+  "title": "Al-Rifq and Mercy: The Prophetic Manner in Caring for the Young Child",
+  "age_group": "0-3",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "f66f6ba1-d342-47a0-8184-6bfb848c47be"
+  ],
+  "summary": "Rifq (gentleness) is an authentic Islamic value, not a weakness—Allah’s Messenger ﷺ said: «Indeed, Allah is Rafeeq (Gentle) and loves rifq in all things.» In the first months, the child does not understand words but senses tone, touch, and presence. Rifq in carrying, softness in handling, patience with crying, and avoiding hitting or harm in any form—these are Prophetic values before they are psychological recommendations. The child treated with rifq learns rifq, and the one threatened with shouting learns fear. You are building the personality day by day with every touch, glance, and word.",
+  "try_this": "This week: Observe your tone of voice with your child. When they cry, instead of tensing up—breathe, come close, and speak in a calm, low voice. The child is soothed by the gentle voice before the words. During changing or bathing, talk to them and describe what you are doing: «Now we are dressing you...» Gentle verbal communication in the early months builds trust even before they understand the meaning.",
+  "order": 2,
+  "estimated_minutes": 46,
+  "reflection_prompts": [
+    "In which situations do you find it difficult to maintain rifq with your child? And what helps you do so?",
+    "How was your parents’ method of tarbiyah (upbringing)? What do you want to preserve or change?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T16:00:00",
+  "updated_at": "2026-06-10T16:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title vs summary",
+        "arabic": "الرفق (with definite article throughout)",
+        "english": "title: 'Al-Rifq'; summary: 'Rifq'",
+        "why": "The Arabic source uses the definite article consistently, but the English transliteration drops it in the body, creating inconsistency within the document.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "بالصوت الهادئ",
+        "english": "by the gentle voice",
+        "why": "هادئ means calm/quiet, not necessarily gentle. The translation shifts the meaning from calmness to gentleness.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

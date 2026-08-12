@@ -1,0 +1,65 @@
+{
+  "id": "path_0-3_cyber_screen_foundations",
+  "title": "Foundations of Screens and Devices: Protecting the Young Child from Birth",
+  "age_group": "0-3",
+  "domain": "cyber",
+  "description": "A 10-day cyber tarbiyah (upbringing) pathway covering the most important foundations for dealing with screens and devices for children up to one year old: zero screens under two years (AAP/WHO recommendation), alternatives of real play, protecting sleep and development, and the risks of early exposure to games and advertisements. Based on the guidelines of the American Academy of Pediatrics and the World Health Organization.",
+  "lesson_ids": [
+    "lesson_0-3_cyber_screen_foundations_01",
+    "lesson_0-3_cyber_screen_foundations_02",
+    "lesson_0-3_cyber_screen_foundations_03",
+    "lesson_0-3_cyber_screen_foundations_b04"
+  ],
+  "estimated_days": 10,
+  "pedagogical_framework": "attachment_rahma",
+  "primary_reference": {
+    "type": "تقرير_سيبراني",
+    "info": "AAP Council on Communications and Media 2016 + WHO Guidelines on physical activity, sedentary behaviour and sleep for children under 5 (2019)"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T18:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "description",
+        "arabic": "مسار تربوي سيبراني",
+        "english": "cyber tarbiyah pathway",
+        "why": "The Arabic 'تربوي' is a general term meaning 'educational' or 'upbringing'. Transliterating it as 'tarbiyah' introduces an Islamic term where none was intended, and creates an awkward language mix. Should be 'educational' or 'upbringing'.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "بدائل اللعب الحقيقي",
+        "english": "alternatives of real play",
+        "why": "The Arabic means 'alternatives to real play' (i.e., activities that replace screen time). The English 'alternatives of real play' could be misread as different types of real play, altering the intended meaning.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "حماية الطفل الصغير من الولادة",
+        "english": "Protecting the Young Child from Birth",
+        "why": "The Arabic means protection starting from birth, but the English phrasing could be misread as protecting the child from the act of being born. Ambiguous.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

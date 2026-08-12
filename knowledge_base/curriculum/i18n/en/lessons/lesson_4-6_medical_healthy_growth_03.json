@@ -1,0 +1,48 @@
+{
+  "id": "lesson_4-6_medical_healthy_growth_03",
+  "path_id": "path_4-6_medical_healthy_growth",
+  "title": "Developmental Milestones to Watch (and When to Seek Help)",
+  "age_group": "4-6",
+  "domain": "medical",
+  "unit_ids": [],
+  "summary": "Most children develop at their own pace, but there are signs that deserve professional attention: clear difficulty in speech that is hard to understand, challenges in focus, social interaction, or noticeable motor delays compared to peers. Early observation and intervention make a big difference—do not wait 'until they grow out of it.'",
+  "try_this": "This week: Observe your child’s development in speech, movement, and interaction. Note anything that concerns you to discuss with the doctor.",
+  "order": 3,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Is there a developmental aspect that worries you?",
+    "Have you discussed it with the pediatrician?"
+  ],
+  "warning_flags": [
+    "تأخّر لغوي أو حركي ملحوظ",
+    "صعوبة تواصلٍ اجتماعي واضحة"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "لا تنتظر «حتى يكبر ويتحسّن»",
+        "english": "do not wait 'until they grow out of it'",
+        "why": "The Arabic says 'until he grows up and gets better' (two separate actions), while the English uses the idiomatic 'grow out of it', which implies the problem will disappear with age. The nuance is slightly different, though the overall intent is similar.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

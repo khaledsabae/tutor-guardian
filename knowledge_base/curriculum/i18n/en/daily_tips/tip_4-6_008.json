@@ -1,0 +1,33 @@
+{
+  "id": "tip_4-6_008",
+  "age_group": "4-6",
+  "domain": "medical",
+  "text": "In the morning: observe your child for two weeks before you worry. But if you notice sudden social withdrawal or repeated crying for more than a month, consult a specialist.",
+  "unit_id": "8d64483f-5e85-4f24-970c-f503373cbf67",
+  "day_of_week": 1,
+  "time_of_day": "morning",
+  "tags": [
+    "صحة_نفسية",
+    "مراقبة",
+    "تنبيه"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T19:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

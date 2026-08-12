@@ -1,0 +1,39 @@
+{
+  "id": "lesson_2-3_medical_early_wellbeing_02",
+  "path_id": "path_2-3_medical_early_wellbeing",
+  "title": "Sleep of the Toddler and Night Wakings",
+  "age_group": "2-3",
+  "domain": "medical",
+  "unit_ids": [],
+  "summary": "A toddler needs about 11–14 hours of sleep daily, including a nap. Night wakings and bedtime resistance are common. Establish a calm routine and regular timings, and avoid screens and stimulating activity before sleep. If severe wakings persist, or if snoring or breathing pauses occur, consult a doctor.",
+  "try_this": "This week: Establish a short, calm sleep routine (bath, story, dim light) in the same order every night.",
+  "order": 2,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "How are your child’s nights going?",
+    "Is the routine consistent?"
+  ],
+  "warning_flags": [
+    "شخيرٌ أو انقطاع نفسٍ ليلي",
+    "استيقاظاتٌ شديدة مستمرة"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

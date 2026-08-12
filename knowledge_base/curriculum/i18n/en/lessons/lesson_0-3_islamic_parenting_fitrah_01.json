@@ -1,0 +1,45 @@
+{
+  "id": "lesson_0-3_islamic_parenting_fitrah_01",
+  "path_id": "path_0-3_islamic_parenting_fitrah",
+  "title": "The Voice of the Qur'an and the Adhan: The First Sounds to Reach His Ears",
+  "age_group": "0-3",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "Hearing begins early, and what is repeated to a baby’s ear becomes familiar and beloved. Let your child hear a gentle recitation and the adhan in a soft voice—not for memorisation now, but to plant an early familiarity with the words of Allah that will bear fruit as he grows.",
+  "try_this": "This week: Play a gentle recitation for a few minutes daily near your child during a calm time, and observe his tranquillity and contentment.",
+  "order": 1,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "When does your child seem most at peace with the sound?",
+    "Have you made recitation part of his routine?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "summary, try_this, reflection_prompts",
+        "arabic": "أسمعي ... شغّلي ... لاحظي ... جعلتِ",
+        "english": "Let your child hear ... Play ... observe ... Have you made",
+        "why": "The Arabic uses feminine singular imperatives and verb forms, directly addressing the mother. The English translation uses gender-neutral imperatives and pronouns, losing the warm, personal tone of the original.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

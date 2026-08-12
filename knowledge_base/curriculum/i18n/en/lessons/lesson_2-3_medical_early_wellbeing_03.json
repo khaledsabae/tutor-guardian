@@ -1,0 +1,40 @@
+{
+  "id": "lesson_2-3_medical_early_wellbeing_03",
+  "path_id": "path_2-3_medical_early_wellbeing",
+  "title": "Signs of Growth and Development (and When to Worry)",
+  "age_group": "2-3",
+  "domain": "medical",
+  "unit_ids": [],
+  "summary": "At this age, your child should be combining two words together, walking and running, and imitating and engaging in imaginative play. Children vary, but the complete absence of words, loss of skills they once mastered, or lack of eye contact are signs that warrant early consultation. Early intervention makes a big difference.",
+  "try_this": "This week: Observe your child’s speech, movement, and communication, and note anything that concerns you to discuss with the doctor.",
+  "order": 3,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "Is your child combining two words together?",
+    "Is there anything that concerns you about their development?"
+  ],
+  "warning_flags": [
+    "غياب الكلمات قرب نهاية الثالثة",
+    "فقدان مهاراتٍ مكتسبة",
+    "ضعف تواصلٍ بصري واجتماعي"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

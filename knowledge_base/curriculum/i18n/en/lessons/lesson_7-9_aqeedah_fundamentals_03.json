@@ -1,0 +1,38 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_03",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "Why Did Allah Create Us?",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "aqe-0af54c62"
+  ],
+  "summary": "Allah did not create mankind in vain. He created us to know Him, worship Him, love Him, and cultivate the earth with goodness. Simplify for your child the meaning of worship: it is not only prayer, but every good deed that pleases Allah—truthfulness, birr al-walidayn (dutifulness to parents), helping people, rifq (gentleness) with animals, even a smile. Say to him: «We are in this world to do what pleases our Lord, and our Lord has prepared a great reward for us called Paradise.» This gives his life meaning and direction, and makes his daily behavior part of a greater purpose.",
+  "try_this": "This week: Ask your child to do one \"deed that pleases Allah\" each day, which he chooses himself (helping his sibling, watering a plant, giving a toy in charity), and talk together in the evening about what he did.",
+  "order": 3,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How do you explain to your child that worship is broader than prayer and includes his akhlaq (character) and interactions?",
+    "What is the impact on a child who knows he has a purpose in life compared to a child who lives without meaning?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "tip_10-12_026",
+  "age_group": "10-12",
+  "domain": "medical",
+  "text": "Weekly family challenge: 30-minute walk, screen-free dinner, sleep before 10. Record: How was the mood/energy?",
+  "unit_id": "med-8b8522f6",
+  "day_of_week": 0,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

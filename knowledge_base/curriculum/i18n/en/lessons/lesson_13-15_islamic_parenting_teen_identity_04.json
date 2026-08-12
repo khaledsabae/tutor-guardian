@@ -1,0 +1,58 @@
+{
+  "id": "lesson_13-15_islamic_parenting_teen_identity_04",
+  "path_id": "path_13-15_islamic_parenting_teen_identity",
+  "title": "Leadership and Embracing a Cause: From Recipient to Maker",
+  "age_group": "13-15",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-946dd770",
+    "isl-a60d7af9",
+    "isl-cc4ee988",
+    "isl-c1f0ce4d"
+  ],
+  "summary": "At this age, the adolescent is searching for a cause to live by. Guide them from being a \"follower\" to a \"maker\": discover their talent/passion, connect it to a cause (environment, education, orphans, technology), and create a small project together. Leadership: service, not authority—a council of consultation, not a solitary decision.",
+  "try_this": "This week: Ask them, \"What problem in your community would you like to solve?\"—then plan a small project together (fundraising, volunteering, awareness content). Implement one step this month.",
+  "order": 4,
+  "estimated_minutes": 44,
+  "reflection_prompts": [
+    "What cause did they choose, and why?",
+    "What skill did they develop in planning/execution?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "المتأثر",
+        "english": "follower",
+        "why": "The Arabic 'المتأثر' means 'the one who is affected/influenced', implying a passive recipient. Translating it as 'follower' shifts the meaning to someone who follows others, which is not the same. The intended contrast is between passive and active, not follower vs leader.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "مجلس شورى",
+        "english": "a council of consultation",
+        "why": "The Islamic term 'shura' is translated away instead of being transliterated. In Islamic parenting materials, 'shura' is a recognized concept and should be preserved as 'shura council' or 'majlis shura' to maintain religious and cultural resonance.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

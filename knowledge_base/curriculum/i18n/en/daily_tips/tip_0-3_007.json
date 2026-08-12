@@ -1,0 +1,51 @@
+{
+  "id": "tip_0-3_007",
+  "age_group": "0-3",
+  "domain": "islamic_parenting",
+  "text": "Your little girl or boy does not yet understand words, but they understand your tone and your touch. Rifq (gentleness) is tenderness, not weakness—the Prophet ﷺ said: «Indeed, Allah is Rafeeq (Most Gentle) and loves rifq in all things.» Be patient with their crying in a calm voice.",
+  "unit_id": "f66f6ba1-d342-47a0-8184-6bfb848c47be",
+  "day_of_week": 6,
+  "time_of_day": "evening",
+  "tags": [
+    "رفق",
+    "رحمة",
+    "نبرة",
+    "صبر"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T16:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "english.text",
+        "arabic": "إن الله رفيق",
+        "english": "Indeed, Allah is Rafeeq (Most Gentle)",
+        "why": "The Arabic 'رفيق' is a simple adjective meaning 'Gentle' or 'Kind', not a superlative. Adding 'Most' overstates the attribute and is not present in the source.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "english.text",
+        "arabic": "الرفق (in both sentences)",
+        "english": "Rifq (gentleness) ... rifq",
+        "why": "The term 'الرفق' is translated as 'gentleness' in the first instance but left untransliterated as 'rifq' in the hadith. This inconsistency can confuse readers about the key concept being introduced.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "lesson_13-15_cyber_digital_maturity_01",
+  "path_id": "path_13-15_cyber_digital_maturity",
+  "title": "The Digital Footprint: Your Reputation Is Being Built Now and Read in 10 Years",
+  "age_group": "13-15",
+  "domain": "cyber",
+  "unit_ids": [
+    "1a79f159-fcad-5a0e-8af3-1e1a8bc90bec",
+    "b37a6dcf-3b48-41df-9837-4460b5f64179",
+    "beb0e561-be2a-51dc-85ac-83c158c748ef"
+  ],
+  "summary": "Every post, comment, like, and search is stored, analyzed, sold, and remains. Universities, companies, and governments examine the digital footprint. The rule: \"Do not post what you would not want your future father, future manager, or future spouse to see.\" Monthly review: delete the old, fix privacy settings, and clean the trail.",
+  "try_this": "This week: log into your child’s accounts together—review old posts, location tags, and apps with granted permissions. Delete or fix them together.",
+  "order": 1,
+  "estimated_minutes": 38,
+  "reflection_prompts": [
+    "How many posts were deleted or hidden?",
+    "Did your child understand the concept of a \"permanent footprint\"?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "لا تنشر ما لا تريد أن يراه والدك/مديرك المستقبلي/زوجك المستقبلي",
+        "english": "Do not post what you would not want your future father, future manager, or future spouse to see.",
+        "why": "The Arabic specifies 'والدك' (your father) without 'المستقبلي' (future), but the English adds 'future' to father, incorrectly implying the father is a future figure rather than a current one.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

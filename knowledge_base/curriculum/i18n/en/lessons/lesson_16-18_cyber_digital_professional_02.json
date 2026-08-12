@@ -1,0 +1,48 @@
+{
+  "id": "lesson_16-18_cyber_digital_professional_02",
+  "path_id": "path_16-18_cyber_digital_professional",
+  "title": "Akhlaq of Artificial Intelligence, Information Security, and Responsible Digital Citizenship",
+  "age_group": "16-18",
+  "domain": "cyber",
+  "unit_ids": [
+    "cyb-db2bb48f",
+    "cyb-26236b19"
+  ],
+  "summary": "Entering university/work = higher digital responsibility: (1) Akhlaq of AI: Do not cheat with ChatGPT in assignments/research — use it as a thinking tool, not a substitute for effort. Cite the source, verify the information. (2) Information security: Strong/unique passwords, password manager, two-factor authentication (2FA) on all important accounts, device encryption, backups. (3) Privacy of others: Do not share others' photos/information without permission, respect GDPR/local protection systems. (4) Citizenship: Report harmful content, support victims of bullying, use technology for good. A digital citizen = an ethical professional.",
+  "try_this": "This week: Enable 2FA on your top 5 accounts, install a password manager (Bitwarden/1Password), review app permissions on your phone.",
+  "order": 2,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Which accounts have you enabled 2FA on?",
+    "What new security habit will you start?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title and summary",
+        "arabic": "أخلاقيات الذكاء الاصطناعي",
+        "english": "Akhlaq of Artificial Intelligence",
+        "why": "The Arabic uses the modern secular term 'أخلاقيات' (ethics), not the Islamic term 'أخلاق' (akhlaq). Transliterating it as 'Akhlaq' imposes a religious connotation absent in the source, and the transliteration corresponds to a different Arabic word.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

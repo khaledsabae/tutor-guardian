@@ -1,0 +1,45 @@
+{
+  "id": "lesson_13-15_islamic_parenting_steadfast_03",
+  "path_id": "path_13-15_aqeedah_certainty",
+  "title": "Al-Ikhlas: Working for Allah, Not for People",
+  "age_group": "13-15",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "In an age of display and appearances, teach your teenager to act for Allah’s sake, not to seek the admiration of people. Ikhlas (sincerity) liberates him from the bondage of others’ opinions and gives his deeds a meaning and steadiness that comparisons cannot shake.",
+  "try_this": "This week: Talk about the difference between working for Allah and working to show off, using an example from his own life.",
+  "order": 3,
+  "estimated_minutes": 9,
+  "reflection_prompts": [
+    "Does your teenager fall into the trap of seeking people’s admiration?",
+    "How have you introduced him to ikhlas?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title, summary, reflection_prompts",
+        "arabic": "الإخلاص",
+        "english": "Al-Ikhlas (title) vs. Ikhlas (summary) vs. ikhlas (prompt)",
+        "why": "The Arabic consistently uses the definite article 'الإخلاص'. The English transliteration is inconsistent: 'Al-Ikhlas' in the title, 'Ikhlas' in the summary, and 'ikhlas' in the reflection prompt. This breaks term consistency within the same document.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

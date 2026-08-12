@@ -1,0 +1,69 @@
+{
+  "id": "path_16-18_islamic_parenting_adult_faith",
+  "title": "Toward Independent Imani Growth: Accompanying Your Young Adult at Life’s Threshold (16-18 Years)",
+  "age_group": "16-18",
+  "domain": "islamic_parenting",
+  "description": "A pathway to help parents guide their child from inherited iman to firmly rooted conviction, while preparing for marriage and upholding `iffah (chastity) through open dialogue. It focuses on crafting a life mission that connects ambition with purpose, and independence with decision-making and responsibility—before leaving home.",
+  "lesson_ids": [
+    "lesson_16-18_islamic_parenting_adult_faith_02",
+    "lesson_16-18_islamic_parenting_adult_faith_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "كتاب_تربوي",
+    "info": "تربية الأولاد في الإسلام لعبد الله ناصح علوان + منهج التربية النبوية للطفل لمحمد نور سويد"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "نحو رشدٍ إيماني مستقل",
+        "english": "Toward Independent Imani Growth",
+        "why": "The Arabic 'رشد' means maturity, right guidance, or reaching sound judgment, not simply 'growth'. The translation loses the specific nuance of attaining mature, guided faith.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "شابك",
+        "english": "Your Young Adult",
+        "why": "The Arabic uses the masculine singular 'شابك' (your young man), while the English uses the gender-neutral 'young adult'. The description later confirms the resource is for a son ('ابنهم'), so the gender specificity is lost.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "نقل ابنهم من إيمانٍ موروث إلى إيمانٍ راسخٍ بقناعة",
+        "english": "guide their child from inherited iman to firmly rooted conviction",
+        "why": "The Arabic 'نقل' (transfer) is stronger than 'guide'; 'ابنهم' (their son) is changed to 'their child'; and 'إيمانٍ راسخٍ بقناعة' (firmly rooted faith with conviction) is reduced to 'firmly rooted conviction', omitting the word 'faith' and merging two distinct concepts.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "الاستعداد للزواج والعفّة",
+        "english": "preparing for marriage and upholding `iffah (chastity)",
+        "why": "The Arabic says 'preparing for marriage and chastity', while the English adds 'upholding', which is not present in the source and slightly shifts the meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

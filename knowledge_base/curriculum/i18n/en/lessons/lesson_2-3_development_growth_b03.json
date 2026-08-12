@@ -1,0 +1,41 @@
+{
+  "id": "lesson_2-3_development_growth_b03",
+  "path_id": "path_2-3_development_growth",
+  "title": "Tantrums: A Small Mind with Insufficient Words",
+  "age_group": "2-3",
+  "domain": "development",
+  "unit_ids": [
+    "dev-77d7ab2f",
+    "dea6683e-62be-4f02-8bfe-a426ef123631",
+    "dev-b3e9a4e0"
+  ],
+  "summary": "Tantrums peak at this age, and the reason is simple: a big will in a small body without enough words to express itself. The tantrum is not poor tarbiyah (upbringing) but a stage of growth. The rule: maintain your calm first, ensure his safety, do not give in to the demand that caused it, and do not punish harshly. Wait out the storm with calm, and after he settles, embrace him and name his feeling ('You were upset'). Prevent tantrums beforehand with consistent routines, sleep, food, and giving him simple choices. With time and words, the tantrums decrease, for you are raising a brain that is learning to regulate itself.",
+  "try_this": "This week: At the first tantrum, try staying calm and silent near him without much talk, and after he settles, name his feeling with one word. Notice how long the tantrum lasted compared to usual.",
+  "order": 3,
+  "estimated_minutes": 31,
+  "reflection_prompts": [
+    "What situations often precede your child’s tantrums (hunger/fatigue/sudden transition)?",
+    "How does your child’s calmness reflect your own calm during the tantrum?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T00:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "tip_4-6_002",
+  "age_group": "4-6",
+  "domain": "islamic_parenting",
+  "text": "Tell your child a short story from the seerah before bed (5 minutes). The magic of the story at this age opens the door of iman before the door of education is opened.",
+  "unit_id": "78ab2258-6301-4bc6-a566-d60d3ca1c1b9",
+  "day_of_week": 1,
+  "time_of_day": "bedtime",
+  "tags": [
+    "سيرة",
+    "قصة",
+    "نوم"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T14:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

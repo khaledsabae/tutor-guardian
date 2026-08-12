@@ -1,0 +1,41 @@
+{
+  "id": "lesson_10-12_islamic_parenting_identity_01",
+  "path_id": "path_10-12_islamic_parenting_identity",
+  "title": "As-Salah: The Pillar of the Deen and the Identity of the Mu'min",
+  "age_group": "10-12",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "723a3b98-bf3c-4607-8a02-9e774d1da69c",
+    "72cea396-0533-4b24-8d2b-8ef82412b221",
+    "7b2ded06-2736-4364-8980-1d70df17fa0c",
+    "8451bbb0-4617-4252-a206-e442c533fac3"
+  ],
+  "summary": "At the age of 10-12, the child begins to understand the meaning of taklif (responsibility). Salah is not a routine but a connection with Allah. Parents: be role models, discuss: Why do we pray? And how do we pray with khushu'?",
+  "try_this": "This week: Create a \"Salah diary\" for your child in which they record their salah and how they felt afterward. Discuss weekly: What did you feel?",
+  "order": 1,
+  "estimated_minutes": 34,
+  "reflection_prompts": [
+    "Which salah is the most difficult for your child? And why?",
+    "How has the Salah diary affected their commitment?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

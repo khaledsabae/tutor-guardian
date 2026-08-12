@@ -1,0 +1,73 @@
+{
+  "id": "path_4-6_islamic_parenting_adab",
+  "title": "Establishing Islamic Adab and Moral Conscience (Ages 4-6)",
+  "age_group": "4-6",
+  "domain": "islamic_parenting",
+  "description": "A 14-day tarbiyah journey to establish foundational Islamic akhlaq values (truthfulness, amanah, mercy, respect) during the preoperational stage (Piaget). Focuses on transforming concepts from theoretical knowledge into heart-based behavioral habits through compassionate parental modeling, Prophetic seerah stories, and daily dialogue. Avoids coercive methods, relying instead on the Prophetic principle of gradualism and qudwah (exemplary conduct) as the tool for moral development in this sensitive stage.",
+  "lesson_ids": [
+    "lesson_4-6_islamic_parenting_adab_01",
+    "lesson_4-6_islamic_parenting_adab_02",
+    "lesson_4-6_islamic_parenting_adab_03",
+    "lesson_4-6_islamic_parenting_adab_b04"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "كتاب_تربوي",
+    "info": "ابن القيم الجوزية، تحفة المودود بأحكام المولود، فصل في تأديب الأولاد وتهذيب أخلاقهم"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T19:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "description",
+        "arabic": "رحلة تربوية",
+        "english": "tarbiyah journey",
+        "why": "The Arabic uses the adjective 'تربوية' (tarbawiyyah), not the noun 'تربية' (tarbiyah). The translation should be 'tarbawiyyah journey' or 'educational journey'.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "description",
+        "arabic": "القيم الأخلاقية الإسلامية",
+        "english": "Islamic akhlaq values",
+        "why": "The Arabic uses the adjective 'الأخلاقية' (moral), not the noun 'أخلاق' (akhlaq). The translation 'Islamic akhlaq values' is redundant and shifts the part of speech.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "القصص النبوية",
+        "english": "Prophetic seerah stories",
+        "why": "The Arabic says 'Prophetic stories' without specifying 'seerah'. The English adds 'seerah', narrowing the meaning.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "كأداة بناء أخلاقي",
+        "english": "as the tool for moral development",
+        "why": "The Arabic uses the indefinite 'أداة' (a tool), while the English uses the definite 'the tool', implying it is the only tool.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

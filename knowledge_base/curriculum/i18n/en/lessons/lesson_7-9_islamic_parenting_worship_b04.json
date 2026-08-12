@@ -1,0 +1,58 @@
+{
+  "id": "lesson_7-9_islamic_parenting_worship_b04",
+  "path_id": "path_7-9_islamic_parenting_worship",
+  "title": "Akhlaq in Dealings: Amanah and Birr al-Walidayn",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-199c7aaf",
+    "b1bd26fc-3144-4928-9bb4-ce2b30f95876",
+    "8e884b98-41a4-4c29-92c5-aa71e62d7d51"
+  ],
+  "summary": "Worship is perfected through akhlaq, and at this age, the child grasps the meanings of amanah (trustworthiness) and truthfulness, as well as birr (righteousness toward parents). Teach him through example and story: amanah is safeguarding what he is entrusted with, birr is obeying with love and gentleness toward his parents, and truthfulness is a protection for people. Connect akhlaq to the love and pleasure of Allah, not just fear. Narrate for him from the seerah of the Prophet ﷺ instances of amanah and mercy in language he understands, and have him apply one practical deed of akhlaq. Praise his akhlaq when it appears. The child who links his worship to his akhlaq understands that religion is conduct, and that the closeness of the servant to his Lord is manifest in his truthfulness and rifq (gentleness) with people.",
+  "try_this": "This week: Choose one khuluq (virtue)—amanah or birr al-walidayn—tell a story about it from the seerah, and agree on one practical application. Praise your child every time he demonstrates it.",
+  "order": 4,
+  "estimated_minutes": 5,
+  "reflection_prompts": [
+    "How does your child see the connection between his worship (his salah) and his akhlaq with people?",
+    "Which khuluq do you want your child to master this month, and how can you be his role model in it?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T00:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "واجعله يطبّق خلقاً واحداً عملياً",
+        "english": "and have him apply one practical deed of akhlaq",
+        "why": "The Arabic instructs to have the child apply one character trait (khuluq) practically, not a single deed. 'Deed of akhlaq' narrows the meaning and shifts the focus from embodying a trait to performing an isolated action.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "في صدقه ورفقه بالناس",
+        "english": "in his truthfulness and rifq (gentleness) with people",
+        "why": "The English adds the transliteration 'rifq' which is not present in the Arabic source. While it does not alter the meaning, it introduces a word not in the original.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

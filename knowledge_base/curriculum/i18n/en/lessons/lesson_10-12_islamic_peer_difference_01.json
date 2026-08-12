@@ -1,0 +1,48 @@
+{
+  "id": "lesson_10-12_islamic_peer_difference_01",
+  "path_id": "path_10-12_islamic_peer_difference",
+  "title": "Feeling Different from Friends and Steadfastness in Commitment",
+  "age_group": "10-12",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-c4b3fccc",
+    "isl-dcb6d4e8"
+  ],
+  "summary": "When your child feels like an outsider because he is the only one in his company who prays or adheres to the commands of Allah, teach him the hadith of the Prophet ﷺ: «Islam began as something strange and will return to being strange as it began, so glad tidings to the strangers» (reported by Muslim). Explain to him that differing from the majority in obedience to Allah is not a deficiency, but rather the praise with which the Prophet ﷺ gave glad tidings to the committed in every era. If other children mock your son because of his prayer, read with him the words of Allah: «O you who have believed, let not a people ridicule [another] people; perhaps they may be better than them» (Al-Hujurat: 11). Clarify to him that the verse forbids the one who mocks, and that Allah may have preferred the one being mocked over the mocker, so there is no need for him to feel ashamed or to respond in kind.",
+  "try_this": "This week: Ask your child if he ever felt different from his friends because of his commitment, and read with him the hadith of the strangers or the verse from Surah Al-Hujurat that fits his situation. Reassure him that this feeling has a positive meaning in the Qur’an and Sunnah, not a negative one.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Has your child ever felt like an outsider because of his commitment? How did he handle it?",
+    "Does he know that being mocked is closer to a legal prohibition against the mocker rather than about him?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[1]",
+        "arabic": "هل يعرف أن السخرية منه أقرب للنهي الشرعي عن الساخر لا عنه هو؟",
+        "english": "Does he know that being mocked is closer to a legal prohibition against the mocker rather than about him?",
+        "why": "The English is garbled and unclear. The Arabic means: 'Does he know that the mockery directed at him is closer to a religious prohibition against the mocker, not about him?' The translation's phrasing ('being mocked is closer to a legal prohibition against the mocker rather than about him') obscures the intended meaning that the prohibition is on the mocker, not the mocked.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

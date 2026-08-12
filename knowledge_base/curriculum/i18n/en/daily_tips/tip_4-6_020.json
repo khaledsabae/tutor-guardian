@@ -1,0 +1,33 @@
+{
+  "id": "tip_4-6_020",
+  "age_group": "4-6",
+  "domain": "medical",
+  "text": "In the morning: If you notice a weakness in concentration affecting play and learning, start by visiting the pediatrician. Behavioral therapy with the family is the first step at this age.",
+  "unit_id": "b8f8b456-bb76-41b6-bce2-1c270063059a",
+  "day_of_week": 3,
+  "time_of_day": "morning",
+  "tags": [
+    "تركيز",
+    "نشاط",
+    "علاج"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T19:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

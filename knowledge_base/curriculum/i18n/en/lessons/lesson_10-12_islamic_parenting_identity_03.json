@@ -1,0 +1,50 @@
+{
+  "id": "lesson_10-12_islamic_parenting_identity_03",
+  "path_id": "path_10-12_islamic_parenting_identity",
+  "title": "Akhlaq in Dealings: Amanah, Truthfulness, and Birr",
+  "age_group": "10-12",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "7b2ded06-2736-4364-8980-1d70df17fa0c",
+    "8b869dfa-053f-4c5e-abe2-159eed4d599a",
+    "99515fe1-7bec-4a39-af86-bf1922262170",
+    "a9219a05-46a1-4ece-8961-686d0d27f960"
+  ],
+  "summary": "In the years before adolescence, khuluq is put to the test: amanah (trustworthiness) in secret and in public, truthfulness in difficult situations, and birr al-walidayn (filial piety) in action. Parents: be the mirror, and righteous companionship is a shield.",
+  "try_this": "This week: challenge your family together with \"Amanah Week\"—each member records a difficult situation in which they chose amanah. Discuss the outcomes.",
+  "order": 3,
+  "estimated_minutes": 47,
+  "reflection_prompts": [
+    "What was the most difficult situation in which your child faced a test of amanah?",
+    "How did companionship influence their behavior?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title, summary",
+        "arabic": "الصدق",
+        "english": "Truthfulness",
+        "why": "The term 'sidq' is translated as 'truthfulness' while other key Islamic terms like 'amanah' and 'birr' are transliterated, creating inconsistency in the treatment of Arabic terms.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

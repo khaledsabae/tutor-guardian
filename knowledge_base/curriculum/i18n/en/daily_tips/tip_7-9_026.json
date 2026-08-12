@@ -1,0 +1,25 @@
+{
+  "id": "tip_7-9_026",
+  "age_group": "7-9",
+  "domain": "medical",
+  "text": "Teach your child to name emotions: 'I am angry,' 'I am worried,' 'I am sad'—naming is the first step to control.",
+  "unit_id": "3a15b379-edec-4916-a0cd-de4fc00863c9",
+  "day_of_week": 2,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

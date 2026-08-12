@@ -1,0 +1,39 @@
+{
+  "id": "lesson_4-6_islamic_parenting_adab_03",
+  "path_id": "path_4-6_islamic_parenting_adab",
+  "title": "Rules and Cooperation: Building the Conscience Before Behavior",
+  "age_group": "4-6",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-33e652bb"
+  ],
+  "summary": "Between the ages of 4-6, the child begins to distinguish 'halal' from 'haram' (Erikson: Initiative vs Guilt), and the nucleus of their conscience takes shape. Guidance here is not through scolding but by involving them in setting rules: 'What do the two of us agree not to do while playing?' Recent research in positive parenting (CDC 2020) indicates that a child who participates in setting rules adheres to them more than a child who receives them as commands. The lesson presents the parent with the 'Mutual Contract' approach—3 clear rules that everyone in the family commits to.",
+  "try_this": "This week: Sit with your child for 10 minutes and agree on 3 rules for play (e.g., 'We do not hit,' 'We take turns,' 'We ask before taking'). Write them on a paper and hang it up. Every time the child adheres to a rule, praise their behavior specifically ('I liked that you asked before taking the toy'). At the end of the week, review together: Which rule did we adhere to the most?",
+  "order": 3,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "Have you noticed your child suggesting rules you hadn’t thought of?",
+    "When did you feel that your commitment to the rules was harder than your child’s?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T19:00:00",
+  "updated_at": "2026-06-08T19:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

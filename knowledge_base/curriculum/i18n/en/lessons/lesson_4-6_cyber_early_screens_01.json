@@ -1,0 +1,36 @@
+{
+  "id": "lesson_4-6_cyber_early_screens_01",
+  "path_id": "path_4-6_cyber_early_screens",
+  "title": "How Much Screen Time Suits Your Child? The Rule and the Alternative",
+  "age_group": "4-6",
+  "domain": "cyber",
+  "unit_ids": [],
+  "summary": "The World Health Organization recommends that screen time not exceed one hour daily for children aged 2 to 5, and less is better. Excess affects sleep, language, and attention. The solution is not total prohibition but setting limits while preparing an enjoyable alternative: play, drawing, outdoor activity.",
+  "try_this": "This week: Set one fixed screen time daily, and prepare an alternative activity ready beforehand (games or a book).",
+  "order": 1,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "How many hours of screen time does your child actually spend today?",
+    "What alternative have you tried that worked?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

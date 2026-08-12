@@ -1,0 +1,57 @@
+{
+  "id": "lesson_16-18_development_adult_readiness_03",
+  "path_id": "path_16-18_development_adult_readiness",
+  "title": "Mental Health and the Pressure of the Future: Anxiety About Tomorrow",
+  "age_group": "16-18",
+  "domain": "development",
+  "unit_ids": [],
+  "summary": "The pressure of high school, university admissions, and comparisons can weigh heavily on your young one. Natural anxiety drives him to work, but persistent sadness, isolation, or loss of enjoyment in everything for more than two weeks are signs not to be ignored. Be a source of *amanah* (security), not additional pressure, and ask about his feelings, not just his grades.",
+  "try_this": "This week: Set aside a quiet session where you ask your son, \"How are *you*?\" not \"How are your studies?\" and listen without offering immediate solutions.",
+  "order": 3,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "What does your son’s general mood look like these days?",
+    "Does he find *amanah* with you to speak about his pressures?"
+  ],
+  "warning_flags": [
+    "حزن أو قلق يومي أكثر من أسبوعين",
+    "عزلة وانسحاب اجتماعي",
+    "فقدان المتعة أو حديث عن العدم"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "كن مصدر أمانٍ لا ضغطٍ إضافي",
+        "english": "Be a source of *amanah* (security), not additional pressure",
+        "why": "The Arabic word is 'amān' (أمان) meaning security/safety. The translation uses 'amanah' (أمانة) which means trust or honesty, a different concept. The transliteration and meaning are incorrect.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "reflection_prompts[1]",
+        "arabic": "هل يجد عندك أماناً ليتكلّم عن ضغطه؟",
+        "english": "Does he find *amanah* with you to speak about his pressures?",
+        "why": "Same error: 'amān' (security) is mistranslated as 'amanah' (trust). The Arabic asks if the child finds security/safety with the parent, not a trust.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "id": "tip_13-15_029",
+  "age_group": "13-15",
+  "domain": "medical",
+  "text": "Weekly Mood Tracker (1-10): Mood/Energy/Sleep. Decline >2 weeks = visit a specialist. Drawing creates awareness.",
+  "unit_id": "med-e64897f2",
+  "day_of_week": 5,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "الرسم يصنع الوعي",
+        "english": "Drawing creates awareness",
+        "why": "In the context of a mood tracker, 'الرسم' refers to the act of charting or plotting data, not artistic drawing. 'Drawing' may be misinterpreted; 'Charting' or 'Plotting' would be more accurate.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

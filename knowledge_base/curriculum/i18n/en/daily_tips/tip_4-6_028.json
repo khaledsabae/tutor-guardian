@@ -1,0 +1,33 @@
+{
+  "id": "tip_4-6_028",
+  "age_group": "4-6",
+  "domain": "medical",
+  "text": "Urgent reminder: If your child speaks of harming themselves or others, do not ignore it. Seek specialised help immediately. This is not a joke or imagination.",
+  "unit_id": "med-95b2e7e8",
+  "day_of_week": 5,
+  "time_of_day": "evening",
+  "tags": [
+    "طارئ",
+    "سلامة",
+    "مساعدة"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T19:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

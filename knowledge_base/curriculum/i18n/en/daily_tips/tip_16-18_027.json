@@ -1,0 +1,34 @@
+{
+  "id": "tip_16-18_027",
+  "age_group": "16-18",
+  "domain": "medical",
+  "text": "Mental well-being is a right. Universities provide counsellors—use them. They are there for you, confidentially, and often free of charge.",
+  "unit_id": "e5d132da-cdb4-403a-a43e-e78640ee6270",
+  "day_of_week": 3,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "الصحة النفسية حق",
+        "english": "Mental well-being is a right",
+        "why": "The Arabic says 'health' (الصحة) but the English says 'well-being', which is a broader concept. The right to mental health is a specific claim; 'well-being' softens it slightly.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

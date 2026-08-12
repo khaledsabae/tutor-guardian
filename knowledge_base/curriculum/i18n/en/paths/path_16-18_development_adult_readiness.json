@@ -1,0 +1,38 @@
+{
+  "id": "path_16-18_development_adult_readiness",
+  "title": "Maturity and Independence: Preparing Your Youth for Adult Life (16-18 Years)",
+  "age_group": "16-18",
+  "domain": "development",
+  "description": "A path to help parents prepare their son for adult life: understanding the maturity of the adolescent brain and managing impulsivity, mastering independent life skills, nurturing his psychological health under the pressure of the future, and building mature relationships with healthy boundaries.",
+  "lesson_ids": [
+    "lesson_16-18_development_adult_readiness_01",
+    "lesson_16-18_development_adult_readiness_02",
+    "lesson_16-18_development_adult_readiness_03",
+    "lesson_16-18_development_adult_readiness_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "مرجع_علمي",
+    "info": "إرشادات النمو في المراهقة المتأخرة — AAP + علم نفس النمو"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

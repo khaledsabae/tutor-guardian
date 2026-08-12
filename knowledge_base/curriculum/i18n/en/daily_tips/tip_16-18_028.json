@@ -1,0 +1,34 @@
+{
+  "id": "tip_16-18_028",
+  "age_group": "16-18",
+  "domain": "medical",
+  "text": "DMDD in Adolescence: Learn your signs, your strategies, your safety net. You manage your condition, it does not manage you. Self-care = maturity (nudhūj).",
+  "unit_id": "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
+  "day_of_week": 4,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": false,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": false,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "structure",
+        "field": "text",
+        "arabic": "نضج",
+        "english": "maturity (nudhūj)",
+        "why": "The English translation adds a transliteration '(nudhūj)' that is not present in the Arabic source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

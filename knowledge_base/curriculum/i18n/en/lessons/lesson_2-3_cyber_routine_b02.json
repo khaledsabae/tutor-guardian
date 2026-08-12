@@ -1,0 +1,58 @@
+{
+  "id": "lesson_2-3_cyber_routine_b02",
+  "path_id": "path_2-3_cyber_routine",
+  "title": "Al-Shāshah al-Mushtarakah Badal al-Shāshah al-Ṣāmitah",
+  "age_group": "2-3",
+  "domain": "cyber",
+  "unit_ids": [
+    "seed-screen-46",
+    "cyb-a75c4112",
+    "cyb-236a4b5e"
+  ],
+  "summary": "Not every minute of screen time is equal. The child who watches alone receives a passive broadcast, while the one who watches with you as you name, comment, and ask transforms that time into linguistic interaction. This 'shared viewing' reduces the harm of the screen and increases its benefit. Choose slow, calm content suitable for his age, comment on what is happening ('Look, the rabbit is jumping!'), and connect it to reality ('We have a ball like this one'). In this way, the screen becomes a bridge for conversation, not a silent wall, and you teach your child to be interactive, not merely a receiver.",
+  "try_this": "This week: Sit with your child during every screen time (without exception), comment on what he sees, and connect it to something in your home. Notice whether he begins to repeat words or point to what he sees.",
+  "order": 2,
+  "estimated_minutes": 30,
+  "reflection_prompts": [
+    "What difference did you notice in your child’s interaction when he watched with you compared to when he watched alone?",
+    "How can you turn the content he loves into an opportunity for new words and sentences?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T00:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "structure",
+        "field": "title",
+        "arabic": "الشاشة المشتركة بدل الشاشة الصامتة",
+        "english": "Al-Shāshah al-Mushtarakah Badal al-Shāshah al-Ṣāmitah",
+        "why": "The title is transliterated rather than translated, making it inaccessible to English readers who do not know Arabic. The meaning 'The Shared Screen Instead of the Silent Screen' is lost.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "وتعلّم طفلك أن يكون متفاعلاً لا متلقّياً.",
+        "english": "and you teach your child to be interactive, not merely a receiver.",
+        "why": "The Arabic says 'not a receiver' (لا متلقّياً), which is an absolute negation. The English adds 'merely', softening the statement and implying the child is still a receiver but also interactive, which is not the original meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

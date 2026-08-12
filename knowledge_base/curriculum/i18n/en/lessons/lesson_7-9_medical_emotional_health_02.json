@@ -1,0 +1,57 @@
+{
+  "id": "lesson_7-9_medical_emotional_health_02",
+  "path_id": "path_7-9_medical_emotional_health",
+  "title": "Sleep, Focus, and When to Seek Help",
+  "age_group": "7-9",
+  "domain": "medical",
+  "unit_ids": [
+    "36081e1a-c41f-4787-a38c-85d50dc9aa2a",
+    "4ab3e41b-9991-4b60-9a05-fae420899e86",
+    "3af026ae-be62-5839-ac0b-26da6874e4c5",
+    "4c790c42-d81f-437c-b5e1-eab7f2a742b4",
+    "70a19c8f-3f62-499d-8e0e-211e46f12e9d",
+    "93088170-21d3-4095-91a2-b86c44afa56b",
+    "med-6fd9c009"
+  ],
+  "summary": "Difficulty sleeping, scattered attention, nail-biting, constant fatigue—these may be signs of ADHD, anxiety, or depression. A consistent sleep routine (9–11 hours), breaking tasks into smaller parts, and immediate rewards can help. If symptoms persist for weeks and affect school or home life: consult a pediatrician or child psychologist.",
+  "try_this": "This week: Establish a fixed sleep schedule (same time every night, no screens an hour before bed, reading or relaxation). Observe: Has their focus improved in the morning?",
+  "order": 2,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Has your child’s sleep improved?",
+    "Have you noticed an improvement in their focus or mood?"
+  ],
+  "warning_flags": [
+    "أعراض مستمرة لأسابيع",
+    "تأثير على الأداء الدراسي أو العلاقات",
+    "أفكار إيذاء النفس"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "طبيب نفسي",
+        "english": "child psychologist",
+        "why": "The Arabic specifies a psychiatrist (طبيب نفسي, a medical doctor), while the English uses 'child psychologist', which is a different profession. This could affect the type of help recommended.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

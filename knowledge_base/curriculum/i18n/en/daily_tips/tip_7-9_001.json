@@ -1,0 +1,34 @@
+{
+  "id": "tip_7-9_001",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "text": "When your child prays beside you, you are planting in their heart a love for worship that will last a lifetime — the example you set is stronger than a thousand pieces of advice.",
+  "unit_id": "6730e1c6-ddca-4ff4-8343-b07df6fa6abb",
+  "day_of_week": 0,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "تبني",
+        "english": "planting",
+        "why": "The Arabic verb 'تبني' means 'you build', not 'you plant'. The metaphor is changed from construction to agriculture, altering the imagery.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

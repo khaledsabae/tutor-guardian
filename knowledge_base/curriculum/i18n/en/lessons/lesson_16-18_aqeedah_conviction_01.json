@@ -1,0 +1,36 @@
+{
+  "id": "lesson_16-18_aqeedah_conviction_01",
+  "path_id": "path_16-18_aqeedah_conviction",
+  "title": "Confronting Atheism and Contemporary Doubts",
+  "age_group": "16-18",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "As your child stands on the threshold of university and the open world, they will encounter organized doubts: atheism, skepticism about the religion, and mockery of its constants online. Your role is not to prevent them from hearing these things, but to fortify them. Teach them that a doubt (*shubhah*) is a question with an answer, and that many who cast doubts do so from ignorance or desire. Train them to seek answers from trusted scholars of knowledge rather than accepting anything from anyone. Help them distinguish between a question that seeks the truth and a doubt that seeks destruction. The most important thing you can give them is confidence that their religion stands firm in the face of debate, and that they are not alone.",
+  "try_this": "This week: Discuss a common doubt your child sees online calmly, and search together for a reliable scholarly response—teach them *how to think*, not just *what to answer*.",
+  "order": 2,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you fortify your child against doubts without isolating them from the world?",
+    "What is the difference between a question that seeks the truth and a doubt that seeks destruction, and how can your child distinguish between them?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

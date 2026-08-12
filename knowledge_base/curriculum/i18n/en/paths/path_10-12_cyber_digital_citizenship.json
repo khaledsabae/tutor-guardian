@@ -1,0 +1,39 @@
+{
+  "id": "path_10-12_cyber_digital_citizenship",
+  "title": "Digital Citizenship and Online Safety (Ages 10-12)",
+  "age_group": "10-12",
+  "domain": "cyber",
+  "description": "A pathway that equips parents with tools to protect their children in the digital world: privacy, cyberbullying, screen addiction, critical thinking about content, while respecting their privacy.",
+  "lesson_ids": [
+    "lesson_10-12_cyber_digital_citizenship_01",
+    "lesson_10-12_cyber_digital_citizenship_02",
+    "lesson_10-12_cyber_digital_citizenship_03",
+    "lesson_10-12_cyber_digital_citizenship_b04"
+  ],
+  "estimated_days": 21,
+  "pedagogical_framework": "zpd_scaffolded",
+  "primary_reference": {
+    "type": "دليل_تربوي",
+    "info": "إرشادات اليونيسف لل مواطنة الرقمية للأطفال"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

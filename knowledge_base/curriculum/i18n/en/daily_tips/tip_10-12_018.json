@@ -1,0 +1,25 @@
+{
+  "id": "tip_10-12_018",
+  "age_group": "10-12",
+  "domain": "medical",
+  "text": "Read together a reliable book on puberty (such as *Jismi Yataghayyar* or its equivalent). Early conversation protects from incorrect information.",
+  "unit_id": "6765ccf5-a94c-5291-a561-9258dc0c475f",
+  "day_of_week": 2,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

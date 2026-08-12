@@ -1,0 +1,65 @@
+{
+  "id": "lesson_4-6_islamic_parenting_adab_01",
+  "path_id": "path_4-6_islamic_parenting_adab",
+  "title": "Rifq: A Tarbiyah Value Before It Is a Technique",
+  "age_group": "4-6",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "0bd76d3c-548a-46ed-b17b-78874741662a",
+    "isl-440cdac2"
+  ],
+  "summary": "In the preoperational stage (Piaget’s preoperational), the child begins to distinguish a gentle voice from a harsh one and links the parent’s manner of interaction to their emotional safety. The Prophetic guidance ﷺ emphasizes that 'rifq is in everything,' and that 'leaders are through rifq'—for rifq (gentleness) is not weakness but a way to build lasting trust. In this lesson, the parent discovers how their voice and touch reflect on their child’s sense of safety and how they build a bond that makes later guidance easier and more deeply impactful.",
+  "try_this": "This week: Choose one daily moment (e.g., 5 minutes before bedtime) to speak to your child in a calm voice without any guidance. Just observe: Do they come closer? Do they share more than usual? Do not comment, just watch. At the end of the week, ask yourself: When was my voice loudest during the day, and did the child respond or withdraw?",
+  "order": 1,
+  "estimated_minutes": 5,
+  "reflection_prompts": [
+    "In which moment today did you feel your voice rise even though your intention was guidance?",
+    "How did your child’s face or body change (withdrawal/approach) when you lowered your voice?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T19:00:00",
+  "updated_at": "2026-06-08T19:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "religious_error",
+        "field": "summary",
+        "arabic": "الرفق في الأمر كله",
+        "english": "rifq is in everything",
+        "why": "The hadith fragment means 'gentleness in all matters,' not 'rifq is in everything.' The translation misquotes the Prophetic guidance and changes the meaning.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[1]",
+        "arabic": "انكشاف",
+        "english": "withdrawal",
+        "why": "'انكشاف' means opening up or uncovering, not withdrawal. The English 'withdrawal' is the opposite of the intended meaning.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "title and summary",
+        "arabic": "الرفق",
+        "english": "Rifq / rifq",
+        "why": "The common Arabic word for gentleness is transliterated rather than translated, leading to awkward constructions like 'Rifq: A Tarbiyah Value' and 'rifq is in everything.' If retained as a term, it should be defined and used consistently, but the hadith translation remains incorrect.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

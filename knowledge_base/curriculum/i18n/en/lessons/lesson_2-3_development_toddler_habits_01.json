@@ -1,0 +1,52 @@
+{
+  "id": "lesson_2-3_development_toddler_habits_01",
+  "path_id": "path_2-3_development_toddler_habits",
+  "title": "My Little One’s Growth: Self-Habits and First Words",
+  "age_group": "2-3",
+  "domain": "development",
+  "unit_ids": [
+    "dev-ff2c707a",
+    "dev-034fe17e",
+    "dev-8a6fa824",
+    "dev-93888518",
+    "dev-a6be8275"
+  ],
+  "summary": "A toddler’s refusal (ages 2-3) to clean their teeth is common and expected at this age. Make cleaning part of a fixed routine like 'bath, story, teeth cleaning, sleep' so your child knows the order and feels some control. Use a sticker chart to motivate them, and if they resist in the bathroom, clean their teeth while they are in bed or in the car seat instead of a daily battle. Toilet training is a developmental skill, not a race between children. The American Academy of Pediatrics recommends not forcing the child before signs of readiness appear: walking to the bathroom by themselves, feeling their bladder is full, and their desire to imitate adults or wear 'big kid' underwear. Early forced starting disrupts training, it does not speed it up. Your child’s refusal of the toilet and frequent wetting is expected, so the Academy advises not starting before 24 months and expects wetting accidents until close to age three. Avoid a daily battle with them: praise them for trying instead of punishing them for the accident, and stop training for a few weeks if they strongly resist, then try again later. By 18 months, most children say several single words, point to show you something that excites them, and follow a one-step direction without a gesture, like 'sit down.' These are signs of normal development according to the American Centers for Disease Control, not an indicator of superiority or delay in themselves. Talk to your child face-to-face and at their eye level to support their language development. Resistance to teeth cleaning between ages 4-6 decreases if you turn it into play rather than a command. Clean your teeth to their favorite song, let your child clean your teeth in turn, and let them choose their toothbrush and toothpaste flavor (limited choices achieve the same goal: clean teeth). Continue supervision until age seven.",
+  "try_this": "This week: Choose only one habit (teeth cleaning or toilet training) and link it to a fixed routine or simple game. Do not start more than one new habit in the same week, and if they strongly resist, stop for a few weeks and try again later instead of daily insistence.",
+  "order": 1,
+  "estimated_minutes": 9,
+  "reflection_prompts": [
+    "Are you waiting for actual signs of readiness before starting toilet training, or are you comparing your child to their peers?",
+    "Do you talk to your child face-to-face and at their eye level to support their speech?",
+    "Do you turn daily care routines into a battle or a shared game?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "title",
+        "arabic": "عادات ذاتية",
+        "english": "Self-Habits",
+        "why": "The phrase 'Self-Habits' is not idiomatic English; a more natural translation would be 'Personal Habits' or 'Self-Care Habits'. The current translation sounds stiff and literal.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

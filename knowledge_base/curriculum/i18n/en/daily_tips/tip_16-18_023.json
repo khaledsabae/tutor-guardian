@@ -1,0 +1,42 @@
+{
+  "id": "tip_16-18_023",
+  "age_group": "16-18",
+  "domain": "development",
+  "text": "Late adolescence: challenges and opportunities. The brain matures, identity takes shape. Be a counselor, not an imposer. Liberate, monitor, support.",
+  "unit_id": "dev-77d7ab2f",
+  "day_of_week": 1,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "english.text",
+        "arabic": "كن مستشاراً لا مفروضاً",
+        "english": "Be a counselor, not an imposer.",
+        "why": "The word 'imposer' is rare and awkward in English; a more natural rendering would be 'not someone who imposes' or 'not an enforcer'. The meaning is preserved but the register is stilted.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "english.text",
+        "arabic": "حرر",
+        "english": "Liberate",
+        "why": "'Liberate' carries strong political connotations (e.g., liberating a country) that are not present in the Arabic, which in a parenting context means 'give freedom' or 'let go'. A more appropriate term would be 'Empower' or 'Set free'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

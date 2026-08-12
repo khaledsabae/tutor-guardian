@@ -1,0 +1,63 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_08",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "The Angels, the Books, and the Messengers",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "aqe-e3092aff"
+  ],
+  "summary": "Teach your child iman (faith) in the ghayb (unseen)—what we do not see but Allah and His Messenger ﷺ have informed us of, so we believe in it. Among this is the angels: noble, luminous creations whom Allah created for His obedience. Among them is Jibril, who brought down the wahy (revelation), and others who protect us, and the two recording angels who write down our deeds. And the Books: Allah sent them as guidance for mankind, the greatest and most complete of which is the Qur’an, the speech of Allah, whose preservation Allah has taken upon Himself. And the Messengers: Allah sent them to teach people their din (religion), the first of whom was Nuh and the last, Muhammad ﷺ. Connect this to behavior: because an angel writes our deeds, we strive to dictate good to him, and because the Qur’an is the speech of our Lord, we love it and learn it.",
+  "try_this": "This week: Remind your child in the morning, 'The angel is writing your good deeds today—what shall we dictate to him?' And set aside a short time daily to listen to or memorize a verse from the Qur’an.",
+  "order": 8,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you teach your child to revere and love the Qur’an without it feeling like a heavy obligation?",
+    "What is the effect on a child’s behavior when they feel that a noble angel is recording their deeds?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "وخصّصا وقتاً قصيراً يومياً",
+        "english": "And set aside a short time daily",
+        "why": "The Arabic uses the dual imperative 'خصّصا', addressing parent and child together, emphasizing a joint activity. The English imperative 'set aside' loses this nuance and can be read as directed at the parent alone.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "نحرص أن نُمليه الخير",
+        "english": "we strive to dictate good to him",
+        "why": "'نحرص' means 'we are keen' or 'we make sure', not 'we strive'. The English introduces an element of effort not present in the Arabic.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[0]",
+        "arabic": "دون أن يكون تكليفاً ثقيلاً",
+        "english": "without it feeling like a heavy obligation",
+        "why": "The Arabic describes the teaching itself as a heavy obligation (objective), while the English shifts to the child's subjective feeling. This changes the focus from the parent's approach to the child's perception.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

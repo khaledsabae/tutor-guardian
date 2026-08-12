@@ -1,0 +1,42 @@
+{
+  "id": "tip_4-6_005",
+  "age_group": "4-6",
+  "domain": "development",
+  "text": "Set aside 10 minutes every day to play your child’s favourite game with them — no phone. This is not a luxury; it is an investment in the emotional amanah (trust) that will shape their learning for years to come.",
+  "unit_id": "0e7e490d-a4b4-407f-8422-7eeb90a58534",
+  "day_of_week": 4,
+  "time_of_day": "anytime",
+  "tags": [
+    "لعب",
+    "أمان_عاطفي",
+    "وقت_نوعي"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-08T14:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "emotional amanah (trust)",
+        "arabic": "الأمان العاطفي",
+        "english": "emotional amanah (trust)",
+        "why": "The Arabic 'الأمان' means 'security/safety', not 'amanah' (trust). The translation introduces an Islamic term not present in the source and changes the meaning.",
+        "severity": "high"
+      }
+    ],
+    "approved_by": null
+  }
+}

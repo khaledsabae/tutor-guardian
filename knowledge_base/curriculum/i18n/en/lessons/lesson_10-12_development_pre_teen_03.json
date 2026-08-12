@@ -1,0 +1,36 @@
+{
+  "id": "lesson_10-12_development_pre_teen_03",
+  "path_id": "path_10-12_development_pre_teen",
+  "title": "Friendship and Peer Pressure: The Compass of Values",
+  "age_group": "10-12",
+  "domain": "development",
+  "unit_ids": [],
+  "summary": "The influence of friends grows at this age, and pressure may push your child to do something contrary to their values just to be accepted. Do not attack their friends; instead, strengthen their inner compass. Discuss hypothetical situations with them («What would you do if…»), and teach them to say «no» with confidence without losing their friends.",
+  "try_this": "This week: Present your child with a hypothetical situation about peer pressure, and ask them how they would act and why.",
+  "order": 3,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "Who influences your child the most?",
+    "Can they refuse what contradicts their values?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

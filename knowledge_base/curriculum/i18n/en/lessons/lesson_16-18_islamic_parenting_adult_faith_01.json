@@ -1,0 +1,64 @@
+{
+  "id": "lesson_16-18_islamic_parenting_adult_faith_01",
+  "path_id": "path_16-18_aqeedah_conviction",
+  "title": "Iman with Conviction: When Your Young Adult Faces the World Alone",
+  "age_group": "16-18",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "As your young adult stands at the threshold of university and work, they will encounter ideas and pressures that test their iman far from you. Your goal is not to shield them from every question, but to ensure they emerge with iman built on conviction, not mere imitation—knowing *why* they believe and engaging with those who differ with confidence and adab. Inherited iman falters at the first gust of doubt, but iman built on evidence stands firm.",
+  "try_this": "This week: Ask your son about the idea he hears most often that shakes his certainty, and sit together to seek a solid answer from a trusted scholar, without denial or haste.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "What idea is troubling your son’s iman these days?",
+    "Did he leave the discussion more at ease or more anxious?"
+  ],
+  "warning_flags": [
+    "انجراف نحو إنكار الدين أو ترك الصلاة",
+    "صحبة تجرّه بعيداً عن قيمه"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "ريح",
+        "english": "doubt",
+        "why": "The Arabic says 'at the first wind' (أول ريح), a general metaphor for any disturbance. The English narrows it to 'gust of doubt', adding the specific concept of doubt not present in the original.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "أكثر فكرةٍ يسمعها تهزّ يقينه",
+        "english": "the idea he hears most often that shakes his certainty",
+        "why": "The Arabic 'أكثر' modifies the shaking (the idea that most shakes his certainty), not the frequency of hearing. The English incorrectly makes it about the idea he hears most often.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "شابك",
+        "english": "your young adult",
+        "why": "The Arabic consistently uses masculine singular 'شابك' (your young man) and 'ابنك' (your son), addressing parents of sons. The English summary uses gender-neutral 'your young adult' and 'they', losing the masculine specificity present in the original and creating inconsistency with the 'try_this' which correctly uses 'son'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

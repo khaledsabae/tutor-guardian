@@ -1,0 +1,45 @@
+{
+  "id": "lesson_16-18_aqeedah_conviction_02",
+  "path_id": "path_16-18_aqeedah_conviction",
+  "title": "Al-ʿAqeedah as a Compass for Decisions: Steadfastness of the Heart",
+  "age_group": "16-18",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "A firmly rooted ʿaqeedah is not merely about rituals; it is a compass that guides the major decisions your child faces now: specialization, companionship, wealth, relationships, and the halal and haram in an age of temptations. Teach him to ask at every crossroads: 'Does this please our Lord?' And that his faith in the Hereafter makes him prioritize Allah's pleasure over immediate gain. The young man whose ʿaqeedah is steadfast in his heart will not be shaken by peer pressure or the allure of the haram, for he possesses an internal scale more steadfast than all external influences.",
+  "try_this": "This week: Discuss a real decision your child is facing, and weigh it together on the scale of 'Does it please Allah? And what is its impact in the Hereafter?' before worldly gain.",
+  "order": 3,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you make ʿaqeedah a practical compass for your child’s major decisions, not just rituals?",
+    "Which decision is your child facing now that you can weigh with him using the scale of Allah’s pleasure?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary, try_this, reflection_prompts",
+        "arabic": "ابنك (your son) and الشاب (the young man)",
+        "english": "your child (in most places) and the young man (in summary)",
+        "why": "The Arabic consistently addresses parents of a son, using 'ابنك' and 'الشاب'. The English translation shifts to the gender-neutral 'your child' in the try_this and reflection prompts, but retains 'the young man' in the summary, creating inconsistency and altering the original's specific focus on boys.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

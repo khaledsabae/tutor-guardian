@@ -1,0 +1,55 @@
+{
+  "id": "lesson_10-12_cyber_digital_citizenship_02",
+  "path_id": "path_10-12_cyber_digital_citizenship",
+  "title": "Cyberbullying: Don’t Participate, Stop It",
+  "age_group": "10-12",
+  "domain": "cyber",
+  "unit_ids": [
+    "cyb-3f81bd4b",
+    "cyb-51951b6a",
+    "cyb-65ff3533",
+    "cyb-74c93d51",
+    "cyb-8c2cbb56"
+  ],
+  "summary": "Cyberbullying is more dangerous: it’s 24/7, reaches the home, and lasts forever. Teach your child: (1) Don’t participate or play the role of the bystander (2) Take a screenshot + report to the platform + tell a parent (3) The National Centre for Electronic Development (19099) for serious reports.",
+  "try_this": "Practice a scenario: \"If you see bullying against a friend, what do you do?\" — Train them on: screenshot → report → tell me.",
+  "order": 2,
+  "estimated_minutes": 47,
+  "reflection_prompts": [
+    "Has your child been exposed to or witnessed cyberbullying?",
+    "Do they know the reporting number (19099)?"
+  ],
+  "warning_flags": [
+    "تغير مفاجئ في المزاج بعد استخدام الجوال",
+    "رفض الذهاب للمدرسة",
+    "إخفاء الشاشة عند دخول الوالدين"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "try_this, reflection_prompts",
+        "arabic": "مرّنه ... هل يعرف",
+        "english": "Train them ... Do they know",
+        "why": "Arabic uses singular masculine pronouns (him/he) referring to the child, while English uses gender-neutral 'them'/'they' which could be interpreted as plural. This shifts the specificity of the original.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

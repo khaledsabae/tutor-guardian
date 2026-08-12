@@ -1,0 +1,51 @@
+{
+  "id": "lesson_10-12_cyber_digital_citizenship_03",
+  "path_id": "path_10-12_cyber_digital_citizenship",
+  "title": "Critical Thinking: Not Everything on the Internet is True",
+  "age_group": "10-12",
+  "domain": "cyber",
+  "unit_ids": [
+    "cyb-a208f26a",
+    "cyb-a688fcbe",
+    "cyb-a75c4112",
+    "cyb-c231a76a",
+    "de291c19-4443-464b-806e-81d9ed0c01ad"
+  ],
+  "summary": "Algorithms feed you what you like, not what benefits you. Teach him: (1) Who is the source? (2) Is there another source that confirms it? (3) Does it provoke anger/fear? (4) Search on trusted sites. Activate SafeSearch and reliable sources for him.",
+  "try_this": "Choose a trending news item—search together: the primary source, expert opinions, facts vs. opinions. Teach him: \"If it’s too unbelievable to be true, it’s most likely false.\"",
+  "order": 3,
+  "estimated_minutes": 23,
+  "reflection_prompts": [
+    "What was the last news item you both verified together?",
+    "Which trusted sites did you rely on?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "لو كان مستحيل التصديق، غالباً كذب",
+        "english": "If it’s too unbelievable to be true, it’s most likely false.",
+        "why": "The Arabic says 'impossible to believe' and 'a lie', while the English softens to 'too unbelievable to be true' and 'false', reducing the directness and intensity.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "id": "lesson_10-12_medical_puberty_wellbeing_02",
+  "path_id": "path_10-12_medical_puberty_wellbeing",
+  "title": "Anxiety, Depression, and School Pressure: When to Seek Help",
+  "age_group": "10-12",
+  "domain": "medical",
+  "unit_ids": [
+    "3cc4fbe0-25f9-4366-b9a6-3893795bec75",
+    "6765ccf5-a94c-5291-a561-9258dc0c475f",
+    "69723253-5e81-4602-8bfe-a073437589c2",
+    "7eb24d4f-e1d0-4bfa-a5ed-6b215e3fa1a1",
+    "8295e748-32d6-4f5a-9ced-e63307cde035",
+    "9a3a2741-7f07-4ed5-bd99-abb28d2a04e7",
+    "med-40813af4",
+    "med-77626be2",
+    "med-8b8522f6",
+    "med-9db37ea4",
+    "med-af2d64fa",
+    "med-b207a9dd",
+    "med-ca2a9d86",
+    "med-ec6f874a"
+  ],
+  "summary": "The pre-adolescent stage brings pressures: school, friends, self-image, and physical changes. Warning signs: sadness lasting more than two weeks, withdrawal, academic decline, changes in sleep or appetite, or thoughts of self-harm. Parents: listen without judgment, reassure them: \"I am with you, we will solve this together.\" Consult a pediatrician or mental health specialist early.",
+  "try_this": "Create a \"Weekly Mood Scale\": a simple chart (1-10) for mood, energy, and sleep. Review it together monthly. If the curve declines for more than two weeks, consult a specialist.",
+  "order": 2,
+  "estimated_minutes": 48,
+  "reflection_prompts": [
+    "What was the highest/lowest point on the mood scale this month?",
+    "What pressures do they repeatedly mention?"
+  ],
+  "warning_flags": [
+    "حزن/قلق يومي >أسبوعين",
+    "عزلة عن الأهل والأصدقاء",
+    "تراجع دراسي مفاجئ",
+    "كلام عن الموت/لا قيمة للحياة",
+    "إيذاء ذاتي"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "أفكار إيذاء",
+        "english": "thoughts of self-harm",
+        "why": "The Arabic 'إيذاء' means 'harm' generally, not specifically 'self-harm'. The English narrows the meaning.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "أنا معكما",
+        "english": "I am with you",
+        "why": "The Arabic uses the dual pronoun 'كما' (you both), while the English 'you' does not convey the dual number.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "lesson_16-18_medical_adult_transition_03",
+  "path_id": "path_16-18_medical_adult_transition",
+  "title": "Building a Sustainable Psychological Life: Habit, Meaning, Seeking Help",
+  "age_group": "16-18",
+  "domain": "medical",
+  "unit_ids": [
+    "e19e72c2-d553-4e12-a6e6-5d7c6f3fc083",
+    "e5d132da-cdb4-403a-a43e-e78640ee6270",
+    "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
+    "83f8a5c4-defa-49a6-91ec-8504fee1140e"
+  ],
+  "summary": "Psychological well-being is not merely the absence of illness, but rather: (1) Daily habits: 7-9 hours of sleep, 30 minutes of movement, real food, real connection. (2) Meaning: Discover what gives you purpose (service, knowledge, art, family) — meaning protects from emptiness. (3) Professional network: A therapist/counselor you trust, a psychiatrist whose number you know, and the hotline 937 saved in your contacts. (4) Seeking help is strength: \"I need help\" is maturity, not weakness. You are building a life, not just passing through a phase.",
+  "try_this": "This week: Create a \"self-contract\" — 3 daily habits, one value you live by, a person you trust, and an emergency number. Sign it, and review it monthly.",
+  "order": 3,
+  "estimated_minutes": 10,
+  "reflection_prompts": [
+    "What are the three habits you have committed to?",
+    "What value have you chosen to live by in the coming year?"
+  ],
+  "warning_flags": [
+    "غياب تام للأمل/المعنى",
+    "عجز عن أداء مهام الحياة اليومية",
+    "أفكار متكررة عن عدم جدوى الحياة"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

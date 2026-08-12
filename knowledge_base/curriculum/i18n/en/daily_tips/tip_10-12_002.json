@@ -1,0 +1,25 @@
+{
+  "id": "tip_10-12_002",
+  "age_group": "10-12",
+  "domain": "islamic_parenting",
+  "text": "When your child (10–12) asks, “Why do I pray?” — don’t say, “Because Allah said so.” Say, “Because I need it to feel at peace.”",
+  "unit_id": "72cea396-0533-4b24-8d2b-8ef82412b221",
+  "day_of_week": 1,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "lesson_4-6_medical_healthy_growth_01",
+  "path_id": "path_4-6_medical_healthy_growth",
+  "title": "Sufficient Sleep: How Much Your Child Needs and Why",
+  "age_group": "4-6",
+  "domain": "medical",
+  "unit_ids": [],
+  "summary": "At this age, a child needs 10 to 13 hours of sleep daily (including naps). Lack of sleep affects mood, attention, and immunity. Establish a regular bedtime, avoid screens an hour before it, and make pre-sleep time calm: a warm bath and a story. If sleep difficulties persist despite the routine, consult a doctor.",
+  "try_this": "This week: Set one consistent bedtime every night and create a calm routine half an hour before it, without screens.",
+  "order": 1,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "How many hours does your child actually sleep?",
+    "Does he have a fixed sleep routine?"
+  ],
+  "warning_flags": [
+    "صعوبات نومٍ شديدة ومستمرة",
+    "شخير أو انقطاع نفسٍ أثناء النوم"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

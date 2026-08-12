@@ -1,0 +1,45 @@
+{
+  "id": "lesson_7-9_cyber_digital_basics_01",
+  "path_id": "path_7-9_cyber_digital_basics",
+  "title": "The Family Screen Contract: Agreed-Upon Rules",
+  "age_group": "7-9",
+  "domain": "cyber",
+  "unit_ids": [],
+  "summary": "Instead of prohibition or chaos, create a clear 'contract' with your child: when, how much, and where devices are used. Rules that they help establish are more likely to be adhered to. Keep devices in a shared space, and agree on screen-free times (meals, before bed).",
+  "try_this": "This week: Sit together and write down three simple rules for device usage, then hang them in a visible place.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Do you have clear, agreed-upon rules?",
+    "Does your child adhere to them?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "summary",
+        "arabic": "القواعد التي يشارك في وضعها يلتزم بها أكثر",
+        "english": "Rules that they help establish are more likely to be adhered to",
+        "why": "The Arabic uses active, personal phrasing (he adheres more), while the English shifts to a passive, impersonal construction, making the tone more formal and less warm.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

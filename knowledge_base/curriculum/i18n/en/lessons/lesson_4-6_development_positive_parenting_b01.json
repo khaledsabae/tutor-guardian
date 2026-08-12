@@ -1,0 +1,74 @@
+{
+  "id": "lesson_4-6_development_positive_parenting_b01",
+  "path_id": "path_4-6_development_positive_parenting",
+  "title": "Routine and Boundaries: The Amanah That a Child Loves",
+  "age_group": "4-6",
+  "domain": "development",
+  "unit_ids": [
+    "seed-picky-79",
+    "dev-ad9ff74a",
+    "dev-b3e9a4e0"
+  ],
+  "summary": "Children may seem to resist boundaries, but in truth they feel amanah (security) within them. A steady routine—predictable times for sleep, food, and play—reduces daily conflicts because the child knows what comes next. A few clear, consistent boundaries are better than many wavering rules. When you say 'no' to something important, stand firm with rifq (gentleness), for inconsistency teaches him that insistence breaks the rule. Offer choices within the boundaries ('You sleep at 8; do you choose the story before that?') so he feels in control. A child in an organized, loving environment is calmer and more cooperative because the world around him is understandable and safe.",
+  "try_this": "This week: Establish a clear routine for one part of the day (e.g., bedtime) with the same steps daily, and stand firm with rifq on one important boundary. Observe its effect on cooperation.",
+  "order": 1,
+  "estimated_minutes": 37,
+  "reflection_prompts": [
+    "Which part of your child’s day needs a clearer routine to reduce conflict?",
+    "How can you stand firm on important boundaries with rifq without turning it into a battle?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T00:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "الأمان",
+        "english": "Amanah",
+        "why": "الأمان (al-amān) means security/safety, not amanah (أمانة) which means trust. The translation uses a different Islamic term, changing the meaning.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "بهدوء",
+        "english": "with rifq (gentleness)",
+        "why": "The Arabic says 'بهدوء' (calmly/quietly), not 'برفق' (with gentleness). The translator inserted the Islamic term 'rifq' where it was not present, altering the original advice.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "بهدوء",
+        "english": "with rifq",
+        "why": "Same error: 'بهدوء' (calmly) translated as 'with rifq', introducing a term not in the source.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[1]",
+        "arabic": "بهدوء",
+        "english": "with rifq",
+        "why": "Again, 'بهدوء' rendered as 'with rifq', unfaithful to the original wording.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

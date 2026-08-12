@@ -1,0 +1,36 @@
+{
+  "id": "lesson_7-9_islamic_parenting_akhlaq_04",
+  "path_id": "path_7-9_islamic_parenting_akhlaq",
+  "title": "Controlling Anger upon the Guidance of the Prophet ﷺ",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "unit_ids": [],
+  "summary": "The Prophet ﷺ taught, when anger arises: seeking refuge in Allah, silence, changing one’s posture, and wudu. Teach your child that anger is natural, but it has tools. Be a model in your own calmness first.",
+  "try_this": "This week: Teach your child one step to take when angry (a deep breath or sitting down), and apply it yourself in front of them.",
+  "order": 4,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "How does your child express their anger?",
+    "Did the new tool help them?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

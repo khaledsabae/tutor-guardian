@@ -1,0 +1,34 @@
+{
+  "id": "tip_13-15_007",
+  "age_group": "13-15",
+  "domain": "islamic_parenting",
+  "text": "Islamic honor lies in knowledge and action. Encourage: \"What skill have you mastered that you can use to benefit others?\" — confidence through action.",
+  "unit_id": "isl-cc4ee988",
+  "day_of_week": 6,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "english.text",
+        "arabic": "الثقة بالعمل",
+        "english": "confidence through action",
+        "why": "The Arabic 'بالعمل' means 'in action' (confidence while acting), not 'through action' (confidence gained by acting). The nuance shifts from a state to a means.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "path_10-12_development_pre_teen",
+  "title": "Pre-Adolescence: Growth and Responsibility (Ages 10-12)",
+  "age_group": "10-12",
+  "domain": "development",
+  "description": "A path to help parents accompany their child at the threshold of adolescence: discussing puberty with confidence, gradual independence and responsibility, friendship and peer pressure, and managing time between study, play, and screens.",
+  "lesson_ids": [
+    "lesson_10-12_development_pre_teen_01",
+    "lesson_10-12_development_pre_teen_02",
+    "lesson_10-12_development_pre_teen_03",
+    "lesson_10-12_development_pre_teen_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "مرجع_علمي",
+    "info": "نمو ما قبل المراهقة — AAP + علم نفس النمو"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

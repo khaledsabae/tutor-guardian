@@ -1,0 +1,48 @@
+{
+  "id": "lesson_16-18_cyber_digital_professional_01",
+  "path_id": "path_16-18_cyber_digital_professional",
+  "title": "Building a Professional Digital Identity: LinkedIn, Portfolio, and Reputation",
+  "age_group": "16-18",
+  "domain": "cyber",
+  "unit_ids": [
+    "cyb-db2bb48f",
+    "cyb-26236b19"
+  ],
+  "summary": "Before university/work: your digital identity = your first CV. Steps: (1) LinkedIn: a professional photo, a clear headline (student/field of interest), a summary highlighting skills/projects/values. (2) Portfolio: GitHub/Behance/personal website — real work, code/design/writing. (3) Cleaning your footprint: search your name on Google, delete/hide what is inappropriate. (4) Network: follow leaders in your field, engage with intelligent comments, request recommendations from teachers/mentors. Your digital reputation = your opportunity.",
+  "try_this": "This week: create/update your LinkedIn — photo, headline, 3 skills, one project. Search your name on Google and fix what appears.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "What project did you highlight in your portfolio?",
+    "What impression did your profile leave when searching your name?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "structure",
+        "field": "summary",
+        "arabic": "(3) نظافة أثر ... (3) شبكة",
+        "english": "(3) Cleaning your footprint ... (4) Network",
+        "why": "The Arabic source incorrectly numbers both steps as (3); the English corrects this to (3) and (4), altering the original numbering structure.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

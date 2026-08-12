@@ -1,0 +1,42 @@
+{
+  "id": "lesson_0-3_cyber_screen_foundations_01",
+  "path_id": "path_0-3_cyber_screen_foundations",
+  "title": "Zero Screens Under Two: The Golden Rule for Protecting the Developing Brain",
+  "age_group": "0-3",
+  "domain": "cyber",
+  "unit_ids": [
+    "cyb-fc24ccce",
+    "cyb-499319c4"
+  ],
+  "summary": "The American Academy of Pediatrics (AAP) and the World Health Organization agree: no screens for children under two (exception: video calls with family). During this period, the brain grows at its fastest rate—neural connections form through sensory exploration, movement, and direct human interaction, not pixels. Early exposure to screens is linked to speech delays, attention problems, sleep difficulties, and hyperactivity. The alternative is not 'prohibition' but 'substitution': a safe floor, blocks, cloth books, water, sand—real play builds a real brain.",
+  "try_this": "This week: Try a 'zero screens hour' daily—put the phone in another room, get down on the floor with your child, and play together with whatever is available (plastic containers, pots, cloth balls). Notice: Does he interact more? Does he sleep better? Record your observations.",
+  "order": 1,
+  "estimated_minutes": 43,
+  "reflection_prompts": [
+    "What is the hardest moment in your day when you tend to hand your child a screen? What is a possible alternative?",
+    "Have you noticed a difference in your child’s behavior after a screen-free day?"
+  ],
+  "warning_flags": [
+    "developmental_red_flag"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T18:00:00",
+  "updated_at": "2026-06-10T18:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

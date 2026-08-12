@@ -1,0 +1,53 @@
+{
+  "id": "lesson_10-12_aqeedah_growth_01",
+  "path_id": "path_10-12_aqeedah_growth",
+  "title": "The Pillars of Iman in Depth: What We Believe and Why",
+  "age_group": "10-12",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "At this age, your child can grasp the 'why,' not just the 'what.' Review with him the six pillars of iman, but in greater depth: Why do we believe in the angels, the books of Allah, the messengers, the Last Day, and the divine decree (qadar)? Connect each pillar to its impact on his life. Belief in the Last Day makes him strive for truthfulness because there is accountability, and belief in qadar grants him tranquility in the face of failure. Your goal is to transform aqeedah from memorized information into a conviction whose wisdom he understands.",
+  "try_this": "This week: Choose one pillar of iman and ask your child, 'How does this change our lives?' Then discuss its practical impact together.",
+  "order": 2,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you move your child from memorizing the pillars of iman to understanding their wisdom and impact?",
+    "Which pillar does your child need to understand its practical impact at this stage?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "رسله",
+        "english": "the messengers",
+        "why": "The Arabic possessive pronoun 'his' (referring to Allah) is omitted, making it 'the messengers' instead of 'His messengers'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "ده بيغيّر إيه في حياتنا؟",
+        "english": "How does this change our lives?",
+        "why": "The Arabic colloquial question asks 'What does this change in our lives?' (focus on the specific changes), while the English asks 'How does this change our lives?' (focus on the manner). The meaning is slightly altered, and the warm, direct dialect is lost.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

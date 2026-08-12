@@ -1,0 +1,53 @@
+{
+  "id": "lesson_4-6_aqeedah_seeds_04",
+  "path_id": "path_4-6_aqeedah_seeds",
+  "title": "Love Allah and Love His Prophet ﷺ",
+  "age_group": "4-6",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "Tie in your child’s heart the love of Allah with the love of His Prophet Muhammad ﷺ. Tell him in a beloved manner that we have a Prophet named Muhammad ﷺ, who was kind, loved children, played with them, and showed mercy to both young and old. Allah loves him, and we love him. Teach him to say «ṣallā Allāhu ʿalayhi wa-sallam» when he hears his name. Short stories about the gentleness of the Prophet ﷺ plant love before he grows and learns the details.",
+  "try_this": "This week: Tell your child one short story about the mercy of the Prophet ﷺ toward children, and teach him to say «ṣallā Allāhu ʿalayhi wa-sallam» when he hears his name.",
+  "order": 4,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How do you convey the love of the Prophet ﷺ to your child at this early age?",
+    "Which quality of the Prophet’s ﷺ do you most want your child to know first?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "summary",
+        "arabic": "بأسلوبٍ محبَّب",
+        "english": "in a beloved manner",
+        "why": "The Arabic is warm and direct, but 'beloved manner' is not idiomatic in English; 'beloved' is typically used for people, not for a manner of speaking. A more natural rendering would be 'in a loving way' or 'in an endearing manner'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[1]",
+        "arabic": "تحبّين أن يعرفها طفلك أولاً",
+        "english": "do you most want your child to know first",
+        "why": "The Arabic verb 'تحبّين' (you love) is rendered as 'you most want', shifting the nuance from 'love' to 'want'. The intended meaning is similar, but the emotional weight of 'love' is lost.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

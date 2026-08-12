@@ -1,0 +1,25 @@
+{
+  "id": "tip_7-9_015",
+  "age_group": "7-9",
+  "domain": "medical",
+  "text": "Your child anxious about something new? Don’t say, “Don’t be afraid.” Say, “I’m with you—let’s try it together, step by step.” Aman (security) builds courage.",
+  "unit_id": "0b45c31c-5888-442b-a64f-d80e9b140e7f",
+  "day_of_week": 5,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

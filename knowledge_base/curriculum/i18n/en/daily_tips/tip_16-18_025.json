@@ -1,0 +1,34 @@
+{
+  "id": "tip_16-18_025",
+  "age_group": "16-18",
+  "domain": "development",
+  "text": "Your decision, your responsibility, your future. Plan: values, dream, skills, steps for this year. You are building your man/woman (son/daughter).",
+  "unit_id": "dev-c5e6f09a",
+  "day_of_week": 2,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "أنت تبني رجلك/امرأتك",
+        "english": "You are building your man/woman (son/daughter)",
+        "why": "The English adds an explanatory gloss '(son/daughter)' that is not present in the Arabic. The Arabic literally says 'your man/your woman', which is a common expression for the adult the child will become, but the parenthetical addition is an interpretation not found in the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

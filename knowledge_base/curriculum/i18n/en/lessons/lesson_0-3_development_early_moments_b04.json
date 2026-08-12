@@ -1,0 +1,41 @@
+{
+  "id": "lesson_0-3_development_early_moments_b04",
+  "path_id": "path_0-3_development_early_moments",
+  "title": "Shared Reading: The First Bridge to Language",
+  "age_group": "0-3",
+  "domain": "development",
+  "unit_ids": [
+    "dev-97d2f1d2",
+    "dev-8fdf563b",
+    "2b2d1fdd-1a30-40f3-aa2b-0dbadea2ce2c"
+  ],
+  "summary": "Before your child utters a word, shared reading builds their linguistic brain. What matters is not that they understand the story, but that they hear your voice, see the pictures, and connect the book with warmth and closeness. At this age, the book is a toy: it is held, flipped, and sometimes chewed—and this is normal. Name what is in the pictures with simple words, imitate animal sounds, and let your child turn the pages. Daily minutes of shared reading foretell a greater linguistic wealth and deeper attachment, and it is one of your strongest early investments.",
+  "try_this": "This week: Choose one illustrated book and read it with your child for two minutes daily before the nap or bedtime. Point to a picture and name it, imitate a sound, and let them turn the page themselves.",
+  "order": 4,
+  "estimated_minutes": 29,
+  "reflection_prompts": [
+    "Which picture or sound captured your child’s attention the most, and how can you build on it?",
+    "How can you transform reading from an 'educational task' into a moment of closeness and comfort for both of you?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T00:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

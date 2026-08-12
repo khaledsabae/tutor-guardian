@@ -1,0 +1,38 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_02",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "Allah Loves Us and Cares for Us",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "aqe-c28835f1"
+  ],
+  "summary": "The love of Allah is the first seed of iman, and upon it, all that follows is built. Teach your child that Allah loves him more than his mother and father, and that He is the One who provides for him, protects him, and heals him when he is ill. Connect every blessing your child loves to the Name of the Bestower: food, family, two eyes with which he sees—'All of this is a gift from Allah because He loves you.' When the child feels that he is loved by his Lord, his heart finds tranquility, and he loves obedience out of love, not fear alone.",
+  "try_this": "This week: Before sleep, mention three blessings Allah has bestowed upon you today, and conclude with, 'Alhamdulillah, our Lord loves us.' Teach him to say, 'Ya Rabb, I love You.'",
+  "order": 2,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you make your child feel that obedience to Allah is a door to love and closeness, not merely commands?",
+    "When was the last time you connected a blessing in front of your child to the Name of Allah, the Bestower?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

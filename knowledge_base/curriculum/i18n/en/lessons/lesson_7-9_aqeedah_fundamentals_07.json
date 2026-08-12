@@ -1,0 +1,55 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_07",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "Muhammad ﷺ Our Role Model",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "aqe-c078677c"
+  ],
+  "summary": "Belief in the messengers is one of the pillars of iman, and the seal of them all and the most beloved to our hearts is our Prophet Muhammad ﷺ. Introduce your child to the Prophet ﷺ as a living, beloved role model, not just a name to be mentioned: he was truthful and trustworthy, so much so that his people called him 'Al-Sadiq Al-Amin' (The Truthful, The Trustworthy). He was merciful to children, kissing and playing with them, and showed rifq (gentleness) to the weak and even animals. Tell your child short stories from his seerah, and teach him to say 'salla Allahu alayhi wa sallam' whenever his name is mentioned, and that following him means emulating his akhlaq (character) before his words. When a child loves the Prophet, it becomes easy for him to follow his example.",
+  "try_this": "This week: Tell your child a short story every night about the mercy of the Prophet ﷺ, then ask him, 'How can we do like him tomorrow?' Let him choose an akhlaq to apply.",
+  "order": 7,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you convey to your child the love of the Prophet ﷺ as a living role model, not just a name to be memorized?",
+    "Which Prophetic akhlaq do you most wish your child to embody first, and how does he see it in you?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "try_this",
+        "arabic": "خُلقاً",
+        "english": "an akhlaq",
+        "why": "The Arabic uses the singular 'خُلقاً' (a character trait), but the English uses 'an akhlaq', which is the plural form. The correct singular is 'khuluq' or simply 'a character trait'.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "reflection_prompts[1]",
+        "arabic": "خُلقٍ نبويٍّ",
+        "english": "Prophetic akhlaq",
+        "why": "The Arabic uses the singular 'خُلقٍ' (a character trait), but the English uses 'akhlaq', which is plural. Should be 'khuluq' or 'character trait'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

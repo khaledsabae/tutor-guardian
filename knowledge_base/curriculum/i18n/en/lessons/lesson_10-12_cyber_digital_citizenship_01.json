@@ -1,0 +1,50 @@
+{
+  "id": "lesson_10-12_cyber_digital_citizenship_01",
+  "path_id": "path_10-12_cyber_digital_citizenship",
+  "title": "Digital Privacy: Your Digital Footprint Does Not Disappear",
+  "age_group": "10-12",
+  "domain": "cyber",
+  "unit_ids": [
+    "40f84fca-81b0-4533-8c7c-a0dbbf8a4598",
+    "7e94871d-1929-4ea4-9bed-8841e09938af",
+    "bd4afec4-d395-55f4-9953-22cc698564fd",
+    "cyb-36b8ad48"
+  ],
+  "summary": "Every photo, comment, and like leaves a permanent digital footprint. Teach your child: \"Before you post, ask: Would I be pleased for my grandfather or my teacher to see this in 10 years?\" – Privacy is a right, and protection is a duty.",
+  "try_this": "Review together the privacy settings of one app your child uses. Enable: private account, no location sharing, and approval before tagging.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Which apps did you review the settings for?",
+    "Did your child understand the concept of a \"digital footprint\"?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "أثر قدمك لا يُمحى",
+        "english": "Your Digital Footprint Does Not Disappear",
+        "why": "The Arabic title says 'أثر قدمك' (your footprint) without 'digital', and 'لا يُمحى' means 'is not erased'. The English adds 'Digital' and changes 'erased' to 'disappear', altering the nuance.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

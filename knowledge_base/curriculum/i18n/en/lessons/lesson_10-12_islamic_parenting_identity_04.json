@@ -1,0 +1,66 @@
+{
+  "id": "lesson_10-12_islamic_parenting_identity_04",
+  "path_id": "path_10-12_aqeedah_growth",
+  "title": "Confidence and Identity: You Are His Child, and Allah Sees You",
+  "age_group": "10-12",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "8451bbb0-4617-4252-a206-e442c533fac3",
+    "99515fe1-7bec-4a39-af86-bf1922262170",
+    "acb36cc3-318d-4866-bfa2-530c03dcc422",
+    "ef7cfad0-4999-42ba-bdf4-1c1d65d3b29f"
+  ],
+  "summary": "A stage of self-doubt. Teach him: his worth with Allah is through his deeds, not his clothes, number of friends, or grades. Build his confidence: praise the effort, not the outcome; give him space to decide; and make du'a for him for steadfastness.",
+  "try_this": "Create together a \"Treasure Box of Achievements\": a small paper each day where he writes something he feels proud of (a prayer, honesty, helping). Open it at the end of the month.",
+  "order": 1,
+  "estimated_minutes": 43,
+  "reflection_prompts": [
+    "What did he write in the Treasure Box of Achievements?",
+    "Have you noticed a change in how he speaks about himself?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "قيمتك عند الله بعملك لا بملابسك أو عدد أصدقائك أو درجاتك",
+        "english": "his worth with Allah is through his deeds, not his clothes, number of friends, or grades",
+        "why": "Arabic uses direct address (your worth, your clothes, your friends, your grades) but English shifts to third person (his). This changes the tone from a direct instruction to a descriptive statement.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "صندوق الإنجازات",
+        "english": "Treasure Box of Achievements",
+        "why": "English adds 'Treasure' which is not in the Arabic. The Arabic simply says 'Box of Achievements'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[0]",
+        "arabic": "صندوق الإنجازات",
+        "english": "Treasure Box of Achievements",
+        "why": "Same addition of 'Treasure' as in try_this.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

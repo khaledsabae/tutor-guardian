@@ -1,0 +1,25 @@
+{
+  "id": "tip_10-12_030",
+  "age_group": "10-12",
+  "domain": "medical",
+  "text": "Break big tasks into small steps, with an immediate reward for completion—this works better for scattered attention than lectures do.",
+  "unit_id": "med-ca2a9d86",
+  "day_of_week": 3,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "lesson_4-6_islamic_street_language_01",
+  "path_id": "path_4-6_islamic_street_language",
+  "title": "My child is mimicking foul language from the street: From nursery to primary school",
+  "age_group": "4-6",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-9933c64e",
+    "isl-624104ea"
+  ],
+  "summary": "If your child (4-6 years old) repeats a foul word they heard in the street, do not magnify the issue with shouting or harsh punishment, as this will embed it in their mind. Teach them gently that the Prophet ﷺ said: «The believer is not one who taunts, curses, speaks obscenely, or uses foul language» (reported by al-Tirmidhi). Replace the word with a kind one, and repeat this calmly without tension until the habit fades. Your child at 7-9 years old now understands the difference between right and wrong, and this is the right time to teach them to guard their tongue, not just to forbid them. Teach them the hadith of the Prophet ﷺ: «Whoever believes in Allah and the Last Day, let them speak good or remain silent» (agreed upon). Make this a rule they use to review their speech: Is what I am about to say good? If not, silence is better than a word they heard from their friends.",
+  "try_this": "This week: Agree with your child (according to their age) on a simple rule they can use to review their speech— for your younger child: an alternative word to say instead of the foul one, and for your slightly older child: the rule «speak good or remain silent» to apply at least once this week.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Does your reaction when hearing a foul word embed it in your child’s mind or erase it calmly?",
+    "Does your older child know the rule «let them speak good or remain silent» as a reference to review their own speech?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

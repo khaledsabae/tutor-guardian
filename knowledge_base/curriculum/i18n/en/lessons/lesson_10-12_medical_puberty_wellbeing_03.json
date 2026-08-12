@@ -1,0 +1,64 @@
+{
+  "id": "lesson_10-12_medical_puberty_wellbeing_03",
+  "path_id": "path_10-12_medical_puberty_wellbeing",
+  "title": "Healthy Habits for Life: Sleep, Movement, Nutrition, Screens",
+  "age_group": "10-12",
+  "domain": "medical",
+  "unit_ids": [
+    "7c036b77-bd8a-4952-80f6-a1325b14d475",
+    "b12c6a7d-2f9f-4769-916b-1cc005069652",
+    "d0d2dc99-520c-4ade-a1ee-9715df0c2dfd",
+    "dev-180034e5",
+    "dev-3b7d4a62",
+    "dev-9d31767e",
+    "dev-a576d902",
+    "dev-dcfb4e1a",
+    "dev-ef1087c3",
+    "med-9db37ea4",
+    "med-af2d64fa",
+    "med-b207a9dd",
+    "med-ca2a9d86",
+    "med-ec6f874a"
+  ],
+  "summary": "Habits now shape future health. 9-11 hours of sleep, 60 minutes of movement daily, real food (less sugar/processed), screens <2 hours/day, no screens in the bedroom. Parents: be the model—your child watches, not just listens.",
+  "try_this": "This week: a family challenge—walk 30 minutes daily together, screen-free dinner, sleep before 10 p.m. Record: how was your mood/energy?",
+  "order": 3,
+  "estimated_minutes": 20,
+  "reflection_prompts": [
+    "Which habit is the hardest for the family?",
+    "What improvement did they notice after a week?"
+  ],
+  "warning_flags": [
+    "سمنة/نحافة مفرطة",
+    "ألم مفاصل/ظهر من الجلوس الطويل",
+    "اضطراب نوم مزمن"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "طفلك يراقب لا يسمع",
+        "english": "your child watches, not just listens",
+        "why": "The Arabic is absolute: 'your child watches, not listens' (i.e., they imitate actions, not words). Adding 'just' softens the statement, implying they do listen but also watch, which changes the intended meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": "lesson_0-3_medical_early_milestones_02",
+  "path_id": "path_0-3_medical_early_milestones",
+  "title": "Foundations of Health Care: Safe Sleep, Nutrition, and Play",
+  "age_group": "0-3",
+  "domain": "medical",
+  "unit_ids": [
+    "med-2dc3af5f",
+    "med-6de3365b"
+  ],
+  "summary": "Foundations of care in the first months: Sleeping on the back to reduce the risk of sudden infant death, breastfeeding or formula feeding on demand while monitoring signs of hunger and fullness (lip-smacking, head-turning, swallowing), and avoiding screens entirely under the age of two—children learn through talking, playing, and sensory exploration. Every waking moment is an opportunity for growth: hold your child, stay close, and describe what you are doing aloud.",
+  "try_this": "This week: A consistent sleep routine—warm bath, gentle massage, a short story or Qur’anic verse, then bed while drowsy but still awake. And watch for hunger signs before crying: mouth movements, hand-sucking, restlessness.",
+  "order": 2,
+  "estimated_minutes": 42,
+  "reflection_prompts": [
+    "What was the most difficult challenge you faced in establishing a sleep routine? How did you handle it?",
+    "Have you noticed a difference in your child’s response when you describe what you are doing during care?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T14:00:00",
+  "updated_at": "2026-06-10T14:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "الموت المفاجئ",
+        "english": "sudden infant death",
+        "why": "The Arabic says 'sudden death' without specifying 'infant'. The English adds 'infant', which is a clarifying addition not present in the source.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[0]",
+        "arabic": "ما أصعب تحدٍ واجهته في روتين النوم؟",
+        "english": "What was the most difficult challenge you faced in establishing a sleep routine?",
+        "why": "The Arabic asks about a challenge faced 'in the sleep routine' (i.e., while carrying it out), not specifically about establishing it. The English narrows the meaning by adding 'establishing'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "lesson_7-9_cyber_digital_basics_03",
+  "path_id": "path_7-9_cyber_digital_basics",
+  "title": "The Privacy of the Child: What Should Not Be Shared Online",
+  "age_group": "7-9",
+  "domain": "cyber",
+  "unit_ids": [],
+  "summary": "Your child does not realise that what is posted remains. Teach him a simple rule: no full name, no address, no school, no private photos, and no passwords—for anyone on the internet. Explain that people on the screen may not be as they claim, and that he should tell you immediately if someone asks for information or photos.",
+  "try_this": "This week: Play the game 'Should We Share This?' with your child using examples (your name? your photo? your school?) so he understands the boundaries.",
+  "order": 3,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Does your child know what should never be shared?",
+    "Does he tell you if someone asks for his information?"
+  ],
+  "warning_flags": [
+    "طلب شخصٍ معلوماتٍ أو صورٍ من الطفل"
+  ],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

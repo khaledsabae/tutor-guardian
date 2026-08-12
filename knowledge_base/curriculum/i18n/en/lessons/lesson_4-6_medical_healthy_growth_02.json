@@ -1,0 +1,39 @@
+{
+  "id": "lesson_4-6_medical_healthy_growth_02",
+  "path_id": "path_4-6_medical_healthy_growth",
+  "title": "Balanced Nutrition and Refusal of Food",
+  "age_group": "4-6",
+  "domain": "medical",
+  "unit_ids": [],
+  "summary": "Picky eating is common at this age and is often temporary. Do not force your child, nor turn the meal into a battle. Offer a variety of healthy options and let them choose the quantity, and be a role model in eating. Reduce sugars between meals. Consult a doctor if they lose weight or consistently refuse entire food groups.",
+  "try_this": "This week: Present a plate with one new item alongside foods they like, without pressure or forcing them to eat.",
+  "order": 2,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "What does your child refuse the most?",
+    "Have meals turned into a struggle?"
+  ],
+  "warning_flags": [
+    "فقدان وزنٍ أو توقف نمو",
+    "رفض فئاتٍ غذائية كاملة باستمرار"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

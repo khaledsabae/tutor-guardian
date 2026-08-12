@@ -1,0 +1,38 @@
+{
+  "id": "tip_2-3_025",
+  "age_group": "2-3",
+  "domain": "islamic_parenting",
+  "text": "Repeat with your child, “Jazaak Allahu khayran” and “I’m sorry”; words of *akhlaq* (good character) are planted through repetition.",
+  "unit_id": null,
+  "day_of_week": 5,
+  "time_of_day": "anytime",
+  "tags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-19T12:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "words of *akhlaq* (good character)",
+        "arabic": "كلمات الأدب",
+        "english": "words of *akhlaq* (good character)",
+        "why": "The Arabic uses 'الأدب' (adab) meaning manners/etiquette, but the English uses 'akhlaq' which is a different Islamic term meaning morals/character. The correct transliteration should be 'adab'.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

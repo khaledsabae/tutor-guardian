@@ -1,0 +1,34 @@
+{
+  "id": "tip_16-18_005",
+  "age_group": "16-18",
+  "domain": "medical",
+  "text": "DMDD may sometimes continue into adolescence. Learn: your warning signs, calming strategies, and safety net. You manage your condition—it does not manage you.",
+  "unit_id": "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
+  "day_of_week": 2,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": false,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": false,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "يستمر للبلوغ أحياناً",
+        "english": "may sometimes continue into adolescence",
+        "why": "Arabic says 'continues to puberty sometimes' (using the specific term 'بلوغ' for puberty), while English broadens to 'adolescence' and adds 'may' not present in the Arabic. The Arabic could imply continuation until puberty rather than into the broader adolescent period.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

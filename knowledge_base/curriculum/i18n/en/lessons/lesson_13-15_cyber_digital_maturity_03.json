@@ -1,0 +1,86 @@
+{
+  "id": "lesson_13-15_cyber_digital_maturity_03",
+  "path_id": "path_13-15_cyber_digital_maturity",
+  "title": "Balancing Games: Fun or Addiction? Crafting a Mithaq (Agreement)",
+  "age_group": "13-15",
+  "domain": "cyber",
+  "unit_ids": [
+    "1a79f159-fcad-5a0e-8af3-1e1a8bc90bec",
+    "1af6f4d4-49af-440e-ae91-55ce73b4cee3",
+    "1e23d518-5d54-4ad0-b7d0-7147a15d13a6",
+    "beb0e561-be2a-51dc-85ac-83c158c748ef"
+  ],
+  "summary": "Signs of addiction (WHO): loss of control, gaming taking priority over life, continuation despite harm. The solution is not prohibition but a mithaq (agreement): (1) fixed daily time (2) no gaming before duties/sleep (3) breaks every hour (4) real alternatives: sports, hobbies, real-life friends. Parents: monitor mood, sleep, and studies.",
+  "try_this": "This week: design together a \"Mithaq for Balanced Gaming\"—write down: hours, conditions, penalties/rewards. Sign it, and review weekly.",
+  "order": 3,
+  "estimated_minutes": 30,
+  "reflection_prompts": [
+    "Did you adhere to the mithaq?",
+    "Which alternative did you enjoy the most?"
+  ],
+  "warning_flags": [
+    "لعب >4 ساعات يومياً",
+    "غضب/قلق عند المنع",
+    "إهمال الواجبات/النوم/العلاقات"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "موازنة الألعاب: متعة أم إدمان؟ عقد توازن",
+        "english": "Balancing Games: Fun or Addiction? Crafting a Mithaq (Agreement)",
+        "why": "The English adds 'Crafting' which is not present in the Arabic title, changing the structure from a noun phrase to an action-oriented phrase.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "عقد توازن",
+        "english": "Mithaq (Agreement)",
+        "why": "The Arabic uses the common word 'عقد' (contract/agreement), but the English introduces the Islamic term 'Mithaq' (ميثاق), which is not present in the source and carries religious connotations.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "العقد",
+        "english": "a mithaq (agreement)",
+        "why": "The Arabic uses 'العقد' (the contract), but the English again uses the Islamic term 'mithaq' instead of a neutral equivalent like 'agreement' or 'contract'.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "try_this",
+        "arabic": "عقد توازن الألعاب",
+        "english": "Mithaq for Balanced Gaming",
+        "why": "The Arabic 'عقد' is rendered as 'Mithaq', introducing an Islamic term not found in the original.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "reflection_prompts",
+        "arabic": "هل التزم بالعقد؟",
+        "english": "Did you adhere to the mithaq?",
+        "why": "The Arabic 'العقد' is translated as 'mithaq', continuing the inconsistent introduction of an Islamic term.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

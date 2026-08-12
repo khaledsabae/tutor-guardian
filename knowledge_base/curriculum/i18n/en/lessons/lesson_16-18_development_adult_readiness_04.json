@@ -1,0 +1,45 @@
+{
+  "id": "lesson_16-18_development_adult_readiness_04",
+  "path_id": "path_16-18_development_adult_readiness",
+  "title": "Mature Relationships and Boundaries: Healthy Friendships and Partnerships",
+  "age_group": "16-18",
+  "domain": "development",
+  "unit_ids": [],
+  "summary": "At this age, deeper relationships form that shape his future. Teach your son the meaning of a healthy relationship: mutual respect, clear boundaries, and no compromise on values to please others. The righteous friend is like the bearer of musk, and whoever does not respect your boundaries does not deserve your closeness.",
+  "try_this": "This week: Discuss with your son the qualities of a friend who uplifts him versus one who drags him down, without directly criticizing his friends.",
+  "order": 4,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Who influences your son the most these days?",
+    "Does he know how to set a boundary with *rifq* (gentleness)?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[1]",
+        "arabic": "هل يعرف كيف يضع حدّاً بأدب؟",
+        "english": "Does he know how to set a boundary with *rifq* (gentleness)?",
+        "why": "The Arabic uses 'بأدب' (with adab/politeness), not 'rifq'. The translation introduces a different Islamic term and changes the meaning from politeness to gentleness.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

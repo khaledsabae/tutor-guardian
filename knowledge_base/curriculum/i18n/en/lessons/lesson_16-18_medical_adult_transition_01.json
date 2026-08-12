@@ -1,0 +1,54 @@
+{
+  "id": "lesson_16-18_medical_adult_transition_01",
+  "path_id": "path_16-18_medical_adult_transition",
+  "title": "Mental Health in University/Work: A Self-Safety Net",
+  "age_group": "16-18",
+  "domain": "medical",
+  "unit_ids": [
+    "83f8a5c4-defa-49a6-91ec-8504fee1140e",
+    "85d5303f-da97-49ab-985a-8c31901d84a2",
+    "e19e72c2-d553-4e12-a6e6-5d7c6f3fc083",
+    "e5d132da-cdb4-403a-a43e-e78640ee6270"
+  ],
+  "summary": "Transitioning to university/work brings new pressures: estrangement, performance, relationships, financial decisions. Your tools: (1) A consistent routine (sleep, movement, nutrition) — the chemical foundation for your brain. (2) A support network: a trusted friend, an academic mentor, a university counselor, a hotline (937). (3) Personal warning signs: write them down and monitor them weekly. (4) An emergency plan: 937/112, an emergency contact, a known psychiatrist. Independence means taking responsibility for your mental health.",
+  "try_this": "This week: Write a personal \"safety card\" — 3 warning signs, 3 calming strategies, 3 people you trust + 937. Keep it in your wallet/phone.",
+  "order": 1,
+  "estimated_minutes": 10,
+  "reflection_prompts": [
+    "What are the three warning signs you identified?",
+    "Who are the three people in your safety net?"
+  ],
+  "warning_flags": [
+    "أفكار انتحار/خطة",
+    "عزلة >أسبوع",
+    "تعاطي مخدرات/كحول للتعامل مع الضغط"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "صديق طوارئ",
+        "english": "emergency contact",
+        "why": "Arabic specifies a friend for emergencies, English generalizes to any contact.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

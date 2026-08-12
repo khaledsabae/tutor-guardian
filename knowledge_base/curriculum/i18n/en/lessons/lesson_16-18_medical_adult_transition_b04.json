@@ -1,0 +1,50 @@
+{
+  "id": "lesson_16-18_medical_adult_transition_b04",
+  "path_id": "path_16-18_medical_adult_transition",
+  "title": "Seeking Psychological Help: A Skill, Not a Weakness",
+  "age_group": "16-18",
+  "domain": "medical",
+  "unit_ids": [
+    "83f8a5c4-defa-49a6-91ec-8504fee1140e",
+    "85d5303f-da97-49ab-985a-8c31901d84a2",
+    "4c790c42-d81f-437c-b5e1-eab7f2a742b4"
+  ],
+  "summary": "The gravest danger a young person facing independence may encounter is going through psychological distress without knowing how or when to seek help. Teach your child that seeking psychological support is like visiting a doctor for the body: a sign of awareness, not weakness. Introduce him to the signs that require action (prolonged sadness, isolation, loss of sleep or appetite, thoughts of self-harm), and the sources he can turn to (a specialist, a helpline, a trusted person). Most importantly, let him know your door is always open without judgment. A young person who has a 'help-seeking plan' is more resilient against the pressures of university, work, and loneliness.",
+  "try_this": "This week: Write a small 'support plan' together: 3 people he trusts, one specialist to turn to, and one sign that means 'it’s time to ask for help.' Assure him you are the first of them, without blame.",
+  "order": 4,
+  "estimated_minutes": 43,
+  "reflection_prompts": [
+    "Does your child clearly know whom to turn to if he faces psychological distress far from you?",
+    "How can you make 'seeking help' a value he takes pride in, not a shame he hides?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T00:00:00",
+  "updated_at": "2026-06-13T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary, try_this, reflection_prompts",
+        "arabic": "الشاب ... ابنك",
+        "english": "young person ... your child",
+        "why": "The Arabic uses masculine-specific terms (الشاب 'the young man', ابنك 'your son'), while the English uses gender-neutral terms (young person, your child). This changes the intended audience from parents of boys to parents of any child.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

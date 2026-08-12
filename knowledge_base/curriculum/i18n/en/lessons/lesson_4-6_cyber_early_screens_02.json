@@ -1,0 +1,36 @@
+{
+  "id": "lesson_4-6_cyber_early_screens_02",
+  "path_id": "path_4-6_cyber_early_screens",
+  "title": "Choosing Safe Content: What They Watch and With Whom",
+  "age_group": "4-6",
+  "domain": "cyber",
+  "unit_ids": [],
+  "summary": "Not all programmes are the same; some are overly fast and stimulating, while others are calm and educational. Choose a specific programme with them beforehand instead of leaving the algorithm to suggest endlessly. Turn off autoplay, and avoid violent or frightening content before bedtime.",
+  "try_this": "This week: Sit down and review the list of what your child watches, remove one unsuitable programme, and replace it with another that is calm and educational.",
+  "order": 2,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "Do you know exactly what your child is watching?",
+    "Is autoplay turned off?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

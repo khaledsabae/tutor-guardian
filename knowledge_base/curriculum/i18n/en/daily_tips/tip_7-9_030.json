@@ -1,0 +1,25 @@
+{
+  "id": "tip_7-9_030",
+  "age_group": "7-9",
+  "domain": "medical",
+  "text": "Irritable Mood: anger >3 times per week + daily irritable mood + one full year = DMDD. Do not wait; consult a specialist.",
+  "unit_id": "med-08886df5",
+  "day_of_week": 6,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

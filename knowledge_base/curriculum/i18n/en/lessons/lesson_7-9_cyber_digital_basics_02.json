@@ -1,0 +1,39 @@
+{
+  "id": "lesson_7-9_cyber_digital_basics_02",
+  "path_id": "path_7-9_cyber_digital_basics",
+  "title": "Electronic Games: The Beneficial and the Harmful",
+  "age_group": "7-9",
+  "domain": "cyber",
+  "unit_ids": [],
+  "summary": "Not all games are bad; some develop thinking and cooperation. The problem lies in excess, violent content, and games that encourage purchases or allow chatting with strangers. Review the game’s age rating, enable safety settings, and watch for any change in your child’s mood after playing.",
+  "try_this": "This week: Sit down and explore a game your child loves—its rating, content, and whether it allows talking to strangers.",
+  "order": 2,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "What games does your child play?",
+    "Have you reviewed its safety settings?"
+  ],
+  "warning_flags": [
+    "غضبٌ شديد عند منع اللعب",
+    "تواصلٌ مع غرباء داخل اللعبة"
+  ],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

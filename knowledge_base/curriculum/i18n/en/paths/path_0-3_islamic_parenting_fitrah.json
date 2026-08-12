@@ -1,0 +1,55 @@
+{
+  "id": "path_0-3_islamic_parenting_fitrah",
+  "title": "Planting the Fitrah: The First Spiritual Nourishment for Your Child (First Year)",
+  "age_group": "0-3",
+  "domain": "aqeedah",
+  "description": "A path to assist parents in creating an imani atmosphere for their infant: letting them hear the Qur’an and the adhan, making du’a for them and following the sunnah of welcoming them, and surrounding them with rifq that makes deen beloved before they can reason.",
+  "lesson_ids": [
+    "lesson_0-3_islamic_parenting_fitrah_01",
+    "lesson_0-3_islamic_parenting_fitrah_02",
+    "lesson_0-3_islamic_parenting_fitrah_03",
+    "lesson_0-3_islamic_parenting_fitrah_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "كتاب_تربوي",
+    "info": "تربية الأولاد في الإسلام لعبد الله ناصح علوان + منهج التربية النبوية للطفل لمحمد نور سويد"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "وإحاطته برحمةٍ",
+        "english": "and surrounding them with rifq",
+        "why": "The Arabic word 'رحمة' means 'mercy', but the English uses 'rifq', a different Arabic word meaning 'gentleness'. This changes the concept from mercy to gentleness and introduces an untranslated Arabic term not present in the source.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "وسنن استقباله",
+        "english": "following the sunnah of welcoming them",
+        "why": "The Arabic plural 'سنن' (sunnahs/practices) is rendered as singular 'sunnah', which may obscure that multiple specific welcoming practices are intended.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

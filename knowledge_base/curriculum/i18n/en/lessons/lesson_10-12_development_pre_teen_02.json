@@ -1,0 +1,45 @@
+{
+  "id": "lesson_10-12_development_pre_teen_02",
+  "path_id": "path_10-12_development_pre_teen",
+  "title": "Gradual Independence and Responsibility",
+  "age_group": "10-12",
+  "domain": "development",
+  "unit_ids": [],
+  "summary": "Your child is growing and needs a wider space, but with boundaries. Transition from control to supervision: entrust them with real responsibilities (their allowance, duties, household tasks) and grant them trust conditioned on commitment. Responsibility given gradually builds maturity, while excessive protection delays it.",
+  "try_this": "This week: Hand over to your child a new responsibility that one of you used to handle (organizing their bag or managing their weekly allowance).",
+  "order": 2,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "Which responsibility can your child take on now?",
+    "How do you handle their mistakes in it?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "تؤخّره",
+        "english": "delays it",
+        "why": "The Arabic pronoun 'ـه' refers to the child (masculine), not to maturity. The English 'it' changes the object from the child to the abstract concept of maturity, slightly altering the focus.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

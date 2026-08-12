@@ -1,0 +1,38 @@
+{
+  "id": "tip_2-3_026",
+  "age_group": "2-3",
+  "domain": "medical",
+  "text": "Establish a calm sleep routine; the little one needs 11–14 hours, and any shortfall will show in his *akhlaq* (disposition).",
+  "unit_id": null,
+  "day_of_week": 6,
+  "time_of_day": "bedtime",
+  "tags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-19T12:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "مزاجه",
+        "english": "akhlaq (disposition)",
+        "why": "The Arabic says 'مزاجه' (his mood/temperament), but the English translates it as 'akhlaq' (an Islamic term for character/morals) and then glosses it as 'disposition'. This changes the meaning from a temporary mood to a broader character trait, and introduces an Islamic term not present in the source.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

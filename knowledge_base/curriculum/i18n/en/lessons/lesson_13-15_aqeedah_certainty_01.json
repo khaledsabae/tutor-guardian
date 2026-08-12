@@ -1,0 +1,45 @@
+{
+  "id": "lesson_13-15_aqeedah_certainty_01",
+  "path_id": "path_13-15_aqeedah_certainty",
+  "title": "Signs of Faith: How We Know Allah Exists and the Qur'an is True",
+  "age_group": "13-15",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "In adolescence, your child begins to ask questions of certainty: How do I know Allah exists? And why Islam specifically? This is a healthy question—do not fear it. Help him see the evidence of the *fitrah* (natural disposition) and the rational proofs: the precision and order of the universe point to a Wise Creator (just as craftsmanship points to a craftsman), the *fitrah* within him bears witness to Allah’s existence, and the Qur'an—through its miraculous nature, preservation, and impact—is proof that it is the Word of Allah. Do not settle for 'just believe,' but build his certainty upon insight so it stands firm against doubts later.",
+  "try_this": "This week: Sit with your child and ask together, 'How do we know our Lord exists?' Then calmly explore one proof (such as the perfection of the universe) in an open discussion.",
+  "order": 2,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you welcome your child’s questions about Allah’s existence with an open heart instead of seeing them as a threat?",
+    "What is the difference between inherited faith by imitation and faith built upon insight?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "دلائل الإيمان",
+        "english": "Signs of Faith",
+        "why": "دلائل means 'proofs' or 'evidences', not 'signs'. In Islamic terminology, 'signs' typically translates آيات or علامات, while دلائل refers to rational or textual proofs. The change softens the intended emphasis on evidence-based conviction.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

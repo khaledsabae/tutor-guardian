@@ -1,0 +1,49 @@
+{
+  "id": "path_4-6_aqeedah_seeds",
+  "title": "Seeds of Aqeedah: The First Introduction to Allah",
+  "age_group": "4-6",
+  "domain": "aqeedah",
+  "description": "A 4-lesson path that introduces the child (ages 4-6) to their Lord in a beloved, tangible way: Allah the Creator, the Bestower, His love and vision, and love for the Prophet ﷺ — the first seeds of aqeedah.",
+  "lesson_ids": [
+    "lesson_4-6_aqeedah_seeds_01",
+    "lesson_4-6_aqeedah_seeds_02",
+    "lesson_4-6_aqeedah_seeds_03",
+    "lesson_4-6_aqeedah_seeds_04"
+  ],
+  "estimated_days": 10,
+  "pedagogical_framework": "aqeedah_parent_led",
+  "primary_reference": {
+    "type": "دراسات_عقدية",
+    "info": "ثلاثة الأصول والقواعد الأربع لابن عثيمين، العقيدة الطحاوية، أسئلة الأطفال الإيمانية، أصول الإيمان على فهم السلف"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-27T00:00:00",
+  "updated_at": "2026-06-27T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "محبّته ورؤيته",
+        "english": "His love and vision",
+        "why": "The Arabic phrase 'محبّته' with the pronoun referring to Allah is ambiguous but in this context likely means 'love for Him' (the child's love for Allah), while 'His love' in English more naturally reads as 'Allah's love (for us)'. The intended meaning is the child learning about loving Allah and seeing Him, not Allah's love and His vision. The English should clarify 'love for Him and seeing Him'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "lesson_0-3_islamic_parenting_fitrah_02",
+  "path_id": "path_0-3_islamic_parenting_fitrah",
+  "title": "Du'a and Tahneek: Sunnahs of Welcoming the Newborn",
+  "age_group": "0-3",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "From the guidance of the Prophet ﷺ is tahneek of the newborn, making du'a for him with barakah and righteousness, and the adhan in his ear. These sunnahs are not mere rituals but the first covenant between the parent and their Lord over this amanah.",
+  "try_this": "This week: Make a special du'a for your child every day (\"O Allah, make him among the righteous\"), and connect the du'a to the moment you hold him.",
+  "order": 2,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "What du'a have you chosen for your child?",
+    "How do you feel when you make du'a for him?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "هذه السنن ليست طقوساً بل أول عقدٍ بين الوالد وربه على هذا الأمانة.",
+        "english": "These sunnahs are not mere rituals but the first covenant between the parent and their Lord over this amanah.",
+        "why": "The Arabic negates that these sunnahs are rituals at all (ليست طقوساً), while the English adds 'mere', changing the meaning to 'not just rituals' and implying they are rituals but more than that.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

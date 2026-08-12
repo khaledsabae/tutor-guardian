@@ -1,0 +1,49 @@
+{
+  "id": "lesson_2-3_cyber_routine_02",
+  "path_id": "path_2-3_cyber_routine",
+  "title": "Organising Sleep and Healthy Interaction with Screens",
+  "age_group": "2-3",
+  "domain": "cyber",
+  "unit_ids": [
+    "0b93e8de-3f9a-4823-8994-68a35e51207e",
+    "cyb-fc24ccce"
+  ],
+  "summary": "This lesson addresses 'organising sleep and healthy interaction with screens' for children from two to three years old. No, the World Health Organisation and the American Academy of Paediatrics recommend completely avoiding screens for children under two (with the exception of video calls). The alternative is direct sensory play, such as blocks and water, to develop their brain properly [1, 2]. This is incorrect; screens before bedtime suppress melatonin secretion and delay sleep. Implement a 'zero screens' routine at least one hour before bedtime, replacing it with a warm bath, a short story, and gentle massage, while dimming bright lights [3, 4]. Set a consistent sleep schedule (same time daily), keep screens entirely out of bedrooms, and make them device-free zones. Regular and sufficient sleep addresses poor concentration and improves performance and mood [4-6].",
+  "try_this": "Try this week: No, the World Health Organisation and the American Academy of Paediatrics recommend completely avoiding screens for children under two (with the exception of video calls). The alternative is direct sensory play, such as blocks and water, to develop their brain properly [1, 2].",
+  "order": 3,
+  "estimated_minutes": 5,
+  "reflection_prompts": [
+    "My child is under two and cries intensely if I take the phone away. Should I allow him some time with it?",
+    "I use screens to calm my child and help him sleep. Is this the correct approach?"
+  ],
+  "warning_flags": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-13T10:00:00",
+  "updated_at": "2026-06-13T10:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "مع إطفاء الأضواء القوية",
+        "english": "while dimming bright lights",
+        "why": "The Arabic says to turn off (إطفاء) bright lights, but the English says to dim them, which is a less strict instruction.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

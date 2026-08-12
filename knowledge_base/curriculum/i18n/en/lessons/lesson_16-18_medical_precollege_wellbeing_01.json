@@ -1,0 +1,44 @@
+{
+  "id": "lesson_16-18_medical_precollege_wellbeing_01",
+  "path_id": "path_16-18_medical_precollege_wellbeing",
+  "title": "Psychological and Physical Health of the Older Adolescent Before University",
+  "age_group": "16-18",
+  "domain": "medical",
+  "unit_ids": [
+    "med-c17d9930",
+    "med-34deb628",
+    "med-974f2776",
+    "med-408796d1"
+  ],
+  "summary": "Your daughter’s anxiety about university and the future is common and often linked to exam pressure, according to the British Health Authority (NHS). Encourage her to talk about her anxiety instead of avoiding it, and break down big decisions (choosing a university, major) together into small, manageable steps. If anxiety consistently affects her sleep or daily life, seek support early. And your teenage son’s inability to sleep early and wake up in the morning is not laziness, but a biological delay in his internal clock by up to two hours after puberty, due to delayed melatonin secretion at night, according to the American Academy of Pediatrics (AAP). Help him by keeping a consistent wake-up time even on holidays, exposing him to early morning light, reducing screen time in the evening, and avoiding caffeine after noon—do not treat this as a discipline issue deserving punishment. A sudden change in your daughter’s weight, her constant preoccupation with calories, severe food restriction, excessive exercise, or distorting her body image are warning signs of an eating disorder, according to the U.S. National Institute of Mental Health (NIMH). This is not a choice but a life-threatening condition that requires immediate medical attention, not waiting.",
+  "try_this": "This week: Set aside one quiet session to ask your son or daughter about their sleep and mental state without questions about grades, and observe calmly (without direct comment) their eating patterns and relationship with their body. If you notice even one warning sign from the above, seek a medical consultation this week, not later.",
+  "order": 1,
+  "estimated_minutes": 10,
+  "reflection_prompts": [
+    "Do you treat your son’s delayed sleep as a shortcoming or as a biological matter needing regulation, not punishment?",
+    "Do you ask your daughter, 'How are *you*?' or just 'How are your studies?'?",
+    "Have you noticed any dietary warning signs that warrant prompt medical consultation?"
+  ],
+  "warning_flags": [
+    "تغيّر مفاجئ في الوزن، انشغال دائم بالسعرات، تقييد أكل شديد، إفراط في الرياضة، أو تشوّه صورة الجسد علامات إنذار لاضطراب أكل تستدعي طبيبًا مختصًا فورًا"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

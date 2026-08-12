@@ -1,0 +1,48 @@
+{
+  "id": "lesson_7-9_cyber_digital_basics_04",
+  "path_id": "path_7-9_cyber_digital_basics",
+  "title": "Cyberbullying: How He Protects Himself and When to Tell You",
+  "age_group": "7-9",
+  "domain": "cyber",
+  "unit_ids": [],
+  "summary": "Your child may face hurtful words or exclusion online, and he may stay silent out of fear or haya (modesty). Teach him not to respond, to save the evidence (a screenshot), and to tell you immediately—you are with him, not against him. And teach him never to be the bully. A child who trusts that you will support him seeks help early.",
+  "try_this": "This week: Tell your child clearly: «If someone bothers you online, come to me immediately, and I will not punish you nor take the device away.»",
+  "order": 4,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Does your child trust that he can tell you?",
+    "Does he know what to do if he is harmed?"
+  ],
+  "warning_flags": [
+    "تغيّر مزاجٍ أو انسحابٌ بعد استخدام الجهاز",
+    "تنمّرٌ متكرر يؤذي الطفل"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "خجلاً",
+        "english": "haya (modesty)",
+        "why": "The Arabic word 'خجلاً' means shyness or embarrassment, not the specific Islamic term 'haya'. Using 'haya' introduces a religious connotation not present in the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

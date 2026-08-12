@@ -1,0 +1,43 @@
+{
+  "id": "tip_0-3_014",
+  "age_group": "0-3",
+  "domain": "cyber",
+  "text": "Your child imitates you: if you are on the phone all the time, he will want to do the same. Be the *qudwah* (role model)—keep the phone in a drawer during playtime, mealtime, and bedtime. Your attention to him is more precious than any app.",
+  "unit_id": "cyb-c1d58bd3",
+  "day_of_week": 1,
+  "time_of_day": "anytime",
+  "tags": [
+    "قدوة",
+    "تقليد",
+    "انتباه",
+    "عادة"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T18:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "english",
+        "arabic": "كن القدوة",
+        "english": "Be the *qudwah* (role model)",
+        "why": "The Arabic uses a plain, direct phrase 'كن القدوة' (be the role model) without any transliteration or parenthetical. The English introduces the transliterated Arabic word 'qudwah' and a parenthetical explanation, making the tone more formal and preachy compared to the warm, direct Arabic.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

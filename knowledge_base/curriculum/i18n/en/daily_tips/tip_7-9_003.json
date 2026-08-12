@@ -1,0 +1,25 @@
+{
+  "id": "tip_7-9_003",
+  "age_group": "7-9",
+  "domain": "islamic_parenting",
+  "text": "Your child fidgets during Salah? This is normal for his age. Pray in front of him, let him count the rak‘āt, and praise him for every improvement.",
+  "unit_id": "b1bd26fc-3144-4928-9bb4-ce2b30f95876",
+  "day_of_week": 2,
+  "time_of_day": "morning",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

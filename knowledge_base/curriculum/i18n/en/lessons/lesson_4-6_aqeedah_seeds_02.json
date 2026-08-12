@@ -1,0 +1,45 @@
+{
+  "id": "lesson_4-6_aqeedah_seeds_02",
+  "path_id": "path_4-6_aqeedah_seeds",
+  "title": "Allah Loves Me and Sees Me",
+  "age_group": "4-6",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "Instill in your child that Allah loves them and always sees them. Connect this to a feeling of safety, not fear: «Our Lord loves you, sees you, and protects you while you sleep.» Teach them that Allah rejoices when they are a good child (sharing their toys, listening to their mother). At this age, love and security are the gateway; do not link «Allah sees you» with punishment, but rather with love and joy, so that a heart grows accustomed to its Lord.",
+  "try_this": "This week: When your child does a small good deed, tell them, «Our Lord saw you and was pleased with you.» Before bed, remind them, «Our Lord loves you and guards you.»",
+  "order": 2,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "How can you make «Allah sees me» feel like a sense of safety rather than fear for your young child?",
+    "When was the last time you connected your child’s good behavior to Allah’s joy in them?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "حتى ينشأ قلبٌ يأنس بربّه",
+        "english": "so that a heart grows accustomed to its Lord",
+        "why": "The Arabic verb 'يأنس' conveys a sense of intimacy, comfort, and finding solace, not merely becoming accustomed. The English 'accustomed' loses the emotional and spiritual warmth intended in the original.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

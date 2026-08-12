@@ -1,0 +1,47 @@
+{
+  "id": "lesson_13-15_medical_mental_health_02",
+  "path_id": "path_13-15_medical_mental_health",
+  "title": "Disruptive Mood Dysregulation Disorder (DMDD) and Intense Anger Outbursts",
+  "age_group": "13-15",
+  "domain": "medical",
+  "unit_ids": [
+    "926b70f3-1ad1-42f7-9d51-c294143bcbd0",
+    "9816082f-6564-42fd-a37b-5b38083a94a8",
+    "a77834fd-ec17-4e0f-b98d-048e87c44bdb",
+    "b7bd9ca3-382c-40b2-8829-8175379be248",
+    "ca67a271-881f-419a-825a-5cbd7e219227",
+    "e93bb1b3-277f-4b93-b530-9946896fd1e0"
+  ],
+  "summary": "DMDD: Severe verbal/behavioral anger outbursts >3 times weekly, irritable/angry mood nearly daily, for >12 months, in at least two settings (home/school). It is not defiance—it is a mood disorder requiring treatment. Approach: Accurate diagnosis (ruling out bipolar/ADHD/depression), family behavioral therapy, emotion-regulation skills, and medication if needed. Parents: Do not blame; seek a specialist’s diagnosis.",
+  "try_this": "This week: Record the anger outbursts (when, trigger, duration, intensity 1-10)—a week’s data will help the doctor make an accurate diagnosis.",
+  "order": 2,
+  "estimated_minutes": 10,
+  "reflection_prompts": [
+    "How many outbursts were recorded this week?",
+    "What are the recurring triggers?"
+  ],
+  "warning_flags": [
+    "نوبات >3/أسبوع + مزاج منزعج يومياً + >سنة",
+    "أذية ذاتية/لغيره",
+    "فشل مدرسي/اجتماعي بسبب الغضب"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "id": "lesson_13-15_islamic_parenting_steadfast_04",
+  "path_id": "path_13-15_aqeedah_certainty",
+  "title": "The Inner Exemplar: A Conscience that Watches Allah",
+  "age_group": "13-15",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "External supervision ends when it is absent. Instill in him the watchfulness of Allah (ihsan: that you worship Allah as if you see Him), for it is the conscience that preserves him when the eyes of people are not upon him. This is the highest fruit of tarbiyah.",
+  "try_this": "This week: Connect a situation your teenager faced with the meaning of 'Allah sees me,' without lengthy preaching.",
+  "order": 4,
+  "estimated_minutes": 9,
+  "reflection_prompts": [
+    "Does your teenager act out of inner motivation or fear of punishment?",
+    "How have you strengthened the watchfulness of Allah?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "religious_error",
+        "field": "title",
+        "arabic": "ضميرٌ يراقب الله",
+        "english": "A Conscience that Watches Allah",
+        "why": "The Arabic phrase 'ضميرٌ يراقب الله' is ambiguous but in Islamic context refers to a conscience that is mindful of Allah's watchfulness (muraqabah). The literal translation 'A Conscience that Watches Allah' suggests the conscience is watching Allah, which is theologically problematic and misrepresents the concept of ihsan. A more accurate rendering would be 'A Conscience Mindful of Allah' or 'A Conscience Aware of Allah’s Watchfulness.'",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "تنتهي حين تغيب عنه",
+        "english": "ends when it is absent",
+        "why": "The Arabic includes 'عنه' (from him), specifying that supervision ends when it is absent from the teenager. The English omits 'from him,' losing the personal reference.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "التربية",
+        "english": "tarbiyah",
+        "why": "The term 'tarbiyah' is transliterated, while the title translates 'القدوة' as 'Exemplar' instead of transliterating it as 'Qudwah.' This inconsistency in handling Islamic terms within the same document is a defect.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

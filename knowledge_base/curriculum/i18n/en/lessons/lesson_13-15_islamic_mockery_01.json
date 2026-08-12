@@ -1,0 +1,49 @@
+{
+  "id": "lesson_13-15_islamic_mockery_01",
+  "path_id": "path_13-15_islamic_mockery",
+  "title": "Steadfastness in Obedience and Salah Despite Friends’ Mockery",
+  "age_group": "13-15",
+  "domain": "islamic_parenting",
+  "unit_ids": [
+    "isl-047ad111",
+    "isl-ac979c60",
+    "isl-f2bef952"
+  ],
+  "summary": "If your child’s friends mock his commitment to Salah, remind him of the hadith of the Prophet ﷺ: «Seven whom Allah will shade in His shade on the Day when there is no shade except His shade»—among them, «a youth who grew up in the worship of Allah» (reported by al-Bukhari). His persistence in obedience during the age of ridicule is a great virtue for which he will be rewarded; there is no place for shame. Connect the hadith to his reality so he feels that his commitment is something to be valued, not mocked. Read with him Surah al-Mutaffifin (verses 29-34), which describes how the criminals mocked the believers in this world, then Allah’s words: «So today those who believed are laughing at the disbelievers»—meaning, the situation will be reversed on the Day of Judgment. The goal is not gloating but to reinforce his conviction that the laughter of others today does not measure the correctness of his stance. The Prophet ﷺ commanded fathers to train their children in Salah from the age of seven and to follow up firmly from the age of ten (reported by Abu Dawud and authenticated by al-Albani). If your child faces mockery from his friends for his Salah, this is an expected test, not an exception. Your role is to connect his commitment to the command of the Prophet ﷺ himself and to follow up with him with firmness and *rifq* (gentleness), not blame at the first sign of social pressure.",
+  "try_this": "This week: If your child faces a situation of mockery for his commitment, read with him the hadith of the «seven whom Allah will shade» or the verses from Surah al-Mutaffifin immediately afterward, and discuss together how he should respond next time with confidence, not defensiveness.",
+  "order": 1,
+  "estimated_minutes": 9,
+  "reflection_prompts": [
+    "Does your child know that the Prophetic hadith praises his steadfastness specifically in the face of mockery?",
+    "Do you follow up with him with firmness and *rifq*, or do you merely give the command without follow-up at the first sign of pressure?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary, try_this, reflection_prompts",
+        "arabic": "ابنك / أبنائهم",
+        "english": "your child / their children",
+        "why": "The Arabic consistently uses the masculine 'ابنك' (your son) and 'أبنائهم' (their sons), but the English translates as gender-neutral 'your child' and 'their children', losing the specific reference to a male child that is present in the original and aligns with the hadith about a young man.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

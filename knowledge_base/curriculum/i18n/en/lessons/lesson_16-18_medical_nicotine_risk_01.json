@@ -1,0 +1,50 @@
+{
+  "id": "lesson_16-18_medical_nicotine_risk_01",
+  "path_id": "path_16-18_medical_nicotine_risk",
+  "title": "Nicotine Addiction and the Great Risk to the Adolescent Despite Awareness",
+  "age_group": "16-18",
+  "domain": "medical",
+  "unit_ids": [
+    "med-7b1f2197",
+    "med-f241abaf"
+  ],
+  "summary": "Nicotine addiction in adolescents develops faster than they expect after the first try. Signs of addiction include: an overwhelming urge to smoke, anxiety without it, and failed attempts to quit. If you notice these signs in your child, seek help from a doctor or specialist immediately; most who quit need more than one attempt, and professional support greatly increases the chance of success, according to HealthyChildren.org, affiliated with the American Academy of Pediatrics. A sixteen- or seventeen-year-old adolescent knows the harms of smoking well, but their brain is not yet fully developed (development continues until the mid-twenties), so the desire to fit in with friends remains stronger than their awareness of danger in the moment of actual pressure, according to the U.S. National Institute of Mental Health (NIMH). Do not consider their proximity to adulthood a guarantee of immunity from pressure; continue open dialogue rather than just scolding.",
+  "try_this": "This week: Start a calm conversation with your child about their friends and who might be smoking around them, without direct accusation. Ask them frankly if they have tried or are thinking of trying it, and listen without immediate scolding.",
+  "order": 1,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "Do you believe that your child’s knowledge of the harms is enough to protect them on its own?",
+    "If you notice an early sign of addiction, do you know who to turn to immediately?"
+  ],
+  "warning_flags": [
+    "إذا ظهرت علامات إدمان نيكوتين واضحة (رغبة ملحّة، توتر بدونه، محاولة إقلاع فاشلة) اطلب مساعدة طبيب أو مختص فورًا"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "إدمان النيكوتين ومخاطرة المراهق الكبير رغم الإدراك",
+        "english": "Nicotine Addiction and the Great Risk to the Adolescent Despite Awareness",
+        "why": "The Arabic phrase 'المراهق الكبير' means 'the older adolescent', but the English translation renders 'Great Risk', moving the adjective 'great' from the adolescent to the risk, altering the meaning.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

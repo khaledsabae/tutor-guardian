@@ -1,0 +1,42 @@
+{
+  "id": "tip_16-18_022",
+  "age_group": "16-18",
+  "domain": "development",
+  "text": "The Arts and the Brain: Creativity develops mental resilience. Encourage: drawing, music, writing, programming — a haqq (right) for the brain.",
+  "unit_id": "dev-586b39f9",
+  "day_of_week": 0,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "حق-half للدماغ",
+        "english": "a haqq (right) for the brain",
+        "why": "The English omits 'half' and reinterprets 'حق' as an Islamic term 'haqq' meaning 'right', while the Arabic phrase 'حق-half' is ambiguous and likely a code-switch for 'right half' (hemisphere). The translation changes the meaning by ignoring 'half' and adding an Islamic gloss not present in the source.",
+        "severity": "high"
+      },
+      {
+        "type": "term_error",
+        "field": "text",
+        "arabic": "حق-half",
+        "english": "haqq (right)",
+        "why": "Transliterates 'حق' as 'haqq' and glosses it as 'right', treating it as a religious term, but the original uses 'حق' in a non-religious, likely erroneous context (possibly intended as 'right' direction).",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

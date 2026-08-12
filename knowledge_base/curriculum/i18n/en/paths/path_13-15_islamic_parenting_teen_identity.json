@@ -1,0 +1,54 @@
+{
+  "id": "path_13-15_islamic_parenting_teen_identity",
+  "title": "Building the Islamic Identity of the Teenager: Between Doubt and Certainty (Ages 13-15)",
+  "age_group": "13-15",
+  "domain": "islamic_parenting",
+  "description": "A pathway to help parents accompany their teenage child in the journey of building their Islamic identity: confronting doubts, understanding acts of worship deeply, preparing for marriage, and making independent decisions.",
+  "lesson_ids": [
+    "lesson_13-15_islamic_parenting_teen_identity_02",
+    "lesson_13-15_islamic_parenting_teen_identity_03",
+    "lesson_13-15_islamic_parenting_teen_identity_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "prophetic_7_7_7",
+  "primary_reference": {
+    "type": "كتاب_تربوي",
+    "info": "تربية الأولاد في الإسلام لعبد الله ناصح علوان + فقه النفس للقرني"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "ابنهم المراهق",
+        "english": "their teenage child",
+        "why": "Arabic specifies 'their teenage son' (masculine singular), while English uses gender-neutral 'child', losing the original masculine specificity.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "صناعة قرار مستقل",
+        "english": "making independent decisions",
+        "why": "Arabic uses singular 'قرار' (decision), while English uses plural 'decisions', altering the nuance from a single independent decision to multiple.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

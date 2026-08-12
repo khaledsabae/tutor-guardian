@@ -1,0 +1,39 @@
+{
+  "id": "lesson_16-18_development_major_choice_01",
+  "path_id": "path_16-18_development_major_choice",
+  "title": "Choosing a University Major: Between Guidance and Exploration",
+  "age_group": "16-18",
+  "domain": "development",
+  "unit_ids": [
+    "dev-08a810de",
+    "dev-8c3c4f3d"
+  ],
+  "summary": "Your son’s hesitation in choosing his university major is normal and does not mean negligence on his part or yours. American professional standards (ASCA) recommend structured exploration: your son gets to know his strengths and interests and gathers real information about each major instead of relying on a single test or a relative’s advice. Ruling out a major that does not suit him is a real step forward, not a failure to be blamed for. On the other hand, your son choosing his major himself is more important than the name of the university or its prestige, according to American career guidance studies. Do not impose a major on him for its reputation or your old desire, nor leave him to choose on a whim; together, gather realistic information about job opportunities and career paths for each major. A decision built on knowledge is better than one based on enthusiasm alone or parental pressure.",
+  "try_this": "This week: Sit with your son for one quiet session and ask him to suggest two or three majors he would like to know more about. Then, together, search for real information about each one (its requirements, the job market after it, its core subjects) instead of you suggesting ready-made answers.",
+  "order": 1,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "Have you formed your opinion about your son’s major based on real knowledge of the job market, or on an old social reputation?",
+    "Does your son feel that ruling out a particular major is progress in the decision or a failure he is ashamed of?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

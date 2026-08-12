@@ -1,0 +1,50 @@
+{
+  "id": "lesson_0-3_development_early_moments_02",
+  "path_id": "path_0-3_development_early_moments",
+  "title": "The Secure Bond: The Emotional Foundation for Every Future Learning",
+  "age_group": "0-3",
+  "domain": "development",
+  "unit_ids": [
+    "dea6683e-62be-4f02-8bfe-a426ef123631"
+  ],
+  "summary": "Attachment theory (Bowlby/Ainsworth) is established: a child who feels secure with a responsive parent develops a 'secure base' from which to explore the world with confidence. Consistent response to crying, eye contact, mutual smiling, and physical presence—these build an 'internal working model' of self-worth and trust in others. The 'Early Moments Matter' report (UNICEF) states: the first thousand days shape the brain’s structure—compassionate responsiveness = strong neural connections for emotion and learning. The opposite (neglect/indifference) = chronic stress circuits that impact learning and behavior for years.",
+  "try_this": "This week: practice 'Response in 30 Seconds'—when your child cries or calls you, respond within 30 seconds (even if just with the words: 'I’m coming, my love, I’m on my way'). Observe: does he calm down faster? Does he return to play sooner? Quick response = security; ignoring = stress.",
+  "order": 2,
+  "estimated_minutes": 31,
+  "reflection_prompts": [
+    "How did you experience ease or anxiety as a parent? Do you see its impact on how you interact with your child?",
+    "What moment did you feel your child 'trusts' you completely?"
+  ],
+  "warning_flags": [
+    "developmental_red_flag"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-10T20:00:00",
+  "updated_at": "2026-06-10T20:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "السنوات الألف الأولى",
+        "english": "the first thousand days",
+        "why": "Arabic says 'years' (سنوات) but English says 'days'. The translation changes the word, not faithful to the source text.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

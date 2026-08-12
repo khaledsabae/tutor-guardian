@@ -1,0 +1,63 @@
+{
+  "id": "path_13-15_medical_mental_health",
+  "title": "Al-Siḥḥah al-Nafsiyyah lil-Murāhiq: min al-Qalaq ilá al-Quwwah (13-15 sanah)",
+  "age_group": "13-15",
+  "domain": "medical",
+  "description": "A medical/tarbiyah (nurturing) pathway that equips parents with tools to understand their child’s psychological health: depression, anxiety, ADHD, autism, mood disorders, and when and how to seek specialised help.",
+  "lesson_ids": [
+    "lesson_13-15_medical_mental_health_01",
+    "lesson_13-15_medical_mental_health_02",
+    "lesson_13-15_medical_mental_health_03",
+    "lesson_13-15_medical_mental_health_04"
+  ],
+  "estimated_days": 28,
+  "pedagogical_framework": "attachment_rahma",
+  "primary_reference": {
+    "type": "دليل_طبي",
+    "info": "دليل AAP للصحة النفسية للمراهقين + DSM-5 المعايير التشخيصية"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "الصحة النفسية للمراهق: من القلق للقوة (13-15 سنة)",
+        "english": "Al-Siḥḥah al-Nafsiyyah lil-Murāhiq: min al-Qalaq ilá al-Quwwah (13-15 sanah)",
+        "why": "The title is transliterated instead of translated, so the English reader gets no meaning from it. The Arabic title means 'Adolescent Mental Health: From Anxiety to Strength (13-15 years)'.",
+        "severity": "high"
+      },
+      {
+        "type": "term_error",
+        "field": "description",
+        "arabic": "مسار طبي/تربوي",
+        "english": "A medical/tarbiyah (nurturing) pathway",
+        "why": "The Arabic adjective 'tarbawī' (educational/pedagogical) is replaced by the transliterated noun 'tarbiyah' with a gloss 'nurturing'. This misrepresents the term and introduces an unnecessary transliteration. Should be 'medical/educational pathway'.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "description",
+        "arabic": "صحة ابنهم النفسية",
+        "english": "their child’s psychological health",
+        "why": "The Arabic specifies 'ابنهم' (their son), but the English uses the gender-neutral 'their child', losing the masculine specificity.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

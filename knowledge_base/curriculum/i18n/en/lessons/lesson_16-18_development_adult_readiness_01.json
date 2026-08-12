@@ -1,0 +1,61 @@
+{
+  "id": "lesson_16-18_development_adult_readiness_01",
+  "path_id": "path_16-18_development_adult_readiness",
+  "title": "A Developing Brain: A Conscious Decision Over Impulse",
+  "age_group": "16-18",
+  "domain": "development",
+  "unit_ids": [],
+  "summary": "The prefrontal cortex, responsible for planning and impulse control, does not fully mature until after the age of twenty. That is why your young one may make reckless decisions despite their intelligence. Your role is not guardianship but *tarbiyah* (nurturing): discuss with them the consequences of decisions step by step, and give them safe opportunities to learn from their choices.",
+  "try_this": "This week: Present your child with a decision that concerns them, and ask them to write down its pros and cons before choosing. Then, discuss it together.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "What decision did you train your child to analyze?",
+    "Did they weigh the immediate and long-term consequences?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "دورك ليس الوصاية بل التدريب",
+        "english": "Your role is not guardianship but *tarbiyah* (nurturing)",
+        "why": "The Arabic says 'التدريب' (training), not 'tarbiyah'. The English introduces an Islamic term not present in the source, altering the concept from practical training to a broader religious upbringing.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "دماغ شابك يكتمل: قرارٌ واعٍ بدل اندفاع",
+        "english": "A Developing Brain: A Conscious Decision Over Impulse",
+        "why": "The Arabic title is personal and specific ('Your young one's brain completes'), while the English is generic ('A Developing Brain'). The sense of completion and direct address is lost.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "summary",
+        "arabic": "شابك",
+        "english": "your young one",
+        "why": "The Arabic uses the masculine singular 'شابك' (your young man) and later 'ابنك' (your son), while the English uses gender-neutral 'your young one' and 'your child'. This loses the original's direct, gendered address.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

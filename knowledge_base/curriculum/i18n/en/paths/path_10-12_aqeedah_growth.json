@@ -1,0 +1,49 @@
+{
+  "id": "path_10-12_aqeedah_growth",
+  "title": "Tarsikh al-ʿAqeedah: min al-Maʿrifah ilá al-Muraqabah",
+  "age_group": "10-12",
+  "domain": "aqeedah",
+  "description": "A path that roots the ʿaqeedah (creed) of your child (10–12) before bulūgh (puberty): from knowledge to muraqabah (watchfulness) and conviction—Islamic identity, deep understanding of the arkān al-īmān (pillars of faith), ikhlāṣ (sincerity) and muraqabah, and riḍā bi-l-qadr (contentment with divine decree).",
+  "lesson_ids": [
+    "lesson_10-12_islamic_parenting_identity_04",
+    "lesson_10-12_aqeedah_growth_01",
+    "lesson_10-12_aqeedah_growth_02",
+    "lesson_10-12_aqeedah_growth_03"
+  ],
+  "estimated_days": 14,
+  "pedagogical_framework": "aqeedah_parent_led",
+  "primary_reference": {
+    "type": "دراسات_عقدية",
+    "info": "ثلاثة الأصول والقواعد الأربع لابن عثيمين، العقيدة الطحاوية، أسئلة الأطفال الإيمانية، أصول الإيمان على فهم السلف"
+  },
+  "prerequisites": [],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-06-27T00:00:00",
+  "updated_at": "2026-06-27T00:00:00",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "ترسيخ العقيدة: من المعرفة إلى المراقبة",
+        "english": "Tarsikh al-ʿAqeedah: min al-Maʿrifah ilá al-Muraqabah",
+        "why": "The English title is a full transliteration of the Arabic, not a translation. It fails to convey the meaning ('Establishing the Creed: From Knowledge to Watchfulness') to an English reader, while the description is translated. This makes the title inaccessible and does not communicate the intended message.",
+        "severity": "high"
+      }
+    ],
+    "approved_by": null
+  }
+}

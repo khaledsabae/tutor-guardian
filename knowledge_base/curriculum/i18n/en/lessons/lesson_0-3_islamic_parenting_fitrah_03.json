@@ -1,0 +1,61 @@
+{
+  "id": "lesson_0-3_islamic_parenting_fitrah_03",
+  "path_id": "path_0-3_islamic_parenting_fitrah",
+  "title": "A Tranquil Imani Atmosphere: The Home That Nurtures with Tarbiyah",
+  "age_group": "0-3",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "An infant absorbs the emotions of their home before understanding its words. A home enveloped in tranquility, adhkar (remembrances of Allah), and mercy plants deep security within your child—a fertile ground for iman (faith) to flourish later.",
+  "try_this": "This week: Create a daily moment of serenity in your home (adhkar, recitation, or a kind word) that your child experiences with you.",
+  "order": 3,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "What is the general atmosphere in your home?",
+    "What moment of tranquility did you add?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "البيت الذي يربّي",
+        "english": "The Home That Nurtures with Tarbiyah",
+        "why": "The Arabic title uses the verb 'يربّي' (nurtures/raises) without the noun 'Tarbiyah'. The English adds 'with Tarbiyah', introducing a term not present in the source and making the title redundant.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "الذكر",
+        "english": "adhkar",
+        "why": "The Arabic uses the singular 'الذكر' (dhikr), but the English translates it as the plural 'adhkar'. This changes the number and may imply multiple remembrances instead of the general act of remembrance.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "try_this",
+        "arabic": "ذكر",
+        "english": "adhkar",
+        "why": "Same issue: Arabic singular 'ذكر' (dhikr) is rendered as plural 'adhkar' in English, inconsistent with the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

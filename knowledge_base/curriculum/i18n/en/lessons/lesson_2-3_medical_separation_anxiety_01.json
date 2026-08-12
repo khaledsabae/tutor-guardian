@@ -1,0 +1,39 @@
+{
+  "id": "lesson_2-3_medical_separation_anxiety_01",
+  "path_id": "path_2-3_medical_separation_anxiety",
+  "title": "Anxiety of Separation at Nursery and Club: From Tiny Nursery to Pre-School",
+  "age_group": "2-3",
+  "domain": "medical",
+  "unit_ids": [
+    "med-0b65e4b5",
+    "med-2bf09c13"
+  ],
+  "summary": "Your little one’s tears (2-3 years) when you leave her at nursery are a normal, expected behaviour that reflect her secure attachment to you. The peak is between 18 months and 3 years. Create a consistent farewell ritual (same word, same hug) and keep it short. Do not slip away without saying goodbye, thinking it is kinder; this erodes her trust and makes the next separation harder, not easier, according to HealthyChildren.org. As she approaches 4-6 years, recurring separation anxiety when entering nursery or club requires steadfastness, not surrender. Tie your return time to a marker she understands («I’ll be back after the nap») instead of the clock. Do not return to the classroom if she cries, nor cancel your plans because of it; your consistency in returning at the agreed time builds her trust and gradually reduces the anxiety.",
+  "try_this": "This week: Create a consistent, short farewell ritual (one word and one hug), repeat it every day without change, and do not return to the classroom no matter how much your child cries after the goodbye.",
+  "order": 1,
+  "estimated_minutes": 7,
+  "reflection_prompts": [
+    "Do you have a consistent farewell ritual, or does it change every day, increasing your child’s confusion?",
+    "Do you stick to the agreed return time even if your child cries at the farewell?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

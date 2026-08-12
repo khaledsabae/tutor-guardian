@@ -1,0 +1,44 @@
+{
+  "id": "lesson_16-18_medical_adult_transition_02",
+  "path_id": "path_16-18_medical_adult_transition",
+  "title": "Relationships, Boundaries, and Coping with Major Pressures",
+  "age_group": "16-18",
+  "domain": "medical",
+  "unit_ids": [
+    "f42e35c1-4bbd-4037-8bfa-4668a530f6d8",
+    "83f8a5c4-defa-49a6-91ec-8504fee1140e",
+    "e5d132da-cdb4-403a-a43e-e78640ee6270"
+  ],
+  "summary": "Ages 16-18 = deep relationships (friendship, love, family) + major pressures (future, identity, independence). Skills: (1) Healthy boundaries: polite \"no,\" time for yourself, do not carry the responsibility of others' happiness. (2) Assertive communication: \"I feel... when... and I need...\". (3) Major pressures: break them into steps, seek help (mentor, therapist, hotline), do not face them alone. (4) Substance use/risks: a conscious decision based on your values, not peer pressure. You are building your adult personality now.",
+  "try_this": "This week: Practice the \"I-message\" — write: \"I feel [emotion] when [situation], and I need [need].\" Practice with a friend or parent.",
+  "order": 2,
+  "estimated_minutes": 10,
+  "reflection_prompts": [
+    "Which relationship needs clearer boundaries?",
+    "How did you feel using the \"I-message\"?"
+  ],
+  "warning_flags": [
+    " علاقة مسيطرة/عنفية",
+    "ضغط لأفعال تخالف القيم",
+    "عزلة إجبارية عن الأهل/الأصدقاء"
+  ],
+  "needs_professional_followup": true,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

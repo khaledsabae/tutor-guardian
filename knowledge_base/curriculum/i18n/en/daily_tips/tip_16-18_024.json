@@ -1,0 +1,25 @@
+{
+  "id": "tip_16-18_024",
+  "age_group": "16-18",
+  "domain": "development",
+  "text": "Childhood is important, but adolescence is a second window for growth. Do not despair over the past—build the future. A true second chance.",
+  "unit_id": "dev-a33dbaaf",
+  "day_of_week": 1,
+  "time_of_day": "evening",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": false,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "lesson_7-9_aqeedah_fundamentals_06",
+  "path_id": "path_7-9_aqeedah_fundamentals",
+  "title": "The Six Pillars of Iman",
+  "age_group": "7-9",
+  "domain": "aqeedah",
+  "unit_ids": [
+    "aqe-d34c31d5"
+  ],
+  "summary": "Iman has six pillars that gather the foundations of aqeedah, as the Prophet ﷺ expressed in the hadith of Jibril: to believe in Allah, His angels, His books, His messengers, the Last Day, and in qadar (divine decree), its good and its bad. Make these for your child the \"House of Iman,\" which has six columns—if they stand firm, the house stands firm. Begin by memorizing them with him in a beloved way (counting fingers, a song), then explain each pillar gradually. Do not burden him with details all at once; at this age, it is enough for him to know the six pillars and take pride in being a \"believer.\"",
+  "try_this": "This week: Memorize the six pillars of Iman with your child by counting them on his fingers every day. Create a drawing of the \"House of Iman\" and its six columns, and hang it in his room.",
+  "order": 6,
+  "estimated_minutes": 8,
+  "reflection_prompts": [
+    "Why is it preferable to teach the child the general framework (the six pillars) before the details?",
+    "How can you make memorizing the pillars an enjoyable experience your child takes pride in, rather than a heavy duty?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": true
+    },
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "summary",
+        "arabic": "بطريقةٍ محبَّبة",
+        "english": "in a beloved way",
+        "why": "The Arabic is warm and natural, suggesting a loving, enjoyable method. The English 'beloved way' is stiff and unidiomatic; a more natural rendering would be 'in a fun, loving way' or 'in an enjoyable manner'.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "مؤمن",
+        "english": "believer",
+        "why": "The document transliterates key terms like 'Iman', 'aqeedah', and 'qadar', but translates 'مؤمن' as 'believer' instead of using the consistent transliteration 'mu'min'. This breaks the pattern and loses the specific Islamic connotation.",
+        "severity": "low"
+      },
+      {
+        "type": "religious_error",
+        "field": "summary",
+        "arabic": "خيره وشرّه",
+        "english": "its good and its bad",
+        "why": "The hadith phrase 'خيره وشرّه' is traditionally rendered as 'its good and its evil'. Translating 'شرّه' as 'its bad' softens the theological concept of divine decree encompassing both good and evil, and deviates from the established wording of the hadith.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}
