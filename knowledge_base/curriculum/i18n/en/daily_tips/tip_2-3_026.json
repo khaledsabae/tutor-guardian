@@ -2,7 +2,7 @@
   "id": "tip_2-3_026",
   "age_group": "2-3",
   "domain": "medical",
-  "text": "Establish a calm sleep routine; the little one needs 11–14 hours, and any shortfall will show in his *akhlaq* (disposition).",
+  "text": "Establish a calm sleep routine; the little one needs 11–14 hours, and any shortfall will show in his mood.",
   "unit_id": null,
   "day_of_week": 6,
   "time_of_day": "bedtime",
@@ -34,5 +34,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }

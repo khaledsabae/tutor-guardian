@@ -2,7 +2,7 @@
   "id": "tip_0-3_024",
   "age_group": "0-3",
   "domain": "development",
-  "text": "Carry your child and respond quickly to their crying; in the first year, responding builds amanah (trust), not indulgence.",
+  "text": "Carry your child and respond quickly to their crying; in the first year, responding builds security, not indulgence.",
   "unit_id": null,
   "day_of_week": 4,
   "time_of_day": "anytime",
@@ -37,5 +37,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }

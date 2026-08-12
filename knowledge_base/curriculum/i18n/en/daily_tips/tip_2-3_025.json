@@ -2,7 +2,7 @@
   "id": "tip_2-3_025",
   "age_group": "2-3",
   "domain": "islamic_parenting",
-  "text": "Repeat with your child, “Jazaak Allahu khayran” and “I’m sorry”; words of *akhlaq* (good character) are planted through repetition.",
+  "text": "Repeat with your child, “Jazaak Allahu khayran” and “I’m sorry”; words of good manners are planted through repetition.",
   "unit_id": null,
   "day_of_week": 5,
   "time_of_day": "anytime",
@@ -34,5 +34,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }

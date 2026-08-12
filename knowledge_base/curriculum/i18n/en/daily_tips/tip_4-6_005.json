@@ -2,7 +2,7 @@
   "id": "tip_4-6_005",
   "age_group": "4-6",
   "domain": "development",
-  "text": "Set aside 10 minutes every day to play your child’s favourite game with them — no phone. This is not a luxury; it is an investment in the emotional amanah (trust) that will shape their learning for years to come.",
+  "text": "Set aside 10 minutes every day to play your child’s favourite game with them — no phone. This is not a luxury; it is an investment in the emotional security that will shape their learning for years to come.",
   "unit_id": "0e7e490d-a4b4-407f-8422-7eeb90a58534",
   "day_of_week": 4,
   "time_of_day": "anytime",
@@ -38,5 +38,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }

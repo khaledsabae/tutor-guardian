@@ -2,7 +2,7 @@
   "id": "tip_4-6_025",
   "age_group": "4-6",
   "domain": "medical",
-  "text": "At every age stage, observe: is your child developing in a manner that aligns with their peers? Relying on objective tracking is kinder (rifq) than constant worry.",
+  "text": "At every age stage, observe: is your child developing in a manner that aligns with their peers? Relying on objective tracking is kinder than constant worry.",
   "unit_id": "med-d2bf41e9",
   "day_of_week": 4,
   "time_of_day": "anytime",
@@ -46,5 +46,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }

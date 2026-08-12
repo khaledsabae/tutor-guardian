@@ -2,7 +2,7 @@
   "id": "tip_16-18_015",
   "age_group": "16-18",
   "domain": "cyber",
-  "text": "Information Security: unique passwords, a password manager (Bitwarden), 2FA on all accounts, encryption, backups. You are responsible (amanah).",
+  "text": "Information Security: unique passwords, a password manager (Bitwarden), 2FA on all accounts, encryption, backups. You are responsible.",
   "unit_id": "cyb-db2bb48f",
   "day_of_week": 3,
   "time_of_day": "morning",
@@ -30,5 +30,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }
