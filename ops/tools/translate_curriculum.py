@@ -85,6 +85,28 @@ GLOSSARY = {
     "تزكية": "tazkiyah",
 }
 
+# 🚨 قيد برمجي لا تعليمات لنموذج. كل مصطلح إنجليزي من المسرد يجب أن يكون
+# له جذر عربي في المصدر. هذا يمنع حقن «rifq» بدل «رحمة» و«amanah» بدل
+# «أمان» — أخطاء وقعت فعلًا ٣٤ مرة قبل إضافة هذا القيد (2026-08-11).
+# الجذور موسّعة عمدًا: «يربّي» و«تربوي» كلاهما يسمحان بـ tarbiyah،
+# و«يستحي» يسمح بـ haya. لكن «رحمة» لا تسمح بـ rifq ولا «أمان» تسمح
+# بـ amanah — لأن الكلمتين مختلفتان جذرًا.
+GLOSSARY_ROOTS = {
+    "tarbiyah": ["ربو", "ربّي", "يرب", "ترب", "تربية", "تربوي"],
+    "akhlaq": ["خلق", "أخلاق", "خُلق", "خلقاً", "أخلاقه", "خلقي"],
+    "adhkar": ["ذكر", "أذكار", "اذكر"],
+    "fitrah": ["فطر", "فطرة", "فطري"],
+    "rifq": ["رفق", "رفيقاً", "يرفق", "ارفق", "برفق", "رقيق"],
+    "aqeedah": ["عقد", "عقيدة", "عقائدي"],
+    "seerah": ["سير", "سيرة", "سيرته"],
+    "haya": ["حيي", "حياء", "يستحي", "استحياء", "حيائي"],
+    "birr al-walidayn": ["برّ", "بر", "يبرّ", "يبر", "بر الوالد"],
+    "silat al-rahim": ["صلة", "رحم", "الأقارب", "أقارب"],
+    "ihsan": ["أحسن", "إحسان", "محسن", "المحسنين", "إحساني"],
+    "amanah": ["أمن", "أمانة", "أمين", "أمناء", "ثقة", "الأمانة"],
+    "tazkiyah": ["زكى", "تزكية", "زكوي"],
+}
+
 # ما يجعل ملفًا يستوجب مراجعة شرعية. متعمَّد أنه واسع: خطأ من نوع
 # «مرّت آية بلا مراجعة» أفدح بكثير من «راجعنا ملفًا لم يكن يحتاج».
 RELIGIOUS_MARKERS = re.compile(
@@ -218,6 +240,26 @@ def _translatable(doc: dict, fields: tuple) -> dict:
     return {k: doc[k] for k in fields if doc.get(k)}
 
 
+def _validate_glossary(arabic: dict, english: dict) -> list[str]:
+    """قيد برمجي: كل مصطلح إنجليزي من المسرد يجب أن يكون له جذر عربي في المصدر.
+
+    يمنع حقن «rifq» بدل «رحمة» و«amanah» بدل «أمان» — أخطاء وقعت ٣٤ مرة
+    قبل إضافة هذا القيد. يرجّع قائمة بالحقن المرفوضة، أو قائمة فارغة إذا سلم.
+    """
+    ar_text = json.dumps(arabic, ensure_ascii=False)
+    en_text = json.dumps(english, ensure_ascii=False)
+    injections = []
+    for en_term, roots in GLOSSARY_ROOTS.items():
+        if en_term not in en_text.lower():
+            continue
+        if any(root in ar_text for root in roots):
+            continue
+        injections.append(
+            f"حقن مصطلح: '{en_term}' في الإنجليزية ولا جذر له في العربية "
+            f"(الجذور المسموحة: {', '.join(roots[:3])}...)")
+    return injections
+
+
 def translate_file(src: Path, fields: tuple, force: bool = False) -> dict:
     """يترجم ملفًا ويراجعه. يرجّع تقريرًا عن الملف."""
     doc = json.loads(src.read_text(encoding="utf-8"))
@@ -250,6 +292,13 @@ def translate_file(src: Path, fields: tuple, force: bool = False) -> dict:
                 f"طول قائمة مختلف في {k}: {len(v)} → {len(translated.get(k, []))}")
     if problems:
         return {"id": rid, "status": "failed", "reason": "; ".join(problems)}
+
+    # 🚨 قيد برمجي: ارفض أي ترجمة تحقن مصطلحًا إسلاميًا لا جذر له في المصدر.
+    # هذا يمنع تكرار أخطاء 2026-08-11 (٣٤ حقنة عبر ٤ تمريرات إصلاح).
+    glossary_issues = _validate_glossary(payload, translated)
+    if glossary_issues:
+        return {"id": rid, "status": "failed",
+                "reason": "حقن مصطلحات: " + "; ".join(glossary_issues)}
 
     review_input = json.dumps(
         {"arabic": payload, "english": translated}, ensure_ascii=False)

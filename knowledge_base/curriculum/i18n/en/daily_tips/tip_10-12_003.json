@@ -2,7 +2,7 @@
   "id": "tip_10-12_003",
   "age_group": "10-12",
   "domain": "islamic_parenting",
-  "text": "At this age, he is tested in his **amanah** (trustworthiness). Praise him when he chooses truthfulness in a difficult situation—reinforcement builds the habit.",
+  "text": "At this age, he is tested in his amanah (trustworthiness). Praise him when he chooses truthfulness in a difficult situation—reinforcement builds the habit.",
   "unit_id": "7b2ded06-2736-4364-8980-1d70df17fa0c",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -30,5 +30,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }

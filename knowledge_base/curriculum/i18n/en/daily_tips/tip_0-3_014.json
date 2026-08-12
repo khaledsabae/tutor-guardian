@@ -2,7 +2,7 @@
   "id": "tip_0-3_014",
   "age_group": "0-3",
   "domain": "cyber",
-  "text": "Your child imitates you: if you are on the phone all the time, he will want to do the same. Be the *qudwah* (role model)—keep the phone in a drawer during playtime, mealtime, and bedtime. Your attention to him is more precious than any app.",
+  "text": "Your child imitates you: if you are on the phone all the time, he will want to do the same. Be the qudwah (role model)—keep the phone in a drawer during playtime, mealtime, and bedtime. Your attention to him is more precious than any app.",
   "unit_id": "cyb-c1d58bd3",
   "day_of_week": 1,
   "time_of_day": "anytime",
@@ -39,5 +39,6 @@
       }
     ],
     "approved_by": null
-  }
+  },
+  "reflection_prompts": []
 }
