@@ -8,7 +8,7 @@
     "0bd76d3c-548a-46ed-b17b-78874741662a",
     "isl-440cdac2"
   ],
-  "summary": "In the preoperational stage (Piaget’s preoperational), the child begins to distinguish a gentle voice from a harsh one and links the parent’s manner of interaction to their emotional safety. The Prophetic guidance ﷺ emphasizes that 'rifq is in everything,' and that 'leaders are through rifq'—for rifq (gentleness) is not weakness but a way to build lasting trust. In this lesson, the parent discovers how their voice and touch reflect on their child’s sense of safety and how they build a bond that makes later guidance easier and more deeply impactful.",
+  "summary": "In the preoperational stage (Piaget’s preoperational), the child begins to distinguish a gentle voice from a harsh one and links the parent’s manner of interaction to their emotional safety. The Prophetic guidance ﷺ emphasizes that 'Allah is gentle and loves gentleness in all things,' and that 'He gives for gentleness what He does not give for harshness'—for rifq (gentleness) is not weakness but a way to build lasting trust. In this lesson, the parent discovers how their voice and touch reflect on their child’s sense of safety and how they build a bond that makes later guidance easier and more deeply impactful.",
   "try_this": "This week: Choose one daily moment (e.g., 5 minutes before bedtime) to speak to your child in a calm voice without any guidance. Just observe: Do they come closer? Do they share more than usual? Do not comment, just watch. At the end of the week, ask yourself: When was my voice loudest during the day, and did the child respond or withdraw?",
   "order": 1,
   "estimated_minutes": 5,
@@ -38,8 +38,8 @@
       {
         "type": "religious_error",
         "field": "summary",
-        "arabic": "الرفق في الأمر كله",
-        "english": "rifq is in everything",
+        "arabic": "إن الله رفيق يحب الرفق في كل شيء",
+        "english": "Allah is gentle and loves gentleness in all things",
         "why": "The hadith fragment means 'gentleness in all matters,' not 'rifq is in everything.' The translation misquotes the Prophetic guidance and changes the meaning.",
         "severity": "high"
       },
