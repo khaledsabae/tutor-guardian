@@ -162,6 +162,10 @@ async def draft_reply(request: Request, user_message: UserMessage):
             escalation_target="emergency_services",
             mode="banned",
         )
+        # These two paths return before the classifier ever runs, so without
+        # this the question rows that matter most — banned and emergency —
+        # would be the ones left unlabelled.
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         return await asyncio.to_thread(_finalize, reply, session_id)
 
     # ── Step 0b: Emergency keyword check ─────────────────────────────
@@ -172,7 +176,9 @@ async def draft_reply(request: Request, user_message: UserMessage):
     # ── Step 1: Emergency severity check ─────────────────────────────
     if is_emergency(user_message):
         logger.info("Emergency severity — returning fallback immediately")
-        return await asyncio.to_thread(_finalize, emergency_reply(user_message, policies), session_id)
+        reply = emergency_reply(user_message, policies)
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        return await asyncio.to_thread(_finalize, reply, session_id)
 
     # ── Step 2: Build query text ──────────────────────────────────────
     query_text = (user_message.message_text or "").strip()
@@ -426,17 +432,27 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     session_id = user_message.session_id
 
     # ── Session: validate + persist incoming user message ────────────
+    # Both calls go through to_thread like /draft does: a sqlite lock or
+    # commit on the event loop stalls every other request this worker holds,
+    # including the streams already in flight.
     user_msg_id: int | None = None
     if session_id:
-        if not store.session_exists(session_id):
+        if not await asyncio.to_thread(store.session_exists, session_id):
             raise HTTPException(status_code=404, detail="Session not found")
-        user_msg_id = store.add_message(
+        user_msg_id = await asyncio.to_thread(
+            store.add_message,
             session_id, "user",
             user_message.message_text or user_message.behavior_type or "",
         )
 
     def _single(reply: AssistantReply) -> StreamingResponse:
         """Emit a non-streamed reply as one terminal `done` event."""
+        # Banned and emergency return through here, before the classifier
+        # runs — tag the question from the reply so the rows that matter
+        # most are not the ones left unlabelled.
+        if user_msg_id is not None:
+            store.update_classification(
+                user_msg_id, domain=reply.domain, severity=reply.severity)
         _finalize(reply, session_id)
 
         def one():
@@ -722,6 +738,15 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                 )
                 if partial:
                     _persist(partial, "interrupted")
+            # Detaches the awaiting task; it does NOT stop run_sync_stream or
+            # the provider connection — asyncio cannot interrupt a running
+            # thread. So generation continues to completion in the background
+            # after the parent leaves. That is pre-existing behaviour, and it
+            # is what made this bug diagnosable at all: the finished call is
+            # still logged to llm_calls, which is how we could prove the
+            # answers were being generated and then dropped. Real cancellation
+            # needs a cooperative cancel()/close() threaded through the
+            # gateway and every provider — a separate change.
             worker.cancel()
 
     return StreamingResponse(event_stream(), media_type="text/event-stream", headers=_SSE_HEADERS)

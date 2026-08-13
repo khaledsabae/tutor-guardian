@@ -113,19 +113,21 @@ def add_message(
     `update_classification` once classification completes.
     """
     conn = get_conn()
-    cur = conn.execute(
-        """INSERT INTO chat_messages
-           (session_id, role, content, domain, severity, mode, needs_human_review)
-           VALUES (?, ?, ?, ?, ?, ?, ?)""",
-        (session_id, role, content, domain, severity, mode, int(needs_human_review)),
-    )
-    message_id = cur.lastrowid
-    conn.execute(
-        "UPDATE chat_sessions SET updated_at = datetime('now') WHERE id = ?",
-        (session_id,),
-    )
-    conn.commit()
-    conn.close()
+    try:
+        cur = conn.execute(
+            """INSERT INTO chat_messages
+               (session_id, role, content, domain, severity, mode, needs_human_review)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (session_id, role, content, domain, severity, mode, int(needs_human_review)),
+        )
+        message_id = cur.lastrowid
+        conn.execute(
+            "UPDATE chat_sessions SET updated_at = datetime('now') WHERE id = ?",
+            (session_id,),
+        )
+        conn.commit()
+    finally:
+        conn.close()
     return message_id
 
 
@@ -171,9 +173,16 @@ def get_history(session_id: str, limit: int = 20) -> list[ConversationTurn]:
     """Return the last `limit` turns (chronological) as ConversationTurn objects."""
     conn = get_conn()
     try:
+        # mode='error' rows carry a placeholder ("تعذّر توليد الرد…"), not an
+        # answer. They are stored so a failed turn is countable instead of
+        # silent — but feeding one back as prior assistant context would put
+        # the apology into the next prompt. mode='interrupted' rows DO stay:
+        # that text is a real partial answer the parent actually read.
         rows = conn.execute(
             """SELECT role, content FROM chat_messages
-               WHERE session_id = ? ORDER BY id DESC LIMIT ?""",
+               WHERE session_id = ?
+                 AND (mode IS NULL OR mode != 'error')
+               ORDER BY id DESC LIMIT ?""",
             (session_id, limit),
         ).fetchall()
     finally:

@@ -85,11 +85,30 @@ def test_coach_query_shape_now_matches_rows():
     conn = store.get_conn()
     rows = conn.execute(
         "SELECT content, domain FROM chat_messages "
-        "WHERE role='user' AND domain IS NOT NULL"
+        "WHERE session_id = ? AND role='user' AND domain IS NOT NULL",
+        (sid,),
     ).fetchall()
     conn.close()
     assert len(rows) == 1
     assert rows[0]["domain"] == "tarbiyah"
+
+
+def test_error_placeholder_never_becomes_prompt_context():
+    """صف `error` يُحفظ ليُعدّ، لا ليُعاد إلى النموذج كسياق.
+
+    بدون هذا يدخل «تعذّر توليد الرد» في prompt السؤال التالي بوصفه ردًّا
+    سابقًا للمساعد. أما `interrupted` فيبقى: نصّه إجابة جزئية قرأها الأب فعلًا.
+    """
+    sid = store.create_session("device-test")
+    store.add_message(sid, "user", "سؤال أول")
+    store.add_message(sid, "assistant", "تعذّر توليد الرد", mode="error")
+    store.add_message(sid, "user", "سؤال ثانٍ")
+    store.add_message(sid, "assistant", "نص جزئي قرأه الأب", mode="interrupted")
+
+    contents = [t.content for t in store.get_history(sid)]
+    assert "تعذّر توليد الرد" not in contents
+    assert "نص جزئي قرأه الأب" in contents
+    assert contents == ["سؤال أول", "سؤال ثانٍ", "نص جزئي قرأه الأب"]
 
 
 # ── نجاة الإجابة عند انقطاع البث ─────────────────────────────────────
@@ -196,6 +215,7 @@ def test_ordinary_question_no_longer_floods_the_review_queue(domain, shipped_pol
 
 @pytest.mark.parametrize("domain", [
     "aqeedah", "fiqh", "islamic_parenting", "medical", "development", "cyber",
+    "tarbiyah",  # كان بلا severity_overrides إطلاقًا — أُضيف هنا ليُرصد حذفه
 ])
 @pytest.mark.parametrize("severity", ["شديد", "طارئ"])
 def test_escalation_is_untouched(domain, severity, shipped_policies):
