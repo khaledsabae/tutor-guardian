@@ -1,11 +1,11 @@
 {
-  "total_units": 1168,
-  "generated_at": "2026-08-10T14:43:05.532250+00:00",
+  "total_units": 1187,
+  "generated_at": "2026-08-13T16:34:10.103646+00:00",
   "by_domain": {
     "medical": 270,
     "cyber": 253,
-    "islamic_parenting": 556,
-    "development": 79,
+    "islamic_parenting": 570,
+    "development": 84,
     "aqeedah": 10
   },
   "units": [
@@ -106,6 +106,18 @@
       "size_chars": 599
     },
     {
+      "id": "179d90e1-a863-42e1-8fea-e8560b7401f7",
+      "domain": "islamic_parenting",
+      "title": "العناد ورفض الأوامر: فرق بين إثبات الذات والتحدي",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "العناد ورفض الأوامر",
+      "needs_ocr": false,
+      "size_chars": 834
+    },
+    {
       "id": "1a79f159-fcad-5a0e-8af3-1e1a8bc90bec",
       "domain": "cyber",
       "title": "علامات الاستخدام المُشكِل للألعاب حسب منظمة الصحة العالمية",
@@ -200,6 +212,18 @@
       "behavior_type": "إدمان_الألعاب",
       "needs_ocr": false,
       "size_chars": 5655
+    },
+    {
+      "id": "21ea9577-9612-4b5f-8a60-a4c149bdc2ad",
+      "domain": "islamic_parenting",
+      "title": "الطفل كثير الكلام والمقاطعة: تهذيب بلا إسكات",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "كثرة الكلام والمقاطعة",
+      "needs_ocr": false,
+      "size_chars": 938
     },
     {
       "id": "24e75eee-6a98-4d35-a300-02c01499c525",
@@ -334,6 +358,18 @@
       "size_chars": 79721
     },
     {
+      "id": "3867de19-f5f7-417b-8d04-a917bb8cf4ef",
+      "domain": "islamic_parenting",
+      "title": "«أنا زهقان»: الملل ليس مشكلة تُحلّ بشاشة",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "الملل",
+      "needs_ocr": false,
+      "size_chars": 898
+    },
+    {
       "id": "3a15b379-edec-4916-a0cd-de4fc00863c9",
       "domain": "medical",
       "title": "From the NATIONAL INSTITUTE of  MENTAL HEALTH",
@@ -406,6 +442,18 @@
       "size_chars": 15893
     },
     {
+      "id": "4868a341-239b-493d-89a8-36a896850899",
+      "domain": "islamic_parenting",
+      "title": "تعليم الطفل المسؤولية: من التذكير المستمر إلى التنظيم الذاتي",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "المسؤولية والتنظيم الذاتي",
+      "needs_ocr": false,
+      "size_chars": 848
+    },
+    {
       "id": "4ab3e41b-9991-4b60-9a05-fae420899e86",
       "domain": "medical",
       "title": "What mental disorders can affect children?",
@@ -440,6 +488,30 @@
       "behavior_type": "نصائح_تربوية_عامة",
       "needs_ocr": false,
       "size_chars": 600
+    },
+    {
+      "id": "562a37b1-e735-4654-8973-9814acaac587",
+      "domain": "development",
+      "title": "يحفظ جيدًا لكنه لا يركّز: الفرق بين ضعف الانتباه وضعف الدافع",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "ضعف التركيز الدراسي",
+      "needs_ocr": false,
+      "size_chars": 929
+    },
+    {
+      "id": "6100b911-911d-4926-8f35-09b43a76303f",
+      "domain": "islamic_parenting",
+      "title": "حين يكون الغضب غضبك أنت: تنظيم انفعال الوالد",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "انفعال الوالد",
+      "needs_ocr": false,
+      "size_chars": 1120
     },
     {
       "id": "635f8863-5aab-4df5-94ad-7ac78ffc1137",
@@ -500,6 +572,18 @@
       "behavior_type": "فرط_الحركة_وتشتت_الانتباه",
       "needs_ocr": false,
       "size_chars": 258
+    },
+    {
+      "id": "6970f436-c954-45ac-ab96-30a798cf523f",
+      "domain": "development",
+      "title": "الفطام التدريجي: كيف يتم دون معركة يومية",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "الفطام عن الرضاعة",
+      "needs_ocr": false,
+      "size_chars": 961
     },
     {
       "id": "69723253-5e81-4602-8bfe-a073437589c2",
@@ -586,6 +670,18 @@
       "size_chars": 600
     },
     {
+      "id": "77e9aa1e-342f-4497-bb5b-a998ac638da2",
+      "domain": "islamic_parenting",
+      "title": "غيرة الطفل بعد ولادة أخ جديد: لماذا تتراجع سلوكياته؟",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "غيرة الطفل من المولود الجديد",
+      "needs_ocr": false,
+      "size_chars": 984
+    },
+    {
       "id": "78431bb2-354f-43ef-a874-d17bc11ed6e6",
       "domain": "medical",
       "title": "From the NATIONAL INSTITUTE of  MENTAL HEALTH",
@@ -658,6 +754,18 @@
       "size_chars": 600
     },
     {
+      "id": "814739d8-0acf-4d8e-8d93-4bc25e9b4b6b",
+      "domain": "islamic_parenting",
+      "title": "لماذا يكذب الطفل؟ التمييز بين الخيال والكذب الدفاعي",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "الكذب عند الأطفال",
+      "needs_ocr": false,
+      "size_chars": 997
+    },
+    {
       "id": "8295e748-32d6-4f5a-9ced-e63307cde035",
       "domain": "medical",
       "title": "Global Report Developmental Disabilities",
@@ -704,6 +812,30 @@
       "behavior_type": "الصحة_النفسية",
       "needs_ocr": false,
       "size_chars": 113451
+    },
+    {
+      "id": "89bf08a7-5d8f-4373-b48d-523b596f5f8a",
+      "domain": "islamic_parenting",
+      "title": "المراهق الذي أغلق بابه: كيف يُستعاد الحوار",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "انقطاع التواصل مع المراهق",
+      "needs_ocr": false,
+      "size_chars": 1001
+    },
+    {
+      "id": "8b595d9b-62ce-48af-b5a5-a3bfe748041d",
+      "domain": "development",
+      "title": "تأخر النطق: العلامات التي تستدعي التقييم ومتى ننتظر",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "تأخر النطق",
+      "needs_ocr": false,
+      "size_chars": 1038
     },
     {
       "id": "8b869dfa-053f-4c5e-abe2-159eed4d599a",
@@ -934,6 +1066,18 @@
       "size_chars": 600
     },
     {
+      "id": "aa50afd9-11c2-4345-8c2c-90ac32639d57",
+      "domain": "islamic_parenting",
+      "title": "الطفل يأخذ ما ليس له: التعامل دون وصمه بالسرقة",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "أخذ ما ليس له",
+      "needs_ocr": false,
+      "size_chars": 821
+    },
+    {
       "id": "aa540ac5-be92-4d96-8615-13cda8aef1d1",
       "domain": "islamic_parenting",
       "title": "التربية القيمية والأخلاقية في ضوء القرآن",
@@ -1100,6 +1244,18 @@
       "behavior_type": "تعليم_العقيدة",
       "needs_ocr": false,
       "size_chars": 343
+    },
+    {
+      "id": "b08d70af-9008-41cc-97f5-cfeba46ba327",
+      "domain": "islamic_parenting",
+      "title": "الخلاف الزوجي أمام الأبناء: ما يضرّهم وما لا يضرّهم",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "الخلافات الزوجية أمام الأبناء",
+      "needs_ocr": false,
+      "size_chars": 956
     },
     {
       "id": "b173f42a-157f-4929-89a9-b67d12828f3d",
@@ -1282,6 +1438,18 @@
       "size_chars": 600
     },
     {
+      "id": "c456b140-4520-4e47-a089-26d6f4877c32",
+      "domain": "development",
+      "title": "صعوبة نطق بعض الحروف: ما هو طبيعي وما يحتاج تدخلًا",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "مخارج الحروف",
+      "needs_ocr": false,
+      "size_chars": 877
+    },
+    {
       "id": "c59870c1-0083-4c48-84d8-60da0b6cf1b0",
       "domain": "islamic_parenting",
       "title": "رسالة نبوية إلى من يضربون الأطفال",
@@ -1292,6 +1460,18 @@
       "behavior_type": "المنهج_النبوي_في_التربية",
       "needs_ocr": false,
       "size_chars": 579
+    },
+    {
+      "id": "c7b72252-7135-405e-98fd-a46d466d9055",
+      "domain": "islamic_parenting",
+      "title": "من النوم في الحضن إلى النوم المستقل: خطة تدريجية",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "النوم المستقل",
+      "needs_ocr": false,
+      "size_chars": 887
     },
     {
       "id": "c88f868b-4f40-45eb-b357-f8867b2c327d",
@@ -4138,6 +4318,18 @@
       "size_chars": 600
     },
     {
+      "id": "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+      "domain": "islamic_parenting",
+      "title": "نوبات الغضب عند الصغار: ماذا تفعل أثناءها وبعدها",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "نوبات الغضب",
+      "needs_ocr": false,
+      "size_chars": 939
+    },
+    {
       "id": "d93c4c32-789e-4844-87ca-76c66651fe61",
       "domain": "islamic_parenting",
       "title": "هدي النبي ﷺ في الاستئذان: قصة كلدة بن حنبل",
@@ -5014,6 +5206,18 @@
       "size_chars": 150089
     },
     {
+      "id": "e095a1d9-98c4-4b4d-afe6-453645643704",
+      "domain": "islamic_parenting",
+      "title": "القلق من رفقة الأبناء: التأثير بدل المنع",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
+      "behavior_type": "اختيار الأصدقاء",
+      "needs_ocr": false,
+      "size_chars": 965
+    },
+    {
       "id": "e19e72c2-d553-4e12-a6e6-5d7c6f3fc083",
       "domain": "medical",
       "title": "NIMH Depression Age Manifestations",
@@ -5062,6 +5266,18 @@
       "size_chars": 334
     },
     {
+      "id": "e724817e-4bd5-4314-9d27-e560b2ca41ef",
+      "domain": "development",
+      "title": "بناء اللغة قبل الكلمة الأولى: ما يفعله الوالد في السنة الأول",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "prenatal-1",
+      "normalized_age_group": "prenatal-1",
+      "behavior_type": "تنمية اللغة المبكرة",
+      "needs_ocr": false,
+      "size_chars": 848
+    },
+    {
       "id": "e88a271e-a530-438b-b8cd-24ae71b52083",
       "domain": "medical",
       "title": "GUIDELINES ON",
@@ -5108,6 +5324,18 @@
       "behavior_type": "التنمر_الإلكتروني",
       "needs_ocr": false,
       "size_chars": 600
+    },
+    {
+      "id": "ee765e4d-9efd-413d-9350-d8aa8d59acf7",
+      "domain": "islamic_parenting",
+      "title": "حين يفقد الطفل أحد والديه: كيف نخبره وكيف نسنده",
+      "source_file": "",
+      "language": "ar",
+      "original_age_group": "unspecified",
+      "normalized_age_group": "unspecified",
+      "behavior_type": "فقد أحد الوالدين",
+      "needs_ocr": false,
+      "size_chars": 1018
     },
     {
       "id": "ee9f4eb5-a08a-42fa-8681-af45dc478d45",
