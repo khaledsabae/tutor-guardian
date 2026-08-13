@@ -353,6 +353,12 @@ def _chunk(text: str, limit: int = _TG_LIMIT) -> list[str]:
 
 
 def send_telegram(token: str, chat_id: str, text: str) -> bool:
+    """Send the report, printing each message_id Telegram hands back.
+
+    The id is the only durable evidence the report actually left the server —
+    an exit code proves the call returned, not that anyone received anything.
+    It goes to the log so a week-old cron run can still be verified by effect.
+    """
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     ok_all = True
     for part in _chunk(text):
@@ -362,8 +368,14 @@ def send_telegram(token: str, chat_id: str, text: str) -> bool:
         try:
             req = urllib.request.Request(url, data=data, method="POST")
             with urllib.request.urlopen(req, timeout=15) as resp:
-                if not json.loads(resp.read()).get("ok", False):
-                    ok_all = False
+                body = json.loads(resp.read())
+            if body.get("ok"):
+                mid = (body.get("result") or {}).get("message_id")
+                print(f"  tg_message_id={mid}")
+            else:
+                print(f"  Telegram rejected: {body.get('description')}",
+                      file=sys.stderr)
+                ok_all = False
         except Exception as e:  # noqa: BLE001
             print(f"Telegram send failed: {e}", file=sys.stderr)
             ok_all = False
