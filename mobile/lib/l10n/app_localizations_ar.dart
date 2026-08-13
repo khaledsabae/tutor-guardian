@@ -313,10 +313,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get educationalGames => 'الألعاب التعليمية';
 
   @override
-  String get healthyHero => 'بطل الصحة';
+  String get healthyHero => 'بطل العادات الذكية';
 
   @override
-  String get treeOfDeeds => 'شجرة الأعمال';
+  String get treeOfDeeds => 'شجرة الأخلاق';
 
   @override
   String get emotionMaze => 'متاهة المشاعر';
@@ -1323,7 +1323,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsFamilyAdhkarDesc =>
-      'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)';
+      'آية أو حديث أو نصيحة — مرة واحدة كل صباح';
 
   @override
   String get settingsEnglishMedia => 'الإنجليزية (بودكاست وفيديو بالإنجليزية)';

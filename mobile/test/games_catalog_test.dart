@@ -7,6 +7,7 @@ library;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:almorabbi/core/app_routes.dart';
 import 'package:almorabbi/features/games/games_catalog.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 
@@ -56,6 +57,28 @@ void main() {
     test('every game has an emoji', () {
       for (final game in kGames) {
         expect(game.emoji, isNotEmpty, reason: '"${game.id}" has no emoji');
+      }
+    });
+
+    test('every route carries the entry point it was given', () {
+      // `entry_point` is read back off RouteSettings.arguments by
+      // EduGameShell. A factory that forgets `arguments:` does not fail — it
+      // silently reports every play as GameSources.unknown, which is the exact
+      // shape of the bug this whole split exists to remove.
+      for (final game in kGames) {
+        final args = game.route(source: GameSources.lesson).settings.arguments;
+        expect(args, isA<Map>(),
+            reason: '"${game.id}" builds a route with no arguments');
+        expect((args! as Map)['source'], GameSources.lesson,
+            reason: '"${game.id}" drops the source it was handed');
+      }
+    });
+
+    test('a route built without a source is explicitly unknown, not null', () {
+      for (final game in kGames) {
+        final args = game.route().settings.arguments;
+        expect((args! as Map)['source'], GameSources.unknown,
+            reason: '"${game.id}" defaults to something other than unknown');
       }
     });
   });

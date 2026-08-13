@@ -313,10 +313,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get educationalGames => 'Educational Games';
 
   @override
-  String get healthyHero => 'Healthy Hero';
+  String get healthyHero => 'Smart Habits Hero';
 
   @override
-  String get treeOfDeeds => 'Tree of Deeds';
+  String get treeOfDeeds => 'Tree of Character';
 
   @override
   String get emotionMaze => 'Emotion Maze';
@@ -1344,7 +1344,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsFamilyAdhkarDesc =>
-      'Daily Prophetic hadith and supplications (morning and evening)';
+      'One verse, hadith or tip each morning';
 
   @override
   String get settingsEnglishMedia => 'English (English audio/video)';
@@ -1467,7 +1467,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lessonPlayMedical => '🎮 Play & Learn';
 
   @override
-  String get lessonPlayIslamic => '🎮 Play & Learn (Tree of Deeds)';
+  String get lessonPlayIslamic => '🎮 Play & Learn (Tree of Character)';
 
   @override
   String get lessonPlayDev => '🎮 Play & Learn (Emotion Maze)';

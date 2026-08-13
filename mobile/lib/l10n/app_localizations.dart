@@ -707,13 +707,13 @@ abstract class AppLocalizations {
   /// No description provided for @healthyHero.
   ///
   /// In ar, this message translates to:
-  /// **'بطل الصحة'**
+  /// **'بطل العادات الذكية'**
   String get healthyHero;
 
   /// No description provided for @treeOfDeeds.
   ///
   /// In ar, this message translates to:
-  /// **'شجرة الأعمال'**
+  /// **'شجرة الأخلاق'**
   String get treeOfDeeds;
 
   /// No description provided for @emotionMaze.
@@ -2561,7 +2561,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsFamilyAdhkarDesc.
   ///
   /// In ar, this message translates to:
-  /// **'أحاديث نبوية وأدعية يومية (صباحاً ومساءً)'**
+  /// **'آية أو حديث أو نصيحة — مرة واحدة كل صباح'**
   String get settingsFamilyAdhkarDesc;
 
   /// No description provided for @settingsEnglishMedia.

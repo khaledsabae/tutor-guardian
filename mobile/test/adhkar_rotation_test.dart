@@ -1,13 +1,17 @@
 /// Adhkar rotation — the content pool must actually be reachable.
 ///
-/// The scheduler picks items by index from `familyAdhkar`. Two defects made
-/// that pointless, and both are cheap to pin:
+/// The scheduler picks items by index from `familyAdhkar`. Three defects made
+/// that pointless, and all three are cheap to pin:
 ///
 ///  1. the rotation index was read from SharedPreferences but never written
 ///     back, so every reschedule restarted at the same place and only the
 ///     first 14 items of each pool were ever delivered;
 ///  2. day 0 was pushed to tomorrow when its hour had already passed, landing
-///     on the same instant as day 1 — two notifications at once.
+///     on the same instant as day 1 — two notifications at once;
+///  3. the pool was filtered by `kind` per slot, so a 'tip' could only ever
+///     arrive in the evening. When the two slots collapsed into one on
+///     2026-08-13, keeping either filter would have made a whole kind
+///     unreachable.
 ///
 /// The scheduler itself needs platform channels, so these tests verify the
 /// pure arithmetic it now uses rather than mocking the plugin.
@@ -18,15 +22,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:almorabbi/features/adhkar/data/family_adhkar.dart';
 
 /// Mirrors `NotificationService.scheduleDaily`'s day-anchored selection.
-int indexForDay(int seed, int epochDay, int dayOffset, int poolSize) =>
-    (seed + epochDay + dayOffset) % poolSize;
+///
+/// The `seed` parameter is gone with the stored index it read: it was never
+/// written by any shipped build, so it was 0 on every install.
+int indexForDay(int epochDay, int dayOffset, int poolSize) =>
+    (epochDay + dayOffset) % poolSize;
 
 void main() {
-  final morningPool = familyAdhkar
-      .where((c) => c.kind == 'hadith' || c.kind == 'verse')
-      .length;
-  final eveningPool =
-      familyAdhkar.where((c) => c.kind == 'hadith' || c.kind == 'tip').length;
+  // One pool: the whole list, unfiltered. That is what makes every item
+  // reachable from a single daily slot.
+  final pool = familyAdhkar.length;
 
   group('content pool', () {
     test('is large enough to be worth rotating', () {
@@ -34,8 +39,7 @@ void main() {
       // 267: one hadith repeated 223 times and 124 tips repeated to 365, each
       // copy padded with a visible «(رقم N)» counter. Counting rows rewarded
       // the padding, so the bar is now set against the real pools.
-      expect(morningPool, greaterThan(100));
-      expect(eveningPool, greaterThan(100));
+      expect(pool, greaterThan(100));
     });
 
     test('no item is a padded copy of another', () {
@@ -98,50 +102,61 @@ void main() {
   });
 
   group('rotation', () {
-    test('a full year of days never repeats within the morning pool', () {
-      // This is the regression that mattered: with the old counter the same
-      // 14 items came back forever.
-      final seen = <int>{};
-      for (var day = 0; day < morningPool; day++) {
-        seen.add(indexForDay(0, day, 0, morningPool));
-      }
-      expect(seen.length, morningPool);
+    test('every item in the pool is reachable', () {
+      // The regression that mattered: with the old counter the same 14 items
+      // came back forever. With one unfiltered pool a full walk must now touch
+      // all 281 items exactly once — the two-slot version reached all 281 in
+      // the union, but never a tip in the morning or a verse in the evening.
+      final seen = {for (var d = 0; d < pool; d++) indexForDay(d, 0, pool)};
+      expect(seen.length, pool);
+      expect(seen, equals({for (var i = 0; i < pool; i++) i}));
+    });
+
+    test('the single pool excludes no kind', () {
+      final kinds = {
+        for (var d = 0; d < pool; d++) familyAdhkar[indexForDay(d, 0, pool)].kind
+      };
+      expect(kinds, containsAll({'hadith', 'verse', 'tip'}));
     });
 
     test('consecutive days give consecutive, distinct items', () {
       const epochDay = 2000;
-      final a = indexForDay(0, epochDay, 0, morningPool);
-      final b = indexForDay(0, epochDay + 1, 0, morningPool);
-      expect(a, isNot(b));
+      expect(indexForDay(epochDay, 0, pool),
+          isNot(indexForDay(epochDay + 1, 0, pool)));
     });
 
     test('rescheduling on the same day is idempotent', () {
       // Opening the app repeatedly must not advance the rotation — that was
       // the whole reason for anchoring to the calendar day.
       const epochDay = 2000;
-      final first = [
-        for (var d = 0; d < 14; d++) indexForDay(0, epochDay, d, morningPool)
-      ];
-      final second = [
-        for (var d = 0; d < 14; d++) indexForDay(0, epochDay, d, morningPool)
-      ];
+      final first = [for (var d = 0; d < 14; d++) indexForDay(epochDay, d, pool)];
+      final second = [for (var d = 0; d < 14; d++) indexForDay(epochDay, d, pool)];
       expect(first, second);
     });
 
     test('the 14 scheduled days are all different items', () {
       const epochDay = 2000;
       final scheduled = {
-        for (var d = 0; d < 14; d++) indexForDay(0, epochDay, d, morningPool)
+        for (var d = 0; d < 14; d++) indexForDay(epochDay, d, pool)
       };
       expect(scheduled.length, 14);
     });
+  });
 
-    test('a stored seed shifts the sequence without breaking it', () {
-      const epochDay = 2000;
-      expect(
-        indexForDay(5, epochDay, 0, morningPool),
-        indexForDay(0, epochDay + 5, 0, morningPool),
-      );
+  group('notification ids', () {
+    // Mirrors the constants in notification_service.dart, per this file's rule
+    // about not importing the scheduler. The retired ranges must stay clear of
+    // the live one: _purgeRetiredSlots cancels them unconditionally on first
+    // launch, so an overlap would cancel live slots on every install.
+    const dailyBase = 1000;
+    const retiredEveningBase = 2000;
+    const retiredWird = 3000;
+
+    test('the live range cannot collide with a retired one', () {
+      expect(dailyBase + 30, lessThanOrEqualTo(retiredEveningBase));
+      expect(retiredWird, isNot(inInclusiveRange(dailyBase, dailyBase + 29)));
+      expect(retiredWird,
+          isNot(inInclusiveRange(retiredEveningBase, retiredEveningBase + 29)));
     });
   });
 

@@ -1,11 +1,9 @@
 /// «الألعاب التعليمية» — one place to hand a child something to play.
 library;
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-import '../../../core/analytics.dart';
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/directional_chevron.dart';
@@ -46,10 +44,15 @@ class _GameCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(Dt.rCard),
       child: InkWell(
         borderRadius: BorderRadius.circular(Dt.rCard),
-        onTap: () {
-          unawaited(Analytics.gameStarted(game.id, 0));
-          Navigator.of(context).push(game.route());
-        },
+        // No analytics call here on purpose. This tap used to log
+        // `game_started(level: 0)` — opening the lobby counted as starting a
+        // game, so every play entered from this screen was counted twice while
+        // a play entered from a lesson counted once. The shell now logs
+        // `game_opened` for every entry point, and this tap stays visible as
+        // `tg_screen_view` besides.
+        onTap: () => Navigator.of(context).push(
+          game.route(source: GameSources.index),
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
           child: Row(

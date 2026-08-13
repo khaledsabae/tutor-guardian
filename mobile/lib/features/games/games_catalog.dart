@@ -24,10 +24,19 @@ class GameEntry {
   });
 
   /// Stable analytics id — never translated.
+  ///
+  /// Must equal the `EduGameTheme.id` of the game this entry points at: the
+  /// catalog id and the theme id are two independently-maintained strings that
+  /// both land in `game_id`, so a mismatch splits one game's numbers in two
+  /// without any error. `games_catalog_test` pins them together.
   final String id;
   final String emoji;
   final String Function(AppLocalizations l10n) label;
-  final Route<void> Function() route;
+
+  /// Takes the entry point so the route can carry it to the shell — see
+  /// [GameSources]. Named and optional, so a caller with nothing to say still
+  /// matches `route()`.
+  final Route<void> Function({String source}) route;
 }
 
 /// Not `const`: the callbacks are function literals.

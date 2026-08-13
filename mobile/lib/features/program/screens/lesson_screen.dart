@@ -829,7 +829,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               label: AppLocalizations.of(context).lessonPlayCyber,
               onPressed: () => Navigator.push(
                 context,
-                AppRoutes.gameDataDefender(),
+                AppRoutes.gameDataDefender(source: GameSources.lesson),
               ),
             ),
           );
@@ -840,7 +840,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               label: AppLocalizations.of(context).lessonPlayMedical,
               onPressed: () => Navigator.push(
                 context,
-                AppRoutes.gameHealthyHero(),
+                AppRoutes.gameHealthyHero(source: GameSources.lesson),
               ),
             ),
           );
@@ -851,7 +851,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               label: AppLocalizations.of(context).lessonPlayIslamic,
               onPressed: () => Navigator.push(
                 context,
-                AppRoutes.gameTreeOfDeeds(),
+                AppRoutes.gameTreeOfDeeds(source: GameSources.lesson),
               ),
             ),
           );
@@ -862,7 +862,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
               label: AppLocalizations.of(context).lessonPlayDev,
               onPressed: () => Navigator.push(
                 context,
-                AppRoutes.gameEmotionMaze(),
+                AppRoutes.gameEmotionMaze(source: GameSources.lesson),
               ),
             ),
           );

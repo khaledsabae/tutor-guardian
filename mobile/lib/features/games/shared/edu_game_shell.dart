@@ -43,10 +43,34 @@ class _EduGameShellState extends ConsumerState<EduGameShell> {
   EduGameProgress _progress = const EduGameProgress(gameId: '');
   bool _loading = true;
 
+  /// Where this game was entered from, read off the route. See [GameSources].
+  String _source = GameSources.unknown;
+  bool _openLogged = false;
+
   @override
   void initState() {
     super.initState();
     _load();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Not initState: ModalRoute.of registers an inherited-widget dependency.
+    // Guarded because didChangeDependencies can fire more than once per mount,
+    // and the contract is one game_opened per shell.
+    //
+    // Both game events are emitted from here rather than from the call sites,
+    // so a new entry point that forgets to name itself lands in
+    // GameSources.unknown instead of vanishing from the numbers entirely.
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is Map && args['source'] is String) {
+      _source = args['source'] as String;
+    }
+    if (!_openLogged) {
+      _openLogged = true;
+      unawaited(Analytics.gameOpened(widget.theme.id, _source));
+    }
   }
 
   Future<void> _load() async {
@@ -67,7 +91,7 @@ class _EduGameShellState extends ConsumerState<EduGameShell> {
   }
 
   void _play(int level) {
-    unawaited(Analytics.gameStarted(widget.theme.id, level));
+    unawaited(Analytics.gameLevelStarted(widget.theme.id, level, _source));
     final questions = widget.questionBuilder(level);
     Navigator.of(context).push(
       AppRoutes.gameRunner(
@@ -75,6 +99,18 @@ class _EduGameShellState extends ConsumerState<EduGameShell> {
         level: level,
         questions: questions,
         onComplete: (result) async {
+          // Logged here rather than in the runner because this closure is the
+          // only place that knows the entry point. A replay re-enters _finish
+          // and fires a second game_completed at the same level — correct, and
+          // it keeps the event count reconcilable against `attempts`.
+          unawaited(Analytics.gameCompleted(
+            gameId: widget.theme.id,
+            level: level,
+            completed: result.completed,
+            stars: result.stars,
+            score: result.score,
+            entryPoint: _source,
+          ));
           final newProgress = _progress.recordGame(level, result);
           await _save(newProgress);
 

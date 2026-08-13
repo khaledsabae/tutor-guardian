@@ -106,10 +106,66 @@ class Analytics {
     return _log('quran_opened');
   }
 
-  /// An educational game round was started.
-  static Future<void> gameStarted(String gameId, int level) {
+  // ── Games ────────────────────────────────────────────────────────────────
+  //
+  // gameStarted() removed 2026-08-13. One event covered two different things.
+  // It fired from the games index on tapping a card — level: 0, meaning "opened
+  // the level-select lobby" — and again from the shell with the real level when
+  // a level actually began. Entering from a lesson skips the index, so that
+  // path fired once and the index path fired twice for the same play. The
+  // counts were inflated and not comparable across entry points, and `level: 0`
+  // is not a level. That is how «4 games, 5,856 sessions, 5.9 per player»
+  // became the strongest engagement number in the app.
+  //
+  // `game_started` history is NOT comparable to either event below. Do not join
+  // the series; treat 2026-08-13 as the start of the games numbers.
+  //
+  // GA4: `entry_point`, `stars` and `completed` are new params and must be
+  // registered as custom dimensions (and `score` as a custom metric) in
+  // Admin → Custom definitions. An unregistered param is collected but reads
+  // empty in every report, and registration is NOT retroactive — the dimension
+  // is blank for every event logged before the day it was created.
+
+  /// A game was opened — its level-select screen appeared.
+  ///
+  /// [entryPoint] is a `GameSources.*` constant. Deliberately does NOT raise
+  /// [EngagementSignal]: opening a screen is not an accomplishment, and marking
+  /// here would make the level-select screen permanently immune to
+  /// `dead_end_v2` — which is exactly the case worth being able to see.
+  static Future<void> gameOpened(String gameId, String entryPoint) =>
+      _log('game_opened', {'game_id': gameId, 'entry_point': entryPoint});
+
+  /// A level actually started. This is the number "how many games were played".
+  static Future<void> gameLevelStarted(
+      String gameId, int level, String entryPoint) {
     EngagementSignal.mark();
-    return _log('game_started', {'game_id': gameId, 'level': level});
+    return _log('game_level_started',
+        {'game_id': gameId, 'level': level, 'entry_point': entryPoint});
+  }
+
+  /// A level ended, win or lose. Until now the result was computed, persisted
+  /// and credited to coins without ever being logged, so starts were
+  /// measurable and outcomes were not.
+  ///
+  /// [completed] is sent as a string because a raw bool param is dropped —
+  /// see [notificationPrefChanged].
+  static Future<void> gameCompleted({
+    required String gameId,
+    required int level,
+    required bool completed,
+    required int stars,
+    required int score,
+    required String entryPoint,
+  }) {
+    EngagementSignal.mark();
+    return _log('game_completed', {
+      'game_id': gameId,
+      'level': level,
+      'completed': completed ? 'true' : 'false',
+      'stars': stars,
+      'score': score,
+      'entry_point': entryPoint,
+    });
   }
 
   /// Call on every app start. Records the first-open day and emits a one-shot
@@ -168,8 +224,14 @@ class Analytics {
   static Future<void> identityUnlinked() => _log('identity_unlinked');
 
   /// Push notification permission was granted (or denied). [granted] = true/false.
+  ///
+  /// Sent as a string, not a bool: firebase_analytics asserts every parameter
+  /// is String or num, so a raw bool throws in debug (swallowed by [_log]'s
+  /// catch, taking the whole event with it) and is dropped in release. This
+  /// event has therefore never carried its only parameter. Same workaround as
+  /// [notificationPrefChanged]. Values before 2026-08-13 are empty.
   static Future<void> pushPermission(bool granted) =>
-      _log('push_permission', {'granted': granted});
+      _log('push_permission', {'granted': granted ? 'true' : 'false'});
 
   /// Server accepted a push-token registration.
   static Future<void> pushTokenRegistered() => _log('push_token_registered');

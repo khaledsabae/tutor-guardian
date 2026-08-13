@@ -18,6 +18,7 @@ import '../../../state/chat_notifier.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../data/progress_models.dart';
 import '../data/settings_repository.dart';
+import 'program_providers.dart';
 import 'progress_providers.dart';
 
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
@@ -138,12 +139,55 @@ class DeleteChildNotifier extends AutoDisposeAsyncNotifier<bool?> {
       final repo = ref.read(settingsRepositoryProvider);
       final ok = await repo.deleteChild(childId);
       ref.invalidate(childrenListProvider);
+      if (ok) await _repointActiveChild(childId);
       state = AsyncValue.data(ok);
       return ok;
     } catch (e, st) {
       state = AsyncValue.error(e, st);
       rethrow;
     }
+  }
+
+  /// Move the "active child" off a child that no longer exists.
+  ///
+  /// Deleting the active child used to remove it from the list and leave every
+  /// other surface pointing at the dead id: the home greeting and the app-bar
+  /// chip kept showing the deleted child's name, `selectedAgeGroupProvider`
+  /// kept deriving from its stored profile, and `childProgressProvider` kept
+  /// re-fetching an id the server no longer had. It self-healed only if the
+  /// user happened to add or switch a child afterwards.
+  ///
+  /// `OnboardingStorage.clearActiveChild()` existed for exactly this and was
+  /// called from nowhere in `lib/`.
+  ///
+  /// Promoting a sibling is preferred over clearing, because clearing leaves a
+  /// parent who still has children looking at an app with no child selected.
+  Future<void> _repointActiveChild(int deletedId) async {
+    final storage = ref.read(onboardingStorageProvider);
+    final wasActive = ref.read(activeChildIdProvider) == deletedId ||
+        storage.activeChildId == deletedId;
+    if (!wasActive) return;
+
+    try {
+      final envelope = await ref.read(childrenListProvider.future);
+      for (final child in envelope.children) {
+        if (child.id == deletedId) continue;
+        // Reuses the full cascade (persist + invalidate progress, tip, paths)
+        // rather than repeating it here.
+        await ref.read(switchActiveChildProvider.notifier)(child);
+        return;
+      }
+    } catch (_) {
+      // The re-fetch failing must not strand the app on a deleted child, so
+      // fall through and clear. Worst case the user picks a child again.
+    }
+
+    await storage.clearActiveChild();
+    ref.read(activeChildIdProvider.notifier).state = null;
+    ref.invalidate(activeChildProfileProvider);
+    ref.invalidate(childProgressProvider);
+    ref.invalidate(dailyTipProvider);
+    ref.invalidate(pathsListProvider);
   }
 }
 

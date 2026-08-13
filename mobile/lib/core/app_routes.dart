@@ -147,12 +147,36 @@ abstract final class Screens {
   static const hub = 'hub';
 }
 
+/// Where a game was entered from, for the `entry_point` param on the game
+/// events. Lives here rather than in the games feature for the same reason
+/// [Screens] does: it is an analytics identifier, and the rule above says those
+/// are constants, never free text.
+///
+/// Only two real values exist. The home shortcut, the hub tile and the help
+/// sheet all route to the games index rather than to a game, so they are
+/// already separable one level up via `home_card_tapped`, `hub_item_tapped`
+/// and `help_intent_tapped`; the in-lesson button is the only path that
+/// bypasses the index. Add a value here when a fifth entry point does the same.
+abstract final class GameSources {
+  /// Tapped a card on the games index.
+  static const index = 'index';
+
+  /// The «العب وتعلم» button inside a lesson of the matching domain.
+  static const lesson = 'lesson';
+
+  /// A route was built without naming its source — a missing call-site update,
+  /// not a real entry point. If this shows up in GA4, something new pushes a
+  /// game route and did not say so.
+  static const unknown = 'unknown';
+}
+
 /// Builds every pushable route, tagged with its [Screens] name.
 abstract final class AppRoutes {
-  static Route<T> _r<T>(String name, WidgetBuilder builder) =>
+  static Route<T> _r<T>(String name, WidgetBuilder builder,
+          {Object? arguments}) =>
       MaterialPageRoute<T>(
         builder: builder,
-        settings: RouteSettings(name: name),
+        settings: RouteSettings(name: name, arguments: arguments),
       );
 
   // ── Program / curriculum ────────────────────────────────────────────────
@@ -218,17 +242,28 @@ abstract final class AppRoutes {
   /// wanted to hand their child something to play.
   static Route<void> games() => _r(Screens.games, (_) => const GamesScreen());
 
-  static Route<void> gameDataDefender() =>
-      _r(Screens.gameDataDefender, (_) => const DataDefenderGameScreen());
+  // Each game route carries where it was entered from in RouteSettings.
+  // arguments, which EduGameShell reads back for `entry_point`. Passing it
+  // through the widget tree instead would mean threading a parameter through
+  // four const screens and four game subclasses to reach the one place that
+  // logs. The parameter is optional so these stay assignable to
+  // `Route<void> Function()` in GameEntry, and an entry point that forgets to
+  // name itself degrades to GameSources.unknown rather than to silence.
+  static Route<void> gameDataDefender({String source = GameSources.unknown}) =>
+      _r(Screens.gameDataDefender, (_) => const DataDefenderGameScreen(),
+          arguments: {'source': source});
 
-  static Route<void> gameHealthyHero() =>
-      _r(Screens.gameHealthyHero, (_) => const HealthyHeroGameScreen());
+  static Route<void> gameHealthyHero({String source = GameSources.unknown}) =>
+      _r(Screens.gameHealthyHero, (_) => const HealthyHeroGameScreen(),
+          arguments: {'source': source});
 
-  static Route<void> gameTreeOfDeeds() =>
-      _r(Screens.gameTreeOfDeeds, (_) => const TreeOfDeedsGameScreen());
+  static Route<void> gameTreeOfDeeds({String source = GameSources.unknown}) =>
+      _r(Screens.gameTreeOfDeeds, (_) => const TreeOfDeedsGameScreen(),
+          arguments: {'source': source});
 
-  static Route<void> gameEmotionMaze() =>
-      _r(Screens.gameEmotionMaze, (_) => const EmotionMazeGameScreen());
+  static Route<void> gameEmotionMaze({String source = GameSources.unknown}) =>
+      _r(Screens.gameEmotionMaze, (_) => const EmotionMazeGameScreen(),
+          arguments: {'source': source});
 
   static Route<void> gameRunner({
     required EduGameTheme theme,

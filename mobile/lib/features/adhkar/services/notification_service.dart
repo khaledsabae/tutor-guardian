@@ -1,8 +1,19 @@
-/// Notification Service — Daily family adhkar push notifications.
+/// Notification Service — one daily local notification, on-device.
 ///
-/// Schedules two daily local notifications (morning + evening) with
-/// authentic Hadith about family, parenting, and children.
-/// No server needed — runs entirely on-device.
+/// It used to be three: adhkar at 06:00 and 19:00, plus a Qur'an wird reminder
+/// at 17:00 — on top of two server pushes, so five a day. Measured over the
+/// first two weeks: 37,393 FCM notifications to 1,567 users, 2.5% opened, 68%
+/// dismissed. (Those figures are FCM-only; GA4's notification_* events come
+/// from the FCM SDK, so the three local ones were never in them — the
+/// unmeasured half was the larger one.)
+///
+/// A notification dismissed 68% of the time teaches people to ignore the app,
+/// and some of them to switch notifications off entirely — which also severs
+/// the feedback-reply channel.
+///
+/// The wird was retired rather than the adhkar for two reasons: it was one
+/// fixed string repeated 365×/year, and its off switch was never wired to
+/// anything, so it could not be silenced. See [_purgeRetiredSlots].
 library;
 
 import 'dart:async';
@@ -27,17 +38,24 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
 
   static const _kEnabled = 'tg.adhkar_notifications_enabled';
-  static const _kMorningHour = 'tg.adhkar_morning_hour';
-  static const _kEveningHour = 'tg.adhkar_evening_hour';
-  static const _kWirdEnabled = 'tg.wird_reminder_enabled';
-  static const _kWirdHour = 'tg.wird_reminder_hour';
-  static const _kNextMorningIndex = 'tg.adhkar_next_morning';
-  static const _kNextEveningIndex = 'tg.adhkar_next_evening';
+  static const _kDailyHour = 'tg.adhkar_daily_hour';
 
-  static const _morningBaseId = 1000;
-  static const _eveningBaseId = 2000;
-  static const _wirdId = 3000;
+  // _kMorningHour / _kEveningHour / _kWirdHour removed 2026-08-13: there is one
+  // slot now. None of the three had a UI writer, so no install had customised
+  // them.
+  //
+  // _kNextMorningIndex / _kNextEveningIndex removed 2026-08-13. Both were read
+  // as a rotation seed and never written — `git log -S"setInt(_kNextMorningIndex"`
+  // is empty across the whole history — so they were 0 on every install and the
+  // seed was a no-op. Nothing to migrate.
+
+  static const _dailyBaseId = 1000;
   static const _daysToSchedule = 14;
+
+  /// Cancel-only. Nothing schedules these any more — see [_purgeRetiredSlots].
+  static const _retiredEveningBaseId = 2000;
+  static const _retiredWirdId = 3000;
+  static const _kRetiredSlotsPurged = 'tg.notif.retired_slots_purged_v2';
 
   /// The wird reminder used to be scheduled with no payload at all, so
   /// `_handleNotificationTap` returned on its first line and tapping
@@ -65,20 +83,50 @@ class NotificationService {
     );
 
     final prefs = await SharedPreferences.getInstance();
+    await _purgeRetiredSlots(prefs);
     final enabled = prefs.getBool(_kEnabled) ?? true;
-    final wird = prefs.getBool(_kWirdEnabled) ?? true;
-    if (enabled || wird) {
+    if (enabled) {
       // Android 13+ shows nothing without the runtime permission.
       await _requestPermission();
+      await scheduleDaily(prefs: prefs);
     }
-    if (enabled) await scheduleDaily(prefs: prefs);
-    if (wird) await scheduleWirdReminder(prefs: prefs);
 
     // Check if cold-started from notification
     final details = await _plugin.getNotificationAppLaunchDetails();
     if (details != null && details.didNotificationLaunchApp) {
       pendingPayload = details.notificationResponse?.payload;
     }
+  }
+
+  /// Cancels every notification id this app used to schedule and no longer does.
+  ///
+  /// Not defensive housekeeping — without it the change does not reach anyone
+  /// who already has the app. `AndroidManifest.xml` registers
+  /// flutter_local_notifications' `ScheduledNotificationBootReceiver` for
+  /// `MY_PACKAGE_REPLACED`, so after an update the plugin re-registers its
+  /// whole pending queue from its own store, without Dart running. Installing
+  /// this build over the old one clears nothing: the evening series (2000+i)
+  /// keeps firing for up to 14 more days, and the wird (3000) was scheduled
+  /// with `matchDateTimeComponents: DateTimeComponents.time` — a daily repeat
+  /// with no end date — so it fires forever.
+  ///
+  /// Runs before the [_kEnabled] branch on purpose: the wird was gated by a
+  /// separate pref that `setEnabled(false)` never touched, so a user who had
+  /// already switched adhkar off still has 3000 queued and would otherwise
+  /// never reach any cancel path.
+  ///
+  /// One-shot: once cancelled the plugin drops them from its store and nothing
+  /// recreates them. The flag is written only after every cancel resolves, so a
+  /// process killed mid-purge retries on the next launch. Delete this method
+  /// and the two `_retired*` constants once v1.0.39 is the floor.
+  Future<void> _purgeRetiredSlots(SharedPreferences prefs) async {
+    if (prefs.getBool(_kRetiredSlotsPurged) == true) return;
+    // 30, not _daysToSchedule: older builds may have queued further out.
+    for (int i = 0; i < 30; i++) {
+      await _plugin.cancel(_retiredEveningBaseId + i);
+    }
+    await _plugin.cancel(_retiredWirdId);
+    await prefs.setBool(_kRetiredSlotsPurged, true);
   }
 
   void processPendingTap() {
@@ -91,9 +139,15 @@ class NotificationService {
   void _handleNotificationTap(String? payload) {
     if (payload == null) return;
 
-    // Three of these go out a day and none of them emitted a single event, so
-    // every notification number we had was FCM-only — the local ones are the
-    // larger share and were entirely unmeasured.
+    // These emitted no events at all until 2026-08-11, so every notification
+    // number we had was FCM-only while the larger, on-device share sat
+    // unmeasured underneath it.
+    //
+    // The scheduler for 'wird' was removed 2026-08-13 (one local notification a
+    // day now). This branch stays because notifications already in the tray at
+    // update time still carry the payload, and because it is how the tail is
+    // watched: local_notification_open(slot='wird') should reach zero within a
+    // couple of days of rollout. Delete the branch then.
     if (payload == _wirdPayload) {
       unawaited(Analytics.localNotificationOpen('wird'));
       // It says "carry on from where you stopped". So carry them there.
@@ -208,57 +262,20 @@ class NotificationService {
     );
   }
 
-  /// Daily reminder to read the Qur'an wird (default 5 PM).
-  Future<void> scheduleWirdReminder({SharedPreferences? prefs}) async {
-    prefs ??= await SharedPreferences.getInstance();
-    final hour = prefs.getInt(_kWirdHour) ?? 17;
-    await _plugin.cancel(_wirdId);
-    
-    final now = tz.TZDateTime.now(tz.local);
-    var scheduled = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour);
-    if (scheduled.isBefore(now)) {
-      scheduled = scheduled.add(const Duration(days: 1));
-    }
-
-    const androidDetails = AndroidNotificationDetails(
-      'parenting_content_channel',
-      'تذكيرات تربوية',
-      channelDescription: 'آيات وأحاديث ونصائح تربوية يومية',
-      importance: Importance.high,
-      priority: Priority.high,
-      styleInformation: BigTextStyleInformation(''),
-    );
-
-    await _plugin.zonedSchedule(
-      _wirdId,
-      '📖 ورد اليوم — المربي الذكي',
-      'حان وقت وردك اليومي من القرآن الكريم. تابع من حيث توقفت 🌿',
-      scheduled,
-      const NotificationDetails(android: androidDetails),
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
-      payload: _wirdPayload,
-    );
-  }
-
-  Future<void> setWirdEnabled(bool enabled) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_kWirdEnabled, enabled);
-    unawaited(Analytics.notificationPrefChanged('wird', enabled));
-    if (enabled) {
-      await _requestPermission();
-      await scheduleWirdReminder(prefs: prefs);
-    } else {
-      await _plugin.cancel(_wirdId);
-    }
-  }
-
-  Future<bool> isWirdEnabled() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_kWirdEnabled) ?? true;
-  }
+  // scheduleWirdReminder() / setWirdEnabled() / isWirdEnabled() removed
+  // 2026-08-13, when the local notifications went from three a day to one.
+  //
+  // The wird was the one retired because it was the one that could not be
+  // switched off: setWirdEnabled and isWirdEnabled had no caller anywhere in
+  // lib/ — the single notifications row in settings drives setEnabled, which
+  // cancelled 1000..1029 and 2000..2029 and never touched 3000. So a user who
+  // turned «إشعارات أذكار الأسرة» off kept receiving «حان وقت وردك اليومي»
+  // daily, forever, on the same channel. It was also scheduled with
+  // matchDateTimeComponents: DateTimeComponents.time, i.e. an unbounded repeat
+  // of one fixed string, against the adhkar slot's 281-item rotation.
+  //
+  // The tap handler for payload 'wird' is deliberately still in
+  // _handleNotificationTap; see the note there.
 
   Future<bool> _requestPermission() async {
     final android = _plugin.resolvePlatformSpecificImplementation<
@@ -267,36 +284,16 @@ class NotificationService {
     return await android.requestNotificationsPermission() ?? false;
   }
 
-  /// Schedule morning + evening parenting-content notifications for the next [_daysToSchedule] days.
+  /// Schedule one parenting-content notification a day for the next
+  /// [_daysToSchedule] days.
   Future<void> scheduleDaily({SharedPreferences? prefs}) async {
     prefs ??= await SharedPreferences.getInstance();
-    final morningHour = prefs.getInt(_kMorningHour) ?? 6;
-    final eveningHour = prefs.getInt(_kEveningHour) ?? 19;
+    final hour = prefs.getInt(_kDailyHour) ?? 6;
+    if (familyAdhkar.isEmpty) return;
 
-    final morningCandidates = familyAdhkar
-        .asMap()
-        .entries
-        .where((e) => e.value.kind == 'hadith' || e.value.kind == 'verse')
-        .map((e) => e.key)
-        .toList();
-
-    final eveningCandidates = familyAdhkar
-        .asMap()
-        .entries
-        .where((e) => e.value.kind == 'hadith' || e.value.kind == 'tip')
-        .map((e) => e.key)
-        .toList();
-
-    if (morningCandidates.isEmpty || eveningCandidates.isEmpty) return;
-
-    // Seed only — kept so existing installs don't jump position.
-    final morningSeed = prefs.getInt(_kNextMorningIndex) ?? 0;
-    final eveningSeed = prefs.getInt(_kNextEveningIndex) ?? 0;
-
-    // Cancel existing scheduled slots up to 30 days
+    // 30, not _daysToSchedule: older builds queued out to 30.
     for (int i = 0; i < 30; i++) {
-      await _plugin.cancel(_morningBaseId + i);
-      await _plugin.cancel(_eveningBaseId + i);
+      await _plugin.cancel(_dailyBaseId + i);
     }
 
     final now = tz.TZDateTime.now(tz.local);
@@ -304,54 +301,51 @@ class NotificationService {
     // Rotation is anchored to the calendar day, not to a stored counter.
     // The counter version read the index but never wrote it back, so every
     // reschedule restarted at the same place and only the first 14 items of
-    // each pool were ever delivered — 96% of the 731 items were unreachable.
+    // each pool were ever delivered — 96% of the items were unreachable.
     // Day-anchoring also means opening the app ten times in a day changes
     // nothing, and each day maps to exactly one item.
+    //
+    // The pool is now the whole list rather than two kind-filtered slices. The
+    // union of the old pools was also 281, but a 'tip' could only ever arrive
+    // in the evening and a 'verse' only in the morning; with one slot, either
+    // filter would have made a whole kind unreachable. A full walk is 281 days,
+    // up from 157 and 139.
     final epochDay = DateTime(now.year, now.month, now.day)
         .difference(DateTime.utc(2020, 1, 1))
         .inDays;
 
-    // Compute each series' first slot once. Adding dayOffset to "today at H"
-    // and then pushing day 0 to tomorrow when H has passed made day 0 and
-    // day 1 land on the same instant — two morning notifications tomorrow.
-    var mBase = tz.TZDateTime(tz.local, now.year, now.month, now.day, morningHour);
-    if (mBase.isBefore(now)) mBase = mBase.add(const Duration(days: 1));
-    var eBase = tz.TZDateTime(tz.local, now.year, now.month, now.day, eveningHour);
-    if (eBase.isBefore(now)) eBase = eBase.add(const Duration(days: 1));
+    // Compute the first slot once. Adding dayOffset to "today at H" and then
+    // pushing day 0 to tomorrow when H has passed made day 0 and day 1 land on
+    // the same instant — two notifications tomorrow.
+    var base = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour);
+    if (base.isBefore(now)) base = base.add(const Duration(days: 1));
 
     for (int dayOffset = 0; dayOffset < _daysToSchedule; dayOffset++) {
-      final mIdx = morningCandidates[
-          (morningSeed + epochDay + dayOffset) % morningCandidates.length];
-      final eIdx = eveningCandidates[
-          (eveningSeed + epochDay + dayOffset) % eveningCandidates.length];
-
-      final morningContent = familyAdhkar[mIdx];
-      final eveningContent = familyAdhkar[eIdx];
-
-      final mDate = mBase.add(Duration(days: dayOffset));
-      final eDate = eBase.add(Duration(days: dayOffset));
-
+      final idx = (epochDay + dayOffset) % familyAdhkar.length;
       await _scheduleSpecific(
-        id: _morningBaseId + dayOffset,
-        scheduledDate: mDate,
-        title: '🌅 أذكار الصباح — المربي الذكي',
-        content: morningContent,
-      );
-
-      await _scheduleSpecific(
-        id: _eveningBaseId + dayOffset,
-        scheduledDate: eDate,
-        title: '🌙 أذكار المساء — المربي الذكي',
-        content: eveningContent,
+        id: _dailyBaseId + dayOffset,
+        scheduledDate: base.add(Duration(days: dayOffset)),
+        title: _titleFor(familyAdhkar[idx]),
+        content: familyAdhkar[idx],
+        contentIndex: idx,
       );
     }
   }
+
+  /// The slot no longer says morning or evening, so the title says what the
+  /// item *is*. Mirrors the headers used by the in-app dialog.
+  String _titleFor(ParentingContent content) => switch (content.kind) {
+        'hadith' => '🕌 حديث شريف — المربي الذكي',
+        'verse' => '📖 آية كريمة — المربي الذكي',
+        _ => '💡 نصيحة اليوم — المربي الذكي',
+      };
 
   Future<void> _scheduleSpecific({
     required int id,
     required tz.TZDateTime scheduledDate,
     required String title,
     required ParentingContent content,
+    required int contentIndex,
   }) async {
     const androidDetails = AndroidNotificationDetails(
       'parenting_content_channel',
@@ -372,7 +366,10 @@ class NotificationService {
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      payload: 'adhkar_${familyAdhkar.indexOf(content)}',
+      // The caller already knows the index. indexOf was an O(n) identity scan,
+      // and two byte-identical const entries canonicalise to one object, so it
+      // could address the payload at the wrong item.
+      payload: 'adhkar_$contentIndex',
     );
   }
 
@@ -386,8 +383,7 @@ class NotificationService {
       await scheduleDaily(prefs: prefs);
     } else {
       for (int i = 0; i < 30; i++) {
-        await _plugin.cancel(_morningBaseId + i);
-        await _plugin.cancel(_eveningBaseId + i);
+        await _plugin.cancel(_dailyBaseId + i);
       }
     }
   }

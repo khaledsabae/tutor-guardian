@@ -89,6 +89,7 @@ class ChildrenListScreen extends ConsumerWidget {
                     child: c,
                     isActive: c.id == activeId,
                     onSwitch: () => _switchTo(context, ref, c),
+                    onEdit: () => _editChild(context, ref, c),
                     onDelete: () => _deleteChild(context, ref, c),
                     onJourney: () => _openJourney(context, c),
                   ),
@@ -137,6 +138,18 @@ class ChildrenListScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _editChild(
+    BuildContext context,
+    WidgetRef ref,
+    ChildProfile child,
+  ) async {
+    final changed =
+        await Navigator.of(context).push(AppRoutes.editChild(child));
+    if (changed == true) {
+      ref.invalidate(childrenListProvider);
+    }
   }
 
   Future<void> _switchTo(
@@ -259,12 +272,14 @@ class _ChildTile extends StatelessWidget {
     required this.child,
     required this.isActive,
     required this.onSwitch,
+    required this.onEdit,
     required this.onDelete,
     required this.onJourney,
   });
   final ChildProfile child;
   final bool isActive;
   final VoidCallback onSwitch;
+  final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onJourney;
 
@@ -356,6 +371,19 @@ class _ChildTile extends StatelessWidget {
                   visualDensity: VisualDensity.compact,
                   onPressed: onJourney,
                 ),
+              // Rename used to be reachable only from Settings, and only for
+              // the *active* child. A parent standing here looking at a child
+              // still called «طفلي» — onboarding never asks for a name — had
+              // two options, switch or delete. On 2026-08-03 one of them
+              // deleted their child to try to re-add it with a name, and the
+              // empty list then had no add button either.
+              IconButton(
+                icon: const Icon(Icons.edit_outlined,
+                    color: AppTheme.textMuted, size: 20),
+                tooltip: AppLocalizations.of(context).settingsEditChild,
+                visualDensity: VisualDensity.compact,
+                onPressed: onEdit,
+              ),
               IconButton(
                 icon: const Icon(Icons.delete_outline,
                     color: AppTheme.textMuted, size: 20),

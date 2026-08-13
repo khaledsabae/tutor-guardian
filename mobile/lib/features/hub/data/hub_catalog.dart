@@ -86,6 +86,34 @@ final List<HubGroup> kHubGroups = [
       ),
     ],
   ),
+  // Second, not fourth. Games are the smallest stock in the app and the most
+  // re-used thing in it, and they used to sit below `achievements` and
+  // `library` — about 550dp down a ~600dp viewport, so reaching them from here
+  // required scrolling past thirteen other tiles. A parent asked for
+  // "games for the child" in written feedback on 2026-08-01 while four were
+  // already shipping.
+  //
+  // If this moves the needle it should show up as a rising share of
+  // `hub_item_tapped` with group='games'; the pre-2026-08-13 baseline for that
+  // is the only one available, since `hub_opened` was removed as unreliable.
+  HubGroup(
+    id: 'games',
+    title: (l10n) => l10n.hubGroupGames,
+    items: [
+      HubItem(
+        id: 'games',
+        emoji: '🎮',
+        label: (l10n, _) => l10n.educationalGames,
+        route: AppRoutes.games,
+      ),
+      HubItem(
+        id: 'quiz_game',
+        emoji: '❓',
+        label: (l10n, _) => l10n.quizzes,
+        route: AppRoutes.quizGame,
+      ),
+    ],
+  ),
   HubGroup(
     id: 'achievements',
     title: (l10n) => l10n.hubGroupAchievements,
@@ -155,24 +183,6 @@ final List<HubGroup> kHubGroups = [
   // The individual games live behind one entry rather than five tiles: the hub
   // is an index, and five near-identical rows here crowded out everything else
   // in it. GamesScreen is the index for the games themselves.
-  HubGroup(
-    id: 'games',
-    title: (l10n) => l10n.hubGroupGames,
-    items: [
-      HubItem(
-        id: 'games',
-        emoji: '🎮',
-        label: (l10n, _) => l10n.educationalGames,
-        route: AppRoutes.games,
-      ),
-      HubItem(
-        id: 'quiz_game',
-        emoji: '❓',
-        label: (l10n, _) => l10n.quizzes,
-        route: AppRoutes.quizGame,
-      ),
-    ],
-  ),
   HubGroup(
     id: 'help',
     title: (l10n) => l10n.hubGroupHelp,

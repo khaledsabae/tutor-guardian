@@ -93,8 +93,24 @@ class SettingsScreen extends ConsumerWidget {
                     .firstOrNull
                 : envelope.children.firstOrNull;
             if (activeChild == null) {
+              // A bare sentence used to be the whole branch. It is the same
+              // shape of mistake as the empty children list that shipped with
+              // no add button: a state the user can reach, that names the
+              // problem and offers nothing to do about it.
               return Center(
-                child: Text(l10n.settingsNoChild),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(l10n.settingsNoChild),
+                    const SizedBox(height: 16),
+                    OutlinedButton.icon(
+                      onPressed: () =>
+                          Navigator.of(context).push(AppRoutes.childrenList()),
+                      icon: const Icon(Icons.add_circle_outline),
+                      label: Text(l10n.childrenAddNew),
+                    ),
+                  ],
+                ),
               );
             }
             return ListView(
