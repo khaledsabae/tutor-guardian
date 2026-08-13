@@ -184,6 +184,12 @@ v1.0.30+75 دون أن يعترض شيء — لا لأن بوابة فشلت، �
 >
 > قبل الإضافة: `docker exec -w /app tg_backend python ops/scripts/weekly_kb_gap_report.py --dry-run --skip-judge`
 > ثم مرّة بالحكم الحقيقي (`--dry-run` وحده) لقياس الإنفاق قبل جدولته أسبوعيًا.
+>
+> ⚠️ **السكربت يرفض العمل (خروج 2) إن لم يجد `mobile/lib/l10n/app_ar.arb`** — وهو
+> يصل الحاوية عبر bind مضاف في `docker-compose.production.yml`، فأول تشغيل بعد
+> النشر **يحتاج إعادة إنشاء الحاوية** لا `git pull` وحده. الرفض متعمَّد: تقرير بلا
+> استبعاد الاقتراحات الجاهزة يبدو طبيعيًا تمامًا وهو يرتّب أزرار التطبيق كأنها
+> طلب آباء. للتجاوز عن عمد: `--allow-unfiltered`.
 > يحتاج `TELEGRAM_BOT_TOKEN` و`TELEGRAM_CHAT_ID` و`DEEPSEEK_API_KEY` في `.env`
 > — وانتبه أن `weekly_dashboard.py` يقرأ `TELEGRAM_CHAT_ID` وهو **غير موجود في
 > `.env.example`** (الموجود `TELEGRAM_CHANNEL_ID`)، فتحقق من وجوده فعليًا.

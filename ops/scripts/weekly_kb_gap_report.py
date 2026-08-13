@@ -79,21 +79,40 @@ def _normalize(text: str) -> str:
     return " ".join(t.split()).strip()
 
 
-def _suggested_questions() -> set[str]:
-    """The chatQ_* strings shipped in the app, normalized."""
-    if not _ARB.exists():
-        print(f"⚠️  {_ARB} غير موجود — لن تُستبعد الاقتراحات الجاهزة، "
-              "والترتيب سيقيس الأزرار لا المستخدمين.", file=sys.stderr)
-        return set()
-    with open(_ARB, encoding="utf-8") as fh:
+class SuggestionsUnavailable(RuntimeError):
+    """The chatQ_* strings could not be loaded — see _suggested_questions."""
+
+
+def _suggested_questions(arb_path: Path) -> set[str]:
+    """The chatQ_* strings shipped in the app, normalized.
+
+    Raises rather than degrading. The container image does not carry
+    `mobile/`, so this file is present only because the production compose
+    binds it read-only — and if that bind ever goes away, a report built
+    without this filter would look completely normal while ranking the app's
+    own suggestion buttons as if parents had typed them. A missing filter is
+    not a smaller report, it is a wrong one.
+    """
+    if not arb_path.exists():
+        raise SuggestionsUnavailable(
+            f"{arb_path} غير موجود — بلا استبعاد الاقتراحات الجاهزة يقيس "
+            f"التقرير أزرار التطبيق لا المستخدمين. تحقّق من الـbind في "
+            f"docker-compose.production.yml، أو مرّر --arb، أو "
+            f"--allow-unfiltered إن كنت تقبل تقريرًا ملوَّثًا عن عمد."
+        )
+    with open(arb_path, encoding="utf-8") as fh:
         arb = json.load(fh)
-    return {
+    keys = {
         _normalize(v) for k, v in arb.items()
         if k.startswith("chatQ") and isinstance(v, str)
     }
+    if not keys:
+        raise SuggestionsUnavailable(f"{arb_path} لا يحوي مفاتيح chatQ_*.")
+    return keys
 
 
-def collect_questions(days: int) -> tuple[list[dict], dict]:
+def collect_questions(days: int, arb_path: Path,
+                      allow_unfiltered: bool = False) -> tuple[list[dict], dict]:
     """The week's genuine parent questions, plus what was filtered and why."""
     rows = _query(
         """SELECT id, content, domain, created_at
@@ -103,7 +122,13 @@ def collect_questions(days: int) -> tuple[list[dict], dict]:
            ORDER BY id""",
         (f"-{days} days",),
     )
-    suggested = _suggested_questions()
+    try:
+        suggested = _suggested_questions(arb_path)
+    except SuggestionsUnavailable:
+        if not allow_unfiltered:
+            raise
+        print("⚠️  --allow-unfiltered: التقرير يقيس الأزرار أيضًا.", file=sys.stderr)
+        suggested = set()
     kept, n_sugg, n_short = [], 0, 0
     for r in rows:
         norm = _normalize(r["content"])
@@ -333,6 +358,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--max-pairs", type=int, default=400)
     ap.add_argument("--concurrency", type=int, default=5)
     ap.add_argument("--workdir", default="/tmp/kb_gaps")
+    ap.add_argument("--arb", default=str(_ARB),
+                    help="app_ar.arb holding the chatQ_* suggestion strings")
+    ap.add_argument("--allow-unfiltered", action="store_true",
+                    help="run even without the suggestion list (report will be skewed)")
     ap.add_argument("--skip-judge", action="store_true",
                     help="counts only — no retrieval, no DeepSeek spend")
     ap.add_argument("--token", help="Telegram bot token (or env TELEGRAM_BOT_TOKEN)")
@@ -341,7 +370,12 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     print(f"Collecting questions (last {args.days} days) from {_DB}...")
-    questions, filt = collect_questions(args.days)
+    try:
+        questions, filt = collect_questions(
+            args.days, Path(args.arb), args.allow_unfiltered)
+    except SuggestionsUnavailable as exc:
+        print(f"🚨 {exc}", file=sys.stderr)
+        return 2
     print(f"  {filt}")
 
     print("Computing unanswered rate...")
