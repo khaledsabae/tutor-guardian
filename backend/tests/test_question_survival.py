@@ -107,8 +107,10 @@ async def _drain(gen, stop_after: int | None = None) -> list[str]:
     return out
 
 
-@pytest.mark.asyncio
-async def test_interrupted_stream_persists_what_the_parent_saw():
+# لا نعتمد pytest-asyncio: ليس في requirements (الموجود pytest-anyio وهو لا
+# يشغّل `async def` تلقائيًا)، ونجاح هذين محليًا كان بفضل نسخة مثبّتة عالميًا
+# على جهاز واحد. asyncio.run تكفي ولا تضيف اعتمادية.
+def test_interrupted_stream_persists_what_the_parent_saw():
     """المحاكاة الدنيا لبنية event_stream: حفظ داخل finally لا داخل except.
 
     هذا هو جوهر العطب: `except Exception` لا يرى CancelledError ولا
@@ -135,7 +137,7 @@ async def test_interrupted_stream_persists_what_the_parent_saw():
                     persisted.append((text, "interrupted"))
                     store.add_message(sid, "assistant", text, mode="interrupted")
 
-    got = await _drain(event_stream(), stop_after=2)
+    got = asyncio.run(_drain(event_stream(), stop_after=2))
     assert got == ["جزء ", "أول "]
     assert persisted == [("جزء أول", "interrupted")]
 
@@ -149,8 +151,7 @@ async def test_interrupted_stream_persists_what_the_parent_saw():
     assert rows[1]["mode"] == "interrupted"
 
 
-@pytest.mark.asyncio
-async def test_completed_stream_persists_once_not_twice():
+def test_completed_stream_persists_once_not_twice():
     """المسار السليم يحفظ مرة واحدة — حارس `persisted` يمنع صفًا مكررًا."""
     sid = store.create_session("device-test")
     writes: list[str] = []
@@ -174,7 +175,7 @@ async def test_completed_stream_persists_once_not_twice():
             if not persisted:
                 _persist("أب", "interrupted")
 
-    await _drain(event_stream())
+    asyncio.run(_drain(event_stream()))
     assert writes == ["llm_generated"]
 
 
