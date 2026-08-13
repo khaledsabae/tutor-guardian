@@ -37,6 +37,16 @@ async def health_check():
         logger.warning("Health check: ChromaDB not ready — %s", e)
         checks["chromadb"] = f"not_ready: {e}"
 
+    # 3. The reranker's own kill switch. It turns itself off for the life of the
+    # process after repeated slow calls, and it takes the off-topic filter with
+    # it — so the app answers from raw retrieval order with no topic check while
+    # nothing anywhere says so. Degraded, not down: answers still come out.
+    try:
+        from app.services.reranker import is_disabled
+        checks["reranker"] = "disabled_after_strikes" if is_disabled() else "ok"
+    except Exception as e:  # noqa: BLE001
+        checks["reranker"] = f"unknown: {e}"
+
     # Return 500 only if SQLite is broken — ChromaDB degraded is acceptable.
     if "error" in checks.get("sqlite", ""):
         return JSONResponse(status_code=500, content={"status": "down", "checks": checks})

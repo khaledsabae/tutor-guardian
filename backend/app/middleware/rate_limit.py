@@ -121,6 +121,16 @@ def _client_identity(request: Request) -> str:
 def _get_redis_client():
     """Lazy-init Redis client (only if REDIS_URL is set)."""
     if not _REDIS_URL:
+        # Said out loud, once, at startup. Without Redis the daily AI quota
+        # lives in this process's memory: it is not shared with any other
+        # worker and every restart or deploy resets it to zero for every
+        # device. The limit still has a number, it just is not the limit the
+        # number claims to be — and nothing used to say so anywhere.
+        logger.warning(
+            "REDIS_URL is not set — the daily AI quota (%s/device) is per-process "
+            "and resets on every restart. It is not a daily ceiling.",
+            _AI_DAILY_LIMIT,
+        )
         return None
     try:
         import redis.asyncio as aioredis

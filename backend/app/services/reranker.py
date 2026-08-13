@@ -63,6 +63,17 @@ def eager_load_model():
         logger.warning("Failed to eager-load reranker: %s", e)
 
 
+def is_disabled() -> bool:
+    """Has this process switched the reranker off after repeated slow calls?
+
+    Worth asking from outside because the switch takes the off-topic detector
+    down with it (`assistant._off_topic` reads `rerank_score`), and the only
+    trace it left was a single log line. The app kept answering, with raw
+    retrieval order and no topic filter, while every health surface stayed green.
+    """
+    return _disabled
+
+
 def rerank(query: str, candidates: list[dict], top_n: int = 4) -> list[dict]:
     """Score candidates against the query; return the best `top_n`.
 
