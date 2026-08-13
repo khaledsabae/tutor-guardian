@@ -17,22 +17,22 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 import '../../coins/coins_providers.dart';
 import 'edu_game_models.dart';
 import 'edu_game_ui.dart';
 
-/// Factory signature for building a question set for a level.
-typedef EduQuestionBuilder = List<EduQuestion> Function(int level);
-
 /// Shell that hosts the educational mini-game UI for a single domain.
+///
+/// The questions used to arrive as a `switch (level)` over ~600 Dart literals
+/// per game. They are now a JSON pack under `assets/content/games/`, keyed by
+/// [EduGameTheme.id] — so a game supplies a theme and nothing else.
 class EduGameShell extends ConsumerStatefulWidget {
   final EduGameTheme theme;
-  final EduQuestionBuilder questionBuilder;
 
   const EduGameShell({
     super.key,
     required this.theme,
-    required this.questionBuilder,
   });
 
   @override
@@ -41,6 +41,8 @@ class EduGameShell extends ConsumerStatefulWidget {
 
 class _EduGameShellState extends ConsumerState<EduGameShell> {
   EduGameProgress _progress = const EduGameProgress(gameId: '');
+  EduQuestionPack _pack = EduQuestionPack.empty;
+  Object? _packError;
   bool _loading = true;
 
   /// Where this game was entered from, read off the route. See [GameSources].
@@ -73,14 +75,39 @@ class _EduGameShellState extends ConsumerState<EduGameShell> {
     }
   }
 
+  /// Loads progress **and** the question pack behind the spinner this screen
+  /// already showed. `EduQuestionBuilder` was synchronous and `rootBundle` is
+  /// not; preloading here keeps the question path synchronous rather than
+  /// pushing a `Future` down into the runner.
   Future<void> _load() async {
     final progress = await EduGameProgressService.instance.load(widget.theme.id);
+    EduQuestionPack pack = EduQuestionPack.empty;
+    Object? error;
+    try {
+      pack = await EduGameContent.load(widget.theme.id);
+      if (pack.isEmpty) error = StateError('empty pack for ${widget.theme.id}');
+    } catch (e) {
+      // A game whose pack will not load must say so. Falling through to level
+      // selection would hand the player a level that opens onto no questions.
+      error = e;
+    }
     if (mounted) {
       setState(() {
         _progress = progress;
+        _pack = pack;
+        _packError = error;
         _loading = false;
       });
     }
+  }
+
+  Future<void> _retryLoad() async {
+    EduGameContent.resetCacheForTesting();
+    setState(() {
+      _loading = true;
+      _packError = null;
+    });
+    await _load();
   }
 
   Future<void> _save(EduGameProgress progress) async {
@@ -92,7 +119,8 @@ class _EduGameShellState extends ConsumerState<EduGameShell> {
 
   void _play(int level) {
     unawaited(Analytics.gameLevelStarted(widget.theme.id, level, _source));
-    final questions = widget.questionBuilder(level);
+    final questions = _pack.forLevel(level);
+    if (questions.isEmpty) return;
     Navigator.of(context).push(
       AppRoutes.gameRunner(
         theme: widget.theme,
@@ -129,6 +157,18 @@ class _EduGameShellState extends ConsumerState<EduGameShell> {
       return Scaffold(
         backgroundColor: widget.theme.backgroundColor,
         body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_packError != null) {
+      return Scaffold(
+        backgroundColor: widget.theme.backgroundColor,
+        appBar: AppBar(
+          backgroundColor: widget.theme.surfaceColor,
+          foregroundColor: widget.theme.textColor,
+          title: Text(widget.theme.name),
+        ),
+        body: ErrorRetryView(error: _packError!, onRetry: _retryLoad),
       );
     }
 
