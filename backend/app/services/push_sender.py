@@ -97,6 +97,63 @@ def get_fcm_token(device_id: str) -> Optional[str]:
     return row["token"] if row else None
 
 
+def _record_send(device_id: str, kind: str) -> None:
+    """Log one delivered push so senders can ask about the recent past.
+
+    Recorded here rather than in each cron so every future sender inherits the
+    log instead of each one having to remember. Best-effort by design: a
+    logging failure must never turn a delivered notification into an error, and
+    the only cost of a missed row is one extra push later.
+
+    `kind` comes from the payload's `type`, which is the same string the client
+    reports back as `push_tapped(type)` — so the send log and the open log can
+    be joined without a second vocabulary.
+    """
+    try:
+        conn = get_conn()
+        conn.execute(
+            "INSERT INTO push_sends (device_id, kind) VALUES (?, ?)",
+            (device_id, kind),
+        )
+        conn.commit()
+        conn.close()
+    except Exception:  # noqa: BLE001
+        logger.warning("push_sends insert failed for %s/%s", device_id, kind,
+                       exc_info=True)
+
+
+def recently_pushed_since(cutoff_iso: str) -> set[str]:
+    """Device ids that received any push at or after `cutoff_iso`.
+
+    One query for the whole audience rather than one per device: the callers
+    iterate over every device holding a token, and a per-row lookup turns a
+    frequency cap into N queries per run.
+
+    The cutoff is normalised with SQLite's `datetime()` because the two sides
+    are written in different shapes: `sent_at` defaults to `datetime('now')`,
+    which is `YYYY-MM-DD HH:MM:SS`, while callers pass Python's `isoformat()`,
+    which is `YYYY-MM-DDTHH:MM:SS.ffffff`. These are compared as strings, and
+    ' ' (0x20) sorts before 'T' (0x54) — so a send made on the cutoff date
+    itself would be read as older than the cutoff and the device would be
+    pushed again. Only the parameter is wrapped, never the column, so the
+    (device_id, sent_at) index is still usable.
+    """
+    try:
+        conn = get_conn()
+        rows = conn.execute(
+            "SELECT DISTINCT device_id FROM push_sends "
+            "WHERE sent_at >= datetime(?)",
+            (cutoff_iso,),
+        ).fetchall()
+        conn.close()
+        return {r["device_id"] for r in rows}
+    except Exception:  # noqa: BLE001
+        # An unreadable log must not silence the sender entirely — failing open
+        # sends one push too many, failing closed sends none at all.
+        logger.warning("push_sends read failed", exc_info=True)
+        return set()
+
+
 def send_to_device(
     device_id: str,
     title: str,
@@ -108,6 +165,8 @@ def send_to_device(
     Returns {"ok": True, "sent": True, "message_id": ...} on success,
     {"ok": True, "sent": False, "reason": "no_token"} if no token stored,
     {"ok": False, "error": ...} on other failures.
+
+    A successful send is recorded in `push_sends` — see [_record_send].
     """
     if not _ensure_app():
         return {"ok": False, "error": "firebase_credentials_not_configured"}
@@ -131,6 +190,7 @@ def send_to_device(
     )
     try:
         message_id = messaging.send(message, app=_app)
+        _record_send(device_id, (data or {}).get("type", "unknown"))
         return {"ok": True, "sent": True, "message_id": message_id}
     except messaging.UnregisteredError:
         # Token is stale; remove it so we don't retry.

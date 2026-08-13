@@ -166,7 +166,7 @@ v1.0.30+75 دون أن يعترض شيء — لا لأن بوابة فشلت، �
 |---|---|---|---|
 | `0 2 * * *` | `docker-cleanup.sh` (تنظيف صور Docker) | `/var/log/docker-cleanup.log` | مساحة القرص لا تتضخم |
 | `17 3 * * *` | `certbot renew` + إعادة تحميل nginx | لوجات certbot | تاريخ انتهاء الشهادة على الدومين |
-| `0 7,17 * * *` | `cron_push_triggers.py` داخل الحاوية — إشعارات FCM (نصيحة الصباح ≈10 صباحًا القاهرة + إعادة تفاعل المساء ≈8 مساءً؛ حد أقصى 2/جهاز/يوم) | `/var/log/tg-push.log` | إشعار وصل فعليًا لجهاز اختبار |
+| `0 17 * * *` | `cron_push_triggers.py` داخل الحاوية — إشعارات FCM (إعادة تفاعل المساء ≈8 مساءً فقط؛ **حد أقصى 1/جهاز/يوم**، ولا يتكرر للجهاز خلال 3 أيام — `--cap-days`) | `/var/log/tg-push.log` | إشعار وصل فعليًا لجهاز اختبار الساعة 17 UTC، **ولا شيء الساعة 07 صباح اليوم التالي** |
 | `30 2 * * *` | `pregen_stories.py --max 20` — التوليد الليلي المسبق للقصص | `/var/log/tg-story-pregen.log` | صفوف جديدة في كاش القصص |
 | `0 3 * * *` | `warm_answer_cache.py` — تسخين كاش الإجابات بأسئلة الألم الشائعة | `/var/log/tg-cache-warm.log` | نسبة الكاش في `/api/stats/ops-llm` |
 | `30 3 * * *` | `backup_user_data.sh` — باكاب `conversations.db` (sqlite3 online backup + integrity_check، gzip، احتفاظ 14 يومًا) → `/root/tg-backups/` | `/var/log/tg-backup.log` | ملف اليوم موجود **وحجمه منطقي** واسترجاع تجريبي يفتح |

@@ -65,6 +65,27 @@ CREATE INDEX IF NOT EXISTS ix_push_tokens_device
     ON push_tokens (device_id);
 """
 
+# One row per push actually handed to FCM.
+#
+# There was no send log at all, so no sender could ask "have we already
+# bothered this device?". streak_at_risk fires for any device idle >36h and
+# win_back for any idle >5 days, which meant the same permanently-lapsed device
+# got the identical message every single evening, forever. Halving the daily
+# volume does not fix that; a frequency cap does.
+#
+# Deliberately not unique on (device_id, kind): the history is the point, and a
+# cap is a question about the recent past, not a constraint on the table.
+_CREATE_PUSH_SENDS: str = """
+CREATE TABLE IF NOT EXISTS push_sends (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id   TEXT NOT NULL,
+    kind        TEXT NOT NULL,
+    sent_at     TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS ix_push_sends_device_time
+    ON push_sends (device_id, sent_at);
+"""
+
 _CREATE_USER_BACKUPS: str = """
 CREATE TABLE IF NOT EXISTS user_backups (
     device_id   TEXT PRIMARY KEY,
@@ -294,6 +315,7 @@ def init_db() -> None:
     _ensure_child_challenges_table(conn)
     _ensure_referrals_table(conn)
     _ensure_push_tokens_table(conn)
+    _ensure_push_sends_table(conn)
     _ensure_parent_identities_table(conn)
     _ensure_daily_login_streaks_table(conn)
     _ensure_api_tokens_columns(conn)
@@ -612,6 +634,17 @@ def _ensure_push_tokens_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_PUSH_TOKENS)
+
+
+def _ensure_push_sends_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the push_sends frequency log."""
+    try:
+        cur = conn.execute("PRAGMA table_info(push_sends)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_PUSH_SENDS)
 
 
 def _ensure_parent_identities_table(conn: sqlite3.Connection) -> None:
