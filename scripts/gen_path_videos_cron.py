@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
-"""Cron-safe path-video generator (NotebookLM, ar_eg).
+"""Cron-safe path-video generator (NotebookLM video overviews), any language.
+
+    python3 scripts/gen_path_videos_cron.py               # Arabic (ar_eg)
+    python3 scripts/gen_path_videos_cron.py --lang en     # English (en_us)
+    python3 scripts/gen_path_videos_cron.py --lang en --dry-run
+
+Language touches four things and all four move together: the `--language` value
+passed to the CLI, the filename tag, the state/manifest key, and the prompt.
+Miss the filename and an English run inspects the Arabic video, judges it
+complete and skips every path; miss the key and it reads the Arabic run's
+"done" as its own. Naming comes from backend/app/media_naming.py so the API
+cannot disagree with what lands on disk.
 
 Designed to be invoked repeatedly by cron over several days until every path
 in the mapping owns a real video. Unlike generate_missing_path_videos.py this
@@ -21,11 +32,12 @@ Idempotent & duplicate-safe:
     downloads/uploads (e.g. rsync to VPS) never confuse it.
   * Failures are counted only when the video is still missing.
 
-State:
+State (keys are the bare path_id for Arabic, `<path_id>@<lang>` otherwise, so
+the existing Arabic state files keep resolving untouched):
   scratch/path_source_mapping_new.json  (input: [{path_id,title,source_id}])
-  scratch/path_video_tasks.json         (in-flight {path_id: task_id})
-  scratch/path_video_failures.json      ({path_id: consecutive_failure_count})
-  scratch/path_video_manifest.json      ({path_id: {completed_at, size_bytes, ...}})
+  scratch/path_video_tasks.json         (in-flight {key: task_id})
+  scratch/path_video_failures.json      ({key: consecutive_failure_count})
+  scratch/path_video_manifest.json      ({key: {completed_at, size_bytes, ...}})
 """
 import asyncio
 import json
@@ -36,25 +48,65 @@ import time
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE / "backend"))
+from app.media_naming import (  # noqa: E402
+    MIN_VIDEO_BYTES, SOURCE_LANG, VIDEO_CLI_LANG, path_video_rel,
+)
+
 CLI = str(BASE / "notebooklm_env" / "bin" / "notebooklm")
 VIDEOS_DIR = BASE / "docs" / "path_videos"
 MAP_FILE = BASE / "scratch" / "path_source_mapping_new.json"
 STATE_FILE = BASE / "scratch" / "path_video_tasks.json"
 FAILS_FILE = BASE / "scratch" / "path_video_failures.json"
 MANIFEST_FILE = BASE / "scratch" / "path_video_manifest.json"
-MIN_SIZE = 5 * 1024 * 1024
+MIN_SIZE = MIN_VIDEO_BYTES
 MAX_FAILS = 3  # stop re-triggering a path after this many hard failures
 POLL_BUDGET_SEC = 22 * 60  # bounded polling per run; cron retries the rest
 ENV = {**os.environ, "HOME": "/home/khalednew"}
 DRY_RUN = "--dry-run" in sys.argv
 
+
+def _arg_lang() -> str:
+    """`--lang en`. Defaults to Arabic, so existing cron lines are unaffected."""
+    if "--lang" in sys.argv:
+        value = sys.argv[sys.argv.index("--lang") + 1]
+        if value not in VIDEO_CLI_LANG:
+            sys.exit(f"❌ unknown --lang {value!r}; known: {sorted(VIDEO_CLI_LANG)}")
+        return value
+    return SOURCE_LANG
+
+
+LANG = _arg_lang()
+
 NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
-PROMPT = (
-    "أنشئ فيديو تعريفي قصير وممتع (~5 دقائق) باللهجة المصرية كعرض تمهيدي لمسار '{title}'. "
-    "اشرح للأمهات والآباء بأسلوب دافئ وعملي أهم الأهداف التربوية لهذا المسار، والخطوات العملية "
-    "الرئيسية التي سيتعلمونها، ورسالة تربوية أو لفتة إيمانية تدعم المنهج. اجعل النبرة ودودة "
-    "ومقنعة كأنك صديق عائلي ينصحهم بلطف."
-)
+
+# 🚨 The English prompt is WRITTEN, not translated. The Arabic one asks for
+# «اللهجة المصرية» — Egyptian dialect — and translating that instruction asks an
+# English narrator to speak Egyptian. What carries over is the intent (a warm
+# family friend, ~5 minutes, goals → practical steps → a faith-rooted note),
+# not the words. The audience differs too: an English-reading Muslim parent
+# shares the religious frame but not the dialect register.
+PROMPTS = {
+    "ar": (
+        "أنشئ فيديو تعريفي قصير وممتع (~5 دقائق) باللهجة المصرية كعرض تمهيدي لمسار '{title}'. "
+        "اشرح للأمهات والآباء بأسلوب دافئ وعملي أهم الأهداف التربوية لهذا المسار، والخطوات العملية "
+        "الرئيسية التي سيتعلمونها، ورسالة تربوية أو لفتة إيمانية تدعم المنهج. اجعل النبرة ودودة "
+        "ومقنعة كأنك صديق عائلي ينصحهم بلطف."
+    ),
+    "en": (
+        "Create a short, engaging introductory video (~5 minutes) in clear English "
+        "as an opening overview of the '{title}' journey. Speak to Muslim mothers "
+        "and fathers who read English and share the same religious frame of "
+        "reference — use Islamic vocabulary (tarbiyah, fitrah, rifq) rather than "
+        "secular approximations, and keep honorifics where they belong. Cover the "
+        "main parenting goals of this journey, the practical steps parents will "
+        "learn, and close on a faith-rooted reflection that grounds the approach. "
+        "Keep the tone warm, direct and practical — a family friend giving gentle "
+        "advice, not a lecture. Never paraphrase or soften a hadith or a Qur'anic "
+        "verse; if you quote one, render it faithfully and keep its attribution."
+    ),
+}
+PROMPT = PROMPTS[LANG]
 
 
 async def _run(*cmd, timeout=180):
@@ -70,7 +122,18 @@ async def _run(*cmd, timeout=180):
 
 
 def _vid_path(path_id):
-    return VIDEOS_DIR / f"{path_id}_ar_eg.mp4"
+    return BASE / path_video_rel(path_id, LANG)
+
+
+def _key(path_id):
+    """State/manifest/failure key.
+
+    Arabic keeps the bare path_id so path_video_manifest.json,
+    path_video_tasks.json and path_video_failures.json keep resolving exactly
+    as they do today; other languages are namespaced so an English run cannot
+    read an Arabic run's "done" as its own.
+    """
+    return path_id if LANG == SOURCE_LANG else f"{path_id}@{LANG}"
 
 
 def _has_video(path_id):
@@ -93,15 +156,17 @@ def _save_manifest(manifest):
 def _register_done(path_id, task_id=None, source_id=None):
     """Record that a path is finished. This is the authoritative DONE gate."""
     manifest = _load_manifest()
-    entry = manifest.get(path_id, {})
+    key = _key(path_id)
+    entry = manifest.get(key, {})
     entry.update({
         "completed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "language": LANG,
         "video_path": str(_vid_path(path_id)),
         "size_bytes": _vid_path(path_id).stat().st_size,
         "task_id": task_id or entry.get("task_id"),
         "source_id": source_id or entry.get("source_id"),
     })
-    manifest[path_id] = entry
+    manifest[key] = entry
     _save_manifest(manifest)
 
 
@@ -109,8 +174,7 @@ def _is_done(path_id):
     """DONE means file exists on disk AND recorded in manifest."""
     if not _has_video(path_id):
         return False
-    manifest = _load_manifest()
-    return path_id in manifest
+    return _key(path_id) in _load_manifest()
 
 
 def _sync_manifest_from_disk(mapping):
@@ -122,7 +186,7 @@ def _sync_manifest_from_disk(mapping):
     changed = False
     source_by_path = {t["path_id"]: t["source_id"] for t in mapping}
     for path_id in source_by_path:
-        if _has_video(path_id) and path_id not in manifest:
+        if _has_video(path_id) and _key(path_id) not in manifest:
             _register_done(path_id, task_id=None, source_id=source_by_path[path_id])
             changed = True
     return changed
@@ -133,7 +197,8 @@ async def trigger(source_id, title, path_id):
         print(f"[trigger] {path_id}: DRY RUN — would trigger source {source_id}")
         return "DRYRUN"
     code, out, err = await _run(
-        CLI, "generate", "video", "-n", NOTEBOOK_ID, "--language", "ar_eg", "-s", source_id,
+        CLI, "generate", "video", "-n", NOTEBOOK_ID,
+        "--language", VIDEO_CLI_LANG[LANG], "-s", source_id,
         PROMPT.format(title=title)
     )
     blob = out + err
@@ -172,8 +237,8 @@ async def main():
     for path_id, task_id in list(state.items()):
         if _is_done(path_id):
             print(f"[poll] {path_id}: already done on disk — dropping stale in-flight task")
-            state.pop(path_id, None)
-            fails.pop(path_id, None)
+            state.pop(_key(path_id), None)
+            fails.pop(_key(path_id), None)
             continue
         st = await poll(task_id)
         print(f"[poll] {path_id}: {st}")
@@ -182,12 +247,12 @@ async def main():
                 print(f"  ✓ downloaded {path_id}")
                 source_id = next((t["source_id"] for t in mapping if t["path_id"] == path_id), None)
                 _register_done(path_id, task_id=task_id, source_id=source_id)
-                state.pop(path_id, None)
-                fails.pop(path_id, None)
+                state.pop(_key(path_id), None)
+                fails.pop(_key(path_id), None)
         elif st == "failed":
-            state.pop(path_id, None)  # genuine failure — allow re-trigger unless now done
+            state.pop(_key(path_id), None)  # genuine failure — allow re-trigger unless now done
             if not _is_done(path_id):
-                fails[path_id] = fails.get(path_id, 0) + 1
+                fails[_key(path_id)] = fails.get(_key(path_id), 0) + 1
         # "error"/auth-expiry: keep the task and retry next run (do NOT drop)
 
     # 2) trigger paths that have no video and no in-flight task
@@ -196,10 +261,10 @@ async def main():
         source_id = t["source_id"]
         if _is_done(path_id):
             continue
-        if path_id in state:
+        if _key(path_id) in state:
             continue
-        if fails.get(path_id, 0) >= MAX_FAILS:
-            print(f"[trigger] {path_id}: skipped — {fails[path_id]} hard failures; needs manual root-cause before retry")
+        if fails.get(_key(path_id), 0) >= MAX_FAILS:
+            print(f"[trigger] {path_id}: skipped — {fails[_key(path_id)]} hard failures; needs manual root-cause before retry")
             continue
         tid = await trigger(source_id, t["title"], path_id)
         if tid == "RATELIMIT":
@@ -209,7 +274,7 @@ async def main():
             continue
         if tid:
             print(f"[trigger] {path_id}: task {tid}")
-            state[path_id] = tid
+            state[_key(path_id)] = tid
             await asyncio.sleep(5)
         else:
             print(f"[trigger] {path_id}: no task id")
@@ -226,22 +291,22 @@ async def main():
                 print(f"  ✓ downloaded {path_id}")
                 source_id = next((t["source_id"] for t in mapping if t["path_id"] == path_id), None)
                 _register_done(path_id, task_id=task_id, source_id=source_id)
-                state.pop(path_id, None)
-                fails.pop(path_id, None)
+                state.pop(_key(path_id), None)
+                fails.pop(_key(path_id), None)
             elif st == "failed":
-                state.pop(path_id, None)
+                state.pop(_key(path_id), None)
                 if _is_done(path_id):
                     print(f"  ✓ {path_id} already done on disk — ignoring stale failure")
-                    fails.pop(path_id, None)
+                    fails.pop(_key(path_id), None)
                 else:
                     print(f"  ✗ {path_id} permanently failed")
-                    fails[path_id] = fails.get(path_id, 0) + 1
+                    fails[_key(path_id)] = fails.get(_key(path_id), 0) + 1
             # "pending", "error" (auth expiry / transient): keep in state, retry next run
         STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
 
     FAILS_FILE.write_text(json.dumps(fails, ensure_ascii=False, indent=2), encoding="utf-8")
     done = sum(1 for t in mapping if _is_done(t["path_id"]))
-    benched = sum(1 for t in mapping if fails.get(t["path_id"], 0) >= MAX_FAILS and not _is_done(t["path_id"]))
+    benched = sum(1 for t in mapping if fails.get(_key(t["path_id"]), 0) >= MAX_FAILS and not _is_done(t["path_id"]))
     print(f"\n[summary] videos done: {done}/{len(mapping)} | in-flight: {len(state)} | benched (>= {MAX_FAILS} fails): {benched}")
 
 

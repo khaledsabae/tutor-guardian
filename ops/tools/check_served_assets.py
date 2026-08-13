@@ -30,6 +30,12 @@ from collections import defaultdict
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# The API derives a file's language the same way. Importing rather than
+# re-deriving is the point: the two disagreeing is the defect this check exists
+# to catch, so it must not carry its own second opinion.
+sys.path.insert(0, os.path.join(REPO_ROOT, "backend"))
+from app.media_naming import language_of_filename  # noqa: E402
+
 
 def _md5(path, chunk=1 << 20):
     h = hashlib.md5()
@@ -49,6 +55,69 @@ def _references(lessons):
                 ref = entry.get("file")
                 if ref:
                     yield lid, kind, ref
+
+
+def _language_claims(lessons):
+    """Yield (lesson_id, kind, relative_path, declared_language)."""
+    for lesson in lessons:
+        lid = lesson.get("lesson_id")
+        assets = lesson.get("assets") or {}
+        for kind in ("podcasts", "videos"):
+            for entry in assets.get(kind) or []:
+                if entry.get("file"):
+                    yield (lid, kind, entry["file"],
+                           (entry.get("language") or "").strip().lower())
+
+
+def _base_lang(code):
+    """'ar_eg' → 'ar', 'en-US' → 'en'.
+
+    Podcast entries declare `ar` and video entries declare `ar_eg`; both mean
+    Arabic. Comparing the raw strings flags all 102 video entries as defects,
+    which on a blocking deploy gate would stop every deploy over a naming
+    convention that was never wrong.
+    """
+    return (code or "").strip().lower().replace("-", "_").split("_")[0]
+
+
+def find_language_mismatches(claims):
+    """Entries whose declared `language` disagrees with their filename tag.
+
+    This is the check that would have caught `docs/lesson_01_podcast.mp3` —
+    37.8 MB of Arabic with no language key, which the loader's old heuristic
+    read as English and served to English users. The index and the filename are
+    two sources of truth for the same fact; nothing compared them.
+    """
+    out = []
+    for lid, kind, ref, declared in claims:
+        from_name = language_of_filename(ref)
+        if not declared:
+            out.append((lid, kind, ref, "(none)", from_name))
+        elif _base_lang(declared) != _base_lang(from_name):
+            out.append((lid, kind, ref, declared, from_name))
+    return out
+
+
+def find_duplicate_languages(lessons):
+    """A lesson claiming the same language twice for one kind.
+
+    A writer that appended where it should have replaced. The reverse mistake —
+    `assets["podcasts"] = [...]`, which regen_podcasts.py does — silently drops
+    the other language instead, and shows up as a coverage gap rather than here.
+    """
+    out = []
+    for lesson in lessons:
+        lid = lesson.get("lesson_id")
+        assets = lesson.get("assets") or {}
+        for kind in ("podcasts", "videos"):
+            seen = defaultdict(list)
+            for entry in assets.get(kind) or []:
+                if entry.get("file"):
+                    seen[language_of_filename(entry["file"])].append(entry["file"])
+            for lang, files in seen.items():
+                if len(files) > 1:
+                    out.append((lid, kind, lang, sorted(files)))
+    return out
 
 
 def find_missing(root, refs):
@@ -109,12 +178,6 @@ def main():
     refs = list(_references(lessons))
 
     present = sum(1 for _l, _k, r in refs if os.path.exists(os.path.join(args.root, r)))
-    if present == 0:
-        # A container image built with .dockerignore stripping media, or a bare
-        # clone. Nothing to verify here — the structural invariants are covered
-        # by backend/tests/test_lesson_index_integrity.py.
-        print(f"SKIP: no media present under {args.root}/docs — nothing to verify")
-        return 0
 
     print("=" * 68)
     print("  SERVED ASSETS CHECK — فحص الملفات التي يقدّمها الخادم فعليًا")
@@ -123,6 +186,42 @@ def main():
     print(f"  references: {len(refs)}  present: {present}")
 
     problems = 0
+
+    # ── Index-only checks ──
+    # These run on every host, including one whose media was stripped by
+    # .dockerignore — a mislabelled entry is a data defect, and the container
+    # that would serve it is exactly the host that cannot see the file.
+    mismatches = find_language_mismatches(_language_claims(lessons))
+    if mismatches:
+        problems += len(mismatches)
+        print(f"\n  ❌ DECLARED LANGUAGE ≠ FILENAME — {len(mismatches)} entry(ies)")
+        for lid, kind, ref, declared, from_name in mismatches:
+            print(f"     {lid} · {kind} · declared={declared} filename={from_name}")
+            print(f"        {ref}")
+    else:
+        print("\n  ✅ every entry's language matches its filename")
+
+    dupes = find_duplicate_languages(lessons)
+    if dupes:
+        problems += len(dupes)
+        print(f"  ❌ SAME LANGUAGE CLAIMED TWICE — {len(dupes)} case(s)")
+        for lid, kind, lang, files in dupes:
+            print(f"     {lid} · {kind} · {lang}: {', '.join(files)}")
+    else:
+        print("  ✅ no lesson claims one language twice")
+
+    # ── On-disk checks ──
+    if present == 0:
+        # A container image built with .dockerignore stripping media, or a bare
+        # clone. The remaining invariants need the files themselves.
+        print("\n  ⏭  no media present — skipping on-disk checks")
+        print()
+        if problems and not args.warn_only:
+            print(f"  ❌ {problems} problem(s) — blocking")
+            return 1
+        if problems:
+            print(f"  🟡 {problems} problem(s) — warn-only, not blocking")
+        return 0
 
     missing = find_missing(args.root, refs)
     if missing:

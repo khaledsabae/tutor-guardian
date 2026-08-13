@@ -1,0 +1,217 @@
+#!/usr/bin/env python3
+"""Cron-safe podcast generator (NotebookLM audio overviews), any language.
+
+Mirror of gen_path_videos_cron.py but for audio. Idempotent (skips lessons whose
+podcast already exists **in the requested language**), persists in-flight task
+ids across runs, and never infinite-loops on the daily quota — so cron drains
+the backlog over days, then the wrapper self-disables.
+
+    python3 scripts/gen_podcasts_cron.py              # Arabic (default)
+    python3 scripts/gen_podcasts_cron.py --lang en
+    python3 scripts/gen_podcasts_cron.py --lang en --dry-run
+
+Input : source_to_lesson.json      ({source_id: [age, topic, lesson_id]})
+State : scratch/podcast_tasks.json  ({state_key: task_id})
+
+Two bugs this file exists to fix
+--------------------------------
+1. **The cron has been calling a file that does not exist.** `b704d67` moved
+   this script to `scripts/archive/` and `cron_gen_podcasts.sh:25` was never
+   updated. The wrapper is `set -u`, not `set -e`, so python exits 2, the log
+   faithfully records `gen exit 2`, and the rsync and self-disable blocks run
+   anyway — a cron that looks healthy and generates nothing. The archived copy
+   is doubly broken: its `BASE = parent.parent` resolves to `scripts/` from
+   inside `archive/`, so every path it builds is wrong.
+
+2. **Language was hard-coded in ten files and never a parameter.** The skip
+   predicate keyed off the Arabic filename, so an English run would inspect the
+   Arabic podcast, judge it complete, skip all 170 lessons, and exit 0 having
+   produced nothing.
+
+Naming and thresholds come from `backend/app/media_naming.py` so the API and
+this script cannot drift apart on where a file lives or when it is finished.
+"""
+import argparse
+import asyncio
+import json
+import os
+import re
+import sys
+import time
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(BASE / "backend"))
+from app.media_naming import (  # noqa: E402
+    AUDIO_CLI_LANG, MIN_PODCAST_BYTES, SOURCE_LANG, podcast_rel,
+)
+
+CLI = str(BASE / "notebooklm_env" / "bin" / "notebooklm")
+MAP_FILE = BASE / "source_to_lesson.json"
+STATE_FILE = BASE / "scratch" / "podcast_tasks.json"
+POLL_BUDGET_SEC = 22 * 60
+ENV = {**os.environ, "HOME": os.environ.get("HOME", "/home/khalednew")}
+
+
+async def _run(*cmd, timeout=180):
+    proc = await asyncio.create_subprocess_exec(
+        *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, env=ENV)
+    try:
+        out, err = await asyncio.wait_for(proc.communicate(), timeout=timeout)
+    except asyncio.TimeoutError:
+        proc.kill()
+        return 1, "", "timeout"
+    return proc.returncode, out.decode(), err.decode()
+
+
+def _pod_path(lesson_id: str, lang: str) -> Path:
+    return BASE / podcast_rel(lesson_id, lang)
+
+
+def _has_pod(lesson_id: str, lang: str) -> bool:
+    f = _pod_path(lesson_id, lang)
+    return f.exists() and f.stat().st_size > MIN_PODCAST_BYTES
+
+
+def _state_key(lesson_id: str, lang: str) -> str:
+    """Arabic keeps the bare lesson id so the existing state file still resolves;
+    other languages are namespaced so two runs cannot claim the same slot."""
+    return lesson_id if lang == SOURCE_LANG else f"{lesson_id}@{lang}"
+
+
+def _split_key(key: str) -> tuple[str, str]:
+    return tuple(key.split("@", 1)) if "@" in key else (key, SOURCE_LANG)
+
+
+def _load(p: Path, default):
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else default
+
+
+def _targets() -> list[tuple[str, str]]:
+    """Every source-mapped lesson as (lesson_id, source_id).
+
+    The sources are already registered in the notebook — 169 of them — so a
+    second language is a re-trigger against an existing source, not an upload.
+    """
+    out = []
+    for sid, meta in _load(MAP_FILE, {}).items():
+        if isinstance(meta, list) and len(meta) >= 3 and meta[2]:
+            out.append((meta[2], sid))
+    return out
+
+
+async def trigger(source_id: str, lang: str):
+    code, out, err = await _run(
+        CLI, "generate", "audio", "--language", AUDIO_CLI_LANG[lang], "-s", source_id)
+    blob = out + err
+    if "RateLimit" in blob or "quota" in blob.lower():
+        return "RATELIMIT"
+    m = re.search(r"(?:Task|Started):\s*([a-fA-F0-9\-]+)", blob)
+    return m.group(1) if m else None
+
+
+async def poll(task_id: str):
+    code, out, err = await _run(CLI, "artifact", "poll", task_id, "--json", timeout=90)
+    if code != 0:
+        return "error"
+    try:
+        return json.loads(out).get("status", "error")
+    except Exception:
+        return "error"
+
+
+async def download(task_id: str, out_path: Path) -> bool:
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    await _run(CLI, "download", "audio", "--artifact", task_id, str(out_path), "--force")
+    if not (out_path.exists() and out_path.stat().st_size > MIN_PODCAST_BYTES):
+        return False
+    # Generators create media 0600; the container runs as uid 10001 against a
+    # host bind mount, so 0600 is unreadable in production — the 2026-07-27
+    # outage. rsync --chmod fixes the copy; this fixes the original.
+    out_path.chmod(0o644)
+    return True
+
+
+async def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--lang", default=SOURCE_LANG, choices=sorted(AUDIO_CLI_LANG))
+    ap.add_argument("--limit", type=int, help="cap triggers this run")
+    ap.add_argument("--dry-run", action="store_true")
+    args = ap.parse_args()
+    lang = args.lang
+
+    targets = _targets()
+    missing = [(lid, sid) for lid, sid in targets if not _has_pod(lid, lang)]
+    print(f"🎙  lang={lang} ({AUDIO_CLI_LANG[lang]}) · {len(targets)} lessons · "
+          f"{len(missing)} missing · min={MIN_PODCAST_BYTES // 1024}KB")
+
+    if args.dry_run:
+        for lid, sid in missing[:args.limit or len(missing)]:
+            print(f"  [dry-run] {lid} → {podcast_rel(lid, lang)}  (source {sid})")
+        return
+
+    state = _load(STATE_FILE, {})
+
+    # 1) resolve in-flight tasks — only this language's
+    for key, tid in list(state.items()):
+        lid, klang = _split_key(key)
+        if klang != lang:
+            continue
+        if _has_pod(lid, lang):
+            state.pop(key, None)
+            continue
+        st = await poll(tid)
+        print(f"[poll] {lid}: {st}")
+        if st == "completed" and await download(tid, _pod_path(lid, lang)):
+            print(f"  ✓ downloaded {lid}")
+            state.pop(key, None)
+        elif st == "failed":
+            state.pop(key, None)
+        # "error"/auth-expiry: keep for next run
+
+    # 2) trigger pending — one rate-limit ends the run; cron resumes
+    triggered = 0
+    for lid, sid in targets:
+        if args.limit and triggered >= args.limit:
+            break
+        key = _state_key(lid, lang)
+        if _has_pod(lid, lang) or key in state:
+            continue
+        tid = await trigger(sid, lang)
+        if tid == "RATELIMIT":
+            print(f"[trigger] {lid}: rate-limited — retry next run")
+            break
+        if tid:
+            print(f"[trigger] {lid}: task {tid}")
+            state[key] = tid
+            triggered += 1
+            await asyncio.sleep(5)
+        else:
+            print(f"[trigger] {lid}: no task id")
+
+    STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # 3) bounded poll of freshly-triggered tasks
+    deadline = time.time() + POLL_BUDGET_SEC
+    while any(_split_key(k)[1] == lang for k in state) and time.time() < deadline:
+        await asyncio.sleep(45)
+        for key, tid in list(state.items()):
+            lid, klang = _split_key(key)
+            if klang != lang:
+                continue
+            st = await poll(tid)
+            if st == "completed" and await download(tid, _pod_path(lid, lang)):
+                print(f"  ✓ downloaded {lid}")
+                state.pop(key, None)
+            elif st == "failed":
+                state.pop(key, None)
+        STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    done = sum(1 for lid, _ in targets if _has_pod(lid, lang))
+    inflight = sum(1 for k in state if _split_key(k)[1] == lang)
+    print(f"\n[summary] {lang}: {done}/{len(targets)} done · {inflight} in-flight")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
