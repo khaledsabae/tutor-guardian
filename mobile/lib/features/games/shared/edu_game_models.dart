@@ -8,6 +8,7 @@ library;
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Difficulty tier for a level.
@@ -121,6 +122,14 @@ class EduQuestion {
 
 /// One answer option for an educational question.
 class EduOption {
+  /// Stable, position-independent handle — `a`..`d`.
+  ///
+  /// Which option is right must not be a matter of where it sits in the list.
+  /// A translated pack carries `key` + text and **no** `isCorrect`: correctness
+  /// stays in the canonical Arabic pack and is merged in by key, so a
+  /// translator reordering options — or a merge that drops one — cannot move
+  /// the right answer.
+  final String key;
   final String text;
   final bool isCorrect;
   final String rationale;
@@ -128,8 +137,89 @@ class EduOption {
   const EduOption({
     required this.text,
     required this.isCorrect,
+    this.key = '',
     this.rationale = '',
   });
+}
+
+/// One game's questions, loaded from `assets/content/games/<game>.ar.json`.
+///
+/// Levels are a lookup, not a `switch`: the pack is data now, so an absent
+/// level falls back to level 1 exactly as the old `default:` arm did.
+class EduQuestionPack {
+  final String game;
+  final Map<int, List<EduQuestion>> _byLevel;
+
+  const EduQuestionPack._(this.game, this._byLevel);
+
+  static const empty = EduQuestionPack._('', <int, List<EduQuestion>>{});
+
+  List<EduQuestion> forLevel(int level) =>
+      _byLevel[level] ?? _byLevel[1] ?? const <EduQuestion>[];
+
+  bool get isEmpty => _byLevel.isEmpty;
+
+  int get questionCount =>
+      _byLevel.values.fold(0, (sum, qs) => sum + qs.length);
+
+  factory EduQuestionPack.fromJson(Map<String, dynamic> json) {
+    final game = json['game'] as String? ?? '';
+    final byLevel = <int, List<EduQuestion>>{};
+    for (final raw in (json['levels'] as List<dynamic>? ?? const [])) {
+      final level = raw as Map<String, dynamic>;
+      final number = (level['level'] as num).toInt();
+      byLevel[number] = [
+        for (final q in (level['questions'] as List<dynamic>? ?? const []))
+          _questionFromJson(q as Map<String, dynamic>),
+      ];
+    }
+    return EduQuestionPack._(game, byLevel);
+  }
+
+  static EduQuestion _questionFromJson(Map<String, dynamic> q) => EduQuestion(
+        id: q['id'] as String,
+        question: q['question'] as String,
+        emoji: q['emoji'] as String?,
+        category: q['category'] as String?,
+        context: q['context'] as String?,
+        options: [
+          for (final o in (q['options'] as List<dynamic>? ?? const []))
+            EduOption(
+              key: (o as Map<String, dynamic>)['key'] as String? ?? '',
+              text: o['text'] as String,
+              // Absent means "not stated here" — a translated pack. Until the
+              // merge lands, an option with no verdict is not the right one;
+              // silently promoting it would mark a wrong answer correct.
+              isCorrect: o['is_correct'] as bool? ?? false,
+              rationale: o['rationale'] as String? ?? '',
+            ),
+        ],
+      );
+}
+
+/// Loads and caches the four question packs.
+///
+/// One read per pack per process: `EduGameShell` preloads inside the `_load()`
+/// that already shows a spinner, so nothing on the question path is async.
+class EduGameContent {
+  EduGameContent._();
+
+  static final Map<String, EduQuestionPack> _cache = {};
+
+  static String assetPath(String game) => 'assets/content/games/$game.ar.json';
+
+  /// Visible for tests; also lets a failed load be retried.
+  static void resetCacheForTesting() => _cache.clear();
+
+  static Future<EduQuestionPack> load(String game) async {
+    final cached = _cache[game];
+    if (cached != null) return cached;
+    final raw = await rootBundle.loadString(assetPath(game));
+    final pack =
+        EduQuestionPack.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+    _cache[game] = pack;
+    return pack;
+  }
 }
 
 /// Result of a single play session.

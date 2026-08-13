@@ -39,7 +39,10 @@ class QuranMemorizationScreen extends ConsumerWidget {
     if (!wasFirst) return;
 
     // First surah ever → log the spiritual milestone + celebrate once.
-    final m = spiritualMilestones.firstWhere((x) => x.key == 'first_surah');
+    // Null only if the milestone pack failed to load; the surah is already
+    // recorded either way, so skip the badge rather than throw over it.
+    final m = spiritualMilestone('first_surah');
+    if (m == null) return;
     await ref.read(childJourneyProvider(childId).notifier).log(
           key: m.key,
           title: m.title,

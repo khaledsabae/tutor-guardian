@@ -160,10 +160,26 @@ class NotificationService {
 
     if (payload.startsWith('adhkar_')) {
       unawaited(Analytics.localNotificationOpen('adhkar'));
-      final idx = int.tryParse(payload.substring(7));
-      if (idx != null && idx >= 0 && idx < familyAdhkar.length) {
-        final content = familyAdhkar[idx];
-        _showTipDialog(content);
+      final suffix = payload.substring(7);
+
+      // Legacy payloads are a bare list index. Builds up to v1.0.39 scheduled
+      // 14 days ahead with `adhkar_$index`, and the OS keeps that queue across
+      // an app update, so those notifications are still in flight when this
+      // build lands. Resolve them the old way for one release, then delete
+      // this branch — an index is exactly what stopped being trustworthy.
+      final legacyIndex = int.tryParse(suffix);
+      if (legacyIndex != null) {
+        if (legacyIndex >= 0 && legacyIndex < familyAdhkar.length) {
+          _showTipDialog(familyAdhkar[legacyIndex]);
+        }
+        return;
+      }
+
+      for (final content in familyAdhkar) {
+        if (content.id == suffix) {
+          _showTipDialog(content);
+          return;
+        }
       }
     }
   }
@@ -327,7 +343,6 @@ class NotificationService {
         scheduledDate: base.add(Duration(days: dayOffset)),
         title: _titleFor(familyAdhkar[idx]),
         content: familyAdhkar[idx],
-        contentIndex: idx,
       );
     }
   }
@@ -345,7 +360,6 @@ class NotificationService {
     required tz.TZDateTime scheduledDate,
     required String title,
     required ParentingContent content,
-    required int contentIndex,
   }) async {
     const androidDetails = AndroidNotificationDetails(
       'parenting_content_channel',
@@ -366,10 +380,14 @@ class NotificationService {
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      // The caller already knows the index. indexOf was an O(n) identity scan,
-      // and two byte-identical const entries canonicalise to one object, so it
-      // could address the payload at the wrong item.
-      payload: 'adhkar_$contentIndex',
+      // The item's stable id, never its position. This queue runs 14 days
+      // ahead and the OS keeps it across app updates, so a payload that means
+      // "whatever is at index 137" is a promise the next release cannot keep:
+      // adding one verse to the pack shifts every item below it, and a
+      // notification that displayed one ayah would open another. Ids are
+      // assigned once and never recomputed — see
+      // assets/content/adhkar/family_adhkar.ar.json.
+      payload: 'adhkar_${content.id}',
     );
   }
 

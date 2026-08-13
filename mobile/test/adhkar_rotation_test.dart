@@ -28,10 +28,21 @@ import 'package:almorabbi/features/adhkar/data/family_adhkar.dart';
 int indexForDay(int epochDay, int dayOffset, int poolSize) =>
     (epochDay + dayOffset) % poolSize;
 
+/// Mirrors the payload `_scheduleSpecific` writes and the suffix
+/// `_handleNotificationTap` reads back off it.
+String payloadFor(ParentingContent content) => 'adhkar_${content.id}';
+
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  // The pool is an asset pack now. `main()` awaits this before
+  // `NotificationService.init()`, which schedules out of it.
+  setUpAll(() async => FamilyAdhkar.load());
+
   // One pool: the whole list, unfiltered. That is what makes every item
-  // reachable from a single daily slot.
-  final pool = familyAdhkar.length;
+  // reachable from a single daily slot. `late` because the pack is loaded in
+  // setUpAll, not at import.
+  late final int pool = familyAdhkar.length;
 
   group('content pool', () {
     test('is large enough to be worth rotating', () {
@@ -98,6 +109,58 @@ void main() {
       for (var i = 0; i < familyAdhkar.length; i++) {
         expect(known, contains(familyAdhkar[i].kind), reason: 'item $i');
       }
+    });
+  });
+
+  group('stable ids', () {
+    // Notifications are queued up to 14 days ahead and the OS keeps that queue
+    // across app updates, so the payload has to survive a pack that changed
+    // underneath it. It used to be the list index: adding one verse shifted
+    // every item below it, and a queued notification showing one ayah would
+    // open another. The id is now what travels.
+    test('every item has a unique, non-numeric id', () {
+      final seen = <String>{};
+      for (var i = 0; i < familyAdhkar.length; i++) {
+        final id = familyAdhkar[i].id;
+        expect(id.trim(), isNotEmpty, reason: 'item $i has no id');
+        expect(int.tryParse(id), isNull,
+            reason: 'id "$id" parses as an int — the tap handler would take '
+                'it for a legacy index');
+        expect(seen.add(id), isTrue, reason: 'duplicate id "$id"');
+      }
+      expect(seen.length, familyAdhkar.length);
+    });
+
+    test('an id says what kind of item it is', () {
+      const prefixes = {'verse': 'v_', 'hadith': 'h_', 'tip': 't_'};
+      for (final c in familyAdhkar) {
+        expect(c.id, startsWith(prefixes[c.kind]!), reason: c.id);
+      }
+    });
+
+    test('a payload resolves back to the item that was scheduled', () {
+      // Reproduces the tap handler over a pack whose order has changed: the
+      // item is found by id, so it is still the one the notification showed.
+      final scheduled = familyAdhkar[7];
+      final payload = payloadFor(scheduled);
+      expect(payload.startsWith('adhkar_'), isTrue);
+
+      final shuffled = familyAdhkar.reversed.toList();
+      final suffix = payload.substring('adhkar_'.length);
+      expect(int.tryParse(suffix), isNull);
+      final resolved = shuffled.firstWhere((c) => c.id == suffix);
+      expect(resolved.text, scheduled.text);
+      expect(resolved.source, scheduled.source);
+    });
+
+    test('a legacy numeric payload is still an index, for one release', () {
+      // Builds up to v1.0.39 queued `adhkar_<index>` 14 days out. Those are in
+      // flight when this build lands, so the old reading has to keep working.
+      const legacy = 'adhkar_12';
+      final suffix = legacy.substring('adhkar_'.length);
+      final idx = int.tryParse(suffix);
+      expect(idx, 12);
+      expect(idx! < familyAdhkar.length, isTrue);
     });
   });
 

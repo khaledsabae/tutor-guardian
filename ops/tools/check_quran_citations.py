@@ -1,9 +1,18 @@
 #!/usr/bin/env python3
 """Verify every Qur'an citation in the app against the mushaf text.
 
-Scope: `kind: 'verse'` entries in mobile/lib/features/adhkar/data/family_adhkar.dart.
-Those go out as daily notifications, so a corrupted word is scripture misquoted
-to every user — the one class of defect in this repo that has no acceptable rate.
+Scope: `kind: 'verse'` entries in
+mobile/assets/content/adhkar/family_adhkar.ar.json (they were Dart literals
+until 2026-08-13; the move is proven byte-for-byte by
+`ops/tools/extract_app_content.py verify`). Those go out as daily
+notifications, so a corrupted word is scripture misquoted to every user — the
+one class of defect in this repo that has no acceptable rate.
+
+The pack now carries a numeric `provenance` — surah and ayah — alongside the
+Arabic `source:` string. This check does **not** take it on trust: it parses
+the citation itself, exactly as before, and then asserts the stored numbers
+agree. A provenance field that drifted from the citation it was derived from is
+an error here, not a shortcut.
 
 Matching is on the **consonantal skeleton**. The mushaf and modern typing
 disagree about where long vowels are written (لقمٰن/لقمان، ٱلصلوٰة/الصلاة،
@@ -23,8 +32,10 @@ import sys
 import unicodedata
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from adhkar_pack import load_or_die  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
-ADHKAR = ROOT / "mobile/lib/features/adhkar/data/family_adhkar.dart"
 QURAN = ROOT / "mobile/assets/data/quran.json"
 
 SURAHS = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال",
@@ -45,10 +56,6 @@ ALIAS = {"بني إسرائيل": "الإسراء", "الانشراح": "الش�
 _MARKS = re.compile("[ً-ٰۖ-ۭـࣰ-ࣿ]")
 _NON_ARABIC = re.compile("[^ء-ي\\s]")
 _AR_DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789")
-_ITEM = re.compile(
-    r"ParentingContent\(\s*text:\s*'((?:[^'\\]|\\.)*)'\s*,"
-    r"\s*source:\s*'((?:[^'\\]|\\.)*)'\s*,"
-    r"\s*topic:\s*'((?:[^'\\]|\\.)*)'\s*,\s*kind:\s*'(\w+)'")
 _CITATION = re.compile(r"سورة\s+(.+?)\s*[—\-–]\s*(?:آية|الآية)\s*([٠-٩0-9]+)")
 
 
@@ -101,11 +108,11 @@ def main() -> int:
             return 2
     print(f"  self-tests: {len(_SELF_TESTS)}/{len(_SELF_TESTS)} ok")
 
-    items = _ITEM.findall(ADHKAR.read_text(encoding="utf-8"))
-    verses = [(t, s) for t, s, _, kind in items if kind == "verse"]
+    verses = [i for i in load_or_die() if i.kind == "verse"]
 
     exact, errors, unparsed = 0, [], []
-    for text, source in verses:
+    for item in verses:
+        text, source = item.text, item.source
         m = _CITATION.search(source)
         if not m:
             unparsed.append((text, source))
@@ -116,6 +123,14 @@ def main() -> int:
             continue
         ch = SURAHS.index(name) + 1
         ayah = int(m.group(2).translate(_AR_DIGITS))
+        # The stored provenance must be what the citation says, not something
+        # a hand-edit put there. A wrong number here reaches users.
+        prov = item.provenance or {}
+        if (prov.get("surah"), prov.get("ayah")) != (ch, ayah):
+            errors.append((text, source,
+                           f"provenance {prov.get('surah')}:{prov.get('ayah')} "
+                           f"لا يطابق الإسناد {ch}:{ayah}"))
+            continue
         # a quote may join consecutive verses with '*'
         frags = [f for f in (skeleton(p) for p in re.split(r"\s*[*]\s*", text)) if f]
         span = " ".join(per_ayah[ch].get(ayah + k, "") for k in range(len(frags) + 1))

@@ -33,7 +33,9 @@ import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
 import 'features/routine/providers/child_mode_providers.dart';
 import 'features/routine/screens/habit_child_mode_screen.dart';
+import 'features/adhkar/data/family_adhkar.dart';
 import 'features/adhkar/services/notification_service.dart';
+import 'features/journey/data/journey_milestones.dart';
 import 'features/shell/root_scaffold.dart';
 import 'features/tour/tour_overlay.dart';
 import 'theme/app_theme.dart';
@@ -82,6 +84,27 @@ void main() async {
     }
     return true;
   };
+
+  // Content packs, before anything reads them. The adhkar pack in particular
+  // must be loaded before NotificationService.init(), which schedules 14 days
+  // of reminders out of it — an unloaded pack is an empty list, and
+  // scheduleDaily would return having queued nothing.
+  //
+  // Not fatal. These are bundled assets, so a failure here is a build defect,
+  // not a runtime condition — but letting it throw would replace the app with
+  // a black screen before the first frame. Reporting it and carrying on
+  // degrades two features (no daily reminder, no milestone suggestions) and
+  // leaves the rest of the app usable, which is the better half of a bad day.
+  try {
+    await FamilyAdhkar.load();
+    await JourneyMilestones.load();
+  } catch (e, stack) {
+    FirebaseCrashlytics.instance.recordError(
+      e, stack,
+      reason: 'content pack failed to load at startup',
+      fatal: false,
+    );
+  }
 
   // Initialize daily Adhkar local notifications
   await NotificationService.instance.init();

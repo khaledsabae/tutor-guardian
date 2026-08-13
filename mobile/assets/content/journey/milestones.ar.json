@@ -1,0 +1,281 @@
+{
+  "schema": "tg.journey_milestones/1",
+  "locale": "ar",
+  "spiritual": [
+    {
+      "key": "shahada",
+      "title": "نطق الشهادة",
+      "description": "أول مرة ينطق الشهادتين",
+      "emoji": "🤍",
+      "concern_note": null
+    },
+    {
+      "key": "first_dua",
+      "title": "حفظ أول دعاء",
+      "description": "تعلّم دعاءً صار يردده",
+      "emoji": "🤲",
+      "concern_note": null
+    },
+    {
+      "key": "first_prayer",
+      "title": "أول صلاة",
+      "description": "صلّى أول صلاة بنفسه",
+      "emoji": "🕌",
+      "concern_note": null
+    },
+    {
+      "key": "keeps_prayer",
+      "title": "يحافظ على الصلاة",
+      "description": "بدأ يحافظ على صلواته",
+      "emoji": "🌟",
+      "concern_note": null
+    },
+    {
+      "key": "first_surah",
+      "title": "حفظ أول سورة",
+      "description": "أتمّ حفظ أول سورة من القرآن",
+      "emoji": "📖",
+      "concern_note": null
+    },
+    {
+      "key": "first_fast",
+      "title": "أول يوم صيام",
+      "description": "صام أول يوم في رمضان",
+      "emoji": "🌙",
+      "concern_note": null
+    },
+    {
+      "key": "good_manner",
+      "title": "موقف خُلق حسن",
+      "description": "موقف أظهر فيه خُلقًا جميلًا",
+      "emoji": "💛",
+      "concern_note": null
+    },
+    {
+      "key": "helped_others",
+      "title": "ساعد غيره",
+      "description": "بادر بمساعدة أحد من حوله",
+      "emoji": "🤝",
+      "concern_note": null
+    },
+    {
+      "key": "quran_khatma",
+      "title": "ختمة قرآن",
+      "description": "أتمّ ختمة كاملة للقرآن",
+      "emoji": "🏆",
+      "concern_note": null
+    }
+  ],
+  "developmental": {
+    "prenatal-1": [
+      {
+        "key": "dev_social_smile",
+        "title": "ابتسامته الأولى",
+        "description": "ابتسم لك ابتسامة اجتماعية",
+        "emoji": "😊",
+        "concern_note": null
+      },
+      {
+        "key": "dev_sit_crawl",
+        "title": "جلس أو بدأ يحبو",
+        "description": "تحكّم في جسده — جلس بمفرده أو حبا",
+        "emoji": "🍼",
+        "concern_note": null
+      },
+      {
+        "key": "dev_first_babble",
+        "title": "أول مناغاة",
+        "description": "بدأ يناغي ويردد مقاطع («ماما/بابا»)",
+        "emoji": "🗣️",
+        "concern_note": "لو لم يناغِ أو يلتفت للصوت قرب نهاية العام، اذكرها لطبيبه."
+      },
+      {
+        "key": "dev_secure_attach",
+        "title": "يهدأ بين يديك",
+        "description": "علامة ارتباط آمن — يطمئن بحضنك",
+        "emoji": "🤱",
+        "concern_note": null
+      }
+    ],
+    "2-3": [
+      {
+        "key": "dev_two_word",
+        "title": "أول جملة من كلمتين",
+        "description": "ركّب كلمتين معاً («عايز ماء»)",
+        "emoji": "🗣️",
+        "concern_note": "لو لم يركّب كلمتين قرب نهاية الثالثة، استشر مختص نطق."
+      },
+      {
+        "key": "dev_toilet",
+        "title": "التدريب على الحمام",
+        "description": "بدأ يستخدم الحمام باستقلالية",
+        "emoji": "🚽",
+        "concern_note": null
+      },
+      {
+        "key": "dev_pretend_play",
+        "title": "اللعب التخيّلي",
+        "description": "تظاهر باللعب (يُطعم دميته)",
+        "emoji": "🧸",
+        "concern_note": null
+      },
+      {
+        "key": "dev_name_feeling",
+        "title": "سمّى مشاعره",
+        "description": "عبّر عن شعور بكلمة بدل النوبة",
+        "emoji": "💛",
+        "concern_note": null
+      }
+    ],
+    "4-6": [
+      {
+        "key": "dev_dress_self",
+        "title": "يلبس بنفسه",
+        "description": "استقلالية يومية — يلبس ويأكل وحده",
+        "emoji": "👕",
+        "concern_note": null
+      },
+      {
+        "key": "dev_friendships",
+        "title": "يلعب مع غيره",
+        "description": "كوّن صداقات ويتشارك في اللعب",
+        "emoji": "🤝",
+        "concern_note": null
+      },
+      {
+        "key": "dev_draw_write",
+        "title": "يمسك القلم ويرسم",
+        "description": "يرسم أشكالاً ويحاول كتابة اسمه",
+        "emoji": "✏️",
+        "concern_note": null
+      },
+      {
+        "key": "dev_express_words",
+        "title": "يعبّر بالكلام",
+        "description": "يصف مشاعره بالكلمات بدل النوبات",
+        "emoji": "🗣️",
+        "concern_note": null
+      }
+    ],
+    "7-9": [
+      {
+        "key": "dev_reads_alone",
+        "title": "يقرأ بمفرده",
+        "description": "قرأ جملة أو قصة قصيرة وحده",
+        "emoji": "📖",
+        "concern_note": null
+      },
+      {
+        "key": "dev_responsibility",
+        "title": "تحمّل مسؤولية",
+        "description": "مهمة بيت أو إدارة مصروفه",
+        "emoji": "💪",
+        "concern_note": null
+      },
+      {
+        "key": "dev_resolve_conflict",
+        "title": "يحل خلافاً",
+        "description": "حافظ على صداقة وحلّ خلافاً بنفسه",
+        "emoji": "🤝",
+        "concern_note": null
+      },
+      {
+        "key": "dev_manage_time",
+        "title": "ينظّم وقته",
+        "description": "وازن بين الواجب واللعب",
+        "emoji": "⏰",
+        "concern_note": null
+      }
+    ],
+    "10-12": [
+      {
+        "key": "dev_puberty_talk",
+        "title": "حوار البلوغ",
+        "description": "تحدّثت معه بثقة عن تغيّرات جسده",
+        "emoji": "🌱",
+        "concern_note": null
+      },
+      {
+        "key": "dev_screen_deal",
+        "title": "يدير وقت الشاشة",
+        "description": "التزم باتفاق منظّم لوقت الشاشة",
+        "emoji": "📱",
+        "concern_note": null
+      },
+      {
+        "key": "dev_respectful_opinion",
+        "title": "يناقش باحترام",
+        "description": "عبّر عن رأيه وناقش بأدب",
+        "emoji": "💬",
+        "concern_note": null
+      },
+      {
+        "key": "dev_self_manage",
+        "title": "يدير مهامه",
+        "description": "مسؤولية أكبر — ينجز بنفسه",
+        "emoji": "✅",
+        "concern_note": null
+      }
+    ],
+    "13-15": [
+      {
+        "key": "dev_future_goal",
+        "title": "يخطط لهدف",
+        "description": "وضع هدفاً مستقبلياً وخطوات له",
+        "emoji": "🎯",
+        "concern_note": null
+      },
+      {
+        "key": "dev_peer_pressure",
+        "title": "قرار واعٍ تحت الضغط",
+        "description": "اتخذ قراراً صحيحاً رغم ضغط الأصدقاء",
+        "emoji": "🧭",
+        "concern_note": null
+      },
+      {
+        "key": "dev_identity_talk",
+        "title": "حوار القيم والهوية",
+        "description": "نقاش ناضج عن قيمه وهويته",
+        "emoji": "💬",
+        "concern_note": null
+      },
+      {
+        "key": "dev_graded_indep",
+        "title": "استقلال بمسؤولية",
+        "description": "استقلال متدرّج مع التزام بالحدود",
+        "emoji": "🕊️",
+        "concern_note": null
+      }
+    ],
+    "16-18": [
+      {
+        "key": "dev_life_ready",
+        "title": "استعداد للحياة",
+        "description": "يستعد للجامعة أو العمل بثقة",
+        "emoji": "🎓",
+        "concern_note": null
+      },
+      {
+        "key": "dev_financial",
+        "title": "إدارة مالية",
+        "description": "يدير ميزانيته ومسؤولياته",
+        "emoji": "💼",
+        "concern_note": null
+      },
+      {
+        "key": "dev_big_decisions",
+        "title": "قرارات كبيرة بثقة",
+        "description": "اتخذ قراراً كبيراً بحكمة واستشارة",
+        "emoji": "🧭",
+        "concern_note": null
+      },
+      {
+        "key": "dev_mature_bond",
+        "title": "علاقة ناضجة معك",
+        "description": "علاقة متبادلة قائمة على الثقة",
+        "emoji": "🤝",
+        "concern_note": null
+      }
+    ]
+  }
+}
