@@ -95,6 +95,19 @@ class JourneyMilestones {
 /// to mark them in any order.
 List<JourneyMilestone> get spiritualMilestones => JourneyMilestones._spiritual;
 
+/// A spiritual milestone by key, or null if the pack did not load.
+///
+/// Callers used to reach for `spiritualMilestones.firstWhere(…)` against a
+/// `const` list, where a match was guaranteed by the compiler. It is an asset
+/// now, so the guarantee is gone and `firstWhere` would throw where the old
+/// code could not.
+JourneyMilestone? spiritualMilestone(String key) {
+  for (final m in JourneyMilestones._spiritual) {
+    if (m.key == key) return m;
+  }
+  return null;
+}
+
 /// Reward id namespaced per child so each child's milestone is rewarded
 /// exactly once (the device-wide coins ledger dedups by id).
 String journeyRewardId(int childId, String milestoneKey) =>
