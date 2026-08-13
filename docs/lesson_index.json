@@ -83,7 +83,8 @@
         "podcasts": [
           {
             "file": "docs/lesson_01_podcast.mp3",
-            "size_bytes": 37871384
+            "size_bytes": 37871384,
+            "language": "ar"
           }
         ],
         "videos": [

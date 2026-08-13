@@ -137,6 +137,65 @@
       ],
       "description": "اسم المراجع الشرعي الذي أجاز هذا المحتوى. null = غير مراجَع، لا يُنشر للإنجليزية.",
       "default": null
+    },
+    "language": {
+      "type": "string",
+      "description": "لغة هذا الملف. غيابه = العربية (لغة المصدر). الترجمات في i18n/<lang>/."
+    },
+    "source_language": {
+      "type": "string",
+      "description": "اللغة التي تُرجم عنها هذا الملف. للمصدر العربي: غير موجود."
+    },
+    "translation": {
+      "type": "object",
+      "description": "سجل الترجمة والمراجعة. تكتبه ops/tools/translate_curriculum.py ويحدّثه revalidate_translations.py — ما عدا approved_by، فهو توقيع بشري.",
+      "properties": {
+        "translator_model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviewer_model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "needs_scholar_review": {
+          "type": "boolean"
+        },
+        "scholar_signals": {
+          "type": "object"
+        },
+        "review_verdict": {
+          "type": "string",
+          "enum": [
+            "clean",
+            "defects",
+            "pending",
+            "unreviewed"
+          ]
+        },
+        "review_defects": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "revalidated_at": {
+          "type": "string",
+          "description": "متى أُعيد الحكم على النص الحالي. غيابه = السجل قد يصف نصًّا أُصلح بعده."
+        },
+        "approved_by": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "اسم المراجع الشرعي. null = غير مراجَع."
+        }
+      },
+      "additionalProperties": true
     }
   }
 }

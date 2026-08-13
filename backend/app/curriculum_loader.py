@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Optional
 
 from app.core.taxonomy import age_equivalents
+from app.media_naming import language_of_filename, path_video_candidates
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +47,10 @@ _assets_cache: dict[str, dict] = {}
 # still open, in Arabic, instead of disappearing for English users.
 _i18n_paths_cache: dict[str, dict[str, dict]] = {}
 _i18n_lessons_cache: dict[str, dict[str, dict]] = {}
+# Tips are cached as a *list* (the daily pick indexes into it), so the overlay
+# is keyed by id and applied per item on read — the list itself is never
+# rebuilt per language. See get_daily_tips() for why that ordering matters.
+_i18n_tips_cache: dict[str, dict[str, dict]] = {}
 
 
 def _norm_lang(lang: Optional[str]) -> Optional[str]:
@@ -55,6 +60,23 @@ def _norm_lang(lang: Optional[str]) -> Optional[str]:
     head = lang.split(",")[0].split(";")[0].strip().lower()
     base = head.split("-")[0]
     return base if base in TRANSLATED_LANGS else None
+
+
+def _media_lang(declared: Optional[str], filename: str) -> str:
+    """Language of a media entry. Untagged means Arabic — never guessed.
+
+    This replaced an inference that read "no `_ar` in the filename" as English:
+
+        if "_ar" in fname or "lesson_0-3" in fname: lang = "ar"
+        else:                                       lang = "en"
+
+    Exactly one indexed podcast carries no `language` — `lesson_10-12_cyber_01`
+    → `docs/lesson_01_podcast.mp3`, 37.8 MB of Arabic. It matches neither
+    branch, so it was served to English users as though it were English, and
+    the fallback that exists for precisely this case never ran.
+    """
+    code = (declared or "").strip().lower().split("-")[0]
+    return code if code else language_of_filename(filename)
 
 
 def _load_json(path: Path) -> Optional[dict]:
@@ -119,27 +141,16 @@ def load_curriculum() -> None:
                         podcasts = raw_assets.get("podcasts", [])
                         videos = raw_assets.get("videos", [])
                         
-                        normalized_podcasts = []
-                        for p in podcasts:
-                            lang = p.get("language")
-                            if not lang:
-                                fname = p.get("file", "")
-                                if "_ar" in fname or "lesson_0-3" in fname:
-                                    lang = "ar"
-                                else:
-                                    lang = "en"
-                            normalized_podcasts.append({**p, "language": lang})
-
-                        normalized_videos = []
-                        for v in videos:
-                            lang = v.get("language")
-                            if not lang:
-                                fname = v.get("file", "")
-                                if "_ar" in fname:
-                                    lang = "ar"
-                                else:
-                                    lang = "en"
-                            normalized_videos.append({**v, "language": lang})
+                        normalized_podcasts = [
+                            {**p, "language": _media_lang(p.get("language"),
+                                                          p.get("file", ""))}
+                            for p in podcasts
+                        ]
+                        normalized_videos = [
+                            {**v, "language": _media_lang(v.get("language"),
+                                                          v.get("file", ""))}
+                            for v in videos
+                        ]
                         
                         asset_data = {
                             "podcasts": normalized_podcasts,
@@ -162,12 +173,16 @@ def load_curriculum() -> None:
     # ── Translation overlays ──
     # Only ids that already exist in Arabic are overlaid: a stray translation
     # file must not conjure a lesson that the source curriculum does not have.
-    global _i18n_paths_cache, _i18n_lessons_cache
-    _i18n_paths_cache, _i18n_lessons_cache = {}, {}
+    global _i18n_paths_cache, _i18n_lessons_cache, _i18n_tips_cache
+    _i18n_paths_cache, _i18n_lessons_cache, _i18n_tips_cache = {}, {}, {}
+    # `_tips_cache` is a list; the other two are dicts. Index tips by id here so
+    # all three present the same {id: doc} shape to the overlay loop.
+    tips_by_id = {t["id"]: t for t in _tips_cache if t.get("id")}
     for lang in TRANSLATED_LANGS:
         for sub, source, target in (
             ("lessons", _lessons_cache, _i18n_lessons_cache),
             ("paths", _paths_cache, _i18n_paths_cache),
+            ("daily_tips", tips_by_id, _i18n_tips_cache),
         ):
             overlay: dict[str, dict] = {}
             for f in sorted((I18N_DIR / lang / sub).glob("*.json")):
@@ -183,6 +198,7 @@ def load_curriculum() -> None:
         ", ".join(
             f"{lang} {len(_i18n_lessons_cache.get(lang, {}))} lessons"
             f"/{len(_i18n_paths_cache.get(lang, {}))} paths"
+            f"/{len(_i18n_tips_cache.get(lang, {}))} tips"
             for lang in TRANSLATED_LANGS
         ) or "none",
     )
@@ -210,14 +226,23 @@ def media_exists(relative_path: Optional[str]) -> bool:
     return (Path(__file__).resolve().parents[2] / relative_path).is_file()
 
 
-def _add_path_video(path: dict) -> dict:
+def _add_path_video(path: dict, lang: Optional[str] = None) -> dict:
+    """Attach the best available path video for `lang`, Arabic as fallback.
+
+    `video_language` ships alongside `video_mp4` because `_translate()` stamps
+    `language: "en"` on the path text unconditionally. Without it, a path badged
+    English can hand the app an Egyptian-dialect video and the only person who
+    finds out is the parent who pressed play.
+    """
     path_id = path.get("id")
     if not path_id:
         return path
     out = dict(path)
-    video_relative_path = f"docs/path_videos/{path_id}_ar_eg.mp4"
-    if media_exists(video_relative_path):
-        out["video_mp4"] = video_relative_path
+    for rel in path_video_candidates(path_id, _norm_lang(lang) or "ar"):
+        if media_exists(rel):
+            out["video_mp4"] = rel
+            out["video_language"] = language_of_filename(rel)
+            break
     return out
 
 
@@ -255,13 +280,13 @@ def get_paths(age_group: Optional[str] = None, domain: Optional[str] = None,
         out = [p for p in out if p.get("domain") == domain]
     # Stable order: by age_group, then domain, then id
     out.sort(key=lambda p: (p.get("age_group", ""), p.get("domain", ""), p.get("id", "")))
-    return [_add_path_video(_translate(p, _i18n_paths_cache, lang)) for p in out]
+    return [_add_path_video(_translate(p, _i18n_paths_cache, lang), lang) for p in out]
 
 
 def get_path(path_id: str, lang: Optional[str] = None) -> Optional[dict]:
     path = _paths_cache.get(path_id)
     if path:
-        return _add_path_video(_translate(path, _i18n_paths_cache, lang))
+        return _add_path_video(_translate(path, _i18n_paths_cache, lang), lang)
     return None
 
 
@@ -279,12 +304,18 @@ def get_lesson(lesson_id: str, lang: Optional[str] = None) -> Optional[dict]:
     return _translate(lesson, _i18n_lessons_cache, lang)
 
 
-def search(query: str, limit: int = 20) -> list[dict]:
+def search(query: str, limit: int = 20, lang: Optional[str] = None) -> list[dict]:
     """Substring search across published lessons, daily tips, and paths.
 
     Returns a flat list of lightweight result dicts:
       {type: lesson|tip|path, id, title, snippet, age_group, domain, path_id?}
     Title matches rank above body-only matches; results are capped at `limit`.
+
+    Matching runs over the source *and* the translation, while rendering uses
+    the requested language. An English user searching "sleep" has no Arabic
+    string to hit, so before this the search returned nothing for them and the
+    English curriculum was unreachable except by browsing; an Arabic query from
+    an English-locale user still matches, and comes back in English.
     """
     q = (query or "").strip().lower()
     if len(q) < 2:
@@ -300,11 +331,14 @@ def search(query: str, limit: int = 20) -> list[dict]:
         start = max(0, idx - 40)
         return ("…" if start else "") + text[start:start + 120]
 
+    def _hit(*values: str) -> bool:
+        return any(q in (v or "").lower() for v in values)
+
     for lesson in _lessons_cache.values():
-        title = lesson.get("title", "")
-        summary = lesson.get("summary", "")
-        in_title = q in title.lower()
-        if in_title or q in summary.lower():
+        view = _translate(lesson, _i18n_lessons_cache, lang)
+        title, summary = view.get("title", ""), view.get("summary", "")
+        in_title = _hit(title, lesson.get("title", ""))
+        if in_title or _hit(summary, lesson.get("summary", "")):
             scored.append((0 if in_title else 1, {
                 "type": "lesson", "id": lesson["id"], "title": title,
                 "snippet": _snippet(summary), "age_group": lesson.get("age_group"),
@@ -312,10 +346,10 @@ def search(query: str, limit: int = 20) -> list[dict]:
             }))
 
     for path in _paths_cache.values():
-        title = path.get("title", "")
-        desc = path.get("description", "")
-        in_title = q in title.lower()
-        if in_title or q in desc.lower():
+        view = _translate(path, _i18n_paths_cache, lang)
+        title, desc = view.get("title", ""), view.get("description", "")
+        in_title = _hit(title, path.get("title", ""))
+        if in_title or _hit(desc, path.get("description", "")):
             scored.append((0 if in_title else 1, {
                 "type": "path", "id": path["id"], "title": title,
                 "snippet": _snippet(desc), "age_group": path.get("age_group"),
@@ -323,8 +357,9 @@ def search(query: str, limit: int = 20) -> list[dict]:
             }))
 
     for tip in _tips_cache:
-        text = tip.get("text", "")
-        if q in text.lower():
+        view = _translate(tip, _i18n_tips_cache, lang)
+        text = view.get("text", "")
+        if _hit(text, tip.get("text", "")):
             scored.append((2, {
                 "type": "tip", "id": tip["id"], "title": _snippet(text),
                 "snippet": "", "age_group": tip.get("age_group"),
@@ -372,19 +407,29 @@ def get_asset_content(asset_id: str) -> Optional[dict]:
     return None
 
 
-def get_daily_tips(age_group: str, time_of_day: Optional[str] = None) -> list[dict]:
-    """Return published tips for an age_group, optionally filtered by time_of_day."""
+def get_daily_tips(age_group: str, time_of_day: Optional[str] = None,
+                   lang: Optional[str] = None) -> list[dict]:
+    """Return published tips for an age_group, optionally filtered by time_of_day.
+
+    🚨 The pool is built from the Arabic cache and only then translated item by
+    item. `_pick_tip_for_today` chooses with `sha256(date:age:time) % len(pool)`,
+    so pool *length and order* are load-bearing: building a separate English
+    pool — even one that happens to be the same size today — makes the index
+    mean something different the first time a tip is added in one language and
+    not the other. Two parents in one household would get different tips on the
+    same day, which is the one property that hash exists to guarantee.
+    """
     ages = set(age_equivalents(age_group))  # 0-3 ≡ prenatal-1
     out = [t for t in _tips_cache if t.get("age_group") in ages]
     if time_of_day:
         # "anytime" matches everything; otherwise exact match
         if time_of_day != "anytime":
             out = [t for t in out if t.get("time_of_day") in (time_of_day, "anytime", None)]
-    return out
+    return [_translate(t, _i18n_tips_cache, lang) for t in out]
 
 
-def get_daily_tip_by_id(tip_id: str) -> Optional[dict]:
+def get_daily_tip_by_id(tip_id: str, lang: Optional[str] = None) -> Optional[dict]:
     for t in _tips_cache:
         if t.get("id") == tip_id:
-            return t
+            return _translate(t, _i18n_tips_cache, lang)
     return None

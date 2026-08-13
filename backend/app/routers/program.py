@@ -69,10 +69,16 @@ def _validate_domain(domain: Optional[str]) -> Optional[str]:
         )
     return domain
 
-def _pick_tip_for_today(age_group: str, time_of_day: Optional[str]) -> dict:
+def _pick_tip_for_today(age_group: str, time_of_day: Optional[str],
+                        lang: Optional[str] = None) -> dict:
     """Deterministic per-day tip selection so the same client sees the
-    same tip on the same day. Hash of (date + age_group) → index in pool."""
-    pool = cl.get_daily_tips(age_group, time_of_day=time_of_day)
+    same tip on the same day. Hash of (date + age_group) → index in pool.
+
+    `lang` translates the pool item-by-item without changing pool length or
+    order, so the index below still lands on the same tip in every language —
+    two parents in one household get the same tip on the same day.
+    """
+    pool = cl.get_daily_tips(age_group, time_of_day=time_of_day, lang=lang)
     if not pool:
         raise HTTPException(
             status_code=404,
@@ -358,19 +364,23 @@ async def get_asset_content(asset_id: str):
 
 @router.get("/search")
 async def search_curriculum(
+    request: Request,
     q: str = Query(..., min_length=2, description="نص البحث (حرفان على الأقل)"),
     limit: int = Query(20, ge=1, le=50),
+    lang: Optional[str] = Query(None, description="لغة المحتوى: ar/en"),
 ):
     """بحث نصّي في الدروس والمسارات والنصائح — additive v1 endpoint."""
-    results = cl.search(q, limit=limit)
+    results = cl.search(q, limit=limit, lang=_resolve_lang(lang, request))
     return {"query": q, "count": len(results), "results": results}
 
 
 @router.get("/daily-tip")
 async def get_daily_tip(
+    request: Request,
     age_group: str = Query(..., description="إلزامي: العمر لتحديد الـ pool"),
     time_of_day: Optional[str] = Query(None, description="اختياري: morning | evening | bedtime | anytime"),
     tip_id: Optional[str] = Query(None, description="اختياري: لو محتاج نصيحة محددة بالـ id"),
+    lang: Optional[str] = Query(None, description="لغة المحتوى: ar/en"),
 ):
     """نصيحة يومية واحدة. الافتراضي: deterministic per-day selection من pool.
     لو tip_id موجود، يرجع النصيحة المحددة (للـ debugging أو favorites)."""
@@ -381,8 +391,10 @@ async def get_daily_tip(
             detail=f"time_of_day غير صالح. القيم المتاحة: {sorted(_VALID_TIME_OF_DAY)}",
         )
 
+    resolved = _resolve_lang(lang, request)
+
     if tip_id is not None:
-        tip = cl.get_daily_tip_by_id(tip_id)
+        tip = cl.get_daily_tip_by_id(tip_id, lang=resolved)
         if tip is None or tip.get("age_group") != age_group:
             raise HTTPException(
                 status_code=404,
@@ -390,7 +402,7 @@ async def get_daily_tip(
             )
         return tip
 
-    return _pick_tip_for_today(age_group, time_of_day)
+    return _pick_tip_for_today(age_group, time_of_day, lang=resolved)
 
 
 # ── Proactive parenting coach (Phase 8) ────────────────────────────────
