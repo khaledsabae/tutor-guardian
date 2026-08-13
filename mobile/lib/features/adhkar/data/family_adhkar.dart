@@ -1,19 +1,29 @@
 /// Family parenting content — Qur'an verses and practical parenting tips used
 /// for the daily notifications.
 ///
-/// 266 items: 142 verses (morning) and 124 tips (evening). Every verse is
+/// 281 items: 142 verses, 124 tips and 15 hadith. Every verse is
 /// checked against the mushaf on each commit by
 /// `ops/tools/check_quran_citations.py`; the file is checked for padding and
 /// blanket attribution by `ops/tools/check_adhkar_integrity.py`.
 ///
-/// **No hadith here, deliberately.** This list previously claimed 730 unique
-/// items and held 267: one hadith text repeated 223 times, each copy made
-/// "unique" by a visible «(حديث رقم N)» counter and stamped with the same
-/// invented isnad, «صحيح — رواه الترمذي وأبو داود». Those 223 went out as
-/// daily notifications attributing words to the Prophet ﷺ with a fabricated
-/// chain, so they were removed rather than left in place while replacements
-/// were sought. Hadith return only with a book, a locator, and a grading from
-/// someone qualified to give one — never generated, and never bulk-attributed.
+/// **Hadith are from Sahih al-Bukhari and Sahih Muslim only**, quoted as the
+/// matn alone with the book and number, and checked against
+/// `ops/tools/check_hadith_citations.py` on every commit. Restricting the
+/// source to the two Sahihs takes the grading question — which is scholarship,
+/// not string work — off the table, and leaves wording and number, which a
+/// machine can verify. Where a quote is shortened it stays one contiguous run
+/// of the narration; the checker rejects anything stitched.
+///
+/// This list previously claimed 730 unique items and held 267: one hadith text
+/// repeated 223 times, each copy made "unique" by a visible «(حديث رقم N)»
+/// counter and stamped with the same invented isnad, «صحيح — رواه الترمذي
+/// وأبو داود». Those 223 went out as daily notifications attributing words to
+/// the Prophet ﷺ with a fabricated chain. Two users reported it on 2026-08-03
+/// and 2026-08-07 and nobody was listening, because the feedback alerts had
+/// never been configured.
+///
+/// Nothing here is generated. A hadith enters only by being found verbatim in
+/// one of the two Sahihs.
 library;
 
 class ParentingContent {
@@ -1632,6 +1642,90 @@ const List<ParentingContent> familyAdhkar = [
     text: 'خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ',
     source: 'صحيح البخاري — حديث ٥٠٢٧',
     topic: 'تعليم القرآن للأبناء',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'مَنْ لاَ يَرْحَمُ لاَ يُرْحَمُ',
+    source: 'صحيح البخاري — حديث ٥٩٩٧',
+    topic: 'الرحمة بالصغار',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'إِنَّمَا يَرْحَمُ اللَّهُ مِنْ عِبَادِهِ الرُّحَمَاءَ',
+    source: 'صحيح البخاري — حديث ٧٤٤٨',
+    topic: 'الرحمة',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'إِنَّ اللَّهَ رَفِيقٌ يُحِبُّ الرِّفْقَ فِي الأَمْرِ كُلِّهِ',
+    source: 'صحيح البخاري — حديث ٦٩٢٧',
+    topic: 'الرفق في التربية',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'لا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ',
+    source: 'صحيح البخاري — حديث ١٣',
+    topic: 'حب الخير',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ',
+    source: 'صحيح البخاري — حديث ٦١٣٥',
+    topic: 'أدب الكلمة',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'إِذَا مَاتَ الإِنْسَانُ انْقَطَعَ عَنْهُ عَمَلُهُ إِلاَّ مِنْ ثَلاَثَةٍ إِلاَّ مِنْ صَدَقَةٍ جَارِيَةٍ أَوْ عِلْمٍ يُنْتَفَعُ بِهِ أَوْ وَلَدٍ صَالِحٍ يَدْعُو لَهُ',
+    source: 'صحيح مسلم — حديث ٤٢٢٣',
+    topic: 'الولد الصالح',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'الدِّينُ النَّصِيحَةُ',
+    source: 'صحيح مسلم — حديث ١٩٦',
+    topic: 'النصيحة',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'لاَ تَغْضَبْ',
+    source: 'صحيح البخاري — حديث ٦١١٦',
+    topic: 'ضبط الغضب',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ',
+    source: 'صحيح مسلم — حديث ١٦٢',
+    topic: 'كف الأذى',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'مَنْ عَالَ جَارِيَتَيْنِ حَتَّى تَبْلُغَا جَاءَ يَوْمَ الْقِيَامَةِ أَنَا وَهُوَ',
+    source: 'صحيح مسلم — حديث ٦٦٩٥',
+    topic: 'تربية البنات',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'السَّاعِي عَلَى الأَرْمَلَةِ وَالْمِسْكِينِ كَالْمُجَاهِدِ فِي سَبِيلِ اللَّهِ، أَوِ الْقَائِمِ اللَّيْلَ الصَّائِمِ النَّهَارَ',
+    source: 'صحيح البخاري — حديث ٥٣٥٣',
+    topic: 'السعي على الأسرة',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'بَلِّغُوا عَنِّي وَلَوْ آيَةً',
+    source: 'صحيح البخاري — حديث ٣٤٦١',
+    topic: 'تبليغ العلم',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'اللَّهُمَّ مَنْ وَلِيَ مِنْ أَمْرِ أُمَّتِي شَيْئًا فَشَقَّ عَلَيْهِمْ فَاشْقُقْ عَلَيْهِ وَمَنْ وَلِيَ مِنْ أَمْرِ أُمَّتِي شَيْئًا فَرَفَقَ بِهِمْ فَارْفُقْ بِهِ',
+    source: 'صحيح مسلم — حديث ٤٧٢٢',
+    topic: 'الرفق بمن تحت يدك',
+    kind: 'hadith',
+  ),
+  ParentingContent(
+    text: 'إِنَّ الصِّدْقَ يَهْدِي إِلَى الْبِرِّ وَإِنَّ الْبِرَّ يَهْدِي إِلَى الْجَنَّةِ وَإِنَّ الرَّجُلَ لَيَصْدُقُ حَتَّى يُكْتَبَ صِدِّيقًا وَإِنَّ الْكَذِبَ يَهْدِي إِلَى الْفُجُورِ وَإِنَّ الْفُجُورَ يَهْدِي إِلَى النَّارِ وَإِنَّ الرَّجُلَ لَيَكْذِبُ حَتَّى يُكْتَبَ كَذَّابًا',
+    source: 'صحيح مسلم — حديث ٦٦٣٧',
+    topic: 'الصدق',
     kind: 'hadith',
   ),
 ];
