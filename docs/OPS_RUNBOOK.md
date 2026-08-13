@@ -36,7 +36,7 @@ Cloudflare ──► analytics_nginx (على الـVPS) ──► tg_backend (Fa
 
 | المكوّن | أين يعيش | ملاحظات |
 |---|---|---|
-| **الباكند** (FastAPI + RAG + Guardrails) | حاوية `tg_backend` على الـVPS، خلف `analytics_nginx` (شبكة Docker مشتركة `alsaba_edge` — مخصّصة لهذا التماس وحده منذ 2026-08-13؛ كانت شبكة إنتاج المنصة بالكامل) ثم Cloudflare | الدومينات: `alsaba.cloud` (صفحات عامة/SEO) و`tg-api.alsaba.cloud` (API). لا يوجد منفذ مكشوف على المضيف — nginx يصل للحاوية بالاسم |
+| **الباكند** (FastAPI + RAG + Guardrails) | حاوية `tg_backend` على الـVPS، خلف `analytics_nginx` (شبكة Docker مشتركة `analytics-platform_production_network`) ثم Cloudflare | الدومينات: `alsaba.cloud` (صفحات عامة/SEO) و`tg-api.alsaba.cloud` (API). لا يوجد منفذ مكشوف على المضيف — nginx يصل للحاوية بالاسم |
 | **الاستدلال الأساسي** | Ollama على خادم `tg-home` المنزلي، يصل إليه الباكند عبر Tailscale | تكلفة ثابتة مهما زاد الاستخدام + ميزة الخصوصية. النموذج الحالي من عائلة `tg-tutor:vN` |
 | **صمام الأمان السحابي** | DeepSeek API | لا يُستدعى **إلا** عند سقوط السلسلة المحلية بالكامل. فلاج `DEEPSEEK_FALLBACK_ENABLED` + سقف شهري صارم fail-closed `DEEPSEEK_FALLBACK_MONTHLY_TOKEN_CAP` (10M توكن). الميزانية تُحسب من جدول `llm_calls` |
 | **مخزن المتجهات** | ChromaDB في volume باسم `tg_chroma` | ⚠️ راجع §3.2 — خطر ترقية 0.x→1.x |
