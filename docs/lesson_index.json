@@ -2,24 +2,24 @@
   "metadata": {
     "version": "1.0",
     "generated_at": "2026-06-09",
-    "total_lessons": 170,
+    "total_lessons": 174,
     "notebook_id": "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287",
     "total_source_pdfs": 44,
     "coverage": {
-      "flashcards": "156/170",
-      "quizzes": "156/170",
-      "reports": "156/170",
-      "data_tables": "156/170",
-      "infographics": "156/170",
-      "podcasts": "169/170",
-      "videos": "102/170"
+      "flashcards": "156/174",
+      "quizzes": "156/174",
+      "reports": "156/174",
+      "data_tables": "156/174",
+      "infographics": "156/174",
+      "podcasts": "169/174",
+      "videos": "102/174"
     },
     "lessons_by_age": {
       "0-3": 6,
       "10-12": 24,
       "13-15": 23,
       "16-18": 25,
-      "2-3": 22,
+      "2-3": 26,
       "4-6": 25,
       "7-9": 31,
       "prenatal-1": 14
@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-07-31T14:51:31.447918Z"
+    "updated_at": "2026-08-13T18:51:36.572072+00:00"
   },
   "lessons": [
     {
@@ -11226,6 +11226,66 @@
             "description": "النمو الجسدي والاجتماعي في سن المدرسة"
           }
         ]
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_aqeedah_first_name_01",
+      "age_group": "2-3",
+      "topic_path": "aqeedah_first_name",
+      "title_ar": "أوّل اسمٍ يسمعه ويقوله: الله",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": [],
+        "videos": []
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_aqeedah_first_name_02",
+      "age_group": "2-3",
+      "topic_path": "aqeedah_first_name",
+      "title_ar": "«بسم الله» و«الحمد لله»: ربط اليوم كلّه بالله",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": [],
+        "videos": []
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_aqeedah_first_name_03",
+      "age_group": "2-3",
+      "topic_path": "aqeedah_first_name",
+      "title_ar": "الله يحبّك: أن يبدأ التعرّف بالرحمة",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": [],
+        "videos": []
+      }
+    },
+    {
+      "lesson_id": "lesson_2-3_aqeedah_first_name_04",
+      "age_group": "2-3",
+      "topic_path": "aqeedah_first_name",
+      "title_ar": "نبيّنا محمد ﷺ: اسمٌ يُقال بحُبّ",
+      "assets": {
+        "flashcards": [],
+        "quizzes": [],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [],
+        "podcasts": [],
+        "videos": []
       }
     }
   ]
