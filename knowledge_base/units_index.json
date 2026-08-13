@@ -1,10 +1,10 @@
 {
   "total_units": 1187,
-  "generated_at": "2026-08-13T16:34:10.103646+00:00",
+  "generated_at": "2026-08-13T17:05:47.993232+00:00",
   "by_domain": {
-    "medical": 270,
+    "medical": 284,
     "cyber": 253,
-    "islamic_parenting": 570,
+    "islamic_parenting": 556,
     "development": 84,
     "aqeedah": 10
   },
@@ -107,7 +107,7 @@
     },
     {
       "id": "179d90e1-a863-42e1-8fea-e8560b7401f7",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "العناد ورفض الأوامر: فرق بين إثبات الذات والتحدي",
       "source_file": "",
       "language": "ar",
@@ -215,7 +215,7 @@
     },
     {
       "id": "21ea9577-9612-4b5f-8a60-a4c149bdc2ad",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "الطفل كثير الكلام والمقاطعة: تهذيب بلا إسكات",
       "source_file": "",
       "language": "ar",
@@ -359,7 +359,7 @@
     },
     {
       "id": "3867de19-f5f7-417b-8d04-a917bb8cf4ef",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "«أنا زهقان»: الملل ليس مشكلة تُحلّ بشاشة",
       "source_file": "",
       "language": "ar",
@@ -443,7 +443,7 @@
     },
     {
       "id": "4868a341-239b-493d-89a8-36a896850899",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "تعليم الطفل المسؤولية: من التذكير المستمر إلى التنظيم الذاتي",
       "source_file": "",
       "language": "ar",
@@ -503,7 +503,7 @@
     },
     {
       "id": "6100b911-911d-4926-8f35-09b43a76303f",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "حين يكون الغضب غضبك أنت: تنظيم انفعال الوالد",
       "source_file": "",
       "language": "ar",
@@ -671,7 +671,7 @@
     },
     {
       "id": "77e9aa1e-342f-4497-bb5b-a998ac638da2",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "غيرة الطفل بعد ولادة أخ جديد: لماذا تتراجع سلوكياته؟",
       "source_file": "",
       "language": "ar",
@@ -755,7 +755,7 @@
     },
     {
       "id": "814739d8-0acf-4d8e-8d93-4bc25e9b4b6b",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "لماذا يكذب الطفل؟ التمييز بين الخيال والكذب الدفاعي",
       "source_file": "",
       "language": "ar",
@@ -815,7 +815,7 @@
     },
     {
       "id": "89bf08a7-5d8f-4373-b48d-523b596f5f8a",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "المراهق الذي أغلق بابه: كيف يُستعاد الحوار",
       "source_file": "",
       "language": "ar",
@@ -1067,7 +1067,7 @@
     },
     {
       "id": "aa50afd9-11c2-4345-8c2c-90ac32639d57",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "الطفل يأخذ ما ليس له: التعامل دون وصمه بالسرقة",
       "source_file": "",
       "language": "ar",
@@ -1247,7 +1247,7 @@
     },
     {
       "id": "b08d70af-9008-41cc-97f5-cfeba46ba327",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "الخلاف الزوجي أمام الأبناء: ما يضرّهم وما لا يضرّهم",
       "source_file": "",
       "language": "ar",
@@ -1463,7 +1463,7 @@
     },
     {
       "id": "c7b72252-7135-405e-98fd-a46d466d9055",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "من النوم في الحضن إلى النوم المستقل: خطة تدريجية",
       "source_file": "",
       "language": "ar",
@@ -4319,7 +4319,7 @@
     },
     {
       "id": "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "نوبات الغضب عند الصغار: ماذا تفعل أثناءها وبعدها",
       "source_file": "",
       "language": "ar",
@@ -5207,7 +5207,7 @@
     },
     {
       "id": "e095a1d9-98c4-4b4d-afe6-453645643704",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "القلق من رفقة الأبناء: التأثير بدل المنع",
       "source_file": "",
       "language": "ar",
@@ -5327,7 +5327,7 @@
     },
     {
       "id": "ee765e4d-9efd-413d-9350-d8aa8d59acf7",
-      "domain": "islamic_parenting",
+      "domain": "medical",
       "title": "حين يفقد الطفل أحد والديه: كيف نخبره وكيف نسنده",
       "source_file": "",
       "language": "ar",
