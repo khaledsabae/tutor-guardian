@@ -34,6 +34,16 @@ services:
       - ./backend/secrets:/app/backend/secrets:ro
       # Ops scripts (cron push triggers) — run inside container with correct env.
       - ./ops/scripts:/app/ops/scripts:ro
+      # Ops tools, for the same reason — and because the tg_sessions volume
+      # above is mounted at /app/ops, which SHADOWS the image's /app/ops/tools.
+      # Docker seeded that directory into the volume once, when the volume was
+      # created, and has never refreshed it since: the container held 20 tools
+      # while the repo had 45, every content-integrity checker among the
+      # missing ones. `ops/tools/**` is in deploy.yml's paths filter, so edits
+      # there triggered a production deploy that reported success and shipped
+      # nothing. Binding the directory puts the repo back in front of the
+      # stale volume copy.
+      - ./ops/tools:/app/ops/tools:ro
       # Mobile marketing assets (logo, icons) for public landing pages.
       - ./mobile/assets:/app/mobile/assets:ro
       # The app's own suggested questions (chatQ_*). weekly_kb_gap_report.py
