@@ -141,10 +141,20 @@ ONLY where that exact Arabic word appears in the source. Never use a glossary te
 for a different Arabic word that seems close: أدعية is du'a, not adhkar; نصيحة is \
 advice, not tarbiyah. Substituting a near-neighbour changes a religious category, \
 which is a defect, not a stylistic choice.
-2. NEVER paraphrase, shorten or soften a hadith or a Qur'anic verse. Translate it \
-faithfully and keep any attribution (رواه البخاري, etc.) exactly as given. If you \
-are unsure of the established English rendering of a hadith, translate it literally \
-rather than reaching for a familiar-sounding phrase.
+2. NEVER paraphrase, shorten or soften a hadith. Translate it faithfully and keep \
+any attribution (رواه البخاري, etc.) exactly as given. If you are unsure of the \
+established English rendering of a hadith, translate it literally rather than \
+reaching for a familiar-sounding phrase.
+2b. 🚨 THE QUR'AN IS NOT TRANSLATED. An English rendering of an ayah is *tafsir* \
+— interpretation of the meaning — not the Qur'an, and presenting it as the \
+Qur'an is a religious error, not a stylistic one. So: do NOT produce an English \
+rendering of Qur'anic text. Keep the Arabic ayah exactly as it is in the source, \
+and if the source gives an interpretation alongside it, render that and label it \
+explicitly — "interpretation of the meaning: …". Never introduce quotation marks \
+around English words in a way that presents them as the words of Allah. If the \
+Arabic only *names* a surah or refers to the Qur'an without quoting it, translate \
+that reference normally — this rule is about rendering ayah text, not about \
+mentioning the Qur'an.
 3. Keep ﷺ and similar honorifics exactly where they appear.
 4. Keep the register warm and direct — a parent speaking to a parent, not an \
 academic. Arabic parenting prose is often more affectionate than English; do not \
@@ -160,8 +170,12 @@ translation is flawed and look for where.
 
 Report, specifically:
 - meaning_change: the English says something the Arabic does not, or omits something it does
-- religious_error: a hadith, verse or attribution altered, softened, shortened, or given a \
-familiar-sounding English phrasing that is not what the Arabic says
+- religious_error: a hadith or attribution altered, softened, shortened, or given a \
+familiar-sounding English phrasing that is not what the Arabic says; an English \
+rendering of a Qur'anic ayah presented as the Qur'an rather than as clearly \
+labelled interpretation of the meaning (tafsir); or anything attributed to the \
+Prophet ﷺ — an honorific, the word "Prophetic", a superlative — that the Arabic \
+does not attribute to him
 - term_error: an Islamic term translated away instead of transliterated, or transliterated \
 inconsistently within the same document
 - register: the English is stiff, clinical or preachy where the Arabic is warm and direct
@@ -245,12 +259,23 @@ def _validate_glossary(arabic: dict, english: dict) -> list[str]:
 
     يمنع حقن «rifq» بدل «رحمة» و«amanah» بدل «أمان» — أخطاء وقعت ٣٤ مرة
     قبل إضافة هذا القيد. يرجّع قائمة بالحقن المرفوضة، أو قائمة فارغة إذا سلم.
+
+    🚨 المطابقة بحدود الكلمة لا بالاحتواء. المطابقة النصية الساذجة كانت تجد
+    «haya» داخل «al-Hayah» — وهي من «الحياة» لا من «حياء» — فترفض ترجمة سليمة
+    مرتين متتاليتين في `lesson_10-12_islamic_parenting_identity_02`. وحارس
+    يرفض السليم يُعطَّل، وتعطيله يعيد الأخطاء الأربعة والثلاثين التي وُضع
+    لأجلها. (نفس الدرس المستفاد من الهيكل الصامت في `check_quran_citations`:
+    المطابقة الفضفاضة تنتج إنذارات كاذبة تُسقِط الحارس نفسه.)
     """
     ar_text = json.dumps(arabic, ensure_ascii=False)
-    en_text = json.dumps(english, ensure_ascii=False)
+    en_text = json.dumps(english, ensure_ascii=False).lower()
     injections = []
     for en_term, roots in GLOSSARY_ROOTS.items():
-        if en_term not in en_text.lower():
+        # An English plural or possessive is the same injection wearing a
+        # suffix — «seerahs» must not walk past a check that stops «seerah».
+        # The suffix list is deliberately short: extending it to any trailing
+        # letter re-opens the al-Hayah false positive this replaced.
+        if not re.search(rf"\b{re.escape(en_term)}(?:s|es|'s)?\b", en_text):
             continue
         if any(root in ar_text for root in roots):
             continue
