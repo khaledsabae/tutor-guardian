@@ -33,7 +33,9 @@ import 'features/referral/referral_service.dart';
 import 'firebase_options.dart';
 import 'features/routine/providers/child_mode_providers.dart';
 import 'features/routine/screens/habit_child_mode_screen.dart';
+import 'features/adhkar/data/family_adhkar.dart';
 import 'features/adhkar/services/notification_service.dart';
+import 'features/journey/data/journey_milestones.dart';
 import 'features/shell/root_scaffold.dart';
 import 'features/tour/tour_overlay.dart';
 import 'theme/app_theme.dart';
@@ -82,6 +84,13 @@ void main() async {
     }
     return true;
   };
+
+  // Content packs, before anything reads them. The adhkar pack in particular
+  // must be loaded before NotificationService.init(), which schedules 14 days
+  // of reminders out of it — an unloaded pack is an empty list, and
+  // scheduleDaily would return having queued nothing.
+  await FamilyAdhkar.load();
+  await JourneyMilestones.load();
 
   // Initialize daily Adhkar local notifications
   await NotificationService.instance.init();
