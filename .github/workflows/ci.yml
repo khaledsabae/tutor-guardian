@@ -16,7 +16,7 @@ on:
 jobs:
   redirect:
     name: Use backend.yml
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, production]
     steps:
       - name: Notice
         run: echo "This workflow is disabled. Use backend.yml for CI."

@@ -39,7 +39,7 @@ jobs:
   # ── 1. Fast unit tests (no docker, no real LLM) ───────────────────────
   pytest:
     name: pytest
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, production]
     # 12 was not enough: the first run after re-enabling this workflow was
     # cancelled at 12m12s. Installing backend/requirements.txt (torch, ONNX
     # Runtime, ChromaDB, sentence-transformers) dominates on a cold pip cache,
@@ -90,7 +90,7 @@ jobs:
   # ── 2. Knowledge-base integrity (catches schema drift) ───────────────
   kb-integrity:
     name: KB integrity
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, production]
     timeout-minutes: 4
     steps:
       - name: Checkout
@@ -113,7 +113,7 @@ jobs:
 
   lint:
     name: ruff
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, production]
     timeout-minutes: 3
     steps:
       - name: Checkout

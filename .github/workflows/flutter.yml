@@ -21,7 +21,7 @@ jobs:
   # ── 1. Static analysis ────────────────────────────────────────────────
   analyze:
     name: flutter analyze
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, production]
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -49,7 +49,7 @@ jobs:
   # ── 2. Unit + widget tests ────────────────────────────────────────────
   test:
     name: flutter test
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, production]
     timeout-minutes: 15
     steps:
       - name: Checkout
