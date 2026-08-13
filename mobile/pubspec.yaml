@@ -111,6 +111,14 @@ flutter:
     # Brand-aligned Lottie celebrations (generated via ops/tools/gen_lottie.py)
     - assets/animations/
     - assets/audio/
+    # App content, one pack per file, suffixed with its locale. These were Dart
+    # `const` literals until 2026-08-13; ops/tools/extract_app_content.py moved
+    # them and proves the move byte-for-byte
+    # (`extract_app_content.py verify --rev <commit-before>`). A translation is
+    # a sibling file — `*.en.json` — never an edit to the Arabic one.
+    - assets/content/games/
+    - assets/content/adhkar/
+    - assets/content/journey/
 
 # Reuse the existing PWA shield icon — keeps mobile visually consistent
 # with the web client and saves us from designing a new asset. Source
