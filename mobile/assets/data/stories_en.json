@@ -1,0 +1,1050 @@
+[
+  {
+    "id": "hope_sprout",
+    "title": "Yusuf and the Seed of Hope",
+    "description": "A nurturing story that teaches children patience, caring for plants, and good akhlaq.",
+    "coverImage": "docs/stories/hope_sprout_cover.png",
+    "themeColor": "0xFF0D9488",
+    "videoFile": "docs/stories/hope_sprout.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Yusuf was a kind boy who loved nature and helping his parents. One bright morning, his father gave him a small golden seed and said, \"This is a blessed seed, my son. Plant it, take care of it, and it will teach you a great secret.\"",
+        "image": "docs/stories/hope_sprout_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Yusuf dug gently into the earth and placed the seed inside. Then he covered it with soil and watered it with sweet water. Every morning, he waited beside it, hoping the little plant would sprout quickly—but the earth stayed still.",
+        "image": "docs/stories/hope_sprout_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Yusuf felt sad and went to his father, wanting to give up. His father laughed and patted his shoulder. \"Yusuf, planting is like tarbiyah—both need patience, rifq, and trust in Allah. Keep watering it, and leave the rest to the Creator.\"",
+        "image": "docs/stories/hope_sprout_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "After days of care, patience, and du'a, Yusuf saw a tiny green shoot pushing through the earth, rising toward the morning sun. He was so happy! He knew now that every good deed needs patience to bloom and bear fruit.",
+        "image": "docs/stories/hope_sprout_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": false,
+        "quoted_arabic": true,
+        "quran_ayah": false,
+        "reviewer_model": false
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "term_error",
+          "field": "pages[2].text",
+          "arabic": "الزرع كالتربية... الصبر والرفق",
+          "english": "planting is like tarbiyah... patience, rifq",
+          "why": "The Arabic words 'التربية' (upbringing) and 'الرفق' (gentleness) are left untranslated as 'tarbiyah' and 'rifq'. These are not standard Islamic terms that must be kept in Arabic; they should be translated to convey the meaning clearly to English readers.",
+          "severity": "medium"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "kitten_kindness",
+    "title": "Anas and the Little Cat",
+    "description": "A faith-filled story that teaches children the virtue of rifq (gentleness) toward animals, following the example of our beloved Prophet ﷺ.",
+    "coverImage": "docs/stories/kitten_kindness_cover.png",
+    "themeColor": "0xFF0284C7",
+    "videoFile": "docs/stories/kitten_kindness.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "One day, as Anas was walking home from school, he heard a faint sound coming from behind an old tree. He tiptoed closer and found a tiny cat, shivering with cold and fear, its beautiful fur all dirty.",
+        "image": "docs/stories/kitten_kindness_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Anas felt a deep pity for the little creature. He remembered a hadith his father had taught him, the words of the Messenger of Allah ﷺ: «In every living being, there is reward.» So he decided to help this small, weak creature.",
+        "image": "docs/stories/kitten_kindness_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Anas hurried home and brought back a bowl of warm milk and a clean cloth. He approached the cat gently, offering the milk. Then he carefully wiped its wet fur until the little cat felt safe and warm.",
+        "image": "docs/stories/kitten_kindness_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "The little cat looked up at Anas with shining eyes and began to purr softly, showing its happiness and gratitude. Anas’s heart filled with joy because he had practiced a great virtue that Allah and His Messenger ﷺ love.",
+        "image": "docs/stories/kitten_kindness_4.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": false,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "religious_error",
+          "field": "pages[1].text",
+          "arabic": "«في كل كبد رطبة أجر»",
+          "english": "«In every living being, there is reward.»",
+          "why": "The English presents a paraphrase as the exact words of the hadith. The Arabic wording is specific ('moist liver'), and the translation replaces it with an interpretation ('living being') without indicating it is the meaning. This misrepresents the hadith text.",
+          "severity": "medium"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "layla_star",
+    "title": "Layla and Her Little Star",
+    "description": "A gentle story to help children relax and praise Allah for the day's blessings before sleep.",
+    "coverImage": "docs/stories/layla_star_cover.png",
+    "themeColor": "0xFF1E293B",
+    "videoFile": "docs/stories/layla_star_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Layla was a little girl who loved gazing at the sky before bedtime. In her cozy room, she opened the window and looked up at the clear sky filled with stars. She whispered, 'Oh shining stars of the sky, do you sleep like we do?'",
+        "image": "docs/stories/layla_star_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "A small star twinkled on the horizon, seeming to smile at Layla. She sat on her soft bed and remembered her mother’s advice: 'Layla, before you close your eyes, remember three beautiful things that happened today and thank Allah for them.'",
+        "image": "docs/stories/layla_star_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "The little star twinkled even more gently, as if inviting Layla to imagine a peaceful journey with it above the soft, silver clouds, to learn how quiet and calm fill the hearts of little ones.",
+        "image": "docs/stories/layla_star_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Layla felt deep gratitude to Allah, who created this vast and wondrous universe and guarded it with its shining stars. She felt in her heart the greatness of the Creator and His mercy for all His servants.",
+        "image": "docs/stories/layla_star_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "Layla’s mind returned to her warm bed, and she began counting her three blessings with a smile: first, playing with her sweet kitten; second, helping her grandfather water the garden; and third, her mother’s delicious and warm food.",
+        "image": "docs/stories/layla_star_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "Layla felt complete peace. She recited Ayat al-Kursi and the du'a for sleep, then snuggled under her warm blanket and closed her eyes, seeing her little star guarding her happy dreams in peace.",
+        "image": "docs/stories/layla_star_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": false,
+        "reviewer_model": false
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "meaning_change",
+          "field": "pages.4.text",
+          "arabic": "وحفظه بنجومه المضيئة",
+          "english": "and guarded it with its shining stars",
+          "why": "The Arabic pronoun 'his' (referring to Allah) is rendered as 'its' (referring to the universe), changing the attribution of the stars from Allah to the universe.",
+          "severity": "low"
+        },
+        {
+          "type": "religious_error",
+          "field": "pages.4.text",
+          "arabic": "لله تعالى",
+          "english": "to Allah",
+          "why": "The honorific 'تعالى' (the Exalted) is dropped.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "saleh_bird",
+    "title": "Saleh and the Little Bird of Amanah",
+    "description": "An engaging story that teaches children to return trusts to their owners and the importance of honesty and amanah (trustworthiness).",
+    "coverImage": "docs/stories/saleh_bird_cover.png",
+    "themeColor": "0xFF065F46",
+    "videoFile": "docs/stories/saleh_bird_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "One day, Saleh was playing with his ball in the neighborhood garden when he saw a little bird building its nest in a blessed olive tree. Suddenly, something shiny fell from the hand of a man passing under the tree.",
+        "image": "docs/stories/saleh_bird_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Saleh ran quickly toward the tree and found a small wallet full of money. He thought for a moment: *I wonder who this wallet belongs to? I must find its owner quickly—amanah is a trait loved by Allah and His Messenger ﷺ.*",
+        "image": "docs/stories/saleh_bird_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Saleh politely and gently asked the kind garden guard and his neighbor, Uncle Ahmad, if they knew the owner of the lost wallet. Everyone could see how eager he was to return the amanah to its rightful owner.",
+        "image": "docs/stories/saleh_bird_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "After a few steps, Saleh saw a man searching anxiously and sadly at the other end of the garden. He looked tired and worried as he rummaged through the grass, looking for something he had lost.",
+        "image": "docs/stories/saleh_bird_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "Saleh approached the man with gentle manners and asked him about the features of his lost wallet to be sure. When the man described it correctly, Saleh took it out and handed it to him with a warm smile.",
+        "image": "docs/stories/saleh_bird_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "The man’s face lit up with joy, and he prayed for Saleh’s blessings and goodness, saying, *‘Thank you for your amanah, my son.’* Saleh returned home happy, knowing that keeping amanah brings Allah’s pleasure and the love of all people.",
+        "image": "docs/stories/saleh_bird_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": false,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "meaning_change",
+          "field": "title",
+          "arabic": "صالح وعصفور الأمانة",
+          "english": "Saleh and the Little Bird of Amanah",
+          "why": "The Arabic title does not include 'Little'; the English adds it, altering the description.",
+          "severity": "low"
+        },
+        {
+          "type": "religious_error",
+          "field": "pages[1].text",
+          "arabic": "فالأمانة خلق يحبه الله ورسوله",
+          "english": "amanah is a trait loved by Allah and His Messenger ﷺ",
+          "why": "The Arabic does not include the honorific 'ﷺ'; the English adds it, introducing an element not present in the source.",
+          "severity": "low"
+        },
+        {
+          "type": "meaning_change",
+          "field": "pages[2].text",
+          "arabic": "لأصحابها",
+          "english": "to its rightful owner",
+          "why": "The Arabic uses the plural 'أصحابها' (its owners); the English renders it as singular 'its rightful owner', changing the number.",
+          "severity": "low"
+        },
+        {
+          "type": "term_error",
+          "field": "pages[5].text",
+          "arabic": "الصلاح",
+          "english": "goodness",
+          "why": "'الصلاح' is an Islamic term meaning righteousness or uprightness; 'goodness' is too generic and loses the specific religious connotation.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "noor_clean",
+    "title": "Noor and the Clean Garden",
+    "description": "An inspiring story that teaches children the importance of cleanliness and keeping the neighborhood and school tidy.",
+    "coverImage": "docs/stories/noor_clean_cover.png",
+    "themeColor": "0xFF047857",
+    "videoFile": "docs/stories/noor_clean_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Noor was an energetic little girl who loved playing in the neighborhood garden after Asr. One day, she noticed some trash and scattered leaves on the beautiful green grass, making the garden look sad.",
+        "image": "docs/stories/noor_clean_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Noor remembered her teacher’s words at school: \"Cleanliness is part of faith, and the environment is an *amanah* (trust) in our hands.\" She decided not to just stand by. She brought big bags and started collecting the leaves and plastic bottles with energy and enthusiasm.",
+        "image": "docs/stories/noor_clean_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Noor worked alone at first, full of energy. She put up a small wooden sign at the garden’s entrance, writing in her pretty handwriting: \"Our environment is an *amanah*—let’s keep it clean and beautiful together.\"",
+        "image": "docs/stories/noor_clean_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Noor’s friends in the neighborhood saw what she was doing. They hurried to help her, bringing extra tools and saying, \"We want our garden to be the prettiest!\" Everyone worked together with team spirit and love.",
+        "image": "docs/stories/noor_clean_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "To make the garden even more beautiful, the children teamed up to plant a small, colorful flower in the middle of the garden. They watered it carefully and hoped it would grow and bloom quickly to bring joy to those who passed by.",
+        "image": "docs/stories/noor_clean_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "The children sat on the wooden bench, enjoying the lovely view and the gentle breeze. Noor felt proud and happy because, by working together, they had made their playground clean, beautiful, and healthy for everyone.",
+        "image": "docs/stories/noor_clean_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": false,
+        "quoted_arabic": true,
+        "quran_ayah": false,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "meaning_change",
+          "field": "pages[1].text",
+          "arabic": "العلب البلاستيكية",
+          "english": "plastic bottles",
+          "why": "The Arabic 'علب' means 'cans' or 'containers', not specifically 'bottles'. The translation narrows the meaning.",
+          "severity": "low"
+        },
+        {
+          "type": "meaning_change",
+          "field": "pages[4].text",
+          "arabic": "وردة صغيرة ملونة",
+          "english": "a small, colorful flower",
+          "why": "The Arabic 'وردة' specifically means 'rose', not a generic 'flower'. The translation loses this specificity.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "maryam_toys",
+    "title": "Maryam and the Toy Box",
+    "description": "A gentle story that shows children the joy of sharing toys with others and making friends happy.",
+    "coverImage": "docs/stories/maryam_toys_cover.png",
+    "themeColor": "0xFFB45309",
+    "videoFile": "docs/stories/maryam_toys_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "On her birthday, Maryam got a new toy box filled with colourful dolls and little cars. She was so happy with her new toys, hugging them with love and great delight.",
+        "image": "docs/stories/maryam_toys_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Their little neighbour Fatimah came to visit. She looked at the new toys with longing, wishing she could play with them. But Maryam hesitated, afraid her favourite toys might break, so she hid them behind her back.",
+        "image": "docs/stories/maryam_toys_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Maryam stood there, unsure. She looked at Fatimah, who sat sadly beside the closed box. Maryam wondered to herself if hiding her toys was the right thing to do—would it make her friend happy?",
+        "image": "docs/stories/maryam_toys_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Maryam’s mother noticed what was happening. She came closer and said gently, \"Maryam, toys are more fun when we play with them together. Kindness and sharing joy bring Allah’s pleasure and make hearts happy.\" Maryam thought about it and decided to share.",
+        "image": "docs/stories/maryam_toys_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "Maryam’s heart felt at ease. She opened her wooden box and invited Fatimah, saying, \"Let’s play together!\" They took out the colourful blocks and started building a tall, beautiful tower, laughing out loud.",
+        "image": "docs/stories/maryam_toys_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "Fatimah’s face lit up with a smile, and they had a wonderful time. Maryam learned that sharing doubles the joy, makes others happy, and builds the strongest, most beautiful friendships—filling life with happiness and blessings.",
+        "image": "docs/stories/maryam_toys_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": false,
+        "quoted_arabic": true,
+        "quran_ayah": false,
+        "reviewer_model": false
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "meaning_change",
+          "field": "pages[1].text",
+          "arabic": "ابنة جارتهم الصغيرة فاطمة",
+          "english": "Their little neighbour Fatimah",
+          "why": "The Arabic specifies 'the daughter of their neighbour' (ابنة جارتهم), but the English makes Fatimah the neighbour herself, altering the relationship.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "omar_prayer",
+    "title": "Umar and the Light of Salah",
+    "description": "An iman-filled tarbiyah story that teaches children the importance of perfecting wudu and preserving salah in its time with passion and khushu'.",
+    "coverImage": "docs/stories/omar_prayer_cover.png",
+    "themeColor": "0xFF059669",
+    "videoFile": "docs/stories/omar_prayer_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Umar was a lively child who loved playing in his garden with his friends. In the middle of their play, he heard the adhan echoing sweetly across the sky: 'Allahu Akbar, Allahu Akbar.' Umar stopped at once and looked at his friends with a smile.",
+        "image": "docs/stories/omar_prayer_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "He remembered the words of the Messenger of Allah ﷺ when he was asked about the most beloved deeds to Allah. He said, 'Salah at its appointed time.' Umar said to his friends, 'My friends, the call of the Creator is more important than any play. Let’s go to the masjid to pray together.'",
+        "image": "docs/stories/omar_prayer_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Umar hurried to the wudu area and performed wudu slowly and carefully: washing his hands and face, wiping his head, remembering that wudu washes away sins and brightens the face with light and barakah.",
+        "image": "docs/stories/omar_prayer_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Umar stood in the first row in the masjid beside his father, feeling the greatness of standing before Allah, the Most High. He performed his salah with steadiness and khushu', without rushing, reciting the Qur'an with a present heart.",
+        "image": "docs/stories/omar_prayer_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "After the salah ended, Umar felt a peace and tranquility fill his chest. He realized that salah is not just movements—it is a light that brightens the Muslim’s day and a great pillar that brings him closer to his Lord.",
+        "image": "docs/stories/omar_prayer_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "When Umar returned to his friends in the garden, he lovingly invited them to join him in performing salah always. The friends all pledged to respond immediately to the light of the adhan every time.",
+        "image": "docs/stories/omar_prayer_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": false,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "religious_error",
+          "field": "pages[1].text",
+          "arabic": "الصلاة على وقتها",
+          "english": "Salah at its appointed time",
+          "why": "The Arabic hadith says 'الصلاة على وقتها' (prayer on its time). The English adds the word 'appointed', which is not in the original wording. This alters the phrasing of a hadith.",
+          "severity": "medium"
+        },
+        {
+          "type": "meaning_change",
+          "field": "pages[2].text",
+          "arabic": "أسبغ الوضوء بتمهل وعناية",
+          "english": "performed wudu slowly and carefully",
+          "why": "The Arabic verb 'أسبغ' means to perform wudu thoroughly and completely, covering all required parts. The English omits this key concept of thoroughness, reducing it to only slowness and care.",
+          "severity": "medium"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "khadija_neighbor",
+    "title": "Khadijah and the Right of the Neighbor",
+    "description": "A warm Islamic story that teaches children the virtue of ihsan (kindness) to neighbors, sharing food and affection, following the Prophetic Sunnah.",
+    "coverImage": "docs/stories/khadija_neighbor_cover.png",
+    "themeColor": "0xFFD97706",
+    "videoFile": "docs/stories/khadija_neighbor_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "On a cold evening, Khadijah was helping her mother prepare a warm, delicious soup that filled the air with a lovely smell. When the cooking was done, her mother took a big plate and said, 'Khadijah, prepare this plate for our neighbor, Grandma Aisha.'",
+        "image": "docs/stories/khadija_neighbor_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Khadijah looked surprised and said, 'Mama, are we sending them food when they have their own?' Her mother smiled and said, 'My dear, our noble Prophet ﷺ taught us, saying: *O Abu Dharr, if you cook a broth, increase its water and look after your neighbors.*'",
+        "image": "docs/stories/khadija_neighbor_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Khadijah carried the warm plate carefully and knocked softly on Grandma Aisha’s door. The old lady opened the door, and when she saw Khadijah with the warm plate, her face lit up with joy and happiness.",
+        "image": "docs/stories/khadija_neighbor_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Grandma Aisha prayed for Khadijah’s blessings and success, gently patting her head. She gave her a piece of candy to thank her for her kindness and care.",
+        "image": "docs/stories/khadija_neighbor_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "Khadijah returned home with her heart dancing with happiness. She learned that Islamic law gives neighbors a great right, and that a simple, kind gift brings hearts closer and plants love in the community.",
+        "image": "docs/stories/khadija_neighbor_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "The next day, Grandma Aisha sent Khadijah a plate full of fresh fruits with a sweet thank-you note, teaching Khadijah that exchanging gifts between neighbors brings love and blessings.",
+        "image": "docs/stories/khadija_neighbor_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": false,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "term_error",
+          "field": "pages[4].text",
+          "arabic": "الشرع الإسلامي",
+          "english": "Islamic law",
+          "why": "The Arabic term 'الشرع' is translated as 'law' instead of being transliterated as 'Shariah', while the description transliterates 'السنة' as 'Sunnah'. This inconsistency in handling Islamic terms within the same document is a term error.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "abdullah_bismillah",
+    "title": "Abdullah and 'Bismillah'",
+    "description": "A warm tarbiyah story that gently shows the Sunnah manners of eating and drinking—saying 'Bismillah,' using the right hand, and praising Allah.",
+    "coverImage": "docs/stories/abdullah_bismillah_cover.png",
+    "themeColor": "0xFF2563EB",
+    "videoFile": "docs/stories/abdullah_bismillah_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Abdullah sat at the lunch table, hungry after a busy school day. The table was filled with delicious food—everything looked so good. He quickly reached out with his left hand to grab a piece of fruit.",
+        "image": "docs/stories/abdullah_bismillah_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "His father stopped him gently and said, \"Abdullah, do you remember the advice of the Messenger of Allah ﷺ to the young boy?\" Abdullah immediately recalled the noble hadith: \"O young boy, say 'Bismillah,' eat with your right hand, and eat from what is in front of you.\"",
+        "image": "docs/stories/abdullah_bismillah_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Abdullah smiled, pulled his hand back, and said in a clear voice, \"Bismillah.\" Then he began to eat with his right hand, taking food from what was in front of him—calmly and politely, without rushing or wasting.",
+        "image": "docs/stories/abdullah_bismillah_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "As they ate, his father told him that saying 'Bismillah' keeps the Shaytan away and brings barakah (blessing) to the food. Eating with the right hand follows the example of the noble Prophet ﷺ and shows good Islamic manners.",
+        "image": "docs/stories/abdullah_bismillah_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "When Abdullah was full, he wiped his hands and said, \"Alhamdulillah, the One who fed us, gave us drink, and made us Muslims.\" He felt content, knowing that following even the small Sunnahs in daily life brings great reward and blessing.",
+        "image": "docs/stories/abdullah_bismillah_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "Saying 'Bismillah' and 'Alhamdulillah' became a beautiful habit for Abdullah at every meal. And every day, barakah and happiness filled the table of his kind family.",
+        "image": "docs/stories/abdullah_bismillah_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": false,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "religious_error",
+          "field": "pages[1].text",
+          "arabic": "«يا غلام، سمّ الله، وكل بيمينك، وكل مما يليك»",
+          "english": "\"O young boy, say 'Bismillah,' eat with your right hand, and eat from what is in front of you.\"",
+          "why": "The Arabic hadith says 'سمّ الله' (mention Allah's name), not specifically 'say Bismillah'. The English alters the wording of the hadith.",
+          "severity": "medium"
+        },
+        {
+          "type": "term_error",
+          "field": "pages[3].text and pages[5].text",
+          "arabic": "التسمية",
+          "english": "saying 'Bismillah' / Saying 'Bismillah'",
+          "why": "The Islamic term 'tasmiyah' is translated away instead of being transliterated or explained. The Arabic uses the general term, not the specific phrase.",
+          "severity": "low"
+        },
+        {
+          "type": "meaning_change",
+          "field": "description",
+          "arabic": "الآداب الشرعية",
+          "english": "Sunnah manners",
+          "why": "The Arabic says 'Shariah etiquettes', not 'Sunnah manners'. 'Sunnah' is a specific term not present in the source.",
+          "severity": "low"
+        },
+        {
+          "type": "meaning_change",
+          "field": "pages[4].text",
+          "arabic": "تطبيق السنن الصغيرة",
+          "english": "following even the small Sunnahs",
+          "why": "The word 'even' is added, not present in the Arabic.",
+          "severity": "low"
+        },
+        {
+          "type": "meaning_change",
+          "field": "pages[5].text",
+          "arabic": "مائدة عائلته الكريمة",
+          "english": "the table of his kind family",
+          "why": "'كريمة' means noble or generous, not 'kind'.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "aisha_permission",
+    "title": "Aisha and the Adab of Isti'dhan",
+    "description": "An Islamic tarbiyah story that teaches children the akhlaq of seeking permission and preserving the privacy of homes, following the Qur'anic guidance.",
+    "coverImage": "docs/stories/aisha_permission_cover.png",
+    "themeColor": "0xFFEC4899",
+    "videoFile": "docs/stories/aisha_permission_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "On a beautiful afternoon, Aisha wanted to enter her mother’s room to get her reading book. She ran and raised her hand to push the door suddenly.",
+        "image": "docs/stories/aisha_permission_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Aisha remembered her father’s words when they had memorized together the words of Allah: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾. Interpretation of the meaning: 'O you who have believed, do not enter houses other than your own houses until you ascertain welcome and greet their inhabitants.'",
+        "image": "docs/stories/aisha_permission_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Aisha stood calmly at the door, knocked three gentle and polite knocks, and said in a clear, sweet voice: 'Assalamu alaykum, may I come in, Mama?'",
+        "image": "docs/stories/aisha_permission_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Her mother gave permission with a warm smile and said, 'Come in, my dear. May Allah bless you and your adab.' So Aisha entered with dignity and joy.",
+        "image": "docs/stories/aisha_permission_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "Her mother taught Aisha that isti'dhan preserves privacy and is a sign of refined Islamic akhlaq that protects hearts and increases love among family.",
+        "image": "docs/stories/aisha_permission_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "Aisha always sought permission before entering any room or house, and she became a role model for her sisters and friends in practicing the beautiful akhlaq of isti'dhan.",
+        "image": "docs/stories/aisha_permission_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 3,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": true,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "meaning_change",
+          "field": "pages[1].text",
+          "arabic": "تذكرت عائشة كلام أبيها عندما حفظت معه قوله تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾",
+          "english": "Aisha remembered her father’s words when they had memorized together the words of Allah: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا عَلَىٰ أَهْلِهَا﴾. Interpretation of the meaning: 'O you who have believed, do not enter houses other than your own houses until you ascertain welcome and greet their inhabitants.'",
+          "why": "The English phrasing merges 'her father's words' with 'the words of Allah', implying the father's words are the Qur'anic verse. The Arabic separates them: she remembered her father's words (likely a reminder) when they memorized the verse. This could misattribute the verse to the father's speech.",
+          "severity": "medium"
+        },
+        {
+          "type": "term_error",
+          "field": "description",
+          "arabic": "خلق الاستئذان",
+          "english": "akhlaq of seeking permission",
+          "why": "Arabic uses singular 'khuluq' (خلق), but English uses plural 'akhlaq'. Should be singular to match the concept of a single character trait.",
+          "severity": "low"
+        },
+        {
+          "type": "term_error",
+          "field": "pages[4].text",
+          "arabic": "الأدب الإسلامي الرفيع",
+          "english": "refined Islamic akhlaq",
+          "why": "Arabic uses 'adab' (أدب), not 'akhlaq'. The English should use 'adab' to maintain consistency with the title and the mother's speech, and to accurately reflect the Arabic term.",
+          "severity": "medium"
+        },
+        {
+          "type": "term_error",
+          "field": "pages[5].text",
+          "arabic": "خلق الاستئذان الجميل",
+          "english": "beautiful akhlaq of isti'dhan",
+          "why": "Arabic uses singular 'khuluq' (خلق), but English uses plural 'akhlaq'. Should be singular to match the Arabic and the concept.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "yaseen_creation",
+    "title": "Yaseen and the Wonders of the Creator",
+    "description": "A faith-filled story that invites children to reflect on the beauty of nature and the greatness of Allah's creation, reinforcing aqeedah and Tawheed.",
+    "coverImage": "docs/stories/yaseen_creation_cover.png",
+    "themeColor": "0xFF0EA5E9",
+    "videoFile": "docs/stories/yaseen_creation_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Yaseen went out with his father for a walk in the green garden. He saw a tiny ant carrying a grain of wheat bigger than itself, climbing a branch with steady steps.",
+        "image": "docs/stories/yaseen_creation_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Yaseen marveled and said, \"Father, how does this little ant have all this strength and order?\"",
+        "image": "docs/stories/yaseen_creation_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "His father smiled and said, \"Oh Yaseen, this is the work of Allah, who has perfected all things. Remember the words of Allah: ﴿صُنْعَ اللَّهِ الَّذِي أَتْقَنَ كُلَّ شَيْءٍ﴾ — interpretation of the meaning: *The work of Allah, who perfected all things.*\"",
+        "image": "docs/stories/yaseen_creation_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Yaseen looked at the stars, the trees, and the colorful flowers. In his heart, he felt the power of the Great Creator, who arranges this wondrous universe with precision and wisdom.",
+        "image": "docs/stories/yaseen_creation_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "Yaseen raised his little hands and said, \"SubhanAllah, Alhamdulillah.\" He knew that every creature in nature glorifies Allah and points to His Oneness.",
+        "image": "docs/stories/yaseen_creation_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "Yaseen grew to love reflecting on Allah’s creations. He often praised and remembered Him, so his faith and love for the Creator grew stronger every day.",
+        "image": "docs/stories/yaseen_creation_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": false,
+        "quoted_arabic": true,
+        "quran_ayah": true,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "meaning_change",
+          "field": "pages[4].text",
+          "arabic": "يسبح بحمد الله",
+          "english": "glorifies Allah",
+          "why": "The Arabic says 'glorifies with the praise of Allah' (يسبح بحمد الله), but the English omits 'with His praise', losing a key Qur'anic nuance.",
+          "severity": "medium"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "fatima_parents",
+    "title": "Fatima and the Flower of Birr",
+    "description": "An Islamic tarbiyah story that plants the seeds of birr al-walidayn and kind obedience in children’s hearts, bringing joy to their parents.",
+    "coverImage": "docs/stories/fatima_parents_cover.png",
+    "themeColor": "0xFF8B5CF6",
+    "videoFile": "docs/stories/fatima_parents_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Fatima’s mother came home from work tired after a long day. She sat down on the sofa to rest for a little while.",
+        "image": "docs/stories/fatima_parents_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Fatima noticed how tired her mother was. She remembered the words of Allah: ﴿وَبِالْوَالِدَيْنِ إِحْسَانًا﴾ — interpretation of the meaning: 'And do ihsan to parents.' So she decided to bring happiness to her mother’s heart.",
+        "image": "docs/stories/fatima_parents_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Quickly, Fatima brought a warm cup of water. She helped tidy up her toys and cleaned the living room with energy and care, without anyone even asking.",
+        "image": "docs/stories/fatima_parents_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "When her mother opened her eyes and saw the neat room and Fatima’s kindness, she smiled with joy. She hugged Fatima close to her chest with tenderness and made du’a for her, asking for blessings.",
+        "image": "docs/stories/fatima_parents_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "Fatima’s father felt so proud of her. He gave her a beautiful red carnation as a gift for her ihsan and her birr al-walidayn.",
+        "image": "docs/stories/fatima_parents_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "Fatima learned that birr al-walidayn is the greatest path to the pleasure of Allah and His Paradise. She continued to do ihsan, obeying her father and mother with a smile that never faded.",
+        "image": "docs/stories/fatima_parents_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": true,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "meaning_change",
+          "field": "pages[4].text",
+          "arabic": "زهرة جوري جميلة",
+          "english": "a beautiful red carnation",
+          "why": "جوري is a type of rose (Damask rose), not a carnation.",
+          "severity": "low"
+        },
+        {
+          "type": "religious_error",
+          "field": "pages[6].text",
+          "arabic": "الله تعالى",
+          "english": "Allah",
+          "why": "The honorific 'تعالى' (the Exalted) is omitted.",
+          "severity": "medium"
+        },
+        {
+          "type": "meaning_change",
+          "field": "pages[5].text",
+          "arabic": "برها بوالدتها",
+          "english": "birr al-walidayn",
+          "why": "The Arabic specifies birr to her mother, but the English uses the general term for birr to both parents.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "bilal_forgiveness",
+    "title": "Bilal and the Heart of Forgiveness",
+    "description": "An inspiring Islamic story that teaches children the virtue of forgiveness and responding to wrongdoing with good character.",
+    "coverImage": "docs/stories/bilal_forgiveness_cover.png",
+    "themeColor": "0xFF10B981",
+    "videoFile": "docs/stories/bilal_forgiveness_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Bilal was happily painting his colorful picture in art class when his classmate Tariq tripped and accidentally spilled juice all over Bilal’s beautiful painting.",
+        "image": "docs/stories/bilal_forgiveness_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Bilal felt sad for a moment and worried he might get angry, but Tariq rushed over, trembling and apologizing, 'I’m sorry, Bilal! I didn’t mean to!'",
+        "image": "docs/stories/bilal_forgiveness_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Bilal remembered the Qur’an’s description of the righteous: ﴿وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ﴾. Interpretation of the meaning: 'Those who restrain anger and pardon the people—and Allah loves the doers of good.'",
+        "image": "docs/stories/bilal_forgiveness_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "Bilal smiled warmly and said, 'It’s okay, Tariq. Alhamdulillah, a Muslim forgives and shows kindness. We can paint a new picture together, even better!'",
+        "image": "docs/stories/bilal_forgiveness_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "Tariq was surprised by Bilal’s gentleness and forgiveness. They cleaned the table together and shared their colors to paint a new, even more beautiful picture.",
+        "image": "docs/stories/bilal_forgiveness_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "Bilal felt a deep peace in his heart. He knew that forgiveness lifts a person’s rank and fills hearts with love and harmony.",
+        "image": "docs/stories/bilal_forgiveness_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": true,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "meaning_change",
+          "field": "pages[3].text",
+          "arabic": "المسلم يعفو ويسامح",
+          "english": "a Muslim forgives and shows kindness",
+          "why": "The Arabic 'يسامح' means 'pardons' or 'forgives', not 'shows kindness'. The translation adds a concept not present in the source.",
+          "severity": "low"
+        },
+        {
+          "type": "meaning_change",
+          "field": "pages[5].text",
+          "arabic": "يرفع صاحب القدر والمنزلة",
+          "english": "lifts a person’s rank",
+          "why": "The Arabic includes 'القدر' (status/destiny) alongside 'المنزلة' (rank). The English omits 'status'.",
+          "severity": "low"
+        },
+        {
+          "type": "meaning_change",
+          "field": "pages[5].text",
+          "arabic": "ويعمر القلوب بالمحبة والسلام",
+          "english": "and fills hearts with love and harmony",
+          "why": "The Arabic 'سلام' means 'peace', not 'harmony'.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  },
+  {
+    "id": "hamza_truth",
+    "title": "Hamza and the Amanah of the Word",
+    "description": "An inspiring Islamic story that teaches children the importance of truthfulness and guarding the tongue from mockery and backbiting, following the akhlaq of the Qur'an.",
+    "coverImage": "docs/stories/hamza_truth_cover.png",
+    "themeColor": "0xFF7C3AED",
+    "videoFile": "docs/stories/hamza_truth_cover.mp4",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Hamza was playing with his friends in the playground. While they were playing, one of the children fell and lost his balance in a funny way. Some of the children started laughing and mocking him, and the child felt shy and sad.",
+        "image": "docs/stories/hamza_truth_1.png"
+      },
+      {
+        "pageNumber": 2,
+        "text": "Hamza hesitated for a moment, then remembered the noble ayah he had memorized in his Qur'an circle: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَر قَوْمٌ مِّن قَوْمٍ عَسَىٰ أَن يَكُونُوا خَيْرًا مِّنْهُمْ﴾. Interpretation of the meaning: 'O you who have believed, let not a people ridicule [another] people; perhaps they may be better than them.'",
+        "image": "docs/stories/hamza_truth_2.png"
+      },
+      {
+        "pageNumber": 3,
+        "text": "Hamza stepped forward firmly and said to his friends with rifq (gentleness): 'My friends, a Muslim does not mock his brother. A kind word is sadaqah (charity).' Then he stretched out his hand to the child, helped him up, and brushed the dust off his clothes.",
+        "image": "docs/stories/hamza_truth_3.png"
+      },
+      {
+        "pageNumber": 4,
+        "text": "The children felt ashamed of their behavior and realized their mistake. They quickly apologized to their friend and joined together to play with a spirit of cooperation and love.",
+        "image": "docs/stories/hamza_truth_4.png"
+      },
+      {
+        "pageNumber": 5,
+        "text": "Hamza returned home feeling proud. He had defended his brother and guarded his tongue. He knew that the Islamic Shari'ah teaches us to be, with our words and deeds, keys to goodness and locks against evil.",
+        "image": "docs/stories/hamza_truth_5.png"
+      },
+      {
+        "pageNumber": 6,
+        "text": "Hamza and his friends became a good example at school. They spread kind words and were careful to advise one another with truth and rifq. Their friendship became a wonderful example of brotherhood in faith.",
+        "image": "docs/stories/hamza_truth_6.png"
+      }
+    ],
+    "language": "en",
+    "source_language": "ar",
+    "translation": {
+      "translator_model": "mistral-large-3:675b",
+      "reviewer_model": "deepseek-v4-pro",
+      "attempts": 1,
+      "needs_scholar_review": true,
+      "scholar_signals": {
+        "keyword": true,
+        "quoted_arabic": true,
+        "quran_ayah": true,
+        "reviewer_model": true
+      },
+      "review_verdict": "defects",
+      "review_defects": [
+        {
+          "type": "meaning_change",
+          "field": "page 3 text",
+          "arabic": "برفق ولين",
+          "english": "with rifq (gentleness)",
+          "why": "Omitted 'ولين' (and softness). The Arabic says 'with gentleness and softness', but the English only mentions gentleness.",
+          "severity": "low"
+        },
+        {
+          "type": "term_error",
+          "field": "page 6 text",
+          "arabic": "بالحق والرفق",
+          "english": "with truth and rifq",
+          "why": "Inconsistent handling of 'rifq'. On page 3, 'rifq' was translated as 'gentleness' in parentheses, but here it is left untranslated, which may confuse readers.",
+          "severity": "low"
+        }
+      ],
+      "approved_by": null
+    }
+  }
+]

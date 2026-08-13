@@ -7,6 +7,7 @@ import 'package:video_player/video_player.dart';
 import '../../../config/app_config.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/content_direction.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/skeleton.dart';
@@ -387,14 +388,22 @@ class _BookCover extends StatelessWidget {
                               color: Colors.white.withValues(alpha: 0.25),
                             ),
                         const SizedBox(height: 18),
-                        Text(
-                          story.title,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            height: 1.25,
+                        // Centred, so direction is invisible on one line — but
+                        // a wrapped bidi title reorders its runs by the ambient
+                        // direction, and the ambient direction here belongs to
+                        // the app, not to the story.
+                        ContentDirectionality(
+                          languageCode: story.language,
+                          text: story.title,
+                          child: Text(
+                            story.title,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                              height: 1.25,
+                            ),
                           ),
                         ),
                       ],

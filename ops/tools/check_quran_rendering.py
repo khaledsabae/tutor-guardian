@@ -44,6 +44,10 @@ ROOT = Path(__file__).resolve().parents[2]
 EN_CONTENT_GLOBS = (
     "knowledge_base/curriculum/i18n/en/**/*.json",
     "mobile/assets/content/**/*.en.json",   # طبقة الألعاب/الأذكار (المرحلة ٤)
+    # القصص: خمس من أربع عشرة تحمل آيات بين ﴿﴾. الملفان نسختان متطابقتان
+    # (شبكة + محزوم)، ويُفحصان معًا لأن انحرافًا في أحدهما وحده يكفي.
+    "docs/stories.en.json",
+    "mobile/assets/data/stories_en.json",
 )
 
 # ما يجعل نصًّا إنجليزيًّا «معلَنًا أنه تفسير».
@@ -161,8 +165,13 @@ def main() -> int:
                 problems.append((path, "unreadable", str(path), str(e)[:80]))
                 continue
             checked += 1
-            for kind, field, snippet in violations_in(doc):
-                problems.append((path, kind, field, snippet))
+            # بعض الطبقات ملفٌ واحد يحوي قائمة وثائق (القصص مثلًا). نفحص كل
+            # عنصر على حدة لا القائمة ككل، وإلا فات فحصُ `kind: verse` — وهو
+            # لا يسري إلا على كائن.
+            docs = doc if isinstance(doc, list) else [doc]
+            for item in docs:
+                for kind, field, snippet in violations_in(item):
+                    problems.append((path, kind, field, snippet))
 
     print(f"  ملفات إنجليزية مفحوصة: {checked}")
 

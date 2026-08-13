@@ -150,6 +150,14 @@ def _unit_metadata(unit: KnowledgeUnit) -> dict:
         "unit_id": unit.id,
         "domain": unit.domain,
         "age_group": unit.age_group,
+        # اللغة تدخل الفهرس ولا تُستعمل في الترشيح بعد — عمدًا. ٤٣ وحدة
+        # إنجليزية من ١,١٨٧، فمرشِّح صارم `language == "en"` يفرّغ النتيجة
+        # ويعطي المستخدم الإنجليزي «لا توجد معلومات كافية» بدل إسنادٍ عربي
+        # مفيد. ما يصلحه هذا السطر أن اللغة صارت **معلومة** عند الاسترجاع
+        # وفي بيانات كل نتيجة، بعد أن كانت تُرمى عند التحميل.
+        # ⚠️ إضافة مفتاح هنا تغيّر `_fingerprint`، فأول إقلاع بعد النشر يعيد
+        # تضمين الوحدات كلها مرة واحدة — تكلفة إقلاع لا تكلفة طلب.
+        "language": unit.language,
         "behavior_type": unit.behavior_type,
         "intervention_type": unit.intervention_type,
         "severity": unit.severity,
