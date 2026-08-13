@@ -20,6 +20,11 @@ After the Dart data is deleted the working tree no longer has anything to
 compare against, so `verify` also accepts `--rev <git-rev>`: it reads the Dart
 sources with `git show <rev>:<path>`. The proof stays re-runnable forever.
 
+`b9c8608` is the last revision that still holds all six Dart data blocks:
+
+    ops/tools/extract_app_content.py verify --rev b9c8608
+    → 7/7 regions byte-identical — 200,962 bytes
+
 Provenance (`family_adhkar`)
 ----------------------------
 Verses and hadith carry structured provenance — numeric surah/ayah, book/number
