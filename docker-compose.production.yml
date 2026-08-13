@@ -54,7 +54,7 @@ services:
       - ./mobile/lib/l10n:/app/mobile/lib/l10n:ro
     networks:
       - internal
-      - analytics_net               # shared with analytics_nginx for direct name-based proxy
+      - edge_net                    # shared with analytics_nginx for direct name-based proxy
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
       interval: 30s
@@ -81,6 +81,13 @@ volumes:
 networks:
   internal:
     driver: bridge
-  analytics_net:
+  # كان اسمه analytics_net وكان بينضم لشبكة إنتاج المنصة بالكامل. التكلفة إن
+  # خدمتنا اسمها `backend` — نفس اسم خدمة باكند المنصة — فالاسم بقى محمول
+  # لكونتينرين على نفس الشبكة وDNS بتاع دوكر بيدوّر بينهم، ونص نداءات فرونت
+  # المنصة الخادمية كانت بتقع علينا وترجع 404. الشبكة دي سطحها التماس المطلوب
+  # وبس: nginx يوصلنا بالاسم عشان alsaba.cloud/seo و/methodology.
+  # مملوكة لولا مشروع (external في الكومبوزين) عشان `compose down` من أي ناحية
+  # مايقطعش التانية. تتخلق بـ: docker network create alsaba_edge
+  edge_net:
     external: true
-    name: analytics-platform_production_network   # join analytics nginx network
+    name: alsaba_edge
