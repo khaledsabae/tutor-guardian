@@ -277,6 +277,42 @@ void main() {
     expect(find.text('إضافة طفل جديد'), findsNothing);
     expect(find.textContaining('وصلت للحد الأقصى'), findsOneWidget);
   });
+
+  testWidgets('ChildrenListScreen keeps the add button when the list is empty',
+      (tester) async {
+    // Reported through the in-app form on 2026-08-03: "حذفت الإسم لعلي أستطيع
+    // إضافته من جديد … ولكن بعد الحذف لم تظهر لي أيقونة إضافة الأطفال نهائياً".
+    // The empty state rendered an illustration and a sentence and nothing else,
+    // so deleting your last child left no way back — the one screen where the
+    // button matters most was the one screen that dropped it.
+    final fake = _FakeTgClient();
+    fake.listChildrenJson = {'count': 0, 'children': <dynamic>[]};
+    final prefs = await SharedPreferences.getInstance();
+
+    final container = ProviderContainer(
+      overrides: [
+        tgClientProvider.overrideWithValue(fake),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ],
+    );
+    addTearDown(container.dispose);
+    await container.read(sharedPreferencesProvider.future);
+
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: const MaterialApp(
+          locale: Locale('ar'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: ChildrenListScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('إضافة طفل جديد'), findsOneWidget);
+  });
 }
 
 // ── Fixtures ─────────────────────────────────────────────────────────────

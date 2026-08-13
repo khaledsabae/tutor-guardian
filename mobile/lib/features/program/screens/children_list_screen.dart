@@ -56,6 +56,24 @@ class ChildrenListScreen extends ConsumerWidget {
                         AppLocalizations.of(context).childrenEmpty,
                         textAlign: TextAlign.center,
                       ),
+                      // The add button used to live only in the populated
+                      // branch below, so deleting your last child left this
+                      // screen with an illustration, a sentence, and no way
+                      // out. Reported from inside the app on 2026-08-03.
+                      const SizedBox(height: 20),
+                      OutlinedButton.icon(
+                        onPressed: () => _addChild(context, ref),
+                        icon: const Icon(Icons.add_circle_outline),
+                        label:
+                            Text(AppLocalizations.of(context).childrenAddNew),
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(50),
+                          side: BorderSide(
+                            color: AppTheme.primary.withValues(alpha: 0.5),
+                          ),
+                          foregroundColor: AppTheme.primary,
+                        ),
+                      ),
                     ],
                   ),
                 ),
