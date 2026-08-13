@@ -389,7 +389,11 @@ def main(argv: list[str] | None = None) -> int:
                     help="questions sent through retrieval + judging")
     ap.add_argument("--max-pairs", type=int, default=400)
     ap.add_argument("--concurrency", type=int, default=5)
-    ap.add_argument("--workdir", default="/tmp/kb_gaps")
+    # /app/ops is the tg_sessions volume, so the artifacts survive a container
+    # recreation. /tmp does not: the first baseline run lost its probe output
+    # to a deploy an hour later, and the runbook's promise that raw question
+    # texts stay on the server for manual review is only true if they persist.
+    ap.add_argument("--workdir", default="/app/ops/kb_gaps")
     ap.add_argument("--arb", default=str(_ARB),
                     help="app_ar.arb holding the chatQ_* suggestion strings")
     ap.add_argument("--allow-unfiltered", action="store_true",
