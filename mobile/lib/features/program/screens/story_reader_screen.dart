@@ -12,6 +12,7 @@ import '../../../core/app_routes.dart';
 import '../data/story_models.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/content_direction.dart';
 import '../../../widgets/ui/night_sky.dart';
 
 /// Immersive bedtime story reader: looping ambient video background,
@@ -185,6 +186,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                           themeColor: themeColor,
                           allPages: widget.story.pages,
                           fontSizeMultiplier: _fontSizeMultiplier,
+                          storyLanguage: widget.story.language,
                         ),
                       ),
                       _buildEndCard(themeColor),
@@ -375,12 +377,17 @@ class _StoryPage extends StatelessWidget {
     required this.themeColor,
     required this.allPages,
     required this.fontSizeMultiplier,
+    required this.storyLanguage,
   });
 
   final StoryPage page;
   final Color themeColor;
   final List<StoryPage> allPages;
   final double fontSizeMultiplier;
+
+  /// The language of *this story's text*, which is not necessarily the app's.
+  /// See [ContentDirectionality].
+  final String storyLanguage;
 
   @override
   Widget build(BuildContext context) {
@@ -418,8 +425,17 @@ class _StoryPage extends StatelessWidget {
                 ],
               ),
               child: SingleChildScrollView(
-                child: Directionality(
-                  textDirection: TextDirection.rtl,
+                // Direction follows the story, not the app. Hard-coding RTL
+                // here was right while every story was Arabic and became wrong
+                // the day English stories shipped — an English page rendered
+                // right-aligned with its full stops on the wrong side. The
+                // story carries its own language tag; the page text is the
+                // fallback signal, which matters because these pages embed
+                // Arabic ayat inside English prose and the paragraph must not
+                // flip around them.
+                child: ContentDirectionality(
+                  languageCode: storyLanguage,
+                  text: page.text,
                   child: Text(
                     page.text,
                     style: TextStyle(
