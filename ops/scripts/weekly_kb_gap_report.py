@@ -227,7 +227,20 @@ def probe_and_judge(questions: list[dict], workdir: Path, sample: int,
     sys.path.insert(0, str(_TOOLS))
     from kb_gap_judge import summarize  # noqa: E402  (tool dir added above)
     with open(judged, encoding="utf-8") as fh:
-        return summarize(json.load(fh))
+        s = summarize(json.load(fh))
+
+    # The judge only ever sees (question, unit) pairs, so a question that
+    # retrieved NOTHING produces no pairs and vanishes from its summary —
+    # and those are the worst-served questions of all, not the best. On the
+    # first real run that was 26 of 100, which would have reported 51/72
+    # unserved instead of the true 77/100.
+    with open(pairs, encoding="utf-8") as fh:
+        probed = json.load(fh)
+    no_units = [r["question"] for r in probed if not r.get("units")]
+    s["probed_questions"] = len(probed)
+    s["no_unit_questions"] = no_units
+    s["unserved_total"] = len(s["unserved_questions"]) + len(no_units)
+    return s
 
 
 def _topic_label(text: str) -> str:
@@ -297,17 +310,24 @@ def format_report(days: int, filt: dict, unans: dict, judged: dict | None,
 
     if judged:
         c = judged["counts"]
-        lines.append(f"<b>حكم الاسترجاع</b> ({judged['questions']} سؤال · "
+        probed = judged.get("probed_questions", judged["questions"])
+        lines.append(f"<b>حكم الاسترجاع</b> (عيّنة {probed} سؤال · "
                      f"{judged['pairs']} زوج)")
         for g in ("صلة", "جزئية", "لا صلة", "?"):
             if c.get(g):
                 lines.append(f"  • {g}: {c[g]} ({100*c[g]/judged['pairs']:.0f}%)")
+        no_units = judged.get("no_unit_questions", [])
         unserved = judged["unserved_questions"]
-        lines.append(f"  • <b>أسئلة لم يخدمها الاسترجاع: {len(unserved)}</b>")
-        if unserved:
+        total_unserved = judged.get("unserved_total", len(unserved))
+        lines.append(f"  • <b>لم يخدمها الاسترجاع: {total_unserved} من {probed}</b> "
+                     f"({100*total_unserved/max(probed,1):.0f}%)")
+        lines.append(f"    منها {len(no_units)} لم يُسترجع لها شيء أصلًا، "
+                     f"و{len(unserved)} استُرجع لها ما لا يخدمها")
+        gaps = unserved + no_units
+        if gaps:
             lines.append("")
             lines.append("<b>أين تعمّق المحتوى</b> (مواضيع الفجوات)")
-            for topic, n in Counter(_topic_label(q) for q in unserved).most_common(6):
+            for topic, n in Counter(_topic_label(q) for q in gaps).most_common(6):
                 lines.append(f"  • {topic}: {n}")
     elif judge_skipped:
         lines.append("<i>الحكم متجاوَز بطلب صريح (--skip-judge) — أعداد فقط.</i>")
