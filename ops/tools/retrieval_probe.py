@@ -4,7 +4,16 @@ Runs the real pipeline (classify → rewrite → retrieve_hybrid) over realistic
 parent questions and dumps every (question, retrieved unit) pair to JSON for
 judging. Deliberately local: probing the live Chroma index from a second
 process is what stranded the collection handle and 500'd production.
+
+Two ways in:
+  * no args — the built-in QUESTIONS list below (a fixed yardstick).
+  * --questions-file — JSONL of {"question": ..., "age_group": ...}, which is
+    how the weekly loop feeds it real parent questions from chat_messages.
+
+    python ops/tools/retrieval_probe.py \
+        --questions-file /tmp/week.jsonl --out /tmp/retrieval_pairs.json
 """
+import argparse
 import json
 import sys
 import time
@@ -52,11 +61,42 @@ QUESTIONS = [
 ]
 
 
-def main():
+def _load_questions(path: str | None, limit: int | None) -> list[tuple[str, str]]:
+    """Built-in list, or JSONL of {"question", "age_group"}."""
+    if not path:
+        items = list(QUESTIONS)
+    else:
+        items = []
+        with open(path, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                row = json.loads(line)
+                q = (row.get("question") or "").strip()
+                if q:
+                    items.append((q, row.get("age_group") or "unspecified"))
+    return items[:limit] if limit else items
+
+
+def main(argv: list[str] | None = None):
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--questions-file", help="JSONL: {question, age_group} per line")
+    ap.add_argument("--out", default="/tmp/retrieval_pairs.json")
+    ap.add_argument("--limit", type=int, help="probe at most N questions")
+    ap.add_argument("--quiet", action="store_true", help="suppress the per-question line")
+    args = ap.parse_args(argv)
+
+    questions = _load_questions(args.questions_file, args.limit)
+    if not questions:
+        print("لا أسئلة للفحص.")
+        json.dump([], open(args.out, "w", encoding="utf-8"), ensure_ascii=False)
+        return 0
+
     # NO _ensure_index(): that is the rebuild path that deleted the collection
     # out from under the live handle and 500'd production. Reads only.
     out = []
-    for q, age in QUESTIONS:
+    for q, age in questions:
         t0 = time.time()
         domains = classify_domains(q)
         rewritten = rewrite_query(q, classifier_fast_path=matched_fast_path(q))
@@ -76,12 +116,14 @@ def main():
                 "text": (u.get("document", "") or "").removeprefix("passage: ")[:340],
             } for u in units],
         })
-        print(f"  {q[:44]:46s} → {len(units)} وحدة  ({','.join(domains)})", flush=True)
-    json.dump(out, open("/tmp/retrieval_pairs.json",
-                        "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        if not args.quiet:
+            print(f"  {q[:44]:46s} → {len(units)} وحدة  ({','.join(domains)})", flush=True)
+    with open(args.out, "w", encoding="utf-8") as fh:
+        json.dump(out, fh, ensure_ascii=False, indent=1)
     pairs = sum(len(r["units"]) for r in out)
-    print(f"\nالأسئلة: {len(out)} | أزواج (سؤال، وحدة): {pairs}")
+    print(f"\nالأسئلة: {len(out)} | أزواج (سؤال، وحدة): {pairs} → {args.out}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

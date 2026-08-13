@@ -1358,6 +1358,24 @@ abstract class AppLocalizations {
   /// **'كيف أناقش ابني في اختيار أصحابه؟'**
   String get chatQ_friends;
 
+  /// No description provided for @chatQ_fears.
+  ///
+  /// In ar, this message translates to:
+  /// **'طفلي كثير الخوف — من الظلام أو النوم وحده'**
+  String get chatQ_fears;
+
+  /// No description provided for @chatQ_siblings.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابني يغار من أخيه الصغير ويؤذيه'**
+  String get chatQ_siblings;
+
+  /// No description provided for @chatQ_bodyChanges.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أتحدث مع طفلي عن التغيرات الجسدية والخصوصية؟'**
+  String get chatQ_bodyChanges;
+
   /// No description provided for @chatWelcome.
   ///
   /// In ar, this message translates to:

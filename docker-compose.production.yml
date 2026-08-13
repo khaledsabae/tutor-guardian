@@ -36,6 +36,12 @@ services:
       - ./ops/scripts:/app/ops/scripts:ro
       # Mobile marketing assets (logo, icons) for public landing pages.
       - ./mobile/assets:/app/mobile/assets:ro
+      # The app's own suggested questions (chatQ_*). weekly_kb_gap_report.py
+      # must exclude them before counting anything — they were the five most
+      # frequent "questions" in production, so a report that counts button
+      # taps ranks the app's own UI as parent demand. The script refuses to
+      # run without this file rather than quietly emitting a skewed report.
+      - ./mobile/lib/l10n:/app/mobile/lib/l10n:ro
     networks:
       - internal
       - analytics_net               # shared with analytics_nginx for direct name-based proxy

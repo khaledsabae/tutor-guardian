@@ -104,29 +104,85 @@ def add_message(
     severity: str | None = None,
     mode: str | None = None,
     needs_human_review: bool = False,
-) -> None:
+) -> int:
+    """Insert one message and return its rowid.
+
+    The rowid matters for user messages: they are written *before* the
+    classifier has run (so the question survives a failed answer), which
+    leaves domain/severity NULL. The caller backfills them through
+    `update_classification` once classification completes.
+    """
     conn = get_conn()
-    conn.execute(
-        """INSERT INTO chat_messages
-           (session_id, role, content, domain, severity, mode, needs_human_review)
-           VALUES (?, ?, ?, ?, ?, ?, ?)""",
-        (session_id, role, content, domain, severity, mode, int(needs_human_review)),
-    )
-    conn.execute(
-        "UPDATE chat_sessions SET updated_at = datetime('now') WHERE id = ?",
-        (session_id,),
-    )
-    conn.commit()
-    conn.close()
+    try:
+        cur = conn.execute(
+            """INSERT INTO chat_messages
+               (session_id, role, content, domain, severity, mode, needs_human_review)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (session_id, role, content, domain, severity, mode, int(needs_human_review)),
+        )
+        message_id = cur.lastrowid
+        conn.execute(
+            "UPDATE chat_sessions SET updated_at = datetime('now') WHERE id = ?",
+            (session_id,),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return message_id
+
+
+def update_classification(
+    message_id: int,
+    *,
+    domain: str | None = None,
+    severity: str | None = None,
+    needs_human_review: bool | None = None,
+) -> None:
+    """Backfill the classification of an already-written message.
+
+    Every question is classified on the way in and the result was thrown
+    away for user rows, which is why `coach_service.recent_parent_topic`
+    (`WHERE role='user' AND domain IS NOT NULL`) could never match a row.
+    Deliberately does not touch `chat_sessions.updated_at` — this is a
+    late annotation of an existing turn, not new activity.
+    """
+    sets, params = [], []
+    if domain is not None:
+        sets.append("domain = ?")
+        params.append(domain)
+    if severity is not None:
+        sets.append("severity = ?")
+        params.append(severity)
+    if needs_human_review is not None:
+        sets.append("needs_human_review = ?")
+        params.append(int(needs_human_review))
+    if not sets:
+        return
+    params.append(message_id)
+    conn = get_conn()
+    try:
+        conn.execute(
+            f"UPDATE chat_messages SET {', '.join(sets)} WHERE id = ?", params
+        )
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def get_history(session_id: str, limit: int = 20) -> list[ConversationTurn]:
     """Return the last `limit` turns (chronological) as ConversationTurn objects."""
     conn = get_conn()
     try:
+        # mode='error' rows carry a placeholder ("تعذّر توليد الرد…"), not an
+        # answer. They are stored so a failed turn is countable instead of
+        # silent — but feeding one back as prior assistant context would put
+        # the apology into the next prompt. mode='interrupted' rows DO stay:
+        # that text is a real partial answer the parent actually read.
         rows = conn.execute(
             """SELECT role, content FROM chat_messages
-               WHERE session_id = ? ORDER BY id DESC LIMIT ?""",
+               WHERE session_id = ?
+                 AND (mode IS NULL OR mode != 'error')
+               ORDER BY id DESC LIMIT ?""",
             (session_id, limit),
         ).fetchall()
     finally:

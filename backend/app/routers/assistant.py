@@ -37,6 +37,10 @@ from app.services.tafsir_service import (
 
 _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
 
+# Shown to the parent *and* stored as the turn when generation fails outright,
+# so the conversation keeps a visible answer instead of a question that hangs.
+_STREAM_ERROR_TEXT = "تعذّر توليد الرد، يُرجى المحاولة لاحقاً."
+
 
 def _sse(event: str, data: dict) -> str:
     """Format one Server-Sent Event."""
@@ -102,6 +106,26 @@ async def _classify_and_rewrite(query_text: str) -> tuple[list[str], str]:
     return domains, rewritten
 
 
+async def _tag_user_message(
+    message_id: int | None, domain: str, severity: str
+) -> None:
+    """Backfill the classification onto the stored user question.
+
+    The question row is written before classification so it survives a failed
+    answer; this puts the domain/severity back on it once they exist. Telemetry
+    must never break the answer, so a write failure is logged, not raised.
+    """
+    if message_id is None:
+        return
+    try:
+        await asyncio.to_thread(
+            store.update_classification,
+            message_id, domain=domain, severity=severity,
+        )
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("tagging user message %s failed: %s", message_id, exc)
+
+
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assistant", tags=["assistant"])
 
@@ -115,10 +139,11 @@ async def draft_reply(request: Request, user_message: UserMessage):
     # asyncio.to_thread — this handler must never block the event loop
     # (single uvicorn worker; a blocked loop freezes /health too).
     session_id = user_message.session_id
+    user_msg_id: int | None = None
     if session_id:
         if not await asyncio.to_thread(store.session_exists, session_id):
             raise HTTPException(status_code=404, detail="Session not found")
-        await asyncio.to_thread(
+        user_msg_id = await asyncio.to_thread(
             store.add_message,
             session_id, "user",
             user_message.message_text or user_message.behavior_type or "",
@@ -137,6 +162,10 @@ async def draft_reply(request: Request, user_message: UserMessage):
             escalation_target="emergency_services",
             mode="banned",
         )
+        # These two paths return before the classifier ever runs, so without
+        # this the question rows that matter most — banned and emergency —
+        # would be the ones left unlabelled.
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         return await asyncio.to_thread(_finalize, reply, session_id)
 
     # ── Step 0b: Emergency keyword check ─────────────────────────────
@@ -147,7 +176,9 @@ async def draft_reply(request: Request, user_message: UserMessage):
     # ── Step 1: Emergency severity check ─────────────────────────────
     if is_emergency(user_message):
         logger.info("Emergency severity — returning fallback immediately")
-        return await asyncio.to_thread(_finalize, emergency_reply(user_message, policies), session_id)
+        reply = emergency_reply(user_message, policies)
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        return await asyncio.to_thread(_finalize, reply, session_id)
 
     # ── Step 2: Build query text ──────────────────────────────────────
     query_text = (user_message.message_text or "").strip()
@@ -168,6 +199,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
 
     primary_domain = _label_domain(detected_domains, [])
     severity = user_message.severity or "خفيف"
+    await _tag_user_message(user_msg_id, primary_domain, severity)
 
     # ── Step 3b: Pre-cache check ─────────────────────────────────────
     # Skipped when classification failed: the cache key contains the domain,
@@ -400,16 +432,27 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     session_id = user_message.session_id
 
     # ── Session: validate + persist incoming user message ────────────
+    # Both calls go through to_thread like /draft does: a sqlite lock or
+    # commit on the event loop stalls every other request this worker holds,
+    # including the streams already in flight.
+    user_msg_id: int | None = None
     if session_id:
-        if not store.session_exists(session_id):
+        if not await asyncio.to_thread(store.session_exists, session_id):
             raise HTTPException(status_code=404, detail="Session not found")
-        store.add_message(
+        user_msg_id = await asyncio.to_thread(
+            store.add_message,
             session_id, "user",
             user_message.message_text or user_message.behavior_type or "",
         )
 
     def _single(reply: AssistantReply) -> StreamingResponse:
         """Emit a non-streamed reply as one terminal `done` event."""
+        # Banned and emergency return through here, before the classifier
+        # runs — tag the question from the reply so the rows that matter
+        # most are not the ones left unlabelled.
+        if user_msg_id is not None:
+            store.update_classification(
+                user_msg_id, domain=reply.domain, severity=reply.severity)
         _finalize(reply, session_id)
 
         def one():
@@ -446,6 +489,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
 
     primary_domain = _label_domain(detected_domains, [])
     severity = user_message.severity or "خفيف"
+    await _tag_user_message(user_msg_id, primary_domain, severity)
 
     # First question in the session? (no assistant turns yet). Only then may
     # the answer cache serve/store — a follow-up depends on conversation the
@@ -514,8 +558,6 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                     "rerank_score": 1.0,
                     "source_domain": "fiqh",
                 })
-        else:
-            retrieved_units = await asyncio.to_thread(_retrieve_blocking)
 
     # Re-label from the retrieved evidence when classification was uncertain.
     primary_domain = _label_domain(detected_domains, retrieved_units)
@@ -588,9 +630,10 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         )
 
     async def event_stream():
-        import queue
         loop = asyncio.get_event_loop()
         q: asyncio.Queue = asyncio.Queue()
+        sent_parts: list[str] = []
+        persisted = False
 
         def run_sync_stream():
             try:
@@ -602,8 +645,37 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             except Exception as e:
                 loop.call_soon_threadsafe(q.put_nowait, ("error", e))
 
-        # Offload the blocking stream reader loop to a background worker thread
-        asyncio.create_task(asyncio.to_thread(run_sync_stream))
+        # Offload the blocking stream reader loop to a background worker thread.
+        # Keep a reference: a bare create_task() may be garbage-collected.
+        worker = asyncio.create_task(asyncio.to_thread(run_sync_stream))
+
+        def _persist(text: str, mode: str) -> None:
+            """Record the assistant turn. Synchronous on purpose.
+
+            This is also called from the `finally` below, which may run while
+            the task is being cancelled — `asyncio.to_thread` would just raise
+            CancelledError again there, so the (millisecond) sqlite write is
+            done inline instead.
+            """
+            nonlocal persisted
+            if persisted:
+                return
+            persisted = True
+            try:
+                if session_id:
+                    store.add_message(
+                        session_id, "assistant", text,
+                        domain=primary_domain, severity=severity, mode=mode,
+                        needs_human_review=decision["needs_human_review"],
+                    )
+                log_session(
+                    domain=primary_domain, behavior_type=user_message.behavior_type or "",
+                    age_group=user_message.age_group or "", severity=severity,
+                    mode=mode, needs_human_review=decision["needs_human_review"],
+                    reply_length=len(text), retrieved_count=len(retrieved_units),
+                )
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("persisting %s turn failed: %s", mode, exc)
 
         try:
             while True:
@@ -625,21 +697,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                             escalation_target=decision["escalate_to"],
                             mode=stream_mode, session_id=session_id,
                         )
-                        if session_id:
-                            await asyncio.to_thread(
-                                store.add_message,
-                                session_id, "assistant", final_text,
-                                domain=primary_domain, severity=severity,
-                                mode=stream_mode,
-                                needs_human_review=decision["needs_human_review"],
-                            )
-                        await asyncio.to_thread(
-                            log_session,
-                            domain=primary_domain, behavior_type=user_message.behavior_type or "",
-                            age_group=user_message.age_group or "", severity=severity,
-                            mode=stream_mode, needs_human_review=decision["needs_human_review"],
-                            reply_length=len(final_text), retrieved_count=len(retrieved_units),
-                        )
+                        await asyncio.to_thread(_persist, final_text, stream_mode)
                         # Feed the answer cache: grounded, local, review-free,
                         # first-question answers only (§5.1).
                         if (
@@ -656,10 +714,40 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                         yield _sse("done", reply.model_dump())
                     elif chunk.delta:
                         # Filter leaked CJK tokens from the live stream too.
-                        yield _sse("token", {"delta": _CJK_RE.sub("", chunk.delta)})
+                        delta = _CJK_RE.sub("", chunk.delta)
+                        sent_parts.append(delta)
+                        yield _sse("token", {"delta": delta})
         except Exception as e:
-            logger.warning("Stream generation failed: %s", e)
-            yield _sse("error", {"detail": "تعذّر توليد الرد، يُرجى المحاولة لاحقاً."})
+            logger.exception("Stream generation failed (session=%s)", session_id)
+            _persist(
+                "".join(sent_parts).strip() or _STREAM_ERROR_TEXT, "error"
+            )
+            yield _sse("error", {"detail": _STREAM_ERROR_TEXT})
+        finally:
+            # Reached on client disconnect too, where the generator is closed
+            # with CancelledError/GeneratorExit — neither is an Exception, so
+            # the handler above never sees them. Without this, an answer the
+            # parent watched stream in was dropped on the floor: no row, no
+            # log, nothing. That silent path was 176 of 1,617 questions
+            # (10.9%) as of 2026-08-13, and it is why they were undiagnosable.
+            if not persisted:
+                partial = "".join(sent_parts).strip()
+                logger.warning(
+                    "Stream interrupted before completion (session=%s, chars=%d)",
+                    session_id, len(partial),
+                )
+                if partial:
+                    _persist(partial, "interrupted")
+            # Detaches the awaiting task; it does NOT stop run_sync_stream or
+            # the provider connection — asyncio cannot interrupt a running
+            # thread. So generation continues to completion in the background
+            # after the parent leaves. That is pre-existing behaviour, and it
+            # is what made this bug diagnosable at all: the finished call is
+            # still logged to llm_calls, which is how we could prove the
+            # answers were being generated and then dropped. Real cancellation
+            # needs a cooperative cancel()/close() threaded through the
+            # gateway and every provider — a separate change.
+            worker.cancel()
 
     return StreamingResponse(event_stream(), media_type="text/event-stream", headers=_SSE_HEADERS)
 
