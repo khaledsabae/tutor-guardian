@@ -89,3 +89,36 @@ def test_no_reference_uses_a_renamed_age_band(lessons):
                 if "path_prenatal-1_" in f:
                     offenders.append(f"{lid}: {f}")
     assert not offenders, "reference to a non-existent age-band filename:\n" + "\n".join(offenders)
+
+
+# ── Path duration must reflect the lessons that exist ────────────────────────
+
+def test_paths_do_not_promise_more_days_than_content():
+    """A path may not advertise more than 3 days per lesson.
+
+    Reported by voice note on 2026-08-02: a mother opened a path badged «28
+    يوم», found four lessons, finished them in one sitting, and asked why.
+    estimated_days had been set aspirationally — the same four-lesson shape
+    carried values from 10 to 28 days across the catalogue, so the badge was
+    not derived from anything. 3/lesson is the loosest ratio any well-formed
+    path used, so nothing claims more pacing than the app's own best example.
+
+    The real fix is more lessons; this only stops the number being a promise
+    the content cannot keep.
+    """
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[2] / "knowledge_base/curriculum"
+    offenders = []
+    for sub in ("paths", "i18n/en/paths"):
+        for f in sorted((root / sub).glob("*.json")):
+            d = json.loads(f.read_text(encoding="utf-8"))
+            n = len(d.get("lesson_ids") or [])
+            days = d.get("estimated_days")
+            if not (isinstance(days, int) and n):
+                continue
+            if days > n * 3:
+                offenders.append(f"{sub}/{d.get('id')}: {days}d / {n} lessons")
+    assert not offenders, "paths promising more than 3 days per lesson:\n  " + \
+        "\n  ".join(offenders)
