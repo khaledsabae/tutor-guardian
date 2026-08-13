@@ -91,13 +91,16 @@ def _pick_tip_for_today(age_group: str, time_of_day: Optional[str]) -> dict:
 
 @router.get("/paths")
 async def list_paths(
+    request: Request,
     age_group: Optional[str] = Query(None, description="فلترة بالعمر: 0-3, 4-6, 7-9, 10-12, 13-15, 16-18"),
     domain: Optional[str] = Query(None, description="فلترة بالمجال: medical, cyber, islamic_parenting, development"),
+    lang: Optional[str] = Query(None, description="لغة المحتوى: ar/en"),
 ):
     """قائمة المسارات المنشورة، قابلة للفلترة."""
     age_group = _validate_age_group(age_group)
     domain = _validate_domain(domain)
-    paths = cl.get_paths(age_group=age_group, domain=domain)
+    paths = cl.get_paths(age_group=age_group, domain=domain,
+                         lang=_resolve_lang(lang, request))
     return {
         "count": len(paths),
         "paths": paths,
@@ -107,16 +110,19 @@ async def list_paths(
 @router.get("/paths/{path_id}")
 async def get_path_detail(
     path_id: str,
+    request: Request,
     include: Optional[str] = Query(None, description="?include=lessons لإرجاع الدروس مع المسار"),
+    lang: Optional[str] = Query(None, description="لغة المحتوى: ar/en"),
 ):
     """تفاصيل مسار واحد. لو include=lessons، يرجع الدروس بالترتيب."""
-    path = cl.get_path(path_id)
+    resolved = _resolve_lang(lang, request)
+    path = cl.get_path(path_id, lang=resolved)
     if path is None:
         raise HTTPException(status_code=404, detail=f"المسار '{path_id}' غير موجود")
 
     body: dict = dict(path)
     if include == "lessons":
-        lessons = cl.get_lessons_for_path(path_id)
+        lessons = cl.get_lessons_for_path(path_id, lang=resolved)
         body["lessons"] = lessons
         body["lessons_count"] = len(lessons)
     return body
@@ -229,11 +235,25 @@ async def get_next_lesson(
     )
 
 
+def _resolve_lang(lang: Optional[str], request: Request) -> Optional[str]:
+    """Query parameter first, then Accept-Language, then Arabic.
+
+    The lesson endpoint took no language at all until 2026-08-13, so English
+    users read Arabic lessons while a complete English translation sat unused
+    on disk. Two of them reported it through the in-app form.
+    """
+    return lang or request.headers.get("accept-language", "") or None
+
+
 @router.get("/lessons/{lesson_id}")
-async def get_lesson_detail(lesson_id: str):
+async def get_lesson_detail(
+    lesson_id: str,
+    request: Request,
+    lang: Optional[str] = Query(None, description="لغة المحتوى: ar/en"),
+):
     """تفاصيل درس واحد. يرجع الـ unit_ids لكن لا يحمّل الـ units الكاملة —
     الـ app يستخدم /api/assistant/stream لجلب السياق عند الحاجة."""
-    lesson = cl.get_lesson(lesson_id)
+    lesson = cl.get_lesson(lesson_id, lang=_resolve_lang(lang, request))
     if lesson is None:
         raise HTTPException(status_code=404, detail=f"الدرس '{lesson_id}' غير موجود")
     return lesson

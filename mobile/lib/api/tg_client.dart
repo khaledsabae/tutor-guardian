@@ -170,6 +170,14 @@ class TgClient {
         _ownsHttpClient = httpClient == null,
         _baseUrlOverride = baseUrl;
 
+  /// UI language, sent as `?lang=` on curriculum reads.
+  ///
+  /// The backend serves Arabic unless asked otherwise. All 170 lessons and 39
+  /// paths have English translations on disk, but until 2026-08-13 nothing
+  /// requested them, so English users read Arabic — reported twice from inside
+  /// the app. Set by the app when the locale changes; `null` keeps Arabic.
+  static String? uiLanguage;
+
   final http.Client _http;
   final _AuthStore _auth;
   final Future<int?> Function()? onNeedActiveChildId;
@@ -571,6 +579,8 @@ class TgClient {
     final qs = <String, String>{};
     if (ageGroup != null && ageGroup.isNotEmpty) qs['age_group'] = ageGroup;
     if (domain != null && domain.isNotEmpty) qs['domain'] = domain;
+    final lang = uiLanguage;
+    if (lang != null && lang.isNotEmpty) qs['lang'] = lang;
     final uri = Uri.parse(
       '$_baseUrl/api/program/paths',
     ).replace(queryParameters: qs.isEmpty ? null : qs);
@@ -587,7 +597,10 @@ class TgClient {
     String pathId, {
     bool includeLessons = false,
   }) async {
-    final qs = includeLessons ? {'include': 'lessons'} : const <String, String>{};
+    final qs = <String, String>{};
+    if (includeLessons) qs['include'] = 'lessons';
+    final lang = uiLanguage;
+    if (lang != null && lang.isNotEmpty) qs['lang'] = lang;
     final uri = Uri.parse(
       '$_baseUrl/api/program/paths/$pathId',
     ).replace(queryParameters: qs.isEmpty ? null : qs);
@@ -601,7 +614,11 @@ class TgClient {
   }
 
   Future<Map<String, dynamic>> getLesson(String lessonId) async {
-    final uri = Uri.parse('$_baseUrl/api/program/lessons/$lessonId');
+    final lang = uiLanguage;
+    final uri = Uri.parse('$_baseUrl/api/program/lessons/$lessonId').replace(
+      queryParameters:
+          (lang != null && lang.isNotEmpty) ? {'lang': lang} : null,
+    );
     final resp = await _http
         .get(uri, headers: const {'Accept': 'application/json'})
         .timeout(AppConfig.httpTimeout);

@@ -29,12 +29,32 @@ BASE_DIR = Path(__file__).resolve().parents[2] / "knowledge_base" / "curriculum"
 PATHS_DIR = BASE_DIR / "paths"
 LESSONS_DIR = BASE_DIR / "lessons"
 TIPS_DIR = BASE_DIR / "daily_tips"
+I18N_DIR = BASE_DIR / "i18n"
+
+# Languages we have full translations for. Arabic is the source, so it is not
+# an overlay — everything falls back to it.
+TRANSLATED_LANGS = ("en",)
 
 # Module-level cache. Loaded once at startup via load_curriculum().
 _paths_cache: dict[str, dict] = {}
 _lessons_cache: dict[str, dict] = {}
 _tips_cache: list[dict] = []
 _assets_cache: dict[str, dict] = {}
+
+# Translation overlays, keyed by language then id. A miss falls through to the
+# Arabic cache above rather than 404ing: a lesson with no translation yet must
+# still open, in Arabic, instead of disappearing for English users.
+_i18n_paths_cache: dict[str, dict[str, dict]] = {}
+_i18n_lessons_cache: dict[str, dict[str, dict]] = {}
+
+
+def _norm_lang(lang: Optional[str]) -> Optional[str]:
+    """'en-US,en;q=0.9' → 'en'. Anything we have no overlay for → None (Arabic)."""
+    if not lang:
+        return None
+    head = lang.split(",")[0].split(";")[0].strip().lower()
+    base = head.split("-")[0]
+    return base if base in TRANSLATED_LANGS else None
 
 
 def _load_json(path: Path) -> Optional[dict]:
@@ -139,9 +159,32 @@ def load_curriculum() -> None:
         logger.warning("[curriculum] docs/lesson_index.json not found")
     _assets_cache = assets
 
+    # ── Translation overlays ──
+    # Only ids that already exist in Arabic are overlaid: a stray translation
+    # file must not conjure a lesson that the source curriculum does not have.
+    global _i18n_paths_cache, _i18n_lessons_cache
+    _i18n_paths_cache, _i18n_lessons_cache = {}, {}
+    for lang in TRANSLATED_LANGS:
+        for sub, source, target in (
+            ("lessons", _lessons_cache, _i18n_lessons_cache),
+            ("paths", _paths_cache, _i18n_paths_cache),
+        ):
+            overlay: dict[str, dict] = {}
+            for f in sorted((I18N_DIR / lang / sub).glob("*.json")):
+                d = _load_json(f)
+                if d and d.get("id") in source:
+                    overlay[d["id"]] = d
+            target[lang] = overlay
+
     logger.info(
-        "[curriculum] loaded %d paths, %d lessons, %d tips, %d assets",
+        "[curriculum] loaded %d paths, %d lessons, %d tips, %d assets"
+        " · translations: %s",
         len(_paths_cache), len(_lessons_cache), len(_tips_cache), len(_assets_cache),
+        ", ".join(
+            f"{lang} {len(_i18n_lessons_cache.get(lang, {}))} lessons"
+            f"/{len(_i18n_paths_cache.get(lang, {}))} paths"
+            for lang in TRANSLATED_LANGS
+        ) or "none",
     )
 
 
@@ -178,7 +221,31 @@ def _add_path_video(path: dict) -> dict:
     return out
 
 
-def get_paths(age_group: Optional[str] = None, domain: Optional[str] = None) -> list[dict]:
+def _translate(item: dict, overlay: dict[str, dict[str, dict]],
+               lang: Optional[str]) -> dict:
+    """Overlay the translated fields onto the Arabic entry.
+
+    Merged rather than swapped, so a translation that omits a field (or a newly
+    added field it does not know about yet) keeps the Arabic value instead of
+    dropping it. Structural fields the app routes on — id, path_id, order —
+    always win from the source.
+    """
+    code = _norm_lang(lang)
+    if not code:
+        return item
+    tr = overlay.get(code, {}).get(item.get("id", ""))
+    if not tr:
+        return item
+    merged = {**item, **{k: v for k, v in tr.items() if v not in (None, "", [])}}
+    for key in ("id", "path_id", "order", "age_group", "domain", "unit_ids"):
+        if key in item:
+            merged[key] = item[key]
+    merged["language"] = code
+    return merged
+
+
+def get_paths(age_group: Optional[str] = None, domain: Optional[str] = None,
+              lang: Optional[str] = None) -> list[dict]:
     """Return published paths, optionally filtered by age_group and/or domain."""
     out = list(_paths_cache.values())
     if age_group:
@@ -188,25 +255,28 @@ def get_paths(age_group: Optional[str] = None, domain: Optional[str] = None) -> 
         out = [p for p in out if p.get("domain") == domain]
     # Stable order: by age_group, then domain, then id
     out.sort(key=lambda p: (p.get("age_group", ""), p.get("domain", ""), p.get("id", "")))
-    return [_add_path_video(p) for p in out]
+    return [_add_path_video(_translate(p, _i18n_paths_cache, lang)) for p in out]
 
 
-def get_path(path_id: str) -> Optional[dict]:
+def get_path(path_id: str, lang: Optional[str] = None) -> Optional[dict]:
     path = _paths_cache.get(path_id)
     if path:
-        return _add_path_video(path)
+        return _add_path_video(_translate(path, _i18n_paths_cache, lang))
     return None
 
 
-def get_lessons_for_path(path_id: str) -> list[dict]:
+def get_lessons_for_path(path_id: str, lang: Optional[str] = None) -> list[dict]:
     """Return published lessons for a path, ordered by `order` ascending."""
     out = [l for l in _lessons_cache.values() if l.get("path_id") == path_id]
     out.sort(key=lambda l: l.get("order", 999))
-    return out
+    return [_translate(l, _i18n_lessons_cache, lang) for l in out]
 
 
-def get_lesson(lesson_id: str) -> Optional[dict]:
-    return _lessons_cache.get(lesson_id)
+def get_lesson(lesson_id: str, lang: Optional[str] = None) -> Optional[dict]:
+    lesson = _lessons_cache.get(lesson_id)
+    if lesson is None:
+        return None
+    return _translate(lesson, _i18n_lessons_cache, lang)
 
 
 def search(query: str, limit: int = 20) -> list[dict]:

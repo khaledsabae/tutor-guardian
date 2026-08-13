@@ -17,6 +17,7 @@ import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../api/tg_client.dart';
 import '../data/onboarding_storage.dart';
 
 /// Async-loaded once at app start. All other providers wait on this
@@ -90,12 +91,16 @@ class AppLocaleNotifier extends StateNotifier<Locale?> {
       final code = _prefs.getString('tg.ui_language');
       if (code != null) {
         state = Locale(code);
+        TgClient.uiLanguage = code;
       }
     }
   }
 
   Future<void> setLocale(String languageCode) async {
     state = Locale(languageCode);
+    // Curriculum reads carry this so lessons arrive in the chosen language;
+    // without it the UI switched and the content stayed Arabic.
+    TgClient.uiLanguage = languageCode;
     if (_prefs != null) {
       await _prefs.setString('tg.ui_language', languageCode);
     }
