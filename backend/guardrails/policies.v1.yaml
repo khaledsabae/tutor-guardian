@@ -76,6 +76,15 @@ domains:
       allow_strict_rulings: false
       require_human_review: true
     severity_overrides:
+      # سؤال عقدي عادي لا يستدعي مراجعة بشرية. بلا هذا السطر كان كل سؤال في
+      # المجال يُعلَّم، لأن severity تُحسم «خفيف» في كل الحالات إلا ما تلتقطه
+      # كلمات الطوارئ — فصارت العلامة تصف المجال لا الخطورة، وامتلأ الطابور
+      # بـ983 رسالة (61%) لم يقرأها أحد. علامةٌ لا تُقرأ وهمُ سلامة لا سلامة.
+      # النمط هنا هو نمط medical/development نفسه، لا نمطًا جديدًا.
+      خفيف:
+        require_human_review: false
+      متوسط:
+        require_human_review: true
       شديد:
         require_human_review: true
         escalate_to: "scholar"
@@ -92,6 +101,19 @@ domains:
     default_policy:
       allow_strict_rulings: false
       require_human_review: true
+    severity_overrides:
+      # نفس علّة aqeedah: سؤال فقهي عادي كان يُعلَّم للمراجعة لمجرد مجاله.
+      # النوازل تصل هنا بـ«شديد» وتُصعَّد لعالِم كما كانت.
+      خفيف:
+        require_human_review: false
+      متوسط:
+        require_human_review: true
+      شديد:
+        require_human_review: true
+        escalate_to: "scholar"
+      طارئ:
+        require_human_review: true
+        escalate_to: "emergency_services"
     notes: >
       "إجابات هذا المجال يجب أن تُصاغ على أنها (معلومات شرعية عامة) مع
       تشجيع السائل على الرجوع لعالِم موثوق في النوازل المعقدة."
@@ -101,12 +123,36 @@ domains:
     default_policy:
       allow_practical_tips: true
       require_human_review: false
+    severity_overrides:
+      # كان المجال بلا overrides إطلاقًا، فحالة «شديد» أو «طارئ» فيه تسقط على
+      # default_policy وتمرّ بلا مراجعة ولا جهة تصعيد. المسار الحيّ يعترض
+      # الطوارئ قبل الحرّاس (is_emergency في assistant.py) فلم يظهر الأثر،
+      # لكن ترك المجال بلا سياسة عالية الخطورة اعتماد على حاجزٍ واحد.
+      شديد:
+        require_human_review: true
+        escalate_to: "counselor"
+      طارئ:
+        require_human_review: true
+        escalate_to: "emergency_services"
 
   islamic_parenting:
     description: "تربية الأطفال وفقاً للتعاليم الإسلامية والآداب الشرعية."
     default_policy:
       allow_strict_rulings: false
       require_human_review: true
+    severity_overrides:
+      # المجال الأكثر ورودًا في أسئلة الآباء — وكان يُعلَّم بالكامل. نفس علّة
+      # aqeedah/fiqh: العلامة كانت تصف المجال لا الخطورة.
+      خفيف:
+        require_human_review: false
+      متوسط:
+        require_human_review: true
+      شديد:
+        require_human_review: true
+        escalate_to: "scholar"
+      طارئ:
+        require_human_review: true
+        escalate_to: "emergency_services"
     notes: >-
       "إجابات هذا المجال تُعتبر معلومات شرعية عامة مأخوذة من كبار العلماء،
       ويُشجع السائل على الرجوع لعالم موثوق في النوازل المعقدة."
@@ -120,3 +166,8 @@ domains:
       شديد:
         require_human_review: true
         escalate_to: "cybersecurity_specialist"
+      # نفس ثغرة tarbiyah: «طارئ» كان يسقط على default_policy (بلا مراجعة).
+      # ابتزاز أو استدراج طفل يصل هنا، وهو أحقّ حالات التصعيد لا أقلّها.
+      طارئ:
+        require_human_review: true
+        escalate_to: "emergency_services"

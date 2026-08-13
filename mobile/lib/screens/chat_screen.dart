@@ -421,13 +421,21 @@ class _EmptyState extends StatelessWidget {
   // Age-tailored pain questions. Topics deliberately match the backend's
   // curated topic seeds (صلاة/مذاكرة/شاشة/عناد/نوم/كذب/سوشيال) so the very
   // first answer lands grounded and specific.
+  //
+  // Three slots were re-pointed on 2026-08-13 from measured demand: 1,284
+  // real questions in production (after excluding these very suggestions,
+  // which otherwise dominate any frequency count, and sub-12-character
+  // noise). Fear/anxiety (29 questions), sibling jealousy (15) and body
+  // changes/privacy (15) each had *zero* suggestion coverage, while the
+  // slots they replaced drew 7–9 questions each. The benched keys stay
+  // defined below — they are still good questions, just out-competed.
   List<String> _suggestionsFor(AppLocalizations l10n) {
     const ageMap = <String, List<String>>{
-      '0-3': ['chatQ_sleep', 'chatQ_stubborn', 'chatQ_eating'],
+      '0-3': ['chatQ_sleep', 'chatQ_stubborn', 'chatQ_siblings'],
       '2-3': ['chatQ_sleep', 'chatQ_stubborn', 'chatQ_speech'],
       '4-6': ['chatQ_pray5', 'chatQ_tantrums', 'chatQ_screens'],
-      '7-9': ['chatQ_study', 'chatQ_prayRegular', 'chatQ_lying'],
-      '10-12': ['chatQ_gaming', 'chatQ_online', 'chatQ_homework'],
+      '7-9': ['chatQ_study', 'chatQ_prayRegular', 'chatQ_fears'],
+      '10-12': ['chatQ_gaming', 'chatQ_online', 'chatQ_bodyChanges'],
       '13-15': ['chatQ_teenDefiant', 'chatQ_socialMedia', 'chatQ_teenPray'],
       '16-18': ['chatQ_talkOlder', 'chatQ_university', 'chatQ_friends'],
     };
@@ -457,6 +465,9 @@ class _EmptyState extends StatelessWidget {
       case 'chatQ_talkOlder': return l10n.chatQ_talkOlder;
       case 'chatQ_university': return l10n.chatQ_university;
       case 'chatQ_friends': return l10n.chatQ_friends;
+      case 'chatQ_fears': return l10n.chatQ_fears;
+      case 'chatQ_siblings': return l10n.chatQ_siblings;
+      case 'chatQ_bodyChanges': return l10n.chatQ_bodyChanges;
       default: return key;
     }
   }

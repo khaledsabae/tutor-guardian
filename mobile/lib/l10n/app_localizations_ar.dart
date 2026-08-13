@@ -648,6 +648,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatQ_friends => 'كيف أناقش ابني في اختيار أصحابه؟';
 
   @override
+  String get chatQ_fears => 'طفلي كثير الخوف — من الظلام أو النوم وحده';
+
+  @override
+  String get chatQ_siblings => 'ابني يغار من أخيه الصغير ويؤذيه';
+
+  @override
+  String get chatQ_bodyChanges => 'كيف أتحدث مع طفلي عن التغيرات الجسدية والخصوصية؟';
+
+  @override
   String get chatWelcome => 'مرحباً — اسأل عن أي تحدٍّ تربوي يواجهك';
 
   @override

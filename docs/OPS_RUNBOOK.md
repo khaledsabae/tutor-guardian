@@ -171,9 +171,22 @@ v1.0.30+75 دون أن يعترض شيء — لا لأن بوابة فشلت، �
 | `0 3 * * *` | `warm_answer_cache.py` — تسخين كاش الإجابات بأسئلة الألم الشائعة | `/var/log/tg-cache-warm.log` | نسبة الكاش في `/api/stats/ops-llm` |
 | `30 3 * * *` | `backup_user_data.sh` — باكاب `conversations.db` (sqlite3 online backup + integrity_check، gzip، احتفاظ 14 يومًا) → `/root/tg-backups/` | `/var/log/tg-backup.log` | ملف اليوم موجود **وحجمه منطقي** واسترجاع تجريبي يفتح |
 | أسبوعيًا `8:00` | `weekly_dashboard.py` — تقرير أسبوعي على تلجرام (مقاييس LLM + retention + إحصائيات DB) | `/var/log/tg-weekly-dashboard.log` | الرسالة وصلت فعلًا على تلجرام |
+| `0 6 * * 6` **(لم يُضَف بعد)** | `weekly_kb_gap_report.py` — أسئلة الأسبوع → استرجاع حقيقي → حكم DeepSeek → تقرير فجوات على تلجرام. يستبعد نصوص `chatQ_*` أولًا وإلا قاس الأزرار لا المستخدمين. **مخرجه تجميعي: نصوص أسئلة الآباء لا تغادر الخادم.** | `/var/log/tg-kb-gaps.log` | تقرير وصل على تلجرام **ونسبة «بلا إجابة» فيه تطابق استعلامًا يدويًا على `chat_messages`** |
 | (systemd timer) | `pcc-laptop-watchdog` — يراقب نبض لابتوب خالد وينبّه على تلجرام لو غاب > ساعتين (كود المؤقّت في `publishing-center/scripts/watchdog/`) | journalctl للـtimer | تنبيه فعلي عند إطفاء اللابتوب |
 
 > درس مسجَّل (2026-07-16): سطر كرون قديم كان يشير لملف غير موجود، فظلت إشعارات إعادة التفاعل معطلة **صامتة** منذ الإعداد. لهذا: أي كرون جديد يُتحقق منه بالأثر (رسالة وصلت/صف اتكتب) لا بمجرد وجوده في crontab.
+
+> **سطر تقرير الفجوات — يضيفه خالد بعد تشغيل جاف ناجح، لا الوكيل:**
+>
+> ```
+> 0 6 * * 6 docker exec -w /app tg_backend python ops/scripts/weekly_kb_gap_report.py >> /var/log/tg-kb-gaps.log 2>&1
+> ```
+>
+> قبل الإضافة: `docker exec -w /app tg_backend python ops/scripts/weekly_kb_gap_report.py --dry-run --skip-judge`
+> ثم مرّة بالحكم الحقيقي (`--dry-run` وحده) لقياس الإنفاق قبل جدولته أسبوعيًا.
+> يحتاج `TELEGRAM_BOT_TOKEN` و`TELEGRAM_CHAT_ID` و`DEEPSEEK_API_KEY` في `.env`
+> — وانتبه أن `weekly_dashboard.py` يقرأ `TELEGRAM_CHAT_ID` وهو **غير موجود في
+> `.env.example`** (الموجود `TELEGRAM_CHANNEL_ID`)، فتحقق من وجوده فعليًا.
 
 ### 5.2 وكلاء PCC على اللابتوب (محتوى وتسويق — لا يمسّون الإنتاج)
 
