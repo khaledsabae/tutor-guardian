@@ -34,9 +34,21 @@ DEFAULT_URL = "https://tg-api.alsaba.cloud/api/feedback/telegram/webhook"
 
 
 def load_env() -> dict[str, str]:
-    """Minimal .env reader — no dependency on python-dotenv."""
+    """Minimal .env reader — no dependency on python-dotenv.
+
+    Falls back to the process environment when there is no .env file: inside
+    the production container compose injects the variables and no such file
+    exists, and running this there is the obvious first thing to try.
+    """
     if not ENV_FILE.exists():
-        sys.exit(f"missing {ENV_FILE}")
+        import os
+
+        env = {k: v for k in (
+            "FEEDBACK_TELEGRAM_BOT_TOKEN", "FEEDBACK_TELEGRAM_WEBHOOK_SECRET",
+        ) if (v := os.environ.get(k))}
+        if not env:
+            sys.exit(f"missing {ENV_FILE}, and nothing in the environment either")
+        return env
     values: dict[str, str] = {}
     for line in ENV_FILE.read_text().splitlines():
         line = line.strip()
