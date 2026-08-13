@@ -142,14 +142,22 @@ class MarkLessonProgressNotifier
     int? childId,
   }) async {
     final repo = ref.read(progressRepositoryProvider);
+    // Resolve the child BEFORE the write, and send it. This value was already
+    // being computed here — but only to invalidate the cache afterwards, while
+    // the PATCH itself went out with no child at all. The server then fell
+    // back to the device's first-created child, so a parent with two children
+    // completed a lesson for one and saw the progress recorded against the
+    // other: 22% of all completions landed on a sibling whose age band did not
+    // even match the lesson (measured 2026-08-13).
+    final targetChild = childId ?? ref.read(activeChildIdProvider);
     final updated = await repo.patchLessonProgress(
       lessonId: arg,
       status: status,
+      childId: targetChild,
     );
     // Invalidate the child progress bundle so the progress bar re-derives
     // with the new status. We also directly invalidate pathProgressMapProvider
     // (the whole family) to force a refresh regardless of autoDispose state.
-    final targetChild = childId ?? ref.read(activeChildIdProvider);
     if (targetChild != null) {
       ref.invalidate(childProgressProvider(targetChild));
     }
