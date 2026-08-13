@@ -1,0 +1,36 @@
+{
+  "id": "lesson_2-3_aqeedah_first_name_04",
+  "path_id": "path_2-3_aqeedah_first_name",
+  "title": "Our Prophet Muhammad ﷺ: A Name Said with Love",
+  "age_group": "2-3",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "At this age your child grasps neither a biography nor a history, but he does grasp that there is a name spoken in his home with a particular warmth. Mention the Prophet's name ﷺ and send blessings upon him in front of him, and tell him one short sentence: «Our Prophet Muhammad loved children.» Add nothing. What remains with him now is not the fact but your tone as you say it, and that is the material on which the whole seerah will be built years later.",
+  "try_this": "This week: whenever you mention the Prophet's name ﷺ in front of your child, send blessings upon him out loud. A child catches tone years before he catches meaning.",
+  "order": 4,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "Does your child hear the Prophet's name ﷺ in your home outside teaching moments?",
+    "Which single quality of the Prophet ﷺ would you want him to know first?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5",
+    "reviewer_model": null,
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

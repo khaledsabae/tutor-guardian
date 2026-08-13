@@ -1,0 +1,36 @@
+{
+  "id": "lesson_2-3_aqeedah_first_name_02",
+  "path_id": "path_2-3_aqeedah_first_name",
+  "title": "«Bismillah» and «Alhamdulillah»: Tying the Whole Day to Allah",
+  "age_group": "2-3",
+  "domain": "aqeedah",
+  "unit_ids": [],
+  "summary": "A two-year-old learns by routine, not by explanation. So tie the two phrases to two fixed moments he already knows: «Bismillah» before eating and «Alhamdulillah» after. Say them yourself every time even if he does not speak, because a child imitates what he sees consistently, not what he is told to do. After a few weeks you will find him saying it before you do — and that is the first time he remembers Allah of his own accord.",
+  "try_this": "This week: pick one fixed daily meal and say «Bismillah» before it and «Alhamdulillah» after it out loud. One meal is enough.",
+  "order": 2,
+  "estimated_minutes": 6,
+  "reflection_prompts": [
+    "Which moment in your day recurs without exception and suits anchoring these two phrases?",
+    "Does your child hear you say it to yourself, or only when you are directing him?"
+  ],
+  "warning_flags": [],
+  "needs_professional_followup": false,
+  "is_published": true,
+  "version": "1.0.0",
+  "approved_by": null,
+  "language": "en",
+  "source_language": "ar",
+  "translation": {
+    "translator_model": "claude-opus-5",
+    "reviewer_model": null,
+    "needs_scholar_review": true,
+    "scholar_signals": {
+      "keyword": true,
+      "quoted_arabic": true,
+      "reviewer_model": false
+    },
+    "review_verdict": "pending",
+    "review_defects": [],
+    "approved_by": null
+  }
+}
