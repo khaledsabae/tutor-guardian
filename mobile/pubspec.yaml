@@ -100,6 +100,12 @@ flutter:
   uses-material-design: true
   assets:
     - assets/data/
+    # Named on its own line even though `assets/data/` already sweeps it in.
+    # `storiesProvider` falls back to the bundle **silently** when the network
+    # fetch times out, so an English reader whose bundle is missing this file
+    # does not see an error — they see Arabic. Anything whose absence is
+    # invisible at runtime is worth making visible here.
+    - assets/data/stories_en.json
     - assets/images/
     - assets/images/logo.png
     # Milestones that still use legacy art (kept until regenerated).
