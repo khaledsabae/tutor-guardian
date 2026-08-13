@@ -30,9 +30,53 @@ void main() {
 
   group('content pool', () {
     test('is large enough to be worth rotating', () {
-      expect(familyAdhkar.length, greaterThan(500));
+      // Was `greaterThan(500)`, and it passed on 730 items that were really
+      // 267: one hadith repeated 223 times and 124 tips repeated to 365, each
+      // copy padded with a visible «(رقم N)» counter. Counting rows rewarded
+      // the padding, so the bar is now set against the real pools.
       expect(morningPool, greaterThan(100));
       expect(eveningPool, greaterThan(100));
+    });
+
+    test('no item is a padded copy of another', () {
+      // The counter suffix made 465 duplicates look distinct. Strip it before
+      // comparing, or this passes on exactly the data it exists to reject.
+      final counter = RegExp(r'\s*\(\s*(?:حديث|نصيحة|أثر|رقم)[^)]*رقم[^)]*\)\s*$');
+      final seen = <String, int>{};
+      for (var i = 0; i < familyAdhkar.length; i++) {
+        final core = familyAdhkar[i].text.replaceAll(counter, '').trim();
+        expect(seen.containsKey(core), isFalse,
+            reason: 'item $i duplicates item ${seen[core]}: '
+                '"${core.substring(0, core.length.clamp(0, 50))}"');
+        seen[core] = i;
+      }
+    });
+
+    test('no item shows a bare counter to the user', () {
+      final counter = RegExp(r'\(\s*(?:حديث|نصيحة|أثر|رقم)[^)]*رقم[^)]*\)');
+      for (var i = 0; i < familyAdhkar.length; i++) {
+        expect(counter.hasMatch(familyAdhkar[i].text), isFalse,
+            reason: 'item $i leaks a placeholder counter into the notification');
+      }
+    });
+
+    test('no kind is stamped with a single blanket source', () {
+      // 223 hadith once shared one invented isnad, «صحيح — رواه الترمذي وأبو
+      // داود», with no hadith number. One source across a whole kind is the
+      // signature of an attribution nobody checked.
+      final byKind = <String, Set<String>>{};
+      final countByKind = <String, int>{};
+      for (final c in familyAdhkar) {
+        byKind.putIfAbsent(c.kind, () => <String>{}).add(c.source);
+        countByKind[c.kind] = (countByKind[c.kind] ?? 0) + 1;
+      }
+      byKind.forEach((kind, sources) {
+        if ((countByKind[kind] ?? 0) >= 10) {
+          expect(sources.length, greaterThan(1),
+              reason: '$kind: all ${countByKind[kind]} items cite '
+                  '"${sources.first}"');
+        }
+      });
     });
 
     test('every item has text and a source', () {
