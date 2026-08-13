@@ -254,3 +254,44 @@ def _restore_modules():
     importlib.reload(feedback_module)
     import app.main as main_module
     importlib.reload(main_module)
+
+
+# ── Telegram redelivery ──────────────────────────────────────────────────────
+
+def test_the_same_update_delivered_twice_reaches_the_parent_once(monkeypatch, tmp_path):
+    """Telegram redelivers any update it did not get a 200 for — a container
+    restart, an nginx 502, a timeout after the reply had already been pushed.
+    Nothing read update_id, so the parent got Khaled's answer twice: two push
+    notifications and two rows in feedback_replies."""
+    client, _ = _build_client(monkeypatch, tmp_path, secret=_SECRET)
+    _seed_feedback("aaaaaaaa-0000", "device-1", 555)
+
+    for _ in range(2):
+        resp = client.post(
+            "/api/feedback/telegram/webhook",
+            json=_update("تمام، اتصلحت"),
+            headers={"X-Telegram-Bot-Api-Secret-Token": _SECRET},
+        )
+        assert resp.status_code == 200
+
+    assert len(_replies_in_db()) == 1
+
+
+def test_a_different_update_still_gets_through(monkeypatch, tmp_path):
+    """The guard keys on the update, not on the feedback row — a second, real
+    reply to the same person must still arrive."""
+    client, _ = _build_client(monkeypatch, tmp_path, secret=_SECRET)
+    _seed_feedback("aaaaaaaa-0000", "device-1", 555)
+
+    first = _update("رد أول")
+    second = _update("رد تاني")
+    second["update_id"] = 2
+
+    for payload in (first, second):
+        client.post(
+            "/api/feedback/telegram/webhook",
+            json=payload,
+            headers={"X-Telegram-Bot-Api-Secret-Token": _SECRET},
+        )
+
+    assert len(_replies_in_db()) == 2

@@ -673,6 +673,16 @@ class AIGateway:
                 return result
             except Exception as e:
                 last_err = e
+                # Recorded, not silently dropped. The monthly cap is a sum over
+                # this table, and a timeout here is the case where the provider
+                # most likely *did* count the tokens — the request reached it and
+                # the answer did not come back. Leaving the row out made the cap
+                # read low by exactly the spend nobody could see. Tokens stay
+                # null because they are genuinely unknown; inventing an estimate
+                # here would be the same mistake wearing the opposite sign.
+                _log_call(self.provider.name, self._provider_model(),
+                          int((time.monotonic() - start) * 1000),
+                          None, None, streamed=False, ok=False)
                 logger.warning("Primary attempt %d/%d failed: %s", attempt, retries, e)
                 if attempt < retries:
                     await asyncio.sleep(0.5 * (2 ** (attempt - 1)))

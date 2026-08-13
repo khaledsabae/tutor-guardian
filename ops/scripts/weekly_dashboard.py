@@ -172,16 +172,38 @@ def _format_report(ops: dict, retention: dict, db: dict) -> str:
     ]
 
     # LLM Metrics
-    if "error" not in ops:
+    #
+    # The key names below are the ones /api/stats/ops-llm actually returns. The
+    # first version of this block read p95_ms, calls_7d, tokens_month and
+    # valve_usage_pct — none of which exist — so the only report that reaches
+    # Khaled printed N/A in place of token spend and valve usage every week,
+    # and cost growth was invisible in the one place built to show it.
+    #
+    # The failure key is `telemetry_error`, not `error`: when telemetry itself
+    # broke, this block used to print numbers that were not there.
+    err = ops.get("telemetry_error") or ops.get("error")
+    if not err:
+        month_tokens = ops.get("month_tokens_by_provider") or {}
+        cache_rate = ops.get("cache_hit_rate")
+        valve = ops.get("valve") or {}
+        valve_pct = valve.get("used_pct")
         lines.append("🤖 مقاييس الذكاء الاصطناعي:")
-        lines.append(f"  • p95 latency: {ops.get('p95_ms', 'N/A')}ms")
-        lines.append(f"  • Cache hit rate: {ops.get('cache_hit_rate', 'N/A')}%")
-        lines.append(f"  • Total calls (7d): {ops.get('calls_7d', 'N/A')}")
-        lines.append(f"  • Token usage (month): {ops.get('tokens_month', 'N/A')}")
-        lines.append(f"  • DeepSeek valve: {ops.get('valve_usage_pct', 'N/A')}%")
+        lines.append(f"  • p95 latency: {ops.get('p95_latency_ms', 'N/A')}ms")
+        # cache_hit_rate is a ratio (0.03), and printing it beside a % sign said
+        # "0.03%" for what is actually 3%.
+        lines.append(
+            f"  • Cache hit rate: {round(cache_rate * 100, 1) if cache_rate is not None else 'N/A'}%"
+        )
+        lines.append(f"  • Total calls (7d): {ops.get('calls', 'N/A')}")
+        lines.append(f"  • Token usage (month): {sum(month_tokens.values()) if month_tokens else 'N/A'}")
+        if month_tokens:
+            lines.append(f"      {month_tokens}")
+        lines.append(
+            f"  • DeepSeek valve: {round(valve_pct * 100, 1) if valve_pct is not None else 'N/A'}%"
+        )
         lines.append("")
     else:
-        lines.append(f"🤖 مقاييس LLM: ⚠️ {ops['error']}")
+        lines.append(f"🤖 مقاييس LLM: ⚠️ {err}")
         lines.append("")
 
     # Retention

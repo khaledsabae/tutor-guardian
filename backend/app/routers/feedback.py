@@ -176,6 +176,42 @@ def _ensure_app_feedback_table(con) -> None:
     for name, ddl in (("audio_b64", "TEXT"), ("tg_message_id", "INTEGER")):
         if name not in cols:
             con.execute(f"ALTER TABLE app_feedback ADD COLUMN {name} {ddl}")
+    # Telegram redelivers any update it did not get a 200 for — a restart, an
+    # nginx 502, a timeout after the reply had already been delivered. Nothing
+    # read update_id, so the same reply was pushed to the parent twice and
+    # written twice into feedback_replies.
+    con.execute(
+        """
+        CREATE TABLE IF NOT EXISTS tg_updates_seen (
+            update_id INTEGER PRIMARY KEY,
+            seen_at TEXT
+        )
+        """
+    )
+
+
+def _claim_update(con, update_id: int | None) -> bool:
+    """True if this update has not been handled before.
+
+    Claimed before the reply is scheduled, not after: the delivery is the thing
+    that must not happen twice, so the record of it has to exist first. An
+    update with no id is let through — there is nothing to key on, and refusing
+    it would drop a real reply.
+    """
+    if update_id is None:
+        return True
+    try:
+        cur = con.execute(
+            "INSERT OR IGNORE INTO tg_updates_seen(update_id, seen_at) VALUES (?, ?)",
+            (int(update_id), datetime.now(timezone.utc).isoformat()),
+        )
+        con.commit()
+        return cur.rowcount > 0
+    except Exception as exc:  # noqa: BLE001
+        # Unknown is not permission: if the claim cannot be recorded, the reply
+        # is not sent rather than possibly sent twice. Khaled can resend.
+        logger.warning("could not claim telegram update %s: %s", update_id, exc)
+        return False
 
 
 class AppFeedbackIn(BaseModel):
@@ -423,8 +459,12 @@ async def telegram_webhook(
     try:
         con = get_conn()
         _ensure_app_feedback_table(con)
-        found = _find_feedback_for_reply(con, replied_to)
+        fresh = _claim_update(con, update.get("update_id"))
+        found = _find_feedback_for_reply(con, replied_to) if fresh else None
         con.close()
+        if not fresh:
+            logger.info("telegram update already handled; not delivering again")
+            return {"ok": True}
     except Exception as exc:  # noqa: BLE001
         logger.warning("webhook lookup failed: %s", exc)
         return {"ok": True}
