@@ -1628,4 +1628,10 @@ const List<ParentingContent> familyAdhkar = [
     topic: 'التربية بالحب والاحتواء',
     kind: 'tip',
   ),
+  ParentingContent(
+    text: 'خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ',
+    source: 'صحيح البخاري — حديث ٥٠٢٧',
+    topic: 'تعليم القرآن للأبناء',
+    kind: 'hadith',
+  ),
 ];
