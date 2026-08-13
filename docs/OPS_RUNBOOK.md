@@ -202,6 +202,16 @@ v1.0.30+75 دون أن يعترض شيء — لا لأن بوابة فشلت، �
 > يحتاج `TELEGRAM_BOT_TOKEN` و`TELEGRAM_CHAT_ID` و`DEEPSEEK_API_KEY` — **الثلاثة
 > متحقَّق من وجودها في الحاوية 2026-08-13.** (`TELEGRAM_CHANNEL_ID` غير مضبوط ولا
 > يستعمله هذا التقرير.)
+>
+> 🔁 **مزوّد الحكم** (2026-08-13): الحكم صار يقبل `--provider {auto,ollama,deepseek}`،
+> و`auto` تعني «ollama إن وُجد `OLLAMA_API_KEY`، وإلا deepseek». المفتاح **غير
+> موجود في حاوية الإنتاج**، فالكرون الأسبوعي باقٍ على deepseek كما هو — لم يتغيّر
+> شيء في تشغيله. لنقل الحكم عن مفتاح ديب سيك (وهو صمّام الدردشة الحيّة، وسقفه
+> الشهري مشترك مع آباء حقيقيين) أضف `OLLAMA_API_KEY=…` إلى `/opt/tutor-guardian/.env`
+> ثم `docker compose -f docker-compose.production.yml up -d tg_backend`. **التحقق
+> بالأثر:** سطر `المحكّم: ollama · mistral-large-3:675b` في `/var/log/tg-kb-gaps.log`
+> — لا كود الخروج. ⚠️ **النقل يغيّر المحكّم، فتوزيع الدرجات قد يتحرّك دون أن تتغيّر
+> قاعدة المعرفة** — أول أسبوع بعد النقل خط أساس جديد لا مقارنة بما قبله.
 
 ### 5.2 وكلاء PCC على اللابتوب (محتوى وتسويق — لا يمسّون الإنتاج)
 
@@ -342,6 +352,7 @@ docker exec tg_backend curl -fsS http://localhost:8000/health
 | `FEEDBACK_ADMIN_KEY` | واجهة مراجعة الملاحظات |
 | `BUFFER_ACCESS_TOKEN` | نشر تسويقي (وكيل `tutor_post`) |
 | `OLLAMA_BASE_URL` وأخواتها | عنوان الاستدلال المحلي (Tailscale) وإعداداته |
+| `OLLAMA_API_KEY` | مفتاح Ollama Cloud لأدوات التحليل الدفعية (`check_quoted_texts.py`، `kb_gap_judge.py`). **غير مضبوط في حاوية الإنتاج** — موجود على اللابتوب فقط. لا يمسّ مسار المستخدم |
 | `AI_DAILY_LIMIT` / `COACH_TIP_ENABLED` | ليست أسرارًا لكنها مفاتيح تشغيل حساسة — لا تغيّرها دون تسجيل |
 | `backend/secrets/firebase-adminsdk.json` | مفتاح Firebase Admin (إشعارات FCM) — ملف، ليس متغيرًا |
 

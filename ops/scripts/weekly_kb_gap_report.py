@@ -11,7 +11,7 @@ The loop:
     chat_messages (role='user', last 7 days)
       → drop the app's own suggested questions and sub-12-character noise
       → ops/tools/retrieval_probe.py   (real classify → rewrite → retrieve)
-      → ops/tools/kb_gap_judge.py      (DeepSeek verdict per (question, unit))
+      → ops/tools/kb_gap_judge.py      (LLM verdict per (question, unit))
       → report: unanswered rate · gap domains · unserved topics → Telegram
 
 Two things this exists to stop:
@@ -25,8 +25,25 @@ Two things this exists to stop:
      detail that identifies anyone. Raw question text stays in the JSON files
      on the VPS — only counts, domains, and coarse topic labels are sent.
 
-Requires: TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID (or --token / --chat-id),
-and DEEPSEEK_API_KEY for the judging step.
+Requires: TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID (or --token / --chat-id), and a
+key for the judging step — see --judge-provider.
+
+Judging spends one LLM call per (question, unit) pair, ~400 per weekly run. That
+is batch work and it does not belong on DEEPSEEK_API_KEY, which is the app's
+live cloud fallback for parents mid-conversation and carries a monthly token cap
+they share. kb_gap_judge.py defaults to Ollama Cloud for exactly that reason.
+
+**On the VPS the default still resolves to deepseek**, because OLLAMA_API_KEY is
+not in the production container's environment. That is deliberate — the cron
+keeps working untouched. To move the weekly judging off DeepSeek too, add to
+`/opt/tutor-guardian/.env` on the VPS:
+
+    OLLAMA_API_KEY=<the Ollama Cloud key>
+
+then `docker compose -f docker-compose.production.yml up -d tg_backend` so the
+container picks it up, and confirm with `docker exec tg_backend printenv
+OLLAMA_API_KEY`. The next run's log line `المحكّم: ollama · …` is the proof it
+took effect; nothing else changes.
 """
 from __future__ import annotations
 
@@ -194,7 +211,8 @@ def _run_tool(script: str, args: list[str]) -> tuple[int, str]:
 
 
 def probe_and_judge(questions: list[dict], workdir: Path, sample: int,
-                    max_pairs: int, concurrency: int) -> dict | None:
+                    max_pairs: int, concurrency: int,
+                    provider: str = "auto") -> dict | None:
     """Run the shipped tools over a sample and return the judge's summary."""
     workdir.mkdir(parents=True, exist_ok=True)
     qfile = workdir / "week_questions.jsonl"
@@ -218,6 +236,7 @@ def probe_and_judge(questions: list[dict], workdir: Path, sample: int,
     code, out = _run_tool("kb_gap_judge.py", [
         "--in", str(pairs), "--out", str(judged), "--quiet",
         "--max-pairs", str(max_pairs), "--concurrency", str(concurrency),
+        "--provider", provider,
     ])
     print(out.strip())
     if code != 0:
@@ -399,7 +418,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--allow-unfiltered", action="store_true",
                     help="run even without the suggestion list (report will be skewed)")
     ap.add_argument("--skip-judge", action="store_true",
-                    help="counts only — no retrieval, no DeepSeek spend")
+                    help="counts only — no retrieval, no LLM spend")
+    ap.add_argument("--judge-provider", choices=("auto", "ollama", "deepseek"),
+                    default="auto",
+                    help="passed to kb_gap_judge.py. auto = ollama when "
+                         "OLLAMA_API_KEY is present, else deepseek — so the VPS "
+                         "container keeps using deepseek until that key is added")
     ap.add_argument("--token", help="Telegram bot token (or env TELEGRAM_BOT_TOKEN)")
     ap.add_argument("--chat-id", help="Telegram chat ID (or env TELEGRAM_CHAT_ID)")
     ap.add_argument("--dry-run", action="store_true", help="print, do not send")
@@ -426,7 +450,8 @@ def main(argv: list[str] | None = None) -> int:
     else:
         print(f"Probing + judging a sample of {min(args.sample, len(questions))}...")
         judged = probe_and_judge(questions, Path(args.workdir), args.sample,
-                                 args.max_pairs, args.concurrency)
+                                 args.max_pairs, args.concurrency,
+                                 args.judge_provider)
 
     report = format_report(args.days, filt, unans, judged, questions,
                            judge_skipped=args.skip_judge)
