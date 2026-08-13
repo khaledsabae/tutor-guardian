@@ -33,6 +33,7 @@ import '../../../widgets/ui/celebration_overlay.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/skeleton.dart';
 import '../../reflections/widgets/reflection_note_card.dart';
+import '../data/review_prompt.dart';
 import '../data/models.dart';
 import '../data/progress_models.dart';
 import '../models/lesson_assets.dart';
@@ -95,6 +96,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           title: AppLocalizations.of(context).lessonCelebrationTitle,
           message: AppLocalizations.of(context).lessonCelebrationMsg,
         );
+        // Finishing a lesson is the strongest positive moment in the app, and
+        // until now it recorded none: ReviewPrompt was reachable only from the
+        // child journey screen, so the store had 4 reviews from 3,252 users.
+        // ReviewPrompt keeps its own gate — twice before it asks, once ever —
+        // so this widens where a good moment is noticed, not how often we ask.
+        if (mounted) await ReviewPrompt.maybeAsk(context);
         if (mounted) Navigator.of(context).pop();
       }
     } catch (e) {
