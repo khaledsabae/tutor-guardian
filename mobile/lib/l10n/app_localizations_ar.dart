@@ -654,7 +654,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatQ_siblings => 'ابني يغار من أخيه الصغير ويؤذيه';
 
   @override
-  String get chatQ_bodyChanges => 'كيف أتحدث مع طفلي عن التغيرات الجسدية والخصوصية؟';
+  String get chatQ_bodyChanges =>
+      'كيف أتحدث مع طفلي عن التغيرات الجسدية والخصوصية؟';
 
   @override
   String get chatWelcome => 'مرحباً — اسأل عن أي تحدٍّ تربوي يواجهك';
@@ -2192,32 +2193,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get updateSplashOnce => 'مرّة واحدة فقط — لن تظهر هذه الشاشة مجدداً.';
 
   @override
-  String get updateSplashFeature1 => 'درسك الأول على بُعد ضغطة';
+  String get updateSplashFeature1 => 'إجابتك ما بقتش تضيع';
 
   @override
   String get updateSplashFeature1Desc =>
-      'بدل ما تدوّر في القائمة، الصفحة الرئيسية بتفتح لك درسًا مختارًا لعمر طفلك مباشرة.';
+      'لو قفلت الشاشة أو انقطع النت وسط الرد، اللي وصلك بيتحفظ في المحادثة بدل ما يروح ويسيب سؤالك بلا إجابة.';
 
   @override
-  String get updateSplashFeature2 => 'الإشعارات بقت توصّلك للمكان الصح';
+  String get updateSplashFeature2 => 'اقتراحات أقرب لأسئلتكم';
 
   @override
   String get updateSplashFeature2Desc =>
-      'ضغطة على التذكير بتفتح المسار اللي وقفت عنده فعلًا، مش الصفحة الرئيسية.';
+      'بدّلنا الأسئلة الجاهزة بناءً على اللي بيسأل عنه الآباء فعلًا: الخوف، وغيرة الإخوة، والتغيّرات الجسدية.';
 
   @override
-  String get updateSplashFeature3 => 'الدروس من التذكيرات بقت تتقفل';
+  String get updateSplashFeature3 => 'الردود بقت أسرع';
 
   @override
   String get updateSplashFeature3Desc =>
-      'أي درس تفتحه من إشعار أو من المفضّلة بقى فيه زر «أتممت هذا الدرس» زي أي درس تاني.';
+      'كان البحث في قاعدة المعرفة بيتكرر مرتين في كل سؤال بلا داعٍ — بقى مرة واحدة.';
 
   @override
-  String get updateSplashFeature4 => 'هدوء تحت الغطاء';
+  String get updateSplashFeature4 => 'المحادثة بتفضل مترابطة';
 
   @override
   String get updateSplashFeature4Desc =>
-      'نظّفنا مصدر إزعاج في الخلفية كان بيستهلك من ثبات التطبيق دون داعٍ.';
+      'لو رد فشل، مابقاش يدخل في سياق سؤالك اللي بعده ويشوّش الإجابة.';
 
   @override
   String quranMemTitle(Object name) {

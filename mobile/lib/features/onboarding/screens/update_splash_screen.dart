@@ -19,7 +19,7 @@ import '../data/onboarding_storage.dart';
 
 /// The app version tag displayed in the what's-new list.
 /// Bump this whenever a new update-splash is warranted.
-const updateSplashVersion = '1.0.33';
+const updateSplashVersion = '1.0.40';
 
 /// Simple state — when set to true, [_AppBootstrapper] knows the update
 /// splash has been dismissed and will render [RootScaffold] instead.

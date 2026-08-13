@@ -656,13 +656,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatQ_friends => 'How do I discuss my son\'s choice of friends?';
 
   @override
-  String get chatQ_fears => 'My child is very fearful — of the dark or sleeping alone';
+  String get chatQ_fears =>
+      'My child is very fearful — of the dark or sleeping alone';
 
   @override
-  String get chatQ_siblings => 'My son is jealous of his baby brother and hurts him';
+  String get chatQ_siblings =>
+      'My son is jealous of his baby brother and hurts him';
 
   @override
-  String get chatQ_bodyChanges => 'How do I talk to my child about body changes and privacy?';
+  String get chatQ_bodyChanges =>
+      'How do I talk to my child about body changes and privacy?';
 
   @override
   String get chatWelcome =>
@@ -2221,32 +2224,32 @@ class AppLocalizationsEn extends AppLocalizations {
       'One-time only — this screen won\'t appear again.';
 
   @override
-  String get updateSplashFeature1 => 'Your First Lesson, One Tap Away';
+  String get updateSplashFeature1 => 'Your Answer No Longer Disappears';
 
   @override
   String get updateSplashFeature1Desc =>
-      'Instead of searching the list, the home screen now opens a lesson picked for your child\'s age.';
+      'If you close the screen or lose connection mid-reply, what you received is kept in the conversation instead of vanishing and leaving your question unanswered.';
 
   @override
-  String get updateSplashFeature2 => 'Reminders Now Take You Somewhere';
+  String get updateSplashFeature2 => 'Suggestions Closer to Your Questions';
 
   @override
   String get updateSplashFeature2Desc =>
-      'Tapping a reminder opens the path you actually left off in, not just the home screen.';
+      'We swapped the suggested questions based on what parents actually ask about: fears, sibling jealousy, and body changes.';
 
   @override
-  String get updateSplashFeature3 => 'Lessons From Reminders Can Be Completed';
+  String get updateSplashFeature3 => 'Faster Replies';
 
   @override
   String get updateSplashFeature3Desc =>
-      'Any lesson opened from a notification or your favourites now has the same \"I completed this lesson\" button as the rest.';
+      'The knowledge-base search was running twice on every question for no reason — now it runs once.';
 
   @override
-  String get updateSplashFeature4 => 'Quieter Under the Hood';
+  String get updateSplashFeature4 => 'The Conversation Stays Coherent';
 
   @override
   String get updateSplashFeature4Desc =>
-      'We cleaned up a background noise source that was needlessly eating into the app\'s stability.';
+      'When a reply fails, it no longer leaks into the context of your next question and muddles the answer.';
 
   @override
   String quranMemTitle(Object name) {

@@ -4067,49 +4067,49 @@ abstract class AppLocalizations {
   /// No description provided for @updateSplashFeature1.
   ///
   /// In ar, this message translates to:
-  /// **'درسك الأول على بُعد ضغطة'**
+  /// **'إجابتك ما بقتش تضيع'**
   String get updateSplashFeature1;
 
   /// No description provided for @updateSplashFeature1Desc.
   ///
   /// In ar, this message translates to:
-  /// **'بدل ما تدوّر في القائمة، الصفحة الرئيسية بتفتح لك درسًا مختارًا لعمر طفلك مباشرة.'**
+  /// **'لو قفلت الشاشة أو انقطع النت وسط الرد، اللي وصلك بيتحفظ في المحادثة بدل ما يروح ويسيب سؤالك بلا إجابة.'**
   String get updateSplashFeature1Desc;
 
   /// No description provided for @updateSplashFeature2.
   ///
   /// In ar, this message translates to:
-  /// **'الإشعارات بقت توصّلك للمكان الصح'**
+  /// **'اقتراحات أقرب لأسئلتكم'**
   String get updateSplashFeature2;
 
   /// No description provided for @updateSplashFeature2Desc.
   ///
   /// In ar, this message translates to:
-  /// **'ضغطة على التذكير بتفتح المسار اللي وقفت عنده فعلًا، مش الصفحة الرئيسية.'**
+  /// **'بدّلنا الأسئلة الجاهزة بناءً على اللي بيسأل عنه الآباء فعلًا: الخوف، وغيرة الإخوة، والتغيّرات الجسدية.'**
   String get updateSplashFeature2Desc;
 
   /// No description provided for @updateSplashFeature3.
   ///
   /// In ar, this message translates to:
-  /// **'الدروس من التذكيرات بقت تتقفل'**
+  /// **'الردود بقت أسرع'**
   String get updateSplashFeature3;
 
   /// No description provided for @updateSplashFeature3Desc.
   ///
   /// In ar, this message translates to:
-  /// **'أي درس تفتحه من إشعار أو من المفضّلة بقى فيه زر «أتممت هذا الدرس» زي أي درس تاني.'**
+  /// **'كان البحث في قاعدة المعرفة بيتكرر مرتين في كل سؤال بلا داعٍ — بقى مرة واحدة.'**
   String get updateSplashFeature3Desc;
 
   /// No description provided for @updateSplashFeature4.
   ///
   /// In ar, this message translates to:
-  /// **'هدوء تحت الغطاء'**
+  /// **'المحادثة بتفضل مترابطة'**
   String get updateSplashFeature4;
 
   /// No description provided for @updateSplashFeature4Desc.
   ///
   /// In ar, this message translates to:
-  /// **'نظّفنا مصدر إزعاج في الخلفية كان بيستهلك من ثبات التطبيق دون داعٍ.'**
+  /// **'لو رد فشل، مابقاش يدخل في سياق سؤالك اللي بعده ويشوّش الإجابة.'**
   String get updateSplashFeature4Desc;
 
   /// No description provided for @quranMemTitle.
