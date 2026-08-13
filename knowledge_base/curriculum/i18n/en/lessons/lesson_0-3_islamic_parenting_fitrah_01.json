@@ -32,14 +32,15 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "register",
-        "field": "summary, try_this, reflection_prompts",
-        "arabic": "أسمعي ... شغّلي ... لاحظي ... جعلتِ",
-        "english": "Let your child hear ... Play ... observe ... Have you made",
-        "why": "The Arabic uses feminine singular imperatives and verb forms, directly addressing the mother. The English translation uses gender-neutral imperatives and pronouns, losing the warm, personal tone of the original.",
-        "severity": "medium"
+        "type": "meaning_change",
+        "field": "reflection_prompts[0]",
+        "arabic": "متى يبدو طفلك أكثر هدوءاً مع الصوت؟",
+        "english": "When does your child seem most at peace with the sound?",
+        "why": "The Arabic uses the comparative 'أكثر هدوءاً' (more calm), while the English uses the superlative 'most at peace', altering the degree and the adjective.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:17:50.624166+00:00"
   }
 }

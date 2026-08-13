@@ -2,7 +2,7 @@
   "id": "tip_10-12_004",
   "age_group": "10-12",
   "domain": "islamic_parenting",
-  "text": "His confidence wavers? Remind him: \"A person’s worth with Allah is by his deeds, not by his clothes or the grades of his friends.\"",
+  "text": "His self-confidence wavers? Remind him: \"A person’s worth with Allah is by his deeds, not by his clothes or the grades of his friends.\"",
   "unit_id": "8451bbb0-4617-4252-a206-e442c533fac3",
   "day_of_week": 3,
   "time_of_day": "evening",
@@ -20,6 +20,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:29.412931+00:00",
+    "fixed_at": "2026-08-13T18:52:29.412951+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

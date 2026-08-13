@@ -36,13 +36,38 @@
     "review_defects": [
       {
         "type": "meaning_change",
+        "field": "summary",
+        "arabic": "يلتزم",
+        "english": "adheres to the commands of Allah",
+        "why": "The Arabic verb 'يلتزم' means 'commits' or 'adheres' without specifying the object; the English adds 'to the commands of Allah', which is an interpretive addition not present in the original.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "اسأل ابنك",
+        "english": "Ask your child",
+        "why": "The Arabic uses the masculine 'ابنك' (your son), but the English uses the gender-neutral 'your child', changing the specificity.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[0]",
+        "arabic": "ابنك",
+        "english": "your child",
+        "why": "Same as above, 'ابنك' is 'your son', not 'your child'.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
         "field": "reflection_prompts[1]",
-        "arabic": "هل يعرف أن السخرية منه أقرب للنهي الشرعي عن الساخر لا عنه هو؟",
-        "english": "Does he know that being mocked is closer to a legal prohibition against the mocker rather than about him?",
-        "why": "The English is garbled and unclear. The Arabic means: 'Does he know that the mockery directed at him is closer to a religious prohibition against the mocker, not about him?' The translation's phrasing ('being mocked is closer to a legal prohibition against the mocker rather than about him') obscures the intended meaning that the prohibition is on the mocker, not the mocked.",
-        "severity": "medium"
+        "arabic": "النهي الشرعي",
+        "english": "legal prohibition",
+        "why": "'النهي الشرعي' means 'religious prohibition' or 'divine prohibition'; 'legal prohibition' may sound secular and less precise.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:21:09.788988+00:00"
   }
 }

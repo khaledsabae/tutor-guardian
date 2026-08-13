@@ -2,7 +2,7 @@
   "id": "tip_16-18_002",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "The mental well-being of teenagers is on the rise globally. You are not alone. Seek help: a university counselor, hotline 937, or a psychiatrist.",
+  "text": "The mental health of teenagers is on the rise globally. You are not alone. Seek help: a university counselor, hotline 937, or a psychiatrist.",
   "unit_id": "85d5303f-da97-49ab-985a-8c31901d84a2",
   "day_of_week": 0,
   "time_of_day": "evening",
@@ -20,6 +20,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:17.124733+00:00",
+    "fixed_at": "2026-08-13T18:53:17.124747+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

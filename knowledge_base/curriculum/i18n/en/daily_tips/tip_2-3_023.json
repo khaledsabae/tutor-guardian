@@ -26,13 +26,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "english",
+        "field": "english.text",
         "arabic": "ولا تجبريه على الكمية",
         "english": "do not force him to finish the amount",
-        "why": "The Arabic says 'do not force him on the quantity' without specifying 'finish'. The English adds 'finish', which narrows the meaning to completing a portion rather than simply not forcing a certain amount.",
+        "why": "The Arabic literally says 'do not force him on the quantity' without the verb 'finish'. The English adds 'to finish', which may imply forcing the child to consume everything served, while the Arabic is more general about not forcing a specific quantity.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:13:53.447624+00:00"
   }
 }

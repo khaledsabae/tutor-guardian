@@ -2,7 +2,7 @@
   "id": "tip_2-3_006",
   "age_group": "2-3",
   "domain": "cyber",
-  "text": "This is incorrect; screens before sleep suppress melatonin secretion and delay sleep. Implement a \"zero screens\" routine at least one hour before bedtime, and replace it with a warm bath, a short story, and a gentle massage, along with dimming bright lights [3, 4].",
+  "text": "This is incorrect; screens before sleep suppress melatonin secretion and delay sleep. Implement a \"zero screens\" routine at least one hour before bedtime, and replace it with a warm bath, a short story, and a gentle massage, along with turning off bright lights [3, 4].",
   "unit_id": null,
   "day_of_week": 6,
   "time_of_day": "anytime",
@@ -22,17 +22,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "إطفاء الأضواء القوية",
-        "english": "dimming bright lights",
-        "why": "The Arabic verb 'إطفاء' means 'turning off' or 'extinguishing', not 'dimming'. The instruction is to turn off bright lights, not merely dim them.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:37.706837+00:00",
+    "fixed_at": "2026-08-13T18:53:37.706847+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

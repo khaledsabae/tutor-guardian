@@ -26,26 +26,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "أرحم",
-        "english": "kinder",
-        "why": "The Arabic word 'أرحم' means 'more merciful', not 'kinder'. The translation loses the specific connotation of mercy (rahma).",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "english.text",
-        "arabic": "أرحم",
-        "english": "(rifq)",
-        "why": "The parenthetical '(rifq)' is an insertion not present in the Arabic. It introduces the term 'rifq' (gentleness/kindness) which is not equivalent to 'rahma' (mercy) and was not used in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:15:04.398656+00:00"
+  }
 }

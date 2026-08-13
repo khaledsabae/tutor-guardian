@@ -221,6 +221,15 @@ def fix_file(en_path: Path, kind: str, levels: tuple, dry_run: bool) -> dict:
                 "reason": f"high+medium ساءت {before} → {after} "
                           f"مقابل تحسّن في {'+'.join(levels)}",
                 "before": before, "after": after}
+    # عدّ high وحده لا يكفي أن يبقى المجموع ثابتًا: تبديل medium بـhigh يُبقي
+    # high+medium كما هو ويمرّ من الشرط أعلاه. حدث فعلًا — high صعدت ٧ → ١١
+    # بينما medium نزلت ١٩ → ٩، والمجموع ينخفض فيبدو تحسّنًا وهو ليس كذلك.
+    high_before = _count_bad(stored, ("high",))
+    high_after = _count_bad(all_defects, ("high",))
+    if high_after > high_before:
+        return {"id": rid, "status": "rejected", "gate": "severity-traded",
+                "reason": f"high ساءت {high_before} → {high_after}",
+                "before": before, "after": after}
 
     src_json = json.dumps(ar_payload, ensure_ascii=False)
     needs_scholar = (bool(tc.RELIGIOUS_MARKERS.search(src_json))

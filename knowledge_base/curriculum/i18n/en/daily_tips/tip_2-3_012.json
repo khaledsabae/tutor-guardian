@@ -22,17 +22,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "أكثر من أي لعبةٍ إلكترونية",
-        "english": "far more than any electronic game",
-        "why": "The Arabic says 'more than' (أكثر من) without an intensifier. The English adds 'far', which is not present in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:13:21.990290+00:00"
   }
 }

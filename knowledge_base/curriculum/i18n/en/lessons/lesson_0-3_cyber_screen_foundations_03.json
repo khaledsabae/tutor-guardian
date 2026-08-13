@@ -38,13 +38,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "try_this",
+        "field": "summary",
         "arabic": "إطفاء الأضواء القوية",
         "english": "dimming bright lights",
-        "why": "Arabic says 'turning off strong lights', not 'dimming'. Dimming implies reducing brightness, not extinguishing.",
+        "why": "The Arabic says 'turning off bright lights' (إطفاء), but the English says 'dimming', which implies reducing brightness rather than switching off completely.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:16:35.549274+00:00"
   }
 }

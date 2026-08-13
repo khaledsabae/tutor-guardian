@@ -2,7 +2,7 @@
   "id": "tip_2-3_003",
   "age_group": "2-3",
   "domain": "development",
-  "text": "Encourage him in imaginative play; for example, give him a spoon so he can pretend to feed his stuffed toy, and take turns in pretending. This develops his communication skills and symbolic thinking.",
+  "text": "Encourage him in imaginative play; for example, give him a spoon so he can pretend to feed his stuffed toy, and exchange roles in pretending. This develops his communication skills and symbolic thinking.",
   "unit_id": null,
   "day_of_week": 3,
   "time_of_day": "anytime",
@@ -22,17 +22,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english",
-        "arabic": "وتبادلا الأدوار في التظاهر",
-        "english": "and take turns in pretending",
-        "why": "The Arabic explicitly says 'exchange roles' (تبادلا الأدوار), which is a specific type of turn-taking where each person takes on a different role. The translation generalizes to 'take turns in pretending', losing the nuance of role exchange.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:35.569781+00:00",
+    "fixed_at": "2026-08-13T18:53:35.569795+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

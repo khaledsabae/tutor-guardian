@@ -1,7 +1,7 @@
 {
   "id": "lesson_4-6_development_positive_parenting_b02",
   "path_id": "path_4-6_development_positive_parenting",
-  "title": "Al-Laʿb al-Takhayyulī: Madrasat al-Ṭifl al-Khafiyyah",
+  "title": "Imaginative Play: The Child's Hidden School",
   "age_group": "4-6",
   "domain": "development",
   "unit_ids": [
@@ -34,17 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "اللعب التخيّلي: مدرسة الطفل الخفية",
-        "english": "Al-Laʿb al-Takhayyulī: Madrasat al-Ṭifl al-Khafiyyah",
-        "why": "The Arabic title is transliterated instead of translated. An English reader gets no meaning from 'Al-Laʿb al-Takhayyulī: Madrasat al-Ṭifl al-Khafiyyah'. The intended meaning is 'Imaginative Play: The Child's Hidden School'.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:13:44.430232+00:00",
+    "fixed_at": "2026-08-13T18:13:44.430243+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

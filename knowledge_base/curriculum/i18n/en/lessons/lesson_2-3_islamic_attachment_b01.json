@@ -9,7 +9,7 @@
     "seed-lying-46",
     "0f8e1ff3-7aa9-4a2c-9a6d-c0c2475c2152"
   ],
-  "summary": "At this age, the child understands with their heart before their mind, so the first thing planted should be love of Allah, not fear of Him. Connect Allah to all that is beautiful: 'Allah created the sweet sun,' 'Allah loves you,' 'We say Alhamdulillah for the food.' Make the remembrance of Allah part of warm moments, not a tool for threat. A child who grows up knowing Allah as the Most Merciful, the Most Loving, builds a secure relationship with their deen that grows with them. Avoid linking Allah to punishment and intimidation at this age, for the emotional foundation you lay now determines how they will feel toward their Lord for years to come.",
+  "summary": "At this age, the child understands with their heart before their mind, so the first thing planted should be love of Allah, not fear of Him. Connect Allah to all that is beautiful: 'Allah created the sweet sun,' 'Allah loves you,' 'We say Alhamdulillah for the food.' Make the remembrance of Allah part of warm moments, not a threatening tool. A child who grows up knowing Allah as merciful, loving builds a secure relationship with their deen that grows with them. Avoid linking Allah to punishment and intimidation at this age, for the emotional foundation you lay now determines how they will feel toward their Lord for years to come.",
   "try_this": "This week: Connect Allah to three beautiful moments daily ('Allah created this,' 'Alhamdulillah,' 'Allah loves you') with a warm tone. Notice if your child begins to repeat or smile in response.",
   "order": 1,
   "estimated_minutes": 40,
@@ -34,17 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "فأول ما يُغرس هو حب الله لا الخوف منه",
-        "english": "so the first thing planted should be love of Allah, not fear of Him",
-        "why": "The Arabic states a fact ('the first thing that is planted is love of Allah'), while the English turns it into a recommendation ('should be'), altering the declarative tone.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:01:59.599548+00:00",
+    "fixed_at": "2026-08-13T19:01:59.599559+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

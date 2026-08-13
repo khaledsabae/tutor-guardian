@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "no screens in the bedroom",
-        "arabic": "لا شاشات في الغرفة",
-        "english": "no screens in the bedroom",
-        "why": "The Arabic says 'الغرفة' (the room) without specifying which room; the English adds 'bedroom', narrowing the meaning unnecessarily.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:10:12.540193+00:00"
   }
 }

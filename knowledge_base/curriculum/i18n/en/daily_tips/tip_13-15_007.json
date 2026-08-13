@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "الثقة بالعمل",
-        "english": "confidence through action",
-        "why": "The Arabic 'بالعمل' means 'in action' (confidence while acting), not 'through action' (confidence gained by acting). The nuance shifts from a state to a means.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:10:43.930510+00:00"
   }
 }

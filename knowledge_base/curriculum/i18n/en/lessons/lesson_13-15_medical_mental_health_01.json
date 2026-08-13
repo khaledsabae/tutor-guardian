@@ -46,21 +46,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "حلوه مع ابنك بسرية",
-        "english": "complete it with your child confidentially",
-        "why": "Arabic uses 'ابنك' (your son), specifying a male child. English generalizes to 'your child', losing the gender specificity.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "هل شعر ابنك بالراحة بعد الحديث؟",
-        "english": "Did your child feel at ease after the conversation?",
-        "why": "Same issue: 'ابنك' (your son) is rendered as 'your child', changing the gender reference.",
+        "field": "summary",
+        "arabic": "مرض كأي مرض، له علاج",
+        "english": "It is an illness like any other, and it has a cure.",
+        "why": "The Arabic 'علاج' means 'treatment', not 'cure'. 'Cure' implies complete resolution, which is not always accurate for depression and may set unrealistic expectations.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:23:17.319164+00:00"
   }
 }

@@ -36,28 +36,21 @@
       {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "يفتح بها الوالد حواراً",
-        "english": "the parent can initiate dialogue",
-        "why": "The Arabic states that the parent opens dialogue with these questions (descriptive), while the English adds 'can' making it a possibility rather than a statement of function.",
+        "arabic": "يبدأ الطفل بنظرية العقل",
+        "english": "the child begins to develop the Theory of Mind",
+        "why": "The Arabic says 'begins with the theory of mind' (i.e., enters the stage of understanding it), not 'begins to develop' which implies the child is constructing the theory itself. The meaning is slightly altered.",
         "severity": "low"
       },
       {
         "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "لو كان في مقدورك تغيير شيء واحد اليوم، ما هو؟",
-        "english": "If you could change one thing about today, what would it be?",
-        "why": "The Arabic says 'change one thing today' (adverb), while the English says 'change one thing about today' (prepositional phrase), slightly altering the scope.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts",
-        "arabic": "هل لاحظت أن طفلك بدأ يطرح عليك أسئلة مماثلة خلال اليوم؟",
-        "english": "Have you noticed your child beginning to ask you similar questions during the day?",
-        "why": "The Arabic uses past tense 'بدأ يطرح' (has started asking), while the English uses present continuous 'beginning to ask', which is less precise about the action having already started.",
+        "field": "summary",
+        "arabic": "وبالرفق في السؤال",
+        "english": "and the concept of rifq (gentleness) in questioning",
+        "why": "The Arabic directly cites 'gentleness in asking' as a principle, without the word 'concept'. Adding 'the concept of' makes it more abstract and less direct than the original.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:31:07.383212+00:00"
   }
 }

@@ -25,15 +25,15 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "type": "register",
         "field": "text",
-        "arabic": "مزاجه",
-        "english": "akhlaq (disposition)",
-        "why": "The Arabic says 'مزاجه' (his mood/temperament), but the English translates it as 'akhlaq' (an Islamic term for character/morals) and then glosses it as 'disposition'. This changes the meaning from a temporary mood to a broader character trait, and introduces an Islamic term not present in the source.",
-        "severity": "medium"
+        "arabic": "ثبّتي",
+        "english": "Establish",
+        "why": "The Arabic uses a feminine singular imperative (addressing a mother directly), while the English uses a gender-neutral imperative, losing the original's direct maternal address.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:13:49.696894+00:00"
+  }
 }

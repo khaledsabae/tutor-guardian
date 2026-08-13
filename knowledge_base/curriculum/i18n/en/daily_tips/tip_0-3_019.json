@@ -2,7 +2,7 @@
   "id": "tip_0-3_019",
   "age_group": "0-3",
   "domain": "development",
-  "text": "In the first two years: your child imitates you, follows simple instructions, and begins symbolic play (feeding a doll). Encourage imagination: 'The doll is hungry, feed her.' Role-play = language + symbolic thinking + empathy.",
+  "text": "In the two years: your child imitates you, follows simple instructions, and begins symbolic play (feeding a doll). Encourage imagination: 'The doll is hungry, feed her.' Symbolic play = language + symbolic thinking + empathy.",
   "unit_id": "2b2d1fdd-1a30-40f3-aa2b-0dbadea2ce2c",
   "day_of_week": 0,
   "time_of_day": "anytime",
@@ -27,8 +27,20 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "في السنتين",
+        "english": "In the two years",
+        "why": "The Arabic phrase refers to the child's age (at two years old), but the English translation 'In the two years' is ambiguous and could be misinterpreted as a time period. A more accurate rendering would be 'At two years' or 'In the second year'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:12.376939+00:00",
+    "fixed_at": "2026-08-13T18:52:12.376952+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

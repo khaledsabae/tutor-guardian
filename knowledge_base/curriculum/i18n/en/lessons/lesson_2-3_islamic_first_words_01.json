@@ -27,19 +27,11 @@
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
-      "reviewer_model": true
+      "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "لسانٍ ذاكرٍ",
-        "english": "a tongue ever-remembering",
-        "why": "Added 'ever' which is not in the Arabic, changing the nuance to continuous remembrance rather than a tongue that remembers.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:27:45.736990+00:00"
   }
 }

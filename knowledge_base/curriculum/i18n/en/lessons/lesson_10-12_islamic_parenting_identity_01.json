@@ -10,7 +10,7 @@
     "7b2ded06-2736-4364-8980-1d70df17fa0c",
     "8451bbb0-4617-4252-a206-e442c533fac3"
   ],
-  "summary": "At the age of 10-12, the child begins to understand the meaning of taklif (responsibility). Salah is not a routine but a connection with Allah. Parents: be role models, discuss: Why do we pray? And how do we pray with khushu'?",
+  "summary": "At the age of 10-12, the child begins to understand the meaning of taklif. Salah is not a routine but a connection with Allah. Parents: be role models, discuss: Why do we pray? And how do we pray with khushu'?",
   "try_this": "This week: Create a \"Salah diary\" for your child in which they record their salah and how they felt afterward. Discuss weekly: What did you feel?",
   "order": 1,
   "estimated_minutes": 34,
@@ -36,6 +36,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:56:31.576958+00:00",
+    "fixed_at": "2026-08-13T18:56:31.576971+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

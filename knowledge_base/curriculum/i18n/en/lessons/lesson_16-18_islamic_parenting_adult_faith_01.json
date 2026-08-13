@@ -37,28 +37,13 @@
       {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "ريح",
-        "english": "doubt",
-        "why": "The Arabic says 'at the first wind' (أول ريح), a general metaphor for any disturbance. The English narrows it to 'gust of doubt', adding the specific concept of doubt not present in the original.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "أكثر فكرةٍ يسمعها تهزّ يقينه",
-        "english": "the idea he hears most often that shakes his certainty",
-        "why": "The Arabic 'أكثر' modifies the shaking (the idea that most shakes his certainty), not the frequency of hearing. The English incorrectly makes it about the idea he hears most often.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "شابك",
-        "english": "your young adult",
-        "why": "The Arabic consistently uses masculine singular 'شابك' (your young man) and 'ابنك' (your son), addressing parents of sons. The English summary uses gender-neutral 'your young adult' and 'they', losing the masculine specificity present in the original and creating inconsistency with the 'try_this' which correctly uses 'son'.",
+        "arabic": "الإيمان الموروث يتزعزع عند أول ريح",
+        "english": "Inherited iman falters at the first gust of doubt",
+        "why": "The Arabic says 'ريح' (wind) without specifying 'doubt'. The English adds 'of doubt', narrowing the metaphor and introducing a concept not present in the original.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:24:43.593015+00:00"
   }
 }

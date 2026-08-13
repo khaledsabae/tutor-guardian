@@ -2,7 +2,7 @@
   "id": "tip_7-9_016",
   "age_group": "7-9",
   "domain": "medical",
-  "text": "Encourage your child to share their feelings: \"How was your day? What made you happy? What bothered you?\" — Naming emotions calms the storm.",
+  "text": "Encourage your child to share their feelings: \"How was your day? What made you happy? What bothered you?\" — Naming calms the storm.",
   "unit_id": "b25fcddc-6765-4e00-9d40-1ac90f97f3b4",
   "day_of_week": 6,
   "time_of_day": "evening",
@@ -18,17 +18,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "التسمية تهدئ العاصفة",
-        "english": "Naming emotions calms the storm.",
-        "why": "The Arabic literally says 'Naming calms the storm' without specifying 'emotions'. The English adds 'emotions', making the metaphor explicit and slightly altering the original phrasing.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:54:27.060210+00:00",
+    "fixed_at": "2026-08-13T18:54:27.060224+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

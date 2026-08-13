@@ -36,13 +36,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "summary",
-        "arabic": "لا تنتظر «حتى يكبر ويتحسّن»",
-        "english": "do not wait 'until they grow out of it'",
-        "why": "The Arabic says 'until he grows up and gets better' (two separate actions), while the English uses the idiomatic 'grow out of it', which implies the problem will disappear with age. The nuance is slightly different, though the overall intent is similar.",
+        "field": "title",
+        "arabic": "علاماتٌ نمائية يجب ملاحظتها",
+        "english": "Developmental Milestones to Watch",
+        "why": "The Arabic 'علامات' means 'signs', not 'milestones'. 'Milestones' implies positive developmental achievements, while the context lists warning signs that need professional attention. This shifts the meaning.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:31:47.689761+00:00"
   }
 }

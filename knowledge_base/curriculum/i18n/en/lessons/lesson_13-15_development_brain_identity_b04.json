@@ -14,7 +14,7 @@
   "order": 4,
   "estimated_minutes": 45,
   "reflection_prompts": [
-    "What area of independence can you grant your child this month without compromising his safety?",
+    "What area of independence can you grant your **son** this month without compromising his safety?",
     "What difference do you feel between the role of 'manager' and the role of 'advisor' in your relationship with him?"
   ],
   "warning_flags": [],
@@ -34,17 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "لابنك",
-        "english": "your child",
-        "why": "The Arabic specifies 'son' (ابنك), but the English uses the gender-neutral 'child', losing the specific reference to a male child.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:58:07.060112+00:00",
+    "fixed_at": "2026-08-13T18:58:07.060123+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

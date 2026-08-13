@@ -31,43 +31,11 @@
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
-      "reviewer_model": true
+      "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "summary, try_this, reflection_prompts",
-        "arabic": "الآداب",
-        "english": "akhlaq",
-        "why": "The Arabic uses 'الآداب' (al-adab, meaning manners/etiquette), not 'الأخلاق' (al-akhlaq, meaning morals/character). Transliterating it as 'akhlaq' introduces a different Islamic concept. The correct transliteration is 'adab' or the translation 'manners'.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "summary",
-        "arabic": "علميه ... دربيه ... أرشديه",
-        "english": "Teach him ... train him ... Guide him",
-        "why": "The Arabic uses feminine singular imperatives directly addressing the mother, creating a warm, personal tone. The English uses neutral imperatives without 'your child' or 'you', making it impersonal and less direct.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "وحفظ دعاء الدخول والخروج",
-        "english": "while memorizing the du’a (supplication) for entering and exiting",
-        "why": "The Arabic presents memorization as a separate action (noun) in a list of three instructions. The English turns it into a participial phrase ('while memorizing'), implying it happens simultaneously with the entering/exiting training, which is not stated in the Arabic.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "وحفظ دعاء الدخول والخروج",
-        "english": "and help him memorize the du’a for entering and exiting",
-        "why": "The Arabic simply says 'and memorization of the du’a' without specifying who helps. The English adds 'help him', inserting an agent not present in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:26:58.260718+00:00"
   }
 }

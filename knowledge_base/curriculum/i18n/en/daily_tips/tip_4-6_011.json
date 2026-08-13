@@ -26,8 +26,18 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "لعبته المفضلة",
+        "english": "their favourite game",
+        "why": "Arabic uses singular masculine pronoun 'his' (لعبته), English uses gender-neutral 'their' which can be singular or plural, slightly altering the specificity.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:14:38.812649+00:00"
   }
 }

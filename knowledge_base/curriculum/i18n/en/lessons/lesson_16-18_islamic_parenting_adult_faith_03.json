@@ -1,7 +1,7 @@
 {
   "id": "lesson_16-18_islamic_parenting_adult_faith_03",
   "path_id": "path_16-18_aqeedah_conviction",
-  "title": "A Message, Not a Job: That Your Young One Lives for a Greater Purpose",
+  "title": "A Mission, Not a Job: That Your Young One Lives for a Greater Purpose",
   "age_group": "16-18",
   "domain": "aqeedah",
   "unit_ids": [],
@@ -29,27 +29,13 @@
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
-      "reviewer_model": false
+      "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title, summary, try_this, reflection_prompts",
-        "arabic": "شابك ... ابنك",
-        "english": "your young one ... your child",
-        "why": "The Arabic consistently addresses the parent of a son (شابك, ابنك), while the English uses gender-neutral terms (young one, child). This changes the intended audience from specifically parents of boys to parents of any child.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "بغايةٍ آخروية",
-        "english": "to an ultimate, hereafter-oriented purpose",
-        "why": "The word 'ultimate' is added; the Arabic only says 'an otherworldly purpose' without the intensifier 'ultimate'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:09:59.784171+00:00",
+    "fixed_at": "2026-08-13T18:09:59.784189+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

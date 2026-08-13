@@ -2,7 +2,7 @@
   "id": "tip_4-6_007",
   "age_group": "4-6",
   "domain": "medical",
-  "text": "Teach your child the name of one part of their body each day in a respectful manner (without causing embarrassment or exaggeration). At this age, their awareness of the body begins—this is an investment in Islamic sexual tarbiyah (upbringing) later on.",
+  "text": "Teach your child the name of one part of their body each day in a respectful manner (without shyness or exaggeration). At this age, their awareness of the body begins—this is an investment in Islamic sexual education later on.",
   "unit_id": "b64ed3c8-59e3-4b79-a7ad-ed558212f087",
   "day_of_week": 6,
   "time_of_day": "anytime",
@@ -26,17 +26,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "لا تخجل ولا تبالغ",
-        "english": "without causing embarrassment or exaggeration",
-        "why": "The Arabic instructs the parent not to feel shy and not to exaggerate; the English changes it to avoiding causing embarrassment or exaggeration to the child, altering the intended meaning.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:00:16.103074+00:00",
+    "fixed_at": "2026-08-13T18:00:16.103087+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

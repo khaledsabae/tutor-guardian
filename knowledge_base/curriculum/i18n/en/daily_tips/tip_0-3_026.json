@@ -2,7 +2,7 @@
   "id": "tip_0-3_026",
   "age_group": "0-3",
   "domain": "medical",
-  "text": "Place your child to sleep on their back in a safe place free of pillows—a simple precaution against the dangers of sleep.",
+  "text": "Put your child to sleep on their back in a safe place free of pillows—a simple precaution against the dangers of sleep.",
   "unit_id": null,
   "day_of_week": 6,
   "time_of_day": "bedtime",
@@ -22,25 +22,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "نوّمي طفلك على ظهره",
-        "english": "Place your child to sleep on their back",
-        "why": "The Arabic verb 'نوّمي' means 'put to sleep' (causative), but the English 'Place your child to sleep' is unnatural and could be misread as 'place your child in order to sleep'. The idiomatic translation is 'Put your child to sleep on their back' or 'Lay your child down to sleep on their back'.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "text",
-        "arabic": "نوّمي طفلك",
-        "english": "Place your child",
-        "why": "The Arabic uses a direct feminine imperative addressing the mother, creating a warm, personal tone. The English uses a gender-neutral imperative, losing the maternal address and making the instruction more clinical.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:21.580340+00:00",
+    "fixed_at": "2026-08-13T18:52:21.580355+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

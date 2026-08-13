@@ -9,13 +9,13 @@
     "seed-screen-46",
     "2aeb1bdb-f2b0-40d4-8371-1f8cd6f03921"
   ],
-  "summary": "Before your child leaves for university or work, your gentle guidance will fade, and their habits will be their only guardian. Many intelligent teenagers stumble not due to lack of ability, but because screen addiction consumes their time. Help them now to build a self-governing system: conscious boundaries for social media and games, deep-focus periods without their phone, and understanding how apps are designed to steal their attention. The goal is not prohibition but control—so they use the tool, rather than being used by it. The skill they master now in managing their attention will determine their success when no one is watching.",
-  "try_this": "This week: Help your child measure their actual screen time for 3 days (via phone settings), then let them set a goal and one daily period for deep focus without their phone.",
+  "summary": "Before your son leaves for university or work, your supervision disappears, and his habits will be his only guardian. Many intelligent teenagers stumble not due to lack of ability, but because screen addiction consumes their time. Help him now to build a self-governing system: conscious boundaries for social media and games, deep-focus periods without his phone, and understanding how apps are designed to steal his attention. The goal is not prohibition but control—so he uses the tool, rather than being used by it. The skill he masters now in managing his attention will determine his success when no one is watching.",
+  "try_this": "This week: Help your son measure his actual screen time for 3 days (via phone settings), then he determines a goal and one daily period for deep focus without his phone.",
   "order": 4,
   "estimated_minutes": 41,
   "reflection_prompts": [
-    "Does your child have a self-governing system for time management that will endure when your supervision disappears?",
-    "Which single digital habit, if they regulated it now, would change their path toward independence?"
+    "Does your son have a self-governing system for time management that will endure when your supervision disappears?",
+    "Which single digital habit, if he regulated it now, would change his path toward independence?"
   ],
   "warning_flags": [],
   "is_published": true,
@@ -39,36 +39,23 @@
       {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "تختفي رقابتك",
-        "english": "your *rifq* (gentle guidance) will fade",
-        "why": "The Arabic says 'your supervision (رقابتك) disappears'. The translator replaced 'supervision' with the Islamic term 'rifq' (gentleness) and added an explanatory gloss, introducing a concept not present in the source. This changes the meaning from parental monitoring to a specific religious virtue.",
-        "severity": "high"
+        "arabic": "عادته",
+        "english": "habits",
+        "why": "Arabic uses singular 'عادته' (his habit), English uses plural 'habits', shifting from a single guardian habit to multiple habits.",
+        "severity": "low"
       },
       {
         "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "حين تختفي رقابتك",
-        "english": "when your *rifq* disappears",
-        "why": "Same error as in summary: 'رقابتك' (your supervision) is mistranslated as 'rifq'.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title, summary, try_this, reflection_prompts",
-        "arabic": "ابنك (your son)",
-        "english": "your child / they",
-        "why": "The Arabic consistently uses the masculine singular 'ابنك' (your son) and masculine pronouns, addressing parents of boys. The English generalizes to 'your child' and 'they', losing the specific gender reference.",
-        "severity": "medium"
-      },
-      {
-        "type": "register",
-        "field": "summary",
-        "arabic": "تختفي رقابتك وتبقى عادته هي حارسه الوحيد",
-        "english": "your *rifq* (gentle guidance) will fade, and their habits will be their only guardian",
-        "why": "The Arabic is direct and uses everyday language ('your supervision disappears'). The English inserts an Islamic term ('rifq') with a gloss, making the tone more preachy and clinical than the original warm, direct advice.",
-        "severity": "medium"
+        "field": "reflection_prompts[1]",
+        "arabic": "لتغيّر مساره في الاستقلال",
+        "english": "would change his path toward independence",
+        "why": "Arabic 'في الاستقلال' means 'in independence' (during the state of independence), English 'toward independence' suggests the direction leading to independence, altering the temporal aspect.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:08:32.944440+00:00",
+    "fixed_at": "2026-08-13T18:08:32.944453+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

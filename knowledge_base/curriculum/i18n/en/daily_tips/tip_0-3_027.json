@@ -22,8 +22,18 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "لاعبي طفلك",
+        "english": "Play ... with your child",
+        "why": "The Arabic imperative 'لاعبي' is feminine singular, addressing a mother. The English 'Play' is gender-neutral and loses the specific feminine address, altering the implied audience.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:09:08.435832+00:00"
   }
 }

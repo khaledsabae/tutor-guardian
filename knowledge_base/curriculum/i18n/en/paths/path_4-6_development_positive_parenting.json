@@ -33,17 +33,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "مع التركيز على الجانب العملي القابل للقياس",
-        "english": "with a focus on practical, measurable implementation",
-        "why": "The Arabic refers to a 'practical, measurable aspect' (جانب), while the English shifts this to 'implementation', which is an action rather than a feature of the course. This slightly alters the meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:38:17.839141+00:00"
   }
 }

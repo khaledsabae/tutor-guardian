@@ -26,18 +26,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "emotional amanah (trust)",
-        "arabic": "الأمان العاطفي",
-        "english": "emotional amanah (trust)",
-        "why": "The Arabic 'الأمان' means 'security/safety', not 'amanah' (trust). The translation introduces an Islamic term not present in the source and changes the meaning.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:14:17.033254+00:00"
+  }
 }

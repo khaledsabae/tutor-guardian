@@ -29,17 +29,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "summary",
-        "arabic": "القواعد التي يشارك في وضعها يلتزم بها أكثر",
-        "english": "Rules that they help establish are more likely to be adhered to",
-        "why": "The Arabic uses active, personal phrasing (he adheres more), while the English shifts to a passive, impersonal construction, making the tone more formal and less warm.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:33:42.478266+00:00"
   }
 }

@@ -2,7 +2,7 @@
   "id": "tip_7-9_025",
   "age_group": "7-9",
   "domain": "medical",
-  "text": "Create a 'Calm Box': paper, pens, a stress ball, soothing pictures. When he gets angry, go to him together, let him choose a tool, then discuss after 10 minutes.",
+  "text": "Create a 'Calm Box': paper, pens, a stress ball, soothing pictures. When he gets angry, go to him together, choose a tool, then discuss after 10 minutes.",
   "unit_id": "78431bb2-354f-43ef-a874-d17bc11ed6e6",
   "day_of_week": 1,
   "time_of_day": "evening",
@@ -18,17 +18,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "اختار أداة",
-        "english": "let him choose a tool",
-        "why": "The Arabic verb 'اختار' is singular imperative or past tense, not explicitly permissive. The English adds 'let him', shifting the instruction from a direct command (possibly to the child) to a suggestion to the parents. The intended meaning is likely the same, but the translation is not literal and introduces a nuance not present in the source.",
-        "severity": "minor"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:01:26.319069+00:00",
+    "fixed_at": "2026-08-13T18:01:26.319080+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

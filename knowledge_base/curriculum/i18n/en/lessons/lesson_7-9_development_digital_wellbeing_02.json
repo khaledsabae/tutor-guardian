@@ -1,14 +1,14 @@
 {
   "id": "lesson_7-9_development_digital_wellbeing_02",
   "path_id": "path_7-9_development_digital_wellbeing",
-  "title": "Friendship and Social Pressure: A Compass of Values",
+  "title": "Friendship and Social Pressure: The Compass of Values",
   "age_group": "7-9",
   "domain": "development",
   "unit_ids": [
     "dev-e601788b"
   ],
-  "summary": "At the age of 7-9, friends become more influential. Teach your child: the righteous friend reminds him of Allah, and pressure to do wrong is not true friendship. Build his self-confidence so he becomes a leader, not a follower.",
-  "try_this": "Ask him: \"If a friend asked you to do something you know is wrong, what would you do?\" — discuss scenarios (cheating, bullying, breaking a rule).",
+  "summary": "At the age of 7-9, friends become more influential. Teach your child: the righteous friend reminds him of Allah, and pressure to do wrong is not friendship. Build his self-confidence so he becomes a leader, not a follower.",
+  "try_this": "Ask him: \"If a friend asked you to do something you know is wrong, what would you do?\" — discuss the scenarios (cheating, bullying, breaking a rule).",
   "order": 2,
   "estimated_minutes": 5,
   "reflection_prompts": [
@@ -31,25 +31,11 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "في سن 7-9 سنوات يصبح الأصدقاء مؤثرين أكثر.",
-        "english": "At the age of 7-9, friends become more influential.",
-        "why": "The Arabic 'في سن 7-9 سنوات' means 'at the ages of 7-9' or 'between 7 and 9 years old'. The English 'At the age of 7-9' is unidiomatic and slightly alters the natural expression, though the meaning is still understandable.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "والضغط لفعل خطأ ليس صداقة",
-        "english": "and pressure to do wrong is not true friendship",
-        "why": "The Arabic says 'ليس صداقة' (is not friendship). The English adds 'true', which is not in the source. This softens the absolute statement by implying it is not genuine friendship rather than not friendship at all.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:05:09.298075+00:00",
+    "fixed_at": "2026-08-13T19:05:09.298093+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

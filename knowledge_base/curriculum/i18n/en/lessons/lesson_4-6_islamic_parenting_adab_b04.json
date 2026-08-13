@@ -1,7 +1,7 @@
 {
   "id": "lesson_4-6_islamic_parenting_adab_b04",
   "path_id": "path_4-6_islamic_parenting_adab",
-  "title": "Adab al-Kalam: al-Sidq wal-Kalimah al-Tayyibah",
+  "title": "Adab al-Kalam: al-Sidq wal-Kalimat al-Tayyibah",
   "age_group": "4-6",
   "domain": "islamic_parenting",
   "unit_ids": [
@@ -9,8 +9,8 @@
     "29896a42-3c9a-4c22-bbf0-8e4d2e4da0e4",
     "isl-33e652bb"
   ],
-  "summary": "At this age, the child absorbs the adab of speech from his home. Teach him through example and practice: truthfulness is beloved, the good word is sadaqah (charity), greetings are exchanged, and 'shukran' and 'min fadlik' are habits. Connect this to Allah’s love for the truthful and the gentle, not to fear. Correct his small lie calmly without labeling him a liar, and make telling the truth safe by ensuring its consequence is lighter. Praise his good word immediately. A child who grows up with a beautiful tongue and truthfulness builds a character people love—and, more importantly, ties adab to an inner value, not merely pleasing adults.",
-  "try_this": "This week: Focus on one adab of speech (greeting or gratitude). Teach it through your example, practice it together, and praise your child every time he says it. Connect it to 'Allah loves the good word.'",
+  "summary": "At this age, the child absorbs the adab of speech from his home. Teach him through example and practice: truthfulness is beloved, the good word is sadaqah (charity), greetings are offered, and 'shukran' and 'min fadlik' are a habit. Connect this to Allah’s love for the truthful and the gentle, not to fear. Correct his small lie calmly without labeling him a liar, and make telling the truth safe by ensuring its consequence is lighter. Praise his good word immediately. A child who grows up with a beautiful tongue and truthfulness builds a character people love—and, more importantly, ties adab to an inner value, not merely pleasing adults.",
+  "try_this": "This week: Focus on one adab of speech (greeting or gratitude). Teach it through your example, practice it together, and praise your child every time he says it. Connect it to 'Allah loves the sweet word.'",
   "order": 4,
   "estimated_minutes": 5,
   "reflection_prompts": [
@@ -37,22 +37,25 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "والسلام يُلقى",
-        "english": "greetings are exchanged",
-        "why": "The Arabic specifies the Islamic greeting 'as-salam' and the action of initiating it (يُلقى = is given/offered). The English generalizes to any greeting and changes the action to mutual exchange, losing the specific sunnah of initiating the salam.",
+        "type": "term_error",
+        "field": "title",
+        "arabic": "آداب الكلام: الصدق والكلمة الطيبة",
+        "english": "Adab al-Kalam: al-Sidq wal-Kalimat al-Tayyibah",
+        "why": "The title is transliterated instead of translated, and the number is changed: Arabic plural 'آداب' becomes singular 'Adab', and singular 'الكلمة' becomes plural 'al-Kalimat'.",
         "severity": "medium"
       },
       {
         "type": "term_error",
-        "field": "try_this",
-        "arabic": "السلام",
-        "english": "greeting",
-        "why": "The specific Islamic term 'salam' is translated away as the generic 'greeting', inconsistent with the document's approach of transliterating key terms like 'adab' and 'sadaqah'.",
-        "severity": "medium"
+        "field": "summary",
+        "arabic": "'شكراً' و'من فضلك'",
+        "english": "'shukran' and 'min fadlik'",
+        "why": "The Arabic words are transliterated instead of translated to 'thank you' and 'please', which would be more appropriate for an English reader.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:14:16.537299+00:00",
+    "fixed_at": "2026-08-13T18:14:16.537314+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

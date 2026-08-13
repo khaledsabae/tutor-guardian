@@ -3,7 +3,7 @@
   "title": "Al-'Ibadah 'an Muhabbah: min al-'Adah ila al-Qalb (10-12 years)",
   "age_group": "10-12",
   "domain": "islamic_parenting",
-  "description": "A path to help parents guide their child from performing 'ibadah out of habit to loving it with the heart before puberty: Salah with love, the first fasts, a living relationship with the Qur'an, and du'a as intimate conversation.",
+  "description": "A path to help parents guide their son from performing 'ibadah out of habit to loving it with the heart shortly before puberty: Salah with love, the first fasts, a living relationship with the Qur'an, and du'a as intimate conversation.",
   "lesson_ids": [
     "lesson_10-12_islamic_parenting_worship_love_01",
     "lesson_10-12_islamic_parenting_worship_love_02",
@@ -38,10 +38,13 @@
         "field": "title",
         "arabic": "العبادة عن محبّة: من العادة إلى القلب (10-12 سنة)",
         "english": "Al-'Ibadah 'an Muhabbah: min al-'Adah ila al-Qalb (10-12 years)",
-        "why": "The Arabic title is transliterated instead of translated, so the meaning ('Worship out of Love: From Habit to the Heart') is lost to an English reader. The description does not compensate for the untranslated title.",
+        "why": "The English title is a transliteration, not a translation. The meaning of the Arabic title ('Worship out of Love: From Habit to the Heart') is lost to an English reader, while the description is fully translated. This creates a disconnect and fails to convey the title's message.",
         "severity": "medium"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:06:38.444680+00:00",
+    "fixed_at": "2026-08-13T19:06:38.444693+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

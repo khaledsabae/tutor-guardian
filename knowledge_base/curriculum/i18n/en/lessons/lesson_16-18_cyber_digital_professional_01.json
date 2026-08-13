@@ -32,17 +32,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "structure",
-        "field": "summary",
-        "arabic": "(3) نظافة أثر ... (3) شبكة",
-        "english": "(3) Cleaning your footprint ... (4) Network",
-        "why": "The Arabic source incorrectly numbers both steps as (3); the English corrects this to (3) and (4), altering the original numbering structure.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:23:24.973493+00:00"
   }
 }

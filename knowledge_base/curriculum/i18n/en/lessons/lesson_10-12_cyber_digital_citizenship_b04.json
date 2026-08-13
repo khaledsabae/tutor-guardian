@@ -34,17 +34,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "كلمات السر والأمان",
-        "english": "Passwords and Amanah",
-        "why": "The Arabic word 'الأمان' (al-amān) means 'security' or 'safety', not 'Amanah' which is a different word (أمانة) meaning 'trustworthiness' or 'honesty'. Transliterating it as 'Amanah' introduces an unintended Islamic term and changes the meaning.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:18:51.143560+00:00"
   }
 }

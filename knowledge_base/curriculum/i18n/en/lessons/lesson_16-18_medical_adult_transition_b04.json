@@ -9,12 +9,12 @@
     "85d5303f-da97-49ab-985a-8c31901d84a2",
     "4c790c42-d81f-437c-b5e1-eab7f2a742b4"
   ],
-  "summary": "The gravest danger a young person facing independence may encounter is going through psychological distress without knowing how or when to seek help. Teach your child that seeking psychological support is like visiting a doctor for the body: a sign of awareness, not weakness. Introduce him to the signs that require action (prolonged sadness, isolation, loss of sleep or appetite, thoughts of self-harm), and the sources he can turn to (a specialist, a helpline, a trusted person). Most importantly, let him know your door is always open without judgment. A young person who has a 'help-seeking plan' is more resilient against the pressures of university, work, and loneliness.",
+  "summary": "The gravest danger a young man approaching independence may encounter is going through psychological distress without knowing how or when to seek help. Teach your son that seeking psychological support is like visiting a doctor for the body: a sign of awareness, not weakness. Introduce him to the signs that require action (prolonged sadness, isolation, loss of sleep or appetite, thoughts of self-harm), and the sources he can turn to (a specialist, a helpline, a trusted person). Most importantly, let him know your door is open without judgment. A young man who has a 'help-seeking plan' is more resilient against the pressures of university, work, and loneliness.",
   "try_this": "This week: Write a small 'support plan' together: 3 people he trusts, one specialist to turn to, and one sign that means 'it’s time to ask for help.' Assure him you are the first of them, without blame.",
   "order": 4,
   "estimated_minutes": 43,
   "reflection_prompts": [
-    "Does your child clearly know whom to turn to if he faces psychological distress far from you?",
+    "Does your son clearly know whom to turn to if he faces psychological distress far from you?",
     "How can you make 'seeking help' a value he takes pride in, not a shame he hides?"
   ],
   "warning_flags": [],
@@ -38,13 +38,16 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "summary, try_this, reflection_prompts",
-        "arabic": "الشاب ... ابنك",
-        "english": "young person ... your child",
-        "why": "The Arabic uses masculine-specific terms (الشاب 'the young man', ابنك 'your son'), while the English uses gender-neutral terms (young person, your child). This changes the intended audience from parents of boys to parents of any child.",
+        "field": "summary",
+        "arabic": "أخطر ما يواجه الشاب المقبل على الاستقلال أن يمرّ بضائقة نفسية ولا يعرف كيف أو متى يطلب المساعدة.",
+        "english": "The gravest danger a young man approaching independence may encounter is going through psychological distress without knowing how or when to seek help.",
+        "why": "The Arabic states a definite fact ('the gravest danger that confronts...') without any modal of possibility. The English adds 'may encounter', introducing a hypothetical nuance not present in the source.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:01:12.846275+00:00",
+    "fixed_at": "2026-08-13T19:01:12.846286+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

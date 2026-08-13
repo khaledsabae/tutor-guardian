@@ -1,17 +1,17 @@
 {
   "id": "lesson_10-12_development_pre_teen_01",
   "path_id": "path_10-12_development_pre_teen",
-  "title": "Bawadir al-Bulugh: Hiwar al-Jasad al-Mutaghayyir bi-Thiqah",
+  "title": "Early Signs of Puberty: Confident Dialogue about the Changing Body",
   "age_group": "10-12",
   "domain": "development",
   "unit_ids": [],
-  "summary": "Signs of bulugh (puberty) may begin at this age, and your child needs to hear about them from you first—not from peers or the internet. Speak with calmness and clarity appropriate for their age about the coming physical changes, reassuring them that these are natural and that you are their trusted source. Early dialogue protects them from misinformation and from shame.",
-  "try_this": "This week: Open a short, reassuring conversation about one physical change, and let your child know they can always ask you.",
+  "summary": "Signs of puberty may begin at this age, and your child needs to hear about them from you first—not from peers or the internet. Speak with calmness and clarity appropriate for his age about the coming physical changes, reassuring him that these are natural and that you are his trusted source. Early dialogue protects him from misinformation and from shame.",
+  "try_this": "This week: Open a short, reassuring conversation about one physical change, and let your child know he can always ask you.",
   "order": 1,
   "estimated_minutes": 8,
   "reflection_prompts": [
-    "Have you spoken with your child about bulugh yet?",
-    "Do they feel they can ask you?"
+    "Have you spoken with your child about puberty yet?",
+    "Does he feel he can ask you?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -29,25 +29,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "بوادر البلوغ: حوار الجسد المتغيّر بثقة",
-        "english": "Bawadir al-Bulugh: Hiwar al-Jasad al-Mutaghayyir bi-Thiqah",
-        "why": "The title is fully transliterated rather than translated, so an English reader receives no meaning. It should be translated, e.g., 'Signs of Puberty: Confident Dialogue about the Changing Body'.",
-        "severity": "high"
-      },
-      {
-        "type": "term_error",
-        "field": "reflection_prompts[0]",
-        "arabic": "هل تحدّثت مع طفلك عن البلوغ بعد؟",
-        "english": "Have you spoken with your child about bulugh yet?",
-        "why": "The Arabic word 'البلوغ' (puberty) is transliterated as 'bulugh' without translation, while the summary uses 'bulugh (puberty)'. This inconsistency may confuse readers. The term should be consistently translated as 'puberty' or consistently transliterated with explanation.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:03:14.556736+00:00",
+    "fixed_at": "2026-08-13T18:03:14.556747+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

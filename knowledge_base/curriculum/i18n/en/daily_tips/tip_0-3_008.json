@@ -27,17 +27,9 @@
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "أصدر صوتاً؟ قلّده.",
-        "english": "He makes a sound? Imitate it.",
-        "why": "The Arabic imperative 'قلّده' means 'imitate him' (the child), not 'imitate it' (the sound). The English shifts the object from the child to the sound, slightly altering the focus of the instruction.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:08:09.049514+00:00"
   }
 }

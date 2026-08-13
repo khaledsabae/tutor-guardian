@@ -2,7 +2,7 @@
   "id": "tip_10-12_012",
   "age_group": "10-12",
   "domain": "cyber",
-  "text": "Do not participate in bullying—stop it. Train your child: screenshot → tell me → report to the platform. The one who remains silent is a partner (in the wrongdoing).",
+  "text": "Do not participate in bullying—stop it. Train him: screenshot → tell me → report to the platform. The silent one is a partner.",
   "unit_id": "cyb-36b8ad48",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -16,19 +16,13 @@
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
-      "reviewer_model": false
+      "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "الصامت شريك",
-        "english": "The one who remains silent is a partner (in the wrongdoing).",
-        "why": "The English adds '(in the wrongdoing)' which is not present in the Arabic, inserting an interpretation that narrows the original statement.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:50.609732+00:00",
+    "fixed_at": "2026-08-13T18:52:50.609745+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

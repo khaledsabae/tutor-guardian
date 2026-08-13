@@ -33,29 +33,22 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "title",
-        "arabic": "الحبُّ أساس التديّن",
-        "english": "Love as the Foundation of Tarbiyah",
-        "why": "The Arabic 'التديّن' means 'religiosity' or 'piety', not 'tarbiyah' (upbringing). The translation changes the core concept from religious devotion to child-rearing.",
-        "severity": "high"
+        "field": "summary",
+        "arabic": "طفلك الذي يُغمَر بالحنان يربط الدين بالأمان والحب",
+        "english": "A child who is immersed in tenderness connects deen with safety and love",
+        "why": "The Arabic uses the second-person possessive 'طفلك' (your child), directly addressing the parent. The English generalizes to 'A child', losing the personal and direct tone.",
+        "severity": "low"
       },
       {
-        "type": "term_error",
-        "field": "reflection_prompts[1]",
-        "arabic": "هل تشعر أن الرحمة حاضرة في تعاملك؟",
-        "english": "Do you feel that rifq (mercy) is present in your interactions?",
-        "why": "The Arabic word 'الرحمة' (mercy) is incorrectly rendered as 'rifq' (gentleness/kindness) and then glossed as 'mercy'. This introduces a different Islamic term.",
-        "severity": "medium"
-      },
-      {
-        "type": "structure",
+        "type": "meaning_change",
         "field": "try_this",
         "arabic": "واقصد بها أنها من رحمة الله التي تربّيه عليها",
-        "english": "and intend that they are from the mercy of Allah by which you raise them (tarbiyah).",
-        "why": "The English adds '(tarbiyah)' which is not present in the Arabic. The Arabic uses the verb 'تربّيه' (you raise him), not the noun 'tarbiyah'.",
+        "english": "and intend that they are from the mercy of Allah by which you raise them (upbringing)",
+        "why": "The English adds the parenthetical gloss '(upbringing)' which is not present in the Arabic. This is an extraneous addition.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:18:06.582173+00:00"
   }
 }

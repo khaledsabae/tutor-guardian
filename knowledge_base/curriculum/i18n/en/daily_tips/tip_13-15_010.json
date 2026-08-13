@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "رقابة أبوية",
-        "english": "parental controls",
-        "why": "The Arabic term is broader, meaning parental supervision or monitoring, while 'parental controls' typically refers to software-based restrictions, potentially narrowing the intended meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:10:51.857499+00:00"
   }
 }

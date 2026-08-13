@@ -9,7 +9,7 @@
     "seed-screen-79",
     "seed-screen-46"
   ],
-  "summary": "Blue light from screens and stimulating content delay a child’s sleep and reduce its depth, while sleep at this age is the fuel for brain growth. The golden rule: no screens in the hour before bedtime, and no screen in the bedroom ever. Replace them with a calm, consistent routine: a warm bath, a short story, dim lighting, and your soothing voice. This routine sends the child’s brain the signal, 'It’s time to wind down.' A well-rested child is calmer during the day and more capable of learning, and the cost is simple: one screen-free hour every evening.",
+  "summary": "Blue light from screens and stimulating content delay a child’s sleep and reduce its depth, while sleep at this age is the fuel for brain growth. The golden rule: no screens in the hour before bedtime, and no screen in the bedroom ever. Replace them with a calm, consistent routine: a warm bath, a short story, dim lighting, and your soothing voice. This routine sends the child’s brain the signal, 'time for quiet has come.' A well-rested child is calmer during the day and more capable of learning, and the cost is simple: one screen-free hour every evening.",
   "try_this": "This week: Make the last hour before bedtime a 'screen-free zone' for the whole family, and replace it with a consistent routine (bath + story + dim light). Observe its effect on how quickly your child falls asleep.",
   "order": 4,
   "estimated_minutes": 5,
@@ -34,25 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "كيف يبدو المساء في بيتكم الآن، وما تغيير واحد يحمي ساعة ما قبل النوم؟",
-        "english": "What does your evening look like now, and what single change can protect the pre-bedtime hour?",
-        "why": "The phrase 'في بيتكم' (in your home) is omitted, and 'يحمي' (protects) is rendered as 'can protect', shifting from a definite change to a potential one.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "هل غرفة نوم طفلك خالية فعلاً من الشاشات والمؤثرات؟",
-        "english": "Is your child’s bedroom truly free of screens and distractions?",
-        "why": "'المؤثرات' means influences or stimuli, not specifically distractions, which narrows the intended meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:01:38.699275+00:00",
+    "fixed_at": "2026-08-13T19:01:38.699287+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

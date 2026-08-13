@@ -33,33 +33,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "description",
-        "arabic": "مسار تربوي سيبراني",
-        "english": "cyber tarbiyah pathway",
-        "why": "The Arabic 'تربوي' is a general term meaning 'educational' or 'upbringing'. Transliterating it as 'tarbiyah' introduces an Islamic term where none was intended, and creates an awkward language mix. Should be 'educational' or 'upbringing'.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "بدائل اللعب الحقيقي",
-        "english": "alternatives of real play",
-        "why": "The Arabic means 'alternatives to real play' (i.e., activities that replace screen time). The English 'alternatives of real play' could be misread as different types of real play, altering the intended meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "حماية الطفل الصغير من الولادة",
-        "english": "Protecting the Young Child from Birth",
-        "why": "The Arabic means protection starting from birth, but the English phrasing could be misread as protecting the child from the act of being born. Ambiguous.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:36:21.814859+00:00"
   }
 }

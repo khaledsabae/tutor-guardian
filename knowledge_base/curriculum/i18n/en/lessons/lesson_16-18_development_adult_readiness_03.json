@@ -33,25 +33,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "كن مصدر أمانٍ لا ضغطٍ إضافي",
-        "english": "Be a source of *amanah* (security), not additional pressure",
-        "why": "The Arabic word is 'amān' (أمان) meaning security/safety. The translation uses 'amanah' (أمانة) which means trust or honesty, a different concept. The transliteration and meaning are incorrect.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "reflection_prompts[1]",
-        "arabic": "هل يجد عندك أماناً ليتكلّم عن ضغطه؟",
-        "english": "Does he find *amanah* with you to speak about his pressures?",
-        "why": "Same error: 'amān' (security) is mistranslated as 'amanah' (trust). The Arabic asks if the child finds security/safety with the parent, not a trust.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:24:19.993095+00:00"
   }
 }

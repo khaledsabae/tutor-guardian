@@ -34,17 +34,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "وتعامل بأخلاق تريده أن يتعلمها",
-        "english": "and interact with the akhlaq (character) you want them to learn",
-        "why": "The Arabic 'تعامل بأخلاق' means 'treat (others) with good character' or 'display the character'. The English 'interact with the akhlaq' is a literal rendering that misses the implied object and idiomatic usage, making it sound like one interacts with the character itself rather than using it in dealings with people.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:27:32.906618+00:00"
   }
 }

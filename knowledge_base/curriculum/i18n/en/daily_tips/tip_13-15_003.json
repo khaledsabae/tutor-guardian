@@ -2,7 +2,7 @@
   "id": "tip_13-15_003",
   "age_group": "13-15",
   "domain": "islamic_parenting",
-  "text": "Khushu' is not the performance of movements—it is the presence of the heart. Ask your child: \"What did you feel in your sujood today?\"—training begins with the question.",
+  "text": "Khushu' is not the performance of movements—it is the presence of the heart. Ask your son: \"What did you feel in your sujood today?\"—training begins with the question.",
   "unit_id": "isl-199c7aaf",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -18,17 +18,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "اسأل ابنك",
-        "english": "Ask your child",
-        "why": "Arabic specifically says 'your son' (ابنك), but English generalizes to 'your child', losing the explicit reference to a male child.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:49.455875+00:00",
+    "fixed_at": "2026-08-13T18:52:49.455889+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -9,7 +9,7 @@
     "8e884b98-41a4-4c29-92c5-aa71e62d7d51",
     "b1bd26fc-3144-4928-9bb4-ce2b30f95876"
   ],
-  "summary": "At the age of 7–9, the child begins to understand the meaning of salah but may see it as burdensome. The key: righteous example (uswah hasanah), encouragement rather than compulsion, and connecting his heart to Allah through stories and love.",
+  "summary": "At the age of 7–9, the child begins to understand the meaning of salah but may see it as burdensome. The key: good example, encouragement rather than compulsion, and connecting his heart to Allah through stories and love.",
   "try_this": "This week: perform one salah daily with your child aloud, let him count the rak‘at, and praise him for every improvement.",
   "order": 1,
   "estimated_minutes": 7,
@@ -33,17 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "القدوة الصالحة",
-        "english": "righteous example (uswah hasanah)",
-        "why": "The English adds the transliterated term 'uswah hasanah' in parentheses, which is not present in the Arabic source. The Arabic uses 'القدوة الصالحة' (good example/role model), not 'أسوة حسنة'. This is an addition.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:16:22.371289+00:00",
+    "fixed_at": "2026-08-13T18:16:22.371304+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

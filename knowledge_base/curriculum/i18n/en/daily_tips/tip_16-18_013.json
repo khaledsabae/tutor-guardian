@@ -18,18 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "english.text",
-        "arabic": "سيرتك المهنية",
-        "english": "your professional seerah",
-        "why": "The Arabic 'سيرة' here means 'biography' or 'career story' in a secular professional context, not the Islamic term 'Seerah' (Prophetic biography). Transliterating it as 'seerah' is misleading and misapplies a religious term.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:12:12.822628+00:00"
+  }
 }

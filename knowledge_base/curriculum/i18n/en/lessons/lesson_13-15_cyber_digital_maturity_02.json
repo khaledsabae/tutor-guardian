@@ -36,14 +36,15 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "register",
-        "field": "try_this",
-        "arabic": "استخدما Google Lens/Reverse Image Search معاً، ابحثا عن المصدر الأصلي. ناقشا: كيف كشفتما التزييف؟",
-        "english": "use Google Lens and Reverse Image Search together, and look for the original source. Discuss: How did you uncover the fabrication?",
-        "why": "Arabic uses dual imperative forms (استخدما, ابحثا, ناقشا) addressing parent and child together, creating a warm, direct tone. English uses standard imperatives, losing the dual intimacy and the explicit joint participation.",
+        "type": "meaning_change",
+        "field": "reflection_prompts[1]",
+        "arabic": "هل أصبح ابنك أكثر حذراً في المشاركة؟",
+        "english": "Has your child become more cautious about sharing?",
+        "why": "The Arabic uses 'ابنك' (your son), specifying a male child, while the English uses the gender-neutral 'your child', losing the original gender specificity.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:21:11.143548+00:00"
   }
 }

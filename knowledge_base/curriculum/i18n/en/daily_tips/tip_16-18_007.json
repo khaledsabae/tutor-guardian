@@ -2,7 +2,7 @@
   "id": "tip_16-18_007",
   "age_group": "16-18",
   "domain": "medical",
-  "text": "2022 Report: The Psychological Well-being of Youth is a Global Priority. Universities provide counsellors—use them, they are there for you.",
+  "text": "2022 Report: The Mental Health of Youth is a Global Priority. Universities provide counsellors—use them, they are there for you.",
   "unit_id": "e5d132da-cdb4-403a-a43e-e78640ee6270",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -20,6 +20,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:11.995478+00:00",
+    "fixed_at": "2026-08-13T18:53:11.995493+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

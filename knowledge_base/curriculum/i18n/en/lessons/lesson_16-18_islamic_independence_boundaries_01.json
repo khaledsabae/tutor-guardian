@@ -9,7 +9,7 @@
     "isl-44227dfe",
     "isl-d7b55818"
   ],
-  "summary": "Your university-age child’s independence in their decisions is a natural stage of growth, not a shortcoming in your birr al-walidayn (dutifulness to parents), as Abdullah Nasih Alwan explains in his book Tarbiyah al-Awlad fi al-Islam. Your role shifts from direct guidance to companionship and counsel, for the values you planted in their early years remain their inner reference. Birr does not mean complete dependence, but mutual respect alongside their independence. If you discover your daughter in an early emotional relationship, it calls for its termination because it lacks a Shar'i framework. However, address it with wisdom, not exposure or scandal before the family, according to the fatwas of Shaykh Ibn Baz. Speak to her calmly, clarify the potential harms, and present the lawful alternative: official engagement with the family’s knowledge if her desire is sincere. Your son’s emotional inclination toward a girl is not a sin in itself because it is not entirely his choice, as per Shaykh Ibn Baz’s fatwa, but accountability lies in the actions: secret correspondence and khalwah (seclusion) are forbidden and must be stopped. Do not punish him for mere feelings, but guide him to the lawful path: if his desire is sincere, then proceed to propose for her hand with the knowledge of both families, rather than continuing a secret relationship.",
+  "summary": "Your university-age child’s independence in their decisions is a natural stage of growth, not a shortcoming in his dutifulness to you, as Abdullah Nasih Alwan explains in his book Tarbiyah al-Awlad fi al-Islam. Your role shifts from direct guidance to companionship and counsel, for the values you planted in their early years remain their inner reference. Birr does not mean complete dependence, but mutual respect alongside their independence. If you discover your daughter in an early emotional relationship, it calls for its termination because it lacks a Shar'i framework. However, address it with wisdom, not exposure or scandal before the family, according to the fatwas of Shaykh Ibn Baz. Speak to her calmly, clarify the potential harms, and present the lawful alternative: official engagement with the family’s knowledge if her desire is sincere. Your son’s emotional inclination toward a girl is not a sin in itself because it is not entirely his choice, as per Shaykh Ibn Baz’s fatwa, but accountability lies in the actions: secret correspondence and khalwah (seclusion) are forbidden and must be stopped. Do not punish him for mere feelings, but guide him to the lawful path: if his desire is sincere, then proceed to propose for her hand with the knowledge of both families, rather than continuing a secret relationship.",
   "try_this": "This week: If you have a son or daughter at this stage, initiate one calm conversation (not tied to a specific incident) about the meaning of birr after independence, and about the Shar'i path if they have a sincere desire to get to know someone with the intention of marriage, instead of leaving the topic unaddressed until a surprise occurs.",
   "order": 1,
   "estimated_minutes": 10,
@@ -36,14 +36,17 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "type": "term_error",
         "field": "summary",
         "arabic": "لا تقصير في برّك",
-        "english": "not a shortcoming in your birr al-walidayn (dutifulness to parents)",
-        "why": "The Arabic 'برّك' (birr towards you, the parent) refers to the child's dutifulness to the parent. The English 'your birr al-walidayn' can be misread as the parent's own birr to their parents, shifting the pronoun reference and potentially confusing the intended meaning.",
-        "severity": "medium"
+        "english": "not a shortcoming in his dutifulness to you",
+        "why": "The term 'برّك' (your birr) is translated as 'dutifulness' here, while the document elsewhere transliterates the same root as 'Birr' (e.g., 'Birr al-Walidayn' in the title, 'Birr does not mean complete dependence' in the summary). Consistent transliteration of this key Islamic term is expected.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:53:46.192332+00:00",
+    "fixed_at": "2026-08-13T17:53:46.192345+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

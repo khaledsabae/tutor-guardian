@@ -29,17 +29,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "هذه السنن ليست طقوساً بل أول عقدٍ بين الوالد وربه على هذا الأمانة.",
-        "english": "These sunnahs are not mere rituals but the first covenant between the parent and their Lord over this amanah.",
-        "why": "The Arabic negates that these sunnahs are rituals at all (ليست طقوساً), while the English adds 'mere', changing the meaning to 'not just rituals' and implying they are rituals but more than that.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:17:43.612865+00:00"
   }
 }

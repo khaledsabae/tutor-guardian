@@ -2,7 +2,7 @@
   "id": "tip_2-3_007",
   "age_group": "2-3",
   "domain": "islamic_parenting",
-  "text": "No—practise 'responding within 30 seconds.' Respond to his call at once, even if only with a reassuring word. Swift response builds 'secure attachment' and makes the child feel safe, while ignoring him causes chronic stress.",
+  "text": "No—practise 'responding within 30 seconds.' Respond to his call at once, even if with a reassuring word. Swift response builds 'secure attachment' and makes the child feel safe, while ignoring causes him chronic stress.",
   "unit_id": null,
   "day_of_week": 0,
   "time_of_day": "anytime",
@@ -24,6 +24,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:41.089911+00:00",
+    "fixed_at": "2026-08-13T18:53:41.089931+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

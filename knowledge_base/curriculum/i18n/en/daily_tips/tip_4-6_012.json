@@ -26,17 +26,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "example",
-        "arabic": "ضع حذاءك في مكانه قبل النوم",
-        "english": "put your shoes in their place before bed",
-        "why": "Arabic uses singular 'حذاءك' (your shoe) while English uses plural 'shoes'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:14:36.680018+00:00"
   }
 }

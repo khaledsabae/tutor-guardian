@@ -2,7 +2,7 @@
   "id": "tip_0-3_007",
   "age_group": "0-3",
   "domain": "islamic_parenting",
-  "text": "Your little girl or boy does not yet understand words, but they understand your tone and your touch. Rifq (gentleness) is tenderness, not weakness—the Prophet ﷺ said: «Indeed, Allah is Rafeeq (Most Gentle) and loves rifq in all things.» Be patient with their crying in a calm voice.",
+  "text": "Your little girl or boy does not yet understand words, but they understand your tone and your touch. Rifq (gentleness) is tenderness, not weakness—the Prophet ﷺ said: «Indeed, Allah is Rafeeq (Gentle) and loves rifq in all things.» Be patient with their crying in a calm voice.",
   "unit_id": "f66f6ba1-d342-47a0-8184-6bfb848c47be",
   "day_of_week": 6,
   "time_of_day": "evening",
@@ -30,22 +30,15 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "meaning_change",
+        "type": "religious_error",
         "field": "english.text",
-        "arabic": "إن الله رفيق",
-        "english": "Indeed, Allah is Rafeeq (Most Gentle)",
-        "why": "The Arabic 'رفيق' is a simple adjective meaning 'Gentle' or 'Kind', not a superlative. Adding 'Most' overstates the attribute and is not present in the source.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "english.text",
-        "arabic": "الرفق (in both sentences)",
-        "english": "Rifq (gentleness) ... rifq",
-        "why": "The term 'الرفق' is translated as 'gentleness' in the first instance but left untransliterated as 'rifq' in the hadith. This inconsistency can confuse readers about the key concept being introduced.",
+        "arabic": "إن الله رفيق يحب الرفق في كل شيء",
+        "english": "Indeed, Allah is Rafeeq (Most Gentle) and loves rifq in all things.",
+        "why": "The Arabic 'رفيق' means 'Gentle', not 'Most Gentle'. Adding the superlative alters the divine attribute as stated in the hadith.",
         "severity": "medium"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:08:04.318641+00:00"
   }
 }

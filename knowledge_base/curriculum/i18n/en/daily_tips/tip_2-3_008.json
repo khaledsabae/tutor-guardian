@@ -2,7 +2,7 @@
   "id": "tip_2-3_008",
   "age_group": "2-3",
   "domain": "islamic_parenting",
-  "text": "Expect outbursts of anger because they are natural. Take a deep breath, use a calm voice, and say to him: «I am here with you, you are safe.» You can try to distract him, or give him time to calm down on his own without showing any irritation from you.",
+  "text": "Expect outbursts of anger because they are natural. Take a deep breath, use a calm voice, and say to him: «I am here with you, you are safe.» You can try to distract him, or give him time to calm down on his own without any irritation from you.",
   "unit_id": null,
   "day_of_week": 1,
   "time_of_day": "anytime",
@@ -22,17 +22,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "دون انفعال منك",
-        "english": "without showing any irritation from you",
-        "why": "The Arabic 'انفعال' means 'agitation' or 'emotional reaction' in general, not specifically 'irritation'. The English narrows the meaning and adds 'showing', shifting the focus from the parent's internal state to outward display.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:37.428506+00:00",
+    "fixed_at": "2026-08-13T18:53:37.428520+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

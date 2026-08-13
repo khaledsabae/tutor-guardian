@@ -1,7 +1,7 @@
 {
   "id": "lesson_2-3_cyber_routine_b01",
   "path_id": "path_2-3_cyber_routine",
-  "title": "Ḥadd al-sāʿah: Qāʿidat al-shāshah fī ʿumr al-snatayn",
+  "title": "The Hour Limit: Screen Rule at Age Two",
   "age_group": "2-3",
   "domain": "cyber",
   "unit_ids": [
@@ -34,17 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "حدّ الساعة: قاعدة الشاشة في عمر السنتين",
-        "english": "Ḥadd al-sāʿah: Qāʿidat al-shāshah fī ʿumr al-snatayn",
-        "why": "The English title is a transliteration of the Arabic, not a translation. The meaning ('The Hour Limit: The Screen Rule at Age Two') is completely lost to an English reader.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:53:40.895036+00:00",
+    "fixed_at": "2026-08-13T17:53:40.895049+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

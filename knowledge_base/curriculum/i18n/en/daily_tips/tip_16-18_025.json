@@ -22,13 +22,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "text",
+        "field": "english",
         "arabic": "أنت تبني رجلك/امرأتك",
         "english": "You are building your man/woman (son/daughter)",
-        "why": "The English adds an explanatory gloss '(son/daughter)' that is not present in the Arabic. The Arabic literally says 'your man/your woman', which is a common expression for the adult the child will become, but the parenthetical addition is an interpretation not found in the source.",
+        "why": "The Arabic says 'your man/woman' without specifying 'son/daughter'. The English adds an explanatory parenthetical that is not present in the source, altering the meaning by making an implicit interpretation explicit.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:12:46.759663+00:00"
   }
 }

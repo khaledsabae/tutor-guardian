@@ -37,13 +37,22 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "summary, try_this, reflection_prompts",
-        "arabic": "ابنك / أبنائهم",
-        "english": "your child / their children",
-        "why": "The Arabic consistently uses the masculine 'ابنك' (your son) and 'أبنائهم' (their sons), but the English translates as gender-neutral 'your child' and 'their children', losing the specific reference to a male child that is present in the original and aligns with the hadith about a young man.",
+        "field": "summary",
+        "arabic": "عند أول ضغط اجتماعي",
+        "english": "at the first sign of social pressure",
+        "why": "The Arabic says 'at the first social pressure' without the word 'sign'. The addition of 'sign of' slightly alters the meaning.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts[1]",
+        "arabic": "عند أول ضغط",
+        "english": "at the first sign of pressure",
+        "why": "The Arabic says 'at the first pressure' without the word 'sign'. The addition of 'sign of' slightly alters the meaning.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:22:41.775096+00:00"
   }
 }

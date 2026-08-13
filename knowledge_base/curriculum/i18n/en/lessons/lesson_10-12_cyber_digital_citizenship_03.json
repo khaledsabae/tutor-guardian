@@ -42,10 +42,19 @@
         "field": "try_this",
         "arabic": "لو كان مستحيل التصديق، غالباً كذب",
         "english": "If it’s too unbelievable to be true, it’s most likely false.",
-        "why": "The Arabic says 'impossible to believe' and 'a lie', while the English softens to 'too unbelievable to be true' and 'false', reducing the directness and intensity.",
+        "why": "The Arabic says 'most likely a lie' (كذب) while the English says 'most likely false', softening the statement. Also, 'مستحيل التصديق' means 'impossible to believe', not 'too unbelievable to be true'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "فعّل له البحث الآمن (SafeSearch) ومصادر موثوقة.",
+        "english": "Activate SafeSearch and reliable sources for him.",
+        "why": "The Arabic implies two actions: activate SafeSearch and (use/provide) reliable sources. The English phrasing 'Activate SafeSearch and reliable sources' is awkward and could be misinterpreted as activating both, which doesn't make sense for sources.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:19:11.933842+00:00"
   }
 }

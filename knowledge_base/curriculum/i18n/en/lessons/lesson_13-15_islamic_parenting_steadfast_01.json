@@ -1,7 +1,7 @@
 {
   "id": "lesson_13-15_islamic_parenting_steadfast_01",
   "path_id": "path_13-15_islamic_parenting_steadfast",
-  "title": "Al-'iffah wa Bidayat al-Gharizah: Hiwar Mubakkir",
+  "title": "Chastity and the First Stirrings of Instinct: An Early Conversation",
   "age_group": "13-15",
   "domain": "islamic_parenting",
   "unit_ids": [],
@@ -29,17 +29,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_loss",
-        "field": "title",
-        "arabic": "العفّة وبدايات الغريزة: حوارٌ مبكر",
-        "english": "Al-'iffah wa Bidayat al-Gharizah: Hiwar Mubakkir",
-        "why": "The title is transliterated instead of translated, so the meaning is lost for an English reader. A translation such as 'Chastity and the Beginnings of Instinct: An Early Dialogue' would convey the intended message.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:53:00.774029+00:00",
+    "fixed_at": "2026-08-13T17:53:00.774040+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

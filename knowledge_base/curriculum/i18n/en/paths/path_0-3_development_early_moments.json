@@ -1,6 +1,6 @@
 {
   "id": "path_0-3_development_early_moments",
-  "title": "Critical Early Moments: Foundations of a Child’s Development up to One Year",
+  "title": "Critical Early Moments: Foundations of Child Development and Growth up to One Year",
   "age_group": "0-3",
   "domain": "development",
   "description": "A 10-day developmental pathway covering the most important principles of early development: sensory and motor sensitivities, attachment theory, Piaget’s sensorimotor stages, and the significance of parental responsiveness in building cognitive and emotional foundations. Based on UNICEF’s 'Early Moments Matter' report and CDC’s Act Early guidelines.",
@@ -33,17 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أسس التطور والنمو للطفل حتى عام",
-        "english": "Foundations of a Child’s Development up to One Year",
-        "why": "The Arabic includes 'والنمو' (and growth), which is omitted in the English translation. 'Development' alone may not fully capture the dual concept of 'تطور ونمو'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:16:34.126703+00:00",
+    "fixed_at": "2026-08-13T18:16:34.126713+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

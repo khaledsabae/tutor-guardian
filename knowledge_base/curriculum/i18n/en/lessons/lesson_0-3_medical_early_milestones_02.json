@@ -13,7 +13,7 @@
   "order": 2,
   "estimated_minutes": 42,
   "reflection_prompts": [
-    "What was the most difficult challenge you faced in establishing a sleep routine? How did you handle it?",
+    "What was the most difficult challenge you faced in the sleep routine? How did you handle it?",
     "Have you noticed a difference in your child’s response when you describe what you are doing during care?"
   ],
   "warning_flags": [],
@@ -33,25 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "الموت المفاجئ",
-        "english": "sudden infant death",
-        "why": "The Arabic says 'sudden death' without specifying 'infant'. The English adds 'infant', which is a clarifying addition not present in the source.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "ما أصعب تحدٍ واجهته في روتين النوم؟",
-        "english": "What was the most difficult challenge you faced in establishing a sleep routine?",
-        "why": "The Arabic asks about a challenge faced 'in the sleep routine' (i.e., while carrying it out), not specifically about establishing it. The English narrows the meaning by adding 'establishing'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:55:49.650357+00:00",
+    "fixed_at": "2026-08-13T18:55:49.650369+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

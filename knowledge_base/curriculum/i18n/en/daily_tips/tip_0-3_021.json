@@ -2,7 +2,7 @@
   "id": "tip_0-3_021",
   "age_group": "0-3",
   "domain": "islamic_parenting",
-  "text": "Recite a short surah to your child every day in a gentle voice; early companionship with the words of Allah bears the fruit of love when they grow up.",
+  "text": "Let your child hear a short surah every day in a gentle voice; early companionship with the words of Allah bears the fruit of love when they grow up.",
   "unit_id": null,
   "day_of_week": 1,
   "time_of_day": "anytime",
@@ -26,13 +26,16 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "text",
-        "arabic": "أسمعي",
-        "english": "Recite",
-        "why": "The Arabic imperative is feminine singular, explicitly addressing a mother. The English translation uses a gender-neutral imperative, losing the specific address to a female parent.",
+        "field": "أسمعي",
+        "arabic": "أسمعي طفلك",
+        "english": "Let your child hear",
+        "why": "The Arabic uses feminine singular imperative addressing the mother directly; the English uses a gender-neutral construction, losing the direct address to the mother.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:58:00.227646+00:00",
+    "fixed_at": "2026-08-13T17:58:00.227664+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

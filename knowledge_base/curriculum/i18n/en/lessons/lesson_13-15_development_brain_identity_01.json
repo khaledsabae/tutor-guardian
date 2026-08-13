@@ -11,12 +11,12 @@
     "6b71ada0-c189-4d5e-89f2-cce19272f4b8"
   ],
   "summary": "Adolescence = a second window for brain growth (UNICEF): (1) Synaptic pruning — the brain retains what is used and neglects what is not. (2) Myelination — speeds up signals, finally reaching the prefrontal cortex. (3) Prefrontal cortex (PFC) — decision-making, planning, impulse control — completes in the 20s. The interpretation: your adolescent is not \"broken\"; their brain is rewiring. The opportunity: what they practice now (sports, knowledge, art, salah, leadership) becomes ingrained for life.",
-  "try_this": "This week: choose together one skill your child wishes to develop — plan: 30 minutes daily for 30 days. Record: how did performance/confidence change?",
+  "try_this": "This week: choose together one skill your son wishes to develop — plan: 30 minutes daily for 30 days. Record: how did performance/confidence change?",
   "order": 1,
   "estimated_minutes": 40,
   "reflection_prompts": [
-    "What skill did they choose?",
-    "Did they feel a difference after 30 days?"
+    "What skill did he choose?",
+    "Did he feel a difference after 30 days?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -38,29 +38,16 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "اختاروا معاً مهارة واحدة يرغب ابنكم تطويرها",
-        "english": "choose together one skill your child wishes to develop",
-        "why": "Arabic specifies 'ابنكم' (your son), English uses gender-neutral 'your child', losing the explicit masculine reference.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "ما المهارة التي اختارها؟",
-        "english": "What skill did they choose?",
-        "why": "Arabic uses masculine singular 'اختارها' (he chose), English uses gender-neutral 'they', altering the original gender specification.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "هل شعر بفرق بعد 30 يوماً؟",
-        "english": "Did they feel a difference after 30 days?",
-        "why": "Arabic uses masculine singular 'شعر' (he felt), English uses gender-neutral 'they', altering the original gender specification.",
+        "field": "summary",
+        "arabic": "ما يمارسه الآن",
+        "english": "what they practice now",
+        "why": "Arabic uses masculine singular 'يمارسه' (he practices) consistent with addressing a son; English uses gender-neutral 'they', losing the masculine specificity and creating inconsistency with the rest of the translation that uses 'he'.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:57:55.188774+00:00",
+    "fixed_at": "2026-08-13T18:57:55.188786+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

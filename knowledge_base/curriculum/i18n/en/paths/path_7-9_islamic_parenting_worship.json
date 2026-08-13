@@ -32,25 +32,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "العبادات",
-        "english": "'Ibadat",
-        "why": "Inconsistent transliteration: title uses 'Ibadat (capital I), description uses 'ibadat (lowercase i). Should be uniform.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "مسار تربوي",
-        "english": "A tarbiyah path",
-        "why": "Arabic uses the adjective 'tarbawi' (educational), not the noun 'tarbiyah'. The translation 'tarbiyah path' alters the meaning slightly and is not a direct rendering.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:38:50.360038+00:00"
   }
 }

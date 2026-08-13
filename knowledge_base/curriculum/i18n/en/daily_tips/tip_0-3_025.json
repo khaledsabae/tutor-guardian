@@ -2,7 +2,7 @@
   "id": "tip_0-3_025",
   "age_group": "0-3",
   "domain": "islamic_parenting",
-  "text": "Make du'a for your child with righteousness every day while you carry them; tie affection to the remembrance of Allah.",
+  "text": "Make du'a for your child to be righteous every day while you carry him; tie affection with the remembrance of Allah.",
   "unit_id": null,
   "day_of_week": 5,
   "time_of_day": "anytime",
@@ -22,17 +22,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "ادعي لطفلك بالصلاح",
-        "english": "Make du'a for your child with righteousness",
-        "why": "The Arabic means 'supplicate for your child for righteousness' (i.e., ask Allah to make them righteous). The English 'with righteousness' could be misread as the manner of making du'a, not the content of the supplication.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:17.553875+00:00",
+    "fixed_at": "2026-08-13T18:52:17.553889+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -8,13 +8,13 @@
     "0bd76d3c-548a-46ed-b17b-78874741662a",
     "isl-440cdac2"
   ],
-  "summary": "In the preoperational stage (Piaget’s preoperational), the child begins to distinguish a gentle voice from a harsh one and links the parent’s manner of interaction to their emotional safety. The Prophetic guidance ﷺ emphasizes that 'Allah is gentle and loves gentleness in all things,' and that 'He gives for gentleness what He does not give for harshness'—for rifq (gentleness) is not weakness but a way to build lasting trust. In this lesson, the parent discovers how their voice and touch reflect on their child’s sense of safety and how they build a bond that makes later guidance easier and more deeply impactful.",
+  "summary": "In the preoperational stage (Piaget’s preoperational), the child begins to distinguish a gentle voice from a harsh one and links the parent’s manner of interaction to their emotional safety. The Prophetic guidance emphasizes that 'Allah is gentle and loves gentleness in all things,' and that 'He gives for gentleness what He does not give for harshness'—for rifq (gentleness) is not weakness but a way to build lasting trust. In this lesson, the parent discovers how their voice and touch reflect on their child’s sense of safety and how they build a bond that makes later guidance easier and more deeply impactful.",
   "try_this": "This week: Choose one daily moment (e.g., 5 minutes before bedtime) to speak to your child in a calm voice without any guidance. Just observe: Do they come closer? Do they share more than usual? Do not comment, just watch. At the end of the week, ask yourself: When was my voice loudest during the day, and did the child respond or withdraw?",
   "order": 1,
   "estimated_minutes": 5,
   "reflection_prompts": [
     "In which moment today did you feel your voice rise even though your intention was guidance?",
-    "How did your child’s face or body change (withdrawal/approach) when you lowered your voice?"
+    "How did your child’s face or body change (opening up/approach) when you lowered your voice?"
   ],
   "warning_flags": [],
   "is_published": true,
@@ -36,30 +36,41 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "religious_error",
-        "field": "summary",
-        "arabic": "إن الله رفيق يحب الرفق في كل شيء",
-        "english": "Allah is gentle and loves gentleness in all things",
-        "why": "The hadith fragment means 'gentleness in all matters,' not 'rifq is in everything.' The translation misquotes the Prophetic guidance and changes the meaning.",
-        "severity": "high"
+        "type": "term_error",
+        "field": "title",
+        "arabic": "قيمة تربوية",
+        "english": "Tarbiyah Value",
+        "why": "Tarbiyah is a noun, not an adjective; the Arabic is 'educational value'. Using 'Tarbiyah' as a modifier is non-standard and may confuse readers.",
+        "severity": "low"
       },
       {
         "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "انكشاف",
-        "english": "withdrawal",
-        "why": "'انكشاف' means opening up or uncovering, not withdrawal. The English 'withdrawal' is the opposite of the intended meaning.",
-        "severity": "medium"
+        "field": "summary",
+        "arabic": "الصوت الحنون",
+        "english": "a gentle voice",
+        "why": "حنون means affectionate or tender, not merely gentle. The nuance of emotional warmth is lost.",
+        "severity": "low"
       },
       {
-        "type": "term_error",
-        "field": "title and summary",
-        "arabic": "الرفق",
-        "english": "Rifq / rifq",
-        "why": "The common Arabic word for gentleness is transliterated rather than translated, leading to awkward constructions like 'Rifq: A Tarbiyah Value' and 'rifq is in everything.' If retained as a term, it should be defined and used consistently, but the hadith translation remains incorrect.",
+        "type": "structure",
+        "field": "summary",
+        "arabic": "يؤكد الهدي النبوي على أن 'إن الله رفيق يحب الرفق في كل شيء'، وأن 'ويعطي على الرفق ما لا يعطي على العنف'",
+        "english": "The Prophetic guidance emphasizes that 'Allah is gentle and loves gentleness in all things,' and that 'He gives for gentleness what He does not give for harshness'",
+        "why": "The Arabic presents the hadith as one continuous quote connected by 'وأن', while the English splits it into two separate quoted segments, altering the structure of the narration.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "كيف ينعكس صوته ولمساته على شعور طفله بالأمان",
+        "english": "how their voice and touch reflect on their child’s sense of safety",
+        "why": "The Arabic uses the passive/reflexive 'ينعكس ... على' (is reflected on), focusing on the child's perception. The English active 'reflect on' shifts the agency and may change the nuance.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:14:08.786839+00:00",
+    "fixed_at": "2026-08-13T18:14:08.786850+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

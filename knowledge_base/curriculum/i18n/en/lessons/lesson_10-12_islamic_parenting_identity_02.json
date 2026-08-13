@@ -1,7 +1,7 @@
 {
   "id": "lesson_10-12_islamic_parenting_identity_02",
   "path_id": "path_10-12_islamic_parenting_identity",
-  "title": "Al-Qur'an: Dustur al-Hayah wa Busulah al-Murahiqa (The Qur'an: Life's Constitution and the Teen's Compass)",
+  "title": "The Qur'an: Life's Constitution and the Teen's Compass",
   "age_group": "10-12",
   "domain": "islamic_parenting",
   "unit_ids": [
@@ -34,17 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "المراهق",
-        "english": "al-Murahiqa",
-        "why": "The Arabic word is masculine 'al-Murahiq' (المراهق), but the transliteration uses the feminine form 'al-Murahiqa'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:03:53.112957+00:00",
+    "fixed_at": "2026-08-13T18:03:53.112970+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

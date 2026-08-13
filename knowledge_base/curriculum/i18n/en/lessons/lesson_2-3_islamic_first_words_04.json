@@ -34,20 +34,13 @@
       {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "الدارج",
-        "english": "A child",
-        "why": "The Arabic word 'الدارج' means 'the common' or 'the current', not 'child'. The intended word is likely 'الطفل' (the child). The translation assumes a correction, but the source text says 'الدارج'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
         "arabic": "يسمع أوامرهما",
         "english": "obeys their commands",
-        "why": "The Arabic verb 'يسمع' means 'hears', not 'obeys'. The translation changes the meaning from hearing to obeying.",
-        "severity": "medium"
+        "why": "The Arabic verb 'يسمع' means 'hears' or 'listens to', not 'obeys'. The original contrasts imitation with hearing commands, not necessarily obeying them. Using 'obeys' shifts the nuance, implying the child does obey but imitates more, whereas the Arabic simply says the child imitates more than he hears (i.e., pays attention to) verbal instructions.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:28:01.486310+00:00"
   }
 }

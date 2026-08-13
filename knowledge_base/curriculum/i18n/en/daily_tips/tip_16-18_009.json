@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "مقياس مزاج",
-        "english": "Weekly temperament tracker",
-        "why": "مزاج means 'mood' (a temporary state), not 'temperament' (an innate disposition). The tracker is for mood, energy, and sleep, so 'mood' is the correct term.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:12:03.272870+00:00"
   }
 }

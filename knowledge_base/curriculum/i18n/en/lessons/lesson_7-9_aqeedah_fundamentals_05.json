@@ -29,19 +29,28 @@
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
-      "reviewer_model": false
+      "reviewer_model": true
     },
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "structure",
-        "field": "title",
-        "arabic": "أسماء الله الحسنى",
-        "english": "Al-Asma' al-Husna (The Most Beautiful Names of Allah)",
-        "why": "English title adds a transliteration not present in the Arabic title.",
+        "type": "term_error",
+        "field": "try_this",
+        "arabic": "السميع",
+        "english": "Al-Sami'",
+        "why": "The Arabic name is 'As-Sami'' (with assimilation of the definite article before a sun letter). The transliteration 'Al-Sami'' is inaccurate and should be 'As-Sami''.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "الرحيم",
+        "english": "The Especially Merciful",
+        "why": "The common translation of 'Ar-Rahim' is 'The Merciful' or 'The Most Merciful'. 'The Especially Merciful' is not a standard rendering and may introduce an unintended nuance.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:32:50.824282+00:00"
   }
 }

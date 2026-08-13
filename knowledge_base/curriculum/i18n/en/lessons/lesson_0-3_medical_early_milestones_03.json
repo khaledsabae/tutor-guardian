@@ -9,7 +9,7 @@
     "6ba3aaa0-3251-4c53-8767-ae1eb9611669",
     "bca43fa9-622d-580b-a4ef-a05fd39e1305"
   ],
-  "summary": "Some signs call for early medical follow-up (not a diagnosis): limited eye contact, not responding when their name is called after the age of one, not pointing to share interest, relying on gestures instead of speech by the age of two, or losing skills the child had previously acquired (words, movements, social interaction). These are 'red flags' for autism or developmental delay—and early detection (before the age of three) can completely change the outcome. Trust your instinct: if you feel something 'isn’t right,' consult a doctor immediately.",
+  "summary": "Some signs call for early medical follow-up (not a diagnosis): limited eye contact, not responding when their name is called after the age of one, not pointing to share interest, relying on gestures instead of speech by the age of two, or losing skills the child had previously acquired (words, movements, social interaction). These are 'red flags' for autism or developmental delay—and early detection (before 3 years) changes the outcome completely. Trust your instinct: if you feel something 'isn’t right,' consult a doctor immediately.",
   "try_this": "This week: Write down in your phone’s notes three things your child does daily (words, gestures, interactions). At the end of the week, review: Has there been any regression? Have new skills emerged? Share the list with your pediatrician at the next visit.",
   "order": 3,
   "estimated_minutes": 22,
@@ -38,6 +38,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:55:59.740308+00:00",
+    "fixed_at": "2026-08-13T18:55:59.740322+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

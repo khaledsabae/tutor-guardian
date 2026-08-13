@@ -1,7 +1,7 @@
 {
   "id": "lesson_4-6_development_positive_parenting_02",
   "path_id": "path_4-6_development_positive_parenting",
-  "title": "Physical and Psychological Safety: Your Attention is a Trust",
+  "title": "Physical and Psychological Safety: Your Attention is Safety",
   "age_group": "4-6",
   "domain": "development",
   "unit_ids": [
@@ -35,17 +35,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "الأمان الجسدي والنفسي: انتباهك أمان",
-        "english": "Physical and Psychological Safety: Your Attention is Amanah",
-        "why": "The Arabic 'أمان' means 'safety/security', not 'Amanah' (trust). The translation changes the meaning from 'Your attention is safety' to 'Your attention is a trust', introducing a religious/ethical concept not present in the source.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:53:41.448578+00:00",
+    "fixed_at": "2026-08-13T17:53:41.448598+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

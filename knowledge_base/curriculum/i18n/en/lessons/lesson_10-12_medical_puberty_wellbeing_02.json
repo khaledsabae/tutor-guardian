@@ -20,13 +20,13 @@
     "med-ca2a9d86",
     "med-ec6f874a"
   ],
-  "summary": "The pre-adolescent stage brings pressures: school, friends, self-image, and physical changes. Warning signs: sadness lasting more than two weeks, withdrawal, academic decline, changes in sleep or appetite, or thoughts of self-harm. Parents: listen without judgment, reassure them: \"I am with you, we will solve this together.\" Consult a pediatrician or mental health specialist early.",
+  "summary": "The pre-adolescent stage brings pressures: school, friends, self-image, and physical changes. Warning signs: sadness lasting more than two weeks, withdrawal, academic decline, changes in sleep or appetite, or thoughts of harm. Parents: listen without judgment, reassure them: \"I am with you, we will solve this together.\" Consult a pediatrician or mental health specialist early.",
   "try_this": "Create a \"Weekly Mood Scale\": a simple chart (1-10) for mood, energy, and sleep. Review it together monthly. If the curve declines for more than two weeks, consult a specialist.",
   "order": 2,
   "estimated_minutes": 48,
   "reflection_prompts": [
     "What was the highest/lowest point on the mood scale this month?",
-    "What pressures do they repeatedly mention?"
+    "What pressures are repeatedly mentioned?"
   ],
   "warning_flags": [
     "حزن/قلق يومي >أسبوعين",
@@ -55,20 +55,15 @@
       {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "أفكار إيذاء",
-        "english": "thoughts of self-harm",
-        "why": "The Arabic 'إيذاء' means 'harm' generally, not specifically 'self-harm'. The English narrows the meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "أنا معكما",
-        "english": "I am with you",
-        "why": "The Arabic uses the dual pronoun 'كما' (you both), while the English 'you' does not convey the dual number.",
+        "arabic": "أخصائي نفسي",
+        "english": "mental health specialist",
+        "why": "The Arabic specifies 'psychologist' (أخصائي نفسي), while the English uses the broader term 'mental health specialist', which could include psychiatrists, therapists, etc. This loses specificity.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:57:21.914108+00:00",
+    "fixed_at": "2026-08-13T18:57:21.914120+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

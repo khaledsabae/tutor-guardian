@@ -27,18 +27,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "بناء لأمانه العصبي",
-        "english": "building their neurological amanah (trust)",
-        "why": "The Arabic 'أمانه' means 'his security/safety', not 'amanah' (trust). The translator misread the word and introduced an Islamic term not present in the source, changing the meaning from 'neurological security' to 'neurological trust'.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:08:32.326818+00:00"
+  }
 }

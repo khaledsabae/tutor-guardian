@@ -1,7 +1,7 @@
 {
   "id": "lesson_7-9_islamic_parenting_worship_02",
   "path_id": "path_7-9_islamic_parenting_worship",
-  "title": "Al-Siyam: Training in Sabr and Taqwa",
+  "title": "Fasting: Training in Sabr and Taqwa",
   "age_group": "7-9",
   "domain": "islamic_parenting",
   "unit_ids": [
@@ -13,7 +13,7 @@
   "order": 2,
   "estimated_minutes": 5,
   "reflection_prompts": [
-    "How did your child behave when he felt hunger?",
+    "How does your child behave when he feels hunger?",
     "What question did he ask about fasting?"
   ],
   "warning_flags": [],
@@ -32,17 +32,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "كيف تصرف طفلك عند شعوره بالجوع؟",
-        "english": "How did your child behave when he felt hunger?",
-        "why": "The Arabic uses present tense (كيف تصرف) asking about the child's general behavior when hungry, while the English shifts to past tense, limiting the question to a specific past instance.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:05:48.541778+00:00",
+    "fixed_at": "2026-08-13T19:05:48.541793+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

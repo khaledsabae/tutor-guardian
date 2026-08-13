@@ -2,7 +2,7 @@
   "id": "tip_4-6_022",
   "age_group": "4-6",
   "domain": "medical",
-  "text": "If your child suffers from nocturnal enuresis (bedwetting): it is common at ages 4–6 and often improves on its own. Do not scold or embarrass them. Consult a pediatrician if it continues after the age of 7.",
+  "text": "If your child suffers from nocturnal enuresis (bedwetting): it is common at ages 4–6 and often improves. Do not scold or embarrass them. Consult a pediatrician if it continues after the age of 7.",
   "unit_id": "med-db5760f5",
   "day_of_week": 4,
   "time_of_day": "bedtime",
@@ -26,17 +26,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "غالباً يتحسن",
-        "english": "often improves on its own",
-        "why": "The Arabic says 'often improves' without specifying 'on its own'. The English adds 'on its own', which is not present in the source and slightly alters the meaning by implying spontaneous resolution without any intervention.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:54:29.143673+00:00",
+    "fixed_at": "2026-08-13T18:54:29.143687+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

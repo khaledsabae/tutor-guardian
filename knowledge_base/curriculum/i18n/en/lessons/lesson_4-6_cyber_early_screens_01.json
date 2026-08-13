@@ -6,7 +6,7 @@
   "domain": "cyber",
   "unit_ids": [],
   "summary": "The World Health Organization recommends that screen time not exceed one hour daily for children aged 2 to 5, and less is better. Excess affects sleep, language, and attention. The solution is not total prohibition but setting limits while preparing an enjoyable alternative: play, drawing, outdoor activity.",
-  "try_this": "This week: Set one fixed screen time daily, and prepare an alternative activity ready beforehand (games or a book).",
+  "try_this": "This week: Set one fixed screen time slot daily, and prepare an alternative activity ready beforehand (games or a book).",
   "order": 1,
   "estimated_minutes": 6,
   "reflection_prompts": [
@@ -31,6 +31,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:02:55.783437+00:00",
+    "fixed_at": "2026-08-13T19:02:55.783450+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

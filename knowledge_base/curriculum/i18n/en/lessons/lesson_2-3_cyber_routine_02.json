@@ -8,7 +8,7 @@
     "0b93e8de-3f9a-4823-8994-68a35e51207e",
     "cyb-fc24ccce"
   ],
-  "summary": "This lesson addresses 'organising sleep and healthy interaction with screens' for children from two to three years old. No, the World Health Organisation and the American Academy of Paediatrics recommend completely avoiding screens for children under two (with the exception of video calls). The alternative is direct sensory play, such as blocks and water, to develop their brain properly [1, 2]. This is incorrect; screens before bedtime suppress melatonin secretion and delay sleep. Implement a 'zero screens' routine at least one hour before bedtime, replacing it with a warm bath, a short story, and gentle massage, while dimming bright lights [3, 4]. Set a consistent sleep schedule (same time daily), keep screens entirely out of bedrooms, and make them device-free zones. Regular and sufficient sleep addresses poor concentration and improves performance and mood [4-6].",
+  "summary": "This lesson addresses 'organising sleep and healthy interaction with screens' for children from two to three years old. No, the World Health Organisation and the American Academy of Paediatrics recommend completely avoiding screens for children under two (with the exception of video calls). The alternative is direct sensory play, such as blocks and water, to develop their brain properly [1, 2]. This is incorrect; screens before bedtime suppress melatonin secretion and delay sleep. Implement a 'zero screens' routine at least one hour before bedtime, replacing it with a warm bath, a short story, and gentle massage, while turning off bright lights [3, 4]. Set a consistent sleep schedule (same time daily), keep screens entirely out of bedrooms, and make them device-free zones. Regular and sufficient sleep addresses poor concentration and improves performance and mood [4-6].",
   "try_this": "Try this week: No, the World Health Organisation and the American Academy of Paediatrics recommend completely avoiding screens for children under two (with the exception of video calls). The alternative is direct sensory play, such as blocks and water, to develop their brain properly [1, 2].",
   "order": 3,
   "estimated_minutes": 5,
@@ -33,17 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "مع إطفاء الأضواء القوية",
-        "english": "while dimming bright lights",
-        "why": "The Arabic says to turn off (إطفاء) bright lights, but the English says to dim them, which is a less strict instruction.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:11:40.191502+00:00",
+    "fixed_at": "2026-08-13T18:11:40.191511+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

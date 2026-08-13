@@ -10,7 +10,7 @@
     "0b45c31c-5888-442b-a64f-d80e9b140e7f"
   ],
   "summary": "As the onset of puberty approaches, the child becomes acutely aware of their body and compares it to others and to what they see on screens. Your words about their body—and your own—shape their relationship with themselves for years to come. Avoid commenting on weight or appearance, and focus instead on what their body *does* (runs, carries, embraces) rather than how it looks. Gently correct unrealistic images in advertisements and social media. Make your home a place where no one is criticized for their appearance. A child who feels their body is respected and accepted builds a confidence that protects them from eating disorders and anxiety later on.",
-  "try_this": "This week: Praise your child once for what their body *did*, not how it looks (‘MashaAllah at your strength when you carried that!’), and be mindful not to criticize your own appearance in front of them. Notice the effect this has on how they talk about themselves.",
+  "try_this": "This week: Praise your child once for what their body *did*, not how it looks (‘Wow at your strength when you carried that!’), and be mindful not to criticize your own appearance in front of them. Notice the effect this has on how they talk about themselves.",
   "order": 4,
   "estimated_minutes": 42,
   "reflection_prompts": [
@@ -34,25 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "religious_error",
-        "field": "try_this",
-        "arabic": "يا سلام على قوتك وأنت تحمل ده",
-        "english": "MashaAllah at your strength when you carried that!",
-        "why": "The Arabic uses a secular exclamation 'يا سلام' (Wow). The English translation inserts 'MashaAllah', an Islamic religious phrase, which is not present in the source and adds a religious element not intended in the original.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this, reflection_prompts",
-        "arabic": "ابنك",
-        "english": "your child",
-        "why": "The Arabic specifically uses 'ابنك' (your son), addressing parents of boys. The English generalizes to 'your child', losing the gender specificity of the original.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:04:46.562899+00:00",
+    "fixed_at": "2026-08-13T18:04:46.562911+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -3,7 +3,7 @@
   "title": "Building the Bond and Qudwah with Your Child (Ages 4-6)",
   "age_group": "4-6",
   "domain": "islamic_parenting",
-  "description": "A 14-day tarbiyah journey that helps the parent build a secure emotional bond with their child in the preoperational stage (Piaget preoperational) through dramatic play, daily dialogue, and short stories, with practical application of the principle of qudwah (role modeling) that begins with the parent themselves.",
+  "description": "A 14-day tarbiyah journey that helps the father build a secure emotional bond with his child in the preoperational stage (Piaget preoperational) through dramatic play, daily dialogue, and short stories, with practical application of the principle of qudwah (role modeling) that begins from the father himself.",
   "lesson_ids": [
     "lesson_4-6_islamic_parenting_bond_01",
     "lesson_4-6_islamic_parenting_bond_02",
@@ -37,20 +37,15 @@
       {
         "type": "meaning_change",
         "field": "description",
-        "arabic": "الوالد",
-        "english": "the parent",
-        "why": "The Arabic uses the masculine singular 'الوالد' (the father) and 'نفسه' (himself), but the English uses gender-neutral 'the parent' and 'themselves', losing the specific reference to the father.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "description",
         "arabic": "رحلة تربوية",
         "english": "tarbiyah journey",
-        "why": "The Arabic adjective 'تربوية' (educational/upbringing) is rendered as the noun 'tarbiyah' instead of the correct transliteration 'tarbawiyyah' or a translation like 'educational journey'. This misrepresents the grammatical form and meaning.",
-        "severity": "medium"
+        "why": "The Arabic uses the adjective 'تربوية' (educational/upbringing) while the English uses the noun transliteration 'tarbiyah', an Islamic term not explicitly present in the source. This adds a religious connotation and changes the part of speech.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:07:50.186094+00:00",
+    "fixed_at": "2026-08-13T19:07:50.186106+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

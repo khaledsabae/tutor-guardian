@@ -34,41 +34,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "الأمان",
-        "english": "Amanah",
-        "why": "الأمان (al-amān) means security/safety, not amanah (أمانة) which means trust. The translation uses a different Islamic term, changing the meaning.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "بهدوء",
-        "english": "with rifq (gentleness)",
-        "why": "The Arabic says 'بهدوء' (calmly/quietly), not 'برفق' (with gentleness). The translator inserted the Islamic term 'rifq' where it was not present, altering the original advice.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "بهدوء",
-        "english": "with rifq",
-        "why": "Same error: 'بهدوء' (calmly) translated as 'with rifq', introducing a term not in the source.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "بهدوء",
-        "english": "with rifq",
-        "why": "Again, 'بهدوء' rendered as 'with rifq', unfaithful to the original wording.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:29:36.930432+00:00"
   }
 }

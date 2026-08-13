@@ -1,7 +1,7 @@
 {
   "id": "lesson_2-3_medical_separation_anxiety_01",
   "path_id": "path_2-3_medical_separation_anxiety",
-  "title": "Anxiety of Separation at Nursery and Club: From Tiny Nursery to Pre-School",
+  "title": "Separation Anxiety at Nursery and Club: From Tiny Nursery to Pre-School",
   "age_group": "2-3",
   "domain": "medical",
   "unit_ids": [
@@ -34,6 +34,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:02:49.634528+00:00",
+    "fixed_at": "2026-08-13T19:02:49.634539+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

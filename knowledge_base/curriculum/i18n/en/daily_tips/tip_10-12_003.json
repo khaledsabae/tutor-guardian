@@ -18,18 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "english.text",
-        "arabic": "الأمانة",
-        "english": "amanah (trustworthiness)",
-        "why": "The Arabic uses a common word for trustworthiness; the English transliterates it as 'amanah', giving a more formal/religious tone not present in the original.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:09:21.534551+00:00"
+  }
 }

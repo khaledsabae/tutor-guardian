@@ -31,8 +31,18 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "الرفق بالحيوان",
+        "english": "rifq (gentleness) with animals",
+        "why": "Inconsistent transliteration: 'birr al-walidayn' retains the definite article, but 'al-rifq' is transliterated as 'rifq' without the article. For consistency, it should be 'al-rifq' or both should follow the same pattern.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:32:44.432287+00:00"
   }
 }

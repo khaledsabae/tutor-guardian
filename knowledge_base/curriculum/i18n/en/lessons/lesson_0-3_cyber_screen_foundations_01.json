@@ -9,7 +9,7 @@
     "cyb-499319c4"
   ],
   "summary": "The American Academy of Pediatrics (AAP) and the World Health Organization agree: no screens for children under two (exception: video calls with family). During this period, the brain grows at its fastest rate—neural connections form through sensory exploration, movement, and direct human interaction, not pixels. Early exposure to screens is linked to speech delays, attention problems, sleep difficulties, and hyperactivity. The alternative is not 'prohibition' but 'substitution': a safe floor, blocks, cloth books, water, sand—real play builds a real brain.",
-  "try_this": "This week: Try a 'zero screens hour' daily—put the phone in another room, get down on the floor with your child, and play together with whatever is available (plastic containers, pots, cloth balls). Notice: Does he interact more? Does he sleep better? Record your observations.",
+  "try_this": "This week: Try a 'zero screens hour' daily—put the phone in another room, get down on the floor with your child, and play together with anything available (plastic containers, pots, cloth balls). Notice: Does he interact more? Does he sleep better? Record your observations.",
   "order": 1,
   "estimated_minutes": 43,
   "reflection_prompts": [
@@ -37,6 +37,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:54:56.690977+00:00",
+    "fixed_at": "2026-08-13T18:54:56.690993+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

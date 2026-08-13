@@ -18,13 +18,13 @@
     "med-ca2a9d86",
     "med-ec6f874a"
   ],
-  "summary": "A practical tool for parents: (1) Weekly mood scale (1-10 chart for mood/energy/sleep) — a decline for more than two weeks = visit a specialist. (2) Personal safety plan: warning signs, calming strategies, trusted people, emergency numbers (937 in Saudi Arabia / 112 international). (3) Emergency: suicidal thoughts, a specific plan, available means, previous self-harm — call 937/112 immediately, do not leave them alone.",
+  "summary": "A practical tool for parents: (1) Weekly mood scale (1-10 chart for mood/energy/sleep) — a decline for more than two weeks = visit a specialist. (2) Personal safety plan: my warning signs, calming strategies, trusted people, emergency numbers (937 in Saudi Arabia / 112 international). (3) Emergency: suicidal thoughts, a specific plan, available means, previous self-harm — call 937/112 immediately, do not leave them alone.",
   "try_this": "This week: Create a \"safety card\" together, pocket-sized — write: 3 warning signs, 3 calming strategies, 3 trusted people + 937. Keep it in a wallet/phone.",
   "order": 4,
   "estimated_minutes": 10,
   "reflection_prompts": [
     "Was the card easy to understand?",
-    "Did your child feel safe having it?"
+    "Did your son feel safe having it?"
   ],
   "warning_flags": [
     "خطة انتحار محددة + وسيلة متاحة",
@@ -48,6 +48,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:59:21.326948+00:00",
+    "fixed_at": "2026-08-13T18:59:21.326963+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

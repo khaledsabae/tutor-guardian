@@ -13,12 +13,12 @@
     "0650c50f-5267-458e-943e-15495ecf1610"
   ],
   "summary": "ADHD: inattention, hyperactivity, impulsivity — a brain that works differently, not broken. Autism: differences in communication, behaviour, and sensory processing — a broad spectrum with unique strengths. Early diagnosis + behavioural intervention (ABA/CBT) + school accommodations (extra time, breaks, written instructions) + medication if needed = success. Parents: focus on strengths, seek professional evaluation, collaborate with the school.",
-  "try_this": "This week: identify 3 strengths your child has (creativity, deep focus, visual memory, empathy) — design a weekly activity that utilises one of them.",
+  "try_this": "This week: identify 3 strengths your son has (creativity, deep focus, visual memory, empathy) — design a weekly activity that utilises one of them.",
   "order": 3,
   "estimated_minutes": 10,
   "reflection_prompts": [
     "What strengths have you discovered?",
-    "How can the school support him better?"
+    "How can the school support him more?"
   ],
   "warning_flags": [
     "فشل أكاديمي رغم الذكاء",
@@ -40,25 +40,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "اختلاف في التواصل/السلوك/الحواس",
-        "english": "differences in communication, behaviour, and sensory processing",
-        "why": "Arabic says 'الحواس' (senses), not 'sensory processing'. The English adds 'processing', slightly shifting the meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "ابنكم",
-        "english": "your child",
-        "why": "Arabic uses 'ابنكم' (your son), which is gender-specific. English uses 'your child', which is gender-neutral, losing the original masculine specificity.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:59:17.350730+00:00",
+    "fixed_at": "2026-08-13T18:59:17.350748+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

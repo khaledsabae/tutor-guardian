@@ -29,17 +29,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "تؤخّره",
-        "english": "delays it",
-        "why": "The Arabic pronoun 'ـه' refers to the child (masculine), not to maturity. The English 'it' changes the object from the child to the abstract concept of maturity, slightly altering the focus.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:19:23.163701+00:00"
   }
 }

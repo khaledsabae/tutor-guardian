@@ -18,17 +18,9 @@
       "quoted_arabic": false,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "ليس عناداً",
-        "english": "not 'inad (stubbornness)",
-        "why": "The English adds the transliteration 'inad which is not present in the Arabic source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:11:15.629667+00:00"
   }
 }

@@ -22,17 +22,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "بمنع الشاشات تماماً",
-        "english": "completely avoiding screens",
-        "why": "The Arabic 'منع' means 'banning' or 'prohibiting', which is stronger than 'avoiding'. The English softens the recommendation.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:13:06.062004+00:00"
   }
 }

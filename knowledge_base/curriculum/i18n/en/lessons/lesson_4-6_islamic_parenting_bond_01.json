@@ -8,7 +8,7 @@
     "0bd76d3c-548a-46ed-b17b-78874741662a",
     "isl-440cdac2"
   ],
-  "summary": "At the age of 4-6 years, the child begins to distinguish a gentle voice from a harsh one and connects the parent’s manner of interaction with their emotional safety. The Prophet ﷺ taught us, 'Indeed, Allah is gentle and loves gentleness in all things.' Rifq is not weakness; rather, it is a way to build lasting trust. This lesson helps the parent discover how their voice and touch reflect in their child’s sense of safety.",
+  "summary": "At the age of 4-6 years, the child begins to distinguish a gentle voice from a harsh one and connects the parent’s manner of interaction with their emotional safety. The Prophet ﷺ taught us, 'Indeed, Allah is gentle and loves gentleness in all things.' Rifq is not weakness; rather, it is a way to build lasting trust. This lesson helps the parent discover how their voice and touch are reflected on their child’s sense of safety.",
   "try_this": "This week: Choose one time daily (for example, 5 minutes before bedtime) to speak to your child in a calm voice without scolding them. Observe how they respond—do they draw closer? Do they share more? Do not comment, just observe.",
   "order": 1,
   "estimated_minutes": 5,
@@ -32,8 +32,20 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "الرفق",
+        "english": "Rifq / gentleness",
+        "why": "The same Arabic word 'الرفق' is transliterated as 'Rifq' in the title and in the sentence 'Rifq is not weakness...', but translated as 'gentleness' in the hadith. This inconsistency may confuse readers.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:42:51.658085+00:00",
+    "fixed_at": "2026-08-13T19:42:51.658103+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

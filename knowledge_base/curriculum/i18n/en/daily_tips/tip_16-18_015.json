@@ -18,18 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "last sentence",
-        "arabic": "أنت مسؤول",
-        "english": "You are responsible (amanah)",
-        "why": "Added the word 'amanah' which is not in the source text.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:12:15.374775+00:00"
+  }
 }

@@ -32,17 +32,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "خجلاً",
-        "english": "haya (modesty)",
-        "why": "The Arabic word 'خجلاً' means shyness or embarrassment, not the specific Islamic term 'haya'. Using 'haya' introduces a religious connotation not present in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:34:12.988534+00:00"
   }
 }

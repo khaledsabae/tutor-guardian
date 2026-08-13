@@ -2,7 +2,7 @@
   "id": "tip_4-6_017",
   "age_group": "4-6",
   "domain": "development",
-  "text": "Tonight: focus on one positive trait in your child each day. Write a note in a small notebook. By the end of the month, you will have built a noble record.",
+  "text": "Tonight: focus on one positive aspect in your child each day. Write a note in a small notebook. By the end of the month, you will have built a precious record.",
   "unit_id": "0e7e490d-a4b4-407f-8422-7eeb90a58534",
   "day_of_week": 3,
   "time_of_day": "evening",
@@ -28,6 +28,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:54:06.475121+00:00",
+    "fixed_at": "2026-08-13T18:54:06.475135+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

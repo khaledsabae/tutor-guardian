@@ -32,20 +32,13 @@
       {
         "type": "meaning_change",
         "field": "text",
-        "arabic": "طفلك الجديد",
-        "english": "your new little one",
-        "why": "The Arabic likely means 'your child who is new to this' not 'your new little one' which implies a new baby. The translation could mislead.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "text",
         "arabic": "الإتقان",
         "english": "itqan (mastery)",
-        "why": "The English adds a transliteration 'itqan' that is not present in the source. The source simply says 'mastery'. This introduces an Arabic term unnecessarily and may be inconsistent with the rest of the document.",
+        "why": "The English adds the transliteration 'itqan' which is not present in the Arabic source; the Arabic simply uses the word 'الإتقان' meaning mastery.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:08:42.444246+00:00"
   }
 }

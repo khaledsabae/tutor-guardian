@@ -32,14 +32,15 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "وحاسبه بلطف",
-        "english": "and hold them accountable with rifq (gentleness)",
-        "why": "The Arabic uses 'بلطف' (with gentleness/kindness), not 'بالرفق'. The English introduces the transliterated term 'rifq', which is a different Arabic word, and adds it alongside the correct translation. This is an addition not present in the source.",
+        "type": "term_error",
+        "field": "title and summary",
+        "arabic": "الأمانة",
+        "english": "Al-Amanah (title) vs amanah (summary)",
+        "why": "Inconsistent transliteration: title uses 'Al-Amanah' with definite article, summary uses 'amanah' without, while Arabic uses definite article in both places.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:35:28.902986+00:00"
   }
 }

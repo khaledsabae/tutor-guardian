@@ -2,7 +2,7 @@
   "id": "tip_10-12_025",
   "age_group": "10-12",
   "domain": "medical",
-  "text": "You are the model—your child watches, not just listens. If you sleep late, eat sugar, or sit in front of a screen, they will do the same as you.",
+  "text": "You are the model—your child watches, not listens. If you sleep late, eat sugar, or sit in front of a screen, they will do the same as you.",
   "unit_id": "med-77626be2",
   "day_of_week": 0,
   "time_of_day": "evening",
@@ -18,17 +18,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "يراقب لا يسمع",
-        "english": "watches, not just listens",
-        "why": "The Arabic says the child does not listen at all, only watches. Adding 'just' changes the meaning to 'not only listens', implying they also listen.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:40.350229+00:00",
+    "fixed_at": "2026-08-13T18:52:40.350242+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

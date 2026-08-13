@@ -29,33 +29,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "البيت الذي يربّي",
-        "english": "The Home That Nurtures with Tarbiyah",
-        "why": "The Arabic title uses the verb 'يربّي' (nurtures/raises) without the noun 'Tarbiyah'. The English adds 'with Tarbiyah', introducing a term not present in the source and making the title redundant.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "الذكر",
-        "english": "adhkar",
-        "why": "The Arabic uses the singular 'الذكر' (dhikr), but the English translates it as the plural 'adhkar'. This changes the number and may imply multiple remembrances instead of the general act of remembrance.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "try_this",
-        "arabic": "ذكر",
-        "english": "adhkar",
-        "why": "Same issue: Arabic singular 'ذكر' (dhikr) is rendered as plural 'adhkar' in English, inconsistent with the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:17:49.808634+00:00"
   }
 }

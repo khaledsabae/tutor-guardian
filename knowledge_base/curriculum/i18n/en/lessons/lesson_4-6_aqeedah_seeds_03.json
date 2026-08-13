@@ -29,17 +29,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "اللعب",
-        "english": "toys",
-        "why": "Arabic 'اللعب' means 'play' (the activity), not 'toys' (the objects). The child enjoys playing, not necessarily toys. This is a slight shift in meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:29:00.046970+00:00"
   }
 }

@@ -29,25 +29,9 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "باللعب واللطف",
-        "english": "through play and rifq (gentleness)",
-        "why": "The Arabic uses 'اللطف' (al-lutf, gentleness), not 'الرفق' (al-rifq). The translation introduces the transliterated term 'rifq' which is not present in the source, then explains it as gentleness. This substitutes a different Arabic word and creates inconsistency with the rest of the document where 'لطف' is translated as 'gently'.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "reflection_prompts[1]",
-        "arabic": "هل الأجواء حول التعليم لطيفة؟",
-        "english": "Is the atmosphere around teaching filled with rifq?",
-        "why": "The Arabic asks if the atmosphere is 'لطيفة' (gentle/kind). The English changes this to 'filled with rifq', again introducing the term 'rifq' not used in the source and altering the phrasing from a simple adjective to a metaphorical 'filled with' construction.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:28:03.567111+00:00"
   }
 }

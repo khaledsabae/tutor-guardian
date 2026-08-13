@@ -10,7 +10,7 @@
     "isl-cc4ee988",
     "isl-c1f0ce4d"
   ],
-  "summary": "At this age, the adolescent is searching for a cause to live by. Guide them from being a \"follower\" to a \"maker\": discover their talent/passion, connect it to a cause (environment, education, orphans, technology), and create a small project together. Leadership: service, not authority—a council of consultation, not a solitary decision.",
+  "summary": "At this age, the adolescent is searching for a cause to live by. Guide them from being an \"influenced\" to a \"maker\": discover their talent/passion, connect them to a cause (environment, education, orphans, technology), and create a small project together. Leadership: service, not authority—a council of consultation, not a solitary decision.",
   "try_this": "This week: Ask them, \"What problem in your community would you like to solve?\"—then plan a small project together (fundraising, volunteering, awareness content). Implement one step this month.",
   "order": 4,
   "estimated_minutes": 44,
@@ -34,25 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "المتأثر",
-        "english": "follower",
-        "why": "The Arabic 'المتأثر' means 'the one who is affected/influenced', implying a passive recipient. Translating it as 'follower' shifts the meaning to someone who follows others, which is not the same. The intended contrast is between passive and active, not follower vs leader.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "مجلس شورى",
-        "english": "a council of consultation",
-        "why": "The Islamic term 'shura' is translated away instead of being transliterated. In Islamic parenting materials, 'shura' is a recognized concept and should be preserved as 'shura council' or 'majlis shura' to maintain religious and cultural resonance.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:59:23.875334+00:00",
+    "fixed_at": "2026-08-13T18:59:23.875352+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

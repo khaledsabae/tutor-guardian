@@ -29,10 +29,11 @@
         "field": "text",
         "arabic": "علّمي طفلك",
         "english": "Teach your child",
-        "why": "Arabic uses feminine singular imperative, addressing a mother; English uses gender-neutral imperative, losing the specific address to mothers.",
+        "why": "The Arabic uses the feminine imperative 'علّمي', directly addressing a mother. The English 'Teach your child' is gender-neutral and loses this specific address, which may be significant in a parenting context.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:13:48.226736+00:00"
   }
 }

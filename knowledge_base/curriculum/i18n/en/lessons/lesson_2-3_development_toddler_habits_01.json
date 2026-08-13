@@ -43,10 +43,11 @@
         "field": "title",
         "arabic": "عادات ذاتية",
         "english": "Self-Habits",
-        "why": "The phrase 'Self-Habits' is not idiomatic English; a more natural translation would be 'Personal Habits' or 'Self-Care Habits'. The current translation sounds stiff and literal.",
+        "why": "The phrase 'Self-Habits' is not idiomatic English; a more natural translation would be 'Personal Habits' or 'Self-Care Habits'. The current translation sounds stiff and unnatural.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:27:34.252508+00:00"
   }
 }

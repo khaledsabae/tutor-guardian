@@ -1,9 +1,9 @@
 {
   "id": "path_16-18_medical_adult_transition",
-  "title": "Mental Well-being of the Young Adult: Independence, Steadfastness, and Seeking Help (16-18 Years)",
+  "title": "Mental Health of the Young Adult: Independence, Stability, and Seeking Help (16-18 Years)",
   "age_group": "16-18",
   "domain": "medical",
-  "description": "A pathway for the older adolescent preparing for legal adulthood: maintaining mental well-being in university/work, managing the pressures of independence, recognizing warning signs, and building a sustainable support network.",
+  "description": "A pathway for the older adolescent preparing for legal adulthood: maintaining mental health in university/work, managing the pressures of independence, recognizing warning signs, and building a sustainable support network.",
   "lesson_ids": [
     "lesson_16-18_medical_adult_transition_01",
     "lesson_16-18_medical_adult_transition_02",
@@ -32,17 +32,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title and description",
-        "arabic": "الصحة النفسية",
-        "english": "Mental Well-being",
-        "why": "The Arabic term 'الصحة النفسية' means 'mental health', a standard clinical and everyday term. The English uses 'mental well-being', which shifts the meaning from health (absence of illness) to a broader positive state. This is a subtle but real change in meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:07:12.819253+00:00",
+    "fixed_at": "2026-08-13T19:07:12.819265+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

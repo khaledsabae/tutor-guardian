@@ -33,37 +33,22 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "title",
-        "arabic": "نحو رشدٍ إيماني مستقل",
-        "english": "Toward Independent Imani Growth",
-        "why": "The Arabic 'رشد' means maturity, right guidance, or reaching sound judgment, not simply 'growth'. The translation loses the specific nuance of attaining mature, guided faith.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "شابك",
-        "english": "Your Young Adult",
-        "why": "The Arabic uses the masculine singular 'شابك' (your young man), while the English uses the gender-neutral 'young adult'. The description later confirms the resource is for a son ('ابنهم'), so the gender specificity is lost.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
         "field": "description",
         "arabic": "نقل ابنهم من إيمانٍ موروث إلى إيمانٍ راسخٍ بقناعة",
         "english": "guide their child from inherited iman to firmly rooted conviction",
-        "why": "The Arabic 'نقل' (transfer) is stronger than 'guide'; 'ابنهم' (their son) is changed to 'their child'; and 'إيمانٍ راسخٍ بقناعة' (firmly rooted faith with conviction) is reduced to 'firmly rooted conviction', omitting the word 'faith' and merging two distinct concepts.",
+        "why": "Arabic specifies 'ابنهم' (their son), but English uses gender-neutral 'their child', losing the intended male audience. Additionally, the Arabic repeats 'إيمان' (iman) in the second phrase, but English omits it, altering the structure and emphasis.",
         "severity": "medium"
       },
       {
-        "type": "meaning_change",
+        "type": "term_error",
         "field": "description",
-        "arabic": "الاستعداد للزواج والعفّة",
-        "english": "preparing for marriage and upholding `iffah (chastity)",
-        "why": "The Arabic says 'preparing for marriage and chastity', while the English adds 'upholding', which is not present in the source and slightly shifts the meaning.",
-        "severity": "low"
+        "arabic": "إيمانٍ راسخٍ بقناعة",
+        "english": "firmly rooted conviction",
+        "why": "The Arabic uses the Islamic term 'إيمان' (iman) which should be transliterated consistently. The English translates it as 'conviction', discarding the term and its specific religious connotation.",
+        "severity": "medium"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:37:51.255981+00:00"
   }
 }

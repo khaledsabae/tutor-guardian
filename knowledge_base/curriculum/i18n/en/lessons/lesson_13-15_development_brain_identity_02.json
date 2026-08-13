@@ -1,7 +1,7 @@
 {
   "id": "lesson_13-15_development_brain_identity_02",
   "path_id": "path_13-15_development_brain_identity",
-  "title": "Risk, Impulse, and the Conscious Decision: Transforming Drive into Choice",
+  "title": "Risk, Impulse, and the Conscious Decision: Transforming Drive into Decision",
   "age_group": "13-15",
   "domain": "development",
   "unit_ids": [
@@ -15,7 +15,7 @@
   "order": 2,
   "estimated_minutes": 47,
   "reflection_prompts": [
-    "How many times did you use \"stop-think-decide\"?",
+    "How many times did he use \"stop-think-decide\"?",
     "Did he feel more in control?"
   ],
   "warning_flags": [
@@ -42,21 +42,16 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "summary",
-        "arabic": "توقف 10 ثوان",
-        "english": "pause for 10 seconds",
-        "why": "The Arabic uses 'توقف' (stop) which is a firm command, while the English softens it to 'pause'. This is inconsistent with the technique's name 'stop-think-decide' and changes the nuance of the instruction.",
+        "field": "title, summary",
+        "arabic": "المخاطرة",
+        "english": "risk",
+        "why": "The Arabic 'المخاطرة' refers to the act of risk-taking, not the abstract concept of risk. In the context of adolescent psychology, 'risk-taking' is the more precise term. The English 'risk' could be misinterpreted as the possibility of loss rather than the behavior.",
         "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "كم مرة استخدم \"إيقاف-فكر-قرر\"؟",
-        "english": "How many times did you use \"stop-think-decide\"?",
-        "why": "The Arabic verb 'استخدم' is in the masculine singular form and, in context, refers to the adolescent (as in the preceding 'try_this' sentence). The English changes the subject to 'you' (the parent), altering the focus of the reflection from the child's behavior to the parent's.",
-        "severity": "medium"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:05:32.623877+00:00",
+    "fixed_at": "2026-08-13T18:05:32.623887+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -2,7 +2,7 @@
   "id": "tip_2-3_001",
   "age_group": "2-3",
   "domain": "development",
-  "text": "Teach him istinja’ (cleansing after relieving oneself) and its importance, and train him to enter the bathroom with the left foot and exit with the right. Preserve the du’a for entering and exiting to embed these adab (manners) as part of his routine.",
+  "text": "Teach him istinja’ (cleansing after relieving oneself) and its importance, and train him to enter the bathroom with the left foot and exit with the right. Make him memorize the du’a for entering and exiting to embed these adab (manners) as part of his routine.",
   "unit_id": null,
   "day_of_week": 1,
   "time_of_day": "anytime",
@@ -22,17 +22,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "وحفظ دعاء الدخول والخروج",
-        "english": "Preserve the du’a for entering and exiting",
-        "why": "The Arabic verb 'حفظ' means to memorize, not to preserve. The instruction is to have the child memorize the supplications, but the English suggests merely keeping or maintaining them.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:59:39.828528+00:00",
+    "fixed_at": "2026-08-13T17:59:39.828538+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

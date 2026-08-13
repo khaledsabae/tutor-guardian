@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "إدمان الألعاب توقف عن المدرسة لعامين",
-        "english": "Gaming addiction led to two years away from school",
-        "why": "The Arabic states that the addiction caused the person to stop attending school for two years (توقف عن المدرسة), implying a definitive break. The English 'led to two years away from school' softens this, suggesting a period of absence rather than explicitly stopping school.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:12:09.234212+00:00"
   }
 }

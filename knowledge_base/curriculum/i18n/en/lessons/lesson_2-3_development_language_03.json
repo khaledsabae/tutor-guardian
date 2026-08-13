@@ -33,8 +33,18 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "وفر له أشياء تحفز خياله كالأواني والمقالي ليتظاهر بالطبخ، أو مكعبات البناء.",
+        "english": "Provide him with items that stimulate his imagination, such as pots, pans, or building blocks, so he can pretend to cook.",
+        "why": "The Arabic lists pots and pans for pretending to cook, and building blocks as a separate item. The English incorrectly groups building blocks under the purpose of pretending to cook, changing the intended use of the blocks.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:27:12.181064+00:00"
   }
 }

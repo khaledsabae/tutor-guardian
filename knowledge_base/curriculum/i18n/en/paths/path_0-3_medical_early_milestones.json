@@ -3,7 +3,7 @@
   "title": "The First Developmental Stages: From Pregnancy to One Year",
   "age_group": "0-3",
   "domain": "medical",
-  "description": "A 14-day tarbiyah (Islamic upbringing) and medical pathway covering the most important developmental stages for children from pregnancy to one year: eye contact and smiling in the first two months, healthcare in the first six months, early warning signs (autism, speech delay, developmental regression), and when and how to seek medical help. Based on CDC Act Early guidelines and the American Academy of Pediatrics.",
+  "description": "A 14-day educational and medical pathway covering the most important developmental stages for children from pregnancy to one year: eye contact and smiling in the first two months, healthcare in the first six months, early warning signs (autism, speech delay, developmental regression), and when and how to seek medical help. Based on CDC Act Early guidelines and the American Academy of Pediatrics.",
   "lesson_ids": [
     "lesson_0-3_medical_early_milestones_01",
     "lesson_0-3_medical_early_milestones_02",
@@ -33,17 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "تربوي",
-        "english": "tarbiyah (Islamic upbringing)",
-        "why": "The Arabic adjective 'تربوي' means 'educational' or 'upbringing' in a general sense. The English adds an explicit Islamic label and transliterates it as a noun, introducing a religious connotation not present in the source.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:16:49.364128+00:00",
+    "fixed_at": "2026-08-13T18:16:49.364141+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

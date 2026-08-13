@@ -25,15 +25,15 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "words of *akhlaq* (good character)",
-        "arabic": "كلمات الأدب",
-        "english": "words of *akhlaq* (good character)",
-        "why": "The Arabic uses 'الأدب' (adab) meaning manners/etiquette, but the English uses 'akhlaq' which is a different Islamic term meaning morals/character. The correct transliteration should be 'adab'.",
-        "severity": "medium"
+        "type": "meaning_change",
+        "field": "text",
+        "arabic": "ردّدي",
+        "english": "Repeat",
+        "why": "Arabic uses feminine imperative 'ردّدي' addressing a female, while English uses gender-neutral 'Repeat', omitting the explicit feminine address.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:13:57.037311+00:00"
+  }
 }

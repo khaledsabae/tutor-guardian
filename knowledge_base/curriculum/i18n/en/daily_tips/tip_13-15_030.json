@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "اصنعها مع ابنك",
-        "arabic": "ابنك",
-        "english": "your child",
-        "why": "The Arabic 'ابنك' specifically means 'your son', while the English 'your child' is gender-neutral and loses the masculine specificity.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:11:46.432711+00:00"
   }
 }

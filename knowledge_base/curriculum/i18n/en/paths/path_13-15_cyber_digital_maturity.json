@@ -1,6 +1,6 @@
 {
   "id": "path_13-15_cyber_digital_maturity",
-  "title": "An-Nudjuh ar-Raqmi: Athar Qadamak, Qararuk (13-15 Years)",
+  "title": "Digital Maturity: Your Footprint, Your Decision (13-15 Years)",
   "age_group": "13-15",
   "domain": "cyber",
   "description": "A pathway to help the teenager build a responsible digital footprint: understanding algorithms, interacting with artificial intelligence, balancing gaming, and protecting their digital reputation for the future.",
@@ -32,17 +32,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "النضج الرقمي: أثر قدمك، قرارك (13-15 سنة)",
-        "english": "An-Nudjuh ar-Raqmi: Athar Qadamak, Qararuk (13-15 Years)",
-        "why": "The Arabic title is meaningful ('Digital Maturity: Your Footprint, Your Decision'), but the English title is a mere transliteration, conveying no meaning to an English reader.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:56:25.718957+00:00",
+    "fixed_at": "2026-08-13T17:56:25.718971+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -2,7 +2,7 @@
   "id": "tip_16-18_016",
   "age_group": "16-18",
   "domain": "islamic_parenting",
-  "text": "Marriage is fitrah (natural disposition), not monasticism. Choose a partner based on deen and akhlaq (moral character). Learn the rights: affection, financial support, and companionship. Prepare for it now.",
+  "text": "Marriage is fitrah (natural disposition), not monasticism. Choose a partner based on deen or akhlaq (moral character). Learn the rights: affection, financial support, and companionship. Prepare for it now.",
   "unit_id": "isl-7365e833",
   "day_of_week": 0,
   "time_of_day": "morning",
@@ -22,21 +22,16 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "text",
+        "field": "third right in the list",
         "arabic": "سفينة",
         "english": "companionship",
-        "why": "The Arabic word 'سفينة' means 'ship', not 'companionship'. The English introduces a completely different concept, likely assuming a typo for 'سكينة' (tranquility), but the translation does not match the given source text.",
+        "why": "The Arabic word 'سفينة' means 'ship', not 'companionship'. The translation changes the meaning entirely.",
         "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "اختر شريكاً على الدين/الخلق",
-        "english": "Choose a partner based on deen and akhlaq",
-        "why": "The Arabic uses a slash '/' which can indicate alternatives or emphasis, while the English uses 'and' which combines them as equal criteria. The well-known hadith emphasizes religion, so the nuance may be lost.",
-        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:27.499869+00:00",
+    "fixed_at": "2026-08-13T18:53:27.499878+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

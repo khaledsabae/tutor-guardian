@@ -15,7 +15,7 @@
   "order": 2,
   "estimated_minutes": 34,
   "reflection_prompts": [
-    "Which verse touched your child's heart?",
+    "Which verse touched your son's heart?",
     "Have you noticed a change in his khushu'?"
   ],
   "warning_flags": [],
@@ -34,17 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "اختارا سورة قصيرة",
-        "english": "Choose a short surah",
-        "why": "The Arabic uses the dual imperative 'اختارا', explicitly addressing two people (parent and child together). The English 'Choose' is ambiguous and could be read as addressing only the parent, losing the collaborative nuance.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:58:48.589358+00:00",
+    "fixed_at": "2026-08-13T18:58:48.589373+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

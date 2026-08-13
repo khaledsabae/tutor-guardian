@@ -1,7 +1,7 @@
 {
   "id": "lesson_2-3_cyber_routine_b02",
   "path_id": "path_2-3_cyber_routine",
-  "title": "Al-Shāshah al-Mushtarakah Badal al-Shāshah al-Ṣāmitah",
+  "title": "The Shared Screen Instead of the Silent Screen",
   "age_group": "2-3",
   "domain": "cyber",
   "unit_ids": [
@@ -34,25 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "structure",
-        "field": "title",
-        "arabic": "الشاشة المشتركة بدل الشاشة الصامتة",
-        "english": "Al-Shāshah al-Mushtarakah Badal al-Shāshah al-Ṣāmitah",
-        "why": "The title is transliterated rather than translated, making it inaccessible to English readers who do not know Arabic. The meaning 'The Shared Screen Instead of the Silent Screen' is lost.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "وتعلّم طفلك أن يكون متفاعلاً لا متلقّياً.",
-        "english": "and you teach your child to be interactive, not merely a receiver.",
-        "why": "The Arabic says 'not a receiver' (لا متلقّياً), which is an absolute negation. The English adds 'merely', softening the statement and implying the child is still a receiver but also interactive, which is not the original meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:11:29.396087+00:00",
+    "fixed_at": "2026-08-13T18:11:29.396106+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

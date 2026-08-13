@@ -34,8 +34,18 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "هذه الملاحظات دليل على ما يطوره دماغه الآن.",
+        "english": "These observations are your guide to what their brain is developing now.",
+        "why": "The Arabic says 'a guide' (دليل) without a possessive pronoun; the English adds 'your', making it more personal and slightly altering the meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:16:42.836381+00:00"
   }
 }

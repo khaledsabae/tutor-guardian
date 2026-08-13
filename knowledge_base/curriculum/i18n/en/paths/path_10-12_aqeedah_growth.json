@@ -1,9 +1,9 @@
 {
   "id": "path_10-12_aqeedah_growth",
-  "title": "Tarsikh al-ʿAqeedah: min al-Maʿrifah ilá al-Muraqabah",
+  "title": "Rooting the ʿAqeedah: From Knowledge to Watchfulness",
   "age_group": "10-12",
   "domain": "aqeedah",
-  "description": "A path that roots the ʿaqeedah (creed) of your child (10–12) before bulūgh (puberty): from knowledge to muraqabah (watchfulness) and conviction—Islamic identity, deep understanding of the arkān al-īmān (pillars of faith), ikhlāṣ (sincerity) and muraqabah, and riḍā bi-l-qadr (contentment with divine decree).",
+  "description": "A path that roots the ʿaqeedah of your child (10–12) before bulūgh (puberty): from knowledge to watchfulness and conviction—faith-based identity, deep understanding of the arkān al-īmān (pillars of faith), ikhlāṣ (sincerity) and watchfulness, and riḍā bi-l-qadr (contentment with divine decree).",
   "lesson_ids": [
     "lesson_10-12_islamic_parenting_identity_04",
     "lesson_10-12_aqeedah_growth_01",
@@ -37,13 +37,16 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "title",
-        "arabic": "ترسيخ العقيدة: من المعرفة إلى المراقبة",
-        "english": "Tarsikh al-ʿAqeedah: min al-Maʿrifah ilá al-Muraqabah",
-        "why": "The English title is a full transliteration of the Arabic, not a translation. It fails to convey the meaning ('Establishing the Creed: From Knowledge to Watchfulness') to an English reader, while the description is translated. This makes the title inaccessible and does not communicate the intended message.",
-        "severity": "high"
+        "field": "description",
+        "arabic": "ابنك",
+        "english": "your child",
+        "why": "The Arabic uses the masculine singular 'ابنك' (your son), while the English uses the gender-neutral 'your child'. This may obscure the original intended audience or tone, though it could be a deliberate inclusive choice.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:17:00.924302+00:00",
+    "fixed_at": "2026-08-13T18:17:00.924315+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

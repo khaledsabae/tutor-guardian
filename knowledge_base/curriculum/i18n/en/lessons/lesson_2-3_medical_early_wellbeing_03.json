@@ -35,6 +35,7 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:28:25.055243+00:00"
   }
 }

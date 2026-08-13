@@ -5,8 +5,8 @@
   "age_group": "7-9",
   "domain": "islamic_parenting",
   "unit_ids": [],
-  "summary": "«Al-Rahimuna yarhamuhum al-Rahman (The merciful will be shown mercy by the Most Merciful).» Teach your child rifq (gentleness) with his siblings, animals, and those who serve him. Correct harshness with calmness and explain its impact on others, for rahmah (mercy) is an akhlaq (virtue) learned through action, not mere advice.",
-  "try_this": "This week: Notice an act of rahmah from your child and praise him for it, or an act of harshness and address it with the question, «How did your brother feel?»",
+  "summary": "«Al-Rahimuna yarhamuhum al-Rahman (The merciful will be shown mercy by the Most Merciful).» Teach your child rifq (gentleness) with his siblings, animals, and those who serve him. Correct harshness with calmness and explain its impact on others, for rahmah (mercy) is a khuluq (character trait) learned through situation, not sermon.",
+  "try_this": "This week: Notice a situation of rahmah from your child and praise him for it, or a situation of harshness and address it with the question, «How did your brother feel?»",
   "order": 2,
   "estimated_minutes": 7,
   "reflection_prompts": [
@@ -29,17 +29,11 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "خُلقٌ",
-        "english": "an *akhlaq* (virtue)",
-        "why": "The Arabic uses the singular 'khuluq' (خُلق), meaning a character trait or virtue. The English transliterates it as 'akhlaq', which is the plural form (أخلاق), and uses it with an indefinite article 'an', which is grammatically incorrect for a plural. The correct transliteration should be 'khuluq'.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:05:28.088472+00:00",
+    "fixed_at": "2026-08-13T19:05:28.088484+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

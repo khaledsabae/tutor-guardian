@@ -13,8 +13,8 @@
     "93088170-21d3-4095-91a2-b86c44afa56b",
     "med-6fd9c009"
   ],
-  "summary": "Difficulty sleeping, scattered attention, nail-biting, constant fatigue—these may be signs of ADHD, anxiety, or depression. A consistent sleep routine (9–11 hours), breaking tasks into smaller parts, and immediate rewards can help. If symptoms persist for weeks and affect school or home life: consult a pediatrician or child psychologist.",
-  "try_this": "This week: Establish a fixed sleep schedule (same time every night, no screens an hour before bed, reading or relaxation). Observe: Has their focus improved in the morning?",
+  "summary": "Difficulty sleeping, scattered attention, nail-biting, constant fatigue—these may be signs of ADHD, anxiety, or depression. A consistent sleep routine (9–11 hours), dividing tasks, and immediate rewards can help. If symptoms persist for weeks and affect school or home life: consult a pediatrician or psychiatrist.",
+  "try_this": "This week: A fixed sleep schedule (same time every night, no screens an hour before bed, reading or relaxation). Observe: Has their focus improved in the morning?",
   "order": 2,
   "estimated_minutes": 7,
   "reflection_prompts": [
@@ -41,17 +41,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "طبيب نفسي",
-        "english": "child psychologist",
-        "why": "The Arabic specifies a psychiatrist (طبيب نفسي, a medical doctor), while the English uses 'child psychologist', which is a different profession. This could affect the type of help recommended.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:06:07.713809+00:00",
+    "fixed_at": "2026-08-13T19:06:07.713822+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

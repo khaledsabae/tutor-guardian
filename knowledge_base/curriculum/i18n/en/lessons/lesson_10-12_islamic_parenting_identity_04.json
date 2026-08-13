@@ -1,7 +1,7 @@
 {
   "id": "lesson_10-12_islamic_parenting_identity_04",
   "path_id": "path_10-12_aqeedah_growth",
-  "title": "Confidence and Identity: You Are His Child, and Allah Sees You",
+  "title": "Confidence and Identity: You are his son, and Allah sees you",
   "age_group": "10-12",
   "domain": "aqeedah",
   "unit_ids": [
@@ -10,12 +10,12 @@
     "acb36cc3-318d-4866-bfa2-530c03dcc422",
     "ef7cfad0-4999-42ba-bdf4-1c1d65d3b29f"
   ],
-  "summary": "A stage of self-doubt. Teach him: his worth with Allah is through his deeds, not his clothes, number of friends, or grades. Build his confidence: praise the effort, not the outcome; give him space to decide; and make du'a for him for steadfastness.",
-  "try_this": "Create together a \"Treasure Box of Achievements\": a small paper each day where he writes something he feels proud of (a prayer, honesty, helping). Open it at the end of the month.",
+  "summary": "A stage of self-doubt. Teach him: your worth with Allah is through your deeds, not your clothes, number of friends, or grades. Build his confidence: praise the effort, not the outcome; give him space to decide; and make du'a for him for steadfastness.",
+  "try_this": "Create together a \"Box of Achievements\": a small paper each day where he writes something he feels proud of (a prayer, honesty, helping). Open it at the end of the month.",
   "order": 1,
   "estimated_minutes": 43,
   "reflection_prompts": [
-    "What did he write in the Treasure Box of Achievements?",
+    "What did he write in the Box of Achievements?",
     "Have you noticed a change in how he speaks about himself?"
   ],
   "warning_flags": [],
@@ -39,28 +39,23 @@
       {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "قيمتك عند الله بعملك لا بملابسك أو عدد أصدقائك أو درجاتك",
-        "english": "his worth with Allah is through his deeds, not his clothes, number of friends, or grades",
-        "why": "Arabic uses direct address (your worth, your clothes, your friends, your grades) but English shifts to third person (his). This changes the tone from a direct instruction to a descriptive statement.",
-        "severity": "medium"
+        "arabic": "قيمتك عند الله بعملك",
+        "english": "your worth with Allah is through your deeds",
+        "why": "The Arabic uses the singular 'بعملك' (by your deed), while the English uses the plural 'your deeds', altering the nuance from a single deed to multiple deeds.",
+        "severity": "low"
       },
       {
         "type": "meaning_change",
         "field": "try_this",
-        "arabic": "صندوق الإنجازات",
-        "english": "Treasure Box of Achievements",
-        "why": "English adds 'Treasure' which is not in the Arabic. The Arabic simply says 'Box of Achievements'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "صندوق الإنجازات",
-        "english": "Treasure Box of Achievements",
-        "why": "Same addition of 'Treasure' as in try_this.",
+        "arabic": "ورقة صغيرة يومياً يكتب فيها شيئاً أحس به فخراً",
+        "english": "a small paper each day where he writes something he feels proud of",
+        "why": "The Arabic uses past tense 'أحس' (felt) to refer to something he felt proud of that day, while the English uses present tense 'feels', changing the nuance from a specific daily reflection to a general feeling.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:42:45.643234+00:00",
+    "fixed_at": "2026-08-13T19:42:45.643252+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

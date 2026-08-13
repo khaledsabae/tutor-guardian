@@ -32,14 +32,23 @@
     "review_verdict": "defects",
     "review_defects": [
       {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "السلام",
+        "english": "As-Salam",
+        "why": "Inconsistent transliteration: title uses 'As-Salam' while summary and try_this use 'as-salam'. The same term should be written uniformly.",
+        "severity": "low"
+      },
+      {
         "type": "meaning_change",
-        "field": "summary",
-        "arabic": "علّمي طفلك السلام عند الدخول والشكر عند العطاء",
-        "english": "Teach your child as-salam (the greeting of peace) upon entering and gratitude upon receiving",
-        "why": "The Arabic 'العطاء' means 'giving', not 'receiving'. The instruction is to teach thanks when giving, but the translation says 'upon receiving', which reverses the intended meaning.",
-        "severity": "medium"
+        "field": "try_this",
+        "arabic": "عند الدخول",
+        "english": "when entering the house",
+        "why": "The Arabic does not specify 'the house'; it only says 'upon entering'. The addition narrows the meaning slightly.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:27:55.803928+00:00"
   }
 }

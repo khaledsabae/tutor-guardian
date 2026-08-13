@@ -25,10 +25,11 @@
         "field": "text",
         "arabic": "يستمر للبلوغ أحياناً",
         "english": "may sometimes continue into adolescence",
-        "why": "Arabic says 'continues to puberty sometimes' (using the specific term 'بلوغ' for puberty), while English broadens to 'adolescence' and adds 'may' not present in the Arabic. The Arabic could imply continuation until puberty rather than into the broader adolescent period.",
+        "why": "Arabic states it as a fact (يستمر = continues), English adds 'may' making it a possibility.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:11:54.538264+00:00"
   }
 }

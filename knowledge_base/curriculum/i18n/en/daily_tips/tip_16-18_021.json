@@ -18,25 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "فترة إصلاح",
-        "english": "time of correction",
-        "why": "The Arabic 'إصلاح' in the context of youth development implies reform, improvement, or making things right, not merely 'correction' which can carry a punitive or error-fixing connotation. 'Time of reform' or 'time of improvement' would be more accurate.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "english.text",
-        "arabic": "أنت تبني رجلك/امرأتك",
-        "english": "You are building your man/woman",
-        "why": "The literal translation 'building your man/woman' is awkward and unidiomatic in English. The Arabic is a warm, direct metaphor for raising a child into a responsible adult. A more natural rendering would be 'You are shaping your son/daughter into a man/woman' or 'You are raising a man/woman.'",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:12:32.798665+00:00"
   }
 }

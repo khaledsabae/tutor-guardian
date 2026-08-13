@@ -2,7 +2,7 @@
   "id": "tip_13-15_015",
   "age_group": "13-15",
   "domain": "cyber",
-  "text": "Online harassment: threatening messages, sharing images, blackmail. Take a screenshot → report to the platform → inform the wali al-amr (guardian) → 19099.",
+  "text": "Online harassment: threatening messages, spreading images, blackmail. Take a screenshot → report to the platform → inform a guardian → 19099.",
   "unit_id": "cyb-8a2da5de",
   "day_of_week": 3,
   "time_of_day": "evening",
@@ -18,17 +18,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "أخبر ولي أمر",
-        "english": "inform the wali al-amr (guardian)",
-        "why": "The Arabic is indefinite 'ولي أمر' (a guardian), while the English uses the definite article 'the' and transliterates as 'wali al-amr', implying a specific guardian. The Arabic does not have the definite article.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:59:06.141992+00:00",
+    "fixed_at": "2026-08-13T17:59:06.142013+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -1,7 +1,7 @@
 {
   "id": "lesson_13-15_islamic_parenting_teen_identity_03",
   "path_id": "path_13-15_islamic_parenting_teen_identity",
-  "title": "Al-Zawaj al-Mustaqbali: Ikhtiyar al-Sharik, al-Huquq, wa Bina' al-Usrah",
+  "title": "Future Marriage: Choosing a Partner, Rights, and Building a Family",
   "age_group": "13-15",
   "domain": "islamic_parenting",
   "unit_ids": [
@@ -9,12 +9,12 @@
     "isl-83d7099a",
     "isl-cc4ee988"
   ],
-  "summary": "At the age of 13-15, thinking about marriage begins. Do not rush the discussion, but do not delay it either: choose a partner based on deen (religion) and akhlaq (character). Learn about mutual rights (nafaqah (maintenance), mawaddah (affection), sakinah (tranquility)), and start building skills now: dialogue, tolerance, and bearing responsibility.",
-  "try_this": "This week: Discuss a scenario: \"If you were to choose your life partner, what are the 3 most important qualities you would look for?\" Listen without judgment, and guide them toward the Shar'i (legal Islamic) criteria.",
+  "summary": "At the age of 13-15, thinking about marriage begins. Do not start the discussion too early, but do not delay it either: choose a partner based on deen (religion) and akhlaq (character). Learn about mutual rights (nafaqah (maintenance), mawaddah (affection), sakinah (tranquility)), and start building skills now: dialogue, tolerance, and bearing responsibility.",
+  "try_this": "This week: Discuss together a scenario: \"If you were to choose your life partner, what are the 3 most important qualities you would look for?\" Listen together without judgment, and guide them toward the Shar'i (legal Islamic) criteria.",
   "order": 3,
   "estimated_minutes": 31,
   "reflection_prompts": [
-    "What qualities did your child mention?",
+    "What qualities did your son mention?",
     "Did they understand the difference between hubb (love) and shahwah (desire)?"
   ],
   "warning_flags": [
@@ -40,53 +40,16 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "title",
-        "arabic": "الزواج المستقبلي: اختيار الشريك، الحقوق، وبناء الأسرة",
-        "english": "Al-Zawaj al-Mustaqbali: Ikhtiyar al-Sharik, al-Huquq, wa Bina' al-Usrah",
-        "why": "The title is transliterated instead of translated, making it incomprehensible to an English reader.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "لا تبكر بالنقاش",
-        "english": "Do not rush the discussion",
-        "why": "The Arabic means 'do not start the discussion early/prematurely', not 'do not rush' which implies haste.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
         "field": "summary",
         "arabic": "سفينة",
         "english": "sakinah (tranquility)",
-        "why": "The Arabic says 'سفينة' (ship), likely a typo for 'سكينة' (tranquility). The translation corrects it but deviates from the source text.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "ناقشا ... استمعا ... وجهوا",
-        "english": "Discuss ... Listen ... guide them",
-        "why": "The Arabic uses dual/plural imperatives addressing both parents explicitly; the English loses this nuance.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "ابنك",
-        "english": "your child",
-        "why": "The Arabic says 'your son' (gender-specific); the English uses gender-neutral 'your child'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "فهم",
-        "english": "they understand",
-        "why": "The Arabic uses masculine singular 'he understood'; the English uses gender-neutral 'they'.",
+        "why": "The Arabic text says 'سفينة' (ship), which is likely a typo for 'سكينة' (tranquility). The English translation corrects this to 'sakinah', but it does not reflect the actual Arabic word provided.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:58:57.049974+00:00",
+    "fixed_at": "2026-08-13T18:58:57.049990+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

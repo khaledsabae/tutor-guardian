@@ -1,7 +1,7 @@
 {
   "id": "lesson_16-18_islamic_parenting_adult_faith_02",
   "path_id": "path_16-18_islamic_parenting_adult_faith",
-  "title": "Al-'iffah wa al-isti'dad li al-zawaj: hiwar sarīḥ bilā khajal",
+  "title": "Chastity and Preparation for Marriage: A Frank Conversation Without Shame",
   "age_group": "16-18",
   "domain": "islamic_parenting",
   "unit_ids": [],
@@ -35,14 +35,25 @@
     "review_verdict": "defects",
     "review_defects": [
       {
+        "type": "term_error",
+        "field": "summary",
+        "arabic": "كسكنٍ وإحصان",
+        "english": "as a source of tranquility and protection",
+        "why": "The Arabic term 'إحصان' is a specific Islamic concept meaning chastity, fortification against immorality, or the state of being married. Translating it as 'protection' loses the specific religious connotation and may be misunderstood as general safety.",
+        "severity": "low"
+      },
+      {
         "type": "meaning_change",
-        "field": "title",
-        "arabic": "العفّة والاستعداد للزواج: حوارٌ صريحٌ بلا خجل",
-        "english": "Al-'iffah wa al-isti'dad li al-zawaj: hiwar sarih bila khajal",
-        "why": "The title is transliterated instead of translated. An English reader who does not know Arabic will not understand the meaning. The Arabic means 'Chastity and Preparation for Marriage: A Frank Conversation Without Shame'.",
-        "severity": "high"
+        "field": "try_this",
+        "arabic": "وأخبره أن بابك مفتوح لأي سؤال",
+        "english": "and let him know your door is always open for any question",
+        "why": "The English adds 'always', which is not present in the Arabic. The Arabic simply states that the door is open, without the temporal emphasis.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:56:11.555550+00:00",
+    "fixed_at": "2026-08-13T17:56:11.555568+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

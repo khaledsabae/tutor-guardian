@@ -3,7 +3,7 @@
   "title": "Establishing Islamic Adab and Moral Conscience (Ages 4-6)",
   "age_group": "4-6",
   "domain": "islamic_parenting",
-  "description": "A 14-day tarbiyah journey to establish foundational Islamic akhlaq values (truthfulness, amanah, mercy, respect) during the preoperational stage (Piaget). Focuses on transforming concepts from theoretical knowledge into heart-based behavioral habits through compassionate parental modeling, Prophetic stories, and daily dialogue. Avoids coercive methods, relying instead on the Prophetic principle of gradualism and qudwah (exemplary conduct) as the tool for moral development in this sensitive stage.",
+  "description": "A 14-day tarbiyah journey to establish foundational Islamic akhlaq values (truthfulness, amanah, rahmah, respect) during the preoperational stage (Piaget). Focuses on transforming concepts from theoretical knowledge into heart-based behavioral habits through compassionate parental modeling, Prophetic stories, and daily dialogue. Avoids coercive methods, and relies on the Prophetic principle of gradualism and qudwah (exemplary conduct) as a tool for moral development in this sensitive stage.",
   "lesson_ids": [
     "lesson_4-6_islamic_parenting_adab_01",
     "lesson_4-6_islamic_parenting_adab_02",
@@ -38,37 +38,15 @@
       {
         "type": "term_error",
         "field": "description",
-        "arabic": "رحلة تربوية",
-        "english": "tarbiyah journey",
-        "why": "The Arabic uses the adjective 'تربوية' (tarbawiyyah), not the noun 'تربية' (tarbiyah). The translation should be 'tarbawiyyah journey' or 'educational journey'.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "description",
-        "arabic": "القيم الأخلاقية الإسلامية",
-        "english": "Islamic akhlaq values",
-        "why": "The Arabic uses the adjective 'الأخلاقية' (moral), not the noun 'أخلاق' (akhlaq). The translation 'Islamic akhlaq values' is redundant and shifts the part of speech.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "القصص النبوية",
-        "english": "Prophetic seerah stories",
-        "why": "The Arabic says 'Prophetic stories' without specifying 'seerah'. The English adds 'seerah', narrowing the meaning.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "كأداة بناء أخلاقي",
-        "english": "as the tool for moral development",
-        "why": "The Arabic uses the indefinite 'أداة' (a tool), while the English uses the definite 'the tool', implying it is the only tool.",
+        "arabic": "(الصدق، الأمانة، الرحمة، الاحترام)",
+        "english": "(truthfulness, amanah, rahmah, respect)",
+        "why": "Inconsistent transliteration: 'sidq' and 'ihtiram' are translated, while 'amanah' and 'rahmah' are transliterated. All should be either translated or transliterated for consistency.",
         "severity": "low"
       }
     ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:07:42.152764+00:00",
+    "fixed_at": "2026-08-13T19:07:42.152776+00:00",
+    "fixer_model": "mistral-large-3:675b"
+  }
 }

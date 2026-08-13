@@ -32,30 +32,15 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "religious_error",
-        "field": "title",
-        "arabic": "ضميرٌ يراقب الله",
-        "english": "A Conscience that Watches Allah",
-        "why": "The Arabic phrase 'ضميرٌ يراقب الله' is ambiguous but in Islamic context refers to a conscience that is mindful of Allah's watchfulness (muraqabah). The literal translation 'A Conscience that Watches Allah' suggests the conscience is watching Allah, which is theologically problematic and misrepresents the concept of ihsan. A more accurate rendering would be 'A Conscience Mindful of Allah' or 'A Conscience Aware of Allah’s Watchfulness.'",
-        "severity": "high"
-      },
-      {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "تنتهي حين تغيب عنه",
-        "english": "ends when it is absent",
-        "why": "The Arabic includes 'عنه' (from him), specifying that supervision ends when it is absent from the teenager. The English omits 'from him,' losing the personal reference.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "التربية",
-        "english": "tarbiyah",
-        "why": "The term 'tarbiyah' is transliterated, while the title translates 'القدوة' as 'Exemplar' instead of transliterating it as 'Qudwah.' This inconsistency in handling Islamic terms within the same document is a defect.",
+        "arabic": "الرقابة الخارجية تنتهي حين تغيب عنه.",
+        "english": "External supervision ends when it is absent.",
+        "why": "The Arabic uses the second-person verb 'تغيب' (you are absent) addressing the parent directly, making it personal: 'when you are absent from him.' The English depersonalizes it to 'when it is absent,' which is ambiguous and loses the direct, warm tone of the original.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:22:28.537516+00:00"
   }
 }

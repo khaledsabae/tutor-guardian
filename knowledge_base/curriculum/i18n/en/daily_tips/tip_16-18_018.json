@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "يراقب لا يسمع",
-        "english": "watches, not just listens",
-        "why": "The Arabic uses absolute negation (لا يسمع = does not listen), implying the child ignores words entirely. The English adds 'just', softening it to 'not only listens', which changes the intended stark contrast between actions and words.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:12:24.633289+00:00"
   }
 }

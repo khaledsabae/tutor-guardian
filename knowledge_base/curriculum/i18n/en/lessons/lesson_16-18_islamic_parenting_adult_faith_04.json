@@ -33,21 +33,22 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "summary, try_this, reflection_prompts",
-        "arabic": "ابنك (your son) and masculine singular pronouns/verbs throughout",
-        "english": "your child, they, them (gender-neutral)",
-        "why": "The Arabic consistently addresses parents of sons using 'ابنك' and masculine singular forms. The English translation neutralizes the gender, losing the original's specific focus on boys.",
-        "severity": "medium"
+        "field": "reflection_prompts[1]",
+        "arabic": "كيف تعامل معها، وبماذا تعلّم منها؟",
+        "english": "How did they handle it, and what did you learn from it?",
+        "why": "The Arabic asks what the child learned (تعلّم منها), but the English asks what the parent learned. This changes the focus from the child's learning to the parent's learning.",
+        "severity": "high"
       },
       {
         "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "وبماذا تعلّم منها؟",
-        "english": "and what did you learn from it?",
-        "why": "The Arabic asks what the son learned (تعلّم is third-person masculine singular). The English asks what the parent learned, completely changing the subject of the question.",
-        "severity": "high"
+        "field": "summary, try_this, reflection_prompts",
+        "arabic": "ابنك (your son) and masculine singular pronouns throughout",
+        "english": "your child / they / them (gender-neutral)",
+        "why": "The Arabic specifically addresses a son using masculine forms, while the English uses gender-neutral language. This loses the original's masculine specificity and may alter the intended audience.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:25:21.756607+00:00"
   }
 }

@@ -7,12 +7,12 @@
   "unit_ids": [
     "aqe-d0f14b8c"
   ],
-  "summary": "Belief in the Last Day gives the child a scale for life: that this world is a temporary abode of action, and that there is a day when every person will meet the recompense of their deeds. Speak about death with honesty and tranquility, not terror: a transition from this world to an everlasting abode, just as a traveler moves to a more beautiful home. Focus heavily on Paradise and its beloved descriptions—rivers, fruits, endless play, meeting the Prophet ﷺ, and seeing Allah, the greatest bliss—more than mentioning the Fire. Our goal is to make our child love Paradise and strive for it, not to fill their heart with fear. Instill in them that the gate of Paradise is obedience and good akhlaq (moral character), and that we are content with Allah’s decree if what we dislike befalls us.",
-  "try_this": "This week: When your child does something good, connect it to Paradise: \"This deed brings you closer to Paradise.\" If they ask about death, reassure them that whoever loves Allah moves to a more beautiful place with a Most Merciful Lord.",
+  "summary": "Belief in the Last Day gives the child a scale for life: that this world is a temporary abode of action, and that there is a day when every person will meet the recompense of their deeds. Speak about death with honesty and tranquility, not terror: a transition from this world to a more lasting abode, just as a traveler moves to a more beautiful home. Focus heavily on Paradise and its beloved descriptions—rivers, fruits, endless play, meeting the Prophet ﷺ, and seeing Allah, the greatest bliss—more than mentioning the Fire. Our goal is to make our child love Paradise and strive for it, not to fill their heart with fear. Instill in them that the gate of Paradise is obedience and good akhlaq (moral character), and that we are content with Allah’s decree if what we dislike befalls us.",
+  "try_this": "This week: When your child does something good, connect it to Paradise: \"This deed brings you closer to Paradise.\" If they ask about death, reassure them that whoever loves Allah moves to a more beautiful place with a Merciful Lord.",
   "order": 9,
   "estimated_minutes": 8,
   "reflection_prompts": [
-    "Why do we emphasize encouraging the child with Paradise more than warning them about the Fire?",
+    "Why do we emphasize encouraging the child with Paradise more than frightening them about the Fire?",
     "How can you speak about death with honesty that builds tranquility, not nightmares?"
   ],
   "warning_flags": [],
@@ -29,7 +29,7 @@
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
-      "reviewer_model": false
+      "reviewer_model": true
     },
     "review_verdict": "defects",
     "review_defects": [
@@ -38,42 +38,13 @@
         "field": "summary",
         "arabic": "ولقاءُ النبي ﷺ ورؤيةُ الله أعظم نعيم",
         "english": "meeting the Prophet ﷺ, and seeing Allah, the greatest bliss",
-        "why": "The Arabic states that both meeting the Prophet and seeing Allah are the greatest bliss, but the English structure implies only seeing Allah is the greatest bliss.",
+        "why": "The Arabic states that both meeting the Prophet and seeing Allah are the greatest bliss (أعظم نعيم is predicate for both). The English apposition 'the greatest bliss' attaches only to 'seeing Allah', implying that only seeing Allah is the greatest bliss, which changes the meaning and diminishes the status of meeting the Prophet.",
         "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "عند ربٍّ رحيم",
-        "english": "with a Most Merciful Lord",
-        "why": "The Arabic says 'in the presence of a Merciful Lord' (عند means nearness, and رحيم is not superlative). The English adds 'Most' and changes 'at' to 'with', altering the attribute and losing the nuance of nearness.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "تخويفه بالنار",
-        "english": "warning them about the Fire",
-        "why": "The Arabic uses 'تخويف' (frightening), but the English softens it to 'warning', changing the intended meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "دارٍ أبقى",
-        "english": "everlasting abode",
-        "why": "The Arabic uses the comparative 'أبقى' (more lasting), but the English translates it as 'everlasting', losing the comparison to this world.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "حسن الخلق",
-        "english": "good *akhlaq* (moral character)",
-        "why": "The English introduces a transliteration 'akhlaq' that is not present in the Arabic source, adding an unnecessary term.",
-        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:04:59.453678+00:00",
+    "fixed_at": "2026-08-13T19:04:59.453692+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

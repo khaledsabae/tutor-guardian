@@ -8,7 +8,7 @@
     "isl-59686545",
     "isl-71d65f43"
   ],
-  "summary": "Your daughter's desire to work is not disobedience in itself, and the scholars have a valid difference of opinion regarding the fundamental permissibility of a woman working outside the home—there is no single decisive fatwa. The prevalent conditions in the opinion of Shaykh Ibn Baz are: modest clothing, avoiding prohibited ikhtilat (mixing between unrelated men and women), and work that suits her nature. Discuss this with her calmly instead of outright refusal, and consult a trusted scholar to detail the ruling for both of you. There is another valid, more cautious opinion (Shaykh Ibn Uthaymeen): the default is for her to remain in her home, and her going out to work without financial need poses a risk to her household later. If she truly needs to (no one to provide for her), it is permissible with conditions: work that suits her nature, a female environment without ikhtilat, proper hijab, and no travel without a mahram. Present this opinion alongside the other, and let a trusted scholar detail her specific case.",
+  "summary": "Your daughter's desire to work is not a sin in itself, and the scholars have a valid difference of opinion regarding the fundamental permissibility of a woman working outside the home—there is no single decisive fatwa. The prevalent conditions in the opinion of Shaykh Ibn Baz are: modest clothing, avoiding prohibited ikhtilat (mixing between unrelated men and women), and work that suits her nature. Discuss this with her calmly instead of outright refusal, and consult a trusted scholar to detail the ruling. There is another valid, more cautious opinion (Shaykh Ibn Uthaymeen): the default is for her to remain in her home, and her going out to work without financial need poses a risk to her household later. If she truly needs to (no one to provide for her), it is permissible with conditions: work that suits her nature, a female environment without ikhtilat, Islamic hijab, and no travel without a mahram. Present this opinion alongside the other, and let a trusted scholar detail her specific case.",
   "try_this": "This week: Sit with your daughter for a discussion, not a decision. Listen to why she specifically wants to work (ambition, financial need, desire for independence), and together, present the question to a trusted scholar you both trust to detail the ruling according to her actual circumstances instead of deciding alone.",
   "order": 1,
   "estimated_minutes": 9,
@@ -32,33 +32,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "اعرض هذا الرأي بجانب غيره",
-        "english": "Present this opinion alongside the other",
-        "why": "The Arabic says 'alongside others' (plural), implying multiple other opinions exist. The English narrows it to 'the other' (singular), which changes the meaning by limiting the scope.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "لتحصل على حكم مفصل",
-        "english": "to detail the ruling",
-        "why": "The Arabic says 'so that you obtain a detailed ruling' (parent as recipient). The English shifts the agency to the scholar detailing the ruling, altering the focus of the action.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "بدل أن تقررا وحدكما",
-        "english": "instead of deciding alone",
-        "why": "The Arabic uses the dual form 'تقررا' (you two decide), addressing both parent and daughter. The English 'deciding alone' is ambiguous and could be read as the parent deciding alone, losing the dual nuance.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:09:25.431851+00:00",
+    "fixed_at": "2026-08-13T18:09:25.431863+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

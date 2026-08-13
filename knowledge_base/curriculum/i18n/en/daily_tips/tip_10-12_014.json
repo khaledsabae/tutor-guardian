@@ -2,7 +2,7 @@
   "id": "tip_10-12_014",
   "age_group": "10-12",
   "domain": "cyber",
-  "text": "Practise together: choose a widespread news item, verify the original source, consult experts — distinguishing (between truth and falsehood) is a life skill.",
+  "text": "Practise together: choose a widespread news item, verify the original source, experts' opinion — distinguishing is a life skill.",
   "unit_id": "cyb-51951b6a",
   "day_of_week": 3,
   "time_of_day": "morning",
@@ -18,17 +18,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "التفريق مهارة للحياة",
-        "english": "distinguishing (between truth and falsehood) is a life skill",
-        "why": "The English adds '(between truth and falsehood)' which is not present in the Arabic. The Arabic only says 'distinguishing' without specifying what is being distinguished.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:42.300303+00:00",
+    "fixed_at": "2026-08-13T18:52:42.300323+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

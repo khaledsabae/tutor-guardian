@@ -3,7 +3,7 @@
   "title": "Iman with Conviction: Aqeedah in the Face of the World",
   "age_group": "16-18",
   "domain": "aqeedah",
-  "description": "A pathway that moves your teenager (16-18) from inherited iman to a certainty rooted in conviction, steadfast before the world: grounding self-driven iman, confronting atheism and contemporary doubts, aqeedah as a compass for decisions, and life for a greater purpose.",
+  "description": "A pathway that moves your young man (16-18) from inherited iman to certainty with conviction, steadfast before the world: grounding personal iman, confronting atheism and contemporary doubts, aqeedah as a compass for decisions, and life for a greater purpose.",
   "lesson_ids": [
     "lesson_16-18_islamic_parenting_adult_faith_01",
     "lesson_16-18_aqeedah_conviction_01",
@@ -33,17 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "ترسيخ الإيمان الذاتي",
-        "english": "grounding self-driven iman",
-        "why": "The Arabic 'الإيمان الذاتي' likely means 'personal faith' or 'faith of the self', not 'self-driven iman' which implies the faith drives itself. The nuance is slightly altered.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:17:37.739435+00:00",
+    "fixed_at": "2026-08-13T18:17:37.739454+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

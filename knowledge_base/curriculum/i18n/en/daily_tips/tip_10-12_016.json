@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "register",
-        "field": "english.text",
-        "arabic": "لغة علمية لا خجل",
-        "english": "using scientific language, not shame",
-        "why": "The Arabic 'لا خجل' is a natural, warm phrase meaning 'without shame' or 'no embarrassment'. The English 'not shame' is awkward and ambiguous; it reads as a negation of the noun 'shame' rather than an adverbial phrase. A more natural rendering would be 'without shame' or 'no embarrassment'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:09:57.376657+00:00"
   }
 }

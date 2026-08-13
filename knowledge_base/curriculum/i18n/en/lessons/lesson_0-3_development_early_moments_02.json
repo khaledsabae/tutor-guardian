@@ -34,17 +34,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "السنوات الألف الأولى",
-        "english": "the first thousand days",
-        "why": "Arabic says 'years' (سنوات) but English says 'days'. The translation changes the word, not faithful to the source text.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:16:52.537382+00:00"
   }
 }

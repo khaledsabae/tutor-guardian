@@ -5,13 +5,13 @@
   "age_group": "16-18",
   "domain": "aqeedah",
   "unit_ids": [],
-  "summary": "A firmly rooted ʿaqeedah is not merely about rituals; it is a compass that guides the major decisions your child faces now: specialization, companionship, wealth, relationships, and the halal and haram in an age of temptations. Teach him to ask at every crossroads: 'Does this please our Lord?' And that his faith in the Hereafter makes him prioritize Allah's pleasure over immediate gain. The young man whose ʿaqeedah is steadfast in his heart will not be shaken by peer pressure or the allure of the haram, for he possesses an internal scale more steadfast than all external influences.",
-  "try_this": "This week: Discuss a real decision your child is facing, and weigh it together on the scale of 'Does it please Allah? And what is its impact in the Hereafter?' before worldly gain.",
+  "summary": "A firmly rooted ʿaqeedah is not merely about rituals; it is a compass that guides the major decisions your son faces now: specialization, companionship, wealth, relationships, and the halal and haram in an age of temptations. Teach him to ask at every crossroads: 'Does this please our Lord?' And that his faith in the Hereafter makes him prioritize Allah's pleasure over immediate gain. The young man whose ʿaqeedah is steadfast in his heart will not be shaken by peer pressure or the allure of the haram, for he possesses an internal scale more steadfast than all external influences.",
+  "try_this": "This week: Discuss a real decision your son is facing, and weigh it together on the scale of 'Does it please Allah? And what is its impact in the Hereafter?' before worldly gain.",
   "order": 3,
   "estimated_minutes": 8,
   "reflection_prompts": [
-    "How can you make ʿaqeedah a practical compass for your child’s major decisions, not just rituals?",
-    "Which decision is your child facing now that you can weigh with him using the scale of Allah’s pleasure?"
+    "How can you make ʿaqeedah a practical compass for your son’s major decisions, not just rituals?",
+    "Which decision is your son facing now that you can weigh with him using the scale of Allah’s pleasure?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -29,17 +29,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary, try_this, reflection_prompts",
-        "arabic": "ابنك (your son) and الشاب (the young man)",
-        "english": "your child (in most places) and the young man (in summary)",
-        "why": "The Arabic consistently addresses parents of a son, using 'ابنك' and 'الشاب'. The English translation shifts to the gender-neutral 'your child' in the try_this and reflection prompts, but retains 'the young man' in the summary, creating inconsistency and altering the original's specific focus on boys.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:59:48.249217+00:00",
+    "fixed_at": "2026-08-13T18:59:48.249230+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

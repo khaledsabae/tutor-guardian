@@ -3,7 +3,7 @@
   "title": "Seeds of Aqeedah: The First Introduction to Allah",
   "age_group": "4-6",
   "domain": "aqeedah",
-  "description": "A 4-lesson path that introduces the child (ages 4-6) to their Lord in a beloved, tangible way: Allah the Creator, the Bestower, His love and vision, and love for the Prophet ﷺ — the first seeds of aqeedah.",
+  "description": "A 4-lesson path that introduces the child (ages 4-6) to their Lord in an endearing, tangible way: Allah the Creator, the Bestower, love for Him and His vision, and love for the Prophet ﷺ — the first seeds of aqeedah.",
   "lesson_ids": [
     "lesson_4-6_aqeedah_seeds_01",
     "lesson_4-6_aqeedah_seeds_02",
@@ -38,12 +38,15 @@
       {
         "type": "meaning_change",
         "field": "description",
-        "arabic": "محبّته ورؤيته",
-        "english": "His love and vision",
-        "why": "The Arabic phrase 'محبّته' with the pronoun referring to Allah is ambiguous but in this context likely means 'love for Him' (the child's love for Allah), while 'His love' in English more naturally reads as 'Allah's love (for us)'. The intended meaning is the child learning about loving Allah and seeing Him, not Allah's love and His vision. The English should clarify 'love for Him and seeing Him'.",
+        "arabic": "مسار 4 دروس قصيرة",
+        "english": "A 4-lesson path",
+        "why": "The Arabic explicitly describes the lessons as 'قصيرة' (short), which is omitted in the English translation. This detail is relevant for the target age group (4-6) and the endearing, tangible approach.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:18:05.976784+00:00",
+    "fixed_at": "2026-08-13T18:18:05.976797+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

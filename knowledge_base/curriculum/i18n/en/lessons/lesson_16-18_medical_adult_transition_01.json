@@ -1,7 +1,7 @@
 {
   "id": "lesson_16-18_medical_adult_transition_01",
   "path_id": "path_16-18_medical_adult_transition",
-  "title": "Mental Health in University/Work: A Self-Safety Net",
+  "title": "Mental Health in University/Work: A Personal Safety Net",
   "age_group": "16-18",
   "domain": "medical",
   "unit_ids": [
@@ -10,7 +10,7 @@
     "e19e72c2-d553-4e12-a6e6-5d7c6f3fc083",
     "e5d132da-cdb4-403a-a43e-e78640ee6270"
   ],
-  "summary": "Transitioning to university/work brings new pressures: estrangement, performance, relationships, financial decisions. Your tools: (1) A consistent routine (sleep, movement, nutrition) — the chemical foundation for your brain. (2) A support network: a trusted friend, an academic mentor, a university counselor, a hotline (937). (3) Personal warning signs: write them down and monitor them weekly. (4) An emergency plan: 937/112, an emergency contact, a known psychiatrist. Independence means taking responsibility for your mental health.",
+  "summary": "Transitioning to university/work brings new pressures: alienation, performance, relationships, financial decisions. Your tools: (1) A consistent routine (sleep, movement, nutrition) — the chemical foundation for your brain. (2) A support network: a trusted friend, an academic mentor, a university counselor, a hotline (937). (3) Personal warning signs: write them down and monitor them weekly. (4) An emergency plan: 937/112, an emergency friend, a known psychiatrist. Independence means taking responsibility for your mental health.",
   "try_this": "This week: Write a personal \"safety card\" — 3 warning signs, 3 calming strategies, 3 people you trust + 937. Keep it in your wallet/phone.",
   "order": 1,
   "estimated_minutes": 10,
@@ -38,17 +38,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "صديق طوارئ",
-        "english": "emergency contact",
-        "why": "Arabic specifies a friend for emergencies, English generalizes to any contact.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:00:48.049809+00:00",
+    "fixed_at": "2026-08-13T19:00:48.049821+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

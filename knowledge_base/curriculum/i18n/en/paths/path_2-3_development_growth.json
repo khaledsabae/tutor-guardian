@@ -3,7 +3,7 @@
   "title": "Child's Growth and Independence (2-3 Years)",
   "age_group": "2-3",
   "domain": "development",
-  "description": "A journey to support the child's independence between the ages of two and three: gradual toilet training, developing language and cognition through imaginative play, based on reliable tarbiyah (upbringing) and developmental references.",
+  "description": "A journey to support the child's independence between the ages of two and three: gradual toilet training, developing language and cognition through imaginative play, based on reliable educational and developmental references.",
   "lesson_ids": [
     "lesson_2-3_development_independence_01",
     "lesson_2-3_development_language_03",
@@ -33,17 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "استناداً إلى مراجع تربوية وتنموية موثوقة",
-        "english": "based on reliable tarbiyah (upbringing) and developmental references",
-        "why": "The Arabic adjective 'تربوية' (educational) is rendered as the noun 'tarbiyah' with a parenthetical, introducing an explicit Islamic term not present in the source.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:17:47.528160+00:00",
+    "fixed_at": "2026-08-13T18:17:47.528173+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

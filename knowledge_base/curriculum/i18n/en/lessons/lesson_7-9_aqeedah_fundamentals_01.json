@@ -29,7 +29,7 @@
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
-      "reviewer_model": true
+      "reviewer_model": false
     },
     "review_verdict": "defects",
     "review_defects": [
@@ -38,26 +38,19 @@
         "field": "summary",
         "arabic": "معرفةً محبَّبةً مبسَّطة",
         "english": "knowledge that is loving, simplified, and endearing",
-        "why": "The Arabic 'محبَّبة' means 'made beloved' or 'endearing' (the knowledge is presented in a way that makes it beloved to the child), not 'loving' (which would describe the knowledge itself as having the quality of love). The translation shifts the attribute from the method of teaching to the knowledge itself.",
-        "severity": "medium"
+        "why": "محبَّبة means 'made lovable' or 'endearing', not 'loving'. The English 'loving' suggests the knowledge itself loves, which is a meaning shift.",
+        "severity": "low"
       },
       {
         "type": "meaning_change",
         "field": "summary",
         "arabic": "وهذا هدي النبي ﷺ مع الصغار",
         "english": "and this was the guidance of the Prophet ﷺ with children",
-        "why": "The Arabic uses a nominal sentence ('وهذا هدي') indicating a timeless present ('this is the guidance'), while the English uses past tense ('was'). This could imply the guidance is only historical, not ongoing.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "العصفور الذي يطير",
-        "english": "the bird that flies",
-        "why": "The Arabic specifies 'العصفور' (the sparrow), a concrete example, while the English generalizes to 'bird'. This loses the vivid, specific imagery of the original.",
+        "why": "Arabic uses present tense 'وهذا هدي' (this is the guidance), indicating a timeless truth. English shifts to past tense 'was', which could imply it is no longer the case.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:31:56.331806+00:00"
   }
 }

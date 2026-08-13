@@ -18,25 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "english",
-        "arabic": "بلطف",
-        "english": "with rifq (gentleness)",
-        "why": "The Arabic word is 'lutf' (لطف), not 'rifq' (رفق). The translation uses the wrong Islamic term.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "english",
-        "arabic": "صحبته",
-        "english": "His companions",
-        "why": "The Arabic 'صحبته' means 'his companionship' (abstract noun), not 'his companions' (concrete plural). The English shifts from the act to the people, slightly altering the nuance.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:09:28.006648+00:00"
   }
 }

@@ -39,17 +39,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "try_this, reflection_prompts",
-        "arabic": "مرّنه ... هل يعرف",
-        "english": "Train them ... Do they know",
-        "why": "Arabic uses singular masculine pronouns (him/he) referring to the child, while English uses gender-neutral 'them'/'they' which could be interpreted as plural. This shifts the specificity of the original.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:19:17.254799+00:00"
   }
 }

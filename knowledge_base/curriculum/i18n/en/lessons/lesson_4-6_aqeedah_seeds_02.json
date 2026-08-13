@@ -36,10 +36,11 @@
         "field": "summary",
         "arabic": "حتى ينشأ قلبٌ يأنس بربّه",
         "english": "so that a heart grows accustomed to its Lord",
-        "why": "The Arabic verb 'يأنس' conveys a sense of intimacy, comfort, and finding solace, not merely becoming accustomed. The English 'accustomed' loses the emotional and spiritual warmth intended in the original.",
+        "why": "The Arabic verb 'يأنس' conveys intimacy, comfort, and a sense of feeling at home with someone, not mere habituation. 'Grows accustomed to' loses the warmth and spiritual depth, suggesting only familiarity rather than a loving, secure attachment.",
         "severity": "medium"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:29:02.342344+00:00"
   }
 }

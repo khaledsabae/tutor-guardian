@@ -5,13 +5,13 @@
   "age_group": "13-15",
   "domain": "aqeedah",
   "unit_ids": [],
-  "summary": "In an age of display and appearances, teach your teenager to act for Allah’s sake, not to seek the admiration of people. Ikhlas (sincerity) liberates him from the bondage of others’ opinions and gives his deeds a meaning and steadiness that comparisons cannot shake.",
+  "summary": "In an age of display and appearances, teach your teenager to act for Allah’s sake, not to seek the admiration of people. Al-Ikhlas liberates him from the bondage of others’ opinions and gives his deeds a meaning and steadiness that comparisons cannot shake.",
   "try_this": "This week: Talk about the difference between working for Allah and working to show off, using an example from his own life.",
   "order": 3,
   "estimated_minutes": 9,
   "reflection_prompts": [
-    "Does your teenager fall into the trap of seeking people’s admiration?",
-    "How have you introduced him to ikhlas?"
+    "Does your teenager become captive to people’s admiration?",
+    "How have you introduced him to Al-Ikhlas?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -32,14 +32,17 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title, summary, reflection_prompts",
-        "arabic": "الإخلاص",
-        "english": "Al-Ikhlas (title) vs. Ikhlas (summary) vs. ikhlas (prompt)",
-        "why": "The Arabic consistently uses the definite article 'الإخلاص'. The English transliteration is inconsistent: 'Al-Ikhlas' in the title, 'Ikhlas' in the summary, and 'ikhlas' in the reflection prompt. This breaks term consistency within the same document.",
+        "type": "meaning_change",
+        "field": "try_this",
+        "arabic": "تحدّثا",
+        "english": "Talk about",
+        "why": "Arabic uses dual imperative 'تحدّثا' (you two talk), implying a mutual conversation between parent and teenager. English 'Talk about' is ambiguous and could be interpreted as a command to the parent alone, losing the dual nuance.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:58:19.829964+00:00",
+    "fixed_at": "2026-08-13T18:58:19.829985+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

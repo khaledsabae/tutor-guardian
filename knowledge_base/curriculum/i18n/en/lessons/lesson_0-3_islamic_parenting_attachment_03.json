@@ -7,8 +7,8 @@
   "unit_ids": [
     "isl-3703ac71"
   ],
-  "summary": "A child communicates from the first months: through crying, smiling, and eye contact. A parent who responds to their child’s communication builds what psychology calls 'secure attachment'—and this is exactly what Islam guided us toward in showing rahmah (mercy) and care for children. Communication does not only mean speech—it means presence: looking into their eyes, smiling so they smile back, imitating their sounds in the early months. A parent who is present in body and heart raises a child confident in themselves and the world around them.",
-  "try_this": "Ten minutes daily: put your phone aside completely, sit with your child on the floor, and let them lead the play. If they point to something, say its name: 'Yes, that’s a...' If they make a sound, imitate it. If they smile, mirror their smile. This is called 'synchronous responsiveness'—the most powerful tool for building secure attachment in modern psychology, and it is the practical application of the Prophetic rahmah (mercy) ﷺ.",
+  "summary": "A child communicates from the first months: through crying, smiling, and eye contact. A father who responds to his child’s communication builds what psychology calls 'secure attachment'—and this is exactly what Islam guided in rahmah and care for children. Communication does not only mean speech—it means presence: looking into his eyes, smiling so he smiles back, imitating his sounds in the early months. A father who is present in body and heart raises a child confident in himself and the world around him.",
+  "try_this": "Ten minutes daily: put your phone aside completely, sit with your child on the floor, and let him lead the play. If he points to something, say its name: 'Yes, that...' If he makes a sound, imitate it. If he smiles, mirror his smile. This is called 'synchronous responsiveness'—the most powerful tool for building secure attachment in modern psychology, and it is the practical application of the Prophetic value of rahmah in its practical form.",
   "order": 3,
   "estimated_minutes": 39,
   "reflection_prompts": [
@@ -35,30 +35,25 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "summary",
-        "arabic": "الرحمة",
-        "english": "rifq (gentleness)",
-        "why": "The Arabic says 'الرحمة' (mercy), but the English translates it as 'rifq' (gentleness) and introduces the Arabic term 'rifq' which is not in the source. This replaces the Islamic concept of mercy with a different term.",
-        "severity": "medium"
-      },
-      {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "الأب",
-        "english": "A parent",
-        "why": "The Arabic specifically says 'الأب' (the father), but the English generalizes to 'A parent', losing the original emphasis on the father's role.",
+        "arabic": "وهو بالضبط ما أرشد إليه الإسلام في الرحمة والاهتمام بالأبناء",
+        "english": "and this is exactly what Islam guided in rahmah and care for children",
+        "why": "The Arabic says 'guided to it in mercy and care' (أرشد إليه في), but the English says 'guided in', which changes the meaning from Islam guiding to secure attachment through mercy, to Islam guiding in the area of mercy.",
         "severity": "low"
       },
       {
-        "type": "term_error",
+        "type": "meaning_change",
         "field": "try_this",
-        "arabic": "الرحمة النبوية",
-        "english": "Prophetic rifq ﷺ",
-        "why": "The Arabic says 'الرحمة النبوية' (Prophetic mercy), but the English translates it as 'Prophetic rifq' and adds the honorific ﷺ not present in the source. The term 'rifq' is not equivalent to 'rahma'.",
-        "severity": "medium"
+        "arabic": "وهو تطبيق لقيمة الرحمة النبوية بشكلها العملي",
+        "english": "and it is the practical application of the Prophetic value of rahmah in its practical form",
+        "why": "The Arabic says 'the value of Prophetic mercy' (الرحمة النبوية), but the English says 'the Prophetic value of rahmah', which shifts the focus from mercy itself to a value, and the phrase 'in its practical form' is redundant with 'practical application'.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:42:41.119610+00:00",
+    "fixed_at": "2026-08-13T19:42:41.119625+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

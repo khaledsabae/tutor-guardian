@@ -34,20 +34,13 @@
       {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "رسله",
-        "english": "the messengers",
-        "why": "The Arabic possessive pronoun 'his' (referring to Allah) is omitted, making it 'the messengers' instead of 'His messengers'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "ده بيغيّر إيه في حياتنا؟",
-        "english": "How does this change our lives?",
-        "why": "The Arabic colloquial question asks 'What does this change in our lives?' (focus on the specific changes), while the English asks 'How does this change our lives?' (focus on the manner). The meaning is slightly altered, and the warm, direct dialect is lost.",
+        "arabic": "وكتبه ورسله",
+        "english": "the books of Allah, the messengers",
+        "why": "The Arabic possessive pronoun 'His' (referring to Allah) is attached to both 'books' and 'messengers', but the English translation only applies it to 'books' and omits it for 'messengers', resulting in a slight loss of the explicit connection to Allah.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:18:28.059461+00:00"
   }
 }

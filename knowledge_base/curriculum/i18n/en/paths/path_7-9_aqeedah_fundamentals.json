@@ -3,7 +3,7 @@
   "title": "Foundations of Aqeedah — Planting Iman in the Young",
   "age_group": "7-9",
   "domain": "aqeedah",
-  "description": "A 10-lesson pathway where the father/mother teaches the correct Islamic aqeedah to their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.",
+  "description": "A 10-lesson pathway where the father/mother teaches the foundations of the correct Islamic aqeedah to their children (ages 3-12). Built upon the Qur’an and Sunnah according to the understanding of the Salaf of the Ummah, far from disputes.",
   "lesson_ids": [
     "lesson_7-9_aqeedah_fundamentals_01",
     "lesson_7-9_aqeedah_fundamentals_02",
@@ -44,12 +44,15 @@
       {
         "type": "meaning_change",
         "field": "description",
-        "arabic": "مسار 10 دروس قصيرة يُعلّم الأب/الأم أسس العقيدة الإسلامية الصحيحة لتعليم أطفالهم",
-        "english": "A 10-lesson pathway where the father/mother teaches the correct Islamic aqeedah to their children",
-        "why": "The Arabic specifies 'أسس العقيدة' (foundations of the creed), but the English omits 'foundations' and says 'the correct Islamic aqeedah', implying the entire creed is taught rather than just its foundations.",
-        "severity": "medium"
+        "arabic": "مسار 10 دروس قصيرة",
+        "english": "A 10-lesson pathway",
+        "why": "The Arabic specifies 'short lessons' (دروس قصيرة), but the English omits 'short', losing the emphasis on brevity.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:18:22.728493+00:00",
+    "fixed_at": "2026-08-13T18:18:22.728503+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

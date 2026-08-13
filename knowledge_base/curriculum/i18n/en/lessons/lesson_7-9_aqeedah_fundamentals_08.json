@@ -29,35 +29,11 @@
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
-      "reviewer_model": false
+      "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "وخصّصا وقتاً قصيراً يومياً",
-        "english": "And set aside a short time daily",
-        "why": "The Arabic uses the dual imperative 'خصّصا', addressing parent and child together, emphasizing a joint activity. The English imperative 'set aside' loses this nuance and can be read as directed at the parent alone.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "نحرص أن نُمليه الخير",
-        "english": "we strive to dictate good to him",
-        "why": "'نحرص' means 'we are keen' or 'we make sure', not 'we strive'. The English introduces an element of effort not present in the Arabic.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "دون أن يكون تكليفاً ثقيلاً",
-        "english": "without it feeling like a heavy obligation",
-        "why": "The Arabic describes the teaching itself as a heavy obligation (objective), while the English shifts to the child's subjective feeling. This changes the focus from the parent's approach to the child's perception.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:34:01.743698+00:00"
   }
 }

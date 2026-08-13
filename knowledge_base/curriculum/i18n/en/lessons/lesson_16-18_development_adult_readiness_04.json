@@ -11,7 +11,7 @@
   "estimated_minutes": 7,
   "reflection_prompts": [
     "Who influences your son the most these days?",
-    "Does he know how to set a boundary gently?"
+    "Does he know how to set a boundary politely?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -29,17 +29,11 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "هل يعرف كيف يضع حدّاً بأدب؟",
-        "english": "Does he know how to set a boundary with *rifq* (gentleness)?",
-        "why": "The Arabic uses 'بأدب' (with adab/politeness), not 'rifq'. The translation introduces a different Islamic term and changes the meaning from politeness to gentleness.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:00:03.327273+00:00",
+    "fixed_at": "2026-08-13T19:00:03.327283+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

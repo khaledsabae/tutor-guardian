@@ -1,16 +1,16 @@
 {
   "id": "lesson_10-12_islamic_parenting_worship_love_01",
   "path_id": "path_10-12_islamic_parenting_worship_love",
-  "title": "As-Salah with Mahabbah, Not Ijbar",
+  "title": "As-Salah with Mahabbah, Not Compulsion",
   "age_group": "10-12",
   "domain": "islamic_parenting",
   "unit_ids": [],
   "summary": "By the age of ten, the command regarding salah intensifies, yet compulsion alone breeds aversion. Connect salah to serenity and the meeting with Allah. Pray before him with visible khushu’, and praise his commitment without a sense of minn (favour). Love establishes what coercion cannot.",
-  "try_this": "This week: Pray one salah beside your child with evident khushu’, then speak together afterwards about the meaning of standing in the presence of Allah.",
+  "try_this": "This week: Pray one salah beside your son with evident khushu’, then speak together afterwards about the meaning of standing in the presence of Allah.",
   "order": 1,
   "estimated_minutes": 8,
   "reflection_prompts": [
-    "How does your child perform his salah now?",
+    "How does your son perform his salah now?",
     "Does he see it as a heavy duty or as a meeting?"
   ],
   "warning_flags": [],
@@ -32,38 +32,17 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "محبّةً لا إلزاماً",
-        "english": "with Mahabbah, Not Ijbar",
-        "why": "Ijbar is not a standard Islamic term; it is simply Arabic for 'compulsion'. The summary uses 'coercion' instead, creating inconsistency. 'Mahabbah' is also transliterated while the summary uses 'Love'.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
+        "type": "meaning_change",
         "field": "summary",
-        "arabic": "دون منٍّ",
-        "english": "without a sense of minn (favour)",
-        "why": "minn is not a technical Islamic term; it is an ordinary Arabic word meaning favour or obligation. Transliterating it is unnecessary and inconsistent with the use of English for similar concepts elsewhere.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "ابنك",
-        "english": "your child",
-        "why": "Arabic specifies 'your son' (ابنك), but the English generalizes to 'your child', losing the explicit gender reference.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "ابنك",
-        "english": "your child",
-        "why": "Same as above: Arabic says 'your son', but English uses 'your child'.",
+        "arabic": "صلِّ أمامه بخشوع",
+        "english": "Pray before him with visible khushu’",
+        "why": "The Arabic does not include 'ظاهر' (visible). The English adds 'visible' which is not in the source text. The try_this section does contain 'بخشوعٍ ظاهر', but the summary does not.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:04:09.392184+00:00",
+    "fixed_at": "2026-08-13T18:04:09.392194+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

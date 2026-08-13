@@ -22,13 +22,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "question",
-        "arabic": "ما آخر شيء تعلمته وأفادت به غيرك؟",
-        "english": "What is the last thing you learned and benefited others with?",
-        "why": "The Arabic includes 'به' (with it), explicitly linking the benefit to the learned thing. The English omits this pronoun, making the benefit general rather than specifically through that knowledge.",
-        "severity": "medium"
+        "field": "english.text",
+        "arabic": "وأفادت به غيرك",
+        "english": "and benefited others with",
+        "why": "Arabic verb 'أفادت' is third person feminine singular, but English translates as second person 'you benefited'. The Arabic likely contains a typo, but the translation changes the subject from 'it benefited' to 'you benefited'.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:10:51.272746+00:00"
   }
 }

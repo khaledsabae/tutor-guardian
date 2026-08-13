@@ -36,13 +36,22 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "واتفقا على قيدٍ واحد سترفعانه تدريجيًا",
-        "english": "Agree on one restriction you will lift gradually",
-        "why": "The Arabic uses dual form 'you both' (parent and son) to emphasize mutual agreement and joint action in lifting the restriction. The English uses singular 'you', losing the collaborative nuance.",
-        "severity": "medium"
+        "field": "summary",
+        "arabic": "وقيادة ابنك أول سيارة علامة استقلالية طبيعية لا تمرّد يستدعي قلقًا زائدًا",
+        "english": "Your son’s first car is a natural sign of independence, not rebellion that warrants excessive concern.",
+        "why": "The Arabic emphasizes the act of driving (قيادة) as the sign of independence, not just the car itself. The English omits this nuance, changing the subject from the driving to the car.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "يبدأ بمنع القيادة الليلية واصطحاب أصدقاء",
+        "english": "it starts with prohibiting night driving and carrying friends",
+        "why": "The Arabic 'اصطحاب أصدقاء' means 'accompanying friends' or 'having friends in the car', not 'carrying friends' which is awkward and could be misinterpreted.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:24:30.109641+00:00"
   }
 }

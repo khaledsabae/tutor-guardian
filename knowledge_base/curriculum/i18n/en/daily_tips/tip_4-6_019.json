@@ -2,7 +2,7 @@
   "id": "tip_4-6_019",
   "age_group": "4-6",
   "domain": "medical",
-  "text": "Tonight: if your child has had a difficult day (a problem at the nursery, a change in routine), give him a little more time before you expect him to calm down. Don’t ask, ‘What happened?’ right away.",
+  "text": "Tonight: if your child has had a difficult day (a problem at the nursery, a change in routine), give him a longer time before you expect him to calm down. Don’t ask, ‘What happened?’ right away.",
   "unit_id": "f5fe6883-0fbe-4e55-947d-4d7653c91169",
   "day_of_week": 3,
   "time_of_day": "evening",
@@ -26,17 +26,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "اعطه وقتاً أطول",
-        "english": "give him a little more time",
-        "why": "The Arabic says 'give him longer time' without the qualifier 'a little'. The English adds 'a little', softening the instruction slightly.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:54:17.527447+00:00",
+    "fixed_at": "2026-08-13T18:54:17.527461+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

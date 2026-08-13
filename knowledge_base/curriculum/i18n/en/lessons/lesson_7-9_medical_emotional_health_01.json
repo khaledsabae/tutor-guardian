@@ -10,7 +10,7 @@
     "0b45c31c-5888-442b-a64f-d80e9b140e7f",
     "b25fcddc-6765-4e00-9d40-1ac90f97f3b4"
   ],
-  "summary": "Recurring tantrums, intense anxiety, or a mood that is disturbed most of the day—these are signs that require intervention. Teach your child to name their feelings (\"I am angry\"), breathing techniques, and when to ask for help.",
+  "summary": "Recurring tantrums, intense anxiety, or a mood that is disturbed most of the day—these are signs that require intervention. Teach your child to name their feelings (\"I am angry\"), a breathing technique, and when to ask for help.",
   "try_this": "Create a \"Calm Box\" together: paper, pens, a stress ball, soothing pictures. When they are angry, go to them together, choose a tool, and discuss after 10 minutes: What happened?",
   "order": 1,
   "estimated_minutes": 7,
@@ -37,33 +37,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "اذهبا له",
-        "english": "go to them",
-        "why": "The Arabic 'له' refers to the box (masculine singular 'it'), not 'them'. The instruction is to go to the calm box, not to the child.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "كم مرة استخدم الصندوق هذا الأسبوع؟",
-        "english": "How many times was the box used this week?",
-        "why": "The Arabic is active ('How many times did he use the box?'), referring to the child's usage. The English passive omits the subject, changing the focus.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "ما الأداة التي فضّلها؟",
-        "english": "Which tool did they prefer?",
-        "why": "The Arabic uses singular masculine 'he preferred' (فضّلها), while the English uses 'they', shifting from specific singular to gender-neutral/plural.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:06:16.771618+00:00",
+    "fixed_at": "2026-08-13T19:06:16.771632+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -34,17 +34,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "واضحكا",
-        "english": "and laugh",
-        "why": "Arabic uses dual imperative 'واضحكا' meaning 'and laugh (both of you)', explicitly including the child. English 'and laugh' loses the dual, making it ambiguous who laughs.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:26:55.964271+00:00"
   }
 }

@@ -13,7 +13,7 @@
   "order": 4,
   "estimated_minutes": 5,
   "reflection_prompts": [
-    "My infant cries constantly. Should I leave him to cry to avoid spoiling him with excessive pampering?",
+    "My infant cries constantly. Should I leave him to cry to avoid spoiling him with pampering?",
     "My child is having a tantrum and refuses to stop screaming. How do I handle this with rifq?"
   ],
   "warning_flags": [],
@@ -33,17 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "هل أتركه يبكي لتجنب إفساده بالدلال؟",
-        "english": "Should I leave him to cry to avoid spoiling him with excessive pampering?",
-        "why": "The Arabic says 'إفساده بالدلال' (spoiling him with pampering) without qualification. The English adds 'excessive', which changes the meaning by implying that only excessive pampering is harmful, whereas the Arabic suggests pampering itself could spoil.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:02:35.793801+00:00",
+    "fixed_at": "2026-08-13T19:02:35.793814+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

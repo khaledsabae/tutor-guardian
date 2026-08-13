@@ -9,13 +9,13 @@
     "isl-1812a28d",
     "isl-199c7aaf"
   ],
-  "summary": "Between the ages of 13 and 15, the adolescent begins to ask: \"Why pray? Why is this haram? Does Allah exist?\" — this is not rebellion, but a search for certainty. Parents: do not silence the question. Say: \"Excellent question, let’s explore it together.\" Present rational and heartfelt evidence, and refer to a book or a trusted scholar.",
-  "try_this": "This week: choose one doubt your child often raises, search together for an answer (a book or a clip by a trusted scholar), and discuss: what convinced you?",
+  "summary": "Between the ages of 13 and 15, the adolescent begins to ask: \"Why pray? Why haram? Does Allah exist?\" — this is not rebellion, but a search for certainty. Parents: do not silence the question. Say: \"Excellent question, let’s explore it together.\" Present rational and heartfelt evidence, and refer to a book or a trusted scholar.",
+  "try_this": "This week: choose one doubt your son often raises, search together for an answer (a book or a clip by a trusted scholar), and discuss: what convinced you?",
   "order": 1,
   "estimated_minutes": 28,
   "reflection_prompts": [
-    "What doubt did your child raise?",
-    "Did they feel reassured after the discussion?"
+    "What doubt did your son raise?",
+    "Did he feel reassured after the discussion?"
   ],
   "warning_flags": [
     "إصرار على الإلحاد/الرفض التام للدين",
@@ -36,33 +36,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "ابنكم",
-        "english": "your child",
-        "why": "Arabic specifies 'your son' (masculine), English uses gender-neutral 'your child', losing the original gender reference.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "ابنك",
-        "english": "your child",
-        "why": "Arabic 'ابنك' (your son) is translated as 'your child', omitting the masculine gender.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "شعر",
-        "english": "they felt",
-        "why": "Arabic uses masculine singular 'شعر' (he felt), English uses gender-neutral 'they felt'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:58:32.526347+00:00",
+    "fixed_at": "2026-08-13T18:58:32.526362+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

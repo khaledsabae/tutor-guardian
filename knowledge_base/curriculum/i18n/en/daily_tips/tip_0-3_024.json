@@ -22,21 +22,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": [
-          "meaning_change",
-          "term_error"
-        ],
-        "field": "english.text",
-        "arabic": "أماناً",
-        "english": "amanah (trust)",
-        "why": "The Arabic word 'أماناً' (amanan) means 'security' or 'safety', not 'amanah' (أمانة) which is a distinct Islamic term meaning 'trust' or 'honesty'. The translation introduces a religiously loaded term not present in the source and changes the meaning from 'security' to 'trust'.",
-        "severity": "high"
-      }
-    ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:08:50.926673+00:00"
+  }
 }

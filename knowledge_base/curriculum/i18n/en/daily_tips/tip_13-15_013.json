@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "مزيفاً",
-        "english": "counterfeits",
-        "why": "The Arabic uses the singular 'مزيفاً' (a counterfeit), while the English uses the plural 'counterfeits'. This is a minor shift in number, though the generic sense is preserved.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:11:07.268808+00:00"
   }
 }

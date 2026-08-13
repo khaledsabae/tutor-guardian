@@ -1,9 +1,9 @@
 {
   "id": "path_2-3_islamic_first_words",
-  "title": "Awl al-Kalimāt al-Ṭayyibah: Bidhrah al-Lisān al-Dhākir (2-3 Years)",
+  "title": "Awwal al-Kalimāt al-Ṭayyibah: Bidhrah al-Lisān al-Dhākir (2-3 Years)",
   "age_group": "2-3",
   "domain": "islamic_parenting",
-  "description": "A path to assist parents in planting the first words of dhikr and adab in their toddler’s tongue: the basmalah, al-ḥamd, salām, and the good word—beginning with qudwah (example), not talqīn (instruction).",
+  "description": "A path to assist parents in planting the first words of dhikr and adab in their toddler’s tongue: the basmalah, al-ḥamd, salām, and the good word—and the first adab by qudwah (example), not talqīn (instruction).",
   "lesson_ids": [
     "lesson_2-3_islamic_first_words_01",
     "lesson_2-3_islamic_first_words_02",
@@ -31,33 +31,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "أول الكلمات الطيّبة: بذرةُ اللسان الذاكر (2-3 سنوات)",
-        "english": "Awl al-Kalimāt al-Ṭayyibah: Bidhrah al-Lisān al-Dhākir (2-3 Years)",
-        "why": "The title is transliterated rather than translated, so the meaning ('The First Good Words: The Seed of the Remembering Tongue') is lost to an English reader.",
-        "severity": "medium"
-      },
-      {
-        "type": "term_error",
-        "field": "description",
-        "arabic": "الحمد ... السلام",
-        "english": "al-ḥamd ... salām",
-        "why": "Inconsistent treatment of the definite article: 'al-ḥamd' retains the article, while 'salām' drops it. Both Arabic terms carry the article (ال).",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "وأول الآداب بالقدوة لا التلقين",
-        "english": "beginning with qudwah (example), not talqīn (instruction)",
-        "why": "The phrase 'وأول الآداب' (and the first etiquettes) is omitted, and the sentence is restructured to 'beginning with...', shifting the focus from the first etiquettes being taught by example to the entire path beginning with example.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:18:07.570936+00:00",
+    "fixed_at": "2026-08-13T18:18:07.570948+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

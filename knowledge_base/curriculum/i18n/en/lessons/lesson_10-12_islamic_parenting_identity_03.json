@@ -11,7 +11,7 @@
     "a9219a05-46a1-4ece-8961-686d0d27f960"
   ],
   "summary": "In the years before adolescence, khuluq is put to the test: amanah (trustworthiness) in secret and in public, truthfulness in difficult situations, and birr al-walidayn (filial piety) in action. Parents: be the mirror, and righteous companionship is a shield.",
-  "try_this": "This week: challenge your family together with \"Amanah Week\"—each member records a difficult situation in which they chose amanah. Discuss the outcomes.",
+  "try_this": "This week: challenge together \"Amanah Week\"—each member records a difficult situation in which they chose amanah. Discuss the outcomes.",
   "order": 3,
   "estimated_minutes": 47,
   "reflection_prompts": [
@@ -34,17 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title, summary",
-        "arabic": "الصدق",
-        "english": "Truthfulness",
-        "why": "The term 'sidq' is translated as 'truthfulness' while other key Islamic terms like 'amanah' and 'birr' are transliterated, creating inconsistency in the treatment of Arabic terms.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:56:23.615839+00:00",
+    "fixed_at": "2026-08-13T18:56:23.615857+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

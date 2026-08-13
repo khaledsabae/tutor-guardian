@@ -3,7 +3,7 @@
   "title": "Ath-Thabat al-Akhlaqi fi Zaman al-Fitan (13-15 Years)",
   "age_group": "13-15",
   "domain": "islamic_parenting",
-  "description": "A path to assist parents in grounding their teenager’s akhlaq (moral character) amidst fitan (trials): ‘iffah (chastity) and the onset of instinct, companionship in the age of social media, ikhlas (sincerity), and building a conscience that watches over Allah.",
+  "description": "A path to assist parents in steadfasting their teenager’s akhlaq amidst fitan (trials): ‘iffah (chastity) and the early stages of instinct, companionship in the age of social media, ikhlas (sincerity), and building a conscience that is mindful of Allah.",
   "lesson_ids": [
     "lesson_13-15_islamic_parenting_steadfast_01",
     "lesson_13-15_islamic_parenting_steadfast_02"
@@ -34,12 +34,15 @@
       {
         "type": "meaning_change",
         "field": "description",
-        "arabic": "وبناء ضميرٍ يراقب الله",
-        "english": "and building a conscience that watches over Allah",
-        "why": "The Arabic means a conscience that is mindful of Allah (i.e., watches Allah, is conscious of Him). The English says 'watches over Allah', which reverses the meaning and implies the conscience is supervising Allah, a serious theological error.",
-        "severity": "high"
+        "arabic": "تثبيت",
+        "english": "steadfasting",
+        "why": "'Steadfasting' is not a standard English verb; the Arabic 'تثبيت' means 'making firm' or 'strengthening'. The translation uses a non-standard word that may confuse readers.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:06:56.461187+00:00",
+    "fixed_at": "2026-08-13T19:06:56.461199+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

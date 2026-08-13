@@ -3,7 +3,7 @@
   "title": "The Secure Bond and Mercy (2-3 years)",
   "age_group": "2-3",
   "domain": "islamic_parenting",
-  "description": "Building secure attachment and dealing with tantrums with rifq (gentleness), combining the Prophetic mercy ﷺ and evidence-based boundary-setting.",
+  "description": "Building secure attachment and dealing with tantrums with rifq (gentleness), combining the Prophetic mercy and evidence of boundary-setting.",
   "lesson_ids": [
     "lesson_2-3_islamic_attachment_b01",
     "lesson_2-3_islamic_attachment_b02",
@@ -37,13 +37,16 @@
     "review_defects": [
       {
         "type": "meaning_change",
+        "severity": "low",
         "field": "description",
         "arabic": "أدلة وضع الحدود",
-        "english": "evidence-based boundary-setting",
-        "why": "The Arabic 'أدلة وضع الحدود' means 'the proofs/evidences of setting boundaries', referring to Islamic textual proofs. The English 'evidence-based boundary-setting' shifts the meaning to a modern psychological term, potentially implying secular evidence rather than Islamic sources.",
-        "severity": "medium"
+        "english": "evidence of boundary-setting",
+        "why": "The Arabic uses the plural 'أدلة' (proofs/evidences), while the English uses the singular 'evidence'. This changes the nuance from multiple proofs to a general concept."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:17:51.652381+00:00",
+    "fixed_at": "2026-08-13T18:17:51.652391+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

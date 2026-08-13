@@ -2,7 +2,7 @@
   "id": "tip_2-3_009",
   "age_group": "2-3",
   "domain": "development",
-  "text": "Name your child’s feelings for him with a simple word in the moment (\"You’re happy,\" \"This is frustration\"); he needs to know the name of the feeling before he can learn to manage it.",
+  "text": "Name your child’s feelings for him with a simple word in the moment (\"You’re happy,\" \"This is frustration\"); he needs to know the name of the feeling before he learns to manage it.",
   "unit_id": null,
   "day_of_week": 1,
   "time_of_day": "anytime",
@@ -24,6 +24,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:50.225189+00:00",
+    "fixed_at": "2026-08-13T18:53:50.225203+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

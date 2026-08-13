@@ -34,8 +34,18 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "summary, try_this, reflection_prompts",
+        "arabic": "ابنك",
+        "english": "your child",
+        "why": "The Arabic consistently uses 'ابنك' (your son), addressing parents of a male child. The English translation generalizes to 'your child', losing the specific gender reference.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:21:41.349859+00:00"
   }
 }

@@ -31,35 +31,20 @@
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
-      "reviewer_model": true
+      "reviewer_model": false
     },
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "title",
-        "arabic": "سنن الفطرة",
-        "english": "Sunnan al-Fitrah",
-        "why": "Incorrect transliteration; the standard transliteration for سنن is 'Sunan', not 'Sunnan'.",
-        "severity": "low"
-      },
-      {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "بناء هوية الطفل الإسلامية",
-        "english": "the foundation of the child’s Islamic identity",
-        "why": "The Arabic 'بناء' means 'building' or 'construction', not 'foundation' (which would be 'أساس'). The nuance of an active, ongoing process is lost.",
-        "severity": "low"
-      },
-      {
-        "type": "term_error",
-        "field": "reflection_prompts[1]",
-        "arabic": "سنن الاستقبال",
-        "english": "sunnan of welcoming",
-        "why": "Inconsistent transliteration; should be 'sunan' to match the standard and the earlier use of 'Sunan' in the title (if corrected).",
+        "arabic": "هي بناء هوية الطفل الإسلامية منذ يومه الأول",
+        "english": "they are the foundation of the child’s Islamic identity from their very first day",
+        "why": "The Arabic 'بناء' means 'building' or 'construction', indicating an active process. The English 'foundation' changes the metaphor to a static base, altering the nuance.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:17:27.735471+00:00"
   }
 }

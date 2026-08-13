@@ -2,7 +2,7 @@
   "id": "tip_10-12_009",
   "age_group": "10-12",
   "domain": "cyber",
-  "text": "Your digital footprint is never erased. Before you post, ask yourself: \"Would I be pleased for my teacher or my grandfather to see this in ten years?\"",
+  "text": "Your digital footprint is never erased. Before it is published, ask yourself: \"Would I be pleased for my teacher or my grandfather to see this in ten years?\"",
   "unit_id": "40f84fca-81b0-4533-8c7c-a0dbbf8a4598",
   "day_of_week": 0,
   "time_of_day": "evening",
@@ -20,6 +20,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:29.288998+00:00",
+    "fixed_at": "2026-08-13T18:52:29.289014+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

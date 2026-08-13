@@ -2,7 +2,7 @@
   "id": "tip_0-3_015",
   "age_group": "0-3",
   "domain": "cyber",
-  "text": "No screens an hour before sleep—the blue light kills melatonin. Routine: bath, story, du'a, sleep. Electronic games before bed = late sleep + night waking + bad mood in the morning.",
+  "text": "No screens an hour before sleep—the blue light kills melatonin. Routine: bath, story, du'a, sleep. Electronic games before bed = going to sleep late + night waking + bad mood in the morning.",
   "unit_id": "cyb-9802937c",
   "day_of_week": 2,
   "time_of_day": "bedtime",
@@ -29,6 +29,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:51:59.576065+00:00",
+    "fixed_at": "2026-08-13T18:51:59.576083+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

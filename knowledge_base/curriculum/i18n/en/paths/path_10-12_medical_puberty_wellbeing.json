@@ -3,7 +3,7 @@
   "title": "Physical and Psychological Health: Navigating Adolescence with Safety (Ages 10-12)",
   "age_group": "10-12",
   "domain": "medical",
-  "description": "A medical/tarbiyah pathway covering physical changes (puberty), school/social pressures, anxiety/depression, healthy habits, and when parents should seek specialized help.",
+  "description": "A medical/tarbiyah pathway covering physical changes (puberty), school/social pressures, anxiety/depression, healthy habits, and when parents seek specialized help.",
   "lesson_ids": [
     "lesson_10-12_medical_puberty_wellbeing_01",
     "lesson_10-12_medical_puberty_wellbeing_02",
@@ -32,17 +32,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "ومتى يطلب الوالدان مساعدة متخصصة",
-        "english": "and when parents should seek specialized help",
-        "why": "The Arabic describes the pathway as covering the topic of when parents seek help, without prescribing. The English adds 'should', turning it into a recommendation, which slightly shifts the meaning.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:06:37.223891+00:00",
+    "fixed_at": "2026-08-13T19:06:37.223905+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -1,6 +1,6 @@
 {
   "id": "path_16-18_development_adult_readiness",
-  "title": "Maturity and Independence: Preparing Your Youth for Adult Life (16-18 Years)",
+  "title": "Maturity and Independence: Preparing Your Young Man for Adult Life (16-18 Years)",
   "age_group": "16-18",
   "domain": "development",
   "description": "A path to help parents prepare their son for adult life: understanding the maturity of the adolescent brain and managing impulsivity, mastering independent life skills, nurturing his psychological health under the pressure of the future, and building mature relationships with healthy boundaries.",
@@ -33,6 +33,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:07:10.462965+00:00",
+    "fixed_at": "2026-08-13T19:07:10.462977+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

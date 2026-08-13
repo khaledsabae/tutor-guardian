@@ -55,10 +55,11 @@
         "field": "summary",
         "arabic": "طفلك يراقب لا يسمع",
         "english": "your child watches, not just listens",
-        "why": "The Arabic is absolute: 'your child watches, not listens' (i.e., they imitate actions, not words). Adding 'just' softens the statement, implying they do listen but also watch, which changes the intended meaning.",
+        "why": "The Arabic says the child watches and does not listen (absolute negation). The English softens this to 'not just listens', implying they do listen but watching is more important. The meaning is altered.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:20:50.433341+00:00"
   }
 }

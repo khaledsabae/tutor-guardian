@@ -2,7 +2,7 @@
   "id": "tip_4-6_001",
   "age_group": "4-6",
   "domain": "islamic_parenting",
-  "text": "Before you reprimand your child, take a deep breath. The Prophet ﷺ said: 'Indeed, Allah is Rafeeq (Most Kind) and loves rifq (gentleness) in all things' — and rifq begins with the tone of your voice before your words.",
+  "text": "Before you reprimand your child, take a deep breath. The Prophet said: 'Indeed, Allah is Rafeeq and loves rifq in all things' — and rifq begins with the tone of your voice before your words.",
   "unit_id": "0bd76d3c-548a-46ed-b17b-78874741662a",
   "day_of_week": 0,
   "time_of_day": "anytime",
@@ -29,14 +29,23 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "religious_error",
+        "type": "term_error",
         "field": "english.text",
         "arabic": "إن الله رفيق يحب الرفق في كل شيء",
-        "english": "Indeed, Allah is Rafeeq (Most Kind) and loves rifq (gentleness) in all things",
-        "why": "The Arabic says 'رفيق' (Rafeeq, meaning gentle/kind) without the superlative 'Most'. The English adds 'Most Kind', which is an intensification not present in the original hadith.",
-        "severity": "low"
+        "english": "Indeed, Allah is Rafeeq and loves rifq in all things",
+        "description": "The key Islamic terms 'رفيق' (Gentle/Kind) and 'الرفق' (gentleness/kindness) are transliterated without translation or gloss, leaving the hadith's meaning opaque to English readers. The subsequent use of 'rifq' in the commentary compounds the issue."
+      },
+      {
+        "type": "structure",
+        "field": "english.text",
+        "arabic": "النبي ﷺ",
+        "english": "The Prophet",
+        "description": "The honorific 'ﷺ' is dropped in the English rendering."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:54:03.974436+00:00",
+    "fixed_at": "2026-08-13T18:54:03.974456+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

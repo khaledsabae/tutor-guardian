@@ -2,7 +2,7 @@
   "id": "tip_16-18_014",
   "age_group": "16-18",
   "domain": "cyber",
-  "text": "AI Ethics in University/Work: Do not cheat with ChatGPT. Use it for reflection, not as a substitute for effort. Cite your sources and verify the information.",
+  "text": "AI Ethics at University/Work: Do not cheat with ChatGPT. Use it for reflection, not as a substitute for effort. Cite your sources and verify the information.",
   "unit_id": "cyb-26236b19",
   "day_of_week": 2,
   "time_of_day": "evening",
@@ -20,6 +20,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:25.647839+00:00",
+    "fixed_at": "2026-08-13T18:53:25.647859+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

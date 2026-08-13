@@ -33,37 +33,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "اتفق مع ابنك على هدفٍ صيامي مناسب، واحتفِ بإنجازه",
-        "english": "Agree with your child on a suitable fasting goal, and celebrate their achievement",
-        "why": "Arabic specifically addresses a son (ابنك) and uses masculine pronoun (إنجازه). English generalizes to 'your child' and 'their', losing the direct, gendered address.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "كيف تجربة ابنك مع الصيام؟",
-        "english": "How was your child’s experience with fasting?",
-        "why": "Same gender generalization: 'ابنك' (your son) becomes 'your child'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "ما الذي يحبّبه فيه؟",
-        "english": "What makes it appealing to them?",
-        "why": "Arabic asks 'What makes him love it?' (personal, emotional). English uses 'appealing' (more detached) and 'them' instead of 'him', shifting both meaning and warmth.",
-        "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "reflection_prompts[1]",
-        "arabic": "ما الذي يحبّبه فيه؟",
-        "english": "What makes it appealing to them?",
-        "why": "The Arabic is warm and direct ('makes him love it'), while the English is clinical ('makes it appealing'). The emotional connection is weakened.",
+        "field": "title",
+        "arabic": "تدرّجٌ وتحفيز",
+        "english": "Gradual Training and Motivation",
+        "why": "The Arabic noun 'تدرّج' means gradualness or gradual progression, not 'training'. The English misrepresents the concept as 'training', which is a different word (تدريب) used later in the summary.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:20:17.282961+00:00"
   }
 }

@@ -22,17 +22,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english",
-        "arabic": "القدوة العملية منك أبلغ من ألف توجيه",
-        "english": "practical qudwa (example) from you is more powerful than a thousand pieces of advice",
-        "why": "أبلغ means more eloquent/effective, not just 'powerful'; توجيه means guidance/direction, not 'advice'; the definite article 'the' is missing before 'practical qudwa'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:13:35.198523+00:00"
   }
 }

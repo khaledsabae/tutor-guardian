@@ -2,7 +2,7 @@
   "id": "tip_10-12_015",
   "age_group": "10-12",
   "domain": "cyber",
-  "text": "Trusted sources: official websites, international organisations, certified experts. Teach him: \"If it seems too incredible to believe, it is most likely false.\"",
+  "text": "Trusted sources: official websites, international organisations, certified experts. Teach him: \"If it seems too incredible to believe, it is most likely a lie.\"",
   "unit_id": "cyb-65ff3533",
   "day_of_week": 3,
   "time_of_day": "evening",
@@ -18,17 +18,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "لو كان مستحيل التصديق، غالباً كذب",
-        "english": "If it seems too incredible to believe, it is most likely false.",
-        "why": "The English adds 'seems', which is not in the Arabic. The Arabic is absolute ('If it is impossible to believe, it is often a lie'), while the English softens it by making it about appearance.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:52:38.635156+00:00",
+    "fixed_at": "2026-08-13T18:52:38.635173+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

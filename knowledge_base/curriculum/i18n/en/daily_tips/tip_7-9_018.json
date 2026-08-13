@@ -2,7 +2,7 @@
   "id": "tip_7-9_018",
   "age_group": "7-9",
   "domain": "medical",
-  "text": "If your child is easily distracted, forgetful, and doesn’t complete tasks—it may be ADHD. A consistent routine, divided tasks, and immediate rewards will help.",
+  "text": "If your child is easily distracted, forgetful, and doesn’t complete tasks—it may be ADHD. A consistent routine, divided tasks, and an immediate reward will help.",
   "unit_id": "4ab3e41b-9991-4b60-9a05-fae420899e86",
   "day_of_week": 1,
   "time_of_day": "morning",
@@ -20,6 +20,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:54:35.744948+00:00",
+    "fixed_at": "2026-08-13T18:54:35.744962+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

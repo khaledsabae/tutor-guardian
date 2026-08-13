@@ -1,9 +1,9 @@
 {
   "id": "path_4-6_cyber_early_screens",
-  "title": "Foundations of Healthy Screen Use in the Pre-School Years (4-6)",
+  "title": "Foundations of the Healthy Screen in the Pre-School Years (4-6)",
   "age_group": "4-6",
   "domain": "cyber",
-  "description": "A path to help parents build a healthy relationship between their child and screens at a sensitive age: setting appropriate time limits, choosing safe content, making viewing a shared and interactive experience, and weaning from excess without conflict.",
+  "description": "A path to help parents build a healthy relationship between their child and the screen at a sensitive age: determining the appropriate time, choosing safe content, making viewing shared and a dialogue, and weaning from excess without battles.",
   "lesson_ids": [
     "lesson_4-6_cyber_early_screens_01",
     "lesson_4-6_cyber_early_screens_02",
@@ -31,33 +31,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "بين طفلهم والشاشة",
-        "english": "between their child and screens",
-        "why": "Arabic uses singular 'الشاشة' (the screen), English uses plural 'screens'. While generic, it's a slight shift.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "تحديد الوقت المناسب",
-        "english": "setting appropriate time limits",
-        "why": "Arabic says 'determining the appropriate time' (no mention of limits), English adds 'limits' and changes verb to 'setting'.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "جعل المشاهدة مشتركةً وحواراً",
-        "english": "making viewing a shared and interactive experience",
-        "why": "Arabic says 'shared and a dialogue', English uses 'interactive experience' which is broader than 'dialogue'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:18:06.845873+00:00",
+    "fixed_at": "2026-08-13T18:18:06.845885+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

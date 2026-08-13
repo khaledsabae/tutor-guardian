@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english",
-        "arabic": "ابنك",
-        "english": "your child",
-        "why": "The Arabic specifically says 'your son' (ابنك), but the English generalizes to 'your child', losing the gender specificity.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:10:19.514461+00:00"
   }
 }

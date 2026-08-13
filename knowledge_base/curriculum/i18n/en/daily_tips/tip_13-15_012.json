@@ -2,7 +2,7 @@
   "id": "tip_13-15_012",
   "age_group": "13-15",
   "domain": "cyber",
-  "text": "Cyberbullying: harsh messages, rumours, exclusion. Do not participate, stop it, report it. The silent one is a partner (in the wrong).",
+  "text": "Cyberbullying: harsh messages, rumours, exclusion. Do not participate, stop it, report it. The silent one is a partner.",
   "unit_id": "a51a2419-0d91-41ac-96ca-3c0f7419e197",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -16,19 +16,13 @@
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
-      "reviewer_model": true
+      "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "الصامت شريك",
-        "english": "The silent one is a partner (in the wrong).",
-        "why": "The Arabic does not contain the phrase 'in the wrong'; the English adds an explanatory gloss not present in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:53:03.137841+00:00",
+    "fixed_at": "2026-08-13T18:53:03.137855+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

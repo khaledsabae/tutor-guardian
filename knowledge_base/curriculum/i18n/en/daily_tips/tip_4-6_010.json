@@ -30,21 +30,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "الطفل في هذا العمر لا يحدد وقته",
-        "arabic": "لا يحدد وقته",
-        "english": "does not manage their own time",
-        "why": "The Arabic verb 'يحدد' means 'determine' or 'set', not 'manage'. The child does not set his own screen time; the parent must set it. 'Manage' implies a broader time management skill, altering the meaning.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "دورك أنت أن تحدد",
+        "field": "english.text",
         "arabic": "دورك أنت أن تحدد",
         "english": "it is your role to set the limits",
-        "why": "The Arabic says 'your role is to determine' (the time), without an explicit object. The English adds 'the limits', which is not present and slightly shifts the focus from setting the time to setting boundaries in general.",
+        "why": "The Arabic says 'your role is to determine (it)' without specifying 'limits'; the translation adds 'the limits' which is not in the source.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:14:30.826482+00:00"
   }
 }

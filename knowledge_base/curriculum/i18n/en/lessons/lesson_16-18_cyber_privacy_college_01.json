@@ -8,13 +8,13 @@
     "cyb-e2c8532b",
     "cyb-f815145d"
   ],
-  "summary": "Before your child applies to universities, sit together and review the privacy settings on their accounts. Also, seek their permission before posting their pictures to set an example. Periodically search for their name to see what is publicly visible. These simple precautionary steps reduce future surprises, according to the Common Sense Education guide for families. More than a third of American university admissions officers review applicants' social media profiles, and the impact is mostly negative rather than positive, according to a 2021 Kaplan survey. Help your child understand that every old or new post is part of their image in front of universities. There is no need to erase their presence, but they should review it with awareness.",
-  "try_this": "This week: Sit together for fifteen minutes, search for your child’s name on search engines and their platforms, and jointly review any old posts that might be misinterpreted by a stranger. Instead of deleting everything or ignoring the issue entirely, address it thoughtfully.",
+  "summary": "Before your son applies to universities, sit together and review the privacy settings on his accounts. Also, seek his permission before posting his pictures—you too—so you can be a role model. Periodically search for his name to see what is publicly visible. These simple precautionary steps reduce future surprises, according to the Common Sense Education guide for families. More than a third of American university admissions officers review applicants' social media profiles, and the impact is mostly negative rather than positive, according to a 2021 Kaplan survey. Help your son understand that every old or new post is part of his image in front of universities. There is no need to erase his presence, but he should review it with awareness.",
+  "try_this": "This week: Sit together for fifteen minutes, search for your son’s name on search engines and his platforms, and jointly review any old posts that might be misinterpreted by a stranger. Instead of deleting everything or ignoring the issue entirely.",
   "order": 1,
   "estimated_minutes": 7,
   "reflection_prompts": [
-    "Does your child know that what they post today might be seen by a stranger who will decide their future years later?",
-    "Are you setting an example for them by reviewing what you post about them before sharing it?"
+    "Does your son know that what he posts today might be seen by a stranger who will decide his future years later?",
+    "Are you setting an example for him by reviewing what you post about him before sharing it?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -32,17 +32,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "بدل حذف كل شيء أو تجاهل الأمر تمامًا",
-        "english": "Instead of deleting everything or ignoring the issue entirely, address it thoughtfully.",
-        "why": "The English adds 'address it thoughtfully' which is not present in the Arabic. The Arabic only says 'instead of deleting everything or ignoring the matter completely' as an alternative to the review action, without an explicit additional instruction.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:00:02.718345+00:00",
+    "fixed_at": "2026-08-13T19:00:02.718357+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

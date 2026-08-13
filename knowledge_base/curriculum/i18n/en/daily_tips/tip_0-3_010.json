@@ -2,7 +2,7 @@
   "id": "tip_0-3_010",
   "age_group": "0-3",
   "domain": "islamic_parenting",
-  "text": "Welcome your newborn with the adhan (call to prayer) in the right ear and the iqamah (second call to prayer) in the left—let the first sound they hear be the name of Allah. Give them a beautiful name on the seventh day, and perform the aqiqah (sacrificial offering) in gratitude to the Creator.",
+  "text": "Welcome your newborn with the adhan (call to prayer) in the right ear and the iqamah in the left—let the first sound they hear be the name of Allah. Give them a beautiful name on the seventh day, and perform the aqiqah (sacrificial offering) in gratitude to the Creator.",
   "unit_id": "isl-8f891c3d",
   "day_of_week": 2,
   "time_of_day": "morning",
@@ -25,7 +25,7 @@
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
-      "reviewer_model": false
+      "reviewer_model": true
     },
     "review_verdict": "defects",
     "review_defects": [
@@ -34,10 +34,11 @@
         "field": "text",
         "arabic": "أول صوت يسمعه اسم الله",
         "english": "let the first sound they hear be the name of Allah",
-        "why": "The Arabic is a descriptive statement ('the first sound he hears is the name of Allah'), while the English turns it into an imperative ('let the first sound they hear be...'), shifting the mood from fact to command.",
+        "why": "The Arabic states a fact (the first sound he hears is the name of Allah) as a result of the adhan, while the English turns it into an explicit command ('let... be'). Also, the Arabic uses masculine singular 'يسمعه' (he hears), while the English uses gender-neutral plural 'they hear'.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:08:37.159745+00:00"
   }
 }

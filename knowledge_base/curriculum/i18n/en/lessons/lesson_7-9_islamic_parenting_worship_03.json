@@ -36,13 +36,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "أي آية أحبها طفلك أكثر؟ ولماذا؟",
-        "english": "Which verse does your child love the most? And why?",
-        "why": "The Arabic uses the past tense 'أحبها' (loved), referring to the child's preference during the memorisation process. The English uses the present tense 'does love', shifting the meaning to a general, timeless preference.",
+        "field": "title",
+        "arabic": "القرآن: رفيق الحياة",
+        "english": "Al-Qur'an: The Lifelong Companion",
+        "why": "The Arabic 'رفيق الحياة' means 'companion of life', not 'lifelong companion'. The translation shifts the focus from the Qur'an being a companion in life to emphasizing the duration of companionship, altering the original nuance.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:35:47.097297+00:00"
   }
 }

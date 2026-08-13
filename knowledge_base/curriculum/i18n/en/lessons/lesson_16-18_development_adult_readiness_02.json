@@ -11,7 +11,7 @@
   "estimated_minutes": 8,
   "reflection_prompts": [
     "Which life skill does your child lack?",
-    "How did you handle the responsibility you entrusted to them?"
+    "How did your child handle the responsibility you entrusted to them?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -29,25 +29,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "كيف تعامل مع المسؤولية التي سلّمتها له؟",
-        "english": "How did you handle the responsibility you entrusted to them?",
-        "why": "The Arabic asks how the child handled the responsibility; the English asks how the parent handled it. The subject is changed from the child to the parent.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary, try_this, reflection_prompts",
-        "arabic": "ابنك",
-        "english": "your child / they / them",
-        "why": "The Arabic uses the masculine singular 'ابنك' (your son) consistently; the English uses gender-neutral 'your child' and 'they/them'. This changes the specificity of the address.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:53:08.126109+00:00",
+    "fixed_at": "2026-08-13T17:53:08.126122+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -22,9 +22,18 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text",
+        "arabic": "اجعلي بيتك هادئاً",
+        "english": "Make your home a tranquil place",
+        "why": "The Arabic uses the feminine imperative 'اجعلي', directly addressing a mother. The English uses the gender-neutral 'your', losing the direct maternal address and warmth of the original.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:09:11.528795+00:00"
+  }
 }

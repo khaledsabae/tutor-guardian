@@ -40,10 +40,13 @@
         "field": "summary",
         "arabic": "مهارات لا تعلمها التطبيقات",
         "english": "skills no app can teach",
-        "why": "The Arabic says 'لا تعلمها' (do not teach them), a statement of fact. The English 'no app can teach' adds a nuance of impossibility not present in the source.",
-        "severity": "low"
+        "why": "Arabic says apps do not teach these skills (لا تعلمها), English says no app can teach them, implying impossibility rather than a statement of fact.",
+        "severity": "medium"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:42:19.106262+00:00",
+    "fixed_at": "2026-08-13T19:42:19.106276+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

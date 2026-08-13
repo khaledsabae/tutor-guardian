@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "الصحة النفسية حق",
-        "english": "Mental well-being is a right",
-        "why": "The Arabic says 'health' (الصحة) but the English says 'well-being', which is a broader concept. The right to mental health is a specific claim; 'well-being' softens it slightly.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:12:46.708141+00:00"
   }
 }

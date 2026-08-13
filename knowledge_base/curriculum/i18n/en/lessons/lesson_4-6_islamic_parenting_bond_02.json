@@ -1,7 +1,7 @@
 {
   "id": "lesson_4-6_islamic_parenting_bond_02",
   "path_id": "path_4-6_islamic_parenting_bond",
-  "title": "Al-La'b an-Nabawi: A Warm Embrace and Play Before Guidance",
+  "title": "Prophetic Play: A Warm Embrace and Play Before Guidance",
   "age_group": "4-6",
   "domain": "islamic_parenting",
   "unit_ids": [
@@ -30,10 +30,13 @@
     "scholar_signals": {
       "keyword": true,
       "quoted_arabic": true,
-      "reviewer_model": true
+      "reviewer_model": false
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:14:07.109289+00:00",
+    "fixed_at": "2026-08-13T18:14:07.109300+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

@@ -22,13 +22,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "text",
+        "field": "الوجه للمسؤولية مبكراً",
         "arabic": "الوجه للمسؤولية مبكراً",
         "english": "this plants the seed of responsibility early",
-        "why": "The Arabic uses a direct metaphor of 'turning towards' or 'directing towards' responsibility, while the English introduces a different metaphor ('planting the seed') and shifts from an imperative or directive statement to a descriptive one about the activity itself.",
+        "why": "The Arabic phrase literally means 'the direction/orientation to responsibility early' (possibly a typo for 'التوجيه للمسؤولية مبكراً'). The English translation introduces a metaphorical idiom ('plants the seed') that is not present in the source, altering the meaning and tone.",
         "severity": "medium"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:10:36.055047+00:00"
   }
 }

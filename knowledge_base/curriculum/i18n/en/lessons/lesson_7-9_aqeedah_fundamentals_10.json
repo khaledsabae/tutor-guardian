@@ -7,7 +7,7 @@
   "unit_ids": [
     "aqe-6dd8b600"
   ],
-  "summary": "The culmination of the journey: ʿaqeedah is not information memorized in the head, but faith in the heart whose effect appears in behavior. The young believer who knows that Allah sees him speaks the truth even if he loses, shows birr al-walidayn, treats his siblings with rifq, and apologizes if he makes a mistake. Connect every good akhlaq for your child to his faith: \"You give charity because our Lord loves the truthful,\" \"You help because our Lord loves those who practice ihsan.\" In this way, the previous lessons transform into a lived life. And the greatest means to reinforce this is for your child to see you living your faith in your behavior before you command him to do so; for the example is more powerful than a thousand pieces of advice.",
+  "summary": "The culmination of the journey: ʿaqeedah is not information memorized in the head, but faith in the heart whose effect appears in behavior. The young believer who knows that Allah sees him speaks the truth even if he loses, shows birr al-walidayn, treats his siblings with rifq, and apologizes if he makes a mistake. Connect every good akhlaq for your child to his faith: \"You are truthful because our Lord loves the truthful,\" \"You help because our Lord loves the good-doers.\" In this way, the previous lessons transform into a lived life. And the greatest means to reinforce this is for your child to see you living your faith in your behavior before you command him to do so; for the example is more powerful than a thousand pieces of advice.",
   "try_this": "This week: Create an \"Iman Tree\" together. Every time your child connects a good akhlaq to his faith, add a leaf to the tree. At the end of the week, review how what he learned has turned into actions.",
   "order": 10,
   "estimated_minutes": 8,
@@ -36,36 +36,15 @@
       {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "«بتصدق عشان ربنا بيحب الصادقين»",
-        "english": "\"You give charity because our Lord loves the truthful\"",
-        "why": "The Arabic verb 'بتصدق' here means 'you speak truth' (from صدق), not 'you give charity' (from صدقة). The context pairs it with 'الصادقين' (the truthful). The English changes the meaning entirely.",
-        "severity": "high"
-      },
-      {
-        "type": "religious_error",
-        "field": "summary",
-        "arabic": "«بتصدق عشان ربنا بيحب الصادقين»",
-        "english": "\"You give charity because our Lord loves the truthful\"",
-        "why": "The Arabic echoes the Qur'anic concept that Allah loves the truthful (cf. 9:119). Translating 'بتصدق' as 'give charity' misrepresents this religious reference and could confuse the intended moral lesson.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "أضافا ورقةً للشجرة",
-        "english": "add a leaf to the tree",
-        "why": "The Arabic uses the dual verb 'أضافا' (they both add), indicating parent and child do it together. The English imperative 'add' loses the dual subject and the collaborative nuance.",
+        "arabic": "فالقدوة أبلغ من ألف موعظة",
+        "english": "for the example is more powerful than a thousand pieces of advice",
+        "why": "The Arabic 'موعظة' means a sermon or religious exhortation, not just general advice. The English 'pieces of advice' loses the religious connotation and softens the impact.",
         "severity": "low"
-      },
-      {
-        "type": "register",
-        "field": "summary",
-        "arabic": "يبرّ والديه، ويرفق بإخوته",
-        "english": "shows birr al-walidayn, treats his siblings with rifq",
-        "why": "The Arabic uses warm, direct verbs ('is dutiful', 'is gentle'). The English replaces them with formal transliterated Islamic terms, making the tone more academic and less accessible for a parenting context.",
-        "severity": "medium"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:43:15.664898+00:00",
+    "fixed_at": "2026-08-13T19:43:15.664915+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

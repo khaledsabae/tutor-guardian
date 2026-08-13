@@ -41,18 +41,11 @@
         "field": "summary",
         "arabic": "واجعله يطبّق خلقاً واحداً عملياً",
         "english": "and have him apply one practical deed of akhlaq",
-        "why": "The Arabic instructs to have the child apply one character trait (khuluq) practically, not a single deed. 'Deed of akhlaq' narrows the meaning and shifts the focus from embodying a trait to performing an isolated action.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "في صدقه ورفقه بالناس",
-        "english": "in his truthfulness and rifq (gentleness) with people",
-        "why": "The English adds the transliteration 'rifq' which is not present in the Arabic source. While it does not alter the meaning, it introduces a word not in the original.",
+        "why": "The Arabic means 'have him apply one character trait practically' (i.e., put a trait into practice). The English shifts the focus to performing a single 'deed of akhlaq' rather than embodying the trait itself.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:36:13.585459+00:00"
   }
 }

@@ -27,17 +27,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english.text",
-        "arabic": "شكراً لله",
-        "english": "as gratitude to Allah",
-        "why": "The Arabic phrase 'شكراً لله' is an adverbial expression meaning 'in thanks to Allah' or 'as an act of gratitude to Allah'. The translation 'as gratitude to Allah' is unidiomatic and slightly alters the meaning, making it sound like the aqiqah is performed as the abstract concept of gratitude rather than as an expression of thanks.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:08:03.248973+00:00"
   }
 }

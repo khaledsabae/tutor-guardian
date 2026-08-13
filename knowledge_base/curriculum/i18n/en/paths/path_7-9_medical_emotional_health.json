@@ -1,6 +1,6 @@
 {
   "id": "path_7-9_medical_emotional_health",
-  "title": "Al-Siḥḥah al-Nafsiyyah wa-al-ʿĀṭifiyyah (7-9 years)",
+  "title": "Mental and Emotional Health (7-9 years)",
   "age_group": "7-9",
   "domain": "medical",
   "description": "A pathway that equips parents with tools to understand their children’s emotions, manage anger and anxiety, regulate sleep, and know when to seek specialised help.",
@@ -32,17 +32,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "title",
-        "arabic": "الصحة النفسية والعاطفية (7-9 سنوات)",
-        "english": "Al-Siḥḥah al-Nafsiyyah wa-al-ʿĀṭifiyyah (7-9 years)",
-        "why": "The title is transliterated rather than translated, so the English reader loses the meaning 'Mental and Emotional Health (7-9 years)'.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:07:40.450633+00:00",
+    "fixed_at": "2026-08-13T19:07:40.450647+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

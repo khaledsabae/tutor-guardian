@@ -9,7 +9,7 @@
     "b37a6dcf-3b48-41df-9837-4460b5f64179",
     "beb0e561-be2a-51dc-85ac-83c158c748ef"
   ],
-  "summary": "Every post, comment, like, and search is stored, analyzed, sold, and remains. Universities, companies, and governments examine the digital footprint. The rule: \"Do not post what you would not want your future father, future manager, or future spouse to see.\" Monthly review: delete the old, fix privacy settings, and clean the trail.",
+  "summary": "Every post, comment, like, and search is stored, analyzed, sold, and remains. Universities, companies, and governments examine the digital footprint. The rule: \"Do not post what you would not want your father, future manager, or future spouse to see.\" Monthly review: delete the old, fix privacy settings, and clean the trail.",
   "try_this": "This week: log into your child’s accounts together—review old posts, location tags, and apps with granted permissions. Delete or fix them together.",
   "order": 1,
   "estimated_minutes": 38,
@@ -38,12 +38,15 @@
       {
         "type": "meaning_change",
         "field": "summary",
-        "arabic": "لا تنشر ما لا تريد أن يراه والدك/مديرك المستقبلي/زوجك المستقبلي",
-        "english": "Do not post what you would not want your future father, future manager, or future spouse to see.",
-        "why": "The Arabic specifies 'والدك' (your father) without 'المستقبلي' (future), but the English adds 'future' to father, incorrectly implying the father is a future figure rather than a current one.",
-        "severity": "medium"
+        "arabic": "أصلح الخصوصية",
+        "english": "fix privacy settings",
+        "why": "The Arabic says 'fix privacy' without specifying 'settings'. The translation adds 'settings', which narrows the meaning.",
+        "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:04:53.578734+00:00",
+    "fixed_at": "2026-08-13T18:04:53.578747+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

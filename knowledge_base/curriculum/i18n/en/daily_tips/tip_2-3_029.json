@@ -29,10 +29,11 @@
         "field": "text",
         "arabic": "اجعلي طفلك يراك تصلّين",
         "english": "Let your child see you praying",
-        "why": "The Arabic imperative 'اجعلي' means 'make' (actively cause), while 'let' implies permission; the nuance of actively ensuring the child sees is lost.",
+        "why": "The Arabic uses the feminine imperative 'اجعلي', explicitly addressing a mother, while the English uses a gender-neutral imperative, losing the direct address to the mother.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:14:11.522699+00:00"
   }
 }

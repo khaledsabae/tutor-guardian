@@ -3,7 +3,7 @@
   "title": "The Prophetic Embrace: Tarbiyah of the Child upon the Guidance of the Messenger in the First Year",
   "age_group": "0-3",
   "domain": "islamic_parenting",
-  "description": "A 12-day Islamic tarbiyah curriculum covering the most important Islamic milestones in caring for the newborn: the sunnahs of birth, naming, and the aqiqah (sacrifice for the newborn), rifq (gentleness) and mercy in dealing with the infant, building secure communication between parent and their little one, and how to plant the seeds of iman (faith) in the tiny heart from the earliest months. Based on Tarbiyat al-Awlad fil-Islam by Abdullah Nasih Ulwan and the Prophetic methodology in tarbiyah.",
+  "description": "A 12-day Islamic tarbiyah curriculum covering the most important Islamic milestones in caring for the newborn: the sunnahs of birth, naming, and the aqiqah (sacrifice for the newborn), rifq (gentleness) and mercy in dealing with the infant, building secure communication between the father and his little one, and how to plant the seeds of iman (faith) in the tiny heart from the earliest months. Based on Tarbiyat al-Awlad fil-Islam by Abdullah Nasih Ulwan and the Prophetic methodology in tarbiyah.",
   "lesson_ids": [
     "lesson_0-3_islamic_parenting_attachment_01",
     "lesson_0-3_islamic_parenting_attachment_02",
@@ -33,26 +33,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "الوالد",
-        "english": "parent",
-        "why": "Arabic specifies 'الوالد' (the father), but English uses gender-neutral 'parent', losing the specific reference to the father.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "مسار تربوي",
-        "english": "tarbiyah curriculum",
-        "why": "Arabic uses the adjective 'تربوي' (educational), but English uses the noun 'tarbiyah' as a modifier, slightly altering the meaning from 'educational path' to 'curriculum of tarbiyah'.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:07:09.527338+00:00",
+    "fixed_at": "2026-08-13T19:07:09.527351+00:00",
+    "fixer_model": "mistral-large-3:675b"
+  }
 }

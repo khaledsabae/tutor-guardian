@@ -31,19 +31,11 @@
     "scholar_signals": {
       "keyword": false,
       "quoted_arabic": true,
-      "reviewer_model": false
+      "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "أدعية قصيرة سهلة",
-        "english": "short, easy du'a",
-        "why": "The Arabic uses the plural 'أدعية' (supplications), indicating multiple short du'as. The English uses the singular 'du'a', which could be misinterpreted as a single supplication. The intended meaning is to teach several short du'as for different situations.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:31:15.023177+00:00"
   }
 }

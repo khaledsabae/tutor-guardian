@@ -31,26 +31,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "وإحاطته برحمةٍ",
-        "english": "and surrounding them with rifq",
-        "why": "The Arabic word 'رحمة' means 'mercy', but the English uses 'rifq', a different Arabic word meaning 'gentleness'. This changes the concept from mercy to gentleness and introduces an untranslated Arabic term not present in the source.",
-        "severity": "high"
-      },
-      {
-        "type": "meaning_change",
-        "field": "description",
-        "arabic": "وسنن استقباله",
-        "english": "following the sunnah of welcoming them",
-        "why": "The Arabic plural 'سنن' (sunnahs/practices) is rendered as singular 'sunnah', which may obscure that multiple specific welcoming practices are intended.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
-  },
-  "reflection_prompts": []
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:36:42.650729+00:00"
+  }
 }

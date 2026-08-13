@@ -7,13 +7,13 @@
   "unit_ids": [
     "aqe-c078677c"
   ],
-  "summary": "Belief in the messengers is one of the pillars of iman, and the seal of them all and the most beloved to our hearts is our Prophet Muhammad ﷺ. Introduce your child to the Prophet ﷺ as a living, beloved role model, not just a name to be mentioned: he was truthful and trustworthy, so much so that his people called him 'Al-Sadiq Al-Amin' (The Truthful, The Trustworthy). He was merciful to children, kissing and playing with them, and showed rifq (gentleness) to the weak and even animals. Tell your child short stories from his seerah, and teach him to say 'salla Allahu alayhi wa sallam' whenever his name is mentioned, and that following him means emulating his akhlaq (character) before his words. When a child loves the Prophet, it becomes easy for him to follow his example.",
-  "try_this": "This week: Tell your child a short story every night about the mercy of the Prophet ﷺ, then ask him, 'How can we do like him tomorrow?' Let him choose an akhlaq to apply.",
+  "summary": "Belief in the messengers is one of the pillars of iman, and the seal of them all and the beloved of them to our hearts is our Prophet Muhammad ﷺ. Introduce your child to the Prophet ﷺ as a living, beloved role model, not just a name to be mentioned: he was truthful and trustworthy, so much so that his people called him 'Al-Sadiq Al-Amin' (The Truthful, The Trustworthy). He was merciful to children, kissing and playing with them, and gentle to the weak and even animals. Tell your child short stories from his seerah, and teach him to say 'salla Allahu alayhi wa sallam' whenever his name is mentioned, and that following him is by his akhlaq before speech. When a child loves the Prophet, it becomes easy for him to follow his example.",
+  "try_this": "This week: Tell your child a short story every night about the mercy of the Prophet ﷺ, then ask him, 'How can we be like him tomorrow?' Let him choose a character trait to apply.",
   "order": 7,
   "estimated_minutes": 8,
   "reflection_prompts": [
     "How can you convey to your child the love of the Prophet ﷺ as a living role model, not just a name to be memorized?",
-    "Which Prophetic akhlaq do you most wish your child to embody first, and how does he see it in you?"
+    "Which Prophetic character trait do you most wish your child to embody first, and how does he see it in you?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -34,22 +34,33 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "try_this",
-        "arabic": "خُلقاً",
-        "english": "an akhlaq",
-        "why": "The Arabic uses the singular 'خُلقاً' (a character trait), but the English uses 'an akhlaq', which is the plural form. The correct singular is 'khuluq' or simply 'a character trait'.",
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "وأحبّهم إلى قلوبنا",
+        "english": "and the beloved of them to our hearts",
+        "why": "The Arabic superlative 'أحبّهم' (the most beloved of them) is rendered as 'the beloved', losing the superlative degree.",
         "severity": "low"
       },
       {
-        "type": "term_error",
+        "type": "meaning_change",
+        "field": "summary",
+        "arabic": "رفيقاً بالضعيف والحيوان",
+        "english": "gentle to the weak and even animals",
+        "why": "The English adds 'even' which is not present in the Arabic, slightly altering the emphasis.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
         "field": "reflection_prompts[1]",
-        "arabic": "خُلقٍ نبويٍّ",
-        "english": "Prophetic akhlaq",
-        "why": "The Arabic uses the singular 'خُلقٍ' (a character trait), but the English uses 'akhlaq', which is plural. Should be 'khuluq' or 'character trait'.",
+        "arabic": "أيّ خُلقٍ نبويٍّ تحبّ أن يتحلّى به طفلك أولاً",
+        "english": "Which Prophetic character trait do you most wish your child to embody first",
+        "why": "The Arabic 'أيّ خُلقٍ' (which character trait) does not include 'most', and 'تحبّ' (you love) is translated as 'wish', adding an extra word and shifting the meaning slightly.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:04:55.485679+00:00",
+    "fixed_at": "2026-08-13T19:04:55.485691+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

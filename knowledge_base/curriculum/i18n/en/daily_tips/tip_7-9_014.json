@@ -2,7 +2,7 @@
   "id": "tip_7-9_014",
   "age_group": "7-9",
   "domain": "medical",
-  "text": "Calm-Down Box: paper, pens, stress ball, soothing pictures. When he gets angry, go to him together, choose a tool, and discuss after 10 minutes.",
+  "text": "Calm-Down Box: paper, pens, stress ball, soothing pictures. When he gets angry, go to him together, pick a tool, and discuss after 10 minutes.",
   "unit_id": "78431bb2-354f-43ef-a874-d17bc11ed6e6",
   "day_of_week": 4,
   "time_of_day": "evening",
@@ -18,17 +18,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "english",
-        "arabic": "اختر أداة",
-        "english": "choose a tool",
-        "why": "The Arabic uses the singular imperative 'اختر' (addressing the child), while the English 'choose' is ambiguous and could be interpreted as a command to the parents. This changes who is instructed to pick the tool.",
-        "severity": "medium"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:54:30.389860+00:00",
+    "fixed_at": "2026-08-13T18:54:30.389873+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

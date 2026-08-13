@@ -33,13 +33,14 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "title",
-        "arabic": "دلائل الإيمان",
-        "english": "Signs of Faith",
-        "why": "دلائل means 'proofs' or 'evidences', not 'signs'. In Islamic terminology, 'signs' typically translates آيات or علامات, while دلائل refers to rational or textual proofs. The change softens the intended emphasis on evidence-based conviction.",
+        "field": "summary",
+        "arabic": "ساعده على رؤية الأدلّة الفطرية والعقلية: دقّة الكون وانتظامه تدلّ على خالقٍ حكيم (كما تدلّ الصنعة على صانع)، والفطرة في داخله تشهد بوجود الله، والقرآن بإعجازه وحفظه وأثره دليلٌ على أنه كلام الله.",
+        "english": "Help him see the evidence of the fitrah (natural disposition) and the rational proofs: the precision and order of the universe point to a Wise Creator (just as craftsmanship points to a craftsman), the fitrah within him bears witness to Allah’s existence, and the Qur'an—through its miraculous nature, preservation, and impact—is proof that it is the Word of Allah.",
+        "why": "The Arabic introduces two categories of proofs (innate and rational) and then lists three items: the universe (rational), the fitrah (innate), and the Qur'an (a separate scriptural proof). The English mislabels the list by saying 'the evidence of the fitrah and the rational proofs' and then including the Qur'an as if it falls under those categories, which confuses the structure and the reader's understanding of what constitutes fitrah evidence.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:21:27.991078+00:00"
   }
 }

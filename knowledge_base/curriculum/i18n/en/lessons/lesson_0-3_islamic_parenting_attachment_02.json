@@ -1,7 +1,7 @@
 {
   "id": "lesson_0-3_islamic_parenting_attachment_02",
   "path_id": "path_0-3_islamic_parenting_attachment",
-  "title": "Al-Rifq and Mercy: The Prophetic Manner in Caring for the Young Child",
+  "title": "Rifq and Rahmah: The Prophetic Manner in Caring for the Young Child",
   "age_group": "0-3",
   "domain": "islamic_parenting",
   "unit_ids": [
@@ -32,25 +32,11 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "term_error",
-        "field": "title vs summary",
-        "arabic": "الرفق (with definite article throughout)",
-        "english": "title: 'Al-Rifq'; summary: 'Rifq'",
-        "why": "The Arabic source uses the definite article consistently, but the English transliteration drops it in the body, creating inconsistency within the document.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "بالصوت الهادئ",
-        "english": "by the gentle voice",
-        "why": "هادئ means calm/quiet, not necessarily gentle. The translation shifts the meaning from calmness to gentleness.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:55:38.302236+00:00",
+    "fixed_at": "2026-08-13T18:55:38.302249+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

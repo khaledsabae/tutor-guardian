@@ -1,9 +1,9 @@
 {
   "id": "path_13-15_aqeedah_certainty",
-  "title": "Al-Yaqeen fi Zaman al-Shubuhat",
+  "title": "Certainty in the Time of Doubts",
   "age_group": "13-15",
   "domain": "aqeedah",
-  "description": "A path to accompany your adolescent (13-15) in building unwavering yaqeen amidst doubts: welcoming religious questions, proofs of iman, ikhlas, and the inner watchfulness of Allah—an aqeedah with conviction, not mere taqlid.",
+  "description": "A path to accompany your adolescent (13-15) in building unwavering yaqeen amidst doubts: welcoming religious questions, proofs of iman, ikhlas, and the inner muraqabah of Allah—an aqeedah with conviction, not mere taqlid.",
   "lesson_ids": [
     "lesson_13-15_islamic_parenting_teen_identity_01",
     "lesson_13-15_islamic_parenting_steadfast_03",
@@ -36,22 +36,17 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "term_error",
-        "field": "description",
-        "arabic": "الشبهات",
-        "english": "doubts",
-        "why": "The same term 'شبهات' is transliterated as 'al-Shubuhat' in the title but translated as 'doubts' in the description, creating inconsistency within the document.",
-        "severity": "medium"
-      },
-      {
         "type": "meaning_change",
         "field": "description",
-        "arabic": "عقيدةٌ بقناعةٍ لا بتقليد",
-        "english": "an aqeedah with conviction, not mere taqlid",
-        "why": "The word 'mere' is added, which is not present in the Arabic. The Arabic simply says 'not by taqlid' without the qualifier.",
-        "severity": "low"
+        "arabic": "مسار يرافق مراهقك",
+        "english": "A path to accompany your adolescent",
+        "why": "The Arabic says the path itself accompanies the adolescent (مسار يرافق), but the English translation changes the subject to an implied 'you', making it a path for the parent to accompany the adolescent. This alters the agency and the program's role.",
+        "severity": "medium"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:17:22.330032+00:00",
+    "fixed_at": "2026-08-13T18:17:22.330043+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

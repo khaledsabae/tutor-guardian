@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "الرسم يصنع الوعي",
-        "english": "Drawing creates awareness",
-        "why": "In the context of a mood tracker, 'الرسم' refers to the act of charting or plotting data, not artistic drawing. 'Drawing' may be misinterpreted; 'Charting' or 'Plotting' would be more accurate.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:11:43.917915+00:00"
   }
 }

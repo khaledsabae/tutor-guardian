@@ -29,8 +29,18 @@
       "quoted_arabic": true,
       "reviewer_model": true
     },
-    "review_verdict": "clean",
-    "review_defects": [],
-    "approved_by": null
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "title",
+        "arabic": "ضبط الغضب على هدي النبي ﷺ",
+        "english": "Controlling Anger upon the Guidance of the Prophet ﷺ",
+        "why": "The phrase 'upon the Guidance' is a literal translation that sounds unnatural in English; 'according to the guidance' or 'following the guidance' would be more idiomatic.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:35:36.199859+00:00"
   }
 }

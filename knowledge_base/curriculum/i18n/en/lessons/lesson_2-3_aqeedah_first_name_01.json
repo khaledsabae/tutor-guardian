@@ -5,13 +5,13 @@
   "age_group": "2-3",
   "domain": "aqeedah",
   "unit_ids": [],
-  "summary": "At this age your child understands neither a definition nor a proof — but he picks up whatever recurs on your tongue. So let «Allah» be among the first words he hears: say it in a calm voice with a smiling face, and repeat it at every beautiful thing he points to. Do not correct his pronunciation and do not test him; loving repetition is the whole lesson. What is being built now is not a piece of information but an association: that this Name always arrives with calm and a smile.",
+  "summary": "At this age your child understands neither a definition nor a proof — but he picks up whatever recurs on your tongue. So let the name «Allah» be among the first he hears: say it in a calm voice with a smiling face, and repeat it at every beautiful thing he points to. Do not correct his pronunciation and do not test him; loving repetition is the whole lesson. What is being built now is not a piece of information but an association: that this Name always arrives with tranquility and a smile.",
   "try_this": "This week: whenever your child points at something he likes — a bird, the moon, a flower — say «Allah» with a smile, and do not ask him to repeat it. He will repeat it on his own.",
   "order": 1,
   "estimated_minutes": 5,
   "reflection_prompts": [
-    "In what tone does your child usually hear the name of Allah from you — reassurance, or warning?",
-    "Which calm moments in your day suit a loving repetition?"
+    "In what tone does your child usually hear the name of Allah from you — tranquility, or warning?",
+    "Which calm moments in your two’s day suit a loving repetition?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -22,15 +22,18 @@
   "source_language": "ar",
   "translation": {
     "translator_model": "claude-opus-5",
-    "reviewer_model": null,
+    "reviewer_model": "deepseek-v4-pro",
     "needs_scholar_review": true,
     "scholar_signals": {
-      "keyword": true,
+      "keyword": false,
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "pending",
+    "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:01:24.231622+00:00",
+    "fixed_at": "2026-08-13T19:01:24.231634+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

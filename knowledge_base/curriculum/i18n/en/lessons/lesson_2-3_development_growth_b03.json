@@ -15,7 +15,7 @@
   "estimated_minutes": 31,
   "reflection_prompts": [
     "What situations often precede your child’s tantrums (hunger/fatigue/sudden transition)?",
-    "How does your child’s calmness reflect your own calm during the tantrum?"
+    "How is your child’s calmness affected by your own calm during the tantrum?"
   ],
   "warning_flags": [],
   "is_published": true,
@@ -36,6 +36,9 @@
     },
     "review_verdict": "clean",
     "review_defects": [],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T19:02:03.612845+00:00",
+    "fixed_at": "2026-08-13T19:02:03.612871+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

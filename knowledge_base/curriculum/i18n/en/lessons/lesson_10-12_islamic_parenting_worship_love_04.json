@@ -36,7 +36,7 @@
         "field": "title",
         "arabic": "الدعاء: تعليمه مناجاة الله",
         "english": "Du'a: Teaching the Art of Intimate Conversation with Allah",
-        "why": "The English adds 'the Art of', which is not present in the Arabic. The Arabic simply says 'Teaching it (as) intimate conversation with Allah'.",
+        "why": "The Arabic does not contain 'the Art of'; it simply says 'teaching it (as) intimate conversation'. The addition is an embellishment that slightly shifts the meaning.",
         "severity": "low"
       },
       {
@@ -44,18 +44,35 @@
         "field": "summary",
         "arabic": "حين يجد الله قريباً يجيب",
         "english": "When they find Allah close and responsive",
-        "why": "The Arabic verb 'يجيب' (He answers) is an action of Allah, but the translation turns it into an adjective 'responsive', losing the active sense of Allah answering the supplication.",
-        "severity": "medium"
+        "why": "The Arabic verb 'يجيب' (He answers) is active, indicating Allah's action. The English adjective 'responsive' loses this active sense and turns it into a characteristic.",
+        "severity": "low"
       },
       {
         "type": "meaning_change",
         "field": "summary",
         "arabic": "يثبت إيمانه على يقينٍ حيّ",
         "english": "their faith is anchored in living certainty",
-        "why": "The Arabic 'يثبت' means 'becomes firm/established', not 'anchored'. The metaphor is changed from a simple verb to a nautical metaphor, slightly altering the imagery.",
+        "why": "The Arabic uses the verb 'يثبت' (becomes firm) and the preposition 'على' (upon). The English uses the metaphor 'anchored in', which is not present in the Arabic. Also, the pronoun shifts from masculine singular 'his' to gender-neutral 'their'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts",
+        "arabic": "هل يدعو ابنك بقلبه أم بصيغٍ فقط؟",
+        "english": "Does your child make du'a from the heart, or only through memorised phrases?",
+        "why": "The Arabic uses 'ابنك' (your son), a masculine singular noun. The English uses 'your child', which is gender-neutral. This changes the gender specificity of the original.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "reflection_prompts",
+        "arabic": "كيف شجّعته؟",
+        "english": "How have you encouraged them?",
+        "why": "The Arabic uses the masculine singular pronoun 'ـه' (him) in 'شجّعته'. The English uses 'them', a gender-neutral pronoun, altering the original gender reference.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:20:33.415757+00:00"
   }
 }

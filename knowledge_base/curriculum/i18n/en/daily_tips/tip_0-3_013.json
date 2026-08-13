@@ -27,17 +27,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "الفيزياء، الأنسجة، القوام، السبب/النتيجة",
-        "english": "physics, textures, cause/effect",
-        "why": "The Arabic lists four items: physics, tissues, textures, cause/effect. The English omits 'tissues' (الأنسجة) and merges 'textures' (القوام) into one, losing the distinction.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:08:19.071954+00:00"
   }
 }

@@ -9,12 +9,12 @@
     "1ad7b0db-b8cb-40cc-b752-f295119be45d",
     "de291c19-4443-464b-806e-81d9ed0c01ad"
   ],
-  "summary": "At this age, the digital footprint becomes a real asset or a burden: university admissions offices and employers search for the name. An old reckless post may cost an opportunity, while a clean and purposeful digital presence may open doors. Help your child 'clean' their old accounts, adjust privacy settings, and build a positive presence that reflects their skills and interests. Teach them the rule of posting: do not post what you would not want your future professor or manager to read. Awareness that the internet is a permanent memory transforms them from a reckless consumer into a conscious reputation builder.",
+  "summary": "At this age, the digital footprint becomes a real asset or a burden: university admissions offices and employers search for the name. An old reckless post may cost an opportunity, while a clean and purposeful digital presence may open doors. Help your son 'clean' his old accounts, adjust privacy settings, and build a positive presence that reflects his skills and interests. Teach him the rule of posting: do not post what you would not want your future professor or manager to read. Awareness that the internet is a permanent memory transforms him from a reckless consumer into a conscious reputation builder.",
   "try_this": "This week: review his public accounts together with the eye of an 'employer,' delete or adjust anything that may harm him, and think of one post or project that builds his positive image.",
   "order": 3,
   "estimated_minutes": 22,
   "reflection_prompts": [
-    "What would your child’s digital footprint say about him if a professor or manager searched for it today?",
+    "What would your son’s digital footprint say about him if a professor or manager searched for it today?",
     "How can you help him build a digital presence that serves his future rather than threatens it?"
   ],
   "warning_flags": [],
@@ -34,17 +34,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "ساعد ابنك على 'تنظيف' حساباته القديمة",
-        "english": "Help your child 'clean' their old accounts",
-        "why": "The Arabic uses 'ابنك' (your son) but the English translates it as 'your child', which is gender-neutral. While the rest of the text uses male pronouns, this change slightly alters the original meaning by not specifying the child's gender.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:08:36.914526+00:00",
+    "fixed_at": "2026-08-13T18:08:36.914550+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

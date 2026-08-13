@@ -18,17 +18,9 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "text",
-        "arabic": "القرآن يُعاش لا يُحفظ",
-        "english": "The Qur'an is to be lived, not just memorised.",
-        "why": "The Arabic says 'لا يُحفظ' (not memorised), a direct negation. The English adds 'just', changing the meaning to 'not only memorised', which softens the original statement.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:10:38.251239+00:00"
   }
 }

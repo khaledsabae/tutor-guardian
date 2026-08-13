@@ -32,22 +32,15 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "register",
-        "field": "summary",
-        "arabic": "بأسلوبٍ محبَّب",
-        "english": "in a beloved manner",
-        "why": "The Arabic is warm and direct, but 'beloved manner' is not idiomatic in English; 'beloved' is typically used for people, not for a manner of speaking. A more natural rendering would be 'in a loving way' or 'in an endearing manner'.",
-        "severity": "low"
-      },
-      {
         "type": "meaning_change",
         "field": "reflection_prompts[1]",
-        "arabic": "تحبّين أن يعرفها طفلك أولاً",
-        "english": "do you most want your child to know first",
-        "why": "The Arabic verb 'تحبّين' (you love) is rendered as 'you most want', shifting the nuance from 'love' to 'want'. The intended meaning is similar, but the emotional weight of 'love' is lost.",
+        "arabic": "أيّ صفةٍ من صفات النبي ﷺ تحبّين أن يعرفها طفلك أولاً؟",
+        "english": "Which quality of the Prophet’s ﷺ do you most want your child to know first?",
+        "why": "The English adds 'most', which is not present in the Arabic. The Arabic asks which quality you would like your child to know first, without the intensifier.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:28:55.989824+00:00"
   }
 }

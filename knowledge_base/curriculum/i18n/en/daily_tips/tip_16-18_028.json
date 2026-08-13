@@ -21,14 +21,14 @@
     "review_verdict": "defects",
     "review_defects": [
       {
-        "type": "structure",
+        "type": "meaning_change",
         "field": "text",
         "arabic": "نضج",
         "english": "maturity (nudhūj)",
-        "why": "The English translation adds a transliteration '(nudhūj)' that is not present in the Arabic source.",
-        "severity": "low"
+        "reason": "The English adds a transliteration '(nudhūj)' that is not present in the Arabic source."
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T17:12:52.796618+00:00"
   }
 }

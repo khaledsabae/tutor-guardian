@@ -6,11 +6,11 @@
   "domain": "islamic_parenting",
   "unit_ids": [],
   "summary": "Do not let the Qur'an become dry memorisation. Connect a verse to a story or a situation from his life, and establish for him a small, consistent wird (portion). Understanding alongside memorisation builds a lasting relationship, not merely words that are forgotten.",
-  "try_this": "This week: Read a short verse with your child and discuss its meaning and how it applies to his day.",
+  "try_this": "This week: Read a short verse with your son and discuss its meaning and how it applies to his day.",
   "order": 3,
   "estimated_minutes": 8,
   "reflection_prompts": [
-    "What is your child’s relationship with the Qur'an now?",
+    "What is your son’s relationship with the Qur'an now?",
     "Is memorisation coupled with understanding?"
   ],
   "warning_flags": [],
@@ -33,21 +33,16 @@
     "review_defects": [
       {
         "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "اقرأ مع ابنك آيةً قصيرة",
-        "english": "Read a short verse with your child",
-        "why": "The Arabic specifies 'ابنك' (your son), but the translation generalizes to 'your child', losing the original gender-specific address.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[0]",
-        "arabic": "ما علاقة ابنك بالقرآن الآن؟",
-        "english": "What is your child’s relationship with the Qur'an now?",
-        "why": "Again, 'ابنك' (your son) is translated as 'your child', altering the specific reference to a son.",
+        "field": "summary",
+        "arabic": "لا تجعل القرآن حفظاً جافاً",
+        "english": "Do not let the Qur'an become dry memorisation",
+        "why": "The Arabic is an active command: 'Do not make the Qur'an dry memorization' (i.e., do not treat it as such). The English shifts to a more passive 'Do not let the Qur'an become dry memorisation', slightly altering the nuance of the parent's role.",
         "severity": "low"
       }
     ],
-    "approved_by": null
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:56:47.890797+00:00",
+    "fixed_at": "2026-08-13T18:56:47.890810+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }

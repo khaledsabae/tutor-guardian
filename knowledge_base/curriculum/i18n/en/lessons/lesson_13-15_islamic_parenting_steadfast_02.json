@@ -5,8 +5,8 @@
   "age_group": "13-15",
   "domain": "islamic_parenting",
   "unit_ids": [],
-  "summary": "Al-sahib saahib (a companion influences). Today’s influencers are virtual companions. Do not attack his friends; instead, strengthen his standards: who uplifts him and who drags him down? Discuss with him whom he follows and why, and teach him that a role model is chosen with awareness.",
-  "try_this": "This week: Ask your teenager whom he follows and admires, and discuss together the qualities of a righteous role model (uswah hasanah).",
+  "summary": "Al-sahib saahib (a companion influences). Today’s influencers are virtual companions. Do not attack his friends; instead, strengthen his standards: who uplifts you and who drags you down? Discuss with him whom he follows and why, and teach him that a role model is chosen with awareness.",
+  "try_this": "This week: Ask your teenager whom he follows and admires, and discuss together the qualities of a righteous role model.",
   "order": 2,
   "estimated_minutes": 9,
   "reflection_prompts": [
@@ -29,33 +29,11 @@
       "quoted_arabic": true,
       "reviewer_model": false
     },
-    "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "الصاحب ساحب",
-        "english": "Al-sahib saahib (a companion influences)",
-        "why": "The Arabic proverb means 'a companion pulls' (i.e., exerts a strong, dragging influence). The translation 'a companion influences' is weaker and loses the pulling metaphor. The transliteration 'Al-sahib saahib' is also inaccurate; it should be 'as-sāḥib sāḥib'.",
-        "severity": "medium"
-      },
-      {
-        "type": "meaning_change",
-        "field": "summary",
-        "arabic": "أن القدوة تُختار بوعي",
-        "english": "that a role model is chosen with awareness",
-        "why": "The Arabic uses the definite article 'القدوة' (the role model), while the English uses the indefinite 'a role model', slightly altering the specificity.",
-        "severity": "low"
-      },
-      {
-        "type": "meaning_change",
-        "field": "try_this",
-        "arabic": "وناقشا معاً صفات القدوة الصالحة",
-        "english": "and discuss together the qualities of a righteous role model (uswah hasanah)",
-        "why": "The Arabic uses the definite 'القدوة الصالحة' (the righteous role model) and does not include the transliteration 'uswah hasanah'. The English changes to indefinite 'a righteous role model' and adds the transliteration, which is not present in the source.",
-        "severity": "low"
-      }
-    ],
-    "approved_by": null
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null,
+    "revalidated_at": "2026-08-13T18:05:57.109479+00:00",
+    "fixed_at": "2026-08-13T18:05:57.109489+00:00",
+    "fixer_model": "mistral-large-3:675b"
   }
 }
