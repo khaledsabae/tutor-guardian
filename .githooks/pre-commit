@@ -34,7 +34,7 @@ if "$PY" ops/tools/check_quran_citations.py; then
 else
     echo ""
     echo "❌ [pre-commit] آية لا تطابق المصحف — commit متوقف."
-    echo "   صحّح النص في mobile/lib/features/adhkar/data/family_adhkar.dart"
+    echo "   صحّح النص في mobile/assets/content/adhkar/family_adhkar.ar.json"
     echo ""
     exit 1
 fi

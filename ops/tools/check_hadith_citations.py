@@ -21,6 +21,14 @@ What this rejects, drawn from what actually shipped:
 Source format expected in `source:`
     'صحيح البخاري — حديث ٥٠٢٧'   ·   'صحيح مسلم — حديث ٢٣١٨'
 
+Scope: `kind: 'hadith'` entries in
+mobile/assets/content/adhkar/family_adhkar.ar.json (Dart literals until
+2026-08-13; the move is proven byte-for-byte by
+`ops/tools/extract_app_content.py verify`). The pack stores a numeric
+`provenance` — book and number — beside the Arabic citation. This check parses
+the citation itself, as before, and asserts the stored pair agrees: derived
+data that drifted from what it was derived from is an error, not a shortcut.
+
 Corpus: `ops/data/hadith_index.json.gz`, derived from the ara-bukhari and
 ara-muslim editions of fawazahmed0/hadith-api. It stores consonantal skeletons
 for matching only — it is not display text, and **it is not a certificate of
@@ -36,17 +44,15 @@ import sys
 import unicodedata
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from adhkar_pack import load_or_die  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
-ADHKAR = ROOT / "mobile/lib/features/adhkar/data/family_adhkar.dart"
 INDEX = ROOT / "ops/data/hadith_index.json.gz"
 
 _MARKS = re.compile("[ً-ٰۖ-ۭـࣰ-ࣿ]")
 _NON_ARABIC = re.compile("[^ء-ي\\s]")
 _AR_DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789")
-_ITEM = re.compile(
-    r"ParentingContent\(\s*text:\s*'((?:[^'\\]|\\.)*)'\s*,"
-    r"\s*source:\s*'((?:[^'\\]|\\.)*)'\s*,"
-    r"\s*topic:\s*'((?:[^'\\]|\\.)*)'\s*,\s*kind:\s*'(\w+)'")
 _CITE = re.compile(r"صحيح\s+(البخاري|مسلم)\s*[—\-–]\s*حديث\s*([٠-٩0-9]+)")
 
 
@@ -98,6 +104,18 @@ def check_one(books: dict, text: str, source: str) -> str | None:
     return f"النص ليس في صحيح {book} ولا في الآخر — لفظ غير ثابت أو ملزوق"
 
 
+def _check_item(books: dict, item) -> str | None:
+    """[check_one] plus: the stored provenance must equal the parsed citation."""
+    m = _CITE.search(item.source)
+    if m is not None:
+        prov = item.provenance or {}
+        parsed = (m.group(1), int(m.group(2).translate(_AR_DIGITS)))
+        if (prov.get("book"), prov.get("number")) != parsed:
+            return (f"provenance {prov.get('book')} {prov.get('number')} "
+                    f"لا يطابق الإسناد {parsed[0]} {parsed[1]}")
+    return check_one(books, item.text, item.source)
+
+
 # Regression fixtures: the checker must reject what shipped and accept what is
 # sound. With zero hadith in the app these are the only thing proving it works.
 _MUST_REJECT = [
@@ -130,10 +148,9 @@ def main() -> int:
             return 2
     print(f"  self-tests: {len(_MUST_ACCEPT)} قبول · {len(_MUST_REJECT)} رفض ✓")
 
-    items = _ITEM.findall(ADHKAR.read_text(encoding="utf-8"))
-    hadiths = [(t, s) for t, s, _, k in items if k == "hadith"]
-    errors = [(t, s, w) for t, s in hadiths
-              if (w := check_one(books, t, s)) is not None]
+    hadiths = [i for i in load_or_die() if i.kind == "hadith"]
+    errors = [(i.text, i.source, w) for i in hadiths
+              if (w := _check_item(books, i)) is not None]
 
     print(f"  أحاديث في التطبيق: {len(hadiths)}   ·   مطابقة: {len(hadiths) - len(errors)}")
 
