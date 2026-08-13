@@ -45,6 +45,13 @@ class KnowledgeUnit(BaseModel):
     id: str
     domain: str  # "medical", "fiqh", "tarbiyah", "cyber"
     age_group: str  # "0-3", "4-6", "7-9", "10-12", "13-15", "16-18"
+    # 🚨 اللغة كانت تُرمى صامتة. ١,٠٦١ من ١,١٨٧ ملفًا في `knowledge_base/units/`
+    # تحمل `language` (٨٣٥ ar · ١٨٣ mixed · ٤٣ en)، وpydantic كان يسقطها لأن
+    # الحقل غير معرَّف هنا — فلا الفهرس يعرف لغة الوحدة ولا الاسترجاع يستطيع
+    # تمييزها، وسؤال إنجليزي يُسنَد إلى فقرات عربية بالكامل بلا أثر واحد يقول
+    # ذلك. الافتراضي "ar" لأن العربية لغة المصدر: ملف بلا وسم عربيٌّ حتى يثبت
+    # غيره، لا مجهول.
+    language: str = "ar"  # "ar" · "en" · "mixed"
     behavior_type: str
     title: str = ""
     intervention_type: str = "إرشادي"  # "وقائي", "إرشادي", "علاجي", "إحالة_لطبيب"
