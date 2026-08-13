@@ -35,6 +35,17 @@ jobs:
           cache: true
           cache-key: flutter-pub-${{ hashFiles('mobile/pubspec.lock') }}
 
+      - name: Trust the runner's Flutter checkout
+        # The self-hosted runner executes as root while flutter-action
+        # unpacks the SDK under a different owner, so every `flutter`
+        # invocation dies with "detected dubious ownership" from git's
+        # safe.directory check — exit 128 before a single line of Dart is
+        # analysed. GitHub-hosted runners never hit this because the tool
+        # cache and the job share one user. `*` here rather than the exact
+        # path: the SDK directory carries the version, so pinning it would
+        # break silently on the next Flutter bump.
+        run: git config --global --add safe.directory '*'
+
       - name: Install dependencies
         working-directory: mobile
         run: flutter pub get
@@ -62,6 +73,17 @@ jobs:
           channel: stable
           cache: true
           cache-key: flutter-pub-${{ hashFiles('mobile/pubspec.lock') }}
+
+      - name: Trust the runner's Flutter checkout
+        # The self-hosted runner executes as root while flutter-action
+        # unpacks the SDK under a different owner, so every `flutter`
+        # invocation dies with "detected dubious ownership" from git's
+        # safe.directory check — exit 128 before a single line of Dart is
+        # analysed. GitHub-hosted runners never hit this because the tool
+        # cache and the job share one user. `*` here rather than the exact
+        # path: the SDK directory carries the version, so pinning it would
+        # break silently on the next Flutter bump.
+        run: git config --global --add safe.directory '*'
 
       - name: Install dependencies
         working-directory: mobile
