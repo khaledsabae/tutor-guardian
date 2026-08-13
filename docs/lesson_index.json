@@ -11,8 +11,8 @@
       "reports": "156/174",
       "data_tables": "156/174",
       "infographics": "156/174",
-      "podcasts": "169/174",
-      "videos": "102/174"
+      "podcasts": "174/174",
+      "videos": "106/174"
     },
     "lessons_by_age": {
       "0-3": 6,
@@ -10733,8 +10733,17 @@
             "language": "ar_eg",
             "description": "التعامل مع سخرية الأصدقاء من الالتزام الديني"
           }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_13-15_islamic_mockery_01_podcast",
+            "file": "docs/lesson_13-15_islamic_mockery_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 35479302
+          }
         ]
-      }
+      },
+      "source_id": "7f069e22-5641-46c7-91ed-a84e5055aa2e"
     },
     {
       "lesson_id": "lesson_13-15_medical_peer_pressure_01",
@@ -11239,9 +11248,24 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": [],
-        "videos": []
-      }
+        "podcasts": [
+          {
+            "id": "lesson_2-3_aqeedah_first_name_01_podcast",
+            "file": "docs/lesson_2-3_aqeedah_first_name_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 25691742
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/path_videos/path_2-3_aqeedah_first_name_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_aqeedah_first_name"
+          }
+        ]
+      },
+      "source_id": "23d21d83-8ba3-4153-ac18-473d2759ed62"
     },
     {
       "lesson_id": "lesson_2-3_aqeedah_first_name_02",
@@ -11254,9 +11278,24 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": [],
-        "videos": []
-      }
+        "podcasts": [
+          {
+            "id": "lesson_2-3_aqeedah_first_name_02_podcast",
+            "file": "docs/lesson_2-3_aqeedah_first_name_02_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 23028368
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/path_videos/path_2-3_aqeedah_first_name_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_aqeedah_first_name"
+          }
+        ]
+      },
+      "source_id": "db39dd7f-6064-45f6-a549-d6f66d31770b"
     },
     {
       "lesson_id": "lesson_2-3_aqeedah_first_name_03",
@@ -11269,9 +11308,24 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": [],
-        "videos": []
-      }
+        "podcasts": [
+          {
+            "id": "lesson_2-3_aqeedah_first_name_03_podcast",
+            "file": "docs/lesson_2-3_aqeedah_first_name_03_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 33001194
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/path_videos/path_2-3_aqeedah_first_name_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_aqeedah_first_name"
+          }
+        ]
+      },
+      "source_id": "16bdc8a6-b6bb-4691-8f27-8a3031330d5d"
     },
     {
       "lesson_id": "lesson_2-3_aqeedah_first_name_04",
@@ -11284,9 +11338,24 @@
         "reports": [],
         "data_tables": [],
         "infographics": [],
-        "podcasts": [],
-        "videos": []
-      }
+        "podcasts": [
+          {
+            "id": "lesson_2-3_aqeedah_first_name_04_podcast",
+            "file": "docs/lesson_2-3_aqeedah_first_name_04_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 16950500
+          }
+        ],
+        "videos": [
+          {
+            "file": "docs/path_videos/path_2-3_aqeedah_first_name_ar_eg.mp4",
+            "type": "video/mp4",
+            "language": "ar_eg",
+            "description": "Path intro video for path_2-3_aqeedah_first_name"
+          }
+        ]
+      },
+      "source_id": "2c0ab46f-84b6-4e04-95b1-a7351a465201"
     }
   ]
 }
