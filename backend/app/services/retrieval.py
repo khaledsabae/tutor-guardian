@@ -416,6 +416,25 @@ def retrieve_relevant_units(
     return results
 
 
+def retrieve_domain_only(
+    query_text: str,
+    domain: str,
+    top_k: int = 5,
+) -> list[dict]:
+    """Vector search over a whole domain, ignoring the child's age band.
+
+    The age-filtered query above is right when the corpus holds a unit for
+    the child's own band, and blind when it does not: a unit written for
+    4-6 is invisible to a 7-9 parent, and query 2 does not rescue it because
+    it only fires on a *completely* empty result — and half the corpus is
+    "unspecified", so it never is. This leg exists to be fused *underneath*
+    the age-filtered one, not to replace it.
+    """
+    collection = with_live_collection(lambda c: c)
+    where = {"domain": {"$eq": canonical_domain(domain)}}
+    return _query(collection, query_text, where, top_k)
+
+
 # Ensure the index is built on first import
 _index_built = False
 _index_lock = threading.Lock()
@@ -551,11 +570,19 @@ def retrieve_hybrid(
     rewritten_query: str = "",
     top_n: int = 4,
     candidates_per_leg: int = 8,
+    rerank_pool: int = 12,
 ) -> list[dict]:
     """The quality-first retrieval path.
 
-    Per domain: vector top-k + BM25 top-k (+ both again for the rewritten
-    query when provided) → RRF fusion → cross-encoder rerank → top_n.
+    Per domain and per query: three legs — vector filtered to the child's age
+    band, vector over the whole domain, and BM25 (which never filtered by age
+    to begin with) → RRF fusion → cross-encoder rerank → top_n.
+
+    The age-free vector leg is additive, never a replacement: a unit written
+    for the child's own band appears in both vector legs and so accumulates
+    twice the RRF credit, which is what keeps the age-matched case intact
+    while the mismatched case stops coming up empty.
+
     Falls back to fusion order if the reranker is unavailable (see
     reranker.rerank — it never raises).
     """
@@ -576,10 +603,24 @@ def retrieve_hybrid(
             for r in vec:
                 r.setdefault("source_domain", domain)
             legs.append(vec)
+            # Half depth on purpose: this leg only has to rescue the units
+            # the age filter hid, and every extra candidate it adds is one
+            # more pair the cross-encoder has to score. At full depth it
+            # bought nothing extra and cost ~875ms per answer.
+            any_age = retrieve_domain_only(
+                query_text=q, domain=domain,
+                top_k=max(1, candidates_per_leg // 2),
+            )
+            for r in any_age:
+                r.setdefault("source_domain", domain)
+            legs.append(any_age)
             lex = bm25.search(q, domain=db_domain, top_k=candidates_per_leg)
             for r in lex:
                 r.setdefault("source_domain", domain)
             legs.append(lex)
 
-    candidates = _rrf_merge(*legs)
+    # The cross-encoder is the expensive step and its cost is linear in the
+    # pool, so the extra leg must not be allowed to grow the pool — it is
+    # there to change *which* candidates are scored, not how many.
+    candidates = _rrf_merge(*legs)[:rerank_pool]
     return rerank(query_text, candidates, top_n=top_n)
