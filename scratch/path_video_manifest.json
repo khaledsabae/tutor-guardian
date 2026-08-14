@@ -124,5 +124,157 @@
     "size_bytes": 17518455,
     "task_id": null,
     "source_id": "70b6b40c-1b49-4478-bab3-7b2ff04fb68f"
+  },
+  "path_0-3_cyber_screen_foundations@en": {
+    "completed_at": "2026-08-14T07:10:29Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_0-3_cyber_screen_foundations_en_us.mp4",
+    "size_bytes": 30313689,
+    "task_id": "2a3bc13a-cbdf-46c2-b0d3-b296f7d1893b",
+    "source_id": "922b77a3-60c4-4186-9854-a1c0c5599fc7"
+  },
+  "path_10-12_cyber_digital_citizenship@en": {
+    "completed_at": "2026-08-14T07:41:29Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_10-12_cyber_digital_citizenship_en_us.mp4",
+    "size_bytes": 24309445,
+    "task_id": "79dbd2c8-af2f-4aba-b552-f557fa4a7447",
+    "source_id": "991f5232-3005-4ced-9cc4-31bcc6ecb453"
+  },
+  "path_0-3_development_early_moments@en": {
+    "completed_at": "2026-08-14T07:44:15Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_0-3_development_early_moments_en_us.mp4",
+    "size_bytes": 32724453,
+    "task_id": "551f5ce9-4f4a-4174-b83b-69ebb31f9404",
+    "source_id": "8f6fead9-5ab4-4709-8974-369ff21e64b9"
+  },
+  "path_0-3_islamic_parenting_fitrah@en": {
+    "completed_at": "2026-08-14T07:45:38Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_0-3_islamic_parenting_fitrah_en_us.mp4",
+    "size_bytes": 27682934,
+    "task_id": "a47f155a-23d1-4831-90b2-3a9868b3cfc4",
+    "source_id": "7eb2fb20-a2ab-4a5a-980e-301b1bc3c968"
+  },
+  "path_0-3_medical_early_milestones@en": {
+    "completed_at": "2026-08-14T07:46:38Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_0-3_medical_early_milestones_en_us.mp4",
+    "size_bytes": 32935403,
+    "task_id": "dec9c531-d456-43b2-88a7-3c78f52ff772",
+    "source_id": "f7c456d2-bfd6-490d-b5af-c7539e8e9097"
+  },
+  "path_10-12_aqeedah_growth@en": {
+    "completed_at": "2026-08-14T07:47:37Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_10-12_aqeedah_growth_en_us.mp4",
+    "size_bytes": 31095469,
+    "task_id": "96dbac4d-df9f-41bb-bedb-21d88993ad86",
+    "source_id": "53e64a0e-773b-42bc-abaf-cb28e348ac84"
+  },
+  "path_10-12_development_pre_teen@en": {
+    "completed_at": "2026-08-14T07:48:36Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_10-12_development_pre_teen_en_us.mp4",
+    "size_bytes": 27826375,
+    "task_id": "d135517e-8be9-4af7-9930-df67cdca1edc",
+    "source_id": "8f14dd11-eb50-4c2e-b415-7ecc07d0f576"
+  },
+  "path_10-12_islamic_parenting_identity@en": {
+    "completed_at": "2026-08-14T07:49:36Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_10-12_islamic_parenting_identity_en_us.mp4",
+    "size_bytes": 25038430,
+    "task_id": "872ed3e1-b3b1-4a57-83a3-ac9ddaa0a93c",
+    "source_id": "661d4d9c-c070-4d11-9b0e-9db6df8734a4"
+  },
+  "path_0-3_islamic_parenting_attachment@en": {
+    "completed_at": "2026-08-14T07:51:20Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_0-3_islamic_parenting_attachment_en_us.mp4",
+    "size_bytes": 27039696,
+    "task_id": "4afb1766-3369-4527-ac2a-89a4655eaa99",
+    "source_id": "34eedfae-03ae-462d-9a9a-1bb976bbac0a"
+  },
+  "path_13-15_aqeedah_certainty@en": {
+    "completed_at": "2026-08-14T08:04:27Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_13-15_aqeedah_certainty_en_us.mp4",
+    "size_bytes": 27583157,
+    "task_id": "4b9f7018-d92f-45fc-b6c2-098096252904",
+    "source_id": "0574f9e6-b98f-492a-8e74-485a38aa52cc"
+  },
+  "path_13-15_islamic_parenting_steadfast@en": {
+    "completed_at": "2026-08-14T08:06:49Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_13-15_islamic_parenting_steadfast_en_us.mp4",
+    "size_bytes": 24063859,
+    "task_id": "3d7f5778-a7e5-40a6-a3a0-25e75dd44fd0",
+    "source_id": "f90cc36c-e7d1-49fa-8cb1-db1ece64e91b"
+  },
+  "path_13-15_islamic_parenting_teen_identity@en": {
+    "completed_at": "2026-08-14T08:07:49Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_13-15_islamic_parenting_teen_identity_en_us.mp4",
+    "size_bytes": 31525070,
+    "task_id": "3b2c12c8-7c76-4ca1-b2c1-6051d53ebe86",
+    "source_id": "eca37275-5344-4b33-af18-d1cd6182bc51"
+  },
+  "path_13-15_medical_mental_health@en": {
+    "completed_at": "2026-08-14T08:08:48Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_13-15_medical_mental_health_en_us.mp4",
+    "size_bytes": 33150668,
+    "task_id": "ae6343a6-e21c-4285-a95d-a2623527de65",
+    "source_id": "3b6c24ed-fc06-48db-b176-1ebd807c9e0b"
+  },
+  "path_10-12_islamic_parenting_worship_love@en": {
+    "completed_at": "2026-08-14T08:10:33Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_10-12_islamic_parenting_worship_love_en_us.mp4",
+    "size_bytes": 27236788,
+    "task_id": "037e283d-e89d-478e-abee-cbb670510fc8",
+    "source_id": "19813684-0c83-4ebd-8fdf-89777949ff66"
+  },
+  "path_10-12_medical_puberty_wellbeing@en": {
+    "completed_at": "2026-08-14T08:11:33Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_10-12_medical_puberty_wellbeing_en_us.mp4",
+    "size_bytes": 25251487,
+    "task_id": "e3319894-9a6f-4df5-a6c4-b71b4566b9f7",
+    "source_id": "f72f983c-f651-4612-a0af-be707776e2b8"
+  },
+  "path_13-15_development_brain_identity@en": {
+    "completed_at": "2026-08-14T08:12:31Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_13-15_development_brain_identity_en_us.mp4",
+    "size_bytes": 28624398,
+    "task_id": "5c201f84-6332-43f9-9590-bd9f0053cf95",
+    "source_id": "35cb3cae-d9c1-4f07-9e10-91376ba404f4"
+  },
+  "path_13-15_cyber_digital_maturity@en": {
+    "completed_at": "2026-08-14T08:14:01Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_13-15_cyber_digital_maturity_en_us.mp4",
+    "size_bytes": 18776687,
+    "task_id": "2cea34ba-5d39-45cd-aaa4-c1de6cce1f48",
+    "source_id": "cb5747de-81ac-4e7a-aafc-34c4a9c628b7"
+  },
+  "path_16-18_cyber_digital_professional@en": {
+    "completed_at": "2026-08-14T08:25:18Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_16-18_cyber_digital_professional_en_us.mp4",
+    "size_bytes": 30724101,
+    "task_id": "e41e24d3-7155-499e-b428-896a9971ab76",
+    "source_id": "98ac4a43-729f-44d9-a10c-5db6a57edea8"
+  },
+  "path_16-18_aqeedah_conviction@en": {
+    "completed_at": "2026-08-14T08:34:14Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_16-18_aqeedah_conviction_en_us.mp4",
+    "size_bytes": 26024017,
+    "task_id": "2c5a8955-bd36-4b84-917a-809f90de11d2",
+    "source_id": "34795a06-dc18-4913-a87f-4b8f370f3801"
   }
 }
