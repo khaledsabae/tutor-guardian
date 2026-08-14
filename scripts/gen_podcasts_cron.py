@@ -117,6 +117,9 @@ async def trigger(source_id: str, lang: str):
     blob = out + err
     if "RateLimit" in blob or "quota" in blob.lower():
         return "RATELIMIT"
+    if "generation is unavailable" in blob.lower():
+        # The message names the feature; the cause is the source reference.
+        return "STALE_SOURCE"
     m = re.search(r"(?:Task|Started):\s*([a-fA-F0-9\-]+)", blob)
     return m.group(1) if m else None
 
@@ -190,6 +193,7 @@ async def main():
     # run when things go wrong, which is exactly when a success-counter stops
     # counting.
     attempted = 0
+    stale: list[str] = []
     for lid, sid in targets:
         if args.limit and attempted >= args.limit:
             break
@@ -205,6 +209,18 @@ async def main():
             print(f"[trigger] {lid}: task {tid}")
             state[key] = tid
             await asyncio.sleep(5)
+        elif tid == "STALE_SOURCE":
+            # 🚨 Not an audio outage. NotebookLM answers "Audio generation is
+            # unavailable" when -s names a source that no longer exists on the
+            # notebook: it accepts CREATE_ARTIFACT, returns 200 with a null
+            # body, and never creates a task row. The old branch printed
+            # "no task id" and walked on, so 74 stale ids in
+            # source_to_lesson.json read as "audio is down" for two weeks —
+            # while video, which reads a different and still-valid mapping,
+            # worked the whole time. Name the real cause.
+            stale.append(lid)
+            print(f"[trigger] {lid}: STALE SOURCE {sid[:8]} — not on the "
+                  f"notebook. Run ops/tools/refresh_source_map.py")
         else:
             print(f"[trigger] {lid}: no task id")
 
@@ -226,6 +242,13 @@ async def main():
             elif st == "failed":
                 state.pop(key, None)
         STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    if stale:
+        print(f"\n🚫 {len(stale)} lesson(s) point at a source that is no longer "
+              f"on the notebook — regenerate the map, not the audio:")
+        print("     python3 ops/tools/refresh_source_map.py --dry-run")
+        for lid in stale[:8]:
+            print(f"       {lid}")
 
     done = sum(1 for lid, _ in targets if _has_pod(lid, lang))
     inflight = sum(1 for k in state if _split_key(k)[1] == lang)

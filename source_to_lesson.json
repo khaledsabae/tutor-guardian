@@ -1,94 +1,4 @@
 {
-  "3b1bc4d0-0bbc-4e6b-bf5b-56d88cf5591a": [
-    "prenatal-1",
-    "cyber_screen_foundations",
-    "lesson_0-3_cyber_screen_foundations_01"
-  ],
-  "688a3b81-7e0f-4245-9427-724219cb9aac": [
-    "prenatal-1",
-    "cyber_screen_foundations",
-    "lesson_0-3_cyber_screen_foundations_02"
-  ],
-  "424206c3-c35b-4e26-834b-90ce2cde12bc": [
-    "prenatal-1",
-    "cyber_screen_foundations",
-    "lesson_0-3_cyber_screen_foundations_03"
-  ],
-  "d54a286a-dbd0-4047-8cfb-016026f26020": [
-    "prenatal-1",
-    "development_early_moments",
-    "lesson_0-3_development_early_moments_01"
-  ],
-  "f31a7e1b-b4b9-423e-b362-03138496c2bf": [
-    "prenatal-1",
-    "development_early_moments",
-    "lesson_0-3_development_early_moments_02"
-  ],
-  "6e81f215-6501-4e8d-aec6-e54b720532eb": [
-    "prenatal-1",
-    "development_early_moments",
-    "lesson_0-3_development_early_moments_03"
-  ],
-  "b9bc7171-c5ed-4663-bb13-48d9d227dd2e": [
-    "prenatal-1",
-    "islamic_parenting_attachment",
-    "lesson_0-3_islamic_parenting_attachment_01"
-  ],
-  "145fc9e8-bc71-4fdb-95f7-87dccb24a345": [
-    "prenatal-1",
-    "islamic_parenting_attachment",
-    "lesson_0-3_islamic_parenting_attachment_02"
-  ],
-  "4812d67a-00e6-4fa2-a04f-cbfd17123b49": [
-    "prenatal-1",
-    "islamic_parenting_attachment",
-    "lesson_0-3_islamic_parenting_attachment_03"
-  ],
-  "9810e949-9163-4386-9cdd-37cf11bbc055": [
-    "prenatal-1",
-    "islamic_parenting_attachment",
-    "lesson_0-3_islamic_parenting_attachment_04"
-  ],
-  "69bfedda-8b9a-4bc8-9b5a-aca294ac78f0": [
-    "prenatal-1",
-    "medical_early_milestones",
-    "lesson_0-3_medical_early_milestones_01"
-  ],
-  "628dc078-3da1-4c1a-a3bc-450b00249b91": [
-    "prenatal-1",
-    "medical_early_milestones",
-    "lesson_0-3_medical_early_milestones_02"
-  ],
-  "5fa352a9-d762-43cc-874c-0ac6e7dcaa0f": [
-    "prenatal-1",
-    "medical_early_milestones",
-    "lesson_0-3_medical_early_milestones_03"
-  ],
-  "39974153-9cac-4f6e-ae0c-89670bbfa93e": [
-    "prenatal-1",
-    "medical_early_milestones",
-    "lesson_0-3_medical_early_milestones_04"
-  ],
-  "939414c0-68d3-40f4-8a91-31c9f2f2f4f6": [
-    "2-3",
-    "cyber_screen_foundations",
-    "lesson_2-3_cyber_routine_02"
-  ],
-  "02a935ab-8fe5-4d04-a77b-0faaf59c6553": [
-    "2-3",
-    "development_early_moments",
-    "lesson_2-3_development_independence_01"
-  ],
-  "407b5539-eee6-4574-ad06-78245cdb791a": [
-    "2-3",
-    "development_early_moments",
-    "lesson_2-3_development_language_03"
-  ],
-  "8d5b520e-e613-4bb8-af0c-fb5c4800a678": [
-    "2-3",
-    "islamic_parenting_attachment",
-    "lesson_2-3_islamic_tantrums_04"
-  ],
   "3f7ba915-aaf3-4d46-847f-12f720e2be23": [
     "0-3",
     "cyber_screen_foundations",
@@ -104,55 +14,20 @@
     "cyber_digital_citizenship",
     "lesson_10-12_cyber_digital_citizenship_b04"
   ],
-  "79ef3ff1-8878-40a7-b34f-045db4494cb0": [
-    "10-12",
-    "medical_puberty_wellbeing",
-    "lesson_10-12_medical_puberty_wellbeing_b04"
-  ],
-  "e48b1cdf-4322-40a4-bf85-37c9d33f61ae": [
-    "13-15",
-    "cyber_digital_maturity",
-    "lesson_13-15_cyber_digital_maturity_b04"
-  ],
   "069c2dc6-3067-4131-8d44-d155467a595e": [
     "13-15",
     "development_brain_identity",
     "lesson_13-15_development_brain_identity_b04"
-  ],
-  "d37ac22d-d7db-4044-937d-bb073785bc5e": [
-    "16-18",
-    "cyber_digital_professional",
-    "lesson_16-18_cyber_digital_professional_b03"
-  ],
-  "fab34fe5-6223-43d4-8fdf-cb5c45b46db3": [
-    "16-18",
-    "cyber_digital_professional",
-    "lesson_16-18_cyber_digital_professional_b04"
   ],
   "39a16fbb-e308-4f72-8115-42ca5f32251c": [
     "16-18",
     "medical_adult_transition",
     "lesson_16-18_medical_adult_transition_b04"
   ],
-  "739d0a15-3498-4f55-b67c-dd941d740c04": [
-    "2-3",
-    "cyber_routine",
-    "lesson_2-3_cyber_routine_b01"
-  ],
   "2874d536-7db2-4654-97ad-cb5a4186cf41": [
     "2-3",
     "cyber_routine",
     "lesson_2-3_cyber_routine_b02"
-  ],
-  "46a47df3-5fc2-46c4-9e71-26af29ae9fd0": [
-    "2-3",
-    "cyber_routine",
-    "lesson_2-3_cyber_routine_b04"
-  ],
-  "7fb32028-a422-41f1-bc3e-f1287f03cd0e": [
-    "2-3",
-    "development_growth",
-    "lesson_2-3_development_growth_b03"
   ],
   "74a6cb19-97b2-4406-a9a0-b30fa3defd96": [
     "2-3",
@@ -169,11 +44,6 @@
     "islamic_attachment",
     "lesson_2-3_islamic_attachment_b02"
   ],
-  "e5cf0f41-3675-4e77-8b03-4813628043f7": [
-    "2-3",
-    "islamic_attachment",
-    "lesson_2-3_islamic_attachment_b03"
-  ],
   "2ead3401-349d-4369-8387-3bf45415502e": [
     "4-6",
     "development_positive_parenting",
@@ -184,255 +54,15 @@
     "development_positive_parenting",
     "lesson_4-6_development_positive_parenting_b02"
   ],
-  "478cd841-9b6e-4d7e-a286-dba8f6375636": [
-    "4-6",
-    "islamic_parenting_adab",
-    "lesson_4-6_islamic_parenting_adab_b04"
-  ],
   "40d4869c-d621-4c29-9ff6-2ff8a8e8fadf": [
     "4-6",
     "islamic_parenting_bond",
     "lesson_4-6_islamic_parenting_bond_b04"
   ],
-  "faf7e7dd-5bcd-46f8-ae4e-aa2a7ac58c3f": [
-    "7-9",
-    "development_digital_wellbeing",
-    "lesson_7-9_development_digital_wellbeing_b04"
-  ],
   "2b416101-bebb-48e9-b164-7704d5fdf5e5": [
     "7-9",
     "islamic_parenting_worship",
     "lesson_7-9_islamic_parenting_worship_b04"
-  ],
-  "e9a40c99-5286-420f-b093-54148d4ab449": [
-    "7-9",
-    "medical_emotional_health",
-    "lesson_7-9_medical_emotional_health_b03"
-  ],
-  "f2e2a40a-61f7-4dfd-9785-ef39b312834a": [
-    "7-9",
-    "medical_emotional_health",
-    "lesson_7-9_medical_emotional_health_b04"
-  ],
-  "4086896f-0dd6-4a28-bade-c8032b18e9d1": [
-    "10-12",
-    "cyber_digital_citizenship",
-    "lesson_10-12_cyber_01"
-  ],
-  "5fb6588e-d31a-4cca-8e0c-052b364a72ac": [
-    "10-12",
-    "cyber_digital_citizenship",
-    "lesson_10-12_cyber_02"
-  ],
-  "f7e6f02d-39fb-4888-ae4a-9e0644e75f5e": [
-    "10-12",
-    "cyber_digital_citizenship",
-    "lesson_10-12_cyber_03"
-  ],
-  "440183bc-479c-49c1-bb07-fe35fa62295f": [
-    "10-12",
-    "islamic_parenting_identity",
-    "lesson_10-12_islamic_01"
-  ],
-  "55fb8fb3-2eed-4eb2-9940-0a1e07d3e951": [
-    "10-12",
-    "islamic_parenting_identity",
-    "lesson_10-12_islamic_02"
-  ],
-  "bc41f39f-97ae-4af2-80dd-b070907a80e4": [
-    "10-12",
-    "islamic_parenting_identity",
-    "lesson_10-12_islamic_03"
-  ],
-  "dab0fff1-8180-4a3f-99ae-6791b243d690": [
-    "10-12",
-    "islamic_parenting_identity",
-    "lesson_10-12_islamic_04"
-  ],
-  "c48f34fc-f1a1-4150-a55c-bef14c4051f8": [
-    "10-12",
-    "medical_puberty_wellbeing",
-    "lesson_10-12_medical_01"
-  ],
-  "42bc52b6-7d36-486f-aa79-e98ea5dcb4c9": [
-    "10-12",
-    "medical_puberty_wellbeing",
-    "lesson_10-12_medical_02"
-  ],
-  "20e00eef-fa60-4165-9364-ef869223c0f6": [
-    "10-12",
-    "medical_puberty_wellbeing",
-    "lesson_10-12_medical_03"
-  ],
-  "b607c436-be69-4a32-839b-af09cae03dc4": [
-    "13-15",
-    "cyber_digital_maturity",
-    "lesson_13-15_cyber_01"
-  ],
-  "78567565-5847-4d61-bcd2-aac115428388": [
-    "13-15",
-    "cyber_digital_maturity",
-    "lesson_13-15_cyber_02"
-  ],
-  "ca2ad154-cbd0-496f-aa24-9c2194997c7d": [
-    "13-15",
-    "cyber_digital_maturity",
-    "lesson_13-15_cyber_03"
-  ],
-  "46ed02d0-0eb1-4f2f-b5c1-6546eafdcc3b": [
-    "13-15",
-    "development_brain_identity",
-    "lesson_13-15_development_01"
-  ],
-  "8b1d28ae-c4de-4aac-b591-8fbb3f61ddd9": [
-    "13-15",
-    "development_brain_identity",
-    "lesson_13-15_development_02"
-  ],
-  "baaf13a7-971f-47e3-b5a5-2f89238e0ded": [
-    "13-15",
-    "development_brain_identity",
-    "lesson_13-15_development_03"
-  ],
-  "73b68643-08f5-4dbf-b705-daef9bc54304": [
-    "13-15",
-    "islamic_parenting_teen_identity",
-    "lesson_13-15_islamic_01"
-  ],
-  "6b437e64-40c5-483d-9abc-bd3bbc94d008": [
-    "13-15",
-    "islamic_parenting_teen_identity",
-    "lesson_13-15_islamic_02"
-  ],
-  "38cfebd5-0b85-477b-a4d7-6e36ed98af79": [
-    "13-15",
-    "islamic_parenting_teen_identity",
-    "lesson_13-15_islamic_03"
-  ],
-  "9c1ff105-66fa-47c3-94a7-17809a24a052": [
-    "13-15",
-    "islamic_parenting_teen_identity",
-    "lesson_13-15_islamic_04"
-  ],
-  "cb9959f3-12d6-46e3-a592-8c6d61c30522": [
-    "13-15",
-    "medical_mental_health",
-    "lesson_13-15_medical_01"
-  ],
-  "b9d49f00-f489-4922-bab6-c2a052f30baf": [
-    "13-15",
-    "medical_mental_health",
-    "lesson_13-15_medical_02"
-  ],
-  "a2737f57-c687-49b6-beb6-748e966f7a76": [
-    "13-15",
-    "medical_mental_health",
-    "lesson_13-15_medical_03"
-  ],
-  "0e79b612-e0fa-4455-a120-59938e7110bc": [
-    "13-15",
-    "medical_mental_health",
-    "lesson_13-15_medical_04"
-  ],
-  "358f4c4e-9742-45f0-b9ee-037b09ca078d": [
-    "16-18",
-    "cyber_digital_professional",
-    "lesson_16-18_cyber_01"
-  ],
-  "5f6d098c-f8a8-4f5a-a9f6-79b2cc8c053e": [
-    "16-18",
-    "cyber_digital_professional",
-    "lesson_16-18_cyber_02"
-  ],
-  "f9989ce3-a6e7-48dc-a627-87fee569c42d": [
-    "16-18",
-    "medical_adult_transition",
-    "lesson_16-18_medical_01"
-  ],
-  "91cd3b56-aba3-40fe-ac12-3f69ac2d0623": [
-    "16-18",
-    "medical_adult_transition",
-    "lesson_16-18_medical_02"
-  ],
-  "e265bfe0-2602-4493-adb4-233c72505d9c": [
-    "16-18",
-    "medical_adult_transition",
-    "lesson_16-18_medical_03"
-  ],
-  "e99a9c41-32ca-41e4-b4ed-f61af795642d": [
-    "4-6",
-    "development_positive_parenting",
-    "lesson_4-6_development_01"
-  ],
-  "85a964f7-0222-46b5-bb0b-044087826f29": [
-    "4-6",
-    "development_positive_parenting",
-    "lesson_4-6_development_02"
-  ],
-  "cc3b004a-dff2-44e4-92c2-2ad56cb8ffe9": [
-    "4-6",
-    "islamic_parenting_adab",
-    "lesson_4-6_adab_01"
-  ],
-  "1ef101c8-a442-4139-89dc-7942bc2cea82": [
-    "4-6",
-    "islamic_parenting_adab",
-    "lesson_4-6_adab_02"
-  ],
-  "ef52b00c-a493-48d2-8f8c-a94fae2e7835": [
-    "4-6",
-    "islamic_parenting_adab",
-    "lesson_4-6_adab_03"
-  ],
-  "3de4e313-6f2f-4c77-a368-c6682bc43afd": [
-    "4-6",
-    "islamic_parenting_bond",
-    "lesson_4-6_bond_01"
-  ],
-  "cda01e43-ade6-4c2a-b389-e73f03d179f5": [
-    "4-6",
-    "islamic_parenting_bond",
-    "lesson_4-6_bond_02"
-  ],
-  "cc0c9f78-495b-443b-8b4d-ece8d57dbfd5": [
-    "4-6",
-    "islamic_parenting_bond",
-    "lesson_4-6_bond_03"
-  ],
-  "37393ebc-4bf7-4cc8-ac6e-b15b4fad2b10": [
-    "7-9",
-    "development_digital_wellbeing",
-    "lesson_7-9_development_01"
-  ],
-  "370aecdc-3b9f-4d93-805a-517973baba60": [
-    "7-9",
-    "development_digital_wellbeing",
-    "lesson_7-9_development_02"
-  ],
-  "7ce48001-258f-45f1-b561-556ee5b4fe82": [
-    "7-9",
-    "islamic_parenting_worship",
-    "lesson_7-9_worship_01"
-  ],
-  "d029eaaa-7796-494c-a397-330e7342944c": [
-    "7-9",
-    "islamic_parenting_worship",
-    "lesson_7-9_worship_02"
-  ],
-  "17ff034d-1fb5-4f76-a9d4-2ed77bf1aefb": [
-    "7-9",
-    "islamic_parenting_worship",
-    "lesson_7-9_worship_03"
-  ],
-  "1e9b6c6c-a3e9-4bc3-b8bb-3111cc7cc474": [
-    "7-9",
-    "medical_emotional_health",
-    "lesson_7-9_medical_01"
-  ],
-  "954f1301-4611-41f2-b796-6486fd8ac9d5": [
-    "7-9",
-    "medical_emotional_health",
-    "lesson_7-9_medical_02"
   ],
   "a40ffd21-a118-4494-bc29-ca1ecb385c7a": [
     "7-9",
@@ -843,5 +473,135 @@
     "7-9",
     "development_middle_childhood",
     "lesson_7-9_development_middle_childhood_01"
+  ],
+  "922b77a3-60c4-4186-9854-a1c0c5599fc7": [
+    "prenatal-1",
+    "cyber_screen_foundations",
+    "lesson_0-3_cyber_screen_foundations_01"
+  ],
+  "09eafd86-3f65-4d11-a056-852d9ebbeb50": [
+    "prenatal-1",
+    "cyber_screen_foundations",
+    "lesson_0-3_cyber_screen_foundations_02"
+  ],
+  "19501a4e-c9ec-49b9-8505-d43f8ad62fd6": [
+    "prenatal-1",
+    "cyber_screen_foundations",
+    "lesson_0-3_cyber_screen_foundations_03"
+  ],
+  "8f6fead9-5ab4-4709-8974-369ff21e64b9": [
+    "prenatal-1",
+    "development_early_moments",
+    "lesson_0-3_development_early_moments_01"
+  ],
+  "59f38681-c2c3-479b-b3d7-a0e54db95704": [
+    "prenatal-1",
+    "development_early_moments",
+    "lesson_0-3_development_early_moments_02"
+  ],
+  "02ccd26f-44d5-4144-a1f7-94e956c07ff8": [
+    "prenatal-1",
+    "development_early_moments",
+    "lesson_0-3_development_early_moments_03"
+  ],
+  "34eedfae-03ae-462d-9a9a-1bb976bbac0a": [
+    "prenatal-1",
+    "islamic_parenting_attachment",
+    "lesson_0-3_islamic_parenting_attachment_01"
+  ],
+  "b5b84d95-54f2-4564-8bb7-9c44a5323068": [
+    "prenatal-1",
+    "islamic_parenting_attachment",
+    "lesson_0-3_islamic_parenting_attachment_02"
+  ],
+  "b19ff8b2-117a-445e-a852-86d872033963": [
+    "prenatal-1",
+    "islamic_parenting_attachment",
+    "lesson_0-3_islamic_parenting_attachment_03"
+  ],
+  "5d0a334f-58bf-47c3-a5b0-a07eacfa722a": [
+    "prenatal-1",
+    "islamic_parenting_attachment",
+    "lesson_0-3_islamic_parenting_attachment_04"
+  ],
+  "f7c456d2-bfd6-490d-b5af-c7539e8e9097": [
+    "prenatal-1",
+    "medical_early_milestones",
+    "lesson_0-3_medical_early_milestones_01"
+  ],
+  "2e7b5b85-bc7c-4047-80dd-9398f4588f9a": [
+    "prenatal-1",
+    "medical_early_milestones",
+    "lesson_0-3_medical_early_milestones_02"
+  ],
+  "f255de7c-9080-4728-8ae7-0976e4336af2": [
+    "prenatal-1",
+    "medical_early_milestones",
+    "lesson_0-3_medical_early_milestones_03"
+  ],
+  "e7325e85-3a0f-4ba6-989c-8f0df8ca47b8": [
+    "prenatal-1",
+    "medical_early_milestones",
+    "lesson_0-3_medical_early_milestones_04"
+  ],
+  "4bbe3607-208f-4bea-b088-5d1ab5b2db76": [
+    "10-12",
+    "medical_puberty_wellbeing",
+    "lesson_10-12_medical_puberty_wellbeing_b04"
+  ],
+  "145759ef-c7d2-4761-975a-a1bf8b9e930a": [
+    "13-15",
+    "cyber_digital_maturity",
+    "lesson_13-15_cyber_digital_maturity_b04"
+  ],
+  "194defb9-5b0d-48bd-ac84-45052a8f44f8": [
+    "16-18",
+    "cyber_digital_professional",
+    "lesson_16-18_cyber_digital_professional_b03"
+  ],
+  "7dfd62b4-c152-4566-8527-82d05a82d9df": [
+    "16-18",
+    "cyber_digital_professional",
+    "lesson_16-18_cyber_digital_professional_b04"
+  ],
+  "2f5cb099-5ece-44a8-97e8-88991b152d46": [
+    "2-3",
+    "cyber_routine",
+    "lesson_2-3_cyber_routine_b01"
+  ],
+  "2fc710b5-f9f8-46e2-9d99-5fee2d140ad3": [
+    "2-3",
+    "cyber_routine",
+    "lesson_2-3_cyber_routine_b04"
+  ],
+  "30a6eb76-5b8e-40df-8fd8-07d0c9650554": [
+    "2-3",
+    "development_growth",
+    "lesson_2-3_development_growth_b03"
+  ],
+  "dffa3d76-d1ca-4ec4-a6d4-249e7ab552cb": [
+    "2-3",
+    "islamic_attachment",
+    "lesson_2-3_islamic_attachment_b03"
+  ],
+  "1f2fb722-27d0-43c6-a9af-882fec966bc4": [
+    "4-6",
+    "islamic_parenting_adab",
+    "lesson_4-6_islamic_parenting_adab_b04"
+  ],
+  "2b0445a3-a1cf-4c5e-95db-b6dfe8a9eb3a": [
+    "7-9",
+    "development_digital_wellbeing",
+    "lesson_7-9_development_digital_wellbeing_b04"
+  ],
+  "b50886b6-a1e4-49e9-9c7c-5a460df8954d": [
+    "7-9",
+    "medical_emotional_health",
+    "lesson_7-9_medical_emotional_health_b03"
+  ],
+  "9015aad2-a591-4dfe-951c-7ab3e05a81f2": [
+    "7-9",
+    "medical_emotional_health",
+    "lesson_7-9_medical_emotional_health_b04"
   ]
 }
