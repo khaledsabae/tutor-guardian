@@ -196,6 +196,10 @@ def test_a_retried_post_does_not_reply_twice(monkeypatch, tmp_path):
     first = _post(client, "aaaa1111", "الإصلاح نزل.")
     second = _post(client, "aaaa1111", "الإصلاح نزل.")
 
+    assert first.status_code == 201
+    # 200, not 201: a duplicate creates nothing, and a caller that trusts the
+    # status code instead of the body must not read it as "sent".
+    assert second.status_code == 200
     assert first.json()["status"] == "queued"
     assert second.json()["status"] == "duplicate"
     assert second.json()["delivered"] is False
