@@ -54,6 +54,11 @@ from app.media_naming import (  # noqa: E402
 )
 
 CLI = str(BASE / "notebooklm_env" / "bin" / "notebooklm")
+
+# Its own profile — see the note in gen_podcasts_cron.py. Sharing one profile
+# with a concurrent audio run knocked the session out three times in a day.
+PROFILE = os.environ.get("TG_NOTEBOOKLM_PROFILE", "tg-video")
+CLI_BASE = [CLI, "-p", PROFILE]
 VIDEOS_DIR = BASE / "docs" / "path_videos"
 MAP_FILE = BASE / "scratch" / "path_source_mapping_new.json"
 STATE_FILE = BASE / "scratch" / "path_video_tasks.json"
@@ -197,7 +202,7 @@ async def trigger(source_id, title, path_id):
         print(f"[trigger] {path_id}: DRY RUN — would trigger source {source_id}")
         return "DRYRUN"
     code, out, err = await _run(
-        CLI, "generate", "video", "-n", NOTEBOOK_ID,
+        *CLI_BASE, "generate", "video", "-n", NOTEBOOK_ID,
         "--language", VIDEO_CLI_LANG[LANG], "-s", source_id,
         PROMPT.format(title=title)
     )
@@ -209,7 +214,7 @@ async def trigger(source_id, title, path_id):
 
 
 async def poll(task_id):
-    code, out, err = await _run(CLI, "artifact", "poll", "-n", NOTEBOOK_ID, task_id, "--json", timeout=90)
+    code, out, err = await _run(*CLI_BASE, "artifact", "poll", "-n", NOTEBOOK_ID, task_id, "--json", timeout=90)
     if code != 0:
         return "error"
     try:
@@ -219,7 +224,7 @@ async def poll(task_id):
 
 
 async def download(task_id, out_path):
-    code, _, _ = await _run(CLI, "download", "video", "-n", NOTEBOOK_ID, "--artifact", task_id, str(out_path), "--force")
+    code, _, _ = await _run(*CLI_BASE, "download", "video", "-n", NOTEBOOK_ID, "--artifact", task_id, str(out_path), "--force")
     if not (out_path.exists() and out_path.stat().st_size > MIN_SIZE):
         return False
     # The CLI writes 0600. The container runs as uid 10001 against a host bind

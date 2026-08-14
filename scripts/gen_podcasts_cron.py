@@ -51,6 +51,17 @@ from media_index import upsert_media  # noqa: E402
 
 CLI = str(BASE / "notebooklm_env" / "bin" / "notebooklm")
 
+# 🚨 Its own profile, not `default`.
+#
+# The notebooklm session lives in ~/.notebooklm/profiles/<profile>/
+# storage_state.json, and every command rotates the cookies in it. Two
+# processes on one profile overwrite each other's refreshed cookies: the
+# session expired THREE times on 2026-08-14 while audio and video generation
+# ran side by side, and one 54-item upload batch lost its first 9 items to it.
+# Separate profiles make concurrent runs independent.
+PROFILE = os.environ.get("TG_NOTEBOOKLM_PROFILE", "tg-audio")
+CLI_BASE = [CLI, "-p", PROFILE]
+
 # Every `notebooklm` subcommand used here needs the notebook context. Without
 # it the CLI exits 1 with "No notebook specified" *before* any API call, the
 # task-id regex matches nothing, and `trigger` returns None — which this script
@@ -123,7 +134,7 @@ def _targets() -> list[tuple[str, str, str]]:
 
 async def trigger(source_id: str, lang: str, notebook: str = NOTEBOOK_ID):
     code, out, err = await _run(
-        CLI, "generate", "audio", "-n", notebook,
+        *CLI_BASE, "generate", "audio", "-n", notebook,
         "--language", AUDIO_CLI_LANG[lang], "-s", source_id)
     blob = out + err
     if "RateLimit" in blob or "quota" in blob.lower():
@@ -137,7 +148,7 @@ async def trigger(source_id: str, lang: str, notebook: str = NOTEBOOK_ID):
 
 async def poll(task_id: str, notebook: str = NOTEBOOK_ID):
     code, out, err = await _run(
-        CLI, "artifact", "poll", "-n", notebook, task_id, "--json", timeout=90)
+        *CLI_BASE, "artifact", "poll", "-n", notebook, task_id, "--json", timeout=90)
     if code != 0:
         return "error"
     try:
@@ -148,7 +159,7 @@ async def poll(task_id: str, notebook: str = NOTEBOOK_ID):
 
 async def download(task_id: str, out_path: Path, notebook: str = NOTEBOOK_ID) -> bool:
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    await _run(CLI, "download", "audio", "-n", notebook,
+    await _run(*CLI_BASE, "download", "audio", "-n", notebook,
                "--artifact", task_id, str(out_path), "--force")
     if not (out_path.exists() and out_path.stat().st_size > MIN_PODCAST_BYTES):
         return False
