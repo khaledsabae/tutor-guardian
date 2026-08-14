@@ -8,8 +8,8 @@
     "coverage": {
       "flashcards": "160/174",
       "quizzes": "160/174",
-      "reports": "156/174",
-      "data_tables": "156/174",
+      "reports": "160/174",
+      "data_tables": "160/174",
       "infographics": "160/174",
       "podcasts": "174/174",
       "videos": "106/174"
@@ -11888,8 +11888,24 @@
             "item_count": 4
           }
         ],
-        "reports": [],
-        "data_tables": [],
+        "reports": [
+          {
+            "id": "8bddf8e2_report_lesson_2-3_aqeedah_first_name_01",
+            "file": "docs/lesson_assets/reports/8bddf8e2_report_lesson_2-3_aqeedah_first_name_01.md",
+            "title": "تقرير: أوّل اسمٍ يسمعه ويقوله: الله",
+            "item_count": 0,
+            "language": "ar"
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "b62f440a_data_table_lesson_2-3_aqeedah_first_name_01",
+            "file": "docs/lesson_assets/data_tables/b62f440a_data_table_lesson_2-3_aqeedah_first_name_01.csv",
+            "title": "جدول: أوّل اسمٍ يسمعه ويقوله: الله",
+            "item_count": 0,
+            "language": "ar"
+          }
+        ],
         "infographics": [
           {
             "id": "a7710af4_infographic_lesson_2-3_aqeedah_first_name_01",
@@ -11941,8 +11957,24 @@
             "item_count": 4
           }
         ],
-        "reports": [],
-        "data_tables": [],
+        "reports": [
+          {
+            "id": "93827cc1_report_lesson_2-3_aqeedah_first_name_02",
+            "file": "docs/lesson_assets/reports/93827cc1_report_lesson_2-3_aqeedah_first_name_02.md",
+            "title": "تقرير: «بسم الله» و«الحمد لله»: ربط اليوم كلّه بالله",
+            "item_count": 0,
+            "language": "ar"
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "4d813131_data_table_lesson_2-3_aqeedah_first_name_02",
+            "file": "docs/lesson_assets/data_tables/4d813131_data_table_lesson_2-3_aqeedah_first_name_02.csv",
+            "title": "جدول: «بسم الله» و«الحمد لله»: ربط اليوم كلّه بالله",
+            "item_count": 0,
+            "language": "ar"
+          }
+        ],
         "infographics": [
           {
             "id": "eb2fa589_infographic_lesson_2-3_aqeedah_first_name_02",
@@ -11994,8 +12026,24 @@
             "item_count": 4
           }
         ],
-        "reports": [],
-        "data_tables": [],
+        "reports": [
+          {
+            "id": "4a5292a8_report_lesson_2-3_aqeedah_first_name_03",
+            "file": "docs/lesson_assets/reports/4a5292a8_report_lesson_2-3_aqeedah_first_name_03.md",
+            "title": "تقرير: الله يحبّك: أن يبدأ التعرّف بالرحمة",
+            "item_count": 0,
+            "language": "ar"
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "23f841b3_data_table_lesson_2-3_aqeedah_first_name_03",
+            "file": "docs/lesson_assets/data_tables/23f841b3_data_table_lesson_2-3_aqeedah_first_name_03.csv",
+            "title": "جدول: الله يحبّك: أن يبدأ التعرّف بالرحمة",
+            "item_count": 0,
+            "language": "ar"
+          }
+        ],
         "infographics": [
           {
             "id": "ce04a09e_infographic_lesson_2-3_aqeedah_first_name_03",
@@ -12047,8 +12095,24 @@
             "item_count": 4
           }
         ],
-        "reports": [],
-        "data_tables": [],
+        "reports": [
+          {
+            "id": "4e4996aa_report_lesson_2-3_aqeedah_first_name_04",
+            "file": "docs/lesson_assets/reports/4e4996aa_report_lesson_2-3_aqeedah_first_name_04.md",
+            "title": "تقرير: نبيّنا محمد ﷺ: اسمٌ يُقال بحُبّ",
+            "item_count": 0,
+            "language": "ar"
+          }
+        ],
+        "data_tables": [
+          {
+            "id": "05788750_data_table_lesson_2-3_aqeedah_first_name_04",
+            "file": "docs/lesson_assets/data_tables/05788750_data_table_lesson_2-3_aqeedah_first_name_04.csv",
+            "title": "جدول: نبيّنا محمد ﷺ: اسمٌ يُقال بحُبّ",
+            "item_count": 0,
+            "language": "ar"
+          }
+        ],
         "infographics": [
           {
             "id": "9497ad90_infographic_lesson_2-3_aqeedah_first_name_04",
