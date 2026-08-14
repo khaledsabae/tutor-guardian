@@ -421,6 +421,80 @@ def _deliver_reply(feedback_id: str, device_id: str | None, text: str) -> None:
         logger.warning("push for reply %s failed: %s", rid, exc)
 
 
+class AdminReply(BaseModel):
+    """A reply written outside Telegram."""
+
+    text: str = Field(min_length=1, max_length=_MAX_REPLY_LEN)
+
+    @field_validator("text")
+    @classmethod
+    def _not_blank(cls, v: str) -> str:
+        if not v.strip():
+            raise ValueError("empty reply")
+        return v.strip()
+
+
+@router.post("/app/{feedback_id}/reply", status_code=status.HTTP_201_CREATED)
+def admin_reply(
+    feedback_id: str,
+    body: AdminReply,
+    background: BackgroundTasks,
+    x_admin_key: str = Header(default=""),
+) -> dict:
+    """Khaled-only: answer a parent without going through Telegram.
+
+    The Telegram loop below is the everyday path and stays the everyday path.
+    This exists because it was the *only* path: on 2026-08-14 a follow-up to
+    #fb_a1325670 had to be written straight into `feedback_replies` with a
+    hand-rolled INSERT, since nothing else could send one. That works, and it
+    is also exactly how a stray script quietly corrupts a parent-facing table —
+    no length cap, no existence check, no audit line, and nothing stopping it
+    from running twice.
+
+    Delivery is identical to the Telegram path — the same `_deliver_reply`, so
+    the reply is stored first and push is only a nudge. That is the point: one
+    delivery mechanism, two ways in.
+    """
+    _require_admin(x_admin_key)
+
+    con = get_conn()
+    try:
+        _ensure_app_feedback_table(con)
+        row = con.execute(
+            "SELECT device_id FROM app_feedback WHERE id = ?", (feedback_id,)
+        ).fetchone()
+        if not row:
+            raise HTTPException(status_code=404, detail="no such feedback")
+        device_id = row[0]
+        # Idempotency the Telegram path gets from `_claim_update` and a curl
+        # does not: a retried POST must not deliver the same words twice. The
+        # same text on the same feedback is treated as the retry it nearly
+        # always is.
+        already = con.execute(
+            "SELECT id FROM feedback_replies WHERE feedback_id = ? "
+            "AND reply_text = ?",
+            (feedback_id, body.text),
+        ).fetchone()
+    finally:
+        con.close()
+
+    if already:
+        return {"status": "duplicate", "reply_id": already[0],
+                "device_id": device_id, "delivered": False}
+
+    if not device_id:
+        # Pre-fix rows carry no device id. Storing a reply nobody can receive
+        # would report success for a message that reaches no one.
+        raise HTTPException(
+            status_code=409,
+            detail="feedback has no device_id — nobody to deliver to",
+        )
+
+    background.add_task(_deliver_reply, feedback_id, device_id, body.text)
+    logger.info("admin reply queued for feedback %s", feedback_id[:8])
+    return {"status": "queued", "device_id": device_id, "delivered": True}
+
+
 @router.post("/telegram/webhook")
 async def telegram_webhook(
     request: Request,
