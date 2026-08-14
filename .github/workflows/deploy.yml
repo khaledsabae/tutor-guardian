@@ -283,3 +283,55 @@ jobs:
         run: |
           echo "=== Last 30 lines of tg_backend (post-deploy) ==="
           docker logs --tail 30 tg_backend 2>&1 || echo "(no logs available)"
+
+      # A failed deploy used to be silent. On 2026-08-14 two consecutive runs
+      # failed on the served-assets guard (702b723, f1f9453) and nobody found
+      # out for three hours — main simply stopped reaching production while
+      # every local signal said the work was pushed and done.
+      #
+      # This fires on the runner itself, so it needs no GitHub secret: the
+      # credentials come from the same .env the app uses (0600, root, and the
+      # runner is root). The token is never echoed — it enters the URL from the
+      # environment at run time and does not appear in this file or in the log.
+      #
+      # ⚠️ Covers a *failed or cancelled run*. It cannot cover a run that never
+      # started — a dead runner, or a push whose paths all miss the filters
+      # above. The drift check in ops/tools/check_deploy_drift.py is what
+      # catches those, because it compares production against origin/main
+      # instead of watching this workflow.
+      - name: Alert on failed deploy
+        if: failure() || cancelled()
+        run: |
+          set -eu
+          cd /root/tutor-guardian
+          set -a; . ./.env; set +a
+          : "${TELEGRAM_BOT_TOKEN:?missing}" "${TELEGRAM_CHAT_ID:?missing}"
+
+          RUNNING_SHA=$(git rev-parse --short HEAD 2>/dev/null || echo '?')
+          CONTAINER=$(docker ps --format '{{.Status}}' --filter name=tg_backend | head -1)
+          HEALTH=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 \
+                   https://tg-api.alsaba.cloud/health || echo 'unreachable')
+
+          TEXT=$(printf '%s\n' \
+            '🔴 نشر المربّي فشل — main لم يصل الإنتاج' \
+            '' \
+            "الحالة:    ${{ job.status }}" \
+            "الكوميت:   ${{ github.sha }}" \
+            "على الخادم: $RUNNING_SHA" \
+            "الحاوية:   ${CONTAINER:-<لا توجد>}" \
+            "‎/health:  $HEALTH" \
+            '' \
+            "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            '' \
+            'الخطوة الفاشلة في اللوج. لو الحارس هو السبب،' \
+            'الأرجح ملف ميديا في الفهرس ولم يصل بالـrsync.')
+
+          curl -sS --max-time 20 \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${TEXT}" \
+            -o /tmp/tg_alert_resp.json -w 'telegram HTTP %{http_code}\n'
+          # Telegram answers HTTP 200 with ok=false for a wrong chat_id, so the
+          # alert is confirmed by the response body — an alert that silently
+          # fails to send is the exact failure this whole step exists to end.
+          python3 -c 'import json,sys; d=json.load(open("/tmp/tg_alert_resp.json")); print("telegram ok=", d.get("ok"), "message_id=", (d.get("result") or {}).get("message_id")); sys.exit(0 if d.get("ok") else 1)'
