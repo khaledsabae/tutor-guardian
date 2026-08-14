@@ -33,8 +33,35 @@ SRC_MAP_PATH = BASE_DIR / "source_to_lesson.json"
 BLOCKED_PATH = BASE_DIR / "scripts" / "infographics_blocked.json"
 NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 NLM = str(BASE_DIR / "notebooklm_env" / "bin" / "notebooklm")
-LANG = "ar_001"
 RESOLUTION = "2752x1536"
+
+sys.path.insert(0, str(BASE_DIR / "backend"))
+from app.media_naming import AUDIO_CLI_LANG, SOURCE_LANG  # noqa: E402
+
+
+def _arg_lang() -> str:
+    """`--lang en`. Defaults to Arabic so existing invocations are unchanged."""
+    if "--lang" in sys.argv:
+        value = sys.argv[sys.argv.index("--lang") + 1]
+        if value not in AUDIO_CLI_LANG:
+            sys.exit(f"❌ unknown --lang {value!r}; known: {sorted(AUDIO_CLI_LANG)}")
+        return value
+    return SOURCE_LANG
+
+
+# 🚨 An infographic is text rendered into PIXELS, so it is the least
+# translatable asset in the app: an English reader gets no partial
+# understanding and there is no fallback — the text IS the image. That also
+# makes it the one asset where the generator's own text rendering is a content
+# risk. A shipped Arabic example, 64_lesson_16-18_medical_adult_transition_b04:
+# the heading meant to read «روتين يومي مش مثالي» rendered «مش» as a broken
+# glyph cluster, leaving it visually identical to the «روتين يومي مثالي» panel
+# above it — two panels teaching opposite things, told apart by one corrupted
+# word. Proofread output rather than trusting it.
+LANG = _arg_lang()
+CLI_LANG = AUDIO_CLI_LANG[LANG]
+# Arabic keeps the bare filename it has always had; other languages are tagged.
+LANG_TAG = "" if LANG == SOURCE_LANG else f"_{LANG}"
 
 sys.path.insert(0, str(BASE_DIR))
 from scripts.infographic_prompts_lib import buildable_targets
@@ -90,14 +117,32 @@ def ask_source_axes(source_id: str) -> str | None:
 
 
 def build_description(lesson: dict) -> str:
+    """Prompt for one infographic, in the target language.
+
+    The English prompt is written, not translated: the Arabic one asks for an
+    RTL layout, an Arabic typeface and «بدون أي نص إنجليزي» — translate that
+    and you have asked an English infographic to contain no English.
+    """
     age = lesson.get("age_group", "")
     title = lesson.get("title", "")
     desc = lesson.get("description", "")
+    if LANG == "en":
+        return (
+            f"Create an elegant, practical parenting infographic in English for "
+            f"parents of children aged {age}, titled '{title}'.\n"
+            f"Cover exactly these points and nothing else:\n{desc}\n\n"
+            "Requirements: soft pastel colours, a clear legible sans-serif "
+            "typeface, left-to-right layout, all text in English with no Arabic "
+            "text, no photographs of real people, no visual clutter. Spell every "
+            "word correctly and completely — a single malformed word can invert "
+            "the meaning of a panel."
+        )
     return (
         f"أنشئ إنفوجرافيك تربوي عربي أنيق وعملي للأهل (الفئة العمرية {age}) بعنوان '{title}'.\n"
         f"محتوى الإنفوجرافيك يجب أن يغطي النقاط التالية حصراً:\n{desc}\n\n"
         "المتطلبات: ألوان باستيل هادئة، خط عربي واضح، تخطيط RTL، "
-        "بدون أي نص إنجليزي، بدون صور أشخاص حقيقية، بدون فوضى بصرية."
+        "بدون أي نص إنجليزي، بدون صور أشخاص حقيقية، بدون فوضى بصرية. "
+        "واكتب كل كلمة كاملة وسليمة الرسم — كلمة واحدة مشوّهة تقلب معنى اللوحة."
     )
 
 
@@ -107,7 +152,7 @@ def existing_asset(lesson: dict) -> dict | None:
     Lets the batch resume after a rate-limit kill without re-generating (and re-burning
     quota on) infographics that were already produced."""
     lesson_id = lesson["lesson_id"]
-    matches = sorted(INFO_DIR.glob(f"*_infographic_{lesson_id}.png"))
+    matches = sorted(INFO_DIR.glob(f"*_infographic_{lesson_id}{LANG_TAG}.png"))
     matches = [p for p in matches if p.stat().st_size >= 10_000]
     if not matches:
         return None
@@ -119,6 +164,7 @@ def existing_asset(lesson: dict) -> dict | None:
         "title": lesson.get("title_ar") or "إنفوجرافيك",
         "item_count": 0,
         "resolution": RESOLUTION,
+        "language": LANG,
     }
 
 
@@ -134,7 +180,7 @@ def generate_one(lesson: dict, source_id: str) -> dict | None:
         [
             "generate", "infographic", desc, "-n", NOTEBOOK_ID, "-s", source_id,
             "--orientation", "landscape", "--detail", "standard",
-            "--style", "instructional", "--language", LANG,
+            "--style", "instructional", "--language", CLI_LANG,
             "--wait", "--timeout", "320", "--retry", "2",
         ],
         timeout=420,
@@ -150,7 +196,7 @@ def generate_one(lesson: dict, source_id: str) -> dict | None:
     artifact_id = m.group(1)
     print(f"    ✅ generated artifact {artifact_id[:8]}")
 
-    filename = f"{artifact_id}_infographic_{lesson_id}.png"
+    filename = f"{artifact_id}_infographic_{lesson_id}{LANG_TAG}.png"
     filepath = INFO_DIR / filename
     rc, out, err = _run(
         ["download", "infographic", str(filepath), "-n", NOTEBOOK_ID, "--latest"],
@@ -170,6 +216,7 @@ def generate_one(lesson: dict, source_id: str) -> dict | None:
         "title": title,
         "item_count": 0,
         "resolution": RESOLUTION,
+        "language": LANG,
     }
 
 

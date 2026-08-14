@@ -69,6 +69,18 @@ def _validate_domain(domain: Optional[str]) -> Optional[str]:
         )
     return domain
 
+def _base_lang(code: Optional[str]) -> Optional[str]:
+    """'ar_eg' → 'ar', 'en-US' → 'en'.
+
+    Media entries declare the NotebookLM locale that produced them, so the same
+    language arrives as `ar` on a podcast and `ar_eg` on a video. Anything that
+    compares those strings raw treats one language as two.
+    """
+    if not code:
+        return None
+    return code.strip().lower().replace("-", "_").split("_")[0]
+
+
 def _pick_tip_for_today(age_group: str, time_of_day: Optional[str],
                         lang: Optional[str] = None) -> dict:
     """Deterministic per-day tip selection so the same client sees the
@@ -288,44 +300,44 @@ async def get_lesson_assets(
         else:
             preferred_lang = "ar"
 
-    # Resolve podcast MP3
-    podcasts = assets.get("podcasts", [])
-    podcast_mp3 = None
-    if podcasts:
-        for p in podcasts:
-            if p.get("language") == preferred_lang:
-                podcast_mp3 = p.get("file")
-                break
-        if not podcast_mp3:
-            # Fallback to Arabic secondary, then to first available
-            for p in podcasts:
-                if p.get("language") == "ar":
-                    podcast_mp3 = p.get("file")
-                    break
-            if not podcast_mp3:
-                podcast_mp3 = podcasts[0].get("file")
+    def _pick(items, kind):
+        """Best file for `preferred_lang`, Arabic as fallback, then whatever exists.
 
-    # Resolve video MP4
-    videos = assets.get("videos", [])
-    video_mp4 = None
-    if videos:
-        for v in videos:
-            if v.get("language") == preferred_lang:
-                video_mp4 = v.get("file")
-                break
-        if not video_mp4:
-            # Fallback to Arabic secondary, then to first available
-            for v in videos:
-                if v.get("language") == "ar":
-                    video_mp4 = v.get("file")
-                    break
-            if not video_mp4:
-                video_mp4 = videos[0].get("file")
+        One helper for every medium, because the two hand-written copies it
+        replaces had drifted: the video branch compared `language == "ar"` while
+        every video entry declares `ar_eg`, so its Arabic fallback could never
+        match and the result came from the `videos[0]` catch-all instead. It was
+        right only because Arabic happened to be first.
 
+        Comparison is on the base language: entries carry `ar`, `ar_eg` and
+        `en_us` for what are two languages.
+        """
+        if not items:
+            return None, None
+        want = _base_lang(preferred_lang)
+        for candidate in (want, "ar"):
+            for entry in items:
+                if entry.get("file") and _base_lang(entry.get("language")) == candidate:
+                    return entry["file"], _base_lang(entry.get("language"))
+        first = next((e for e in items if e.get("file")), None)
+        if first is None:
+            return None, None
+        # No declared language anywhere: infographics, reports and data tables
+        # carry none at all, and Arabic is the source language for every asset
+        # produced before English generation existed.
+        return first["file"], _base_lang(first.get("language")) or "ar"
+
+    podcast_mp3, podcast_lang = _pick(assets.get("podcasts", []), "podcast")
+    video_mp4, video_lang = _pick(assets.get("videos", []), "video")
     # Single-file visual assets (one per lesson): infographic image, report
     # markdown, data-table CSV. Each is served statically from /docs/.
-    def _first_file(items):
-        return items[0].get("file") if items else None
+    #
+    # These are language-bearing too, and more starkly than audio: an
+    # infographic is Arabic *pixels*, so an English reader gets no partial
+    # understanding and no fallback is possible — the text is the image.
+    infographic, infographic_lang = _pick(assets.get("infographics", []), "infographic")
+    report, report_lang = _pick(assets.get("reports", []), "report")
+    data_table, data_table_lang = _pick(assets.get("data_tables", []), "data_table")
 
     def _served(relative_path, kind):
         """Drop a media reference whose file is not on this host.
@@ -345,11 +357,22 @@ async def get_lesson_assets(
     return {
         "podcast_mp3": _served(podcast_mp3, "podcast"),
         "video_mp4": _served(video_mp4, "video"),
-        "infographic": _first_file(assets.get("infographics", [])),
-        "report": _first_file(assets.get("reports", [])),
-        "data_table": _first_file(assets.get("data_tables", [])),
+        "infographic": _served(infographic, "infographic"),
+        "report": _served(report, "report"),
+        "data_table": _served(data_table, "data_table"),
         "flashcards": assets.get("flashcards", []),
-        "quizzes": assets.get("quizzes", [])
+        "quizzes": assets.get("quizzes", []),
+        # What the app actually got, per medium. Asking for English and being
+        # handed Arabic is normal while English media is still being generated;
+        # the app can only say so if the response admits it.
+        "languages": {
+            "requested": _base_lang(preferred_lang),
+            "podcast": podcast_lang,
+            "video": video_lang,
+            "infographic": infographic_lang,
+            "report": report_lang,
+            "data_table": data_table_lang,
+        },
     }
 
 

@@ -220,7 +220,14 @@ async def poll(task_id):
 
 async def download(task_id, out_path):
     code, _, _ = await _run(CLI, "download", "video", "-n", NOTEBOOK_ID, "--artifact", task_id, str(out_path), "--force")
-    return out_path.exists() and out_path.stat().st_size > MIN_SIZE
+    if not (out_path.exists() and out_path.stat().st_size > MIN_SIZE):
+        return False
+    # The CLI writes 0600. The container runs as uid 10001 against a host bind
+    # mount, so 0600 is unreadable in production — that is the 2026-07-27
+    # outage. The podcast generator already does this; this one did not, and
+    # the first English video landed 0600 and had to be fixed by hand.
+    out_path.chmod(0o644)
+    return True
 
 
 async def main():
