@@ -11,6 +11,7 @@ Arabic is the fallback everywhere: a missing translation must degrade to the
 Arabic entry, never to a 404 or an empty field.
 """
 import pytest
+from pathlib import Path
 from fastapi.testclient import TestClient
 
 from app import curriculum_loader as cl
@@ -203,3 +204,55 @@ def test_path_video_prefers_requested_language_then_arabic(monkeypatch):
         "a path badged English must not claim its Arabic video is English"
 
     assert "video_mp4" not in cl._add_path_video({"id": "nope"}, lang="en")
+
+
+# ── Visual assets carry a language too ────────────────────────────────────
+# An infographic is Arabic text rendered into PIXELS: an English reader gets no
+# partial understanding and no fallback is possible, because the text IS the
+# image. Yet infographics, reports and data tables were served with
+# `items[0].get("file")` — first entry wins, language never consulted.
+
+
+def test_every_file_bearing_asset_declares_a_language():
+    """156 infographics, 224 reports and 260 data tables carried no language."""
+    import json
+    index = Path(__file__).resolve().parents[2] / "docs" / "lesson_index.json"
+    untagged = []
+    for lesson in json.loads(index.read_text(encoding="utf-8"))["lessons"]:
+        assets = lesson.get("assets") or {}
+        for kind in ("podcasts", "videos", "infographics", "reports", "data_tables"):
+            for entry in assets.get(kind) or []:
+                if entry.get("file") and not (entry.get("language") or "").strip():
+                    untagged.append(f"{lesson.get('lesson_id')}: {kind} {entry['file']}")
+    assert not untagged, "asset with no language:\n" + "\n".join(untagged[:10])
+
+
+def test_lesson_assets_report_the_language_actually_served(client):
+    """Asking for English and being handed Arabic is normal while English media
+    is still being generated — but the response has to admit it."""
+    cl.load_curriculum()
+    lesson_id = sorted(cl._assets_cache)[0]
+    r = client.get(f"/api/program/lesson-assets/{lesson_id}?lang=en")
+    assert r.status_code == 200
+    langs = r.json()["languages"]
+    assert langs["requested"] == "en"
+    # Nothing English exists yet, so every medium present must say "ar" —
+    # never "en", which would be the response lying about what it served.
+    for medium in ("podcast", "video", "infographic", "report", "data_table"):
+        assert langs[medium] in (None, "ar"), f"{medium} claimed {langs[medium]}"
+
+
+def test_arabic_video_declared_ar_eg_is_matched_as_arabic(client):
+    """Video entries declare `ar_eg`, podcasts declare `ar`.
+
+    The old code compared those strings raw, so the video fallback branch
+    (`language == "ar"`) could never fire and Arabic was returned only because
+    it happened to be first in the list.
+    """
+    cl.load_curriculum()
+    with_video = [lid for lid, a in cl._assets_cache.items()
+                  if (a.get("videos") or [])]
+    assert with_video, "fixture needs a lesson with a video"
+    r = client.get(f"/api/program/lesson-assets/{with_video[0]}?lang=en")
+    assert r.status_code == 200
+    assert r.json()["languages"]["video"] == "ar"

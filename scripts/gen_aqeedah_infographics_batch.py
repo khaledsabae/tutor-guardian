@@ -13,6 +13,19 @@ INDEX_PATH = BASE_DIR / "docs" / "lesson_index.json"
 NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 NLM = str(BASE_DIR / "notebooklm_env" / "bin" / "notebooklm")
 RESOLUTION = "2752x1536"
+
+# Language is a parameter here for the same reason it is in
+# generate_missing_infographics.py: an infographic is text baked into pixels,
+# so a run in the wrong language produces an asset an English reader cannot
+# use at all — there is no partial understanding and no fallback.
+sys.path.insert(0, str(BASE_DIR / "backend"))
+from app.media_naming import AUDIO_CLI_LANG, SOURCE_LANG  # noqa: E402
+
+LANG = sys.argv[sys.argv.index("--lang") + 1] if "--lang" in sys.argv else SOURCE_LANG
+if LANG not in AUDIO_CLI_LANG:
+    sys.exit(f"\u274c unknown --lang {LANG!r}; known: {sorted(AUDIO_CLI_LANG)}")
+CLI_LANG = AUDIO_CLI_LANG[LANG]
+LANG_TAG = "" if LANG == SOURCE_LANG else f"_{LANG}"
 STARTED_RE = re.compile(r"(?:Started|Task):\s*([0-9a-f-]{36})")
 
 sys.path.insert(0, str(BASE_DIR))
@@ -39,7 +52,7 @@ def generate_one(lesson, index_lookup):
     rc, out, err = run_cmd([
         'generate', 'infographic', desc, '-n', NOTEBOOK_ID, '-s', src,
         '--orientation', 'landscape', '--detail', 'standard', '--style', 'instructional',
-        '--language', 'ar_001', '--wait', '--timeout', '360', '--retry', '1',
+        '--language', CLI_LANG, '--wait', '--timeout', '360', '--retry', '1',
     ], timeout=420)
     m = STARTED_RE.search(out)
     if rc != 0 or not m:
