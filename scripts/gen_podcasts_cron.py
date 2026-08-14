@@ -183,13 +183,20 @@ async def main():
         # "error"/auth-expiry: keep for next run
 
     # 2) trigger pending — one rate-limit ends the run; cron resumes
-    triggered = 0
+    #
+    # `attempted`, not `triggered`: counting only successes means a run where
+    # every trigger fails never reaches the cap. `--limit 3` against the
+    # notebook-less CLI produced 169 invocations — the cap exists to bound a
+    # run when things go wrong, which is exactly when a success-counter stops
+    # counting.
+    attempted = 0
     for lid, sid in targets:
-        if args.limit and triggered >= args.limit:
+        if args.limit and attempted >= args.limit:
             break
         key = _state_key(lid, lang)
         if _has_pod(lid, lang) or key in state:
             continue
+        attempted += 1
         tid = await trigger(sid, lang)
         if tid == "RATELIMIT":
             print(f"[trigger] {lid}: rate-limited — retry next run")
@@ -197,7 +204,6 @@ async def main():
         if tid:
             print(f"[trigger] {lid}: task {tid}")
             state[key] = tid
-            triggered += 1
             await asyncio.sleep(5)
         else:
             print(f"[trigger] {lid}: no task id")
