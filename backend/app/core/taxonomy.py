@@ -40,6 +40,13 @@ CANONICAL_AGE_GROUPS: set[str] = {
     "prenatal-1", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18", "unspecified",
 }
 
+# The same bands in developmental order, which the set above cannot express.
+# Retrieval needs "how far apart are these two ages" to keep a 16-18 unit out
+# of a 4-6 parent's answer — see `age_bands_apart`.
+ORDERED_AGE_GROUPS: tuple[str, ...] = (
+    "prenatal-1", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18",
+)
+
 # The 0-3 band was split into "prenatal-1" (pregnancy→1yr) + "2-3". Existing
 # children/units created before the split still carry "0-3" — alias it onto
 # the new canonical band so they keep resolving instead of being orphaned.
@@ -106,3 +113,18 @@ def age_equivalents(value: str) -> list[str]:
     out = {key, canonical_age_group(key)}
     out.update(_REVERSE_AGE_ALIASES.get(canonical_age_group(key), []))
     return list(out)
+
+
+def age_bands_apart(a: str, b: str) -> int | None:
+    """How many bands separate two age groups, or None when the question does
+    not apply — "unspecified" content is written for every age, and an
+    unrecognised label must not be silently treated as adjacent.
+
+    Callers use this to keep obviously wrong-age material out of an answer:
+    advice for a 16-18 year old is not a near miss for a 4-6 year old, it is a
+    different childhood.
+    """
+    ca, cb = canonical_age_group(a or ""), canonical_age_group(b or "")
+    if ca not in ORDERED_AGE_GROUPS or cb not in ORDERED_AGE_GROUPS:
+        return None
+    return abs(ORDERED_AGE_GROUPS.index(ca) - ORDERED_AGE_GROUPS.index(cb))

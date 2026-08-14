@@ -18,7 +18,11 @@ from typing import Sequence, cast
 import chromadb
 from chromadb import Documents, EmbeddingFunction, Embeddings
 
-from app.core.taxonomy import canonical_domain, age_equivalents
+from app.core.taxonomy import (
+    canonical_domain,
+    age_equivalents,
+    age_bands_apart,
+)
 from app.models.knowledge import KnowledgeUnit
 from app.services.knowledge_loader import load_default_knowledge_units
 
@@ -571,17 +575,39 @@ def retrieve_hybrid(
     top_n: int = 4,
     candidates_per_leg: int = 8,
     rerank_pool: int = 12,
+    age_span: int = 1,
 ) -> list[dict]:
     """The quality-first retrieval path.
 
     Per domain and per query: three legs — vector filtered to the child's age
-    band, vector over the whole domain, and BM25 (which never filtered by age
-    to begin with) → RRF fusion → cross-encoder rerank → top_n.
+    band, vector across the domain regardless of band, and BM25 → RRF fusion →
+    cross-encoder rerank → top_n.
 
-    The age-free vector leg is additive, never a replacement: a unit written
+    The band-free vector leg is additive, never a replacement: a unit written
     for the child's own band appears in both vector legs and so accumulates
     twice the RRF credit, which is what keeps the age-matched case intact
-    while the mismatched case stops coming up empty.
+    while the gap case stops coming up empty.
+
+    `age_span` bounds how far those two unbanded legs may reach — 1 means the
+    neighbouring band, which is what "the corpus has nothing for this child's
+    age, use the nearest thing" was always supposed to mean. Without it they
+    reach anywhere, and BM25 always could: measured across the probe set, **31%
+    of everything delivered to a parent sat two or more bands away** — a
+    question about a four-year-old's tantrums answered with material on a
+    16-18 year old, and one about an eight-year-old wetting the bed answered
+    with ADHD and bereavement. That predates the band-free leg; BM25 has been
+    unbanded since it was written, and the age-filtered vector leg could not
+    counterweight it.
+
+    Bounding both to one band improves every axis at once (probe set):
+
+                                matched   gap   two-or-more bands away
+        BM25 unbanded (before)   14/23    4/11         31%
+        age_span=2               15/23    4/11         24%
+        age_span=1 (this)        16/23    5/11          0%
+
+    "unspecified" is never filtered — half the corpus carries it and it is
+    written to apply at every age. Set age_span to None to disable the bound.
 
     Falls back to fusion order if the reranker is unavailable (see
     reranker.rerank — it never raises).
@@ -592,6 +618,23 @@ def retrieve_hybrid(
     bm25 = get_bm25()
     legs: list[list[dict]] = []
     queries = [q for q in (query_text, rewritten_query) if q]
+
+    def within_span(cands: list[dict]) -> list[dict]:
+        """Drop candidates written for a childhood this child is not in.
+
+        `unspecified` and anything with an unreadable band are kept: the first
+        applies at every age by design, and the second is a labelling gap, not
+        a licence to answer a four-year-old's question with teenage material.
+        """
+        if age_span is None:
+            return cands
+        keep = []
+        for c in cands:
+            band = (c.get("metadata") or {}).get("age_group", "")
+            apart = age_bands_apart(band, age_group)
+            if apart is None or apart <= age_span:
+                keep.append(c)
+        return keep
 
     for domain in domains:
         db_domain = canonical_domain(domain)
@@ -607,14 +650,19 @@ def retrieve_hybrid(
             # the age filter hid, and every extra candidate it adds is one
             # more pair the cross-encoder has to score. At full depth it
             # bought nothing extra and cost ~875ms per answer.
-            any_age = retrieve_domain_only(
+            any_age = within_span(retrieve_domain_only(
                 query_text=q, domain=domain,
                 top_k=max(1, candidates_per_leg // 2),
-            )
+            ))
             for r in any_age:
                 r.setdefault("source_domain", domain)
             legs.append(any_age)
-            lex = bm25.search(q, domain=db_domain, top_k=candidates_per_leg)
+            # Over-fetch before bounding, or the bound silently shortens the
+            # leg: the wrong-band hits it removes were occupying slots the
+            # right-band ones never got a chance at.
+            lex = within_span(
+                bm25.search(q, domain=db_domain, top_k=candidates_per_leg * 3)
+            )[:candidates_per_leg]
             for r in lex:
                 r.setdefault("source_domain", domain)
             legs.append(lex)
