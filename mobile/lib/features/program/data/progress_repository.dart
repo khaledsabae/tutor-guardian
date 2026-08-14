@@ -39,10 +39,12 @@ class ProgressRepository {
   Future<LessonProgress> patchLessonProgress({
     required String lessonId,
     required ProgressStatus status,
+    int? childId,
   }) async {
     final json = await _client.patchLessonProgress(
       lessonId: lessonId,
       status: progressStatusToWire(status),
+      childId: childId,
     );
     return LessonProgress.fromJson(json);
   }

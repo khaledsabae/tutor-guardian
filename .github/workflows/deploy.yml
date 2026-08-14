@@ -209,11 +209,17 @@ jobs:
 
           # ── 5. Wait for the new container to be healthy ──────────────
           # Cold start loads the embedding model weights + ChromaDB, which
-          # routinely takes >60s — give it up to 180s before failing so a
-          # slow-but-successful boot isn't reported as a deploy failure.
-          echo "→ waiting for container health (up to 180s)"
+          # routinely takes >60s. 180s was enough until a boot that also has
+          # to REBUILD the index: on 2026-08-13 the HNSW bloat guard purged
+          # and re-embedded 864 units, the app logged "startup complete" and
+          # answered /health 200 — seconds after attempt 36 had already given
+          # up. The deploy rolled a healthy release back, and the units it
+          # carried never reached production while the logs showed a clean
+          # boot. A rebuild is exactly when a deploy most needs patience, so
+          # the ceiling has to clear it: 420s.
+          echo "→ waiting for container health (up to 420s)"
           STATUS="missing"
-          for i in $(seq 1 36); do
+          for i in $(seq 1 84); do
             sleep 5
             STATUS=$(docker inspect --format='{{.State.Health.Status}}' tg_backend 2>/dev/null || echo "missing")
             echo "  attempt $i: $STATUS"

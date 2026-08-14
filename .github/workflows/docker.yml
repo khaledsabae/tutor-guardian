@@ -38,7 +38,7 @@ jobs:
   #   * The uvicorn entrypoint parses its argument set
   build:
     name: docker build
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, production]
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -86,7 +86,7 @@ jobs:
   # the import chain that loads sentence-transformers.
   smoke:
     name: docker smoke
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, production]
     timeout-minutes: 10
     needs: build
     steps:

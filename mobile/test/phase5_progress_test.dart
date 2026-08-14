@@ -248,6 +248,43 @@ void main() {
       // Mark complete button present
       expect(find.text('أتممت هذا الدرس'), findsOneWidget);
     });
+
+    // `test` not `testWidgets`: no widget is pumped, and riverpod's
+    // autoDispose scheduler leaves a pending timer that FakeAsync then
+    // reports as a failure even after every expectation has passed.
+    test(
+      'markProgress sends the active child so a sibling does not get the credit',
+      () async {
+        // The regression this pins: markProgress resolved the active child and
+        // used it only to invalidate caches, sending the PATCH with no child at
+        // all. The server then attributed the completion to the device's
+        // first-created child. Measured 2026-08-13: 22% of completions sat on a
+        // sibling whose age band did not match the lesson — a parent finished a
+        // lesson and watched it stay undone.
+        SharedPreferences.setMockInitialValues({});
+        final prefs = await SharedPreferences.getInstance();
+        final fake = _FakeTgClient();
+        final container = ProviderContainer(
+          overrides: [
+            tgClientProvider.overrideWithValue(fake),
+            sharedPreferencesProvider.overrideWith((_) async => prefs),
+          ],
+        );
+        await container.read(sharedPreferencesProvider.future);
+        container.read(activeChildIdProvider.notifier).state = 7;
+        addTearDown(container.dispose);
+
+        await container
+            .read(markLessonProgressProvider('lesson_2-3_aqeedah_first_name_01')
+                .notifier)
+            .markProgress(ProgressStatus.completed);
+
+        expect(fake.patchCalled, isTrue);
+        expect(fake.lastPatchedChildId, 7,
+            reason: 'the completion must carry the child the parent is viewing');
+      },
+    );
+
   });
 }
 
@@ -276,20 +313,30 @@ class _FakeTgClient extends TgClient {
   }) async =>
       childProgressJson ?? {'child_id': childId, 'lessons': []};
 
+  /// The child id the last PATCH carried — the whole point of the call on a
+  /// device with more than one child. Recorded so a test can assert it was
+  /// actually sent, rather than silently swallowed as it used to be.
+  int? lastPatchedChildId;
+  bool patchCalled = false;
+
   @override
   Future<Map<String, dynamic>> patchLessonProgress({
     required String lessonId,
     required String status,
-  }) async =>
-      lessonProgressJson ??
-      {
-        'lesson_id': lessonId,
-        'path_id': 'path_x',
-        'status': status,
-        'started_at': null,
-        'completed_at': null,
-        'updated_at': '2026-06-08T12:00:00Z',
-      };
+    int? childId,
+  }) async {
+    patchCalled = true;
+    lastPatchedChildId = childId;
+    return lessonProgressJson ??
+        {
+          'lesson_id': lessonId,
+          'path_id': 'path_x',
+          'status': status,
+          'started_at': null,
+          'completed_at': null,
+          'updated_at': '2026-06-08T12:00:00Z',
+        };
+  }
 
   @override
   Future<Map<String, dynamic>> getPathDetail(

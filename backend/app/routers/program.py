@@ -529,9 +529,24 @@ def patch_lesson_progress(
         now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         # Idempotent upsert. We re-read the existing row to preserve
         # `started_at` when the client transitions to `completed`.
+        #
+        # Matched on (device_id, lesson_id) — the table's ACTUAL unique key.
+        # `child_id` was added later and left out of it, so the table can hold
+        # only one row per device per lesson no matter how many children the
+        # device has. Selecting on child_id too meant a row owned by a sibling
+        # was invisible here: the handler concluded nothing existed, inserted,
+        # and sqlite rejected it with `UNIQUE constraint failed:
+        # lesson_progress.device_id, lesson_progress.lesson_id` — an
+        # unhandled 500 for a parent doing nothing more exotic than finishing
+        # a lesson. Eight of them on 2026-08-13, right after a migration moved
+        # rows onto the correct sibling while clients still sent no child_id.
+        #
+        # Matching the real key makes the upsert total: the row is found
+        # whoever it belongs to, and `child_id` below re-points it at the
+        # child the client names.
         existing = conn.execute(
-            "SELECT * FROM lesson_progress WHERE device_id = ? AND child_id = ? AND lesson_id = ?",
-            (device_id, child_id, lesson_id),
+            "SELECT * FROM lesson_progress WHERE device_id = ? AND lesson_id = ?",
+            (device_id, lesson_id),
         ).fetchone()
 
         if existing is None:
@@ -566,11 +581,20 @@ def patch_lesson_progress(
             if payload.status == "not_started":
                 started_at = None
                 completed_at = None
+            # Same key as the SELECT, and `child_id` is written rather than
+            # matched on: a client that names its child re-points the row,
+            # while an older client that names none leaves it where it is.
+            # Keying the UPDATE on child_id too meant the statement matched
+            # nothing whenever the row belonged to a sibling — no row changed,
+            # no error raised, and the parent's completion vanished in
+            # silence. That is the same failure the user reported, wearing a
+            # 200 instead of a 500.
             conn.execute(
                 """
                 UPDATE lesson_progress
-                   SET path_id = ?, status = ?, started_at = ?, completed_at = ?, updated_at = ?
-                 WHERE device_id = ? AND child_id = ? AND lesson_id = ?
+                   SET path_id = ?, status = ?, started_at = ?, completed_at = ?,
+                       updated_at = ?, child_id = COALESCE(?, child_id)
+                 WHERE device_id = ? AND lesson_id = ?
                 """,
                 (
                     path_id,
@@ -578,8 +602,8 @@ def patch_lesson_progress(
                     started_at,
                     completed_at,
                     now,
+                    payload.child_id and child_id,
                     device_id,
-                    child_id,
                     lesson_id,
                 ),
             )
