@@ -40,8 +40,16 @@ SOURCE_LANG = "ar"
 # Value passed to the NotebookLM CLI's `--language`. Audio and video use
 # different codes because the Arabic runs did: `ar_001` (Arabic-World) for
 # audio, `ar_eg` (Arabic-Egypt) for video.
+#
+# English video is `en`, not `en_us`. `en_us` was a guess and the CLI rejects
+# it outright — "Unknown language code: en_us" — so every English video run
+# failed before reaching the API. Confirmed against `notebooklm language list`
+# on 2026-08-14: the list offers exactly one English, `en`; the regional
+# variants that exist for Arabic (`ar_001`, `ar_eg`) have no English analogue.
+# Only the CLI argument changes. `VIDEO_WRITE_TAG` still writes `_en_us.mp4`
+# and `VIDEO_READ_TAGS` still accepts both, so no file is stranded.
 AUDIO_CLI_LANG = {"ar": "ar_001", "en": "en"}
-VIDEO_CLI_LANG = {"ar": "ar_eg", "en": "en_us"}
+VIDEO_CLI_LANG = {"ar": "ar_eg", "en": "en"}
 
 # Filename tag written for each language. Mirrors the CLI argument above so a
 # file can be checked against the command that produced it.
