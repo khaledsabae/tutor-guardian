@@ -47,6 +47,16 @@ from app.media_naming import (  # noqa: E402
 )
 
 CLI = str(BASE / "notebooklm_env" / "bin" / "notebooklm")
+
+# Every `notebooklm` subcommand used here needs the notebook context. Without
+# it the CLI exits 1 with "No notebook specified" *before* any API call, the
+# task-id regex matches nothing, and `trigger` returns None — which this script
+# prints as "no task id" and walks past. That is why a run against all 169
+# lessons finished in minutes having produced nothing: not expired auth (the
+# brief's first guess, and reads were verified working), just a missing flag.
+# `gen_path_videos_cron.py` passes `-n` on all three of its calls; this file
+# passed it on none.
+NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 MAP_FILE = BASE / "source_to_lesson.json"
 STATE_FILE = BASE / "scratch" / "podcast_tasks.json"
 POLL_BUDGET_SEC = 22 * 60
@@ -102,7 +112,8 @@ def _targets() -> list[tuple[str, str]]:
 
 async def trigger(source_id: str, lang: str):
     code, out, err = await _run(
-        CLI, "generate", "audio", "--language", AUDIO_CLI_LANG[lang], "-s", source_id)
+        CLI, "generate", "audio", "-n", NOTEBOOK_ID,
+        "--language", AUDIO_CLI_LANG[lang], "-s", source_id)
     blob = out + err
     if "RateLimit" in blob or "quota" in blob.lower():
         return "RATELIMIT"
@@ -111,7 +122,8 @@ async def trigger(source_id: str, lang: str):
 
 
 async def poll(task_id: str):
-    code, out, err = await _run(CLI, "artifact", "poll", task_id, "--json", timeout=90)
+    code, out, err = await _run(
+        CLI, "artifact", "poll", "-n", NOTEBOOK_ID, task_id, "--json", timeout=90)
     if code != 0:
         return "error"
     try:
@@ -122,7 +134,8 @@ async def poll(task_id: str):
 
 async def download(task_id: str, out_path: Path) -> bool:
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    await _run(CLI, "download", "audio", "--artifact", task_id, str(out_path), "--force")
+    await _run(CLI, "download", "audio", "-n", NOTEBOOK_ID,
+               "--artifact", task_id, str(out_path), "--force")
     if not (out_path.exists() and out_path.stat().st_size > MIN_PODCAST_BYTES):
         return False
     # Generators create media 0600; the container runs as uid 10001 against a
