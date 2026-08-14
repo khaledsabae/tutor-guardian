@@ -21,6 +21,7 @@ from fastapi import (
     Header,
     HTTPException,
     Request,
+    Response,
     status,
 )
 from pydantic import BaseModel, Field, field_validator
@@ -439,6 +440,7 @@ def admin_reply(
     feedback_id: str,
     body: AdminReply,
     background: BackgroundTasks,
+    response: Response,
     x_admin_key: str = Header(default=""),
 ) -> dict:
     """Khaled-only: answer a parent without going through Telegram.
@@ -479,6 +481,12 @@ def admin_reply(
         con.close()
 
     if already:
+        # 200, not the route's default 201: nothing was created. Live against
+        # production this answered "duplicate ... delivered: false" under a
+        # 201 Created, and a caller that checks the status code rather than
+        # reading the body would have recorded a reply that was never sent —
+        # the same shape of lie as a green deploy that shipped nothing.
+        response.status_code = status.HTTP_200_OK
         return {"status": "duplicate", "reply_id": already[0],
                 "device_id": device_id, "delivered": False}
 
