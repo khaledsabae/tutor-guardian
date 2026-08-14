@@ -6,11 +6,11 @@
     "notebook_id": "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287",
     "total_source_pdfs": 44,
     "coverage": {
-      "flashcards": "156/174",
-      "quizzes": "156/174",
+      "flashcards": "160/174",
+      "quizzes": "160/174",
       "reports": "156/174",
       "data_tables": "156/174",
-      "infographics": "156/174",
+      "infographics": "160/174",
       "podcasts": "174/174",
       "videos": "106/174"
     },
@@ -11872,11 +11872,34 @@
       "topic_path": "aqeedah_first_name",
       "title_ar": "أوّل اسمٍ يسمعه ويقوله: الله",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "nb_lesson_2-3_aqeedah_first_name_01_fc",
+            "file": "docs/lesson_assets/flashcards/nb_lesson_2-3_aqeedah_first_name_01_fc.json",
+            "title": "أوّل اسمٍ يسمعه ويقوله: الله — بطاقات",
+            "item_count": 8
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "nb_lesson_2-3_aqeedah_first_name_01_qz",
+            "file": "docs/lesson_assets/quizzes/nb_lesson_2-3_aqeedah_first_name_01_qz.json",
+            "title": "أوّل اسمٍ يسمعه ويقوله: الله — اختبار",
+            "item_count": 4
+          }
+        ],
         "reports": [],
         "data_tables": [],
-        "infographics": [],
+        "infographics": [
+          {
+            "id": "a7710af4_infographic_lesson_2-3_aqeedah_first_name_01",
+            "file": "docs/lesson_assets/infographics/a7710af4_infographic_lesson_2-3_aqeedah_first_name_01.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "ar"
+          }
+        ],
         "podcasts": [
           {
             "id": "lesson_2-3_aqeedah_first_name_01_podcast",
@@ -11902,11 +11925,34 @@
       "topic_path": "aqeedah_first_name",
       "title_ar": "«بسم الله» و«الحمد لله»: ربط اليوم كلّه بالله",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "nb_lesson_2-3_aqeedah_first_name_02_fc",
+            "file": "docs/lesson_assets/flashcards/nb_lesson_2-3_aqeedah_first_name_02_fc.json",
+            "title": "«بسم الله» و«الحمد لله»: ربط اليوم كلّه بالله — بطاقات",
+            "item_count": 8
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "nb_lesson_2-3_aqeedah_first_name_02_qz",
+            "file": "docs/lesson_assets/quizzes/nb_lesson_2-3_aqeedah_first_name_02_qz.json",
+            "title": "«بسم الله» و«الحمد لله»: ربط اليوم كلّه بالله — اختبار",
+            "item_count": 4
+          }
+        ],
         "reports": [],
         "data_tables": [],
-        "infographics": [],
+        "infographics": [
+          {
+            "id": "eb2fa589_infographic_lesson_2-3_aqeedah_first_name_02",
+            "file": "docs/lesson_assets/infographics/eb2fa589_infographic_lesson_2-3_aqeedah_first_name_02.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "ar"
+          }
+        ],
         "podcasts": [
           {
             "id": "lesson_2-3_aqeedah_first_name_02_podcast",
@@ -11932,11 +11978,34 @@
       "topic_path": "aqeedah_first_name",
       "title_ar": "الله يحبّك: أن يبدأ التعرّف بالرحمة",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "nb_lesson_2-3_aqeedah_first_name_03_fc",
+            "file": "docs/lesson_assets/flashcards/nb_lesson_2-3_aqeedah_first_name_03_fc.json",
+            "title": "الله يحبّك: أن يبدأ التعرّف بالرحمة — بطاقات",
+            "item_count": 8
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "nb_lesson_2-3_aqeedah_first_name_03_qz",
+            "file": "docs/lesson_assets/quizzes/nb_lesson_2-3_aqeedah_first_name_03_qz.json",
+            "title": "الله يحبّك: أن يبدأ التعرّف بالرحمة — اختبار",
+            "item_count": 4
+          }
+        ],
         "reports": [],
         "data_tables": [],
-        "infographics": [],
+        "infographics": [
+          {
+            "id": "ce04a09e_infographic_lesson_2-3_aqeedah_first_name_03",
+            "file": "docs/lesson_assets/infographics/ce04a09e_infographic_lesson_2-3_aqeedah_first_name_03.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "ar"
+          }
+        ],
         "podcasts": [
           {
             "id": "lesson_2-3_aqeedah_first_name_03_podcast",
@@ -11962,11 +12031,34 @@
       "topic_path": "aqeedah_first_name",
       "title_ar": "نبيّنا محمد ﷺ: اسمٌ يُقال بحُبّ",
       "assets": {
-        "flashcards": [],
-        "quizzes": [],
+        "flashcards": [
+          {
+            "id": "nb_lesson_2-3_aqeedah_first_name_04_fc",
+            "file": "docs/lesson_assets/flashcards/nb_lesson_2-3_aqeedah_first_name_04_fc.json",
+            "title": "نبيّنا محمد ﷺ: اسمٌ يُقال بحُبّ — بطاقات",
+            "item_count": 8
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "nb_lesson_2-3_aqeedah_first_name_04_qz",
+            "file": "docs/lesson_assets/quizzes/nb_lesson_2-3_aqeedah_first_name_04_qz.json",
+            "title": "نبيّنا محمد ﷺ: اسمٌ يُقال بحُبّ — اختبار",
+            "item_count": 4
+          }
+        ],
         "reports": [],
         "data_tables": [],
-        "infographics": [],
+        "infographics": [
+          {
+            "id": "9497ad90_infographic_lesson_2-3_aqeedah_first_name_04",
+            "file": "docs/lesson_assets/infographics/9497ad90_infographic_lesson_2-3_aqeedah_first_name_04.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "ar"
+          }
+        ],
         "podcasts": [
           {
             "id": "lesson_2-3_aqeedah_first_name_04_podcast",
