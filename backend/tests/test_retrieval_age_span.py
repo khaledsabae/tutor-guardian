@@ -45,7 +45,7 @@ def _run(vec, any_age, lex, age_group="4-6", **kw):
     ("4-6", "7-9", 1),
     ("2-3", "4-6", 1),
     ("4-6", "16-18", 4),
-    ("0-3", "2-3", 1),          # legacy alias resolves before comparing
+    ("0-3", "2-3", 1),          # legacy label straddles the infancy boundary
 ])
 def test_distance_between_bands(a, b, expected):
     assert age_bands_apart(a, b) == expected
@@ -61,6 +61,55 @@ def test_distance_is_undefined_rather_than_zero(a, b):
     """Undefined must not collapse to 0 — that would silently make every
     unlabelled unit count as a perfect age match."""
     assert age_bands_apart(a, b) is None
+
+
+# ── Infancy is not the band next door ────────────────────────────────────────
+
+def test_infancy_costs_an_extra_step():
+    """`prenatal-1` runs from pregnancy to the first birthday. The band table
+    makes it look like 2-3's neighbour the way 4-6 neighbours 7-9, and on
+    2026-08-14 that let a unit titled "Your baby at 2 months" answer a parent
+    asking about a two-year-old's tantrum in the street."""
+    assert age_bands_apart("prenatal-1", "2-3") == 2
+    assert age_bands_apart("2-3", "prenatal-1") == 2
+    assert age_bands_apart("prenatal-1", "4-6") == 3
+
+
+def test_infancy_is_still_reachable_from_itself():
+    assert age_bands_apart("prenatal-1", "prenatal-1") == 0
+
+
+def test_the_legacy_label_is_not_charged_for_a_boundary_it_straddles():
+    """"0-3" predates the split into prenatal-1 + 2-3, so a child still
+    carrying it may well be three years old. It aliases onto prenatal-1 for
+    lookup, but charging it the infancy step would cut those children off from
+    2-3 material on the strength of a label nobody has updated — four
+    production profiles still carry it."""
+    assert age_bands_apart("0-3", "2-3") == 1
+    assert age_bands_apart("0-3", "prenatal-1") == 1
+
+
+def test_infant_material_does_not_reach_a_toddler_question():
+    delivered = _run(
+        vec=[],
+        any_age=[_hit("two-month-old", "prenatal-1")],
+        lex=[_hit("two-month-old-lex", "prenatal-1")],
+        age_group="2-3",
+    )
+    assert delivered == set()
+
+
+def test_a_widened_span_still_lets_infancy_through():
+    """The surcharge must be a cost, not a ban — a parent of a one-year-old
+    asking something the corpus only answers for toddlers still needs it."""
+    delivered = _run(
+        vec=[],
+        any_age=[_hit("toddler-unit", "2-3")],
+        lex=[],
+        age_group="prenatal-1",
+        age_span=2,
+    )
+    assert "toddler-unit" in delivered
 
 
 # ── The bound ────────────────────────────────────────────────────────────────
