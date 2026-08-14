@@ -64,16 +64,29 @@ say "video exit $VID_EXIT"
 RATELIMITED=0
 grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
 
-# ── Audio, only if the pool is not already spent ──
-if [ "$RATELIMITED" -eq 0 ]; then
-    timeout 2700 "$PY" scripts/gen_podcasts_cron.py --lang en > "$RUN_OUT" 2>&1
-    AUD_EXIT=$?
-    cat "$RUN_OUT" >> "$LOG"
-    say "audio exit $AUD_EXIT"
-    grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
-else
-    say "audio skipped — quota already spent by video this run"
-fi
+# ── Audio — always attempted, even when video was refused ──
+#
+# Whether NotebookLM meters audio and video from one pool or from separate
+# ones is NOT established. It was inferred from co-occurrence (19 video + 5
+# audio on 2026-08-14, then a refusal) and never tested in isolation: a probe
+# with video already refused found audio refused too, which fits one exhausted
+# pool and two exhausted pools equally well.
+#
+# The design does not need that answer, because the costs are asymmetric:
+#   · an attempt that is refused costs nothing — a refusal is not a generation
+#   · skipping while capacity exists costs a whole day of that medium
+# So attempt audio regardless. Under one shared pool this adds one cheap
+# refused call; under separate pools it is the difference between finishing the
+# audio backlog and never touching it once video reaches its ceiling.
+#
+# To settle it: run audio alone on a fresh day and count how many it gets
+# before refusal. If it reaches roughly the video ceiling on its own, the
+# pools are separate.
+timeout 2700 "$PY" scripts/gen_podcasts_cron.py --lang en > "$RUN_OUT" 2>&1
+AUD_EXIT=$?
+cat "$RUN_OUT" >> "$LOG"
+say "audio exit $AUD_EXIT (video refused: $RATELIMITED)"
+grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
 
 # ── Publish ──
 # Media never reaches production through the deploy; it is gitignored and
