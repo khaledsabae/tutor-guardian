@@ -100,22 +100,30 @@ def _load(p: Path, default):
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else default
 
 
-def _targets() -> list[tuple[str, str]]:
-    """Every source-mapped lesson as (lesson_id, source_id).
+def _targets() -> list[tuple[str, str, str]]:
+    """Every source-mapped lesson as (lesson_id, source_id, notebook_id).
 
-    The sources are already registered in the notebook — 169 of them — so a
-    second language is a re-trigger against an existing source, not an upload.
+    The map value is [age, topic, lesson_id] and may carry a 4th element: the
+    notebook the source lives on. It has to, because the main notebook is at
+    299/300 sources — the lessons that did not fit were uploaded to a second
+    one, and a source id is only meaningful together with its notebook.
+
+    🚨 Passing the wrong `-n` reproduces the exact failure this pipeline just
+    spent hours diagnosing: the server cannot resolve the source, answers 200
+    with a null body, and the CLI reports "Audio generation is unavailable" —
+    naming the feature when the fault is the argument.
     """
     out = []
     for sid, meta in _load(MAP_FILE, {}).items():
         if isinstance(meta, list) and len(meta) >= 3 and meta[2]:
-            out.append((meta[2], sid))
+            notebook = meta[3] if len(meta) >= 4 and meta[3] else NOTEBOOK_ID
+            out.append((meta[2], sid, notebook))
     return out
 
 
-async def trigger(source_id: str, lang: str):
+async def trigger(source_id: str, lang: str, notebook: str = NOTEBOOK_ID):
     code, out, err = await _run(
-        CLI, "generate", "audio", "-n", NOTEBOOK_ID,
+        CLI, "generate", "audio", "-n", notebook,
         "--language", AUDIO_CLI_LANG[lang], "-s", source_id)
     blob = out + err
     if "RateLimit" in blob or "quota" in blob.lower():
@@ -127,9 +135,9 @@ async def trigger(source_id: str, lang: str):
     return m.group(1) if m else None
 
 
-async def poll(task_id: str):
+async def poll(task_id: str, notebook: str = NOTEBOOK_ID):
     code, out, err = await _run(
-        CLI, "artifact", "poll", "-n", NOTEBOOK_ID, task_id, "--json", timeout=90)
+        CLI, "artifact", "poll", "-n", notebook, task_id, "--json", timeout=90)
     if code != 0:
         return "error"
     try:
@@ -138,9 +146,9 @@ async def poll(task_id: str):
         return "error"
 
 
-async def download(task_id: str, out_path: Path) -> bool:
+async def download(task_id: str, out_path: Path, notebook: str = NOTEBOOK_ID) -> bool:
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    await _run(CLI, "download", "audio", "-n", NOTEBOOK_ID,
+    await _run(CLI, "download", "audio", "-n", notebook,
                "--artifact", task_id, str(out_path), "--force")
     if not (out_path.exists() and out_path.stat().st_size > MIN_PODCAST_BYTES):
         return False
@@ -177,7 +185,8 @@ async def main():
     lang = args.lang
 
     targets = _targets()
-    missing = [(lid, sid) for lid, sid in targets if not _has_pod(lid, lang)]
+    nb_of = {lid: nb for lid, _s, nb in targets}
+    missing = [(lid, sid) for lid, sid, _nb in targets if not _has_pod(lid, lang)]
     print(f"🎙  lang={lang} ({AUDIO_CLI_LANG[lang]}) · {len(targets)} lessons · "
           f"{len(missing)} missing · min={MIN_PODCAST_BYTES // 1024}KB")
 
@@ -196,9 +205,9 @@ async def main():
         if _has_pod(lid, lang):
             state.pop(key, None)
             continue
-        st = await poll(tid)
+        st = await poll(tid, nb_of.get(lid, NOTEBOOK_ID))
         print(f"[poll] {lid}: {st}")
-        if st == "completed" and await download(tid, _pod_path(lid, lang)):
+        if st == "completed" and await download(tid, _pod_path(lid, lang), nb_of.get(lid, NOTEBOOK_ID)):
             print(f"  ✓ downloaded {lid}")
             register(lid, lang, _pod_path(lid, lang))
             state.pop(key, None)
@@ -215,14 +224,14 @@ async def main():
     # counting.
     attempted = 0
     stale: list[str] = []
-    for lid, sid in targets:
+    for lid, sid, notebook in targets:
         if args.limit and attempted >= args.limit:
             break
         key = _state_key(lid, lang)
         if _has_pod(lid, lang) or key in state:
             continue
         attempted += 1
-        tid = await trigger(sid, lang)
+        tid = await trigger(sid, lang, notebook)
         if tid == "RATELIMIT":
             print(f"[trigger] {lid}: rate-limited — retry next run")
             break
@@ -256,8 +265,8 @@ async def main():
             lid, klang = _split_key(key)
             if klang != lang:
                 continue
-            st = await poll(tid)
-            if st == "completed" and await download(tid, _pod_path(lid, lang)):
+            st = await poll(tid, nb_of.get(lid, NOTEBOOK_ID))
+            if st == "completed" and await download(tid, _pod_path(lid, lang), nb_of.get(lid, NOTEBOOK_ID)):
                 print(f"  ✓ downloaded {lid}")
                 register(lid, lang, _pod_path(lid, lang))
                 state.pop(key, None)
@@ -272,7 +281,7 @@ async def main():
         for lid in stale[:8]:
             print(f"       {lid}")
 
-    done = sum(1 for lid, _ in targets if _has_pod(lid, lang))
+    done = sum(1 for lid, _s, _n in targets if _has_pod(lid, lang))
     inflight = sum(1 for k in state if _split_key(k)[1] == lang)
     print(f"\n[summary] {lang}: {done}/{len(targets)} done · {inflight} in-flight")
 

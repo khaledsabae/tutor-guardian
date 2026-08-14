@@ -47,6 +47,21 @@ MAP_FILE = ROOT / "source_to_lesson.json"
 NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 
 
+def notebooks_in_map(mapping: dict, default: str) -> list:
+    """Every notebook the map references.
+
+    🚨 The map spans TWO notebooks: the main one is at 299/300 sources, so the
+    54 lessons that did not fit were uploaded to a second. A refresh that reads
+    only the main notebook would judge all 54 stale and delete them — turning a
+    repair tool into the thing it repairs.
+    """
+    found = {default}
+    for meta in mapping.values():
+        if isinstance(meta, list) and len(meta) >= 4 and meta[3]:
+            found.add(meta[3])
+    return sorted(found)
+
+
 def live_sources(notebook: str) -> dict:
     """{source_id: title} for every source currently on the notebook."""
     out = subprocess.run(
@@ -83,29 +98,40 @@ def main():
     if not args.write and not args.dry_run:
         ap.error("مرّر --dry-run أو --write")
 
-    live = live_sources(args.notebook)
+    mapping = json.loads(MAP_FILE.read_text(encoding="utf-8"))
+    live: dict[str, str] = {}
+    owner: dict[str, str] = {}          # source_id → the notebook it lives on
+    for nb in notebooks_in_map(mapping, args.notebook):
+        found = live_sources(nb)
+        print(f"  {nb[:8]}… : {len(found)} sources")
+        live.update(found)
+        owner.update({sid: nb for sid in found})
+
     by_title: dict[str, list] = {}
     for sid, title in live.items():
         by_title.setdefault(title, []).append(sid)
-
-    mapping = json.loads(MAP_FILE.read_text(encoding="utf-8"))
     kept, remapped, orphaned = {}, {}, []
 
     for sid, meta in mapping.items():
         lesson_id = meta[2] if isinstance(meta, list) and len(meta) >= 3 else None
         if sid in live:
+            # stamp the owning notebook so a source id is never ambiguous
+            if isinstance(meta, list) and len(meta) >= 3:
+                meta = list(meta[:3]) + [owner.get(sid, args.notebook)]
             kept[sid] = meta
             continue
         cands = _candidates(lesson_id or "", by_title)
         if cands:
-            remapped[cands[0]] = meta
+            # keep the notebook the replacement actually lives on
+            base = list(meta[:3]) if isinstance(meta, list) else meta
+            remapped[cands[0]] = base + [owner.get(cands[0], args.notebook)]
         else:
             orphaned.append(lesson_id or sid)
 
     new_map = {**kept, **remapped}
 
     print("═" * 62)
-    print(f"  مصادر حيّة على الدفتر : {len(live)}")
+    print(f"  مصادر حيّة (كل الدفاتر): {len(live)}")
     print(f"  مدخلات الخريطة        : {len(mapping)}")
     print(f"    ✅ صالحة كما هي     : {len(kept)}")
     print(f"    🔧 أُعيد ربطها بالعنوان: {len(remapped)}")
@@ -119,7 +145,7 @@ def main():
             print(f"     {lid}")
         if len(orphaned) > 12:
             print(f"     … و{len(orphaned) - 12} غيرها")
-        print(f"\n   ⚠️ الدفتر عند {len(live)}/300 مصدرًا — لا يتّسع لرفع جديد.")
+        print("\n   ⚠️ الدفتر الرئيسي عند 299/300 — الرفع الجديد يذهب للدفتر الثاني.")
 
     if args.dry_run:
         print("\n(dry-run — لم يُكتب شيء)")
