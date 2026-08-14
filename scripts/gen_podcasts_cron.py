@@ -46,6 +46,9 @@ from app.media_naming import (  # noqa: E402
     AUDIO_CLI_LANG, MIN_PODCAST_BYTES, SOURCE_LANG, podcast_rel,
 )
 
+sys.path.insert(0, str(BASE / "ops" / "tools"))
+from media_index import upsert_media  # noqa: E402
+
 CLI = str(BASE / "notebooklm_env" / "bin" / "notebooklm")
 
 # Every `notebooklm` subcommand used here needs the notebook context. Without
@@ -148,6 +151,23 @@ async def download(task_id: str, out_path: Path) -> bool:
     return True
 
 
+def register(lesson_id: str, lang: str, out_path: Path) -> None:
+    """Put the file in the index. A download that is not indexed never ships.
+
+    `/lesson-assets` reads the index, not the disk — three English episodes sat
+    on disk with zero index entries, so English users kept getting Arabic.
+    """
+    try:
+        result = upsert_media(lesson_id, "podcasts", {
+            "file": str(out_path.relative_to(BASE)),
+            "language": lang,
+            "size_bytes": out_path.stat().st_size,
+        })
+        print(f"  · index: {result}")
+    except Exception as e:  # never lose a generated file to a bookkeeping error
+        print(f"  ⚠ index write failed for {lesson_id}: {type(e).__name__}: {e}")
+
+
 async def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--lang", default=SOURCE_LANG, choices=sorted(AUDIO_CLI_LANG))
@@ -180,6 +200,7 @@ async def main():
         print(f"[poll] {lid}: {st}")
         if st == "completed" and await download(tid, _pod_path(lid, lang)):
             print(f"  ✓ downloaded {lid}")
+            register(lid, lang, _pod_path(lid, lang))
             state.pop(key, None)
         elif st == "failed":
             state.pop(key, None)
@@ -238,6 +259,7 @@ async def main():
             st = await poll(tid)
             if st == "completed" and await download(tid, _pod_path(lid, lang)):
                 print(f"  ✓ downloaded {lid}")
+                register(lid, lang, _pod_path(lid, lang))
                 state.pop(key, None)
             elif st == "failed":
                 state.pop(key, None)

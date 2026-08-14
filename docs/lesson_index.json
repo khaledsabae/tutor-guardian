@@ -4905,6 +4905,11 @@
             "file": "docs/lesson_0-3_cyber_screen_foundations_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_cyber_screen_foundations_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 33526594
           }
         ],
         "reports": [
@@ -4980,6 +4985,11 @@
             "file": "docs/lesson_0-3_development_early_moments_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_development_early_moments_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 30338567
           }
         ],
         "reports": [
@@ -5055,6 +5065,11 @@
             "file": "docs/lesson_10-12_cyber_digital_citizenship_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_cyber_digital_citizenship_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 40998153
           }
         ],
         "reports": [

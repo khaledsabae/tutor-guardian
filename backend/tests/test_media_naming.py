@@ -101,3 +101,74 @@ def test_every_language_is_defined_across_all_four_tables():
 def test_thresholds_are_a_single_number():
     """Four generators used 500 KB, 2 MB, 10 KB and 10 MB for the same check."""
     assert MIN_PODCAST_BYTES == 2 * 1024 * 1024
+
+
+# ── Index registration ────────────────────────────────────────────────────
+# A generated file that is not in the index never reaches a user: the
+# /lesson-assets endpoint reads docs/lesson_index.json, not the disk. Three
+# English episodes sat on disk with zero index entries while English users kept
+# being served Arabic.
+
+
+def _upsert():
+    import importlib.util
+    from pathlib import Path
+    p = Path(__file__).resolve().parents[2] / "ops" / "tools" / "media_index.py"
+    spec = importlib.util.spec_from_file_location("media_index", p)
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
+def test_upsert_adds_english_without_erasing_arabic(tmp_path):
+    """`assets["podcasts"] = [...]` — what regen_podcasts.py does — would drop
+    the Arabic reference on the first English download. The file stays on disk,
+    so check_served_assets sees nothing wrong and every Arabic user silently
+    loses their podcast at the next deploy."""
+    import json
+    m = _upsert()
+    idx = tmp_path / "lesson_index.json"
+    idx.write_text(json.dumps({"lessons": [{"lesson_id": "L1", "assets": {
+        "podcasts": [{"file": "docs/L1_podcast.mp3", "language": "ar"}]}}]}))
+
+    assert m.upsert_media("L1", "podcasts", {
+        "file": "docs/L1_podcast_en.mp3", "language": "en"}, idx) == "inserted"
+    pods = json.loads(idx.read_text())["lessons"][0]["assets"]["podcasts"]
+    assert {p["language"] for p in pods} == {"ar", "en"}
+
+
+def test_upsert_is_idempotent_per_language(tmp_path):
+    import json
+    m = _upsert()
+    idx = tmp_path / "lesson_index.json"
+    idx.write_text(json.dumps({"lessons": [{"lesson_id": "L1", "assets": {}}]}))
+    m.upsert_media("L1", "podcasts", {"file": "a.mp3", "language": "en", "size_bytes": 1}, idx)
+    assert m.upsert_media("L1", "podcasts",
+                          {"file": "a.mp3", "language": "en", "size_bytes": 2}, idx) == "replaced"
+    pods = json.loads(idx.read_text())["lessons"][0]["assets"]["podcasts"]
+    assert len(pods) == 1 and pods[0]["size_bytes"] == 2
+
+
+def test_upsert_treats_ar_eg_as_arabic(tmp_path):
+    """Video entries declare `ar_eg`, podcasts `ar`. Comparing raw strings
+    would let a second Arabic entry in alongside the first."""
+    import json
+    m = _upsert()
+    idx = tmp_path / "lesson_index.json"
+    idx.write_text(json.dumps({"lessons": [{"lesson_id": "L1", "assets": {
+        "videos": [{"file": "v_ar_eg.mp4", "language": "ar_eg"}]}}]}))
+    assert m.upsert_media("L1", "videos",
+                          {"file": "v2_ar_eg.mp4", "language": "ar"}, idx) == "replaced"
+    assert len(json.loads(idx.read_text())["lessons"][0]["assets"]["videos"]) == 1
+
+
+def test_upsert_refuses_an_entry_with_no_language(tmp_path):
+    """An unlabelled entry is what made 37.8 MB of Arabic get served as
+    English. The writer must not be able to create one."""
+    import json
+    import pytest as _pytest
+    m = _upsert()
+    idx = tmp_path / "lesson_index.json"
+    idx.write_text(json.dumps({"lessons": [{"lesson_id": "L1", "assets": {}}]}))
+    with _pytest.raises(ValueError):
+        m.upsert_media("L1", "podcasts", {"file": "a.mp3"}, idx)
