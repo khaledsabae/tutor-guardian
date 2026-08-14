@@ -36,13 +36,27 @@ def parse_prompt_blocks() -> dict[str, dict]:
     return blocks
 
 
-def missing_infographic_lessons() -> list[dict]:
-    """الدروس في الفهرس التي لا تملك أصل infographic بعد."""
+def _base_lang(code) -> str:
+    """'ar_eg' → 'ar'. Entries declare locales; one language, several spellings."""
+    return (code or "").strip().lower().replace("-", "_").split("_")[0] or "ar"
+
+
+def missing_infographic_lessons(lang: str = "ar") -> list[dict]:
+    """الدروس التي لا تملك أصل infographic **بهذه اللغة** بعد.
+
+    🚨 كان يسأل «هل للدرس إنفوجراف؟» لا «هل له إنفوجراف إنجليزي؟» — فأي درس
+    يملك النسخة العربية يُعدّ مكتملًا، ويرجّع تشغيلُ الإنجليزية **صفر هدف**
+    وتخرج بنجاح. نفس عطب مُسنِد التخطّي الذي جعل تشغيلة صوت إنجليزية تفحص
+    الملف العربي وتتخطّى كل الدروس ثم تخرج بـ0.
+    """
     idx = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+    want = _base_lang(lang)
     out = []
     for l in idx["lessons"]:
         assets = l.get("assets", {}) or {}
-        if not assets.get("infographics"):
+        have = [e for e in (assets.get("infographics") or [])
+                if _base_lang(e.get("language")) == want]
+        if not have:
             out.append(
                 {
                     "lesson_id": l["lesson_id"],
@@ -54,10 +68,10 @@ def missing_infographic_lessons() -> list[dict]:
     return out
 
 
-def buildable_targets() -> tuple[list[dict], list[str]]:
-    """(جاهز: دروس ناقصة ولها برومبت)، (بلا برومبت: lesson_ids)."""
+def buildable_targets(lang: str = "ar") -> tuple[list[dict], list[str]]:
+    """(جاهز: دروس ناقصة بهذه اللغة ولها برومبت)، (بلا برومبت: lesson_ids)."""
     prompts = parse_prompt_blocks()
-    missing = missing_infographic_lessons()
+    missing = missing_infographic_lessons(lang)
     ready, no_prompt = [], []
     for m in missing:
         p = prompts.get(m["lesson_id"])

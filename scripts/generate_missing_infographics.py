@@ -89,7 +89,7 @@ def reverse_source_map() -> dict[str, str]:
 
 
 def missing_infographic_lessons() -> list[dict]:
-    lessons, _ = buildable_targets()
+    lessons, _ = buildable_targets(LANG)
     return lessons
 
 
@@ -224,6 +224,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--delay", type=float, default=4.0)
+    # Read at import time by _arg_lang() (LANG/CLI_LANG/LANG_TAG are module
+    # constants), but argparse must still know the flag or it rejects the run.
+    parser.add_argument("--lang", default=SOURCE_LANG, choices=sorted(AUDIO_CLI_LANG),
+                        help="output language (default: ar)")
     args = parser.parse_args()
 
     INFO_DIR.mkdir(parents=True, exist_ok=True)

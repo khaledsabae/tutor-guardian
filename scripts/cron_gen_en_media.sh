@@ -88,6 +88,28 @@ cat "$RUN_OUT" >> "$LOG"
 say "audio exit $AUD_EXIT (video refused: $RATELIMITED)"
 grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
 
+# ── Infographics ──
+# Also attempted regardless, for the same asymmetry: a refusal is free.
+#
+# `generate infographic` DOES take --language, unlike `generate quiz` and
+# `generate flashcards`, which take none and return English whatever the prompt
+# says (OPERATIONS_LOG 2026-08-14). NOTEBOOKLM_HL is set anyway because it
+# defaults to "en" only when unset — an inherited ar_001 from a shell that ran
+# the Arabic pipeline would quietly produce Arabic into `_en` filenames.
+NOTEBOOKLM_HL=en timeout 2700 "$PY" scripts/generate_missing_infographics.py \
+    --lang en > "$RUN_OUT" 2>&1
+INFO_EXIT=$?
+cat "$RUN_OUT" >> "$LOG"
+say "infographics exit $INFO_EXIT"
+grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
+
+# An infographic is text rendered into pixels: nothing in the filename, the
+# index or the exit code knows what language is actually drawn inside it. OCR
+# the new ones rather than let a wrong-language image reach review as if it
+# were fine. Reported, not blocking — the run already produced the files.
+timeout 900 "$PY" ops/tools/check_infographic_language.py --lang en >> "$LOG" 2>&1
+say "infographic language check exit $?"
+
 # ── Publish ──
 # Media never reaches production through the deploy; it is gitignored and
 # arrives only by rsync. --chmod=F644 is load-bearing: the CLI writes 0600 and
@@ -105,6 +127,13 @@ rsync -av --chmod=F644 --min-size=5242880 \
     docs/path_videos/ "$VPS:${VPS_DOCS}path_videos/" >> "$LOG" 2>&1
 say "rsync video exit $?"
 
+rsync -av --chmod=F644 \
+    --include='*_infographic_*_en.png' --include='*/' --exclude='*' \
+    -e "ssh -o BatchMode=yes -o ConnectTimeout=15" \
+    docs/lesson_assets/infographics/ \
+    "$VPS:${VPS_DOCS}lesson_assets/infographics/" >> "$LOG" 2>&1
+say "rsync infographics exit $?"
+
 # ── Report coverage, and retire when there is nothing left ──
 REMAIN=$("$PY" - <<'PYEOF' 2>/dev/null
 import json, os, sys
@@ -118,10 +147,17 @@ lids = [v[2] for v in json.load(open("source_to_lesson.json")).values()
 pids = [t["path_id"] for t in json.load(open("scratch/path_source_mapping_new.json"))]
 a = sum(1 for x in lids if not have(podcast_rel(x, "en"), MIN_PODCAST_BYTES))
 v = sum(1 for x in pids if not have(path_video_rel(x, "en"), MIN_VIDEO_BYTES))
-print(f"{a+v} {a} {v}")
+# Count what is BUILDABLE, not what exists. Only 80 of 174 lessons have an
+# infographic prompt block in scripts/infographic_prompts.md; counting all of
+# them leaves 94 permanently "remaining", so the total never reaches zero, the
+# agent never self-retires, and the stall guard fires every day on work that
+# was never possible.
+from scripts.infographic_prompts_lib import buildable_targets
+i = len(buildable_targets("en")[0])
+print(f"{a+v+i} {a} {v} {i}")
 PYEOF
 )
-say "remaining: ${REMAIN:-?} (total audio video)"
+say "remaining: ${REMAIN:-?} (total audio video infographic)"
 
 # 🚨 exit 0 must not mean "ran"; it must mean "worked, or had a reason not to".
 #
