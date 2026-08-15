@@ -1,0 +1,37 @@
+{
+  "id": "isl-86605602__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Unanalyzable Text",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "قظعَ لَ ؽَ لذَ نَ ِ إ : تُ ؾْ قُ , ؽَ ؼَ ؾَ خَ قَ هُ وَ ادً ك فؾَ ل ؾَ عَ جْ تَ نْ أَ : لَ اقَ ,؟ للها دَ ْـط ؿ ثُ : تُ ؾْ قُ ,؟ ؽَ عَ م عَ طْ يَ نْ أَ فُ اخَ تَ كَ دَ لَ وَ ؾَ ُتؼْ تَ نْ أَ وَ : لَ اقَ ,؟ يُ أَ ؿ .» كَ ر ِ اجَ ةَ ؾَ ق ِ ؾحَ ل ِ كازَ تُ نْ أَ : لَ اقَ َٓ نْ أَ كؾَ طَ لكقعُ ِ يابَ اقْ لَ اعَ تَ : ف ِ باحَ صْ أَ ـْ م ةٌ بَ اصَ ط فُ لَ قْ حَ وَ ﷺ لبـلا لاقو ناتَ فْ ُب ِ ب اقتُ ل ْ تَ َٓ وَ ؿ كُ دَ َٓ وْ أَ اقؾُ ُتؼْ تَ َٓ وَ اقكُ زْ تَ َٓ وَ اققُ ر ِ س تَ َٓ وَ اًئقْ شَ للها ِ ب اقكُ ر ِ شْ تُ ؽُ ْـ ِ م كفَ وَ ـْ ؿ ل ِ ف ل ِ كقصُ عْ تَ َٓ وَ ؿ ؽُ يد ِ يْ أَ ـَ قْ بَ فُ كَ ور اػَ كَ فُ لَ قَ فُ فَ اَقكْ دُ لا لف ف ِ ب بَ ققعُ فَ ائً قْ شَ ؽَ لذَ ـْ م بَ اصَ أَ ـْ م لَ اقَ فُ ْـطَ اػَ طَ ء اشَ نْ ِ إوَ فُ بَ قَ اطَ ء اشَ نْ ِ إ للها كلَِ إ هُ ر",
+  "text_simplified": "The text is unclear and contains unintelligible symbols. No educational (tarbiyah) content can be extracted from it. Please provide a clear and understandable text.",
+  "labels": [
+    "نص غير واضح",
+    "غير مفهوم",
+    "بحاجة إلى توضيح"
+  ],
+  "created_at": "2026-06-21T10:16:20Z",
+  "updated_at": "2026-06-21T10:16:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-86605602",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

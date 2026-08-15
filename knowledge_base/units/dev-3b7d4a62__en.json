@@ -1,0 +1,46 @@
+{
+  "id": "dev-3b7d4a62__en",
+  "domain": "development",
+  "source_file": "Positive_Parenting_9_11.pdf",
+  "title": "Embracing Academic Challenges and Understanding Others in the Adolescent Stage",
+  "language": "en",
+  "age_group": "10-12",
+  "behavior_type": "التطور_الطبيعي",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "more academic challenges at school.  Become more independent from the family.  Begin to see the point of view of others more clearly.  Have an increased attention span. Positive Parenting Tips Following are some things you, as a parent, can do to help your child during this time:  Spend time with your child. Talk with her about her friends, her accomplishments, and what challenges she will face.  Be involved with your child’s school. Go to school events; meet your child’s teachers.  Encourage your child to join school and community groups, such as a sports team, or to be a volunteer for a  Help your child develop his own sense of right and wrong. Talk with him about risky things friends might pressure him to do, like smoking or dangerous physical dares.  Help your child develop a sense of responsibility—involve your child in household tasks like cleaning and cooking. Talk with your child about saving and spending money wisely.  Meet the families of your child’s friends.  Talk with your child about respecting others. Encourage her to help people in need. Talk with her about what to do when others are not kind or are disrespectful. National Center on Birth Defects and Developmental Disabilities Division of Human Development and Disability  Help your child set his own goals. Encourage him to think about skills and abilities he would like to have and about how to develop them.  Make clear rules and stick",
+  "text_simplified": "At this stage, your child faces greater academic challenges at school, becomes more independent from the family, begins to see others' perspectives more clearly, and their attention span increases. Support this growing independence while remaining close and attentive.",
+  "labels": [
+    "تحديات أكاديمية",
+    "الانفصال عن الأهل",
+    "فهم الآخرين"
+  ],
+  "created_at": "2026-06-07T07:56:52Z",
+  "updated_at": "2026-06-10T18:30:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Positive_Parenting_9_11",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "dev-3b7d4a62",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "متابعاً",
+        "english": "attentive",
+        "why": "The Arabic 'متابعاً' means actively following up, monitoring, or staying involved with the child's affairs. The English 'attentive' is more passive and loses the sense of active supervision and follow-through.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

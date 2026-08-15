@@ -1,0 +1,56 @@
+{
+  "id": "cyb-e49f94f3__en",
+  "domain": "cyber",
+  "source_file": "Every_Online_Safety_Conversation.pdf",
+  "title": "How to Support Your Child in Facing Sexual Extortion (al-ibtizaz al-jinsi)",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "ابتزاز جنسي",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Internet Matters — Online Safety Conversations",
+  "text_original": "on, this is called ‘sexual extortion’. Support your child to get content taken down and get more help eSafety can help get content taken down and provide further support and advice. Make a report to eSafety by completing the online form at www.eSafety.gov.au/report Search for the ‘eSafety Guide’ to learn more about how to stay safe on games, apps and online platforms including social media. Supporting a child if they There are many agencies that support children and experience abuse young people who have experienced online child exploitation or online grooming. These are listed at If your child tells you they have experienced abuse try to accce.gov.au/help-and-support/who-can-help. remain calm and take action to support them: • Do not blame your child – they have done nothing Reporting online child abuse • Make sure they are safe • Listen and believe them It is illegal to view, share or produce suggestive or • Collect evidence including screenshots, URLs and explicit images of children. This content can be reported directly to the platform and at • Make a report to the Australian Centre to Counter www.eSafety.gov.au/report Child Exploitation and get support for your child Getting help from the Australian Centre to Counter Child Exploitation If you are in Australia and a child is in immediate danger, or at risk of harm call Triple Zero (000). To make a report, complete the online form at www.accce.gov.au/report Your report to the Australian Centre to Counter Child Exploitation will be looked at by specialist investigators",
+  "text_simplified": "This type of abuse is called sexual extortion (al-ibtizaz al-jinsi). Support your child in removing the offensive content and seek additional help from the e-safety authority. Listen to your child, believe them, and do not blame them. Collect evidence such as screenshots. Report to the relevant authorities if the child is in immediate danger.",
+  "labels": [
+    "سلامة رقمية",
+    "إساءة إلكترونية",
+    "دعم نفسي",
+    "حماية الطفل",
+    "تبليغ"
+  ],
+  "created_at": "2026-06-20T15:02:38Z",
+  "updated_at": "2026-06-20T15:02:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Every_Online_Safety_Conversation",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "cyb-e49f94f3",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "كيف تدعم طفلك في مواجهة الابتزاز الجنسي",
+        "english": "How to Support Your Child in Facing Sexual Extortion (al-ibtizaz al-jinsi)",
+        "why": "The English title adds a parenthetical transliteration '(al-ibtizaz al-jinsi)' that is not present in the Arabic source. This is an addition of information not in the original.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "واحصل على مساعدة إضافية من هيئة السلامة الإلكترونية",
+        "english": "and seek additional help from the e-safety authority",
+        "why": "The Arabic verb 'احصل' means 'get/obtain', while the English 'seek' implies searching or attempting to obtain. This slightly alters the nuance from a direct instruction to obtain help to a suggestion to look for help.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

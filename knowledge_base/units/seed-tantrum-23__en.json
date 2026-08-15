@@ -1,0 +1,55 @@
+{
+  "id": "seed-tantrum-23__en",
+  "domain": "medical",
+  "source_file": "curated/CDC - Positive Parenting / AAP",
+  "title": "Managing Tantrums in Children Aged Two to Three",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "نوبات الغضب",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "CDC - Positive Parenting / AAP",
+  "text_original": "نوبات الغضب في هذا العمر طبيعية وتحدث لأن الطفل لا يملك الكلمات الكافية للتعبير عن إحباطه. أهم قاعدة: حافظي على هدوئك أنتِ أولاً ولا ترُدّي بصراخ أو عقاب جسدي. تأكدي من سلامته، ثم تجاهلي النوبة بهدوء دون منحها اهتماماً زائداً أو الرضوخ للطلب الذي سببها. بعد أن يهدأ، احتضنيه وسمِّ له شعوره بكلمات مثل «كنت غضبان». امنعي النوبات قبل حدوثها بثبات الروتين، والنوم الكافي، وإعطائه خيارات بسيطة ليشعر ببعض التحكم.",
+  "text_simplified": "Tantrums at this age are normal and happen because the child does not have enough words to express their frustration. The most important rule: maintain your own calm first and do not respond with shouting or physical punishment. Ensure their safety, then ignore the tantrum quietly without giving it extra attention or giving in to the demand that caused it. After they calm down, embrace them and name their feeling with words like, 'You were angry.' Prevent tantrums before they occur by keeping a consistent routine, ensuring sufficient sleep, and giving them simple choices so they feel some control.",
+  "labels": [
+    "نوبات الغضب",
+    "تنظيم الانفعالات",
+    "السلوك",
+    "2-3 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "CDC - Positive Parenting / AAP",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-tantrum-23",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ثم تجاهلي النوبة بهدوء",
+        "english": "then ignore the tantrum quietly",
+        "why": "The Arabic 'بهدوء' means 'calmly', not 'quietly'. 'Quietly' could imply not making noise, whereas the intended meaning is to remain calm and composed while ignoring the tantrum.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "حافظي على هدوئك أنتِ أولاً",
+        "english": "maintain your own calm first",
+        "why": "The Arabic uses a warm, direct imperative 'keep your calm' while the English 'maintain your own calm' is stiff and clinical, shifting the register from supportive parenting advice to formal instruction.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

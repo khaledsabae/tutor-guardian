@@ -1,0 +1,56 @@
+{
+  "id": "isl-c0936200__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching Children Religious and Moral Values",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ةمؾداسمًا ةم٘بمٓمًا ـمُ نيادمٛلها رجمسأ ـمس نامٞمط ـمس دمٞمٕمؾ ـمس ؽمٚمعا دبمق قه (2) .حمٞحص دامٜمؾم٢مس )54/3( »خيراتمًاو ةمورمٕمعا« مذ يقسمٗمًا فمضرمظأ (3) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ اقنه ءلش يٕ اقفرعي نأ ءلش ـط دٓوٕا اقنه اذإ ـيدلاقلا كؾط لغبـي ـم ؿؾط كؾط ؿهو ػقؾؽتلا تقو ؿفقؾط تيلقل ؿؾعلا كؾط اوبرؽقل ,فـط .)352/3( »يراخبلا حقحص حرش« في اؿك لاطب ـبا فلاق .ةعيرشلا تٕلما نبق ساضتحلاا ذٍع برلأ يرلخاب دلألأا ٛٗصٔ :ُٕثلاجلأ عطاتلا للحا :ٙدلاٚلأ حْٛ للها بيْ ١ٝصٚ ﷺ لبـلا نأ ورؿط ـب للها دبط ـط حقحص داـسنب )169/2( دؿحأ جرخأ ,ةقصقلا ؽقؾط صاق نيإ :فـبٓ لاق ةافقلا فترضح اؿل ﷺ احقك للها لبك نإ :لاق عبسلا تاواؿسلا ننف ,للها ٓإ فلإ لاب :كرمآ ,ـقتـثا ـط كانهأو ,ـقتـثاب كرمآ ـبه تحجر ةػك في للها ٓإ فلإ ٓ تعضوو ةػك في تعضو قل عبسلا ـقضرٕاو ةؿفبم ةؼؾح ـك عبسلا ـقضرٕاو عبسلا تاواؿسلا نأ قلو ,للها ٓإ فلإ ٓ قزري ابهو ,ءلش ؾك ةلاص انهنف ,هدؿحبو للها ناحبسو ,للها ٓإ فلإ ٓ ـفتؿصق .»برؽلاو كرشلا ـط :كانهأو ,ؼؾخلا :ٙدلاٚلأ بٛكعٜ للها بيْ ١ٝصٚ َ َ َ َ ۡ ُ ۡ َ ۡ َ ُ ۡ َ َ َ َ ۡ َ ٓ َ َ ُ ۡ ُ ُ ۡ َ ﴿ :كلاعت لاق اٌ ِّيِجلِِ لاك ذِإ تٍٔلٱ بٔلػيّ ضَخ ذِإ ءادٓط ًخِن مأ ق َ ٰ ح َ ش ۡ وَإِ و َ يِػ ٰ م َ ش ۡ وَإِ ً َ هۧ ِ ٰر َ ۡ ةِإ م َ ن ٓ ا َ ةاء َ ّ َ ٰ",
+  "text_simplified": "This text addresses the topic of *tarbiyah* (upbringing) of children and teaching them religious and moral values. It highlights the importance of guiding children toward *salah* (prayer) and *ibadah* (worship) from a young age. It also mentions some Prophetic *ahadith* that encourage teaching children *tawhid* (monotheism) and avoiding *shirk* (associating partners with Allah). The goal is to instill *iman* (faith) in the hearts of children from an early age.",
+  "labels": [
+    "تربية",
+    "دين",
+    "أطفال",
+    "قيم",
+    "تعليم"
+  ],
+  "created_at": "2026-06-21T10:33:16Z",
+  "updated_at": "2026-06-21T10:33:16Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-c0936200",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "نفوس الأطفال",
+        "english": "hearts of children",
+        "why": "The Arabic 'نفوس' means 'souls' or 'selves', not 'hearts' (which would be 'قلوب'). The translation substitutes a different body/spiritual metaphor, altering the intended meaning.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ترك الشرك",
+        "english": "avoiding shirk",
+        "why": "The Arabic verb 'ترك' means 'to abandon' or 'to leave', which is stronger and more definitive than 'avoiding'. 'Avoiding' suggests staying away from situations, while 'abandoning' implies completely giving up shirk.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

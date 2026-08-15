@@ -1,0 +1,48 @@
+{
+  "id": "isl-0b607846__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Tawakkul (Reliance) upon Allah and Trust in Him",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تعزيز الإيمان والتوكل",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ُ َ لَ لاك ِۚءاٍلٱ ٌَِ نَي ٍػِ ػيّ و تج ىِٰإ ي وا ٔ س لاك ٤٢ َي َ َ َ َ ُ ۡ َ ۡ َ ُ َ ۡ َ َ َ َ َ ذ َ ذ ذ ۡ َ ۡ َ ۡ َ ۡ َ َ ٌَِ نكَـ جٍٔلٱ آٍِحة لاخو ًٗ خِ ر ٌَ لَِإ ِللَّٱ رمأ ٌَِ مٔۡيٱ ًغِ َا .)44 :43:دقه ةرقس( ﴾َ َ ۡ ُ ۡ :دٝسٛتياب ٙديٛي حْٛ للها بيْ ١ٝصٚ ﷺ لبـلا نأ ورؿط ـب للها دبط ـط حقحص داـسنب )169/2( دؿحأ جرخأ ,ةقصقلا ؽقؾط صاق نيإ :فـبٓ لاق ةافقلا فترضح اؿل ﷺ احقك للها لبك نإ :لاق عبسلا تاواؿسلا ننف ,للها ٓإ فلإ لاب :كرمآ ,ـقتـثا ـط كانهأو ,ـقتـثاب كرمآ ـبه تحجر ةػك في للها ٓإ فلإ ٓ تعضوو ةػك في تعضو قل عبسلا ـقضرٕاو ةؿفبم ةؼؾح ـك عبسلا ـقضرٕاو عبسلا تاواؿسلا نأ قلو ,للها ٓإ فلإ ٓ قزري ابهو ,ءلش ؾك ةلاص انهنف ,هدؿحبو للها ناحبسو ,للها ٓإ فلإ ٓ ـفتؿصق .»برؽلاو كرشلا ـط :كانهأو ,ؼؾخلا ِٗ٥آبأ بٛكعٜٚ ِٖٝاسبإ اٗب ٢صٚٚ فِ ٰ َ ط َ غ ۡ ٱ للَّ َ ذ ٱ ن ذ ِإ نَي ذ ت َ ٰ ي َ ب ُ ٔل ُ ػ ۡ ي َ و َ ِّيِج َ ة ً ُ هۧ ِ ٰر َ ۡ ةِإ ٓ آ َ ِة صَّ ٰ ذ و َ و َ ﴿ :كلاعت لاق َ َ َ ۡ َ ٓ َ َ ُ ۡ ُ ُ ۡ َ َ ُ ۡ ُ ُ َ َ",
+  "text_simplified": "The text speaks about the importance of tawakkul upon Allah and trust in Him in all matters. It mentions that whoever relies upon Allah, He suffices him and provides for him from where he does not expect. It also indicates that salah and worship increase the servant’s closeness to his Lord.",
+  "labels": [
+    "توكل",
+    "إيمان",
+    "صلاة",
+    "ثقة بالله",
+    "عبادة"
+  ],
+  "created_at": "2026-06-21T10:22:52Z",
+  "updated_at": "2026-06-21T10:22:52Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-0b607846",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "التوكل على الله",
+        "english": "tawakkul upon Allah",
+        "why": "The phrase 'tawakkul upon Allah' is not idiomatic English; 'tawakkul in Allah' or 'reliance upon Allah' would be more natural. The Arabic is simple and direct, but the English sounds stiff and slightly awkward.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

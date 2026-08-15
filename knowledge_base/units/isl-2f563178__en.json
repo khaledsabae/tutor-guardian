@@ -1,0 +1,48 @@
+{
+  "id": "isl-2f563178__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching Children Patience and Anger Management",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "التربية السلوكية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": ",فقف رجتت .)3(اراد فب اؿفل ىترشا ؿث ,دحاو ؿهرد .نقمًدمٕمُ فمًامضر دامٜمؾم٢مس )85/6( »ءامٞمًوٕا ةمٞمٚمط« مذ ؿمٞمٕمٟ قمسأ فمضرمظأ (1) بيأ ـمس دمٕمؾ« بياتمي رمٔمٟاو ،حمٞحص دامٜمؾم٢مس همػمهو ،)143/1( »مػبمٙمًا« مذ نيامؼمٓمًا فمضرمظأ (2) .»فمشمػمؾ ـمُ ءشيو ﭬ صامىو فَ وع ِ ضَ لا : مْ هُ ْنم ِ نَ ِإفَ , فْ فِ خَ ُولْ فَ سِ اَنل ِ ل مْ كُ دُ حَ أ َ ذَ صَ اذَ ِإ« :ﷺ فمًقم٘مً ؼمواقمُ ﭬ دمٕمؾ ؾمٕموو ،)713( يراخبمًا فمضرمظأ » ء اشَ امَ لْوِ طَ ُولْ فَ ه ِ س ِ فْ َن ِ ل مْ كُ دُ حَ أ َ ذَ صَ اذَ ِإوَ , ر ِبكَ لْاوَ مَ وق ِ سَ لاوَ .ـحمرمًا دبمق ـمس ثرالحا لالح ـسمط دامٜمؾم٢مس )2764( »هدمٜسمُ« مذ دمٕلجا ـمسا فمضرمظأ (3) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ :٣ذلأا ٢ًع برصياٚ سهٓلما ٔع ٞٗٓياٚ فٚسعلماب سَلأا ٘كف ديٛيا ًِعتٜٚ َ َ ۡ َ ُ ۡ َ ۡ ۡ ُ ۡ َ َ ٰ َ ذ َ ذ َ ُ ٰ َ ﴿ :فظعي قهو فـبٓ ناؿؼل لاق غ ُّٱو فِ ورػٍلٱِة رمأو ةٔيػلٱ ًِ ِكأ نَيتي .)17:ناؿؼل( ﴾ ِ رٔم ُ ُ لۡ ۡ ٱ مِ ز ۡ غ َ َ ۡ ٌِ م َ ِل ٰ ذ َ ن ذ ِإ ۡم َ َ ةاغ َ َ أ ٓ اٌ َ عَل ٰ َ َ ب ۡ ِ غ ۡ ٱو َ ِ ره َ ٍِ ُ ۡ لٱ ـِ طَ كفَ ْـيَ وَ فور كُ دُ حَ أَ دَ ار أَ",
+  "text_simplified": "Parents must teach their children patience and controlling anger, and not respond immediately to their desires. They should also train them to bear responsibility from a young age, and reinforce positive behavior with praise and encouragement. It is also important for parents to be a good example in dealing with difficult situations.",
+  "labels": [
+    "الصبر",
+    "الغضب",
+    "التربية",
+    "القدوة",
+    "المسؤولية"
+  ],
+  "created_at": "2026-06-21T10:31:06Z",
+  "updated_at": "2026-06-21T10:31:06Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-2f563178",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "structure",
+        "field": "text_simplified",
+        "arabic": "وعدم الاستجابة الفورية لرغباتهم",
+        "english": "and not respond immediately to their desires",
+        "why": "The Arabic noun phrase is part of what children are taught (coordinated with patience and anger control), but the English infinitive could be read as an instruction to parents, making the subject ambiguous and potentially changing the meaning.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

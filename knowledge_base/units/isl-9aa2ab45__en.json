@@ -1,0 +1,72 @@
+{
+  "id": "isl-9aa2ab45__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Al-Tawakkul ma‘a al-Akhdh bi-l-Asbab fi al-Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إيمانية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "تقبأ تـؽف تعجرف ,ؽتقبم كلإ عجرا :لاؼف ,فقؾط تدطلف ام :اـؾؼف ,ةقثراحلا ـبا فعبتي ؾؿحي شارػب ـحك اذنف ,اعقؿج للها دبطو ؿصاطو لاق ,ارقج نقؽي نأ لشخ فكلك :ؿقعك لاق ,لب تعـص ام نيلش :لاق ,؟ؽكلش .)1(»فب للها ءاش ام ٓإ رادلا قراػي ام ؾق رؿط ناؽف :زيزعلا دبط بِ اتَ ك كؾَ طَ د لَقَ لْا ـَ قْ بَ ؾِ حَ ِـلا ةُ يَ ق ِ س تَ ؼٌ حَ أَ : ءاطَ عَ ل تُ ؾْ قُ :لَ اقَ ,جٍ يْ ر جُ ـِ بْ ا ـِ طَ ,؟ كَ دلَوَ ـَ قْ بَ تيْ قَ س : لَ اقَ فُ كَ أَ ﷺ للها ل ِ بكَ ـْ طَ ؽَ لذَ اَـغَ ؾَ بَ دْ قَ وَ , ؿ عَ كَ :لَ اقَ ,؟ للها طَ زَ , هر ِ قْ غَ وَ :لَ اقَ ؟ ناؿ عْ ُـلا لف : تُ ؾْ قُ لْا ػ قْ حَ ـْ م دُ ر لحَ لْا ػقْ حَ ـْ م دُ ر لَ اؼَ فَ ,لغ ِ بَ ْـتَ َٓ ء اقَ شْ ل َ ِ ب كصَ وْ ل َ فَ ل ص ِ قيُ ًلاجُ ر ضَ حَ فُ كَ أَ : ق ٍ ور ـْ طَ ف ِ يأْ ر فُ كَ ِ إوَ , ـَ س .حمٞحص دامٜمؾم٢مس )159( »ةمٚمّمًاو مؼمًا« مذ يزورمعاو ،)221/11( ةبمٞمؿ بيأ ـمسا فمضرمظأ (1) .فمٜمق حمٞحص دامٜمؾم٢مس )219/11( ةبمٞمؿ بيأ ـمسا فمضرمظأ (2) ،يرهزمًا ـمق ،رمٛمٕمُ ـمق ،ةمٞمٚمق ـمسا امٜمصدمط :لامى )221/11( ةبمٞمؿ بيأ ـمسا فمضرمظأ (3) .فمس ةورمق لامى",
+  "text_simplified": "The text speaks of an old story that shows the importance of tawakkul (reliance on Allah) together with taking the means. It relates that a man asked the Prophet ﷺ about leaving his son unsecured, so he ﷺ replied that one must first tie the camel, then rely on Allah. The story teaches us that planning and hard work do not conflict with trust in Allah.",
+  "labels": [
+    "توكل",
+    "أخذ بالأسباب",
+    "تربية",
+    "إيمان",
+    "تخطيط"
+  ],
+  "created_at": "2026-06-21T10:21:25Z",
+  "updated_at": "2026-06-21T10:21:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-9aa2ab45",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "religious_error",
+        "field": "text_simplified",
+        "arabic": "سأل النبي ... فأجابه",
+        "english": "asked the Prophet ﷺ ... he ﷺ replied",
+        "why": "English adds the honorific ﷺ after 'the Prophet' and after the pronoun 'he', but the Arabic text does not include any honorific. This is an addition of religious attribution not present in the source.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الناقة",
+        "english": "the camel",
+        "why": "Arabic specifies a female camel (she-camel), while English uses the generic 'camel', losing the gender distinction.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "بلا ربط",
+        "english": "unsecured",
+        "why": "Arabic means 'without tying' (i.e., not tied up), but 'unsecured' is vague and could imply not made safe rather than specifically not tied.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "ثم التوكل",
+        "english": "then rely on Allah",
+        "why": "The term 'tawakkul' is transliterated earlier in the text, but here it is translated as 'rely on Allah' instead of keeping the transliteration, creating inconsistency.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

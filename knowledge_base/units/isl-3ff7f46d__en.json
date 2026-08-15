@@ -1,0 +1,39 @@
+{
+  "id": "isl-3ff7f46d__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "The General Environment and Its Impact on the Prophetic Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "نيذلا مهيلع فارعﻷاو ديلاقتلاو تاداقتعﻻا ةعومﳎ ىلع يوتﲢ ةيناسنإ تاطاشن اهيف يرﳚ امو ةيعيبطلا ةئيبلا ا(cid:273) دوصقﳌاو ة ماعلا ةئيبلا ةيكزتو .35\" رشلا ﱃإ ةرورض هجتي ناسنﻹا نأ ﰒ ،هداسف وأ هكولس حﻼص ﰲ رثأ ناسنﻹ(cid:682) ةطيﶈا ةئيبللف .ةيعامتجﻻا تاقﻼعلا ةكبشو تاسايسلاو مظنلاو ءاج ﰒ نمو .د رفلل ةيفاقثلاو ةيعيبطلاو ةيداصتقﻻاو ةيسايسلاو ةيعامتجﻻا ةئيبلا لمشت ةماعلا ةئيبلاف ﱄاتل(cid:682)و .ةفلتخﳌا هتاجاح عابشﻹ طيﶈا . ماعلا اﳍولدم ﰲ ةئيبلا ةيكزت ىلع ملسو هيلع ﷲ ىلص ﱯنلا صرح 88 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا ﱘركلا نآرقلا باتكل(cid:682) دصقنو ملسو هيلع ﷲ ىلص ﱯنلا ا(cid:273) ماق ﱵلا ةيوبﱰلا تايلمعلا مهأ نم يه ،ةمكﳊاو باتكلا ميلعت ةلأسمف اﲑخأو ﲔب قرفت ﱵلا مولعلاو فراعﳌا هنم اوجرختسيل باتكلا ةباحصلا ملع ﰊرﳌا لوسرلاف ،ةنسﳊا تايكولسلاو فراعﳌاو مولعلا لك عبنم و ه يذلا . ةينيدلاو ةيويندلا ناسنﻹا ةايح حلصي ام ﱃإ يد(cid:275)و سوفنلا يفشتو ،لطابلاو قﳊا ،ةيلمع ةمكحو ةيرظن ةمكح :نامسق ةمكﳊا نأ هﲑسفت ﰲ يزارلا راشأو ،ريدقتلاو لمعلاو لوقلا ﰲ باوصلا يهو ةنسلا يهف ةمكﳊا امأ \" يزارلا يأ هلوق و ه ثحبلا اذه ﰲ انمهي امو ،ﱀاصو نسح لمع لك ا(cid:276)(cid:997) لوقلل صلخ ﰒ ،لماكلا كولسلا ﰲ امهعامتجا نم دب ﻻو . ﱃاعت ﷲ دنع نم يهف \"لآﳌاو لاﳊا ﰲ مهتحلصمو دابعلا ةعفنم هيف ام قلخ ﱃاعت ﷲ نم ةمكﳊا هلئاسو ﰲ كلذكو ةيوبﱰلا ةيلمعلا ﰲ ةيوبنلا تافرصتل طباضلا و هف هرداصمو ىﱪكلا هلوصأ ﰲ ﱐ(cid:682)ر جهنم يوبنلا يوبﱰلا جهنﳌاف ةصﻼخو . ةيئزﳉا ةيليصفتلا ي وبنلا يوبﱰلا جاهنﳌا لئاسو :ﱐاثلا ثحبﳌا ةسرامﳌا لاﳎ ﱃإ ئدابﳌاو دئاقعلا",
+  "text_simplified": "The general environment encompasses social, political, economic, cultural, and natural factors that influence human behavior and interactions. The Prophet ﷺ was keen on the tazkiyah (purification) of the environment in its broad sense. Additionally, teaching the Book and wisdom (al-hikmah) was among the most important tarbiyah (upbringing) processes he carried out, for wisdom is divided into theoretical and practical, and the Sunnah is the practical wisdom that guides to correctness in speech and action.",
+  "labels": [
+    "البيئة العامة",
+    "التربية النبوية",
+    "الحكمة",
+    "تعليم الكتاب",
+    "تزكية البيئة"
+  ],
+  "created_at": "2026-06-20T14:40:17Z",
+  "updated_at": "2026-06-20T14:40:17Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-3ff7f46d",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

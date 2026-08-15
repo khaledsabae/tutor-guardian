@@ -1,0 +1,64 @@
+{
+  "id": "isl-ee097ab9__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "Al-Tarbiyah al-Nabawiyyah wa-Tawjeeh al-Sulook al-Imani",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إيمانية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "لعافتي ةعاﲨ طسو ادرف هرابتع(cid:682) كلكو هتاذب ﻼقتسم ادرف هرابتع(cid:682) ةيدسﳉاو ةيحورلاو ةيركفلا هتابلطتمو ناسنﻹا تاجاﳊ اهنيدو اهايند ﰲ اهحلصي اﲟ ا(cid:275)اجايتحا عابشإو ةعمتﳎ تابلطتﳌا هذه ةيمنت ىلع لمعت ملسو هيلع ﷲ ىلص هتاهيجوت (cid:685)دجو كلذل .اهلخاد .لامكلا جرادم ﰲ اهيقريو : ﰲ اهددﳓ نأ نكﳝو ناسنﻹا ﰲ ةيوبﱰلا لخادﳌا عيﲨ ةيوبنلا ةيبﱰلا تلﴰ ﰎ نمو : ةيدقعلا ةيبﱰلا ـ أ حيحصلا ناﳝﻹا نم دمتست ﱵلا ئدابﳌاو ميقلا ساسأ ىلع هكولس هيجوتو ىﱪكلا لوصﻷ(cid:682) هطبرو ةقلطﳌا تاينيقيلا ىلع درفلا ةيبرت يهو روصتلا ﰲ ةيوبﱰلا ةيلمعلا ﰲ ةيوازلا رجح وه ةيبﱰلا نم عونلا اذهو 18ه رشو هﲑخ ردقلاو رخﻵا مويلاو هلسرو هبتكو هتكئﻼمو ﱃاعت (cid:389)(cid:682) ةطباضلا ىﱪكلا ﱐاعﳌا خيسرت ﰲ بصي ناك ملسو هيلع ﷲ ىلص ﱯنلا هيجوت بلاغو اعيﲨ مهيلع ﷲ تاولص ءايبنﻸل ﱃوﻷا ةمهﳌاو يمﻼسﻹا . ةسراﳑو اركف درفلا ةايﳊ 85 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا ىلص ﷲ لوسر فلخ تنك :لاق امهنع ﱃاعت ﷲ يضر سابع نبا هاور ام بابلا اذه ﰲ ملسو هيلع ﷲ ىلص ةيوبﱰلا هتاهيجوت ةلثمأ نمو تنعتسا اذإو ،ﷲ لأساف تلأس اذإ ،كهاﲡ هدﲡ ﷲ ظفحا ،كظفﳛ ﷲ ظفحا ،تاملك كملعأ ﱐإ مﻼغ (cid:686) \":لاقف اموي ملسو هيلع ﷲ كورضي ﱂ كورضي نأ ىلع تعمتجا ولو ،كل ﷲ هبتك دق ءيشب ﻻإ كوعفني ﱂ ءيشب كوعفني نأ ىلع تعمتجا و ل ةمﻷا نأ ملعاو (cid:389)(cid:682) نعتساف . 19\" فحصلا تفجو مﻼقﻷا تعفر ،كيلع ﷲ هبتك دق ءيشب ﻻإ . ردقلاو ءاضقلاو ﱃاعت ﷲ ىلع لكوتلاو رضلاو عفنلاو ةناعتسﻻا ﱐاعم خيسﱰب ملسو هيلع ﷲ",
+  "text_simplified": "This unit discusses the Prophetic tarbiyah (upbringing) that aims to nurture a person’s spiritual, psychological, and physical needs, and to guide their behavior in accordance with Islamic principles. It focuses on strengthening correct faith and reliance on Allah, seeking His help in all matters. It also highlights the guidance of the Prophet Muhammad ﷺ in raising the individual to be independent and to depend on Allah.",
+  "labels": [
+    "تربية نبوية",
+    "إيمان",
+    "توكل",
+    "توجيه سلوكي",
+    "قيم إسلامية"
+  ],
+  "created_at": "2026-06-20T14:39:29Z",
+  "updated_at": "2026-06-20T14:39:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ee097ab9",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "التربية النبوية وتوجيه السلوك الإيماني",
+        "english": "Al-Tarbiyah al-Nabawiyyah wa-Tawjeeh al-Sulook al-Imani",
+        "why": "The English title is a transliteration, not a translation, so the meaning is completely lost to English readers.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "التوكل على الله",
+        "english": "reliance on Allah",
+        "why": "The Islamic term 'tawakkul' is translated away as 'reliance' instead of being transliterated, while 'tarbiyah' is transliterated elsewhere, creating inconsistency.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تذكر",
+        "english": "highlights",
+        "why": "The Arabic 'تذكر' means 'mentions', but the English 'highlights' adds emphasis not present in the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

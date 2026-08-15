@@ -1,0 +1,48 @@
+{
+  "id": "isl-d4e2e2dc__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children in Islam and the Importance of Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "وأ كلاعت للها ءاؿسأ ـم :ؼحلا« قدصلاو تباثلا دقجقؿلاو ؽؾؿلاو لاؿلاو ملاسلإاو لدعلاو ,لضؼؿلا .)2(»ققؼحلا دحاوو مزحلاو تقؿلاو ةريره لبأ ثيدح في اؿك بودـؿلاو بجاقلا ؿؽحلا كؾط ؼؾطي ؼحلاو لْ ا كؾَ طَ ؿِ ؾس لْ ا ؼُ حَ :ل ُ قؼُ يَ ﷺ للها لَ قس تُ قؿشْ تَ وَ , ةقَ طْ دَ لا ةُ بَ اجَ ِ إوَ , ز ِ ئاَـجَ لْ ا عُ ابَ تِ اوَ , ضِ ير ِ ؿ لْ ا ةُ دَ اقَ طوَ , مِ لاَ س .)3(» سِ صاعَ لْ ا فتقؼل اذإ :لاق ,؟للها لقسر اي ـه ام :ؾقق :تس ؿؾسؿلا كؾط ؿؾسؿلا ؼح« دؿحف سطط اذإو ,فل حصكاف ؽحصـتسا اذإو ,فبجلف كاطد اذإو ,فقؾط ؿؾسف .)4(»فعبتاف تام اذإو ,هدعف ضرم اذإو ,فتؿشف للها .)149/17( »ؿمٝمٗمعا«و ،)49/11( »برمٕمًا ناسمً« (1) .)1129ص( »طمٞحمعا سقمُام٘مًا« (2) .)2162( ؿمٚسمُو ،)1241( يراخبمًا فمضرمظأ (3) .)2162( ؿمٚسمُ امٝمضرمظأ (4) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ اؿك ,دكمؿلا بودـؿلا كؾطو بجاقلا كؾط لاؼي :ةعيرشلا في ؼحلاو« دقصؼم بقؾطم فكَ نف ,عرشلا في تباث اؿفـم دحاو ؾك نٕ ,)1(»ؼح رتقلا« :لاق اذه في ؼؾصأ دقو .كلوأو ,لُ وَ أ بجاقلا كؾط فقلاصإ نأ رقغ ,ادً كمم ادً صق ـقب فقف عؿج فكَ نف ,بدـلاو بجاقلا ـقب كترشؿلا ردؼلا كؾط ؼحلا ثيدحلا لاب ءادتبٓا نأ مدَ ؼت دقو ,تابودـمو تابجاو .افقلإ بودـم اهرقغ فيو ,مدَ ؼت اؿك ةؿقلقلا في ةبجاقف :ةقطدلا ةباجإ امأو في مدَ ؼت ام كؾط ؾقصػت هرقغ فيو ,حاصـتسٓا دـط ةبجاقف :ةحقصَـلا امأو .تيلي ام كؾط فقف ػؾتخاف :سصاعلا تقؿشت امأو ,هدؼػت نقؽقف فطاقض",
+  "text_simplified": "The text discusses the rights of children in Islam and emphasizes the importance of justice, truthfulness, and mercy in the tarbiyah (upbringing) of children. It also clarifies that children have rights such as love, respect, healthcare, and education. Parents must teach their children Islamic values and good akhlaq (manners).",
+  "labels": [
+    "حقوق الطفل",
+    "تربية",
+    "قيم إسلامية",
+    "عدل",
+    "رحمة"
+  ],
+  "created_at": "2026-06-21T10:14:43Z",
+  "updated_at": "2026-06-21T10:14:43Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-d4e2e2dc",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الأخلاق الحميدة",
+        "english": "good akhlaq (manners)",
+        "why": "The Arabic 'الأخلاق الحميدة' means 'good morals/character', which is broader than 'manners'. The parenthetical 'manners' narrows the meaning to etiquette, potentially losing the moral dimension.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

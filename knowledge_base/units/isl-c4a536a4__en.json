@@ -1,0 +1,48 @@
+{
+  "id": "isl-c4a536a4__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Analysing Hyperactivity and Attention Deficit Behaviour in the Child",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "فرط حركة وتشتت انتباه",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ـُ قْ س لا ضَ عْ بَ ل ـَـؿ تُ دُ ير ِ تُ ل ـجُ لاعَ تُ ل م أُ تْ كَ اكَ : تْ لَاقَ ,ڤ ةَ شَ ئاطَ ـْ طَ و تَ لا تُ ؾْ كَ أَ كتَ حَ ؽَ ِ لذَ ضُ عْ بَ افَ لَ م فَ ﷺ ِ للها ل ِ قس كؾَ طَ ل ِ ـؾَ خ ِ دْ تُ ِ ل لا ـَ م نُ قؽُ يَ ام حْ ل َ كَ فُ ْـطَ تُ ْـؿس فَ ءاثَ ؼلْا ِ ب أُ لػلَ لكِ ِ إوَ نَ ام أُ لـتْ تَ أَ : تْ لَاقَ ,ڤ ةَ شَ ئاطَ ـْ طَ كتَ حَ يد ِ قَ ِ ب تْ ذَ خَ ل َ فَ ,ل ِ ب دُ ير ِ تُ ام ير ِ دْ أَ َٓ افَ تُ قْ تَ ل َ فَ ل ِ ب تْ خَ ر صَ فَ ,ل ِ ل بُ ح ِ اقَ صَ ائً قْ شَ تْ ذَ خَ أَ ؿ ثُ ,لس ِ ػَ كَ ضُ عْ بَ ـَ ؽَ س كتَ حَ جُ ف ِ كْ َُٕ لكِ ِ إوَ , ر ِ ادَ لا بِ ابَ ك ؾَ طَ ل ِ ـتْ ػَ قَ وْ أَ ر ِ اصَ كْ َْٕ ا ـْ ِ م ةٌ قَ س ِ ك اذَ ِ نفَ ر ادَ لا ل ِ ـتْ ؾَ خَ دْ أَ ؿ وَ لف ِ جْ وَ ف ِ ِ ب تْ حَ س ـَ ف ِ قْ لَِ إ",
+  "text_simplified": "The text describes the story of a child struggling with difficulties in concentration and attention, displaying impulsive behaviours such as talking non-stop and finding it hard to sit still. Parents are advised to provide a calm and supportive environment for the child, along with using short motivational methods to enhance focus.",
+  "labels": [
+    "فرط حركة",
+    "تشتت انتباه",
+    "سلوك اندفاعي",
+    "دعم أسري",
+    "تحفيز التركيز"
+  ],
+  "created_at": "2026-06-21T10:22:21Z",
+  "updated_at": "2026-06-21T10:22:21Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-c4a536a4",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يصف النص قصة عن طفل",
+        "english": "The text describes the story of a child",
+        "why": "Arabic uses indefinite 'قصة' (a story), but English uses definite 'the story', implying a specific known story rather than an example.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

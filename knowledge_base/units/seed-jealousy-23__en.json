@@ -1,0 +1,55 @@
+{
+  "id": "seed-jealousy-23__en",
+  "domain": "development",
+  "source_file": "curated/AAP - HealthyChildren.org / New baby & siblings",
+  "title": "Child’s Jealousy of the Newborn from Age Two to Three",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "الغيرة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تنموي",
+  "reference_info": "AAP - HealthyChildren.org / New baby & siblings",
+  "text_original": "غيرة الطفل من المولود الجديد ردّ فعل طبيعي وصحّي، فهو يخاف أن يفقد حبّك واهتمامك. لا تعاقبيه على غيرته ولا تقارنيه بالرضيع. خصّصي وقتاً يومياً خاصاً به وحده يشعر فيه أنه ما زال مهماً ومحبوباً. أشركيه في رعاية الرضيع بمهام بسيطة تناسبه ليشعر أنه شريك لا منافس. امدحي رفقه بأخيه، وراقبيه دائماً مع الرضيع لضمان سلامته. تقبّلي أي تراجع مؤقت في سلوكه كالتبوّل أو طلب الرضاعة بصبر وتطمين. ذكّريه كثيراً أن حبّك له لم ينقص، واطلبي من الزوّار الاهتمام به لا بالرضيع فقط.",
+  "text_simplified": "A child’s jealousy of the newborn is a natural and healthy reaction; he fears losing your love and attention. Do not punish him for his jealousy, nor compare him to the baby. Set aside daily time just for him, so he feels he is still important and loved. Involve him in caring for the baby with simple tasks suited to him, so he feels he is a partner, not a rival. Praise his *rifq* (gentleness) with his brother, and always supervise him with the baby to ensure safety. Accept any temporary regression in his behavior, like bedwetting or asking for nursing, with patience and reassurance. Remind him often that your love for him has not decreased, and ask visitors to pay attention to him, not just the baby.",
+  "labels": [
+    "الغيرة",
+    "المولود الجديد",
+    "الأشقاء",
+    "2-3 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP - HealthyChildren.org / New baby & siblings",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-jealousy-23",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "لضمان سلامته",
+        "english": "to ensure safety",
+        "why": "The Arabic specifies 'his safety' (سلامته), but the English omits the pronoun, making it unclear whose safety is meant.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "امدحي رفقه بأخيه",
+        "english": "Praise his *rifq* (gentleness) with his brother",
+        "why": "The Arabic uses the common word رفق (gentleness) in a warm, direct parenting context; transliterating it as *rifq* adds an unnecessary technical/foreign term and disrupts the plain register.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

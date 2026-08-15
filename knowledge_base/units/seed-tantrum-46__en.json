@@ -1,0 +1,39 @@
+{
+  "id": "seed-tantrum-46__en",
+  "domain": "medical",
+  "source_file": "curated/CDC - Positive Parenting Tips / AAP",
+  "title": "Dealing with Tantrums at Ages Four to Six",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "نوبات الغضب",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "CDC - Positive Parenting Tips / AAP",
+  "text_original": "ابدأ بالهدوء وثبات الانفعال فالطفل يقلّد ردة فعلك. لا تتفاوض ولا تستسلم للطلب أثناء النوبة، وامنحه مساحة آمنة ليهدأ. علّمه في الأوقات الهادئة كيف يسمّي مشاعره ويستخدم طرقاً بديلة كالتنفّس العميق أو طلب المساعدة بالكلام. ضع قواعد بسيطة وواضحة وثابتة، وامدح السلوك الجيد فوراً ليتكرر. بعد النوبة تحدّث معه باختصار عن تصرف أفضل في المرة القادمة. إذا كانت النوبات شديدة جداً أو متكررة يومياً أو مصحوبة بإيذاء للنفس فاستشر مختصاً.",
+  "text_simplified": "Begin with calmness and emotional steadiness, for the child imitates your reaction. Do not negotiate or give in to demands during the tantrum, and provide him with a safe space to calm down. Teach him, during peaceful moments, how to name his feelings and use alternative methods such as deep breathing or asking for help with words. Set simple, clear, and consistent rules, and praise good behavior immediately so it is repeated. After the tantrum, speak to him briefly about a better way to act next time. If the tantrums are very severe, occur daily, or are accompanied by self-harm, consult a specialist.",
+  "labels": [
+    "نوبات الغضب",
+    "تنظيم الانفعالات",
+    "السلوك",
+    "الحدود",
+    "4-6 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "CDC - Positive Parenting Tips / AAP",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-tantrum-46",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

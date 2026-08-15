@@ -1,0 +1,64 @@
+{
+  "id": "aqe-c078677c__en",
+  "domain": "aqeedah",
+  "source_file": "aqidah_unified_manifest.md",
+  "title": "Muhammad ﷺ Our Uswah (Model)",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تعليم_العقيدة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_فقهي",
+  "reference_info": "مسار العقيدة — محمد ﷺ قدوتنا. المصادر: العقيدة الطحاوية، القواعد الأربع، ثلاثة الأصول، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش).",
+  "text_original": "محمد ﷺ قدوتنا\n\nالتركيز: خاتم الأنبياء وأسوة حسنة\n\nالدليل: لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ (الأحزاب: 21).\n\nالتطبيق اليومي: كل أسبوع: قصة نبوية قصيرة (الصدق، الرفق، الصبر) ونشاط يطبّقها.\n\nنصيحة للأب/الأم: لا تُعلّم السيرة كتاريخ فقط؛ اجعلها قدوة سلوكية.",
+  "text_simplified": "The Prophet Muhammad ﷺ is the seal of the prophets and our uswah (model). Allah says: «لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ». Read your child a short prophetic story every week about truthfulness, rifq (gentleness), or patience, and follow it with an activity that applies it practically. Do not teach the seerah as history to be memorized, but as a behavioral uswah to be lived.",
+  "labels": [
+    "عقيدة",
+    "توحيد",
+    "تربية_إسلامية",
+    "نشء",
+    "prophet_example"
+  ],
+  "created_at": "2026-06-24T13:13:17Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "aqidah_unified_manifest",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "aqe-c078677c",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title and text_simplified",
+        "arabic": "قدوتنا / قدوةً سلوكية",
+        "english": "Our Uswah (Model) / behavioral uswah",
+        "why": "The Arabic uses قدوة (qudwah), not أسوة (uswah). Transliterating it as 'uswah' changes the Arabic term and conflates it with the Qur'anic word أسوة. It should be 'qudwah' or 'role model'.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "«لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ»",
+        "english": "«لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ» (left untranslated)",
+        "why": "The Qur'anic verse is quoted in Arabic but not translated into English, so its meaning is omitted for English readers. The translation should provide an English rendering clearly labelled as interpretation of the meaning.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "قصة نبوية قصيرة",
+        "english": "a short prophetic story",
+        "why": "نبوية means 'of the Prophet ﷺ' (i.e., from his life/seerah), not 'prophetic' in the sense of predictive. The English phrase is ambiguous and may be misunderstood. Better: 'a short story from the Prophet's life' or 'a short story about the Prophet'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "id": "isl-8bf4e7a3__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Al-ʿAdl bayna al-Abna’ fi al-Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية الأبناء والعدل بينهم",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "برضف :لاق ,؟لاغد فكذختي نذإ :دقاو فل لاؼي فل ـبا لاؼف ,دجاسؿلا .)2(»ٓ :لقؼتو ,ﷺ للها لقسر ـط ؽثدحأ :لاقو ,هردص اذإ دجاسؿلا ؿكءاسك اقعـؿت ٓ :ﷺ لبـلا لاق ,ﭭ رؿط ـبا لاق فقؾط ؾبقلف :لاق ,ـفعـؿـل للهاو :للها دبط ـب للاب لاؼف :لاق ,افقلإ ؿؽكذلتسا .)2157( ؿمٚسمُو ،)6141( يراخبمًا فمضرمظأ (1) .)442( ؿمٚسمُ فمضرمظأ (2) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ للها لقسر ـط كبرخأ :لاقو ,طق فؾثم فبس فتعؿس ام ائقس ابس فبسف للها دبط .)1(»ـفعـؿـل للهاو :لقؼتو ,ﷺ بْ ـتَ جْ قَ ؾْ فَ ؿ كُ دُ حَ أَ ؾَ تَ اقَ اذَ ِ إ« :ﷺ فلقؼل فجقلا كؾط دٓوٕا برض ـط كفـي ـم ضرغلا نٕ ,ةؾتاؼؿلا ـكامأ في دٓوٕا برض ـط كفـي اؿك ,)2(» فَ جْ قَ لْ ا .ررضلا قاحلإو ءاذيلإا سقلو بيدلتلا برضلا دلألأا ينب هذعلا :شؼع عباشلا للحا ماقؼلا نٕ ,ـيدلاقلا افقؾط فبـي نأ لغبـي لتلا رقمٕا ـم دٓوٕا ـقب لدعلا لقصحل كطدأ فلقصح مدطو ,ءاـبٕا ـقب ةػلٕاو ةبحؿلا لقصحل برقأ فب :ةقخلإا ـقب ضغبلاو دسحلاو قاؼشلاو ةوادعلا ﴾ ۡ َ َ ُ ۡ ّ َ ُ ۡ َ ذ ۡ ُ ٰ َ ۡ َ ٓ ُ ذ ُ ُ ُ ﴿ :كلاعت لاق ۚ يِ يثُلۡٱ ظِ خ ورٌِ ِ رنلذِّل ًۡكدِ لوأ فِِ للَّٱ ًؾيغِ ٔي .)11:ءاسـلا ةرقس( عقؿج نقؾعجي اقكاك ةقؾهاجلا ؾهأ ننف ,ؿفقف لدعلاب ؿكرملي :يأ« ؾصأ في ؿفـقب ةيقستلاب كلاعت للها رملف ,ثاكلإا نود رقكذؾل ثارقؿلا ؽلذو :ـققثكٕا ظح ؾثم ركذؾل ؾعجف ,ـقػـصلا ـقب توافو ,ثارقؿلا .)441( ؿمٚسمُ دمٜمق فقمىقمعاو ،»ملحمٞحمّمًا« مذ فمٜمُ عقمورمعا (1) .)2612( ؿمٚسمُو",
+  "text_simplified": "Parents must raise their children with ʿadl (justice) and equality among them, and avoid striking or harming them. ʿAdl between children brings about love and keeps away envy and hatred. Striking for discipline is permitted as long as it does not cause harm or injury.",
+  "labels": [
+    "تربية",
+    "عدل",
+    "ضرب",
+    "أبناء",
+    "نصائح"
+  ],
+  "created_at": "2026-06-21T10:21:00Z",
+  "updated_at": "2026-06-21T10:21:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-8bf4e7a3",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "العدل بين الأبناء في التربية",
+        "english": "Al-ʿAdl bayna al-Abna’ fi al-Tarbiyah",
+        "why": "The title is transliterated rather than translated, so the meaning 'Justice between children in upbringing' is not conveyed to English readers.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "8b595d9b-62ce-48af-b5a5-a3bfe748041d__en",
+  "domain": "development",
+  "source_file": "",
+  "source_url": "",
+  "title": "Late Speech: Signs That Call for Evaluation and When to Wait",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "تأخر النطق",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "متوسط",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "تختلف سرعة الكلام بين الأطفال اختلافًا واسعًا، لكن هناك محطات إن تخلّف عنها الطفل فالتقييم أولى من الانتظار:\n\n• في عمر سنة: لا يستجيب لاسمه، ولا يناغي، ولا يشير بإصبعه لما يريد.\n• في عمر سنة ونصف: حصيلته أقل من عشر كلمات مفهومة.\n• في عمر سنتين: لا يركّب كلمتين معًا («ماما مية»)، أو لا يفهم أوامر بسيطة.\n• في أي عمر: فقدان مهارة لغوية كان يتقنها — وهذه علامة تستدعي عرضًا عاجلًا.\n\nأول خطوة دائمًا **فحص السمع**، حتى لو بدا الطفل سامعًا. ضعف السمع الجزئي أو المتكرر بسبب التهابات الأذن الوسطى من أشيع أسباب التأخر وأسهلها علاجًا، ويمرّ دون ملاحظة.\n\nما يفيد في البيت بالتوازي مع التقييم:\n• تحدّث معه وجهًا لوجه وفي مستوى نظره، وانتظر بعد كلامك ثوانٍ ليردّ.\n• صِف ما تفعلانه بصوت مسموع طوال اليوم — «دلوقتي بنغسل الطبق».\n• وسّع كلمته بدل تصحيحها: يقول «مية» فتقول «عايز مية؟ اتفضل المية».\n• قلّل الشاشات في هذه السنّ قدر ما تستطيع؛ اللغة تُكتسب من التبادل مع إنسان لا من الاستقبال.\n• لا تجبره على الترديد ولا تسخر من نطقه، ولا تجعل غيره يجيب عنه.\n\nالتأخر المكتشَف مبكرًا يستجيب للتدخل أفضل بكثير — الانتظار «حتى يكبر» هو أكثر ما يُفقد الوقت.",
+  "text_simplified": "The pace of speech development varies widely among children, but there are milestones where, if a child falls behind, evaluation is better than waiting:\n\n• At one year old: Does not respond to their name, does not babble, or does not point with their finger to what they want.\n• At one and a half years old: Vocabulary is fewer than ten understandable words.\n• At two years old: Does not combine two words (e.g., \"mama water\"), or does not understand simple commands.\n• At any age: Loss of a language skill they had previously mastered—this is a sign that requires urgent assessment.\n\nThe first step is always **hearing evaluation**, even if the child seems to hear. Partial or recurrent hearing loss due to middle ear infections is one of the most common and easily treatable causes of speech delay, yet it often goes unnoticed.\n\nWhat helps at home alongside evaluation:\n• Speak to them face-to-face and at their eye level, and wait a few seconds after you speak for them to respond.\n• Describe what you are both doing out loud throughout the day—\"Now we are washing the plate.\"\n• Expand on their words instead of correcting them: If they say \"water,\" you say, \"Do you want water? Here is the water.\"\n• Reduce screen time as much as possible at this age; language is acquired through interaction with a person, not passive reception.\n• Do not force them to repeat words, do not mock their pronunciation, and do not let others answer for them.\n\nEarly-detected delay responds much better to intervention—waiting \"until they grow up\" is what wastes the most time.",
+  "labels": [],
+  "keywords": [
+    "speech delay",
+    "speech",
+    "language acquisition",
+    "hearing evaluation",
+    "speech therapy"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "8b595d9b-62ce-48af-b5a5-a3bfe748041d",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "keywords[2]",
+        "arabic": "الحصيلة اللغوية",
+        "english": "language acquisition",
+        "why": "الحصيلة اللغوية means vocabulary or lexical inventory, not language acquisition (اكتساب اللغة). The English keyword changes the meaning.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

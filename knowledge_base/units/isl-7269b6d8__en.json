@@ -1,0 +1,56 @@
+{
+  "id": "isl-7269b6d8__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "The Prophetic Manhaj in Practical Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية نبوية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "عم مجسني اذهو اطيشن (cid:686)وق مسﳉا ىلع ءاعدلا ﰲ هلوق ﰲ امك مسﳉا فعضي ام لك نع داعتبﻻا ﱃإ هتوعدو ةناكر ةعراصمو ةشئاع ةقباسم ﰲ ملسو هيلع ﷲ ىلص هلعف كلذكو .26\" لسكلاو زجعلا نم كب ذوعأ ﱐإ مهللا \" روهشﳌا يوبنلا يوبﱰلا جهنﳌا ﰲ ةيعقاولا :اين(cid:684) هيبري ﻻو ،هقيطي ﻻ اﲟ ناسنﻹا بلاطي ﻻ جهنم وهف ،هتاقاطو هتاردقو ناسنﻺل هتاعارم نم قلطني ةيبﱰلا ﰲ يوبنلا جهنﳌا نأ ﻻوأ ا(cid:273) دصقنو لماعتي .ﰊاﳚﻹا يعقاولا رثﻷاو نقيتسﳌا دوجولا تاذ ،ةيعوضوﳌا قئاقﳊا عم لماعتي وه اﳕإو ،عقاولا ﰲ اﳍ دوجو ﻻ ﱵلا ةيلقعلا تايلاثﳌا ىلع لك(cid:1001) يذلا ناسنﻹا .تارورضلاو بئاغرلاو ،قاوشﻷاو عزاونلا يذ ناسنﻹا ،حورو لقعو ،باصعأو مدو مﳊ نم بكرﳌا يعقاولا ناسنﻹا عم ءاقترﻻا ﱃإ فد(cid:275) ا(cid:276)أ يأ 28، ةيلاثم ةيعقاو يه هتيعقاوف ،تقولا سفن ﰲو .27ر ثأتيو رثؤيو مانيو ظقيتسيو فاﳜو وجريو هركيو بﳛو برشيو .سانلا عقاو ﰲ قيبطتلل لباق جهنم وهف ﰒ نمو .جذوﳕ لمكأو ىوتسم عفرأ ﱃإ عمت(cid:272)او ناسنﻹ(cid:682) كلام نب سنأ ثيدح هيلع لديو ﲎعﳌا اذه ﱃإ ﲑشي اﳑو :اوُ لاقَـَف ،اه وﱡلاقَـَت م ُْ(cid:276)ﱠَأكَ او ج ُ وﱠز َ ـَتَأ ﻼََف َ ءاس َ ّ ِ نلا لُزِ َ تع ْ َأ (cid:685)ََأ :ر ُ خ َ آ لَاَقو َ ،ر ُ ط ِ ْفُأ ﻻَو َ ر َ ه ْ دﱠلا ُ موص ُ َأ (cid:685)ََأ : ر ُ خ َ آ لَاَقو َ ،ادًَ بَأ ل َ ْ يﱠللا يّ ِ لص َ ُأ ﱐ ّ ِإِ َف ،(cid:685)ََأ امﱠَأ :م ْ ه ُ دُح َ َأ لَاَق ؟ر َ خﱠَ(cid:998)َ ام َ و",
+  "text_simplified": "The text discusses the Prophetic manhaj in tarbiyah, which considers human capacities and does not burden a person beyond their ability. It explains that this manhaj is practical, dealing with the human being in all their aspects (body, mind, soul) as well as their emotions and dreams. It also highlights that the Prophet ﷺ used to nurture his companions upon balance and avoidance of extremism in worship.",
+  "labels": [
+    "تربية",
+    "منهج نبوي",
+    "توازن",
+    "واقعية",
+    "عبادة"
+  ],
+  "created_at": "2026-06-20T14:39:48Z",
+  "updated_at": "2026-06-20T14:39:48Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-7269b6d8",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "التربية الواقعية",
+        "english": "Practical Tarbiyah",
+        "why": "الواقعية means 'realistic', not 'practical'. The Arabic emphasizes a realistic approach that acknowledges human nature, while 'practical' shifts the meaning to usefulness or applicability.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "هذا المنهج واقعي",
+        "english": "this manhaj is practical",
+        "why": "Same issue: واقعي should be 'realistic', not 'practical'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

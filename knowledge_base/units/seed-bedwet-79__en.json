@@ -1,0 +1,47 @@
+{
+  "id": "seed-bedwet-79__en",
+  "domain": "medical",
+  "source_file": "curated/NHS - Bedwetting / AAP",
+  "title": "Continuing Bedwetting at Ages Seven to Nine",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "التبول اللاإرادي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NHS - Bedwetting / AAP",
+  "text_original": "إذا استمر التبول الليلي في هذا العمر فهو لا يزال شائعاً ولا يدل غالباً على مشكلة خطيرة. تعامل معه بدعم وتطمين، وأكّد للطفل أنه ليس مذنباً وأن كثيرين مثله. نظّم شرب السوائل خلال النهار وقلّلها مساءً، وثبّت دخول الحمّام قبل النوم. استخدم تقويماً للّيالي الجافة مع مكافأة معنوية بسيطة لرفع ثقته. تجنّب الحفّاضات في هذا العمر إن أمكن لأنها قد تؤخّر التعلّم. ينصح بمراجعة الطبيب لمناقشة خيارات مثل جهاز الإنذار الليلي إذا كان التبول متكرراً ويؤثر على ثقة الطفل أو حياته الاجتماعية.",
+  "text_simplified": "If nighttime bedwetting continues at this age, it is still common and usually does not indicate a serious problem. Deal with it with support and reassurance, and affirm to the child that they are not at fault and that many others are like them. Regulate fluid intake during the day and reduce it in the evening, and establish a routine of using the bathroom before sleep. Use a calendar for dry nights with a small moral reward to boost their confidence. Avoid diapers at this age if possible, as they may delay learning. It is advised to consult a doctor to discuss options such as a nighttime alarm if bedwetting is frequent and affects the child’s confidence or social life.",
+  "labels": [
+    "التبول اللاإرادي",
+    "النوم",
+    "الثقة بالنفس",
+    "7-9 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NHS - Bedwetting / AAP",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-bedwet-79",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "مكافأة معنوية بسيطة",
+        "english": "a small moral reward",
+        "why": "The Arabic 'مكافأة معنوية' means a non-material or psychological reward (e.g., praise, a sticker), not a moral/ethical reward. The English 'moral reward' is ambiguous and could be misunderstood as relating to morality rather than being intangible.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

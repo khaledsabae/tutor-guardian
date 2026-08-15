@@ -1,0 +1,56 @@
+{
+  "id": "isl-94d2e5ad__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching the Child Tawakkul upon Allah and Good Akhlaq",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية دينية وأخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ِ ُ ج ۡ ٱو َ ا ِ ٗ ٌِ اء َ لَ َ َ َ لِ ۡ ٱ اذ َ ٰ ه َ و ۡ ػ َ ج ۡ ٱ ب ّ ر َ ً ُ يِْٰر َ ۡ ةِإ ل َ اك َ ذ ۡ وَإِ ﴿ :كلاعت لاق .)35:ؿقهاربإ ةرقس( ﴾َ َ ۡ َ ُ ۡ ذ ماِغلۡٱ دتػنّ نأ :ىسػيا ٔع ٘ٓبا ٕاُكي ٢ْٗٚ َ ُ َ ۡ ُ ٰ َ ۡ ُ َ َ ۡ ﴿ :فـبٓ ناؿؼل حئاصك ركذي قهو كلاعت لاق ْٔو ۦِِِّةلِِ َملى لاك ذوَإِ .)13:ناؿؼل ةرقس( ﴾ٞ َ ٌ ۡ ُ َ َ ۡ ّ ذ ذ ۡ ۡ ُ َ ذ َ ُ ٰ َ ُ ُ َ ًيظِ غ ًيظى كشِّ لٱ نِإ ِۡ للَّٱِة كشّ ت لَ نَيتي ۥ ّظِػي .)416/4( »مػثمي ـمسا مػسمٗمش« (1) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ :١شٝشصيا ٠دٝكعيا عابع ٔبلا بيٓيا ًِٝعت ,ؽظػحي للها ظػحا :تاؿؾك ؽؿؾطأ نيإ ملاغ اي :سابط ـبٓ ﷺ لاق ,للهاب ـعتساف تـعتسا اذإو ,للها للساف تللس اذإ ,ؽهاجت هدجت للها ظػحا فبتك دق ءلشب ٓإ كقعػـي ؿل ءلشب كقعػـي نأ كؾط تعؿتجا قل ةمٕا نأ ؿؾطاو للها فبتك دق ءلشب ٓإ كورضي ؿل ءلشب كورضي نأ كؾط اقعؿتجا قلو ,ؽل للها .)1(»ػحصلا تػجو ,ملاقٕا تعفر ,ؽقؾط ةءاسلإا ةياغ فقلإ ءاسأ دؼف ىدس فكرتو فعػـي ام هدلو ؿقؾعت ؾؿهأ ـم« ؿفؿقؾعت كرتو ؿفل ؿفلاؿهإو ءابٔا ؾبق ـم ؿهداسف ءاج اؿكإ دٓوٕا رثكأو اقعػـي ؿلو ؿفسػكلب اقعػتـي ؿؾف اراغص ؿهقطاضلف فــسو ـيدلا ضئارف .)2(»ارابك ؿهءابآ افَ ِ ب ذُ قِ",
+  "text_simplified": "Parents must teach their children tawakkul (reliance) upon Allah and seeking His help in all matters, while guiding them towards du'a and trust in Allah. It is also essential to raise children upon good akhlaq (moral character) and warn them against injustice and aggression, as this shapes their personality and behavior in the future.",
+  "labels": [
+    "تربية",
+    "توكل على الله",
+    "أخلاق",
+    "دعاء",
+    "طفل"
+  ],
+  "created_at": "2026-06-21T10:23:04Z",
+  "updated_at": "2026-06-21T10:23:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-94d2e5ad",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "مع ضرورة توجيههم للدعاء والثقة بالله",
+        "english": "while guiding them towards du'a and trust in Allah",
+        "why": "The Arabic includes 'ضرورة' (necessity), making the guidance an obligation, but the English omits this word, weakening the force.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ينبغي تربية الأطفال",
+        "english": "It is also essential to raise children",
+        "why": "The Arabic 'ينبغي' means 'should' or 'ought to', a recommendation, but the English 'essential' implies necessity, strengthening the obligation beyond the original.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

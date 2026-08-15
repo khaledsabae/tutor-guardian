@@ -1,0 +1,64 @@
+{
+  "id": "isl-ebc1b275__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Planting the Love of the Prophet ﷺ in the Child’s Heart",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ًل َيلَِّ ٱو ًؾِميخ جهيم .)1(»بيدلتلاو ؿقؾعتلاب ٓإ :ِٗطفْأ ١بضامح ًُٕٛعتٜٚ ةقاقس في قهو صاعلا ـب ورؿط اكرضح :لاق ,يرفؿلا ةساؿش ـبا ـط امأ ,هاتبأ اي :لقؼي فـبا ؾعجف ,رادجلا كلإ ففجو لقحو لايقص كؽبف تقؿلا ,ففجقب ؾبقلف :لاق ,اذؽب ﷺ للها لقسر كرشب امأ ,اذؽب ﷺ للها لقسر كرشب دق نيإ ,للها لقسر ادؿحم نأو ,للها ٓإ فلإ ٓ نأ ةدافش دعك ام ؾضفأ نإ :لاؼف ,لـم ﷺ للها لقسرل اضغب دشأ دحأ امو لـتيأر دؼل ,ثلاث قابصأ كؾط تـك لاحلا ؽؾت كؾط تم قؾف ,فتؾتؼف فـم تـؽؿتسا دق نقكأ نأ للإ بحأ ٓو :تؾؼف ,ﷺ لبـلا تقتأ لبؾق في ملاسلإا للها ؾعج اؿؾف ,راـلا ؾهأ ـم تـؽل اي ؽلام :لاق ,يدي تضبؼف :لاق ,فـقؿي طسبف ,ؽعيابلأف ؽـقؿي طسبا ,لل رػغي نأ :تؾق ,؟اذاؿب طترشت :لاق ,طترشأ نأ تدرأ :تؾق :لاق ,؟ورؿط ,افؾبق ناك ام مدته ةرجفلا نأو ,فؾبق ناك ام مدفي ملاسلإا نأ تؿؾط امأ :لاق ٓو ,ﷺ للها لقسر ـم للإ بحأ دحأ ناك امو ,؟فؾبق ناك ام مدفي جحلا نأو نأ تؾئس قلو ,فل ٓلاجإ فـم لـقط لأمأ نأ ؼقصأ تـك امو ,فـم لـقط في ؾجأ تقجرل لاحلا ؽؾت كؾط تم قلو ,فـم لـقط لأمأ ـكأ ؿل نيٕ تؼصأ ام فػصأ .)574ص( »يدمٕسمًا مػسمٗمش« (1) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ لاف تم اكأ اذنف ,افقف للاح ام يردأ ام ءاقشأ اـقلو ؿث ,ةـجلا ؾهأ ـم نقكأ نأ فجرخأ »... اـش باترلا لؾط اقـشف نيقؿتـفد اذنف ,راك ٓو ةحئاك لـبحصت :)11ص( »دبهيا ١تفي« في ٙديٚ حصٜٓ ٖٛٚ ٟشٛتدا ٔبا ٍاقٚ .»ؽلذ ـط لومسم ؽكنف ,ةقطخو ةؿؾكو",
+  "text_simplified": "The text tells the story of a child who was crying intensely and kicking the wall. His father gently reproached him and asked about the reason for his anger. The child explained that he was angry with his father because he had not told him that the Prophet Muhammad ﷺ was the most beloved person to him, and the child affirmed his love for the Prophet ﷺ. The text aims to teach parents the importance of planting the love of the Prophet ﷺ in the hearts of children from a young age.",
+  "labels": [
+    "حب النبي",
+    "تربية الأطفال",
+    "غضب الأطفال",
+    "تعليم ديني",
+    "قدوة حسنة"
+  ],
+  "created_at": "2026-06-21T10:32:25Z",
+  "updated_at": "2026-06-21T10:32:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ebc1b275",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "religious_error",
+        "field": "title",
+        "arabic": "غرس حب النبي في قلب الطفل",
+        "english": "Planting the Love of the Prophet ﷺ in the Child’s Heart",
+        "why": "The Arabic title does not include the honorific ﷺ after 'النبي', but the English adds it, introducing an honorific not present in the source.",
+        "severity": "low"
+      },
+      {
+        "type": "religious_error",
+        "field": "text_simplified",
+        "arabic": "غرس حب النبي في قلوب الأطفال",
+        "english": "planting the love of the Prophet ﷺ in the hearts of children",
+        "why": "The Arabic phrase 'حب النبي' lacks the honorific ﷺ, but the English adds it, same addition as in the title.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "النبي محمد صلى الله عليه وسلم هو أحب الناس إليه",
+        "english": "the Prophet Muhammad ﷺ was the most beloved person to him",
+        "why": "Arabic 'أحب الناس' means 'the most beloved of people' (plural), but English uses singular 'person', losing the collective sense.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

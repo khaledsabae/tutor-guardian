@@ -1,0 +1,64 @@
+{
+  "id": "isl-65b250d1__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Tarbiyah and Akhlaq for Children",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية دينية وأخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "لبأ نإ :تؾؼف ,لب بحرف ,فتبرخلف تكأ .)4(»فـم ؿؾعتٕ رؿط ـب للها دبط لبأ لـعبتأ :لشرؼلا ورؿط ـب دقعس لاقو ف ِ قْ ؾَ طَ اَـؾْ خَ دَ كتَ حَ لؿ ِ ؾَ س بَ ل ِ بأَ كلَِ إ ل ِ بأَ عَ م تُ ؼْ ؾَ طَ كْ ا :ل ِ افَ ْـؿ ِ لْا قبُ أَ لَ اقَ و ل ِ بأَ ل َ شَ كْ ل َ فَ , ف ِ قْ لَِ إ اَـس ؾَ جَ فَ , بٍ صَ قَ ـْ ِ م فُ لَ ة ٍ قَ ؾِ طُ ؾِ ِ ض ل ِ ف سٌ ِ لاجَ قَ هُ وَ ه ِ ر ِ ادَ ل ِ ف .)5(» ثَ يدحَ لْا فُ ؿ :ل ِ بأَ فُ لَ لَ اؼَ فَ , لؿ ِ ؾَ س بَ ل ِ بأَ كلَِ إ ل ِ بأَ عَ م تُ ؼْ ؾَ طَ كْ ا : ل ِ افَ ْـؿ ِ لْا قبُ أَ لاقو .)6(»ثيدحلا ... ؟ ةَ بَ قتُ ؽْ ؿ لْا لؾِ صَ يُ ﷺ لُ قس نَ اكَ ػَ قْ كَ :اَـثْ دِ حَ .)1821( ؿمٚسمُو ،)7222( يراخبمًا فمضرمظأ (1) .)447( يراخبمًا فمضرمظأ (2) .»فمشمػمؾ ـمُ ءشيو ملامؾ ـمس للها دبمق« بياتمي مذ فتمضرمظ (3) .نيادمٛلها ؿمٚسمُ ـمس كمٞيح لالح ـسمط دامٜمؾم٢مس )418/2( ةبمٞمؿ بيأ ـمسا فمضرمظأ (4) .)7112( يراخبمًا فمضرمظأ (5) .)599( يراخبمًا فمضرمظأ (6) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ ـِ بْ للها دبْ طَ ـْ طَ حقحص داـسنب هرقغو ,)218/2( ةبقش لبأ ـبا جرخأو طُ ـُ",
+  "text_simplified": "The text includes noble Prophetic hadiths that highlight the importance of tarbiyah (upbringing) for children upon good akhlaq (character) and teaching them Islamic manners. It clarifies that guiding children toward upright behavior strengthens their personality and deepens their relationship with Allah. Parents must instill religious values in their children’s hearts from a young age.",
+  "labels": [
+    "تربية",
+    "أخلاق",
+    "أحاديث",
+    "أبناء",
+    "قيم إسلامية"
+  ],
+  "created_at": "2026-06-21T10:25:36Z",
+  "updated_at": "2026-06-21T10:25:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-65b250d1",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "أهمية التربية الدينية والأخلاقية للأبناء",
+        "english": "The Importance of Tarbiyah and Akhlaq for Children",
+        "why": "The Arabic title specifies 'religious and moral upbringing' (التربية الدينية والأخلاقية), but the English title omits the qualifiers 'religious' and 'moral', reducing the meaning to just 'Tarbiyah and Akhlaq' which are general terms for upbringing and character without the religious/moral dimension.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يقوي علاقتهم بالله",
+        "english": "deepens their relationship with Allah",
+        "why": "The Arabic verb 'يقوي' means 'strengthens', while 'deepens' is a different nuance. Although similar, it is not an exact rendering and slightly alters the meaning.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "في نفوس أبنائهم",
+        "english": "in their children’s hearts",
+        "why": "The Arabic 'نفوس' means 'souls' or 'inner selves', not specifically 'hearts'. The English uses 'hearts' which is a common but not exact equivalent, slightly shifting the meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

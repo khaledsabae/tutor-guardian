@@ -1,0 +1,56 @@
+{
+  "id": "isl-223fedeb__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Guidelines for Interacting with the Child During Illness and After Recovery",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "السلوك أثناء المرض",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "يسفنلا لماعلاو كلذ ققّحتيلو رلما ءاودلاو ةربلإا لمحتي عاجش لفط هنأو ،رضي لاو فيفخ لملأا اذه ةقّفشلا رعاشم ءافخإ ةلوامحو ،لملأا عضوم نع لفطلا لاؤس ةرثك نع داعتبلاا نم دب لا هلاغشإ نسيح امك ،لملأاب هساسحإ يوقّيو لفطلا فعضي رعاشلما هذه راهظإ نلأ ،ءاكبلاو ةفطلالماب نوكيف ءاودلا ضيرلما ءاطعإ امأو هعضو بسانت تيلا تاياولهاو بعللاب . 64 ص ةبرغلا هيبن ،ةيكولسلا تلاكشلما :رظنا ) ( . 6 ص ،رلجاج سميج ،بوهولما لفطلا :رظنا )2( . - 4 ص ،تاكرب يفطل ،ينبوهولما ةياعر في يوبرتلا ركفلا :رظنا )3( .244 - 99 ص ةبرغلا هيبن ،ةيكولسلا تلاكشلما :رظنا )4( .شيودلا دممح ،راغصلا ةيبرت في تاهيجوتو راكفأ :طيرش لىإ عمتسا ) ( . 9 ص ةبرغلا هيبن ،ةيكولسلا تلاكشلما :رظنا )6( فلابخ وهو ولح ءاودلا نأ ءاعدلااو بذكلا نم رذلحاو ةوقّلا نع داعتبلااو ةرياسلماو تاداع لفطلا دوعتي دقّف ءافشلا دعب ليلدتلاو لهاستلا رارمتسا نم بيرلما رذحيلو كلذ هنلأ هبلط بايجو هضرم ءانثأ ءايشأ بلطي لافطلأا ضعبف ،ضرلما ةرتف ءانثأ ةئيس لثاتم اذإو ،ضرلما ةرتف في هتدعاسلم هايإ هؤاطعإ نسُيف ماعطلا نم اعون يهتشي دقو ضيرم ةرثك وأ هتدلاو ناضحأ في همون وأ ةدئازلا هتابلط رارمتسا وأ هليلدت مدع بجيف ءافشلل .ةئيسلا تاداعلا نم اهيرغو هلحم نم لفطلا نامرح في ضرلما اذه مهسي ذإ ؛قاعلما وأ اٌنمزم ًاضرم ضيرلما لفطلا )2( لىإ بيرلما جاتيح اذلو ،ةينودلاو تاذلا راقّتحاب رعشي دقو ،ملعتلا صرف نم يرثك هيرغ نع هزيمتب هلهأ هرعشي نأو ،ةحمرو بح رظن هيلإ رظنلاو لفطلا مارتحا * هلوح نم كلذك هلماعي نأ بيجو ،صقّنلاب هروعش لوزي تىح ،ىرخلأا بهاولماو ءاكذلاب . يرقّحتلاو ءازهتسلاا",
+  "text_simplified": "Parents should avoid displaying excessive worry in front of the child during their illness, as this increases their sensitivity to pain. They should also encourage the child to play and engage in activities suitable for their condition, while avoiding overresponding to their requests so they do not become accustomed to negative behaviors. After recovery, the child needs balanced treatment that preserves their self-respect and prevents them from feeling deficient.",
+  "labels": [
+    "مرض الطفل",
+    "القلق الزائد",
+    "السلوكيات السلبية",
+    "الشفاء",
+    "احترام الذات"
+  ],
+  "created_at": "2026-06-20T14:37:56Z",
+  "updated_at": "2026-06-20T14:37:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-223fedeb",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "الاستجابة المفرطة",
+        "english": "overresponding",
+        "why": "Nonstandard English; 'over-responding' or 'overindulging' would be more natural and clear.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "الشعور بالنقص",
+        "english": "feeling deficient",
+        "why": "Awkward and clinical; 'feeling of inferiority' or 'feeling inadequate' better captures the Arabic meaning and tone.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

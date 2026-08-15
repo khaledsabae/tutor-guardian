@@ -1,0 +1,47 @@
+{
+  "id": "seed-sleep-23__en",
+  "domain": "medical",
+  "source_file": "curated/AAP - HealthyChildren.org Sleep",
+  "title": "Sleep Problems and Bedtime Resistance at Ages Two to Three",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "مشاكل النوم",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "AAP - HealthyChildren.org Sleep",
+  "text_original": "يحتاج الطفل في هذا العمر إلى ما بين ١١ و١٤ ساعة نوم يومياً مع القيلولة. أهم حل هو روتين نوم ثابت وهادئ كل ليلة بنفس الترتيب: حمّام دافئ ثم قصة ثم إطفاء الضوء في نفس الميعاد. تجنّبي الشاشات قبل النوم بساعة على الأقل لأن ضوءها يؤخّر النوم. اجعلي غرفته مظلمة وهادئة، وضعيه في السرير وهو نعسان لكنه مستيقظ ليتعلّم النوم وحده. إن استيقظ وبكى طمئنيه بهدوء وكلمات قصيرة دون حمله أو اللعب معه، وثابري فالثبات هو المفتاح.",
+  "text_simplified": "At this age, a child needs between 11 and 14 hours of sleep daily, including naps. The most important solution is a consistent and calm bedtime routine every night in the same order: a warm bath, then a story, then turning off the light at the same time. Avoid screens at least one hour before bedtime, as their light delays sleep. Make his room dark and quiet, and place him in bed while drowsy but still awake so he learns to fall asleep on his own. If he wakes up and cries, reassure him calmly with short words without picking him up or playing with him, and be patient—consistency is the key.",
+  "labels": [
+    "النوم",
+    "روتين النوم",
+    "مقاومة النوم",
+    "2-3 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP - HealthyChildren.org Sleep",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-sleep-23",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وثابري فالثبات هو المفتاح",
+        "english": "and be patient—consistency is the key",
+        "why": "The Arabic imperative 'ثابري' means 'persist/be constant', not 'be patient'. The English replaces the direct command to persevere with patience, slightly altering the instruction.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

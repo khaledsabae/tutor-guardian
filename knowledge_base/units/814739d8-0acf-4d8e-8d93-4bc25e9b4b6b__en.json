@@ -1,0 +1,46 @@
+{
+  "id": "814739d8-0acf-4d8e-8d93-4bc25e9b4b6b__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "Why Does the Child Lie? Distinguishing Between Imagination and Defensive Lying",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "الكذب عند الأطفال",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "قبل سنّ السادسة لا يكون أغلب «الكذب» كذبًا بالمعنى الأخلاقي: الطفل يخلط الخيال بالواقع، أو يقول ما يتمنّى أن يكون حدث. أما بعدها فالكذب غالبًا **دفاعي** — وسيلة للهروب من عقاب يخافه، لا رغبة في الخداع.\n\nهذا يقود إلى القاعدة الأهم: كلما اشتدّ العقاب على الخطأ، زاد الكذب لإخفائه. الطفل لا يتعلّم ألّا يخطئ، بل يتعلّم ألّا يُكتشف.\n\nما يساعد:\n• لا تنصب فخًّا. سؤال «هل أنت من كسر الكوب؟» وأنت تعرف الجواب يدفعه للكذب. قل بدلًا منه: «الكوب اتكسر. تعال نصلّح الموضوع مع بعض.»\n• اجعل الاعتراف أرخص من الإخفاء: خفّف النتيجة صراحةً حين يعترف، وقل له ذلك مسبقًا.\n• افصل بين الفعل والشخص. «اللي حصل غلط» لا «أنت كذّاب». الوصف يثبّت الهوية ويصير نبوءة.\n• حين يكون الكذب خياليًا (قصة عن مغامرة لم تحدث)، لا تعامله كجريمة. شاركه اللعبة ثم افصل بلطف: «دي حكاية حلوة. طيب واللي حصل فعلًا إيه؟»\n• كن قدوة مرئية: الطفل يرى الوعود الصغيرة التي لا تُنفَّذ ويقيس عليها.\n\nاطلب استشارة مختص إن صار الكذب مستمرًا بلا سبب واضح، أو مصحوبًا بأخذ أشياء الآخرين وإيذاء متكرر — فقد يكون عرضًا لضغط أعمق لا سلوكًا قائمًا بذاته.",
+  "text_simplified": "Before the age of six, most 'lying' is not lying in the *akhlaq* (moral) sense: the child mixes imagination with reality or says what they wish had happened. After that, lying is often **defensive**—a means to escape feared punishment, not a desire to deceive.\n\nThis leads to the most important rule: the harsher the punishment for a mistake, the more lying increases to hide it. The child does not learn not to make mistakes but learns not to get caught.\n\nWhat helps:\n• Do not set a trap. Asking, 'Did you break the cup?' when you already know the answer pushes them to lie. Instead, say: 'The cup broke. Come, let’s fix the situation together.'\n• Make confession cheaper than concealment: explicitly reduce the consequence when they confess, and tell them this beforehand.\n• Separate the action from the person. 'What happened was wrong' not 'You are a liar.' The label fixes the identity and becomes a self-fulfilling prophecy.\n• When the lie is imaginative (a story about an adventure that did not happen), do not treat it as a crime. Join in the game, then gently separate: 'That’s a nice story. Now, what actually happened?'\n• Be a visible role model: the child sees small promises that are not kept and measures accordingly.\n\nSeek specialist advice if lying becomes persistent without a clear reason or is accompanied by taking others’ things and repeated harm—it may be a sign of deeper pressure, not a standalone behavior.",
+  "labels": [],
+  "keywords": [
+    "lying",
+    "truthfulness",
+    "imagination",
+    "punishment",
+    "confession"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "814739d8-0acf-4d8e-8d93-4bc25e9b4b6b",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "بالمعنى الأخلاقي",
+        "english": "in the *akhlaq* (moral) sense",
+        "why": "The Arabic uses the ordinary adjective 'أخلاقي' (moral); the English inserts the transliterated Islamic term 'akhlaq', which is not present in the source and adds a specifically Islamic framing not intended by the original.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "seed-aggression-23__en",
+  "domain": "medical",
+  "source_file": "curated/AAP - HealthyChildren.org",
+  "title": "Hitting and Biting in a Child Aged Two to Three",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "العدوان",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "AAP - HealthyChildren.org",
+  "text_original": "الضرب والعض في هذا العمر شائعان لأن الطفل لا يملك كلمات كافية ليعبّر عن غضبه أو إحباطه. أوقفي السلوك فوراً بهدوء وحزم وبجملة قصيرة واضحة مثل «لا ضرب، الضرب يؤلم». لا تردّي بضربه أو عضّه فهذا يعلّمه أن العنف مقبول. وجّهي انتباهه لبديل وعلّميه كلمات يعبّر بها مثل «أنا غضبان» أو «أريد دوري». راقبي المواقف التي تثير العدوان كالجوع والتعب والزحام وحاولي تفاديها. امدحي اللعب اللطيف والمشاركة الهادئة فوراً. كوني قدوة في حلّ الغضب بهدوء. إن استمر العنف الشديد أو الإيذاء المتكرر فاستشيري مختصاً.",
+  "text_simplified": "Hitting and biting at this age are common because the child does not have enough words to express their anger or frustration. Stop the behavior immediately with calmness and firmness, using a short, clear phrase like, 'No hitting, hitting hurts.' Do not respond by hitting or biting them, as this teaches them that violence is acceptable. Redirect their attention to an alternative and teach them words to express themselves, such as 'I am angry' or 'I want my turn.' Monitor situations that trigger aggression, like hunger, tiredness, or crowds, and try to avoid them. Praise gentle play and calm sharing immediately. Be a role model in resolving anger peacefully. If severe violence or repeated harm continues, consult a specialist.",
+  "labels": [
+    "العدوان",
+    "الضرب",
+    "العض",
+    "تنظيم الغضب",
+    "2-3 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP - HealthyChildren.org",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-aggression-23",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

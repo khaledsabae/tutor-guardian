@@ -1,0 +1,72 @@
+{
+  "id": "seed-defiance-23__en",
+  "domain": "islamic_parenting",
+  "source_file": "curated/CDC - Positive Parenting / إرشاد تربوي",
+  "title": "Dealing with Stubbornness in a Child Aged Two to Three",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "العناد",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "CDC - Positive Parenting / إرشاد تربوي",
+  "text_original": "العناد في هذا العمر علامة طبيعية على نمو إرادة الطفل واكتشافه لذاته، وليس تمرّداً مقصوداً. تجنّبي معركة الإرادات والصراخ، فالشدّة تزيد العناد. امنحيه خيارات بسيطة محدودة مثل «تلبس الأحمر أم الأزرق» ليشعر ببعض التحكم. استخدمي اللعب والمرح لتجاوز الرفض بدل الأمر المباشر. ثبّتي روتيناً يومياً واضحاً فالطفل يتعاون أكثر حين يتوقّع ما سيحدث. كوني حازمة بلطف في الأمور المهمة، ومرنة في الصغيرة. امدحي تعاونه فوراً، واقتدي بالرفق النبوي فالرفق ما كان في شيء إلا زانه.",
+  "text_simplified": "Stubbornness at this age is a natural sign of the child’s growing will and self-discovery, not intentional defiance. Avoid battles of will and shouting, for harshness only increases stubbornness. Offer simple, limited choices like, \"Do you want to wear the red or the blue?\" so he feels some control. Use play and fun to bypass refusal instead of direct commands. Establish a clear daily routine, for the child cooperates more when he knows what to expect. Be firm with *rifq* (gentleness) in important matters, and flexible in small ones. Praise his cooperation immediately, and follow the Prophetic *rifq*, for *rifq* only beautifies whatever it is applied to.",
+  "labels": [
+    "العناد",
+    "الحزم بلطف",
+    "الروتين",
+    "التربية الإسلامية",
+    "2-3 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "CDC - Positive Parenting / إرشاد تربوي",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-defiance-23",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "فالشدّة تزيد العناد",
+        "english": "for harshness only increases stubbornness",
+        "why": "English adds 'only' which is not in the Arabic; the Arabic simply states that harshness increases stubbornness.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تجنّبي معركة الإرادات والصراخ",
+        "english": "Avoid battles of will and shouting",
+        "why": "Arabic has singular 'battle' (معركة) of plural 'wills' (الإرادات); English reverses the number, making 'battles' plural and 'will' singular.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "كوني حازمة بلطف",
+        "english": "Be firm with *rifq* (gentleness)",
+        "why": "Arabic uses 'لطف' (gentleness), not 'رفق'. English transliterates 'rifq' which is a different Arabic word not present in this phrase; it should be translated as 'gentleness' without introducing an Islamic term not in the source.",
+        "severity": "medium"
+      },
+      {
+        "type": "religious_error",
+        "field": "text_simplified",
+        "arabic": "فالرفق ما كان في شيء إلا زانه",
+        "english": "for *rifq* only beautifies whatever it is applied to",
+        "why": "This is a hadith of the Prophet ﷺ. The English paraphrase changes the wording: 'ما كان في شيء' means 'it is not in anything except that it beautifies it', not 'only beautifies whatever it is applied to'. The hadith is altered and not rendered accurately.",
+        "severity": "high"
+      }
+    ],
+    "approved_by": null
+  }
+}

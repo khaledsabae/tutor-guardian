@@ -1,0 +1,56 @@
+{
+  "id": "isl-0ca172e2__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Considering Individual Differences and the Importance of the Example in Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "فروق فردية في التربية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "ةيبرتلا جهنم :رظنا )6( هنلأ دارفنا ىلع هباقّع نوكي قهارلما وأ غلابلا دلولاف ةيبرتلا في ةيدرفلا قورفلا ةاعارم * ،ًانلعم أطلخا ناك اذإ ًاباتع مهمامأ بتَاعيو ،راغصلا هناوخإ همرتيح نأ بيجو ًايربك حبصأ نوكيو بيرلماو قهارلما ينب ةقلاعلا في ًلالخ ناثديح ملاكلا في هيلع ةوسقّلاو هبينأت نلأ هدلاو باغ اذإ تيبلا لجر وهو ،ةودق هنلأ روكذلا نم ركبلا دلولا قح في بجوأ كلذ ركذلا يفكي لا ام باتعلا نم اهيفكي تنبلاف ،لفطلا سنج ةيدرفلا قورفلا نمو * .ةلوهسب داقّنتو رثكأ فاتخ يهو فيعض اهدسج نلأ ةداع ةيبرتلا لئاسو نم هذه لك عمتتجو ،لفطلا كولس في تارثؤلما عيجم لمشتو ةيبرتلا لئاسو ددعتت اذلو ،قبس ام نمض لئاسولا هذه ضعب ركذ رم دقو لفطلا بيرتل يقّتلتو لوادلجا :يهو ةلصفم اههمأ ضرعنس ابه لفطلا طبرن فيكو ةودقلاب ةيبرتلا لاوأ نيدلاولاب ءادتقلاا لىإ هجتيف ،قومرم نئاك ةيار تتح ءاوضنلاا لىإ ةجالحاب لفطلا سيح يعولا اهيف جزتيم ةيركف ةيلمع لىإ ءادتقلاا لوحتي ثم ،ءاقدصلأا وأ ينملعلما وأ ةوخلإا وأ . هتايح لحارم لك في ةودقّلا لىإ ًاجاتمح لظيو ،زازتعلااو ةاكالمحاب ءامتنلااو ةروكذلما ةيزيرغلا ةجالحا عبشي هنأ لىإ ةفاضإ حلاصلإا لماوع مظعأ نم ءادتقلااو نأ دقّتعي وهو يعو يرغب وأ يعوب ةاكالمحا ىلع ةبيجع ةردق هيدل لفطلا نلأ ؛ افنآ .24 -24 ص يولوم دممح :هدلو ملسلما بيري فيكو ،62 ص ،بيللحا دحمأ نب رمع ،ءابلآا ةركذت :رظنا ) ( . 4 ص ،ديحم نب للها دبع ،رشابلما يرغ هيجوتلا .رظنا )2( .2 ص ،يولاحنلا نحمرلا دبع ،ةيملاسلإا ةيبرتلا لوصأ :رظنا )3( .632/2 ،ناولع للها دبع ،ملاسلإا في دلاولأا ةيبرت :رظنا )4( .3 3 ص :بطق",
+  "text_simplified": "Individual differences among children must be considered in tarbiyah. The older brother is disciplined more strictly if he errs because he is a role model, while the girl may be disciplined less due to the delicacy of her body. Younger children should also respect their older brother. The father must be a good example (uswah hasanah) for his children. Tarbiyah relies on the good example that the child feels from a young age and needs in every stage of their life.",
+  "labels": [
+    "فروق فردية",
+    "قدوة",
+    "تربية الأبناء",
+    "العدل بين الأبناء",
+    "التربية الإسلامية"
+  ],
+  "created_at": "2026-06-20T14:36:48Z",
+  "updated_at": "2026-06-20T14:36:48Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-0ca172e2",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تُعاقب البنت أقل بسبب ضعف جسدها",
+        "english": "the girl may be disciplined less due to the delicacy of her body",
+        "why": "Arabic states as a fact that the girl is punished less because of her body's weakness; English adds 'may' making it uncertain, uses 'disciplined' instead of 'punished', and 'delicacy' instead of 'weakness', softening the meaning.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "قدوة حسنة",
+        "english": "good example (uswah hasanah)",
+        "why": "The Arabic uses 'قدوة حسنة', not the Qur'anic phrase 'أسوة حسنة'. Adding the transliteration 'uswah hasanah' introduces an Islamic term not present in the source and may imply a specific religious reference.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

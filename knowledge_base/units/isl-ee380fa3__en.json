@@ -1,0 +1,56 @@
+{
+  "id": "isl-ee380fa3__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Akhlaq Tarbiyah for Children",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية أخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ؽكإ :لاؼف .وزكأ تؾعجو ةردلاب لـعصي ؾعجو هراسقب يدي .»! )1(بأ ـم كسقعل ؾهو كسقط لبلب كـؽيأ كؾَ طَ ير ِ ِ ثؽْ تَ س تَ َٓ « :افحصـي قهو ﭭ ةصػح فتـبٓ رؿط لاقو غُ يَ َٓ وَ , ؽ ِ لَ ادَ بَ ام ل ِ ـق ِ لل َ س ا وَ , ف ِ ير ِ جُ فْ تَ َٓ وَ , ء ٍ لشَ ل ِ ف ف ِ قع ِ ج ِ ار .)2(» ةَ شَ ِ ئاطَ دُ ير ِ يُ ﷺ ِ للها ل ِ قس كلَِ إ بَ حَ أَ وَ , ؽ ِ ْـ ِ م ل َ ضَ وْ أَ له ِ ؽَ تُ ر :نيٝعيا ٜٔديا زدب ٍاق ـط شقتػتلاو ـفجاوزأ نذإ رقغب تاـبلا كؾط ءابٔا لقخد زاقج فقف« .)3(»ةجوازؿلاب ؼؾعتي اؿط اؿقس لاقحٕا شؼلا َو يِشٖزتحٔ ,يرلخا ٜمع يّجلح دلألأا عجم :شؼع غداظلا للحا َ َ َ َ ۡ ُ ۡ َ ۡ َ ُ ۡ َ َ َ َ ۡ َ ٓ َ َ ُ ۡ ُ ُ ۡ َ ﴿ :كلاعت لاق اٌ ِّيِجلِِ لاك ذِإ تٍٔلٱ بٔلػيّ ضَخ ذِإ ءادٓط ًخِن مأ ق َ ٰ ح َ ش ۡ وَإِ و َ يِػ ٰ م َ ش ۡ وَإِ ً َ هۧ ِ ٰر َ ۡ ةِإ م َ ن ٓ ا َ ةاء َ ّ َ ٰ ل َ وَإِ م َ ٓ َ ٰ ل َ ِإ د ُ ت ُ ػ ۡ نّ َ ْ أ ُ لا َ ك ٖيدِ",
+  "text_simplified": "The text discusses the importance of tarbiyah for children upon Islamic values and noble akhlaq. It highlights the necessity of teaching children patience, truthfulness, and respect. It also advises parents to instill the love of goodness and cooperation in the hearts of their children.",
+  "labels": [
+    "تربية",
+    "قيم إسلامية",
+    "أخلاق",
+    "تعليم الأطفال",
+    "توجيه أسري"
+  ],
+  "created_at": "2026-06-21T10:22:03Z",
+  "updated_at": "2026-06-21T10:22:03Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ee380fa3",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "أهمية التربية الأخلاقية للأبناء",
+        "english": "The Importance of Akhlaq Tarbiyah for Children",
+        "why": "The Arabic uses ordinary words meaning 'moral education'; the English transliterates them as 'Akhlaq Tarbiyah' (reversed order) instead of translating, introducing Islamic jargon not present in the source and altering the meaning.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "تربية الأبناء على القيم الإسلامية والأخلاق الحميدة",
+        "english": "tarbiyah for children upon Islamic values and noble akhlaq",
+        "why": "The Arabic uses 'تربية' (upbringing) and 'الأخلاق الحميدة' (good morals) as normal words; the English transliterates them as 'tarbiyah' and 'akhlaq', making the text less accessible and not a faithful translation.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

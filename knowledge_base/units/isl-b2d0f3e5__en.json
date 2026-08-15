@@ -1,0 +1,56 @@
+{
+  "id": "isl-b2d0f3e5__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Balanced Use of Technology for Children",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "إدمان ألعاب إلكترونية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "نأ هيف طرتشيو نم رذلحا يغبني نكلو .اهيرغو ميمصتلاو مسرلاو ،تاعوسولماو ةيملعلا تاقّباسلما دهاشيو ةراثلإا درلمج بعللا بنتجو لفطلا ةحص ىلع ًاظافح بوسالحا عم لماعتلا في طارفلإا .9 ص ،ضيبم ديعس دممح ،ملسلما قلاخأ :رظنا ) ( . 4 ص ،دادح نىم ،ملاسلإا قلاخأو ملاعلإا لئاسو ينب انؤانبأ :رظنا )2( ،دلولا ةيبرت في ملسلما بلأا ةيلوؤسمو ، 2 - 24 ص ،توتنشلا دلاخ ،ملسلما ةيبرت في تيبلا رود :رظنا )3( . 4 - 4 ص ،ثراحاب ناندع . 2 - ص ،توتنشلا دلاخ ،ملسلما لفطلا ةيبرت في تيبلا رود :رظنا )4( . 4 - 4 ص ،ثراحاب ناندع ،دلولا ةيبرت في ملسلما بلأا ةيلوئسم :رظنا ) ( . دهلجاو تقولا ةعاضإو تاقوأ فيو هداوم في مكحتلا نكيمو زافلتلا نم ًلاامج عسوأ وهو :ويديفلا )2( اذلو ،طارفإب همادختسا ناك وأ ةمراص ةباقرل عضيخ لم اذإ ًاميسج ًارطخ حبصيو ،ضرعلا تقو طبض في مزيحو ًاقّيقد ًارايتخا ةيوبرتلاو ةيملعلا ةطرشلأا راتيخ نأ بيرلما ىلع نإف .ًائيس اًئيش اوري نل لهلأا نأ نمضي كلذكو ةدهاشلما ًائيش ظفيحو هيناعبم رثأتيف يمركلا نآرقّلا عاسم ىلع لفطلا بيري ام مهأ :لجسلما )3( . اهيرغو صصقّلاو ديشانلأاو ةطرشلأا كلذكو ،هنم ،ةيبرتلا في مهست نأ نكيمو ملعتلا ةيلمع في اهمادختسا رثكيو :ةيميلعتلا لئاسولا )4( طرتشيو تائيلهاو بتكلاو تلالمجا قيرط نع اهنم دجتسي ام ىلع علاطلاا نم دبلاف اذلو ةيرصبلا اهنم لئاسولا هذهو لفطلا نسل اهتبسانمو قيوشتلاو ةراثلإاو حوضولاو عونتلا اهيف ةملأا دامجأ ضرعت تيلا فحاتلماو ،ةسدقّلما نكاملأا روصو ،لثلماو ئدابلماب ةيحولما تاحوللاك ،ةيعسم لئاسو نم قبس ام لىإ ةفاضلإاب اذه ،ةروصلما صصقّلاو ةفدالها لافطلأا تلامجو .دحاو نآ في ةعيسمو",
+  "text_simplified": "Children must be protected from excessive use of computers and electronic devices, with a focus on beneficial activities such as drawing and design. Educational and scientific programs should be carefully selected, and screen time should be precisely limited. It is also recommended to accustom the child to listening to the Qur'an and meaningful nasheeds, and to ensure a variety of educational tools such as books and magazines.",
+  "labels": [
+    "إدمان ألعاب",
+    "تربية رقمية",
+    "حماية الطفل",
+    "وسائل تعليمية",
+    "تنظيم الوقت"
+  ],
+  "created_at": "2026-06-20T14:37:11Z",
+  "updated_at": "2026-06-20T14:37:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-b2d0f3e5",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ينبغي اختيار البرامج التعليمية والعلمية المناسبة",
+        "english": "Educational and scientific programs should be carefully selected",
+        "why": "The Arabic says appropriate educational and scientific programs should be selected; the English omits 'appropriate' and adds 'carefully', changing the instruction.",
+        "severity": "medium"
+      },
+      {
+        "type": "structure",
+        "field": "text_simplified",
+        "arabic": "القرآن الكريم",
+        "english": "the Qur'an",
+        "why": "The honorific 'الكريم' (the Noble) is dropped.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

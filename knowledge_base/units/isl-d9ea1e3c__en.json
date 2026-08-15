@@ -1,0 +1,48 @@
+{
+  "id": "isl-d9ea1e3c__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "Tarbiyah through the Qudwah in the Seerah of the Prophet ﷺ",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية بالقدوة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "ﰲ ملسو هيلع ﷲ ىلص هتكراشمك ةقاش تناك نإو لامعﻷا ﰲ مهتكراشم كلذ نمو ،عوﳉا ةدش نم نيرجﲝ هنطب ىلع . ةيوبنلا تافرصتلا ﰲ ةودقلا رهاظم نم كلذ ﲑغ ﱃإ بازحﻷا موي قدنﳋا رفحو نأ نكﳝو ،هعابتاو ءادتقﻻا ىلع سانلا صرحأ اوناكف هتباحص ةيبرت ﰲ ﱪكﻷا رثﻷا ملسو هيلع ﷲ ىلص هتيبرت نم بناﳉا اﳍ ناك دقل هيلع ﷲ ىلص ﱯنلا مهرمأ نأ دعب مهمارحإ نم للحتلاو مهسوؤر قلح نع ﲔملسﳌا عانتماو ةيبيدﳊا حلص رارقإ دعب عقو ام انه رضحتسن اوموق ) :لاق باتكلا ةيضق نم ملسو هيلع ﷲ ىلص ﷲ لوسر غرف اﳌو\" :ةثداﳊا يوار لوقي حلصلا طورشب مهاضر مدعل كلذو ،ملسو ،سانلا نم يقل ام اﳍ ركذف ،ةملس مأ ىلع لخدف ماق دحأ مهنم مقي ﱂ املف ،تارم ثﻼث لاق ﱴح دحأ مهنم ماق ام ﷲ و ف ،( اورﳓاف ًادحأ ملكي ملف جرخف ماقف ،كقلحيف كقلاح و عدتو ،كندب رحنت ﱴح ةملك ًادحأ ملكت ﻻ ﰒ ،جرخا ؟كلذ بﲢأ ،ﷲ لوسر (cid:686) :تلاقف (cid:685)دنع دهاشلاو ،44\" اض ،اورحنف اوماق كلذ سانلا يأر املف ،هقلحف هقلاح اعدو ،هَندُْ ب رﳓ ،كلذ لعف ﱴح مهنم . ةظحللا كلت ﰲ هلوق نم غلبأ هلعفف هلعف ﰲ ملسو هيلع ﷲ ىلص ﱯنلل مهتعباتم ثدﳊ(cid:682) ةيبﱰلاو ،45ا هبيذ(cid:275)و اهلقصو سوفنلا ةيبﱰل اهلغتسي اﳕإو ،هيجوت ﲑغبو ةﱪع ﲑغب ىدس بهذت ثادحﻷا كﱰي ﻻ عرابلا ﰊرﳌا نإ .أدبم ىلع دكؤي وأ اقلخ سرغي وأ ةﱪع يقتسي وأ ةلاسر لصويل ﰊﱰﳌا سفن ﰲ ارثأ عبطيل هلوح نم ثادحﻷا ﰊرﳌا رمثتسي نأ ﲏعت هبحاص امو ثدﳊا ىقبيو ،بسانﳌا هعقوم ميلعتلا عقي فقوﳌا اذه رمثتسي ﲔحف ،لوقعلاو",
+  "text_simplified": "The text illustrates how the Prophet Muhammad ﷺ used daily situations for the tarbiyah of his Companions, such as the incident of shaving his head at Al-Hudaybiyah, where he shaved his head to be a qudwah (example) for them. This clarifies that effective tarbiyah relies on practical qudwah, not merely commands, and that the wise murabbi (educator) invests in events to nurture souls and instill values.",
+  "labels": [
+    "تربية نبوية",
+    "قدوة حسنة",
+    "تربية عملية",
+    "مواقف تربوية",
+    "توجيه"
+  ],
+  "created_at": "2026-06-20T14:40:49Z",
+  "updated_at": "2026-06-20T14:40:49Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-d9ea1e3c",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "التربية، القدوة، المربي",
+        "english": "tarbiyah, qudwah, murabbi",
+        "why": "The Arabic uses common, everyday words (education, example, educator) that are warm and direct. The English transliterates them into Arabic terms, making the text stiff and less accessible to a general English reader. This is unnecessary jargon and does not reflect the natural tone of the source.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

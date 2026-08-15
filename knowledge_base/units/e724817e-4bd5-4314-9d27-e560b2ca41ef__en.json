@@ -1,0 +1,37 @@
+{
+  "id": "e724817e-4bd5-4314-9d27-e560b2ca41ef__en",
+  "domain": "development",
+  "source_file": "",
+  "source_url": "",
+  "title": "Building Language Before the First Word: What the Parent Does in the First Year",
+  "language": "en",
+  "age_group": "prenatal-1",
+  "behavior_type": "تنمية اللغة المبكرة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "اللغة تبدأ قبل أول كلمة بشهور طويلة. الرضيع يبني حصيلته من التبادل لا من الاستماع السلبي، ولهذا لا تُغني الشاشة ولا التسجيلات عن إنسان يخاطبه ويصمت لينتظر ردّه.\n\nما يبني اللغة عمليًا في السنة الأولى:\n• تبادل الأدوار: تكلّم، ثم اصمت ثانيتين أو ثلاثًا. صمتك يعلّمه أن للحديث دورًا. ردّ على مناغاته كأنها كلام حقيقي.\n• سمِّ الأشياء أثناء استعمالها لا في درس منفصل: «دي المية… المية سخنة».\n• انزل إلى مستوى نظره وواجهه بوجهك؛ رؤية الشفاه جزء من التعلّم.\n• الغناء والإيقاع يثبّتان الأصوات أسرع من الكلام العادي.\n• اقرأ له من كتاب مصوّر ولو لدقيقتين يوميًا من الشهر السادس. المهم التكرار لا الطول.\n• استجب لإشارته: حين يمدّ يده لشيء سمِّه له وأعطه. ربط الإشارة بالنتيجة أساس التواصل.\n\nوانتبه لعلامات تستدعي التقييم: عدم الاستجابة للأصوات المفاجئة، أو غياب التواصل البصري، أو عدم المناغاة نهائيًا بعد الشهر السادس — هذه أسباب لعرضه على الطبيب لا للانتظار.",
+  "text_simplified": "Language begins months before the first word. The infant builds their linguistic foundation through interaction, not passive listening, which is why screens and recordings cannot replace a human who speaks to them and then falls silent to await their response.\n\nWhat practically builds language in the first year:\n• Turn-taking: Speak, then remain silent for two or three seconds. Your silence teaches them that speech has a turn. Respond to their cooing as if it were real speech.\n• Name things while using them, not in a separate lesson: «This is water… the water is hot.»\n• Lower yourself to their eye level and face them directly; seeing the lips is part of learning.\n• Singing and rhythm anchor sounds faster than ordinary speech.\n• Read to them from a picture book, even if only for two minutes daily, starting from the sixth month. What matters is repetition, not duration.\n• Respond to their gestures: when they reach for something, name it for them and give it to them. Linking gesture to outcome is the foundation of communication.\n\nBe mindful of signs that may require evaluation: lack of response to sudden sounds, absence of eye contact, or no cooing at all after the sixth month—these are reasons to consult a doctor, not to wait.",
+  "labels": [],
+  "keywords": [
+    "Early language",
+    "Cooing",
+    "Eye contact",
+    "Infant",
+    "Reading to infants"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "e724817e-4bd5-4314-9d27-e560b2ca41ef",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

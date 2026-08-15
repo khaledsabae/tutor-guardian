@@ -1,0 +1,64 @@
+{
+  "id": "isl-740684b1__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching the Child Salah and Sabr through Uswah and Du'a",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "حقحص داـسنب هرقغو ,)446( »دهزلا« في دواد قبأ جرخأو ؿفؾلا :لقؼي ناك فكأ )2(كارط فل لاؼي راصكٕا ـم خقش ـط ,يراصكٕا دقعس .ائقش كدـط اؿم ؽلذ اـصؼـي ٓ يدعب ـم يدلقلو لل لاماخ اركذ ؽللسأ نيإ ُ ٰ َ ُ ۡ َ َ ﴿ :كلاعت فلقؼل ؿهدٓوأ كؾط ءاطدلا ـط نادلاقلا كفـيو .)11:ءارسلإا( ﴾ ٗ ُ َ ُ ٰ َ ۡ َ َ َ ۡ َ ۡ ُ َ ٓ َ ُ ّ ذ لَٔجغ َسنلۡ ِ ٱ نكَو ِٖ يلۡٱِة ۥهءَاد شّ ِ لٱِة .)27/7( »مػثمي ـمسا مػسمٗمش« (1) امُ :زيزمٕمًا دبمق ـمس رمٛمق لامى ،ةثمًاثمًا ةم٘بمٓمًا ـمُ ،نيدمعا نيامٜمٙمًا يرامٗمٖمًا ؽمًامُ ـمس كارمق قه (2) .رهدمًا مقمّي نامي :تمسامص ـمّمٖمًا قمسأ لامى و ،فمٜمُ ةلاص رثميأ ادمطأ ؿمٚمقأ ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ فلامو هدٓوأو فسػك كؾط قطدي ثقح فتؾجطو ناسكلإا ؾفج ـم اذهو« للها ـؽلو ,رقخلا في ءاطدلاب ردابي اؿك ءاطدلا ؽلذب ردابيو بضغلا دـط رشلاب .)1(»رشلاب فل بقجتسي ٓو رقخلا في فل بقجتسي - فػطؾب – ٓو ؿؽسػكأ كؾط اقطدت ٓ :لاق ﷺ لبـلا نأ )3449( ؿؾسم جرخأو افقف للسي ةطاس للها ـم اقؼفاقت ٓ ؿؽلاقمأ كؾط اقطدت ٓو ؿكدٓوأ كؾط اقطدت .»ؿؽل بقجتسقف ءاطط :ةحلاص ةقـب دلقلا بؾص ـيدلاقؾل عرشي .ملاسلاو ةلاصلا اؿفقؾط ايركزو ؿقهاربإ بؾص ـم مدؼت اؿك لَ اقَ « :اطقفرم ﭬ ةريره لبأ ثيدح ـم »ـقحقحصلا« فيو ل ِ ف ؾُ ِ تاؼَ يُ ام لاَ غُ ة ٍ أَ ر ا ؾُ كُ دُ ِ ؾتَ ة ٍ أَ ر ا ة ِ ئَاؿ ِ ِ ب ةَ ؾَ ْقؾَ",
+  "text_simplified": "The text discusses the tarbiyah (upbringing) of children and teaching them Salah and sabr, mentioning Qur'anic ayahs and Prophetic hadiths that urge good guidance. It highlights the importance of accustoming the child to acts of worship from a young age and the necessity of dealing with mistakes with wisdom and rifq (gentleness). It also clarifies that du'a and good uswah (example) are among the most important means of tarbiyah.",
+  "labels": [
+    "تربية",
+    "صلاة",
+    "قدوة",
+    "صبر",
+    "دعاء"
+  ],
+  "created_at": "2026-06-21T10:16:47Z",
+  "updated_at": "2026-06-21T10:16:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-740684b1",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "القدوة",
+        "english": "Uswah",
+        "why": "The Arabic word is 'القدوة' (qudwah/qidwah), meaning example or role model. 'Uswah' is the transliteration of a different word, 'أسوة'. The correct transliteration is 'Qudwah' or 'Qidwah'.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "القدوة الحسنة",
+        "english": "good uswah (example)",
+        "why": "Same error: 'uswah' corresponds to أسوة, not قدوة. Should be 'good qudwah (example)' or 'good role model'.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "الصلاة والصبر",
+        "english": "Salah and sabr",
+        "why": "Inconsistent capitalization of transliterated terms: 'Salah' is capitalized but 'sabr' is lowercase. Both are common nouns in Arabic and should be treated consistently, e.g., 'Salah and Sabr' or 'salah and sabr'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "isl-5b61587e__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "The Mother’s Role in Leadership and Justice Among the Children",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية الأبناء والعدل بينهم",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "ةفلامخ دلاولأا ،ًامع وأ ًلااخ وأ ًايربك ًاخأ وأ ناك ًابأ ،لجرلل ةرسلأا ةدايق ةأرلما ملست نأ دب لاو نإو عيطت نأ اهيلعف ًائيش َعَنَم نإو ،ةعاطلا ىلع دلاولأا بىرتيل هرملأ داقّنت نأ اهيلعو ثدتح تافارنحلاا نم ًايرثك نلأ هيلع رتستت لاو بلأا برتخ نأ بجيف اهدلاوأ ضعب هفلاخ .ملأا رُتست ببسب لاو عرشلا هعنيم لا ًائيش دلاولأا بلطي نأك ،ةيرح في ملأا حبصت لاوحلأا ضعب فيو عانقإ دلاولأا لواحيف ،همتكي دقو هنع حصفي دق هاري يأرل عنايم بلأا نكلو ،عقاولا .2 4 ص :بطق دممح :ةيملاسلإا ةيبرتلا جهنم :رظنا ) ( .69 -6 ص :قباسلا عجرلما :رظنا )2( . 4 ص :ليوبناتسلاا دوممح :انلافطأ بيرن فيك :رظنا )3( .69 ص :تونتشلا دلاخ ،تانبلا ةيبرت :رظنا )4( مله ينبتو اهدلاوأ سفن بيّطتو ،ةأرلما عيطت نأ دب لا لالحا هذه يفف ،عنتقّي لاف بلأا ًاساسحإ نيدلاولل نأ دهشت ثادحأ نم ةايلحا في ابم مهيزعتو ،هلقّع ةحاجرو مهدلاو لضف ءاقدصلأا رفاسي ثم ،ًلاثم هدلو رفس ضفري ًانايحأ دلاولا لعيج ساسحلإا اذهو ،بييخ لا .هساسحإ ببسب كلذو ًايرخ دلاولا ضفر نوكيف ىذأب نوباصيف ةيوستلا نوبحتسي اوناك تىح ،مهدلاوأ ينب لدعلا في ةوسأ يرخ فلسلا ناك دقو المو هرجح ىلع هعضوو هلبَقو بيصلا ذخأ ًلاجر بينلا بتاعو لبَُقّلا في مهنيب امف { :ةياور فيو } امهَنيب تيَوس لاأ { :هل لاقّف ،هبنج لىإ اهسلجأ هتنب تءاج . } امهنيب تلدع زييتم زويج لاو ،لبَُقّلاو ةبعلالماو ةَبلهاو ةقّفنلاو ةبوقّعلاو ةلماعلما في ٌبولطم لدعلاو هل لاقّف ،هتوخإ نود هبهي نأ هوبأ دارأ ثيح روهشلما نامَعنلا ثيدلح ءاطعب دلاولأا دحأ زييتم حيبت ًابابسأ كانه نأ لاإ }",
+  "text_simplified": "The mother must take up the leadership of the family in the father’s absence or when needed, and raise the children upon obedience and discipline. Likewise, the father should embody wisdom in his treatment of his children, and not forbid them from something Allah loves unless it is harmful. Justice among the children is required in all matters—such as spending, gifts, and treatment—and it is not permissible to favor one over another without a valid *shar'i* reason.",
+  "labels": [
+    "تربية",
+    "عدل",
+    "قيادة أسرة",
+    "طاعة",
+    "حكمة أبوية"
+  ],
+  "created_at": "2026-06-20T14:32:30Z",
+  "updated_at": "2026-06-20T14:32:30Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-5b61587e",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "النفقة",
+        "english": "spending",
+        "why": "النفقة is a specific Islamic legal term for obligatory financial maintenance/support, not general spending; translating it as 'spending' loses the fiqh nuance and may mislead readers about the nature of the obligation.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "دون سبب شرعي",
+        "english": "without a valid *shar'i* reason",
+        "why": "The Arabic says 'without a shar'i reason'; adding 'valid' is redundant and slightly alters the phrase, implying there could be invalid shar'i reasons.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "وأن تربي الأبناء على الطاعة والانضباط",
+        "english": "and raise the children upon obedience and discipline",
+        "why": "The English 'upon obedience and discipline' is a literal rendering of Arabic 'على' and sounds stiff/preachy; a more natural English would be 'to be obedient and disciplined' or 'with obedience and discipline'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

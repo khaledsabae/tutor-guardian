@@ -1,0 +1,48 @@
+{
+  "id": "isl-7dbd2226__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Sabr and Steadfastness upon the Deen",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "توجيه ديني وأخلاقي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ؾؿشتو ,فتيرذ في ظػحي حلاصلا ؾجرلا نأ كؾط ؾقلد فقف« رؼتل ةـجلا في ةجرد كؾطأ كلإ ؿفتجرد عفرو ؿفقف فتطاػشب ,ةرخٔاو اقكدلا في .)3(»فب ةـسلا تدروو نآرؼلا في ءاج اؿك ,ؿبه فـقط ۡ ُ َ ذ ّ ُ ۡ َ ۡ َ ۡ َ ٰ َ ُ ُ ذ ّ ُ ۡ ُ ۡ َ َ ذ َ ْ ُ َ َ َ ذ َ ﴿ :كلاعت لاقو رذ ًٓخػتتّٱو أٌِاء َيلَِّ ٱو .)21:رقطلا( ﴾ ي ٞ ِْر َ ب َ ص َ ن َ اٍ َ ِة يِٕۢ ِ رم ۡ ٱ كُل ُ ُ ۚ ءشَ ۡ َ ٌَِ ّ ًٓ ِ ِيٍ َ ع َ َ ۡ ٌِ ّ ًٓ ُ ٰن َ لَ ۡ َ خ ٓ اٌ َ و َ َ َ ﴿ :كلاعت فلقق ـط :رقبج ـب دقعس تللس :لاق ,ةرم ـب ورؿط ـطو :سابط ـبا لاق :لاق ,﴾ۡ ُ َ ذ ّ ُ ۡ َ ۡ َ ۡ َ ٰ َ ُ ُ ذ ّ ُ ۡ ُ ۡ َ َ ذ َ ْ ُ َ َ رذ ًٓخػتتّٱو أٌِاء .)4(»فـقط فب للها رؼقف ؾؿعلا في فكود ناك نإو فتيرذ فل عفرت ـممؿلا ،رمٕسمُ امٜمص :لامى ،نامٞمٗمؾ امٜمص :لامى همػمهو ،)184/1( »هدمٜسمُ« مذ يدمٞمٛلحا فمضرمظأ (1) .فمس سابمق ـمسا ـمق ،مػبمض ـمس دمٞمٕمؾ ـمق ،دارزمًا ةسرمٞمُ ـمس ؽمٚمعا دبمق ـمق دمٛمح امٜمص :لامى ،نامٞمٗمؾ ؼيرمـ ـمُ همػمهو ،)185/1( »هدمٜسمُ« مذ يدمٞمٛلحا فمضرمظأ (2) .حمّي ٓ فمٜمٙمًو امققمورمُ يورو .فمس ردمٙمٜمعا ـمس دمٛمح ـمق ،ةمىقمؾ ـمس .)186/5( »مػثمي ـمسا مػسمٗمش« (3) .حمٞحص دامٜمؾم٢مس همػمهو",
+  "text_simplified": "The text discusses the importance of *sabr* (patience) and steadfastness upon the *Deen*, mentioning Qur'anic *ayat* and Prophetic *ahadith* that urge adornment with *sabr*. It also points out that *sabr* is the key to relief and that Allah is with those who are patient.",
+  "labels": [
+    "صبر",
+    "ثبات",
+    "دين",
+    "قرآن",
+    "حديث"
+  ],
+  "created_at": "2026-06-21T10:15:28Z",
+  "updated_at": "2026-06-21T10:15:28Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-7dbd2226",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "تحث على التحلي بالصبر",
+        "english": "urge adornment with sabr",
+        "why": "The English phrase 'urge adornment with sabr' is stiff and unnatural; the Arabic 'تحث على التحلي بالصبر' is a direct urging to cultivate/embody patience. A more natural rendering would be 'urge people to adorn themselves with patience' or 'urge cultivating patience'.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

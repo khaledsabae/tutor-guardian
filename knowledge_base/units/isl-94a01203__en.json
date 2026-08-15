@@ -1,0 +1,64 @@
+{
+  "id": "isl-94a01203__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "Al-Tarbiyah al-Nabawiyyah and the Role of the Masjid in Building the Individual",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "اهدقعي ملسو هيلع ﷲ ىلص ﱯنلا ناك ﱵلا ةيوبﱰلا قلﳊا ركذلا سلاجﲟ دصقنو .ددﳉا نيوعدﳌاو ةوعدلا لاحو دارفﻷا نوكو ،ةهج نم ةحوتفﳌا دجسﳌا سلا(cid:272) ةبسنل(cid:682) نأشلا وه امك دارفﻷا نم اﲑبك اددع مضت نكت ﱂ ا(cid:276)أ ﱃإ ةراشإ ةصاﳋا انلوقو . ىرخأ ةهج نم ﲔملسﳌا ةماع نم اوسيل اهيف ةيوبﱰلا ةيلمعلا نم ﲔفدهتسﳌا دصقنو ،ا هنم ةيرسلا ةلحرﳌا ﰲ ةصاخ ةوعدلا ت(cid:686)ادب ﰲ ةيوبﱰلا ةليسولا هذه جهتنا هنأ انل ﲔبي ملسو هيلع ﷲ ىلص ىفطصﳌا ةﲑسل انعبتتو .مقرﻷا ﰊأ نب مقرﻷا راد و هو ،هيف دقعنت تناك يذلا ناكملل ةبسن كلذو ،59ي مقرﻷا سل(cid:272)(cid:682) رهتشا ام طبضل(cid:682) حلطصن نأ نكﳝ ام و أ ةوعدلا لمحتس ﱵلا ةليصﻷا تاماعدلا ةيبرت صاﳋا سل(cid:272)ا اذه لﻼخ نم فدهي ملسو هيلع ﷲ ىلص ﱯنلا ناكو باطﳋا انهو .برق نع اﳍ هنيوكتو ةئفلا هذﳍ ملسو هيلع ﷲ ىلص هعبتت ناكف ،غيلبتلاو ةوعدلا أبع لمحتتس ﱵلا ةيوعدلا تادايقل(cid:682) هيلع ﲑط(cid:998) ﱃإ فدهي هيف باطﳋا نأ انلق يذلا دجسﳌا سكع ،يدرفلا كولسلا ليكشتب هيلع حلطصي ام يأ هنيعب درفلل اهجوم نوكي يوبﱰلا يع سلا نم اﳍ دبﻻ ،سيسأتلا ةلحرم ﰲ تناك ةوعد لكف ،يعقاوو يعيبط رمأ ةليسولا هذﳍ ملسو هيلع ﷲ ىلص هدامتعاو .يعامتجﻻا كولسلا ةجردل(cid:682) (cid:686)دايق اسيس(cid:998) هعبطب لوﻷا يوبﱰلا سيسأتلا نوكيف ،دعب اميف باعيتسﻻاو ،جاتنﻹا ةمهم اهدارفأ ﱃوتيس ﱵلا ،ﱃوﻷا (cid:686)ﻼ ﳋا ةيبرت ﱃإ ﰲ ملسو هيلع ﷲ ىلص ﱯنلا دي ىلع اوبرت نيذلا لك نأ يهو ةحضاو ةقيقح مامأ فقن انلعﳚ ،اهنم تاطﶈ (cid:685)ءارقتساو ةﲑسلل انعوجر نإ نيذلا ةبعصلا فقاوﳌا لاجرو ،ةوعدلا غيلبت لاجر اوناك لب ،قلﳋا ﰲ ةساكتنا وأ هيف قافن و أ",
+  "text_simplified": "This unit discusses the importance of Islamic tarbiyah (upbringing) derived from the seerah of the Prophet Muhammad ﷺ, focusing on the role of the masjid as an educational and tarbiyah center. It aims to build the individual’s personality and guide their behavior socially and in da'wah, emphasizing that correct tarbiyah begins from the earliest upbringing. It also highlights that the Companions, who were raised under the guidance of the Prophet ﷺ, became callers and leaders in facing challenges.",
+  "labels": [
+    "تربية",
+    "سيرة نبوية",
+    "مسجد",
+    "دعوة",
+    "تنشئة"
+  ],
+  "created_at": "2026-06-20T14:41:25Z",
+  "updated_at": "2026-06-20T14:41:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-94a01203",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "التربية النبوية",
+        "english": "Al-Tarbiyah al-Nabawiyyah",
+        "why": "The Arabic title phrase meaning 'Prophetic Upbringing/Education' is left as transliteration rather than translated, making it opaque to English readers; inconsistent with the text where 'التربية الإسلامية' is rendered as 'Islamic tarbiyah'.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "سيرة النبي محمد صلى الله عليه وسلم",
+        "english": "seerah of the Prophet Muhammad ﷺ",
+        "why": "'Seerah' is transliterated without explanation, while 'tarbiyah' is given a parenthetical '(upbringing)'; inconsistent handling of Islamic terms.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تربوا على يد النبي",
+        "english": "raised under the guidance of the Prophet ﷺ",
+        "why": "The Arabic 'على يد' implies direct, hands-on upbringing by the Prophet, whereas 'under the guidance of' suggests a more indirect influence, softening the original meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

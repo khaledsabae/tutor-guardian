@@ -1,0 +1,56 @@
+{
+  "id": "isl-094f42cd__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Al-ʿAdl bayna al-Abnaʾ wa Ahammiyatuhu fi al-Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "العدل بين الأبناء",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "للها ـؽلو ,ؿفؾثم ضرٕا ءؾم ـم للإ بحأ .)1(»ؿفؼح ضعبب بهذتف ,ؿفحلاصتف ؽقؾط ءاضؼلا نأ كبرخأ :ً٘طف ِظعٚ ,صلاخلإا ًُٕٛعتٜٚ ,لـب اي :لاق ,ﷺ باحصأ ملاك كؾحأ ام فبأو :فقبٕ ؾقضػلا ـب لؾط لاق .)2(»كلاعتو كرابت للها فب اودارأ ؿنهٕ :لاق ,فبأ اي ,ٓ :لاق ,؟لاح اؿل يردتو :)11ص( »دبهيا ١تفي« في ٙديٚ حصٜٓ ٖٛٚ ٟشٛتدا ٔبا ٍاقٚ فؿؾعب ظُ طاقلا ؾِ ؿعي ؿل كتمو ,نقعماسلا عُ ػتـي ؿؾعلاب ؽطاػتكا ردق كؾطو« ٓو ,ةقـب ٓإ ـَ ظعت لاف ,رجحلا ـط ء اؿلا لُ زي اؿك بقؾؼلا ـط فتُ ظطقم تْ لَز .»ةقـب ٓإ ـَ ؾكلت ٓو ,ةقـب ٓإ ـَ قشؿت :دلاٚلأا ينب باشتياٚ دٛيا بًيج اَ ٢ًع ٕادياٛيا صسيحٚ ﭬ رقشبؾل ﷺ لبـلا رمأو ﭭ رقشب ـب ناؿعـلا ثيدحب ؽلذل لدتسي .فجيرخت مدؼت » ؿ كُ دَٓ وْ أَ ـَ قْ بَ اقلُ دطْ اوَ لله ا اقؼُ تَ ا« :دٓوٕا ـقب لدعلاب ؿفـقب عققي ام كرتو ةقخٕا ـقب ػلآتلا كلإ بدـلا - اضيأ - ثيدحلا فيو« .)215/5( »يرابلا حتف« »ءابمل ققؼعلا ثرقي وأ ءاـحشلا .حمٞحص دامٜمؾم٢مس )134/6( »ىمؼمٙمًا تام٘بمٓمًا« مذ دمٕمؾ ـمسا فمضرمظأ (1) دامٜمؾم٢مس )46/54( »فيخرامش« مذ رمياسمق ـمساو ،)299/2( »نمايلإا بمٕمؿ« مذ لم٘مٝمٞبمًا فمضرمظأ (2) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ اؿل دوأ فكنف ؿؽـقب اقلذابت كـب اي :لقؼي ﭬ سكأ ناك :لاق ,تباث ـط .ةبحؿلاو ػلآتلا فقؾط بتتري ؿفـقب لدعلاو دٓوٕا ـقب لدعلا ؼح مدؼتو :للها َٔ فٛترا ٢ًع ٤آبلأا ٢بسٜ اُن تُ لَ ؽ ِ كَ ِ إ ةُ قَ َـبُ ايَ :ڤ ةصػح فتـبٓ ﭬ رؿط لاق لكِ أَ ـَ قؿ ِ ؾَ عْ",
+  "text_simplified": "Parents must uphold ʿadl (justice) among their children in giving and treatment, and not favour one over another. ʿAdl encompasses gifts, emotions, and love, and refraining from discrimination between males and females. This strengthens affection and protects against resentment and envy among siblings.",
+  "labels": [
+    "العدل",
+    "تربية الأبناء",
+    "المساواة",
+    "الغيرة",
+    "الحب"
+  ],
+  "created_at": "2026-06-21T10:30:48Z",
+  "updated_at": "2026-06-21T10:30:48Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-094f42cd",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "structure",
+        "field": "title",
+        "arabic": "العدل بين الأبناء وأهميته في التربية",
+        "english": "Al-ʿAdl bayna al-Abnaʾ wa Ahammiyatuhu fi al-Tarbiyah",
+        "why": "The English title is a transliteration of the Arabic, not a translation. It does not convey the meaning to an English reader.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الحقد",
+        "english": "resentment",
+        "why": "Arabic 'الحقد' means deep-seated hatred or malice, which is stronger than 'resentment'. The translation softens the intensity.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

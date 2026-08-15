@@ -1,0 +1,64 @@
+{
+  "id": "isl-901bde3f__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Rules of Immediate Discipline and Limited Physical Correction for Children",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تأديب وعقاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "بيهرتللو * . هجويو ملعي لب لفطلا بقاعي لاف ةرم لوأ ثدح اذإ أطلخا نأ * ،هكولس أطخ لفطلا ماهفإو اهببس نايب عم ةرشابم أطلخا دعب ةبوقّعلا عاقّيإ بيج * . ةبوقّعلا ترخأت اذإ لعف ام ىسني ابمر هنلأ نلأ ،مهمامأ هتبقاعم نوكتف تيبلا لهأو هناوخإ مامأ رهاظ لفطلا أطخ ناك اذإ * . اهلك ةرسلأل ةيوبرت ةفيظو ققّحيس كلذ بنجتي نأو ،ديعولاو ريذحتلا اهقّبسي نأ يغبنيف برضلا يه ةبوقّعلا تناك اذإ * ةلدتعمو ةظيلغ يرغ اصعلا نوكت نأو ،نطبلا وأ هجولا وأ ردصلا وأ سأرلا ىلع برضلا لاف اهقرفيو ،غولبلا نود ناك اذإ ثلاث لىإ ةدحاو نم برضلا نوكي نأو ،ةبوطرلا هنلأ برضلا فاقّيإ بجيف هب ثاغتساو هبر لفطلا ركذ اذإو ،دحاو لمح في نوكت .26 -2 ص ،كوبس ،تاهملأا ثيدح :رظنا ) ( . 6 ص ،ثراحاب ناندع ،دلولا ةيبرت في ملسلما بلأا ةيلوئسم :رظنا )2( .36 -32 ص ،نادحم دايز دممح ،لافط بيرن فيك :رظنا )3( .64 -63 ص ،يويدب يلع دحمأ ،باقّعلاو باوثلا :رظنا )4( .33 ،رماعلا بينج ،ةيبرتلا في لوسرلا بيلاسأ :رظنا ) ( . 2 - 2 /2 ،ناولع حصان للها دبع ،ملاسلإا في دلاولأا ةيبرت :رظنا )6( .32 ،ديوس رون دممح ،ةيوبنلا ةيبرتلا جهنم نع لاقّن ، 3 ،نياوهلأل ،ةيبرتلا :رظنا ) ( .للها ميظعت لفطلا سفن في سرغي كلذب . ضعب ىلع مهضعب دقّيح لا تىح هسفنب برضلا بيرلما لىوتي نأ بيجو * . باقّعلا في ديزي دق هنلأ بضغلا لاح هبقاعي لاأ * . كلذ نايب يفكيو أطلخا ببسب لمأ هباصأ اذإ هتبقاعم كرتي نأ * بيهرتلاو بيغرتلاب ةيبرتلا طباوض ثلاثلا",
+  "text_simplified": "A child must be disciplined immediately upon committing a mistake, with an explanation of why the discipline is given and clarification that their behavior is wrong. Do not delay the discipline, as they may forget what they did. If the mistake is committed in front of their siblings or family, let the discipline be in front of them so that it serves as a lesson. Avoid harsh physical correction, and if you must resort to it, let it be light and limited in number, and stop immediately if the child seeks refuge with their Lord.",
+  "labels": [
+    "عقاب",
+    "تربية",
+    "ضرب",
+    "تأديب",
+    "أطفال"
+  ],
+  "created_at": "2026-06-20T14:36:24Z",
+  "updated_at": "2026-06-20T14:36:24Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-901bde3f",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title, text_simplified",
+        "arabic": "الضرب / الضرب المحدود",
+        "english": "physical correction / Limited Physical Correction",
+        "why": "The Arabic explicitly says hitting/striking (الضرب), but the English uses the euphemism 'physical correction', which obscures the direct meaning and softens the instruction. This is a significant semantic shift in a parenting context.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "title, text_simplified",
+        "arabic": "معاقبة / العقاب",
+        "english": "discipline / the discipline",
+        "why": "Arabic 'عقاب' means punishment, not discipline. 'Discipline' is a softer, more positive term that changes the nature of the instruction.",
+        "severity": "medium"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "تجنب الضرب الشديد، وإذا اضطررت للضرب فليكن خفيفاً وبعدد محدود",
+        "english": "Avoid harsh physical correction, and if you must resort to it, let it be light and limited in number",
+        "why": "The English uses clinical euphemisms ('physical correction', 'resort to it') where the Arabic is direct and concrete about hitting. This shifts the register from direct parental guidance to clinical language.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

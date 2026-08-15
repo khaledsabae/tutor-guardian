@@ -1,0 +1,56 @@
+{
+  "id": "isl-fd937511__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Al-I'tidal fi al-Tarhib wa al-Targhib fi Tarbiyat al-Talab",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "التربية بالترهيب والترغيب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": ".للها ميظعت لفطلا سفن في سرغي كلذب . ضعب ىلع مهضعب دقّيح لا تىح هسفنب برضلا بيرلما لىوتي نأ بيجو * . باقّعلا في ديزي دق هنلأ بضغلا لاح هبقاعي لاأ * . كلذ نايب يفكيو أطلخا ببسب لمأ هباصأ اذإ هتبقاعم كرتي نأ * بيهرتلاو بيغرتلاب ةيبرتلا طباوض ثلاثلا ثحبلما ةيقلاخلأا تافارنحلااو ةيسفنلا ضارملأا نم لفطلا يمتح -للها نذإب -طباوضلا هذهو :طباوضلا هذه مهأو ،ةيعامتجلاا تلالاتخلااو :بيهرتلاو بيغرتلا في لادتعلاا -1 لعيج اذهو ،نيدبلا باقّعلا ىلع زيكرتلاو بيهرتلا ةرثك لايجلأا هيناعت ام رثكأ لعل في جردتي نأ يغبني اذلو ؛ دحأ لكل داقّني ًلايلذ وأ دعب اميف هتايح في ًايساق لفطلا وهو هرخآب بيرلما أدب اذإ ةعرسب يهتني دق باقّعلا ملسو ليوط ةيبرتلا دمأ نلأ ةبوقّعلا لفطلا نع وفعلل طسوتلاو ةعافشلا ةصرف ءاعفشلل حيتي نأ بيرملل يغبنيو برضلا نيوته في اببس نوكي دق بيهرتلا نم راثكلإل نأ امك هنم لبقّيو ةبوتلاب هل حمسيو لكشب دحاو باقّع راركت نم رذلحا يغبني اذلو برضلا ىلع دايتعلااو ءاطخلأا .مزلالا نم لقأ ناك اذإ كلذكو رمتسم هراتهتسا لىإ يدؤيس كلذ نلأ باقّعلا نود ديدهتلا نم رثكي لا نأ بيرلما ىلعو . 2 - 2 /2 ،ناولع حصان للها دبع ،ملاسلإا في دلاولأا ةيبرت :رظنا ) ( .36 -32 ص ،نادحم دايز دممح ،لافط بيرن فيك :رظنا )2( .قباسلا عجرلما :رظنا )3( . 4 ص ،نودلخ نبا ةمدقّم :رظنا )4( .3 9 ص :بطق دممح ،ةيملاسلإا ةيبرتلا جهنم :رظنا ) ( . 2 - 2 /2 ،ناولع حصان للها دبع ،ملاسلإا في دلاولأا ةيبرت :رظنا )6( .2 ص ،ديوس رون دممح ،ةيوبنلا ةيبرتلا جهنم",
+  "text_simplified": "The one responsible for *tarbiyah* (upbringing) must discipline the child personally without harming others. The child should not be punished in a state of anger, as this increases the punishment. Leave off punishing the child if they experience pain due to their mistake, as that suffices as a lesson. Moderation in *tarhib* (deterrence) and *targhib* (encouragement) is the foundation, while avoiding excessive physical punishment and focusing on *tarhib*.",
+  "labels": [
+    "تربية",
+    "ترهيب",
+    "ترغيب",
+    "عقاب",
+    "ضبط سلوك"
+  ],
+  "created_at": "2026-06-20T14:36:29Z",
+  "updated_at": "2026-06-20T14:36:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-fd937511",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "الاعتدال في الترهيب والترغيب في تربية الطفل",
+        "english": "Al-I'tidal fi al-Tarhib wa al-Targhib fi Tarbiyat al-Talab",
+        "why": "The Arabic title ends with 'تربية الطفل' (tarbiyat al-tifl, upbringing of the child), but the English transliteration renders it as 'Tarbiyat al-Talab', which means 'upbringing of the students/request' and changes the meaning.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ليكفي ذلك بيانًا",
+        "english": "as that suffices as a lesson",
+        "why": "The Arabic 'بيانًا' means clarification or explanation, not 'a lesson'. The English shifts the nuance from sufficing as a clarification to sufficing as a moral lesson.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

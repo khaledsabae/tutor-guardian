@@ -1,0 +1,38 @@
+{
+  "id": "isl-59686545__en",
+  "domain": "islamic_parenting",
+  "age_group": "16-18",
+  "behavior_type": "خلاف الأهل مع رغبة الفتاة في العمل",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "title": "My daughter wants to work and I don’t agree",
+  "language": "en",
+  "reference_type": "كتاب_فقهي",
+  "jurisdiction": "فيه خلاف فقهي معتبر بين العلماء؛ استشر عالمًا موثوقًا لحالتك الخاصة",
+  "reference_info": "فتاوى الشيخ عبدالعزيز بن باز — حكم عمل المرأة خارج بيتها وضوابطه (binbaz.org.sa)؛ وللمسألة خلاف فقهي معتبر بين أهل العلم في أصل الحكم وضوابطه",
+  "text_original": "عمل المرأة خارج بيتها ليس محرمًا لذاته، لكنه مقيد بضوابط: الحشمة وعدم التبرج، عدم الاختلاط المحرم بالرجال الأجانب، أن يكون العمل مناسبًا لطبيعتها، وألا يكون على حساب واجباتها الأساسية نحو زوجها وأولادها إذا كانت متزوجة. وللعلماء تفصيل وخلاف معتبر في أصل الحكم وضوابطه بحسب الحاجة والمصلحة والمفسدة.",
+  "text_simplified": "Your daughter’s (16–18 years old) desire to work is not disobedience in itself, and the scholars have a valid difference of opinion on the fundamental permissibility of a woman working outside the home—there is no single decisive fatwa. The prevailing conditions are: modest dress, avoiding unlawful *ikhtilat* (mixing), and work that suits her nature. Discuss it with her calmly instead of outright refusal, and consult a trusted scholar who can clarify the ruling for both of you.",
+  "labels": [
+    "عمل المرأة",
+    "تربية البنات",
+    "المراهقة المتأخرة",
+    "خلاف فقهي معتبر"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "حكم عمل المرأة خارج بيتها",
+    "source_author": "الشيخ عبدالعزيز بن باز",
+    "source_url": "https://binbaz.org.sa/fatwas/5631/"
+  },
+  "source_language": "ar",
+  "translated_from": "isl-59686545",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

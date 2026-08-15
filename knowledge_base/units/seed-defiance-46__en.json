@@ -1,0 +1,56 @@
+{
+  "id": "seed-defiance-46__en",
+  "domain": "islamic_parenting",
+  "source_file": "curated/CDC - Positive Parenting Tips / إرشاد تربوي",
+  "title": "Stubbornness and Refusal of Commands in the Child Aged Four to Six",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "العناد",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "CDC - Positive Parenting Tips / إرشاد تربوي",
+  "text_original": "حين يرفض طفلك الأوامر، ابدأ بالهدوء وتجنّب إصدار أوامر كثيرة متتابعة. اطلب منه أمراً واحداً واضحاً بنبرة حازمة لطيفة، وأعطه مهلة قصيرة للاستجابة. اربط الأوامر بأسباب بسيطة يفهمها بدل «لأنني قلت»، فالفهم يقلّل المقاومة. استخدم القواعد الثابتة والنتائج المنطقية الهادئة بدل العقاب الانفعالي. امدح الطاعة والتعاون فوراً وبشكل محدّد ليتكرّر. أعطه فرصاً للاختيار ضمن حدود ليشعر بالاحترام. كن قدوة في ضبط النفس، وذكّره بقيمة بر الوالدين بلطف ودون إكراه فالتربية بالحب أبقى أثراً.",
+  "text_simplified": "When your child refuses commands, begin with calm and avoid issuing many consecutive orders. Ask him for one clear command in a firm yet gentle tone, and give him a short time to respond. Connect commands to simple reasons he understands instead of 'because I said so,' as understanding reduces resistance. Use consistent rules and calm, logical consequences instead of emotional punishment. Praise obedience and cooperation immediately and specifically so it is repeated. Give him opportunities to choose within limits so he feels respected. Be a role model in self-control, and remind him gently and without compulsion of the value of *birr al-walidayn* (dutifulness to parents), for *tarbiyah* (upbringing) with love leaves a lasting impact.",
+  "labels": [
+    "العناد",
+    "طاعة الأوامر",
+    "الحدود",
+    "بر الوالدين",
+    "4-6 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "CDC - Positive Parenting Tips / إرشاد تربوي",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-defiance-46",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "اطلب منه أمراً واحداً واضحاً",
+        "english": "Ask him for one clear command",
+        "why": "The Arabic means 'ask of him one clear instruction/command' (i.e., give him one clear instruction), but the English 'ask him for one clear command' can be read as asking the child to provide a command, changing the direction of the request.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "فالتربية بالحب أبقى أثراً",
+        "english": "for *tarbiyah* (upbringing) with love leaves a lasting impact",
+        "why": "The Arabic comparative 'أبقى أثراً' (more lasting in effect) is flattened to 'leaves a lasting impact', losing the comparative nuance.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

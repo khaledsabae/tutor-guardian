@@ -1,0 +1,56 @@
+{
+  "id": "isl-a7f9d1f3__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "Arkan al-Islam in a Hadith Nabawi",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تعليم ديني",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "هنأ ،ةيبﱰلا ﰲ يوبنلا جهنﳌا ةيعقاوب اين(cid:684) دصقن ﰒ . ةفلتخﳌا م(cid:275)اقاطو ةيعامتجﻻا ﱰ ََْفا \" : لَاقَـَف ، ِ ةﻼَصﱠ لا ن ﱰ ََْفا اَﲟ ِ ﱐِﱪ َأ ،(cid:589) ِ ﱠا لَوس :ﻼئاق ﰊارعﻷا هلأس امنيحف شَ نﱠهِي ِ ف دُيزَِأ ﻻَ ،ق :لَاَق ،(cid:684)ًﻼََث ا ﱰ ََْفا :لَاَق ؟نﱠه امنيح امأ ،طقف هيلع هضرف اميف ﷲ قدص نإ ةنﳉا هلوخدب ﱪخأف .31 قَدَص ِﱠنلا لَاقَـَف :لَاَق ،ا (cid:589)ﱠا دُُ بع دْقََل \" :لَاَق ،رانلا نع هدعابيو ةنﳉا هلخدي لمع نع لبج نب ذاعم هلأس َأ ﻻََأ \" :لَاَق ﱠﰒُ \" ت ،َةاكَزﱠلا ﰐِؤ ُْـتو يشَ ه ِِب كْرِشُْت ُأ ﻻََأ \" :لَاَق ﱠﰒُ ،عِج ِ اض تـَت : ﻼََت ﱠﰒُ لَاَق ،لِ \" :لَاَق ﱠﰒُ ،\" د ُ اه َ ِ ﳉْ ا ه ِ م ِ اَنس َ ُةو َ ر ْ ذ ِ و َ ،ُةﻼَصﱠ لا ُ هد ُ وم ُ ع َ و َ ، ُ مﻼ َس ْ ﻹِْا رِم ْ َﻷْا س ُ ْأر َ \" :لَاَق ،(cid:589) ِ ﱠا لَوس ُ ر َ (cid:686) َ ىَل َ ـب :ت ُ ْلُـق \" ؟ ه ِ م ِ اَنس َ ِ ةو َ ر ْ ذ ِ و َ ه ِ د ِ وم ُ ع َ و َ ه ِ ّ ِ لكُ رِم ْ َﻷْا . \" 32 ذَه َ ك َ ْ يَلع َ فﱠ كُ \" :لَاَق ه ِِ ناس َ ِ لِب ذَخ َ َأَف ، ِ (cid:589)ﱠا ﱯ ﱠ ِ َن (cid:686) َ ىَل َ ـب",
+  "text_simplified": "This text explains a hadith nabawi about the arkan (pillars) of Islam and the importance of Salah, Zakat, and Jihad. The hadith clarifies that the foundation of the religion is Islam, its pillar is Salah, and its peak is Jihad. It also shows that whoever fulfills the obligations and is sincere to Allah will enter Jannah and be far from the Fire.",
+  "labels": [
+    "حديث نبوي",
+    "أركان الإسلام",
+    "الصلاة",
+    "الجهاد",
+    "التربية الدينية"
+  ],
+  "created_at": "2026-06-20T14:39:58Z",
+  "updated_at": "2026-06-20T14:39:58Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-a7f9d1f3",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "أركان الإسلام في حديث نبوي",
+        "english": "Arkan al-Islam in a Hadith Nabawi",
+        "why": "The title transliterates 'Arkan al-Islam' and 'Hadith Nabawi' instead of translating them as 'Pillars of Islam' and 'Prophetic hadith'. The body text translates 'arkan' as 'pillars' but the title does not, creating inconsistency. 'Nabawi' is an Arabic adjective that should be rendered 'Prophetic' in English.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "الجنة",
+        "english": "Jannah",
+        "why": "The Arabic 'الجنة' is transliterated as 'Jannah' while the paired term 'النار' is translated as 'the Fire'. This is inconsistent treatment of Islamic terms within the same document.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

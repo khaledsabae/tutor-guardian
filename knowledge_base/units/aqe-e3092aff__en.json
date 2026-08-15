@@ -1,0 +1,56 @@
+{
+  "id": "aqe-e3092aff__en",
+  "domain": "aqeedah",
+  "source_file": "aqidah_unified_manifest.md",
+  "title": "Al-Mala'ikah, al-Kutub, and al-Rusul",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تعليم_العقيدة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_فقهي",
+  "reference_info": "مسار العقيدة — الملائكة والكتب والرسل. المصادر: العقيدة الطحاوية، القواعد الأربع، ثلاثة الأصول، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش).",
+  "text_original": "الملائكة والكتب والرسل\n\nالتركيز: الإيمان بالغيب الملموس بآثاره\n\nالدليل: وَمَا يَنطِقُ عَنِ الْهَوَىٰ * إِنْ هُوَ إِلَّا وَحْيٌ يُوحَىٰ (النجم: 3-4). جبريل بالوحي، ملك الموت بقبض الأرواح.\n\nالتطبيق اليومي: تذكير بلطف: معك ملكان كاتبان يسجلان حسناتك وسيئاتك.\n\nنصيحة للأب/الأم: لا تُخيف الطفل من الملائكة؛ قدّمهم كخدمة رحيمة من الله.",
+  "text_simplified": "Belief in the unseen encompasses the angels, the books, and the messengers. Allah said about His Prophet ﷺ: «وَمَا يَنطِقُ عَنِ الْهَوَىٰ * إِنْ هُوَ إِلَّا وَحْيٌ يُوحَىٰ». Jibril is entrusted with revelation, and the Angel of Death with taking souls. Remind your child gently that two recording angels accompany him, writing down his deeds. Do not frighten him with the angels; rather, present them as a merciful service from Allah.",
+  "labels": [
+    "عقيدة",
+    "توحيد",
+    "تربية_إسلامية",
+    "نشء",
+    "angels_books_prophets"
+  ],
+  "created_at": "2026-06-24T13:13:17Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "aqidah_unified_manifest",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "aqe-e3092aff",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "structure",
+        "field": "text_simplified",
+        "arabic": "قال تعالى عن نبيه",
+        "english": "Allah said about His Prophet ﷺ",
+        "why": "The honorific 'تعالى' (Exalted) for Allah is dropped in the English translation.",
+        "severity": "low"
+      },
+      {
+        "type": "religious_error",
+        "field": "text_simplified",
+        "arabic": "نبيه",
+        "english": "His Prophet ﷺ",
+        "why": "The honorific 'ﷺ' is added after 'Prophet' although the Arabic does not include it.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

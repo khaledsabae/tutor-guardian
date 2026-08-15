@@ -1,0 +1,69 @@
+{
+  "id": "b08d70af-9008-41cc-97f5-cfeba46ba327__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "Al-Khilaf al-Zawji Amam al-Abna': Ma Yadurruhum wa Ma La Yadurruhum",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "الخلافات الزوجية أمام الأبناء",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "ليس كل خلاف أمام الأبناء ضارًّا. الأطفال الذين يرون خلافًا يُدار باحترام ثم يُحلّ يتعلّمون أن الاختلاف جزء طبيعي من العلاقات وأنه قابل للإصلاح. الضرر يأتي من نوع محدّد من الخلاف:\n\n**ما يضرّ فعلًا:** رفع الصوت والإهانة والتحقير، والخلاف الذي يبدأ أمامهم ولا ينتهي أمامهم فيبقى معلّقًا، والصمت الطويل الثقيل بين الوالدين، وتحويل الطفل إلى رسول أو شاهد أو حَكَم، وذمّ أحد الوالدين للآخر أمامه.\n\n**ما لا يضرّ:** خلاف بصوت هادئ ينتهي بحلّ يراه الأبناء، واختلاف رأي معلن مع احترام واضح.\n\nعمليًا:\n• أجّل الخلاف الحادّ إلى وقت لا يراكم فيه أحد.\n• إن بدأ أمامهم، فأنهِ الظاهر منه أمامهم: «اختلفنا، واتفقنا نكمّل بعدين، والموضوع مش بسببك.»\n• قل الجملة الأخيرة صراحةً — الأطفال يفسّرون خلاف الوالدين بأنه ذنبهم أكثر مما يتصوّر الكبار.\n• لا تجعل الطفل ناقلًا للرسائل ولا مصدرًا للمعلومات عن الطرف الآخر.\n• احرص على أن يروا الإصلاح كما رأوا الخلاف.\n\nوإن كان في البيت عنف — لفظي أو جسدي — فهذا ليس خلافًا زوجيًا يُدار بالنصائح، ويحتاج تدخّلًا ودعمًا مختصًا وحماية فورية.",
+  "text_simplified": "Not every khilaf (disagreement) in front of the children is harmful. Children who witness a khilaf managed with respect and then resolved learn that difference is a natural part of relationships and that it can be mended. The harm comes from a specific type of khilaf:\n\n**What truly harms:** Raising the voice, insults, belittlement, a khilaf that begins in front of them but does not end in front of them—remaining unresolved, prolonged heavy silence between the parents, turning the child into a messenger, witness, or judge, and one parent speaking ill of the other in front of them.\n\n**What does not harm:** A khilaf in a calm voice that ends with a resolution the children witness, and a difference of opinion declared with clear respect.\n\nPractically:\n• Postpone intense khilaf to a time when no one is around them.\n• If it begins in front of them, conclude its visible part in front of them: \"We disagreed, we agreed to continue later, and this is not because of you.\"\n• Say the last sentence explicitly—children interpret their parents' khilaf as their fault more than adults might imagine.\n• Do not make the child a messenger or a source of information about the other parent.\n• Ensure they see the resolution just as they saw the khilaf.\n\nAnd if there is violence in the home—verbal or physical—this is not a marital khilaf to be managed with advice; it requires intervention, specialized support, and immediate protection.",
+  "labels": [],
+  "keywords": [
+    "Al-khilafat al-zawjiyyah",
+    "Al-shijar amam al-atfal",
+    "Al-aman al-usari",
+    "Hall al-khilaf"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "b08d70af-9008-41cc-97f5-cfeba46ba327",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "structure",
+        "field": "title",
+        "arabic": "الخلاف الزوجي أمام الأبناء: ما يضرّهم وما لا يضرّهم",
+        "english": "Al-Khilaf al-Zawji Amam al-Abna': Ma Yadurruhum wa Ma La Yadurruhum",
+        "why": "The title is transliterated rather than translated, leaving English readers without the meaning of the content.",
+        "severity": "medium"
+      },
+      {
+        "type": "structure",
+        "field": "keywords",
+        "arabic": "[\"الخلافات الزوجية\", \"الشجار أمام الأطفال\", \"الأمان الأسري\", \"حل الخلاف\"]",
+        "english": "[\"Al-khilafat al-zawjiyyah\", \"Al-shijar amam al-atfal\", \"Al-aman al-usari\", \"Hall al-khilaf\"]",
+        "why": "Keywords are transliterated instead of translated, making them useless for English-language search and comprehension.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أجّل الخلاف الحادّ إلى وقت لا يراكم فيه أحد.",
+        "english": "Postpone intense khilaf to a time when no one is around them.",
+        "why": "The Arabic says 'when no one sees you' (second person plural, referring to the parents), but the English shifts to third person 'them', which could refer to the children and changes the focus from the parents being unseen to the children being absent.",
+        "severity": "medium"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "خلاف",
+        "english": "khilaf",
+        "why": "The ordinary Arabic word 'خلاف' (disagreement) is repeatedly transliterated as 'khilaf' instead of translated, making the English text stiff and less natural.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

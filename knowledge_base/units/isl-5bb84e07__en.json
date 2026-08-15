@@ -1,0 +1,56 @@
+{
+  "id": "isl-5bb84e07__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching the Child to Slaughter the Udhiyah for Eid",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تعليم التضحية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ﭭ رؿط ـبا ناك :لاق ,عفاك ـطو .)1(»ةاش ةيراجلا كؾطو ةاش ملاغلا كؾط لقؼي ناؽف :لاق ,هايإ اهاططأ ةيراجلا ـطو ,ـقتاش ملاغلا ـط ةؼقؼعلا نقؽت نأ بحتسؿلا نأ ,ؽش لاب ؾضفٕا قه اذفف ,اتهققو ؽلذب ةحرصؿلا ثيداحٕا ةرثؽل ,ةاش .زئاجف ةدحاو ةاشب ركذلا هدلو ـط ؼط نإو :عباطيا ّٛٝيا في ٘ٓع حبرتٚ .)2(»كؿسيو فعباس مقي فـط حبذت« :ةؼقؼعلا في ﭬ ةرؿس ثيدحل حَ لْا ـِ طَ ﷺ للها لُ قس ؼَ طَ : تْ لَاقَ ڤ ةَ شَ ئاطَ ـْ طَ و .فجيرخت مدؼت »اؿ :سػع عباسيا ّٜٛ حبذ عباطيا ّٛٝيا ٔع اٖسخأ ٕإٚ ننف ,فعباس مقي فـط ؼعي :لقؼي ,ءاطط تعؿس :لاق ,ةـققط ـبا ـطو ساـلا تيأرو :لاق ,رخٔا عباسلا كلإ هورخمي نأ للإ بحلف ؿهلطخأ .)3(»انهودفيو ةؼقؼعلا ؾهأ ؾكلي :لاق ,فعباس مقي فـط ؼعلاب نورحتي :ينُٝجع ٔبا ٍاق تاف ننف :ءاؿؾعلا لاق ,عباسلا مققلا في نقؽت نأ ؾضفٕاف ةؼقؼعلا امأو« ,ـيرشعلاو يداحلا مققلا لػف تاف ننف ,رشط عبارلا مققلا لػف عباسلا مققلا وأ سداسلا مققلا في ةؼقؼعلا حبذي نأ جرح ٓ فكأ كؾط تقو يأ لػف تاف ننف .ملحمٞحمّمًا طشر مغمق حمٞحص دامٜمؾم٢مس )511ص( »م٠مـقمعا« مذ ؽمًامُ فمضرمظأ (1) .فيجرتخ مدم٘مش (2) .فمٜمق حمٞحص دامٜمؾم٢مس )332/4( قازرمًا دبمق فمضرمظأ (3) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ ةثلاث لهو طؼف ةؾضػم تاقوأ هذه ـؽل ,رشط نياثلا وأ رشاعلا وأ سماخلا .)1(»ـيرشعلاو يداحلاو رشط عبارلاو عباسلا وأ ـماثلا وأ عبارلا في فـط حبذ قؾف ٓإو ,بابحتسلال عباسلا مققب دققؼتلا .)2(ؾكٕاو خبطلا مققب ٓ ,حبذلاب رابتطٓاو ,تأزجأ هدعب وأ رشاعلا ةؾػح قهو عقبسلاب كؿسي اؿل ؾصأ ٓ فكأ اقؿؾعي نأ ءابٔا",
+  "text_simplified": "Parents must teach their children to slaughter the sacrificial ram on Eid al-Adha, taking into account the child’s age and ability to perform the slaughter. It is preferable to train the child gradually in slaughtering, starting from the age of seven, and to reinforce their behavior with appropriate rewards.",
+  "labels": [
+    "تضحية",
+    "عيد الأضحى",
+    "تربية دينية",
+    "تدريب",
+    "مكافأة"
+  ],
+  "created_at": "2026-06-21T10:18:07Z",
+  "updated_at": "2026-06-21T10:18:07Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-5bb84e07",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "التضحية بالكبش",
+        "english": "to slaughter the sacrificial ram",
+        "why": "The Arabic 'التضحية' denotes the act of sacrifice as a religious ritual, not merely the physical slaughter. The English reduces it to 'slaughter', omitting the sacrificial/ritual dimension.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "في العيد",
+        "english": "for Eid",
+        "why": "The Arabic 'في العيد' means 'on Eid' or 'during Eid', indicating the time. The English 'for Eid' suggests purpose or occasion, which is a slight shift.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

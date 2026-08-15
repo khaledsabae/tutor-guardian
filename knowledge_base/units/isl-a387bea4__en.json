@@ -1,0 +1,39 @@
+{
+  "id": "isl-a387bea4__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children upon Their Parents in Islam",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ؿفس :ـقؿفس ﷺ ـحك اؿـقبف :لاق ,ةـيدؿلا كلإ ـقعجار ءابضعلا كؾط هءارو ﷺ للها لقسر ؼباسم ٓأ لقؼي ؾعجف :لاق ,ادش ؼبسي ٓ راصكٕا ـم ؾجر ناكو :لاق ,رقسك ,فملاك تعؿس اؿؾف :لاق ,ؽلذ دقعي ؾعجف ,؟ؼباسم ـم ؾه ,؟ةـيدؿلا كلإ ,ﷺ للها لقسر نقؽي نأ ٓإ ,ٓ :لاق ,؟اػيرش باته ٓو اؿيرك مرؽت امأ :تؾق دامٜمؾم٢مس )51( »فمٛمٞمٚمٕمشو لمُرمًا ؾئامْمو« مذو ،)243/1( »مػبمٙمًا« مذ نيامؼمٓمًا فمضرمظأ (1) .مامٝثيدمط ـسيح ـمم مامٝمو دابمق ـمس ؿمٞمٙمط ـمس ؿمٞمٙمطو ،شامٞمق ـمس ثرالحا ـمس ـحمرمًا دبمق لالح (2) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ ,تئش نإ :لاق ,ؾجرلا ؼباسلأف نيرذ ,لمأو لبلب للها لقسر اي :تؾق :لاق فقؾط تطبرف :لاق ,تودعف ترػطف ,لؾجر تقـثو ؽقلإ بهذا :تؾق :لاق وأ افرش فقؾط تطبرف هرثإ في تودط ؿث ,لسػك لؼبتسأ ,ـقفرش وأ افرش دق :تؾق :لاق ,فقػتك ـقب فؽصلف :لاق ,فؼحلأ كتح تعفر نيإ ؿث ,ـقفرش .ةـيدؿلا كلإ فتؼبسف لاق ـضأ اكأ لاق ,للهاو تؼبس :بريا دبع ٔبا ٍاق ةدعلاو ودعلا في ةبردلاو دادتشٓا ؾقبس كؾط ففبشو اذه ـم ناك ام« فجو كؾط ناك امو فب سلب لاف ناهرلا فجو كؾط ٓ قفؾلا فجو كؾط وأ ودعؾل .)1(»ؾحي ٓو زقجي لاف ةـهارؿلا ةقؼلاو ةطاجشلا ةؾقضفو ,ضقط لاب ؾجرٕا كؾط ةؼباسؿلا زاقج :فقفو« فلاجر داـسنب )593/1( »نياثؿلاو داحٕا« في ؿصاط لبأ ـبا جرخأو كؾط نقؼبتسي ﷺ للها لقسر باحصأ ناك :لاق ,ثيرح ـب ورؿ .ةقسداؼلا مقي لـعي ؿفؼبسي ثيرح ـب رؿط ناؽف ؿفمادقأ ف ِ مادَ قْ أَ كؾَ طَ وَ ,بِ اكَ ر لاوَ ؾِ قْ خَ لْا كؾَ طَ نَ قؼُ بْ تَ س",
+  "text_simplified": "This text discusses the rights of children upon their parents in Islam, mentioning Prophetic hadiths that urge good tarbiyah (upbringing) of children and treating them with kindness and justice. It also highlights the importance of avoiding harshness and violence in tarbiyah, and the necessity of instilling religious and moral values in the hearts of children.",
+  "labels": [
+    "حقوق الأبناء",
+    "تربية إسلامية",
+    "الرفق بالأطفال",
+    "العدل في التربية",
+    "الأخلاق"
+  ],
+  "created_at": "2026-06-21T10:26:36Z",
+  "updated_at": "2026-06-21T10:26:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-a387bea4",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

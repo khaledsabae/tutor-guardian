@@ -1,0 +1,56 @@
+{
+  "id": "isl-3c91c800__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Foundations of Tarbiyah and Teaching Children",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية وتعليم",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "فُ تَ قَ ططَ دَ ر فَ : لَ اقَ , ؿ كُ دَٓ وْ أَ ـَ ْقبَ اقلُ دطْ اوَ لله ا اقؼُ تَ افَ : لَ اقَ .)225/2( »مػثمي ـمسا مػسمٗمش« (1) .)417ص( »يدمٕسمًا مػسمٗمش« (2) .)1623( ؿمٚسمُو ،)2587( يراخبمًا فمضرمظأ (3) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ :دٝعيا لٝقد ٔبا ٍاق ؾقضػتلا نأ :فقف ةؿؽحلاو تابفلا في دٓوٕا ـقب ةيقستلا بؾص كؾط لدي« ؾضػؿلا دلقلا لـطأ هدلقل دلقلا ـم برلا مدطو ضغابتلاو شاحيلإا كلإ يدمي :ينُٝجع ٔبا ٍاق جاتحي ام ناسكإ ؾك لطعي ةؼػـلا سقل ضحؿلا عبرتلا ةقطعلاب دارؿلاو« رخٔاو بتك كلإ جاتحيو ؿؾعلا بؾطي ؿهدحأ نأ ردق اذنف ارقثك وأ ناك لاقؾق ناك قل ؽلذكو سلب لاف بتؽلا ـم فقلإ جاتحي ام لوٕا كططلف ؽلذك سقل باقثلا كلإ جاتحي ـم لطعقف جاتحي ٓ رخٔاو باقث كلإ جاتحي ؿهدحأ قل ؽلذكو سلب لاف هاططلف ءاود كلإو ؿهارد كلإ جاتحاف ضرم قل ؽلذكو عفدل ناك ام ؿفؿلا سلب ٓو فجوزي فكنف فجوزف جاوزلا ـس ؿهدحأ غؾب اضحم اطبرت ناك اذإ امأ فجاتحي ام ناسكإ ؾك لطعي نأ فقف ةيقستلاف ةجاحلا .)2(»ؿفـقب ؾيدعتلا ـم دبلاف .)378ص( »مامٙمطٕا مامٙمطإ« (1) 126/4( »مللحامّمًا ضاير حشر« (2) كمٓمقأ اذم٢مو ءاقمؾ كثمٟٕاو رميذمًا لمٓمٕي نأ ؾيدمٕتمًا ؾه ءمامٚمٕمًا ػمٚتمظاو « :ينُٝجع ٔبا ٍاقٚ لمٜمٕي ثامػمعا مذ للها ؿهامٓمقأ مامي ؿمٝمٞمٓمٕي نأ ؾيدمٕتمًا نأ مأ ةئامُ كثمٟٕا كمٓمقأ ةئامُ رميذمًا حمضارمًا قه لقم٘مًا اذهو ملسخم كثمٟٕا كمٓمقأ ةئامُ رميذمًا كمٓمقأ اذم٢مو ملمٞثمٟٕا ظمط ؾثمُ رميذمٚمً امْمح امقمؼمش عمؼمش ؿمص فمضاتيح امُ دمطاو ؾمي كمٓمقأ اذم٢مو للها ةمٛسمى ـمُ لدمقأ ةمٛسمى ٓ فمٟٕ ؾمْمو لمٜمٕي",
+  "text_simplified": "Parents must raise their children with a love for knowledge and reading, and provide books suitable for their ages. They should also reinforce positive behavior with rewards rather than punishment, and address behavioral issues with wisdom and patience. The child needs guidance and a good example (uswah hasanah). If they are ill, they must be treated, and if they are in need of marriage, they must be married.",
+  "labels": [
+    "تربية",
+    "تعليم",
+    "قراءة",
+    "مكافأة",
+    "قدوة"
+  ],
+  "created_at": "2026-06-21T10:21:13Z",
+  "updated_at": "2026-06-21T10:21:13Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-3c91c800",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title vs text_simplified",
+        "arabic": "تربية",
+        "english": "Tarbiyah (title) / raise (text)",
+        "why": "The same Arabic word 'تربية' is transliterated as 'Tarbiyah' in the title but translated as 'raise' in the body, creating inconsistency within the document.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "القدوة الحسنة",
+        "english": "a good example (uswah hasanah)",
+        "why": "The English adds the transliterated term 'uswah hasanah' which is not present in the Arabic source. This introduces a specific Islamic term (from Qur'an 33:21) not used in the original, potentially altering the intended meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

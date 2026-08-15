@@ -1,0 +1,48 @@
+{
+  "id": "isl-fef5f702__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "The Role of the Masjid and the Family in Islamic Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا يضر َ ةش َ ِ ئاع َ نعف هل هتيب لهأ ةداهشو ،51\" يلهﻷ مكﲑخ (cid:685)أو هلهﻷ مكﲑخ مكﲑخ \"هلوق ﰲ ﲎعﳌا اذه ﱃإ ﲑشي ملسو هيلع ﷲ ىلص هدجنف (cid:685)دنع دهاشلاو ،هلهأ مدﳜو هبوث عقريو هلعن فسﳜ ناكو ،\"52ط ﱡ َق ةًَأر (cid:589) ِ ﱠا لُوس ،ةلاسرلا غيلبت رم(cid:997) اهنم قلعت ام هترسأ عم ةيوبﱰلا هفقاوم نمف ،ةرسﻷا لخاد يعارلاو ﰊرﳌا ملسو هيلع ﷲ ىلص ناك هنأ وه هلك اذه نم ،هﻻوم ناكو ةثراح نب اديزو ـ هدنع ناكو ـ بلاط ﰊأ نب يلعو اهنع ﷲ يضر ةﳚدخ هتجوز ملسو هيلع ﷲ ىلص ﱯنلا اعد نم لوأ ناكف ﰊَِأ نعف ،ﲔبرقﻷا هتﲑشع ﰒ هتيب لهأ اعدف فُـْنَأ (cid:686) شْ ا د ٍ مﱠَ ﳏُ ت (cid:589) ِ ﱠا لِوس بزﱡلا مﱠُأ (cid:686) يشَ ِ (cid:589)ﱠا ن (cid:589) ِ ﱠا لِوس ْنكُ :لُوقَُ ـي ،َة م ع نعف ،ةماعلا بادﻵا هترسأ دارفﻷ هميلعت اهنمو (cid:589) ِ ﱠا لُوس ﱄِ لَاقَـَف ،ة ِ فَح كولس دعاوق خيسرتو ةوعدلا غيلبت ﰲ ةليسوك ةرسﻸل ملسو هيلع ﷲ ىلص لوسرلا رامثتسا انل دكؤت اهلك ،ةﲑثك بابلا اذه ﰲ فقاوﳌاو . ملسﳌا عمت(cid:272)ا ةيوبﱰلا راودﻷاو دجسﳌا :اين(cid:684) ةعلق وهف\" ، ﱃاعت ﷲ ﱃإ عاقبلا بحأ وهو ،تاولصلل دعﳌا ناكﳌا وه حﻼطصﻻا ﰲو ،دوجسلا عضوم ىلع ةلﻻدل ةغللا ﰲ دجسﳌا قلطي هيف يذلا ىدتنﳌاو ،مهحصانتو مهرواشت لﳏو م(cid:275)ارﲤؤم زكرم وهو .ًايموي ﲔملسﳌا عامتجا ناكمو ءايقتﻷا تيب وهو ،ةليضفلا نصحو ناﳝﻹا .55\" ن ونواعتي ﲑﳋا ىلعو نوفلآتيو نوفراعتي ،هيجوتلاو ميلعتلاو فاكتعﻻاو ةدابعلل ً(cid:685)اكم ملسو هيلع",
+  "text_simplified": "The text discusses the role of the masjid in Islamic tarbiyah (nurturing), and how the Prophet Muhammad ﷺ used the masjid as a center for teaching, guidance, and da'wah. It also highlights the importance of the family in instilling tarbiyah values, and mentions that the masjid is a place of worship, consultation, and cooperation among Muslims.",
+  "labels": [
+    "مسجد",
+    "تربية",
+    "أسرة",
+    "دعوة",
+    "تعليم"
+  ],
+  "created_at": "2026-06-20T14:41:11Z",
+  "updated_at": "2026-06-20T14:41:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-fef5f702",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "القيم التربوية",
+        "english": "tarbiyah values",
+        "why": "The Arabic 'القيم التربوية' means 'educational/upbringing values'. Using 'tarbiyah' as an adjective ('tarbiyah values') is grammatically awkward and may confuse readers; 'tarbiyah' is a noun, not an adjective. Better: 'values of tarbiyah' or 'educational values'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "isl-08be6045__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children upon Their Parents in Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية الأطفال",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ِ ب ر مْ يُ : لَ اقَ ,)4( نَ ار :ِٖبرن دعب ٙٚداتعٝي ّاٝصيا ٢ًع ٕٛبزدٜٚ قشُ اطَ ةَ ادَ غَ ﷺ ل ِ بَـلا ؾَ س أَ : تْ لَاقَ , ذقِ عَ م تْـ ِ ب عِ قِ بَ ر ِ ئاصَ حَ بَ صْ أَ ـْ م وَ , ف ِ ِ مقْ يَ ةَ قَ ؼ ِ بَ ؿ حَ بَ صْ أَ ـْ م ر ِ اصَ كْ َٕ ْ ا .ـسمط دامٜمؾم٢مس )348/1( ةبمٞمؿ بيأ ـمسا امٝمضرمظأ (1) .فمس فمٞمسأ ـمق ،مامِه ـمق ،ةيوامٕمُ قمسأ امٜمصدمط :لامى )348/1( ةبمٞمؿ بيأ ـمسا فمضرمظأ (2) ،ءامضر بيأ ـمق ،نامٞمٗمؾ ـمق ،عمٞميو امٜمصدمط :لامى )348/1( ةبمٞمؿ بيأ ـمسا فمضرمظأ (3) :ؿمشامط قمسأ لامى ،يرزلجا للها دبمق ـمس زرمح ءامضر بيأ ىقمؾ تام٘مص فمًامضرو ،فمس لقحمٙمُ ـمق ـمسا هرميذو ،نقمٞموقمٙمًا فمٜمق ثديح لمُامؿ ،سم٠مس فمس سمٞمً ةرمُ لامىو ،دواد قمسأ فم٘مصوو ،ةم٘مص خمٞمؿ ـمق عماسمًا فمٞمو ملمس امُ فثيدحمس مؼتمٕي ،لقحمٙمُ ـمق سمًدي نامي :لامىو ،»تام٘ثمًا« مذ نابمط .مػسي رامصٕا مذ بمٓلخاو ،امٜه ثيدحتمًامس حمٍي لم قهو تمٚمى ،همػمه و لقحمٙمُ .ردم٘مًا مػبمي دمسامق ةم٘مص ،ةمىرمًا لمامق ،يرزلجا نارمٝمُ ـمس نقمٛمٞمُ قه (4) ـمق ،ةرازمو بيأ ـمق ،نامٞمٗمؾ ـمق ،عمٞميو امٜمصدمط :لامى )348/1( ةبمٞمؿ بيأ ـمسا فمضرمظأ (5) .نارمٝمُ ـمس نقمٛمٞمُ ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ كؽَ بَ اذَ ِ نفَ , ـِ فْ ع ِ لْا ـْ ِ م ةَ بَ عْ ؾُ لا ؿ فُ لَ ؾُ عَ جْ كَ وَ ,اَـكَ اقَ بْ ص ِ م قِ صَ كُ وَ دُ عْ بَ",
+  "text_simplified": "The text discusses the rights of children upon their parents and mentions Prophetic hadiths that urge raising children with justice and mercy. Parents must provide care and education for their children. It also highlights the importance of treating children equally and not discriminating among them.",
+  "labels": [
+    "حقوق الأطفال",
+    "تربية",
+    "العدل",
+    "الرحمة",
+    "الوالدين"
+  ],
+  "created_at": "2026-06-21T10:23:54Z",
+  "updated_at": "2026-06-21T10:23:54Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-08be6045",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يجب على الآباء توفير الرعاية والتعليم لأطفالهم",
+        "english": "Parents must provide care and education for their children",
+        "why": "Arabic specifies 'الآباء' (fathers), not both parents; English broadens the obligation to 'Parents', changing the subject.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "في التربية",
+        "english": "in Tarbiyah",
+        "why": "Tarbiyah is transliterated in the title but the same term is translated as 'raising' in the body, creating inconsistency; if Tarbiyah is kept, it should be defined or used consistently.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

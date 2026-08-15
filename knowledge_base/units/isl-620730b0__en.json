@@ -1,0 +1,48 @@
+{
+  "id": "isl-620730b0__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Rifq of the Prophet ﷺ with Children in Salah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "قدوة تربوية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "هذخفَ كؾَ طَ لكدُ عؼْ قُ فَ لكذُ خُ ل ْ يَ ﷺ للها لُ قس نَ اكَ ,ﭭ ديْ زَ ـِ بْ ةَ م فُ ؾَ لا : لُ قؼُ يَ ؿ خْ ُْٕ ا هذخفَ كؾَ طَ ـَ س حَ لْا دُ عؼْ يُ وَ :ًٞصٜ ٖٛٚ بٜٓش تٓب ١َاَلأ ً٘حم ِٗب ٘تحمزٚ زاػصياب ٘تكفغ َٔٚ ؾٌ ِ ماحَ قَ هُ وَ لؾِ صَ يُ نَ اكَ ﷺ ِ للها لَ قس نَ أَ ,ﭬ يِ ر ِ اصَ كْ َْٕ ا ةَ دَ اتَ قَ ل ِ بأَ ـْ طَ شَ د ِ بْ طَ ـِ بْ ةَ عَ ق ِ بر ـِ بْ صِ اعَ لْا ل ِ بَٕ ِ وَ ,ﷺ ِ للها ل ِ قس ت ِ ْـ ِ ب بَ َـيْ زَ تَ ْـ ِ ب ةَ م اقَ اذَ ِ إوَ افَ عَ ضَ وَ دَ جَ س نأ افقؾط كشخي دجس وأ عكر اذإ ناك فكأ ةمامٕ فتؿحرو ﷺ فتؼػش ـمو« ـم عزجتف ضرٕا في رقصت ٓ فب افؼؾعتل تكاك انهلكو ضرٕاب افعضقف طؼست دلقلا ةؿحر ردق ؿظط ؿفضعب فـم طبـتساو ماق اذإ افؾؿحي نأ جاتحقف فتقراػم كؾط ةظفاحؿلاو عقشخلا في ةغلابؿلا كؾط ةظفاحؿلا ذئـقح ضراعت فكٕ ناقبل ؽلذ ؾعف اؿكإ ﷺ نقؽي نأ ؾؿتحيو نياثلا مدؼف دلقلا رصاخ ةاطارم دجس اذنف ءاشعلا ﷺ للها لقسر عم لؾصك اـك :لاق ,ﭬ ةريره لبأ ـطو فػؾخ ـم هدقب اؿهذخأ فسأر عفر اذنف ,هرفض كؾط ـقسحلاو ـسحلا بثو .)6113( يراخبمًا فمضرمظأ (1) .)543( ؿمٚسمُو ،)516( يراخبمًا فمضرمظأ (2) .)429/11( »يرابمًا حتمو« (3) ـــــــــــــــتــــــــ",
+  "text_simplified": "The text describes the behavior of the Prophet Muhammad ﷺ during salah, as he would lengthen his sujud and ruku' with khushu', maintaining his tranquility even with children around him. It shows how he dealt with the little ones with rifq (gentleness), such as lifting his head from sujud gently if a child sat on his back. This example teaches parents the importance of patience and rifq with children during acts of worship.",
+  "labels": [
+    "قدوة",
+    "تربية",
+    "صلاة",
+    "لطف",
+    "صبر"
+  ],
+  "created_at": "2026-06-21T10:19:09Z",
+  "updated_at": "2026-06-21T10:19:09Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-620730b0",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title and text_simplified (last sentence)",
+        "arabic": "لطف / اللطف",
+        "english": "Rifq / rifq",
+        "why": "The Arabic uses لطف (lutf) in the title and in the final sentence, but the English consistently renders it as 'rifq', which is a different Arabic word (رفق). While both mean gentleness/kindness, the translation substitutes one term for another, altering the specific wording of the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

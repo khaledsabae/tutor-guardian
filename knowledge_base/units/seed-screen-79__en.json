@@ -1,0 +1,38 @@
+{
+  "id": "seed-screen-79__en",
+  "domain": "cyber",
+  "source_file": "curated/AAP - Family Media Plan",
+  "title": "Managing Screens and Devices at Ages Seven to Nine",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "إدمان الشاشات",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_سيبراني",
+  "reference_info": "AAP - Family Media Plan",
+  "text_original": "في هذا العمر ضع خطة عائلية متّفقاً عليها لاستخدام الأجهزة تحدّد الوقت والمكان ونوع المحتوى. اجعل أوقاتاً وأماكن خالية من الشاشات كأوقات الطعام والنوم والواجبات. فعّل أدوات الرقابة الأبوية والبحث الآمن، وأبقِ الأجهزة في مكان مشترك بالمنزل لا في غرفة الطفل. تحدّث معه بصراحة عن الأمان الرقمي: عدم مشاركة معلوماته أو صوره، وإخبارك فوراً إذا رأى ما يزعجه أو تواصل معه غريب. وازِن وقت الشاشة بأنشطة بدنية واجتماعية وقراءة ونوم كافٍ. كن قدوة بعاداتك الرقمية فالأطفال يقلّدون ما يرونه أكثر مما يُقال لهم.",
+  "text_simplified": "At this age, set a family-agreed plan for device use that specifies time, place, and type of content. Designate screen-free times and places, such as during meals, sleep, and homework. Activate parental controls and safe search tools, and keep devices in a shared space in the home, not in the child’s room. Talk to them openly about digital safety: not sharing their information or photos, and telling you immediately if they see something disturbing or if a stranger contacts them. Balance screen time with physical activity, social interaction, reading, and sufficient sleep. Be a role model with your own digital habits, as children imitate what they see more than what they are told.",
+  "labels": [
+    "وقت الشاشة",
+    "الأمان الرقمي",
+    "الرقابة الأبوية",
+    "7-9 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP - Family Media Plan",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-screen-79",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

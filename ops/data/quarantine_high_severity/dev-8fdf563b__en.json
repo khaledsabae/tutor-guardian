@@ -1,0 +1,56 @@
+{
+  "id": "dev-8fdf563b__en",
+  "domain": "development",
+  "source_file": "Positive_Parenting_3_5.pdf",
+  "title": "Advice for Nurturing Young Children in the Hyperactivity Stage",
+  "language": "en",
+  "age_group": "prenatal-1",
+  "behavior_type": "تربية إيجابية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "Tips Following are some things you, as a parent, can do to help your preschooler during this time:  Continue to read to your child. Nurture her love for books by taking her to the library or bookstore.  Let your child help with simple chores.  Encourage your child to play with other children. This helps him to learn the value of sharing and friendship.  Be clear and consistent when disciplining your child. Explain and show the behavior that you expect from her. Whenever you tell her no, follow up with what he should be doing instead.  Help your child develop good language skills by speaking to him in complete sentences and using \"grown up\" words. Help him to use the correct words and phrases.  Help your child through the steps to solve problems when she is  Give your child a limited number of simple choices (for example, deciding what to wear, when to play, and what to eat for snack). National Center on Birth Defects and Developmental Disabilities Division of Human Development and Disability Child Safety First As your child becomes more independent and spends more time in the outside world, it is important that you and your child are aware of ways to stay safe. Here are a few tips to protect your child:  Tell your child why it is important to stay out of traffic. Tell him not to play in the street or run after stray balls.  Be cautious",
+  "text_simplified": "As a father, you can often support your *tarbiyah* (nurturing) of your young children during this stage by reading books with them, helping them with simple tasks, encouraging them to play with their friends, teaching them how to behave properly, and speaking to them in a serious manner.",
+  "labels": [
+    "أطفال صغار",
+    "القراءة",
+    "الحوار",
+    "الأنشطة الاجتماعية",
+    "التعليم"
+  ],
+  "created_at": "2026-06-07T07:56:06Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Positive_Parenting_3_5",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "dev-8fdf563b",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "كثيراً ما يساعدكم كأب على تربية أطفالكم الصغار",
+        "english": "As a father, you can often support your *tarbiyah* (nurturing) of your young children",
+        "why": "The Arabic says something 'helps you as a father' to raise your children, but the English changes the actor to 'you can support', altering the meaning from being helped to doing the supporting.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "قراءتهم للكتب",
+        "english": "reading books with them",
+        "why": "The Arabic 'قراءتهم للكتب' means reading books to them (the children), not reading together with them.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

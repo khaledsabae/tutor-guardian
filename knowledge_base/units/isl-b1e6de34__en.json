@@ -1,0 +1,54 @@
+{
+  "id": "isl-b1e6de34__en",
+  "domain": "islamic_parenting",
+  "source_file": "Al_Hady_Al_Nabawi.pdf",
+  "title": "The Virtue of Tarbiyah of Daughters and the Qualities of the Successful Murabbi",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية_البنات",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كتاب إسلامي",
+  "text_original": ":هننس في يذمرتلا هاور )9( .ةنلجا هل تبجو دقّف ،نهحمريو ،نهيفكيو ،نبهدؤي :تانب ثلاث هل ناك نم { للها . } ينتنثو:لاق ؟للها لوسر اي ينتنثو :موقّلا ضعب نم لجر لاقّف حجانلا بيرلما تافص دقو ،للها قيفوت دعب هدلو ةيبرت في هحانج داز اهنم دادزا املك تافص حجانلا بيرملل نيعي لا اذهو ،كلذ يرغ وأ ،ًلااخ وأ ًادج وأ ًامع وأ ًاتخأ وأ ًاخأ وأ ًامأ وأ ًابأ بيرلما نوكي .دصقّي لم نإو هتيبرت في مهسي لفطلا لوح نم لك لب ،دحاو قتاع ىلع عقّت ةيبرتلا نأ ،مزلحاو ،صرلحاو ،لدعلاو ،ةوقّلاو ،ةناملأاو ،ملعلا :اههمأ ةيرثك بيرلما تافصو .ةمكلحاو ،قدصلاو ،حلاصلاو لىإ ةفاضإ ،يعرشلا ملعلا نم ردق هيدل نوكي نأ دب لاف .ةيبرتلا ةيلمع في بيرلما ُةَدُع .رصاعلما عقاولا هقّف بجاولا ردقّلا ىوس بيرلما نم بلطيُ لاو ،ةنسلاو باتكلا ملع وه :يعرشلا ملعلاو ةدابع ةفرعم هيلع فقوتي يذلا ردقّلا\" هنأب ءاملعلا هددح دقو ،هملعتي نأ فلكم لك ىلع للها دبعتي فيك فرعيَ نأ بيج لالحا هذه في هنإف ،ابه مايقّلا ديري ةلماعم وأ ،اهلعف ديري \"ةلماعلما هذبه موقّي فيكو ةدابعلا هذبه لصي دقو ،تافارلخاو عدبلا ىلع نوئشني هدلاوأ نإف عرشلاب ًلاهاج بيرلما ناك اذإو .-للهاب اذايع -بركلأا كرشلا لىإ رملأا اهوثرو انمإ ةيدبعتلاو ةيدَقّعَلا ءاطخلأا لج نأ دجول سانلا لاوحأ في لمأتلما رظن ولو .) 4 ( بدلأا دواد وبأ ،) 9 6( ةلصلاو برلا يذمرتلا ) ( .2629 ثيدلحا مقر :تانبلا لىإ ناسحلإا لضف باب ،بدلأاو ةلصلاو برلا باتك :ملسم هاور )2( .2 ص :ينميثع نب دممح خيشلا :ملعلا باتك )3( ،هيلع مهيبريو يرلخا مهملعي نم مله للها ضيّقّي نأ",
+  "text_simplified": "The Prophet ﷺ said: «Whoever has three daughters and disciplines them (in tarbiyah), provides for them, and shows them mercy, Paradise is assured for him.» A man then asked: 'And two, O Messenger of Allah?' He ﷺ replied: «And two.» (Reported by al-Tirmidhi). The success of the murabbi in the tarbiyah of his child comes first by the tawfiq of Allah, then by his adornment with the qualities of the successful murabbi.",
+  "labels": [
+    "قلق",
+    "أعراض نفسيه",
+    "طفل صغير"
+  ],
+  "created_at": "2026-06-07T08:24:49Z",
+  "updated_at": "2026-06-10T18:30:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Al_Hady_Al_Nabawi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-b1e6de34",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يؤدبهن",
+        "english": "disciplines them (in tarbiyah)",
+        "why": "The English adds '(in tarbiyah)' which is not present in the Arabic. The Arabic simply says 'يؤدبهن' (disciplines them).",
+        "severity": "low"
+      },
+      {
+        "type": "religious_error",
+        "field": "text_simplified",
+        "arabic": "فقد وجبت له الجنة",
+        "english": "Paradise is assured for him",
+        "why": "The Arabic 'وجبت' means 'became obligatory/incumbent', a stronger legal term. 'Assured' softens the hadith's wording and gives a familiar-sounding English phrasing that is not exactly what the Arabic says.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

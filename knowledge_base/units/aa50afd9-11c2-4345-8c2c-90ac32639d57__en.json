@@ -1,0 +1,46 @@
+{
+  "id": "aa50afd9-11c2-4345-8c2c-90ac32639d57__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "The Child Takes What Is Not His: Handling It Without Stamping Him as a Thief",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "أخذ ما ليس له",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "مفهوم الملكية لا يكتمل عند الطفل قبل سنّ السادسة تقريبًا. ما يبدو «سرقة» كثيرًا ما يكون رغبة فورية لم يقاومها، لا نيّة اعتداء. ووصف الطفل بأنه «حرامي» أمام أحد يصنع هوية يصعب الخروج منها، ولا يعلّمه الأمانة.\n\nالخطوات العملية:\n• تعامل مع الواقعة بهدوء وبلا جمهور. الإحراج العلني يدفع للإنكار لا للإصلاح.\n• اجعل الإصلاح جزءًا من الحل: يعيد الشيء بنفسه ويعتذر. الإعادة تعلّمه أكثر من أي محاضرة.\n• اسأل عن الدافع بلا اتهام: هل أراد شيئًا يملكه غيره ولا يملكه؟ هل يشعر بالحرمان؟ هل يريد شراء صداقة؟ العلاج يختلف باختلاف الدافع.\n• درّبه على الملكية في البيت: هذا الشيء لك، وهذا لأخيك، وهذا مشترك يُستأذَن عليه.\n• أعطه مصروفًا صغيرًا منتظمًا يتعلّم منه الانتظار والادخار — الطفل الذي يملك طريقًا مشروعًا للحصول يقلّ لجوؤه لغيره.\n\nراجع مختصًا إن تكرّر الأمر بعد سنّ السابعة رغم المعالجة الهادئة، أو صاحبه كذب منظّم وإخفاء متعمّد.",
+  "text_simplified": "The concept of ownership is not fully developed in a child before the age of six or so. What may seem like 'theft' is often an immediate desire he did not resist, not an intention to transgress. Labeling the child as a 'thief' in front of others creates an identity that is difficult to escape, and does not teach him *amanah* (trustworthiness).\n\nPractical steps:\n• Handle the incident calmly and without an audience. Public embarrassment leads to denial, not reform.\n• Make restitution part of the solution: he returns the item himself and apologizes. Returning it teaches him more than any lecture.\n• Ask about the motive without accusation: Did he want something that others have and he does not? Does he feel deprived? Does he want to buy friendship? The remedy differs based on the motive.\n• Train him in ownership at home: this thing is yours, this is your brother’s, and this is shared—permission must be sought for it.\n• Give him a small, regular allowance so he learns patience and saving—the child who has a lawful way to obtain things is less likely to resort to unlawful means.\n\nConsult a specialist if the behavior persists after the age of seven despite calm intervention, or if it is accompanied by systematic lying and deliberate concealment.",
+  "labels": [],
+  "keywords": [
+    "theft",
+    "ownership",
+    "taking others' things",
+    "amanah",
+    "restitution"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "aa50afd9-11c2-4345-8c2c-90ac32639d57",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "english.text_simplified",
+        "arabic": "الطفل الذي يملك طريقًا مشروعًا للحصول يقلّ لجوؤه لغيره.",
+        "english": "the child who has a lawful way to obtain things is less likely to resort to unlawful means.",
+        "why": "The Arabic says 'لغيره' (to other than it) without specifying that the other means are unlawful. The English adds 'unlawful', narrowing the meaning and introducing a moral judgment not explicit in the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

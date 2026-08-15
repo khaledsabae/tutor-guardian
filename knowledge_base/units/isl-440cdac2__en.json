@@ -1,0 +1,55 @@
+{
+  "id": "isl-440cdac2__en",
+  "domain": "islamic_parenting",
+  "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+  "title": "Rifq in Our Dealings with Our Children",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "الرفق في التربية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كتاب إسلامي",
+  "text_original": "المبحث العالث : الرفق رواه البخاري في صحيحه , كتاب الأدب رقم الحديث 5778 , ص 599 رياض الصالحين من كتاب سيد المرسالين م ج 2 , باب تعظيم حرمات المسلمين / ص 551 كذلك في الرفق الذي هو منبعث من طيب نفس في التعامل مع الآخرين, ما رواه ( عبدالله بن مغفل أن رسول الله صلى الله عليه وسلم قال : ( إن الله رفيق يحب الرفق ويعطي عليه ما لا يعطي على العنف ) )\" . فعلينا أن نكون سابقين بالرفق قبل معاقبة الأبناء, حتى ولو أخطاوا في حقنا أو في ‎Go‏ أنفسهم وأن نوجههم ونعمل جاهدين للدفع بهم على الطريق المستقيم, وندعوا الله لهم بالهداية والتوفيق لأنه هو الهادي وحده إلى سواء السبيل. قال تعالى لنبيه الكريم ‎I}:‏ لا تهدي مَن أخبنت وَلَكِنَ ‎ordi alll‏ مَن ‎slag‏ وَهْو ‎alel‏ بالففكيين (* أيضا من جوانب الرفق لدى رسول الله صلى الله عليه وسلم - ما جاء ( عن المقدام بن شريح عن أبيه قال: (( سألت عائشة عن البداوة فقالت كان رسول الله ‎ho‏ الله عليه وسلم يبدو إلى هذه التلاع وإنه أراد البداوة مرة فأرسل إلي ناقة محرمة من إبل الصدقة فقال لي يا عائشة إرفقي فإن الرفق لم يكن في شيء قط إلا زانه وما نزع من شيء قط إلا شانه ) )\". فإذا كان هذا الرفق من الرحمة المهداة صلى الله عليه وسلم - بالحيوان وحثه لزوجته عائشة بنت الصديق بهذا ‎alll‏ أليس من باب أولى أن يطبق هذا النهج الطيب على أطفالنا الذين هم بذرات فعلينا أن نحسن هذا مع النشء حتى نقطف ثمارا",
+  "text_simplified": "Rifq (gentleness) is an important value in dealing with others, as mentioned in the authentic hadith. We must lead with rifq before punishment, and guide our children toward the straight path.",
+  "labels": [
+    "رفق",
+    "تربية أسرية",
+    "العقاب",
+    "الطفل"
+  ],
+  "created_at": "2026-06-07T08:29:09Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Al_Minhaj_Al_Nabawi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-440cdac2",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يجب أن نكون رؤساء بالرفق قبل العقاب",
+        "english": "We must lead with rifq before punishment",
+        "why": "The Arabic says 'we must be leaders with gentleness before punishment' (a state of being), but the English changes it to 'we must lead' (an action), losing the emphasis on being leaders.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "الرفق (appears twice)",
+        "english": "Rifq (gentleness) ... rifq",
+        "why": "The transliteration of the same Arabic term is inconsistent in capitalization within the document (Rifq vs rifq).",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

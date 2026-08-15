@@ -1,0 +1,64 @@
+{
+  "id": "isl-48e32cae__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "The Role of the Murabbi in Reinforcing Good Behaviours and Communicating with the School",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية وتعليم",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "وأ دحوتت نأ بيجو كلت تناك نإ امأ ،اهمعدي نأ هيلعف ةنسلحا تاداعلا عرزت ةسردلما نأ بيرلما فرع ةضرع مهلك رشبلا نأب هدلو عانقإ لوايح نأو ةسردلماب لصتي نأ بجيف ةئيس تاداعلا تايقلاخأ نع لأسي نأ بيرلما ىلع بيج امك ،اهحبقو ةداعلا هذه ءوسب هعنقّيو ،أطخلل .ةسردلما في هكولسو هدلو ةنهم ةسراملم لفطلا ليهأت يفيظولا دادعلإاب دوصقّلما سيل :يفيظولا دادعلإا -ج ،ءيش لك لبق ًاّمأو ةجوز نوكتل ةأرلما ليهأت لمشيل موهفلما عستي لب ،هتمأ عفنتو هعفنت يذلاو .ةفيرش ةنهم بحاصو ًلاوئسم ًابأو عمتلمجا في ًالحاص ًاوضع نوكيل ركذلا ليهأتو . 6 ص :نادحم دايز دممح ،لافط بيرن فيك :رظنا ) ( .2 ص :ديوس رون دممح :ةيوبنلا ةيبرتلا جهنم نع لاقّن ، ص :يدروالما ،كوللما ةحيصن :رظنا )2( روكذلا ينب جهانلما دّحوت ًةداع لودلا لكو ،ةموملأاو ةيجوزلا ةايلح ةأرلما دادعإ هدقّتفن لينزلما يربدتلل عوبسلأا في ينتصح لدعبم ةدام كلذل صصختُ ذإ ،اهضعب ادع ثانلإاو لا تيلا داولما ضعب صيلقّت لباقّم ةدالما هذه عيسوت ينبرلما ضعب حرتقّي اذلو ،ةينفلا ةيبرتلاو بيلاسأو لماعتلا بادآو جوزلا قوقّح ةاتفلا مّلعت جهانم ةفاضإو ةأرلما اهجاتتح .ةأرلما هجاتتح امم اهيرغو لنزلما ثيثأت قرطو ،لمُ جتلا مّلعلماو ةسردلما مارتحا هءانبأ دوِعي نأ بيرلما ىلع بيج اهرودب ةسردلما موقّت يكلو . ًاقّساف وأ ًاعدتبم وأ ًارفاك نوكي نأ لاإ هيرقوتو . 3 - 3 ص .ليوبناتسلاا دوممح :انلافطأ بيرن فيكو ، 4 ص :توتنشلا دلاخ ،تانبلا ةيبرت :رظنا ) ( . 43 - 42 ص :توتنشلا دلاخ ،ملسلما لفطلا ةيبرت في تيبلا رود :رظنا )2( ةيبرتلا فادهأ نم ةيدوبعلا قيقتحو ةديقعلا خيسرت ةايلحا رومأ نم رمأ لك في",
+  "text_simplified": "The murabbi must communicate with the school to reinforce good behaviours and correct bad habits. He should also instil in his child that all humans are prone to error, and that he should be admonished for bad habits. The functional preparation aims to qualify the child to practise a profession beneficial to him and his ummah, not merely narrow vocational training. It also includes preparing the girl to be a righteous wife, and preparing the boy to be a righteous member of society.",
+  "labels": [
+    "تربية",
+    "تعاون مع المدرسة",
+    "إعداد وظيفي",
+    "تأهيل اجتماعي",
+    "سلوكيات"
+  ],
+  "created_at": "2026-06-20T14:33:18Z",
+  "updated_at": "2026-06-20T14:33:18Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-48e32cae",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تأهيل المرأة لتكون زوجة صالحة، وتأهيل الذكر ليكون عضواً صالحاً",
+        "english": "preparing the girl to be a righteous wife, and preparing the boy to be a righteous member",
+        "why": "Arabic says 'the woman' and 'the male', not 'the girl' and 'the boy'. This changes the age/gender nuance from adult/general to child-specific.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وأن يعيبه على العادة السيئة",
+        "english": "and that he should be admonished for bad habits",
+        "why": "Arabic uses active verb with the murabbi as subject (he should blame the child for the bad habit), but English renders it as passive, shifting agency. Also singular 'habit' becomes plural 'habits'.",
+        "severity": "medium"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "الإعداد الوظيفي",
+        "english": "functional preparation",
+        "why": "Literal translation is stiff and unidiomatic; 'vocational preparation' or 'career preparation' would be clearer in English.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

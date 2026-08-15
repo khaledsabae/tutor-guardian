@@ -1,0 +1,47 @@
+{
+  "id": "isl-a9397134__en",
+  "domain": "islamic_parenting",
+  "source_file": "Al_Hady_Al_Nabawi.pdf",
+  "title": "Introduction to a Tarbiyah Curriculum for Children — Layla bint Abd al-Rahman al-Juraybah",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "أصول_التربية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كتاب إسلامي",
+  "text_original": "ةبيرلجا نحمرلا دبع تنب ىليل ميحرلا نحمرلا للها مسب تائيسو انسفنأ روشر نم للهاب ذوعنو ،هيدهتسنو هنيعتسنو هدمحن لله دملحا للها لاإ هلإ لا نأ دهشأو ،هل يداه لاف للضي نمو هل لضم لاف للها هديه نم ،انلماعأ هلآ لىعو هيلع للها لىص ،هلوسرو هدبع اًدممح نأ دهشأو ،هل كيشر لا هدحو لىإ دوعتل ةيوبترلا تاعوضوملل ةسام ةجاحب ةيملاسلإا ةملأا نإف :دعبو ميدقتل ةلوامح هنأ في عوضولما ةيهمأ نمكتو )دلولا ةيبرت( اههمأ نمو ،اهدمج قباس دمتعي ،نيركفلما تاباتكو ينيحولا نم دمتسم هنأو ،قيبطتلل لباق ليمع جذومن لاإ ةيوبترلا بتكلا ةرفو عمو .بولسلأا حوضوو ةرابعلا ةلوهس ىخوتيو زايجلإا هذه شرن لىع تلمع داشرلإاو ةوعدلاو فاقولأاو ةيملاسلإا نوئشلا ةرازو نأ جهنم نم ةقثبنم ،بولسلأا ةلهس ،مجلحا ةيرغص نوكت نأ :اهنم تاياغل ةلاسرلا وآ ،ةدرمج تايرظن مدقت دق ةيوبترلا بتكلا نلأ ،قيبطتلل ةلباق ،ةيبترلا في ملاسلإا ةيوبرت تاقيبطت ركذي اهضعبو ،ةيرسي تاقيلعت عم ينيحولا نم اً صوصن عمتج في ةديلجا بتكلا ترمو .تائلما اهضعب غلبي ذإ الهوطل ءارقلا اهنع فزعي نكلو ،ناولع حصان ّللها دبع خيشلل )ملاسلإا في دلاولأا ةيبرت( باتك :لاجلما اذه بلأا ةيلوئسم( باتكو ،ديوس رون دممح ذاتسلأل )لفطلل ةيوبنلا ةيبترلا( باتكو .اهركذل لاجلما عستي لا ىرخأ بتكو ،ثراحاب ناندعل )دلولا ةيبرت في ملسلما .ميركلا ههجول اً صلاخ هلعيج نأو ،ثحبلا اذبه عفني نأ للها لأسأ يرخلأا فيو :يه باوبأ ةسخم نم ثحبلا نوكتيو ةفاضإ ،بيرلما تافصو اهتناكمو اهموهفم :ملاسلإا في ةيبترلا :لولأا بابلا * .ةيبترلا في ةسردلماو دجسلما رود لىإ ،ةديقعلا خيسرت اهنمو :ملاسلإا في ةيبترلا فادهأ نم :نياثلا بابلا * ةيمنتو ميلعتلاو ،ةملها ولع ءاكذإو ،ةيصخشلا ءانبو ،ةدابعلا لىع",
+  "text_simplified": "An introduction to a book on the tarbiyah (nurturing) of children by the author Layla bint Abd al-Rahman al-Juraybah. It begins with praise and thanks to Allah, affirming that guidance and success in tarbiyah are in the hands of Allah, paving the way for presenting a practical curriculum for nurturing children.",
+  "labels": [
+    "السلوك غير المرغوب فيه",
+    "الإرهاق العصبي",
+    "القلق",
+    "التنقل الزائد"
+  ],
+  "created_at": "2026-06-07T08:22:53Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Al_Hady_Al_Nabawi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-a9397134",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "مقدمة في منهج تربية الأطفال",
+        "english": "Introduction to a Tarbiyah Curriculum for Children",
+        "why": "The Arabic 'منهج تربية الأطفال' means 'method of raising children' (a method for parents), but the English 'Tarbiyah Curriculum for Children' can be read as a curriculum intended for children themselves, and 'curriculum' is narrower than 'منهج'.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

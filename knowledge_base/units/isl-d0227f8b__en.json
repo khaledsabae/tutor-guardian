@@ -1,0 +1,39 @@
+{
+  "id": "isl-d0227f8b__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Justice Between Children in Love and Giving",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "التمييز بين الأبناء",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ًؾي بأ ّجو ًؾى ويَ ا ؽرۡأ هٔخرطٱ .)9 :7:ػسقي ةرقس( ﴾ َ ٰ َ ٗ ۡ َ اؿقف ٓو فتقطر ناطؾسلا ةؾماعم في ٓ ,رقمٕا ؾك في بقؾطم لدعلا نأ« في نأو ,هرقغو راثيلإاو ةبحؿلا في ,هدٓوٕ دلاقلا ةؾماعم في كتح ,فكود بقؼعي مدق اؿل ,اذفلو ,لاقحٕا دسػتو ,رمٕا فقؾط ؾتخي ؽلذب للاخلإا كؾطو ,ؿفسػكأ كؾط ىرج ام ؿفـم ىرج ,فتقخإ كؾط هرثآو ةبحؿلا في ػسقي .)2(»ؿفقخأو ؿفقبأ : لُ قؼُ يَ , ر ِ بَ ْـؿلْا كؾَ طَ قَ هُ وَ ﭭ ر ٍ قشبَ ـَ بْ نَ اؿ عْ ُـلا تُ عْ ؿس : لَ اقَ , ر ٍ ماطَ ـْ طَ دَ ف ِ شْ تُ كتَ حَ كضَ ر أَ َٓ : ةَ حَ اوَ ر طَ تْ لَاؼَ فَ , ةً قَ ططَ ل ِ بأَ لكاطَ طْ أَ ةً قَ ططَ ةَ حَ اوَ ر طَ ـْ م لـبْ ا تُ قْ طَ طْ أَ لكِ ِ إ : لَ اؼَ فَ ﷺ للها لَ قس , َٓ : لَ اقَ ,؟اذَ هَ ؾَ ْثم كَ دلَ وَ ر تَ قْ طَ طْ أَ : لَ اقَ , للها لَ قس ايَ كَ دَ ف ِ شْ أُ نْ أَ لـتْ ر .)3(» فُ تَ قَ ططَ دَ ر فَ : لَ اقَ , ؿ كُ دَٓ وْ أَ ـَ ْقبَ اقلُ دطْ اوَ لله ا اقؼُ تَ افَ : لَ اقَ .)225/2( »مػثمي ـمسا مػسمٗمش« (1) .)417ص( »يدمٕسمًا مػسمٗمش« (2) .)1623( ؿمٚسمُو ،)2587( يراخبمًا فمضرمظأ (3) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ",
+  "text_simplified": "Parents must treat their children with justice and equality, and not discriminate between them in love and giving. Differentiating between children leads to feelings of jealousy and hatred among them. The Prophet ﷺ urged justice between children even in kisses.",
+  "labels": [
+    "العدل بين الأبناء",
+    "التربية الإسلامية",
+    "الغيرة بين الأشقاء",
+    "المساواة",
+    "الوصايا النبوية"
+  ],
+  "created_at": "2026-06-21T10:21:09Z",
+  "updated_at": "2026-06-21T10:21:09Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-d0227f8b",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

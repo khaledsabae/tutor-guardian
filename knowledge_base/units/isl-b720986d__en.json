@@ -1,0 +1,47 @@
+{
+  "id": "isl-b720986d__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "Observing Individual Differences in the Prophetic Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إيجابية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "َ ر َ ه ْ دﱠلا ُ موص ُ َأ (cid:685)ََأ : ر ُ خ َ آ لَاَقو َ ،ادًَ بَأ ل َ ْ يﱠللا يّ ِ لص َ ُأ ﱐ ّ ِإِ َف ،(cid:685)ََأ امﱠَأ :م ْ ه ُ دُح َ َأ لَاَق ؟ر َ خﱠَ(cid:998)َ ام َ و َ ه ِِبْنَذ ن ْ م ِ ،ر ُ ط ِ ْفُأو َ ُ موص ُ َأ ﲏ ّ ِك ِ َل ُ هَل م ْ كُاقَـْتَأو َ (cid:589) ِ ﱠ ِ م ْ كُاش َ خ ْ َﻷَ ﱐ ّ ِِإ (cid:589) ِ ﱠاو َ ام َ َأ ،اذَكَو َ اذَكَ م ُْ تْلُـق ن َ يذ ِﱠلا م ُُ تـْنَأ \" :لَاقَـَف ،م ْ هِ ْ يَلِإ م َ ﱠلس َ و َ ه ِ ْ يَلع َ ُ (cid:589)ﱠا ىﱠلص َ (cid:589) ِ ﱠا لُوس ُ ر َ َ ءاج َ َف ،ادًَ بَأ هجهنمف ،ةدابعلا رومأ ﰲ نوقيطي ام ىلع مهيلع ﷲ ناوضر ةباحصلا ﰊري ناك ملسو هيلع ﷲ ىلص هنأ ﱃإ ةراشإ نمضت ثيدﳊا اذهف .30ك لذك اهدهﳚ ﻻو اهرسكي ﻻ هنكلو ليﲤ ﲔح اهموقيو اههجوي ةرطفلا عم ﲔلو ﲔه اعيﲨ قلخلل رسيم مهتناكمو ةيسفنلا م(cid:275)افﻼتخا ﰲ (ﲔبطاخﳌا) ﲔبﱰﳌا لاوحأ ىعار ملسو هيلع ﷲ ىلص هنأ ،ةيبﱰلا ﰲ يوبنلا جهنﳌا ةيعقاوب اين(cid:684) دصقن ﰒ . ةفلتخﳌا م(cid:275)اقاطو ةيعامتجﻻا ﱰ ََْفا \" : لَاقَـَف ، ِ ةﻼَصﱠ لا ن ﱰ ََْفا اَﲟ ِ ﱐِﱪ َأ ،(cid:589) ِ ﱠا لَوس :ﻼئاق ﰊارعﻷا هلأس امنيحف شَ نﱠهِي ِ ف دُيزَِأ ﻻَ ،ق :لَاَق ،(cid:684)ًﻼََث ا ﱰ ََْفا :لَاَق",
+  "text_simplified": "The text shows that the Prophet Muhammad ﷺ would observe individual differences among the Companions in tarbiyah (upbringing), never burdening anyone beyond their capacity. The hadith teaches us the importance of understanding each child’s abilities and not forcing them into what they cannot bear, while considering their psychological and social differences.",
+  "labels": [
+    "فروق فردية",
+    "تربية نبوية",
+    "مراعاة القدرات",
+    "الصبر على الأطفال"
+  ],
+  "created_at": "2026-06-20T14:39:53Z",
+  "updated_at": "2026-06-20T14:39:53Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-b720986d",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "فلم يكن يكلف أحدًا فوق طاقته",
+        "english": "never burdening anyone beyond their capacity",
+        "why": "The English adds 'never', which is not explicitly present in the Arabic. The Arabic uses a past negative habitual form (لم يكن يكلف) meaning 'he did not burden', not an absolute 'never'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

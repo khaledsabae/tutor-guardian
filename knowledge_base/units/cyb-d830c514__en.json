@@ -1,0 +1,48 @@
+{
+  "id": "cyb-d830c514__en",
+  "domain": "cyber",
+  "source_file": "Screen_Time_2025.pdf",
+  "title": "The Impact of Media and Technology on Children from Birth to Eight Years",
+  "language": "en",
+  "age_group": "prenatal-1",
+  "behavior_type": "وقت الشاشة",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "Common Sense Media",
+  "text_original": "The Common Sense Census: Kids Zero to Eight The Common Sense Census: Media Use by Kids Zero to Eight COMMON SENSE IS GRATEFUL FOR THE GENEROUS SUPPORT AND UNDERWRITING THAT FUNDED THIS RESEARCH REPORT Bezos Family Foundation Jennifer Caldwell and John H.N. Fisher Herman H. Fleishman Foundation Morgan Charitable Foundation A Letter from Our Founder As technology continues to reshape every aspect of our society, it is more crucial than ever to understand its influence on our youngest generation. We are excited to share the latest edition of the Common Sense Census: Zero to Eight, which provides the first comprehensive look since the pandemic at how children from birth to age 8 are engaging with media and technology. We see both challenge and opportunity in our latest findings. While 75% to 80% of parents express concerns about screen media's impact, three-quarters also recognize the potential for learning and connection. This tension—balancing technology's risks with its benefits— James P. Steyer defines the modern parenting experience. Parents of young children face the dual challenge Founder and CEO of navigating screen media use and preserving fundamental childhood experiences like daily reading, which has declined from 64% to 52% among 5- to 8-year-olds since 2017, even as overall screen time remains steady. The report highlights the convergence of early childhood and technology. Screen time is no longer just a mainstay of children's entertainment and education—it's now an integral part of daily activities for many families. We found that 1 in 5 families now use",
+  "text_simplified": "This detailed preliminary report explores how children from birth to the age of eight interact with media and technology, highlighting the balance between the risks of electronic device use and the importance of education and communication.",
+  "labels": [
+    " infants",
+    "أقلام_الألعاب",
+    "القراءة",
+    "الأطفال",
+    "التحديات"
+  ],
+  "created_at": "2026-06-07T08:04:17Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Screen_Time_2025",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "cyb-d830c514",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يقدم",
+        "english": "explores",
+        "why": "The Arabic verb 'يقدم' means 'presents' or 'offers', not 'explores'; this changes the action from presenting to investigating.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

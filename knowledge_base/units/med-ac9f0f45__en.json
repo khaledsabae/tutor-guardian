@@ -1,0 +1,37 @@
+{
+  "id": "med-ac9f0f45__en",
+  "domain": "medical",
+  "source_file": "ADHD_NIMH.pdf",
+  "title": "Remedies for ADHD: Available Tools",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "ADHD",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Attention-Deficit/Hyperactivity Disorder: What You Need to Know (2024)",
+  "text_original": "and impulsivity, although, in some people, those symptoms become less severe and less impairing. They may also be irritable, have a low tolerance for frustration and stress, or experience frequent or intense mood changes. Some adults may not have been diagnosed with ADHD when younger because their teachers or family did not recognize the disorder, they had a mild form of the disorder, or they managed well until experiencing the demands of adulthood. But it is never too late to seek a diagnosis and treatment for ADHD and other mental health conditions that may co-occur with it. Effective treatment can make day-to-day life easier for people with ADHD and their families. How is ADHD treated? Although there is no cure for ADHD, current treatments may help reduce symptoms and improve functioning. Common treatments for ADHD are medication, psychotherapy, and other behavioral interventions. For children, treatment often includes parent education and school-based programs. Researchers are studying new treatments for people with ADHD, such as cognitive training and neurofeedback. These options are usually explored only after medication and psychotherapy have already been tried. For many people, treatment involves a combination of elements. Stimulants are the most common type of medication used to treat ADHD, and research shows them to be highly effective. They work by increasing levels of brain chemicals involved in thinking and attention. Like all medications, stimulants can have side effects and must be prescribed and monitored by a health care provider. Tell the provider about other medications you or",
+  "text_simplified": "ADHD can be mild or moderate, and individuals who were not diagnosed with the disorder at a young age may face issues such as anger, difficulty in endurance, and responding to pressures. Treatments include medication and psychological therapy programs.",
+  "labels": [
+    "ADHD",
+    "علاج نفسي",
+    "أدوية"
+  ],
+  "created_at": "2026-06-07T08:10:20Z",
+  "updated_at": "2026-07-27",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "ADHD_NIMH",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "med-ac9f0f45",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

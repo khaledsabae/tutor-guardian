@@ -1,0 +1,54 @@
+{
+  "id": "d7a09c7e-769c-48b5-aaf8-0511fedfc0db__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "Tantrums in Young Children: What to Do During and After Them",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "نوبات الغضب",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "نوبة الغضب في سنّ الثانية والثالثة ليست سوء تربية: الجزء المسؤول عن كبح الانفعال في دماغ الطفل لم ينضج بعد، بينما رغباته ولغته تسبقانه. أي محاولة للإقناع أثناء النوبة تفشل — الطفل في تلك اللحظة غير قادر على السماع.\n\nأثناء النوبة:\n• قلّل الكلام. جملة واحدة قصيرة تُكرَّر بنبرة ثابتة: «أنا معاك.»\n• أمّن المكان وابقَ قريبًا. لا تحاصره ولا تتركه وحده تمامًا.\n• لا تفاوض ولا تتراجع عن قرار قلته — التراجع أثناء الصراخ يعلّمه أن الصراخ يعمل.\n• لا ترفع صوتك فوق صوته. انفعالك يضاعف انفعاله.\n\nبعد أن يهدأ:\n• احتضنه أولًا ثم تكلّم. الترتيب مهم.\n• سمِّ ما حدث بكلمات بسيطة: «كنت زعلان جدًا عشان عايز الحلوى.»\n• علّمه البديل مرة واحدة فقط: «المرة الجاية قول: أنا زعلان.»\n\nالوقاية أنجع من العلاج: أغلب النوبات تقع عند الجوع أو النعاس أو الانتقال المفاجئ بين نشاطين. تنبيه مسبق («فاضل خمس دقائق ونخرج») يمنع كثيرًا منها.\n\nاعرض الطفل على مختص إن تجاوزت النوبات ربع ساعة بانتظام، أو تكرّرت أكثر من خمس مرات يوميًا بعد سنّ الرابعة، أو صاحبها إيذاء للنفس.",
+  "text_simplified": "A tantrum at the age of two or three is not poor tarbiyah (upbringing): the part of the brain responsible for controlling emotions has not yet matured, while the child's desires and language outpace it. Any attempt to reason during a tantrum will fail—the child in that moment is unable to listen.\n\nDuring the tantrum:\n• Minimize speech. One short sentence repeated in a steady tone: «I’m with you.»\n• Secure the area and stay close. Do not corner him or leave him completely alone.\n• Do not negotiate or back down from a decision you have made—backing down during screaming teaches him that screaming works.\n• Do not raise your voice above his. Your agitation will amplify his.\n\nAfter he calms down:\n• Hug him first, then speak. The order matters.\n• Name what happened in simple words: «You were very upset because you wanted the candy.»\n• Teach him the alternative just once: «Next time, say: I’m upset.»\n\nPrevention is better than cure: most tantrums occur when the child is hungry, sleepy, or suddenly transitioning between activities. A prior warning («Five minutes left before we go out») prevents many of them.\n\nHave the child evaluated by a specialist if tantrums regularly exceed fifteen minutes, occur more than five times a day after the age of four, or are accompanied by self-harm.",
+  "labels": [],
+  "keywords": [
+    "tantrums",
+    "screaming",
+    "emotional outbursts",
+    "calming the child",
+    "self-control"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أي محاولة للإقناع أثناء النوبة تفشل",
+        "english": "Any attempt to reason during a tantrum will fail",
+        "why": "الإقناع means persuasion, not reasoning; reasoning is a specific type of persuasion and narrows the meaning.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "keywords",
+        "arabic": "الانفعال",
+        "english": "emotional outbursts",
+        "why": "الانفعال means emotional agitation/being affected, not necessarily outbursts; inconsistent with the text translation 'agitation'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

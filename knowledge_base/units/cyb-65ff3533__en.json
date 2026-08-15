@@ -1,0 +1,37 @@
+{
+  "id": "cyb-65ff3533__en",
+  "domain": "cyber",
+  "source_file": "Cyberbullying_Guide.pdf",
+  "title": "How to Deal with Anxiety and Digital Violence in Adolescence?",
+  "language": "en",
+  "age_group": "10-12",
+  "behavior_type": "قلق, إدمان ألعاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO/Common Sense Media",
+  "text_original": "on, help them think through what happened, how they feel about it, and what they’re going to do about it. No one knows how to resolve a situation without understanding it fully. It’s important to involve your child in the process, not just take over yourself, because the main goal is to help him or her strengthen the self-confidence that might’ve been shaken and restore a sense of physical and/or emotional safety. 5. What if my child witnesses cyberbullying or bullies others? If your child does experience cyberbullying as a witness or bystander, it’s important to talk through some strategies as to how they can help their peers. Being kind goes a long way. Suggest your child sit with a child who’s being bullied or invite them to hang out. Your child can reach out to the other child via social media by being positive and supportive. It’s not helpful to retaliate online as that rarely influences the person doing the bullying and can put your child at risk. If your child is bullying or cyberbullying others, get them to stop the bullying but try not to overreact.Talk with your child, get all the facts and consider probing further in their devices and accounts. Look for underlying issues and problems that might be affecting your child. While there should be consequences, solutions are more important than punishment. CONNECTSAFELY.ORG | 2 PUTTING NUMBERS INTO PERSPECTIVE & SOME Probably because there is no single definition of cyberbullying, the numbers are all over",
+  "text_simplified": "Parents must help their children understand what happened, their feelings about it, and the steps they will take. Children should be part of this reflection to maintain their trust in themselves.",
+  "labels": [
+    "القلق",
+    "الإدمان",
+    "العنف الرقمي"
+  ],
+  "created_at": "2026-06-07T08:00:59Z",
+  "updated_at": "2026-06-10T18:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Cyberbullying_Guide",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "cyb-65ff3533",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "id": "isl-0faa18cf__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Tarbiyah of the Yateem and the Role of the Alternative Family",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية اليتيم",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "نادقّفو فعضلاب رعشي ميتيلاو فورعلما يدسي نم لكل ميظعلا رجلأا بترو هتاجاح عابشإ ىلع ملاسلإا َثح اذلو يرغص وهو اهمدحأ وأ هادلاو تويم يذلا ديحولا ميتيلا كانهف ميتيلا تلااح فلتتخو جاوزلا هيدلاو نم دوجوملل نكيمو ،ةعرسب اهعم قفاوتيو ةديدج ةئيب في همجد لهسيف وأ ةلمرأ نم جوزتلما نوكي نأ طرشب ،ةيسفن تابارطضا نود ددلجا هتوخإ عم بىريو .قلطم وأ لمرأ نم ةجوزتلما كلذكو ،يعولا نم ردق ىلع ،لفط اله ةقّلطم خلأا لحيف ،هتيبرت نولوتي نودشار رابك ةوخإ هلو اهمدحأ وأ هيدلاو لفطلا دقّفي دقو نواعتتو همرتتح نأ ملأا ىلعو ،ةمزاحو ةيوق ةيصخشب عتمتي نأ طرشب هدلاو لمح بركلأا وه دوعتيو يربكلا خلأل دايقّنلاا ىلع راغصلا دوّعي كلذ نلأ ،ًارهاظ ةدايقّلا هل ملستو هعم . ص ،ديوس رون دممح ،ةيوبنلا ةيبرتلا جهنم :رظنا ) ( نكلو راغصلا ىلع رطيستو ةيهانلاو ةرملآا نوكت دق تناك امهم ملأا نلأو ،مهتيبرت ىلع .بركلأا خلأا وه رخآ عون نم ةهجوم ةطلس لىإ نوجاتيح اوراص اوقّهار اذإ ،ضرلما وأ مئادلا بايغلا وأ قلاطلاب هيوبأ دحأ دقاف وأ ميتيلا لفطلا كلذ نم بيرقو انهف ،لافطأ ةدع اله ناك وأ ،اهلهأ دنع تيقّبو جاوزلا نع همأ تفزعو ًاديحو ناك اذإف تىح روملأا مامز ليدبلا اذله ملأا ملست نأ دب لاو ،لالخا وأ دلجاك ةهجوم ةطلس نم دبلا رثكأ ةداع لجرلاو ،لالخا وأ دلجا ةطلس ىقّبت ملأا ةطلس نم اوتلفناو لافطلأا برك اذإ .يخارتلاو للادلا ونح اتهرطفب قاسنت تيلا ملأا نم ًلاقّع تمأو ًامزح :يهو ةيوبرتلاو ةيسفنلا لفطلا ةملاس -للها نذإب -نمضت لئاسو كانهو رعاشم مهفي نأو ةيلوئسلما لمتحو يعولا نم ردق ىلع ليدبلا بيرلما نوكي نأ ) (",
+  "text_simplified": "This text addresses the situations of the yateem (orphan) and methods of dealing with them in terms of tarbiyah and psychological well-being. It highlights the importance of providing a stable and supportive environment for the yateem, with a focus on the role of the mother or older sibling in compensating for the loss of the parents. The text recommends that the guardian be a firm and wise substitute to ensure the child’s psychological and tarbiyah safety.",
+  "labels": [
+    "تربية",
+    "يتيم",
+    "دعم نفسي",
+    "أسرة",
+    "رعاية"
+  ],
+  "created_at": "2026-06-20T14:37:38Z",
+  "updated_at": "2026-06-20T14:37:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-0faa18cf",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الأخ الأكبر",
+        "english": "older sibling",
+        "why": "Arabic specifies 'older brother', not 'sibling'; the gender-neutral translation loses the masculine specificity.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "المربي",
+        "english": "guardian",
+        "why": "Arabic 'المربي' means the one who raises/educates, not necessarily a legal guardian; 'guardian' narrows the meaning.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "التربوية",
+        "english": "tarbiyah safety",
+        "why": "Arabic adjective 'التربوية' (educational/upbringing-related) is transliterated as noun 'tarbiyah' and combined with 'safety', producing unclear English; should be 'educational safety' or 'upbringing-related well-being'.",
+        "severity": "medium"
+      },
+      {
+        "type": "register",
+        "field": "title",
+        "arabic": "تربية اليتيم",
+        "english": "Tarbiyah of the Yateem",
+        "why": "Transliterating ordinary Arabic words 'tarbiyah' and 'yateem' makes the title stiff and less accessible; Arabic is direct and warm.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

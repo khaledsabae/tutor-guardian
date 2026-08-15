@@ -1,0 +1,64 @@
+{
+  "id": "isl-fb584945__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "Tarbiyah al-Jamaliyyah wa-l-Badaniyyah fi al-Islam",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية جمالية وبدنية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "؟ﷲ لوسر (cid:686) نه امو :ليق :تس ملسﳌا بـْتاف تام اذإو ،هدُْ عف ضرم اذإو .هتم :ةيلامﳉا ةيبﱰلا ـ د اﲟ ناسنﻹا رعشي ﱴح ،24\" سﳊا اذه ةيقرت ىلع بيردتلاو ةيتوصلا وأ ةيلكشلا هروص ﱴشب ﱄامﳉا سﳊا داﳚإ ىلع درفلا ةيبرت\" هب دصقيو ساسحﻹا اذه نم ديفتسي ﰒ نمو ،هلاوقأو هلاعفأو ،هقلخو هقلخ ﰲ ، هسفن ﰲ هلاﲨو ،ةيناسنﻹا ةايﳊا لاﲨو ،نوكلا لاﲨ نم هب طيﳛ ةيﳍﻹا ةردقلا كاردإ هلﻼخ نم عيطتسيو ،هلعفو هلوقو هنكسمو هسبلمو هلكش ﰲ هكاحيف ،هب اهلك هتايح غبصي نأ ىلع هدعاسي اﲟ لامﳉ(cid:682) 86 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا : ةيمسﳉا ةيبﱰلا ـ ه ملسو هيلع ﷲ ىلص هتاهيجوت تءاجف ،ناسنﻹا ىلع ا(cid:273) ﷲ معنأ ةمعنك ندبل(cid:682) ةيانعلا ةرورض ىلع هتمأ ملسو هيلع ﷲ ىلص ﱯنلا ﰉر دقل يه ةيدسﳉا وأ ةيندبلا وأ ةيمسﳉا ةيبﱰلاف ،هيذؤيو هرضي نأ هنأش نم ام لك نع داعتبﻻاو هحلصي ام لكو ندبلا ىلع ةظفاﶈا ةرورض ﱃإ هبنت ةظفاﶈا ﱃإ فد(cid:275) يهف .ةيكرﳊا هتءافك ةد(cid:686)زو ةفلتخﳌا مسﳉا تاردق ةيمنت فد(cid:273) مظنم يمسج طاشنب اﳍﻼخ ـ هاعري نم وأ درفلا موقي ةيلمع . 25\" فيعضلا نمؤﳌا نم ﷲ ﱃإ بحأو لضفأو ﲑخ يوقلا نمؤﳌا\" ملسو هيلع ﷲ ىلص ههيجوت مومع عم مجسني اذهو اطيشن (cid:686)وق مسﳉا ىلع ءاعدلا ﰲ هلوق ﰲ امك مسﳉا فعضي ام لك نع داعتبﻻا ﱃإ هتوعدو ةناكر ةعراصمو ةشئاع ةقباسم ﰲ ملسو هيلع ﷲ ىلص هلعف كلذكو .26\" لسكلاو زجعلا نم كب ذوعأ ﱐإ مهللا \" روهشﳌا يوبنلا يوبﱰلا جهنﳌا ﰲ ةيعقاولا :اين(cid:684) هيبري ﻻو ،هقيطي",
+  "text_simplified": "This text concerns *tarbiyah* (upbringing) that is aesthetic and sensory, and how to nurture a love of beauty in the human soul through appearance, behavior, and *akhlaq* (character). It also points to the importance of physical *tarbiyah* in Islam, citing Prophetic *ahadith* (plural of hadith) that encourage physical strength and care for the body. The text connects inner and outer beauty, and physical health with spiritual strength.",
+  "labels": [
+    "تربية جمالية",
+    "تربية بدنية",
+    "جمال النفس",
+    "صحة الجسم",
+    "أحاديث نبوية"
+  ],
+  "created_at": "2026-06-20T14:39:44Z",
+  "updated_at": "2026-06-20T14:39:44Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-fb584945",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "التربية الجمالية والبدنية في الإسلام",
+        "english": "Tarbiyah al-Jamaliyyah wa-l-Badaniyyah fi al-Islam",
+        "why": "The Arabic title is a normal descriptive phrase and should be translated (e.g., 'Aesthetic and Physical Education in Islam'), not transliterated. Transliteration obscures meaning for English readers and is not an Islamic technical term requiring retention.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "التربية البدنية",
+        "english": "physical *tarbiyah*",
+        "why": "The standard phrase 'physical education' is rendered with the transliterated term 'tarbiyah', which is unnecessary and may confuse; the Arabic uses the ordinary word for education/upbringing, not a technical Islamic term.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "القوة الإيمانية",
+        "english": "spiritual strength",
+        "why": "'إيمانية' specifically means faith-based or related to iman (Islamic faith), whereas 'spiritual' is broader and loses the explicit Islamic connotation.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

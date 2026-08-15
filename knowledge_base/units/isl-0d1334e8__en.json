@@ -1,0 +1,48 @@
+{
+  "id": "isl-0d1334e8__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children upon Parents in Islam",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية أطفال",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ؿقهاربإ بؾص ـم مدؼت اؿك لَ اقَ « :اطقفرم ﭬ ةريره لبأ ثيدح ـم »ـقحقحصلا« فيو ل ِ ف ؾُ ِ تاؼَ يُ ام لاَ غُ ة ٍ أَ ر ا ؾُ كُ دُ ِ ؾتَ ة ٍ أَ ر ا ة ِ ئَاؿ ِ ِ ب ةَ ؾَ ْقؾَ لا ـَ فَ قصُ ََٕ :ملاَ س ف ِ ْقؾَ طَ دَ وُ ادَ نقؽي دقو ,للها ؾقبس في دافجلا ةقـب دلقلا كؾط ضح ثيدحلا اذه في« فتقك في رجٕا فل ؿت دق ـؽلو ,ارفاك نقؽقف ,فقف فؾمأ ام فلاخب دلقلا .)454ص( »يدمٕسمًا مػسمٗمش« (1) .)367/7( »يراخبمًا حمٞحص حشر« (2) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ ءاٍبلأا ٚدلأ ذٍع ٍٛظمل ٛكفإلما سٕولأا َٖذلإلا نعف :عوالخا للحا :ءاقشأ ةدط دقلقؿلا عم ؾعػي نأ لغبـي :ديٚ اذإ دٛيٛلما رٜٛعت ۡ َ َ َ ۡ َ َ َ ذ َ َ ﴿ :افـط كلاعت للها لاق ثقح نارؿط ةأرما تؾعف اؿك جىاك آخػؽو اٍيـ ّ َ ُ ۡ َ ُ َ ذ َ ۡ َ َ ۡ َ َ َ َ ُ َ ۡ َ ُ ذ َ َ ُ ٓ َ ُ ۡ َ َ ّ ّ َ ِيِ وَإِ ٖثَٰ ُلۡٱن رنلَّٱ سحىو جػؽو اٍِة ًيغأ للَّٱو ثَٰ ُأ آخػؽو ِيِ ِإ ب لآ( ﴾ ذ ٰ َ ۡ ذ َ َ َ ذ ّ ُ َ َ َ ُ ُ ٓ ّ َ َ ۡ َ َ ُ ۡ ذ َ رذو مِة اْذيعِ أ ِيِ وَإِ ًيرم آخيٍ ش :٘هٝٓتحٚ ,١نبرياب ٘ي ٤اعديا نرؿتقل فب فؽـح ؽلو لبصلا ؿف",
+  "text_simplified": "This text discusses the rights of children upon their parents, drawing evidence from Prophetic hadiths and Qur'anic references. It clarifies that the tarbiyah (upbringing) of children and their education are among the most important religious duties. Parents must care for their children and guide them toward goodness.",
+  "labels": [
+    "حقوق الأطفال",
+    "تربية",
+    "دين",
+    "آباء",
+    "أبناء"
+  ],
+  "created_at": "2026-06-21T10:16:51Z",
+  "updated_at": "2026-06-21T10:16:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-0d1334e8",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "آيات قرآنية",
+        "english": "Qur'anic references",
+        "why": "The Arabic specifies Qur'anic verses (آيات), while the English uses the broader 'references', which could include non-verse material and loses the specific meaning of revealed verses.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

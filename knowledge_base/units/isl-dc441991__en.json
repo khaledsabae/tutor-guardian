@@ -1,0 +1,48 @@
+{
+  "id": "isl-dc441991__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Parental Guidance for Correcting a Child’s Behaviour",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "سلوك عام",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ؽكإو ,يدلو كؾط ؽترثآ نقكأ نأ فاخأ نيإو ,برقخ ـم لاحك اهدادجب برقخ لل تكاك قل هاتبأ اي :ةشئاط تلاؼف ,يدلو كؾط فيدرف ,فقتزح في كتح ؿهدٓوأ ـقب اقلدعي نأ نقبحتسي اقكاك :لاق ,)2(ؿقهاربإ ـطو لوٕا كمٓمقأ مامٚثمُ ـيرمظٔا لمٓمٕي وأ اهدمؽسي يأ ةئامعا دري نأ فمٞمٚمق بمضو ـيرمظٔا طمٕي = .»ؾجمظو ءامٞمط ـمق ٓ ةمقامٜمىو اضر ـمق هقمٚمٚيح نأ طمنمس ؿمٝمٚحتسي وأ .)728/2( »ريدم٘مًا ضمٞمو« (1) رامٖص ـمُ ،ةسمُالخا ةم٘بمٓمًا ـمُ ،لمٕخمٜمًا ورمٛمق ـمس دقمؾٕا ـمس سمٞمى ـمس ديزي ـمس ؿمٞهارمسإ قه (2) .حمٞحص دامٜمؾم٢مس )154( »ةمٚمّمًاو مؼمًا« مذ يزورمعا للها دبمق قمسأ فمضرمظأ (3) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ فل زيزعلا دبط ـب رؿط ناك :لاق ,زيزعلا دبط ـب رؿط ـب زيزعلا دبط ـطو ,ةؾقل فل تضرعتف :لاق ,فتقب في فعم ماـيو فبحي ناكو ,بعك ـم ةأرما ـم ـبا تؾخدف ؾخدأ ,ؽب ءاج ام رش :لاؼف ,ؿعك :تؾق ,؟زيزعلا دبطأ :لاؼف كلإ هرػض ندل ـم فصم فكلك ضػتكاف ,لؾصي قهو ,ةقكقكذاش دـط تسؾجف ؾجرلا :فل تؾؼف ,؟ؽل ام :لاؼف ,نياتلف ,عكر ؿث ةيآب رم فكأ تــظف ,هرعش ءلش ـم اذه :لاؼي نأ ـمآ تسلو ,اـب عـصت ٓ ام ةقثراحلا ـباب عـصتل ؽكإو لؾط داطلف ,ٓ :تؾؼف ,؟دحأ اذه ؽؿؾطأ :لاؼف ,ؿهدـط هاري ٓو ,هدـط هاري ؿقهاربإو اكأ تقبأ تـؽف تعجرف ,ؽتقبم كلإ عجرا :لاؼف ,فقؾط تدطلف ام :اـؾؼف ,ةقثراحلا ـبا فعبتي ؾؿحي شارػب ـحك اذنف ,اعقؿج للها دبطو ؿصاطو لاق ,ارقج نقؽي نأ لشخ فكلك :ؿقعك لاق ,لب تعـص ام نيلش :لاق ,؟ؽكلش .)1(»فب للها ءاش ام ٓإ رادلا قراػي ام ؾق رؿط ناؽف :زيزعلا دبط بِ",
+  "text_simplified": "The text speaks of a father’s concern for his son regarding inappropriate behaviour and recounts moments of *tarbiyah* (upbringing) related to interacting with children. It highlights the importance of parental guidance and dialogue with children to correct behaviour.",
+  "labels": [
+    "تربية",
+    "أبوة",
+    "توجيه",
+    "حوار",
+    "سلوك"
+  ],
+  "created_at": "2026-06-21T10:21:20Z",
+  "updated_at": "2026-06-21T10:21:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-dc441991",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "مواقف تربوية تتعلق بالتعامل مع الأطفال",
+        "english": "moments of *tarbiyah* (upbringing) related to interacting with children",
+        "why": "The Arabic uses the adjective 'تربوية' meaning educational/pedagogical, not the noun 'tarbiyah'. The English inserts an Islamic term not present in the source, altering the meaning and register.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

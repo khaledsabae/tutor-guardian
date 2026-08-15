@@ -1,0 +1,62 @@
+{
+  "id": "isl-24a45a01__en",
+  "domain": "islamic_parenting",
+  "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+  "title": "Teaching in the Instruction of the Qur'an",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تعليم",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كتاب إسلامي",
+  "text_original": "المبحث الثالث : تعليم القرآن\nوقمت بتوصية أولياء الأمور والمربين بتطبيق ذلك النهج التربوي السديد في تربية الأطفال\nوتنشئتهم على تعاليمه البنائة والهادفة , والتي من شأنها ترسية أساس قوي لهذه الأمة المسلمة.\nوقد ركزت على تقسيم هذا البحث إلى ‎BW‏ فصول رئيسية تتحدث عن:\n«ه المداعبة والرفق بالأطفال\n‎yl Mol‏ يحمل بحثي هذا فوائد تربوية لكل أب حان ‎alg‏ حنونة , ولكل مرب ومربية.",
+  "text_simplified": "Parents are advised to apply the Qur'anic teaching approach in the tarbiyah (upbringing) of their children, to establish the foundations of the Islamic Ummah.",
+  "labels": [
+    "تعليم",
+    "قرآن",
+    "تربية أسرية"
+  ],
+  "created_at": "2026-06-07T08:28:08Z",
+  "updated_at": "2026-06-10T18:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Al_Minhaj_Al_Nabawi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-24a45a01",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أوصيت أولياء الأمور",
+        "english": "Parents are advised",
+        "why": "Arabic is first-person active 'I advised parents' (or at best past passive 'parents were advised'); English changes to present passive 'Parents are advised', altering voice, tense, and dropping the speaker.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "التدريس في تعليم القرآن",
+        "english": "Teaching in the Instruction of the Qur'an",
+        "why": "Arabic 'تعليم القرآن' means 'teaching the Qur'an' (Qur'an as the object taught); English 'Instruction of the Qur'an' suggests the Qur'an is the instructor or the subject is instruction from the Qur'an, changing the meaning.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أولياء الأمور",
+        "english": "Parents",
+        "why": "Arabic 'أولياء الأمور' means guardians/parents, including non-parent guardians; English 'Parents' narrows the scope.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

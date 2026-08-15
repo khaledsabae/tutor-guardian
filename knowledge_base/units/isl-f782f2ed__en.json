@@ -1,0 +1,48 @@
+{
+  "id": "isl-f782f2ed__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Foundations of Tarbiyah for Children",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية دينية وأخلاقية",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ةمٞمسرمشو ْ ُ َ َ َ ذ َ ُ َ َ ﴿ :ممامٕمش لامى ،ءامسٔا مغمق دٓوٕا ققم٘مط ـمُ ؼمطو ،لمقشر أٌِاء َيلَِّ ٱ آيّديَ ٞ َ ٌ َ َ َ َ ۡ َ َ ُ َ َ ۡ َ ُ ذ َ ُ ُ َ ٗ َ ۡ ُ ۡ َ َ ۡ ُ َ ُ َ ْ ٓ ُ ظلَؽِ ثهِهلٌَ آييغ ةراجِلۡٱو سالنّٱ اْدٔكو اراُ ًؾيِيْأو ًؾصفُأ أك ]6:ؿيرحتمًا[ ﴾َ ُ َ ۡ ُ َ َ ُ َ ۡ َ َ ۡ ُ َ َ َ ٓ َ َ ذ َ ُ ۡ َ ذ ٞ َ نورمؤي اٌ نٔيػفيو ًْرم أ اٌ للَّٱ نٔػػيّ لَ دادطِ نأ امُإو ،ةمٞصقمًا ؽمٚتمس اقمُقم٘ي نأ امُم٢مو ،ؿبه صىقمُ ؿيهدمًاو دمٜمق دٓوٕامو .بام٘مٕمًاو دمٞمققمًا ؽمًذمس اقم٘حتسمٞمو اهقمٕمٞمْي اي ؿميدٓوأ :يأ ،)11:ءاسمٜمًا( ﴾ۡ ُ ٰ َ ۡ ٓ ُ ذ ُ ُ ُ ﴿ :ممامٕمش لامىو ۡ ًكدِ لوأ فِِ للَّٱ ًؾيغِ ٔي ةمٞمٜيدمًا ؿمٝلحامّمٛمس اقمُقم٘تمً ،ؿمٝمٞمٚمق للها ؿمياصو دمى عئادو ؿميدمٜمق ـيدمًاقمًا منمٕمُ للها ةمقامٓمس ؿنهورمُم٠مشو ،دمؾامٗمعا ـمق ؿنهقمٗمٙمشو ؿنهقمسدم١مشو ؿنهقمٛمٚمٕتمو ،ةيقمٞمٟدمًاو .ماودمًا مغمق ىقم٘تمًا ةمُزلامُو ،ةمٜسمًاو نآرم٘مًا ؿمٞمًامٕمش مغمق ؿمٝتمٞمسرمشو ،ؿهدٓوأ حلاصإ ـيدمًاقمًا مغمق لمٖبمٜمٞمو ؿهدٓوٕ نقلحامّمًاو ءامٞبمٟٕا امٝمٛمٚمق لتمًا ةمٛمٞمٚسمًا ةحمٞحمّمًا ةدمٞم٘مٕمًاو ةمُرمط ؿمٞمٔمٕمشو ،ـتمٗمًا مذ جقمًقمًا ـمُو ،للهامس كمنمًا ـمُ ؿهريذتحو ،ؿمٝمُاقمىأو ـمُ ؽمًذ مغمق ؿهديقمٕمشو ؿمٝبيردمشو ،تامُرحمعا ـمق ؿهدامٕمسإو ،ملمٛمٚسمعا ءامُد ٓو ،ﷺ فمًقمؾرو للها رمُم٠مس رتمم٠ي لامٞمض ةمُٕا هذله نادمًاقمًا جَ ريخ كتمط ،ؿهرمٖص مغمق للها دبمٕيو ، للها مغمق ؾميقتمًا ـسيحو ،للها ـمُ فايخو ،مارلحا برم٘ي ـيد ةمٍمٟ فهم نقمٙيو ،ؿ مُٝ مَٗ مٞمٕض",
+  "text_simplified": "The text discusses the importance of Islamic tarbiyah (upbringing) for children and teaching them religious values and akhlaq (moral character). It emphasizes the necessity of instilling love for Allah and His Messenger ﷺ in the hearts of children from a young age. It also recommends teaching them salah, the Noble Qur'an, and virtuous akhlaq. The goal is to raise a righteous and believing generation.",
+  "labels": [
+    "تربية إسلامية",
+    "تعليم ديني",
+    "أخلاق",
+    "تنشئة أطفال",
+    "قيم"
+  ],
+  "created_at": "2026-06-21T10:14:29Z",
+  "updated_at": "2026-06-21T10:14:29Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-f782f2ed",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "أساسيات التربية الدينية للأطفال",
+        "english": "Foundations of Tarbiyah for Children",
+        "why": "The English title omits the word 'الدينية' (religious), so it loses the explicit religious focus of the Arabic title. 'Tarbiyah' alone can mean general upbringing, not necessarily religious education.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

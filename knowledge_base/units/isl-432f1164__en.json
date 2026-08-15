@@ -1,0 +1,56 @@
+{
+  "id": "isl-432f1164__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children upon Their Parents in Islam",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية أطفال",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "باجَ ل لْا ِ ب ؽق ِ بأَ ل ِ ام :لاق .ؽملاغ ؼتطأ :فل ؾقؼف ,ةافقلا فترضح اؿل فكأ ,رباج ـب ؿقؽح ـطو ْ ُ َ َ ۡ َ َ ذ َ ۡ َ ۡ َ ﴿ :لاق .ؽملاغ ؼتطأ :لاق .هرقغ لام يدلقل سقل أكرح ٔل َيلَِّ ٱ ضخۡيو .)3(ةئا ﴾ۡ ۡ َ َ ْ ُ َ ً ٰ َ ٗ ذ ّ ُ ۡ ۡ َ ۡ ييغ أـاخ افعؽِ ثي ءاش قل ةؼػـلا فؾهأ كؾط ؼػـي ؾجرلا :ـسحؾل تؾق :دـه لبأ ـب دواد لاقو .)4(»ؽقؾط للها عسو اؿك ؽسػك ؾط عسوأ ,ؾجرلا افيأ :لاؼف ,انهودب كػتكا .حمٞحص دامٜمؾم٢مس )184( »ةمٚمّمًاو مؼمًا« مذ يزورمعا فمضرمظأ (1) .ـسمط دامٜمؾم٢مس )164/2( »خيراتمًاو ةمورمٕمعا« مذ يقسمٗمًا فمضرمظأ (2) امٜمصدمط ،حمًاص ـمس ـحمرمًا دبمق امٜمصدمط :لامى )414( »لامعا حلاصإ« مذ امٞمٟدمًا بيأ ـمسا جرمظأ (3) ،فمس رمسامض ـمس ؿمٞمٙمط ـمق ،دمًامظ بيأ ـمس ؾمٞمقمامؾإ ـمق ،زيزمٕمًا دبمق ـمس ديزي ـمق ،مدآ ـمس كمٞيح .ثيدلحا ـسمط حمًاص ـمس ـحمرمًا دبمق ـسمط هدامٜمؾإو .ـسمط دامٜمؾم٢مس )376( »لامٞمٕمًا« مذ امٞمٟدمًا بيأ ـمسا فمضرمظأ (4) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ دلألأا ٜمع ًلاظلا :ُٕثلاجلأ غداظلا للحا ل ِ بَـلا نَ اكَ لَ اقَ وَ , ؿ فَ ناقَ بْ ص كؾَ طَ ر فُ كَ أَ ,ﭬ ؽلام ـِ بْ سِ كَ أَ ـْ طَ .)1( فُ ؾُ عَ ػْ يَ ﷺ ,ؿفقؾط ؿؾسف ناقبصب رؿف نياـبلا تباث عم لشمأ تـك :لاق ,راقس ـطو سكأ ثدحو ,ؿفقؾط ؿؾسف ناقبصب رؿف سكأ عم لشؿي ناك فكأ تباث ثدحو .)2(»ؿفقؾط ؿؾسف ناقبصب رؿف ﷺ للها لقسر",
+  "text_simplified": "The text discusses the rights of children upon their parents, mentioning Prophetic hadiths that urge kindness toward children and warn against wronging them. It also highlights the importance of raising children upon religious values and *akhlaq* (moral character).",
+  "labels": [
+    "حقوق الأطفال",
+    "تربية",
+    "أحاديث نبوية",
+    "الآباء",
+    "القيم الدينية"
+  ],
+  "created_at": "2026-06-21T10:30:02Z",
+  "updated_at": "2026-06-21T10:30:02Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-432f1164",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تحث على حسن معاملة الأطفال وعدم ظلمهم",
+        "english": "urge kindness toward children and warn against wronging them",
+        "why": "The Arabic uses one verb 'تحث على' governing both 'good treatment' and 'not wronging'; the English splits it into 'urge kindness' and 'warn against wronging', adding a warning nuance not present in the Arabic.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "القيم الدينية والأخلاقية",
+        "english": "religious values and *akhlaq* (moral character)",
+        "why": "The Arabic uses the adjective 'الأخلاقية' (moral) as part of 'moral values'; the English replaces it with the transliterated noun 'akhlaq', introducing an Islamic term not used in the source and changing the grammatical structure.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

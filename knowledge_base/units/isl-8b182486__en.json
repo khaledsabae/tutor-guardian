@@ -1,0 +1,56 @@
+{
+  "id": "isl-8b182486__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children in Islam from the Prophetic Ahadith",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "للها دبمق« بياتمي مذ فتمضرمظ (3) .نيادمٛلها ؿمٚسمُ ـمس كمٞيح لالح ـسمط دامٜمؾم٢مس )418/2( ةبمٞمؿ بيأ ـمسا فمضرمظأ (4) .)7112( يراخبمًا فمضرمظأ (5) .)599( يراخبمًا فمضرمظأ (6) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ ـِ بْ للها دبْ طَ ـْ طَ حقحص داـسنب هرقغو ,)218/2( ةبقش لبأ ـبا جرخأو طُ ـُ بْ دُ قْ بَ طُ وَ ,هُ قبُ أَ ,ةَ شَ ئاطَ نَ قتُ ل ْ يَ اقكُ اكَ ؿ فُ كَ أَ , ةَ ؽَ قْ ؾَ م ل ِ بأَ ـِ بْ للها د قْ بَ طُ طَ قبُ أَ وَ , ةَ شَ ئاعَ ل كلًقْ م قثكَ سٌ اكَ أُ وَ , ةَ م ـب ورؿط :ساـلا ـم عؿسف رقغص قهو ةؽم كلإ ناقػس هدلو ةـققط جرخأو فتدجو ٓإ - فكارقأ لـعي - دحأ كلإ فؿضت سقل ,فؼػلا في حقجك لبأ ـباو راـيد ءٓمه تؽسا :لاق ,؟ؽلقح ناؿؾغلا ءٓمه :شؿطلأل ؾجر لاقو .)2(»ؽـيد رمأ ؽقؾط نقظػحي ـسلا ثيدح ملاغ ذئمقي اكأو رؿط ـبا كلقم اًعفاك تيآ تـك :ؽلام لاقو ةلاص دعب سؾجي ناكو :لاق .لـثدحيو لعم دعؼقف للإ لزـقف لل ملاغ لعمو .)3(دحأ فقتلي داؽي ٓ دجسؿلا في حبصلا باغف جرخف ؿؾعلا بؾصاف بهذا :فـبٓ لاق لاجر نأ :لاق ,ةرقؿط ـطو .)4(»ثيداحلب فثدحف هءاج ؿث ,باغ ام فـط »ةيامٗمٙمًا« مذ بمٞمٓلخا فم٘يرمـ ـمُو ،)95/2( »خيراتمًاو ةمورمٕمعا« مذ يقسمٗمًا فمضرمظأ (1) .حمٞحص دامٜمؾم٢مس )61/1( مذ مذ ثيدامطأ« مذ ئرم٘معا ؾمْمٗمًا قمسأو ،)52/5( »ءامٞمًوٕا ةمٞمٚمط« مذ ؿمٞمٕمٟ قمسأ فمضرمظأ (2) .حمٞحص دامٜمؾم٢مس )173/5( »فمٚهأو ملامٙمًا ،مػميز بيأ ـمس دمٛمح لمٜمصدمط :لامى )361/1( »خيراتمًاو ةمورمٕمعا« مذ يقسمٗمًا فمضرمظأ (3)",
+  "text_simplified": "This text addresses the rights of children in Islam, mentioning Prophetic ahadith that emphasize the importance of tarbiyah (upbringing) and teaching them. It highlights the necessity of caring for children and treating them with kindness. It also clarifies some rulings related to the rights of the child within the family.",
+  "labels": [
+    "حقوق الطفل",
+    "تربية",
+    "أحاديث نبوية",
+    "أسرة",
+    "إسلام"
+  ],
+  "created_at": "2026-06-21T10:25:40Z",
+  "updated_at": "2026-06-21T10:25:40Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-8b182486",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "تربية الأطفال وتعليمهم",
+        "english": "tarbiyah (upbringing) and teaching them",
+        "why": "The Arabic uses the ordinary word تربية (upbringing), not a technical Islamic term. Transliterating it as 'tarbiyah' introduces unnecessary jargon and is not present in the source.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يشير إلى ضرورة رعاية الأطفال وحسن معاملتهم",
+        "english": "It highlights the necessity of caring for children and treating them with kindness",
+        "why": "The Arabic verb يشير means 'indicates' or 'points out', while 'highlights' implies a stronger emphasis not present in the original.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

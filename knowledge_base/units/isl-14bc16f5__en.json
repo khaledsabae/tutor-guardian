@@ -1,0 +1,39 @@
+{
+  "id": "isl-14bc16f5__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Virtue of al-Hasan and al-Husayn and Raising Children upon the Love of Ahl al-Bayt",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ؿ فُ ؾَ لا« :ﭬ ـسحلا ـط ﷺ للها لقسر لاق لُ ق ؼُ يَ وَ , ـَ س حَ لْاوَ هُ ذُ خُ ل ْ يَ نَ اكَ فُ كَ أَ ﷺ ل ِ بَـلا ـْ طَ ,ﭭ ديْ زَ ـِ بْ ةَ م .)3(» لَ اقَ اؿ فُ بَ حل َ فَ اؿ فُ بُ حأُ لكِ ِ إ ؿ ـسحلا بحأ ـم« :ﷺ لاق )4(ـسح دـسب هرقغو ,)143( فجام ـبا دـطو .»لـضغبأ دؼف اؿفضغبأ ـمو ,لـبحأ دؼف ـقسحلاو نأ ,ڤ ةشئاط ـط ـسح داـسنب هرقغو ,)232( اقكدلا لبأ ـبا جرخأو تلاؼف ,فصاخم حسؿي بهذف ﷺ للها لقسر يدي ـقب ناك ديز ـب ةماسأ .)411ص( »يدمٕسمًا مػسمٗمش« (1) .)2422( ؿمٚسمُو ،)3749( يراخبمًا فمضرمظأ (2) .)3747( يراخبمًا فمضرمظأ (3) .مذقمٙمًا فاحلجا بيأ فقمق بيأ ـمس دواد لالح (4) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ نينف فقبحأ ةشئاط اي :لاق ,فقلإ اكأ لـطد ,للها لقسر اي لـطد :ڤ ةشئاط ؾبؼي خقش :لقؼيو ,فؾبؼقف اؿلاس فـبا لؼؾي ناك ﭭ رؿط ـبا نأ تيلقسو كـغ للإ بحأ ساـلا ـم ام ,ةقـب اي للهاو :ڤ ةشئاعل ﭬ رؽب قبأ لاقو .)2( »ؽـم ارؼف لؾط زطأ ٓو ,ؽـم يدعب :ً٘ٝع ٘فطعٚ دٜصٜ ٙديٛي ١ٜٚاعَ بس لىإ سظْاٚ ,ةكاكر ـبا ـط ـسح داـسنب )154( »لاقعلا« في اقكدلا لبأ ـبا جرخأو ,عارصلاو ةدشلا في نياؼؾي نأ ةيواعم ـب ديزي دارأ :لاق ,فكامز ؾهأ ةيآ ناكو نأ ىأرف رظكلسو افجو فرطأ نيدجأ ام :ةيواعم لاؼف ,ةيواعؿل ؽلذ اوركذف ساـلا عم تمدق اؿؾف :لاق ةكاكر ـب ديزي فقف ؾعجو هلشكلف ادفو ديزقل دفقي ملاؽلاو ةللسؿلا ةيواعم ىرجأ ؿث",
+  "text_simplified": "The text discusses Prophetic hadiths that highlight the virtue of al-Hasan and al-Husayn, may Allah be pleased with them both, and the love of the Prophet ﷺ for them. It also mentions some incidents that demonstrate their status among the Companions. Parents can derive the importance of raising children upon the love of Ahl al-Bayt.",
+  "labels": [
+    "تربية",
+    "آل البيت",
+    "حب النبي",
+    "قدوة",
+    "أخلاق"
+  ],
+  "created_at": "2026-06-21T10:19:33Z",
+  "updated_at": "2026-06-21T10:19:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-14bc16f5",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

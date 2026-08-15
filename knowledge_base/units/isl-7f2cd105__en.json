@@ -1,0 +1,64 @@
+{
+  "id": "isl-7f2cd105__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "The Prophetic Tarbiyah Curriculum and Its Characteristics",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "ىلع رداقو ،هتاقلطنمو هرداصم ﰲ ليصأ هنإف ،يمﻼسﻹا جاهنﳌاو روصتلل لوﻷا يقيبطتلا لصﻷاو ،ةايﳊا نيدايم رئاس ﰲ ا(cid:275)ودقو ةمﻷا ﰊرم ملسو هيلع ﷲ ىلص ﱯنلا ناك اﳌو ،ا(cid:273) ،تاعمت(cid:272)او دارفﻷا تﲑ غف ،ةيوبﱰلا جئاتنلا ىلعأ ﱃإ لوصولا نم تنكم ﱵلا ،ةيوبﱰلا ملسو هيلع ﷲ ىلص هتسراﳑ ئرقتسن نأ انيلع امازل ناك هلئاسو مهأو يوبﱰلا هجهنم تطبض ﱵلا صئاصﳋا مهأ اهنم طبنتسن نأ لواﳓو ،نوكلا ﲔناوقو ديحوتلا ةموظنم عم لماكتم ماجسنا ﰲ ﱵلا صئاصﳋا ة يهام ﰲ لثمتت ة يرهوج ةيلاكشإ ﰲ اهصﳋأ ،تﻻؤاست ةعومﳎ ىلع ةباجﻹا ﻻواﳏ ثحبلا قلطنيس ،قبس ام ىلع ءانبو . ة يوبﱰلا هتيلمع ﰲ ملسو هيلع ﷲ ىلص اهجهتنا ﱵلا لئاسولا مهأ اذكو ،ي وبنلا يوبﱰلا جهنﳌا ﱂاعم تلكش يو بﱰلا هجهنﳌ ةماعلا صئاصﳋا ضعب اﳍﻼخ نم اطبنتسم ةيوبﱰلا هتسراﳑو ملسو هيلع ﷲ ىلص ﱯنلا ةﲑسل يئارقتسﻻا جهنﳌا دمتعأسو . هيف ةجهتنﳌا لئاسولا ضعب ىلع ﻻدتسمو جاهنﳌا اذه لئاسو ضعب ىلع زكﲑس ﱐاثلا ثحبﳌا امنيب ،يوبنلا يوبﱰلا جاهنﳌا صئاصﳋا ةساردب متهي لوﻷا ،ﲔثحبم ﰲ ثحبلا ﰐأيسو . ةيتاسسؤﳌاو ةيجوغاديبلا 82 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا ي وبنلا يوبﱰلا جاهنﳌا صئاصخ :لوﻷا ثحبﳌا ا هطبضو تاحلطصﳌا فيرعت :لوﻷا بلطﳌا جاهنﳌا حلطصم موهفم :ﻻوأ ج(cid:276)و ،1ه كلسم كلس يأ نﻼف ليبس نﻼف ج(cid:276)أو اج(cid:276) راص قيرطلا جهنتساو ،حضاولا قيرطلا ﲎعﲟ جهنلاو جاهنﳌاو جهنﳌا لاقي ةغ للا ﰲ نإ لوقلا نكﳝ قلطنﳌا اذه نم . انيب احضاو اج(cid:276) راصو نابتساو حضو قيرطلا ج(cid:276)أ برعلا ناسل ﰲو .2جهنﳌا ميقتسم وهو هحضوأ رمﻷا ﱄ قيرطلا ﱃ إ ةراشﻹا ﰲ كﱰشتو",
+  "text_simplified": "This text addresses the Prophetic tarbiyah (upbringing) curriculum derived from the seerah of the Prophet Muhammad ﷺ. It aims to extract the general characteristics of this curriculum and the most important tarbiyah methods he used. The research focuses on analyzing these characteristics and their applications in the upbringing of individuals and communities. Parents can benefit from these principles in raising their children upon a comprehensive Islamic foundation.",
+  "labels": [
+    "منهج نبوي",
+    "تربية إسلامية",
+    "سيرة نبوية",
+    "خصائص تربوية",
+    "وسائل تعليمية"
+  ],
+  "created_at": "2026-06-20T14:38:52Z",
+  "updated_at": "2026-06-20T14:38:52Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-7f2cd105",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "المنهج التربوي النبوي",
+        "english": "The Prophetic Tarbiyah Curriculum",
+        "why": "Arabic uses the adjective 'التربوي' (educational/pedagogical), not the noun 'tarbiyah'. Translating it as 'Tarbiyah Curriculum' introduces a transliterated noun not present in the source; a more accurate rendering would be 'The Prophetic Educational Methodology' or 'The Prophetic Tarbawiy Curriculum'.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "أهم الوسائل التربوية التي استخدمها",
+        "english": "the most important tarbiyah methods he used",
+        "why": "Same issue: 'التربوية' is an adjective meaning educational, not the noun 'tarbiyah'. Using 'tarbiyah methods' is inconsistent with the later translation of 'تربية' as 'upbringing'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وفق أسس إسلامية متكاملة",
+        "english": "upon a comprehensive Islamic foundation",
+        "why": "Arabic plural 'أسس' (foundations/bases) is rendered as singular 'foundation', and 'وفق' (according to) is changed to 'upon'. This slightly alters the meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

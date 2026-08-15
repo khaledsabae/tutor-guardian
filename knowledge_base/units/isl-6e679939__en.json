@@ -1,0 +1,55 @@
+{
+  "id": "isl-6e679939__en",
+  "domain": "islamic_parenting",
+  "age_group": "10-12",
+  "behavior_type": "تعليم الزكاة للأبناء",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "فقه إسلامي — تعليم الزكاة للأطفال",
+  "text_original": "",
+  "text_simplified": "Children need to learn how to fulfill *zakat al-mal* (obligatory almsgiving on wealth), as they now have their own money. Parents should guide them in a way that is suitable for their age.",
+  "labels": [
+    "زكاة المال",
+    "الأطفال",
+    "الإسلامي",
+    " تعليم",
+    "الأسرة"
+  ],
+  "created_at": "2026-06-07T08:32:56Z",
+  "updated_at": "2026-06-10T18:00:00Z",
+  "version": "1.0.0",
+  "title": "Teaching Children Aged 10–12 How to Fulfill Zakat al-Mal",
+  "language": "en",
+  "source_meta": {
+    "source_title": "زكاة المال للأطفال — تعليم الزكاة للأبناء",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-6e679939",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "حيث أنهم يملكون مالًا خاصًا بهم",
+        "english": "as they now have their own money",
+        "why": "The English adds 'now', which is not present in the Arabic and implies a recent change in the children's financial situation.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "بطريقة مناسبة",
+        "english": "in a way that is suitable for their age",
+        "why": "The English adds 'for their age', which is not in the Arabic. The Arabic only says 'in a suitable way' without specifying age.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

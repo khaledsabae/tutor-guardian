@@ -1,0 +1,48 @@
+{
+  "id": "isl-d8ac2c78__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Rulings on Abortion in Islamic Jurisprudence",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "إجهاض وأحكام شرعية",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "هقوقّح لوأ تناك اذلو ،ةايلحا في هقّح لفطلل ةوعدف لسنلا ديدتح امأو ،دولولاب جاوزلا لىإ هتوعدو ،ةمايقّلا موي مملأا هتمأب بينلا ناك اذإ لملحا عنام مادختسا ءاملعلا حابأ دقو ،ينملسلما فاعضإ لىإ ىعست ةييرصنت كلاهلل ةأرلما ةايح ضِرعي لملحا ناك وأ ةياعرلاو ةعاضرلا في هقّح لفطلا ءاطعإ دصقّلا . لدع ملسم بيبط ةداهشب :يه ماكحأ ةدع تعرش هتايح ىلع ةظفالمحاو لفطلا ةياعرلو * . امهيدلو وأ امهيسفن ىلع اتفاخ اذإ عضرلماو لماحلل رطفلا ةحابإ ) ( . مطفْتَو عضرُتو عضت تىح لمالحا ةأرلما ىلع تابوقّعلاو دودلحا ةماقإ ليجأت )2( خفن لبق يأ -لىولأا رهشلأا في ناك نإف ،همأ نطب في ًلاْمَح مادام يننلجا ةياحم )3( ةهاركلا عم ضاهجلإل نوحيبلماو ،ةهاركلاو يمرحتلا ينب رودت ٌلاوقأ ءاملعللف -حورلا ًافوخ تاهبشلا هذه ناسنلإا بنجتي نأ عرولا ىضتقّمو\" اهعروو ملأا ىوقّتل كلذ اوكرت . \" مارلحا في طروتلا نم لعفب اهيرغ وأ همأ هتطقسأ نإو ،عاجملإاب مارحف حورلا خفن دعب ضاهجلإا امأو .2 2 -2 /32 ،ةميت نبا ملاسلإا خيش ،ىواتفلا عوممج :رظنا ) ( . 3 /2 ،ينميثع نب لحاص نب دممح خيشلا ىواتف :رظنا )2( . 4 ص ،يسدقّلما نيدلا ءابه :ةدعلاو ، 39/3 ،ةمادق نبا ،نيغلما :رظنا )3( .4 4/9 ،قباسلا عجرلما :رظنا )4( . - 4ص ،يعابسلا نيدلا فيس دممح ،نوناقّلاو بطلاو هقّفلا ينب ضاهجلإا :رظنا ) ( :ناتلاح هلف دمعتم في ببست نم ىلع بيج لالحا هذه يفف ،لعفلا كلذ ببسب تويم ثم ًايح عقّي نأ * نيرهش مايصف دتج لم نإف ةبقر قتع يهو ةنمؤلما سفنلا لتق ةرافكو ،ةلماك ةيدلا هلتق .ملعلا لهأ عاجمإ هيلعو ينعباتتم امك ةرافكلاو",
+  "text_simplified": "This text discusses the rulings on abortion in Islamic jurisprudence, clarifying that aborting the fetus is prohibited after the soul is breathed into it (the first four months) except in cases of extreme necessity, such as a threat to the mother's life. It also explains that abortion before the soul is breathed in is permissible in some cases with the knowledge of trusted physicians. The aim is to protect both the fetus and the mother in accordance with Shariah guidelines.",
+  "labels": [
+    "إجهاض",
+    "فقه إسلامي",
+    "حماية الجنين",
+    "أحكام شرعية",
+    "صحة الأم"
+  ],
+  "created_at": "2026-06-20T14:35:06Z",
+  "updated_at": "2026-06-20T14:35:06Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-d8ac2c78",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الضوابط الشرعية",
+        "english": "Shariah guidelines",
+        "why": "The Arabic 'ضوابط' means binding regulations or controls, whereas 'guidelines' in English suggests non-binding advice. This softens the legal force of the original.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

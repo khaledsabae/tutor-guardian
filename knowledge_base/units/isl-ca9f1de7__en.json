@@ -1,0 +1,64 @@
+{
+  "id": "isl-ca9f1de7__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Tarbiyah of Children upon Salah with Positive Methods",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "فقؾط بجاقلا اقعقضل برض كضقف ةللسؿلا تراصل ٓإو فب اقمقؼي نأ لغبـي اؿب اقمقؼيو ماظـلا اوداتعقل برضقف عاجيلإاو ملايلإل ٓ بيدلتؾل برضلا نقؽي نأ دبٓ اـؾق اؿك فكأ ٓإ ـمزلا في ـقؿؾعؿلا ضعب ؾعػي اؿك ؾعػي ٓ حبرم رقغ ابرض فلاحب ؼقؾي ابرض نقبرؿلا ءٓمه لطدي اؿك ؾؿفي ٓو عجقؿلا ؿقظعلا برضلا برضي ؼباسلا ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ ؾثتؿي ٓ لبصلا نٕ ءلش ؿفل لاؼي ٓ ةقبترلا ـط ساـلا دعبأ ـم ؿه ـيذلا .)1(»فبدمي برضلا ـؽل فرعي ٓو كؾط ؿبهرضف ةلاصلا قه يذلا لطرشلا بجاقلا كرت كؾط ؿبهرضب رملف« ىذمي لبصلا نأ :عازك فقف ءاؿؾعلا ـقب ؿؾعي ٓ اؿم اذهو كلوأ ؿؾظلاو بذؽلا في افقلإ جاتحي لتلا رقمٕا ـم فكتري امو حئابؼلا ـم فؾعػي ام كؾط :رملخا هبرشل نحمرلا دبع هدلىل رمع برض دُ بْ طَ ل خأَ بَ ر ِ شَ : لَ اقَ , ر طُ ـَ بْ للها دَ بْ طَ نَ أَ , ؿ بَ خْ أَ , يِ ر ِ هْ زُ لا ـِ طَ صْ ؿ ِ ِ ب ـُ حْ كَ وَ ث ِ ر ِ احَ لْا ـُ بْ ةُ بَ ؼْ طُ ةَ طَ وَ ر س ِ قبُ أَ فُ عَ م صِ اعَ لْا ـِ بْ ور ِ ؿ طَ كلَِ إ اؼَ ؾَ طَ كْ ا احَ صَ اؿ فَ ﭬ بِ اطَ خَ لْا ـِ بْ ر ـُ بْ للها دُ بْ طَ لَ ا قَ .هُ اَـبْ ر ِ شَ بٍ ار دْ قَ اكَ ِ نفَ اكَ ر فِ صَ : َٓ اؼَ",
+  "text_simplified": "The text discusses the importance of tarbiyah of children upon salah and their commitment to it. It points out that hitting is not an effective method of tarbiyah and may cause behavioral problems. Parents must use positive tarbiyah methods such as encouragement and dialogue to reinforce good behavior. Emphasis is placed on the good example (role model) and patience in teaching children.",
+  "labels": [
+    "تربية",
+    "صلاة",
+    "سلوك",
+    "أهل",
+    "طفل"
+  ],
+  "created_at": "2026-06-21T10:20:25Z",
+  "updated_at": "2026-06-21T10:20:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ca9f1de7",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "title",
+        "arabic": "على الصلاة",
+        "english": "upon Salah",
+        "why": "The literal translation 'upon Salah' is unnatural in English; 'in prayer' or 'to pray' would be clearer and more idiomatic.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "على الصلاة",
+        "english": "upon salah",
+        "why": "Same literal translation issue as title; 'upon salah' is stilted and may confuse readers.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "أساليب تربوية إيجابية",
+        "english": "positive tarbiyah methods",
+        "why": "The Arabic adjective 'تربوية' (educational) is rendered as the noun 'tarbiyah', producing an ungrammatical phrase; should be 'positive educational methods' or 'positive methods of tarbiyah'.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

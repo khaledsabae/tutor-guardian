@@ -1,0 +1,56 @@
+{
+  "id": "isl-c0274dd3__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Patience in the Tarbiyah of Children",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": ")984/2( »ةمساحمّمًا ؾئامْمو« مذ دحمأ فمضرمظأ (2) ارقميذمُ ناميو ،يرهزمًا فقمق ـمس ـحمرمًا دبمق ـمس دمٕمؾ ـمس ؿمٞهارمسإ ـمس دمٕمؾ ـمس دحمأ قه (3) .نقمصدمح ءمامٚمق ؿمٝمٚمي تمٞمس ؾهأ ـمُ دهزمًاو حلامّمًامس اموقصقمُ ؾمْمٗمًاو ؿمٚمٕمًامس .)117/1( »ؾبمٜمط ـمس دحمأ مامُلإا لاقمىأ ةمققمؾقمُ« (4) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ دـط فقـب ؿصاط ـب سقق كصوأ :لاق ,ؿصاط ـب سقق ـب ؿقؽح ـطو ؿهبركأ ؿفقؾط اودقس اذإ مقؼلا ننف ,ؿكبركأ ؿؽقؾط اودقس ,لـب اي ,فتقم .)1(»ؿفئاػكأ دـط ؿبه ىرزأ ؿهرغصأ اودقس اذإو ,ؿهابأ اقػؾخ لبأ عم تؾخد :لاق فقط ـب ـؿحرلا دبط ـب دقؿح ـب ـؿحرلا دبط ـطو رظكا ,لـب يأ :لبأ لاؼف :لاق ,ؾجر كؾط اقعؿتجا دق ساـلا تيأرف ,دجسؿلا !! ةورط اذه ,ةبأ اي :فل تؾؼف :لاق ,رقبزلا ـب ةورط قه اذنف ترظـف ؟ اذه ـم باحصأ تيأر دؼل للهاقف بجعت ٓ لـب اي :لاؼف :لاق .ؽلذ ـم تبجعتو .)2(فكقللسي ؿنهإو ,ﷺ للها لقسر :ب٥اصلما ٢ًع برصيا دلاٚلأا ًِعتٜٚ ۡ َ ٰ َ ذ َ َ َ َ ٓ َ ٰ َ َ ۡ ۡ َ ﴿ :كلاعت فلقق في اؿك فـبٓ ناؿؼل لاق ٌَِ مِلذ نِإ ۡمةاغأ اٌ عَل بِ غٱو .)17:ناؿؼل( ﴾ ُ ۡ َ ﷺ ل ِ بـَ ؾل )3( ةً َـبْ ا نَ أَ ﭭ ديْ زَ ـِ بْ ةَ م أُ ـْ طَ )5655( يراخبلا جرخأو ض ِ حُ دْ قَ ل ِ تَـبْ ا نَ أَ بُ س ِ حْ كَ لبَ أُ وَ دٌ عْ س وَ ﷺ ل ِ بَـلا عَ م قَ هُ وَ ف ِ قْ لَِ إ تْ",
+  "text_simplified": "The text discusses the importance of raising children with patience and endurance, citing Prophetic hadiths and Qur'anic verses. It mentions that children are an amanah (trust) upon the parents, and that Islamic values must be taught to them. It also highlights that patience in the tarbiyah of children carries a great reward with Allah.",
+  "labels": [
+    "تربية",
+    "صبر",
+    "أبناء",
+    "إسلام",
+    "قيم"
+  ],
+  "created_at": "2026-06-21T10:31:14Z",
+  "updated_at": "2026-06-21T10:31:14Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-c0274dd3",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تربية الأبناء على الصبر والتحمل",
+        "english": "raising children with patience and endurance",
+        "why": "The Arabic preposition 'على' means 'upon/on', indicating that children are to be raised to possess patience and endurance. The English 'with' suggests the parents' manner of raising, changing the core meaning from teaching children patience to being patient as a parent.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أمانة في أعناق الآباء",
+        "english": "an amanah (trust) upon the parents",
+        "why": "The Arabic phrase 'في أعناق' (on the necks) is omitted, losing the specific metaphor of a heavy responsibility placed directly on the parents' necks.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

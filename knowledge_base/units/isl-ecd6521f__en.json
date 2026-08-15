@@ -1,0 +1,48 @@
+{
+  "id": "isl-ecd6521f__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Tarbiyah of Children upon Islamic Values",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية أخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ـيأ :لاؼف هءاج ؿث ةؾقل تاذ هدؼػف ,فقبٕ ائقش مزلأ ناك ؿساؼلا ـب ـؿحرلا ةرم دعت ٓو لـب اي للها ءاش نإ رقخ« :لاق ,صاق دـط تـك :لاؼف ,؟تـك ورؿط ـم عؿست ٓ لـب اي :لبأ لل لاق :دقفشلا ـب بقبح ـب ؿقهاربإ لاق .)5(»)4(رقبزلا لآ نامرفق ـب ورؿط ـم عؿساو )3(دقبط ـب ،ثيدلحا مذ يقم٘مس سمٞمًو ،فثيدمط بتمٙي خمٞمؿ :ؿمشامط قمسأ لامىو ،ىرمظأ فمٗمٕضو ،ةرمُ فم٘مصقمو = .فمً دمٝمِي فمٚبمى امُو ،ملمً فمٞمو ،قودص :»بيرم٘تمًا« مذ ظموالحا لامىو .حمٞحص دامٜمؾم٢مس )43( »عدبمًا« مذ حاضو ـمسا فمضرمظأ (1) )311/4( »ملامٙمًا مذ« مذ يورلها دمٜمقو ،حمٞحص دامٜمؾم٢مس )125/11( قازرمًا دبمق فمضرمظأ (2) .»ؿمٚمٙتي ؾمٕجمو ةمًزتمٕمعا ـمُ ؾمضر ءاجمو« :قازرمًا دبمق ؼيرمـ ـمُ ةمٞمقاد نامي ،رقمٝمِمعا مززتمٕمعا ،ؿهٓقمُ لمٛمٞمٛتمًا ،ناسمٞمي ـمسا لام٘ي و ،بامس ـمس دمٞبمق ـمس ورمٛمق (3) .ادمسامق نامي فمٟأ عمُ ةمقاجم فمٛتها ،فتمقدمس ممإ .ػمٞمٕض قهو ،بمٞمٕمؿ ـمس مػمسزمًا لآ نامُرمٝمى ،رقمقٕا كمٞيح قمسأ ،يمٍبمًا رامٜيد ـمس ورمٛمق (4) ةدمٞم٘مق حشر« بياتمي رمٔمٟاو ،تمسامص دامٜمؾم٢مس )441/2( »ةمٜسمًا« مذ دحمأ ـمس للها دبمق فمضرمظأ (5) .ءاقهٕاو عدبمًا ؾهأ ةسمًامج ـمق ريذحتمًا ـمق لامّمو فمٞمو ترميذ »مليزارمًا ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ ,ؽبؾق للها حؾصأ ,كسقط اي « :فـبٓ لقؼي ناك فكأ ,بشقح ـب ماقعلا ـطو ,ةبرشٕاو ,طبابرلا باحصأ سلاجي كسقط ىرأ نٕ ,للهاو :لقؼي ناكو ؾهأ :لـعي ,تامقصخلا باحصأ سلاجي هارأ نأ ـم للإ بحأ ,ؾصابلاو ؿهقحزاؿت ٓو ءافػسلا اقسلاجت ٓ :فقـبل ؽؾؿلا دبط ـب ماشه لاقو مقـلاب اقحبطصت ٓو داشرلا كلإ لومي ٓ ؿهرمأ ننف ملاؽلا باحصأو ؿكايإو .)2(»دؽكو ممش فكنف ءٕظلا نِأ ٛبحاصو َع دلألأا داعبإ :ُٕثلاجلا",
+  "text_simplified": "The text speaks of the importance of tarbiyah (nurturing) of children upon Islamic values and noble akhlaq (character). It points to the necessity of teaching them truthfulness, amanah (trustworthiness), and keeping away from bad behaviors. It also clarifies the role of parents in guiding their children toward righteousness and avoiding bad companions. It emphasizes that tarbiyah of children upon the religion and akhlaq is a great responsibility that rests upon the family.",
+  "labels": [
+    "تربية",
+    "أخلاق",
+    "قيم إسلامية",
+    "الأبناء",
+    "الأسرة"
+  ],
+  "created_at": "2026-06-21T10:28:15Z",
+  "updated_at": "2026-06-21T10:28:15Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ecd6521f",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ضرورة تعليمهم الصدق والأمانة والبعد عن السلوكيات السيئة",
+        "english": "the necessity of teaching them truthfulness, amanah (trustworthiness), and keeping away from bad behaviors",
+        "why": "The English uses a gerund 'keeping away' as the object of 'teaching', which is ungrammatical and slightly shifts the meaning: Arabic implies teaching them to keep away, not teaching the concept of keeping away.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

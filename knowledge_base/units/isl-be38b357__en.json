@@ -1,0 +1,47 @@
+{
+  "id": "isl-be38b357__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Permissible Play for Children in the Prophetic Tarbiyah",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية ولعب",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "حَ لْاوَ ,ل ِ تر جْ حُ بِ ا بَ كؾَ طَ ام ف ِ ِ بعلَ كلَِ إ ر ظُ كْ أَ فئادَ ر ِ ِ ب لكر اصً قرو ابً ثُ اقت قر دَ لاو بارحلاب ابً عل ناؽف دجسؿلا في ةشبحلا بعل امأو« ـم قهو ,فقؾط طقشـتلاو ـيرؿتلاو بورحلا كؾط بيردتلا باب ـم قهو ,ابه .)2(»دجسؿلا في ﷺ لبـلا فحابأ ؽلذلو ,بودـؿلا ؾقبق :دٝعيا ّٜٛ ٘ٝف ١فيامخ لا ٟريا ٍافطلأا بعًب عأب لاٚ يدـطو رؽب قبأ لؾط ؾخد :تلاق ,ڤ ةشئاط ـط »ـقحقحصلا« فيو ,ثاعب مقي راصكٕا فب تلواؼت اؿب ,ناقـغت راصكٕا يراقج ـم ناتيراج للها لقسر تقب في ناطقشلا رقمزؿبأ :رؽب قبأ لاؼف ,ـقتقـغؿب اتسقلو :تلاق ادقط مقق ؾؽل نإ رؽب ابأ اي« :ﷺ للها لقسر لاؼف ,دقط مقي في ؽلذو ,؟ﷺ ـم ؾحي ام كلإ سقػـلا طسبو تاحارؾل عقضقم دقعلا نأ ؾقلد فقفو« بارشلاو ؾكٕاو بعؾلا ـم للها ؾحأ امو قزرلا تابقطب ذخٕاو اقكدلا .)892( ؿمٚسمُو ،)454( يراخبمًا فمضرمظأ (1) .)13/8( »ؿمٝمٗمعا« (2) .)549/2( »يراخبمًا حمٞحص حشر« (3) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ :زسض ِث ٔهٜ لم اذإ ١سٛدزلأاب بعًيا شٛيجٚ دؼَ فَ ـَ قـس تِ س تُ ْـ ِ ب اكَ أَ وَ ﷺ ل ِ بَـلا لـجَ وَ زَ تَ : تْ لَاقَ ,ڤ ةَ شَ ئاطَ ـْ طَ كفَ قَ فَ ير ِ عَ شَ قَ ر تَ فَ تُ ؽْ ط ِ قُ فَ , جٍ ر زْ خَ ـِ بْ ث ِ ر ِ احَ لْا ل ِ ـبَ ل ِ ف اـَ لْ زَ َـفَ ةَ َـيد ِ",
+  "text_simplified": "The text discusses the importance of permissible play for children, mentioning that the Prophet Muhammad ﷺ used to play with children and allow them to play. It also points out that beneficial play strengthens a child’s physical and mental growth. Parents should encourage their children to engage in useful play rather than harmful games.",
+  "labels": [
+    "لعب الأطفال",
+    "تربية نبوية",
+    "نمو الطفل",
+    "اللعب المباح"
+  ],
+  "created_at": "2026-06-21T10:25:58Z",
+  "updated_at": "2026-06-21T10:25:58Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-be38b357",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "التربية النبوية",
+        "english": "Prophetic Tarbiyah",
+        "why": "The Arabic 'التربية' is a common word meaning upbringing/education, but the English leaves it as 'Tarbiyah', an Arabic transliteration, making it seem like a technical Islamic term when it is not. This is an unnecessary transliteration that obscures meaning for English readers.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "dev-aa62cbec__en",
+  "domain": "development",
+  "source_file": "Positive_Parenting_9_11.pdf",
+  "title": "Offering Advice for Improving Behavior and Physical Health for Children Aged 7–9",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تربية إيجابية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "UNICEF",
+  "text_original": "vegetables; limit foods high in solid fats, added sugars, or salt, and prepare healthier foods for family meals.  Keep television sets out of your child's bedroom. Limit screen time, including computers and video games, to no more than 1 to 2 hours.  Encourage your child to participate in an hour a day of physical activities that are age appropriate and enjoyable and that offer variety! Just make sure your child is doing three types of activity: aerobic activity like running, muscle strengthening like climbing, and bone strengthening – like jumping rope – at least three days per week. A pdf of this document for reprinting is available free of charge from http://www.cdc.gov/ncbddd/childdevelopment/positiveparenting/middle2.html Additional Information: http://www.cdc.gov/childdevelopment 1-800-CDC-INFO (800-232-4636) http://www.cdc.gov/info",
+  "text_simplified": "Avoid foods rich in fats, added sugars, and sugar, and prepare healthy dishes for family meals. Try not to place the television in your child’s room, and limit their viewing to less than two hours daily.",
+  "labels": [
+    "تربية أسرية",
+    "الصحة البدنية",
+    "السلوك الإيجابي"
+  ],
+  "created_at": "2026-06-07T07:57:44Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Positive_Parenting_9_11",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "dev-aa62cbec",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

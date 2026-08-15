@@ -1,0 +1,48 @@
+{
+  "id": "isl-50818e97__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "A Story about Controlling Anger and Avoiding Violence",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "عدوانية",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ِ ب حُ س يَ , ف ِ ِ ؾهْ أَ ضَ عْ بَ ذُ قِ عَ يُ نَ اكَ ﷺ ل ِ بَـلا نَ أَ ,ڤ ةَ شَ ِ ئاطَ ـْ طَ و كَ ؤُ اػَ ش ِ َٓ ِ إ ء اػَ ش ِ َٓ ل ِ فاشَ لا تَ ْكأَ وَ ف ِ ػ ِ شْ ا سَ اَبلْ ا بْ ه ِ ذْ أَ سِ اَـلا بَ ر فُ ؾَ لا : لُ قؼُ يَ وَ عذبلا نِأ ٛظلالد َؤ عذبلا َو دلألأا شٖزتح :ُٔشؼعلأ عطاتلا للحا ذَ خَ أَ تعجَ ر ؾَ فَ , صٍ اقَ دَ ْـط اكَ أَ وَ ل ِ بأَ لكآر : لَ اقَ ,بٍ ابَ خَ ـِ بْ للها دبْ طَ ـْ طَ .)4()3( ةَ ؼَ لاؿ عَ لْا عَ لَاصَ دْ قَ نٌ ر قَ : لَ اقَ ,ةَ وَ ار فل دطلف نابضغ بؾؼكاف ,نآرؼلا في نقلداجي ساكأ عم قهو فـباب بابخ رم فبرضف فقتلي نأ رقغ ـم فقؾط بثو كتػلا بؾؼكا اؿؾف ,ةعسك وأ اماطخ وأ اصقس كؾعف ,لسػك ديرت اؿكإ ,تؿؾط دق :لاق فقبأ ـم دجلا ىأر اؿؾف ,اػقـط ابرض رم اذإ ناؽف ,دقطأ ٓ نيإ ,ةبأ اي :لاؼف ,فبرضي ؾعجف ائقش فقؾط در اؿف ,؟ اذام ,للها كلإ ءلش ـم لبأ ؾبق ام لـم اقؾبؼت نأ ٓإ ,ٓ :لقؼقف :لاق ,فكقطدي ؿبه .)5(»ثادحأو رقمأ ﷺ لبـلا دعب ناك دق فكإ :نقلقؼقف :لاق .)5743( يراخبمًا فمضرمظأ (1) .تئمؿ نإ فمٕمضارمو »مليزارمًا ةدمٞم٘مق حشر« بياتمي مذ ؾصٕا اذه ـمق تمٛمٚمٙمش (2) مغمق ةمًامٓتمؾٓاو مؼمٙمًا ـمُ ؿمٝمْمٕمس مذ",
+  "text_simplified": "The text tells an old story illustrating aggressive behavior among children, where one recounts how he used to hit his friend violently. The story aims to teach children to control anger and avoid violence.",
+  "labels": [
+    "عدوانية",
+    "غضب",
+    "تربية",
+    "ضبط النفس",
+    "عنف"
+  ],
+  "created_at": "2026-06-21T10:28:06Z",
+  "updated_at": "2026-06-21T10:28:06Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-50818e97",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "النص يتحدث عن قصة قديمة",
+        "english": "The text tells an old story",
+        "why": "The Arabic says the text talks about an old story, not that it tells the story itself; the English implies the text is the story.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

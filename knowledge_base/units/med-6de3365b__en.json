@@ -1,0 +1,48 @@
+{
+  "id": "med-6de3365b__en",
+  "domain": "medical",
+  "source_file": "Autism_CDC.pdf",
+  "title": "Advice for Maintaining Your Child’s Healthy and Effective Growth in the First Months of Their Life",
+  "language": "en",
+  "age_group": "prenatal-1",
+  "behavior_type": "تنمية مبكرة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "CDC — Learn the Signs. Act Early: قوائم مراحل النمو (Milestone Checklists)",
+  "text_original": "• Talk, read, and sing to your baby. This will help her learn to speak and understand words later. • Limit screen time (TV, phones, tablets, etc.) to video calling with loved ones. Screen time is not recommended for children younger than 2 years of age. Babies learn by talking, playing, and interacting • Feed only breast milk or formula to your baby. Babies are not ready for other foods, water or other drinks for about the first 6 months of life. • Give your baby safe toys to play with that are easy to hold, like rattles or cloth books with colorful pictures • Let your baby have time to move and interact with people and objects throughout the day. Try not to keep your baby in swings, strollers, or bouncy seats for too long. • Set steady routines for sleeping and feeding. • Lay your baby on her back and show her a bright-colored toy. Move the toy slowly from left to right and up and down to see if she watches how the toy moves. • Sing and talk to your baby as you help her “exercise” (move her body) for a few minutes. Gently bend and move her arms and legs up and down. To see more tips and activities download CDC’s Milestone Tracker app. This milestone checklist is not a substitute for a standardized, validated developmental screening tool. These developmental milestones show what most children (75% or more) can do by each age. Subject matter",
+  "text_simplified": "Talk to your child, read to them, and sing to them to help them learn language and words. Set a specific time for screen exposure for children under two years old, as children learn through talking, playing, and exploring.",
+  "labels": [
+    "تنمية طفولة",
+    "الغذاء الصحي",
+    "اللعب والأنشطة",
+    "النوم",
+    "الحركة"
+  ],
+  "created_at": "2026-06-07T08:15:01Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Autism_CDC",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "med-6de3365b",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "حدد وقتًا محددًا لمشاهدة الشاشات",
+        "english": "Set a specific time for screen exposure",
+        "why": "The Arabic uses the direct, everyday phrase 'watching screens' (مشاهدة الشاشات), while the English 'screen exposure' is clinical and less warm, shifting the register.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

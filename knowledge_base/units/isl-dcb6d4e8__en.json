@@ -1,0 +1,60 @@
+{
+  "id": "isl-dcb6d4e8__en",
+  "domain": "islamic_parenting",
+  "source_file": "quran_al_hujurat_11.txt",
+  "title": "The Prohibition of Mocking Those Who Uphold Salah",
+  "language": "en",
+  "age_group": "10-12",
+  "behavior_type": "التعامل مع سخرية الآخرين من الالتزام الديني",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_info": "القرآن الكريم، سورة الحجرات، الآية 11",
+  "text_original": "يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَرْ قَوْمٌ مِّن قَوْمٍ عَسَىٰ أَن يَكُونُوا خَيْرًا مِّنْهُمْ وَلَا نِسَاءٌ مِّن نِّسَاءٍ عَسَىٰ أَن يَكُنَّ خَيْرًا مِّنْهُنَّ (سورة الحجرات: 11).",
+  "text_simplified": "If other children mock your child because of his salah, recite with him the words of Allah: «يَا أَيُّهَا الَّذِينَ آمَنُوا لَا يَسْخَرْ قَوْمٌ مِّن قَوْمٍ عَسَىٰ أَن يَكُونُوا خَيْرًا مِّنْهُمْ» (Al-Hujurat: 11). Explain to him that this ayah prohibits the one who mocks, and that Allah may have preferred the one being mocked over the mocker, so there is no need for him to feel ashamed or to respond in kind.",
+  "labels": [
+    "السخرية من الالتزام",
+    "الصلاة",
+    "النهي عن السخرية",
+    "الطفولة المتأخرة"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "القرآن الكريم — سورة الحجرات"
+  },
+  "source_language": "ar",
+  "translated_from": "isl-dcb6d4e8",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "يلتزم بالصلاة",
+        "english": "Uphold Salah",
+        "why": "The Arabic 'يلتزم' means 'adheres to' or 'commits to', while 'uphold' suggests establishing or maintaining, which is a slightly different concept.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الساخر نفسه",
+        "english": "the one who mocks",
+        "why": "The Arabic includes the emphatic 'نفسه' (himself) to stress that the verse addresses the mocker, not the mocked; the English loses this emphasis.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "title and body",
+        "arabic": "الصلاة",
+        "english": "Salah / salah",
+        "why": "The transliterated term is capitalized in the title ('Salah') but lowercase in the body ('salah'), which is inconsistent within the same document.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

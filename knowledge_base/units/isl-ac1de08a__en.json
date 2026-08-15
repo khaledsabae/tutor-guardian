@@ -1,0 +1,64 @@
+{
+  "id": "isl-ac1de08a__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Islamic Tarbiyah through Observation and Guidance",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "ميمصت :رظنا ) ( .43 - 436 ص ،يسدقّلما نيدلا ءابه :ةدعلاو ، 26 - 2 / ،ةمادق نبا ،نيغلما :رظنا )2( .قباسلا عجرلما :رظنا )3( .قباسلا عجرلما :رظنا )4( اهلئاسوو ةيبرتلا عاونأ رمع عم بسانتت انهلأو ،ناسنلإا ةايح ةليط اهرارمتساب ةيملاسلإا ةيبرتلا زيمتت بيرتل نواعتت لب لصفنت لا ةددعتم لاكشأ اله ناك هتيصخش بناوج لمشتو ،ناسنلإا :هثيدح في لوسرلا اهيلإ راشأ ةليلج ةدعاق ركذن نأ بيج كلذ لبقو ،ملسلما لفطلا هيلع قشي رمأب هدلو رمأي لا نأ دارلماو } هرب ىلع هدلو ناعأ ًلاجر للها محر { لكلأاب لوغشم وهو لفطلا ةادانم نم رذيح نأ بيرلما ىلع اذلو ،قوقّعلا لىإ كلذ هرجيف اعدو نيركفلما ضعب كلذب ىدان دقو ،بعللا في قرغتسم وهو وأ مونلا لوايح وأ ءاطخأ تلق كلذل نادلاولا هبنت اذإف رسكلل ةلباقّلا ةنيمثلا ءايشلأا داعبإ لىإ مهضعب :لياتلا وحنلا ىلع عاونأ ةسخم ةيبرتلاو :لياتلا وحنلا ىلع عاونأ ةسخم ةيبرتلل ةظحلالماب ةيبرتلا لاوأ تيلا ةظحلالما كلت ؛عمتلمجا دارفلأ هتظحلام في بينلا ُهَدَسَج ًاساسأ ةيبرتلا هذه دعتُ نيوكتلا في هتمزلامو دلولا ةقّحلام ةظحلالماب ةيبرتلاب دوصقّلماو\" ،ديشرلا هيجوتلا اهبقّعي لاؤسلاو ،يعامتجلااو يسفنلا دادعلإا في هتظحلامو هتبقارمو ،يقلاخلأاو يديقّعلا لا ةظحلالما نأ نيعي اذهو ،\"يملعلا هليصتحو ةيمسلجا هتيبرت في هلاحو هعضو نع رمتسلما يطويسلا هدروأو ، 4 / ،هدلاو ىلع دلولا قح في ءاج ام ،بدلأا باتك :هفنصم في ةبيش بيأ نبا هجرخأ ) ( .يرغصلا عمالجا في . 2 ص ،ليوبناتسلاا دوممح ،انلافطأ بيرن فيك :رظنا )2( .63 - 62 ص ،هبرغلا هيبن ،ةيكولسلا تلاكشلما :رظنا )3( . ةيصخشلا بناوج عيملج ةلماش نوكت نأ دب دلولا ةفرغ شتفن نأ أطلخا",
+  "text_simplified": "Islamic tarbiyah (nurturing) is distinguished by its continuity and suitability for all stages of a person’s life, encompassing all aspects of their personality. The murabbi (nurturer) must not command the child with what is difficult for them; rather, they should assist them toward goodness. Among the types of tarbiyah is tarbiyah through observation, which involves following the child in their moral, intellectual, and social development. Tarbiyah through observation means continuously monitoring the child’s state and guiding them with rifq (gentleness).",
+  "labels": [
+    "تربية إسلامية",
+    "ملاحظة",
+    "توجيه",
+    "تربية الطفل",
+    "تنشئة"
+  ],
+  "created_at": "2026-06-20T14:35:47Z",
+  "updated_at": "2026-06-20T14:35:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ac1de08a",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وملاءمتها لمراحل عمر الإنسان",
+        "english": "and suitability for all stages of a person’s life",
+        "why": "The Arabic says 'suitability for the stages of human life' without 'all'; adding 'all' overstates the claim.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وتشمل جوانب شخصيته المتعددة",
+        "english": "encompassing all aspects of their personality",
+        "why": "The Arabic says 'multiple aspects' (جوانب متعددة), not 'all aspects'; the English changes the scope.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "مراقبة حال الطفل المستمرة",
+        "english": "continuously monitoring the child’s state",
+        "why": "The Arabic adjective 'المستمرة' modifies 'حال' (state), meaning 'the child's continuous state'; the English turns it into an adverb modifying 'monitoring', changing the meaning.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

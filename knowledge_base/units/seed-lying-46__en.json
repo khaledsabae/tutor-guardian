@@ -1,0 +1,72 @@
+{
+  "id": "seed-lying-46__en",
+  "domain": "islamic_parenting",
+  "source_file": "curated/AAP - HealthyChildren.org / إرشاد تربوي إسلامي",
+  "title": "Dealing with a Child’s Lying Between the Ages of Four and Six",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "الكذب",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "AAP - HealthyChildren.org / إرشاد تربوي إسلامي",
+  "text_original": "في هذا العمر لا يميّز الطفل دائماً بين الخيال والكذب المقصود، وكثير من «كذبه» تمنٍّ أو خيال لا حيلة لخداع. لا تصفه بالكذّاب ولا تعاقبه بقسوة فهذا يعلّمه إخفاء الحقيقة أكثر. حافظي على هدوئك واسأليه بلطف عمّا حدث فعلاً دون تحقيق مخيف. علّميه قيمة الصدق بقدوتك أنتِ أولاً فالطفل يقلّد والديه، وبيّني له أن الصدق محبوب وأن النبي صلى الله عليه وسلم حثّ عليه. امدحي صدقه حين يعترف ولو أخطأ، واجعلي عاقبة الصدق أخفّ دائماً من عاقبة الكذب حتى يطمئن أن قول الحقيقة آمن.",
+  "text_simplified": "At this age, the child does not always distinguish between imagination and intentional lying, and much of what may seem like 'lying' is wishful thinking or fantasy, not deception. Do not label him as a liar, nor punish him harshly, for this teaches him to conceal the truth even more. Maintain your calm and ask him gently about what actually happened, without an intimidating interrogation. Teach him the value of truthfulness first and foremost through your own example, for the child imitates his parents. Show him that honesty is beloved, and that the Prophet ﷺ urged us toward it. Praise his honesty when he admits the truth, even if he made a mistake, and always make the consequence of honesty lighter than that of lying, so he feels secure that speaking the truth is safe.",
+  "labels": [
+    "الكذب",
+    "الصدق",
+    "الأخلاق",
+    "التربية الإسلامية",
+    "4-6 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP - HealthyChildren.org / إرشاد تربوي إسلامي",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-lying-46",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "لا حيلة لخداع",
+        "english": "not deception",
+        "why": "The Arabic says 'no trick to deceive', emphasizing the absence of cunning intent; 'not deception' loses the nuance of 'trick' and could be read as simply 'not deceptive'.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "حافظي على هدوئك",
+        "english": "Maintain your calm",
+        "why": "The Arabic uses a warm, direct feminine imperative addressing the mother; the English is neutral and slightly clinical, losing the gendered, personal tone.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "بقدوتك أنتِ أولاً",
+        "english": "first and foremost through your own example",
+        "why": "The Arabic says 'by your example first' (sequential priority); 'first and foremost' is an idiom meaning primarily, which shifts the nuance.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وأن النبي صلى الله عليه وسلم حثّ عليه",
+        "english": "and that the Prophet ﷺ urged us toward it",
+        "why": "The Arabic says the Prophet urged truthfulness itself ('urged it'), not 'urged us toward it'; adding 'us' and 'toward' is a paraphrase that changes the object.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "isl-5e099094__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Disciplining Children between Permissibility and Prohibition",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تأديب الأطفال",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "طَ كلَِ إ بَ تَ ؽَ فَ ؽَ ِ لذَ ِ ب ﭬ بِ اطَ خَ لْا ـُ بْ ر فَ صِ اعَ لْا ـُ بْ طَ ؽَ لذَ ؾَ عَ ػَ فَ بٍ تَ قَ كؾَ طَ ر فُ شْ أَ ثَ ِ بؾَ فَ فُ ؾَ س ثُ فُ ْـم فكاؽَ م ؾِ جْ أَ ـْ م ةُ بَ قَ اطَ وَ هُ دَ ؾَ جَ ﭬ ر .)356/1( »مللحامّمًا ضاير حشر« (1) .)339/4( »ؾم٘مٜمًاو ؾم٘مٕمًا ضرامٕمش ءرد« (2) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ طُ دؾْ جَ ـْ م تَ ام فُ كَ أَ سِ اَـلا ةُ م دَ قَ فُ بَ اصَ أَ ؿ .)1(» هدؾْ ج ـْ م .عدبلا ؾهأ فتسلاجؿل للها دبط فـبٓ بابخ برض تيلقسو لكِ إ : تْ لَاؼَ فَ , ؿِ قتقَ لْا بِ دَ أَ ـْ طَ تؾئس وَ , ةَ شَ ئاطَ تعْ ؿس .)2(» طَ سبَ ْـيَ كتَ حَ ؿ هُ دَ حَ أَ بُ ر ِ ضْ َٕ ؼتا ؿقتقلا اذه ؿحرت ٓ :لقؼي ,ؿقتقلاو هدـط فل اؿقتي برضي نقؿقم ناكو .)3(»ؿقتقلا اذه حؾصأ ؿفؾلا :لقؼيو برضي نقؿقمو ,ؿقتقلا اذه في للها .)4( فُ بَ دَ أَ ـْ سحْ أَ وَ كدَ لَوَ م ر ِ كْ أَ :نَ قلُقؼُ يَ اقكُ اكَ : لَ اقَ ,دؿ .)5(فبدأ ـسحي نأ دلاقلا كؾط دلقلا ؼح ـم :لاؼي ناك :ناقػس لاقو للها دبط ـب رؽب كلإ يقق داـسنب )336( »لاقعلا« في اقكدلا لبأ ـبا جرخأو .عرزؾل داؿسلاك هدلقل دلاقلا برض :فـبٓ ناؿؼل لاق :لاق نيزؿلا ـمسا ـمق ،لمامؾ ـمق",
+  "text_simplified": "This text addresses the topic of disciplining children and physical punishment, presenting various opinions on the permissibility of *darb* (striking) in *tarbiyah* (upbringing). It notes that some scholars permit light disciplinary *darb* when necessary, while cautioning against excess in striking or harming the child.",
+  "labels": [
+    "تأديب",
+    "تربية",
+    "ضرب الأطفال",
+    "نصائح تربوية"
+  ],
+  "created_at": "2026-06-21T10:20:34Z",
+  "updated_at": "2026-06-21T10:20:34Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-5e099094",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ضربهم",
+        "english": "physical punishment",
+        "why": "The Arabic specifically says 'hitting them' (ضربهم), while 'physical punishment' is a broader category that could include other forms of punishment. The translation softens and generalizes the original term.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "id": "isl-0ee49139__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "Planting Values and Principles through Exemplary Conduct and Active Participation",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية قيمية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": ".اﳍ هئامتن(cid:682) هسيسﲢ ﱪع ،ئدابﳌاو ميقلا هذه ةعانص ﰲ اكراشم هلعج ﱃإ ،اﳍاصيإ دارﳌا ميقلاو ئدابملل هنيقلت ةقيرط نم ﰊﱰﳌ(cid:682) لقتنت ةيلمع . هتايكولس ﰲ اﳍ ةسراﳑ رثكأو هنهذ ﰲ ميقلا هذه ﱐاعم خيسﱰل ةساﲪو اطابترا رثكأ ﰊﱰﳌا لعﲡ ةليسولا هذهو هنأ دﳚ اي برم ملسو هيلع ﷲ ىلص ﱯنلا تافرصتل ظحﻼﳌا نأ ﻻإ ،ةيوبﱰلا ةليسولا هذه نع اوملكت نم مه ﲔثدﶈا ةيبﱰلا ءاملع ناك نإو . ملسﳌا عمتجملل ةيﲑبدتلا ةايﳊا نوؤش رئاس ﰲ كلذكو ،ميقلاو ئدابﳌا نم ةعومﳎ سرغل مهيلع ﷲ ناوضر هتباحصل هتيبرت ﰲ اهجهتنا ل بق رومﻷا رابك تلﴰ لب ،قيبطتلا نم قيض بناج ىلع رصتقت ﱂ ـ ﲔبﱰﳌا كارشإ ﰲ ـ جهنلا اذﳍ ملسو هيلع ﷲ ىلص ﱯنلا ةسراﳑ نإ تناك ﰒ نمو ،هلك رمﻷا سأر يه لب رومﻷا ت(cid:686)ﱪك نم يهو ،ة وعدلا غيلبت مه لﲪ ﰲ مﳍ ملسو هيلع ﷲ ىلص هكارشإ اهنمو ،اهراغص ىلص م(cid:273) لقتناف ،هل ﲔعادلاو هنع ﲔحفانﳌاو هتلﲪو هلهأ مه ﲔملسﳌا مومع نأو ،نيدلل ءامتنﻻا ﱐاعﲟ سسﲢ ملسو هيلع ﷲ ىلص هتاهيجوت ،ةلاسرلا رشن ﰲ ﲑبكلا رثﻷا هتكراشﳌ تناك ةباحصلا نم اجذوﳕ انه رضحتسن نأ نكﳝو ،ﲔعادلا عقوم ﱃإ نيوعدﳌا عقوم نم ملسو هيلع ﷲ ،هيبنو ﷲ لوسر ﱐإ\" :هل لاق ةوعدل(cid:682) ركب ﰉأ ملسو هيلع ﷲ ىلص ﷲ لوسر حتاف ام لوأف ،هنع ﷲ يضر قيدصلا ركبوبأ لوﻷا جذومنلا اهجومو ازكرم ناك ملسو هيلع ﷲ ىلص ﱯنلا باطخف ،36\" هتعاط ىلع ةﻻاوﳌاو ،هﲑغ دبعت ﻻو ،هل كيرش ﻻ هدحو ﷲ ﱃإ كوعدﻷ ﲏثعب 89 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا",
+  "text_simplified": "This unit explains how to instill values and principles in children through good *qudwa* (exemplary conduct) and active participation. It aims to transform *tarbiyah* from mere theoretical instruction into a practical practice that the child feels in their daily behavior. The unit reviews the model of the Prophet Muhammad ﷺ in the *tarbiyah* of the *Sahabah* (Companions) and involving them in *da'wah* (calling to Islam) tasks. It also emphasizes the importance of involving parents and the family in the *tarbiyah* process to strengthen religious belonging.",
+  "labels": [
+    "تربية إسلامية",
+    "قدوة حسنة",
+    "غرس القيم",
+    "مشاركة أسرية",
+    "منهج نبوي"
+  ],
+  "created_at": "2026-06-20T14:40:26Z",
+  "updated_at": "2026-06-20T14:40:26Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-0ee49139",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "القدوة الحسنة",
+        "english": "good *qudwa* (exemplary conduct)",
+        "why": "The Arabic 'qudwa' means 'example' or 'model', not 'conduct'. Glossing it as 'exemplary conduct' misrepresents the term and shifts the meaning from the person/example to behavior.",
+        "severity": "medium"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "ممارسة عملية",
+        "english": "practical practice",
+        "why": "The phrase 'practical practice' is redundant and awkward; 'practical application' or simply 'practice' would be more natural and less stiff.",
+        "severity": "low"
+      },
+      {
+        "type": "structure",
+        "field": "text_simplified",
+        "arabic": "في تربية الصحابة وإشراكهم",
+        "english": "in the *tarbiyah* of the *Sahabah* and involving them",
+        "why": "The grammatical parallelism is broken; it should be 'and in involving them' or 'and their involvement' to match the preceding 'in the tarbiyah'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الأهل والأسرة",
+        "english": "parents and the family",
+        "why": "Arabic 'الأهل' includes family/relatives, not only parents; the English narrows the meaning to parents, potentially excluding other relatives.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

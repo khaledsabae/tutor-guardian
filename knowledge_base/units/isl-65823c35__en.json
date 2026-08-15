@@ -1,0 +1,48 @@
+{
+  "id": "isl-65823c35__en",
+  "domain": "islamic_parenting",
+  "source_file": "Rakaiz_Tarbiya.pdf",
+  "title": "The Importance of Choosing the Righteous Companion in Tarbiyah",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تأثير الصحبة",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "تربية البنات",
+  "text_original": "ﻫ ﹸ ﺎﻌﺗ نﱠ إ (cid:3) ، ﺐ ﹲ ﺣﺎﺳ ﺐ ﹶ ﺣﺎﺼﻟا ن ﱠ ﺈﻓ ؛ ﺔ ﻴﺑﱰﻟا ﰲ ﺎﲥﺎﻋاﺮﻣ ﺐ ﹸ ﳚ ﻲﺘﻟا ﺰﺋﺎﻛﺮﻟا . ﻪ ﺴ ﻴﻠﺟ ﰲ ﺮ ﺛﺆﻳ نأ ﺪﱠ ﺑﻻو  ﲆﻋ ﺐﹺ ﺣﺎﺼﻟا ﲑﺛﺄ ﺗ نﺎﻴﺑ ﰲ ﻼﹰ ﺜﻣﹶ ﻲﱡ ﺒﻨﻟا ﺎﻨﻟ بﴐ ﺪﻗو   ء ِ ﻮ ﺴﻟاو ﺢِ ﻟ ﺎﺼﻟا ﺲِ ﻴﻠ ِ ﺠﻟ ا ﻞُ ﺜ ﻣَ» :لﺎﻘﻓ ﴩ ﻟاو ﲑﳋا ﰲ ﻪﺒﺣ ﹺ ﺎﺻ  (cid:3) ن أ ﺎﻣﱠإِ :ﻚﺴ ﻤـﻟ ا ﻞُ ﻣﺎﺤ ﻓَ ؛ ﺮِ ﻴﻜﻟا ﺦِ ﻓ ﺎﻧو ﻚﺴ ﻤـﻟ ا ﻞِ ﻣ ﺎﺤﻛ  ﺎﻣ ﱠإ :ﺮِ ـ ﻴ ﻜ ِ ﻟا ﺦُ ﻓ ِ ﺎﻧ و ،ﺔً ﺒ ـﻴ ﱢﻃ � ﺤ ﻳ ر ِ ﻪُ ﻨ ﻣ ﺪَﺠ ِ ﺗَ ن أ ﺎﻣ ﱠإِ و ،ﻪُ ﻨ ﻣ عَ ﺎﺘ ﺒﺗَ ن أ ﺎﻣ ﱠإِو  . « ﺔ ً ـ ﺜ َﻴﺒِﺧ ﺎﺤً ﻳر ﺪَﺠ ِ ﺗَ ن أ ﺎﻣ ﱠإِو ،ﻚَ ﺑ ﺎﻴﺛ قَ ﺮِ ﺤ ـﻳ  ﻢ ﻛ ﹸ ﺪ ﹸﺣﹶ أ ﹶ ﺮ ﻈ ﹸ ﻨ ﻴﻠـ ﻓ ﹶ ﻪ ﹺ ـ ﻠ ﻴﻠﺧﹶ ﻦ ﹺ ـ ﻳ د ﹺ ﲆ ﻋ ﻞ ﹸ ﺟﹸ ﺮﱠـﻟا» :  ﻲ ﱡ ـﺒﻨﱠﻟا ل ﺎﻗو  (cid:3) . « ﻞ ﻟﺎﺨـ ﻳ ﹸ ﻦ ﻣﹶ . (٢٦٢٨) « ﻪ ﺤﻴﺤﺻ» ﰲ ﻢﻠﺴﻣو ،(٥٥٣٤) « ﻪ ﺤﻴﺤﺻ» ﰲ يرﺎﺨﺒﻟا ﻪﺟﺮﺧأ ( ١) . (٩٢٧) « ﺔ ﺤﻴﺤﺼﻟا ﺔﻠﺴﻠﺴﻟا» : ﺮﻈﻧاو ،(٤٨٣٣) « ﻦ ﻨﺴﻟا» ﰲ دوادﻮﺑأ ﻪﺟﺮﺧأ ( ٢) ",
+  "text_simplified": "A companion influences their companion, whether for good or evil. The example of this is like the carrier of musk and the blower of the bellows. The carrier of musk either gives you some or you buy some perfume from him, while the blower of the bellows either burns your clothes or you find a foul smell from him. Therefore, it is essential to choose righteous companionship that brings benefit to one’s children.",
+  "labels": [
+    "الصحبة",
+    "التربية",
+    "الأخلاق",
+    "التأثير",
+    "القدوة"
+  ],
+  "created_at": "2026-06-20T11:35:05Z",
+  "updated_at": "2026-06-20T11:35:05Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Rakaiz_Tarbiya",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-65823c35",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "لذلك يجب اختيار الصحبة الصالحة التي تعود بالنفع على الأبناء.",
+        "english": "Therefore, it is essential to choose righteous companionship that brings benefit to one’s children.",
+        "why": "The Arabic 'يجب' expresses a strong obligation ('must'), while the English 'it is essential' softens it to a recommendation or importance, losing the obligatory nuance.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

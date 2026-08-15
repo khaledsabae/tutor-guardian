@@ -1,0 +1,55 @@
+{
+  "id": "isl-ee373ffe__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children upon Their Parents in Islam",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "أَ كؾَ طَ ةً ؼَ ػَ كَ ؿ لْ ا ؼَ ػَ كْ أَ اذَ ِ إ« :ﷺ لاقو .)4(» ةً قَ دَ صَ .)994( ؿمٚسمُ فمضرمظأ (1) .)995( ؿمٚسمُ فمضرمظأ (2) .)996( ؿمٚسمُ فمضرمظأ (3) .)1112( ؿمٚسمُو ،)5351( يراخبمًا فمضرمظأ (4) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ اقَ ـغْ أَ ؽَ َتثَ ر ذَ تَ نْ أَ ؽَ كَ ِ إ« :فضرم في ﭬ دعسل ﷺ لاقو ج ِ أُ َٓ ِ إ ِ للها فَ جْ وَ افَ ِ ب لغ ِ تَ بْ تَ ةً ؼَ ػَ كَ ؼَ ػ ِ ْـتُ ـْ لَ ؽَ كَ ِ إوَ سَ اَـلا نَ قػُ ػَ ؽَ َت يَ ةً لَ اطَ ؿ ا ل ف لف ؾُ عَ جْ تَ ام .)2(»اؼً حَ ؽَ ِ ؾهْ َٕ ِ وَ اؼً حَ ؽَ س ِ ػْ َـ ِ ل نَ ِ إوَ « :ﭭ ورؿط ـب للها دبعل ﷺ لاقو ,ؿبه ؼفرلا في قه :ؿفؼحو .ةبارؼلاو ,دٓوٕا :اـه فب لـعقف ؾهٕا امأو« .)3(»ؿفسقكلتو ,ؿفتؾكاممو ,ؿفقؾط قاػكلإاو -ْ٘ذإ يرػب -فٚسعلماب اٗدٚش ٍاَ َٔ اٖدلاٚأ ١كفْٚ اٗتكفْ رخأت ٕأ ٠أسًُي شٛيجٚ :ًلاٝبخ ٕان اذإ ايَ : تْ لَاؼَ فَ ,ڤ ةَ عَ ق ِ بر ـِ بْ ةَ بَ تْ طُ تُ ْـ ِ ب دُ ْـه تْ ء اجَ : تْ لَاقَ ,ڤ ةَ شَ ئاطَ ـط فُ لَ يذلَا ـْ م ؿ عصْ أُ نْ أَ جٌ ر حَ لؾَ طَ ؾْ فَ فَ , ؽٌ قس ابَ أَ نَ ِ إ , للها لَ قس ف ِ قؿعطْ تُ",
+  "text_simplified": "This text discusses the rights of children upon their parents in Islam, mentioning Prophetic hadiths that urge raising children with justice and ihsan (excellence). It also highlights the importance of teaching them prayer and instilling religious values in their hearts from a young age. It emphasizes that the tarbiyah (upbringing) of children is a great responsibility for which parents will be questioned on the Day of Judgment.",
+  "labels": [
+    "حقوق الأبناء",
+    "تربية إسلامية",
+    "أحاديث نبوية",
+    "مسؤولية الوالدين"
+  ],
+  "created_at": "2026-06-21T10:29:50Z",
+  "updated_at": "2026-06-21T10:29:50Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ee373ffe",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "حقوق الأبناء على الآباء في الإسلام",
+        "english": "The Rights of Children upon Their Parents in Islam",
+        "why": "The Arabic 'الآباء' means 'fathers', but the English translates it as 'Parents', which includes mothers. This broadens the meaning.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "غرس القيم الدينية في نفوسهم",
+        "english": "instilling religious values in their hearts",
+        "why": "The Arabic 'نفوسهم' means 'their souls/self', not specifically 'hearts' (قلوبهم). The English substitutes 'hearts', which is a different concept.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

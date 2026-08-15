@@ -1,0 +1,56 @@
+{
+  "id": "isl-6d8f26e2__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Tarbiyah in the Child’s Life",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ي َ و َ ِّيِج َ ة ً ُ هۧ ِ ٰر َ ۡ ةِإ ٓ آ َ ِة صَّ ٰ ذ و َ و َ ﴿ :كلاعت لاق َ َ َ ۡ َ ٓ َ َ ُ ۡ ُ ُ ۡ َ َ ُ ۡ ُ ُ َ َ ذ ذ ُ ُ َ َ َ َ ّ ُ ُ َ ضَخ ذِإ ءادٓط ًخِن مأ ١٣٢ نٍِٔيصٌ ًخُأو لَِإ َتٍّٔتّ لَـ َيلَِّ ٱ ًؾى ّ َ ٰ ل َ وَإِ م َ ٓ َ ٰ ل َ ِإ د ُ ت ُ ػ ۡ نّ َ ْ أ ُ لا َ ك ٖيدِ ػ ۡ ب َ َۢ ٌِ ن َ ود ُ ت ُ ػ ۡ تّ َ اٌ َ ِّيِج َ لِِ ل َ ا َ ك ذ ۡ ِإ ت ُ ٔ ۡ ٍ َ ۡ لٱ ب َ ٔل ُ ػ ۡ يّ َ ةرقس( ﴾ ن َ ٍٔ ُ ِيص ۡ م ُ ۥلَ ُ َ َ ُ نَّ ۡ َ و َ ا د ٗ خِ ٰ و َ ا ٓ ٗ ٰ ل َ ِإ ق َ ٰ ح َ ش ۡ وَإِ و َ يِػ ٰ م َ ش ۡ وَإِ ً َ هۧ ِ ٰر َ ۡ ةِإ م َ .)133 :132:ةرؼبلا ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ اٛعطكٜ لا ٕأ ٢ًع ِٗجسٚ ,ٜٔسفاهياب ٘بػتيا ٔع ٙدلاٚلأ بٛكعٜ ْٞٗ :للها َٔ ًَِٗأٚ ِٖ٤ادز ْ ُ َ ۡ ْ َ َ َ َ َ َ ُ ُ ْ ُ ذ",
+  "text_simplified": "Parents must teach their children the Islamic religion and guide them toward worship and good akhlaq. The text points to the importance of tarbiyah in raising the child. It also mentions that children have religious rights that parents must observe.",
+  "labels": [
+    "تربية دينية",
+    "حقوق الطفل",
+    "تعليم ديني",
+    "أخلاق",
+    "تنشئة"
+  ],
+  "created_at": "2026-06-21T10:22:56Z",
+  "updated_at": "2026-06-21T10:22:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-6d8f26e2",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "أهمية التربية الدينية للأطفال",
+        "english": "The Importance of Tarbiyah in the Child’s Life",
+        "why": "Omits 'religious' (الدينية) and changes plural 'children' (الأطفال) to singular 'child's life', altering the focus from religious upbringing for children to general tarbiyah in a child's life.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "النص يشير إلى أهمية التربية الدينية في تنشئة الطفل.",
+        "english": "The text points to the importance of tarbiyah in raising the child.",
+        "why": "Omits 'religious' (الدينية), reducing 'religious upbringing' to just 'tarbiyah'.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

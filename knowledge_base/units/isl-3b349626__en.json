@@ -1,0 +1,48 @@
+{
+  "id": "isl-3b349626__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Tarbiyah of the Orphaned Child between Firmness and Tenderness",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية الطفل اليتيم",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "........................ حيحصلا رايتخلاا ونح بيرلما ةيلوؤسمو لحاصلا سيللجا ايناث ......................................... هتاعرتمخو ثيدلحا ملعلا نم ةدافلإا ًاثلاث 9 ................ ةجوزلا رايتخا في ابه ةناعتسلااو ةثارولا ملعو ةئيبلا نم ةدافلإا اعبار 64 .............................................. ةيرطفلا عفاودلا نم ةدافلإا اسماخ 63 .................... نانلحاو مزلحا ينب عملجا ةرورضو ميتيلا لفطلا ةيبرت لولأا لصفلا 6 .............................. تاسسؤلماو دارفلأا ينب يذلا لفطلا ةيبرت نياثلا لصفلا 66 ....... ضرلما بسبح ةيبرتلا طئاسو يريغتو قاعلما وأ ضيرلما لفطلا ةيبرت ثلاثلا لصفلا",
+  "text_simplified": "This text discusses the tarbiyah of the orphaned child and the importance of combining firmness with tenderness. It also highlights the benefit of the environment and modern knowledge in choosing a spouse. It emphasizes the necessity of adapting tarbiyah methods according to the child’s health condition.",
+  "labels": [
+    "تربية",
+    "طفل يتيم",
+    "حزم",
+    "حنان",
+    "اختيار الزوجة"
+  ],
+  "created_at": "2026-06-20T14:38:38Z",
+  "updated_at": "2026-06-20T14:38:38Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-3b349626",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الاستفادة من البيئة والعلم الحديث في اختيار الزوجة",
+        "english": "the benefit of the environment and modern knowledge in choosing a spouse",
+        "why": "The Arabic word 'الزوجة' specifically means 'wife', but the English uses 'spouse', which is gender-neutral and could refer to either husband or wife. This changes the meaning.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

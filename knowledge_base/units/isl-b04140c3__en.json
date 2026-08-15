@@ -1,0 +1,64 @@
+{
+  "id": "isl-b04140c3__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "The Role of the Masjid in the Prophetic Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "ﻼيكشت ﱯعشلا ماعلا يأرلا ليكشت\" ﱃإ نأ نكﳝ و ،ﲔملسﳌا مومعل اهجوتم اﳕإو درفلل اهجوتم دعي ﱂ يوبﱰلا باطﳋاف ،بطﳋا نم اهﲑغو ةعمﳉا ةبطخ ﰲ ايلج كلذ رهظيو ماعلا :ﰲ دجسﳌا ﰲ ملسو هيلع ﷲ ىلص ﱯنلا اهسرام ﱵلا ةيوبﱰلا راودﻷا مهأ لمﳒ ،ةيناسنﻹا ةاواسﳌاو ةيمﻼسﻹا ةوخﻷا ىلع ةيبﱰلا : ﻻوأ ، ة يدبعتلا تايكولسلا ضعب حيحصتو تﻻﻼتخﻻا ضعب ةﳉاعﳌ دجسﳌا رامثتسا : اين(cid:684) و أ هنم ةردابم كلذ ناك ءاوس ميلعتلا ليبق نم ناك دجسﳌا ﰲ ملسو هيلع ﷲ ىلص هلعف بلاغو ،ةيميلعت ةسسؤم دجسﳌا رابتعا :اثل(cid:684) ،لئاس لاؤس وأ ﱵفتسم ىوتف نع ةباجإ 93 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا ءاسنلا عنم مدع ىلع هبنف ،ابيصن هيف ءاسنلل لعج اﳕإو ،طقف لاجرلا ىلع يوبﱰلا دجسﳌا رود رصقي ﱂ ملسو هيلع ﷲ ىلص ﱯنلا نأ ﲑشنو يق ِ َف ،د ِ ج ِ س ا ت ِ َناكَ \" :لَاَق ر با نِعف ،دجسﳌا نايتإ نم (cid:589) ِ ﱠا لِوس عـ َنْﳝَ :لَاَق ،ﱐِاه . عمت(cid:272)ا ﰲ اماه (cid:685)وكم نهرابتع(cid:682) هيف نهملعيو هنلأسي اموي ءاسنلل ملسو هيلع ﷲ ىلص ﱯنلا ذﲣا ﰒ نمو .58\" ِ (cid:589)ﱠا ة صاﳋا ركذلا سلاﳎ :اثل(cid:684) باتكلا ت(cid:686)آ مهعم سرادتيو نيدلا ئدابم مهنقليل هباحصﻷ اهدقعي ملسو هيلع ﷲ ىلص ﱯنلا ناك ﱵلا ةيوبﱰلا قلﳊا ركذلا سلاجﲟ دصقنو .ددﳉا نيوعدﳌاو ةوعدلا لاحو دارفﻷا نوكو ،ةهج نم ةحوتفﳌا دجسﳌا سلا(cid:272) ةبسنل(cid:682) نأشلا وه امك دارفﻷا نم اﲑبك اددع مضت نكت ﱂ ا(cid:276)أ ﱃإ ةراشإ ةصاﳋا انلوقو . ىرخأ ةهج نم ﲔملسﳌا ةماع نم اوسيل اهيف ةيوبﱰلا",
+  "text_simplified": "The text discusses the role of the masjid in Islamic tarbiyah (upbringing), based on the seerah of the Prophet Muhammad ﷺ. It clarifies that the masjid was not merely a place of worship but a comprehensive educational and tarbiyah institution. It also shows that the Prophet ﷺ dedicated time to teaching both women and men and addressed incorrect behaviors. The aim is to guide parents on the importance of the masjid in raising children.",
+  "labels": [
+    "تربية إسلامية",
+    "دور المسجد",
+    "تعليم ديني",
+    "قدوة نبوية",
+    "تنشئة أطفال"
+  ],
+  "created_at": "2026-06-20T14:41:20Z",
+  "updated_at": "2026-06-20T14:41:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-b04140c3",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يعالج السلوكيات الخاطئة",
+        "english": "addressed incorrect behaviors",
+        "why": "Arabic 'يعالج' means he used to treat/correct, implying active remediation; English 'addressed' is weaker and could mean merely mentioned or dealt with superficially.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الأهل",
+        "english": "parents",
+        "why": "Arabic 'الأهل' means family/household, not exclusively parents; English narrows to parents, potentially excluding other caregivers or relatives involved in upbringing.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "كان يخصص وقتًا",
+        "english": "dedicated time",
+        "why": "Arabic 'كان يخصص' indicates a habitual/ongoing practice; English 'dedicated' is simple past, losing the habitual aspect.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

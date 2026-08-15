@@ -1,0 +1,37 @@
+{
+  "id": "89bf08a7-5d8f-4373-b48d-523b596f5f8a__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "The Adolescent Who Closed His Door: How to Restore Dialogue",
+  "language": "en",
+  "age_group": "13-15",
+  "behavior_type": "انقطاع التواصل مع المراهق",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "انسحاب المراهق إلى غرفته وقلّة كلامه ليسا بالضرورة رفضًا لك: الحاجة إلى الخصوصية وبناء هوية مستقلة جزء أصيل من هذه المرحلة. الخطر ليس في الانسحاب نفسه، بل في انقطاع كل القنوات.\n\nما يفتح الباب:\n• اختر الوقت الذي يتكلّم فيه هو لا الذي يناسبك. أغلب المراهقين يتحدثون في السيارة، أو ليلًا، أو أثناء نشاط مشترك — لأن غياب المواجهة بالعين يخفّف الضغط.\n• ابدأ بالاهتمام بما يهمّه هو ولو بدا تافهًا: لعبة، فريق، مقطع. الاهتمام بعالمه هو تذكرة الدخول.\n• اسأل أسئلة مفتوحة لا استجوابًا. «إيه أحسن حاجة حصلت النهارده؟» أنفع من «عملت الواجب؟».\n• استمع بلا مقاطعة وبلا حلّ فوري. أكثر ما يُغلق الحوار هو تحويل كل شكوى إلى محاضرة.\n• احترم الخصوصية المعلنة: اطرق الباب، ولا تقرأ رسائله سرًّا. اكتشافه لذلك يكلّفك ما بنيته كله.\n• لا تحاصره بالأسئلة بعد فترة صمت طويلة — ابدأ بالوجود القريب الصامت، وبمشاركة يومية قصيرة.\n\nوميّز بين الانسحاب الطبيعي وعلامات تستدعي المساعدة: انقطاع عن الأصدقاء جميعًا، تغيّر حادّ في النوم أو الشهية، فقدان الاهتمام بكل ما كان يحبّه، أو كلام عن اليأس. هذه ليست مراهقة عادية وتحتاج مختصًا.",
+  "text_simplified": "A teenager’s withdrawal to his room and reduced speech are not necessarily a rejection of you: the need for privacy and building an independent identity are an essential part of this stage. The danger is not in the withdrawal itself, but in the cutting off of all channels.\n\nWhat opens the door:\n• Choose the time when he speaks, not the one that suits you. Most teenagers talk in the car, at night, or during a shared activity — because the absence of eye contact eases the pressure.\n• Start by showing interest in what matters to him, even if it seems trivial: a game, a team, a clip. Interest in his world is your entry ticket.\n• Ask open-ended questions, not an interrogation. “What was the best thing that happened today?” is more useful than “Did you do your homework?”\n• Listen without interrupting and without offering an immediate solution. What shuts down dialogue most is turning every complaint into a lecture.\n• Respect declared privacy: knock on the door, and do not read his messages secretly. His discovery of this will cost you everything you have built.\n• Do not corner him with questions after a long period of silence — start with silent, close presence, and short daily sharing.\n\nDistinguish between natural withdrawal and signs that require help: complete withdrawal from all friends, a sharp change in sleep or appetite, loss of interest in everything he used to love, or talk of despair. These are not normal adolescence and need a specialist.",
+  "labels": [],
+  "keywords": [
+    "Adolescence",
+    "Withdrawal",
+    "Dialogue",
+    "Privacy",
+    "Trust"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "89bf08a7-5d8f-4373-b48d-523b596f5f8a",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "seed-bedwet-46__en",
+  "domain": "medical",
+  "source_file": "curated/AAP - HealthyChildren.org / NHS",
+  "title": "Night-Time Involuntary Urination at Ages Four to Six",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "التبول اللاإرادي",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "AAP - HealthyChildren.org / NHS",
+  "text_original": "التبول اللاإرادي الليلي في هذا العمر شائع جداً وطبيعي، وكثير من الأطفال لا يتحكمون ليلاً بشكل كامل بعد. الأهم ألّا تعاقب الطفل أو توبّخه أبداً فالأمر خارج عن إرادته والعقاب يزيده سوءاً. قلّل المشروبات قبل النوم بساعتين، واحرص أن يدخل الحمّام مباشرة قبل النوم. استخدم واقياً للمرتبة لتسهيل الأمور، وأشرك الطفل بهدوء في تغيير الملابس دون أن تشعره بالذنب. امدح الليالي الجافة وكافئها بتشجيع بسيط. إذا بدأ التبول بعد فترة جفاف طويلة، أو كان مصحوباً بألم أو عطش شديد أو تبوّل نهاري، فاستشر الطبيب.",
+  "text_simplified": "Night-time involuntary urination at this age is very common and normal, and many children have not yet gained full night-time control. The most important thing is never to punish or scold the child, as this is beyond their control, and punishment only makes it worse. Reduce drinks two hours before bedtime, and ensure they use the bathroom immediately before sleeping. Use a mattress protector to make things easier, and calmly involve the child in changing clothes without making them feel guilty. Praise dry nights and reward them with simple encouragement. If the urination starts after a long dry period, or is accompanied by pain, excessive thirst, or daytime urination, consult a doctor.",
+  "labels": [
+    "التبول اللاإرادي",
+    "تدريب الحمام",
+    "النوم",
+    "4-6 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP - HealthyChildren.org / NHS",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-bedwet-46",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

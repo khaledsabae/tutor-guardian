@@ -1,0 +1,64 @@
+{
+  "id": "isl-ea569b55__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Tarbiyah in Akhlaq and the Religious Dimension for Children",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تربية أخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ؿؾعت اؿب ؽحدم ـم ؽكرغي ٓو ,فـم كؾط رشلا ـم فقؾط فطخس دـط فقف لاق ٓإ فـم ؿؾعي ؿل ام رقخلا ـم دحأ في .)3(»فحدم ام ردق .ـسمط دامٜمؾم٢مس )41( »سامٜمًا ةارادمُ« مذ امٞمٟدمًا بيأ ـمسا فمضرمظأ (1) .ـسمط دامٜمؾم٢مس )56/1( »ـمٜسمًا« مذ لمُرادمًا فمضرمظأ (2) .رمظآ ـمـقمُ مذ فتمضرمظ (3) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ :ينًُطًُي زدصيا ١َلاضٚ مدصياب دلاٚلأا سَأٜٚ لـب اي :لاقو ,فقـب عؿج ةافقلا لبأ ترضح اؿل :دقبط ـب ؾقطاؿسإ لاق ؾتق قل كتح قدصلاب ؿؽقؾطو ,هودهاعتف نآرؼلاب ؿؽقؾطو ,للها ىقؼتب ؿؽقؾط لـب اي ,نآرؼلا تأرق ذـم فبذك تبذك ام للهاو ,فب رقأ فـط ؾئس ؿث ,لاقتق ؿكدحأ ـم جرخأ ٓ اكأو لـتيأر دؼل للهاقف ,ـقؿؾسؿلا ةماعل رودصلا ةملاسب ؿؽقؾطو نوترفأ لسػـل لسػك في يذلاك فل لسػك في يذلاو ٓإ اؿؾسم كؼلأ امو ,لباب .)1(»؟ارقخ ٓإ لسػـل بحأ ٓ نيأ :َِٗٓ ٤افعطيا ٠اعاسَٚ ,ينًُطلماب لفسيا ًُٕٛعٜٚ اذإو ,تزقج دجسؿلا في تقؾص اذإ هاتبأ اي :فقبٕ دعس ـب بعصم لاق .)2(»اـب ىدتؼي ةؿئأ اـكإ لـب اي :لاق ,؟ تؾصأ تقبلا في تقؾخ :ينًُطلما َٔ ٤افعطيا ٍاَٛأ ٢ًع ١ظفالمحا ًُٕٛعٜٚ ٓ ,هاتبأ اي :ؿلاس لاؼف ,فقكزي ؾعجف ,ـقؿقتي لام هدـط ﭭ رؿط ـبا ناك ٓإ فـم ؼبي ؿل قلو فـقكزٕ :لاؼف ,فقف اذه عرسأ ام ,برضت ٓو ,فقف رجتت .)3(اراد فب اؿفل ىترشا ؿث ,دحاو ؿهرد .نقمًدمٕمُ فمًامضر دامٜمؾم٢مس )85/6( »ءامٞمًوٕا ةمٞمٚمط« مذ ؿمٞمٕمٟ قمسأ فمضرمظأ (1) بيأ ـمس دمٕمؾ« بياتمي رمٔمٟاو ،حمٞحص دامٜمؾم٢مس همػمهو ،)143/1( »مػبمٙمًا« مذ نيامؼمٓمًا فمضرمظأ (2) .»فمشمػمؾ ـمُ ءشيو ﭬ صامىو فَ وع ِ ضَ لا : مْ هُ ْنم ِ نَ",
+  "text_simplified": "The text addresses the importance of raising children upon religious values and akhlaq, such as truthfulness and birr al-walidayn. It highlights the necessity of teaching children to respect their elders and adhere to good conduct. It also clarifies that consistent guidance helps in building a balanced personality.",
+  "labels": [
+    "تربية",
+    "قيم دينية",
+    "أخلاق",
+    "تعليم الأطفال",
+    "البر بالوالدين"
+  ],
+  "created_at": "2026-06-21T10:31:01Z",
+  "updated_at": "2026-06-21T10:31:01Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ea569b55",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "أهمية التربية الأخلاقية والدينية للأطفال",
+        "english": "The Importance of Tarbiyah in Akhlaq and the Religious Dimension for Children",
+        "why": "The Arabic title means 'the importance of moral and religious upbringing/education for children'. The English rephrases it as 'Tarbiyah in Akhlaq and the Religious Dimension', which changes the meaning and introduces terms not in the source.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "القيم الدينية والأخلاقية",
+        "english": "religious values and akhlaq",
+        "why": "The Arabic uses the adjective 'أخلاقية' meaning 'moral'; the English uses the transliterated noun 'akhlaq', which is a different grammatical form and may not convey the same nuance.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "التوجيه المستمر",
+        "english": "consistent guidance",
+        "why": "'مستمر' means continuous/ongoing, not 'consistent', which implies regularity or uniformity.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

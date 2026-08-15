@@ -1,0 +1,56 @@
+{
+  "id": "isl-379cccef__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Distinguishing Between Children and Its Psychological Effects",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تمييز بين الأبناء",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "دوممح ،انلافطأ بيرن فيك :رظنا )6( عوبسلأا مايأ ضعب نيدلاولا نع بيغي يذلا دلولا كلذكو .ةيانعلا لىإ امهتجالح كلذو ةلماعلما زييتم ببس دلاولأا ةيقّبل نادلاولا نيّبي نأ دبلاو ،جلاعلا وأ لمعلا وأ ةساردلل ءلاؤه ةلماعم ينب يرسي قرف نكلو ةيربكلا ةجردلاب سيل زيمتلا اذهو ،قافشإو فطلب .هنع نوزواجتيو هب ةوخلإا حماستي يرسيلا قرفلا اذهو ،ةيقّبلا ةلماعمو اذه حدمُيف ،مهنيب دقّعُت تيلا تانراقّلما كلت ةوخلإا سوفن في ةيهاركلا عرزي اممو .هاخأ هركيو مومذلما دلولا نزحيف براقلأاو ءاقدصلأا دنع كلذ لاقّي دقو ،اذه مذيُو اذهو هتوخإ نع ةيفخ اذه يطعي سانلا ضعب نإف ،طقّف رهاظلا في سيل لدعلاو . رمآتلاو ةينانلأا لفطلا ُمِلعي ءافختسلاا .ناطقّلا دحمأ ،)ءانبلأا ةيبرت( طيرش :لىإ عمتسا ) ( وأ للادلا وه صرلحا نأ نونظيف ،رسلأا نم يرثك ةايح في ٌبئاغ يوبرت موهفم وهو دامتعلاا نود لفطلا تاجاح عيجم ةرشابمو ،ةمئادلا ةقّحلالماو هدح نع دئازلا فولخا .هبئاغر عيجم ةيبلتو ،هيلع دامتعلاا ىلع هتردق عم اهديب همعطتو ،هيلع ًافوخ بعللا نم اهدلو عنتم تيلا ملأاو هلعيجو هدسفي اهملاك يرغص هنأ ةجبح لمع يأب هدلو فلكي لا يذلا بلأاو ،هسفن ىلع ىرقّلا ءانبأ ينب عساشلا قرفلا :وه دَهاشلما ليلدلاو .يركفتلا يمدع ،ةدارلإا فيعض ًايلاكتا ىلع بيرلما لميح دقوتم ساسحإ :رمثلما يقيقلحا صرلحاو ةنيدلما ءانبأ ينبو يداوبلاو :اهنم رهاظم هلو .لفطلا كلذل لمأت وأ قاشلما دَبكت نإو هدلو ةيبرت ىوقأ نوكيف هبلق نم ةنكمتم ةحمرلا نلأ ةبامج هدلول دلاولا ةوعد ذإ :ءاعدلا )أ( دقّف مهدلاوأ ىلع ءاعدلا نم نيدلاولا لوسرلا رذح اذلو احالحإ دشأو ةفطاع .ةباجإ ةعاس قفاوت هيجوتلا اهيف يفكي لا ،دملأا ةليوط ةرمتسم ةيوبرتلا ةيلمعلا نلأ :ةمزلالماو ةعباتلما )ب(",
+  "text_simplified": "This text explains the problem of distinguishing between children in treatment, where one of the parents favors one child over another due to circumstances such as study or work. This distinction leads to feelings of hatred and sadness among siblings and may appear in a hidden or overt manner. It also discusses the concept of excessive protection and over-reliance on the child, which weakens their independence. It emphasizes the necessity of justice and equality in *tarbiyah* (upbringing) to avoid negative psychological effects.",
+  "labels": [
+    "تمييز",
+    "تربية",
+    "عدل",
+    "علاقات أسرية",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-20T14:32:40Z",
+  "updated_at": "2026-06-20T14:32:40Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-379cccef",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "التمييز بين الأبناء",
+        "english": "Distinguishing Between Children",
+        "why": "The Arabic 'التمييز' in this parenting context means unfair discrimination or favoritism, not neutral 'distinguishing'. The English loses the negative connotation and may be misunderstood as simply recognizing differences.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "مشكلة التمييز بين الأبناء في المعاملة",
+        "english": "the problem of distinguishing between children in treatment",
+        "why": "'في المعاملة' means 'in the way they are treated/dealt with', but 'in treatment' can be misread as medical treatment. Also 'distinguishing' again should be 'discrimination' to preserve the negative sense.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

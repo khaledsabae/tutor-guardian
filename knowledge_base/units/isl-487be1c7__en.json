@@ -1,0 +1,56 @@
+{
+  "id": "isl-487be1c7__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "The Importance of Islamic Tarbiyah for the Child",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": ":كوشلا علقّي يذلا حلافلا لمع هبشي ةيبرتلا نىعمو \" \" هتابن نسحيل عرزلا ملاسلإا في ةيبرتلا ةناكم   { :لىاعت هلوق اهنمو ،دلولا ةيبرت لضف ىلع ثيداحلأاو تايلآا تلد في مهيلع موقّت نأو للها ةيصعم نع مهاهنتو للها ةعاطب مهرمأت\" :-للها هحمر - ةداتق لاق \" اهنع متهرجزو ،اهنع مهتعذق ةيصعم تيأر اذإف ،هيلع مهدعاستو هب مهرمأتو للها رمأب ٍعار مكلك { :لوقّي للها لوسر تعسم :لاق - امهنع للها يضر - رمع نبا نعو . ص :يدابأزويرفلل طيلمحا سوماقّلاو ،)ببر( ةدام 44 ،444/ :روظنم نبلا برعلا ناسل :رظنا ) ( .24 ص :نلجاي دادقّم .اتهاياغو ةيملاسلإا ةيبرتلا فادهأ )2( .34 ص :ليازغلا :دلولا اهيأ ةلاسر )3( .)6( مقر ةيآ :يمرحتلا ةروس )4( .39 /4 :يرثك نبا يرسفت ) ( اهجوز تيب في ةيعار ةأرلماو ،هتيعر نع لوئسمو ٍعار ماملإا ،هتيعر نع لوؤسم مكلكو . } ...اهتيعر نع ةلوئسمو ةحئار حري لم لاإ هحصنب اهطحُي ملف ةيعر للها هيعرتسي دبع نم ام { : لاقو ؟هتبَدأ اذام ،هنع لوئسم كنإف كنبا بدأ \" :-امهنع للها يضر - رمع نبا لاقو . \" كل هتيعاوطو كّرب نع لوئسم وهو ؟هتمَلع اذامو نم يرخ هدلو لجرلا بِدؤي نلأ { :لاقّف ةقدصلا نم يرخ ةيبرتلا نأ بينلا برخأو لك نم لضفأ نسلحا َقلُُلخا دلولا ميلعت نأ لىإ دشرأ امك } عاصب قدصتي نأ . } نسح بدأ نم لضفأ ًادلو ٌدلاو لَحنَ ام { :لاقّف ءاطع لوسر لاق :لاق هّللا دبع نب رباج نعف ،رانلا نع باجح يهف تانبلا ةيبرت امأو ةراملإاو جارلخا دواد وبأ ،) 4 ( داهلجا يذمرتلا ،) 29(",
+  "text_simplified": "Tarbiyah (Islamic upbringing) in Islam is a process of building and nurturing the child, like a farmer who tends to his crops. Parents must teach the child obedience to Allah and good akhlaq (manners), and protect them from sins. Good tarbiyah is better than charity, and it is the responsibility of both the father and the mother. Raising daughters with proper tarbiyah shields from the Fire.",
+  "labels": [
+    "تربية",
+    "إسلام",
+    "طفل",
+    "مسؤولية",
+    "أخلاق"
+  ],
+  "created_at": "2026-06-20T14:32:08Z",
+  "updated_at": "2026-06-20T14:32:08Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-487be1c7",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ومنعهم من المعاصي",
+        "english": "and protect them from sins",
+        "why": "The Arabic verb 'منعهم' means 'prevent/forbid them', implying active parental prohibition. The English 'protect them from sins' softens this into shielding, which is not the same action.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تربية البنات تحمي من النار",
+        "english": "Raising daughters with proper tarbiyah shields from the Fire",
+        "why": "The English adds 'with proper tarbiyah', which is not in the Arabic. The Arabic states that upbringing of daughters (in general) protects from the Fire; the addition narrows the meaning.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

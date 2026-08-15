@@ -1,0 +1,64 @@
+{
+  "id": "isl-d739a357__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Foundations of Reward and Discipline in the Tarbiyah of the Child",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية سلوكية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "طرش لىإ ةأفاكلما لوحتت لا نأ * حيحصلا ديدلجا كولسلا ىلع ةأفاكلما رصتقّت لب ،هتفرغ هبيترت وأ هماعطو هلكأك بجاو مايقّلل ًاطرش حبصأ رثك اذإ قبسلما دعولا نلأ ،قبسم دعو نود ةأفاكلما نوكت نأو لا تىح دعولا زانجإو ،ةركبلما ةلوفطلا ةلحرم في ةرشابم لمعلا دعب نوكت نأ * هدعو دعب ةأفاكلما رخؤن نأ نسيح ةرخأتلما ةلحرلما فيو ،دعولا فلاخإو بذكلا ملعتي .ةأفاكلماب حرفيف لمعلا بعت ىسني هنلأو ةرخلآل لمعلا ملعتيل .6 -62 ص ،يويدب يلع دحمأ ،باقّعلاو باوثلا :رظنا ) ( .64 ص ،وللحا ناسح مأ ،ةعئاش ءاطخأ :رظنا )2( .3 -3 ص :بطق دممح ،ةيملاسلإا ةيبرتلا جهنم :رظنا )3( .62 -6 ص ،يويدب يلع دحمأ ،باقّعلاو باوثلا :رظنا )4( . 3 ص هبرغلا هيبن ،ةيكولسلا تلاكشلماو ،6 ص ،وللحا ناسح مأ ،ةعئاش ةيوبرت ءاطخأ :رظنا ) ( بيهرتلا نياثلا ثحبلما هعم حماستي يذلا لفطلا نأو ،بيهرتلا لىإ بيرلما ةجاح ةثيدلحا تاساردلا تتبثأ تاجرد هل بيهرتلاو ،قلاخلأاو كولسلا ححصي باقّعلاو امهجاعزإ في رمتسي هدلاو نامرلحاو سبلحاو رجلهاو ةعطاقّلما لىإ دتتمو باتعلاو بضغلا ةرظنو هجولا بيطقّتب أدبت .اتهاجرد رخأ وهو برضلاو يدالما نامرلحا وأ ةعاملجا نم نسلا يفف هنم دب لا ناك نإو ،ناكملإا ردق لفطلا برض بنجتي نأ بيرلماب رديجو . هببسو باقّعلا ىزغم فرعيو اهيف زييم تيلا :اهنم طباوض بيهرتللو * . هجويو ملعي لب لفطلا بقاعي لاف ةرم لوأ ثدح اذإ أطلخا نأ * ،هكولس أطخ لفطلا ماهفإو اهببس نايب عم ةرشابم أطلخا دعب ةبوقّعلا عاقّيإ بيج * . ةبوقّعلا ترخأت اذإ لعف ام ىسني ابمر هنلأ نلأ ،مهمامأ هتبقاعم نوكتف تيبلا لهأو هناوخإ مامأ رهاظ لفطلا أطخ",
+  "text_simplified": "Rewards should be tied to a specific positive behavior, not made a condition for fulfilling obligations. It is better to delay the reward in early childhood to teach the child to work toward a goal. Physical discipline, such as hitting, is not effective and should be avoided. Preferable tarbiyah methods include guidance and temporary deprivation. Discipline should be immediate and direct after the mistake, with an explanation of the reason given to the child.",
+  "labels": [
+    "مكافأة",
+    "عقاب",
+    "تربية",
+    "سلوك",
+    "طفل"
+  ],
+  "created_at": "2026-06-20T14:36:19Z",
+  "updated_at": "2026-06-20T14:36:19Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-d739a357",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "العقاب",
+        "english": "Discipline",
+        "why": "The Arabic 'العقاب' means punishment, but the English uses 'Discipline', which is broader and softer; the same substitution occurs in the body text where 'العقاب' is translated as 'Discipline'.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "تربية",
+        "english": "Tarbiyah / tarbiyah",
+        "why": "The transliterated term 'Tarbiyah' is capitalized in the title but lowercase in the body text, creating inconsistency within the document.",
+        "severity": "low"
+      },
+      {
+        "type": "structure",
+        "field": "text_simplified",
+        "arabic": "ويفضل استخدام أساليب تربوية كالتوجيه والحرمان المؤقت",
+        "english": "Preferable tarbiyah methods include guidance and temporary deprivation",
+        "why": "The Arabic uses a verbal construction 'it is preferred to use educational methods such as...', but the English changes it to a noun phrase 'Preferable tarbiyah methods include...', altering the sentence structure and omitting the verb 'use'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

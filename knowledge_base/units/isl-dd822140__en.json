@@ -1,0 +1,56 @@
+{
+  "id": "isl-dd822140__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children over Parents in Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية أبناء",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "َٖذلإلا ٜمع دلألأا يٗظعلا ذبع َب ذحمأ َب داىع هذبع وب ذنمح ًِيح ىبأ /خًصلا ُلًضف َٖذلإلا ٜمع دلألأا يٗظعلا ذبع َب ذحمأ َب داىع هذبع وب ذنمح ًِيح ىبأ /خًصلا ُلًضف ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ فلؤملل ةظوفمح قوقلحا عيجم ههم ْزج ٍأ وأ باتكلا ازي شصن َداعإب حنشُي لا ، ُظىفمح عبطلا قىقح ٌكًناكًم ماظن ٍأ في هخشنو هظفح وأ لاكشلأا وم لكش ٍأب . ههم ْزج ٍأ وأ باتكلا عاجترسا وم وِكيم ٌنوتركلإ وأ ّشخأ ُغل ٍأ لىإ هتجمشت وأ باتكلا وم ْزج ٍأ سابتقاب حنشُي لاو . فلؤلما وم قبشم ٌطخ ىرإ ِلع لىصلحا ىود ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ ٓذبع َب ذىلذ ٜٗيح ٘بأ /خٗؼلا ٛمٗضف ٛوذكو :دعبو ﷺ للها لقسر كؾط ملاسلاو ةلاصلاو ,لله دؿحلا ـؽل ,اؿهدٓوٕ ـيدلاقلا ققؼحو ,ـيدلاقلا رب باقبأ في ةباتؽلا ةرثك دؼف ققؼحلا ؽؾت ,ءابٔا كؾط دٓوٕا ققؼحب ؼؾعتي اؿقف رقثؽلا بتؽي ؿل في ببسلا له ءابٔا كؾط دٓوٕا ققؼح لاؿهإ نقؽي اؿبر ؾب ,ةؾؿفؿلا .اوبرك اذإ دعب لاصأ ؿفل ؿفققؼط ملاكو - ةكرابؿلا ةقػؾسلا راثٔا ـم ةؾؿج – للها فؼفو – ػلمؿلا دروأ دقو ,دٓوٕا ةقبترب ءاـتطلال ؿؿفلا ذحشت ,رثٕا ؾهأ ةؼيرص كؾط ,- كرابم ػؾسلا قلَأ ءابٔا هدـط كـؿتي يذلا رشلا دلقتقف ,ؽلذ لاؿهإ مدطو ,ؿفققؼح ظػحو ٓو ,ساـلا دـطو للها دـط ؿفل ـسحأ ناك ؿهقبستحاف اراغص دٓوٕا تام .للهاب ٓإ ةقق ٓو لقح .ةؾؿجلا في هدروأ اؿقف اؼفقم فتقػللف فعم فؾؿط تعجار دقو اكركذي يذلا ؾؿعلا اذه ـم عػـلا في فقف كرابيو ,ارقخ فيزجي نأ للها للسأ .ثيداحأو راثآ رقغب ملاؽلا مدطو ػؾسلا عؿجب كؾط",
+  "text_simplified": "This text addresses the rights of children over their parents, emphasizing the importance of raising children with sound tarbiyah (upbringing) based on the din (religion) and akhlaq (character). It highlights that parents are responsible for teaching and guiding their children from a young age. It warns against neglecting these rights due to the negative consequences that may result.",
+  "labels": [
+    "حقوق الأبناء",
+    "تربية",
+    "مسؤولية الآباء",
+    "دين",
+    "أخلاق"
+  ],
+  "created_at": "2026-06-21T10:14:11Z",
+  "updated_at": "2026-06-21T10:14:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-dd822140",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الآباء",
+        "english": "parents",
+        "why": "Arabic uses 'الآباء' (fathers) specifically, but English translates as 'parents', broadening the meaning to include mothers, which the Arabic does not state.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "لما يترتب عليه من آثار سلبية",
+        "english": "due to the negative consequences that may result",
+        "why": "Arabic states the negative consequences as definite ('what results from it'), while English adds 'may', making it a possibility and softening the warning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

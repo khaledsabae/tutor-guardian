@@ -1,0 +1,56 @@
+{
+  "id": "isl-4f1f6411__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children upon Their Parents in Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية الأطفال",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "(2) ,ؽلذب رقجلم فكنف فعئارش مازتلا كؾط فبردو للها ةطاص كؾط اقبص ؾؿح ـمو« :بًٗلما ٔبا ٍاق حقحص حرش« »افقؾط ؿفؾؿح ـم ابه بساحم رقغ ؽلذ في ناقبصلا مزؾت لتلا ةؼشؿلا نأو .)147/4( »يراخبلا ،)382/7( قازرمًا دبمقو ،)595( »هدمٜسمُ« مذ دمٕلجا ـمسا فمٚصوو فمس امُوزمج يراخبمًا فم٘مٚمق (3) .حمٞحص دامٜمؾم٢مس اهممػمهو .ةمػثمي بابمًا مذ ثيدامطٕاو تائاو ،حمٞحص دامٜمؾم٢مس )115/3( ةبمٞمؿ بيأ ـمسا فمضرمظأ (4) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ ؿؽؿعك ـم هقؿتؽت لاف )1(قدصؿلا ؿكءاج اذإ لـب اي« :فقـبل لقؼي ناك فكأ رقخو فل رش قفف ؿؽقؾط راج نإو ,فلو ؿؽل رقخ قفف ؿؽقؾط لدط نإ فكنف ,ائقش ؿؽل قطدي نأ هورملت نأ ,تردصو ةقشاؿلا قدص اذإ اقطدت ٓو ,ؿؽل ـط ,ؿلاس ـط )3(ـسح داـسنب )2764( »هدـسم« في دعجلا ـبا جرخأو ٓو ,فقف رجتت ٓ هاتبأ اي :تؾؼف ,فقكزي ؾعجف ـقؿقتي لام هدـط ناك فكأ :فقبأ :لاق ,دحاو ؿهرد ٓإ فـم ؼبي ؿل قلو فـقكزٕ :لاؼف ,فقف اذه عرسأ ام ,برضت .»اراد فب اؿفل ىترشا ؿث .)5(لتخأ ؼـط في اققص لكزأ نأ لبأ نياصوأ :)4(رذ ـب رؿط لاقو ١ٗد ٢ًع ٕٛهٜٚ ١طٜسفيا رس ٘ٓع طكطٜ لاٚ ٜ٘ٛبأ عَ بيصيا رس عسػٜٚ .ابهامسرأ ـمُ امٝمٞموقتسي يذمًا ةاميزمًا ؾمُامق (1) .حمٞحص دامٜمؾم٢مس همػمهو ،)337/3( »لاقمُٕا« مذ فيقجمٟز ـمسا امٝمضرمظأ (2) .ثيدلحا ـسمط شيرم٘مًا ـحمرمًا دبمق ـمس ثرالحا (3) .ةمؾداسمًا ةم٘بمٓمًا ـمُ ،مذقمٙمًا رذ قمسأ ،لبهرمعا ،نيادمٛلها ةرارز ـمس للها دبمق ـمس رذ ـمس رمٛمق قه (4) .حمٞحص دامٜمؾم٢مس )81/4( قازرمًا دبمق فمضرمظأ (5) عدبمًا ؾهأ ـمُ ةمٗئامـ فمٕمٜمُ مامٟإو نامٞبمّمًامس جلحا زاقمض مذ ءمامٚمٕمًا ملمس فلامظ ٓ (6) .)99/9( »ؿمٚسمُ حشر«",
+  "text_simplified": "The text discusses the rights of children upon their parents, such as good tarbiyah (upbringing), education, and justice among them. It highlights the importance of truthfulness and rifq (gentleness) in dealing with children, and warns against injustice or neglect. It mentions some Prophetic hadiths that urge the proper tarbiyah and care of children.",
+  "labels": [
+    "حقوق الأطفال",
+    "تربية",
+    "عدل",
+    "رفق",
+    "تعليم"
+  ],
+  "created_at": "2026-06-21T10:24:02Z",
+  "updated_at": "2026-06-21T10:24:02Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-4f1f6411",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "حقوق الأطفال على الآباء في التربية",
+        "english": "The Rights of Children upon Their Parents in Tarbiyah",
+        "why": "Arabic 'الآباء' means fathers specifically, but English 'Parents' includes both mothers and fathers, broadening the scope.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "حقوق الأطفال على آبائهم",
+        "english": "the rights of children upon their parents",
+        "why": "Arabic 'آبائهم' means their fathers, not parents; English uses 'parents' which includes mothers.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

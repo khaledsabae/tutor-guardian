@@ -1,0 +1,56 @@
+{
+  "id": "isl-343ab724__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Foundations of Islamic Tarbiyah and Monitoring One's Children",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "كلذل لمأت وأ قاشلما دَبكت نإو هدلو ةيبرت ىوقأ نوكيف هبلق نم ةنكمتم ةحمرلا نلأ ةبامج هدلول دلاولا ةوعد ذإ :ءاعدلا )أ( دقّف مهدلاوأ ىلع ءاعدلا نم نيدلاولا لوسرلا رذح اذلو احالحإ دشأو ةفطاع .ةباجإ ةعاس قفاوت هيجوتلا اهيف يفكي لا ،دملأا ةليوط ةرمتسم ةيوبرتلا ةيلمعلا نلأ :ةمزلالماو ةعباتلما )ب( اومُزلا { :لاق ثيح بينلا كلذ لىإ راشأ دقو احيحص ًاصلاخ ناك امهم رباعلا . } مبهادآ اونسحأو ..مكدلاوأ لمعلا فورظ تناك اذإو ،ةحجانلا ةيبرتلل طرش تيبلا نع ليوطلا بايغلا مدعو ةمزلالماو اذه ناك نمو ،ةليقّث حبصت ملأا ةيلوئسم نإف بايغلا كلذ يضتقّت ةوعدلا وأ ملعلا بلط وأ .بولطلما اهرود نم بركأ رودب مايقّلا ىلع ةرداق ةيوق ةلحاص ةجوز راتيخ نأ هيلع هلاح .63 -62 ص .ليوبناتسلاا دوممح ،انلافطأ بيرن فيك :رظنا ) ( .322 ص :ديوس رون دممح ،ةيوبنلا ةيبرتلا جهنم :رظنا )2( .2 ص :بطق دممح ،ةيملاسلإا ةيبرتلا جهنم :رظنا )3( ،36 ثيدلحا مقرو 2 /2 :تانبلا لىإ ناسحلإاو نيدلاولا رب باب ،بدلأا باتك في هجام نبا هجرخأ )4( .9 ص :ملسلما جاهنم هباتك في يرئازلجا هفعض دقو ،\" مبهادآ اونسحأو مكدلاوأ اومركا\" هظفلو لاح في لهاستي لاف ،اهعضاوم في روملأا عضي يذلا وه مزالحاو ،ةيبرتلا ماوق هبو . قفرلاو ينللا بجوتست لاح في ددشتي لاو ةدشلا بجوتست ام ينبو هنيب لويح نأو ،هلامو هندبو هلقّعو هنيد ظفيح ابم هدلو مزلُي نأ :مزلحا طباضو .عرشلا ضراعت لم ام هدلب في ةَيعرلما ةيعامتجلاا ديلاقّتلا همزلي نأو ،هايندو هنيد في هرضي كنكيم لمو ،هماطف ىلع ردقّت لم هءاكب تحمر نإ كنإف\" :-للها هحمر - يزولجا نبا لاق . \"ًايرقّف ًلاهاج",
+  "text_simplified": "Parents must be a good example (uswah hasanah) for their children, and they should be keen to make du'a for them with goodness and mercy. Tarbiyah is an ongoing process that requires follow-up and patience, not just passing guidance. The father should choose a righteous and strong wife to help him in the tarbiyah of the children, especially if work circumstances require his absence from the home. Firmness in tarbiyah means placing matters in their proper places—no leniency when it is needed, nor harshness when it is not.",
+  "labels": [
+    "تربية",
+    "دعاء",
+    "قدوة",
+    "متابعة",
+    "حزم"
+  ],
+  "created_at": "2026-06-20T14:32:44Z",
+  "updated_at": "2026-06-20T14:32:44Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-343ab724",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وأن يحرصا على الدعاء لهم بالخير والرحمة",
+        "english": "and they should be keen to make du'a for them with goodness and mercy",
+        "why": "The Arabic structure 'يجب على الوالدين أن يكونا... وأن يحرصا...' makes both actions obligatory. The English uses 'must' for the first but 'should' for the second, weakening the obligation to a recommendation.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "على الأب أن يختار زوجة صالحة قوية",
+        "english": "The father should choose a righteous and strong wife",
+        "why": "The Arabic 'على الأب أن يختار' expresses a duty or obligation upon the father. The English 'should choose' reduces this to a suggestion, altering the deontic force.",
+        "severity": "high"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "ee765e4d-9efd-413d-9350-d8aa8d59acf7__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "When a Child Loses One of Their Parents: How to Tell Them and How to Support Them",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "فقد أحد الوالدين",
+  "intervention_type": "إرشادي",
+  "severity": "شديد",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "فهم الطفل للموت يتغيّر بعمره: قبل السادسة يظنّه مؤقتًا وقد يسأل متى يعود، وبين السادسة والتاسعة يدرك أنه نهائي وتكثر أسئلته الحسّية، وبعدها يقترب فهمه من فهم الكبار وتظهر أسئلة المعنى والعدل.\n\nعند الإخبار:\n• أخبره مبكرًا وبكلمات صريحة وبسيطة. عبارات مثل «سافر» أو «نام» تولّد خوفًا من السفر والنوم، وتُفقد الطفل ثقته حين يكتشف الحقيقة.\n• ليخبره أقرب شخص إليه، في مكان هادئ آمن، وبجملة قصيرة ثم صمت يسمح له بالسؤال.\n• أجب عن سؤاله بقدر سؤاله، ولا بأس بـ«لا أعرف».\n• طمئنه على المستقبل الملموس: من سيوصله للمدرسة، ومن سيبقى معه. قلق الأطفال في الفقد عملي بقدر ما هو عاطفي.\n\nبعد ذلك:\n• توقّع حزنًا متقطّعًا: يبكي دقائق ثم يلعب. هذا طبيعي وليس قسوة ولا إنكارًا.\n• حافظ على الروتين اليومي قدر الإمكان؛ الثبات هو ما يشعره بالأمان.\n• اسمح بذكر الفقيد وبالحديث عنه، ولا تُخفِ حزنك تمامًا — رؤية الكبير حزينًا ثم متماسكًا تعلّمه أن الحزن يُحتمل.\n• لا تحمّله دورًا فوق سنّه («أنت راجل البيت دلوقتي»).\n\nاطلب دعمًا مختصًا إن استمرّ اضطراب النوم أو الطعام أو الانسحاب أشهرًا، أو ظهر تراجع دراسي حادّ، أو ألقى الطفل باللوم على نفسه.",
+  "text_simplified": "A child’s understanding of death changes with their age: before the age of six, they may think it is temporary and ask when the parent will return; between six and nine, they realize it is permanent and their questions become more sensory-based; after that, their understanding approaches that of adults, and questions about meaning and justice arise.\n\nWhen telling them:\n• Tell them early, with clear and simple words. Phrases like \"they traveled\" or \"they slept\" can create fear of travel and sleep, and cause the child to lose trust when they discover the truth.\n• The person closest to them should tell them, in a quiet and safe place, with a short sentence followed by silence to allow them to ask questions.\n• Answer their question to the extent of their question, and it is fine to say \"I do not know.\"\n• Reassure them about the tangible future: who will take them to school, who will stay with them. Children’s anxiety in loss is as much practical as it is emotional.\n\nAfter that:\n• Expect intermittent grief: they may cry for a few minutes and then play. This is normal and not cruelty or denial.\n• Maintain the daily routine as much as possible; stability is what makes them feel secure.\n• Allow them to mention the deceased and talk about them, and do not completely hide your sadness—seeing an adult sad and then composed teaches them that grief can be endured.\n• Do not burden them with a role beyond their age (\"You are the man of the house now\").\n\nSeek specialized support if sleep or eating disturbances, withdrawal, or a sharp academic decline persist for months, or if the child blames themselves.",
+  "labels": [],
+  "keywords": [
+    "Loss",
+    "Grief",
+    "Death of a father",
+    "Mourning in children",
+    "Psychological support"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "ee765e4d-9efd-413d-9350-d8aa8d59acf7",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أو ظهر تراجع دراسي حادّ",
+        "english": "or a sharp academic decline persist for months",
+        "why": "The Arabic lists 'a sharp academic decline appears' as a separate condition for seeking support, not requiring it to persist for months. The English incorrectly attaches 'persist for months' to the academic decline as well.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

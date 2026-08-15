@@ -1,0 +1,64 @@
+{
+  "id": "isl-aeca7eab__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Al-Rifq bi-l-Atfal fi-l-Hadith al-Nabawi",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية أخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": ",فقصلا ؿبهاقث ناك فكأ ثيدحلا اذه كـعمو« :ٟرَتريا ٍاق (4) .)2479( ؿقر ثيدحلا بؼط فلاق »نلضلا حير ؿبهاقث .اهممػمهو ،)2479( يذمُمؽمًاو ،)244/8( ةبمٞمؿ بيأ ـمسا فمضرمظأ (5) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ ـْ م فقْ تَ قَ لْأَ غُ ؾُ بْ يَ ءادَ ر يَ نَ اكَ فكأ : لَ اقَ ,فق ِ بأَ ـْ طَ ,لؿقْ تَ لا ؿ ادَ ر ِ تذْ خَ تَ ا ؽكَ أَ قْ لَ ,ت ِ بَ أَ ايَ :تُ ؾْ قُ :لَ اقَ ,ف ِ يْ دَ يَ ـِ قْ بَ ـْ ِ م ف ِ قْ يَ دْ ثَ وَ ف ِ ػ ِ ؾْ خَ ةً بَ قِ صَ افَ تؿ للهاقَ فَ ,اذَ هَ ؾْ ؼُ تَ َٓ ,لَـبُ ايَ :لَ اقَ ,اذَ هَ كء .)1( للَإ سِ اَـلا ضِ غَ بْ أَ لف تْ كَ اكَ قْ لَ تدْ دقَ لَ َٓ ِ إ ,هاـقص قؾف ػؽي اـتقب فبأ اي :ـسحلا فقبٕ ـسحلا لبأ ـب ـسحلا ـبا لاقو .)2(فـط ضرطأ ؿث ,دامر ـم اًئقش ؿث حرصا :لاق ـب طقؿش ـب للها دقبط ـط )35( »لاؿلا حلاصإ« في اقكدلا لبأ ـبا جرخأو كلإ نوداؼي ابه ـقؼفاـؿلا ةمزأ ؿهاردلاو رقكاكدلا :لبأ لل لاق :لاق ,نلاجط :ٟشٛتدا ٔبا ٍاق كقبأ ناكو ,لاؿلا ـم افً قلأ ػؾَ خو ارسقم ناك لبأ نأ لـب اي ؿؾطاو« اد ىقس فغقؾب دعب ر ي ؿلو ,غؾب نأ كلإ لاؿلا ؽلذ ـم فقؾط ؼػكاُ ف ,ًلاػص ؾققو ,اراـيد ـيرشط قحك لططأُ ؿث ,ىرخٕا ةرجأ ذخليو ةدحاو ـؽسي ناك تعبو ,ؿؾعلا بتك ـم ابً تك ابه",
+  "text_simplified": "The text discusses a noble hadith that advises on rifq (gentleness) with children and their care. The hadith mentions that whoever does not show mercy to the young and does not acknowledge the rights of the elders is not among the Muslims. It also highlights the importance of tarbiyah (upbringing) of children upon good akhlaq (character).",
+  "labels": [
+    "تربية",
+    "رفق",
+    "أطفال",
+    "أخلاق",
+    "حديث نبوي"
+  ],
+  "created_at": "2026-06-21T10:30:14Z",
+  "updated_at": "2026-06-21T10:30:14Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-aeca7eab",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "الرفق بالأطفال في الحديث النبوي",
+        "english": "Al-Rifq bi-l-Atfal fi-l-Hadith al-Nabawi",
+        "why": "The English title is a transliteration, not a translation, so the meaning 'Gentleness with Children in the Prophetic Hadith' is not conveyed to English readers.",
+        "severity": "medium"
+      },
+      {
+        "type": "religious_error",
+        "field": "text_simplified",
+        "arabic": "حديث نبوي شريف",
+        "english": "noble hadith",
+        "why": "The Arabic explicitly says 'Prophetic noble hadith' (hadith nabwi sharif), but the English omits 'Prophetic', weakening the attribution to the Prophet ﷺ.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "حق الكبار",
+        "english": "the rights of the elders",
+        "why": "The Arabic singular 'right' (haqq) is rendered as plural 'rights', slightly altering the nuance of the hadith paraphrase.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

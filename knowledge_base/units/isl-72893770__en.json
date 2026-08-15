@@ -1,0 +1,56 @@
+{
+  "id": "isl-72893770__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "Characteristics of the Comprehensive Prophetic Tarbiyah Methodology",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية شاملة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "يوبﱰلا جاهنﳌ(cid:682) (cid:685)دوصقم نإف ،ةصﻼخو . ةيوبﱰلا ةيلمعلا ﰲ هتاهيجوتو هتافرصت تطبض ﱵلاو ملسو هيلع ي وبنلا يوبﱰلا جاهنﳌا صئاصخ :ﱐاثلا ب لطﳌا ة يوبنلا ةيبﱰلا ﰲ لومشلا : ﻻوأ 84 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا نأ ثيح ،يمﻼسﻹا نيدلل ةماعلا صئاصﳋا نم ةقثبنم ةيصاﳋا هذه نوك نع جت(cid:685) ،يوبنلا يوبﱰلا جهنملل ةيصاخك ةيلومشل(cid:682) لوقلا نإ . هلك ناسنﻹا نايكو اهلك ةايﳊاو هلك نامزلا تبعوتساو ةعامﳉاو درفلا ةايح تﻻاﳎ لكب تطاحأ هتاعيرشتو هماكحأ ،هدنع سوسﶈاو يداﳌا بناﳉ(cid:682) تمتها ﱵلا اهسفن يه ناسنﻹا ﰲ يونعﳌاو يحورلا بناﳉ(cid:682) تمتها ﱵلا ملسو هيلع ﷲ ىلص ﱯنلا ةيبﱰف ﱵلا اهسفن يه ايندلا ﰲ ناسنﻹا ﱀاصم قيقﲢ ﱃإ تفده ﱵلا هتيبرتو ،دسﳉاو بلقلا تبطاخ ﱵلا اهسفن يه لقعلا تبطاخ ﱵلا هتيبرتو ﱵل ا ةيبﱰلا اهسفن يه ﱃاعت هبرب ناسنﻹا ةقﻼع ﰲ ءاقترﻻا ﱃإ تحمط ﱵلا ملسو هيلع ﷲ ىلص هتيبرتو ،ةينيدلا هﳊاصم قيقﲢ ﱃإ تفده . هطيﳏو هسفنب ناسنﻹا ةقﻼعب ءاقترﻻا ﱃإ تحمط : لﻼخ نم يوبنلا يوبﱰلا جهنﳌا ﰲ لومشلا رهاظم ىلع فقن نأ نكﳝ انه نمو ،ةيوبﱰلا ةيلمعلا نم ةاخوتﳌا فادهﻷا ﰲ لومشلا . 1 ﰲ اﳍوصح داري ﱵلا تاﲑيغتلا كلت :فادهﻷ(cid:682) دصقنو ،ةيوبﱰلا فادهﻷا ةلأسﲟ قلعت اموه اثيدحو اﳝدق ةيبﱰلا هيناعت ام زربأ نم نإ جهانﳌاو تاودﻷاو لئاسولا ددﲢ ﱵلا ةماعلا ةفسلفلا ا(cid:276)وك ﰲ فادهﻷا ةيﳘأ رهظتو .اهققﲢ ىجري ةفداه دصاقم ةيوبرت ةيلمع لكلف ،كولسلا . ةيوبﱰلا ةيلمعلا ﰲ ةعبتﳌا ةأشن ددﲢ ﱵلا تاقﻼعلا ءوض ﰲ ةلماكتم ةلماش نوكت نأ\" :اهﳘأ ةيرهوﳉا تافصلا نم ةعومجﲟ ةزيمتم نوكت نأ فادهﻷا هذﳍ يغبنيو",
+  "text_simplified": "The text discusses the characteristics of the Prophetic tarbiyah (upbringing) methodology, emphasizing its comprehensiveness, which encompasses all aspects of human life: material, spiritual, intellectual, and physical. This methodology aims to achieve the well-being of the human being in this world and the Hereafter, and focuses on building an integrated relationship between the individual and their Lord, themselves, and their surroundings. It also clarifies that the tarbiyah objectives in this methodology are comprehensive and integrated, based on a general philosophy that defines the means and tools.",
+  "labels": [
+    "منهج نبوي",
+    "تربية شاملة",
+    "أهداف تربوية",
+    "تنمية متكاملة",
+    "قيم إسلامية"
+  ],
+  "created_at": "2026-06-20T14:39:20Z",
+  "updated_at": "2026-06-20T14:39:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-72893770",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "المنهج التربوي النبوي الشامل",
+        "english": "Comprehensive Prophetic Tarbiyah Methodology",
+        "why": "The Arabic adjective 'التربوي' (educational/upbringing) is rendered as the transliterated noun 'Tarbiyah' without translation, while the body text uses 'tarbiyah (upbringing)' with a parenthetical translation. This inconsistency in transliteration/translation within the same document is a term error.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تحقيق مصالح الإنسان",
+        "english": "achieve the well-being of the human being",
+        "why": "Arabic 'مصالح' means 'interests' or 'benefits' (plural), which is broader than 'well-being'. The English narrows the meaning to a state of comfort/health, losing the sense of multiple benefits/interests in this world and the Hereafter.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

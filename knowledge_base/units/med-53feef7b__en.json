@@ -1,0 +1,37 @@
+{
+  "id": "med-53feef7b__en",
+  "domain": "medical",
+  "source_file": "Children_Mental_Health.pdf",
+  "title": "Anxious Behaviour and Anxiety in Children: What to Do?",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "قلق وفرط حركة",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Children and Mental Health: Is This Just a Stage?",
+  "text_original": "Is This Just a Stage? From the NATIONAL INSTITUTE of MENTAL HEALTH All children are sad, anxious, irritable, or aggressive at times, and many find it occasionally challenging to sit still, pay attention, or interact with others. In most cases, these are just typical developmental phases. However, such behaviors may also indicate a more serious problem in some children. What mental disorders can affect children? Many mental disorders can begin in childhood. Examples Early treatment can help children manage their symptoms include anxiety disorders, attention-deficit/hyperactivity and support their social and emotional well-being. Many disorder (ADHD), depression and other mood disorders, adults reflect on how mental disorders affected their eating disorders, and post-traumatic stress disorder (PTSD). childhood and wish they had received help sooner. What are the signs of mental health conditions in children? Distinguishing between challenging behaviors and emotions that are a part of normal development and those that may be cause for concern can be hard. Consider seeking help if your child’s behavior or emotions last for weeks or longer, cause distress for your child or your family, or interfere with your child’s functioning at school, at home, or with friends. If your child’s behavior is unsafe, or if your child talks about wanting to hurt themselves or someone else, seek help immediately. Learn more about warning signs at www.nimh.nih.gov/children. When might children benefit from an evaluation? Younger children Older children ● Have frequent tantrums or are irritable much of the time ● Have lost interest in things that",
+  "text_simplified": "Anxious behaviour in some children may be typical, but it can also indicate a health concern. A doctor should be consulted if these behaviours persist for weeks or longer, or if they affect the child’s interaction with family, school, or friends.",
+  "labels": [
+    "سلوك العصبي",
+    "القلق",
+    "الفرط الحركي"
+  ],
+  "created_at": "2026-06-07T08:16:06Z",
+  "updated_at": "2026-07-27",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Children_Mental_Health",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "med-53feef7b",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

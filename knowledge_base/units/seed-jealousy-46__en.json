@@ -1,0 +1,48 @@
+{
+  "id": "seed-jealousy-46__en",
+  "domain": "development",
+  "source_file": "curated/AAP / UNICEF - Siblings",
+  "title": "Child’s Jealousy of the New Sibling at Ages Four to Six",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "الغيرة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تنموي",
+  "reference_info": "AAP / UNICEF - Siblings",
+  "text_original": "في هذا العمر يعبّر الطفل عن غيرته من المولود بالكلام أو السلوك أو طلب الاهتمام. اعترف بمشاعره وسمّها له بهدوء: «تشعر أحياناً أن الاهتمام كله للبيبي». امنحه وقتاً خاصاً ومسؤوليات «الأخ الكبير» التي تشعره بالفخر لا بالعبء. تجنّب تحميله فوق طاقته أو لومه عند كل خطأ بسبب الرضيع. اقرأ معه قصصاً عن الأشقاء، وأبرز مزايا كونه أكبر كاللعب والخروج. لا تقارن بينه وبين أخيه أبداً. علّمه أن المشاعر الصعبة طبيعية لكن إيذاء الرضيع ممنوع. طمئنه دائماً أن حبّك يكفي الجميع، فالطمأنينة تذيب الغيرة مع الوقت.",
+  "text_simplified": "At this age, the child expresses jealousy of the newborn through speech, behavior, or seeking attention. Acknowledge his feelings and name them for him calmly: “Sometimes you feel that all the attention is for the baby.” Give him special time and responsibilities of the 'big brother' that make him feel pride, not burden. Avoid overloading him beyond his capacity or blaming him for every mistake because of the infant. Read stories about siblings with him, and highlight the advantages of being older, like playing and going out. Never compare him to his sibling. Teach him that difficult feelings are natural, but harming the baby is forbidden. Always reassure him that your love is enough for everyone—this reassurance melts jealousy over time.",
+  "labels": [
+    "الغيرة",
+    "المولود الجديد",
+    "الأشقاء",
+    "المشاعر",
+    "4-6 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP / UNICEF - Siblings",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-jealousy-46",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "غيرة الطفل من أخيه الجديد في عمر أربعة إلى ستة",
+        "english": "Child’s Jealousy of the New Sibling at Ages Four to Six",
+        "why": "The Arabic specifies 'أخيه الجديد' (his new brother), using the masculine singular possessive. The English broadens this to 'the New Sibling', which is gender-neutral and drops the possessive 'his'. This changes the meaning from a specific new brother to any new sibling.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

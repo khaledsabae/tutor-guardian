@@ -1,0 +1,48 @@
+{
+  "id": "isl-eaeb0ee0__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "The Role of the Murabbi in the Tarbiyah of the Child through Qudwah and Play",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية سلوكية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "بيري فيك :رظنا )2( .326 ص ،بطق دممح ،ةيملاسلإا ةيبرتلا جهنم :رظنا )3( .334 قباسلا عجرلما :رظنا )4( . 4 - 4 ص ،ليوبناتسلاا دوممح ،انلافطأ بيرن فيك :رظنا ) ( نأو ةركفلا ضرع في ًارهام نوكي نأو ،برصلا وأ ةعاجشلاك هيلإ وعدي ابم ًافصتم نوكي نع قسفلا ةلظم تتح هلفط عوقو نم رذيح نأ بيرلما ىلعو ةرثؤم توصلا ةنر نوكت . مهتيهارك هسفن في عرزيو مله هرفني نأ هيلع اذلو ،ينلثملماو ينينغلماب هباجعإ قيرط بعللا امأ ةفلتخلما تاراهلماو يركفتلا ىلع ةردقّلا ملعتي هنمو :بعللا :)2( ةيكولسلا يرياعلماو مازتللااو ةعاطلاو ةدايقّلا نف اهنم ملعتي ةسردم لكشيف يعاملجا وأ بيبطلا وأ سردلما وأ بلأا لثيم ركذّ لاف يلبقّتسلما هرود ءادأ ىلع بردتي امك يعاملجا بعللا في نزاوتلا بيج نكلو ،اهبسانت ةنهم يأ وأ ملأا رود لثتم ةاتفلاو ،مهيرغ لامتحاو نيرخلآا عم لماعتلا بولسأ ملعتيو ،ءاوطنلاا نع لفطلا دعبي تىح يدرفلاو دوجوب كلذو ،ةيعامتجلاا بادلآاو تاداعلا نيوكت لئاسو نم دعيو :ديلقتلا :)3( هسفن بيرلما ناك اذإ ةيعامتجلاا بادلآا لفطلا ميلعت لهسيو لفطلا اهدلقّي تيلا ةودقّلا لفطلا دنع ديلقّتلا أدبيو ةأرلجا ىلع لفطلا دوّع اذإو مئاد لكشب بادلآا هذبه ًايلحتم ءامتنلااب يعولا هيف جزتيم ءادتقا حبصي ثم عاو يرغ ًاديلقّت نوكيو لىولأا ةنسلا رخآ في طلتخاو عاجشلا بيرلما دجو اذإ فوخلل ًاجلاع نوكي نأ نكيمو زازتعلااو ةاكالمحاو .قباسلا عجرلما :رظنا ) ( .4 4 ص ،بطق دممح ،يملاسلإا ةيبرتلا جهنم :رظنا )2( .23 ص ،يىحيلا ةنمآ ،ةرسلأا ةيبرتل يلمع جمانرب :رظنا )3( .2 -2 4 ص ،يقابلا دبع ناديز ،ةلوفطلاو ةرسلأا :رظنا )4( .422 ص ،ثراحاب ناندع ،دلولا ةيبرت في بلأا ةيلوئسمو ،قباسلا",
+  "text_simplified": "The murabbi must be cautious about exposing their child to excessive entertainment and auditory influences, and should be a good qudwah (example) through patience and courage. Play helps the child learn thinking and various skills, and teaches them leadership, commitment, and behavioral standards through group play. Imitation begins with the murabbi’s qudwah, makes teaching social etiquette easier, and can address fear if the murabbi is brave and composed.",
+  "labels": [
+    "تربية",
+    "قدوة",
+    "لعب",
+    "تقليد",
+    "آداب اجتماعية"
+  ],
+  "created_at": "2026-06-20T14:37:25Z",
+  "updated_at": "2026-06-20T14:37:25Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-eaeb0ee0",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "المؤثرات الصوتية",
+        "english": "auditory influences",
+        "why": "The Arabic refers specifically to sound effects or audio effects (as in media), but the English 'auditory influences' is vague and could mean anything affecting hearing, losing the intended meaning of overexposure to sound effects.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

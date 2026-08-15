@@ -1,0 +1,48 @@
+{
+  "id": "seed-picky-79__en",
+  "domain": "development",
+  "source_file": "curated/NHS - Fussy eaters / AAP",
+  "title": "Selective Eating in the Child Aged Seven to Nine",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "رفض الطعام",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تنموي",
+  "reference_info": "NHS - Fussy eaters / AAP",
+  "text_original": "في هذا العمر يمكن إشراك الطفل بشكل أكبر في التخطيط للوجبات واختيار وصفة صحية أسبوعياً. اشرح له فائدة الخضار بلغة بسيطة تربطها بما يحب كالطاقة للعب والقوة. اعتمد قاعدة واضحة وثابتة: نفس طعام العائلة، وله حرية اختيار الكمية، دون طبخ وجبة بديلة خاصة. ضع حدوداً لطيفة على الوجبات الخفيفة قبل الطعام حتى يأتي للمائدة جائعاً. تجنّب وصف الطفل بأنه «صعب الإرضاء» أمامه فالوصف يثبّت السلوك. استمر بتقديم الخضار بهدوء فالقبول يأتي بالتكرار لا بالإجبار.",
+  "text_simplified": "At this age, you can involve the child more in planning meals and choosing a healthy recipe each week. Explain the benefit of vegetables in simple language, linking it to what he loves, like energy for play and strength. Adopt a clear and consistent rule: the same food as the family, with the freedom to choose the quantity, without cooking a special alternative meal. Set gentle limits on snacks before meals so he comes to the table hungry. Avoid describing the child as 'picky' in front of him, as the description reinforces the behaviour. Continue to offer vegetables calmly, for acceptance comes with repetition, not compulsion.",
+  "labels": [
+    "الأكل الانتقائي",
+    "رفض الطعام",
+    "التغذية",
+    "العادات الصحية",
+    "7-9 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "NHS - Fussy eaters / AAP",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-picky-79",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "اشرح له فائدة الخضار بلغة بسيطة",
+        "english": "Explain the benefit of vegetables in simple language",
+        "why": "The Arabic includes the indirect object 'له' (to him), specifying that the explanation is directed to the child. The English omits this, leaving the addressee of the explanation implicit.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

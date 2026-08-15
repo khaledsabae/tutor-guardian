@@ -1,0 +1,48 @@
+{
+  "id": "isl-71334e77__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Guiding Parents in Choosing Suitable Toys for Children",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "إدمان ألعاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "بعؾلاو ٓإ ىري ٓ فكأ كتح بعؾلا ـمدي بعل ناؽف ,افداه ناك ػؾسلا ءاـبأ فبعؾي ناك يذلا بعؾلا نأ كؾط .ـتهققبو ـنهلش حلاصإو دٓوٕا ةقبترل ـفبيردت كلإ لومي تاـبلا ةطاجشلا كؾط بيردتلاو ,دادتشٓا ؾقبس كؾط ناؽف :رقكذلا امأ .دٓوٕا دـط ةقكدبلا ةقؼلاو ءاكذلا ةقؿـتو ةقسورػلاو سأرلاب ءاـحكٓا قف غكقؽلاو ,فقتاراؽلا باعلأ نقسراؿي ـيذلا كؾط مرحي لله ٓإ نقؽت ٓ ةدابعلاو ةدابط ءاـحكٓا نٕ ,ندبلا ـم كؾطٕا ءزجلاب وأ .حمٞحص هدمٜمؾو ، مِ ادَ مىْ َٕا مغَ مقَ قابَسِ مًا بامس )519/12( ةبمٞمؿ بيأ ـمسا فمضرمظأ (1) .ةموقمٙمًا ءمامٚمق ـمُ تام٘ثمًا ـمُ ،ةمٕمسارمًا ةم٘بمٓمًا ـمُ ،لمُضرلحا ملمّمط ـمس ؾمٞمٝمي ـمس ةمٛمٚمؾ قه (2) .عمٞمِتمًامس لمُر ػمٞمٕض قهو ،ةسمُالخا ةم٘بمٓمًا ـمُ ،يدمؾٕا مذقمٙمًا مػبمض ـمس ؿمٞمٙمط (3) .ثرالحا ـمس شمٜمط لالح يقمى دامٜمؾم٢مس )91ص( »فيخرامش« مذ ةمقرز قمسأ فمضرمظأ (4) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ لغبـي اؿك ,ؽلذ ـط ﷺ لبـلا لفـل فجقلا برض مرحي ؽلذكو ,هدحو .مرحم ؾعف وأ بجاو ةطاضإ ـم عرشلا ػلاخي ام ؾك ـط دعبلا ؽلذك صٕيج لا ابم إبعل ارإ يّٗمع ظٗمػتلأ دلألأا شدص :ُٔشؼعلأ عوالخا للحا : سػع عبزلأا بعي ٔلم ِٖسدصن اؿ َ فُ بَ ر َ ضَ فَ )2( ة ِ دَ ر ْ افَ شُ لا ِ ب ن ِ ابَ عَ ؾْ تَ فُ لَ ـِ قْ تَ يَ ر ِ اجَ كؾَ طَ ؾَ خَ دَ ر َ ؿ َ طُ ـَ بْ ا نَ أَ ,عفاك ـط ؽَ تَ كتَ حَ ابه رشط ةعبرٕا وأ درـلاب بعؾي هدلوو فؾهأ ـم ادحأ دجو اذإ ناك ,ﭭ فكأ .ؿفماقأو ؿبهرضو اهرسك",
+  "text_simplified": "Parents must choose toys for their children that develop intelligence, physical skills, and mental abilities, while avoiding violent toys or those that harm psychological and physical health. They should also monitor playtime and guide children toward beneficial activities that reinforce religious and social values.",
+  "labels": [
+    "ألعاب الأطفال",
+    "تربية",
+    "صحة نفسية",
+    "توجيه أبوي",
+    "قيم إسلامية"
+  ],
+  "created_at": "2026-06-21T10:26:45Z",
+  "updated_at": "2026-06-21T10:26:45Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-71334e77",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "اختيار الألعاب المناسبة لأطفالهم",
+        "english": "choose toys for their children",
+        "why": "The adjective 'المناسبة' (suitable) is omitted in the body text, so the English does not specify that the toys should be suitable, although the title includes it.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

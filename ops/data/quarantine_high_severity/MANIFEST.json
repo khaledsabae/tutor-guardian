@@ -1,0 +1,545 @@
+[
+  {
+    "unit_id": "3a72f29b-1f14-46fc-9a89-b72df7295c98__en",
+    "translated_from": "3a72f29b-1f14-46fc-9a89-b72df7295c98",
+    "file": "3a72f29b-1f14-46fc-9a89-b72df7295c98__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic word 'ملاحظات' means 'notes' or 'observations', but the English title uses 'Ḥuqūq' which means 'rights'. This is a completely different word and changes the meaning of the title.",
+        "arabic": "٢ ملاحظات في تربية البنات",
+        "english": "2 – Ḥuqūq fī tarbiyah al-banāt"
+      }
+    ]
+  },
+  {
+    "unit_id": "aqe-0af54c62__en",
+    "translated_from": "aqe-0af54c62",
+    "file": "aqe-0af54c62__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Qur'anic verse is left untranslated in the English text, so non-Arabic readers receive no meaning of this central ayah.",
+        "arabic": "«وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ»",
+        "english": "«وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ»"
+      }
+    ]
+  },
+  {
+    "unit_id": "aqe-6dd8b600__en",
+    "translated_from": "aqe-6dd8b600",
+    "file": "aqe-6dd8b600__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The English text leaves the Qur'anic verse in Arabic without providing an English translation, so the meaning is not conveyed to English readers.",
+        "arabic": "قُلْ إِنَّ صَلَاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي لِلَّهِ رَبِّ الْعَالَمِينَ",
+        "english": "قُلْ إِنَّ صَلَاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي لِلَّهِ رَبِّ الْعَالَمِينَ"
+      }
+    ]
+  },
+  {
+    "unit_id": "aqe-b1e103fc__en",
+    "translated_from": "aqe-b1e103fc",
+    "file": "aqe-b1e103fc__en.json",
+    "defects": [
+      {
+        "type": "religious_error",
+        "why": "The English adds a source attribution not present in the Arabic, and the attribution is incorrect: this hadith is narrated by Muslim, not al-Bukhari.",
+        "arabic": "وقال النبي ﷺ: «من مات وهو يعلم أن لا إله إلا الله دخل الجنة».",
+        "english": "The Prophet ﷺ said: 'Whoever dies knowing that there is no god but Allah will enter Paradise.' (Narrated by al-Bukhari)."
+      }
+    ]
+  },
+  {
+    "unit_id": "aqe-c28835f1__en",
+    "translated_from": "aqe-c28835f1",
+    "file": "aqe-c28835f1__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Qur'anic verse is left untranslated in the English text, so its meaning is not conveyed to an English reader. The translation should provide an English rendering or at least a gloss.",
+        "arabic": "وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا",
+        "english": "«وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا»"
+      }
+    ]
+  },
+  {
+    "unit_id": "dev-7117419a__en",
+    "translated_from": "dev-7117419a",
+    "file": "dev-7117419a__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic says 'avoid exposure to psychological stress' without specifying who is exposed. The English adds 'them' (children) and changes the meaning to avoiding causing stress to children, whereas the Arabic likely refers to the parents avoiding stress themselves.",
+        "arabic": "وتجنب التعرض للضغط النفسي",
+        "english": "and to avoid subjecting them to psychological pressure"
+      }
+    ]
+  },
+  {
+    "unit_id": "dev-8fdf563b__en",
+    "translated_from": "dev-8fdf563b",
+    "file": "dev-8fdf563b__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic says something 'helps you as a father' to raise your children, but the English changes the actor to 'you can support', altering the meaning from being helped to doing the supporting.",
+        "arabic": "كثيراً ما يساعدكم كأب على تربية أطفالكم الصغار",
+        "english": "As a father, you can often support your *tarbiyah* (nurturing) of your young children"
+      }
+    ]
+  },
+  {
+    "unit_id": "dev-b3e9a4e0__en",
+    "translated_from": "dev-b3e9a4e0",
+    "file": "dev-b3e9a4e0__en.json",
+    "defects": [
+      {
+        "type": "term_error",
+        "why": "The Arabic 'مقابس الأمان' in this context likely means seat belt buckles/sockets, not electrical safety sockets. The English 'safety sockets' is a literal mistranslation that changes the meaning to electrical outlets. Should be 'seat belt buckles' or 'safety belt sockets'.",
+        "arabic": "مقابس الأمان",
+        "english": "safety sockets"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-27372b44__en",
+    "translated_from": "isl-27372b44",
+    "file": "isl-27372b44__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic says 'لمجرد رؤية الآخرين له' meaning 'just so that others see it' (i.e., showing off), but the English says 'merely because others have it', changing the motive from ostentation to envy or keeping up with others' possessions.",
+        "arabic": "يحذر من شراء سيارة أو جهاز لمجرد رؤية الآخرين له",
+        "english": "It warns against buying a car or a device merely because others have it"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-2d7f2303__en",
+    "translated_from": "isl-2d7f2303",
+    "file": "isl-2d7f2303__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "الترهيب means warning or instilling appropriate fear of consequences, not 'gentle discipline'; the translation softens and changes the intended method.",
+        "arabic": "التربية بالترغيب والترهيب",
+        "english": "Tarbiyah through encouragement and gentle discipline"
+      },
+      {
+        "type": "term_error",
+        "why": "The Islamic term 'tarhib' is translated away instead of being transliterated or accurately rendered, inconsistent with the transliteration of Tarbiyah, murabbi, and akhlaq in the same document.",
+        "arabic": "الترهيب",
+        "english": "gentle discipline"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-343ab724__en",
+    "translated_from": "isl-343ab724",
+    "file": "isl-343ab724__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic structure 'يجب على الوالدين أن يكونا... وأن يحرصا...' makes both actions obligatory. The English uses 'must' for the first but 'should' for the second, weakening the obligation to a recommendation.",
+        "arabic": "وأن يحرصا على الدعاء لهم بالخير والرحمة",
+        "english": "and they should be keen to make du'a for them with goodness and mercy"
+      },
+      {
+        "type": "meaning_change",
+        "why": "The Arabic 'على الأب أن يختار' expresses a duty or obligation upon the father. The English 'should choose' reduces this to a suggestion, altering the deontic force.",
+        "arabic": "على الأب أن يختار زوجة صالحة قوية",
+        "english": "The father should choose a righteous and strong wife"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-36917162__en",
+    "translated_from": "isl-36917162",
+    "file": "isl-36917162__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic says 'toward the maids/servants' (i.e., directing daughters to be with or rely on maids), not 'becoming like servants.' The English adds 'becoming like,' which changes the intended meaning.",
+        "arabic": "دفع الأمهات لبناتهن نحو الخادمات",
+        "english": "pushing their daughters toward becoming like servants"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-47643ca5__en",
+    "translated_from": "isl-47643ca5",
+    "file": "isl-47643ca5__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic includes 'المظهر' (appearance) as an object of focus alongside tight or short clothing; the English omits it, changing the meaning.",
+        "arabic": "مع التركيز على المظهر واللباس الضيق أو القصير",
+        "english": "while focusing on tight or short clothing"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-602bfb05__en",
+    "translated_from": "isl-602bfb05",
+    "file": "isl-602bfb05__en.json",
+    "defects": [
+      {
+        "type": "religious_error",
+        "why": "The Arabic explicitly says 'hit them gently' (ضربهم بلطف), which is a direct paraphrase of the hadith about commanding children to pray at seven and hitting them at ten. The English 'discipline them gently' softens and omits the specific action of hitting, altering the religious ruling.",
+        "arabic": "ويمكن ضربهم بلطف إن لم يلتزموا بها في سن العاشرة",
+        "english": "and may discipline them gently if they do not adhere to it by the age of ten"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-624104ea__en",
+    "translated_from": "isl-624104ea",
+    "file": "isl-624104ea__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The hadith is quoted in Arabic without an English translation, so its meaning is not conveyed to English readers; the source Arabic also quotes it, but a translation should render it.",
+        "arabic": "«من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت»",
+        "english": "«مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ» (left untranslated)"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-67c4622e__en",
+    "translated_from": "isl-67c4622e",
+    "file": "isl-67c4622e__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic pronoun 'كان موجوداً' most likely refers to the child (الطفل), meaning the child inherits from the waqf if the child is in existence (e.g., born alive at the time of entitlement). The English 'if one exists' is ambiguous and likely read as referring to the waqf, changing the condition.",
+        "arabic": "أن الطفل يرث من الوقف إذا كان موجوداً",
+        "english": "that the child inherits from a *waqf* (endowment) if one exists"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-707601b0__en",
+    "translated_from": "isl-707601b0",
+    "file": "isl-707601b0__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic says the children recite it (يقرؤونه), but the English makes the subject 'those who teach' also the one who recites, changing who performs the recitation and thus the condition for the reward.",
+        "arabic": "من يعلم أطفاله القرآن ويقرؤونه",
+        "english": "those who teach their children the Qur'an and recite it"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-73905b43__en",
+    "translated_from": "isl-73905b43",
+    "file": "isl-73905b43__en.json",
+    "defects": [
+      {
+        "type": "term_error",
+        "why": "The Arabic word عنف means 'violence' and should be translated into English. Transliterating it as 'Unf leaves the title unintelligible to English readers and is not an Islamic technical term requiring transliteration.",
+        "arabic": "بدون عنف",
+        "english": "without 'Unf"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-85fcbc9d__en",
+    "translated_from": "isl-85fcbc9d",
+    "file": "isl-85fcbc9d__en.json",
+    "defects": [
+      {
+        "type": "religious_error",
+        "why": "The Arabic uses 'عليه السلام' for Prophet Ibrahim, but the English uses 'ﷺ', which is reserved exclusively for Prophet Muhammad. This alters the honorific and is religiously incorrect.",
+        "arabic": "نبي الله إبراهيم عليه السلام",
+        "english": "Prophet of Allah, Ibrahim ﷺ"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-901bde3f__en",
+    "translated_from": "isl-901bde3f",
+    "file": "isl-901bde3f__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic explicitly says hitting/striking (الضرب), but the English uses the euphemism 'physical correction', which obscures the direct meaning and softens the instruction. This is a significant semantic shift in a parenting context.",
+        "arabic": "الضرب / الضرب المحدود",
+        "english": "physical correction / Limited Physical Correction"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-9933c64e__en",
+    "translated_from": "isl-9933c64e",
+    "file": "isl-9933c64e__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The hadith is left untranslated in the English text. The English reader cannot understand the teaching, so the core religious instruction is not conveyed. The translation should provide an English rendering of the hadith's meaning.",
+        "arabic": "«ليس المؤمن بالطعّان ولا اللعّان ولا الفاحش ولا البذيء»",
+        "english": "«ليس المؤمن بالطعّان ولا اللعّان ولا الفاحش ولا البذيء»"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-9baf6011__en",
+    "translated_from": "isl-9baf6011",
+    "file": "isl-9baf6011__en.json",
+    "defects": [
+      {
+        "type": "religious_error",
+        "why": "The Arabic uses the passive form 'يُوصى' (is advised), meaning the Prophet is the recipient of advice, not the giver. The English changes it to active 'advised', attributing a recommendation to the Prophet that the Arabic does not. This misattributes a statement to the Prophet.",
+        "arabic": "يُوصى النبي صلى الله عليه وسلم بتطبيق نهج الرحمة على أطفالنا",
+        "english": "The Prophet ﷺ advised applying the approach of mercy to our children"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-9d71a2f5__en",
+    "translated_from": "isl-9d71a2f5",
+    "file": "isl-9d71a2f5__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic idiom 'قضاء الحاجات' specifically refers to relieving oneself (toilet training/istinja), not general needs. The English is vague and loses the intended meaning.",
+        "arabic": "قضاء الحاجات",
+        "english": "fulfilling needs"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-a10b175c__en",
+    "translated_from": "isl-a10b175c",
+    "file": "isl-a10b175c__en.json",
+    "defects": [
+      {
+        "type": "term_error",
+        "why": "The Arabic term 'muraqabah' (مراقبة) means mindfulness/awareness that Allah is watching, not literally observing Allah. The English 'observe Allah' is theologically incorrect and could imply watching Allah, which is impossible. It should be translated as 'mindfulness of Allah' or 'awareness of Allah'.",
+        "arabic": "مراقبة الله",
+        "english": "observe Allah"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-a8fadfa1__en",
+    "translated_from": "isl-a8fadfa1",
+    "file": "isl-a8fadfa1__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic 'تزكية للنفس' in this context means self-praise or self-commendation (claiming purity for oneself), not self-purification. The translation changes the meaning of the religious ruling.",
+        "arabic": "الأسماء التي فيها تزكية للنفس",
+        "english": "names that involve *tazkiyah* (self-purification) of the self"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-add301df__en",
+    "translated_from": "isl-add301df",
+    "file": "isl-add301df__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "Arabic refers to the child's peers, but English 'their peers' likely refers to the parents' peers, changing who the child imitates.",
+        "arabic": "لأقرانه",
+        "english": "their peers"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-bfbe3bbe__en",
+    "translated_from": "isl-bfbe3bbe",
+    "file": "isl-bfbe3bbe__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "Arabic 'وحدة القيادة' means 'unity of leadership' (i.e., singleness/unified command), not 'unit of leadership' as a noun entity. The English changes the meaning.",
+        "arabic": "وحدة القيادة في الأسرة",
+        "english": "The Unit of Leadership in the Family"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-c0274dd3__en",
+    "translated_from": "isl-c0274dd3",
+    "file": "isl-c0274dd3__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic preposition 'على' means 'upon/on', indicating that children are to be raised to possess patience and endurance. The English 'with' suggests the parents' manner of raising, changing the core meaning from teaching children patience to being patient as a parent.",
+        "arabic": "تربية الأبناء على الصبر والتحمل",
+        "english": "raising children with patience and endurance"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-c4b3fccc__en",
+    "translated_from": "isl-c4b3fccc",
+    "file": "isl-c4b3fccc__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The title is transliterated but not translated; the English reader cannot understand the meaning of the hadith phrase.",
+        "arabic": "بدأ الإسلام غريبًا فطوبى للغرباء",
+        "english": "Bada al-Islam ghariban fa-tuba li-l-ghuraba'"
+      },
+      {
+        "type": "meaning_change",
+        "why": "The hadith is transliterated but not translated; the English reader cannot understand its meaning, so the instruction to teach the hadith is not fulfilled.",
+        "arabic": "«بدأ الإسلام غريبًا وسيعود غريبًا كما بدأ، فطوبى للغرباء»",
+        "english": "«Bada al-Islam ghariban wa-sa-ya‘udu ghariban kama bada’a, fa-tuba li-l-ghuraba’»"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-d192e37a__en",
+    "translated_from": "isl-d192e37a",
+    "file": "isl-d192e37a__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The English title omits 'religious' (الدينية) and converts the adjectival phrase 'religious and moral upbringing' into two nouns 'Tarbiyah and Akhlaq', losing the explicit religious dimension and altering the meaning.",
+        "arabic": "أهمية التربية الدينية والأخلاقية للأبناء",
+        "english": "The Importance of Tarbiyah and Akhlaq for Children"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-d54fd8e8__en",
+    "translated_from": "isl-d54fd8e8",
+    "file": "isl-d54fd8e8__en.json",
+    "defects": [
+      {
+        "type": "religious_error",
+        "why": "The Arabic uses 'ضربهم' (hit/strike them) from the hadith, but the English softens it to 'disciplined', obscuring the explicit command.",
+        "arabic": "وضربهم عليها عند العاشرة إن تركروها",
+        "english": "and disciplined for it at ten if they neglect it"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-ded5466d__en",
+    "translated_from": "isl-ded5466d",
+    "file": "isl-ded5466d__en.json",
+    "defects": [
+      {
+        "type": "term_error",
+        "why": "Arabic 'التأديب' (at-ta'deeb) means disciplining/teaching good behavior, not 'adab' (manners). The translation uses the wrong Islamic term, changing the gift from an action to a quality.",
+        "arabic": "التأديب الحسن",
+        "english": "Good Adab"
+      },
+      {
+        "type": "term_error",
+        "why": "Same error as title: 'التأديب' is disciplining, not 'adab'. The parenthetical '(manners)' reinforces the wrong meaning.",
+        "arabic": "التأديب الحسن",
+        "english": "good adab (manners)"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-f3f09dc7__en",
+    "translated_from": "isl-f3f09dc7",
+    "file": "isl-f3f09dc7__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic 'تأديبهن' means 'disciplining them', not 'tarbiyah' (upbringing). The English substitutes a different Islamic term, altering the hadith's wording and meaning.",
+        "arabic": "فأحسن تأديبهن",
+        "english": "excels in their tarbiyah"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-f6bbab53__en",
+    "translated_from": "isl-f6bbab53",
+    "file": "isl-f6bbab53__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic means neglecting or missing the prayer, a serious sin; the English 'wasting time for prayer' suggests merely not using time efficiently for prayer, which is a different and weaker meaning.",
+        "arabic": "تضييع الصلاة",
+        "english": "wasting time for prayer"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-f6c0c64a__en",
+    "translated_from": "isl-f6c0c64a",
+    "file": "isl-f6c0c64a__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The English title is a transliteration of the Arabic, not a translation. It does not convey the meaning of the hadith or the subtitle 'The Virtue of Disciplining Children' to an English reader.",
+        "arabic": "«ما نحل والدٌ ولداً أفضل من أدب حسن» — فضل تأديب الأبناء",
+        "english": "«Mā naḥala wālidun waladan afḍala min adabin ḥasan» – Faḍl Taʼdīb al-Abnāʼ"
+      },
+      {
+        "type": "meaning_change",
+        "why": "The hadith is left in Arabic transliteration without an English translation, so the English reader cannot understand the core religious quote. The surrounding text only paraphrases it, but the actual hadith wording is not rendered in English.",
+        "arabic": "«ما نحل والدٌ ولداً من نحلٍ أفضل من أدب حسن»",
+        "english": "«Mā naḥala wālidun waladan min naḥlin afḍala min adabin ḥasan»"
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-fb6a8582__en",
+    "translated_from": "isl-fb6a8582",
+    "file": "isl-fb6a8582__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The English title is a transliteration of the Arabic, not a translation. It does not convey the meaning 'Justice between children: when is differential treatment accepted and how is it explained' to an English reader.",
+        "arabic": "العدل بين الأولاد: متى يُقبل تمييز المعاملة وكيف يُشرح",
+        "english": "Al-ʿAdl bayna al-Awlad: Mata Yuqbalu Tamyiz al-Muʿamalah wa Kayfa Yushrah"
+      },
+      {
+        "type": "meaning_change",
+        "why": "The first sentence is left as Arabic transliteration with only one word glossed. It should be translated as 'Justice between children is a principle in upbringing.' The meaning is not conveyed.",
+        "arabic": "العدل بين الأولاد أصل في التربية",
+        "english": "Al-ʿadl bayna al-awlad asl fi al-tarbiyah (upbringing)."
+      }
+    ]
+  },
+  {
+    "unit_id": "isl-fd937511__en",
+    "translated_from": "isl-fd937511",
+    "file": "isl-fd937511__en.json",
+    "defects": [
+      {
+        "type": "term_error",
+        "why": "The Arabic title ends with 'تربية الطفل' (tarbiyat al-tifl, upbringing of the child), but the English transliteration renders it as 'Tarbiyat al-Talab', which means 'upbringing of the students/request' and changes the meaning.",
+        "arabic": "الاعتدال في الترهيب والترغيب في تربية الطفل",
+        "english": "Al-I'tidal fi al-Tarhib wa al-Targhib fi Tarbiyat al-Talab"
+      }
+    ]
+  },
+  {
+    "unit_id": "med-72806e5e__en",
+    "translated_from": "med-72806e5e",
+    "file": "med-72806e5e__en.json",
+    "defects": [
+      {
+        "type": "meaning_change",
+        "why": "The Arabic 'اضطراب دمداي' refers to DMDD (disruptive mood dysregulation disorder), not depressive disorder. The translation changes the diagnosis, which is clinically significant.",
+        "arabic": "اضطراب دمداي",
+        "english": "depressive disorder"
+      }
+    ]
+  },
+  {
+    "unit_id": "seed-defiance-23__en",
+    "translated_from": "seed-defiance-23",
+    "file": "seed-defiance-23__en.json",
+    "defects": [
+      {
+        "type": "religious_error",
+        "why": "This is a hadith of the Prophet ﷺ. The English paraphrase changes the wording: 'ما كان في شيء' means 'it is not in anything except that it beautifies it', not 'only beautifies whatever it is applied to'. The hadith is altered and not rendered accurately.",
+        "arabic": "فالرفق ما كان في شيء إلا زانه",
+        "english": "for *rifq* only beautifies whatever it is applied to"
+      }
+    ]
+  }
+]

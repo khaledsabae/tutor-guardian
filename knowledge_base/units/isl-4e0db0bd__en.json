@@ -1,0 +1,56 @@
+{
+  "id": "isl-4e0db0bd__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "A Story about Birr al-Walidayn and the Importance of Akhlaq",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تربية أخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "نايدمتف اطاب امدق اؿؾف ,لاؿلا اؿفـم ذخلي نأ باطخلا ـب رؿط كلإ بتكو ؾعػف ,ؽلذ ,؟اؿؽػؾسأ ام ؾثم فػؾسأ شقجلا ؾكأ :لاق ,رؿط كلإ ؽلذ اعفد اؿؾف ,احبرلف لاؿلا ايدأ ,اؿؽػؾسلف ـقـممؿلا رقمأ اـبا :باطخلا ـب رؿط لاؼف ,ٓ :ٓاق رقمأ اي ؽل لغبـي ام :لاؼف للها دقبط امأو تؽسف للها دبط املف ,فحبرو تؽسف هايدأ :رؿط لاؼف ,هاـؿضل ؽؾه وأ لاؿلا اذه صؼك قل اذه ,ـقـممؿلا قل ـقـممؿلا رقمأ اي :رؿط ءاسؾج ـم ؾجر لاؼف ,للها دقبط فعجارو ,للها دبط ػصكو لاؿلا سأر رؿط ذخلف ,اضارق فتؾعج دق :رؿط لاؼف ,؟اضارق فتؾعج .)2(»لاؿلا حبر ػصك باطخلا ـب رؿط اـبا للها دقبطو للها دبط ذخأو ,فحبر .)352/3( »يراخبمًا حمٞحص حشر« مذ لامٓمس ـمسا فمٜمق هامٙمط (1) »ةمساصلإا« مذ ظموالحا فححصو ،حمٞحص دامٜمؾم٢مس همػمهو ،)1372( »م٠مـقمعا« مذ ؽمًامُ فمضرمظأ (2) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ اَـ قْ ؾَ طَ وَ جَ قتَ اكَ ر صَ احَ : لَ اقَ ,ل ِ بأَ لـثَ دَ حَ ,لمر جَ لْا بٍ قْ ؾَ كُ ـُ بْ ؿ لؾَ طَ وَ :لَ اقَ ,اهَ اَـحْ تَ فَ اؿ ؾَ فَ :لَ اقَ ,دقعُ س ـُ بْ عُ شاجَ م :فُ لَ لَ اؼَ يُ , ؿٍ قْ ؾَ س : لَ اقَ ,ؿِ جَ عَ لْا ـَ م اَـؾْ تَ قَ ـَ يذلَا كؾَ تْ ؼَ لْا ـَ م ؾٍ قتقَ كلَِ إ تُ ؼْ ؾَ طَ كْ افَ : لَ اقَ ,ؼٌ ؾَ خَ صٌ قؿقَ ـَ قْ بَ فُ تُ ؾْ س غَ فَ :لَ اقَ ,ء دِ لا فقْ ؾَ",
+  "text_simplified": "The text tells an old story that illustrates the importance of raising children with good akhlaq (manners) and respect. It narrates a conversation between two people about treating parents with kindness. The story teaches children the value of obedience and birr al-walidayn (righteousness toward parents). Parents can use this story to reinforce family values.",
+  "labels": [
+    "تربية",
+    "أخلاق",
+    "بر الوالدين",
+    "قصة",
+    "تعليم"
+  ],
+  "created_at": "2026-06-21T10:33:03Z",
+  "updated_at": "2026-06-21T10:33:03Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-4e0db0bd",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title and text_simplified",
+        "arabic": "بر الوالدين / الأخلاق",
+        "english": "Birr al-Walidayn / Akhlaq (title) vs birr al-walidayn / akhlaq (text)",
+        "why": "Transliterated terms are capitalized inconsistently between the title and the body text.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الأخلاق الحميدة والاحترام ... البر بالوالدين",
+        "english": "good akhlaq (manners) and respect ... birr al-walidayn (righteousness toward parents)",
+        "why": "The English adds parenthetical glosses not present in the Arabic, and 'manners' narrows the broader meaning of 'akhlaq' (morals/character).",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "seed-aggression-46__en",
+  "domain": "medical",
+  "source_file": "curated/CDC / AAP - Positive Parenting",
+  "title": "Aggressive Behaviour in the Child Aged Four to Six",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "العدوان",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "CDC / AAP - Positive Parenting",
+  "text_original": "إذا كان طفلك يضرب أو يدفع إخوته أو أصدقاءه، تعامل مع السلوك فوراً بهدوء وحزم دون عنف مقابل. أوقف اللعب لوقت قصير ليهدأ، ثم تحدّث معه عمّا شعر به وكيف يتصرّف بشكل أفضل. علّمه في الأوقات الهادئة بدائل للتعبير عن الغضب كالكلام أو الابتعاد أو طلب المساعدة. ضع قواعد واضحة وثابتة لرفض إيذاء الآخرين، وطبّق نتائج منطقية هادئة عند تجاوزها. امدح حلّه للخلافات بالكلام والمشاركة. قلّل تعرّضه للمحتوى العنيف في الشاشات. تأكد من نومه وطعامه وراحته فالإرهاق يزيد العدوان. إن كان العنف متكرراً ويؤذي الآخرين بشدة فينصح باستشارة مختص.",
+  "text_simplified": "If your child hits or pushes their siblings or friends, address the behaviour immediately with calmness and firmness, without responding with violence. Pause playtime for a short while to allow them to calm down, then speak with them about what they felt and how they can act better. Teach them, during calm moments, alternatives to express anger, such as speaking, walking away, or asking for help. Set clear and consistent rules against harming others, and apply calm, logical consequences when these are broken. Praise their resolution of conflicts through speech and sharing. Reduce their exposure to violent content on screens. Ensure they are well-rested, fed, and comfortable, as fatigue increases aggression. If the violence is frequent and severely harms others, it is advised to consult a specialist.",
+  "labels": [
+    "العدوان",
+    "الضرب",
+    "تنظيم الانفعالات",
+    "الحدود",
+    "4-6 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "CDC / AAP - Positive Parenting",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-aggression-46",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

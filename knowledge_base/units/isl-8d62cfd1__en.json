@@ -1,0 +1,39 @@
+{
+  "id": "isl-8d62cfd1__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "A Prophetic Tarbiyah Model from the Life of Abu Bakr al-Siddiq",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "حتاف ام لوأف ،هنع ﷲ يضر قيدصلا ركبوبأ لوﻷا جذومنلا اهجومو ازكرم ناك ملسو هيلع ﷲ ىلص ﱯنلا باطخف ،36\" هتعاط ىلع ةﻻاوﳌاو ،هﲑغ دبعت ﻻو ،هل كيرش ﻻ هدحو ﷲ ﱃإ كوعدﻷ ﲏثعب 89 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا هذه نمف .(هتعاط ىلع ةﻻاوﳌاو ) ملسو هيلع ﷲ ىلص هلوق ﰲ كلذ سملنو هل ةوعدلاو نيدلا اذﳍ ءامتنﻻا سرغ ﱃإ ﱃوﻷا ةلهولا نم ةرشابم ،ةديدﳉا ةوعدلل ةكرﳊا ﲑثك قيدصلا\" ناكف ،ةرصنلاو ةﻻاوﳌا بجاوب هنم امايق ﱃاعت ﷲ ﱃإ ةوعدلا ةﲑسم ﰲ قلطناو ركبوبأ ملسأ ةظحللا ركب و بأ شاع دقل 38، ةنﳉ(cid:682) نيرشبﳌا نم ةسﲬ مﻼسإ ﰲ اببس نوكي نأ ارخف هيفكيو ،37\" م ﻼسﻺل ةميظع بساكم ققحو رثأ كرﲢ امنيأ . ةيوبنلا ةيبﱰلا راﲦ نم ةرﲦ و هف ﱃاعت ﷲ هافوت نأ ﱃإ قاشﳌاو ىذﻷا لمﲢ ﰲو لهﻷاو لاﳌاو سفنل(cid:682) داهﳉا ﰲو غيلبتلا ﰲ اكراشم ،شيﳉا رارقتساو بورﳊا عقاوم رايتخا ﰲ مهكارشإ اهنمو ةﲑثك بابلا اذه ﰲ ةلثمﻷاو ،ة يركسعلاو ةيسايسلا تارايتخﻻا ﰲ مهكارشإ اهنمو امك ةيركسعلا ططﳋا ﰲ مﳍ هتراشتساو ،ةدايقلا تايحﻼص مهضيوفتو (cid:686)ارسلا ضعب ﰲ ملسو هيلع ﷲ ىلص هجورخ مدعو مﳍ ةيولﻷا هدقعو ،تادهاعﳌ(cid:682) ةقلعتﳌا ةيجراﳋا اذكو ةيلخادلا ةيﲑبدتلا تاسايسلاو ،ةيداهتجﻻا ماكحﻷا ضعب ذاﲣا ﰲ مهكارشإ كلذكو ،قدنﳋا ةوزغ ﰲ لصح . ةمهﳌا ةيﲑبدتلا ةيسايسلا رومﻷا نم اهﲑغو ةبسﳊاو ةاكزلا عﲨ ماهﲟ مايقلل ةباحصلا ضعب هنييعتو هفﻼختساك هبايغ دنع ةمامﻹا ﰲ م لسو هيلع ﷲ ىلص هفﻼختسا نيدلا رومأ ﰲ ملسو هيلع ﷲ ىلص هتيبرت اهتلﴰ ﱵلا كارشﻹا تﻻاﳎ نمو . هضرم ﰲ ركب",
+  "text_simplified": "This text presents a Prophetic tarbiyah (nurturing) model through the personality of Abu Bakr al-Siddiq, illustrating how the Companions participated in administrative and military decision-making. It also highlights the importance of involving individuals in responsibilities to strengthen belonging and loyalty.",
+  "labels": [
+    "تربية نبوية",
+    "مشاركة",
+    "قيادة",
+    "ولاء",
+    "صحابة"
+  ],
+  "created_at": "2026-06-20T14:40:30Z",
+  "updated_at": "2026-06-20T14:40:30Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-8d62cfd1",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "med-081f7c03__en",
+  "domain": "medical",
+  "source_file": "Autism_CDC.pdf",
+  "title": "Development and Behaviour in Infants Aged 4 to 6 Months",
+  "language": "en",
+  "age_group": "prenatal-1",
+  "behavior_type": "معالم النمو",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "CDC — Learn the Signs. Act Early: قوائم مراحل النمو (Milestone Checklists)",
+  "text_original": "Development Language/Communication Milestones ◦ Holds head steady without support when you are ◦ Makes sounds like “oooo”, “aahh” (cooing) ◦ Makes sounds back when you talk to him ◦ Holds a toy when you put it in his hand ◦ Turns head towards the sound of your voice ◦ Uses her arm to swing at toys ◦ Brings hands to mouth ◦ Pushes up onto elbows/forearms when on tummy Other important things to share with the doctor… • What are some things you and your baby do together? • What are some things your baby likes to do? • Is there anything your baby does or does not do that concerns you? • Has your baby lost any skills he/she once had? • Does your baby have any special healthcare needs or was he/she born prematurely? You know your baby best. Don’t wait. If your baby is not meeting one or more milestones, has lost skills he or she once had, or you have other concerns, act early. Talk with your baby’s doctor, share your concerns, and ask about developmental screening. If you or the doctor are still concerned: 1. Ask for a referral to a specialist who can evaluate your baby more; and 2. Call your state or territory’s early intervention program to find out if your baby can get services to help. Learn more and find the number at cdc.gov/FindEI. For more on how to help your baby, visit cdc.gov/Concerned. Acting early can make a real difference! Help",
+  "text_simplified": "The infant learns to hold their head without support, makes sounds like \"oooo\" and \"aahh\", responds to your voice, holds toys placed in their hands, and turns toward your voice. Parents should observe these milestones to take the necessary steps.",
+  "labels": [
+    " developmental milestones",
+    "early intervention",
+    "baby care"
+  ],
+  "created_at": "2026-06-07T08:14:16Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Autism_CDC",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "med-081f7c03",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يستجيب لأصواتك",
+        "english": "responds to your voice",
+        "why": "The Arabic uses the plural 'أصواتك' (your sounds/voices), while the English uses the singular 'your voice'. This narrows the meaning and omits the plural sense.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

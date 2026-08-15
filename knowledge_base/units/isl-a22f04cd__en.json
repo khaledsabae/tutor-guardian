@@ -1,0 +1,56 @@
+{
+  "id": "isl-a22f04cd__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching Children the Adab of Eating and 'Ibadat",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية دينية وسلوكية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "فتؿطف اؿؾف ,فقؿطػت ابه رمأ ؿث ـقؿؾسؿلا ـم ؾجر كلإ لبصلا عفدف ,ماعطلا ؾكأ دقو ,فتؿطف .)1(»اهقؿجرف ساـلا رمأو ,اهردص كلإ افل رػحف ؾهأ ؾعػي اؿك راعلا ةقشخ ؿفئاذيإو دٓوٕا ؾتق ـط عرشلا كنه دقو :رقكذلا ضعب عم رؼػلا ةقشخ وأ ,ؿتهاـب عم ةقؾهاجلا ﴾ۡ ُ ذ ۡ ُ ُ ُ ۡ َ ُ ۡ ذ ٰ َ ۡ ۡ ّ ُ َ ٰ َ ۡ َ ْ ٓ ُ ُ ۡ َ َ َ ﴿ :كلاعت لاق ۡ ًْايوَإِ ًؾكزرُ َنَّ قلٌِإ ٌَِ ًؽدلوأ أيخلتّ لَ و ۡ ُ ذ ۡ ُ ُ ُ ۡ َ ُ ۡ ذ ٰ َ ۡ َ َ ۡ َ ۡ ُ َ ٰ َ ۡ َ ْ ٓ ُ ُ ۡ َ َ َ ﴿ :كلاعت لاقو ًٗ ؽا يوَإِ ًٓؼزرُ َنَّ ٖ قلٌِإ ثيظخ ًؽدلوأ أيخلتّ لَو .)31:ءارسلإا( ﴾ ٗ َ ٗ ۡ َ َ ۡ ُ َ ۡ َ ذ ا يِ تن ا ط ٔ خِ نكَ ًٓيخؼ نِ إ .»امٟزمًا دمط« بياتمي مذ فتمٜمٞمس ملامي هدامٜمؾإ مذو ؿمٚسمُ فمضرمظأ (1) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ بِ ْكذَ لا يُ أَ ﷺ ل ِ بَـلا تُ لْل َ س : لَ اقَ ,ﭬ دقعسم ـبا ـط »ـقحقحصلا« فيو قظعَ لَ ؽَ لذَ نَ ِ إ : تُ ؾْ قُ , ؽَ ؼَ ؾَ خَ قَ هُ وَ ادً ك فؾَ ل ؾَ عَ جْ تَ نْ أَ : لَ اقَ ,؟ للها دَ ْـط ؿ ثُ : تُ ؾْ قُ ,؟ ؽَ عَ م عَ طْ يَ نْ",
+  "text_simplified": "Parents must teach their children the adab of eating and drinking, such as eating with the right hand and saying *bismillah* before eating. It is also important to instill the love of 'ibadat (acts of worship) and obedience in children’s hearts from a young age. Guiding children toward good behavior and reinforcing Islamic values in their daily lives is essential.",
+  "labels": [
+    "آداب الطعام",
+    "تربية إسلامية",
+    "تعليم الأطفال",
+    "القيم الدينية",
+    "السلوك الحسن"
+  ],
+  "created_at": "2026-06-21T10:16:17Z",
+  "updated_at": "2026-06-21T10:16:17Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-a22f04cd",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الطاعات",
+        "english": "obedience",
+        "why": "Arabic plural 'الطاعات' means 'acts of obedience', English singular 'obedience' loses the plural and the sense of multiple acts.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "من المهم",
+        "english": "is essential",
+        "why": "Arabic 'من المهم' means 'it is important', English 'is essential' is stronger and more emphatic, shifting the register.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

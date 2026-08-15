@@ -1,0 +1,53 @@
+{
+  "id": "isl-624104ea__en",
+  "domain": "islamic_parenting",
+  "age_group": "7-9",
+  "behavior_type": "تقليد ألفاظ بذيئة من الشارع",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "title": "My son has started using foul language he learned from the street kids",
+  "language": "en",
+  "reference_type": "حديث",
+  "reference_info": "متفق عليه: صحيح البخاري حديث رقم 6018، وصحيح مسلم حديث رقم 47، عن أبي هريرة رضي الله عنه",
+  "text_original": "من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت. متفق عليه، رواه البخاري (6018) ومسلم (47) عن أبي هريرة رضي الله عنه.",
+  "text_simplified": "Your son, at the age of 7–9, now understands the difference between right and wrong, and this is the perfect time to teach him to guard his tongue—not just to forbid him. Teach him the hadith of the Prophet ﷺ: «مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ» (muttafaq ‘alayh), and make it a rule he checks his words by: *Is what I’m about to say khayr (good)?* If it isn’t, silence is better than a word he heard from his friends.",
+  "labels": [
+    "الألفاظ البذيئة",
+    "ضبط اللسان",
+    "الطفولة المتوسطة",
+    "تقليد الأقران"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "صحيح البخاري وصحيح مسلم",
+    "source_author": "الإمام البخاري والإمام مسلم"
+  },
+  "source_language": "ar",
+  "translated_from": "isl-624104ea",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "«من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت»",
+        "english": "«مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ» (left untranslated)",
+        "why": "The hadith is quoted in Arabic without an English translation, so its meaning is not conveyed to English readers; the source Arabic also quotes it, but a translation should render it.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وقت مناسب",
+        "english": "the perfect time",
+        "why": "Arabic 'مناسب' means 'suitable/appropriate', not 'perfect'; the English overstates.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

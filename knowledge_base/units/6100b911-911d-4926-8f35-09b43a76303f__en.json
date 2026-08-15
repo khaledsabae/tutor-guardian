@@ -1,0 +1,46 @@
+{
+  "id": "6100b911-911d-4926-8f35-09b43a76303f__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "When the Anger Is Yours: Regulating the Parent’s Emotion",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "انفعال الوالد",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "كثير من الآباء والأمهات يسألون عن سلوك أبنائهم وهم في الحقيقة منهكون من انفعالهم هم. الاعتراف بذلك ليس ضعفًا؛ هو أدقّ تشخيص، لأن انفعال الوالد أقوى مؤثّر في انفعال الطفل — الأطفال يلتقطون التنظيم الانفعالي بالعدوى لا بالتلقين.\n\nما يساعد عمليًا:\n• اعرف علاماتك المبكرة: شدّ الفكّ، ارتفاع الصوت، ضيق النفس. التدخّل قبل الانفجار ممكن، وبعده صعب.\n• خذ مسافة قبل الردّ ولو ثلاثين ثانية: اخرج من الغرفة بعد أن تؤمّن الطفل، اشرب ماءً، تنفّس ببطء والزفير أطول من الشهيق.\n• عالج الأسباب لا اللحظة: قلّة النوم والجوع والضغط المالي والوحدة ترفع القابلية للانفجار أكثر من سلوك الطفل نفسه.\n• قلّل نقاط الاحتكاك اليومية المعروفة (الصباح، الواجب، النوم) بتحضير مسبق بدل معالجتها بالانفعال كل يوم.\n• حين تخطئ، اعتذر بوضوح وبلا تبرير: «أنا صوّتّ عليك، ودي غلطتي أنا، وأنت متستاهلش كده.» الاعتذار لا يُضعف هيبتك — يعلّمه أن الخطأ يُصلَح، وهي أثمن مهارة تورّثها له.\n• لا تحمّل نفسك تصوّرًا مثاليًا عن «الوالد الهادئ دائمًا». المطلوب أن يكون الإصلاح أكثر من الانفجار، لا أن ينعدم الانفجار.\n\nواطلب دعمًا مختصًا إن كان الغضب يخرج إلى إيذاء، أو صاحبه حزن مستمر أو فقدان اهتمام بكل شيء أو أفكار مؤذية — فهذه حالة تستحق العلاج لا الجَلْد الذاتي.",
+  "text_simplified": "Many fathers and mothers ask about their children’s behavior when, in truth, they are exhausted by their own emotions. Acknowledging this is not weakness—it is the most precise diagnosis, for the parent’s emotion is the strongest influence on the child’s emotion. Children absorb emotional regulation by contagion, not by instruction.\n\nWhat helps in practice:\n• Recognize your early signs: jaw clenching, raised voice, shortness of breath. Intervention is possible before the explosion, but difficult after it.\n• Take a pause before responding, even if just thirty seconds: leave the room after ensuring the child’s safety, drink water, breathe slowly with the exhale longer than the inhale.\n• Address the causes, not the moment: lack of sleep, hunger, financial pressure, and loneliness increase the likelihood of an outburst more than the child’s behavior itself.\n• Reduce daily friction points (mornings, homework, bedtime) by preparing in advance instead of managing them with emotion every day.\n• When you make a mistake, apologize clearly and without justification: “I raised my voice at you, and that was my mistake. You didn’t deserve that.” Apologizing does not weaken your authority—it teaches him that mistakes are repaired, and that is the most precious skill you can pass on to him.\n• Do not burden yourself with an idealized image of “the parent who is always calm.” What is required is that repair outweighs outbursts, not that outbursts never occur.\n\nAnd seek professional support if the anger escalates to harm, or if it is accompanied by persistent sadness, loss of interest in everything, or harmful thoughts—for this is a condition that deserves treatment, not self-flagellation.",
+  "labels": [],
+  "keywords": [
+    "mother’s irritability",
+    "parental anger",
+    "emotional regulation",
+    "guilt",
+    "apologizing to the child"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "6100b911-911d-4926-8f35-09b43a76303f",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "قلّل نقاط الاحتكاك اليومية المعروفة (الصباح، الواجب، النوم) بتحضير مسبق بدل معالجتها بالانفعال كل يوم.",
+        "english": "Reduce daily friction points (mornings, homework, bedtime) by preparing in advance instead of managing them with emotion every day.",
+        "why": "The Arabic includes 'المعروفة' (known/well-known), which is omitted in the English. This slightly reduces the specificity that these are recognized, typical friction points.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

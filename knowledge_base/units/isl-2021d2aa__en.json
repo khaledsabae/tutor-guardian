@@ -1,0 +1,48 @@
+{
+  "id": "isl-2021d2aa__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Analysis of a Tarbiyah Story Containing Domestic Violence",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "عنف أسري",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "عموامٜمًا لقم٘مًا« بياتمي مذ اتهرميذ ،عضاقتمًا مذ هذه مػمه رقص ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نْ ِ نفَ ,اػً لْأَ ـَ قع ِ بْ س غَ ؾَ بَ ل ٍ اؿ ِ ب ل ِ ـتقْ تَ أَ تْـكُ ؽكَ إ ,ت ِ بَ أَ ايَ :ةبتط فقبٕ ور :لَ اقَ ,ف ِ ض ِ م ل َ فَ ةُ بَ تْ طُ :فُ لَ لَ اقَ ,فقض ِ م ل َ فَ ل ِ ـطْ دَ فَ َٓ ِ إوَ ,هُ ذْ خُ فَ اذَ قَ فُ فَ فُ ْـطَ ل ِ ؾ ِ ئاس .فجيرخت مدؼت » ؿ د فُ ْـم لؼبَ ام كتَ حَ هُ اضَ م افعم اقبهذا ,فسقماقج مورلا ذخأ دعب هدقبعل لاق يبرطلا رقشب نأ مدؼتو نإ لـب يأ تؽسا :لاؼف ,اـترؼفأ تبأ اي :فـبا فل لاؼف ,للها فجقل رارحأ ؿتكلف .»هديزأ نأ تببحلف نيبرتخا لبر :امقي كقبأ لل لاق :تلاق ,لمأ لـتثدح :لاق ,زيزعلا دبط ـب دؿحم ـطو ؾئاس اذإو ,فيدي ـقب فتعضقف ,هرطػل فتلقفف :تلاق ,ـقخث زبخب اـبل لفتشأ ـم مدعؿلا هدبط :كقبأ لقؼي :تلاق ,؟فيقلا ءلؾؿلا ضرؼي ـم :لقؼي ,ؾئاسلا كلإ افقف اؿب افعفدف ,ابه جرخف ,ةػحصلا ذخأ ؿث :تلاق ,تاـسحلا ,؟ادغ ؽبؾص ابه ؿقؼت ةرسؽب ؽقتآ ٓأ :رحسلا في فل تؾؼف ايواص فتؾقل تابو .)1(»ةجاح ـم ؽلذ كلإ دجأ ام ,ٓ :لاق ٛٗبشعلا ٛػملا دلألأا يٗمعت :ُٕثلاجلأ ٌ٘اجلا للحا .)2( ـِ حْ ؾَ لا كؾَ طَ هُ دَ لَوَ بُ ر ِ ضْ يَ نَ اكَ فُ كَ أَ ,ﭭ ر طُ ـِ بْ ا ـِ طَ ٓ نينف",
+  "text_simplified": "The text discusses a complex and unclear story involving dialogue between characters about tarbiyah (upbringing) situations. It depicts physical violence and family conflicts. Parents are advised to avoid violence in tarbiyah and resort to dialogue and understanding.",
+  "labels": [
+    "عنف",
+    "تربية",
+    "أسرة",
+    "صراع",
+    "حوار"
+  ],
+  "created_at": "2026-06-21T10:29:02Z",
+  "updated_at": "2026-06-21T10:29:02Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-2021d2aa",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يظهر فيها عنف جسدي وصراعات أسرية",
+        "english": "It depicts physical violence and family conflicts",
+        "why": "The Arabic 'يظهر فيها' means 'appears in it' (passive/reflexive), while the English 'It depicts' implies the story intentionally portrays or represents the violence, which is a slightly different nuance.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "4868a341-239b-493d-89a8-36a896850899__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "Teaching the Child Responsibility: From Constant Reminders to Self-Regulation",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "المسؤولية والتنظيم الذاتي",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "الطفل الذي يُذكَّر بكل خطوة يتعلّم أن يعتمد على التذكير لا على نفسه. الانتقال إلى التنظيم الذاتي يحتاج نقل الجهد الذهني إليه تدريجيًا.\n\nخطوات عملية:\n• استبدل التذكير بسؤال: بدل «ذاكِر»، قل «إيه اللي فاضل في خطتك النهارده؟». السؤال ينقل التفكير إليه.\n• اصنعا معًا قائمة أو جدولًا مرئيًا يشطب هو بنده بنفسه. الشطب بيده جزء من التعلّم لا تفصيل شكلي.\n• أعطه مهامًا حقيقية يعتمد عليها البيت لا مهام رمزية — تجهيز حقيبته، ترتيب سفرته، سقي نبات. الشعور بأن غيابه يُحدث فرقًا هو أصل المسؤولية.\n• اترك النتيجة الطبيعية تحدث حين تكون آمنة: نسي واجبه فليواجه أثر ذلك في المدرسة. إنقاذه في كل مرة يمنع التعلّم.\n• درّبه على تقدير الوقت: «تفتكر ده هياخد قد إيه؟» ثم قارنا بالواقع. ضعف تقدير الوقت أشيع من الكسل.\n• امدح العملية لا النتيجة: «رتّبت وقتك كويس» أنفع من «شاطر».\n\nوابدأ بمهمة أو مهمتين لا بقائمة طويلة، وتوقّع تراجعًا مؤقتًا في فترات الضغط والامتحانات.",
+  "text_simplified": "A child who is reminded at every step learns to rely on reminders rather than on themselves. The transition to self-regulation requires gradually shifting the mental effort to them.\n\nPractical steps:\n• Replace reminders with a question: instead of saying \"study,\" ask \"what’s left in your plan for today?\" The question shifts the thinking to them.\n• Create together a visible checklist or schedule that they can tick off themselves. The act of ticking is part of the learning, not just a formal detail.\n• Give them real tasks that the household depends on, not symbolic ones—preparing their bag, organizing their lunchbox, watering the plant. The feeling that their absence makes a difference is the essence of responsibility.\n• Allow natural consequences to occur when it is safe: if they forget their homework, let them face the effect of that at school. Rescuing them every time prevents learning.\n• Train them to estimate time: \"How long do you think this will take?\" Then compare with reality. Poor time estimation is more common than laziness.\n• Praise the process, not the result: \"You managed your time well\" is more beneficial than \"well done.\"\n\nStart with one or two tasks, not a long list, and expect temporary setbacks during periods of stress and exams.",
+  "labels": [],
+  "keywords": [
+    "Responsibility",
+    "Self-regulation",
+    "Household tasks",
+    "Independence",
+    "Routine"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "4868a341-239b-493d-89a8-36a896850899",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "unreviewed",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

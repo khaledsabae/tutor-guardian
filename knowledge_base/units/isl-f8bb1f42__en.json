@@ -1,0 +1,46 @@
+{
+  "id": "isl-f8bb1f42__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "References to Various Islamic Sources",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "تاوعدلا باتك يذمﱰلا عماج 51 .4157 مقر رمﻷا ﰲ زواجتلا وفعلا ﰲ ب(cid:682) بادﻵا باتك ننسلا ﰲ دووادوبأ 52 .3287 مقر مﻼسﻹا ﰲ هئ(cid:682)آ ﱃإ بستنا نم ب(cid:682) بقانﳌا باتك حيحصلا ﰲ يراخبلا 53 .4984 مقر ﲔميل(cid:682) لكﻷاو ماعطلا ىلع ةيمستلا ب(cid:682) ةمعطﻷا باتك هسفن 54 .2000 ص مولعلاو ةيبﱰلل ةيمﻼسﻹا ةمظنﳌا تاروشنم دجسملل يعامتجﻻاو يوبﱰلا رودلا ،ﰲدصلا حودﳑ 55 . قباسلا عجرﳌا سفن . 93 ةيوعدلا ةيبﱰلا ﰲ ةطاسولاو ديحوتلا يراصنﻷا ديرف 57 .855 مقر لسغ ةعمﳉا دهشي ﱂ نم ىلع له ب(cid:682) ةعمﳉا باتك حيحصلا ﰲ يراخبلا 58 . ةيوعدلا ةيبﱰلا ﰲ ةطاسولاو ديحو تلا هباتك ﰲ كلذ ﱃإ راشأ 59 .82 ص ةطاسولاو ديحوتلا يراصنﻷا ديرف 60 96 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم",
+  "text_simplified": "The text includes references to various Islamic books and sources, such as books of adab, hadith, and fiqh, along with reference numbers and author names. There is no clear content related to tarbiyah behavior or psychological issues for children.",
+  "labels": [
+    "مراجع دينية",
+    "كتب إسلامية",
+    "مصادر تربوية"
+  ],
+  "created_at": "2026-06-20T14:41:50Z",
+  "updated_at": "2026-06-20T14:41:50Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-f8bb1f42",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "سلوك تربوي",
+        "english": "tarbiyah behavior",
+        "why": "The Arabic adjective 'تربوي' means 'educational' or 'upbringing-related', not the noun 'tarbiyah'. Transliterating it as 'tarbiyah' introduces an Islamic term not present in the source and narrows the meaning to a specific concept, changing the intended general sense.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

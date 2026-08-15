@@ -1,0 +1,47 @@
+{
+  "id": "isl-3f7359b4__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Guiding Children toward Permissible and Beneficial Play",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية الأطفال وتوجيه اللعب",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "اياؼب ـم ةقؼب فكنف خقشلا اذه في ؽل ؾه :لبأ لل لاق ,اـفرصكا .)5(»ةورط ـب للها دبط ديري ,يأر ؾبكو ثيدح ـم تئش ام هدـط دجاو عؿساف بهذاف ,ةشئاط ـط ثدحت ةأرما اـهاه ,لمأ لل تلاق :ةبعش لاقو .)6(»افـم تعؿسف افقلإ تبهذف :لاق ,افـم .حمٞحص دامٜمؾم٢مس )143/2( »خيراتمًاو ةمورمٕمعا« مذ يقسمٗمًا فمضرمظأ (1) .حمٞحص دامٜمؾم٢مس )11( »عمُاسمًا بادآو يوارمًا قلامظٕ عمُالجا« مذ بمٞمٓلخا فمضرمظأ (2) .حمٞحص دامٜمؾم٢مس )313/2( »لامضرمًا ةمورمٕمُو ؾمٚمٕمًا« مذ دحمأ فمضرمظأ (3) .ردمٙمٜمعا لآ ممقمُ ،نيدمعا ػمؾقي قمسأ ،لمٛمٞتمًا شيرم٘مًا نقمِمضامعا ةمٛمٚمؾ بيأ ـمس بقم٘مٕي قه (4) ،ؿهدمٕمس ـمُو ةمٜيدمعا ؾهأ لمٕمساتمً ؿمٛتمعا ؿسم٘مًا )227/1( »تام٘بمٓمًا« مذ دمٕمؾ ـمسا فمضرمظأ (5) .لبمؾارمًا للاه بيأ لالح ملمً فمٞمو دامٜمؾم٢مس )22/31( »فيخرامش« مذ رمياسمق ـمساو .حمٞحص دامٜمؾم٢مس )281/7( »تام٘بمٓمًا« مذ دمٕمؾ ـمسا فمضرمظأ (6) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ عشؼلا فلايخ لا ابم ُٕبعمٖ دلألأا كشت حابٖٔ :ُٔشؼعلأ عباشلا للحا :ينًُطلما ٤ارٜإب ِٗبعي ببطتٜ لم اَ لٜسطيا في دلاٚلأا بعًب عأب لاٚ ﷺ للها لقسر ءاجف ناقبصلا عم بعلأ تـك :لاق ,ﭭ سابط ـبا ـط .)1(»باب ػؾخ تيراقتف .)2(»مارحب سقل اؿب نقبعؾي ناقبصلا كرت زاقج ثيدحلا اذه فيو« ,عفار لبأ ـط حقحص داـسنب )336/4( »تاؼبطلا« في دعس ـبا جرخأو نورعشي لاف ,بارغلا ةبعل ؾقؾلاب نقبعؾي ؿهو ناقبصلا ةريره ابأ كتأ اؿبر :لاق .»نورػقف ناقبصلا عزػقف ,فقؾجرب برضيو ,ؿفـقب فسػك لؾي كتح ءلشب :٘تَسس طكطٜ اَ يرػب دذطلما في ٕٛبعًٜ ٍافطلأا ىترب عأب لاٚ ص ِ دَ ْـط ِ ر ِ ؿ تَ لا ِ ب كتَ مْ يُ ﷺ ِ للها لُ قس نَ اكَ : لَ اقَ",
+  "text_simplified": "This section explains the importance of permissible play for children and the necessity of guiding them toward beneficial games that do not harm their *din* (religion) or *akhlaq* (character). It also highlights how the Prophet ﷺ used to play with children and bring joy to them, while emphasizing the avoidance of forbidden or harmful games.",
+  "labels": [
+    "لعب الأطفال",
+    "تربية إسلامية",
+    "توجيه سلوكي",
+    "قدوة حسنة"
+  ],
+  "created_at": "2026-06-21T10:25:49Z",
+  "updated_at": "2026-06-21T10:25:49Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-3f7359b4",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يشرح النص",
+        "english": "This section explains",
+        "why": "The Arabic says 'the text explains' (النص), but the English changes the subject to 'this section', narrowing the referent and introducing a word not present in the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

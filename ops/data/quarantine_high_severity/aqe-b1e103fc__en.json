@@ -1,0 +1,48 @@
+{
+  "id": "aqe-b1e103fc__en",
+  "domain": "aqeedah",
+  "source_file": "aqidah_unified_manifest.md",
+  "title": "Who is Allah?",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تعليم_العقيدة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_فقهي",
+  "reference_info": "مسار العقيدة — من هو الله؟. المصادر: العقيدة الطحاوية، القواعد الأربع، ثلاثة الأصول، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش).",
+  "text_original": "من هو الله؟\n\nالتركيز: الخالق الواحد، لا شريك له\n\nالدليل: قُلْ هُوَ اللَّهُ أَحَدٌ... (سورة الإخلاص). حديث: «من مات وهو يعلم أن لا إله إلا الله دخل الجنة» (متفق عليه).\n\nالتطبيق اليومي: كلما رأيت نعمة (طعام، شمس، والد) قل: «الحمد لله» واربطها بالله وحده.\n\nنصيحة للأب/الأم: لا تُجيب طفلك بـ«الله في كل مكان» دون توضيح؛ قل: الله فوق السماوات، يرانا في كل مكان.",
+  "text_simplified": "Allah is the One Creator, with no partner. «قُلْ هُوَ اللَّهُ أَحَدٌ» (interpretation of the meaning: Say, He is Allah, the One). The Prophet ﷺ said: 'Whoever dies knowing that there is no god but Allah will enter Paradise.' (Narrated by al-Bukhari). Connect every blessing your child sees—food, sunlight, or a parent—solely to Allah, so they say, 'Alhamdulillah.' Do not simply reply with 'Allah is everywhere' without clarification; say: Allah is above the heavens, and He sees us everywhere.",
+  "labels": [
+    "عقيدة",
+    "توحيد",
+    "تربية_إسلامية",
+    "نشء",
+    "who_is_allah"
+  ],
+  "created_at": "2026-06-24T13:13:17Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "aqidah_unified_manifest",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "aqe-b1e103fc",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "religious_error",
+        "field": "text_simplified",
+        "arabic": "وقال النبي ﷺ: «من مات وهو يعلم أن لا إله إلا الله دخل الجنة».",
+        "english": "The Prophet ﷺ said: 'Whoever dies knowing that there is no god but Allah will enter Paradise.' (Narrated by al-Bukhari).",
+        "why": "The English adds a source attribution not present in the Arabic, and the attribution is incorrect: this hadith is narrated by Muslim, not al-Bukhari.",
+        "severity": "high"
+      }
+    ],
+    "approved_by": null
+  }
+}

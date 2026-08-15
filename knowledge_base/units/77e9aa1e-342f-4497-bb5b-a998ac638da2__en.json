@@ -1,0 +1,62 @@
+{
+  "id": "77e9aa1e-342f-4497-bb5b-a998ac638da2__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "A Child’s Jealousy After the Birth of a New Sibling: Why Do Their Behaviours Regress?",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "غيرة الطفل من المولود الجديد",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "حين يولد طفل جديد يتغيّر سلوك الأكبر فجأة: يعود إلى التبول اللاإرادي، أو يطلب الرضاعة، أو يتشبّث بأمه، أو يضرب الرضيع. هذا ليس عدوانًا ولا تراجعًا في التربية — هو ردّ فعل طبيعي لطفل فقد موقعه الوحيد فجأة، ويحاول استعادة الانتباه بالطريقة التي كانت تنجح معه سابقًا.\n\nما يساعد عمليًا:\n• خصّص له وقتًا يوميًا قصيرًا لكن ثابتًا (عشر دقائق تكفي) لا يقاطعه فيه أحد، وسمّه باسم: «وقتنا أنا وأنت». الثبات أهم من الطول.\n• أشركه بمهمة حقيقية صغيرة يقدر عليها — إحضار الحفاض، اختيار ملابس الرضيع — لا بمهمة صورية يشعر أنها تمثيل.\n• لا تُقارن أبدًا، ولا تقل «كبرت وهو صغير». المقارنة تثبّت الغيرة ولا تحلّها.\n• سمِّ مشاعره بدل إنكارها: «واضح إنك زعلان إن ماما مشغولة. ده شعور طبيعي.» الطفل الذي يجد اسمًا لشعوره يحتاج أقل إلى إظهاره بالسلوك.\n• لا تترك الرضيع معه بلا مراقبة في الأسابيع الأولى — ليس لأنه سيّئ، بل لأن ضبط الاندفاع في هذا السنّ لم يكتمل بعد.\n\nالتراجع السلوكي يهدأ عادةً خلال أسابيع إلى شهرين. إن استمر أكثر من ثلاثة أشهر، أو صاحبه إيذاء متعمّد ومتكرر للرضيع، فاعرض الحالة على مختص.",
+  "text_simplified": "When a new baby is born, the older child’s behaviour suddenly changes: they may return to bedwetting, ask for nursing, cling to their mother, or even hit the baby. This is not aggression nor a failure in *tarbiyah* (upbringing)—it is a natural reaction from a child who has suddenly lost their unique place and is trying to regain attention in ways that used to work for them.\n\nPractical ways to help:\n• Set aside a short but consistent daily time just for them (ten minutes is enough), where no one interrupts. Call it something special: “Our time, just me and you.” Consistency matters more than duration.\n• Involve them in a small, real task they can handle—bringing a diaper, choosing the baby’s clothes—not a pretend task they’ll sense is just for show.\n• Never compare them, and don’t say, “You’re big, and they’re small.” Comparisons reinforce jealousy, not resolve it.\n• Name their feelings instead of denying them: “It’s clear you’re upset that Mama is busy. That’s a normal feeling.” A child who can name their emotion needs to act it out less.\n• Don’t leave the baby alone with them unsupervised in the first weeks—not because they’re bad, but because impulse control at this age isn’t fully developed yet.\n\nBehavioural regression usually eases within a few weeks to two months. If it lasts longer than three months, or if it involves deliberate and repeated harm to the baby, consult a specialist.",
+  "labels": [],
+  "keywords": [
+    "Sibling jealousy",
+    "Newborn",
+    "Behavioural regression",
+    "Bedwetting after birth",
+    "Older child"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "77e9aa1e-342f-4497-bb5b-a998ac638da2",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "هذا ليس عدوانًا ولا تراجعًا في التربية",
+        "english": "This is not aggression nor a failure in *tarbiyah* (upbringing)",
+        "why": "The Arabic says 'not a regression in upbringing' (تراجعًا في التربية), but the English renders it as 'a failure in tarbiyah', changing the meaning from a temporary backsliding to a failure. The word 'tarbiyah' is also transliterated unnecessarily for a common Arabic word.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وسمّه باسم: «وقتنا أنا وأنت»",
+        "english": "Call it something special: “Our time, just me and you.”",
+        "why": "The English adds 'something special' and 'just', which are not in the Arabic. The Arabic simply says 'name it with a name: Our time, me and you.'",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أو يضرب الرضيع",
+        "english": "or even hit the baby",
+        "why": "The English adds 'even', intensifying the action beyond the Arabic 'or hit the baby'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "isl-1bceeaf6__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Gradual Training of the Child in Salah and 'Ibadat",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تعويد على الصلاة والعبادات",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "في ةلاصلا نيزيملما ضعب هركي دقو سوللجاب رمؤيو ،جرالخا في لافطلأا تاوصأ عمسي وهو ،رثكأ وأ قئاقد رشع رظتنيف ةثلاثلا نم لقأ هرمع ناك اذإف ،يرخ طسولاو ،ةكرحلل بلمحا بيصلا وهو نآرقّلا ةءارقو يركبتلا في ةيرلحا هل كرتيو هنم اَبيرق يلصي نأ هدلاو طرتشيو ةلاصلاب رمؤي هنإف ًاماع رشع نأ ذنم هذخأي نأ بجاولاف رشع ةثلاثلا غلب ناك اذإو ،ةلاصلا ةماقإ تقو لىإ يرخأتلا وأ .ةلاصلل هروضح نم دكأتلا ىلع صريح نأ بيج هنأ لاإ هدرفبم تيأي هكرتي وأ نذؤي -ةباحصلا ناك دقّف ،فلس نبم ًءادتها ةفلتخلما تادابعلا ىلع مهدوعي نأ هيلع امك مهعم نولصيو ،عولجا نع اوَهلتيل بعللا منهوطعيو مهدلاوأ نومِوصي -مهيلع للها ناوضر بيردتلا ليبس ىلع كلذ لك ،مهعم نوجيحو ،نونذؤيو ،نيديعلاو حيوارتلاو ةعملجا نم راثكلإا ىلع هعيجشتو هبيغرتو بيصلا ةأفاكم تادابعلا ىلع ديوعتلل لئاسولا لضفأو يغبني نكلو لولأا ةودقّلاب طبري ،يورخلأا باوثلا في بَغريو ،طسو جهنم ىلع تادابعلا عمو ،لىاعتو هناحبس هّللاب طبتري لب ،ايادلهاب طبتري لا تىح هتأفاكم نم راثكلإا نم رذلحا .أطلخا نم هحيحصتو لمعلا ناسحإو عوشلخا لىإ لفطلا هجوي تادابعلا رارمتسا .ينميثع نب لحاص نب دممح ،دلاولأا ةيبرت في فلسلا جهنم :طيرش لىإ عمتسا ) ( .64 / ةمادق نبا ،نيغلما :رظنا )2( . 39 - 23 ص :ديوس رون دممح ،ةيوبنلا ةيبرتلا جهنم :رظنا )3( قلُلخاب ىلحتي انمإ ملسلما نلأ ،نيدلا نم ءزج يهف ةلضافلا قلاخلأا ىلع ةئشنتلا امأو . هناحبس للها نم ءازلجا ءاغتبا :يه لحارم لىإ جاتتح ةيقللخا ةئشنتلاو هرغص في بيرلما هدوع ام ىلع أشني\" لفطلا نإف ةركبم ةلحرم في تاداعلا سرغ ) ( هبرك في هيلع بعصيف ،عشجو ةّدحو",
+  "text_simplified": "The child should be trained in salah from the age of seven, taking into account their age and ability to concentrate. It is preferable to encourage the child in 'ibadat gradually, not through compulsion, and to connect them with the love of Allah rather than just material rewards. It is important for parents to be a good example in performing salah and 'ibadat. Care should be taken to avoid excessive material rewards, so the child does not associate 'ibadah solely with them.",
+  "labels": [
+    "تربية دينية",
+    "تعويد على الصلاة",
+    "قدوة حسنة",
+    "تشجيع بدون إجبار",
+    "تنشئة أخلاقية"
+  ],
+  "created_at": "2026-06-20T14:33:41Z",
+  "updated_at": "2026-06-20T14:33:41Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-1bceeaf6",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يجب تعويد الطفل على الصلاة منذ سن السابعة",
+        "english": "The child should be trained in salah from the age of seven",
+        "why": "The Arabic 'يجب' expresses obligation (must), but English 'should' softens it to a recommendation, altering the religious instruction derived from the hadith.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وليس بالهدايا المادية فقط",
+        "english": "rather than just material rewards",
+        "why": "Arabic 'الهدايا المادية' means material gifts, not rewards; the English uses 'rewards' which conflates gifts with the later 'مكافآت' (rewards) and loses the distinction.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يجب الحذر من الإكثار من المكافآت المادية",
+        "english": "Care should be taken to avoid excessive material rewards",
+        "why": "Arabic 'يجب الحذر' is a strong warning (must beware), English 'Care should be taken' is softer and less urgent.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

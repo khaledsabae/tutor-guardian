@@ -1,0 +1,48 @@
+{
+  "id": "isl-dfa52092__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "The Importance of Truthfulness and Educational Agreement Between Parents",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية الأبناء والصدق",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": ":الهأسف ،هيطعتل اهدلو تدان تيلا ةملسلما ةأرلما بينلا رذح دقو } ةبذك ِكيلع تبتُك ائيش هيطعت لم ول :لاقّف ،ًارتم هيطعأ نأ تدرأ :تلاق ؟هيطعت .44 ص :دجنلما دممح ،تويبلا حلاصلإ ةحيصن نوعبرأ ) ( .) 2( مقر ةيآ :فهكلا ةروس )2( . 9 - /3 :يعافرلا دممح ،ريدقّلا يلعلا يرسيت :رظنا )3( .6 ص :ضيبم دممح ،ملسلما قلاخأ :رظنا )4( .)44 /3( دحمأ ،)499 ( بدلأا دواد وبأ ) ( ، 6/2 )499 ( ثيدلحا مقر :بذكلا في ديدشتلا في باب ،بدلأا باتك :ةنس في دواد وبأ هجرخأ )6( .44 /3 :هدنسم في دحمأ ماملإا هجرخأو ناك اذإ بيرلما نلأ ؛ببسلا ناك امهم هدلو ىلع بيرلما بذكي لاأ قدصلا رهاظم نمو هيلعو ،ءابه هحصنو هلمع حبصأ ةدحاو ةرم ولو ًابذاك ناك نإو ،هدلاوأ هب ىدتقا ًاقداص . هيلإ رذتعيلف عطتسي لم نإف ،لفطلل هدعو يذلا دعولاب ءافولا وأ حلاصلا نم لابح سانلا مامأ رهاظتي يذلا بيرلما ببسب ءايرلا ملعتي لافطلأا ضعبو . هترسأ ينب كلذ فلاخ هلاح نوكي ثم اهميرغ وأ نىغلا وأ قللخا لاو ،لاعفنلاا طبضو لقّعلا ميكتح :رخآ نىعبم وأ ،عضوم في ءيش لك عضو يهو لب ،بسحف ةحجانلا ةيوبرتلا بيلاسلأا عابتاو لاعفنلاا طبض ىلع ًارداق نوكي نأ يفكي ناوخإو ةدجو دجو بأو مأ نم تيبلا دارفأ ينب عبتلما يوبرتلا جهنلما رارقّتسا نم دبلا ضقانتلا نلأ ؛اهداتري تيلا نكاملأا نم اهيرغو دجسلماو عراشلاو ةسردلماو تيبلا ينبو . ةيسفن تلاكشلم لفطلا ضرعيس اذإو ،بسانلما يوبرتلا بولسلأا ىلع امهقافتاو نيدلاولا نواعت يغبني اذه ىلعو داقّنتو عيطت لب ،لجرلا هِفست وأ ضرتعت لا نأ اهيلعف ملأا هارت لا رمأب بلأا",
+  "text_simplified": "Parents must be truthful role models for their children, never lying to them, because lying plants bad behavior in the child. They should also agree on a single, stable approach to tarbiyah (upbringing) at home, school, and the masjid, to ensure sound nurturing. If parents differ in their tarbiyah, the child may suffer psychological problems.",
+  "labels": [
+    "الصدق",
+    "القدوة",
+    "التربية",
+    "الكذب",
+    "الاتفاق التربوي"
+  ],
+  "created_at": "2026-06-20T14:32:59Z",
+  "updated_at": "2026-06-20T14:32:59Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-dfa52092",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "فلا يكذبا عليهم أبدًا",
+        "english": "never lying to them",
+        "why": "The Arabic uses a negative command (لا + jussive) meaning 'so they should never lie to them', but the English renders it as a participial phrase 'never lying to them', which describes their behavior rather than commanding it, weakening the imperative force.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

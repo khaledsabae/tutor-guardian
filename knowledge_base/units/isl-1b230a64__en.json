@@ -1,0 +1,48 @@
+{
+  "id": "isl-1b230a64__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children and the Virtue of Salah in Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ِإ ب لآ( ﴾ ذ ٰ َ ۡ ذ َ َ َ ذ ّ ُ َ َ َ ُ ُ ٓ ّ َ َ ۡ َ َ ُ ۡ ذ َ رذو مِة اْذيعِ أ ِيِ وَإِ ًيرم آخيٍ ش :٘هٝٓتحٚ ,١نبرياب ٘ي ٤اعديا نرؿتقل فب فؽـح ؽلو لبصلا ؿف في فعضوو ءلشلا غضم قه :ؽقـحتلاو .)745/9( »يرابلا حتف«.فب ىقؼيو ؾكٕا كؾط فَ ﷺ ل ِ بَـلا ف ِ ب تُ قْ تَ ل َ فَ , م لاَ غُ لل دَ لوُ : لَ اقَ ,ﭬ كس ل ِ بأَ د ِ لَوَ ر بَ كْ أَ نَ اكَ وَ , للَِ إ فُ عَ فَ دَ وَ , ة ِ كَ ر بَ لْا ِ ب فُ لَ اطَ دَ وَ , ة ٍ ر تَ ِ ب فُ ؽَ َـحَ فَ , ؿ فُ عَ بَ تْ ل َ فَ فقْ ؾَ طَ لَ ابَ فَ , فُ ؽُ ِـحَ يُ ل ِ بصَ ِ ب ﷺ ل ِ بَـلا لتأُ : تْ لَاقَ ,ڤ ةَ شَ ئاطَ ـْ طَ و .)2145( ؿمٚسمُو ،)5467( يراخبمًا فمضرمظأ (1) .)268( ؿمٚسمُو ،)5468( يراخبمًا فمضرمظأ (2) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ .»ؿفؽـحيو ,ؿفقؾط كبرقف ناقبصلاب كتمي ناك ﷺ فكأ يراصكٕا ةحؾص لبأ ـب للها دبعب تبهذ :لاق ,ﭬ ؽلام ـب سكأ ـطو ؾه :لاؼف ,فل ارقعب لـفي ةءابط في ﷺ للها لقسرو ,دلو ـقح ﷺ للها لقسر كلإ افرغف ؿث ـفكلاف فقف في ـهاؼللف تارؿت فتلواـف ,ؿعك :تؾؼف ,؟رؿت ؽعم .)1(»فظؿؾتي لبصلا ؾعجف فقف في فجؿف ,لبصلا .فقؾط كربو",
+  "text_simplified": "The text includes Prophetic hadiths about the rights of children and the virtue of salah. It mentions the story of Bilal ibn Rabah with the Prophet ﷺ regarding salah. It also highlights the importance of raising children upon the deen and akhlaq.",
+  "labels": [
+    "تربية",
+    "دين",
+    "أطفال",
+    "صلاة",
+    "أخلاق"
+  ],
+  "created_at": "2026-06-21T10:16:56Z",
+  "updated_at": "2026-06-21T10:16:56Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-1b230a64",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "التربية",
+        "english": "Tarbiyah",
+        "why": "The Arabic term 'التربية' is transliterated as 'Tarbiyah' in the title, but in the body the same term is translated as 'raising' (in 'raising children'). This inconsistent handling of the same Islamic term within the document is a term_error.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

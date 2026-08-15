@@ -1,0 +1,56 @@
+{
+  "id": "isl-f4accfb8__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Foundations of Akhlaq Tarbiyah for Children",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تربية أخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "ًةيادب كلذب مازللإا نوكي دقو ،هب .هنم تئرب دق ةمذلا نوكت هنإف بيرلما هب همزلأ ام لك كرت هنأ بهو ،باوثلا ءاغتبا هب نلأ ؛داملجاو ناويلحاو سانلا عم ثم ،ًلاوأ هبر عم قلاخلأا مراكم ىلع هثح )4( تيلا ةفطاعلا نيوكتو ينقّلتلاب نوكي نأ بيج ثلحا اذهو هلك كلذ لمشت قلاخلأا سفنلا طبضو ىولها رهق ىلع ردقّيل هتدارإ ةيوقّتو ،رجلأا ءاغتبا قيبطتلا لىإ عفدت ينقداصلا صصق هل ىكحيُو ،يرلخا لىإ هبحاص دوقّي ،نسح قلخ قدصلا نإ :لاقّيف ،قدصلل هعفدت ةفطاع هيدل نوكتتو قدصلا بيح اذبهو ،ةرخلآاو ايندلا في مهءازجو .ةيمزعلاو ةدارلإاب حلستي نأ دبلاو . 9- ص :ميقّلا نبا ،دودولما ةفتحو ، 3 ، 2/3 :ليازغلا ،نيدلا مولع ءايحإ :رظنا ) ( . 4 ص :ميقّلا نبا ،دودولما ةفتح :رظنا )2( ةيقلاخلأا ةيبرتلا رودو ، 4 ص .موركم دودولا دبع ،ةملسلما ةيصخشلا ءانبل ةيوبرتلا لوصلأا :رظنا )3( . ص .نلجاي دادقّم :ةيملاسلإا .2 -2 ص .نلجاي دادقّم ،ةيملاسلإا ةيقلاخلأا ةيبرتلا رود .رظنا )4( ةيعامتجلاا ةيصخشلا ءانب ،ةيسفنلا هتاجاح عابشإ :)لولأا( ،ينّقّش ىلع ةيعامتجلاا ةيصخشلا ءانب دمتعي .ةيلبقّتسلما هتايح ةسراملم هدادعإ :)نياثلا(و ةيعامتجلااو ةيسفنلا تاجالحا عابشإ -1 اذإ ًادبأ ًايوس ًاصخش نوكي نل نكلو ،انهودب ناسنلإا شيعي دق تاجالحا هذه نإ :راصتخاب اهضرعنسو ،اهضعب دقّف وأ اهدقّف للاقّتسلااو ريدقّتلاو مارتحلاا لىإ هتجاح )أ( تَلفح دقو ،هتقّث باستكاو هب ةقّثلا عرزو ًايعامتجا هلوبَق نيعي ةجالحا هذه عابشإو ةليجم ًنىكُ ب متهدانمو نايبصلا ىلع بينلا ملاسك :لفطلا مارتحا رهاظبم ةّنسلا وه ناكو ،هلبق خايشلأا يطعُي نأ ملاغلا بينلا نذأتسا دقّف سلالمجا في مهقوقّح مارتحاو . لوسرلا ينيم نع سلالجا لفطلاف ،ءافوج رهاظم درمج سيلو",
+  "text_simplified": "This text discusses the importance of tarbiyah in akhlaq (moral character) and fostering truthfulness in children’s hearts through truthful stories and encouragement toward good behavior. It also highlights the role of the righteous example in building a child’s moral and social personality, with emphasis on self-control and strengthening the will. It stresses that building character depends on fulfilling psychological and social needs such as respect and appreciation.",
+  "labels": [
+    "تربية أخلاقية",
+    "الصدق",
+    "القدوة الحسنة",
+    "بناء الشخصية",
+    "ضبط النفس"
+  ],
+  "created_at": "2026-06-20T14:33:55Z",
+  "updated_at": "2026-06-20T14:33:55Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-f4accfb8",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "أساسيات التربية الأخلاقية للأطفال",
+        "english": "Foundations of Akhlaq Tarbiyah for Children",
+        "why": "The Arabic title uses 'التربية الأخلاقية' (moral education/upbringing), not 'Akhlaq Tarbiyah'. The English introduces transliterated Islamic terms and reverses their order, altering the title's meaning and register.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "القدوة الحسنة",
+        "english": "the righteous example",
+        "why": "'حسنة' means good, not necessarily righteous; 'righteous' adds a religious connotation not explicit in the Arabic.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

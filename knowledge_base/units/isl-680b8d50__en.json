@@ -1,0 +1,55 @@
+{
+  "id": "isl-680b8d50__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "The Concept of the Curriculum in Islamic Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "مفاهيم تربوية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "وأ ،ةيوبﱰلا ةيركفلا هتسردم بسح لك ،مهنيب اميف نوفلتﳜ ةيبﱰلا لقﲝ ﲔمتهﳌا نإ : ةيبﱰلا مولع لاﳎ ﰲ ةيوبرت ةطخ جهنﳌا نأ ىري نم كانهف .ا(cid:273)اعيتساو اهتيبلت جهنﳌا نم داري ﱵلا ت(cid:686)دحتلاو تاجاﳊا قفدت ببسب اذكو ،ةيفرعﳌا وأ ،ةيموقلا هن(cid:997) جهنﳌا ﰲ ىري نم كانهو .ﲔملعملل ةيبرت ةطخ مهدنع و هف .ﱘوقتلاو ،ةيميلعتلا تاطاشنلاو ىوتﶈاو ،ةصاﳋاو ةماعلا فادهﻷا نمضتت يذلا ماظنلا ه ن(cid:997) رخآ هاﲡا ىري اميف .ةعبتﳌا ةسرامﳌاو ةفرعﳌا قرطو ،ا(cid:273) مامتهﻻا يرﳚ ﻻ ﱵلا ةيساردلا داوﳌا نم ةلسلس نمضتت ةسارد ناديم .5ه ذيفنتو جهنﳌا ءانب لوح اهرولبيو تارارقلا ددﳛ ةهج نم ةيدام تازيهﲡو ،سيردت قرطو ،ةيميلعت لئاسوو تامولعﳌا ﲔبو رشبلا ﲔب طشنو مئاد لعافت\" هنأ ىلع هفرعي نم كانه نأ امك .(ةملعتم تاراهمو فراعم) هتاجرﳐ هلو ،(سيردتلا قرط) تايلمع هلو .(ةيساردلا داوﳌاو ذيمﻼتلا) هتﻼخدم هلف .ىرخأ لكل\" ﱃاعت هلوق دنع ﱘركلا نآرقلا ﰲ هل ةﳛرصلا ةراشﻹا نم قلطنت جاهنﳌا حلطصﳌ ةفلتخﳌا تﻻامعتسﻻا نإف ة يمﻼسﻹا ةيبﱰلا ﰲ امأ عراشلا اهعضو ﱵلا ةحضاولا ةقيرطلا وه ةيمﻼسﻹا ةيبﱰلا ناديم ﰲ جهنﳌا نأ لوقلا نكميف ،\"احضاو ﻼيبس يأ اجاهنمو ةعرش مكنم انلعج فلأتت ﱵلا تاراسﳌا عومﳎ :ﱐﻼيكلا روتكدلا ﲑبعتب وأ .ةايﳊا تﻻاﳎ ﱴش ﰲ ملسﳌا ناسنﻹا ةيبﱰل ةمزﻼلا لئاسولاو فادهﻷا صﳜ اميف و أ راضلاو عفانلا و أ مارﳊاو لﻼﳊا ﲔبتل يحولا اهماقأ تارانم نم تاراسﳌا هذه ىلع امو ،رصعو روط لك ﰲ ةفلتخﳌا ةايﳊا نيدايم اهنم .6ر سعلاو رسيلا يملع حلطصمك ةيوبنلا ةيبﱰلا :ا ين(cid:684) : ةيبﱰلا فيرعت ـ 1 ﰲ ديزيل يأ ،7\" ﷲ دنع و بري ﻼف سانلا لاومأ ﰲ وبﲑل (cid:682)ر نم متيتآ امو:\"ﱃ اعت ﷲ لوقي",
+  "text_simplified": "Specialists in tarbiyah (upbringing) differ in defining the curriculum. Some see it as an educational plan encompassing goals, content, activities, and evaluation, while others view it as an integrated system in which the teacher, learner, and subject matter interact. In Islamic tarbiyah, the curriculum is regarded as the clear path derived from the Qur’an and the Sunnah, for nurturing the Muslim individual in all aspects of life.",
+  "labels": [
+    "منهج دراسي",
+    "تربية إسلامية",
+    "تعريف تربوي",
+    "خطة تعليمية"
+  ],
+  "created_at": "2026-06-20T14:39:00Z",
+  "updated_at": "2026-06-20T14:39:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-680b8d50",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "التربية الإسلامية",
+        "english": "Islamic Tarbiyah",
+        "why": "The Arabic 'التربية الإسلامية' means 'Islamic education' (the academic field). Transliterating 'التربية' as 'Tarbiyah' is unnecessary and may imply a narrower Islamic upbringing concept; standard translation is 'Islamic Education'.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "المتخصصون في التربية",
+        "english": "Specialists in tarbiyah (upbringing)",
+        "why": "The Arabic 'التربية' here refers to the general field of education, not specifically 'tarbiyah/upbringing'. The transliteration plus gloss 'upbringing' changes the meaning from education specialists to upbringing specialists, which is not equivalent in curriculum studies.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

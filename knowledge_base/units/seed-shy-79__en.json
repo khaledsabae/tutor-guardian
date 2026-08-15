@@ -1,0 +1,38 @@
+{
+  "id": "seed-shy-79__en",
+  "domain": "medical",
+  "source_file": "curated/AAP / Child Mind Institute",
+  "title": "Supporting the Shy Child at the Age of Seven to Nine",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "الخجل",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "AAP / Child Mind Institute",
+  "text_original": "في هذا العمر تزداد أهمية الصداقات، وقد يحتاج الطفل الخجول لمساعدتك في بناء مهاراته الاجتماعية. درّبه في البيت عبر تمثيل المواقف مثل كيف يبدأ حديثاً أو ينضم للعب. شجّعه على نشاط جماعي يحبه كالرياضة أو نادٍ، فالاهتمام المشترك يسهّل تكوين الصداقات. لا تتحدّث نيابة عنه دائماً، ودعه يطلب ما يريد بنفسه في المواقف البسيطة. ركّز على نقاط قوّته وامدح محاولاته الاجتماعية لرفع ثقته. تابع مدرسته للاطمئنان أنه ليس منعزلاً أو متعرّضاً للتنمّر. إذا لازَمه قلق اجتماعي شديد أو تجنّب كامل للمدرسة فينصح باستشارة مختص.",
+  "text_simplified": "At this age, friendships become increasingly important, and your shy child may need your help in building their social skills. Train them at home by role-playing situations, such as how to start a conversation or join in play. Encourage them to participate in group activities they enjoy, like sports or a club, as shared interests make forming friendships easier. Do not always speak on their behalf, and let them ask for what they want themselves in simple situations. Focus on their strengths and praise their social efforts to boost their confidence. Stay in touch with their school to ensure they are not isolated or being bullied. If they experience severe social anxiety or complete avoidance of school, it is advised to consult a specialist.",
+  "labels": [
+    "الخجل",
+    "الصداقات",
+    "المهارات الاجتماعية",
+    "7-9 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP / Child Mind Institute",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-shy-79",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

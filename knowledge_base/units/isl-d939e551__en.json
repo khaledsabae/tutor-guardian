@@ -1,0 +1,72 @@
+{
+  "id": "isl-d939e551__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Patience in Family Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "دَ ْـط ِ ء ِ قْ س كؾَ طَ بِ هَ ذَ لا ِ ب صِ قخُ ؿ .)1( ر ِ ق ِ بؽَ لْا خِ قْ شَ لا كؾَ طَ ؾِ قؼثَ لا ؾِ ؿ .اٖدلاٚأ ١ٝبست ٢ًع اٗٓٝعٜ تيس لحاصيا زٚصيا زاتتخ ٕأ ١دٚصيا ٢ًع ٞػبٜٓٚ فتدابط ةكرب ؿفؾؿشتو ,هدعب ـم فتيرذ ظػحي لله هاقؼتو جوزلا حلاص نٕ .ةرخٔاو اقكدلا في ُ َ ۡ َ َ َ َ َ َ ۡ ۡ َ َ ۡ َ ٰ َ ُ َ َ َ ُ َ ۡ ذ َ َ ﴿ :كلاعت لاق ۥّختَ نكَو ِثِيدِ ٍلٱ فِِ يِ ٍيِتي يِ ٍلؾِى نكَـ رادلِۡ ٱ اٌأو َ ۡ َ ۡ َ َ َ ُ ذ ُ َ ٓ َ ُ ۡ َ َ َ ُ َ َ َ َ َ ٗ ٰ َ َ ُ ُ َ َ َ َ َ ُ ذ ٞ َ اجرخخصيو اٍْدطأ اؾيتيّ نأ مبّر دارأـ ا دِيص أٍْةخ نكَو آٍل نن ۡ َ ذ ۡ َ ۡ َ َ ُ َ َ َ ۡ ۡ َ ُ ُ ۡ َ َ َ َ َ ّ ذ ّ ٗ َ ۡ َ َ ُ َ َ ِّييغ عطِ صت ًل اٌ وي رمأ َع ۥّخيػػ اٌو ٗم بّر ٌَِ ثحۡر اٍْنن .)82:ػفؽلا( ﴾ ٗ ۡ َ دبمق ـمق قاحمؾإ بيأ ـمق شمٛمقٕا ةياور ـمُ )318/4( ةبمٞمؿ بيأ ـمسا فمضرمظأ (1) ،ؿمشامط بيأ ـمسٓ »ؾمٚمٕمًا« مذ مامي فمضقمًا اذه مغمق يرقثمًا فمٕمسامشو ،فمًقمى فمس ىزمسأ ـمس ـحمرمًا »نامنمس ـمسا مزامُأ« مذ مامي ؾمٞئاسرإو ،)311/11( قازرمًا دبمق",
+  "text_simplified": "The text addresses a religious and tarbiyah-related topic about the importance of patience and steadfastness in family relationships, with reference to a Qur'anic ayah. It highlights the role of parents in guiding their children toward Islamic values.",
+  "labels": [
+    "تربية",
+    "دين",
+    "أسرة",
+    "صبر",
+    "توجيه"
+  ],
+  "created_at": "2026-06-21T10:15:19Z",
+  "updated_at": "2026-06-21T10:15:19Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-d939e551",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "التربية الأسرية",
+        "english": "Family Tarbiyah",
+        "why": "The Arabic 'التربية' means general upbringing/education, not specifically the Islamic technical term 'tarbiyah'. Transliterating it as 'Tarbiyah' introduces an Islamic-specific term not present in the source and may mislead. Should be 'Family Upbringing' or 'Family Education'.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "تربويًا",
+        "english": "tarbiyah-related",
+        "why": "Same issue: 'تربويًا' is a general adjective meaning educational/pedagogical, not necessarily Islamic tarbiyah. Using 'tarbiyah-related' over-transliterates and changes register.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "مع الاستشهاد بآية قرآنية",
+        "english": "with reference to a Qur'anic ayah",
+        "why": "'استشهاد' means citing/quoting, not merely referring. The English 'with reference to' weakens the meaning, suggesting the text only mentions a verse rather than quotes it.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يُشير إلى",
+        "english": "It highlights",
+        "why": "'يُشير' means indicates/points out, while 'highlights' implies emphasis or prominence. Slight semantic shift.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

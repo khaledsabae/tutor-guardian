@@ -1,0 +1,64 @@
+{
+  "id": "isl-9d71a2f5__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Foundations of Tarbiyah for Sons and Daughters in Islam",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية الأطفال",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "بيرلما عِنقّيُ نأ نسحتسيو فراعتلما ةيعامتجلاا ًارمأ انهوك مرتيحو اهتمرح ملعي نأ يغبني لب ،ابه عنتقّي نأ ًايرورض سيلف ةيعرشلا فيلاكتلا اذإ لاجرلا ةسلامج نم ةلفطلا عنم نم دب لاف ،ةاتفلا نع تىفلا دادعإ فلتيخ نأ يغبني * َمزَلُتو ،ءايلحاو ةمشلحاو بدلأا مَلَعتُو ،عراشلا لىإ جورلخا نمو ةسمالخا وأ ةعبارلا تغلب نمو ةيلاثم ًامأو ةحجان ةجوز نوكتل اهدعاسي ام لكو لنزلما لامعأ مَلعتُو ،باجلحاب في ثوكلماو نيُزتلاو لنزلما لامعأ في اهعم اهكرشتف اهتنبل ةقّيدص ملأا نوكت نأ بجاولا سبليو ةلاصلاو جئاولحا ءاضق لىإ هعم جريخو هدلو قداصي بلأاو .سابللا هباشتو تيبلا اذإ ةصابخو مهدحأب قلعتي دق هنلأ هئاقدصأ تلاحر في هعم هذخأ نم رذحيل نكلو ،هلثم .دلاولا رذيح لم ثيح نم فارنحلاا ثدُ يحو ًاقّهارم ناك . 2 - ص ،بايد ةيزوف ،هتئشنتو لفطلا ونم :رظنا ) ( .44 -3 ص ،ليوبناتسلاا دوممح ،انلافطأ بيرن فيك :رظنا )2( . 4 - 3 ص ،نييبرشلا ايركزو قداص ةيرسي ،لفطلل يوبرتلا جمانبرلا ميمصت :رظنا )3( . 4 ص ،بايد ةيزوف ،هتئشنتو لفطلا ونم :رظنا )4( .32 ص ،ثراحاب ناندع ،دلولا ةيبرت في ملسلما بلأا ةيلوؤسم :رظنا ) ( . 4 ، 9 - ص ،توتنشلا دلاخ ،ملسلما تيبلا في تانبلا ةيبرت :رظنا )6( ةملها ولع حور ءاكذإو ةيمنت :اهنم رومأ ةدع ىلع دمتعت ةيلاع ةهمّ اذ حَ بصيل لفطلا ةيبرت نإ كلذ نلأ هتناهإو هيرقّتح مدعو هتراشتساو هيأر مارتحاب كلذو ،لفطلا ةدارإ ةيوقّت * ةفلامخو ىولها رهقو برصلا ىلع هديوعتبو ،ةناهلماو ةلذلا دوعيو هسفن رقّتيح لفطلا لعيج .ةّملها ولعو ةزعلاب رعشت كلذب سفنلا نلأ سفنلا في كلذ نوكي نأ نم رذلحا بيجو",
+  "text_simplified": "The preparation of a son must differ from the preparation of a daughter. The daughter is prepared to be a righteous wife and a successful mother, learning household duties, modesty, and haya (shame/modesty). As for the son, his father should accompany him, teach him Salah (prayer) and fulfilling needs, while being cautious about taking him along on his friends' outings. The tarbiyah (upbringing) of a child relies on honoring him, respecting his opinion, consulting him, strengthening his will, and accustoming him to patience and restraining desires, so he feels a sense of honor and dignity.",
+  "labels": [
+    "تربية الأولاد",
+    "تربية البنات",
+    "احترام الطفل",
+    "تنشئة إسلامية",
+    "تعزيز الثقة"
+  ],
+  "created_at": "2026-06-20T14:34:44Z",
+  "updated_at": "2026-06-20T14:34:44Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-9d71a2f5",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "قضاء الحاجات",
+        "english": "fulfilling needs",
+        "why": "The Arabic idiom 'قضاء الحاجات' specifically refers to relieving oneself (toilet training/istinja), not general needs. The English is vague and loses the intended meaning.",
+        "severity": "high"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "الحشمة والحياء",
+        "english": "modesty, and haya (shame/modesty)",
+        "why": "The Arabic distinguishes between حشمة (modesty/decorum) and حياء (bashfulness/sense of shame). The English glosses haya as 'shame/modesty', conflating the two and using 'shame' which has negative connotations; 'bashfulness' would be more accurate.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "الأولاد والبنات",
+        "english": "Sons and Daughters",
+        "why": "Arabic means 'boys and girls' generally, not necessarily one's own sons and daughters; the English narrows the meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

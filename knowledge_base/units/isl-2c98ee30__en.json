@@ -1,0 +1,64 @@
+{
+  "id": "isl-2c98ee30__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children over Their Parents in Tarbiyah and Education",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية الأطفال",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ػصـب لـترزأ للهاقف :سكأ لاق ,هدلوو فلام رثكأ ؿفؾلا :لاؼف ,فل للها عداف ,ؽمدخي فب ؽتقتأ .مققلا ةئاؿلا قحك كؾط نوداعتقل يدلو دلوو يدلو نإو ,رقثؽل للام نإ اي :تلاؼف ﷺ للها لقسر لب تتلف ﷺ لبـلا مدؼم ,يدقب ؿقؾس مأ تذخأ .)3(»بتاك ملاغ قهو لـبا اذه ,للها لقسر .)9ص( »دمًقمًا ةحمٞمّمٟ مذ دبمٙمًا ةتمٗمً« (1) .)2319( ؿمٚسمُو ،)6911( يراخبمًا فمضرمظأ (2) دبمق ـمس دمٛمحو نوراه ـمس ديزي ؼيرمـ ـمُ همػمهو ،)19/7( »تام٘بمٓمًا« مذ دمٕمؾ ـمسا امٝمضرمظأ (3) طشر مغمق حمٞحص هدامٜمؾإو ،فمس ﭬ سمٟأ ـمق ،ؾيقمٓمًا دمٞحم امٟمؼمظأ :ٓامى ،يرامّمٟٕا للها .ملخمٞمِمًا لامضر فمًامضرو يراخبمًا ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ فتعؿسف ﷺ لبـلا كؾط لبأ عم تؾخد :لاق ,ﭬ ةرؿس ـب رباج ـطو ؿؾؽت ؿث :لاق ,ةػقؾخ رشط اـثا ؿفقف لضؿي كتح لضؼـي ٓ رمٕا اذه نإ :لقؼي .)1(»شيرق ـم ؿفؾك :لاق ,؟لاق ام :لبٕ تؾؼف :لاق ,لؾط لػخ ملاؽب ل ِ بأَ كلَِ إ اؼَ ِ ؾطَ كْ ا ل ِ ؾطَ ف ِ ِ ـبْ ٓ ِ وَ ةَ م ر ِ ؽْ ع ِ ل سٍ ابَ طَ ـُ بْ ا لَ اقَ و ـم لـللسف فتئجف ,فـم ؿؾعتأ ملاس ـب للها دبط كلإ لبأ لـؾسرأ :ةدرب قبأ لاقو .)3( ؽـم ؿؾعتأو ؽللسٕ ؽقلإ لـؾسرأ لبأ نإ :تؾؼف ,لب بحرف ,فتبرخلف تكأ .)4(»فـم ؿؾعتٕ رؿط ـب للها دبط لبأ لـعبتأ :لشرؼلا ورؿط ـب دقعس لاقو ف ِ قْ ؾَ طَ اَـؾْ خَ دَ كتَ حَ لؿ ِ ؾَ س بَ ل ِ بأَ كلَِ إ ل ِ بأَ عَ م تُ ؼْ ؾَ طَ كْ",
+  "text_simplified": "The text discusses the rights of children over their parents, citing Prophetic hadiths that highlight the importance of the tarbiyah (upbringing) of children and their education. It mentions the story of a man who came to the Prophet ﷺ asking about his son’s right, to which the Prophet ﷺ replied that he should choose a good name for him and refine his adab (manners). It also emphasizes the necessity of justice among children in giving and treatment.",
+  "labels": [
+    "حقوق الطفل",
+    "التربية النبوية",
+    "العدل بين الأبناء",
+    "تعليم الأبناء",
+    "الأبوة"
+  ],
+  "created_at": "2026-06-21T10:25:32Z",
+  "updated_at": "2026-06-21T10:25:32Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-2c98ee30",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "الآباء",
+        "english": "Parents",
+        "why": "الآباء means fathers specifically, not parents; the English broadens the scope to include mothers, which is not in the Arabic.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "آبائهم",
+        "english": "their parents",
+        "why": "Same issue: آبائهم means their fathers, not their parents.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يشير إلى ضرورة",
+        "english": "emphasizes the necessity",
+        "why": "يشير means indicates or points out, not emphasizes; the English overstates the force of the Arabic.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

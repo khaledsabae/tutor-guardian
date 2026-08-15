@@ -1,0 +1,56 @@
+{
+  "id": "isl-ce5bf696__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "The Importance of a Secure Relationship Between the Child and His Parents",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "الارتباط العاطفي والاستقلالية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "نأ بيرلما ىلع امك ديعتسيل ؛ةبوتلاو عوجرلا ةصرف هل حيتيو هيلع عّنشي لاف ،تئافلا كاردتساو حاجنلل ًاقّيرط مهنسامح لىإ نوتفلتي مهؤابآ ناك ءايوسلأا نأ لىإ تاساردلا تراشأ دقو .يسفنلا هنزاوت لمعلاو بعللا في منهوكراشيو ،ءاطخلأا دقّن نم رثكأ ةنسلحا ملهامعأ ىلع منهوحديمو ،بيرق وأ ملعم وأ ليمزب قلعتي هتقّهارم في لفطلا تدجو ةقادصلا هذه تدقّف اذإو تدقّع ةقادصلا نأ ول هدلاو نم اهبستكي نأ لىولأا ناك ةئيس تابرخ بستكي دقو ىرخأ ةهج نمو ةلزعلا في ةبغرلاو هترسأ ينب ةبرغلاب هرعشي لفطلا راقّتحا نأ امك مهعم قاسنيف ةئيس ةقّفر ءلاؤه نوكي دقو ،هب نوبجعي نيذلا هقافرب هتلص يّوقّي .ةلثملأا تائبم دهشي عقاولاو ،فرحنيو رصاوأ امهنيب لظت نأ بيج اهدنعف هدلاو نع هيركفتو لفطلا ةيصخش فلتتخ دقو ىلع ةظفالمحا مهلما نكلو هيبأ نع ًةروص دلولا نوكي نأ ًاطرش سيل ذإ ،ةبلمحاو ةقادصلا في هسفن ىلع دامتعلاا لوايح ذإ ،ةركبم نس في لفطلا دنع أدبيف للاقّتسلاا امأو سفنلا ىلع دامتعلااو للاقّتسلاا ىلع هدعاست نأ ملأا ىلعو بايثلا ءادتراو ماعطلا لوانت ًايرسع لمعلا ناك اذإ لاإ ةدعاسلما هل مدقّت لاأ يغبنيو ،برص لىإ جاتيح ًابعص ًارمأ نوكيسو . 4 - 3 ص :رهاط ةرسيمو ملاسلا دبع قوراف :ةيوبرتو ةيسفن تاسارد ةلسلس :رظنا ) ( . 4 - 43 ص :قباسلا عجرلما :رظنا )2( . ص :نييبرشلا ايركز ،لافطلأا دنع ةيسفنلا تلاكشلما :رظنا )3( . 3 :ص ،رهاط ةرسيمو ملاسلا دبع قوراف ،ةيوبرتو ةيسفن تاسارد :رظنا )4( هفيكت لهسيو هسفنب هتقّث معدي امم ،هلامعأو هتاجاح لك في كلذ في رمتسيو ،هعيطتسي لا نانلحاو بلحا لىإ هتجاح )ب( ،بلحا اذه رهاظم نم يرثكب ةّنسلا تلفحَ اذلو",
+  "text_simplified": "Studies indicate that children need a secure relationship with their parents to achieve success and psychological adjustment. Parents should praise their child’s accomplishments and encourage him rather than criticize his mistakes, as this strengthens his self-confidence. Early independence also helps the child rely on himself, while ensuring support is provided only when needed. The absence of this relationship may lead the child to feel estrangement and isolation.",
+  "labels": [
+    "الارتباط الآمن",
+    "الثقة بالنفس",
+    "الاستقلالية",
+    "العلاقة الأبوية",
+    "التشجيع"
+  ],
+  "created_at": "2026-06-20T14:34:04Z",
+  "updated_at": "2026-06-20T14:34:04Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ce5bf696",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "فقدان هذه العلاقة قد يؤدي إلى شعور الطفل بالغربة والعزلة",
+        "english": "The absence of this relationship may lead the child to feel estrangement and isolation",
+        "why": "Arabic 'فقدان' means loss, implying the relationship existed and was lost; English 'absence' is neutral and could mean it never existed, altering the nuance.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "مع ضرورة تقديم الدعم عند الحاجة فقط",
+        "english": "while ensuring support is provided only when needed",
+        "why": "Arabic states a necessity (ضرورة) to provide support only when needed; English 'while ensuring' turns it into an action of making sure, shifting from a requirement to a procedural step.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

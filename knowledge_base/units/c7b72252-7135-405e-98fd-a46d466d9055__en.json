@@ -1,0 +1,54 @@
+{
+  "id": "c7b72252-7135-405e-98fd-a46d466d9055__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "From Sleeping in the Lap to Independent Sleep: A Gradual Plan",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "النوم المستقل",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "الطفل الذي ينام في الحضن يتعلّم أن الحضن جزء من عملية النوم نفسها، فيستيقظ ليلًا ولا يجده فيبكي — ليس دلالًا بل ارتباط شرطي.\n\nالانتقال يتم بالتدرّج لا بالقطع:\n\n**١. ثبّت روتينًا قصيرًا وثابتًا** لا يتجاوز عشرين دقيقة، بالترتيب نفسه كل ليلة: حمّام، ملابس، قصة، إضاءة خافتة. التوقّع نفسه يهدّئ.\n\n**٢. ضعه في السرير وهو نعسان لا نائم.** هذه أهم خطوة: أن تكون آخر لحظة قبل النوم في سريره لا على صدرك.\n\n**٣. تدرّج في المسافة.** اجلس بجواره ويدك عليه ليلتين أو ثلاثًا، ثم يدك بلا ملامسة، ثم على كرسي قربه، ثم أبعد قليلًا كل بضع ليالٍ حتى الباب.\n\n**٤. حافظ على الاستجابة عند الاستيقاظ الليلي** لكن أقصرها: طمأنة قصيرة في مكانه بلا حمل وبلا إضاءة قوية وبلا حديث طويل.\n\nتوقّع تراجعًا بعد أي مرض أو سفر أو تغيير في البيت — أعد البدء من الخطوة السابقة بلا إحباط، فالعودة أسرع من المرة الأولى.\n\nواحرص على السلامة: سرير خالٍ من الوسائد والألعاب الكبيرة للأطفال دون العامين، وعلى ظهره في السنة الأولى.",
+  "text_simplified": "A child who sleeps in the lap learns that the lap is part of the sleep process itself, so when they wake up at night and do not find it, they cry—not out of indulgence, but due to a conditioned attachment.\n\nThe transition is made gradually, not abruptly:\n\n**1. Establish a short and consistent routine** that does not exceed twenty minutes, in the same order every night: bath, clothes, story, dim light. The same expectation brings calm.\n\n**2. Place them in the bed while drowsy, not asleep.** This is the most important step: that the last moment before sleep is in their bed, not on your chest.\n\n**3. Gradually increase the distance.** Sit beside them with your hand on them for two or three nights, then your hand without touching, then on a chair near them, then move a little further every few nights until you reach the door.\n\n**4. Maintain responsiveness during nighttime awakenings** but keep it brief: a short reassurance in their place without carrying, without strong light, and without long conversation.\n\nExpect setbacks after any illness, travel, or change at home—restart from the previous step without frustration, as the return will be quicker than the first time.\n\nEnsure safety: a bed free of pillows and large toys for children under two years, and on their back in the first year.",
+  "labels": [],
+  "keywords": [
+    "Independent sleep",
+    "Sleep routine",
+    "Attachment",
+    "Nighttime awakenings",
+    "Child's bed"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "c7b72252-7135-405e-98fd-a46d466d9055",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ليس دلالًا بل ارتباط شرطي",
+        "english": "not out of indulgence, but due to a conditioned attachment",
+        "why": "دلال means spoiledness or being coddled, not 'indulgence' (which is the parent's action). ارتباط شرطي means a conditioned association/link, not 'attachment' (which has a specific emotional meaning in child development).",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "التوقّع نفسه يهدّئ",
+        "english": "The same expectation brings calm",
+        "why": "نفسه means 'itself', emphasizing the predictability, not 'the same expectation' which could imply a repeated expectation.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

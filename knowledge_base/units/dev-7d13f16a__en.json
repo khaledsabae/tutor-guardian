@@ -1,0 +1,56 @@
+{
+  "id": "dev-7d13f16a__en",
+  "domain": "development",
+  "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+  "title": "Improving the Relationship Between Parents and Child and Strengthening Trust",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تحسين العلاقة الأسرية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "دليل التربية الإيجابية - Alliance for Child Protection (NSPCC)",
+  "text_original": "،لفطلاو ءابلآا نيب ةقلاعلا تدسف اذإ راهظلإ قرط ىلإ لصوتلا .لفطلا اهب فرصتي وأ رعشي يتلا ،ةيمهلأا غلاب رمأ مكلفط ىلإ نيطورشملا ريغ ةفطاعلاو بحلا اميس لاو ،هقيبطت بعصلا نمو كلذ لوق لهسلا نم نكلو .ةفلتخم تاجايتحا نيب قيفوتلا ةلواحم وأ بعتلاب مكروعش دنع ،مكنيب طبارلا ةيوقتو ،مكلفط ةقث ةدايز ىلع كلذ دعاسيُ دق .ايًوس اوملعتو مكلفط عم اتًقو اوقرغتسا .لضفأ وٍحن ىلع هتاجايتحا مهف ىلع اضً يأ دعاسيُ دق امك ةوسقلا يديدش اونوكت لاو اوملستست لا •. :حئاصن سمخ لضفأ .روفلا ىلع روملأا ريغتت مل اذإ مكسفنأ عم فادهلأاو ةريغصلا تاوطخلا ىلع اوزكر يتلا روملأاب نيمتهم مكنأ مكلفطل اورهظأ • .قيقحتلل ةلباقلا مكنكميُ ةعتمم ةطشنأ يف اوركف .هل قورت طسو لح ىلإ لوصولل نيدعتسم اونوك • .ايًوس اهب مايقلا .أطخ يأ فارتقا دنع نيئطخم مكنأب فارتعلااو ارًيغت اهيف متيأر يتلا تاقولأا يف اوركف • ءيش يأو مكلفط تايكولس يف ايًباجيإ .ةبرجتلا كلت نم هوملعتت نأ نكميُ نيدعتسم اونوكو هئارآ نع مكلفط اولأسا • ىلع كلذ مكدعاسيُ دقف ؛هيلإ عامتسلال .هروظنم نم روملأا ةيؤر ةيباجيلإا ةيبرتلا ؟مكب ةصاخلا تاظحلاملا ضعب نوفيضتُ لا مل ،مكيلع اهانحرط يتلا حئاصنلا لضفأ متأرق نأ دعبو ،نلآا .مكب ةصاخ ةخسن ليلدلا اذه نم اولعجتل ةحفصلا هذه اومدختسا كلذل ،اهريغ نع ةرسأ لك فلتخت :ايوس اهب مايقلا مكنكمي يتلا ةيلسملا روملأا :اهومتظحلا يتلا لفطلا تايكولس ىلع ةئراطلا ةيباجيلإا تارييغتلا ؟رييغتلا كلذ ثودح ىلع تدعاس نوكت دق يتلا روملأا ام NSPCC ةيعمج نم ةيساسأ تامولعم روعشلا ءابلآا عيمج باتني دق ادنلريأ يف ةيبرتلا يف ةدعاسملا طخ )ةيلامشلا ادنلريأ( ةيلامشلا ،رخلآ نٍ يح نم ةقثلا مدعو رتوتلاب صخش",
+  "text_simplified": "When the relationship between parents and child falters, it becomes important to find ways to express feelings. You can strengthen trust and the bond between you by spending enjoyable time together and understanding the child’s needs. Avoid harshness and giving up, and focus on small steps and achievable goals. Listen to your child’s opinions and learn from your mistakes together.",
+  "labels": [
+    "العلاقة الأسرية",
+    "الثقة",
+    "التواصل",
+    "التربية الإيجابية",
+    "فهم الاحتياجات"
+  ],
+  "created_at": "2026-06-21T10:35:12Z",
+  "updated_at": "2026-06-21T10:35:12Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alliance_Positive_Parenting_Guide_Arabic",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "dev-7d13f16a",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تتعطل",
+        "english": "falters",
+        "why": "Arabic 'تتعطل' means breaks down or becomes disrupted, while 'falters' suggests merely weakens or hesitates, softening the severity of the relationship problem.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الاستسلام",
+        "english": "giving up",
+        "why": "Arabic 'الاستسلام' in a parenting context means giving in to the child's demands (permissiveness), but 'giving up' can be read as abandoning effort or quitting, changing the intended advice.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

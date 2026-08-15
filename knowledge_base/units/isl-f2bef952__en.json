@@ -1,0 +1,62 @@
+{
+  "id": "isl-f2bef952__en",
+  "domain": "islamic_parenting",
+  "source_file": "sahih_abi_dawud_495.txt",
+  "title": "Command Your Children with Salah: Steadfastness Upon It Despite the Mockery of Friends",
+  "language": "en",
+  "age_group": "13-15",
+  "behavior_type": "الثبات على الصلاة رغم ضغط الأصدقاء",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "حديث",
+  "reference_info": "صحيح أبي داود (تحقيق الألباني)، حديث رقم 495، عن عمرو بن شعيب عن أبيه عن جده",
+  "text_original": "مُروا أولادَكم بالصلاةِ وهم أبناءُ سبعِ سنينَ، واضربوهُم عليها وهمْ أبناءُ عشرٍ، وفرِّقوا بينهُم في المضاجعِ. رواه أبو داود، وحسّنه الألباني في صحيح أبي داود (495).",
+  "text_simplified": "The Prophet ﷺ commanded fathers to accustom their children to salah from the age of seven and to follow up firmly from the age of ten (reported by Abu Dawud and authenticated by Al-Albani). If your child faces mockery from his friends for his salah, this is an expected test, not an exception. Your role is to connect his commitment to the command of the Prophet ﷺ himself, and to follow up with firmness and rifq (gentleness), not with blame at the first sign of social pressure.",
+  "labels": [
+    "السخرية من الالتزام",
+    "الصلاة",
+    "أمر الأبناء بالصلاة",
+    "المراهقة"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "سنن أبي داود / صحيح أبي داود",
+    "source_author": "الإمام أبو داود السجستاني؛ تحقيق محمد ناصر الدين الألباني"
+  },
+  "source_language": "ar",
+  "translated_from": "isl-f2bef952",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "مروا أولادكم بالصلاة",
+        "english": "Command Your Children with Salah",
+        "why": "The Arabic means 'Command your children to pray' (the preposition ب indicates the object of the command), but the English 'with Salah' suggests using Salah as a means or accompaniment, not the act being commanded.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "عند أول ضغط اجتماعي",
+        "english": "at the first sign of social pressure",
+        "why": "The Arabic says 'at the first social pressure' (the pressure itself), while the English adds 'sign of', altering the condition and softening the meaning.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "رفق",
+        "english": "rifq (gentleness)",
+        "why": "رفق is a common Arabic word meaning gentleness/kindness, not a technical Islamic term requiring transliteration; transliterating it as 'rifq' is unnecessary and inconsistent with the otherwise English rendering.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

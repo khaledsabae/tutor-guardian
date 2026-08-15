@@ -1,0 +1,47 @@
+{
+  "id": "med-3f714838__en",
+  "domain": "medical",
+  "source_file": "Saudi_MOH_Child_Nutrition_Guide.pdf",
+  "title": "Preserving the Child’s Weight and Avoiding Obesity, Diabetes, and Heart Diseases",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تغذية صحية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "وزارة الصحة السعودية",
+  "text_original": "دﻟﻴــﻞ اﻟﺘﻐــﺬﻳﺔ\nاﻟﺤﻔﺎظ ﻋﻠﻰ اﻟـــﻮزن ﺧﻼل ﻧﻤﻮ اﻟﻄﻔﻞ ﻳﺆدي\nاﻟﻮزن ﻋﻨـــﺪ اﻟﻄﻔـــﻞ؟\nﻣﺘﺎﺑﻌـــﺔ وزن اﻟﻄﻔﻞ ﻣﻨﺬ اﻟـــﻮﻻدة، ﻣﻊ\nاﺳـــﺘﻤﺮار ﻧﻤﻮ اﻟﻄﻔـــﻞ ﺧـــﻼل اﻟﺰﻳﺎرات\nاﻟﻮاﻟﺪﻳﻦ ﺑﺎﻟﺴـــﻤﻨﺔ أو اﻟﺴـــﻜﺮي اﻟﻨﻮع\nاﻟﺜﺎﻧﻲ او أﻣﺮاض اﻟﻘﻠﺐ واﻟﺸﺮاﻳﻴﻦ.\nوﺑﻌـــﺾ اﻷﻣﺮاض اﻟﻤﺮﺗﺒﻄﺔ ﺑﺎﻟﺴـــﻤﻨﺔ\nأﻋـــﺮاض اﻟﺠﻬـــﺎز اﻟﻬﻀﻤـــﻲ، ﻣﻘﺎوﻣﺔ\nﻳﺤﺴّ ـــﻦ ﺻﺤـــﺔ  اﻟﻌﻈـــﺎم  واﻟﺼﺤـــﺔ\nاﻟﺪم وأﻣﺮاض اﻟﻘﻠﺐ اﻟﺘﺎﺟﻴﺔ واﻟﺴﻜﺘﺔ\nاﻟﺪﻣﺎﻏﻴﺔ وداء اﻟﺴﻜﺮي واﻻﻛﺘﺌﺎب.\nاﻟﺸﺎﺷـــﺎت ﻟﺴـــﺎﻋﺎت ﻃﻮﻳﻠﺔ، وﻓﻘﺎ ﻹرﺷـــﺎدات ﻣﻨﻈﻤﺔ\nﻟﻤﺎذا ﺣﻠﻴﺐ اﻷم؟\nﺧﻤـــﺲ ﺣﻘـــﺎﺋﻖ\nﺧﻤـــﺲ ﺣﻘـــﺎﺋﻖ\nﺧﻤـــﺲ ﺣﻘـــﺎﺋﻖ\nﺧﻤـــﺲ ﺣﻘـــﺎﺋﻖ\nاﻹﻛﺜﺎر ﻣﻦ ﺗﻨﺎول اﻟﺨﻀﺮوات واﻟﻔﻮاﻛﻪ\nﺧﻤـــﺲ ﺣﻘـــﺎﺋﻖ",
+  "text_simplified": "It is essential to maintain the child’s weight as they grow, as their weight impacts their overall health. The child’s weight should be monitored from birth throughout their development, with medical visits to check for obesity, type 2 diabetes, or cardiovascular diseases.",
+  "labels": [
+    "وزن الطفل",
+    "السمنة",
+    "السكري النوع الثاني",
+    "أمراض القلب والأوعية الدموية"
+  ],
+  "created_at": "2026-06-22T11:59:23Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Saudi_MOH_Child_Nutrition_Guide",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "med-3f714838",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "والزيارات الطبية للسمنة أو السكري النوع الثاني أو أمراض القلب والأوعية الدموية",
+        "english": "with medical visits to check for obesity, type 2 diabetes, or cardiovascular diseases",
+        "why": "The Arabic says 'medical visits for obesity, type 2 diabetes, or cardiovascular diseases' without specifying the purpose. The English adds 'to check for', narrowing the meaning to screening rather than management or treatment of these conditions.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

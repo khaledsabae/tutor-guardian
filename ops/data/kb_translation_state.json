@@ -1,0 +1,4638 @@
+{
+  "0bd76d3c-548a-46ed-b17b-78874741662a": {
+    "id": "0bd76d3c-548a-46ed-b17b-78874741662a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3825
+  },
+  "179d90e1-a863-42e1-8fea-e8560b7401f7": {
+    "id": "179d90e1-a863-42e1-8fea-e8560b7401f7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 5867
+  },
+  "21ea9577-9612-4b5f-8a60-a4c149bdc2ad": {
+    "id": "21ea9577-9612-4b5f-8a60-a4c149bdc2ad",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tarbiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: ربو, ربّي, يرب...); حقن مصطلح: 'akhlaq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: خلق, أخلاق, خُلق...)"
+  },
+  "36236dbf-1010-46b1-92e4-e09880513854": {
+    "id": "36236dbf-1010-46b1-92e4-e09880513854",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tarbiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: ربو, ربّي, يرب...); حقن مصطلح: 'haya' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: حيي, حياء, يستحي...)"
+  },
+  "3867de19-f5f7-417b-8d04-a917bb8cf4ef": {
+    "id": "3867de19-f5f7-417b-8d04-a917bb8cf4ef",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 5069
+  },
+  "3a72f29b-1f14-46fc-9a89-b72df7295c98": {
+    "id": "3a72f29b-1f14-46fc-9a89-b72df7295c98",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 5,
+    "tokens": 3516
+  },
+  "41b84d8c-347e-4ce2-b26d-f53ece84fb8d": {
+    "id": "41b84d8c-347e-4ce2-b26d-f53ece84fb8d",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tarbiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: ربو, ربّي, يرب...)"
+  },
+  "4868a341-239b-493d-89a8-36a896850899": {
+    "id": "4868a341-239b-493d-89a8-36a896850899",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "unreviewed",
+    "defects": 0,
+    "tokens": 65876
+  },
+  "562a37b1-e735-4654-8973-9814acaac587": {
+    "id": "562a37b1-e735-4654-8973-9814acaac587",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 4349
+  },
+  "6100b911-911d-4926-8f35-09b43a76303f": {
+    "id": "6100b911-911d-4926-8f35-09b43a76303f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 5243
+  },
+  "6970f436-c954-45ac-ab96-30a798cf523f": {
+    "id": "6970f436-c954-45ac-ab96-30a798cf523f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 5242
+  },
+  "77e9aa1e-342f-4497-bb5b-a998ac638da2": {
+    "id": "77e9aa1e-342f-4497-bb5b-a998ac638da2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3829
+  },
+  "814739d8-0acf-4d8e-8d93-4bc25e9b4b6b": {
+    "id": "814739d8-0acf-4d8e-8d93-4bc25e9b4b6b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3435
+  },
+  "89bf08a7-5d8f-4373-b48d-523b596f5f8a": {
+    "id": "89bf08a7-5d8f-4373-b48d-523b596f5f8a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 4960
+  },
+  "8b595d9b-62ce-48af-b5a5-a3bfe748041d": {
+    "id": "8b595d9b-62ce-48af-b5a5-a3bfe748041d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2840
+  },
+  "968f42b5-5184-4f4a-97d9-b854f507dbe6": {
+    "id": "968f42b5-5184-4f4a-97d9-b854f507dbe6",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 1612
+  },
+  "aa50afd9-11c2-4345-8c2c-90ac32639d57": {
+    "id": "aa50afd9-11c2-4345-8c2c-90ac32639d57",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 5664
+  },
+  "aqe-0af54c62": {
+    "id": "aqe-0af54c62",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3561
+  },
+  "aqe-6dd8b600": {
+    "id": "aqe-6dd8b600",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 4079
+  },
+  "aqe-b1e103fc": {
+    "id": "aqe-b1e103fc",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3285
+  },
+  "aqe-c078677c": {
+    "id": "aqe-c078677c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3903
+  },
+  "aqe-c28835f1": {
+    "id": "aqe-c28835f1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2291
+  },
+  "aqe-d0f14b8c": {
+    "id": "aqe-d0f14b8c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 4042
+  },
+  "aqe-d34c31d5": {
+    "id": "aqe-d34c31d5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 6068
+  },
+  "aqe-d4f44453": {
+    "id": "aqe-d4f44453",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3891
+  },
+  "aqe-e3092aff": {
+    "id": "aqe-e3092aff",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2820
+  },
+  "aqe-ff6b8a27": {
+    "id": "aqe-ff6b8a27",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "unreviewed",
+    "defects": 0,
+    "tokens": 65703
+  },
+  "b08d70af-9008-41cc-97f5-cfeba46ba327": {
+    "id": "b08d70af-9008-41cc-97f5-cfeba46ba327",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 3528
+  },
+  "c456b140-4520-4e47-a089-26d6f4877c32": {
+    "id": "c456b140-4520-4e47-a089-26d6f4877c32",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3936
+  },
+  "c7b72252-7135-405e-98fd-a46d466d9055": {
+    "id": "c7b72252-7135-405e-98fd-a46d466d9055",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4323
+  },
+  "cd81035d-4fdb-4274-bcf2-55074ee7a1de": {
+    "id": "cd81035d-4fdb-4274-bcf2-55074ee7a1de",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2201
+  },
+  "cyb-2066aac9": {
+    "id": "cyb-2066aac9",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 713
+  },
+  "cyb-236a4b5e": {
+    "id": "cyb-236a4b5e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1424
+  },
+  "cyb-26236b19": {
+    "id": "cyb-26236b19",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 866
+  },
+  "cyb-30a93e6a": {
+    "id": "cyb-30a93e6a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1195
+  },
+  "cyb-36b8ad48": {
+    "id": "cyb-36b8ad48",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1006
+  },
+  "cyb-3f81bd4b": {
+    "id": "cyb-3f81bd4b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1357
+  },
+  "cyb-473eebdd": {
+    "id": "cyb-473eebdd",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "cyb-499319c4": {
+    "id": "cyb-499319c4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 807
+  },
+  "cyb-51951b6a": {
+    "id": "cyb-51951b6a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1439
+  },
+  "cyb-65ff3533": {
+    "id": "cyb-65ff3533",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2592
+  },
+  "cyb-74c93d51": {
+    "id": "cyb-74c93d51",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3025
+  },
+  "cyb-8a2da5de": {
+    "id": "cyb-8a2da5de",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1780
+  },
+  "cyb-8c2cbb56": {
+    "id": "cyb-8c2cbb56",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1566
+  },
+  "cyb-9802937c": {
+    "id": "cyb-9802937c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1289
+  },
+  "cyb-a208f26a": {
+    "id": "cyb-a208f26a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3833
+  },
+  "cyb-a688fcbe": {
+    "id": "cyb-a688fcbe",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1176
+  },
+  "cyb-a75c4112": {
+    "id": "cyb-a75c4112",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2340
+  },
+  "cyb-c231a76a": {
+    "id": "cyb-c231a76a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 663
+  },
+  "cyb-d830c514": {
+    "id": "cyb-d830c514",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1625
+  },
+  "cyb-db2bb48f": {
+    "id": "cyb-db2bb48f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 453
+  },
+  "cyb-e49f94f3": {
+    "id": "cyb-e49f94f3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3946
+  },
+  "cyb-f4323218": {
+    "id": "cyb-f4323218",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 628
+  },
+  "cyb-fc24ccce": {
+    "id": "cyb-fc24ccce",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1712
+  },
+  "d7a09c7e-769c-48b5-aaf8-0511fedfc0db": {
+    "id": "d7a09c7e-769c-48b5-aaf8-0511fedfc0db",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 5475
+  },
+  "dev-0a5739fc": {
+    "id": "dev-0a5739fc",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 333
+  },
+  "dev-180034e5": {
+    "id": "dev-180034e5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 354
+  },
+  "dev-18b8e7a3": {
+    "id": "dev-18b8e7a3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1705
+  },
+  "dev-3b7d4a62": {
+    "id": "dev-3b7d4a62",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1649
+  },
+  "dev-49a18746": {
+    "id": "dev-49a18746",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2627
+  },
+  "dev-586b39f9": {
+    "id": "dev-586b39f9",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 628
+  },
+  "dev-7117419a": {
+    "id": "dev-7117419a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2158
+  },
+  "dev-75346fc0": {
+    "id": "dev-75346fc0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1147
+  },
+  "dev-77d7ab2f": {
+    "id": "dev-77d7ab2f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1035
+  },
+  "dev-7b2f411e": {
+    "id": "dev-7b2f411e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2671
+  },
+  "dev-7d13f16a": {
+    "id": "dev-7d13f16a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1554
+  },
+  "dev-7fb63252": {
+    "id": "dev-7fb63252",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1642
+  },
+  "dev-8fdf563b": {
+    "id": "dev-8fdf563b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2387
+  },
+  "dev-97d2f1d2": {
+    "id": "dev-97d2f1d2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3241
+  },
+  "dev-9d31767e": {
+    "id": "dev-9d31767e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1982
+  },
+  "dev-a33dbaaf": {
+    "id": "dev-a33dbaaf",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1639
+  },
+  "dev-a3cf002d": {
+    "id": "dev-a3cf002d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1540
+  },
+  "dev-a576d902": {
+    "id": "dev-a576d902",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1468
+  },
+  "dev-a869552f": {
+    "id": "dev-a869552f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1874
+  },
+  "dev-a8abb3d5": {
+    "id": "dev-a8abb3d5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1865
+  },
+  "dev-a97a6769": {
+    "id": "dev-a97a6769",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2215
+  },
+  "dev-aa62cbec": {
+    "id": "dev-aa62cbec",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3030
+  },
+  "dev-ad9ff74a": {
+    "id": "dev-ad9ff74a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 799
+  },
+  "dev-b3e9a4e0": {
+    "id": "dev-b3e9a4e0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2404
+  },
+  "dev-c5e6f09a": {
+    "id": "dev-c5e6f09a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 634
+  },
+  "dev-dcfb4e1a": {
+    "id": "dev-dcfb4e1a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 604
+  },
+  "dev-e129e5e9": {
+    "id": "dev-e129e5e9",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2454
+  },
+  "dev-ef1087c3": {
+    "id": "dev-ef1087c3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1592
+  },
+  "dev-ff344c8a": {
+    "id": "dev-ff344c8a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1285
+  },
+  "dev-ffce138f": {
+    "id": "dev-ffce138f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2036
+  },
+  "e095a1d9-98c4-4b4d-afe6-453645643704": {
+    "id": "e095a1d9-98c4-4b4d-afe6-453645643704",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4365
+  },
+  "e724817e-4bd5-4314-9d27-e560b2ca41ef": {
+    "id": "e724817e-4bd5-4314-9d27-e560b2ca41ef",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 4209
+  },
+  "ee765e4d-9efd-413d-9350-d8aa8d59acf7": {
+    "id": "ee765e4d-9efd-413d-9350-d8aa8d59acf7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2609
+  },
+  "f414d4fc-4ee9-4385-b7d6-4496c1ee9aaa": {
+    "id": "f414d4fc-4ee9-4385-b7d6-4496c1ee9aaa",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4227
+  },
+  "isl-0020cb29": {
+    "id": "isl-0020cb29",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 4244
+  },
+  "isl-003e7702": {
+    "id": "isl-003e7702",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1935
+  },
+  "isl-00ca8ce8": {
+    "id": "isl-00ca8ce8",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'seerah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: سير, سيرة, سيرته...)"
+  },
+  "isl-0243bed4": {
+    "id": "isl-0243bed4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3449
+  },
+  "isl-031fc474": {
+    "id": "isl-031fc474",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1533
+  },
+  "isl-034b141a": {
+    "id": "isl-034b141a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3265
+  },
+  "isl-047ad111": {
+    "id": "isl-047ad111",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4431
+  },
+  "isl-05aa623c": {
+    "id": "isl-05aa623c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1150
+  },
+  "isl-06b8336f": {
+    "id": "isl-06b8336f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3240
+  },
+  "isl-06c45ab7": {
+    "id": "isl-06c45ab7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1782
+  },
+  "isl-07cd6cf0": {
+    "id": "isl-07cd6cf0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2804
+  },
+  "isl-08b656f3": {
+    "id": "isl-08b656f3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2314
+  },
+  "isl-08be6045": {
+    "id": "isl-08be6045",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2221
+  },
+  "isl-094f42cd": {
+    "id": "isl-094f42cd",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2034
+  },
+  "isl-09afb431": {
+    "id": "isl-09afb431",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2340
+  },
+  "isl-0b607846": {
+    "id": "isl-0b607846",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3521
+  },
+  "isl-0ca172e2": {
+    "id": "isl-0ca172e2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3675
+  },
+  "isl-0d1334e8": {
+    "id": "isl-0d1334e8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2035
+  },
+  "isl-0d5120d9": {
+    "id": "isl-0d5120d9",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1722
+  },
+  "isl-0eb77048": {
+    "id": "isl-0eb77048",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 5345
+  },
+  "isl-0ecac170": {
+    "id": "isl-0ecac170",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3330
+  },
+  "isl-0ee49139": {
+    "id": "isl-0ee49139",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 4427
+  },
+  "isl-0f6abe5d": {
+    "id": "isl-0f6abe5d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2363
+  },
+  "isl-0faa18cf": {
+    "id": "isl-0faa18cf",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 2953
+  },
+  "isl-10541fe2": {
+    "id": "isl-10541fe2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2073
+  },
+  "isl-1057f72f": {
+    "id": "isl-1057f72f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2376
+  },
+  "isl-11a3cb7e": {
+    "id": "isl-11a3cb7e",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'birr al-walidayn' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: برّ, بر, يبرّ...)"
+  },
+  "isl-11c1bec0": {
+    "id": "isl-11c1bec0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3161
+  },
+  "isl-12f1f119": {
+    "id": "isl-12f1f119",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2948
+  },
+  "isl-14009a8e": {
+    "id": "isl-14009a8e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2181
+  },
+  "isl-14202095": {
+    "id": "isl-14202095",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3256
+  },
+  "isl-14bc16f5": {
+    "id": "isl-14bc16f5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1833
+  },
+  "isl-156cff0e": {
+    "id": "isl-156cff0e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3500
+  },
+  "isl-162e28c1": {
+    "id": "isl-162e28c1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4638
+  },
+  "isl-17710349": {
+    "id": "isl-17710349",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4714
+  },
+  "isl-18569b11": {
+    "id": "isl-18569b11",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2481
+  },
+  "isl-18fa1a80": {
+    "id": "isl-18fa1a80",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2668
+  },
+  "isl-19074fe7": {
+    "id": "isl-19074fe7",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-1a3e7f6f": {
+    "id": "isl-1a3e7f6f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3912
+  },
+  "isl-1b1c38d3": {
+    "id": "isl-1b1c38d3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3288
+  },
+  "isl-1b230a64": {
+    "id": "isl-1b230a64",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3312
+  },
+  "isl-1bceeaf6": {
+    "id": "isl-1bceeaf6",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3516
+  },
+  "isl-1c2554f4": {
+    "id": "isl-1c2554f4",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-1d89f7df": {
+    "id": "isl-1d89f7df",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1821
+  },
+  "isl-1e090b79": {
+    "id": "isl-1e090b79",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 536
+  },
+  "isl-1ebc9718": {
+    "id": "isl-1ebc9718",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1775
+  },
+  "isl-1efbc747": {
+    "id": "isl-1efbc747",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3339
+  },
+  "isl-1f696f30": {
+    "id": "isl-1f696f30",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4272
+  },
+  "isl-2010ce26": {
+    "id": "isl-2010ce26",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2468
+  },
+  "isl-2021d2aa": {
+    "id": "isl-2021d2aa",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1841
+  },
+  "isl-20cd665c": {
+    "id": "isl-20cd665c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3696
+  },
+  "isl-20cf8569": {
+    "id": "isl-20cf8569",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tarbiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: ربو, ربّي, يرب...)"
+  },
+  "isl-21b63f71": {
+    "id": "isl-21b63f71",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1257
+  },
+  "isl-22169daa": {
+    "id": "isl-22169daa",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3685
+  },
+  "isl-223fedeb": {
+    "id": "isl-223fedeb",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2378
+  },
+  "isl-22d62ea2": {
+    "id": "isl-22d62ea2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1535
+  },
+  "isl-22f68950": {
+    "id": "isl-22f68950",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2060
+  },
+  "isl-232f3ebf": {
+    "id": "isl-232f3ebf",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-23c2dd25": {
+    "id": "isl-23c2dd25",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3664
+  },
+  "isl-24a45a01": {
+    "id": "isl-24a45a01",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3294
+  },
+  "isl-24dda124": {
+    "id": "isl-24dda124",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3113
+  },
+  "isl-257951bb": {
+    "id": "isl-257951bb",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3862
+  },
+  "isl-25aad8e0": {
+    "id": "isl-25aad8e0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3904
+  },
+  "isl-25e3d1bc": {
+    "id": "isl-25e3d1bc",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2357
+  },
+  "isl-27372b44": {
+    "id": "isl-27372b44",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1987
+  },
+  "isl-276074bc": {
+    "id": "isl-276074bc",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2435
+  },
+  "isl-281aef95": {
+    "id": "isl-281aef95",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3117
+  },
+  "isl-2935b46f": {
+    "id": "isl-2935b46f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1981
+  },
+  "isl-2a3f0ed3": {
+    "id": "isl-2a3f0ed3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 6,
+    "tokens": 2840
+  },
+  "isl-2aa57245": {
+    "id": "isl-2aa57245",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3895
+  },
+  "isl-2bbafb5d": {
+    "id": "isl-2bbafb5d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3569
+  },
+  "isl-2be190f6": {
+    "id": "isl-2be190f6",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3662
+  },
+  "isl-2c787a2b": {
+    "id": "isl-2c787a2b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 5930
+  },
+  "isl-2c98ee30": {
+    "id": "isl-2c98ee30",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 5326
+  },
+  "isl-2d7f2303": {
+    "id": "isl-2d7f2303",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2703
+  },
+  "isl-2d96bbf3": {
+    "id": "isl-2d96bbf3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2582
+  },
+  "isl-2f563178": {
+    "id": "isl-2f563178",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1370
+  },
+  "isl-2fafe289": {
+    "id": "isl-2fafe289",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-2fee1086": {
+    "id": "isl-2fee1086",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4281
+  },
+  "isl-30476c63": {
+    "id": "isl-30476c63",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3535
+  },
+  "isl-3110e6c7": {
+    "id": "isl-3110e6c7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1732
+  },
+  "isl-31ba95cb": {
+    "id": "isl-31ba95cb",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3080
+  },
+  "isl-327af9d3": {
+    "id": "isl-327af9d3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 616
+  },
+  "isl-32871fdb": {
+    "id": "isl-32871fdb",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4871
+  },
+  "isl-33e652bb": {
+    "id": "isl-33e652bb",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1661
+  },
+  "isl-343ab724": {
+    "id": "isl-343ab724",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3867
+  },
+  "isl-34fc82de": {
+    "id": "isl-34fc82de",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1342
+  },
+  "isl-35bd0931": {
+    "id": "isl-35bd0931",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2578
+  },
+  "isl-36917162": {
+    "id": "isl-36917162",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2640
+  },
+  "isl-369ae871": {
+    "id": "isl-369ae871",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1962
+  },
+  "isl-3703ac71": {
+    "id": "isl-3703ac71",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 273
+  },
+  "isl-37320362": {
+    "id": "isl-37320362",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3092
+  },
+  "isl-379cccef": {
+    "id": "isl-379cccef",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2392
+  },
+  "isl-390466e2": {
+    "id": "isl-390466e2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1272
+  },
+  "isl-39499300": {
+    "id": "isl-39499300",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3744
+  },
+  "isl-39616856": {
+    "id": "isl-39616856",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3026
+  },
+  "isl-3a04cacb": {
+    "id": "isl-3a04cacb",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tarbiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: ربو, ربّي, يرب...)"
+  },
+  "isl-3afa9af8": {
+    "id": "isl-3afa9af8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2414
+  },
+  "isl-3b349626": {
+    "id": "isl-3b349626",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1854
+  },
+  "isl-3c03e3e6": {
+    "id": "isl-3c03e3e6",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tazkiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: زكى, تزكية, زكوي...)"
+  },
+  "isl-3c246978": {
+    "id": "isl-3c246978",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1489
+  },
+  "isl-3c91c800": {
+    "id": "isl-3c91c800",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3163
+  },
+  "isl-3d476538": {
+    "id": "isl-3d476538",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1657
+  },
+  "isl-3e91893e": {
+    "id": "isl-3e91893e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3471
+  },
+  "isl-3f60fca7": {
+    "id": "isl-3f60fca7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1450
+  },
+  "isl-3f7359b4": {
+    "id": "isl-3f7359b4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3607
+  },
+  "isl-3ff7f46d": {
+    "id": "isl-3ff7f46d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 5118
+  },
+  "isl-410bbaa8": {
+    "id": "isl-410bbaa8",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tazkiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: زكى, تزكية, زكوي...)"
+  },
+  "isl-41e80342": {
+    "id": "isl-41e80342",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-426e674e": {
+    "id": "isl-426e674e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1580
+  },
+  "isl-42741535": {
+    "id": "isl-42741535",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-43bfb6da": {
+    "id": "isl-43bfb6da",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-44443cd2": {
+    "id": "isl-44443cd2",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-460a62af": {
+    "id": "isl-460a62af",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 1811
+  },
+  "isl-466fef9d": {
+    "id": "isl-466fef9d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2042
+  },
+  "isl-47643ca5": {
+    "id": "isl-47643ca5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4073
+  },
+  "isl-487be1c7": {
+    "id": "isl-487be1c7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3216
+  },
+  "isl-48e32cae": {
+    "id": "isl-48e32cae",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3286
+  },
+  "isl-49217cf3": {
+    "id": "isl-49217cf3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2828
+  },
+  "isl-4a91d5da": {
+    "id": "isl-4a91d5da",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2562
+  },
+  "isl-4bd24438": {
+    "id": "isl-4bd24438",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1935
+  },
+  "isl-4c08bd7d": {
+    "id": "isl-4c08bd7d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2587
+  },
+  "isl-4c1cd031": {
+    "id": "isl-4c1cd031",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1735
+  },
+  "isl-4c9c61c3": {
+    "id": "isl-4c9c61c3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3106
+  },
+  "isl-4d3a645f": {
+    "id": "isl-4d3a645f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 8036
+  },
+  "isl-4e0db0bd": {
+    "id": "isl-4e0db0bd",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3797
+  },
+  "isl-4e356b57": {
+    "id": "isl-4e356b57",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1658
+  },
+  "isl-4ecbbad1": {
+    "id": "isl-4ecbbad1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4269
+  },
+  "isl-4f1029a3": {
+    "id": "isl-4f1029a3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2593
+  },
+  "isl-4f1f6411": {
+    "id": "isl-4f1f6411",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2926
+  },
+  "isl-4fd89060": {
+    "id": "isl-4fd89060",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3059
+  },
+  "isl-50818e97": {
+    "id": "isl-50818e97",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1901
+  },
+  "isl-50f95326": {
+    "id": "isl-50f95326",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 840
+  },
+  "isl-516d879f": {
+    "id": "isl-516d879f",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'adhkar' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: ذكر, أذكار, اذكر...)"
+  },
+  "isl-51abde6d": {
+    "id": "isl-51abde6d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1675
+  },
+  "isl-52462ce7": {
+    "id": "isl-52462ce7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3134
+  },
+  "isl-5296fd5a": {
+    "id": "isl-5296fd5a",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-52abd1a8": {
+    "id": "isl-52abd1a8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 410
+  },
+  "isl-52c6e496": {
+    "id": "isl-52c6e496",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1988
+  },
+  "isl-54836d16": {
+    "id": "isl-54836d16",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2340
+  },
+  "isl-552b4f5a": {
+    "id": "isl-552b4f5a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1615
+  },
+  "isl-55a861c7": {
+    "id": "isl-55a861c7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2995
+  },
+  "isl-59686545": {
+    "id": "isl-59686545",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2770
+  },
+  "isl-597a1018": {
+    "id": "isl-597a1018",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2159
+  },
+  "isl-5a55d030": {
+    "id": "isl-5a55d030",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 390
+  },
+  "isl-5a728c81": {
+    "id": "isl-5a728c81",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2074
+  },
+  "isl-5b240e2f": {
+    "id": "isl-5b240e2f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 705
+  },
+  "isl-5b61587e": {
+    "id": "isl-5b61587e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3724
+  },
+  "isl-5b861419": {
+    "id": "isl-5b861419",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-5b8d2dc3": {
+    "id": "isl-5b8d2dc3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1646
+  },
+  "isl-5bb84e07": {
+    "id": "isl-5bb84e07",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2982
+  },
+  "isl-5bf1878f": {
+    "id": "isl-5bf1878f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2535
+  },
+  "isl-5c664643": {
+    "id": "isl-5c664643",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'amanah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: أمن, أمانة, أمين...)"
+  },
+  "isl-5cf45742": {
+    "id": "isl-5cf45742",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3659
+  },
+  "isl-5d8ffb6e": {
+    "id": "isl-5d8ffb6e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3334
+  },
+  "isl-5e099094": {
+    "id": "isl-5e099094",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2327
+  },
+  "isl-602280fa": {
+    "id": "isl-602280fa",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-602bfb05": {
+    "id": "isl-602bfb05",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2329
+  },
+  "isl-61e09b66": {
+    "id": "isl-61e09b66",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3098
+  },
+  "isl-620730b0": {
+    "id": "isl-620730b0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1909
+  },
+  "isl-624104ea": {
+    "id": "isl-624104ea",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 5567
+  },
+  "isl-642d3763": {
+    "id": "isl-642d3763",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2269
+  },
+  "isl-64e37a2f": {
+    "id": "isl-64e37a2f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3912
+  },
+  "isl-65823c35": {
+    "id": "isl-65823c35",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4245
+  },
+  "isl-65b250d1": {
+    "id": "isl-65b250d1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2060
+  },
+  "isl-65e723b9": {
+    "id": "isl-65e723b9",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'seerah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: سير, سيرة, سيرته...)"
+  },
+  "isl-65ecd339": {
+    "id": "isl-65ecd339",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 5,
+    "tokens": 3962
+  },
+  "isl-66f08676": {
+    "id": "isl-66f08676",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-6792dd0f": {
+    "id": "isl-6792dd0f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2727
+  },
+  "isl-67c4622e": {
+    "id": "isl-67c4622e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2776
+  },
+  "isl-680b8d50": {
+    "id": "isl-680b8d50",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4581
+  },
+  "isl-689dde49": {
+    "id": "isl-689dde49",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4326
+  },
+  "isl-68c41eea": {
+    "id": "isl-68c41eea",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2075
+  },
+  "isl-68df90c4": {
+    "id": "isl-68df90c4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4102
+  },
+  "isl-695f47e5": {
+    "id": "isl-695f47e5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 531
+  },
+  "isl-6a157c3f": {
+    "id": "isl-6a157c3f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3620
+  },
+  "isl-6a8c2563": {
+    "id": "isl-6a8c2563",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2824
+  },
+  "isl-6ae600bf": {
+    "id": "isl-6ae600bf",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3170
+  },
+  "isl-6c69c835": {
+    "id": "isl-6c69c835",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tarbiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: ربو, ربّي, يرب...)"
+  },
+  "isl-6cecdb96": {
+    "id": "isl-6cecdb96",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4056
+  },
+  "isl-6d5e1c7f": {
+    "id": "isl-6d5e1c7f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2076
+  },
+  "isl-6d8f26e2": {
+    "id": "isl-6d8f26e2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1405
+  },
+  "isl-6d93523b": {
+    "id": "isl-6d93523b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1845
+  },
+  "isl-6e3ef777": {
+    "id": "isl-6e3ef777",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3657
+  },
+  "isl-6e577f4f": {
+    "id": "isl-6e577f4f",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-6e679939": {
+    "id": "isl-6e679939",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1646
+  },
+  "isl-6fe42624": {
+    "id": "isl-6fe42624",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3001
+  },
+  "isl-707601b0": {
+    "id": "isl-707601b0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1788
+  },
+  "isl-71334e77": {
+    "id": "isl-71334e77",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1223
+  },
+  "isl-714f9e97": {
+    "id": "isl-714f9e97",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 4086
+  },
+  "isl-71d65f43": {
+    "id": "isl-71d65f43",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4992
+  },
+  "isl-7269b6d8": {
+    "id": "isl-7269b6d8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3343
+  },
+  "isl-72787824": {
+    "id": "isl-72787824",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2354
+  },
+  "isl-72893770": {
+    "id": "isl-72893770",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3098
+  },
+  "isl-7349e59c": {
+    "id": "isl-7349e59c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4530
+  },
+  "isl-73905b43": {
+    "id": "isl-73905b43",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2896
+  },
+  "isl-740684b1": {
+    "id": "isl-740684b1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2806
+  },
+  "isl-74580658": {
+    "id": "isl-74580658",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3451
+  },
+  "isl-752169b4": {
+    "id": "isl-752169b4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2285
+  },
+  "isl-756e7d81": {
+    "id": "isl-756e7d81",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2026
+  },
+  "isl-76f9459f": {
+    "id": "isl-76f9459f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4631
+  },
+  "isl-778dc8f5": {
+    "id": "isl-778dc8f5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2790
+  },
+  "isl-77ba4991": {
+    "id": "isl-77ba4991",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'akhlaq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: خلق, أخلاق, خُلق...)"
+  },
+  "isl-79b2424f": {
+    "id": "isl-79b2424f",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-79b5db35": {
+    "id": "isl-79b5db35",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4980
+  },
+  "isl-7ad7d768": {
+    "id": "isl-7ad7d768",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3135
+  },
+  "isl-7b7cda4e": {
+    "id": "isl-7b7cda4e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1746
+  },
+  "isl-7bfdefb2": {
+    "id": "isl-7bfdefb2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 6022
+  },
+  "isl-7bff5e2c": {
+    "id": "isl-7bff5e2c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1988
+  },
+  "isl-7c088c1a": {
+    "id": "isl-7c088c1a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3138
+  },
+  "isl-7dbd2226": {
+    "id": "isl-7dbd2226",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2929
+  },
+  "isl-7e0815a2": {
+    "id": "isl-7e0815a2",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'akhlaq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: خلق, أخلاق, خُلق...)"
+  },
+  "isl-7ec75c52": {
+    "id": "isl-7ec75c52",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2318
+  },
+  "isl-7f2cd105": {
+    "id": "isl-7f2cd105",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3428
+  },
+  "isl-7f3a1d9b": {
+    "id": "isl-7f3a1d9b",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'akhlaq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: خلق, أخلاق, خُلق...)"
+  },
+  "isl-7f82819c": {
+    "id": "isl-7f82819c",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-801dbc52": {
+    "id": "isl-801dbc52",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2120
+  },
+  "isl-80a33332": {
+    "id": "isl-80a33332",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'aqeedah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: عقد, عقيدة, عقائدي...)"
+  },
+  "isl-8251f498": {
+    "id": "isl-8251f498",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2795
+  },
+  "isl-82829528": {
+    "id": "isl-82829528",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2179
+  },
+  "isl-82c3c96e": {
+    "id": "isl-82c3c96e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2796
+  },
+  "isl-837af34f": {
+    "id": "isl-837af34f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1664
+  },
+  "isl-841d1ede": {
+    "id": "isl-841d1ede",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3022
+  },
+  "isl-842e0f60": {
+    "id": "isl-842e0f60",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3538
+  },
+  "isl-84538ea0": {
+    "id": "isl-84538ea0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3291
+  },
+  "isl-848acb1e": {
+    "id": "isl-848acb1e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3301
+  },
+  "isl-855eeb20": {
+    "id": "isl-855eeb20",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 532
+  },
+  "isl-85e3c490": {
+    "id": "isl-85e3c490",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'ihsan' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: أحسن, إحسان, محسن...)"
+  },
+  "isl-85fcbc9d": {
+    "id": "isl-85fcbc9d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2060
+  },
+  "isl-86605602": {
+    "id": "isl-86605602",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1909
+  },
+  "isl-87ab426e": {
+    "id": "isl-87ab426e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3295
+  },
+  "isl-89eaf8dd": {
+    "id": "isl-89eaf8dd",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3963
+  },
+  "isl-8a046b9b": {
+    "id": "isl-8a046b9b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4039
+  },
+  "isl-8aa15666": {
+    "id": "isl-8aa15666",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3755
+  },
+  "isl-8adb5078": {
+    "id": "isl-8adb5078",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2045
+  },
+  "isl-8adc1c25": {
+    "id": "isl-8adc1c25",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2066
+  },
+  "isl-8b182486": {
+    "id": "isl-8b182486",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2469
+  },
+  "isl-8b3e09ef": {
+    "id": "isl-8b3e09ef",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1982
+  },
+  "isl-8bf01cae": {
+    "id": "isl-8bf01cae",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3470
+  },
+  "isl-8bf4e7a3": {
+    "id": "isl-8bf4e7a3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2907
+  },
+  "isl-8cade404": {
+    "id": "isl-8cade404",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-8d62cfd1": {
+    "id": "isl-8d62cfd1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1788
+  },
+  "isl-8de863a3": {
+    "id": "isl-8de863a3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2339
+  },
+  "isl-8df11735": {
+    "id": "isl-8df11735",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2564
+  },
+  "isl-8f8f836b": {
+    "id": "isl-8f8f836b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 4896
+  },
+  "isl-901bde3f": {
+    "id": "isl-901bde3f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3581
+  },
+  "isl-908a2da0": {
+    "id": "isl-908a2da0",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-908e4c80": {
+    "id": "isl-908e4c80",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3983
+  },
+  "isl-91f5606a": {
+    "id": "isl-91f5606a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2231
+  },
+  "isl-9238038f": {
+    "id": "isl-9238038f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2966
+  },
+  "isl-927b1dd2": {
+    "id": "isl-927b1dd2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2070
+  },
+  "isl-941f7bfb": {
+    "id": "isl-941f7bfb",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-9469b324": {
+    "id": "isl-9469b324",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3033
+  },
+  "isl-946dd770": {
+    "id": "isl-946dd770",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 537
+  },
+  "isl-94a01203": {
+    "id": "isl-94a01203",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 5591
+  },
+  "isl-94d2e5ad": {
+    "id": "isl-94d2e5ad",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2083
+  },
+  "isl-94d9d405": {
+    "id": "isl-94d9d405",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4685
+  },
+  "isl-969f83c1": {
+    "id": "isl-969f83c1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2398
+  },
+  "isl-9738d757": {
+    "id": "isl-9738d757",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1965
+  },
+  "isl-9933c64e": {
+    "id": "isl-9933c64e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2996
+  },
+  "isl-995b1515": {
+    "id": "isl-995b1515",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 715
+  },
+  "isl-9a173156": {
+    "id": "isl-9a173156",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-9aa2ab45": {
+    "id": "isl-9aa2ab45",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 3545
+  },
+  "isl-9b3b5acd": {
+    "id": "isl-9b3b5acd",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4170
+  },
+  "isl-9b6fc547": {
+    "id": "isl-9b6fc547",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4804
+  },
+  "isl-9b8e8ff5": {
+    "id": "isl-9b8e8ff5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1765
+  },
+  "isl-9baf6011": {
+    "id": "isl-9baf6011",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2401
+  },
+  "isl-9c60af92": {
+    "id": "isl-9c60af92",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3339
+  },
+  "isl-9d71a2f5": {
+    "id": "isl-9d71a2f5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2933
+  },
+  "isl-a0528213": {
+    "id": "isl-a0528213",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3626
+  },
+  "isl-a0625782": {
+    "id": "isl-a0625782",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1619
+  },
+  "isl-a0f25a05": {
+    "id": "isl-a0f25a05",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3915
+  },
+  "isl-a10b175c": {
+    "id": "isl-a10b175c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2476
+  },
+  "isl-a22f04cd": {
+    "id": "isl-a22f04cd",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4464
+  },
+  "isl-a36a8295": {
+    "id": "isl-a36a8295",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3527
+  },
+  "isl-a387bea4": {
+    "id": "isl-a387bea4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1902
+  },
+  "isl-a3a4ff7e": {
+    "id": "isl-a3a4ff7e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3084
+  },
+  "isl-a444db2a": {
+    "id": "isl-a444db2a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2777
+  },
+  "isl-a445a1c4": {
+    "id": "isl-a445a1c4",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-a4875a31": {
+    "id": "isl-a4875a31",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-a48ec3a4": {
+    "id": "isl-a48ec3a4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3531
+  },
+  "isl-a7f9d1f3": {
+    "id": "isl-a7f9d1f3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4577
+  },
+  "isl-a8a4dd9a": {
+    "id": "isl-a8a4dd9a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3796
+  },
+  "isl-a8fadfa1": {
+    "id": "isl-a8fadfa1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2386
+  },
+  "isl-a9397134": {
+    "id": "isl-a9397134",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3184
+  },
+  "isl-ab49af82": {
+    "id": "isl-ab49af82",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2155
+  },
+  "isl-ac1de08a": {
+    "id": "isl-ac1de08a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3034
+  },
+  "isl-ac2f2fd1": {
+    "id": "isl-ac2f2fd1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3104
+  },
+  "isl-ac6398a4": {
+    "id": "isl-ac6398a4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3649
+  },
+  "isl-ac979c60": {
+    "id": "isl-ac979c60",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3425
+  },
+  "isl-ad149e0b": {
+    "id": "isl-ad149e0b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 867
+  },
+  "isl-add301df": {
+    "id": "isl-add301df",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2687
+  },
+  "isl-addc4e81": {
+    "id": "isl-addc4e81",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1762
+  },
+  "isl-adf40f0b": {
+    "id": "isl-adf40f0b",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-ae3d3405": {
+    "id": "isl-ae3d3405",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1261
+  },
+  "isl-aeca7eab": {
+    "id": "isl-aeca7eab",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3397
+  },
+  "isl-af807518": {
+    "id": "isl-af807518",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-b014135a": {
+    "id": "isl-b014135a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 441
+  },
+  "isl-b04140c3": {
+    "id": "isl-b04140c3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 4698
+  },
+  "isl-b0534fbc": {
+    "id": "isl-b0534fbc",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-b174a774": {
+    "id": "isl-b174a774",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 478
+  },
+  "isl-b1e6de34": {
+    "id": "isl-b1e6de34",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4919
+  },
+  "isl-b1fe8885": {
+    "id": "isl-b1fe8885",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 597
+  },
+  "isl-b290bf9e": {
+    "id": "isl-b290bf9e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3037
+  },
+  "isl-b2c738e2": {
+    "id": "isl-b2c738e2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3186
+  },
+  "isl-b2d0f3e5": {
+    "id": "isl-b2d0f3e5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2694
+  },
+  "isl-b328d5a2": {
+    "id": "isl-b328d5a2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 2855
+  },
+  "isl-b479d931": {
+    "id": "isl-b479d931",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2992
+  },
+  "isl-b5620aee": {
+    "id": "isl-b5620aee",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2261
+  },
+  "isl-b720986d": {
+    "id": "isl-b720986d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3843
+  },
+  "isl-b782e64c": {
+    "id": "isl-b782e64c",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'seerah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: سير, سيرة, سيرته...)"
+  },
+  "isl-b793e864": {
+    "id": "isl-b793e864",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2116
+  },
+  "isl-b7e51a39": {
+    "id": "isl-b7e51a39",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 933
+  },
+  "isl-b7ed60a1": {
+    "id": "isl-b7ed60a1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3602
+  },
+  "isl-b8207e53": {
+    "id": "isl-b8207e53",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1939
+  },
+  "isl-b8f7662c": {
+    "id": "isl-b8f7662c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 4718
+  },
+  "isl-ba3f4e04": {
+    "id": "isl-ba3f4e04",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2090
+  },
+  "isl-ba5acfd6": {
+    "id": "isl-ba5acfd6",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2463
+  },
+  "isl-ba66715b": {
+    "id": "isl-ba66715b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 5331
+  },
+  "isl-ba8618fc": {
+    "id": "isl-ba8618fc",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2707
+  },
+  "isl-bd142357": {
+    "id": "isl-bd142357",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 6891
+  },
+  "isl-bd250b64": {
+    "id": "isl-bd250b64",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3066
+  },
+  "isl-bdbed783": {
+    "id": "isl-bdbed783",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3563
+  },
+  "isl-be38b357": {
+    "id": "isl-be38b357",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4140
+  },
+  "isl-be5c0b84": {
+    "id": "isl-be5c0b84",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3162
+  },
+  "isl-beb6b0f0": {
+    "id": "isl-beb6b0f0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1597
+  },
+  "isl-bf36ef72": {
+    "id": "isl-bf36ef72",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3266
+  },
+  "isl-bfbe3bbe": {
+    "id": "isl-bfbe3bbe",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1333
+  },
+  "isl-c0274dd3": {
+    "id": "isl-c0274dd3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3266
+  },
+  "isl-c03dced7": {
+    "id": "isl-c03dced7",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'akhlaq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: خلق, أخلاق, خُلق...)"
+  },
+  "isl-c0936200": {
+    "id": "isl-c0936200",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3333
+  },
+  "isl-c0adb8a0": {
+    "id": "isl-c0adb8a0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 3989
+  },
+  "isl-c10d43e4": {
+    "id": "isl-c10d43e4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 5560
+  },
+  "isl-c30de28e": {
+    "id": "isl-c30de28e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2159
+  },
+  "isl-c32410ab": {
+    "id": "isl-c32410ab",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2643
+  },
+  "isl-c3ebb142": {
+    "id": "isl-c3ebb142",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2763
+  },
+  "isl-c4a536a4": {
+    "id": "isl-c4a536a4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2121
+  },
+  "isl-c4b3fccc": {
+    "id": "isl-c4b3fccc",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 4604
+  },
+  "isl-c4d83813": {
+    "id": "isl-c4d83813",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-c5b93252": {
+    "id": "isl-c5b93252",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3888
+  },
+  "isl-c5c7c609": {
+    "id": "isl-c5c7c609",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1159
+  },
+  "isl-c7590415": {
+    "id": "isl-c7590415",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3186
+  },
+  "isl-c8183443": {
+    "id": "isl-c8183443",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-c81c58e1": {
+    "id": "isl-c81c58e1",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3234
+  },
+  "isl-ca9f1de7": {
+    "id": "isl-ca9f1de7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3199
+  },
+  "isl-cbc7891a": {
+    "id": "isl-cbc7891a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2276
+  },
+  "isl-cd4d1888": {
+    "id": "isl-cd4d1888",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4394
+  },
+  "isl-cdac63e0": {
+    "id": "isl-cdac63e0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2360
+  },
+  "isl-ce1b71bd": {
+    "id": "isl-ce1b71bd",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2708
+  },
+  "isl-ce5bf696": {
+    "id": "isl-ce5bf696",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2973
+  },
+  "isl-cea29cdc": {
+    "id": "isl-cea29cdc",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3289
+  },
+  "isl-d0227f8b": {
+    "id": "isl-d0227f8b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3655
+  },
+  "isl-d06a6717": {
+    "id": "isl-d06a6717",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2992
+  },
+  "isl-d0a71a62": {
+    "id": "isl-d0a71a62",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2370
+  },
+  "isl-d126e483": {
+    "id": "isl-d126e483",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4005
+  },
+  "isl-d15d1a95": {
+    "id": "isl-d15d1a95",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3818
+  },
+  "isl-d16b57ea": {
+    "id": "isl-d16b57ea",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-d192e37a": {
+    "id": "isl-d192e37a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2074
+  },
+  "isl-d291bca7": {
+    "id": "isl-d291bca7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3093
+  },
+  "isl-d4007010": {
+    "id": "isl-d4007010",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-d4327cab": {
+    "id": "isl-d4327cab",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'akhlaq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: خلق, أخلاق, خُلق...)"
+  },
+  "isl-d44d24f5": {
+    "id": "isl-d44d24f5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2443
+  },
+  "isl-d44e6fe8": {
+    "id": "isl-d44e6fe8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2581
+  },
+  "isl-d4dbc6b8": {
+    "id": "isl-d4dbc6b8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3347
+  },
+  "isl-d4e2e2dc": {
+    "id": "isl-d4e2e2dc",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2457
+  },
+  "isl-d54fd8e8": {
+    "id": "isl-d54fd8e8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2669
+  },
+  "isl-d5f85bee": {
+    "id": "isl-d5f85bee",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 2884
+  },
+  "isl-d5f87105": {
+    "id": "isl-d5f87105",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1955
+  },
+  "isl-d631779d": {
+    "id": "isl-d631779d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4594
+  },
+  "isl-d6faddeb": {
+    "id": "isl-d6faddeb",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2622
+  },
+  "isl-d739a357": {
+    "id": "isl-d739a357",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3601
+  },
+  "isl-d7a2d117": {
+    "id": "isl-d7a2d117",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3476
+  },
+  "isl-d7c56adc": {
+    "id": "isl-d7c56adc",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3561
+  },
+  "isl-d8ac2c78": {
+    "id": "isl-d8ac2c78",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3937
+  },
+  "isl-d8e6e42f": {
+    "id": "isl-d8e6e42f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2899
+  },
+  "isl-d939e551": {
+    "id": "isl-d939e551",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 3191
+  },
+  "isl-d9ea1e3c": {
+    "id": "isl-d9ea1e3c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3051
+  },
+  "isl-dab3c9f4": {
+    "id": "isl-dab3c9f4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3679
+  },
+  "isl-dc441991": {
+    "id": "isl-dc441991",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2266
+  },
+  "isl-dc9d1503": {
+    "id": "isl-dc9d1503",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-dcb6d4e8": {
+    "id": "isl-dcb6d4e8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 4110
+  },
+  "isl-dd395fbb": {
+    "id": "isl-dd395fbb",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2179
+  },
+  "isl-dd822140": {
+    "id": "isl-dd822140",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2916
+  },
+  "isl-ddc58cc5": {
+    "id": "isl-ddc58cc5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4127
+  },
+  "isl-ded5466d": {
+    "id": "isl-ded5466d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 5,
+    "tokens": 4124
+  },
+  "isl-dfa52092": {
+    "id": "isl-dfa52092",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4072
+  },
+  "isl-e0cb0e7b": {
+    "id": "isl-e0cb0e7b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 4243
+  },
+  "isl-e20d927a": {
+    "id": "isl-e20d927a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2241
+  },
+  "isl-e2248a74": {
+    "id": "isl-e2248a74",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "unreviewed",
+    "defects": 0,
+    "tokens": 65646
+  },
+  "isl-e2711973": {
+    "id": "isl-e2711973",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2485
+  },
+  "isl-e40ef2fa": {
+    "id": "isl-e40ef2fa",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3998
+  },
+  "isl-e4672a9e": {
+    "id": "isl-e4672a9e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3370
+  },
+  "isl-e4c8a66d": {
+    "id": "isl-e4c8a66d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3206
+  },
+  "isl-e622ac43": {
+    "id": "isl-e622ac43",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2346
+  },
+  "isl-e7a5622f": {
+    "id": "isl-e7a5622f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 484
+  },
+  "isl-e81562ec": {
+    "id": "isl-e81562ec",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3785
+  },
+  "isl-e837f328": {
+    "id": "isl-e837f328",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 4712
+  },
+  "isl-e856f88f": {
+    "id": "isl-e856f88f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2918
+  },
+  "isl-e872dad0": {
+    "id": "isl-e872dad0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4225
+  },
+  "isl-e8f0394b": {
+    "id": "isl-e8f0394b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 741
+  },
+  "isl-e946de7d": {
+    "id": "isl-e946de7d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2313
+  },
+  "isl-ea569b55": {
+    "id": "isl-ea569b55",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3030
+  },
+  "isl-eaeb0ee0": {
+    "id": "isl-eaeb0ee0",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2529
+  },
+  "isl-ebc1b275": {
+    "id": "isl-ebc1b275",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3951
+  },
+  "isl-ec2f1d58": {
+    "id": "isl-ec2f1d58",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-ec65b64c": {
+    "id": "isl-ec65b64c",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2112
+  },
+  "isl-ecd6521f": {
+    "id": "isl-ecd6521f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3774
+  },
+  "isl-ee097ab9": {
+    "id": "isl-ee097ab9",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3157
+  },
+  "isl-ee271b17": {
+    "id": "isl-ee271b17",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'haya' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: حيي, حياء, يستحي...)"
+  },
+  "isl-ee373ffe": {
+    "id": "isl-ee373ffe",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3795
+  },
+  "isl-ee380fa3": {
+    "id": "isl-ee380fa3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2553
+  },
+  "isl-f0c08a57": {
+    "id": "isl-f0c08a57",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2997
+  },
+  "isl-f0ecb056": {
+    "id": "isl-f0ecb056",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3094
+  },
+  "isl-f1213a76": {
+    "id": "isl-f1213a76",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1254
+  },
+  "isl-f1d62436": {
+    "id": "isl-f1d62436",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2769
+  },
+  "isl-f2bef952": {
+    "id": "isl-f2bef952",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 4458
+  },
+  "isl-f2ccdca6": {
+    "id": "isl-f2ccdca6",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1058
+  },
+  "isl-f3270ea2": {
+    "id": "isl-f3270ea2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1737
+  },
+  "isl-f3c9f4ab": {
+    "id": "isl-f3c9f4ab",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3826
+  },
+  "isl-f3f09dc7": {
+    "id": "isl-f3f09dc7",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2588
+  },
+  "isl-f3f7d74e": {
+    "id": "isl-f3f7d74e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2096
+  },
+  "isl-f4accfb8": {
+    "id": "isl-f4accfb8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2745
+  },
+  "isl-f4c611da": {
+    "id": "isl-f4c611da",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 3439
+  },
+  "isl-f4e75ff2": {
+    "id": "isl-f4e75ff2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4097
+  },
+  "isl-f59629b6": {
+    "id": "isl-f59629b6",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1979
+  },
+  "isl-f5f9ceac": {
+    "id": "isl-f5f9ceac",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2784
+  },
+  "isl-f5fca662": {
+    "id": "isl-f5fca662",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3186
+  },
+  "isl-f60db728": {
+    "id": "isl-f60db728",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tarbiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: ربو, ربّي, يرب...)"
+  },
+  "isl-f6342250": {
+    "id": "isl-f6342250",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'birr al-walidayn' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: برّ, بر, يبرّ...)"
+  },
+  "isl-f6bbab53": {
+    "id": "isl-f6bbab53",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2181
+  },
+  "isl-f6c0c64a": {
+    "id": "isl-f6c0c64a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4047
+  },
+  "isl-f6f7676b": {
+    "id": "isl-f6f7676b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3666
+  },
+  "isl-f769f5cd": {
+    "id": "isl-f769f5cd",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3299
+  },
+  "isl-f77b3ed4": {
+    "id": "isl-f77b3ed4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3283
+  },
+  "isl-f782f2ed": {
+    "id": "isl-f782f2ed",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2265
+  },
+  "isl-f84ef732": {
+    "id": "isl-f84ef732",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3405
+  },
+  "isl-f8bb1f42": {
+    "id": "isl-f8bb1f42",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2155
+  },
+  "isl-f8bc202e": {
+    "id": "isl-f8bc202e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 4219
+  },
+  "isl-fab3255f": {
+    "id": "isl-fab3255f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1916
+  },
+  "isl-fac650ff": {
+    "id": "isl-fac650ff",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-fb04bcd3": {
+    "id": "isl-fb04bcd3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3230
+  },
+  "isl-fb584945": {
+    "id": "isl-fb584945",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 3726
+  },
+  "isl-fb6a8582": {
+    "id": "isl-fb6a8582",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2532
+  },
+  "isl-fd6abf48": {
+    "id": "isl-fd6abf48",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3053
+  },
+  "isl-fd937511": {
+    "id": "isl-fd937511",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1786
+  },
+  "isl-fe05a9ce": {
+    "id": "isl-fe05a9ce",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 889
+  },
+  "isl-fe2f3c39": {
+    "id": "isl-fe2f3c39",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 4415
+  },
+  "isl-fe625918": {
+    "id": "isl-fe625918",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-fedf4c8c": {
+    "id": "isl-fedf4c8c",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'rifq' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: رفق, رفيقاً, يرفق...)"
+  },
+  "isl-fef5f702": {
+    "id": "isl-fef5f702",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3795
+  },
+  "med-00fa7863": {
+    "id": "med-00fa7863",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1219
+  },
+  "med-081f7c03": {
+    "id": "med-081f7c03",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1202
+  },
+  "med-08886df5": {
+    "id": "med-08886df5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 1988
+  },
+  "med-0b39e5a8": {
+    "id": "med-0b39e5a8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2156
+  },
+  "med-1eb2b059": {
+    "id": "med-1eb2b059",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2185
+  },
+  "med-2dc3af5f": {
+    "id": "med-2dc3af5f",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1227
+  },
+  "med-3f714838": {
+    "id": "med-3f714838",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1437
+  },
+  "med-40813af4": {
+    "id": "med-40813af4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 791
+  },
+  "med-48273aa4": {
+    "id": "med-48273aa4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 476
+  },
+  "med-53feef7b": {
+    "id": "med-53feef7b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 777
+  },
+  "med-61f2e992": {
+    "id": "med-61f2e992",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 987
+  },
+  "med-6de3365b": {
+    "id": "med-6de3365b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1498
+  },
+  "med-6fd9c009": {
+    "id": "med-6fd9c009",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 1290
+  },
+  "med-72806e5e": {
+    "id": "med-72806e5e",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1021
+  },
+  "med-77626be2": {
+    "id": "med-77626be2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1693
+  },
+  "med-87cc2468": {
+    "id": "med-87cc2468",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1556
+  },
+  "med-895d3705": {
+    "id": "med-895d3705",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1595
+  },
+  "med-8b8522f6": {
+    "id": "med-8b8522f6",
+    "status": "translated",
+    "needs_scholar_review": false,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1628
+  },
+  "med-95b2e7e8": {
+    "id": "med-95b2e7e8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1720
+  },
+  "med-9db37ea4": {
+    "id": "med-9db37ea4",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1025
+  },
+  "med-a1a24ab2": {
+    "id": "med-a1a24ab2",
+    "status": "translated",
+    "needs_scholar_review": false,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2447
+  },
+  "med-a1df6423": {
+    "id": "med-a1df6423",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2516
+  },
+  "med-a7b437b7": {
+    "id": "med-a7b437b7",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'tarbiyah' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: ربو, ربّي, يرب...)"
+  },
+  "med-ac9f0f45": {
+    "id": "med-ac9f0f45",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1297
+  },
+  "med-af2d64fa": {
+    "id": "med-af2d64fa",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1381
+  },
+  "med-b207a9dd": {
+    "id": "med-b207a9dd",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1401
+  },
+  "med-b88b7ad3": {
+    "id": "med-b88b7ad3",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1656
+  },
+  "med-b99c1ea8": {
+    "id": "med-b99c1ea8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1685
+  },
+  "med-c7a1bbf6": {
+    "id": "med-c7a1bbf6",
+    "status": "translated",
+    "needs_scholar_review": false,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1516
+  },
+  "med-c974d9d8": {
+    "id": "med-c974d9d8",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 562
+  },
+  "med-ca2a9d86": {
+    "id": "med-ca2a9d86",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 1576
+  },
+  "med-ccf5e011": {
+    "id": "med-ccf5e011",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 1873
+  },
+  "med-cd46475d": {
+    "id": "med-cd46475d",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 2268
+  },
+  "med-cfeefc11": {
+    "id": "med-cfeefc11",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 862
+  },
+  "med-d2bf41e9": {
+    "id": "med-d2bf41e9",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 403
+  },
+  "med-d90d03d6": {
+    "id": "med-d90d03d6",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1347
+  },
+  "med-db5760f5": {
+    "id": "med-db5760f5",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2236
+  },
+  "med-e64897f2": {
+    "id": "med-e64897f2",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 3,
+    "tokens": 2493
+  },
+  "med-e7e88a3b": {
+    "id": "med-e7e88a3b",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1768
+  },
+  "med-ec6f874a": {
+    "id": "med-ec6f874a",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2003
+  },
+  "seed-aggression-23": {
+    "id": "seed-aggression-23",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2402
+  },
+  "seed-aggression-46": {
+    "id": "seed-aggression-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 3999
+  },
+  "seed-bedwet-46": {
+    "id": "seed-bedwet-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2249
+  },
+  "seed-bedwet-79": {
+    "id": "seed-bedwet-79",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2423
+  },
+  "seed-defiance-23": {
+    "id": "seed-defiance-23",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 5209
+  },
+  "seed-defiance-46": {
+    "id": "seed-defiance-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4232
+  },
+  "seed-fear-46": {
+    "id": "seed-fear-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2909
+  },
+  "seed-fear-79": {
+    "id": "seed-fear-79",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2740
+  },
+  "seed-jealousy-23": {
+    "id": "seed-jealousy-23",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 4810
+  },
+  "seed-jealousy-46": {
+    "id": "seed-jealousy-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 4716
+  },
+  "seed-lying-46": {
+    "id": "seed-lying-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 4,
+    "tokens": 6530
+  },
+  "seed-lying-79": {
+    "id": "seed-lying-79",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 3787
+  },
+  "seed-picky-23": {
+    "id": "seed-picky-23",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2127
+  },
+  "seed-picky-46": {
+    "id": "seed-picky-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1905
+  },
+  "seed-picky-79": {
+    "id": "seed-picky-79",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2575
+  },
+  "seed-screen-46": {
+    "id": "seed-screen-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 3855
+  },
+  "seed-screen-79": {
+    "id": "seed-screen-79",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 2109
+  },
+  "seed-shy-46": {
+    "id": "seed-shy-46",
+    "status": "failed",
+    "reason": "term injection: حقن مصطلح: 'haya' في الإنجليزية ولا جذر له في العربية (الجذور المسموحة: حيي, حياء, يستحي...)"
+  },
+  "seed-shy-79": {
+    "id": "seed-shy-79",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1414
+  },
+  "seed-sleep-23": {
+    "id": "seed-sleep-23",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 2185
+  },
+  "seed-sleep-46": {
+    "id": "seed-sleep-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 1,
+    "tokens": 1591
+  },
+  "seed-tantrum-23": {
+    "id": "seed-tantrum-23",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "defects",
+    "defects": 2,
+    "tokens": 5211
+  },
+  "seed-tantrum-46": {
+    "id": "seed-tantrum-46",
+    "status": "translated",
+    "needs_scholar_review": true,
+    "verdict": "clean",
+    "defects": 0,
+    "tokens": 1344
+  }
+}

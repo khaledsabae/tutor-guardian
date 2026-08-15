@@ -1,0 +1,48 @@
+{
+  "id": "isl-ab49af82__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Rulings of Taharah and Wudu in Islam",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تعليم ديني",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ـٍ بْ ا ِ ب ر فُ كَ أَ , للها دقْ بَ طُ ـِ بْ ةَ حَ ؾْ صَ ـْ طَ و لف حٌ بِ صَ تَ م اكَ أَ وَ ؾٍ قْ ؾَ بُ ـُ بْ ور :لَ اقَ ,كؾَ قْ لَ ل ِ بأَ ـِ بْ ـِ ؿ لا دبْ طَ ـْ طَ .)3( ِ للها دُ ابَ ط ِ افَ ق ِ ف ر ش ِ تَ ْـيَ ل ِ تلَا ة ِ طَ اس لا ل ِ ف دُ قُ ر تَ أَ :لَ اؼَ فَ ف ِ ِ ؾجْ ر ِ ِ ب ل ِ ـكَ ر حَ فَ ؾِ خْ َـلا خاٌلإأ سٕنزلا ُاتخ :ُٕثلاجلأ عباشلا للحا بْ ِ إ ـَ َتَتخْ ا : لَ اقَ ﷺ ِ للها لَ قس هُ ل ِ بأَ ـْ طَ .)4(» مِ ودُ ؼَ لْ ا ِ ب ـَ َتتَ خْ اوَ صُ قَ وَ , طبْ لإْ ا ػُ ْتكَ وَ , دُ ادَ حْ تس ٓاوَ , نُ اتَ خلْ ا : سٌ ؿ طْ ػلْ ا« :ﷺ لاقو .)5(» ر ِ اػَ ضْ َْٕ ا ؿ ق ِ ؾؼْ تَ وَ , بِ ر ِ اشَ لا ﴾ ج ٰ م َ ِيؾ َ ِة ۥّ ُ بّ ُ ر َ ً َ هۧ ِ ٰر َ ۡ ةِإ لِٓ َ َ خب ۡ ٱ ِذوَإِ ﴿ :كلاعت فلقق في ,ﭭ سابط ـبا ـطو :سأرلا في ,دسجلا في سؿخو ,سأرلا في سؿخ :ةرافطلاب للها هلاتبا« :لاق فيو ,سأرلا قرفو ,براشلا صقو ,ةضؿضؿلاو ,قاشـتسٓاو",
+  "text_simplified": "The text discusses the rulings of taharah (ritual purification) and wudu and their importance in Islam. It mentions some du'a and actions associated with taharah, such as istinshaq (inhaling water into the nose) and istijmar (cleansing with stones or the like). It also refers to some Prophetic hadiths that clarify the virtue of taharah.",
+  "labels": [
+    "طهارة",
+    "وضوء",
+    "أدعية",
+    "أحاديث",
+    "تعليم ديني"
+  ],
+  "created_at": "2026-06-21T10:29:19Z",
+  "updated_at": "2026-06-21T10:29:19Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ab49af82",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "بعض الأدعية",
+        "english": "some du'a",
+        "why": "The Arabic plural 'ad'iyah' (supplications) is rendered as singular/uncountable 'du'a', losing the plural sense.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

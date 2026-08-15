@@ -1,0 +1,46 @@
+{
+  "id": "isl-06c45ab7__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Incomprehensible Text Requiring Clarification",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "أَ ,اػً قعضَ ﷺ للها ثُ ,ف ِ ض ِ عْ بَ ِ ب زَ بْ خُ لا ت ِ ػَ ؾَ فَ ,افَ لَ ار ثُ ,ر ٍ قع ِ شَ ـْ ِ م اصً ار :لَ اقَ ,ﷺ ِ للها ل ِ قس كلَِ إ ل ِ ـ تْ ؾَ س ثُ ,ف ِ ض ِ عْ بَ ِ ب )4(ل ِ ـتْ ثَ َٓ وَ يد ِ يَ تَ حْ تَ فُ تْ س ف ِ قْ ؾَ طَ تُ ؿ ؼُ فَ ,سُ اَـلا فُ عَ م لا ل ِ ف ﷺ ِ للها لَ قس تُ دْ جَ قَ فَ ,ف ِ ِ ب تُ بْ هَ ذَ فَ .)168ص( »ىقلها مذ« (1) .تمسامص دامٜمؾم٢مس )215( »مػبمٙمًا دهزمًا« مذ لم٘مٝمٞبمًا فمضرمظأ (2) .)22( »خقمٞمِمًا ؿجمٕمُ« مذ عمٞجم ـمسا فمضرمظأ (3) .فامٗتمًٓا قهو ثامٞتمًٓا ـمُ فمٓمسإ مغمق فمْمٕمسو فمؾأر مغمق فمْمٕمس تمٗمً :ينتْثََلاوَ (4) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ » مٍ اعَ طَ ِ ب« :لَ اقَ ,ؿ عَ كَ :تُ ؾْ ؼُ فَ » ةَ حَ ؾْ صَ قبُ أَ ؽَ ؾَ س آ« :ﷺ للها لُ قس ـَ قْ بَ تُ ؼْ ؾَ طَ كْ اوَ ؼَ ؾَ طَ كْ افَ »اقم عَ كَ :تُ ؾْ ؼُ فَ اجَ دْ قَ ؿٍ قْ ؾَ س أُ ايَ :ةَ حَ ؾْ صَ قبُ أَ لَ اؼَ فَ ,فُ تُ ر بَ خْ ل َ فَ ةَ حَ ؾْ صَ ابَ أَ تُ ئْ ج ِ كتَ حَ ,ؿ ؾَ طْ أَ فُ لُقس ا",
+  "text_simplified": "The text contains unclear and confusing expressions, and no clear tarbiyah-related information can be derived from it. It appears to be written in a disorganized manner or contains spelling and grammatical errors. It is advised to consult a specialist to clarify the content.",
+  "labels": [
+    "نص غير واضح",
+    "أخطاء إملائية",
+    "استشارة تربوية"
+  ],
+  "created_at": "2026-06-21T10:28:28Z",
+  "updated_at": "2026-06-21T10:28:28Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-06c45ab7",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "أنصح بالتواصل مع مختص لتوضيح المحتوى.",
+        "english": "It is advised to consult a specialist to clarify the content.",
+        "why": "The Arabic uses the first-person direct advice 'أنصح' (I advise), which is warm and personal. The English shifts to the impersonal passive 'It is advised', making it stiffer and less direct.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

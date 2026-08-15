@@ -1,0 +1,56 @@
+{
+  "id": "isl-20cd665c__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching Children Salah and Religious Tarbiyah",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ذ ذ ُ َ َ ﴿ :أرق ,رادلا ؾخدف فؾهأ كلإ عجر اذنف ,افرص ؿهاقكد ىِٰإ ميجيع ندٍتّ لَو .)11ص( »دمًقمًا ةحمٞمّمٟ مذ دبمٙمًا ةتمٗمً« (1) .ـسمط دمٜسمس همػمهو ،)71( »دهزمًا« مذ دواد قمسأ فمضرمظأ (2) ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ بّ ّ ر َ ق ُ ز ۡ رو َ ِّۚ يِػ ً ۡ ٓ ُ ِ َ ِ خ ف ۡ َ لنِّ اي َ نّ ۡ لَّ ُ ٱ ِةٔ ٰ ي َ لۡ َ ٱ َ ةر َ ْ ۡ ز َ ً ۡ ٓ ُ ِ ۡ ٌِ ّ ا ج ٗ ٰو َ ز ۡ أ ٓ ۦِِّة اِ َ ػ ۡ خ ذ ٌ َ اٌ َ َ ُ ُ ۡ َ ُ ۡ ذ ٗ ۡ َ ُ َ ۡ َ َ َ ۡ َ َ ۡ َ ۡ َ ٰ َ ذ َ َ ۡ َ ۡ ُ ۡ َ ٰ َ ۡ َ َ ۗمكزرُ َ نَّ ۡا كز ر مي س ٔ ن لَ ۡآييغ بِ طغٱو ِةٔيػلٱِة ميْأ رمأو ١٣١ ق بخو .)1(للها ؿؽؿحر ةلاصلا ةلاصلا :لاق ﴾ٰ َ ۡ ذ ُ َ ٰ َ ۡ َ ىٔلخيِل ثتِلعىٱو ؿؾعي للهاو ,ؼثاقلا مايأ في لبأ كؾط تؾخد :ؾبـح ـب دؿحأ ـب حلاص لاق دق ,افقؾط سؾجي دبل فل ناك دقو ,رصعلا ةلاصل جرخ دقو ,ـحك ةلاح يأ في ابأ اي لـغؾب فقف اذإو ,دغاك باتك فتحت اذنف لؾب دق كتح ةرقثك نقـس فقؾط تتأ ةعبرلب ؽقلإ تفجو دقو ,ـيدلا ـم ؽقؾط امو ,ؼقضلا ـم فقف تكأ ام",
+  "text_simplified": "Parents must teach children salah (prayer) and accustom them to it from a young age. It is also essential for parents to be a good example for their children in performing acts of worship. The text highlights the importance of tarbiyah (nurturing) children upon religious values and akhlaq (moral character).",
+  "labels": [
+    "تربية",
+    "صلاة",
+    "قدوة",
+    "أطفال",
+    "دين"
+  ],
+  "created_at": "2026-06-21T10:30:31Z",
+  "updated_at": "2026-06-21T10:30:31Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-20cd665c",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ينبغي",
+        "english": "It is also essential",
+        "why": "The Arabic 'ينبغي' means 'should' or 'ought to', expressing a recommendation; the English 'essential' expresses necessity, making the obligation stronger than the source.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "القيم الدينية والأخلاقية",
+        "english": "religious values and akhlaq (moral character)",
+        "why": "The Arabic phrase means 'religious and moral values' (one set of values described by two adjectives). The English splits it into 'religious values' and 'akhlaq (moral character)', changing the meaning and transliterating an adjective as a noun that is not in the source.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

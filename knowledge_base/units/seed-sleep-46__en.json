@@ -1,0 +1,47 @@
+{
+  "id": "seed-sleep-46__en",
+  "domain": "medical",
+  "source_file": "curated/AAP / NHS - Children's sleep",
+  "title": "Sleep Difficulties at the Age of Four to Six",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "مشاكل النوم",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "AAP / NHS - Children's sleep",
+  "text_original": "يحتاج الطفل في هذا العمر إلى نحو ١٠ إلى ١٣ ساعة نوم. ثبّت موعد نوم واستيقاظ واحداً كل أيام الأسبوع حتى العطلات. اصنع روتيناً مهدّئاً قبل النوم بنصف ساعة بعيداً عن الشاشات والألعاب الحركية والطعام الثقيل. إن كان يخاف من الظلام استخدم إضاءة خافتة وطمئنه، وتجنّب القصص أو الأفلام المخيفة قبل النوم. إن جاء لغرفتك ليلاً أعِده بهدوء وحزم إلى سريره دون عتاب طويل. تجنّب الكافيين في المشروبات، واجعل أيامه مليئة بالحركة واللعب فهذا يحسّن نومه.",
+  "text_simplified": "At this age, a child needs about 10 to 13 hours of sleep. Keep a consistent bedtime and wake-up time every day of the week, including weekends. Create a calming routine half an hour before bed, away from screens, physical play, and heavy food. If they are afraid of the dark, use dim lighting and reassure them, and avoid scary stories or films before bed. If they come to your room at night, gently and firmly return them to their bed without lengthy reproach. Avoid caffeine in drinks, and ensure their days are filled with movement and play, as this improves their sleep.",
+  "labels": [
+    "النوم",
+    "روتين النوم",
+    "الخوف من الظلام",
+    "4-6 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "AAP / NHS - Children's sleep",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-sleep-46",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "حتى العطلات",
+        "english": "including weekends",
+        "why": "The Arabic 'العطلات' means holidays/vacations in general, including weekends and other days off. The English narrows this to only weekends, omitting non-weekend holidays.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

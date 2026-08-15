@@ -1,0 +1,38 @@
+{
+  "id": "isl-327af9d3__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Unclear Description of Wudu and Salah Rituals",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "سلوك ديني",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "اطَ ـِ بْ ء ِ ار بَ لْا ـِ بْ دَ يز ِ يَ ـْ طَ و نَ اكَ ػَ قْ كَ وَ ,؟ ل ُ ضَ قَ تَ يَ ﷺ لُ قس نَ اكَ ػَ قْ كَ ؿ ؽُ يَ ر ِ ُ لأَ فَ اقعُ ؿ ِ تَ جْ ا :ل ِ بأَ لَ اقَ اطَ دَ وَ فُ ؾَ هْ أَ وَ ف ِ ق ِ ـبَ عَ ؿ جَ فَ : لَ اقَ , ؿ كُ ايَ ِ إ ل ِ تبَ حْ صُ ر ير ِ دْ أَ َٓ لكِ ِ نفَ ,؟لؾِ صَ يُ ,اثً لاَ ثَ كَـؿ قُ لْا دَ قَ لْا ؾَ س غَ وَ ,اثً لاَ ثَ فُ فَ جْ وَ ؾَ س غَ وَ ؼَ شَ ْـتَ س فَ , ءقضُ قَ ِ ب هاضَ فقْ كَ ذُ أُ وَ فُ س قُ لْا لـعْ يَ - ,اثً لاَ ثَ هذهَ هُ دَ يَ ؾَ س - ,اثً لاَ ثَ ؾَ جْ ر غَ وَ ,اثً لاَ ثَ كَـؿ قُ لْا لـعْ يَ ؾَ جْ ر نَ اكَ ػَ قْ كَ ؿ ؽُ يَ ر ِ أُ نْ أَ تُ قْ لَأَ ام اذَ ؽَ هَ : لَ اقَ – ىر قُ لْا ل ِ ـعْ يَ , ة ِ لاَ صَ لا ِ ب ر ير ِ دْ كَ َٓ ةً لاَ صَ كؾَ صَ فَ فُ تَ قْ بَ ؾَ خَ دَ ؿ ثُ , ل ُ ضَ قَ تَ يَ ثُ ,سي ـْ م تايَ آ فُ",
+  "text_simplified": "The text discusses the rituals of wudu and salah in an incomprehensible manner due to distorted characters. It appears to be an attempt to describe the steps of wudu and salah, but the text is unclear.",
+  "labels": [
+    "وضوء",
+    "صلاة",
+    "طقوس دينية",
+    "تعليم ديني"
+  ],
+  "created_at": "2026-06-21T10:24:51Z",
+  "updated_at": "2026-06-21T10:24:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-327af9d3",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

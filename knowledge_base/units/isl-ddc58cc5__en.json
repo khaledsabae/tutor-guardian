@@ -1,0 +1,56 @@
+{
+  "id": "isl-ddc58cc5__en",
+  "domain": "islamic_parenting",
+  "source_file": "Rakaiz_Tarbiya.pdf",
+  "title": "Responsibility of Parents in the Tarbiyah of Children",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية الأبناء",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "تربية البنات",
+  "text_original": "D C B A@ ? > =  . [ ٢٨- ٢٧ : ل ﺎﻔﻧﻷا] ( J I H G F    ﹺ  (cid:3) ﲈﻛ ؛ءﺎﺑﻵا ﲆﻋ ﷲ ا ﻦ ﻣ ﺔﹲﻤﻴﻈﻋ ﺔﹲﻤﻌﻧو ﺔﹲﺒﻫ ءﺎﻨﺑﻷا ءﻻﺆﻫو ³ ² ± ° ¯ ® ¬ « ª © ¨ : ل ﺎﻗ (cid:3)  . [ ٤٩ : ￯ رﻮﺸﻟا] ( º ¹ ¸ ¶ µ ´  ﻢ ﻬﻴﻠﻋ ﺐ َ ﺟوأو ،ﻢ ﻬﺋﺎﻨﺑأ ﻰﻠﻋ ءﺎﺑﻵا ﷲا ﻦ ﻤﺘـ ﺋ ا ﺪﻗو ن ْ ﺈ ِ ﻓ ؛ءﺎﺑﻶﻟ ار ًﺎﺒﺘﺧاو ﺎﻧ ًﺎﺤﺘﻣا ﺎ ﻬﻠﻌﺟو ،ﻢ ﻬﻫﺎﺠﺗ ت ٍ ﺎﺒﺟاوو ﺎﻗ ًﻮﻘﺣ  ﺮ ﹲﺟأ ﷲ اﺪ ﻨﻋ ﻢ ﳍ ن ﺎ ﻛ ﷲ ا ﻢﻫ ُ ﺮ َﻣأ ﺎ ﻤﻠﺜﻣ ﻢﻬﺋﺎﻨﺑأ ه َﺎﺠﺗ ﺎﲠ اﻮﻣﺎﻗ  ﻢ ﻬ ﺴﻔﻧ أ (cid:3)ا ﻮﺿ ﺮﱠـ ﻋ ﹶ ﺪ ﻘﻓ ﺎﻬﻴ ﻓ ا ﻮﻃ ﺮﱠـ ﻓ ن إ ﺎﻣﱠ أو ، ﻞ ﹲﻳﺰﺟ ب ﹲ اﻮﺛو ، ﻢﹲ ﻴﻈﻋ (cid:3) . ﻢﻬ ﻄﻳﺮﻔﺗ ﺐ ﺴﺤﺑ ﺔ ﺑﻮﻘﻌﻠﻟ  ² ± ° ¯ ® ¬ « :  ﷲا لﺎﻗ  . [ ٦ : ﻢ ﻳﺮﺤﺘﻟا] ( º ¹ ¸ ¶ µ ´ ³ ـﻳﺎﻋر بِ ﻮﺟو ﰲ ﻢٌ ﻴﻈﻋ ﻞٌ ﺻأ ﺔُ ﻳﻵا هﺬﻫو . ﻢﻬﻟاﻮﺣﺄﺑ ﺔﻳﺎﻨﻌﻟاو ،ﻢ ﻬﺘﻴﺑﺮﺗو  ه ﺬﻫ ﲑﺴﻔﺗ ﰲ ¢ ﺐ ﻟﺎﻃ ﰊأ ﻦﺑ ﲇ ﱡ ﻋ ﺪﺷاﺮﻟا ﺔﻔﻴﻠﳋا لﺎﻗ  . « ﻢ ﻫﹸ ﻮﺑدﱢ أو ،ﻢﻫﻮﻤ ﹸ ﻠﱢﻋﹶ » :ﺔﻳﻵا . (١٠٣/ ٢٣) « نآﺮﻘﻟا ﻞﻳوﺄﺗ ﻦ ﻋ نﺎﻴﺒﻟا ﻊﻣﺎﺟ» ﰲ يﱡ ﱪﻄﻟا",
+  "text_simplified": "Children are a great blessing from Allah, and parents must engage in their tarbiyah (upbringing and nurturing) and teach them. Whoever fulfills this duty will earn a great reward, while whoever falls short exposes themselves to punishment. The noble ayah commands the tarbiyah and teaching of children.",
+  "labels": [
+    "تربية",
+    "أبناء",
+    "تعليم",
+    "مسؤولية",
+    "دين"
+  ],
+  "created_at": "2026-06-20T11:33:07Z",
+  "updated_at": "2026-06-20T11:33:07Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Rakaiz_Tarbiya",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ddc58cc5",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "ويجب على الآباء تربيتهم وتعليمهم",
+        "english": "and parents must engage in their tarbiyah (upbringing and nurturing) and teach them",
+        "why": "The Arabic is direct and imperative ('must raise them and teach them'), while the English uses a formal noun phrase 'engage in their tarbiyah' with a parenthetical, making it stiff and less direct.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "من يقوم بذلك",
+        "english": "Whoever fulfills this duty",
+        "why": "The Arabic says 'whoever does that' (referring to upbringing and teaching), but the English adds 'duty' and changes 'does' to 'fulfills', narrowing the meaning to completing an obligation rather than simply performing the action.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

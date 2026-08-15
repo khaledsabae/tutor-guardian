@@ -1,0 +1,64 @@
+{
+  "id": "isl-12f1f119__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Guiding Children towards Religious and Moral Values",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية دينية وأخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ِ للها د ِ بْ طَ ؾِ تْ قَ ؾَ بْ قَ ء أَ كؾَ طَ ر ِ قْ بَ زُ لا ـُ بْ ِ للها دُ بْ طَ وَ اكَ أَ ,ةً قَ فاعَ لَ تقْ ؿ لْا لف نَ إ : لَ اقَ ,ةً عَ جوَ :تْ لَاقَ ,؟ؽَـيدجتَ ػَ قْ كَ :للها دُ بْ طَ افَ لَ لَ اؼَ فَ نْ أَ لف ِ تَ شْ أَ ام ِ للهاقَ فَ , ؾْ عَ ػْ تَ َلافَ ,؟ هُ اَـؿ تَ تَ ؽَ ِ لذَ ِ ؾفَ ل ِ تقْ ؿ ِ ب تُ ؿشت ؽَ ؾَ عَ لَ : تْ لَاقَ ِ إوَ ,ؽبَ ستَ حْ ل َ فَ ؾَ تَ ؼْ تُ نْ أَ ا م إ ,ؽقْ فَ رصَ دحَ أَ لؾَ طَ لتل ْ يَ كتَ حَ تَ قم .)3975( يراخبمًا فمضرمظأ (1) ؿمص خبمٓي ضمٞخمعا ـبمٚمًا ـمُ ذختي امُ :يرهزٕا لامى :ـمٙسمش دمىو ،فام٘مًا سرميو ةزمٛلها حتمٗمس (2) .ؾمّمٛي كتمط كمؽي .ؾمسلإاو سامٜمًا مذ نقمٙي ،عيسرمًا (3) نأ ؾمٛتيحو ةورمق ممإ حمٞحص دامٜمؾم٢مس )111/3( »ىمؼمٙمًا تام٘بمٓمًا« مذ دمٕمؾ ـمسا فمضرمظأ (4) .فمٞمسأ ـمُ امٝمٕمٛمؾ نقمٙي ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ : لَ اقَ ,تقْ ؿ كَ افَ ؾُ بَ ؼْ تَ فَ ,ؽؼُ فاقَ تُ َٓ ةطَ خ ؽقْ ؾَ طَ ضَ ر عْ تُ نْ أَ كَ ايَ ِ نفَ ,)1(لـ قْ طَ .ؽَ لذَ افَ كُ ز ِ حْ قُ فَ ؾتَ ؼْ قُ لَ ر ِ قْ بَ زُ لا ـُ بْ ا كَـطَ اؿ هذه كؾط كتأ",
+  "text_simplified": "The text includes a discussion about *tarbiyah* (the nurturing and upbringing of children) and teaching them religious and moral values. It highlights the importance of guiding children toward good behavior and deepening their understanding of the *deen* (religion). It also mentions some Prophetic *ahadith* (sayings of the Prophet ﷺ) that encourage kind and excellent treatment of children.",
+  "labels": [
+    "تربية",
+    "قيم دينية",
+    "أخلاق",
+    "تعليم",
+    "طفل"
+  ],
+  "created_at": "2026-06-21T10:31:55Z",
+  "updated_at": "2026-06-21T10:31:55Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-12f1f119",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "تربية الأطفال",
+        "english": "*tarbiyah* (the nurturing and upbringing of children)",
+        "why": "The Arabic uses the ordinary word تربية (upbringing/education), but the English transliterates it as tarbiyah with a gloss, making the tone more academic and less direct than the simple Arabic.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تعزيز فهمهم للدين",
+        "english": "deepening their understanding of the *deen* (religion)",
+        "why": "تعزيز means strengthening/reinforcing, not deepening; the English changes the nuance.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "حسن التعامل مع الأطفال",
+        "english": "kind and excellent treatment of children",
+        "why": "The Arabic says حسن (good/kind) only; 'excellent' is an addition not present in the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "id": "isl-ac979c60__en",
+  "domain": "islamic_parenting",
+  "source_file": "quran_al_mutaffifin_29_34.txt",
+  "title": "The Believers Laughing at Those Who Mocked Them on the Day of Resurrection",
+  "language": "en",
+  "age_group": "13-15",
+  "behavior_type": "التعامل مع سخرية الأصدقاء من الالتزام",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_info": "القرآن الكريم، سورة المطففين، الآيات 29-34",
+  "text_original": "إِنَّ الَّذِينَ أَجْرَمُوا كَانُوا مِنَ الَّذِينَ آمَنُوا يَضْحَكُونَ * وَإِذَا مَرُّوا بِهِمْ يَتَغَامَزُونَ * وَإِذَا انقَلَبُوا إِلَىٰ أَهْلِهِمُ انقَلَبُوا فَكِهِينَ ... فَالْيَوْمَ الَّذِينَ آمَنُوا مِنَ الْكُفَّارِ يَضْحَكُونَ (سورة المطففين: 29-34).",
+  "text_simplified": "When your child’s friends mock him for his commitment, read with him Surah Al-Mutaffifin (29-34), which describes how the criminals mocked the believers in this world, then the words of Allah: «فَالْيَوْمَ الَّذِينَ آمَنُوا مِنَ الْكُفَّارِ يَضْحَكُونَ», interpretation of the meaning: 'So today those who believed are laughing at the disbelievers.' The goal is not gloating but to strengthen his conviction that the laughter of others today does not measure the correctness of his stance.",
+  "labels": [
+    "السخرية من الالتزام",
+    "الصبر على الأذى",
+    "الآخرة",
+    "المراهقة"
+  ],
+  "created_at": "2026-07-30T12:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "القرآن الكريم — سورة المطففين"
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ac979c60",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أي ينقلب الموقف يوم القيامة",
+        "english": "(omitted)",
+        "why": "The explanatory clause is omitted, losing the explicit statement that the situation is reversed on the Day of Resurrection.",
+        "severity": "medium"
+      },
+      {
+        "type": "structure",
+        "field": "text_simplified",
+        "arabic": "قوله تعالى",
+        "english": "the words of Allah",
+        "why": "The honorific 'تعالى' (Exalted is He) is dropped.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

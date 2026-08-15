@@ -1,0 +1,56 @@
+{
+  "id": "isl-ba3f4e04__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching Children the Rights of Parents and Ihsan (Excellence) Towards Them",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "جرخ :لاؼي نأ هرؽي ناكو ,ةيريقج افؿسا ﷺ .)2145( ؿمٚسمُو ،)5467( يراخبمًا فمضرمظأ (1) .)117/14( »ؿمٚسمُ حشر« (2) .حمٞحص دامٜمؾم٢مس )838( »درمٗمعا بدٕا« مذ يراخبمًا دمٜمق قهو (3) .فمس بمٞسمعا ـمسا ـمق ،دواد ـمق ،يدمق بيأ ـمسا ـمق )475/8( ةبمٞمؿ بيأ ـمسا فمضرمظأ (4) .)2139( ؿمٚسمُ فمضرمظأ (5) .)2141( ؿمٚسمُ فمضرمظأ (6) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ ,افسػك لكزت :ؾقؼف ,ةرب افؿسا ناك بـيز نأ ,ﭬ ةريره لبأ ـطو .)2142( ؿؾسمو ,)6192( يراخبلا فجرخأ »بـيز ﷺ للها لقسر اهاؿسف .فـم ـسحأ ؿسا كلإ ؿسٓا ؾيقحت باب : لَ اؼَ فَ ,ﷺ ل ِ بـَ لا كلَِ إ ء اجَ هُ ابَ أَ نَ أَ , فق ِ بأَ ـْ طَ , بِ قَ س لْا ـِ بْ ا ـْ طَ و لْا ـُ بْ ا : لَ اقَ ,ل ِ بأَ فقكاؿ قِ غَ أُ َٓ : لَ اقَ , ؾٌ فْ س تَ كْ أَ : لَ اقَ , نٌ زْ حَ : لَ اقَ .)1(» ةُ كَ وزُ حُ لْا تْ لَازَ اؿ كؾط سقل ةهورؽؿلا ءاؿسٕا رققغتب ماسلا فقؾط هرمأ نأ لدي ثيدحلا اذه« كـعم كؾط ناك قل فكٕ ,ةقهارؽلا كـعم كؾط ؽلذ نأو ,بقجقلا فجو .)2(»ؽلذ لبـلا غقس ٓو ,نزح كؾط تابثلا دقعس دجل زجي ؿل بقجقلا .)3(رذـؿلا هاؿسو نلاف ـم دقسأ لبأ ـبا ؿسا ﷺ رقغو فجو كؾط ـسحلا ؿسٓاب حقبؼلا ؿسٓا رققغت فبجعي ﷺ لبـلا ناك« ةدط للها لقسر رقغ دقو ,ـسحلا للػلا فبجعي ناك فكٕ ,ـؿقتلاو لؤاػتلا للها دبط كلإ صاعلا ـب ورؿط ـب للها دبط ؿسا لقحو بـيزب ةرب رقغ ,لماسأ",
+  "text_simplified": "Parents must teach their children the rights of parents and ihsan (excellence) towards them. They should also raise their children upon birr (righteousness) and obedience, while being mindful of their feelings and not neglecting them.",
+  "labels": [
+    "حقوق الوالدين",
+    "تربية الأبناء",
+    "البر",
+    "الطاعة",
+    "الإحسان"
+  ],
+  "created_at": "2026-06-21T10:17:35Z",
+  "updated_at": "2026-06-21T10:17:35Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-ba3f4e04",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "تعليم الأبناء حقوق الوالدين والإحسان",
+        "english": "Teaching Children the Rights of Parents and Ihsan (Excellence) Towards Them",
+        "why": "The English title adds 'Towards Them', which is not present in the Arabic title. The Arabic title does not specify the object of ihsan; the addition is an interpretive expansion.",
+        "severity": "low"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "الإحسان",
+        "english": "ihsan (excellence)",
+        "why": "The transliterated term 'Ihsan' is capitalized in the title but appears lowercase in the body text, creating inconsistent capitalization within the same document.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

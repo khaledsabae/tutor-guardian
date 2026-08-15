@@ -1,0 +1,39 @@
+{
+  "id": "isl-11c1bec0__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "The Prophetic Tarbiyah Curriculum and Considering Individual Differences",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إيجابية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "ِ وم ُ ع َ و َ ه ِ ّ ِ لكُ رِم ْ َﻷْا . \" 32 ذَه َ ك َ ْ يَلع َ فﱠ كُ \" :لَاَق ه ِِ ناس َ ِ لِب ذَخ َ َأَف ، ِ (cid:589)ﱠا ﱯ ﱠ ِ َن (cid:686) َ ىَل َ ـب :ت ُ ْلُـق \" ؟ه ِ ّ ِ لكُ ك َ ِ لَذ ك ِ ﻼََﲟ ِ كَ ُ ﱪِخ ْ ُأ ﻻََأ 87 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا همئﻼيو هقيطي ام ﱃإ ههجو ـ مارﳊاو لﻼﳊ(cid:682) ةمﻷا ملعأ وهو ـ هتادادعتساو ذاعم ةقاط نم ملع اﳌ ملسو هيلع ﷲ ىلص هنأ فيك انه ظحﻼنو هادادعتساو ﰊارعﻷا ةقاطف ،ةنﳉا لوخدل اببس اهلعجو ضئارفل(cid:682) هعم ىفتكا ﰊارعﻷا نأ ﲔح ﰲ ،ةنﳉا هلوخدل اببس ضئارفلاو هل لفاونلا لعجو . ذاعم دادعتسا و ه سيل ا وموق هنع ﷲ يضر ذاعم نب دعس ﰲ لاق ثيح ،دارفﻸل ةيعامتجﻻا ةناكﳌا كلذك ىعار دقف ،تاقاطلا تافﻼتخا هتيبرت ﰲ ىعار هنأ امكو ،ذئموي شيرق ديس و هو ةكم حتف موي انمأم هتيب لعج امنيح هنع ﷲ يضر نايفس ﰊﻷ هفيرشت كلذكو ،هموق ﲔب هتناكﲟ هملعل مكديسل اﳑ ملسو هيلع ﷲ ىلص هتﲑس ﰲ ﲑثك فقاوﳌا هذه ﲑغو ةدايقلا ﰲ هتردقب هملعل ةتؤم موي هنع ﷲ يضر ديلولا نب دلاﳋ ةيار هؤاطعإ كلذكو . هتمأ ةيبرت ﰲ ملسو هيلع ﷲ ىلص هتيعقاو ىلع لدي ة ليسوو اقلطنمو ادصقم ةين(cid:682)رلا :اثل(cid:684) يحولا لعﳚ جهنم و هف .ا(cid:275)وقو اهزيﲤ اهنم دمتست ﱵلا ىرخﻷا صئاصﳋا ردصم يه ةيصاﳋا هذهو",
+  "text_simplified": "The text discusses a Prophetic tarbiyah (upbringing) curriculum that considers the individual differences among children and employs diverse methods such as motivation and honoring to reinforce positive behavior. It explains how the Prophet ﷺ dealt with the Sahabah (his companions) in ways suited to their abilities and social status to achieve tarbiyah goals.",
+  "labels": [
+    "تربية نبوية",
+    "فروق فردية",
+    "تحفيز",
+    "تكريم",
+    "قدوة حسنة"
+  ],
+  "created_at": "2026-06-20T14:40:02Z",
+  "updated_at": "2026-06-20T14:40:02Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-11c1bec0",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

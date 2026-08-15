@@ -1,0 +1,64 @@
+{
+  "id": "aqe-d4f44453__en",
+  "domain": "aqeedah",
+  "source_file": "aqidah_unified_manifest.md",
+  "title": "Al-Asma' al-Husna (The Most Beautiful Names of Allah)",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تعليم_العقيدة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_فقهي",
+  "reference_info": "مسار العقيدة — أسماء الله الحسنى. المصادر: العقيدة الطحاوية، القواعد الأربع، ثلاثة الأصول، أسئلة الأطفال الإيمانية (الركف)، العقيدة أولاً (الجريش).",
+  "text_original": "أسماء الله الحسنى\n\nالتركيز: 9 أسماء تُعلّم الطفل صفات ربه\n\nالدليل: وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ (الأعراف: 180).\n\nالتطبيق اليومي: أسبوعياً: اختر اسماً واحداً وربّطه بحادثة يومية (الرزاق عند الأكل، البصير في السر).\n\nنصيحة للأب/الأم: لا تُثقل الطفل بـ99 اسماً دفعة واحدة؛ ابدأ بالأسماء المألوفة في القرآن.",
+  "text_simplified": "Al-Asma' al-Husna introduce the child to the attributes of their Lord. Allah says: «وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ». Choose one name each week and connect it to a daily situation: *Al-Razzaq* (The Provider) at mealtime, *Al-Basir* (The All-Seeing) when they are alone. Do not overwhelm your child with all ninety-nine at once; start with the names most familiar in the Qur'an.",
+  "labels": [
+    "عقيدة",
+    "توحيد",
+    "تربية_إسلامية",
+    "نشء",
+    "names_of_allah"
+  ],
+  "created_at": "2026-06-24T13:13:17Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "aqidah_unified_manifest",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "aqe-d4f44453",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "أسماء الله الحسنى",
+        "english": "Al-Asma' al-Husna",
+        "why": "The transliteration omits the word 'Allah' from the Arabic phrase, rendering it as 'Al-Asma' al-Husna' instead of 'Asma' Allah al-Husna'. The translation in parentheses includes 'of Allah', but the transliteration itself is incomplete.",
+        "severity": "medium"
+      },
+      {
+        "type": "structure",
+        "field": "text_simplified",
+        "arabic": "قال تعالى",
+        "english": "Allah says",
+        "why": "The honorific 'تعالى' (Exalted is He) is dropped in the English rendering. The Arabic explicitly says 'قال تعالى', but the English only says 'Allah says' without the honorific.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ابدأ بالأسماء المألوفة في القرآن",
+        "english": "start with the names most familiar in the Qur'an",
+        "why": "The Arabic 'المألوفة' means 'familiar' or 'the familiar ones', but the English adds the superlative 'most familiar', which is not present in the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

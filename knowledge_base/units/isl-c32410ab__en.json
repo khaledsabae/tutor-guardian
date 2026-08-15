@@ -1,0 +1,48 @@
+{
+  "id": "isl-c32410ab__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Tarbiyah of Children upon Islamic Values and Adab",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": ")511/12( ةبمٞمؿ بيأ ـمسا فمضرمظأ (2) .حمٞحص دامٜمؾم٢مس )511/12( ةبمٞمؿ بيأ ـمسا فمضرمظأ (3) .حمٞحص دامٜمؾم٢مس )21/9( ةبمٞمؿ بيأ ـمسا فمضرمظأ (5) .حمٞحص دامٜمؾم٢مس همػمهو ،)21/9( ةبمٞمؿ بيأ ـمسا فمضرمظأ (6) )51( »فمٛمٞمٚمٕمشو لمُرمًا ؾئامْمو« مذ نيامؼمٓمًاو ،عمٞميو ـمق )512/12( ةبمٞمؿ بيأ ـمسا فمضرمظأ (7) .ملحمٞحمّمًا طشر مغمق حمٞحص هدامٜمؾإو فمس دهامج ـمق ،شمٛمقٕا ـمق اهملامي ةدئاز ـمق ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ ,فقؾط سؾجي شارف فل حرطيو سؾجي ﭬ سكأ ناك :لاق ,ةماؿث ـط ام سئب لـب اي :لاؼف ,لمرك ـحكو امقي اـقؾط جرخف ,فيدي ـقب هدلو لمريو .)1(»ساصرؼلا لطخأ اؿف كمرف ذخأ ؿث ,نقمرت :١سابطياٚ ّٛعيا دلاٚلأا ًِٝعت في بغسٜٚ ةبطلام :عبرأ ٓإ بعلو قفل قفف للها ركذ فقف سقل ءلش ؾك« :ﷺ لاق ؾجرلا ؿقؾعتو ,ـقضرغلا ـقب فقشمو ,فسرف ؾجرلا بيدلتو ,فتأرما ؾجرلا .حقحص داـسنب )8894( »ىبرؽلا« في لئاسـلا فجرخأ »ةحابسلا :لاق ,ؾفس ـب ةمامأ لبأ ـط )2(ـسح داـسنب هرقغو ,)46/1( دؿحأ جرخأ مقعلا ؿؽكاؿؾغ اقؿؾط نأ حارجلا ـب ةدقبط لبأ كلإ ﭬ رؿط بتك .»لمرلا ؿؽتؾتاؼمو :ٚدعياب دلاٚلأا ١كباطَ شٛيجٚ ﷺ للها لقسر لاق :لاق ,ﭬ عقكٕا ـب ةؿؾس ـط )1847( ؿؾسم جرخأ للها لقسر نياططأ ؿث :لاق ,ةؿؾس اـتلاجر رقخو ةداتق قبأ مققلا اـكاسرف رقخ ناك لـفدرأ ؿث ,اعقؿج لل اؿفعؿجف ,ؾجارلا ؿفسو ,سراػلا ؿفس :ـقؿفس ﷺ ـحك اؿـقبف :لاق ,ةـيدؿلا كلإ ـقعجار ءابضعلا كؾط هءارو ﷺ للها لقسر ؼباسم ٓأ لقؼي ؾعجف :لاق ,ادش ؼبسي ٓ راصكٕا ـم ؾجر ناكو :لاق ,رقسك ,فملاك تعؿس اؿؾف :لاق ,ؽلذ دقعي ؾعجف ,؟ؼباسم ـم ؾه ,؟ةـيدؿلا كلإ ,ﷺ للها لقسر نقؽي نأ ٓإ ,ٓ :لاق ,؟اػيرش",
+  "text_simplified": "The text speaks of the importance of the tarbiyah (upbringing) of children upon Islamic values and teaching them noble adab. It points to the necessity of habituating children to salah, adhkar (remembrances), and good conduct. It also mentions some Prophetic hadiths that encourage good treatment of children and teaching them.",
+  "labels": [
+    "تربية",
+    "قيم إسلامية",
+    "آداب",
+    "أطفال",
+    "تعليم"
+  ],
+  "created_at": "2026-06-21T10:26:32Z",
+  "updated_at": "2026-06-21T10:26:32Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-c32410ab",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الذكر",
+        "english": "adhkar (remembrances)",
+        "why": "The Arabic uses the singular 'dhikr' (remembrance), while the English uses the plural 'adhkar', changing the number and potentially the specific meaning.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

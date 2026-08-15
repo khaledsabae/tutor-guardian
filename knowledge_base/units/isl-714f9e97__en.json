@@ -1,0 +1,64 @@
+{
+  "id": "isl-714f9e97__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "A Warning against Physical Violence towards Children",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "عنف ضد الأطفال",
+  "intervention_type": "إحالة_لطبيب",
+  "severity": "شديد",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "رقغل افقؾصي يذلا :لاؼف دعس فباجلف ﴾ َ ُ َ ۡ َ َ ,لبأ بـج كلإ تقؾص :لاق ,دعس ـب بعصم ـط )535( ؿؾسم دـطو ,ؽقتبكر كؾط ؽقػؽب برضا :لبأ لل لاؼف ,لتبكر ـقب يدي تؾعجو :لاق اكرمأو ,اذه ـط اـقنه اكإ :لاقو ,يدي برضف ,ىرخأ ةرم ؽلذ تؾعف ؿث :لاق .»بكرلا كؾط ػكٕاب برضك نأ اقؾعج اقعكر اذإ دقعسم ـب للها دبط قـب ناك :لاق ,دعس ـب بعصم ـط اؿؾف ,يدي برضف ,فتعـصف دعس بـج كلإ تقؾصف ,ؿهذاخفأ ـقب ؿفيديأ ؽلذ دعب ىرخأ ةرم فتؾعف ؿث ,ؽقتبكر ؽيدقب برضا لـب اي :لاق ,فرصكا اذه ؾعػك اـك :لاق ,فرصكا اؿؾف ,يدي برضف ,فبـج كلإ تقؾصف ,مققب .)2(»بكرلا كؾط ػكٕاب برضك نأ اكرمأو .برمط ـمس كمامؾ لالح ـسمط دامٜمؾم٢مس همػمهو ،)64/2( »هدمٜسمُ« مذ مغمٕي قمسأ فمضرمظأ (1) قمسأ امٜمص ،ؾمٞئاسرإ امٜمص ،ػمؾقي ـمس دمٛمح امٟمؼمظأ :لامى )1341( »ـمٜسمًا« مذ لمُرادمًا امٝمضرمظأ (2) فمًامضرو ؿمٚسمُ طشر مغمق حمٞحص اهدامٜمؾإو فمس دمٕمؾ ـمس بمٕمّمُ لمٜمصدمط ،يدبمٕمًا رقمٗمٕي .ملخمٞمِمًا لامضر ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ :٠لاصياٚ ٤ٛضٛيا ١ٝفٝن ٙدلاٚأ ًِعٜ بشاع ٔب ٤ابريا ارٖٚ : لَ اقَ , ء ِ ار ُْٕ ا ر ِ قْ خَ كَ نَ اكَ وَ , نَ اؿ ق ِ مأَ نَ اكَ وَ بٍ ز ِ اطَ ـِ بْ ء ِ ار بَ لْا ـِ بْ دَ يز ِ يَ ـْ طَ و نَ اكَ ػَ قْ كَ وَ ,؟ ل ُ ضَ قَ تَ يَ ﷺ لُ قس نَ اكَ ػَ قْ كَ ؿ ؽُ يَ ر ِ ُ لأَ فَ اقعُ ؿ ِ تَ",
+  "text_simplified": "The text recounts an old story illustrating violent behavior toward children, describing scenes of beating and harsh treatment. It conveys that there is a need for *tarbiyah* (nurturing) of children with gentleness and respect, and to avoid physical violence.",
+  "labels": [
+    "عنف",
+    "تربية",
+    "ضرب",
+    "أطفال",
+    "قسوة"
+  ],
+  "created_at": "2026-06-21T10:24:47Z",
+  "updated_at": "2026-06-21T10:24:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-714f9e97",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "النص يتحدث عن قصة قديمة",
+        "english": "The text recounts an old story",
+        "why": "Arabic says the text 'talks about' an old story, not that it 'recounts' it; 'recounts' implies the text is narrating the story directly, which is a subtle shift.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يُستفاد من النص أن هناك حاجة",
+        "english": "It conveys that there is a need",
+        "why": "Arabic uses passive 'it is understood/derived from the text', focusing on the reader's inference; English 'It conveys' makes the text the active communicator, changing the nuance.",
+        "severity": "low"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "تربية الأطفال بلطف واحترام",
+        "english": "*tarbiyah* (nurturing) of children with gentleness and respect",
+        "why": "The Arabic uses the ordinary word 'تربية' (upbringing/raising); the English adds an Islamic transliteration 'tarbiyah' with a gloss, making the tone more academic and introducing a term not marked as technical in the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

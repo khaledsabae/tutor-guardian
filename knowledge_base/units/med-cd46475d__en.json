@@ -1,0 +1,55 @@
+{
+  "id": "med-cd46475d__en",
+  "domain": "medical",
+  "source_file": "DMDD.pdf",
+  "title": "Clinical Trials of New Treatments for Children’s Gaming Addiction",
+  "language": "en",
+  "age_group": "13-15",
+  "behavior_type": "إدمان ألعاب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Disruptive Mood Dysregulation Disorder: The Basics",
+  "text_original": "more only in adults. Research shows that, compared to about a disease and improve health care. Other adults, children respond differently to medications people, such as those with health conditions, join to and treatments, both physically and mentally. The try treatments that aren’t widely available. way to get the best treatments for children is through NIMH supports clinical trials across the United States. research designed specifically for them. Talk to a health care provider about clinical trials Clinical trials are research studies that look at ways and whether one is right for your child. For more to prevent, detect, or treat diseases and conditions. information, visit www.nimh.nih.gov/clinicaltrials. These studies help show whether a treatment is safe Reprints For more information The information in this publication is in the public MedlinePlus (National Library of Medicine) domain and may be reused or copied without https://medlineplus.gov https://medlineplus.gov/spanish (en español) permission. However, you may not reuse or copy images. Please cite the National Institute of Mental National Institute of Mental Health Health as the source. Read our copyright policy to Office of Science Policy, Planning, and learn more about our guidelines for reusing NIMH Communications content at www.nimh.nih.gov/copyright. 6001 Executive Boulevard, MSC 9663 Bethesda, MD 20892-9663 Toll-free: 1-866-615-6464 Email: nimhinfo@nih.gov www.nimh.nih.gov social media @NIMHgov NIH Publication No. 23-MH-8119",
+  "text_simplified": "The National Institute of Mental Health (NIMH) provides support for clinical trials aimed at new treatments, helping to determine whether these treatments are safe and effective.",
+  "labels": [
+    "إدمان",
+    "طفل",
+    "علاج",
+    "تجارب طبية"
+  ],
+  "created_at": "2026-06-07T08:21:27Z",
+  "updated_at": "2026-07-27",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "DMDD",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "med-cd46475d",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "لعلاج إدمان ألعاب الأطفال",
+        "english": "for Children’s Gaming Addiction",
+        "why": "The Arabic literally means 'for treating addiction to children's games' (i.e., games intended for children), while the English implies children are the ones addicted to gaming. This shifts the subject of the addiction.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "للعلاجات الجديدة",
+        "english": "of New Treatments",
+        "why": "Arabic 'for new treatments' indicates the trials are conducted for the purpose of developing new treatments, whereas English 'of new treatments' suggests the trials are testing those treatments. The relationship is altered.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

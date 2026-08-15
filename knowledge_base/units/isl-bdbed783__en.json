@@ -1,0 +1,48 @@
+{
+  "id": "isl-bdbed783__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Tarbiyah of the Orphaned Child and the Importance of Cooperation",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية الطفل اليتيم",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "ةقّثلا عرزت تقولا نيدلاولاب نسحيف عبارلا هماع في يعاملجا بعللا لىإ لفطلا لييم :نواعتلا :)5( لحم ىلع نواعتلاو يعاملجا لكلأاك رومأ ةدع في كلذو ،يرطفلا ليلما اذه للاغتسا هفيلكتو يرغصلاب ةحمرلاك ايلُع ميق يعاملجا لمعلا للاخ نم ملعتيو ،بيترتلا وأ ضارغلأا ةدهاشلما هراثآ هل نواعتلاو ،ةبلمحاو راثيلإاو ،لمعلل ةقّباسلماو دلجاو ،لمعلا نم هبساني ابم ةدعاسمو فرغلاو باعللأا بيترتو نياولأا لحم كلذ نمو ،هتلوهسو لمعلا زانجإ ةعرسك . ص ،ةبرغلا هيبن ،ةيكولسلا تلاكشلما :رظنا ) ( .34 ص ،ديوس رون دممح ،ةيوبنلا ةيبرتلا جهنم :رظنا )2( . 43 ص ،ليوبناتسلاا دايز دوممح ،انلافطأ بيرن فيك :رظنا )3( .39 -36 ص ،نادحم دايز دممح ،ًلافط بيرن فيك :رظنا )4( . 92 - ص ،ةبرغلا هيبن ،ةيكولسلا تلاكشلما :رظنا ) ( كلذل ضرعنسو ..يكذلاو ضيرلماو ميتيلاك ةصاخ ةيبرت لىإ لافطلأا ضعب جاتيح ..زايجلإا نم ءيشب نانلحاو مزلحا ينب عملجا ةرورضو ميتيلا لفطلا ةيبرت نمزم ضربم اهمدحأ وأ هيدلاو دقّف نم هب قحليو ةصاخ ةيبرت لىإ جاتيح ميتيلا لفطلا .اهيرغ وأ داهج وأ رفس وأ قلاط وأ نع ليدب دوجوو نملأاب ساسحلإاو يفطاعلا عابشلإا ميتيلا لفطلا تاجايتحا مهأو ةئيبلا عم يعامتجلاا قفاوتلا لىإ جاتيح امك ،بيذهتلاو هيجوتلاب موقّي اهمدحأ وأ نيدلاولا .ليدبلا بيرلما ةركف لبّقّتو ةديدلجا ،نانحلل يقّيقّلحا ردصلما دقّفي هنأ امك ةوقّلا رصانع نادقّفو فعضلاب رعشي ميتيلاو فورعلما يدسي نم لكل ميظعلا رجلأا بترو هتاجاح عابشإ ىلع ملاسلإا َثح اذلو يرغص وهو اهمدحأ وأ هادلاو تويم يذلا ديحولا ميتيلا كانهف ميتيلا تلااح فلتتخو جاوزلا هيدلاو نم دوجوملل نكيمو ،ةعرسب اهعم قفاوتيو ةديدج ةئيب في همجد لهسيف وأ ةلمرأ نم جوزتلما نوكي نأ طرشب",
+  "text_simplified": "A child at the age of four tends toward group play and cooperation with others. This natural inclination can be utilized to teach them values such as cooperation and sharing in organizing toys and utensils. An orphaned child needs special tarbiyah and emotional care to compensate for the loss of their parents. It is important to provide a stable and secure environment to strengthen their social adaptation.",
+  "labels": [
+    "تربية",
+    "يتيم",
+    "تعاون",
+    "رعاية عاطفية",
+    "تكيف اجتماعي"
+  ],
+  "created_at": "2026-06-20T14:37:33Z",
+  "updated_at": "2026-06-20T14:37:33Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-bdbed783",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "لتعليمه قيماً ... تكيفه الاجتماعي ... والديه",
+        "english": "to teach them values ... their social adaptation ... their parents",
+        "why": "The Arabic uses singular masculine pronouns (ه) referring to the child, while the English uses plural/gender-neutral pronouns (them/their), changing the grammatical number and potentially obscuring the singular focus on the individual child.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

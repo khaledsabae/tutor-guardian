@@ -1,0 +1,56 @@
+{
+  "id": "isl-6d5e1c7f__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Integrating the Gifted and Caring for the Sick Child",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "رعاية الأطفال الموهوبين والمرضى",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "تاسسؤلما امأو .342 ص ،قباسلا عجرلما :رظنا ) ( . 4 - 4 ،4 ص ،تاكرب يفطل ،ينبوهولما ةياعر في يوبرتلا ركفلا :رظنا )2( . 4 - 44 ص ،رضخ دممح ةيزوف :ةرئالحا تائفلاو ،قباسلا عجرلما :رظنا )3( . 4 - 4 ص ،قباسلا عجرلما :رظنا )4( . 4 - 4 ص ،قباسلا عجرلما :رظنا ) ( ءايكذلأا جمد يرلخا نم نأ نوري ةيبرتلا ءاملع نم ًايرثك نكلو ،ءايكذلأل ةصاخ سرادم ضعب حرتقا امك ةلقّتسم لوصف مله صصتخ نأ ىلع ةماعلا سرادلما في مهيرغ عم ديوزت متي نأ ىلع ةررقّلما نسلا لبق ةسردلما اولخديل ءايكذلأل ةصرفلا ةحاتإ ينيوبرتلا ةركف ىلع موقّت جهانم عضوو ،ةنكملما لئاسولا ةفاكو بتكلاو لماعلماو ةزهجلأاب ملهوصف . مهبساني يذلا عيفرلا ىوتسلماب زيمتتو عونتلا قاعلما وأ ضيرلما لفطلا ةيبرت ضرلما بسبح ةيبرتلا طئاسو يريغتو فلتيخو ايسفن اضرم ضيرلما نع ايدسج اضرم ضيرلما فلتيخو ةصاخ ةيبرت ضيرملل .ائراط اَضرم ضيرلما نع اَنمزم اضرم ضيرلما ىفشتسلما في هعضو رملأا مزل اذإ ةصابخو هتايح في رثؤي ًائراط ًاضرم ضيرلما لفطلا ) ( يدافتلو ،يعامتجلااو يلقّعلا هروطتو هعابطو هتيصخش رثأتت ثيح ،هترسأ نم هنامرحو . هجلاع ةرتف ءانثأ هبراقأ دحأ وأ همأ هقّفارت نأ يغبني لفطلا ىلع ةيبنالجا رارضلأا نأب هيلإ ءايحلإا اذه عبنمو ةعاجشلاو برصلا ىلع لفطلا ديوعت في هرثأ يسفنلا لماعلاو كلذ ققّحتيلو رلما ءاودلاو ةربلإا لمحتي عاجش لفط هنأو ،رضي لاو فيفخ لملأا اذه ةقّفشلا رعاشم ءافخإ ةلوامحو ،لملأا عضوم نع لفطلا لاؤس ةرثك نع داعتبلاا نم دب لا هلاغشإ نسيح امك ،لملأاب هساسحإ يوقّيو لفطلا فعضي رعاشلما هذه راهظإ نلأ ،ءاكبلاو ةفطلالماب نوكيف ءاودلا ضيرلما ءاطعإ امأو",
+  "text_simplified": "Gifted children should be integrated with their peers in public schools while providing advanced curricula that suit their level. As for the sick child, they require special care that varies according to the type of illness, whether physical or psychological. Their psychological state must be considered, and they should be encouraged to practice patience and courage, while avoiding excessive sympathy that may weaken them.",
+  "labels": [
+    "موهوبون",
+    "رعاية صحية",
+    "تربية خاصة",
+    "دعم نفسي",
+    "دمج مدرسي"
+  ],
+  "created_at": "2026-06-20T14:37:51Z",
+  "updated_at": "2026-06-20T14:37:51Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-6d5e1c7f",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "يجب دمج الأطفال الموهوبين مع أقرانهم في المدارس العامة",
+        "english": "Gifted children should be integrated with their peers in public schools",
+        "why": "Arabic 'يجب' expresses obligation (must), but English 'should' is advisory, weakening the directive; also inconsistent with the later 'must be considered' in the same passage.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "مع تجنب إظهار الشفقة المفرطة التي تضعفه",
+        "english": "while avoiding excessive sympathy that may weaken them",
+        "why": "Arabic 'التي تضعفه' states a definite effect (weakens him), but English 'may weaken them' introduces uncertainty and changes singular to plural/neutral.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

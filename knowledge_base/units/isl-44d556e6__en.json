@@ -1,0 +1,39 @@
+{
+  "id": "isl-44d556e6__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching the Child Sabr in Illness and Pain",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تربية إيمانية وصبر",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "أَ ؿ ؽَ كْ أَ اذَ ِ نفَ ,اهَ ور ِ ؽْـيُ نْ أَ ـْ م لَ لُ قؼُ تَ يذ ِ لَا ِ ب سَ اَـلا تهْ دَ بَ سَ اـَ لا ضُ وِ ر أُ لكِ إ ,لَـبُ ايَ ,ػقْ س لا ِ ب َٓ ِ إ لتل ْ يَ َٓ ر ٍ قْ خَ لف ر قْ خَ َٓ وَ , ػقْ س دَ عَ تَ نْ ِ إوَ ,ائً قْ شَ ل ِ ل لله ا ذَ ػ ِ ْـيُ نْ أَ قجُ ر طُ ل ِ ب ؾْ طُ يَ نْ ِ نفَ , بِ عْ صَ لا ةَ ضَ ايَ ر ِ داـسنب )467/13( ةبقش لبأ ـبا فجرخأ » دُ ير ِ أُ يذ ِ لَا لله ِ ؾطَ دْ ؼَ فَ ةٌ قَ ِ ـم ٛٗعشؼلا نئاطٕلاب ضشلما ذٍع ءاٍبلأا ٚأاذو :ُٔشؼعلأ َواجلا للحا ٚرٕعؼلأ شخظلان ٛوشلمحا نئاطٕلا َع يِداعبإٔ إِنحٔ ٛٗقشلان : لُ قؼُ يَ وَ , ـَ قْ س حَ لْا ذُ قِ عَ يُ ﷺ ل ِ بَـلا نَ اكَ : لَ اقَ ,ﭭ سٍ ابَ طَ ـِ بْ ا ـْ طَ ؾِ كُ ـْ ِ م ة ِ م اتَ لا ِ للها ت ِ اؿ ِ ؾؽَ ِ ب ذُ قطُ أَ قَ احَ س ِ إوَ ؾَ قط ِ اؿ ِ إ افَ ِ ب ذُ قِ عَ يُ نَ اكَ اؿ كُ ابَ أَ نَ ِ إ َٓ ـٍ قْ طَ ؾِ كُ ـْ موَ ةم اهَ وَ ناطَ قْ شَ ل ِ ب تْ ؼَ",
+  "text_simplified": "Parents must teach their children sabr (patience) and endurance when facing illness or pain, and not to rush into complaining. They should also instill the concept of reward and recompense from Allah for sabr in trials. This helps the child strengthen their character and bear responsibility.",
+  "labels": [
+    "صبر",
+    "تربية إيمانية",
+    "تحمل الألم",
+    "تعليم الأطفال",
+    "الأجر والثواب"
+  ],
+  "created_at": "2026-06-21T10:27:41Z",
+  "updated_at": "2026-06-21T10:27:41Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-44d556e6",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

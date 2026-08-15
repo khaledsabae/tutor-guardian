@@ -1,0 +1,72 @@
+{
+  "id": "isl-b328d5a2__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Teaching Children Salah and Religious Tarbiyah",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "كسقط ىرأ نٕ ,للهاو :لقؼي ناكو ؾهأ :لـعي ,تامقصخلا باحصأ سلاجي هارأ نأ ـم للإ بحأ ,ؾصابلاو ؿهقحزاؿت ٓو ءافػسلا اقسلاجت ٓ :فقـبل ؽؾؿلا دبط ـب ماشه لاقو مقـلاب اقحبطصت ٓو داشرلا كلإ لومي ٓ ؿهرمأ ننف ملاؽلا باحصأو ؿكايإو .)2(»دؽكو ممش فكنف ءٕظلا نِأ ٛبحاصو َع دلألأا داعبإ :ُٕثلاجلا للحا لا سِ قؾجَ لْ اوَ حِ لاصَ لا سِ قؾجَ لْ ا ؾُ َثم « :ﷺ للها لُ قس دُ ج ِ تَ وْ أَ ف ِ ير ِ تَ شْ تَ ام ؿ ِ لْ ا بِ ح ِ اصَ ـْ ِ م ؽَ م دَ عْ يَ َٓ , د ِ ادَ حَ لْ ا ر ِ ق ِ كوَ , ؽ ِ س .)3(» ةً ثَ ق ِ بخَ احً ير ِ فُ ْـ ِ م دُ ج ِ تَ وْ أَ ؽَ بَ قْ ثَ وْ أَ ؽَ كَ دَ بَ قُ ر ِ حْ يُ د ِ ادَ حَ لْ ا ر ق ِ كوَ , فُ حَ ير ِ نَ ِ نفَ ,ءافَ ػَ س كُ ايَ إ , لـبَ ايَ : فقـبَ ل بٍ ق ِ بحَ ـُ بْ ر دَ ْـيَ فبحيُ ـْ م وَ , فؿؾْ ح ِ ب ر ـمس بامٝمؿ ؾمضأ ـمُ ـسمط دامٜمؾم٢مس )121( »امٝمٜمق لمٝمٜمًاو عدبمًا« مذ حاضو ـمسا فمضرمظأ (1) .رمظآ ـمـقمُ مذ فتمضرمظ (2) .)2628( ؿمٚسمُو ،)2111( يراخبمًا فمضرمظأ (3) .حمٞحص دامٜمؾم٢مس همػمهو ،)411/8( ةبمٞمؿ بيأ ـمسا فمضرمظأ (4) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ في ؿهقغبصت نأ ؾبق ءقسلا ءاكرق ؿكدٓوأ اقبـج« :لبرحلا",
+  "text_simplified": "Parents must teach their children Salah and adherence to the Din, and avoid neglecting them or leaving them without guidance. Children need a good example and tarbiyah (upbringing) based on love and firmness. Keeping children away from bad companions and places of idle distraction helps in their righteous upbringing.",
+  "labels": [
+    "تربية الأطفال",
+    "الصلاة",
+    "القدوة الحسنة",
+    "رفقاء السوء",
+    "التوجيه الديني"
+  ],
+  "created_at": "2026-06-21T10:28:20Z",
+  "updated_at": "2026-06-21T10:28:20Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-b328d5a2",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "التربية الدينية",
+        "english": "Religious Tarbiyah",
+        "why": "Tarbiyah is not a technical Islamic term requiring transliteration; it means upbringing/education and should be translated, especially in the title where no gloss is provided.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "الدين",
+        "english": "the Din",
+        "why": "Din is a transliteration of the ordinary word for religion; it is not necessary and may be unclear to readers; 'religion' or 'faith' would be clearer.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أماكن اللهو",
+        "english": "places of idle distraction",
+        "why": "اللهو means amusement or entertainment, not necessarily 'idle distraction'; adding 'idle' introduces a negative connotation not present in the Arabic.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "القدوة الحسنة",
+        "english": "a good example",
+        "why": "The Arabic definite phrase 'the good example/role model' is rendered as indefinite 'a good example', losing the specific sense of an exemplary role model.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

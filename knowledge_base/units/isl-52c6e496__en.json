@@ -1,0 +1,55 @@
+{
+  "id": "isl-52c6e496__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Children over Their Parents in Islamic Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ؼحلا 74 . رشلا ـم ؿهريذحتو ,رقخلا كؾط ؿفثحل دٓوٕا عؿج :رشط سداسلا ؼحلا ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ 75 ....................... ؿفتياطرو دٓوٕا ةفاظـب ماؿتهٓا :رشط عباسلا ؼحلا 77 ..................................... نآرؼلا دٓوٕا ؿقؾعت :رشط ـماثلا ؼحلا 82 .... كرشلا ـم ؿهريذحتو ,ةؿقؾسلا ةدقؼعلا ءاـبٕا ؿقؾعت :رشط عساتلا ؼحلا 89 ........ ضئارػلا ـم اؿهرقغو ماقصلاو ةلاصلا ءاـبٕا ؿقؾعت :نورشعلا ؼحلا 96 ............................. ,ةـسلا دٓوٕا ؿقؾعت :نورشعلاو يداحلا ؼحلا 145 ..... ةقطرشلا مقؾعلا ؿؾعتل ؿفبقغرتو دٓوٕا ثح :نورشعلاو نياثلا ؼحلا ؿفؿقؾعتل ؿؾعلا ؾهأ كلإ ؿبهاحطصاو دٓوٕا لاسرإ :نورشعلاو ثلاثلا ؼحلا 111 .. عرشلا ػلاخي ٓ اؿب نقبعؾي دٓوٕا كرت حابيو :نورشعلاو عبارلا ؼحلا 121 ............. زقجي ٓ اؿب اقبعل اذإ دٓوٕا رجز :نورشعلاو سماخلا ؼحلا ةرشاعلا ـس اقغؾب اذإ عجاضؿلا في ؿفـقب ؼيرػتلا :نورشعلاو سداسلا ؼحلا 128 ...... ةقماسلا فادهلأل لقصقؾل دٓوٕا عقجشت :نورشعلاو عباسلا ؼحلا ةققرلاك ةقطرشلا ؾئاسقلاب ضرؿلا دـط ءاـبٕا ةاوادم :نورشعلاو ـماثلا ؼحلا 134 .............. ةذقعشلاو رحسلاك ةمرحؿلا ؾئاسقلا ـط ؿهداعبإو اهقحكو 133 عدبلا ؾهأ ةسلاجم ـمو عدبلا ـم دٓوٕا ريذحت :نورشعلاو عساتلا ؼحلا 135 ..................... ءقسلا ؾهأ ةبحاصم ـط دٓوٕا داعبإ :نقثلاثلا ؼحلا 136 . ـقؿؾسؿلا ةدطاسمو لذبلا كؾط دٓوٕا بيردت :نقثلاثلاو يداحلا ؼحلا 144 ......................... ةقبرعلا ةغؾلا دٓوٕا ؿقؾعت :نقثلاثلاو نياثلا ؼحلا ـم ؿفتياققل ؾقؾلا لوأ جورخلا ـم دٓوٕا عـم لغبـيو :نقثلاثلاو ثلاثلا ؼحلا 143 ............................. ثاكلإاو رقكذلا ناتخ :نقثلاثلاو عبارلا ؼحلا ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ نيدلاىلا ىلع دلاولأا قىقح ــــــــــــــــــــ 144 ............................. دٓوٕا كؾط ةؼػـلا :نقثلاثلاو سماخلا ؼحلا 151 ............................ دٓوٕا كؾط ملاسلا :نقثلاثلاو سداسلا ؼحلا 152 .................. قلاخٕا ـساحم دٓوٕا ؿقؾعت :نقثلاثلاو عباسلا ؼحلا 173 ................. قلاخٕا",
+  "text_simplified": "This text addresses the rights of children over their parents, encompassing diverse tarbiyah (upbringing) and religious directives. It aims to strengthen Islamic values and akhlaq (moral character) in raising children, while also focusing on protecting them from intellectual and behavioral deviations.",
+  "labels": [
+    "حقوق الطفل",
+    "تربية دينية",
+    "قيم أخلاقية",
+    "توجيه أسري"
+  ],
+  "created_at": "2026-06-21T10:33:31Z",
+  "updated_at": "2026-06-21T10:33:31Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-52c6e496",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "توجيهات تربوية ودينية متنوعة",
+        "english": "diverse tarbiyah (upbringing) and religious directives",
+        "why": "The Arabic has one noun 'توجيهات' (directives) modified by two adjectives 'تربوية' (educational) and 'دينية' (religious). The English splits it into two nouns: 'tarbiyah (upbringing)' and 'religious directives', changing the meaning and structure. 'Tarbiyah' is not a directive; it is the adjective 'educational/upbringing' describing the directives.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "القيم الإسلامية والأخلاقية",
+        "english": "Islamic values and akhlaq (moral character)",
+        "why": "The Arabic 'الأخلاقية' is an adjective modifying 'القيم' (values), meaning 'moral values.' The English turns it into a separate noun 'akhlaq (moral character)' and drops the word 'values' for the moral aspect, changing 'Islamic and moral values' into 'Islamic values and akhlaq.' This alters the meaning and introduces a transliterated term not present as a noun in the Arabic.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

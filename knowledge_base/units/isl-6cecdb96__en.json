@@ -1,0 +1,46 @@
+{
+  "id": "isl-6cecdb96__en",
+  "domain": "islamic_parenting",
+  "source_file": "Al_Minhaj_Al_Nabawi.pdf",
+  "title": "The Importance of Peace in Islamic Tarbiyah",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "آداب السلام",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كتاب إسلامي",
+  "text_original": "المبحث الأول : إفشاء السلام\nوهنا سآتحدث عن منهج النبي محمد ‎Lo‏ الله عليه وسلم في تربية ‎JULY‏ وتهذيبهم بأخلاقه\nصلى الله عليه وسلم ‎Gall‏ هي أخلاق ‎Las‏ الإسلامي الحنيف.\n( عن كلدة بن حنبل ‎gl)‏ صفوان بن أمية بعثه إلى رسول الله ‎bo‏ الله عليه وسلم بلبن وجداية\nوضفابيس والنبي ‎Lo‏ الله عليه ‎Gleb lug‏ مكة فدخلت فلم أسلم فقال إرجع ‎Jad‏ السلام\nعليكم, وذلك بعد ما أسلم صفوان بن ‎dual‏ € (\nففي هذا الحديث درس عن السلام وهي تحية المسلم إذا لقي ‎a]‏ المسلم, ومما لا شك فيه أن\nالتربية على هذا يولد الأثر الكبير في المحبة واحترام الأخر.",
+  "text_simplified": "The hadith speaks of the akhlaq of the Prophet Muhammad ﷺ, and clarifies the importance of *as-salam* (the greeting of peace) as the Muslim’s greeting to whomever he meets.",
+  "labels": [
+    "الأخلاق الإسلامية",
+    "السلام",
+    "التفاهم المتبادل"
+  ],
+  "created_at": "2026-06-07T08:29:46Z",
+  "updated_at": "2026-07-30",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Al_Minhaj_Al_Nabawi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-6cecdb96",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title vs text_simplified",
+        "arabic": "السلام",
+        "english": "Peace (title) / as-salam (text)",
+        "why": "The same Arabic term 'السلام' is rendered as 'Peace' in the title but transliterated as 'as-salam' in the body, creating inconsistency in how the Islamic greeting term is presented.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

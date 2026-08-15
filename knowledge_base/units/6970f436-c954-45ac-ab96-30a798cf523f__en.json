@@ -1,0 +1,54 @@
+{
+  "id": "6970f436-c954-45ac-ab96-30a798cf523f__en",
+  "domain": "development",
+  "source_file": "",
+  "source_url": "",
+  "title": "Gradual Weaning: How to Do It Without a Daily Battle",
+  "language": "en",
+  "age_group": "prenatal-1",
+  "behavior_type": "الفطام عن الرضاعة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "الفطام المفاجئ يصعب على الطفل وعلى الأم معًا: الطفل يفقد مصدر طمأنينة لا غذاء فقط، والأم قد تتعرّض لاحتقان مؤلم. التدرّج أسهل وأنجح.\n\nخطوات عملية:\n• استبدل رضعة واحدة كل أسبوع تقريبًا، وابدأ بالرضعة التي يتعلّق بها أقل — عادةً رضعة منتصف النهار — واترك رضعة النوم للأخير لأنها أشدّها ارتباطًا بالتهدئة.\n• قدّم البديل قبل أن يشتدّ جوعه، لا في ذروة الجوع.\n• غيّر الإشارات المرتبطة بالرضاعة: الكرسي المعتاد، الوضعية، الوقت. الطفل يستدعيها بالسياق لا بالجوع وحده.\n• عوّض قرب الجسد بطريقة أخرى: حَمل، تدليك، قراءة قصة. الحاجة إلى القرب لا تنتهي بانتهاء الرضاعة، ولو أُلغيت معها صار الفطام فقدًا مضاعفًا.\n• أشرك والدًا آخر أو أحد المقرّبين في تهدئة النوم خلال هذه الفترة.\n\nتجنّب وضع مواد مُرّة أو حارّة على الثدي — تربك الطفل وقد تضرّه، وتحوّل مصدر الأمان إلى مصدر خوف مفاجئ.\n\nوأجّل الفطام مؤقتًا إن تزامن مع تغيير كبير: مرض، سفر، مولود جديد، دخول حضانة. تراكُم التغييرات يجعل المقاومة أشدّ.\n\nوإن رافق الفطام رفض شديد للطعام أو نقص واضح في الوزن، فاستشر طبيب الأطفال.",
+  "text_simplified": "Sudden weaning is difficult for both the child and the mother: the child loses a source of reassurance, not just nourishment, and the mother may experience painful engorgement. Gradual weaning is easier and more successful.\n\nPractical steps:\n• Replace one feeding session every week or so, starting with the session the child is least attached to—usually the midday feeding—and leave the bedtime feeding for last, as it is the most strongly linked to soothing.\n• Offer the alternative before hunger intensifies, not at the peak of hunger.\n• Change the cues associated with nursing: the usual chair, position, and time. The child recalls them through context, not hunger alone.\n• Compensate for physical closeness in another way: carrying, massage, reading a story. The need for closeness does not end with nursing; if it is taken away with it, weaning becomes a double loss.\n• Involve another parent or a close relative in soothing the child to sleep during this period.\n\nAvoid placing bitter or spicy substances on the breast—they confuse the child and may harm them, turning a source of security into a source of sudden fear.\n\nPostpone weaning temporarily if it coincides with a major change: illness, travel, a new baby, or starting nursery. The accumulation of changes makes resistance stronger.\n\nIf weaning is accompanied by severe food refusal or noticeable weight loss, consult a pediatrician.",
+  "labels": [],
+  "keywords": [
+    "Weaning",
+    "Breastfeeding",
+    "Gradual",
+    "Food refusal",
+    "Routine"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "6970f436-c954-45ac-ab96-30a798cf523f",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الطفل يستدعيها بالسياق لا بالجوع وحده.",
+        "english": "The child recalls them through context, not hunger alone.",
+        "why": "The Arabic means the child calls for nursing based on context, not hunger alone; 'يستدعيها' is 'summons/calls for it', not 'recalls them'. The English changes the action from the child actively asking for nursing to passively remembering cues, and shifts the pronoun/object.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أحد المقرّبين",
+        "english": "a close relative",
+        "why": "Arabic 'المقرّبين' means close people (relatives or close friends), not specifically relatives. The English narrows the meaning to family members only.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

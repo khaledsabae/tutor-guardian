@@ -1,0 +1,37 @@
+{
+  "id": "isl-52abd1a8__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "Unanalyzable Text",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "غير محدد",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ؼيرمٓمًا رمامص مامٙمطأ ممإ ؼمٞمورمًا دامؿرإ * مامٕمٓمًا مغمق ةميمؼمًا فمس ؾمّتح امُ * رمٛلخا بشر دمط * رامٙتمطٓامس ؼمٚمٕتي امُ نامٞمس مذ رماثمًا لمٜمض * ةمٞمُلامؾلإا ةمٕيمنمًا مذ حئامسذمًا مامٙمطأ * ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ ةمٞمُلامؾلإا ةمٕيمنمًا مذ ةمٞحضٕا مامٙمطأ * ةمٞمُلامؾلإا ةمٕيمنمًا مذ مؼمٙمًا مذ * ةمٞمُلامؾلإا ةمٕيمنمًا مذ ةمٛمٞمٛمٜمًا مذ * فم٘مٞم٘تحو سرمٞمعا فم٘مٗمًا مغمق ؼمٞمٚمٕتمًا * ةمٞمُلامؾلإا ةمٕيمنمًا مذ ردمٖمًا ؿيرتح * ءاموقمًا ؼمٚخمس ءلابمٜمًا فاتحإ * عمٛمٓمًا مذ مذ عمٛمٚمًا * ةمٞمُلامؾلإا ةمٕيمنمًا مذ ؾخبمًا مذ * ةمقامٜم٘مًا ؼمٚخمس ةمقمالجاو ةمٜسمًا ؾهأ فاتحإ * ءايرمًا رمٓمظ ـمُ ءلامْمٗمًا ريذتح * ءامضرمًا ةمٚمٞمْمو مذ ءلام٘مٕمًا بمٞمهرمش * ؾبمٜمط ـمس دحمٕ دهزمًا باتمي ؼمٞم٘تح *",
+  "text_simplified": "The text is incomprehensible and contains unreadable symbols. It appears corrupted or incorrectly written. No useful information can be extracted from it.",
+  "labels": [
+    "نص مشوه",
+    "غير مفهوم",
+    "أخطاء كتابية"
+  ],
+  "created_at": "2026-06-21T10:33:39Z",
+  "updated_at": "2026-06-21T10:33:39Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-52abd1a8",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "clean",
+    "review_defects": [],
+    "approved_by": null
+  }
+}

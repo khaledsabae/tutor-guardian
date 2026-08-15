@@ -1,0 +1,48 @@
+{
+  "id": "isl-c7590415__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "The Role of the School in the Child’s Social and Akhlaq-Based Tarbiyah",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تربية وتعليم",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": ":رظنا ) ( .قباسلا عجرلما :رظنا )2( .ينميثع نب دممح خيشلا ،)دلاولأا ةيبرت في فلسلا جهنم( طيرش :لىإ عمتسا )3( . 34 ص :ديوس رون دممح ،ةيوبنلا ةيبرتلا جهنم :رظنا )4( .ينميثع نب دممح خيشلا ،)دلاولأا ةيبرت في فلسلا جهنم( طيرش :لىإ عمتسا ) ( .دجسلما في ةماقّلما تارضالمحاو سوردلا روضلح هدلاو هذخأي نأ )6( :ةيبرتلا ةسردلما رود * انهلأ ،ةيناثلا ةيوبرتلا ةسسؤلما دعتو ،دجسلما رود نم بركأ رود مويلا اهلف ةسردلما امأو .نارقأ ىلع لوصلحا ةصرف هل حيتتو ،لوطأ ًةدم لفطلا يوتتح :بناوج ةثلاث في ةسردلما ةيهمأ نمكتو * قوفتلاب لاإ مهنم دحأ زيمتي لاو ةسردلما في بلاطلا ىواستي :يعامتجلاا ءانبلا -أ ةسردلما في ًابيحرت هترسأ في ذوبنلما لفطلا ديج اذبهو امهيلك وأ يقلاخلأا وأ يملعلا جمدني هنأ امك ،هترسأ في هل رهظت لم ةبوبمح ةيصخش هل رهظتل قوفتلا باستكلا ًةصرفو ةاعارمو نيرخلآا مارتحاو لماعتلا ئدابم ملعتيف متهايصخش فلتتخ هبارتأ نم ةعوممج في يعاملجا بعللا للاخ نم هملعتي يذلا طابضنلاا لىإ ةفاضإ اذه ،ةعاملجا ةحلصم .ةيلوؤسلما لمتح ىلع ةردق تاذ ةيدايق تايصخش مهيف رهظتو ،ةيسردلما ةطشنلأاو بيرلما راتخا اذإ قلاخلأا ءانب في لاعف رودب ةسردلما موقّت :يقلاخلأا ءانبلا -ب .ينلحاص ءانرق كلذك مضتو عرشلاب نومزتلم ءانمأو ءايقّتأ نوسردم اهيف ًةسردم اذإو ةسردلماو ةرسلأا ابه متته تيلا ةيقلاخلأا تاهيجوتلا براقّتت وأ دحوتت نأ بيجو كلت تناك نإ امأ ،اهمعدي نأ هيلعف ةنسلحا تاداعلا عرزت ةسردلما نأ بيرلما فرع ةضرع مهلك رشبلا نأب هدلو عانقإ لوايح نأو ةسردلماب لصتي نأ بجيف ةئيس تاداعلا تايقلاخأ نع لأسي نأ بيرلما ىلع بيج امك ،اهحبقو ةداعلا هذه ءوسب هعنقّيو ،أطخلل .ةسردلما في هكولسو هدلو",
+  "text_simplified": "The school is the second tarbiyah (upbringing) institution after the masjid, and it plays a major role in building the child socially and in akhlaq (moral character). The school helps the child learn the principles of cooperation and respect for others, and it nurtures their leadership personality. It also strengthens moral values when parents cooperate with the school in guiding the child.",
+  "labels": [
+    "دور المدرسة",
+    "تربية الأبناء",
+    "بناء اجتماعي",
+    "قيم أخلاقية",
+    "تعاون الأهل"
+  ],
+  "created_at": "2026-06-20T14:33:13Z",
+  "updated_at": "2026-06-20T14:33:13Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-c7590415",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "دور المدرسة في تربية الطفل اجتماعياً وأخلاقياً",
+        "english": "The Role of the School in the Child’s Social and Akhlaq-Based Tarbiyah",
+        "why": "The Arabic title says the school's role in the child's upbringing socially and morally (adverbs modifying 'upbringing'). The English title restructures this as 'Social and Akhlaq-Based Tarbiyah', implying the tarbiyah itself is based on akhlaq and is social, which shifts the meaning and introduces the term 'akhlaq' not present as a noun in the Arabic title.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

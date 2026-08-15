@@ -1,0 +1,61 @@
+{
+  "id": "med-6fd9c009__en",
+  "domain": "medical",
+  "age_group": "7-9",
+  "behavior_type": "قضم الأظافر",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — قضم الأظافر كسلوك عصبي",
+  "text_original": "",
+  "text_simplified": "Nail-biting is a common behavior in children. It may cause damage to the skin, leading to redness and swelling. It is important to monitor the child and provide them with safe alternatives to benefit from.",
+  "labels": [
+    "سلوكيات طفولة",
+    "العناية بالجروح",
+    "الرعاية الصحية للأطفال"
+  ],
+  "created_at": "2026-06-07T08:32:42Z",
+  "updated_at": "2026-06-07T08:32:42Z",
+  "version": "1.0.0",
+  "title": "Qadm al-Athafir 'inda al-Atfal (Nail-Biting in Children)",
+  "language": "en",
+  "source_meta": {
+    "source_title": "قضم الأظافر عند الأطفال",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "med-6fd9c009",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "قضم الأظافر عند الأطفال",
+        "english": "Qadm al-Athafir 'inda al-Atfal (Nail-Biting in Children)",
+        "why": "The transliteration of الأظافر as 'al-Athafir' is incorrect: the Arabic letter is ظ (ẓā'), not ث (thā'). It should be transliterated as al-Aẓāfir or al-Azafir.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وإعطاءه أشياء آمنة للاستفادة منها",
+        "english": "provide them with safe alternatives to benefit from",
+        "why": "The Arabic says 'safe things' (أشياء آمنة), not 'safe alternatives'. Adding 'alternatives' introduces a meaning not present in the source.",
+        "severity": "medium"
+      },
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "يجب مراقبة الطفل وإعطاءه",
+        "english": "It is important to monitor the child and provide them",
+        "why": "The Arabic uses a direct obligation 'يجب' (must/should), while the English softens it to 'It is important to', making the guidance less direct.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

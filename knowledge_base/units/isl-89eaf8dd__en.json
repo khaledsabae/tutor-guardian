@@ -1,0 +1,56 @@
+{
+  "id": "isl-89eaf8dd__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Rights of Parents and the Tarbiyah of Children in Islam",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": ".)125/17( »ؿمٝمٗمعا« (3) هرمىأو ،ةبمٕمٙمًا دبمقو ىزمٕمًا دبمٕمي للها مػمٖمً دبمٕمُ ؿمؾا ؾمي ؿيرتح مغمق قامٗمشٓا مزمط ـمسا ؾم٘مٟ دمىو دبمقو مكمق دبمق :ـمس ةمٞمٛستمًا ؾتح لامو فمٞمٚمقو )37ص( »دودقمعا ةمٗتح« مذ ؿمٞم٘مًا ـمسا ةمُلامٕمًا ةمٚمٝلجا ضمٕمس فمٚمٕمٗي مامي لقمؾرمًا دبمق وأ لبمٜمًا دبمق :ـمس ٓو ،ةمٕمٞمِمًا دمٜمق رقمٝمِمُ قه مامي ملسلحا .)596/1( »ةمٗمٞمٕمْمًا ةمٚسمٚسمًا« .ةمٜسمًا ؾهأ ـمُ .للها دبمق ممإ رجلحا دبمق ـمُ ؾمضر ؿمؾا مػمه فمٟأ ﷺ فمٜمق حص دمىو ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ ؽَ قـؽْ كَ َٓ :اَـؾْ ؼُ فَ , ؿ لاَ غُ اَـم ؾٍ جُ ر ل دَ لوُ : لَ ا قَ ,ﭬ ر ٍ ِ باجَ ـْ طَ لا دَ بْ طَ ؽَ َـبْ ا ؿ : لَ اؼَ فَ ,ﷺ ل ِ بَـلا ر بَ خْ ل َ فَ , ةَ م كَ َٓ وَ ؿِ ساؼَ لْا ابَ أَ رقغ ذإ فب هرصاخ بقطي اؿسا فل راتخا ـؿحرلا دبط فقؿسي نأ هرمأ اؿل فكأو« .)2(»ـسحأ فكقك فقجقتو ـسح ؿساب ٓإ فقؾط رقشي ٓ فكأ لاحلا كضتقاف ؿسٓا دبط ﭬ يراصكٕا ةحؾص لبٕ دلو كؿس ﷺ فكأ )2144( ؿؾسم دـطو لا دُ بْ طَ وَ ,للها دُ بْ طَ للها كلَإ ءاؿ َٕا بُ حَ أَ : لَ اقَ ,دهاجَ م :ينتذاصياٚ ٤اٝبْلأا ٤اسمأب ١ُٝطتيا بشتطٜٚ .)5(»)4(ؿقهاربإ لبأ ؿساب فتقؿسف ملاغ ةؾقؾلا لل دلو« :ﷺ لاق دؼف ؿفئاقبكلب نقؿسي اقكاك ؿنهإ« :ءاقبكٕا ءاؿسلب كؿس ـؿل ارؼم ﷺ لاقو .)6(»ؿفؾبق ـقحلاصلاو .)2133( ؿمٚسمُو ،)6186( يراخبمًا فمضرمظأ (1) .)571/11( »يرابمًا حتمو« (2) ـمق ،حمٞجمٟ بيأ ـمسا ـمق ،ةمٜمٞمٞمق ـمسا امٜمصدمط :لامى )475/8(",
+  "text_simplified": "Parents must teach their children the rights of parents and ihsan (excellence) toward them, along with the necessity of choosing good names for their children. They should also treat their children with mercy and justice, avoiding favoring one over another. The Prophet ﷺ urged making du'a for children for righteousness and birr (piety).",
+  "labels": [
+    "حقوق الوالدين",
+    "تربية الأبناء",
+    "العدل بين الأبناء",
+    "اختيار الأسماء",
+    "الدعاء للأبناء"
+  ],
+  "created_at": "2026-06-21T10:17:21Z",
+  "updated_at": "2026-06-21T10:17:21Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-89eaf8dd",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "الإحسان إليهما",
+        "english": "ihsan (excellence) toward them",
+        "why": "In the context of parents, ihsan means treating them with utmost goodness, kindness, and dutifulness, not merely 'excellence'. The gloss 'excellence' is too abstract and loses the relational duty.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "بالصلاح والبر",
+        "english": "for righteousness and birr (piety)",
+        "why": "Birr in this context refers to righteousness/dutifulness, especially toward parents, not specifically 'piety' (religious devotion). The gloss narrows the meaning and may mislead.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

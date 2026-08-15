@@ -1,0 +1,48 @@
+{
+  "id": "seed-picky-46__en",
+  "domain": "development",
+  "source_file": "curated/CDC - Nutrition for Children / AAP",
+  "title": "Dealing with a Child’s Refusal of Vegetables at Ages Four to Six",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "رفض الطعام",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تنموي",
+  "reference_info": "CDC - Nutrition for Children / AAP",
+  "text_original": "ابدأ بإجابة عملية مباشرة: رفض الخضار في هذا العمر شائع وليس مرضاً. قدّم الخضار بأشكال ممتعة كقطع ملوّنة أو وجوه مرحة في الطبق، وأشرك طفلك في شراء وغسل وتقطيع الخضار فمشاركته تزيد رغبته في تذوّقها. قدّم صنفاً واحداً جديداً مع أصناف مألوفة، وبكميات صغيرة دون ضغط أو رشوة بالحلوى. اجعل وقت الطعام هادئاً وممتعاً بلا شاشات، واتركه يقرر الكمية التي يأكلها بنفسه. امدح المحاولة لا النتيجة، وكرّر التقديم بصبر فالتعرّض المتكرر هو مفتاح القبول.",
+  "text_simplified": "Start with a practical answer: refusing vegetables at this age is common and not an illness. Serve vegetables in fun shapes, like colorful pieces or cheerful faces on the plate, and involve your child in buying, washing, and cutting the vegetables—his participation will increase his desire to taste them. Offer one new item alongside familiar ones, in small amounts, without pressure or bribing with sweets. Make mealtime calm and enjoyable, without screens, and let him decide how much he eats. Praise the effort, not the result, and repeat the offering with patience, as repeated exposure is the key to acceptance.",
+  "labels": [
+    "رفض الخضار",
+    "الأكل الانتقائي",
+    "التغذية",
+    "وقت الطعام",
+    "4-6 سنوات"
+  ],
+  "created_at": "2026-06-13T00:00:00Z",
+  "updated_at": "2026-06-13T00:00:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "CDC - Nutrition for Children / AAP",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "seed-picky-46",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "ابدأ بإجابة عملية مباشرة",
+        "english": "Start with a practical answer",
+        "why": "The word 'مباشرة' (direct) is omitted, so the English loses the emphasis on giving a direct answer.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "isl-34fc82de__en",
+  "domain": "islamic_parenting",
+  "source_file": "Al_Hady_Al_Nabawi.pdf",
+  "title": "Tarbiyah in Islam: Its Concept, Status, and the Qualities of the Successful Murabbi",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "أصول_التربية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كتاب إسلامي",
+  "text_original": "اذبه عفني نأ للها لأسأ يرخلأا فيو :يه باوبأ ةسخم نم ثحبلا نوكتيو ةفاضإ ،بيرلما تافصو اهتناكمو اهموهفم :ملاسلإا في ةيبترلا :لولأا بابلا * .ةيبترلا في ةسردلماو دجسلما رود لىإ ،ةديقعلا خيسرت اهنمو :ملاسلإا في ةيبترلا فادهأ نم :نياثلا بابلا * ةيمنتو ميلعتلاو ،ةملها ولع ءاكذإو ،ةيصخشلا ءانبو ،ةدابعلا لىع ةئشنتلاو ةقيقعلاو دأولا مكح هيفو :ملاسلإا في لفطلا ماكحأ :ثلاثلا بابلا * ،ناتلخاو رعشلا قلحو ،ةعاضرلاو ةقفنلاو ،ثايرلماو بسنلا توبثو ،ةيمستلاو .ةدلاولاو ةناضلحاو ةيبترلاو ،ةظحلالماب ةيبترلا هيفو :اهلئاسوو ةيبترلا عاونأ :عبارلا بابلا * امأو .بيهترلاو بيغترلاب ةيبترلاو ،ةظعولمابو ،ةراشلإاب ةيبترلاو ،ةداعلاب ملعو ،ثيدلحا ملعلا تاعترمخو ،حلاصلا سيللجاو ،ةودقلا :يهف لئاسولا .ةيرطفلا عفاودلاو ةثارولا مث ،ضيرلماو يكذلاو ميتيلا ةيبرت هيفو :ةصالخا ةيبترلا :سمالخا بابلا * .تايصوتلاو جئاتنلا مهأ اهيفو ةتمالخا عفني نأ للها ةلئاس ،ةدئافلا مومع في ةبغر اًزجوم اً بولسأ ةلاسرلا تدمتعا دقو . تانسلحا نازيم في اهلعيج نأو ابه ملاسلإا في ةيبرتلا ملاسلإا في ةيبرتلا موهفم ديسلاو كلالما :ىلع قلطيو )بَرلا( مسلااو )ْببََر( لعفلا نم ٌةَقّتشم :ةغللا في ةيبرتلا .حلاصلإا وهو ثلاثلا نىعلما نم ةذوخأم ةيبرتلاو حلصلماو عاطلما نم لماكتم ملسُم ميلس ٍناسنإ ُنيوكتو ُةئشنت \" :حلاطصلاا في ةيبرتلا تافيرعت نمو ،ةيداقّتعلاا ةيحورلاو ،ةيداقّتعلااو ةيلقّعلاو ةيحصلا ةيحانلا نم ،ةفلتخلما هيحاون عيجم \" ةيعادبلإاو ةيرادلإاو ينب نم ةيبنجلأا تاتابنلا جريخو :كوشلا علقّي يذلا حلافلا لمع هبشي ةيبرتلا نىعمو \" \" هتابن نسحيل عرزلا ملاسلإا في ةيبرتلا ةناكم   { :لىاعت هلوق اهنمو ،دلولا ةيبرت لضف ىلع ثيداحلأاو تايلآا تلد في مهيلع موقّت نأو للها ةيصعم نع مهاهنتو للها ةعاطب مهرمأت\" :-للها هحمر - ةداتق لاق \" اهنع متهرجزو ،اهنع",
+  "text_simplified": "This section presents the concept of tarbiyah (Islamic upbringing) in Islam, its status, the qualities of the successful murabbi (educator), the role of the masjid and the school in tarbiyah, and the objectives of Islamic tarbiyah, including instilling aqeedah (creed) in the child’s soul from a young age.",
+  "labels": [
+    "أصول التربية",
+    "صفات المربي",
+    "التربية الإسلامية"
+  ],
+  "created_at": "2026-06-07T08:23:22Z",
+  "updated_at": "2026-06-10T18:30:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Al_Hady_Al_Nabawi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-34fc82de",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "صفات المربي",
+        "english": "Qualities of the Successful Murabbi",
+        "why": "The English title adds the word 'Successful', which is not present in the Arabic title. The Arabic title simply says 'qualities of the educator' without the qualifier 'successful'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

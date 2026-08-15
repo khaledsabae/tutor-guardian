@@ -1,0 +1,56 @@
+{
+  "id": "isl-1b1c38d3__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "The Importance of the Islamic Tarbiyah Curriculum in Treating Behavioral Disorders",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "اضطرابات سلوكية وتربوية",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا :يوبنلا يوبﱰلا جاهنﳌا يفيلﳋ ن(cid:685)دع .د ط(cid:682)رل(cid:682) سماﳋا دمﳏ ةعماج ةيناسنﻹا مولعلاو بادﻵا ةيلكب هاروتكد ملسﳌا عمت(cid:272)ا ةيمنت ﰲ مهاسي لماكتمو لماش يوبرت جاهنم ﱃإ علطتلا قايس ﰲ ةيعوضوﳌا هتيﳘأ ةيوبﱰلا جهانﳌا عوضوم ﰲ ثحبلا يستكي ،ةيوبﱰلا جهانﳌا ىوتسم ىلع ةروث نم مويلا ﱂاعلا هفرعي ام لظ ﰲ ،ةديازتﳌا هتاجاح ﱯليو ،ممﻷا ﲔب يعيبطلا هرودب مايقلاو هل يقرلا ققﳛو قايسنا ﲔب حواﱰت جهانﳌا هذه تلظو ،ناسنﻺل ةيتا ذلا ﱀاصﳌا ضعب بلج ﰲ ادودﳏ اهرثأ لظ لب ،ةيقيقﳊا ناسنﻹا ةيناسنإ ققﲢ ﱂ ﱵلاو ،ةيكولسلاو ةيوبﱰلا تﻻﻼتخﻻا نم ﲑبك ددع زارفإ ﱃإ ىدأ اﳑ ،عقاول(cid:682) اﳍ ةقﻼع ﻻ ةيلاثم تاحومط ﲔبو هزئارغو ناسنﻹا تاوهش ءارو لماك ﰲ ولغو ةيضاﱰفﻻا تايلاثﳌا ﰲ قارغإ ﲔبو ،راصبﻷا ا(cid:273) تيمعو ركفلا تباصأ ةبكرم ةعويمو قﻼخﻷا ﰲ لماك خسفتو قلطم لﻼﳓا ﲔبف دسﳉا ةيرح ﱃإ وعدي نمو اهجومو اردصم لقعلا لعج ﱃإ وعدي نمو حورلا سيدقت ﱃإ وعدي نم ﲔبو .تاسرامﳌا ﰲ ددشتو دئاقعلا .طباوضلا نم هخﻼسناو جاهنﳌ ﱂاعم سملتن نأ انيلع امازل ناك ،اﳍوأ هب حلص اﲟ ﻻإ حلصي نل ةمﻷا هذه رخآ نأ ةدعاقل (cid:685)ريرقت نم اقﻼطناو ،كئلوأو ءﻻؤه ﲔبف ام ﷲ ﲑغيل ،ةيقرشو ةيبرغ ميهافم نم ةمﻷا هذه ىلع نار ام ﲑيغتو ،ةيلمعلاو ةيملعلا ةايﳊا ديدﲡ ىلع رداقو ،هتاقلطنمو هرداصم ﰲ ليصأ هنإف ،يمﻼسﻹا جاهنﳌاو روصتلل لوﻷا يقيبطتلا لصﻷاو ،ةايﳊا نيدايم رئاس ﰲ ا(cid:275)ودقو ةمﻷا ﰊرم ملسو هيلع ﷲ ىلص ﱯنلا ناك اﳌو ،ا(cid:273) ،تاعمت(cid:272)او دارفﻷا تﲑ غف ،ةيوبﱰلا جئاتنلا ىلعأ ﱃإ لوصولا نم تنكم ﱵلا ،ةيوبﱰلا ملسو هيلع ﷲ ىلص هتسراﳑ ئرقتسن نأ انيلع امازل",
+  "text_simplified": "This text discusses the importance of the integrated Islamic tarbiyah (upbringing) curriculum in developing the Muslim community. It points out that current tarbiyah curricula may have caused behavioral and psychological disorders due to their deviation from the human fitrah (natural disposition). It calls for a return to the Prophetic methodology as the foundation for correct tarbiyah, which achieves balance between the spirit, body, and mind.",
+  "labels": [
+    "منهج تربوي",
+    "تربية إسلامية",
+    "اضطرابات سلوكية",
+    "فطرة إنسانية",
+    "منهج نبوي"
+  ],
+  "created_at": "2026-06-20T14:38:47Z",
+  "updated_at": "2026-06-20T14:38:47Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-1b1c38d3",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "المنهج التربوي الإسلامي",
+        "english": "Islamic Tarbiyah Curriculum",
+        "why": "The Arabic uses the adjective 'تربوي' (educational/pedagogical), not the noun 'تربية' (tarbiyah). 'Tarbiyah Curriculum' is a specific Islamic term not present in the source and narrows the meaning.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "المنهج التربوي الإسلامي المتكامل / المناهج التربوية الحالية",
+        "english": "integrated Islamic tarbiyah (upbringing) curriculum / current tarbiyah curricula",
+        "why": "Same issue: 'التربوي/التربوية' is an adjective meaning educational, not the noun 'tarbiyah'. The English repeatedly inserts 'tarbiyah' where the Arabic does not use that term, altering the register and meaning.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

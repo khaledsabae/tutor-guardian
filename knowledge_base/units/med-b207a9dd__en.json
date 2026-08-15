@@ -1,0 +1,47 @@
+{
+  "id": "med-b207a9dd__en",
+  "domain": "medical",
+  "source_file": "DMDD.pdf",
+  "title": "How to Deal with Anxiety and Anger in Children?",
+  "language": "en",
+  "age_group": "10-12",
+  "behavior_type": "قلق, غضب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "تقرير_طبي",
+  "reference_info": "NIMH — Disruptive Mood Dysregulation Disorder: The Basics",
+  "text_original": "the relationship between thoughts, behaviors, and feelings For more information about the diagnosis and and is often effective in treating anger and disruptive treatment of children, visit www.nimh.nih.gov/ behavior. Researchers at NIMH are also using CBT to childrenandmentalhealth. If you need help help children increase their ability to tolerate frustration identifying a provider in your area, call the without having an outburst. This therapy teaches Substance Abuse and Mental Health Services coping skills for controlling anger and ways to identify Administration (SAMHSA) Treatment Referral Helpline and relabel the distorted perceptions that contribute at 1-800-662-HELP (4357). SAMHSA also has an online tool at https://findtreatment.gov that you can search by location. For more information on how to Parent training teaches parents or caregivers more find help for you, a friend, or a family member, visit effective ways to respond to irritable behavior, such www.nimh.nih.gov/findhelp. as anticipating events that might lead a child to temper outbursts and working ahead to avert them. Training How is DMDD treated? also emphasizes the importance of predictable and consistent responses to a child’s outbursts and DMDD is a relatively new disorder; few DMDD-specific rewards for positive behavior. treatment studies have been conducted. Current To learn more about psychotherapy, visit www.nimh. treatments are primarily based on what has been nih.gov/psychotherapies. helpful for other childhood disorders associated with irritability, such as ADHD, oppositional defiant disorder, Medication and anxiety disorders. Currently, there are no medications approved by the Treatment for DMDD generally includes certain types U.S. Food and Drug Administration",
+  "text_simplified": "Behavior, emotions, and thoughts are closely linked. This text provides information on diagnosing anxiety and effective therapeutic tools for treating anger in children. You can find more information on how to seek help at www.nimh.nih.gov/",
+  "labels": [
+    "السلوك",
+    "المشاعر",
+    "العلاج",
+    "المساعدة"
+  ],
+  "created_at": "2026-06-07T08:19:54Z",
+  "updated_at": "2026-07-27",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "DMDD",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "med-b207a9dd",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "مرتبط بشكل كبير",
+        "english": "closely linked",
+        "why": "The Arabic 'بشكل كبير' means 'greatly' or 'strongly', not 'closely'. The English changes the nature of the link from intensity to proximity.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "isl-0243bed4__en",
+  "domain": "islamic_parenting",
+  "source_file": "Manhaj_Nabawi_Khulayfi.pdf",
+  "title": "The Importance of Salah and Mercy in the Tarbiyah of Children",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية دينية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "المنهاج التربوي النبوي — د. عدنان الخليفي",
+  "text_original": "امأف خسرتو قوذلا ﰊرت ﱵلاو ةيوبﱰلا لئاسولا ىقرأ نم هذهو .رصعلا ةﻼصو رجفلا ةﻼص ىلع ةظفاﶈا يهو ةلصوم ةقيرط ىلع ﱃ اعت 91 2024 ربنون –نورشعلاو دحاولا ددعلا **** ةـــــــفرعملا ةــــــلجم ي فيلخل ناندع .د ** يوبنلا يوبرتلا جاهنملا ًاموي هباحصأ عم ناك ملسو هيلع ﷲ ىلص ﱯنلا نأ \" :هنع ﷲ يضر سنأ ثيدح ﰲ امكف ،رعاشملل اشايجو ةفطاعلل اﲑثم افقوم ،ﻻ :اولاق رانلا ﰲ اهدلو ةحراط هذه نورتأ ملسو هيلع ﷲ ىلص :لاقف هتمض هتدجو املف اهدلو نع ثحبت ﱯسلا نم ةأرم(cid:682) اذإو مامأ ﱐاسنﻹا فعضلاو ةﲪرلا رعاشم مهيف كرح مهنيع(cid:997) ةباحصلا هاري يذلا ثدﳊا اهف ،47\" رانلا ﰲ هبيب ح يقلي ﻻ ﷲو :لاق . اهديلوب مﻷا هذه ةﲪر نم دشأو ﱪكأ يه هدابعب ﷲ ةﲪر نأ ملسو هيلع ﷲ ىلص دَكأف ،مﻷا ةفطاع هيلع ﷲ ىلص هظعو ﰲ امك ،ظعولا نم هبساني ام ملسو هيلع ﷲ ىلص هيف مدختسيف ،فوخو نزح فقوم ثدﳊا نوكي دقو انيهتناف راصنﻷا نم لجر ةزانج ﰲ ملسو هيلع ﷲ ىلص ﷲ لوسر عم انجرخ\" :لاق بزاع نب ءاﱪلا ن عف ،ﱪقلا دنع هباحصأ ملسو ،ضرﻷا ﰲ هب تكني دوع هدي ﰲو ﲑطلا انسو ؤر ىلع اﳕأك هلوح انسلجو ملسو هيلع ﷲ ىلص ﷲ لوسر سلجف دحلي اﳌو ﱪقلا ﱃإ فقومف ،48 هتنتفو ﱪقلا باذع فصو ﰲ ليوطلا ثيدﳊا ركذ ﰒ ..(cid:684)ﻼث و أ ﲔترم ﱪقلا باذع نم (cid:389)(cid:682) اوذيعتسا :لاقف ،هسأر عفرف اسراغ ﰒ ،لاوز ﱃإ مهلك قلﳋا ﲑصم نأ ﱃإ اهبنم ظعي انه ملسو هيلع ﷲ ىلص ﱯنلاف ارث(cid:998) دشأ بلقلا نﻼعﳚ فوﳋاو نزﳊا . ميعن و أ باذعو لاؤس",
+  "text_simplified": "This text addresses the importance of salah in the tarbiyah (upbringing) of children, and it cites the story of the Prophet Muhammad ﷺ with a mother searching for her son to teach mercy and affection. It explains how emotional situations can be used to reinforce religious and tarbiyah values in children.",
+  "labels": [
+    "تربية",
+    "صلاة",
+    "رحمة",
+    "قدوة",
+    "طفل"
+  ],
+  "created_at": "2026-06-20T14:40:58Z",
+  "updated_at": "2026-06-20T14:40:58Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Manhaj_Nabawi_Khulayfi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-0243bed4",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "term_error",
+        "field": "title",
+        "arabic": "تربية",
+        "english": "Tarbiyah",
+        "why": "The Arabic word 'تربية' is a common word meaning upbringing/education, not a technical Islamic term requiring transliteration. Transliterating it as 'Tarbiyah' in the title without a gloss obscures the meaning for English readers.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "التربوية",
+        "english": "tarbiyah values",
+        "why": "The Arabic adjective 'التربوية' means educational/upbringing. Rendering it as 'tarbiyah values' uses the transliterated noun as an adjective, which is unidiomatic and unclear; it should be 'educational values' or 'upbringing values'.",
+        "severity": "medium"
+      },
+      {
+        "type": "term_error",
+        "field": "title and text_simplified",
+        "arabic": "الصلاة",
+        "english": "Salah / salah",
+        "why": "Inconsistent capitalization of the transliterated term 'salah' between the title ('Salah') and the body ('salah').",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

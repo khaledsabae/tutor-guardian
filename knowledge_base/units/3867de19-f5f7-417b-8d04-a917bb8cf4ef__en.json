@@ -1,0 +1,46 @@
+{
+  "id": "3867de19-f5f7-417b-8d04-a917bb8cf4ef__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "«I’m Bored»: Boredom Is Not a Problem to Be Solved with a Screen",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "الملل",
+  "intervention_type": "وقائي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "الملل ليس عطبًا يحتاج إصلاحًا فوريًا. هو المساحة التي يبدأ فيها الطفل باختراع لعبته وحلّ مشكلته بنفسه. والوالد الذي يملأ كل فراغ بنشاط أو شاشة يحرمه هذه المهارة، ويعلّمه أن التسلية تأتي من الخارج دائمًا.\n\nما يساعد:\n• لا تستجب فورًا. اترك دقائق من التذمّر تمرّ — أغلب الأطفال يبدأون شيئًا من تلقاء أنفسهم بعدها.\n• جهّز «سلّة ملل» فيها مواد مفتوحة لا ألعابًا جاهزة: كراتين، أقلام، خيوط، أزرار، شرائط لاصقة. المواد المفتوحة تولّد لعبًا مختلفًا كل مرة.\n• أشركه في العمل الحقيقي بدل اختراع نشاط: غسل الخضار، طيّ الملابس، ترتيب الرفّ. الأطفال الصغار يستمتعون بمهام الكبار أكثر مما نظنّ.\n• قاوم جعل الشاشة هي الحلّ الافتراضي للملل. حين تصير كذلك، يهبط تحمّل الطفل للفراغ سريعًا ويطلبها أبكر كل مرة.\n• دوّر الألعاب: أخفِ نصفها وبدّلها كل أسبوعين. اللعبة الغائبة تعود جديدة.\n\nوإن كان «الزهق» شكوى دائمة مع رفض كل شيء وانسحاب من اللعب مع الآخرين، فانظر إلى ما تحته — قد يكون قلقًا أو مزاجًا منخفضًا لا مللًا.",
+  "text_simplified": "Boredom is not a malfunction that needs immediate fixing. It is the space where a child begins to invent their own play and solve their own problems. The parent who fills every gap with an activity or a screen deprives them of this skill and teaches them that entertainment always comes from outside.\n\nWhat helps:\n• Do not respond immediately. Let a few minutes of complaining pass—most children start something on their own afterward.\n• Prepare a «boredom basket» with open-ended materials, not ready-made toys: cardboard boxes, crayons, strings, buttons, adhesive tape. Open-ended materials generate different play each time.\n• Involve them in real work instead of inventing an activity: washing vegetables, folding clothes, organizing the shelf. Young children enjoy adult tasks more than we think.\n• Resist making the screen the default solution for boredom. When it becomes so, a child’s tolerance for emptiness drops quickly, and they demand it earlier each time.\n• Rotate toys: hide half of them and switch them every two weeks. The absent toy returns as new.\n\nAnd if «boredom» is a constant complaint with refusal of everything and withdrawal from playing with others, look beneath it—it may be anxiety or low mood, not boredom.",
+  "labels": [],
+  "keywords": [
+    "Boredom",
+    "Free play",
+    "Creativity",
+    "Screens",
+    "Activities"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "3867de19-f5f7-417b-8d04-a917bb8cf4ef",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "أقلام",
+        "english": "crayons",
+        "why": "Arabic 'أقلام' means pens or pencils generally, not specifically wax crayons. The English narrows the material to a specific type not stated in the source.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}
