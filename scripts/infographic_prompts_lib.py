@@ -6,6 +6,7 @@ scripts/infographic_prompts.md، وحساب الدروس الناقصة فيها
 لا يتصل بـ NotebookLM — مجرد تحليل ملفات. يُستخدم من مولّد الإنفوجرافيك.
 """
 import json
+import sys
 import re
 from pathlib import Path
 
@@ -36,6 +37,18 @@ def parse_prompt_blocks() -> dict[str, dict]:
     return blocks
 
 
+_BACKEND = str(Path(__file__).resolve().parents[1] / "backend")
+if _BACKEND not in sys.path:
+    sys.path.insert(0, _BACKEND)
+from app.core.taxonomy import age_equivalents  # noqa: E402
+
+_REAL_LESSONS = {
+    p.stem for p in
+    (Path(__file__).resolve().parents[1] / "knowledge_base" / "curriculum"
+     / "lessons").glob("*.json")
+}
+
+
 def _base_lang(code) -> str:
     """'ar_eg' → 'ar'. Entries declare locales; one language, several spellings."""
     return (code or "").strip().lower().replace("-", "_").split("_")[0] or "ar"
@@ -52,7 +65,28 @@ def missing_infographic_lessons(lang: str = "ar") -> list[dict]:
     idx = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
     want = _base_lang(lang)
     out = []
+    # 🚨 45 index entries carry the OLD short id (`lesson_10-12_cyber_01`). They
+    # are not dead: curriculum_loader resolves each to `lesson_<age>_<topic>_<n>`
+    # and caches the assets under both. Reporting them as "no prompt" made the
+    # backlog look 45 lessons larger than it is, and deleting them would have
+    # broken 45 lessons in production. Resolve the id the same way the loader
+    # does, so the count describes the curriculum rather than the index's shape.
     for l in idx["lessons"]:
+        sid = l.get("lesson_id", "")
+        age, topic = l.get("age_group"), l.get("topic_path")
+        if age and topic and sid:
+            order = sid.split("_")[-1]
+            # `prenatal-1` and `0-3` are the same band — the index writes the
+            # first, the curriculum files the second. Reuse the backend's
+            # taxonomy rather than hard-coding the alias, so a future band split
+            # cannot leave this resolver quietly behind.
+            for band in age_equivalents(age):
+                candidate = f"lesson_{band}_{topic}_{order}"
+                if candidate in _REAL_LESSONS:
+                    l = {**l, "lesson_id": candidate}
+                    break
+            else:
+                l = {**l, "lesson_id": f"lesson_{age}_{topic}_{order}"}
         assets = l.get("assets", {}) or {}
         have = [e for e in (assets.get("infographics") or [])
                 if _base_lang(e.get("language")) == want]
