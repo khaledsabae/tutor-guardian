@@ -374,6 +374,18 @@ def close_session(session_id: int, reason: str,
         conn.close()
 
 
+def session_for(session_id: int) -> Optional[sqlite3.Row]:
+    """One session by id. Routers check `child_id` against the caller's token
+    before acting on it — a session id is not an authorisation."""
+    conn = get_conn()
+    try:
+        return conn.execute(
+            "SELECT * FROM child_screen_sessions WHERE id = ?", (session_id,)
+        ).fetchone()
+    finally:
+        conn.close()
+
+
 def active_session(child_id: int) -> Optional[sqlite3.Row]:
     """The child's open session, if any. The middleware's gate."""
     conn = get_conn()

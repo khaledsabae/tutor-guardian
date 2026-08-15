@@ -10,6 +10,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from fastapi import APIRouter, HTTPException, Query, Request
 
+from app.config.guardrails_loader import ChildSurfacePolicy, load_child_surface_policy
 from app.db.init_db import get_conn
 from app.models.value_tracking import (
     ChildHabitDayOut,
@@ -26,6 +27,7 @@ from app.routers.value_tracking import (
     _persist_event,
     _verify_child_ownership,
 )
+from app.services import child_budget
 from app.services import child_token as child_token_service
 
 router = APIRouter(tags=["child-mode"])
@@ -104,19 +106,120 @@ def create_child_web_claim(request: Request, child_id: int = Query(..., ge=1)):
     }
 
 
+def _policy(request: Request) -> ChildSurfacePolicy:
+    """The child-surface policy, from app state or loaded on the spot.
+
+    The fallback is not a default: load_child_surface_policy raises on a bad
+    file, so a router without startup state either gets a valid policy or an
+    error. It exists so tests can mount this router without a lifespan.
+    """
+    policy = getattr(request.app.state, "child_surface_policy", None)
+    return policy or load_child_surface_policy()
+
+
+def _refusal(result: dict) -> HTTPException:
+    """Turn a budget refusal into a 403 the parent app can render.
+
+    The message ships as a key plus an Arabic fallback: the key is what a
+    localized client should render (27% of users are not reading Arabic), the
+    fallback is what an older build will show rather than a blank dialog.
+    """
+    reason = result.get("reason", "denied")
+    body = {
+        "error": reason,
+        "band": result.get("band"),
+        "message_key": result.get("parent_message_key") or f"child_gate.{reason}",
+    }
+    if result.get("parent_message_ar"):
+        body["message_ar"] = result["parent_message_ar"]
+    elif reason in ("budget_exhausted", "audio_budget_exhausted"):
+        body["message_ar"] = "خلصت مدة النهارده. نكمل بكرة إن شاء الله 🌙"
+        body["resets_at"] = result.get("resets_at")
+    return HTTPException(status_code=403, detail=body)
+
+
 @router.post("/value-tracking/child-sessions", response_model=dict)
-def create_child_session(request: Request, child_id: int = Query(..., ge=1)):
+def create_child_session(
+    request: Request,
+    child_id: int = Query(..., ge=1),
+    # Both default for backward compatibility: builds already on Play call
+    # this with only child_id, and the shipped child mode is the habit
+    # checklist. Defaulting the offset to UTC shifts an old client's day
+    # boundary by its real offset; the rolling-24h floor in child_budget keeps
+    # that from being worth anything.
+    surface: str = Query("habit"),
+    tz_offset_minutes: int = Query(0),
+):
     """Parent endpoint: issue a short-lived child-mode token for a child.
 
-    Requires normal parent Bearer auth. The returned token is meant to be
-    handed to the child's device (or the same device in child mode) and is
-    valid for 30 minutes.
+    Requires normal parent Bearer auth. The token is now bound to a screen
+    session: the age gate decides whether one may exist at all, and the TTL is
+    clamped to what is left of the budget. A token that outlives its budget is
+    a bypass waiting to be found, so it does not.
     """
     device_id = _require_device_id(request)
     _verify_child_ownership(device_id, child_id)
-    token = child_token_service.issue_child_token(device_id, child_id, ttl_seconds=1800)
+
+    policy = _policy(request)
+    session = child_budget.open_session(device_id, child_id, surface,
+                                        tz_offset_minutes, policy)
+    if not session["ok"]:
+        raise _refusal(session)
+
+    ttl = min(1800, session["allowed_seconds"])
+    token = child_token_service.issue_child_token(device_id, child_id, ttl_seconds=ttl)
     expires_at = child_token_service.child_token_expiry_iso(token)
-    return {"token": token, "expires_at": expires_at, "child_id": child_id}
+    return {
+        "token": token,
+        "expires_at": expires_at,
+        "child_id": child_id,
+        "session_id": session["session_id"],
+        "surface": session["surface"],
+        "allowed_seconds": session["allowed_seconds"],
+        "remaining_today": session["remaining_today"],
+        "remaining_audio_today": session["remaining_audio_today"],
+        "requires_parent_present": session["requires_parent_present"],
+        "heartbeat_interval_seconds": session["heartbeat_interval_seconds"],
+        "exit_ritual_seconds": session["exit_ritual_seconds"],
+    }
+
+
+@router.post("/value-tracking/child-mode/heartbeat", response_model=dict)
+def child_heartbeat(request: Request, session_id: int = Query(..., ge=1)):
+    """Bill the time since the last beat and report what is left.
+
+    A 403 here is the budget ending, which the child's app renders as a quiet
+    closing screen — not an error.
+    """
+    child_id = _get_child_id(request)
+    policy = _policy(request)
+
+    session = child_budget.session_for(session_id)
+    if session is None or session["child_id"] != child_id:
+        raise HTTPException(status_code=404, detail={"error": "session_not_found"})
+
+    result = child_budget.heartbeat(session_id, policy)
+    if not result["ok"]:
+        raise _refusal(result)
+    return result
+
+
+@router.post("/value-tracking/child-mode/session-end", response_model=dict)
+def child_session_end(
+    request: Request,
+    session_id: int = Query(..., ge=1),
+    reason: str = Query("completed"),
+):
+    """Close a session from the child's side, after the exit ritual."""
+    child_id = _get_child_id(request)
+    session = child_budget.session_for(session_id)
+    if session is None or session["child_id"] != child_id:
+        raise HTTPException(status_code=404, detail={"error": "session_not_found"})
+
+    allowed = {"completed", "parent_exit", "timeout"}
+    child_budget.close_session(session_id, reason if reason in allowed else "completed",
+                               _policy(request))
+    return {"ok": True}
 
 
 @router.get("/value-tracking/child-mode/today", response_model=ChildHabitDayOut)

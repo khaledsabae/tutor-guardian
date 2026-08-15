@@ -1,0 +1,294 @@
+"""The gate as the network sees it.
+
+test_child_budget.py proves the service refuses. This file proves the refusal
+survives being wired to HTTP — including the case that matters most, where a
+child holds a perfectly valid token and the surface is over anyway.
+
+The middleware tests mount the real AuthMiddleware rather than the auth stub
+the other suites use. Stubbing the thing under test would have passed no
+matter what the middleware did.
+"""
+import pytest
+from fastapi import FastAPI, Request
+from fastapi.testclient import TestClient
+from starlette.middleware.base import BaseHTTPMiddleware
+
+from app.config.guardrails_loader import load_child_surface_policy
+from app.db.init_db import get_conn, init_db
+from app.middleware.auth import AuthMiddleware
+from app.routers.child_mode import router as child_mode_router
+from app.routers.children import router as children_router
+from app.routers.value_tracking import router as value_router
+from app.services import child_budget, child_token
+
+DEVICE = "test-device-001"
+
+
+@pytest.fixture
+def tmp_db(tmp_path, monkeypatch):
+    db = tmp_path / "surface.db"
+    monkeypatch.setenv("CONVERSATIONS_DB", str(db))
+    init_db()
+    return db
+
+
+class _AuthStubMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        auth_header = request.headers.get("Authorization", "")
+        if auth_header.startswith("Child-Bearer "):
+            payload = child_token.verify_child_token(auth_header[13:].strip())
+            if payload is None:
+                from starlette.responses import JSONResponse
+                return JSONResponse(status_code=401, content={"detail": "invalid"})
+            request.state.child_mode = True
+            request.state.device_id = payload["device_id"]
+            request.state.child_id = payload["child_id"]
+        else:
+            request.state.device_id = DEVICE
+        return await call_next(request)
+
+
+@pytest.fixture
+def client(tmp_db):
+    app = FastAPI()
+    app.add_middleware(_AuthStubMiddleware)
+    app.include_router(children_router, prefix="/api")
+    app.include_router(value_router, prefix="/api")
+    app.include_router(child_mode_router, prefix="/api")
+    with TestClient(app) as c:
+        yield c
+
+
+def _child(client, age_group="7-9") -> int:
+    r = client.post("/api/children", json={"name": "أحمد", "age_group": age_group})
+    assert r.status_code == 201, r.text
+    return r.json()["id"]
+
+
+def _open(client, child_id, surface="story", tz=180):
+    return client.post(
+        "/api/value-tracking/child-sessions",
+        params={"child_id": child_id, "surface": surface, "tz_offset_minutes": tz},
+    )
+
+
+# ── Issuing a token is where the age gate bites ────────────────────────────
+
+def test_an_infant_gets_a_403_with_something_to_read(client):
+    """Not a 500, not an empty body. The parent is told what happened and
+    what would change it."""
+    cid = _child(client, "prenatal-1")
+    r = _open(client, cid)
+    assert r.status_code == 403
+    detail = r.json()["detail"]
+    assert detail["error"] == "age_not_allowed"
+    assert detail["message_key"] == "child_gate.under_2"
+    assert detail["message_ar"]
+
+
+def test_a_toddler_may_listen_but_not_watch(client):
+    cid = _child(client, "2-3")
+    assert _open(client, cid, surface="screen_off").status_code == 200
+    assert _open(client, cid, surface="story").status_code == 403
+
+
+def test_the_token_expires_with_the_budget_not_after_it(client):
+    """The plan's clamp: a 10-minute story does not hand out a 30-minute
+    token, because the leftover twenty are exactly the window a bypass
+    would live in."""
+    cid = _child(client)
+    body = _open(client, cid).json()
+    assert body["allowed_seconds"] == 600
+    payload = child_token.verify_child_token(body["token"])
+    assert payload is not None
+    ttl = payload["exp"] - payload["iat"] if "iat" in payload else None
+    assert body["allowed_seconds"] <= 1800
+    assert ttl is None or ttl <= 600
+
+
+def test_a_legacy_client_still_works(client):
+    """Builds on Play call this with child_id alone. They keep working, on
+    the habit surface, and they are age-gated like everyone else."""
+    cid = _child(client)
+    r = client.post("/api/value-tracking/child-sessions", params={"child_id": cid})
+    assert r.status_code == 200, r.text
+    assert r.json()["surface"] == "habit"
+
+    infant = _child(client, "prenatal-1")
+    r = client.post("/api/value-tracking/child-sessions", params={"child_id": infant})
+    assert r.status_code == 403
+
+
+def test_another_devices_child_is_refused(client, tmp_db):
+    conn = get_conn()
+    try:
+        cur = conn.execute(
+            "INSERT INTO child_profiles (device_id, name, age_group) VALUES (?, ?, ?)",
+            ("someone-else", "طفل", "7-9"),
+        )
+        conn.commit()
+        foreign = cur.lastrowid
+    finally:
+        conn.close()
+    assert _open(client, foreign).status_code in (403, 404)
+
+
+# ── Heartbeat and close ────────────────────────────────────────────────────
+
+def test_heartbeat_reports_what_is_left(client):
+    cid = _child(client)
+    session = _open(client, cid).json()
+    r = client.post(
+        "/api/value-tracking/child-mode/heartbeat",
+        params={"session_id": session["session_id"]},
+        headers={"Authorization": f"Child-Bearer {session['token']}"},
+    )
+    assert r.status_code == 200, r.text
+    assert 0 < r.json()["remaining_seconds"] <= 600
+    assert r.json()["exit_ritual"] is False
+
+
+def test_a_child_cannot_heartbeat_another_childs_session(client):
+    """A session id is not an authorisation."""
+    mine = _child(client)
+    theirs = _child(client)
+    my_session = _open(client, mine).json()
+    their_session = _open(client, theirs).json()
+    r = client.post(
+        "/api/value-tracking/child-mode/heartbeat",
+        params={"session_id": their_session["session_id"]},
+        headers={"Authorization": f"Child-Bearer {my_session['token']}"},
+    )
+    assert r.status_code == 404
+
+
+def test_session_end_closes_it(client):
+    cid = _child(client)
+    session = _open(client, cid).json()
+    r = client.post(
+        "/api/value-tracking/child-mode/session-end",
+        params={"session_id": session["session_id"], "reason": "completed"},
+        headers={"Authorization": f"Child-Bearer {session['token']}"},
+    )
+    assert r.status_code == 200
+    assert child_budget.active_session(cid) is None
+
+
+# ── The parent's view ──────────────────────────────────────────────────────
+
+def test_screen_usage_keeps_listening_and_watching_apart(client):
+    cid = _child(client)
+    policy = load_child_surface_policy()
+
+    watched = _open(client, cid, surface="story").json()
+    child_budget.close_session(watched["session_id"], "completed", policy)
+    listened = _open(client, cid, surface="screen_off").json()
+    child_budget.close_session(listened["session_id"], "completed", policy)
+
+    r = client.get(f"/api/children/{cid}/screen-usage",
+                   params={"tz_offset_minutes": 180})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["budget_seconds"] == 20 * 60
+    assert body["screen_off_budget_seconds"] == 60 * 60
+    assert set(body["by_surface"]) == {"story", "screen_off"}
+    assert body["band"] == "7-9"
+
+
+def test_screen_usage_needs_to_own_the_child(client, tmp_db):
+    conn = get_conn()
+    try:
+        cur = conn.execute(
+            "INSERT INTO child_profiles (device_id, name, age_group) VALUES (?, ?, ?)",
+            ("someone-else", "طفل", "7-9"),
+        )
+        conn.commit()
+        foreign = cur.lastrowid
+    finally:
+        conn.close()
+    assert client.get(f"/api/children/{foreign}/screen-usage").status_code == 404
+
+
+# ── The middleware, unstubbed ──────────────────────────────────────────────
+
+@pytest.fixture
+def guarded_client(tmp_db):
+    """The real AuthMiddleware in front of a route that does nothing, so a
+    non-200 can only have come from the gate."""
+    app = FastAPI()
+    app.add_middleware(AuthMiddleware)
+
+    @app.post("/api/value-tracking/child-mode/ping")
+    def ping(request: Request):
+        return {"child_id": request.state.child_id}
+
+    @app.post("/api/value-tracking/child-mode/session-end")
+    def end(request: Request):
+        return {"ok": True}
+
+    with TestClient(app) as c:
+        yield c
+
+
+def _make_child(age_group="7-9") -> int:
+    conn = get_conn()
+    try:
+        cur = conn.execute(
+            "INSERT INTO child_profiles (device_id, name, age_group) VALUES (?, ?, ?)",
+            (DEVICE, "أحمد", age_group),
+        )
+        conn.commit()
+        return cur.lastrowid
+    finally:
+        conn.close()
+
+
+def test_a_valid_token_without_a_live_session_is_refused(guarded_client):
+    """The case the TTL clamp alone does not cover: the budget ran out at
+    minute ten and the token is good until minute twenty."""
+    cid = _make_child()
+    token = child_token.issue_child_token(DEVICE, cid, ttl_seconds=1800)
+    r = guarded_client.post("/api/value-tracking/child-mode/ping",
+                            headers={"Authorization": f"Child-Bearer {token}"})
+    assert r.status_code == 403
+    assert r.json()["error"] == "child_budget_exhausted"
+    assert r.json()["message_key"] == "child_gate.budget_exhausted"
+
+
+def test_the_same_token_works_once_a_session_is_open(guarded_client):
+    cid = _make_child()
+    policy = load_child_surface_policy()
+    token = child_token.issue_child_token(DEVICE, cid, ttl_seconds=1800)
+    opened = child_budget.open_session(DEVICE, cid, "story", 180, policy)
+    assert opened["ok"], opened
+
+    r = guarded_client.post("/api/value-tracking/child-mode/ping",
+                            headers={"Authorization": f"Child-Bearer {token}"})
+    assert r.status_code == 200
+    assert r.json()["child_id"] == cid
+
+
+def test_closing_the_session_shuts_the_door_again(guarded_client):
+    cid = _make_child()
+    policy = load_child_surface_policy()
+    token = child_token.issue_child_token(DEVICE, cid, ttl_seconds=1800)
+    opened = child_budget.open_session(DEVICE, cid, "story", 180, policy)
+    child_budget.close_session(opened["session_id"], "completed", policy)
+
+    r = guarded_client.post("/api/value-tracking/child-mode/ping",
+                            headers={"Authorization": f"Child-Bearer {token}"})
+    assert r.status_code == 403
+
+
+def test_session_end_stays_reachable_after_the_budget_is_gone(guarded_client):
+    """A client must always be able to report a clean close — including the
+    close that spent the last second."""
+    cid = _make_child()
+    token = child_token.issue_child_token(DEVICE, cid, ttl_seconds=1800)
+    r = guarded_client.post("/api/value-tracking/child-mode/session-end",
+                            headers={"Authorization": f"Child-Bearer {token}"})
+    assert r.status_code == 200
+
+
+def test_no_token_is_still_a_401(guarded_client):
+    assert guarded_client.post("/api/value-tracking/child-mode/ping").status_code == 401

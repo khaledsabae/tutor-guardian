@@ -30,11 +30,13 @@ import sqlite3
 from datetime import date, datetime, timedelta, timezone
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field, field_validator
 
-from app.core.taxonomy import CANONICAL_AGE_GROUPS
+from app.config.guardrails_loader import load_child_surface_policy
+from app.core.taxonomy import CANONICAL_AGE_GROUPS, map_profile_age_to_band
 from app.db.init_db import get_conn
+from app.services import child_budget
 from app.services.coach_service import CHALLENGE_TOPICS
 
 router = APIRouter()
@@ -447,6 +449,48 @@ def get_challenge(child_id: int, request: Request):
         return {"child_id": child_id, "challenge": _challenge_row_to_dict(row)}
     finally:
         conn.close()
+
+
+@router.get(
+    "/children/{child_id}/screen-usage",
+    summary="What the child's screen and listening time looked like on a day",
+)
+def get_screen_usage(child_id: int, request: Request,
+                     on_date: Optional[str] = Query(None, alias="date"),
+                     tz_offset_minutes: int = 0):
+    """The parent's view of the budget.
+
+    Screen and listening are reported as separate numbers on purpose. Adding
+    them would recreate the single "hours today" figure that the policy exists
+    to argue against — forty minutes of a dark screen and a recitation is not
+    the same thing as forty minutes of a game, and a parent deciding what to
+    do next needs to see which one it was.
+    """
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        age_group = conn.execute(
+            "SELECT age_group FROM child_profiles WHERE id = ?", (child_id,)
+        ).fetchone()["age_group"]
+    finally:
+        conn.close()
+
+    policy = getattr(request.app.state, "child_surface_policy", None) \
+        or load_child_surface_policy()
+    band = policy.band(map_profile_age_to_band(age_group))
+    local_date = on_date or child_budget.local_date_for(
+        datetime.now(timezone.utc), tz_offset_minutes
+    )
+    usage = child_budget.today_usage(child_id, local_date, policy)
+    return {
+        "child_id": child_id,
+        "date": local_date,
+        "band": band.band,
+        "budget_seconds": band.daily_budget_minutes * 60,
+        "screen_off_budget_seconds": band.screen_off_daily_budget_minutes * 60,
+        **usage,
+    }
 
 
 @router.put(

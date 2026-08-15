@@ -10,6 +10,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
+from app.services import child_budget
 from app.services import child_token as child_token_service
 from app.services import conversation_store as store
 
@@ -115,6 +116,26 @@ class AuthMiddleware(BaseHTTPMiddleware):
             request.state.device_id = payload["device_id"]
             request.state.child_id = payload["child_id"]
             request.state.token = token
+
+            # A valid token is not a live session. The token's TTL is already
+            # clamped to the budget at issue time, but clamping alone leaves
+            # the window between "budget ran out" and "token expires" — and a
+            # token issued for a 20-minute allowance that the child spent in
+            # ten still parses fine for the other ten. The open session is the
+            # authority; a closed one means the surface is over.
+            #
+            # session-end is exempt so a client can always report a clean
+            # close, including the close that exhausted the budget.
+            if not path.endswith("/session-end"):
+                if child_budget.active_session(payload["child_id"]) is None:
+                    return JSONResponse(
+                        status_code=403,
+                        content={
+                            "error": "child_budget_exhausted",
+                            "message_key": "child_gate.budget_exhausted",
+                            "message_ar": "خلصت مدة النهارده. نكمل بكرة إن شاء الله 🌙",
+                        },
+                    )
             return await call_next(request)
 
         if not auth_header.startswith("Bearer "):
