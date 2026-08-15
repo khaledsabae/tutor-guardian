@@ -1740,6 +1740,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get covenantDelivered => 'تم تسجيل تقديم المكافأة بنجاح! ✅';
 
   @override
+  String get covenantOverdueTitle => 'مكافأة مستنية التسليم';
+
+  @override
+  String covenantOverdueBody(int count) {
+    return 'فيه $count مكافأة اتصرفت من أكتر من أسبوع ولسه ماوصلتش. الوعد اللي ما يتنفّذش بيعلّم أكتر من الوعد اللي ما يتقالش.';
+  }
+
+  @override
   String get covenantParentWelcome =>
       'بوابة الأهل: أضف مكافآت حقيقية يلتزم بها الأهل بالواقع (مثل رحلات أو هدايا)، وتابع طلبات طفلك لتسليمها.';
 
@@ -1978,28 +1986,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get storyGenerating => 'جارٍ تأليف القصة…';
 
   @override
-  String storyCost(Object count) {
-    return 'توليد قصة ($count 🪙)';
-  }
+  String get storyGenerateFree => 'اكتب لي قصة ✨';
 
   @override
   String get storyLoading => 'قد يستغرق هذا لحظات…';
 
   @override
   String get storyAnother => 'قصة أخرى';
-
-  @override
-  String get storyInsufficient => 'عذراً، رصيدك لا يكفي 🪙';
-
-  @override
-  String storyInsufficientMsg(Object count, Object reward) {
-    return 'تحتاج إلى $count عملة لتأليف قصة مخصصة لطفلك. شارك التطبيق مع أصدقائك واحصل على $reward عملة مجاناً عن كل صديق ينضم إلينا! 🌿';
-  }
-
-  @override
-  String storyInviteBtn(Object reward) {
-    return 'ادعُ صديقاً (+$reward 🪙)';
-  }
 
   @override
   String storyError(Object error) {
@@ -3094,6 +3087,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get exclusiveBadgeOwned => 'مملوكة ✓';
+
+  @override
+  String get gameClosingTitle => 'خلاص كده النهارده 🌙';
+
+  @override
+  String gameClosingPraise(int score) {
+    return 'شاطر. جمعت $score نقطة.';
+  }
+
+  @override
+  String get gameClosingMission =>
+      'دلوقتي قوم اعمل حاجة واحدة برّه الشاشة، واحكيها لبابا أو ماما.';
+
+  @override
+  String get gameClosingLeave => 'تمام، أنا خارج';
+
+  @override
+  String get exclusiveBadgesIntro =>
+      'الشارات دي بتتفتح بالإنجاز، مش بالشراء. عملاتك ليها مصرف واحد: مكافأة حقيقية من عهد المكافآت.';
+
+  @override
+  String get exclusiveBadgeLocked => 'تُفتح بالإنجاز';
+
+  @override
+  String get exclusiveBadgesToCovenant => 'افتح عهد المكافآت';
 
   @override
   String get reflectionNoteBadge => 'ملاحظة';

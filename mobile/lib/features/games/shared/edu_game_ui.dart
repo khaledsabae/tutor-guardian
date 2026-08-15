@@ -538,3 +538,66 @@ Future<void> showEduResultDialog({
 void lightHaptic() => HapticFeedback.lightImpact();
 void mediumHaptic() => HapticFeedback.mediumImpact();
 void errorHaptic() => HapticFeedback.heavyImpact();
+
+/// The exit ritual: what a child sees when the surface is over.
+///
+/// Deliberately not the results dialog. That one offers "next level" and
+/// "play again", which at the exact moment a budget runs out teaches that the
+/// limit was a suggestion. This has one button, it says goodbye rather than
+/// congratulating, and the only thing it proposes happens off the screen.
+///
+/// It is not dismissible and it does not auto-close after three seconds — a
+/// child needs long enough to read the thing they are being asked to go do,
+/// and a screen that vanishes on its own is the abrupt cut-off the whole
+/// ritual exists to avoid.
+Future<void> showEduClosingScreen({
+  required BuildContext context,
+  required EduGameTheme theme,
+  required EduGameResult result,
+  required VoidCallback onLeave,
+}) {
+  final l10n = AppLocalizations.of(context);
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (ctx) => PopScope(
+      canPop: false,
+      child: AlertDialog(
+        backgroundColor: theme.surfaceColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        title: Text(
+          l10n.gameClosingTitle,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: theme.textColor, fontWeight: FontWeight.w800),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              l10n.gameClosingPraise(result.score),
+              textAlign: TextAlign.center,
+              style: TextStyle(color: theme.textColor, height: 1.6),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              l10n.gameClosingMission,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: theme.textColor,
+                fontWeight: FontWeight.w700,
+                height: 1.7,
+              ),
+            ),
+          ],
+        ),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          TextButton(
+            onPressed: onLeave,
+            child: Text(l10n.gameClosingLeave),
+          ),
+        ],
+      ),
+    ),
+  );
+}

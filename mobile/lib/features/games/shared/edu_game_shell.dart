@@ -11,7 +11,6 @@ import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
@@ -19,6 +18,7 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/error_retry_view.dart';
 import '../../coins/coins_providers.dart';
+import '../../routine/providers/child_mode_providers.dart';
 import 'edu_game_models.dart';
 import 'edu_game_ui.dart';
 
@@ -211,16 +211,46 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
   bool _finished = false;
   bool _showMiniStarBurst = false;
 
+  /// How long this level has actually been on screen.
+  ///
+  /// There was no time tracking in any of the four games — the only way out
+  /// was answering every question or losing three lives, and a child who did
+  /// neither could sit here indefinitely. The server bills by heartbeat, but
+  /// the cap has to be visible here too or the game plays on past the budget
+  /// while the session dies quietly underneath it.
+  final Stopwatch _elapsed = Stopwatch();
+  Timer? _capTimer;
+
+  /// Set when the surface ended mid-level: the closing screen replaces the
+  /// results dialog, and neither "next level" nor "play again" is offered.
+  bool _closedByBudget = false;
 
   @override
   void initState() {
     super.initState();
     _lives = 3;
     _index = 0;
+    _elapsed.start();
+    _watchTheBudget();
+  }
+
+  /// The cap is whatever the server said when the session opened — never a
+  /// constant compiled into the client, which is a limit a client can edit.
+  void _watchTheBudget() {
+    final remaining = ref.read(childModeProvider).remainingSeconds;
+    if (remaining == null || remaining <= 0) return;
+    _capTimer = Timer(Duration(seconds: remaining), () {
+      if (mounted && !_finished) {
+        setState(() => _closedByBudget = true);
+        _finish();
+      }
+    });
   }
 
   @override
   void dispose() {
+    _capTimer?.cancel();
+    _elapsed.stop();
     super.dispose();
   }
 
@@ -301,28 +331,54 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
 
     widget.onComplete(result);
 
-    if (mounted) {
-      setState(() => _finished = true);
-      showEduResultDialog(
+    if (!mounted) return;
+    setState(() => _finished = true);
+    _capTimer?.cancel();
+    _elapsed.stop();
+
+    // The exit ritual. A game that ends by dropping the child back to a menu
+    // teaches that the way out of a screen is another screen, and a game that
+    // offers "play again" at the exact moment the budget ran out teaches that
+    // limits are negotiable. When the surface is over there is one button, and
+    // it goes outside.
+    final inChildMode = ref.read(childModeProvider).active;
+    final surfaceOver = _closedByBudget || ref.read(childModeProvider).exitRitual;
+
+    if (inChildMode && surfaceOver) {
+      unawaited(ref.read(childModeProvider.notifier).endSession(
+            reason: _closedByBudget ? 'budget_exhausted' : 'completed',
+          ));
+      showEduClosingScreen(
         context: context,
         theme: widget.theme,
         result: result,
-        onNext: completed && widget.level < 10
-            ? () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              }
-            : null,
-        onReplay: () {
-          Navigator.of(context).pop();
-          _resetGame();
-        },
-        onExit: () {
+        onLeave: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         },
       );
+      return;
     }
+
+    showEduResultDialog(
+      context: context,
+      theme: widget.theme,
+      result: result,
+      onNext: completed && widget.level < 10
+          ? () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            }
+          : null,
+      onReplay: () {
+        Navigator.of(context).pop();
+        _resetGame();
+      },
+      onExit: () {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   void _resetGame() {
@@ -738,11 +794,12 @@ class _OptionButton extends StatelessWidget {
 }
 
 /// Extension on [CoinsNotifier] so games can credit small per-question earnings.
+///
+/// This used to write `coins.balance` in SharedPreferences directly, which put
+/// the four games outside every rule CoinsService enforces — including the
+/// daily earning ceiling, which is precisely the limit that stops a game from
+/// being a coin mint. It goes through `earn` now, and is capped like anything
+/// else that credits coins.
 extension GameCoins on CoinsNotifier {
-  Future<void> creditGameEarnings(int amount) async {
-    final prefs = await SharedPreferences.getInstance();
-    final balance = prefs.getInt('coins.balance') ?? 0;
-    await prefs.setInt('coins.balance', balance + amount);
-    await refresh();
-  }
+  Future<void> creditGameEarnings(int amount) => earn(amount);
 }

@@ -3284,6 +3284,18 @@ abstract class AppLocalizations {
   /// **'تم تسجيل تقديم المكافأة بنجاح! ✅'**
   String get covenantDelivered;
 
+  /// No description provided for @covenantOverdueTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مكافأة مستنية التسليم'**
+  String get covenantOverdueTitle;
+
+  /// No description provided for @covenantOverdueBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'فيه {count} مكافأة اتصرفت من أكتر من أسبوع ولسه ماوصلتش. الوعد اللي ما يتنفّذش بيعلّم أكتر من الوعد اللي ما يتقالش.'**
+  String covenantOverdueBody(int count);
+
   /// No description provided for @covenantParentWelcome.
   ///
   /// In ar, this message translates to:
@@ -3692,11 +3704,11 @@ abstract class AppLocalizations {
   /// **'جارٍ تأليف القصة…'**
   String get storyGenerating;
 
-  /// No description provided for @storyCost.
+  /// No description provided for @storyGenerateFree.
   ///
   /// In ar, this message translates to:
-  /// **'توليد قصة ({count} 🪙)'**
-  String storyCost(Object count);
+  /// **'اكتب لي قصة ✨'**
+  String get storyGenerateFree;
 
   /// No description provided for @storyLoading.
   ///
@@ -3709,24 +3721,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'قصة أخرى'**
   String get storyAnother;
-
-  /// No description provided for @storyInsufficient.
-  ///
-  /// In ar, this message translates to:
-  /// **'عذراً، رصيدك لا يكفي 🪙'**
-  String get storyInsufficient;
-
-  /// No description provided for @storyInsufficientMsg.
-  ///
-  /// In ar, this message translates to:
-  /// **'تحتاج إلى {count} عملة لتأليف قصة مخصصة لطفلك. شارك التطبيق مع أصدقائك واحصل على {reward} عملة مجاناً عن كل صديق ينضم إلينا! 🌿'**
-  String storyInsufficientMsg(Object count, Object reward);
-
-  /// No description provided for @storyInviteBtn.
-  ///
-  /// In ar, this message translates to:
-  /// **'ادعُ صديقاً (+{reward} 🪙)'**
-  String storyInviteBtn(Object reward);
 
   /// No description provided for @storyError.
   ///
@@ -5629,6 +5623,48 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'مملوكة ✓'**
   String get exclusiveBadgeOwned;
+
+  /// No description provided for @gameClosingTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'خلاص كده النهارده 🌙'**
+  String get gameClosingTitle;
+
+  /// No description provided for @gameClosingPraise.
+  ///
+  /// In ar, this message translates to:
+  /// **'شاطر. جمعت {score} نقطة.'**
+  String gameClosingPraise(int score);
+
+  /// No description provided for @gameClosingMission.
+  ///
+  /// In ar, this message translates to:
+  /// **'دلوقتي قوم اعمل حاجة واحدة برّه الشاشة، واحكيها لبابا أو ماما.'**
+  String get gameClosingMission;
+
+  /// No description provided for @gameClosingLeave.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمام، أنا خارج'**
+  String get gameClosingLeave;
+
+  /// No description provided for @exclusiveBadgesIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'الشارات دي بتتفتح بالإنجاز، مش بالشراء. عملاتك ليها مصرف واحد: مكافأة حقيقية من عهد المكافآت.'**
+  String get exclusiveBadgesIntro;
+
+  /// No description provided for @exclusiveBadgeLocked.
+  ///
+  /// In ar, this message translates to:
+  /// **'تُفتح بالإنجاز'**
+  String get exclusiveBadgeLocked;
+
+  /// No description provided for @exclusiveBadgesToCovenant.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح عهد المكافآت'**
+  String get exclusiveBadgesToCovenant;
 
   /// No description provided for @reflectionNoteBadge.
   ///

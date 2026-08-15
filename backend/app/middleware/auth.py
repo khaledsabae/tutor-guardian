@@ -5,6 +5,7 @@ Protects /api/assistant/*, /api/chat/*, /api/insights/* and other auth-gated end
 The session-creation endpoint itself (POST /api/chat/sessions) is public.
 """
 import logging
+import os
 
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
@@ -48,6 +49,32 @@ _PROTECTED_PREFIXES = (
 # match on the exact path suffix so the read-only GETs remain public.
 _PROTECTED_PROGRAM_PROGRESS = "/api/program/lessons/"
 
+# Soft-protected: authenticate when a token is present, but do not 401 when
+# it is absent.
+#
+# /api/program/story generates on the model and was reachable by anyone. It
+# needs an identity — but adding it to the list above would 401 every build
+# already on Play from the moment this deploys, and pushing to main deploys.
+# So the middleware binds device_id when the caller has a token, and lets the
+# rest through until STORY_AUTH_ENFORCE is set on the server. Flip it once the
+# forced-update floor is above the last build that calls this anonymously; the
+# behaviour then is identical to _PROTECTED_PREFIXES.
+#
+# This is not "unprotected in the meantime": the endpoint sits behind the AI
+# rate limiter (rate_limit._AI_PREFIXES) with a per-identity daily quota, and
+# an anonymous caller is counted by IP.
+#
+# Matched exactly, not by prefix: "/api/program/story" as a prefix also
+# swallows "/api/program/story-themes", the public catalogue the theme picker
+# reads before anyone has picked anything.
+_SOFT_PROTECTED_PATHS = frozenset({"/api/program/story"})
+
+
+def _story_auth_enforced() -> bool:
+    """Read at call time, not import time, so the VPS can flip it on restart
+    without a redeploy — and so tests can set it per-case."""
+    return os.environ.get("STORY_AUTH_ENFORCE", "").strip().lower() in {"1", "true", "yes"}
+
 
 def _is_protected(path: str, method: str) -> bool:
     # Only POST /api/chat/sessions (session creation) is public; the GET
@@ -78,6 +105,9 @@ def _is_protected(path: str, method: str) -> bool:
     # Monthly report exposes a child's name and progress — device-owned data.
     if path.startswith("/api/program/monthly-report"):
         return True
+    # Once enforcement is on, a soft-protected path is simply protected.
+    if path in _SOFT_PROTECTED_PATHS and _story_auth_enforced():
+        return True
     for prefix in _PROTECTED_PREFIXES:
         if path.startswith(prefix):
             return True
@@ -92,8 +122,18 @@ class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         path = request.url.path
 
-        # Skip public paths
+        # Skip public paths — but a soft-protected path in its grace window
+        # still gets its identity read, so the route can bind the story to a
+        # device and check that the child belongs to it. A caller with no
+        # token, or a stale one, passes through anonymous rather than 401.
         if not _is_protected(path, request.method):
+            if path in _SOFT_PROTECTED_PATHS:
+                header = request.headers.get("Authorization", "")
+                if header.startswith("Bearer "):
+                    info = store.validate_token(header[7:].strip())
+                    if info is not None:
+                        request.state.device_id = info["device_id"]
+                        request.state.session_id = info["session_id"]
             return await call_next(request)
 
         auth_header = request.headers.get("Authorization", "")

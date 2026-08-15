@@ -29,21 +29,17 @@ class CoinsNotifier extends StateNotifier<CoinsState> {
     state = await CoinsService.instance.read();
   }
 
-  /// Spend coins (e.g. to generate a story). Returns true on success.
-  Future<bool> spend(int amount) async {
-    final ok = await CoinsService.instance.spend(amount);
+  /// Redeem coins against a covenant — the only thing they buy, and it is
+  /// handed over off the screen by a parent. Returns true on success.
+  Future<bool> spendOnCovenant(int amount) async {
+    final ok = await CoinsService.instance.spendOnCovenant(amount);
     if (ok) state = await CoinsService.instance.read();
     return ok;
   }
 
-  /// Buy an exclusive cosmetic badge. Returns true if purchased.
-  Future<bool> buyBadge(String badgeId, int cost) async {
-    final ok = await CoinsService.instance.buyBadge(badgeId, cost);
-    if (ok) state = await CoinsService.instance.read();
-    return ok;
-  }
-
-  /// Earn coins (e.g. from bedtime routine).
+  /// Earn coins (e.g. from bedtime routine, or a game). Silently capped at
+  /// the daily ceiling — the caller is not told it hit the cap, because the
+  /// child does not need a number telling them they have run out of reward.
   Future<void> earn(int amount) async {
     await CoinsService.instance.earn(amount);
     state = await CoinsService.instance.read();
@@ -55,9 +51,8 @@ class CoinsNotifier extends StateNotifier<CoinsState> {
 final coinsProvider =
     StateNotifierProvider<CoinsNotifier, CoinsState>((ref) => CoinsNotifier());
 
-/// The set of exclusive badge ids the user has purchased.
+/// Cosmetic badges the user owns from before they could no longer be bought.
 final ownedBadgesProvider = FutureProvider<Set<String>>((ref) async {
-  // re-reads whenever the balance changes (a purchase mutates both)
   ref.watch(coinsProvider);
   return CoinsService.instance.ownedBadges();
 });

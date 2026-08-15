@@ -48,6 +48,17 @@ _VALID_PROGRESS_STATUS = {"not_started", "in_progress", "completed"}
 
 # ── Helpers ──────────────────────────────────────────────────────────────
 
+def _child_belongs_to_device(child_id: int, device_id: str) -> bool:
+    conn = get_conn()
+    try:
+        return conn.execute(
+            "SELECT 1 FROM child_profiles WHERE id = ? AND device_id = ?",
+            (child_id, device_id),
+        ).fetchone() is not None
+    finally:
+        conn.close()
+
+
 def _validate_age_group(age_group: Optional[str]) -> Optional[str]:
     if age_group is None:
         return None
@@ -726,6 +737,18 @@ async def generate_story(req: StoryRequest, request: Request):
 
     # Cache tier: only when the child's gender is known (Arabic conjugation).
     device_id = getattr(request.state, "device_id", None)
+
+    # A child_id is a small integer, so an anonymous caller could walk the
+    # range and learn other families' children by their conjugated stories.
+    # When the caller has an identity, the child must be theirs; when they do
+    # not — the grace window for builds already on Play — the id is dropped
+    # rather than trusted, which costs a gendered cache hit and nothing else.
+    if req.child_id is not None:
+        if device_id is None:
+            req.child_id = None
+        elif not _child_belongs_to_device(req.child_id, device_id):
+            raise HTTPException(status_code=404, detail="الطفل غير موجود.")
+
     gender = story_service.resolve_child_gender(device_id, req.child_id)
     cached = story_service.get_cached_story(req.theme, req.age_group, gender)
     if cached:

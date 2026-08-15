@@ -1766,6 +1766,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get covenantDelivered => 'Reward delivery recorded! ✅';
 
   @override
+  String get covenantOverdueTitle => 'A reward is still waiting';
+
+  @override
+  String covenantOverdueBody(int count) {
+    return '$count reward(s) redeemed over a week ago still haven\'t arrived. A promise not kept teaches more than one never made.';
+  }
+
+  @override
   String get covenantParentWelcome =>
       'Parent Gateway: Add real rewards parents commit to (like trips or gifts), and track your child\'s redemption requests.';
 
@@ -2007,28 +2015,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get storyGenerating => 'Writing your story…';
 
   @override
-  String storyCost(Object count) {
-    return 'Generate Story ($count 🪙)';
-  }
+  String get storyGenerateFree => 'Write me a story ✨';
 
   @override
   String get storyLoading => 'This may take a moment…';
 
   @override
   String get storyAnother => 'Another Story';
-
-  @override
-  String get storyInsufficient => 'Sorry, you don\'t have enough coins 🪙';
-
-  @override
-  String storyInsufficientMsg(Object count, Object reward) {
-    return 'You need $count coins to write a custom story. Share the app with friends and get $reward coins free for each friend who joins! 🌿';
-  }
-
-  @override
-  String storyInviteBtn(Object reward) {
-    return 'Invite a Friend (+$reward 🪙)';
-  }
 
   @override
   String storyError(Object error) {
@@ -3131,6 +3124,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exclusiveBadgeOwned => 'Owned ✓';
+
+  @override
+  String get gameClosingTitle => 'That\'s it for today 🌙';
+
+  @override
+  String gameClosingPraise(int score) {
+    return 'Well done. You scored $score.';
+  }
+
+  @override
+  String get gameClosingMission =>
+      'Now go do one thing away from the screen, and tell someone about it.';
+
+  @override
+  String get gameClosingLeave => 'Okay, I\'m going';
+
+  @override
+  String get exclusiveBadgesIntro =>
+      'These badges unlock through achievement, not purchase. Your coins buy one thing: a real reward from the covenant.';
+
+  @override
+  String get exclusiveBadgeLocked => 'Unlocked by achievement';
+
+  @override
+  String get exclusiveBadgesToCovenant => 'Open the covenant';
 
   @override
   String get reflectionNoteBadge => 'Note';

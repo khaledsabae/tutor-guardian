@@ -6,6 +6,7 @@ import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
 import '../../widgets/ui/bouncy_button.dart';
+import '../program/providers/progress_providers.dart';
 import 'coins_providers.dart';
 import 'covenant_service.dart';
 
@@ -19,7 +20,12 @@ class CovenantScreen extends ConsumerStatefulWidget {
 class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   List<Covenant> _covenants = [];
+  List<Covenant> _overdue = const [];
   bool _loading = true;
+
+  /// Rewards belong to a child. Child 0 is the fallback for a family that has
+  /// not created a profile yet — it keeps its own list rather than sharing one.
+  int get _childId => ref.read(activeChildIdProvider) ?? 0;
 
   @override
   void initState() {
@@ -30,10 +36,12 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
 
   Future<void> _loadCovenants() async {
     setState(() => _loading = true);
-    final data = await CovenantService.instance.load();
+    final data = await CovenantService.instance.load(_childId);
+    final overdue = await CovenantService.instance.overdueDeliveries(_childId);
     if (mounted) {
       setState(() {
         _covenants = data;
+        _overdue = overdue;
         _loading = false;
       });
     }
@@ -47,7 +55,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
 
   Future<void> _addReward(String title, int cost) async {
     if (title.trim().isEmpty || cost <= 0) return;
-    await CovenantService.instance.add(title.trim(), cost);
+    await CovenantService.instance.add(_childId, title.trim(), cost);
     await _loadCovenants();
   }
 
@@ -60,9 +68,9 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
       return;
     }
 
-    final success = await ref.read(coinsProvider.notifier).spend(cov.cost);
+    final success = await ref.read(coinsProvider.notifier).spendOnCovenant(cov.cost);
     if (success) {
-      await CovenantService.instance.redeem(cov.id);
+      await CovenantService.instance.redeem(_childId, cov.id);
       await _loadCovenants();
       if (mounted) {
         showDialog(
@@ -83,7 +91,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
   }
 
   Future<void> _deliver(Covenant cov) async {
-    await CovenantService.instance.deliver(cov.id);
+    await CovenantService.instance.deliver(_childId, cov.id);
     await _loadCovenants();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -93,7 +101,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
   }
 
   Future<void> _delete(Covenant cov) async {
-    await CovenantService.instance.delete(cov.id);
+    await CovenantService.instance.delete(_childId, cov.id);
     await _loadCovenants();
   }
 
@@ -265,6 +273,33 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
+        // The child already paid. Surfacing this first is the whole reason
+        // delivery is tracked separately from redemption.
+        if (_overdue.isNotEmpty) ...[
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: Colors.amber.shade50,
+              borderRadius: BorderRadius.circular(Dt.rCard),
+              border: Border.all(color: Colors.amber.shade200),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalizations.of(context).covenantOverdueTitle,
+                  style: const TextStyle(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  AppLocalizations.of(context).covenantOverdueBody(_overdue.length),
+                  style: const TextStyle(height: 1.5),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 14),
+        ],
         // Parent welcome box
         Container(
           padding: const EdgeInsets.all(14),
