@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'l10n/app_localizations.dart';
 import 'l10n/l10n_global.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
@@ -216,9 +217,41 @@ class TutorGuardianApp extends ConsumerWidget {
   }
 }
 
+/// Last `minimum_build_number` the server actually confirmed. Kept so a failed
+/// config fetch can still enforce the gate instead of falling open — old builds
+/// were slipping past the update wall whenever the call timed out.
+const kCachedMinBuildKey = 'cached_minimum_build_number';
+
+/// Fetches the app config, remembering the gate value across launches.
+///
+/// On a failed fetch we fall back to the last confirmed minimum rather than
+/// opening the app: a device that has seen the server once must keep obeying
+/// the gate offline. A device that has *never* reached it rethrows and stays
+/// open, so a backend outage can't lock out a first launch.
+Future<Map<String, dynamic>> resolveAppConfig({
+  required Future<Map<String, dynamic>> Function() fetch,
+  required SharedPreferences prefs,
+}) async {
+  try {
+    final config = await fetch();
+    final minBuild = config['minimum_build_number'];
+    if (minBuild is int) {
+      await prefs.setInt(kCachedMinBuildKey, minBuild);
+    }
+    return config;
+  } catch (_) {
+    final cached = prefs.getInt(kCachedMinBuildKey);
+    if (cached == null) rethrow;
+    return <String, dynamic>{'minimum_build_number': cached};
+  }
+}
+
 final appConfigProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   final client = ref.watch(tgClientProvider);
-  return await client.fetchAppConfig();
+  return resolveAppConfig(
+    fetch: client.fetchAppConfig,
+    prefs: await SharedPreferences.getInstance(),
+  );
 });
 
 final packageInfoProvider = FutureProvider<PackageInfo>((ref) async {
