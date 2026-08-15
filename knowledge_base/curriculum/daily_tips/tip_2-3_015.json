@@ -4,7 +4,7 @@
   "domain": "development",
   "text": "عند العناد، قدّم خيارين محدودين («الملعقة أم الشوكة؟») بدل الأوامر؛ الشعور بالاختيار يقلّل النوبات.",
   "unit_id": null,
-  "day_of_week": 7,
+  "day_of_week": 0,
   "time_of_day": "anytime",
   "tags": [],
   "is_published": true,

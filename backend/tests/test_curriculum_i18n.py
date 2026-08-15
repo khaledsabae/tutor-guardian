@@ -15,6 +15,7 @@ from pathlib import Path
 from fastapi.testclient import TestClient
 
 from app import curriculum_loader as cl
+from app.media_naming import language_of_filename
 from app.main import app
 
 
@@ -228,18 +229,30 @@ def test_every_file_bearing_asset_declares_a_language():
 
 
 def test_lesson_assets_report_the_language_actually_served(client):
-    """Asking for English and being handed Arabic is normal while English media
-    is still being generated — but the response has to admit it."""
+    """The reported language must describe the file that was actually chosen.
+
+    This asserted `in (None, "ar")` when no English media existed, and broke the
+    day the first English infographic landed — it was pinning a snapshot of the
+    backlog, not an invariant. Coverage is meant to change; what must not is the
+    response describing a file it did not serve.
+    """
     cl.load_curriculum()
     lesson_id = sorted(cl._assets_cache)[0]
     r = client.get(f"/api/program/lesson-assets/{lesson_id}?lang=en")
     assert r.status_code == 200
-    langs = r.json()["languages"]
+    body = r.json()
+    langs = body["languages"]
     assert langs["requested"] == "en"
-    # Nothing English exists yet, so every medium present must say "ar" —
-    # never "en", which would be the response lying about what it served.
-    for medium in ("podcast", "video", "infographic", "report", "data_table"):
-        assert langs[medium] in (None, "ar"), f"{medium} claimed {langs[medium]}"
+    for medium, key in (("podcast", "podcast_mp3"), ("video", "video_mp4"),
+                        ("infographic", "infographic"), ("report", "report"),
+                        ("data_table", "data_table")):
+        served, reported = body.get(key), langs[medium]
+        if served is None:
+            assert reported is None, \
+                f"{medium}: nothing served but language reported {reported!r}"
+        else:
+            assert reported == language_of_filename(served), (
+                f"{medium}: serving {served} but reporting {reported!r}")
 
 
 def test_arabic_video_declared_ar_eg_is_matched_as_arabic(client):
