@@ -129,6 +129,106 @@ _MUST_REJECT = [
 _MUST_ACCEPT = [("خيركم من تعلم القرآن وعلمه", "صحيح البخاري — حديث ٥٠٢٧")]
 
 
+# ── وحدات المعرفة المترجَمة ────────────────────────────────────────────────
+#
+# 🚨 هذا الحارس لم يكن ينظر إلى `knowledge_base/units/` إطلاقًا. يوم 2026-08-15
+# نزلت ٥٤٦ وحدة إنجليزية مترجَمة، ومرّت الفحوص الستة كلها خضراء — **لأن لا أحد
+# كان ينظر هنا**، لا لأن المحتوى سليم. وفي تلك الدفعة:
+#
+#     العربي   : وقال النبي ﷺ: «من مات وهو يعلم أن لا إله إلا الله دخل الجنة»
+#     الإنجليزي: … will enter Paradise. (Narrated by al-Bukhari)
+#
+# المصدر العربي **لا يحمل إسنادًا البتة** — لا «رواه» ولا «البخاري» ولا «مسلم».
+# النموذج اخترع إسنادًا، والمخترَع خطأ أيضًا: الحديث عند مسلم. وهذه هي الفئة
+# نفسها التي شحنت ٢٢٣ حديثًا مختلَقًا كإشعارات.
+#
+# ولا يُطابَق نثر مترجَم على الصحيحين: الترجمة ليست لفظًا، فالمطابقة هناك ترفض
+# السليم. الفحص هنا **بنيويّ ويقيني**: إسنادٌ في الإنجليزية لا نظير له في العربية
+# اختراعٌ مهما كان متنه. وهذا يمسك الحالة التي وقعت بلا احتمال إيجابية كاذبة.
+
+_EN_ATTRIB = re.compile(
+    r"\b(?:narrated|reported|related|recorded|transmitted)\s+by\s+"
+    r"(?:al-?)?(bukhari|bukhaari|muslim|tirmidhi|abu\s*dawud|nasai|ibn\s*majah|ahmad)"
+    r"|\b(?:sahih\s+)?(?:al-?)?(bukhari|muslim)\b\s*(?:,|\)|$)",
+    re.IGNORECASE)
+
+# أي أثر إسناد في العربية — التخريج بأي صيغة، لا الصحيحين وحدهما.
+_AR_ATTRIB = re.compile(
+    r"رواه|أخرجه|متفق\s*عليه|البخاري|مسلم|الترمذي|أبو\s*داود|النسائي|"
+    r"ابن\s*ماجه|أحمد|صحيح\s*الجامع")
+
+_BOOK_AR = {"bukhari": "البخاري", "bukhaari": "البخاري", "muslim": "مسلم",
+            "tirmidhi": "الترمذي", "ahmad": "أحمد"}
+
+
+def check_translated_attribution(arabic: str, english: str) -> str | None:
+    """None when sound; else why the English attribution is not in the Arabic.
+
+    Two rejections, both certain:
+      · الإنجليزية تُسند والعربية لا تُسند إطلاقًا → إسناد مخترَع.
+      · كلتاهما تُسند وتسمّيان كتابين مختلفين     → إسناد مبدَّل.
+
+    ولا يُحكم على المتن نفسه — الترجمة تُغيّر اللفظ بالضرورة، والحكم عليها
+    بمطابقة اللفظ يرفض السليم ويُعطَّل الحارس، وتعطيلُه يعيد ما وُضع لأجله.
+    """
+    m = _EN_ATTRIB.search(english or "")
+    if not m:
+        return None
+    named = (m.group(1) or m.group(2) or "").lower().replace(" ", "")
+    if not _AR_ATTRIB.search(arabic or ""):
+        return (f"الإنجليزية تنسب الحديث إلى «{named}» والعربية لا تحمل إسنادًا "
+                f"البتة — إسناد مخترَع")
+    ar_book = _BOOK_AR.get(named)
+    if ar_book and ar_book not in arabic:
+        return (f"الإنجليزية تنسبه إلى «{named}» ولا ذكر لـ«{ar_book}» في العربية "
+                f"— إسناد مبدَّل")
+    return None
+
+
+_UNIT_MUST_REJECT = [
+    # الحالة التي وقعت فعلًا — aqe-b1e103fc، 2026-08-15.
+    ("وقال النبي ﷺ: «من مات وهو يعلم أن لا إله إلا الله دخل الجنة».",
+     "The Prophet said: 'Whoever dies knowing there is no god but Allah "
+     "will enter Paradise.' (Narrated by al-Bukhari)"),
+    # إسناد مبدَّل: العربية تخرّجه لمسلم والإنجليزية تنسبه للبخاري.
+    ("قال ﷺ: «الرفق ما كان في شيء إلا زانه». رواه مسلم.",
+     "He said: 'Gentleness beautifies everything.' (Narrated by al-Bukhari)"),
+]
+_UNIT_MUST_ACCEPT = [
+    # إسناد مطابق.
+    ("قال ﷺ: «الرفق ما كان في شيء إلا زانه». رواه مسلم.",
+     "He said: 'Gentleness beautifies everything.' (Narrated by Muslim)"),
+    # لا إسناد في أيٍّ منهما — ليس شأن هذا الفحص.
+    ("الرفق بالأطفال أصل في التربية.",
+     "Gentleness with children is a foundation of upbringing."),
+    # نثر تربوي عادي يذكر البخاري بلا دعوى إسناد… لا شيء يُنسب هنا.
+    ("يقول أهل العلم إن التربية بالقدوة أبلغ.",
+     "Scholars say that teaching by example is the most effective."),
+]
+
+
+def scan_translated_units() -> list:
+    """Every `<id>__en.json` beside its Arabic source."""
+    units = ROOT / "knowledge_base" / "units"
+    out = []
+    for f in sorted(units.glob("*__en.json")):
+        src = units / f.name.replace("__en.json", ".json")
+        if not src.exists():
+            continue
+        try:
+            en = json.loads(f.read_text(encoding="utf-8"))
+            ar = json.loads(src.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        # يُفحص كل حقل نصّي مقابل نظيره: الإسناد قد يقع في المتن أو العنوان.
+        for key in ("text_simplified", "text_original", "title"):
+            why = check_translated_attribution(
+                str(ar.get(key) or ""), str(en.get(key) or ""))
+            if why:
+                out.append((en.get("id", f.stem), key, why))
+    return out
+
+
 def main() -> int:
     print("\n" + "=" * 67)
     print("  HADITH CITATION CHECK — فحص الأحاديث على الصحيحين")
@@ -146,7 +246,29 @@ def main() -> int:
         if check_one(books, text, source) is None:
             print(f"\n🔴  SELF-TEST: قُبل «{text[:50]}» وهو مرفوض — الفحص لاغٍ.\n")
             return 2
-    print(f"  self-tests: {len(_MUST_ACCEPT)} قبول · {len(_MUST_REJECT)} رفض ✓")
+    for ar, en in _UNIT_MUST_ACCEPT:
+        why = check_translated_attribution(ar, en)
+        if why:
+            print(f"\n🔴  SELF-TEST: رُفض إسناد سليم ({why}) — الفحص لاغٍ.\n")
+            return 2
+    for ar, en in _UNIT_MUST_REJECT:
+        if check_translated_attribution(ar, en) is None:
+            print(f"\n🔴  SELF-TEST: قُبل إسناد مخترَع «{en[:46]}» — الفحص لاغٍ.\n")
+            return 2
+    print(f"  self-tests: {len(_MUST_ACCEPT)} قبول · {len(_MUST_REJECT)} رفض · "
+          f"وحدات {len(_UNIT_MUST_ACCEPT)}/{len(_UNIT_MUST_REJECT)} ✓")
+
+    unit_errors = scan_translated_units()
+    en_units = len(list((ROOT / "knowledge_base" / "units").glob("*__en.json")))
+    print(f"  وحدات مترجَمة مفحوصة: {en_units}   ·   إسناد مخترَع: {len(unit_errors)}")
+    if unit_errors:
+        print(f"\n🔴  إسناد في الإنجليزية لا نظير له في العربية ({len(unit_errors)}):")
+        for uid, key, why in unit_errors[:12]:
+            print(f"\n     ✗ {uid} · {key}\n       → {why}")
+        print("\n" + "=" * 67)
+        print("  ❌  نسبة قولٍ إلى النبي ﷺ بسندٍ ليس في المصدر — لا يجوز الدفع.")
+        print("=" * 67 + "\n")
+        return 1
 
     hadiths = [i for i in load_or_die() if i.kind == "hadith"]
     errors = [(i.text, i.source, w) for i in hadiths
