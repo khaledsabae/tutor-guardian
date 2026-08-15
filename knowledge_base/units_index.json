@@ -1,10 +1,10 @@
 {
-  "total_units": 1187,
-  "generated_at": "2026-08-13T17:05:47.993232+00:00",
+  "total_units": 1189,
+  "generated_at": "2026-08-15T12:31:28.831430+00:00",
   "by_domain": {
-    "medical": 284,
+    "medical": 285,
     "cyber": 253,
-    "islamic_parenting": 556,
+    "islamic_parenting": 557,
     "development": 84,
     "aqeedah": 10
   },
@@ -51,6 +51,18 @@
       "title": "Alukah Al Rahma Bi Al Atfal",
       "source_file": "Alukah_Al_Rahma_Bi_Al_Atfal.pdf",
       "language": "ar",
+      "original_age_group": "4-6",
+      "normalized_age_group": "4-6",
+      "behavior_type": "الرفق_بالأطفال",
+      "needs_ocr": false,
+      "size_chars": 44120
+    },
+    {
+      "id": "0bd76d3c-548a-46ed-b17b-78874741662a__en",
+      "domain": "islamic_parenting",
+      "title": "Alukah al-Rahmah bi al-Atfal",
+      "source_file": "Alukah_Al_Rahma_Bi_Al_Atfal.pdf",
+      "language": "en",
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "الرفق_بالأطفال",
@@ -111,6 +123,18 @@
       "title": "العناد ورفض الأوامر: فرق بين إثبات الذات والتحدي",
       "source_file": "",
       "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "العناد ورفض الأوامر",
+      "needs_ocr": false,
+      "size_chars": 834
+    },
+    {
+      "id": "179d90e1-a863-42e1-8fea-e8560b7401f7__en",
+      "domain": "medical",
+      "title": "Stubbornness and Refusal of Commands: Distinguishing Between",
+      "source_file": "",
+      "language": "en",
       "original_age_group": "2-3",
       "normalized_age_group": "2-3",
       "behavior_type": "العناد ورفض الأوامر",

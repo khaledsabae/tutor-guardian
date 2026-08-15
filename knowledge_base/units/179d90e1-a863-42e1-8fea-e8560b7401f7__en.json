@@ -1,0 +1,53 @@
+{
+  "id": "179d90e1-a863-42e1-8fea-e8560b7401f7__en",
+  "domain": "medical",
+  "source_file": "",
+  "source_url": "",
+  "title": "Stubbornness and Refusal of Commands: Distinguishing Between Asserting the Self and Defiance",
+  "language": "en",
+  "age_group": "2-3",
+  "behavior_type": "العناد ورفض الأوامر",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "مقال_تربوي",
+  "reference_info": "محتوى تحريري كُتب للتطبيق استجابةً لفجوات مقيسة في أسئلة الآباء (2026-08-13). إرشادي عام لا يُغني عن استشارة مختص.",
+  "text_original": "«لا» المتكررة في سنّ الثانية والثالثة علامة نموّ لا علامة فساد: الطفل اكتشف أنه شخص منفصل له إرادة، ويختبر حدود هذه الإرادة. من يقمع هذه المرحلة تمامًا لا يربّي طفلًا مطيعًا، بل يؤجّل المواجهة إلى المراهقة.\n\nما يقلّل الصدام:\n• قلّل الأوامر المباشرة واستبدلها بخيارين مقبولين لك: «تلبس الأزرق ولا الأحمر؟» الطفل يشبع حاجته للتحكّم داخل حدود ترسمها أنت.\n• لا تسأل سؤالًا إجابته «لا» وأنت لا تقبل «لا»: قل «وقت النوم» لا «تحب تنام؟».\n• اجعل عدد القواعد قليلًا وثابتًا. القاعدة التي تُطبَّق مرة وتُترك مرة تعلّمه أن المقاومة مجدية.\n• سبق الأمر بتنبيه زمني. الانتقال المفاجئ بين الأنشطة أكبر مولّد للرفض.\n• التزم بما قلته بهدوء وبلا تفاوض طويل. الحزم في التنفيذ لا في نبرة الصوت.\n\nوميّز بين العناد العادي والتحدي المستمر: إن كان الرفض دائمًا ومصحوبًا بعدوان تجاه من هم أصغر، ونوبات غضب شديدة أغلب الأيام لأكثر من ستة أشهر، فاعرضه على مختص.",
+  "text_simplified": "The repeated \"no\" at the age of two or three is a sign of growth, not corruption: the child has discovered that they are a separate person with a will, and is testing the limits of this will. Whoever suppresses this stage entirely does not raise an obedient child, but rather postpones the confrontation to adolescence.\n\nWhat reduces conflict:\n• Minimize direct commands and replace them with two acceptable choices for you: \"Do you want to wear the blue or the red?\" The child satisfies their need for control within boundaries you set.\n• Do not ask a question whose answer is \"no\" when you will not accept \"no\": say \"It’s bedtime\" instead of \"Do you want to sleep?\"\n• Keep the number of rules few and consistent. A rule that is enforced once and abandoned another teaches them that resistance is effective.\n• Precede the command with a time warning. Sudden transitions between activities are the biggest generator of refusal.\n• Stick to what you have said calmly and without lengthy negotiation. Firmness is in implementation, not in tone of voice.\n\nDistinguish between ordinary stubbornness and persistent defiance: if the refusal is constant, accompanied by aggression toward those younger, and severe tantrums most days for more than six months, consult a specialist.",
+  "labels": [],
+  "keywords": [
+    "Stubbornness",
+    "Refusal of commands",
+    "Independence",
+    "Boundaries"
+  ],
+  "created_at": "2026-08-13T16:32:22.728492+00:00",
+  "updated_at": "2026-08-13T16:32:22.728492+00:00",
+  "version": "1.0.0",
+  "source_language": "ar",
+  "translated_from": "179d90e1-a863-42e1-8fea-e8560b7401f7",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "register",
+        "field": "text_simplified",
+        "arabic": "الانتقال المفاجئ بين الأنشطة أكبر مولّد للرفض",
+        "english": "Sudden transitions between activities are the biggest generator of refusal",
+        "why": "Literal translation of 'مولّد' as 'generator' is stiff and mechanical; natural English would be 'trigger' or 'cause'.",
+        "severity": "low"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "فاعرضه على مختص",
+        "english": "consult a specialist",
+        "why": "Arabic says present the child to a specialist; English says consult a specialist, shifting the object from the child to the parent.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

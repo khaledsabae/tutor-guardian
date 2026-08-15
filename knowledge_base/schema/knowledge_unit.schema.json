@@ -175,6 +175,43 @@
           "description": "رابط إلكتروني للمصدر إن توفر."
         }
       }
+    },
+    "source_language": {
+      "type": "string",
+      "description": "اللغة المُترجَم عنها. حاضر في الوحدات المولَّدة بالترجمة فقط — الوحدة الأصلية لا تحمله."
+    },
+    "translated_from": {
+      "type": "string",
+      "description": "معرّف الوحدة المصدر. الوحدة المترجمة **وحدة جديدة** لا نسخة تحلّ محلّ الأصل، والأصل يبقى في الفهرس بلغته."
+    },
+    "translation": {
+      "type": "object",
+      "description": "سِجلّ الترجمة: أي نموذج ترجم، وأيّ نموذج راجع (من عائلة مختلفة عمدًا)، وهل تحتاج مراجعة شرعية، ومن اعتمدها.",
+      "properties": {
+        "translator_model": {
+          "type": "string"
+        },
+        "reviewer_model": {
+          "type": "string"
+        },
+        "needs_scholar_review": {
+          "type": "boolean"
+        },
+        "review_verdict": {
+          "type": "string"
+        },
+        "review_defects": {
+          "type": "array"
+        },
+        "approved_by": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "null = لم يراجعها بشر. لا تملؤه أداة."
+        }
+      },
+      "additionalProperties": true
     }
   }
 }
