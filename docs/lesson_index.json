@@ -6203,6 +6203,11 @@
             "file": "docs/lesson_4-6_development_positive_parenting_b01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_development_positive_parenting_b01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 32980277
           }
         ],
         "reports": [
@@ -6278,6 +6283,11 @@
             "file": "docs/lesson_4-6_development_positive_parenting_b02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_development_positive_parenting_b02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 33758292
           }
         ],
         "reports": [
