@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-13T18:51:36.572072+00:00"
+    "updated_at": "2026-08-15T08:30:20.951435Z"
   },
   "lessons": [
     {
@@ -3539,6 +3539,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_cyber_screen_foundations_01",
             "language": "ar"
+          },
+          {
+            "id": "6b54f3b3-92b4-40b4-bccf-5cf837c4b451_infographic",
+            "file": "docs/lesson_assets/infographics/6b54f3b3-92b4-40b4-bccf-5cf837c4b451_infographic_lesson_0-3_cyber_screen_foundations_01_en.png",
+            "title": "Protecting Baby Brains From Screens",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
