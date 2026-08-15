@@ -244,6 +244,9 @@ def main():
     # constants), but argparse must still know the flag or it rejects the run.
     parser.add_argument("--lang", default=SOURCE_LANG, choices=sorted(AUDIO_CLI_LANG),
                         help="output language (default: ar)")
+    parser.add_argument("--push", action="store_true",
+                        help="push the registration commit to main — this "
+                             "deploys production. Off by default.")
     args = parser.parse_args()
 
     INFO_DIR.mkdir(parents=True, exist_ok=True)
@@ -341,8 +344,20 @@ def main():
         if failed:
             msg += f" (failed: {len(failed)})"
         subprocess.run(["git", "commit", "-m", msg], cwd=BASE_DIR, check=True)
-        subprocess.run(["git", "push", "origin", "main"], cwd=BASE_DIR, check=True)
-        print("✅ Committed and pushed.")
+        if args.push:
+            # Opt-in only. This used to be unconditional, which made a content
+            # generator a deployment tool: pushing to main triggers the
+            # production deploy, so an unattended 06:30 cron shipped whatever it
+            # had produced — and on 2026-08-15 it did exactly that (5a9562d),
+            # while the deploy pipeline was already red for an unrelated reason.
+            # Registering an infographic and deciding to release are not the
+            # same act, and only one of them should happen while nobody is
+            # watching.
+            subprocess.run(["git", "push", "origin", "main"], cwd=BASE_DIR, check=True)
+            print("✅ Committed and pushed.")
+        else:
+            print("✅ Committed locally. Not pushed — `--push` to deploy, or "
+                  "push by hand after review.")
     except subprocess.CalledProcessError as e:
         print(f"⚠️ Git failed: {e}")
 
