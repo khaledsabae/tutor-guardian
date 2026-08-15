@@ -762,6 +762,8 @@
   "childModePinIncorrect": "الرمز غير صحيح.",
   "childModePinMismatch": "الرقم غير متطابق. حاول مرة أخرى.",
   "childModeSessionExpired": "انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.",
+  "childModeBudgetSpent": "خلصت مدة النهارده. نكمل بكرة إن شاء الله 🌙",
+  "childModeOffline": "الاتصال اتقطع، فقفلنا الجلسة. نرجع لما النت يرجع 🌙",
   "childModeEnterFailed": "فشل الدخول لوضع الطفل.",
   "habitCustomizeNameLabel": "اسم العادة الجديدة",
   "habitCustomizeNameHint": "مثال: تمرين السباحة",

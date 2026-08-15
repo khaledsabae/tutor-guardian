@@ -762,6 +762,8 @@
   "childModePinIncorrect": "Incorrect PIN.",
   "childModePinMismatch": "The PINs do not match. Try again.",
   "childModeSessionExpired": "The secure session has ended. Please hand the phone back to the parent.",
+  "childModeBudgetSpent": "That's today's time. We'll carry on tomorrow 🌙",
+  "childModeOffline": "The connection dropped, so we closed the session. Back when you're online 🌙",
   "childModeEnterFailed": "Could not enter child mode.",
   "habitCustomizeNameLabel": "New habit name",
   "habitCustomizeNameHint": "e.g. Swimming practice",

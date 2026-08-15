@@ -4574,6 +4574,18 @@ abstract class AppLocalizations {
   /// **'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.'**
   String get childModeSessionExpired;
 
+  /// No description provided for @childModeBudgetSpent.
+  ///
+  /// In ar, this message translates to:
+  /// **'خلصت مدة النهارده. نكمل بكرة إن شاء الله 🌙'**
+  String get childModeBudgetSpent;
+
+  /// No description provided for @childModeOffline.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاتصال اتقطع، فقفلنا الجلسة. نرجع لما النت يرجع 🌙'**
+  String get childModeOffline;
+
   /// No description provided for @childModeEnterFailed.
   ///
   /// In ar, this message translates to:

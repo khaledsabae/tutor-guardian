@@ -2512,6 +2512,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'The secure session has ended. Please hand the phone back to the parent.';
 
   @override
+  String get childModeBudgetSpent =>
+      'That\'s today\'s time. We\'ll carry on tomorrow 🌙';
+
+  @override
+  String get childModeOffline =>
+      'The connection dropped, so we closed the session. Back when you\'re online 🌙';
+
+  @override
   String get childModeEnterFailed => 'Could not enter child mode.';
 
   @override

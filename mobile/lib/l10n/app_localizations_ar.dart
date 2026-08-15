@@ -2479,6 +2479,14 @@ class AppLocalizationsAr extends AppLocalizations {
       'انتهى وقت الجلسة الآمنة. يُرجى إعادة الهاتف للمربي.';
 
   @override
+  String get childModeBudgetSpent =>
+      'خلصت مدة النهارده. نكمل بكرة إن شاء الله 🌙';
+
+  @override
+  String get childModeOffline =>
+      'الاتصال اتقطع، فقفلنا الجلسة. نرجع لما النت يرجع 🌙';
+
+  @override
   String get childModeEnterFailed => 'فشل الدخول لوضع الطفل.';
 
   @override

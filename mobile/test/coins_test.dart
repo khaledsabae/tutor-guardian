@@ -1,5 +1,7 @@
 /// The coin economy has one sink and two ceilings, and each of these tests
 /// pins one of the things that used to be true and should not be again.
+library;
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:almorabbi/features/coins/coins_service.dart';
