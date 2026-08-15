@@ -2,7 +2,7 @@
   "id": "tip_16-18_016",
   "age_group": "16-18",
   "domain": "islamic_parenting",
-  "text": "Marriage is fitrah (natural disposition), not monasticism. Choose a partner based on deen or akhlaq (moral character). Learn the rights: affection, financial support, and companionship. Prepare for it now.",
+  "text": "Marriage is fitrah (natural disposition), not monasticism. Choose a partner based on deen or akhlaq (moral character). Learn the rights: affection, financial support, and tranquility. Prepare for it now.",
   "unit_id": "isl-7365e833",
   "day_of_week": 0,
   "time_of_day": "morning",
@@ -19,16 +19,7 @@
       "reviewer_model": true
     },
     "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "third right in the list",
-        "arabic": "سفينة",
-        "english": "companionship",
-        "why": "The Arabic word 'سفينة' means 'ship', not 'companionship'. The translation changes the meaning entirely.",
-        "severity": "high"
-      }
-    ],
+    "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T18:53:27.499869+00:00",
     "fixed_at": "2026-08-13T18:53:27.499878+00:00",

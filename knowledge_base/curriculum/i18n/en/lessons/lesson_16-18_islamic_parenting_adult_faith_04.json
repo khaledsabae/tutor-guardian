@@ -11,7 +11,7 @@
   "estimated_minutes": 7,
   "reflection_prompts": [
     "What real responsibility did you hand over to your child this week?",
-    "How did they handle it, and what did you learn from it?"
+    "How did they handle it, and what did they learn from it?"
   ],
   "warning_flags": [],
   "needs_professional_followup": false,
@@ -31,14 +31,6 @@
     },
     "review_verdict": "defects",
     "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "reflection_prompts[1]",
-        "arabic": "كيف تعامل معها، وبماذا تعلّم منها؟",
-        "english": "How did they handle it, and what did you learn from it?",
-        "why": "The Arabic asks what the child learned (تعلّم منها), but the English asks what the parent learned. This changes the focus from the child's learning to the parent's learning.",
-        "severity": "high"
-      },
       {
         "type": "meaning_change",
         "field": "summary, try_this, reflection_prompts",

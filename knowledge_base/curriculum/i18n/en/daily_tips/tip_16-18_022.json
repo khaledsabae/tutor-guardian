@@ -2,7 +2,7 @@
   "id": "tip_16-18_022",
   "age_group": "16-18",
   "domain": "development",
-  "text": "The Arts and the Brain: Creativity develops mental resilience. Encourage: drawing, music, writing, programming — a haqq (right) for the brain.",
+  "text": "The Arts and the Brain: Creativity develops mental resilience. Encourage: drawing, music, writing, programming — exercise for the brain.",
   "unit_id": "dev-586b39f9",
   "day_of_week": 0,
   "time_of_day": "evening",
@@ -19,16 +19,7 @@
       "reviewer_model": false
     },
     "review_verdict": "defects",
-    "review_defects": [
-      {
-        "type": "meaning_change",
-        "field": "حق-half للدماغ",
-        "arabic": "حق-half للدماغ",
-        "english": "a haqq (right) for the brain",
-        "why": "The Arabic says 'haqq-half' (half a right), but the English omits 'half', changing the meaning to a full right.",
-        "severity": "high"
-      }
-    ],
+    "review_defects": [],
     "approved_by": null,
     "revalidated_at": "2026-08-13T17:12:37.505281+00:00"
   }
