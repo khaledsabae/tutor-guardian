@@ -71,8 +71,19 @@ class SurfaceSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     counts_toward_budget: bool
+    # Audio with the screen dark is not screen time by the medical definition,
+    # so it does not bill the screen budget — but it still displaces sleep and
+    # real play, so it bills its own. Naming the ledger here keeps the budget
+    # service from hardcoding the string "screen_off".
+    counts_toward_audio_budget: bool = False
     max_minutes: PositiveMinutes
     exit_ritual_seconds: PositiveSeconds
+
+    @model_validator(mode="after")
+    def _bills_at_most_one_ledger(self) -> "SurfaceSpec":
+        if self.counts_toward_budget and self.counts_toward_audio_budget:
+            raise ValueError("a surface cannot bill both the screen and audio budgets")
+        return self
 
     @model_validator(mode="after")
     def _ritual_fits_inside_the_surface(self) -> "SurfaceSpec":

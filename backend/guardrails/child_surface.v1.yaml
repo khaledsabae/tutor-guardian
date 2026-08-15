@@ -78,6 +78,7 @@ surfaces:
   # لكنه يُخصم من `screen_off_daily_budget_minutes` أعلاه ويُعرض للوالد منفصلًا.
   screen_off:
     counts_toward_budget: false
+    counts_toward_audio_budget: true
     max_minutes: 45
     exit_ritual_seconds: 60
 
