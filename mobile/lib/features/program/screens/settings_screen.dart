@@ -31,28 +31,11 @@ import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
 import '../providers/backup_provider.dart';
 import 'children_list_screen.dart';
-import '../providers/lesson_assets_provider.dart';
 import '../../adhkar/services/notification_service.dart';
 import '../widgets/follow_us_row.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
-
-  void _toggleLanguage(BuildContext context, WidgetRef ref, String current) {
-    final l10n = AppLocalizations.of(context);
-    final newLang = current == 'ar' ? 'en' : 'ar';
-    ref.read(contentLanguageProvider.notifier).setLanguage(newLang);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          newLang == 'ar'
-              ? l10n.settingsMediaLangChanged
-              : l10n.settingsMediaLangChangedEn,
-        ),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
 
   /// Re-arms the first-run tour by rewinding the stored version to 0. It can't
   /// play here — it points at the root scaffold's nav bar, which this modal
@@ -75,7 +58,6 @@ class SettingsScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final asyncList = ref.watch(childrenListProvider);
     final profile = ref.watch(activeChildProfileProvider);
-    final currentLanguage = ref.watch(contentLanguageProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settingsTitle)),
@@ -173,15 +155,10 @@ class SettingsScreen extends ConsumerWidget {
                   onTap: () => _confirmReset(context, ref, activeChild),
                 ),
                 const SizedBox(height: 24),
-                _SettingsRow(
-                  icon: Icons.language,
-                  title: l10n.settingsMediaLang,
-                  subtitle: currentLanguage == 'ar'
-                      ? l10n.settingsArabicMedia
-                      : l10n.settingsEnglishMedia,
-                  onTap: () => _toggleLanguage(context, ref, currentLanguage),
-                ),
-                const SizedBox(height: 24),
+                // The single language control. It sets the interface, the
+                // curriculum text and the media language together — there used
+                // to be a second switch here just for media, and two switches
+                // meant they could disagree.
                 _SettingsRow(
                   icon: Icons.translate,
                   title: l10n.language,

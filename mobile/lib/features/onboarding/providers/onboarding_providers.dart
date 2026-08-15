@@ -88,6 +88,11 @@ class AppLocaleNotifier extends StateNotifier<Locale?> {
 
   void _init() {
     if (_prefs != null) {
+      // One-time cleanup: media used to have its own switch under
+      // `content_language`, and it could disagree with this one. The app now
+      // derives media language from the app locale, so the old key is dead
+      // state — removed so nothing can read it back into existence.
+      _prefs.remove('content_language');
       final code = _prefs.getString('tg.ui_language');
       if (code != null) {
         state = Locale(code);

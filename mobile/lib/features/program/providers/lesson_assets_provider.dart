@@ -2,7 +2,6 @@ import 'dart:io' show Platform;
 import 'dart:ui' show PlatformDispatcher;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../models/flashcard_deck.dart';
@@ -10,41 +9,27 @@ import '../models/lesson_assets.dart';
 import '../models/quiz_deck.dart';
 import 'program_providers.dart';
 
-class ContentLanguageNotifier extends StateNotifier<String> {
-  final SharedPreferences? _prefs;
-
-  /// [uiFallback] is the language the parent is *reading* in. A stored value
-  /// beats it, because that is an explicit choice made in Settings.
-  ContentLanguageNotifier(this._prefs, String uiFallback)
-      : super(_prefs?.getString('content_language') ?? uiFallback);
-
-  Future<void> setLanguage(String lang) async {
-    state = lang;
-    if (_prefs != null) {
-      await _prefs.setString('content_language', lang);
-    }
-  }
-}
-
 /// Language for lesson media (podcast, video), sent as `?lang=` to
 /// `/lesson-assets`.
 ///
-/// Kept separate from the UI language on purpose — English text with Arabic
-/// audio is a real preference. But its default used to be a hard-coded `'ar'`
-/// read from SharedPreferences, with no reference to the UI language or to the
-/// device: `TgClient.uiLanguage` drove the text and nothing connected the two.
+/// **Derived from the app language — it is not a setting of its own.**
 ///
-/// So a parent on an English phone read English lessons and was handed the
-/// Arabic podcast — and would still have been handed it once English audio
-/// existed, because nothing here ever asked what language they were reading
-/// in. The default now follows the UI language; an explicit choice still wins.
-final contentLanguageProvider =
-    StateNotifierProvider<ContentLanguageNotifier, String>((ref) {
-  final prefsAsync = ref.watch(sharedPreferencesProvider);
-  final prefs = prefsAsync.maybeWhen(
-    data: (p) => p,
-    orElse: () => null,
-  );
+/// There used to be two switches: one for the interface and curriculum text
+/// (`appLocaleProvider` → `TgClient.uiLanguage`) and a second, separate one for
+/// media, stored under `content_language`. They could disagree, and they did:
+/// a parent on an English phone read English lessons and was handed the Arabic
+/// podcast, because the media switch defaulted to a hard-coded `'ar'` and never
+/// asked what language they were reading in.
+///
+/// Making the media switch *follow* the UI language fixed the default but kept
+/// two controls, on the argument that English text with Arabic audio is a real
+/// preference. That argument only held while there was no English media to
+/// choose. There is now, so the second control is a second way to get the app
+/// into a state nobody asked for — and one more thing to explain to a parent
+/// who just wants the app in English.
+///
+/// One language. `appLocaleProvider` is the setting; this reads it.
+final contentLanguageProvider = Provider<String>((ref) {
   // Mirrors main.dart's locale resolution: an explicit app locale, else the
   // device's — pinned to Arabic under FLUTTER_TEST exactly as MaterialApp is.
   final uiCode = ref.watch(appLocaleProvider)?.languageCode ??
@@ -56,7 +41,7 @@ final contentLanguageProvider =
   // media while their UI switches.
   final supported =
       AppLocalizations.supportedLocales.map((l) => l.languageCode).toSet();
-  return ContentLanguageNotifier(prefs, supported.contains(uiCode) ? uiCode : 'ar');
+  return supported.contains(uiCode) ? uiCode : 'ar';
 });
 
 final lessonAssetsProvider = FutureProvider.autoDispose

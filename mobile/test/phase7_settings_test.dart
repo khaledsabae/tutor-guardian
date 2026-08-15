@@ -127,12 +127,20 @@ void main() {
       expect(find.text('تعديل معلومات الطفل'), findsOneWidget);
       expect(find.text('إعادة تعيين التقدم'), findsOneWidget);
       // Scroll to the language row and privacy row below it.
+      //
+      // There is ONE language row now. Settings used to carry two — 'لغة
+      // الوسائط التعليمية' for media and 'اللغة' for the interface — and they
+      // could disagree: an English interface served Arabic podcasts because the
+      // media switch defaulted to 'ar' independently. This asserts the media
+      // row is gone, not merely that the language row exists, because a second
+      // switch reappearing is the regression worth catching.
       await tester.scrollUntilVisible(
-        find.text('لغة الوسائط التعليمية'),
+        find.text('اللغة'),
         300,
         scrollable: find.byType(Scrollable).first,
       );
-      expect(find.text('لغة الوسائط التعليمية'), findsOneWidget);
+      expect(find.text('اللغة'), findsOneWidget);
+      expect(find.text('لغة الوسائط التعليمية'), findsNothing);
       await tester.scrollUntilVisible(
         find.text('سياسة الخصوصية'),
         300,
