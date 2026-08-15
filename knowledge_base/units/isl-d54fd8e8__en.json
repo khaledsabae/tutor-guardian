@@ -1,0 +1,64 @@
+{
+  "id": "isl-d54fd8e8__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Accustoming the Child to Salah and the Importance of Tarbiyah (religious upbringing)",
+  "language": "en",
+  "age_group": "7-9",
+  "behavior_type": "تربية دينية وتعويد على الصلاة",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "،هطخس نم فولخاو هاضرب مامتهلااو للها ةبقارم ىلع بلغي تىح اذه رجلأا ءاغتبا نود ًةداع لمعي وأ ،لمع يأ لمعي لم هنع اوباغ نإو سانلا اضرل ًابلط لمعيو تادابعلا ىلع ةئشنتلا ةلضافلا قلاخلأاو ةيندبلاو ةيبلقلا نم هظفحيلو نيدلاب هقّلعت نمضيل تادابعلا ىلع هدلو ةئشنت لىإ حجانلا بيرلما ىعسي ركذ دقو ،هغولب دعب ةيعرشلا فيلاكتلاب همزلن ثم لفطلا لمنه نأ أطلخا نمو ،فارنحلاا مللحُ ا غلب اذإ تىح اهيلع دوعتيل نكلو هيلع ابهوجول لا ةلاصلا زيِملما ميلعت نأ ءاملعلا .اهكرت ىلع ردقّي لمو ابه هبلق قلعتو هيلع ةيرسي ةلاصلا تناك ةلاصلاب َرمأ ًاركذ ناك نإف ،اهيلع لفطلا ديوعت بيج ةيندب ةيبلق ةدابع ُمهأ ةلاصلاو . ص .قباسلا عجرلما :رظنا ) ( .94/ :ليازغلا ،نيدلا مولع ءايحإ )2( . 6 - 2 ، - 2 ص :ميحسلا دممح ،اندلاوأ ةيبرت في انئاطخأ نم :رظنا )3( كرتو رشعلا غلب اذإف ،رشعلا َغلبي نأ لىإ ابه رمؤيو ،يننس عبس نبا وهو ةعاملجا عم .برضلاب بقوع ةلاصلا مهفويخو مهبَغريو للهاب مهركذيو ،اهتقو لخد اذإ ةلاصلاب هدلاوأ رمأي نأ بلأا ىلعو .هنم ًابيرق مهاري نأ مهيلع طرتشي وأ دجسلما لىإ هعم مهذخأيو ءوضولا لىإ مهوعدي ثم ةروع رتسو عوشخو ةراهط نم ةلاصلا ةحصل طرتشُي ام لكب مهمزلي نأ بيجو ًاركبم دجسلما لىإ هذخأي هدلاو نلأ ؛دجسلما في ةلاصلا نيزيملما ضعب هركي دقو سوللجاب رمؤيو ،جرالخا في لافطلأا تاوصأ عمسي وهو ،رثكأ وأ قئاقد رشع رظتنيف ةثلاثلا نم لقأ هرمع ناك اذإف ،يرخ طسولاو ،ةكرحلل بلمحا بيصلا وهو نآرقّلا ةءارقو يركبتلا في ةيرلحا هل كرتيو هنم اَبيرق يلصي نأ هدلاو طرتشيو ةلاصلاب رمؤي هنإف ًاماع رشع نأ",
+  "text_simplified": "The successful murabbi (educator) strives to instill the love of 'ibadat (acts of worship) in the child's soul, and the most important of these is salah, which combines physical, spiritual, and moral tarbiyah. The child should be accustomed to salah from the age of seven, and disciplined for it at ten if they neglect it, while ensuring they are encouraged and made to love it. It is a mistake to leave the child until they reach puberty and then suddenly burden them with salah; rather, they should be trained gradually. It is also recommended to take the child to the masjid early so they may grow accustomed to the jama'ah (congregation).",
+  "labels": [
+    "الصلاة",
+    "تربية الأطفال",
+    "تعويد على العبادة",
+    "المسجد",
+    "القدوة الحسنة"
+  ],
+  "created_at": "2026-06-20T14:33:36Z",
+  "updated_at": "2026-06-20T14:33:36Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-d54fd8e8",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "religious_error",
+        "field": "text_simplified",
+        "arabic": "وضربهم عليها عند العاشرة إن تركروها",
+        "english": "and disciplined for it at ten if they neglect it",
+        "why": "The Arabic uses 'ضربهم' (hit/strike them) from the hadith, but the English softens it to 'disciplined', obscuring the explicit command.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "تكليفه بالصلاة",
+        "english": "burden them with salah",
+        "why": "Arabic 'تكليفه' means religious obligation/duty, not a burden; 'burden' introduces a negative connotation absent in the source.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "التربية البدنية والقلبية والأخلاقية",
+        "english": "physical, spiritual, and moral tarbiyah",
+        "why": "'القلبية' means of the heart, not necessarily spiritual; 'spiritual' is an interpretive expansion.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

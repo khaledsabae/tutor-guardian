@@ -1,0 +1,47 @@
+{
+  "id": "isl-d192e37a__en",
+  "domain": "islamic_parenting",
+  "source_file": "Alukah_Rights_of_Children.pdf",
+  "title": "The Importance of Tarbiyah and Akhlaq for Children",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "تربية دينية وأخلاقية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "حقوق الأولاد على الوالدين - عماد عبدالعظيم (الألوكة)",
+  "text_original": "ِمسرَموَ ء ِ َٓم١ُ هَ ؾَْثمُ ِ تيْمؽَ َ مؿْ اموَ دامٜمؾم٢مس )432/13( ةبمٞمؿ بيأ ـمسا فمضرمظأ .امَٝ مَٚ ثْمُ ِ بَ مٞص ِ م٠ُموَ عَ مض ِ رْ أَ نْ م٠َِمس سي ِ مْٗ مَٟ تمصْدَ مطَ َٓوَ .حمٞحص دامٜمؾم٢مس )19/2( »خيراتمًاو ةمورمٕمعا« مذ يقسمٗمًا فمضرمظأ (2) ـــــــــــــــتــــــــ نيدلاىلا ىلع دلاولأا قىقح ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ لَ ذ امو ,لاؿلا ـم ءلش لل ؼبي ؿلو ,ؿؾعلا بؾص في اؿفـؿث تُ ؼػكأو ـيرادلا ,ظاطَ قُ لا ـم هرقغك نادؾبلا فقطي جرخ ٓو ,هرقغ لذك اقكدلا بؾص في كقبأ .دادسلا كؾط يرجت هر قمأو ,ؿفقطعتسي ؿهدـط فطَ اقر نادؾبلا ر ةرقس( ﴾ ُ َ ۡ َ َ ُ ۡ َ ۡ ُ ۡ ُ ۡ َ َ ٗ َ ۡ َ ُ ذ َ ۡ َ َ ذ ذ َ َ َ ﴿ بٗ صِ تي لَ ديخ ٌَِ ّكزريو ٢ اجرمَ ۥلَ وػيَ للَّٱ ق .)1(»)3-2:قلاطلا :عآيا ٟدٜأ في اُع ففعتيا ٢ًع ٕٛبسٜٚ ةقؾح اكدـط نإ ـقـممؿلا رقمأ اي :باطخلا ـب رؿعل ؿقرٕا ـب للها دبط لاق اذإ :لاؼف ,كرملب افقف رملت نأ رظكاف ,ةضفو بهذ ـم ةقكآو ,ءٓقؾج ةقؾح ـم لل طسبا :لاؼف ,اغراف مققلا كارأ نيإ :لاؼف ,امقي هآرف ,نيذآف اغراف لـتيأر كتلف ,فل طسبف عطـب رملف - ؾخـلا ديري - :بهو ـبا لاق ,شحلا في اعطك لاؿلا اذه تركذ ؽكإ ؿفؾلا :لاؼف ,فقؾط ػقو ؿث فقؾط بصف لاؿلا ؽلذب ِةر َ ط َ ِل َ ٍ ُ ۡ لٱ يطِ ٰن َ ل َ ى ۡ ٱو َ ي َ ِج َ لِ ۡ ٱو َ ِء ٓ اص َ",
+  "text_simplified": "The text discusses the importance of tarbiyah (upbringing) for children upon religious and moral values, and highlights the necessity of reinforcing positive behavior in them. It also clarifies that neglect in guidance may lead to behavioral issues. Parents must follow up with their children and provide continuous advice and direction.",
+  "labels": [
+    "تربية",
+    "قيم دينية",
+    "سلوك إيجابي",
+    "إرشاد أسري"
+  ],
+  "created_at": "2026-06-21T10:30:23Z",
+  "updated_at": "2026-06-21T10:30:23Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alukah_Rights_of_Children",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-d192e37a",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "أهمية التربية الدينية والأخلاقية للأبناء",
+        "english": "The Importance of Tarbiyah and Akhlaq for Children",
+        "why": "The English title omits 'religious' (الدينية) and converts the adjectival phrase 'religious and moral upbringing' into two nouns 'Tarbiyah and Akhlaq', losing the explicit religious dimension and altering the meaning.",
+        "severity": "high"
+      }
+    ],
+    "approved_by": null
+  }
+}

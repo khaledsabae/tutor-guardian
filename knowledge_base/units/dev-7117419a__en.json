@@ -1,0 +1,56 @@
+{
+  "id": "dev-7117419a__en",
+  "domain": "development",
+  "source_file": "Alliance_Positive_Parenting_Guide_Arabic.pdf",
+  "title": "Achieving Balance in Tarbiyah and Reducing Stress",
+  "language": "en",
+  "age_group": "unspecified",
+  "behavior_type": "إدارة التوتر والغضب",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "دليل التربية الإيجابية - Alliance for Child Protection (NSPCC)",
+  "text_original": "لوبقم كولسلا اذه باقعلاو باوثلا نيب ميلسلا نزاوتلا لكِّ شيُ عفصلل ضرعتلا لافطلأا بنجتي دق .اهتاذ .ةيباجيلإا ةيبرتلا نم يساسلأا بناجلا .هب نورعشي ام ءافخإ وأ بذكلا ىلإ ءوجللاب NSPCC ةيعمج نم ةيساسأ تامولعم مكرتوت فيفخت نم مكنكمتُ لبسُ ىلإ لصوتلا يرورضلا نم مكلفط تافرصت سيل ،ةريثك رومأ ةمث .مكبضغ يف مكحتلاو تاقلاعلا لثم ،رتوتلاب مكروعش يف ببستت دق ،بسحف ،نكسلاو ،ةحصلاو ،ةايحلاو لمعلا نيب نزاوتلا ربدتو ،ةيرسلأا ءابآ لضفأ اونوكت نأ ىلإ نوحمطت.ريثك اهريغو ،ةلاطبلاو !دهجم رمأ رتوتلا ةأطو تحت ءاقبلا نكلو ،مكلافطلأ ةيباجيلإا ةيبرتلا رومأب نوموقت وأ ءايشأب نوهوفتتو ابًضغ نوطيشتست دق ،مكب رتوتلا دبتسي امدنع ،مكلفط نوعفصت وأ ةيذؤم تارابعب نوهوفتت مكسفنأ نودجت دق .اقًحلا اهيلع نومدنتس هومنو مكلفط رعاشم ىلع اضً يأ رثؤي دق رتوتلا ءاوجأ هيلع رطيستُ لزنم يف شيعلا نأ امك .بضغلاو رتوتلا يف مكحتلاب كلذ بنجت مكنكميُ نكلو .يحصلا ناكملإا ردقب نيدعتسم اونوك • يف رتوتلل نيريثم لافطلأا عيمج حبصيُ نم وأ مكترسأ نم معدلا نوقلتت دق ريكفتلا مكيلع كلذل ؛تاقولأا ضعب ىلع تايدتنملا مادختساب وأ قيدص .اقًبسم رتوتلا اذه عم لماعتلا يف نورمي نيرخآ ءابآ نأ ةفرعمو .تنرتنلإا مكلفط رعش اذإ ،لاثملا ليبس ىلع .مكل ارًيبك اعًيجشت نوكي دق هتاذ فقوملاب يف باهذلا دنع بارطضلااو للملاب لثم رومأ راظتنا دنع وأ ،ةليوط تلاحر ةعضب مكعم اورضحأف ،ءابطلأا ديعاوم مكسفنلأ اتًقو اوصصخ • .هئاهللإ ةطشنأ وأ بتك لثم رومأب مايقلا كلذ نمضتي دق عامتسلاا وأ ةيضايرلا تانيرمتلا ةسرامم يتلا عتملا نوكت دق .ىقيسوملا ىلإ حاجنلا نع اولفاغتت لا • لثم ةطيسب مكسفنلأ اهنوصصختُ عم ديج وحن ىلع ملقأتلا يف متحجن اذإ مامحتسلاا ضوح",
+  "text_simplified": "It is essential to achieve balance between reward and discipline in the tarbiyah (upbringing) of children and to avoid subjecting them to psychological pressure. Parents can reduce stress by controlling anger and managing relationships, while focusing on positive tarbiyah. It is important to dedicate time for rest and enjoyable activities such as sports or music, and to seek support from friends or online forums. Avoiding angry reactions or lying helps protect the child’s feelings.",
+  "labels": [
+    "تربية إيجابية",
+    "توازن الثواب والعقاب",
+    "إدارة الغضب",
+    "دعم الوالدين",
+    "صحة نفسية"
+  ],
+  "created_at": "2026-06-21T10:35:03Z",
+  "updated_at": "2026-06-21T10:35:03Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Alliance_Positive_Parenting_Guide_Arabic",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "dev-7117419a",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "وتجنب التعرض للضغط النفسي",
+        "english": "and to avoid subjecting them to psychological pressure",
+        "why": "The Arabic says 'avoid exposure to psychological stress' without specifying who is exposed. The English adds 'them' (children) and changes the meaning to avoiding causing stress to children, whereas the Arabic likely refers to the parents avoiding stress themselves.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "العقاب",
+        "english": "discipline",
+        "why": "Arabic 'العقاب' means punishment, but English 'discipline' is broader and softer, potentially changing the intended contrast between reward and punishment.",
+        "severity": "medium"
+      }
+    ],
+    "approved_by": null
+  }
+}

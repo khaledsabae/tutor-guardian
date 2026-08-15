@@ -1,0 +1,54 @@
+{
+  "id": "isl-fb6a8582__en",
+  "domain": "islamic_parenting",
+  "source_file": "Al_Hady_Al_Nabawi.pdf",
+  "title": "Al-ʿAdl bayna al-Awlad: Mata Yuqbalu Tamyiz al-Muʿamalah wa Kayfa Yushrah",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "العدل_بين_الأولاد",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كتاب إسلامي",
+  "text_original": "دوممح ،انلافطأ بيرن فيك :رظنا )6( عوبسلأا مايأ ضعب نيدلاولا نع بيغي يذلا دلولا كلذكو .ةيانعلا لىإ امهتجالح كلذو ةلماعلما زييتم ببس دلاولأا ةيقّبل نادلاولا نيّبي نأ دبلاو ،جلاعلا وأ لمعلا وأ ةساردلل ءلاؤه ةلماعم ينب يرسي قرف نكلو ةيربكلا ةجردلاب سيل زيمتلا اذهو ،قافشإو فطلب .هنع نوزواجتيو هب ةوخلإا حماستي يرسيلا قرفلا اذهو ،ةيقّبلا ةلماعمو اذه حدمُيف ،مهنيب دقّعُت تيلا تانراقّلما كلت ةوخلإا سوفن في ةيهاركلا عرزي اممو .هاخأ هركيو مومذلما دلولا نزحيف براقلأاو ءاقدصلأا دنع كلذ لاقّي دقو ،اذه مذيُو اذهو هتوخإ نع ةيفخ اذه يطعي سانلا ضعب نإف ،طقّف رهاظلا في سيل لدعلاو . رمآتلاو ةينانلأا لفطلا ُمِلعي ءافختسلاا .ناطقّلا دحمأ ،)ءانبلأا ةيبرت( طيرش :لىإ عمتسا ) ( وأ للادلا وه صرلحا نأ نونظيف ،رسلأا نم يرثك ةايح في ٌبئاغ يوبرت موهفم وهو دامتعلاا نود لفطلا تاجاح عيجم ةرشابمو ،ةمئادلا ةقّحلالماو هدح نع دئازلا فولخا .هبئاغر عيجم ةيبلتو ،هيلع دامتعلاا ىلع هتردق عم اهديب همعطتو ،هيلع ًافوخ بعللا نم اهدلو عنتم تيلا ملأاو هلعيجو هدسفي اهملاك يرغص هنأ ةجبح لمع يأب هدلو فلكي لا يذلا بلأاو ،هسفن ىلع ىرقّلا ءانبأ ينب عساشلا قرفلا :وه دَهاشلما ليلدلاو .يركفتلا يمدع ،ةدارلإا فيعض ًايلاكتا ىلع بيرلما لميح دقوتم ساسحإ :رمثلما يقيقلحا صرلحاو ةنيدلما ءانبأ ينبو يداوبلاو :اهنم رهاظم هلو .لفطلا كلذل لمأت وأ قاشلما دَبكت نإو هدلو ةيبرت ىوقأ نوكيف هبلق نم ةنكمتم ةحمرلا نلأ ةبامج هدلول دلاولا ةوعد ذإ :ءاعدلا )أ( دقّف مهدلاوأ ىلع ءاعدلا نم نيدلاولا لوسرلا رذح اذلو احالحإ دشأو ةفطاع .ةباجإ ةعاس قفاوت هيجوتلا اهيف يفكي لا ،دملأا ةليوط ةرمتسم ةيوبرتلا ةيلمعلا نلأ :ةمزلالماو ةعباتلما )ب(",
+  "text_simplified": "Al-ʿadl bayna al-awlad asl fi al-tarbiyah (upbringing). If one of them needs special care—due to illness, absence for study, work, or treatment—the parents must explain to the rest of the children the reason for this distinction in treatment, so that no feeling of injustice or jealousy takes root in their hearts.",
+  "labels": [
+    "العدل بين الأولاد",
+    "تمييز المعاملة",
+    "تربية أسرية"
+  ],
+  "created_at": "2026-06-07T08:27:28Z",
+  "updated_at": "2026-06-10T18:30:00Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Al_Hady_Al_Nabawi",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-fb6a8582",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "title",
+        "arabic": "العدل بين الأولاد: متى يُقبل تمييز المعاملة وكيف يُشرح",
+        "english": "Al-ʿAdl bayna al-Awlad: Mata Yuqbalu Tamyiz al-Muʿamalah wa Kayfa Yushrah",
+        "why": "The English title is a transliteration of the Arabic, not a translation. It does not convey the meaning 'Justice between children: when is differential treatment accepted and how is it explained' to an English reader.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "العدل بين الأولاد أصل في التربية",
+        "english": "Al-ʿadl bayna al-awlad asl fi al-tarbiyah (upbringing).",
+        "why": "The first sentence is left as Arabic transliteration with only one word glossed. It should be translated as 'Justice between children is a principle in upbringing.' The meaning is not conveyed.",
+        "severity": "high"
+      }
+    ],
+    "approved_by": null
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "isl-add301df__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Mistakes in Tarbiyah: Imitation of the Child and the Impact of Companionship",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تقليد أعمى",
+  "intervention_type": "إرشادي",
+  "severity": "متوسط",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": "،يوبن قلخ كلذ ناك ولو نغم وأ لثمم وأ بعلال اهمدلو ديلقّتب نادلاولا بجعي نأ أطلخا نمو نمو ،نيدلاولا روعش نود لفطلا سفنً في ةئيسلا ةودقّلا ةبمح سرغي اذه نلأ ،ًافيرط ديلقّتلا مهتسبلأ وأ مهئاسمأ وأ ينفرحنلما روص لمتح تيلا تاودلأا وأ سبلالما ءارش كلذك أطلخا . مبه ءادتقلاا ثروي اذه نلأ ةصالخا . ص ،ضيبم ديعس دممح :ملسلما قلاخأو ،632/2 ناولع للها دبع ،ملاسلإا في دلاولأا ةيبرت :رظنا ) ( .3 3 ص ،ديوس رون دممح ،ةيوبنلا ةيبرتلا جهنم :رظنا )2( .43 - 42 ص ،توتنشلا دلاخ ،ملسلما لفطلا ةيبرت في ملسلما تيبلا رود :رظنا )3( .63 - 634/2 ،ناولع للها دبع ،ملاسلإا في دلاولأا ةيبرت :رظنا )4( . 9 - ص ،ميحسلا دممح ،اندلاوأ ةيبرت في انئاطخأ نم :رظنا ) ( حيحصلا رايتخلاا ونح بيرلما ةيلوؤسمو لحاصلا سيللجا ايناث في ًادرفنم مهنم لك بعلي ةقّفر لىإ لييم لفطلاف ةيسفنو ةيعامتجا ةجاح سيللجا ققّيح لفطلا برك املكو يعاملجا بعللا لىإ مهنم لك لييم اهدعبو ةعبارلا ةنسلا فصتنم ةقّفرلاف ةقّهارلما في امأو ،هيدلاو نع هللاقّتسا أدبيل هتقّفر عم هيضقّي لوطأ تقو لىإ جاتحا . قهارلما اهنع نيغتسي لا تيلا ةيعامتجلااو ةيسفنلا تاجالحا مهأ نم نلأ يدسلجاو يلقّعلا لفطلا نسل ةبسانم قافرلا ةعوممج نوكت نأ طورشلا مهأو مهنع ةيلوئسلماب سحأ بركأ ناك اذإو دّلقّم ِعبات لىإ لوحتي مهنم رغصأ ناك اذإ لفطلا في ًامئاد محقُّي لا نكلو ،هنس في ةقّفر عم لاإ بعلي َلاأ اذه َنىعم سيلو مهتياحم نعو ىلع بيرلما لمعيف ةلحاص نوكت نأ ةقّفرلا طورش نمو هنم بركأ وأ رغصأ تاعوممج ظيفحتلا قلبح هدلو طبريو ،ينميقّتسم نايرج لوح نكسلا",
+  "text_simplified": "A common mistake is when parents rejoice at their child imitating them or their peers, but this plants negative feelings in the child and distances them from their parents' emotions. Also, buying clothes and items that feature cartoon characters or the like may lead to blind imitation. The child should play with companions suitable for their age to develop their independence and psychological and social needs.",
+  "labels": [
+    "تقليد",
+    "تربية",
+    "رفقة",
+    "استقلالية",
+    "احتياجات نفسية"
+  ],
+  "created_at": "2026-06-20T14:36:57Z",
+  "updated_at": "2026-06-20T14:36:57Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-add301df",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "لأقرانه",
+        "english": "their peers",
+        "why": "Arabic refers to the child's peers, but English 'their peers' likely refers to the parents' peers, changing who the child imitates.",
+        "severity": "high"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "صور الشخصيات",
+        "english": "cartoon characters or the like",
+        "why": "Arabic says images of characters generally; English narrows to cartoon characters and adds 'or the like', which is not in the source.",
+        "severity": "medium"
+      },
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "في نفسه",
+        "english": "(omitted)",
+        "why": "Arabic specifies that negative feelings are planted in the child's inner self; English omits this nuance, saying only 'in the child'.",
+        "severity": "low"
+      }
+    ],
+    "approved_by": null
+  }
+}

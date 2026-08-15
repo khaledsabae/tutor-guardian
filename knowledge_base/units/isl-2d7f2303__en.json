@@ -1,0 +1,56 @@
+{
+  "id": "isl-2d7f2303__en",
+  "domain": "islamic_parenting",
+  "source_file": "Kayfa_Turabbi_Waladak.pdf",
+  "title": "Foundations of Islamic Tarbiyah and Guiding the Child",
+  "language": "en",
+  "age_group": "4-6",
+  "behavior_type": "تربية إسلامية",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "كيف تربي ولدك",
+  "text_original": ".246 ص ،يولاحنلا نحمرلا دبع ،ةيملاسلإا ةيبرتلا لوصأ :رظنا ) ( .مهفلا ىلع ينعيو نىعلما برقّي يذلا لثلما برضب ةظعولما -3 ،ًايوبرت هلغتسي نأ بيرلما ىلع بجو ينعم ءيش ثدح املكف ثدلحاب ةظعولما -4 رثؤيو ،للها معنب لفطلا ركذيل تاعالمجاو بورلحا نع جتانلا رامدلا دهاشم ىلع قيلعتلاك . ديعبلا هرثأ هيجوتلا اذله نوكيف ةَقرو لاعفنا ةظلح في هنلأ سفنلا في اذه وأ هتظعوبم ًلاماع بيرلما نكي لم نإف ،ةعباتلماو صلاخلإا :ةظعولما في فلسلا يدهو هلقّع ردق ىلع لفطلا ةبطامخ مهيده نمو بولقّلا هل حتفت نلف اهيف صلمخ يرغ رايتخا نسيح هنأ امك هسفن في خوسرلاو لوبقّلل ىعدأ نوكيل هتبطامخ في فطلتلاو هلو ،سانلا نع هدارفناو هردص حارشنا تقوو ةيسفنلا لفطلا ةلاح يعايرف بسانلما تقولا ةرطفلا ءافصو بلقّلا ةقر ينب عميج لالحا كلت في هنلأ لفطلا ضرم تقو لغتسي نأ .ةدئافلا ققّيح لاف دعابلأا مامأ وأ هبعل تقو هظعو امأو ،ّليم لا تىح لفطلا يعاريو ةظعولماب لوَختيف ظعولا ةرثك نم بيرلما رَذيح نأ بيجو .تاقولأا دعابت عم ،اهراركت نسحيف تقؤم ةظعولما يرثأت نلأو اهطباوضو بيغرتلاو بيهرتلاب ةيبرتلا ًاسماخ بيغرتلا لولأا ثحبلما ميقّلا زيزعتو قلاخلأا بيذتهو كولسلا ةيمنتل ةيساسلأا لماوعلا نم بيغرتلاو بيهرتلا موقّي تيلا لامعلأا نلأ لفطلا ةايح نم لىولأ ا ةلحرلما في ًايرورضو ًامهم ًارود لثيمو نأ امك ةلهس حبصت تىح ابه مايقّلا لىإ هعفدي زفاح لىإ جاتتح ةقاش ةرم لولأ ابه .3 ص :بطق دممح ،ةيملاسلإا ةيبرتلا جهنم :رظنا ) ( .6 6/2 ،ناولع حصان للها دبع ،ملاسلإا في دلاولأا ةيبرت :رظنا )2( .336 -33 ص ،ديوس رون دممح ،ةيملاسلإا ةيبرتلا جهنم :رظنا )3( . ص :بطق دممح ،ةيملاسلإا",
+  "text_simplified": "The murabbi (educator) must use daily events to guide the child and teach him, while considering his psychological state and the appropriate time. It is important to avoid excessive advice so that it does not lose its impact, and to ensure gradual guidance. Tarbiyah through encouragement and gentle discipline is essential for developing behavior and akhlaq (moral character), especially in the early stages of the child's life.",
+  "labels": [
+    "تربية",
+    "توجيه",
+    "ترغيب وترهيب",
+    "سلوك",
+    "أخلاق"
+  ],
+  "created_at": "2026-06-20T14:36:11Z",
+  "updated_at": "2026-06-20T14:36:11Z",
+  "version": "1.0.0",
+  "source_meta": {
+    "source_title": "Kayfa_Turabbi_Waladak",
+    "source_author": ""
+  },
+  "source_language": "ar",
+  "translated_from": "isl-2d7f2303",
+  "translation": {
+    "translator_model": "mistral-large-3:675b",
+    "reviewer_model": "deepseek-v4-pro",
+    "needs_scholar_review": true,
+    "review_verdict": "defects",
+    "review_defects": [
+      {
+        "type": "meaning_change",
+        "field": "text_simplified",
+        "arabic": "التربية بالترغيب والترهيب",
+        "english": "Tarbiyah through encouragement and gentle discipline",
+        "why": "الترهيب means warning or instilling appropriate fear of consequences, not 'gentle discipline'; the translation softens and changes the intended method.",
+        "severity": "high"
+      },
+      {
+        "type": "term_error",
+        "field": "text_simplified",
+        "arabic": "الترهيب",
+        "english": "gentle discipline",
+        "why": "The Islamic term 'tarhib' is translated away instead of being transliterated or accurately rendered, inconsistent with the transliteration of Tarbiyah, murabbi, and akhlaq in the same document.",
+        "severity": "high"
+      }
+    ],
+    "approved_by": null
+  }
+}
