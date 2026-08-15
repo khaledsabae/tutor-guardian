@@ -311,17 +311,37 @@ async def get_lesson_assets(
 
         Comparison is on the base language: entries carry `ar`, `ar_eg` and
         `en_us` for what are two languages.
+
+        **Existence is part of the choice, not a filter applied after it.**
+        Media is gitignored and arrives by rsync, so the index routinely names a
+        file this host does not have. Picking first and dropping the path
+        afterwards was wrong twice over: the response still reported a language
+        for a medium it had not served, and a lesson whose English podcast was
+        indexed but not yet synced lost its Arabic one too — a working fallback,
+        sitting on disk, skipped because a better-matching entry was chosen
+        before anyone asked whether it was there.
         """
-        if not items:
+        usable = []
+        for entry in items or ():
+            path = entry.get("file")
+            if not path:
+                continue
+            if not cl.media_exists(path):
+                # The gap is worth a line in the log: an indexed file that never
+                # arrived is invisible in every count that reads the index.
+                logger.warning(
+                    "lesson %s: %s references missing file %s", lesson_id, kind, path
+                )
+                continue
+            usable.append(entry)
+        if not usable:
             return None, None
         want = _base_lang(preferred_lang)
         for candidate in (want, "ar"):
-            for entry in items:
-                if entry.get("file") and _base_lang(entry.get("language")) == candidate:
+            for entry in usable:
+                if _base_lang(entry.get("language")) == candidate:
                     return entry["file"], _base_lang(entry.get("language"))
-        first = next((e for e in items if e.get("file")), None)
-        if first is None:
-            return None, None
+        first = usable[0]
         # No declared language anywhere: infographics, reports and data tables
         # carry none at all, and Arabic is the source language for every asset
         # produced before English generation existed.
@@ -339,27 +359,15 @@ async def get_lesson_assets(
     report, report_lang = _pick(assets.get("reports", []), "report")
     data_table, data_table_lang = _pick(assets.get("data_tables", []), "data_table")
 
-    def _served(relative_path, kind):
-        """Drop a media reference whose file is not on this host.
-
-        Media is gitignored and arrives by rsync, so the index can name a file
-        that was renamed or never synced. Returning it anyway hands the app a
-        URL that 404s inside the player; returning None lets the app render the
-        lesson without that medium, and the warning makes the gap visible.
-        """
-        if relative_path and not cl.media_exists(relative_path):
-            logger.warning(
-                "lesson %s: %s references missing file %s", lesson_id, kind, relative_path
-            )
-            return None
-        return relative_path
-
     return {
-        "podcast_mp3": _served(podcast_mp3, "podcast"),
-        "video_mp4": _served(video_mp4, "video"),
-        "infographic": _served(infographic, "infographic"),
-        "report": _served(report, "report"),
-        "data_table": _served(data_table, "data_table"),
+        # No post-filter here: `_pick` already refused anything not on this
+        # host, so a path present below is a file that exists and a language
+        # beside it describes that same file.
+        "podcast_mp3": podcast_mp3,
+        "video_mp4": video_mp4,
+        "infographic": infographic,
+        "report": report,
+        "data_table": data_table,
         "flashcards": assets.get("flashcards", []),
         "quizzes": assets.get("quizzes", []),
         # What the app actually got, per medium. Asking for English and being
