@@ -5,10 +5,24 @@
 #
 # Why one driver and not two agents
 # ---------------------------------
-# The NotebookLM quota is ~24 generations/day and it is **shared across audio
-# and video** — measured 2026-08-14: 19 video + 5 audio, then RateLimit. Two
-# agents running blind would race for the same pool and neither would finish.
-# One driver spends it in a deliberate order.
+# 🚨 This comment used to state as measured fact that the quota is ~24/day and
+# shared across audio and video. It was neither. It was inferred from one
+# afternoon (19 video + 5 audio, then RateLimit) and then written down without
+# the inference, so every later decision treated it as a ceiling.
+#
+# 2026-08-15 disproved it: 60 generations were accepted in a single day —
+# 20 video, and 20 audio twice, in separate runs. Whatever meters this, it is
+# not a 24/day pool.
+#
+# What the numbers actually suggest is a per-RUN ceiling near 20, not a daily
+# one: audio stopped at exactly 20 in both of its runs, and video was accepted
+# for exactly 20 in its own. That is a hypothesis, not a measurement — it is
+# settled by two consecutive audio-only runs on one day, which is why the agent
+# was disabled for 2026-08-16 rather than left to blur the result again.
+#
+# So the reason for one driver is not a shared pool. It is that two agents on
+# the same Google account rotate each other's cookies out (see below), and one
+# driver makes the order deliberate rather than a race.
 #
 # Video first because it is nearly done: 20 paths remain against 172 lessons,
 # so video clears in about a day and audio then gets the whole budget every
@@ -48,20 +62,33 @@ say "===== English media run ====="
 # So: log in, then make a real read. If the read comes back with data, the
 # session is alive. If not, stop — a run that cannot authenticate cannot
 # generate, and should say so rather than spend an hour proving it.
-AUTH_FAILED=0
-for p in tg-video tg-audio; do
+# 🚨 And re-checked before EVERY step, not once at the top.
+#
+# Checking once was worth 124 failed calls on 2026-08-15. The order is video
+# (up to 45 min) → audio (up to 45 min) → infographics, and the first and last
+# both run on tg-video. By the time infographics started, that session was up
+# to 80 minutes past a check it had passed, and every one of its 124 calls came
+# back "Authentication expired" — 344 errors, read as a quota ceiling because
+# a whole medium failing at once looks like one.
+#
+# The two profiles also sit on the same Google account, so separating them
+# stops the cookie rotation that killed the session three times on 08-14, but
+# it does not buy two independent sessions. Freshness is per-step or it is not
+# a property of the run at all.
+ensure_session() {
+    local p="$1"
     timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" login --browser-cookies chrome \
         >> "$LOG" 2>&1
-    say "auth $p login exit $?"
     if timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" source list \
             -n "$NOTEBOOK_MAIN" --json 2>/dev/null | grep -q '"sources"'; then
         say "auth $p verified by read ✓"
-    else
-        say "auth $p FAILED — login reported success but the API refuses reads"
-        AUTH_FAILED=1
+        return 0
     fi
-done
-if [ "$AUTH_FAILED" -ne 0 ]; then
+    say "auth $p FAILED — login reported success but the API refuses reads"
+    return 1
+}
+
+if ! ensure_session tg-video || ! ensure_session tg-audio; then
     say "FAIL: no usable session — nothing can be generated"
     exit 1
 fi
@@ -100,6 +127,7 @@ grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
 # To settle it: run audio alone on a fresh day and count how many it gets
 # before refusal. If it reaches roughly the video ceiling on its own, the
 # pools are separate.
+ensure_session tg-audio || say "WARN: tg-audio unusable — attempting anyway"
 timeout 2700 "$PY" scripts/gen_podcasts_cron.py --lang en > "$RUN_OUT" 2>&1
 AUD_EXIT=$?
 cat "$RUN_OUT" >> "$LOG"
@@ -114,12 +142,31 @@ grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
 # says (OPERATIONS_LOG 2026-08-14). NOTEBOOKLM_HL is set anyway because it
 # defaults to "en" only when unset — an inherited ar_001 from a shell that ran
 # the Arabic pipeline would quietly produce Arabic into `_en` filenames.
-NOTEBOOKLM_HL=en timeout 2700 "$PY" scripts/generate_missing_infographics.py \
-    --lang en > "$RUN_OUT" 2>&1
-INFO_EXIT=$?
-cat "$RUN_OUT" >> "$LOG"
-say "infographics exit $INFO_EXIT"
-grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
+# 🚨 tg-video has been idle through video AND audio by now — up to 80 minutes.
+# This is the step that lost 124 calls to an expired session on 2026-08-15.
+if ! ensure_session tg-video; then
+    say "SKIP infographics: tg-video session is dead and re-login did not fix it"
+    INFO_EXIT=99
+else
+    NOTEBOOKLM_HL=en timeout 2700 "$PY" scripts/generate_missing_infographics.py \
+        --lang en > "$RUN_OUT" 2>&1
+    INFO_EXIT=$?
+    cat "$RUN_OUT" >> "$LOG"
+    say "infographics [en] exit $INFO_EXIT"
+    grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
+
+    # The 14 Arabic gaps. The driver ran `--lang en` only, so these were never
+    # attempted by anything — and they do not show up as missing in any English
+    # count, which is why they sat unnoticed. Last, because English is the
+    # backlog this driver exists for; Arabic is 14 files, not 124.
+    if [ "$RATELIMITED" -eq 0 ]; then
+        NOTEBOOKLM_HL=ar timeout 1200 "$PY" scripts/generate_missing_infographics.py \
+            --lang ar > "$RUN_OUT" 2>&1
+        cat "$RUN_OUT" >> "$LOG"
+        say "infographics [ar] exit $?"
+        grep -qi "rate.limit" "$RUN_OUT" && RATELIMITED=1
+    fi
+fi
 
 # An infographic is text rendered into pixels: nothing in the filename, the
 # index or the exit code knows what language is actually drawn inside it. OCR
