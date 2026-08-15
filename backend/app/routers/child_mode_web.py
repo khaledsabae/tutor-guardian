@@ -14,15 +14,26 @@ name after claiming.
 """
 from fastapi import APIRouter, HTTPException, Query, Request
 
+from app.config.guardrails_loader import load_child_surface_policy
 from app.db.init_db import get_conn
+from app.services import child_budget
 from app.services import child_token as child_token_service
 
 router = APIRouter(prefix="/child-web", tags=["child-web"])
 
 
 @router.post("/claim-session", response_model=dict)
-def claim_session(request: Request, claim: str | None = Query(None, min_length=8)):
-    """Redeem a one-time QR claim code for a long-lived web child token."""
+def claim_session(request: Request, claim: str | None = Query(None, min_length=8),
+                  tz_offset_minutes: int = Query(0)):
+    """Redeem a one-time QR claim code for a long-lived web child token.
+
+    This is the second way into a child surface, and it has to carry the same
+    gate as the first. The QR flow mints its token here rather than through
+    `/child-sessions`, so without opening a screen session the teen would hold
+    a valid twenty-hour token that the middleware refuses on every request —
+    and if the middleware were relaxed to let it through instead, the web
+    surface would be the one place with no budget at all.
+    """
     if not claim:
         raise HTTPException(status_code=422, detail="مطلوب رمز المطالبة (claim).")
     result = child_token_service.redeem_claim_code(claim)
@@ -32,11 +43,30 @@ def claim_session(request: Request, claim: str | None = Query(None, min_length=8
     conn = get_conn()
     try:
         row = conn.execute(
-            "SELECT name, age_group FROM child_profiles WHERE id = ?",
+            "SELECT device_id, name, age_group FROM child_profiles WHERE id = ?",
             (result["child_id"],),
         ).fetchone()
     finally:
         conn.close()
+
+    session: dict = {}
+    if row is not None and child_budget.child_surface_enabled():
+        policy = getattr(request.app.state, "child_surface_policy", None) \
+            or load_child_surface_policy()
+        session = child_budget.open_session(
+            row["device_id"], result["child_id"], "habit", tz_offset_minutes, policy
+        )
+        if not session["ok"]:
+            # The claim code is already spent by now, which is correct — a
+            # refused teen should not be able to retry the same QR until the
+            # parent decides to show another.
+            raise HTTPException(status_code=403, detail={
+                "error": session["reason"],
+                "message_key": session.get("parent_message_key")
+                or f"child_gate.{session['reason']}",
+                "message_ar": session.get("parent_message_ar")
+                or "خلصت مدة النهارده. نكمل بكرة إن شاء الله 🌙",
+            })
 
     return {
         "token": result["token"],
@@ -44,6 +74,9 @@ def claim_session(request: Request, claim: str | None = Query(None, min_length=8
         "child_name": row["name"] if row else "الطفل",
         "age_group": row["age_group"] if row else None,
         "expires_at": result["expires_at"],
+        "session_id": session.get("session_id"),
+        "allowed_seconds": session.get("allowed_seconds"),
+        "heartbeat_interval_seconds": session.get("heartbeat_interval_seconds"),
     }
 
 

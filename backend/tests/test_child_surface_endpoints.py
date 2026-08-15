@@ -17,6 +17,7 @@ from app.config.guardrails_loader import load_child_surface_policy
 from app.db.init_db import get_conn, init_db
 from app.middleware.auth import AuthMiddleware
 from app.routers.child_mode import router as child_mode_router
+from app.routers.child_mode_web import router as child_mode_web_router
 from app.routers.children import router as children_router
 from app.routers.value_tracking import router as value_router
 from app.services import child_budget, child_token
@@ -55,6 +56,7 @@ def client(tmp_db):
     app.include_router(children_router, prefix="/api")
     app.include_router(value_router, prefix="/api")
     app.include_router(child_mode_router, prefix="/api")
+    app.include_router(child_mode_web_router, prefix="/api")
     with TestClient(app) as c:
         yield c
 
@@ -346,3 +348,38 @@ def test_a_typo_leaves_the_surface_on(client, monkeypatch):
 def test_the_default_is_on(monkeypatch):
     monkeypatch.delenv("CHILD_SURFACE_ENABLED", raising=False)
     assert child_budget.child_surface_enabled() is True
+
+
+# ── Every door, not just the front one ─────────────────────────────────────
+
+def test_the_qr_web_claim_opens_a_session_too(client):
+    """The regression that broke the deploy.
+
+    The QR flow for teens mints its token in child_mode_web rather than
+    through /child-sessions, so adding the gate to one entry point left the
+    other holding a valid twenty-hour token with no session behind it — every
+    request 403'd. Relaxing the middleware for web tokens would have been the
+    other way to make it green, and would have made the web surface the one
+    place with no budget at all.
+    """
+    cid = _child(client)
+    claim = client.post("/api/value-tracking/child-web-claims",
+                        params={"child_id": cid})
+    assert claim.status_code == 200, claim.text
+    code = claim.json()["claim_code"]
+
+    redeemed = client.post("/api/child-web/claim-session", params={"claim": code})
+    assert redeemed.status_code == 200, redeemed.text
+    assert redeemed.json()["session_id"] is not None
+    assert child_budget.active_session(cid) is not None
+
+
+def test_the_qr_web_claim_is_age_gated_like_the_front_door(client):
+    """A second entry point must not be a second policy."""
+    infant = _child(client, "prenatal-1")
+    claim = client.post("/api/value-tracking/child-web-claims",
+                        params={"child_id": infant})
+    code = claim.json()["claim_code"]
+    r = client.post("/api/child-web/claim-session", params={"claim": code})
+    assert r.status_code == 403
+    assert r.json()["detail"]["error"] == "age_not_allowed"
