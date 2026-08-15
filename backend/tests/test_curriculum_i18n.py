@@ -255,17 +255,58 @@ def test_lesson_assets_report_the_language_actually_served(client):
                 f"{medium}: serving {served} but reporting {reported!r}")
 
 
-def test_arabic_video_declared_ar_eg_is_matched_as_arabic(client):
+def test_arabic_video_declared_ar_eg_is_matched_as_arabic(client, monkeypatch):
     """Video entries declare `ar_eg`, podcasts declare `ar`.
 
     The old code compared those strings raw, so the video fallback branch
     (`language == "ar"`) could never fire and Arabic was returned only because
     it happened to be first in the list.
+
+    Presence is monkeypatched rather than left to the host. This test asks one
+    question — does `ar_eg` normalize to `ar` — and it used to answer it only by
+    luck: media is gitignored, so it passed on a laptop that had the files and
+    would have reported the same 'pass' on CI for the opposite reason, once
+    selection began consulting the disk. What a test depends on should be in the
+    test.
     """
     cl.load_curriculum()
     with_video = [lid for lid, a in cl._assets_cache.items()
                   if (a.get("videos") or [])]
     assert with_video, "fixture needs a lesson with a video"
+    monkeypatch.setattr(cl, "media_exists", lambda p: True)
     r = client.get(f"/api/program/lesson-assets/{with_video[0]}?lang=en")
     assert r.status_code == 200
     assert r.json()["languages"]["video"] == "ar"
+
+
+def test_a_missing_english_file_falls_back_to_arabic_not_to_nothing(
+        client, monkeypatch):
+    """An indexed file this host does not have must not cost the fallback too.
+
+    The index runs ahead of the rsync by design, so an English podcast is
+    registered before it lands. Choosing the best match first and dropping its
+    path afterwards took the Arabic file down with it: the English entry won,
+    then vanished at the existence check, and nobody went back for the Arabic
+    file sitting on disk. The lesson lost both.
+    """
+    cl.load_curriculum()
+    with_pod = [lid for lid, a in cl._assets_cache.items()
+                if len([p for p in (a.get("podcasts") or []) if p.get("file")]) >= 2]
+    if not with_pod:
+        pytest.skip("fixture needs a lesson with podcasts in two languages")
+    lid = with_pod[0]
+    pods = cl._assets_cache[lid]["podcasts"]
+    arabic = next((p["file"] for p in pods if p.get("language") == "ar"), None)
+    assert arabic, "fixture needs an Arabic podcast to fall back to"
+
+    # Everything is on disk except the English file.
+    monkeypatch.setattr(cl, "media_exists", lambda p: p == arabic)
+    body = client.get(f"/api/program/lesson-assets/{lid}?lang=en").json()
+    assert body["podcast_mp3"] == arabic
+    assert body["languages"]["podcast"] == "ar"
+
+    # And with nothing on disk at all, the response must claim nothing.
+    monkeypatch.setattr(cl, "media_exists", lambda p: False)
+    body = client.get(f"/api/program/lesson-assets/{lid}?lang=en").json()
+    assert body["podcast_mp3"] is None
+    assert body["languages"]["podcast"] is None
