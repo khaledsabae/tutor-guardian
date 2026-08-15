@@ -14,7 +14,8 @@ from app.services.guardrails import (
     apply_guardrails, is_emergency, emergency_reply, evaluate_guardrails,
     _build_fallback_message,
 )
-from app.services.retrieval import retrieve_hybrid, _ensure_index, log_retrieval
+from app.services.retrieval import (retrieve_hybrid, _ensure_index,
+                                    log_retrieval, detect_query_language)
 from app.services.reranker import RERANK_MIN_SCORE
 from app.services.query_rewriter import rewrite_query
 from app.services.llm_service import (
@@ -241,6 +242,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
                 domains=detected_domains,
                 age_group=user_message.age_group or "unspecified",
                 rewritten_query=rewritten_query,
+                lang=detect_query_language(query_text),
             )
             log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units
@@ -528,6 +530,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                 query_text=query_text, domains=detected_domains,
                 age_group=user_message.age_group or "unspecified",
                 rewritten_query=rewritten_query,
+                lang=detect_query_language(query_text),
             )
             log_retrieval(query_text, detected_domains, rewritten_query, units)
             return units

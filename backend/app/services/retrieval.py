@@ -9,6 +9,7 @@ Optimizations (v2):
 """
 import hashlib
 import logging
+import re
 import shutil
 import threading
 from functools import lru_cache
@@ -154,11 +155,14 @@ def _unit_metadata(unit: KnowledgeUnit) -> dict:
         "unit_id": unit.id,
         "domain": unit.domain,
         "age_group": unit.age_group,
-        # اللغة تدخل الفهرس ولا تُستعمل في الترشيح بعد — عمدًا. ٤٣ وحدة
+        # اللغة **تُرتِّب ولا تُرشِّح** — انظر `retrieve_hybrid`. ٤٣ وحدة
         # إنجليزية من ١,١٨٧، فمرشِّح صارم `language == "en"` يفرّغ النتيجة
         # ويعطي المستخدم الإنجليزي «لا توجد معلومات كافية» بدل إسنادٍ عربي
-        # مفيد. ما يصلحه هذا السطر أن اللغة صارت **معلومة** عند الاسترجاع
-        # وفي بيانات كل نتيجة، بعد أن كانت تُرمى عند التحميل.
+        # مفيد؛ ولهذا رُفض الترشيح، وكان رفضه صوابًا.
+        # 🚨 لكن «لا نستطيع الترشيح» قُرئ «لا نستطيع شيئًا»، ودفع الثمنَ
+        # القارئُ العربي: ١٤ من ٣١ وحدة في `prenatal-1` غير عربية، فأمٌّ تسأل
+        # بالعربية عن ابنها ابن السنتين كانت تُعطى «Your child at 2 years».
+        # التفضيل الآن رصيد RRF إضافي، لا استبعاد.
         # ⚠️ إضافة مفتاح هنا تغيّر `_fingerprint`، فأول إقلاع بعد النشر يعيد
         # تضمين الوحدات كلها مرة واحدة — تكلفة إقلاع لا تكلفة طلب.
         "language": unit.language,
@@ -546,6 +550,99 @@ def log_retrieval(query_text: str, domains: list[str],
 
 _RRF_K = 60
 
+# Fraction of the rerank-score spread that reading in your own language is
+# worth. It settles near-ties among candidates the cross-encoder already judged
+# relevant; it cannot outrank a real relevance gap. That ceiling is the point:
+# 250+ units in this corpus are bulk-imported ITU and WHO policy text written
+# for telecom companies and health ministries, almost all Arabic and
+# `unspecified`, so eligible at every age. An unbounded preference for Arabic
+# would float those above an English parenting unit that answers the question,
+# and score as a win while the answer got worse.
+_LANG_TIEBREAK = 0.15
+
+
+_ARABIC_CHARS = re.compile(r"[؀-ۿ]")
+_LATIN_CHARS = re.compile(r"[A-Za-z]")
+
+
+def detect_query_language(text: str) -> str | None:
+    """The language the parent wrote in — which is the one they read in.
+
+    Taken from the question rather than from a request field on purpose.
+    `UserMessage` carries no language, and adding one would mean every client
+    already installed keeps retrieving with no preference until it updates —
+    on an app with a force-update lever precisely because old builds linger.
+    The question is already in the reader's language; nothing needs to be sent.
+
+    Script, not vocabulary: an Arabic question about "screen time" is Arabic.
+    Returns None when there is too little to tell, and None means no
+    preference — never a guess.
+    """
+    ar = len(_ARABIC_CHARS.findall(text))
+    la = len(_LATIN_CHARS.findall(text))
+    if ar + la < 8:
+        return None
+    if ar > la:
+        return "ar"
+    if la > ar:
+        return "en"
+    return None
+
+
+@lru_cache(maxsize=1)
+def _unit_languages() -> dict:
+    """unit_id → language, from the corpus rather than from a candidate dict.
+
+    🚨 The legs do not agree on what a candidate carries. Vector hits come out
+    of Chroma with the full stored metadata; BM25 hits carry a `metadata` dict
+    with **no language key at all**. Reading the candidate directly therefore
+    gave the bonus to vector hits and withheld it from BM25 hits — a preference
+    for which leg found a unit, wearing the costume of a language preference.
+
+    That is not a hypothetical: the first probe run scored a "gain" that was
+    entirely this bug. One Arabic unit displaced another Arabic unit, and the
+    displaced one was the more on-topic of the two. The number said the change
+    worked; the titles said it had reshuffled two Arabic units by provenance.
+    """
+    return {u.id: u.language for u in load_default_knowledge_units()}
+
+
+def _candidate_language(cand: dict) -> str | None:
+    """The candidate's language, resolved by id first — see _unit_languages."""
+    uid = cand.get("unit_id") or (cand.get("metadata") or {}).get("unit_id")
+    if uid:
+        found = _unit_languages().get(uid)
+        if found:
+            return found
+    return (cand.get("metadata") or {}).get("language")
+
+
+def _language_matches(unit_lang: str | None, want: str) -> bool:
+    """True when a unit is written in `want`.
+
+    🚨 `mixed` does NOT match, and the reasoning that said it should was wrong
+    in a way only the titles showed. "It contains both languages, so it is
+    readable either way" is true of the unit and false of the ranking: 69 units
+    carry the tag, and counting it as a match handed all 69 the bonus on
+    *every* query in *either* language. That is not a language preference, it
+    is a preference for one tag, applied universally.
+
+    Measured, on "My 8-year-old wets the bed": it promoted a `mixed` unit about
+    early puberty over an Arabic unit about childhood anxiety — neither about
+    bedwetting, and it scored as an English gain because `mixed` counted.
+    Making `mixed` neutral, the same probe surfaced
+    «التبول اللاإرادي الليلي في عمر أربعة إلى…» for the Arabic version of that
+    question: nocturnal enuresis, exactly the subject asked about.
+
+    An absent tag is neutral for the same reason — see retrieve_hybrid.
+    """
+    if not unit_lang:
+        return False
+    unit_lang = unit_lang.strip().lower()
+    if unit_lang == "mixed":
+        return False
+    return unit_lang.split("-")[0] == want.split("-")[0]
+
 
 def _rrf_merge(*ranked_lists: list[dict]) -> list[dict]:
     """Reciprocal Rank Fusion across candidate lists, deduped by unit_id.
@@ -576,6 +673,7 @@ def retrieve_hybrid(
     candidates_per_leg: int = 8,
     rerank_pool: int = 12,
     age_span: int = 1,
+    lang: str | None = None,
 ) -> list[dict]:
     """The quality-first retrieval path.
 
@@ -608,6 +706,34 @@ def retrieve_hybrid(
 
     "unspecified" is never filtered — half the corpus carries it and it is
     written to apply at every age. Set age_span to None to disable the bound.
+
+    `lang` prefers units written in the reader's language. It is a **ranking**
+    signal, never a filter — the distinction is the whole point. The corpus is
+    835 `ar`, 183 `mixed`, 126 untagged and **43 `en`**, so a hard
+    `language == "en"` filter empties the result for the English 27% of users
+    and returns "no sufficient information" instead of a useful Arabic
+    citation. That is why filtering was refused, and refusing it was right.
+
+    But "we cannot filter" was then read as "we can do nothing", and the cost
+    of that fell on Arabic readers: 14 of the 31 `prenatal-1` units are not
+    Arabic, so a parent asking in Arabic about a two-year-old was handed
+    "Your child at 2 years*" in English. Nothing was choosing Arabic for them,
+    because nothing was choosing at all.
+
+    Preference is expressed in the currency this function already uses: one
+    extra leg appearance, the same credit an age-matched unit earns by showing
+    up in two vector legs. It reorders near-ties and decides who survives the
+    `rerank_pool` cap; it cannot lift an irrelevant unit over a relevant one.
+
+    Two deliberate non-behaviours, both neutral rather than penalised:
+
+    · **Untagged is not wrong-language.** Units with no tag get no bonus and no
+      penalty. Demoting them would bury a slice of the corpus on the strength
+      of a missing field.
+    · **`mixed` is neutral too**, and that is a correction — see
+      _language_matches. Counting it as a match for both languages gave 69
+      units a bonus on every query in either language, which is a preference
+      for a tag, not for a language, and it displaced on-topic content.
 
     Falls back to fusion order if the reranker is unavailable (see
     reranker.rerank — it never raises).
@@ -671,4 +797,38 @@ def retrieve_hybrid(
     # pool, so the extra leg must not be allowed to grow the pool — it is
     # there to change *which* candidates are scored, not how many.
     candidates = _rrf_merge(*legs)[:rerank_pool]
-    return rerank(query_text, candidates, top_n=top_n)
+    if not lang:
+        return rerank(query_text, candidates, top_n=top_n)
+
+    # 🚨 Language is applied AFTER the reranker, not before it.
+    #
+    # Before it, the preference is inert. Measured across a 10-question probe:
+    # zero results changed, at 1×, 3×, 6× and 12× the RRF weight. The reason is
+    # structural, not a matter of tuning — the cross-encoder re-sorts whatever
+    # it is handed, so a pre-rerank bonus can only change which candidates
+    # enter the pool, and a candidate that was ranked twelfth by fusion is one
+    # the cross-encoder then rejects anyway. Turning the weight up moves
+    # nothing; it just makes the no-op look deliberate.
+    #
+    # After it, the ordering is a judgement about relevance that already
+    # happened. Preferring the reader's language among candidates the
+    # cross-encoder has *already* judged relevant is the thing that was wanted
+    # all along, and it cannot promote an off-topic unit, because off-topic
+    # units are not in this list — RERANK_MIN_SCORE removed them.
+    scored = rerank(query_text, candidates, top_n=len(candidates))
+    if len(scored) <= 1:
+        return scored[:top_n]
+
+    # Scaled to the spread of this result set rather than a fixed constant:
+    # rerank scores are cross-encoder logits with no stable range, so any
+    # absolute nudge is either meaningless on a wide spread or decisive on a
+    # narrow one. A fraction of the spread means "flip near-ties, never a
+    # clear relevance gap" at every scale.
+    vals = [c.get("rerank_score", 0.0) for c in scored]
+    spread = max(vals) - min(vals)
+    bonus = _LANG_TIEBREAK * spread
+    scored.sort(key=lambda c: -(
+        c.get("rerank_score", 0.0)
+        + (bonus if _language_matches(_candidate_language(c), lang) else 0.0)
+    ))
+    return scored[:top_n]
