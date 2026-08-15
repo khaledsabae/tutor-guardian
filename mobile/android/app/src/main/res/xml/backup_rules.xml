@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 11 and below (android:fullBackupContent).
+
+  Android Auto Backup uploads the app's internal storage to the user's Google
+  Drive by default. The privacy screen promises that a parent's recorded voice
+  never leaves the device — and until this file existed, that promise was
+  false: `narrations/` sits in the app's files directory and was being backed
+  up with everything else.
+
+  A recording of a parent reading to their child is the most personal thing
+  this app holds. It is excluded here, and `data_extraction_rules.xml` does
+  the same for Android 12+, which ignores this file entirely.
+-->
+<full-backup-content>
+    <exclude domain="file" path="narrations/" />
+    <!-- The child-mode PIN and tokens live in EncryptedSharedPreferences;
+         restoring them onto a different device would carry a family's lock
+         to a phone their child might be holding. -->
+    <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
+</full-backup-content>

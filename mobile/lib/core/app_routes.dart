@@ -26,6 +26,8 @@ import 'package:flutter/material.dart';
 
 import '../features/coins/coins_screen.dart';
 import '../features/agreement/agreement_screen.dart';
+import '../features/screen_off/record_narration_screen.dart';
+import '../features/screen_off/screen_off_player_screen.dart';
 import '../features/agreement/child_agreement_screen.dart';
 import '../features/coins/covenant_screen.dart';
 import '../features/coins/exclusive_badges_screen.dart';
@@ -142,6 +144,8 @@ abstract final class Screens {
   static const covenant = 'covenant';
   static const agreement = 'agreement';
   static const childAgreement = 'child_agreement';
+  static const screenOffPlayer = 'screen_off_player';
+  static const recordNarration = 'record_narration';
 
   // Account & meta
   static const settings = 'settings';
@@ -399,6 +403,17 @@ abstract final class AppRoutes {
   /// The only surface that opens before an agreement is signed.
   static Route<bool> childAgreement() =>
       _r(Screens.childAgreement, (_) => const ChildAgreementScreen());
+
+  /// Listening with the display dark — bills the audio ledger, not the screen.
+  static Route<void> screenOffPlayer(
+          {required String title, required String source}) =>
+      _r(Screens.screenOffPlayer,
+          (_) => ScreenOffPlayerScreen(title: title, source: source));
+
+  static Route<bool> recordNarration(
+          {required String storyKey, required String storyText}) =>
+      _r(Screens.recordNarration,
+          (_) => RecordNarrationScreen(storyKey: storyKey, storyText: storyText));
 
   // ── Account & meta ──────────────────────────────────────────────────────
   static Route<void> settings() =>
