@@ -130,6 +130,18 @@ def _vid_path(path_id):
     return BASE / path_video_rel(path_id, LANG)
 
 
+def _unkey(state_key):
+    """`path_id@en` → `path_id`.
+
+    🚨 The state dict is keyed by _key(), so iterating `state.items()` yields
+    the NAMESPACED key — and passing that to _vid_path() writes
+    `path_x@en_en_us.mp4`, which `path_video_candidates()` never looks for. Seven
+    videos were generated this way: real files, correct size and duration, 644,
+    and invisible to the app. Always unkey before building a path.
+    """
+    return state_key.split("@", 1)[0]
+
+
 def _key(path_id):
     """State/manifest/failure key.
 
@@ -246,7 +258,8 @@ async def main():
         print("[startup] manifest synced from disk")
 
     # 1) resolve in-flight tasks
-    for path_id, task_id in list(state.items()):
+    for _state_key, task_id in list(state.items()):
+        path_id = _unkey(_state_key)
         if _is_done(path_id):
             print(f"[poll] {path_id}: already done on disk — dropping stale in-flight task")
             state.pop(_key(path_id), None)
@@ -297,7 +310,8 @@ async def main():
     deadline = time.time() + POLL_BUDGET_SEC
     while state and time.time() < deadline:
         await asyncio.sleep(45)
-        for path_id, task_id in list(state.items()):
+        for _state_key, task_id in list(state.items()):
+            path_id = _unkey(_state_key)
             st = await poll(task_id)
             if st == "completed" and await download(task_id, _vid_path(path_id)):
                 print(f"  ✓ downloaded {path_id}")
