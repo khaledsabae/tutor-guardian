@@ -1,0 +1,152 @@
+{
+  "age_band": "7-9",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "بنك المهام اليومية — كل مهمة تُنفَّذ خارج الشاشة، ووقتها المقدَّر لا يقل عن خمسة أضعاف دقائق البطاقة (البطاقة ثلاث دقائق، فالحد الأدنى خمس عشرة دقيقة).",
+  "missions": [
+    {
+      "id": "mission_7-9_green_hunt",
+      "domain": "development",
+      "title_ar": "صيّاد الأخضر",
+      "instruction_ar": "اطلع البلكونة أو الحديقة ودوّر على خمس حاجات لونها أخضر، وارجع قول لبابا أو ماما.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "الملاحظة",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_table_set",
+      "domain": "islamic_parenting",
+      "title_ar": "أنا مسؤول عن السفرة",
+      "instruction_ar": "رتّب السفرة لوحدك النهارده، وقول «بسم الله» قبل ما تاكلوا.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "المسؤولية",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_call_grandparent",
+      "domain": "islamic_parenting",
+      "title_ar": "صوتك يفرّح",
+      "instruction_ar": "اتصل بجدو أو تيتة واسأل عن أخبارهم، واحكي لهم حاجة حصلت معاك النهارده.",
+      "estimated_minutes": 20,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "صلة الرحم",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_water_plant",
+      "domain": "development",
+      "title_ar": "حاجة حيّة بتعتمد عليك",
+      "instruction_ar": "اسقي نبتة في البيت أو عند الجيران، وشوفها كل يوم لمدة أسبوع.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": ["نبتة", "مياه"],
+      "skill": "المواظبة",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_secret_good_deed",
+      "domain": "islamic_parenting",
+      "title_ar": "حسنة مافيش حد يعرفها",
+      "instruction_ar": "اعمل حاجة حلوة لحد في البيت من غير ما تقول له ولا تقول لحد، وقول لبابا بس إنك عملتها.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإخلاص",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_draw_the_sky",
+      "domain": "aqeedah",
+      "title_ar": "بصّ فوق",
+      "instruction_ar": "اقعد بصّ للسما عشرة دقايق، وبعدين ارسم اللي شفته واحكي لبابا عنه.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": ["ورق", "ألوان"],
+      "skill": "التأمل",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_tidy_own_shelf",
+      "domain": "development",
+      "title_ar": "رفّي أنا اللي مسؤول عنه",
+      "instruction_ar": "رتّب رف أو درج بتاعك لوحدك، وشيل حاجة واحدة مابقتش بتستعملها واديها لحد.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "النظام",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_ask_and_listen",
+      "domain": "islamic_parenting",
+      "title_ar": "اسأل واسمع",
+      "instruction_ar": "اسأل بابا أو ماما: «إيه أصعب حاجة عملتها وإنت صغير؟» واسمع لآخر الحكاية من غير ما تقاطع.",
+      "estimated_minutes": 15,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإنصات",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_walk_and_count",
+      "domain": "medical",
+      "title_ar": "امشي وعُدّ",
+      "instruction_ar": "اخرج امشي مع حد من البيت، وعُدّ كام شجرة قابلتوها في الطريق.",
+      "estimated_minutes": 25,
+      "needs_parent": true,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "الحركة",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_say_sorry",
+      "domain": "islamic_parenting",
+      "title_ar": "أصعب كلمتين",
+      "instruction_ar": "فكّر في حد زعّلته من غير قصد، وروح قول له «أنا آسف» في عينيه.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الاعتذار",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_memorise_one_line",
+      "domain": "aqeedah",
+      "title_ar": "سطر واحد بس",
+      "instruction_ar": "احفظ آية قصيرة مع بابا أو ماما، وردّدها لهم قبل النوم من غير ما تبصّ.",
+      "estimated_minutes": 15,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الحفظ",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_build_something",
+      "domain": "development",
+      "title_ar": "ابنِ حاجة بإيدك",
+      "instruction_ar": "ابنِ أي حاجة من الكراتين أو المكعبات اللي عندك، وورّيها لحد في البيت واشرح إزاي عملتها.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": ["كراتين أو مكعبات"],
+      "skill": "الصنع",
+      "is_published": true
+    }
+  ]
+}

@@ -36,7 +36,7 @@ from pydantic import BaseModel, Field, field_validator
 from app.config.guardrails_loader import load_child_surface_policy
 from app.core.taxonomy import CANONICAL_AGE_GROUPS, map_profile_age_to_band
 from app.db.init_db import get_conn
-from app.services import child_budget, family_agreement
+from app.services import child_budget, child_missions, family_agreement
 from app.services.coach_service import CHALLENGE_TOPICS
 
 router = APIRouter()
@@ -772,4 +772,39 @@ def sign_agreement_as_parent(child_id: int, request: Request):
     result = family_agreement.sign(device_id, child_id, "parent")
     if not result["ok"]:
         raise HTTPException(status_code=409, detail={"error": result["reason"]})
+    return result
+
+
+# ── The parent's evening: one card, one button ─────────────────────────────
+
+class MissionConfirmItem(BaseModel):
+    mission_id: int
+    confirmed: bool = True
+    note: Optional[str] = Field(default=None, max_length=280)
+
+
+class MissionConfirmIn(BaseModel):
+    items: list[MissionConfirmItem] = Field(min_length=1, max_length=50)
+
+
+@router.get("/children/missions/pending",
+            summary="Every mission across every child that is waiting on the parent")
+def pending_missions(request: Request):
+    device_id = _require_device_id(request)
+    return {"pending": child_missions.pending_for_device(device_id)}
+
+
+@router.post("/children/missions/confirm",
+             summary="Settle several missions at once")
+def confirm_missions(body: MissionConfirmIn, request: Request):
+    """A parent with three children presses one button, not six.
+
+    Batching is the feature: the evening notification opens onto a list, and
+    a confirmation flow that costs one tap per child is a flow that gets
+    abandoned by the second child.
+    """
+    device_id = _require_device_id(request)
+    result = child_missions.confirm_batch(
+        device_id, [i.model_dump() for i in body.items]
+    )
     return result

@@ -57,6 +57,10 @@ Migration v22: added family_agreements + agreement_clauses — the two-sided
                `applies_to`, because an agreement whose every rule points at
                the child is a list of orders, and the research this feature
                rests on is about an agreement.
+Migration v23: added child_missions — one off-screen task a day, claimed by
+               the child without waiting and confirmed by the parent in a
+               single evening batch. The unique key is (child, date, mission)
+               so a retry cannot assign the same task twice.
 """
 import os
 import sqlite3
@@ -182,7 +186,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 22
+SCHEMA_VERSION = 23
 
 
 def db_path() -> Path:
@@ -340,6 +344,7 @@ def init_db() -> None:
     _ensure_feedback_replies_table(conn)
     _ensure_child_screen_sessions_table(conn)
     _ensure_family_agreements_tables(conn)
+    _ensure_child_missions_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -468,6 +473,30 @@ CREATE INDEX IF NOT EXISTS ix_css_started
     ON child_screen_sessions (child_id, started_at);
 """
 
+_CREATE_CHILD_MISSIONS: str = """
+CREATE TABLE IF NOT EXISTS child_missions (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id     TEXT NOT NULL,
+    child_id      INTEGER NOT NULL,
+    mission_key   TEXT NOT NULL,
+    local_date    TEXT NOT NULL,
+    -- assigned | claimed | confirmed | not_done | expired
+    status        TEXT NOT NULL DEFAULT 'assigned',
+    assigned_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    claimed_at    TEXT,
+    confirmed_at  TEXT,
+    parent_note   TEXT,
+    UNIQUE (child_id, local_date, mission_key)
+);
+CREATE INDEX IF NOT EXISTS ix_missions_pending
+    ON child_missions (device_id, status);
+CREATE INDEX IF NOT EXISTS ix_missions_child_date
+    ON child_missions (child_id, local_date);
+-- The 21-day no-repeat rule scans a child's history by mission.
+CREATE INDEX IF NOT EXISTS ix_missions_child_key
+    ON child_missions (child_id, mission_key, local_date);
+"""
+
 _CREATE_FAMILY_AGREEMENTS: str = """
 CREATE TABLE IF NOT EXISTS family_agreements (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -561,6 +590,17 @@ def _ensure_habit_templates_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_HABIT_TEMPLATES)
+
+
+def _ensure_child_missions_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v23 child_missions table."""
+    try:
+        cur = conn.execute("PRAGMA table_info(child_missions)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_CHILD_MISSIONS)
 
 
 def _ensure_family_agreements_tables(conn: sqlite3.Connection) -> None:
