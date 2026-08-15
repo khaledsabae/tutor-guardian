@@ -36,6 +36,7 @@
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -43,6 +44,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CLI = str(ROOT / "notebooklm_env" / "bin" / "notebooklm")
+# The pipeline authenticates tg-audio / tg-video, not `default`. A call with no
+# `-p` goes out as a profile nothing logs into, and the CLI reports that as
+# "Authentication expired" — which reads like a dead session and is really the
+# wrong user.
+PROFILE = os.environ.get("TG_NOTEBOOKLM_PROFILE", "tg-video")
 MAP_FILE = ROOT / "source_to_lesson.json"
 NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 
@@ -65,7 +71,7 @@ def notebooks_in_map(mapping: dict, default: str) -> list:
 def live_sources(notebook: str) -> dict:
     """{source_id: title} for every source currently on the notebook."""
     out = subprocess.run(
-        [CLI, "source", "list", "-n", notebook, "--json"],
+        [CLI, "-p", PROFILE, "source", "list", "-n", notebook, "--json"],
         capture_output=True, text=True, timeout=180,
     )
     if out.returncode != 0:

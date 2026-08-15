@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate remaining aqeedah infographics one by one with per-lesson timeout."""
 import json
+import os
 import re
 import subprocess
 import sys
@@ -12,6 +13,7 @@ INFO_DIR = BASE_DIR / "docs" / "lesson_assets" / "infographics"
 INDEX_PATH = BASE_DIR / "docs" / "lesson_index.json"
 NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 NLM = str(BASE_DIR / "notebooklm_env" / "bin" / "notebooklm")
+PROFILE = os.environ.get("TG_NOTEBOOKLM_PROFILE", "tg-video")
 RESOLUTION = "2752x1536"
 
 # Language is a parameter here for the same reason it is in
@@ -33,7 +35,11 @@ from scripts.infographic_prompts_lib import buildable_targets
 
 
 def run_cmd(args, timeout=180):
-    p = subprocess.run([NLM] + args, cwd=BASE_DIR, capture_output=True, text=True, timeout=timeout)
+    # Same profile as the other infographic generator — calling with no `-p`
+    # uses `default`, which nothing logs into, and the CLI reports that as
+    # "Authentication expired" rather than "wrong profile".
+    p = subprocess.run([NLM, "-p", PROFILE] + args, cwd=BASE_DIR,
+                       capture_output=True, text=True, timeout=timeout)
     return p.returncode, p.stdout.strip(), p.stderr.strip()
 
 

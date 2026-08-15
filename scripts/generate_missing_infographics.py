@@ -18,6 +18,7 @@ Usage:
 """
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -70,9 +71,20 @@ STARTED_RE = re.compile(r"(?:Started|Task):\s*([0-9a-f-]{36})")
 EMPTY_MARKERS = ("No parseable chunks", "Source not found", "Error:")
 
 
+# 🚨 Its own profile, like the audio and video generators.
+#
+# This file kept calling the CLI with no `-p`, so every call used `default` —
+# a profile nothing logs into any more. The failure surfaces as
+# "Authentication expired", which reads like a dead session and is really a
+# request sent as the wrong user. Two profiles were created and this generator
+# was left out of the change.
+PROFILE = os.environ.get("TG_NOTEBOOKLM_PROFILE", "tg-video")
+
+
 def _run(args: list[str], timeout: int) -> tuple[int, str, str]:
     p = subprocess.run(
-        [NLM, *args], cwd=BASE_DIR, capture_output=True, text=True, timeout=timeout
+        [NLM, "-p", PROFILE, *args], cwd=BASE_DIR,
+        capture_output=True, text=True, timeout=timeout
     )
     return p.returncode, p.stdout.strip(), p.stderr.strip()
 
@@ -205,6 +217,10 @@ def generate_one(lesson: dict, source_id: str) -> dict | None:
     if rc != 0 or not filepath.exists() or filepath.stat().st_size < 10_000:
         print(f"    ❌ download failed: {(err or out)[:160]}")
         return None
+    # The CLI writes 0600; the container runs as uid 10001 against a host bind
+    # mount, so 0600 is unreadable in production — the 2026-07-27 outage. The
+    # podcast and video generators already do this; this one did not.
+    filepath.chmod(0o644)
 
     # NotebookLM auto-title, e.g. "Artifact: <title> (latest of N)"
     tmatch = re.search(r"Artifact:\s*(.+?)\s*\(latest", out)
