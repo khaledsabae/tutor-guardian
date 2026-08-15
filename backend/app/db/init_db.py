@@ -52,6 +52,11 @@ Migration v21: added child_screen_sessions table — the server-side time budget
                string, and every read of the day's usage is floored by a
                rolling 24-hour window, so changing the device timezone cannot
                hand a child a second daily allowance.
+Migration v22: added family_agreements + agreement_clauses — the two-sided
+               media agreement between a parent and a child. Clauses carry
+               `applies_to`, because an agreement whose every rule points at
+               the child is a list of orders, and the research this feature
+               rests on is about an agreement.
 """
 import os
 import sqlite3
@@ -177,7 +182,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 21
+SCHEMA_VERSION = 22
 
 
 def db_path() -> Path:
@@ -334,6 +339,7 @@ def init_db() -> None:
     _ensure_referral_clicks_table(conn)
     _ensure_feedback_replies_table(conn)
     _ensure_child_screen_sessions_table(conn)
+    _ensure_family_agreements_tables(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -462,6 +468,40 @@ CREATE INDEX IF NOT EXISTS ix_css_started
     ON child_screen_sessions (child_id, started_at);
 """
 
+_CREATE_FAMILY_AGREEMENTS: str = """
+CREATE TABLE IF NOT EXISTS family_agreements (
+    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id           TEXT NOT NULL,
+    child_id            INTEGER NOT NULL,
+    version             INTEGER NOT NULL DEFAULT 1,
+    -- draft | active | archived. Only one active row per child; superseding
+    -- one archives it rather than deleting, so a family can see what they
+    -- agreed to last month and what changed.
+    status              TEXT NOT NULL DEFAULT 'draft',
+    signed_by_parent_at TEXT,
+    signed_by_child_at  TEXT,
+    next_review_date    TEXT,
+    created_at          TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE TABLE IF NOT EXISTS agreement_clauses (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    agreement_id  INTEGER NOT NULL,
+    -- child | parent | both. The column that makes this an agreement.
+    applies_to    TEXT NOT NULL,
+    clause_key    TEXT,
+    text_ar       TEXT NOT NULL,
+    is_custom     INTEGER NOT NULL DEFAULT 0,
+    sort_order    INTEGER NOT NULL DEFAULT 0,
+    -- Set when the child ticks "I understand" on this clause specifically.
+    -- One OK for the whole page is a signature on something unread.
+    acknowledged_at TEXT
+);
+CREATE INDEX IF NOT EXISTS ix_agreements_child
+    ON family_agreements (child_id, status);
+CREATE INDEX IF NOT EXISTS ix_clauses_agreement
+    ON agreement_clauses (agreement_id, sort_order);
+"""
+
 _CREATE_FEEDBACK_REPLIES: str = """
 CREATE TABLE IF NOT EXISTS feedback_replies (
     id           TEXT PRIMARY KEY,
@@ -521,6 +561,17 @@ def _ensure_habit_templates_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_HABIT_TEMPLATES)
+
+
+def _ensure_family_agreements_tables(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v22 agreement tables."""
+    try:
+        cur = conn.execute("PRAGMA table_info(family_agreements)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_FAMILY_AGREEMENTS)
 
 
 def _ensure_child_screen_sessions_table(conn: sqlite3.Connection) -> None:
