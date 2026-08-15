@@ -1291,6 +1291,86 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  // ── Family media agreement ───────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> fetchSuggestedClauses(int childId) async {
+    final session = await ensureSession();
+    final uri = Uri.parse(
+        '$_baseUrl/api/children/$childId/agreement/clauses/suggested');
+    final resp = await _http
+        .get(uri, headers: _authHeaders(session.token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>?> fetchAgreement(int childId) async {
+    final session = await ensureSession();
+    final uri = Uri.parse('$_baseUrl/api/children/$childId/agreement');
+    final resp = await _http
+        .get(uri, headers: _authHeaders(session.token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return body['agreement'] as Map<String, dynamic>?;
+  }
+
+  Future<Map<String, dynamic>> saveAgreementDraft(
+      int childId, List<Map<String, dynamic>> clauses) async {
+    final session = await ensureSession();
+    final uri = Uri.parse('$_baseUrl/api/children/$childId/agreement');
+    final resp = await _http
+        .post(uri,
+            headers: {..._authHeaders(session.token),
+                      'Content-Type': 'application/json'},
+            body: jsonEncode({'clauses': clauses}))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<void> signAgreementAsParent(int childId) async {
+    final session = await ensureSession();
+    final uri = Uri.parse('$_baseUrl/api/children/$childId/agreement/sign');
+    final resp = await _http
+        .post(uri, headers: _authHeaders(session.token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+  }
+
+  Future<Map<String, dynamic>?> fetchChildAgreement(String childToken) async {
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/agreement');
+    final resp = await _http
+        .get(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return body['agreement'] as Map<String, dynamic>?;
+  }
+
+  Future<void> acknowledgeClause(
+      {required String childToken, required int clauseId}) async {
+    final uri = Uri.parse(
+            '$_baseUrl/api/value-tracking/child-mode/agreement/acknowledge')
+        .replace(queryParameters: {'clause_id': '$clauseId'});
+    final resp = await _http
+        .post(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+  }
+
+  /// Returns true once both signatures are in and the agreement is active.
+  Future<bool> signAgreementAsChild(String childToken) async {
+    final uri =
+        Uri.parse('$_baseUrl/api/value-tracking/child-mode/agreement/sign');
+    final resp = await _http
+        .post(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return body['activated'] as bool? ?? false;
+  }
+
   /// Report that the child is still on the surface, and learn what is left.
   ///
   /// Returns null when the session is over — budget spent, reaped, or already
