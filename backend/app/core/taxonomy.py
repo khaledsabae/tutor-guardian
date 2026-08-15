@@ -40,6 +40,13 @@ CANONICAL_AGE_GROUPS: set[str] = {
     "prenatal-1", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18", "unspecified",
 }
 
+# The same bands in developmental order, which the set above cannot express.
+# Retrieval needs "how far apart are these two ages" to keep a 16-18 unit out
+# of a 4-6 parent's answer — see `age_bands_apart`.
+ORDERED_AGE_GROUPS: tuple[str, ...] = (
+    "prenatal-1", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18",
+)
+
 # The 0-3 band was split into "prenatal-1" (pregnancy→1yr) + "2-3". Existing
 # children/units created before the split still carry "0-3" — alias it onto
 # the new canonical band so they keep resolving instead of being orphaned.
@@ -106,3 +113,37 @@ def age_equivalents(value: str) -> list[str]:
     out = {key, canonical_age_group(key)}
     out.update(_REVERSE_AGE_ALIASES.get(canonical_age_group(key), []))
     return list(out)
+
+
+def age_bands_apart(a: str, b: str) -> int | None:
+    """How far apart two age groups are, or None when the question does not
+    apply — "unspecified" content is written for every age, and an unrecognised
+    label must not be silently treated as adjacent.
+
+    Callers use this to keep obviously wrong-age material out of an answer:
+    advice for a 16-18 year old is not a near miss for a 4-6 year old, it is a
+    different childhood.
+
+    The steps are not all the same size, so this is not a plain index gap.
+    `prenatal-1` covers pregnancy through the first year — a pre-verbal infant —
+    and the band table makes it look like 2-3's neighbour in exactly the way
+    4-6 neighbours 7-9. It is not: on 2026-08-14 a parent asking about a
+    two-year-old's tantrum in the street was answered with a unit titled "Your
+    baby at 2 months". Crossing into or out of infancy therefore costs an extra
+    step, which puts it out of reach at the default span of one band without
+    forbidding it outright.
+    """
+    ra, rb = (a or "").strip(), (b or "").strip()
+    ca, cb = canonical_age_group(ra), canonical_age_group(rb)
+    if ca not in ORDERED_AGE_GROUPS or cb not in ORDERED_AGE_GROUPS:
+        return None
+    gap = abs(ORDERED_AGE_GROUPS.index(ca) - ORDERED_AGE_GROUPS.index(cb))
+    # The surcharge keys on the literal label, not the canonical one. The
+    # legacy "0-3" spans infancy AND toddlerhood, so a child still carrying it
+    # may well be three years old; it aliases onto prenatal-1 for lookup, but
+    # charging it for crossing a boundary it already straddles would cut those
+    # children off from 2-3 material on the strength of a label nobody has
+    # updated. Four production profiles still carry it.
+    if (ra == "prenatal-1") != (rb == "prenatal-1"):
+        gap += 1
+    return gap
