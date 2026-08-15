@@ -46,6 +46,12 @@ Migration v17: added submitted_by + device_timestamp columns to
                habits_value_events to track entry source and device time.
 Migration v20: added feedback_replies table so a reply written in Telegram can
                be delivered back to the device that sent the feedback.
+Migration v21: added child_screen_sessions table — the server-side time budget
+               behind the child surface. local_date is derived on the server
+               from a client-supplied UTC offset rather than taken as a date
+               string, and every read of the day's usage is floored by a
+               rolling 24-hour window, so changing the device timezone cannot
+               hand a child a second daily allowance.
 """
 import os
 import sqlite3
@@ -171,7 +177,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 20
+SCHEMA_VERSION = 21
 
 
 def db_path() -> Path:
@@ -327,6 +333,7 @@ def init_db() -> None:
     _ensure_user_backups_table(conn)
     _ensure_referral_clicks_table(conn)
     _ensure_feedback_replies_table(conn)
+    _ensure_child_screen_sessions_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -427,6 +434,34 @@ CREATE INDEX IF NOT EXISTS ix_habit_templates_device_child_active
 # No foreign key to app_feedback: that table is created lazily by the feedback
 # router rather than here, so it may not exist yet. The route is the only
 # writer and only ever inserts a feedback_id it has just looked up.
+_CREATE_CHILD_SCREEN_SESSIONS: str = """
+CREATE TABLE IF NOT EXISTS child_screen_sessions (
+    id                INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id         TEXT NOT NULL,
+    child_id          INTEGER NOT NULL,
+    surface           TEXT NOT NULL,
+    -- Derived on the server from tz_offset_minutes, never taken from the
+    -- client as a string. A client that picks its own date picks its own
+    -- daily budget.
+    local_date        TEXT NOT NULL,
+    tz_offset_minutes INTEGER NOT NULL,
+    started_at        TEXT NOT NULL,
+    last_heartbeat_at TEXT NOT NULL,
+    ended_at          TEXT,
+    -- completed | budget_exhausted | timeout | parent_exit | superseded
+    ended_reason      TEXT,
+    counted_seconds   INTEGER NOT NULL DEFAULT 0,
+    created_at        TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS ix_css_child_date
+    ON child_screen_sessions (child_id, local_date);
+CREATE INDEX IF NOT EXISTS ix_css_open
+    ON child_screen_sessions (child_id, ended_at);
+-- The rolling-24h floor scans by start time across all children.
+CREATE INDEX IF NOT EXISTS ix_css_started
+    ON child_screen_sessions (child_id, started_at);
+"""
+
 _CREATE_FEEDBACK_REPLIES: str = """
 CREATE TABLE IF NOT EXISTS feedback_replies (
     id           TEXT PRIMARY KEY,
@@ -486,6 +521,17 @@ def _ensure_habit_templates_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_HABIT_TEMPLATES)
+
+
+def _ensure_child_screen_sessions_table(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v21 child_screen_sessions table."""
+    try:
+        cur = conn.execute("PRAGMA table_info(child_screen_sessions)")
+        names = {row[1] for row in cur.fetchall()}
+    except sqlite3.Error:
+        names = set()
+    if not names:
+        conn.executescript(_CREATE_CHILD_SCREEN_SESSIONS)
 
 
 def _ensure_feedback_replies_table(conn: sqlite3.Connection) -> None:

@@ -17,6 +17,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from fastapi import APIRouter, HTTPException, Query, Request
 
+from app.core.taxonomy import HABIT_AGE_GROUPS
 from app.db.init_db import get_conn
 from app.models.value_tracking import (
     ChildHabitDayOut,
@@ -144,7 +145,10 @@ def _persist_event(
 
 # ── Age-gate helper ───────────────────────────────────────────────────────
 
-_HABIT_AGE_GROUPS = {"7-9", "10-12", "13-15", "16-18"}
+# The band list itself lives in core.taxonomy; keeping a literal here was one
+# of three diverging copies of the age vocabulary. _DEFAULT_HABITS below is
+# the content, which stays — HABIT_AGE_GROUPS must keep matching its keys, and
+# the taxonomy test asserts exactly that.
 
 # Mirrors kAgeBandedHabits in mobile/lib/features/routine/models/habit_models.dart.
 _DEFAULT_HABITS: dict[str, dict[str, list[str]]] = {
@@ -176,7 +180,7 @@ def _default_habits_for_age(age_group: str) -> dict[str, list[str]]:
 
 
 def _is_habit_age(age_group: str) -> bool:
-    return age_group in _HABIT_AGE_GROUPS
+    return age_group in HABIT_AGE_GROUPS
 
 
 def _load_active_templates(conn: sqlite3.Connection, device_id: str, child_id: int) -> list[sqlite3.Row]:

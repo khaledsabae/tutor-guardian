@@ -14,7 +14,7 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.config.guardrails_loader import load_guardrails_config
+from app.config.guardrails_loader import load_child_surface_policy, load_guardrails_config
 from app.config.llm_config import LLM, DEFAULT_HOME_OLLAMA_URL
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
@@ -47,6 +47,9 @@ async def lifespan(app: FastAPI):
     # ── Base startup ─────────────────────────────────────────────────────
     child_token.assert_configured()  # fail fast: no CHILD_MODE_SECRET → no boot
     app.state.guardrails_config = load_guardrails_config()
+    # Deliberately unguarded, like the line above it: an unreadable age gate
+    # must stop the boot, not start a server that quietly enforces nothing.
+    app.state.child_surface_policy = load_child_surface_policy()
     init_db()
     curriculum.load_curriculum()
 

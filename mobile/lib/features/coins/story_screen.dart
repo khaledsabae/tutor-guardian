@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/analytics.dart';
-import '../../core/app_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
@@ -18,7 +17,6 @@ import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 import '../onboarding/providers/onboarding_providers.dart';
 import 'coins_providers.dart';
-import 'coins_service.dart';
 
 const _themes = <(String, String, String)>[
   ('honesty', '🤝', 'الصدق والأمانة'),
@@ -44,36 +42,14 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
   bool _loading = false;
   String? _story;
 
+  // Stories are free. They used to cost 50 coins, which made the reward for
+  // engaging with the app more time inside the app — the exact loop the rest
+  // of this product tells parents to be wary of. If a story should be earned,
+  // it gets earned by something that happens away from the screen, not by a
+  // balance.
   Future<void> _generate() async {
     final theme = _theme;
     if (theme == null) return;
-    final coins = ref.read(coinsProvider);
-    if (coins.balance < CoinsService.storyCost) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(AppLocalizations.of(context).storyInsufficient),
-          content: Text(
-            AppLocalizations.of(context).storyInsufficientMsg(CoinsService.storyCost, CoinsService.referralReward),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(AppLocalizations.of(context).cancel),
-            ),
-            FilledButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(context, AppRoutes.invite());
-              },
-              style: FilledButton.styleFrom(backgroundColor: AppTheme.primary),
-              child: Text(AppLocalizations.of(context).storyInviteBtn(CoinsService.referralReward)),
-            ),
-          ],
-        ),
-      );
-      return;
-    }
     final profile = ref.read(activeChildProfileProvider);
     final name = profile?.name ?? 'بطلنا الصغير';
     final age = profile?.ageGroup ?? '4-6';
@@ -86,8 +62,6 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
             theme: theme,
             childId: ref.read(activeChildIdProvider),
           );
-      // Only deduct coins after a successful generation.
-      await ref.read(coinsProvider.notifier).spend(CoinsService.storyCost);
       unawaited(Analytics.storyGenerated(theme));
       if (mounted) setState(() => _story = story);
     } catch (e) {
@@ -154,7 +128,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
             BouncyButton(
               label: _loading
                   ? AppLocalizations.of(context).storyGenerating
-                  : AppLocalizations.of(context).storyCost(CoinsService.storyCost),
+                  : AppLocalizations.of(context).storyGenerateFree,
               color: Dt.accent,
               onTap: (_theme == null || _loading) ? null : _generate,
             ),

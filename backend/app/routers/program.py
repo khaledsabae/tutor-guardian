@@ -28,6 +28,7 @@ from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
 from app import curriculum_loader as cl
+from app.core.taxonomy import ACCEPTED_CHILD_AGE_INPUTS, CANONICAL_DOMAINS
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -35,16 +36,28 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/program", tags=["program"])
 
 # ── Constants ────────────────────────────────────────────────────────────
-# Accept every canonical band + the legacy "0-3" alias (pre-split children).
-_VALID_AGE_GROUPS = {
-    "prenatal-1", "0-3", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18",
-}
-_VALID_DOMAINS = {"medical", "cyber", "islamic_parenting", "development", "aqeedah"}
+# These two used to be literals here, and a third and fourth copy lived in
+# value_tracking.py and core/taxonomy.py. They had already drifted: this file
+# was the only one carrying the legacy "0-3". Both now come from taxonomy, the
+# single source of truth; the accepted values are unchanged.
+_VALID_AGE_GROUPS = ACCEPTED_CHILD_AGE_INPUTS
+_VALID_DOMAINS = CANONICAL_DOMAINS
 _VALID_TIME_OF_DAY = {"morning", "evening", "bedtime", "anytime"}
 _VALID_PROGRESS_STATUS = {"not_started", "in_progress", "completed"}
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────
+
+def _child_belongs_to_device(child_id: int, device_id: str) -> bool:
+    conn = get_conn()
+    try:
+        return conn.execute(
+            "SELECT 1 FROM child_profiles WHERE id = ? AND device_id = ?",
+            (child_id, device_id),
+        ).fetchone() is not None
+    finally:
+        conn.close()
+
 
 def _validate_age_group(age_group: Optional[str]) -> Optional[str]:
     if age_group is None:
@@ -724,6 +737,18 @@ async def generate_story(req: StoryRequest, request: Request):
 
     # Cache tier: only when the child's gender is known (Arabic conjugation).
     device_id = getattr(request.state, "device_id", None)
+
+    # A child_id is a small integer, so an anonymous caller could walk the
+    # range and learn other families' children by their conjugated stories.
+    # When the caller has an identity, the child must be theirs; when they do
+    # not — the grace window for builds already on Play — the id is dropped
+    # rather than trusted, which costs a gendered cache hit and nothing else.
+    if req.child_id is not None:
+        if device_id is None:
+            req.child_id = None
+        elif not _child_belongs_to_device(req.child_id, device_id):
+            raise HTTPException(status_code=404, detail="الطفل غير موجود.")
+
     gender = story_service.resolve_child_gender(device_id, req.child_id)
     cached = story_service.get_cached_story(req.theme, req.age_group, gender)
     if cached:

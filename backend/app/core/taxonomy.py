@@ -54,6 +54,38 @@ AGE_ALIASES: dict[str, str] = {
     "0-3": "prenatal-1",
 }
 
+# The labels above describe CONTENT. A person is a narrower question: a
+# knowledge unit may be written for every age and carry "unspecified", but a
+# child is never "unspecified" — accepting that label for a person would let a
+# caller opt out of the age gate by omission. These are the labels an API
+# caller may send when the subject is a child.
+ADDRESSABLE_AGE_GROUPS: set[str] = set(ORDERED_AGE_GROUPS)
+ACCEPTED_CHILD_AGE_INPUTS: set[str] = ADDRESSABLE_AGE_GROUPS | set(AGE_ALIASES)
+
+# Habit templates only exist from school age up; younger bands have a routine,
+# not a habit ledger. A subset of the vocabulary, not a competing one.
+HABIT_AGE_GROUPS: set[str] = {"7-9", "10-12", "13-15", "16-18"}
+
+# ── Child-surface bands (the age gate) ──────────────────────────────────────
+# A separate axis from the bands above, and deliberately so: those answer
+# "which content fits this child", this answers "may this child be shown a
+# screen at all". WHO and the AAP put the first hard line before any screen
+# exposure — the taxonomy's own line falls at 2 (prenatal-1 ends at 1yr, 2-3
+# begins at 2), so the gate uses 2, which is the more conservative of the two
+# readings and needs no birthdate the profiles do not carry.
+CHILD_SURFACE_AGE_BANDS: tuple[str, ...] = (
+    "under-2", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18",
+)
+
+# prenatal-1 spans pregnancy→1yr, so it maps onto the no-screen band. Every
+# other canonical band keeps its label.
+_PROFILE_BAND_TO_SURFACE_BAND: dict[str, str] = {"prenatal-1": "under-2"}
+
+# The band a child falls into when we cannot tell. Failing to the strictest
+# band is the only safe direction: the cost of being wrong is a parent seeing
+# an explanation screen, versus an infant being handed a screen.
+FALLBACK_CHILD_SURFACE_BAND = "under-2"
+
 # ── Severity levels ─────────────────────────────────────────────────────────
 CANONICAL_SEVERITIES: set[str] = {"خفيف", "متوسط", "شديد", "طارئ"}
 
@@ -94,6 +126,27 @@ def canonical_age_group(value: str) -> str:
         return value
     key = value.strip()
     return AGE_ALIASES.get(key, key)
+
+
+def map_profile_age_to_band(value: str | None) -> str:
+    """The child-surface band a stored profile age falls into.
+
+    Fails closed. Every input that is not a recognised developmental band —
+    None, "", "unspecified", a typo, a label from a future migration — returns
+    the no-screen band. Callers gate on the returned band alone and never on
+    the raw column, so a profile that nobody has updated cannot open a session
+    by being unreadable.
+
+    The legacy "0-3" is the case that matters in production: four profiles
+    still carry it, and it straddles infancy and toddlerhood. It aliases onto
+    prenatal-1 and therefore onto "under-2" — a two-and-a-half-year-old whose
+    parent never re-picked the age is refused the screen rather than an infant
+    being granted one. The parent-facing message says which way to fix it.
+    """
+    canonical = canonical_age_group(value or "")
+    if canonical not in ADDRESSABLE_AGE_GROUPS:
+        return FALLBACK_CHILD_SURFACE_BAND
+    return _PROFILE_BAND_TO_SURFACE_BAND.get(canonical, canonical)
 
 
 # Reverse alias map (canonical → legacy labels) so equivalence is bidirectional.

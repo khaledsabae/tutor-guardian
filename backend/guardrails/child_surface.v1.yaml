@@ -1,0 +1,130 @@
+# سياسة سطح الطفل — البوابة العمرية والميزانية الزمنية
+# ============================================================================
+# مصدر الحقيقة الوحيد للأسئلة الأربعة:
+#   هل يُسمح لهذا الطفل بشاشة أصلًا؟ · أي أسطح؟ · كم دقيقة؟ · ومتى يبدأ الوداع؟
+#
+# يُفرَض في السيرفر لا في العميل. تعديل أي رقم هنا يغيّر سلوك الإنتاج فورًا،
+# فأي تخفيف يمرّ على خالد أولًا (الخطة، بند هـ.٤).
+#
+# قرار حدّ العمر (٢٠٢٦-٠٨-١٥): الحد الأدنى سنتان لا ١٨ شهرًا. توصية AAP/WHO
+# تضع الخط عند ١٨ شهرًا، لكن ملفات الأطفال تحمل `age_group` لا تاريخ ميلاد،
+# وأقرب حدّ يعرفه التصنيف هو ٢ (prenatal-1 تنتهي عند سنة، و2-3 تبدأ من سنتين).
+# اخترنا الأكثر تحفظًا من القراءتين بدل إضافة عمود تاريخ ميلاد الآن.
+version: "1.0.0"
+
+defaults:
+  daily_budget_minutes: 20
+  session_max_minutes: 20
+  heartbeat_interval_seconds: 30
+  # بعدها تُقفل الجلسة تلقائيًا. ثلاث نبضات فائتة — تسامح مع شبكة متقطعة،
+  # وليس نافذة يُلعب فيها بلا محاسبة (المدة تُحسب على الطفل عند الإعدام).
+  heartbeat_grace_seconds: 90
+  exit_ritual_seconds: 60
+  # ممنوعة على كل الفئات في الإصدار الأول. القائمة البيضاء للمواضيع لم تُبنَ
+  # بعد (سبرنت ٣)، و`intent_guard` الحالي قائمة سوداء — غير كافية لطفل.
+  # المحمّل يرفض `true` صراحةً حتى لا يُفتَح الباب بتعديل YAML وحده.
+  allow_free_text: false
+  # الصوت لا يُحسب وقت شاشة طبيًا، لكنه يزاحم النوم واللعب الواقعي — فله
+  # ميزانيته المنفصلة. قرار مقصود، لا سهو.
+  screen_off_daily_budget_minutes: 60
+
+age_bands:
+  under-2:
+    screen_allowed: false
+    allowed_surfaces: []
+    parent_message_key: "child_gate.under_2"
+    # The three activities are inline on purpose. The «بدائل بلا شاشة»
+    # section is Sprint 2 work, and a refusal that points at a screen which
+    # does not exist yet reads as a dead end. Replace this with a link once
+    # there is somewhere to send the parent.
+    parent_message_ar: "لا يُنصح بأي تعرّض للشاشات في هذا السن. لو كان ابنك أكبر من سنتين، حدِّث سنّه من صفحة الطفل. وفي المقابل، ثلاثة يمكن عملها الآن: سمِّ له ما حولك بصوت عالٍ وأنت تحمله، وافتح معه كتابًا مصوّرًا واتركه يقلّب الورق، ورتّبا معًا الملعقة والكوب على السفرة."
+
+  "2-3":
+    screen_allowed: false          # لا واجهة بصرية — صوت فقط
+    allowed_surfaces: ["screen_off"]
+    parent_message_key: "child_gate.audio_only"
+    parent_message_ar: "في هذا السن نكتفي بالصوت والشاشة مطفية. اختر «استماع» من شاشة الطفل."
+
+  "4-6":
+    screen_allowed: true
+    requires_parent_present: true  # الجلسة تتطلب بقاء الوالد
+    daily_budget_minutes: 15
+    session_max_minutes: 15
+    allowed_surfaces: ["screen_off", "agreement", "mission", "story"]
+
+  "7-9":
+    screen_allowed: true
+    requires_parent_present: false # الوالد يفتح ثم يترك
+    daily_budget_minutes: 20
+    session_max_minutes: 20
+    allowed_surfaces: ["screen_off", "agreement", "mission", "story", "game", "habit"]
+
+  "10-12":
+    screen_allowed: true
+    daily_budget_minutes: 25
+    session_max_minutes: 25
+    allowed_surfaces: ["screen_off", "agreement", "mission", "story", "game", "habit", "drill"]
+
+  "13-15":
+    screen_allowed: true
+    daily_budget_minutes: 30
+    session_max_minutes: 25
+    allowed_surfaces: ["screen_off", "agreement", "mission", "story", "game", "habit", "drill", "license"]
+
+  "16-18":
+    screen_allowed: true
+    daily_budget_minutes: 40
+    session_max_minutes: 25
+    allowed_surfaces: ["screen_off", "agreement", "mission", "story", "game", "habit", "drill", "license"]
+
+surfaces:
+  # الشاشة مطفية = صفر وقت شاشة بالتعريف الطبي، فلا يُخصم من ميزانية الشاشة —
+  # لكنه يُخصم من `screen_off_daily_budget_minutes` أعلاه ويُعرض للوالد منفصلًا.
+  screen_off:
+    counts_toward_budget: false
+    counts_toward_audio_budget: true
+    max_minutes: 45
+    exit_ritual_seconds: 60
+
+  # الميثاق شرط دخول لا نشاط. الطفل لا يدفع من وقته ثمن قراءة عهدٍ عليه.
+  agreement:
+    counts_toward_budget: false
+    max_minutes: 15
+    exit_ritual_seconds: 30
+
+  # بطاقة المهمة قصيرة عمدًا — تُقرأ ويُخرَج منها. طقس وداع بدقيقة على سطح
+  # عمره ثلاث دقائق يكون ثلث الجلسة، فله طقس أقصر.
+  mission:
+    counts_toward_budget: true
+    max_minutes: 3
+    exit_ritual_seconds: 15
+
+  story:
+    counts_toward_budget: true
+    max_minutes: 10
+    exit_ritual_seconds: 60
+
+  game:
+    counts_toward_budget: true
+    max_minutes: 10
+    exit_ritual_seconds: 60
+
+  # Ten rather than five: a habit checklist takes a child two minutes and a
+  # distracted child rather longer, and the token's TTL is clamped to this
+  # number. At five, a child who wandered off mid-list came back to an expired
+  # session and a parent who had to re-enter the PIN — friction paid by the
+  # families already on Play, for no safety gained.
+  habit:
+    counts_toward_budget: true
+    max_minutes: 10
+    exit_ritual_seconds: 30
+
+  drill:
+    counts_toward_budget: true
+    max_minutes: 8
+    exit_ritual_seconds: 45
+
+  license:
+    counts_toward_budget: true
+    max_minutes: 10
+    exit_ritual_seconds: 60

@@ -1,24 +1,34 @@
-/// Exclusive badges store — spend coins to unlock cosmetic badges that
-/// then appear in the achievements screen. Fully on-device.
+/// Cosmetic badges — earned, not bought.
+///
+/// This was a store: six badges at 100–300 coins each. Selling cosmetics for
+/// a currency the app itself mints is the second half of the loop the story
+/// paywall was the first half of, and the coin now has exactly one sink — a
+/// covenant a parent hands over in the real world. So the prices are gone and
+/// the buy button with them.
+///
+/// Badges anyone already bought stay theirs. Reclaiming them to make a point
+/// about extrinsic motivation would be its own kind of rude, and they cost
+/// real effort to save for.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/app_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/design_tokens.dart';
 import 'coins_providers.dart';
 
-/// id, emoji, title, price
-const exclusiveBadges = <(String, String, String, int)>[
-  ('gold_star', '🌟', 'النجمة الذهبية', 100),
-  ('crown', '👑', 'تاج المربي', 200),
-  ('diamond', '💎', 'ماسة التميّز', 300),
-  ('rocket', '🚀', 'رائد التعلّم', 150),
-  ('rainbow', '🌈', 'قوس قزح', 120),
-  ('trophy_gold', '🏆', 'الكأس الذهبي', 250),
+/// id, emoji, title
+const exclusiveBadges = <(String, String, String)>[
+  ('gold_star', '🌟', 'النجمة الذهبية'),
+  ('crown', '👑', 'تاج المربي'),
+  ('diamond', '💎', 'ماسة التميّز'),
+  ('rocket', '🚀', 'رائد التعلّم'),
+  ('rainbow', '🌈', 'قوس قزح'),
+  ('trophy_gold', '🏆', 'الكأس الذهبي'),
 ];
 
 class ExclusiveBadgesScreen extends ConsumerWidget {
@@ -26,53 +36,44 @@ class ExclusiveBadgesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final coins = ref.watch(coinsProvider);
+    final l10n = AppLocalizations.of(context);
     final ownedAsync = ref.watch(ownedBadgesProvider);
     final owned = ownedAsync.maybeWhen(data: (s) => s, orElse: () => <String>{});
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).coinsRedeemBadges),
-        actions: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text('🪙 ${coins.balance}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w800, color: Dt.accentDeep)),
+      appBar: AppBar(title: Text(l10n.coinsRedeemBadges)),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Text(
+            l10n.exclusiveBadgesIntro,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6),
+          ),
+          const SizedBox(height: 12),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton(
+              onPressed: () => Navigator.push(context, AppRoutes.covenant()),
+              child: Text(l10n.exclusiveBadgesToCovenant),
             ),
           ),
-        ],
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(16),
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-        childAspectRatio: 0.82,
-        children: [
-          for (final (id, emoji, title, price) in exclusiveBadges)
-            _BadgeCard(
-              id: id,
-              emoji: emoji,
-              title: title,
-              price: price,
-              owned: owned.contains(id),
-              canAfford: coins.balance >= price,
-              onBuy: () async {
-                final ok =
-                    await ref.read(coinsProvider.notifier).buyBadge(id, price);
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(ok
-                          ? AppLocalizations.of(context).covenantSuccess
-                          : AppLocalizations.of(context).covenantInsufficient),
-                    ),
-                  );
-                }
-              },
-            ),
+          const SizedBox(height: 8),
+          GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            childAspectRatio: 0.82,
+            children: [
+              for (final (id, emoji, title) in exclusiveBadges)
+                _BadgeCard(
+                  emoji: emoji,
+                  title: title,
+                  owned: owned.contains(id),
+                ),
+            ],
+          ),
         ],
       ),
     );
@@ -81,21 +82,14 @@ class ExclusiveBadgesScreen extends ConsumerWidget {
 
 class _BadgeCard extends StatelessWidget {
   const _BadgeCard({
-    required this.id,
     required this.emoji,
     required this.title,
-    required this.price,
     required this.owned,
-    required this.canAfford,
-    required this.onBuy,
   });
-  final String id;
+
   final String emoji;
   final String title;
-  final int price;
   final bool owned;
-  final bool canAfford;
-  final VoidCallback onBuy;
 
   @override
   Widget build(BuildContext context) {
@@ -124,29 +118,17 @@ class _BadgeCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          if (owned)
-            Text(AppLocalizations.of(context).exclusiveBadgeOwned,
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.w700))
-          else
-            GestureDetector(
-              onTap: canAfford ? onBuy : null,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                decoration: BoxDecoration(
-                  color: canAfford ? Dt.accent : Dt.track,
-                  borderRadius: BorderRadius.circular(Dt.rChip),
-                ),
-                child: Text(
-                  '🪙 $price',
-                  style: TextStyle(
-                    color: canAfford ? Colors.white : Dt.inkSoft,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
+          Text(
+            owned
+                ? AppLocalizations.of(context).exclusiveBadgeOwned
+                : AppLocalizations.of(context).exclusiveBadgeLocked,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: owned ? Colors.white : Dt.inkSoft,
+              fontWeight: FontWeight.w700,
+              fontSize: 12,
             ),
+          ),
         ],
       ),
     ).animate().scale(

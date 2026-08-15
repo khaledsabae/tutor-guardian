@@ -1268,16 +1268,60 @@ class TgClient {
         AppL10n.current.apiChildSessionExpired,
       );
 
-  Future<Map<String, dynamic>> createChildSession(int childId) async {
+  Future<Map<String, dynamic>> createChildSession(
+    int childId, {
+    String surface = 'habit',
+  }) async {
     final session = await ensureSession();
     final token = session.token;
+    // The server derives the child's calendar day from this offset rather
+    // than trusting a date string — moving the device clock forward no longer
+    // buys a fresh daily budget.
+    final offset = DateTime.now().timeZoneOffset.inMinutes;
     final uri = Uri.parse('$_baseUrl/api/value-tracking/child-sessions')
-        .replace(queryParameters: {'child_id': '$childId'});
+        .replace(queryParameters: {
+      'child_id': '$childId',
+      'surface': surface,
+      'tz_offset_minutes': '$offset',
+    });
     final resp = await _http
         .post(uri, headers: _authHeaders(token))
         .timeout(AppConfig.httpTimeout);
     if (resp.statusCode != 200) throw _wrap(resp);
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  /// Report that the child is still on the surface, and learn what is left.
+  ///
+  /// Returns null when the session is over — budget spent, reaped, or already
+  /// closed. That is not an error to retry: the caller closes the surface.
+  Future<Map<String, dynamic>?> childHeartbeat({
+    required String childToken,
+    required int sessionId,
+  }) async {
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/heartbeat')
+        .replace(queryParameters: {'session_id': '$sessionId'});
+    final resp = await _http
+        .post(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode == 403 || resp.statusCode == 404) return null;
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<void> endChildSession({
+    required String childToken,
+    required int sessionId,
+    String reason = 'completed',
+  }) async {
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/session-end')
+        .replace(queryParameters: {
+      'session_id': '$sessionId',
+      'reason': reason,
+    });
+    await _http
+        .post(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
   }
 
   Future<Map<String, dynamic>> createChildWebClaim(int childId) async {
