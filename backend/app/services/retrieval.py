@@ -704,6 +704,14 @@ def retrieve_hybrid(
         age_span=2               15/23    4/11         24%
         age_span=1 (this)        16/23    5/11          0%
 
+    ⚠️ That last row no longer reproduces. `age_reach_probe` reports **15/23**
+    matched, 5/11 gap as of 2026-08-15 — the conclusion stands, the number is
+    one lower. It is not the language change below: that probe passes no
+    `lang`, and re-running it against `origin/main` in a detached worktree,
+    before the change existed, also gives 15/23. Something else moved it
+    between the two measurements and was not caught, because nothing re-runs
+    this. Read the row as directional, and re-measure before tuning against it.
+
     "unspecified" is never filtered — half the corpus carries it and it is
     written to apply at every age. Set age_span to None to disable the bound.
 
