@@ -56,7 +56,7 @@ def child():
 
     DEVICE = "dev-test-1"
 
-    def make(age_group: str) -> int:
+    def make(age_group: str, with_agreement: bool = True) -> int:
         conn = db.get_conn()
         try:
             cur = conn.execute(
@@ -64,9 +64,27 @@ def child():
                 (DEVICE, "طفل", age_group),
             )
             conn.commit()
-            return cur.lastrowid
+            child_id = cur.lastrowid
         finally:
             conn.close()
+        # Since Sprint 2 a signed agreement is an entry condition for any band
+        # that has a clause bank. These tests are about the time budget, so the
+        # helper puts them past that gate; test_child_surface_endpoints owns
+        # the gate itself.
+        if with_agreement:
+            from app.services import family_agreement
+            clauses = family_agreement.suggested_clauses(
+                __import__("app.core.taxonomy", fromlist=["x"]).map_profile_age_to_band(age_group)
+            )[:4]
+            if clauses:
+                family_agreement.save_draft(DEVICE, child_id, clauses)
+                current = family_agreement.get_current(DEVICE, child_id)
+                for c in current["clauses"]:
+                    if c["applies_to"] in ("child", "both"):
+                        family_agreement.acknowledge_clause(DEVICE, child_id, c["id"])
+                family_agreement.sign(DEVICE, child_id, "parent")
+                family_agreement.sign(DEVICE, child_id, "child")
+        return child_id
 
     make.device = DEVICE
     return make

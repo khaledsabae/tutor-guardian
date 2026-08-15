@@ -27,7 +27,7 @@ from app.routers.value_tracking import (
     _persist_event,
     _verify_child_ownership,
 )
-from app.services import child_budget
+from app.services import child_budget, family_agreement
 from app.services import child_token as child_token_service
 
 router = APIRouter(tags=["child-mode"])
@@ -296,3 +296,46 @@ def child_record_event(request: Request, body: ChildHabitEventCreate):
         )
     finally:
         conn.close()
+
+
+# ── The agreement, from the child's side ───────────────────────────────────
+
+@router.get("/value-tracking/child-mode/agreement", response_model=dict)
+def child_read_agreement(request: Request):
+    """What the child is being asked to agree to.
+
+    A separate endpoint under the child prefix rather than opening
+    /api/children to a child token: the parent routes read and write a
+    family's whole profile set, and a child surface has no business there.
+    """
+    child_id = _get_child_id(request)
+    device_id = _require_device_id(request)
+    agreement = family_agreement.get_current(device_id, child_id)
+    if agreement is None:
+        return {"agreement": None}
+    return {"agreement": agreement}
+
+
+@router.post("/value-tracking/child-mode/agreement/acknowledge", response_model=dict)
+def child_acknowledge_clause(request: Request, clause_id: int = Query(..., ge=1)):
+    """The child says they understood one clause. One at a time, on purpose."""
+    child_id = _get_child_id(request)
+    device_id = _require_device_id(request)
+    result = family_agreement.acknowledge_clause(device_id, child_id, clause_id)
+    if not result["ok"]:
+        raise HTTPException(status_code=404, detail={"error": result["reason"]})
+    return result
+
+
+@router.post("/value-tracking/child-mode/agreement/sign", response_model=dict)
+def child_sign_agreement(request: Request):
+    child_id = _get_child_id(request)
+    device_id = _require_device_id(request)
+    result = family_agreement.sign(device_id, child_id, "child")
+    if not result["ok"]:
+        raise HTTPException(status_code=409, detail={
+            "error": result["reason"],
+            "remaining": result.get("remaining"),
+            "message_key": f"agreement.{result['reason']}",
+        })
+    return result

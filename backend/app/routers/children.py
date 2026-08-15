@@ -36,7 +36,7 @@ from pydantic import BaseModel, Field, field_validator
 from app.config.guardrails_loader import load_child_surface_policy
 from app.core.taxonomy import CANONICAL_AGE_GROUPS, map_profile_age_to_band
 from app.db.init_db import get_conn
-from app.services import child_budget
+from app.services import child_budget, family_agreement
 from app.services.coach_service import CHALLENGE_TOPICS
 
 router = APIRouter()
@@ -688,3 +688,88 @@ def delete_child(child_id: int, request: Request):
         }
     finally:
         conn.close()
+
+
+# ── Family media agreement ─────────────────────────────────────────────────
+
+class AgreementClauseIn(BaseModel):
+    applies_to: str = Field(pattern="^(child|parent|both)$")
+    text_ar: str = Field(min_length=1, max_length=400)
+    clause_key: Optional[str] = None
+    is_custom: bool = False
+    sort_order: int = 0
+
+
+class AgreementDraftIn(BaseModel):
+    clauses: list[AgreementClauseIn] = Field(min_length=1, max_length=40)
+
+
+@router.get(
+    "/children/{child_id}/agreement/clauses/suggested",
+    summary="Suggested clause pairs for the child's age band",
+)
+def suggested_agreement_clauses(child_id: int, request: Request):
+    """Pairs, always. The UI shows the parent's clause next to the child's so
+    the trade is visible while they edit rather than discovered after."""
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        age_group = conn.execute(
+            "SELECT age_group FROM child_profiles WHERE id = ?", (child_id,)
+        ).fetchone()["age_group"]
+    finally:
+        conn.close()
+    band = map_profile_age_to_band(age_group)
+    return {"child_id": child_id, "age_band": band,
+            "pairs": family_agreement.load_clause_bank(band),
+            "clauses": family_agreement.suggested_clauses(band)}
+
+
+@router.get("/children/{child_id}/agreement", summary="The child's agreement")
+def get_agreement(child_id: int, request: Request):
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+    finally:
+        conn.close()
+    return {"child_id": child_id,
+            "agreement": family_agreement.get_current(device_id, child_id)}
+
+
+@router.post("/children/{child_id}/agreement", summary="Create or replace the draft")
+def put_agreement_draft(child_id: int, body: AgreementDraftIn, request: Request):
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+    finally:
+        conn.close()
+
+    result = family_agreement.save_draft(
+        device_id, child_id, [c.model_dump() for c in body.clauses]
+    )
+    if not result["ok"]:
+        # 422 rather than 400: the draft is well-formed JSON that fails a rule
+        # about what an agreement is, and the message names which rule.
+        raise HTTPException(status_code=422, detail={
+            "error": result["reason"],
+            "message_key": f"agreement.{result['reason']}",
+        })
+    return result["agreement"]
+
+
+@router.post("/children/{child_id}/agreement/sign", summary="Parent signs the draft")
+def sign_agreement_as_parent(child_id: int, request: Request):
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+    finally:
+        conn.close()
+
+    result = family_agreement.sign(device_id, child_id, "parent")
+    if not result["ok"]:
+        raise HTTPException(status_code=409, detail={"error": result["reason"]})
+    return result

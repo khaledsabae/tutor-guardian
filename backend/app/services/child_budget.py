@@ -38,6 +38,7 @@ from typing import Any, Optional
 
 from app.config.guardrails_loader import ChildSurfacePolicy, ResolvedBand, SurfaceSpec
 from app.core.taxonomy import map_profile_age_to_band
+from app.services import family_agreement
 from app.db.init_db import get_conn
 
 _UTC = timezone.utc
@@ -243,6 +244,34 @@ def open_session(device_id: str, child_id: int, surface: str,
             }
         if surface not in band.allowed_surfaces:
             return {"ok": False, "reason": "surface_not_allowed", "band": band_name}
+
+        # The agreement is the frame everything else sits inside, so it is an
+        # entry condition rather than a screen among screens: a child with no
+        # signed agreement can open the agreement and nothing else.
+        #
+        # `agreement` is exempt for the obvious reason, and it bills no daily
+        # ledger — a child does not spend screen time to read an agreement
+        # written about them.
+        #
+        # ORDERING: this must not ship ahead of the signing UI. A gate whose
+        # only exit is a screen that does not exist yet locks out every family
+        # already using child mode.
+        # ...for bands that can actually agree to something. A two-year-old
+        # cannot read a clause, let alone sign one, and their only surface is
+        # audio with the screen dark. So the gate keys on whether a clause
+        # bank exists for the band: no bank, nothing to agree to, no gate —
+        # and writing clauses_10-12.json later turns it on for that band with
+        # no code change.
+        gated = bool(family_agreement.load_clause_bank(band_name))
+        if gated and surface != "agreement" and not family_agreement.has_active_agreement(
+            device_id, child_id
+        ):
+            return {
+                "ok": False,
+                "reason": "agreement_required",
+                "band": band_name,
+                "next_surface": "agreement",
+            }
 
         reap_stale_sessions(policy, conn)
 
