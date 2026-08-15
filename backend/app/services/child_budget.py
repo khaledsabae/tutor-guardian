@@ -31,6 +31,7 @@ legitimately used; a device rotating through timezones gains nothing.
 """
 from __future__ import annotations
 
+import os
 import sqlite3
 from datetime import datetime, timedelta, timezone
 from typing import Any, Optional
@@ -52,6 +53,23 @@ _MIN_TZ_OFFSET_MINUTES = -12 * 60
 _HEARTBEAT_CHARGE_INTERVALS = 2
 
 _ROLLING_WINDOW = timedelta(hours=24)
+
+
+def child_surface_enabled() -> bool:
+    """The kill switch. Set CHILD_SURFACE_ENABLED=false and restart.
+
+    Turning it off does not disable child mode — it returns the app to exactly
+    what it did before this sprint: a flat thirty-minute child token, no
+    session, no age gate, no budget. That is a weaker product and a deliberate
+    one; the alternative on a bad night is rolling back a deploy that also
+    carries everything else on main.
+
+    Read at call time so a restart is enough. Anything other than an explicit
+    false leaves the surface on — a typo in the env file must not silently
+    unlock the gate.
+    """
+    return os.environ.get("CHILD_SURFACE_ENABLED", "true").strip().lower() \
+        not in {"0", "false", "no", "off"}
 
 
 # ── Time helpers ───────────────────────────────────────────────────────────

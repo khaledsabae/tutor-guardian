@@ -292,3 +292,57 @@ def test_session_end_stays_reachable_after_the_budget_is_gone(guarded_client):
 
 def test_no_token_is_still_a_401(guarded_client):
     assert guarded_client.post("/api/value-tracking/child-mode/ping").status_code == 401
+
+
+# ── The kill switch ────────────────────────────────────────────────────────
+
+def test_the_switch_restores_the_pre_sprint_token(client, monkeypatch):
+    """Off means the app does what it did before this sprint — a flat token,
+    no session — not a locked door."""
+    monkeypatch.setenv("CHILD_SURFACE_ENABLED", "false")
+    cid = _child(client)
+    r = _open(client, cid)
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["child_surface_enabled"] is False
+    assert "session_id" not in body
+    assert child_budget.active_session(cid) is None
+
+
+def test_the_switch_lets_a_tokened_child_through_the_middleware(guarded_client, monkeypatch):
+    """The two halves have to agree. A middleware still demanding a session
+    while nothing opens one would lock every child out — the opposite of a
+    kill switch."""
+    monkeypatch.setenv("CHILD_SURFACE_ENABLED", "false")
+    cid = _make_child()
+    token = child_token.issue_child_token(DEVICE, cid, ttl_seconds=1800)
+    r = guarded_client.post("/api/value-tracking/child-mode/ping",
+                            headers={"Authorization": f"Child-Bearer {token}"})
+    assert r.status_code == 200
+
+
+def test_the_switch_off_still_refuses_an_infant(client, monkeypatch):
+    """It disables the budget, not judgement. With no session there is no age
+    gate either — this test records that, so the cost of flipping the switch
+    is written down rather than discovered."""
+    monkeypatch.setenv("CHILD_SURFACE_ENABLED", "false")
+    infant = _child(client, "prenatal-1")
+    r = _open(client, infant)
+    assert r.status_code == 200
+    assert r.json()["child_surface_enabled"] is False
+
+
+def test_a_typo_leaves_the_surface_on(client, monkeypatch):
+    """"flase", "", "1", "yes" — anything that is not an explicit false keeps
+    the gate. A misspelt env var must not silently unlock it."""
+    for value in ("flase", "", "1", "yes", "TRUE", "on"):
+        monkeypatch.setenv("CHILD_SURFACE_ENABLED", value)
+        assert child_budget.child_surface_enabled() is True, value
+    for value in ("false", "FALSE", "0", "no", "off", " false "):
+        monkeypatch.setenv("CHILD_SURFACE_ENABLED", value)
+        assert child_budget.child_surface_enabled() is False, value
+
+
+def test_the_default_is_on(monkeypatch):
+    monkeypatch.delenv("CHILD_SURFACE_ENABLED", raising=False)
+    assert child_budget.child_surface_enabled() is True

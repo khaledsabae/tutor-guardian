@@ -33,7 +33,11 @@ age_bands:
     screen_allowed: false
     allowed_surfaces: []
     parent_message_key: "child_gate.under_2"
-    parent_message_ar: "لا يُنصح بأي تعرّض للشاشات في هذا السن. لو كان ابنك أكبر من سنتين، حدِّث سنّه من صفحة الطفل. الأنشطة المناسبة متاحة في «بدائل بلا شاشة»."
+    # The three activities are inline on purpose. The «بدائل بلا شاشة»
+    # section is Sprint 2 work, and a refusal that points at a screen which
+    # does not exist yet reads as a dead end. Replace this with a link once
+    # there is somewhere to send the parent.
+    parent_message_ar: "لا يُنصح بأي تعرّض للشاشات في هذا السن. لو كان ابنك أكبر من سنتين، حدِّث سنّه من صفحة الطفل. وفي المقابل، ثلاثة يمكن عملها الآن: سمِّ له ما حولك بصوت عالٍ وأنت تحمله، وافتح معه كتابًا مصوّرًا واتركه يقلّب الورق، ورتّبا معًا الملعقة والكوب على السفرة."
 
   "2-3":
     screen_allowed: false          # لا واجهة بصرية — صوت فقط
@@ -105,9 +109,14 @@ surfaces:
     max_minutes: 10
     exit_ritual_seconds: 60
 
+  # Ten rather than five: a habit checklist takes a child two minutes and a
+  # distracted child rather longer, and the token's TTL is clamped to this
+  # number. At five, a child who wandered off mid-list came back to an expired
+  # session and a parent who had to re-enter the PIN — friction paid by the
+  # families already on Play, for no safety gained.
   habit:
     counts_toward_budget: true
-    max_minutes: 5
+    max_minutes: 10
     exit_ritual_seconds: 30
 
   drill:

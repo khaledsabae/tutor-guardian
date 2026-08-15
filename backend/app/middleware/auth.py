@@ -165,8 +165,11 @@ class AuthMiddleware(BaseHTTPMiddleware):
             # authority; a closed one means the surface is over.
             #
             # session-end is exempt so a client can always report a clean
-            # close, including the close that exhausted the budget.
-            if not path.endswith("/session-end"):
+            # close, including the close that exhausted the budget. The kill
+            # switch skips the check entirely — with the surface off, no
+            # sessions are being opened, so requiring one would lock every
+            # child out rather than restoring the old behaviour.
+            if child_budget.child_surface_enabled() and not path.endswith("/session-end"):
                 if child_budget.active_session(payload["child_id"]) is None:
                     return JSONResponse(
                         status_code=403,

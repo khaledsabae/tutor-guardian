@@ -146,9 +146,13 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
         remainingSeconds: session['allowed_seconds'] as int?,
         exitRitual: false,
       );
-      _startHeartbeat(
-        intervalSeconds: (session['heartbeat_interval_seconds'] as int?) ?? 30,
-      );
+      // No session id means the server has the child surface switched off and
+      // handed back a plain token. Nothing to report on, so nothing beats.
+      if (session['session_id'] != null) {
+        _startHeartbeat(
+          intervalSeconds: (session['heartbeat_interval_seconds'] as int?) ?? 30,
+        );
+      }
       await refresh();
       return true;
     } catch (e) {
@@ -237,7 +241,14 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
         // recovered without us. Never block the child's exit on the network.
       }
     }
-    state = state.copyWith(
+    // Constructed rather than copyWith: copyWith uses `??`, so passing null
+    // for sessionId would keep the closed session's id and the next entry
+    // would heartbeat against a session that is already over.
+    state = ChildModeState(
+      active: state.active,
+      childId: state.childId,
+      day: state.day,
+      submittedHabits: state.submittedHabits,
       sessionId: null,
       remainingSeconds: 0,
       exitRitual: false,

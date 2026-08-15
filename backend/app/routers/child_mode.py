@@ -160,6 +160,18 @@ def create_child_session(
     device_id = _require_device_id(request)
     _verify_child_ownership(device_id, child_id)
 
+    # Kill switch: hand back the pre-sprint token and open no session. The
+    # middleware skips its session check under the same flag, so the two stay
+    # consistent — a half-disabled gate would lock every child out.
+    if not child_budget.child_surface_enabled():
+        token = child_token_service.issue_child_token(device_id, child_id, ttl_seconds=1800)
+        return {
+            "token": token,
+            "expires_at": child_token_service.child_token_expiry_iso(token),
+            "child_id": child_id,
+            "child_surface_enabled": False,
+        }
+
     policy = _policy(request)
     session = child_budget.open_session(device_id, child_id, surface,
                                         tz_offset_minutes, policy)
