@@ -808,3 +808,82 @@ def confirm_missions(body: MissionConfirmIn, request: Request):
         device_id, [i.model_dump() for i in body.items]
     )
     return result
+
+
+@router.get("/children/{child_id}/today",
+            summary="The parent's one-screen view of a child's day")
+def child_day_summary(child_id: int, request: Request,
+                      tz_offset_minutes: int = 0):
+    """Screen, listening, the mission, the agreement — on one card.
+
+    Assembled server-side so the app makes one call rather than four, and so
+    the numbers a parent compares are computed from the same instant.
+
+    Screen and listening stay separate all the way out. Adding them recreates
+    the single "hours today" figure this whole feature exists to argue
+    against: forty minutes of a dark screen and a recitation is not the same
+    thing as forty minutes of a game.
+    """
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        row = conn.execute(
+            "SELECT name, age_group FROM child_profiles WHERE id = ?", (child_id,)
+        ).fetchone()
+    finally:
+        conn.close()
+
+    policy = getattr(request.app.state, "child_surface_policy", None) \
+        or load_child_surface_policy()
+    band_name = map_profile_age_to_band(row["age_group"])
+    band = policy.band(band_name)
+    now = datetime.now(timezone.utc)
+    local_date = child_budget.local_date_for(now, tz_offset_minutes)
+    usage = child_budget.today_usage(child_id, local_date, policy)
+
+    agreement = family_agreement.get_active(device_id, child_id)
+    mission = child_missions.today_mission(device_id, child_id, band_name, local_date)
+
+    month_start = local_date[:8] + "01"
+    leverage = child_missions.leverage(
+        child_id, month_start, screen_seconds=_month_screen_seconds(child_id, month_start)
+    )
+
+    return {
+        "child_id": child_id,
+        "child_name": row["name"],
+        "date": local_date,
+        "band": band_name,
+        "screen": {
+            "counted_seconds": usage["counted_seconds"],
+            "budget_seconds": band.daily_budget_minutes * 60,
+        },
+        "listening": {
+            "counted_seconds": usage["screen_off_seconds"],
+            "budget_seconds": band.screen_off_daily_budget_minutes * 60,
+        },
+        "mission": mission,
+        "agreement": None if agreement is None else {
+            "status": agreement["status"],
+            "next_review_date": agreement["next_review_date"],
+            "review_due": agreement["review_due"],
+            "clauses_on_parent": agreement["clauses_on_parent"],
+            "clauses_on_child": agreement["clauses_on_child"],
+        },
+        "month": leverage,
+    }
+
+
+def _month_screen_seconds(child_id: int, month_start: str) -> int:
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT COALESCE(SUM(counted_seconds), 0) AS s "
+            "FROM child_screen_sessions WHERE child_id = ? AND local_date >= ? "
+            "AND surface NOT IN ('screen_off', 'agreement')",
+            (child_id, month_start),
+        ).fetchone()
+        return int(row["s"])
+    finally:
+        conn.close()

@@ -1304,6 +1304,20 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  /// The parent's one-screen view of a child's day, assembled server-side so
+  /// the numbers being compared come from the same instant.
+  Future<Map<String, dynamic>> fetchChildDay(int childId) async {
+    final session = await ensureSession();
+    final offset = DateTime.now().timeZoneOffset.inMinutes;
+    final uri = Uri.parse('$_baseUrl/api/children/$childId/today')
+        .replace(queryParameters: {'tz_offset_minutes': '$offset'});
+    final resp = await _http
+        .get(uri, headers: _authHeaders(session.token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   Future<Map<String, dynamic>?> fetchAgreement(int childId) async {
     final session = await ensureSession();
     final uri = Uri.parse('$_baseUrl/api/children/$childId/agreement');

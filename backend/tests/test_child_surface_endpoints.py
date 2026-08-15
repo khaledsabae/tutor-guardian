@@ -536,3 +536,70 @@ def test_a_toddler_is_not_asked_to_sign_anything(client):
     the gate does not apply and audio still opens."""
     cid = _child_without_agreement(client, "2-3")
     assert _open(client, cid, surface="screen_off").status_code == 200
+
+
+# ── The parent's one screen ────────────────────────────────────────────────
+
+def test_the_day_summary_keeps_screen_and_listening_apart(client):
+    """Adding them recreates the single 'hours today' figure the whole
+    feature argues against."""
+    cid = _child(client)
+    policy = load_child_surface_policy()
+
+    watched = _open(client, cid, surface="story").json()
+    child_budget.close_session(watched["session_id"], "completed", policy)
+    listened = _open(client, cid, surface="screen_off").json()
+    child_budget.close_session(listened["session_id"], "completed", policy)
+
+    r = client.get(f"/api/children/{cid}/today", params={"tz_offset_minutes": 180})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["screen"]["budget_seconds"] == 20 * 60
+    assert body["listening"]["budget_seconds"] == 60 * 60
+    assert "counted_seconds" in body["screen"]
+    assert "counted_seconds" in body["listening"]
+    assert body["screen"] is not body["listening"]
+
+
+def test_the_day_summary_carries_the_agreement_state(client):
+    cid = _child(client)
+    body = client.get(f"/api/children/{cid}/today").json()
+    assert body["agreement"]["status"] == "active"
+    assert body["agreement"]["clauses_on_parent"] > 0
+    assert body["agreement"]["review_due"] is False
+
+
+def test_the_day_summary_shows_no_agreement_when_there_is_none(client):
+    cid = _child_without_agreement(client)
+    body = client.get(f"/api/children/{cid}/today").json()
+    assert body["agreement"] is None
+
+
+def test_the_day_summary_includes_todays_mission(client):
+    cid = _child(client)
+    body = client.get(f"/api/children/{cid}/today").json()
+    assert body["mission"] is not None
+    assert body["mission"]["title_ar"]
+    assert body["mission"]["estimated_minutes"] >= 15
+
+
+def test_the_month_ratio_is_absent_until_there_is_screen_time(client):
+    """A ratio printed against zero screen minutes is an infinity next to a
+    number a parent is meant to read."""
+    cid = _child(client)
+    body = client.get(f"/api/children/{cid}/today").json()
+    assert body["month"]["ratio"] is None
+
+
+def test_the_day_summary_needs_to_own_the_child(client, tmp_db):
+    conn = get_conn()
+    try:
+        cur = conn.execute(
+            "INSERT INTO child_profiles (device_id, name, age_group) VALUES (?, ?, ?)",
+            ("someone-else", "طفل", "7-9"),
+        )
+        conn.commit()
+        foreign = cur.lastrowid
+    finally:
+        conn.close()
+    assert client.get(f"/api/children/{foreign}/today").status_code == 404

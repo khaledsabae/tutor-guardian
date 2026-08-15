@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 
 import '../features/coins/coins_screen.dart';
 import '../features/agreement/agreement_screen.dart';
+import '../features/parent_day/parent_day_screen.dart';
 import '../features/screen_off/record_narration_screen.dart';
 import '../features/screen_off/screen_off_player_screen.dart';
 import '../features/agreement/child_agreement_screen.dart';
@@ -146,6 +147,7 @@ abstract final class Screens {
   static const childAgreement = 'child_agreement';
   static const screenOffPlayer = 'screen_off_player';
   static const recordNarration = 'record_narration';
+  static const parentDay = 'parent_day';
 
   // Account & meta
   static const settings = 'settings';
@@ -409,6 +411,9 @@ abstract final class AppRoutes {
           {required String title, required String source}) =>
       _r(Screens.screenOffPlayer,
           (_) => ScreenOffPlayerScreen(title: title, source: source));
+
+  static Route<void> parentDay() =>
+      _r(Screens.parentDay, (_) => const ParentDayScreen());
 
   static Route<bool> recordNarration(
           {required String storyKey, required String storyText}) =>
