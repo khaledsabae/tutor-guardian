@@ -28,6 +28,7 @@ from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
 from app import curriculum_loader as cl
+from app.core.taxonomy import ACCEPTED_CHILD_AGE_INPUTS, CANONICAL_DOMAINS
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -35,11 +36,12 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/program", tags=["program"])
 
 # ── Constants ────────────────────────────────────────────────────────────
-# Accept every canonical band + the legacy "0-3" alias (pre-split children).
-_VALID_AGE_GROUPS = {
-    "prenatal-1", "0-3", "2-3", "4-6", "7-9", "10-12", "13-15", "16-18",
-}
-_VALID_DOMAINS = {"medical", "cyber", "islamic_parenting", "development", "aqeedah"}
+# These two used to be literals here, and a third and fourth copy lived in
+# value_tracking.py and core/taxonomy.py. They had already drifted: this file
+# was the only one carrying the legacy "0-3". Both now come from taxonomy, the
+# single source of truth; the accepted values are unchanged.
+_VALID_AGE_GROUPS = ACCEPTED_CHILD_AGE_INPUTS
+_VALID_DOMAINS = CANONICAL_DOMAINS
 _VALID_TIME_OF_DAY = {"morning", "evening", "bedtime", "anytime"}
 _VALID_PROGRESS_STATUS = {"not_started", "in_progress", "completed"}
 
