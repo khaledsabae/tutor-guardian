@@ -23,6 +23,7 @@ REPO="/home/khalednew/projects/tutor-guardian"
 LOG="/tmp/gen_en_media.log"
 VPS="root@72.62.44.131"
 VPS_DOCS="/root/tutor-guardian/docs/"
+NOTEBOOK_MAIN="94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 export HOME="/home/khalednew"
 export PYTHONUNBUFFERED=1
 cd "$REPO" || exit 1
@@ -35,16 +36,33 @@ say "===== English media run ====="
 # Each generator authenticates its own profile (tg-video / tg-audio). One
 # profile shared by two processes rotates cookies out from under the other —
 # the session died three times on 2026-08-14 that way.
+# 🚨 Verified by EFFECT, not by the login command's exit code.
+#
+# On 2026-08-15 at 06:30 `login` exited 0 and printed "Cookies verified
+# successfully" for both profiles — and every generate call that followed
+# failed with "re-authenticate". The run produced nothing and PCC recorded it
+# "ok", because the guard trusted a success message instead of asking the API
+# a question. That is the failure this whole pipeline keeps producing, written
+# into the guard meant to catch it.
+#
+# So: log in, then make a real read. If the read comes back with data, the
+# session is alive. If not, stop — a run that cannot authenticate cannot
+# generate, and should say so rather than spend an hour proving it.
 AUTH_FAILED=0
 for p in tg-video tg-audio; do
     timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" login --browser-cookies chrome \
         >> "$LOG" 2>&1
-    rc=$?
-    say "auth $p exit $rc"
-    [ "$rc" -ne 0 ] && AUTH_FAILED=1
+    say "auth $p login exit $?"
+    if timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" source list \
+            -n "$NOTEBOOK_MAIN" --json 2>/dev/null | grep -q '"sources"'; then
+        say "auth $p verified by read ✓"
+    else
+        say "auth $p FAILED — login reported success but the API refuses reads"
+        AUTH_FAILED=1
+    fi
 done
 if [ "$AUTH_FAILED" -ne 0 ]; then
-    say "FAIL: could not authenticate — nothing can be generated"
+    say "FAIL: no usable session — nothing can be generated"
     exit 1
 fi
 
