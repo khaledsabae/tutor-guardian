@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
-import '../../screen_off/audio_tag.dart';
 
 /// Calm, non-intrusive bedtime ambient audio manager.
 ///
@@ -37,10 +36,7 @@ class BedtimeAudioService {
     _player = AudioPlayer();
     _volume = initialVolume.clamp(0.0, 1.0);
     try {
-      await _player!.setAudioSource(AudioSource.asset(
-        assetPath,
-        tag: audioTag(id: assetPath, title: 'خلفية هادئة'),
-      ));
+      await _player!.setAsset(assetPath);
       await _player!.setLoopMode(LoopMode.all);
       await _player!.setVolume(_volume);
       _initialized = true;

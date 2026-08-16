@@ -29,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 
 import '../../main.dart' show messengerKey;
 import '../routine/providers/child_mode_providers.dart';
@@ -103,25 +102,19 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
     }
 
     try {
-      // The MediaItem tag is what just_audio_background needs to raise a
-      // foreground service and a media notification. Without a tag it throws,
-      // and without the service Android silences playback within seconds of
-      // the screen going off — which is precisely the situation this whole
-      // mode is built for. The package was in pubspec.yaml since sprint 2 and
-      // was never initialised or tagged, so background playback had never
-      // actually worked.
+      // Plain just_audio. Audio stops when Android backgrounds the app, which
+      // is a real limitation of this mode and is documented in audio_tag.dart
+      // — the package that would fix it supports one player and this app has
+      // five, so enabling it broke recitation instead.
       final list = widget.playlist;
       if (list != null && list.isNotEmpty) {
-        await _player.setAudioSources([
-          for (var i = 0; i < list.length; i++)
-            AudioSource.uri(Uri.parse(list[i]), tag: _mediaItemFor(list[i], i)),
-        ]);
-      } else {
-        await _player.setAudioSource(
-          widget.source.startsWith('http')
-              ? AudioSource.uri(Uri.parse(widget.source), tag: _mediaItem)
-              : AudioSource.file(widget.source, tag: _mediaItem),
+        await _player.setAudioSources(
+          [for (final url in list) AudioSource.uri(Uri.parse(url))],
         );
+      } else if (widget.source.startsWith('http')) {
+        await _player.setUrl(widget.source);
+      } else {
+        await _player.setFilePath(widget.source);
       }
       await _player.play();
     } catch (e) {
@@ -157,18 +150,6 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
       await notifier.endSession(reason: 'completed');
     }
   }
-
-  MediaItem get _mediaItem => _mediaItemFor(widget.source, 0);
-
-  MediaItem _mediaItemFor(String id, int index) => MediaItem(
-        // Ids must be distinct across a playlist or the notification and the
-        // queue index disagree about which item is playing.
-        id: '$id#$index',
-        title: widget.title,
-        // Deliberately spare. This text appears on the lock screen, where the
-        // rule about not making the screen worth looking at still applies.
-        artist: 'المربي',
-      );
 
   /// Coming back from the background is the moment the session is most likely
   /// to be stale, so report immediately rather than waiting out the rest of

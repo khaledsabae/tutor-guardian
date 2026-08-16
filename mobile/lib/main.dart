@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 import 'l10n/app_localizations.dart';
 import 'l10n/l10n_global.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -66,30 +65,10 @@ void main() async {
     statusBarIconBrightness: Brightness.dark,
   ));
 
-  // Background audio for the screen-off mode.
+  // NO background audio package here, deliberately. See
+  // features/screen_off/audio_tag.dart for the full story: this app has five
+  // AudioPlayer instances, and just_audio_background supports exactly one.
   //
-  // `just_audio_background` has been in pubspec.yaml since sprint 2 with
-  // nothing calling this and no service declared in the manifest, so the one
-  // mode the design leans on hardest — listening with the display dark — was
-  // silenced by Android within seconds of the screen going off. The package
-  // was added; it was never turned on.
-  //
-  // Wrapped because a failure here must not stop the app booting: without it
-  // the audio simply stops when backgrounded, which is the behaviour we have
-  // shipped until now.
-  try {
-    await JustAudioBackground.init(
-      androidNotificationChannelId: 'cloud.alsaba.tutorguardian.audio',
-      androidNotificationChannelName: 'التشغيل الصوتي',
-      // The notification is the foreground service's anchor; it has to stay
-      // while audio plays or the OS reclaims the process mid-story.
-      androidNotificationOngoing: true,
-      androidStopForegroundOnPause: true,
-    );
-  } catch (e, s) {
-    debugPrint('just_audio_background init failed: $e\n$s');
-  }
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Crashlytics. Everything that lands here is non-fatal by definition — the

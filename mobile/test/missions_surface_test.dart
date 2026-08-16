@@ -133,35 +133,6 @@ void main() {
     });
   });
 
-  group('background audio is turned on, not merely depended on', () {
-    // just_audio_background sat in pubspec.yaml since sprint 2 with no init
-    // call and no service declared, so playback was silenced within seconds of
-    // the screen going dark — in the one mode built entirely around that.
-    test('the package is initialised at startup', () {
-      final main = File('lib/main.dart').readAsStringSync();
-      expect(main, contains('JustAudioBackground.init('));
-    });
-
-    test('the manifest declares the media service and its permission', () {
-      final manifest =
-          File('android/app/src/main/AndroidManifest.xml').readAsStringSync();
-      expect(manifest, contains('com.ryanheise.audioservice.AudioService'));
-      expect(manifest, contains('foregroundServiceType="mediaPlayback"'));
-      expect(manifest,
-          contains('android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK'));
-    });
-
-    test('the player tags its source so the service can raise a notification',
-        () {
-      // just_audio_background throws without a MediaItem tag, so an untagged
-      // source is a crash rather than a silent degradation.
-      final player =
-          File('lib/features/screen_off/screen_off_player_screen.dart')
-              .readAsStringSync();
-      expect(player, contains('tag: _mediaItem'));
-      expect(player, contains("switchSurface('screen_off')"));
-    });
-  });
 
 
   group('the notification channels exist on the device', () {
@@ -422,30 +393,49 @@ void _regressionTests() {
 }
 
 void _audioTagTests() {
-  group('every audio source carries a tag', () {
-    // JustAudioBackground.init() is global. Once it runs, an AudioSource with
-    // no MediaItem throws — so turning background playback on for the
-    // screen-off mode broke four players that had worked for months: Qur'an
-    // recitation, the podcast, the bedtime ambience and the narration
-    // preview. None of them had ever needed a tag before, and nothing in the
-    // suite noticed.
-    test('no untagged setUrl / setAsset / setFilePath survives anywhere', () {
+  group('background audio stays out of this app', () {
+    // I added just_audio_background for the screen-off mode and it broke
+    // Qur'an recitation, the podcast, the bedtime ambience and the narration
+    // preview — with an error telling users to check their internet. The
+    // package's own README, first sentence: it "supports the simple use case
+    // where an app has a single AudioPlayer instance". This app has five.
+    //
+    // Tagging every source did not fix it, because the constraint is not the
+    // tag. These tests exist so it cannot come back by accident.
+
+    test('the package is not initialised', () {
+      expect(_codeOnly('lib/main.dart').contains('JustAudioBackground.init('),
+          isFalse,
+          reason: 'see lib/features/screen_off/audio_tag.dart');
+    });
+
+    test('no player imports it', () {
       final offenders = <String>[];
       for (final f in Directory('lib').listSync(recursive: true)) {
         if (f is! File || !f.path.endsWith('.dart')) continue;
-        final src = f.readAsStringSync();
-        for (final call in ['setUrl(', 'setAsset(', 'setFilePath(']) {
-          if (src.contains('_player.$call') || src.contains('_player!.$call')) {
-            offenders.add('${f.path} → $call');
-          }
+        // Code, not prose: main.dart and audio_tag.dart both *name* the
+        // package in comments explaining why it is gone, which is the point.
+        if (_codeOnly(f.path).contains('just_audio_background')) {
+          offenders.add(f.path);
         }
       }
-      expect(offenders, isEmpty,
-          reason: 'these throw under JustAudioBackground:\n${offenders.join("\n")}');
+      // audio_tag.dart names the package in prose only, which is the point.
+      expect(offenders, isEmpty);
     });
 
-    test('background audio is initialised, which is what makes that true', () {
-      expect(_codeOnly('lib/main.dart'), contains('JustAudioBackground.init('));
+    test('the manifest declares no media service', () {
+      final manifest =
+          File('android/app/src/main/AndroidManifest.xml').readAsStringSync();
+      expect(manifest.contains('com.ryanheise.audioservice.AudioService'),
+          isFalse);
+    });
+
+    test('the reason is written down where the next person will look', () {
+      final record =
+          File('lib/features/screen_off/audio_tag.dart').readAsStringSync();
+      // The quote wraps across lines in the source, so match the halves.
+      expect(record, contains('single AudioPlayer'));
+      expect(record, contains('audio_service'));
     });
   });
 }

@@ -21,7 +21,6 @@ import 'package:just_audio/just_audio.dart';
 import '../../../theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/l10n_global.dart';
-import '../../screen_off/audio_tag.dart';
 
 class PodcastPlayerScreen extends StatefulWidget {
   final String? url;
@@ -72,10 +71,7 @@ class _PodcastPlayerScreenState extends State<PodcastPlayerScreen> {
     });
 
     try {
-      await _player.setAudioSource(AudioSource.uri(
-        Uri.parse(url),
-        tag: audioTag(id: url, title: 'بودكاست المربي'),
-      ));
+      await _player.setUrl(url);
       await _player.setSpeed(_speeds[_speedIndex]);
       if (!mounted) return;
       setState(() => _ready = true);
