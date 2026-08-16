@@ -154,11 +154,20 @@ def recently_pushed_since(cutoff_iso: str) -> set[str]:
         return set()
 
 
+# Every message this service sent used to land on one Android channel, named
+# for re-engagement. That is fine while everything *is* re-engagement, and
+# wrong the moment something is not: a parent who mutes marketing nudges would
+# have muted a safety alert with them. The channel is a parameter now, and the
+# default keeps every existing caller exactly where it was.
+DEFAULT_CHANNEL = "almorabbi_reengagement"
+
+
 def send_to_device(
     device_id: str,
     title: str,
     body: str,
     data: Optional[dict[str, str]] = None,
+    channel_id: str = DEFAULT_CHANNEL,
 ) -> dict:
     """Send an FCM notification to a single device.
 
@@ -167,6 +176,10 @@ def send_to_device(
     {"ok": False, "error": ...} on other failures.
 
     A successful send is recorded in `push_sends` — see [_record_send].
+
+    `channel_id` selects the Android notification channel. Use
+    `license_alert.SAFETY_CHANNEL` for anything a parent must be able to keep
+    unmuted while silencing the rest.
     """
     if not _ensure_app():
         return {"ok": False, "error": "firebase_credentials_not_configured"}
@@ -183,7 +196,7 @@ def send_to_device(
         android=messaging.AndroidConfig(
             priority="high",
             notification=messaging.AndroidNotification(
-                channel_id="almorabbi_reengagement",
+                channel_id=channel_id,
                 sound="default",
             ),
         ),

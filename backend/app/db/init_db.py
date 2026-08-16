@@ -61,6 +61,14 @@ Migration v23: added child_missions — one off-screen task a day, claimed by
                the child without waiting and confirmed by the parent in a
                single evening batch. The unique key is (child, date, mission)
                so a retry cannot assign the same task twice.
+Migration v24: added child_licences + child_scenario_answers — the internet
+               licence. `outcome` is copied onto the answer row rather than
+               read back from the bank, so re-classifying a choice next year
+               cannot rewrite what a child did last March. And a level is not
+               granted by answering: status goes practising → awaiting_talk →
+               granted, and the middle step is a parent recording that they
+               actually talked, which is what makes this a family agreement
+               rather than a certificate the app issues to itself.
 """
 import os
 import sqlite3
@@ -186,7 +194,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 23
+SCHEMA_VERSION = 24
 
 
 def db_path() -> Path:
@@ -345,6 +353,7 @@ def init_db() -> None:
     _ensure_child_screen_sessions_table(conn)
     _ensure_family_agreements_tables(conn)
     _ensure_child_missions_table(conn)
+    _ensure_licence_tables(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -497,6 +506,48 @@ CREATE INDEX IF NOT EXISTS ix_missions_child_key
     ON child_missions (child_id, mission_key, local_date);
 """
 
+_CREATE_CHILD_LICENCES: str = """
+CREATE TABLE IF NOT EXISTS child_licences (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id     TEXT NOT NULL,
+    child_id      INTEGER NOT NULL,
+    -- stranger | signal | contact | footprint | public
+    level_key     TEXT NOT NULL,
+    -- practising | awaiting_talk | granted
+    status        TEXT NOT NULL DEFAULT 'practising',
+    granted_at    TEXT,
+    talked_at     TEXT,
+    next_review_date TEXT,
+    created_at    TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE (child_id, level_key)
+);
+CREATE INDEX IF NOT EXISTS ix_licences_child
+    ON child_licences (child_id, status);
+"""
+
+_CREATE_SCENARIO_ANSWERS: str = """
+CREATE TABLE IF NOT EXISTS child_scenario_answers (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    device_id     TEXT NOT NULL,
+    child_id      INTEGER NOT NULL,
+    scenario_key  TEXT NOT NULL,
+    level_key     TEXT NOT NULL,
+    choice_key    TEXT NOT NULL,
+    -- safe | unsafe | critical, copied from the bank at answer time. Read
+    -- back from the bank instead and editing a classification would rewrite
+    -- history; the log has to stay what it was.
+    outcome       TEXT NOT NULL,
+    attempt       INTEGER NOT NULL DEFAULT 1,
+    answered_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    parent_alerted_at TEXT
+);
+CREATE INDEX IF NOT EXISTS ix_scenarios_child
+    ON child_scenario_answers (child_id, level_key);
+-- The seven-day repeat rule scans a child's history by scenario.
+CREATE INDEX IF NOT EXISTS ix_scenarios_repeat
+    ON child_scenario_answers (child_id, scenario_key, answered_at);
+"""
+
 _CREATE_FAMILY_AGREEMENTS: str = """
 CREATE TABLE IF NOT EXISTS family_agreements (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -601,6 +652,19 @@ def _ensure_child_missions_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_CHILD_MISSIONS)
+
+
+def _ensure_licence_tables(conn: sqlite3.Connection) -> None:
+    """Idempotent migration helper for the v24 internet-licence tables."""
+    for table, ddl in (("child_licences", _CREATE_CHILD_LICENCES),
+                       ("child_scenario_answers", _CREATE_SCENARIO_ANSWERS)):
+        try:
+            cur = conn.execute(f"PRAGMA table_info({table})")
+            names = {row[1] for row in cur.fetchall()}
+        except sqlite3.Error:
+            names = set()
+        if not names:
+            conn.executescript(ddl)
 
 
 def _ensure_family_agreements_tables(conn: sqlite3.Connection) -> None:

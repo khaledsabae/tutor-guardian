@@ -97,6 +97,15 @@ class DeepLinkHandler {
       return;
     }
 
+    // Internet-licence safety alert: /license. The one immediate push this
+    // product sends, and it is addressed to the parent. It must land on the
+    // talking point, not on the home screen.
+    if (path == '/license') {
+      navigator.popUntil((route) => route.isFirst);
+      navigator.push(AppRoutes.parentLicense());
+      return;
+    }
+
     // Lesson deep link: /l/{lesson_id}
     final lessonMatch = RegExp(r'^/l/([^/]+)$').firstMatch(path);
     if (lessonMatch != null) {

@@ -5,6 +5,7 @@ import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../models/habit_models.dart';
 import '../../agreement/child_agreement_screen.dart';
+import '../../license/child_license_screen.dart';
 import '../../missions/child_mission_screen.dart';
 import '../providers/child_mode_providers.dart';
 import '../widgets/quiet_time_bar.dart';
@@ -49,6 +50,10 @@ class HabitChildModeScreen extends ConsumerWidget {
     // mission session sits on a spinner that nothing will ever resolve.
     if (state.surface == 'mission') {
       return const ChildMissionScreen();
+    }
+
+    if (state.surface == 'license') {
+      return const ChildLicenseScreen();
     }
 
     if (state.day == null) {

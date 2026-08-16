@@ -36,7 +36,7 @@ from pydantic import BaseModel, Field, field_validator
 from app.config.guardrails_loader import load_child_surface_policy
 from app.core.taxonomy import CANONICAL_AGE_GROUPS, map_profile_age_to_band
 from app.db.init_db import get_conn
-from app.services import child_budget, child_missions, family_agreement
+from app.services import child_budget, child_license, child_missions, family_agreement
 from app.services.coach_service import CHALLENGE_TOPICS
 
 router = APIRouter()
@@ -783,6 +783,15 @@ class MissionConfirmItem(BaseModel):
     note: Optional[str] = Field(default=None, max_length=280)
 
 
+class LicenseLevelIn(BaseModel):
+    """Which level a parent is acting on.
+
+    A body rather than a query param so the level name is never in a URL, and
+    so an accidental GET cannot grant anything.
+    """
+    level_key: str = Field(..., min_length=2, max_length=32)
+
+
 class MissionConfirmIn(BaseModel):
     items: list[MissionConfirmItem] = Field(min_length=1, max_length=50)
 
@@ -894,3 +903,60 @@ def _month_screen_seconds(child_id: int, month_start: str) -> int:
         return int(row["s"])
     finally:
         conn.close()
+
+
+# ── Internet licence — the parent's half ───────────────────────────────────
+
+
+@router.get("/children/{child_id}/license",
+            summary="Where a child is on the internet licence")
+def child_license_summary(child_id: int, request: Request):
+    """The level, the progress, and — the point of the whole feature — the
+    talking points for the situations the child has actually met."""
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+    finally:
+        conn.close()
+    return child_license.summary(device_id, child_id)
+
+
+@router.post("/children/{child_id}/license/talked",
+             summary="Record that the parent and child talked about this level")
+def child_license_talked(child_id: int, request: Request,
+                         payload: LicenseLevelIn):
+    """Not verified, and not verifiable.
+
+    The only alternative is interrogating the parent, and a parent who lies
+    here is lying to themselves rather than to the app. What matters is that
+    the step is in the path and cannot be skipped silently.
+    """
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+    finally:
+        conn.close()
+    return child_license.record_talk(device_id, child_id, payload.level_key)
+
+
+@router.post("/children/{child_id}/license/grant",
+             summary="Grant a level")
+def child_license_grant(child_id: int, request: Request,
+                        payload: LicenseLevelIn):
+    """Refused until the practice is complete AND the talk is recorded.
+
+    409 rather than 422: this is a state conflict, not a malformed request —
+    the same level granted after the talk succeeds unchanged.
+    """
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+    finally:
+        conn.close()
+    result = child_license.grant(device_id, child_id, payload.level_key)
+    if not result["ok"]:
+        raise HTTPException(status_code=409, detail={"error": result["reason"]})
+    return result

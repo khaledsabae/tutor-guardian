@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import '../features/coins/coins_screen.dart';
 import '../features/agreement/agreement_screen.dart';
 import '../features/missions/pending_missions_screen.dart';
+import '../features/license/parent_license_screen.dart';
 import '../features/offscreen/offscreen_activities_screen.dart';
 import '../features/screen_off/screen_off_picker_screen.dart';
 import '../features/parent_day/parent_day_screen.dart';
@@ -152,6 +153,7 @@ abstract final class Screens {
   static const recordNarration = 'record_narration';
   static const parentDay = 'parent_day';
   static const pendingMissions = 'pending_missions';
+  static const parentLicense = 'parent_license';
 
   // Account & meta
   static const settings = 'settings';
@@ -421,6 +423,11 @@ abstract final class AppRoutes {
   /// Choosing what to listen to: a parent's recording, or a reciter.
   static Route<void> screenOffPicker() =>
       _r(Screens.screenOffPicker, (_) => const ScreenOffPickerScreen());
+
+  /// The internet licence, parent side: talking points, and a grant the
+  /// server refuses until the family has actually talked.
+  static Route<void> parentLicense() =>
+      _r(Screens.parentLicense, (_) => const ParentLicenseScreen());
 
   /// Where the age gate sends a parent it just refused.
   static Route<void> offscreenActivities({String? band}) =>

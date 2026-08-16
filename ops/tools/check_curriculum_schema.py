@@ -40,7 +40,18 @@ CURRICULUM = ROOT / "knowledge_base" / "curriculum"
 SCHEMA = CURRICULUM / "schema"
 
 # (مجلد المحتوى, اسم المخطّط)
-KINDS = (("lessons", "lesson"), ("paths", "path"), ("daily_tips", "daily_tip"))
+#
+# `agreements` و`missions` شُحنا في سبرنت ٢ خارج هذه القائمة — أي أن البنك
+# الذي يقرّر ما يوقّعه طفل، والبنك الذي يقرّر ما يُطلب منه أن يفعله، كانا
+# الوحيدَين بلا فحص مخطّط. أُدرجا مع `license` لا بعده.
+KINDS = (
+    ("lessons", "lesson"),
+    ("paths", "path"),
+    ("daily_tips", "daily_tip"),
+    ("agreements", "agreement_clauses"),
+    ("missions", "mission_bank"),
+    ("license", "license_scenario"),
+)
 
 
 def main() -> int:

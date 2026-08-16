@@ -28,6 +28,7 @@ from app.routers.value_tracking import (
     _verify_child_ownership,
 )
 from app.core.taxonomy import map_profile_age_to_band
+from app.services import child_license, license_alert
 from app.services import child_budget, child_missions, family_agreement
 from app.services import child_token as child_token_service
 
@@ -381,3 +382,83 @@ def child_mission_claim(request: Request, mission_id: int = Query(..., ge=1)):
     if not result["ok"]:
         raise HTTPException(status_code=409, detail={"error": result["reason"]})
     return result
+
+
+# ── Internet licence (Sprint 3, level 1) ───────────────────────────────────
+#
+# The child half is two endpoints and neither of them tells the child whether
+# they were right. That is the whole design: say it back and the exercise
+# becomes a puzzle to brute-force until the green light appears, which
+# measures persistence rather than judgement.
+
+
+@router.get("/value-tracking/child-mode/license/today", response_model=dict)
+def child_license_today(request: Request):
+    """The next situation to think about, or None when this level is done."""
+    child_id = _get_child_id(request)
+    device_id = _require_device_id(request)
+
+    level_key = child_license.current_level(child_id)
+    child_license.ensure_level(device_id, child_id, level_key)
+    scenario = child_license.next_scenario(child_id, level_key)
+
+    # The child sees the situation and the choices. `outcome`, `alerts_parent`
+    # and `talking_point_ar` are the parent's half and are stripped here — a
+    # payload that carries the answer is an answer key.
+    public = None
+    if scenario is not None:
+        public = {
+            "key": scenario["key"],
+            "situation_ar": scenario["situation_ar"],
+            "choices": [
+                {"key": c["key"], "text_ar": c["text_ar"]}
+                for c in scenario.get("choices", [])
+            ],
+        }
+
+    return {
+        "level_key": level_key,
+        "scenario": public,
+        "progress": child_license.progress(child_id, level_key),
+    }
+
+
+@router.post("/value-tracking/child-mode/license/answer", response_model=dict)
+def child_license_answer(request: Request,
+                         scenario_key: str = Query(..., min_length=2),
+                         choice_key: str = Query(..., min_length=2)):
+    """Record the child's choice, and alert the parent when the situation
+    warrants it — including when the child answered it well.
+
+    A child who chose correctly in a grooming scenario may be living through
+    one. The plan is explicit that the alert is about meeting the situation,
+    not about failing it.
+    """
+    child_id = _get_child_id(request)
+    device_id = _require_device_id(request)
+    level_key = child_license.current_level(child_id)
+
+    result = child_license.answer(
+        device_id, child_id, level_key, scenario_key, choice_key
+    )
+    if not result["ok"]:
+        raise HTTPException(status_code=404, detail={"error": result["reason"]})
+
+    if result["alerts_parent"]:
+        # Fire and forget: a failed push must never block a child's screen,
+        # and the answer is already recorded either way.
+        try:
+            sent = license_alert.send_alert(
+                device_id,
+                talking_point=result["talking_point_ar"],
+                critical=result["outcome"] == "critical",
+            )
+            if sent.get("sent"):
+                child_license.mark_alerted(child_id, scenario_key, result["attempt"])
+        except Exception:  # noqa: BLE001 — never surface a push failure here
+            pass
+
+    child_license.refresh_status(device_id, child_id, level_key)
+
+    # Nothing about right or wrong. A test reads this body to keep it so.
+    return {"ok": True, "next": True}

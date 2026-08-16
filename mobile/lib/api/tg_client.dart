@@ -1486,6 +1486,72 @@ class TgClient {
     return body['settled'] as int? ?? 0;
   }
 
+  // ── Internet licence ─────────────────────────────────────────────────────
+
+  /// The next situation to think about. The payload carries no outcome flags —
+  /// the server strips them, because a response that includes the answer is an
+  /// answer key sitting in the client.
+  Future<Map<String, dynamic>> fetchChildLicense(String childToken) async {
+    final uri =
+        Uri.parse('$_baseUrl/api/value-tracking/child-mode/license/today');
+    final resp = await _http
+        .get(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  /// Record a choice. Returns nothing about right or wrong, deliberately.
+  Future<void> answerLicenseScenario({
+    required String childToken,
+    required String scenarioKey,
+    required String choiceKey,
+  }) async {
+    final uri =
+        Uri.parse('$_baseUrl/api/value-tracking/child-mode/license/answer')
+            .replace(queryParameters: {
+      'scenario_key': scenarioKey,
+      'choice_key': choiceKey,
+    });
+    final resp = await _http
+        .post(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+  }
+
+  Future<Map<String, dynamic>> fetchLicenseSummary(int childId) async {
+    final session = await ensureSession();
+    final uri = Uri.parse('$_baseUrl/api/children/$childId/license');
+    final resp = await _http
+        .get(uri, headers: _authHeaders(session.token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  Future<void> recordLicenseTalk(int childId, String levelKey) async {
+    await _licensePost(childId, 'talked', levelKey);
+  }
+
+  /// Throws on 409 — the server refuses a grant before the practice is done
+  /// and the talk is recorded, and the UI shows that refusal rather than
+  /// hiding the button.
+  Future<void> grantLicenseLevel(int childId, String levelKey) async {
+    await _licensePost(childId, 'grant', levelKey);
+  }
+
+  Future<void> _licensePost(int childId, String action, String levelKey) async {
+    final session = await ensureSession();
+    final uri = Uri.parse('$_baseUrl/api/children/$childId/license/$action');
+    final resp = await _http
+        .post(uri,
+            headers: {..._authHeaders(session.token),
+              'Content-Type': 'application/json'},
+            body: jsonEncode({'level_key': levelKey}))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+  }
+
   Future<Map<String, dynamic>> createChildWebClaim(int childId) async {
     final session = await ensureSession();
     final token = session.token;

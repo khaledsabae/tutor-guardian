@@ -875,6 +875,44 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                   ],
                 ),
                 const SizedBox(height: 8),
+                // The internet licence — 10-12 only in v1.
+                //
+                // Not because the policy stops the others: the surface is open
+                // to 13-15 and 16-18 too. It is that the only scenario bank
+                // written so far is `age_band: "10-12"`, and showing a
+                // fifteen-year-old situations pitched at a ten-year-old is a
+                // worse first impression than not showing the button. Widen
+                // this when scenarios_*.json exists for the older bands.
+                if (widget.ageGroup == '10-12')
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () {
+                            final profile = ref.read(activeChildProfileProvider);
+                            _enterChildMode(
+                              childId,
+                              profile?.name ??
+                                  AppLocalizations.of(context).childFallbackName,
+                              surface: 'license',
+                            );
+                          },
+                          icon: const Icon(Icons.shield_outlined),
+                          label: const Text('رخصة الإنترنت'),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => Navigator.of(context)
+                              .push(AppRoutes.parentLicense()),
+                          icon: const Icon(Icons.menu_book_outlined),
+                          label: const Text('نتكلم فيها'),
+                        ),
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 8),
                 Row(
                   children: [
                     Expanded(

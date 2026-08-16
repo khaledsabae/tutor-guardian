@@ -163,6 +163,8 @@ void main() {
     });
   });
 
+  _licenseTests();
+
   group('the off-screen alternatives are real content', () {
     test('every band the age gate can refuse has activities', () {
       // The under-2 refusal carried three activities inside its own message
@@ -182,4 +184,82 @@ class _FixedChildMode extends ChildModeNotifier {
   _FixedChildMode(ChildModeState fixed) : super(TgClient()) {
     state = fixed;
   }
+}
+
+// ── The internet licence (sprint 3, level 1) ───────────────────────────────
+
+/// Source with comment lines stripped.
+///
+/// Substring checks over a whole file match the comment that *explains* the
+/// rule as readily as a violation of it — which is exactly how this test
+/// failed first time, on the docstring saying the screen must never claim
+/// something was unlocked.
+String _codeOnly(String path) => File(path)
+    .readAsLinesSync()
+    .where((l) => !l.trimLeft().startsWith('//'))
+    .join('\n');
+
+void _licenseTests() {
+  group('the licence is an agreement, never a permission', () {
+    test('no parent-facing string claims something was unlocked', () {
+      // The app has no authority over the child's browser, YouTube or
+      // WhatsApp. A screen saying "level 2 unlocked: filtered search" tells a
+      // parent something is protected that is not — and a family that relaxes
+      // supervision on a protection that does not exist is worse off than
+      // with no feature. This reads the screen source rather than trusting
+      // review.
+      final source = _codeOnly('lib/features/license/parent_license_screen.dart');
+      for (final claim in ['فُتح', 'اتفتح', 'صار متاحًا', 'unlocked']) {
+        expect(source.contains(claim), isFalse, reason: 'claims: $claim');
+      }
+      expect(source, contains('اتفاق بينكم'));
+    });
+
+    test('the grant button cannot be reached before the talk is recorded', () {
+      final source =
+          File('lib/features/license/parent_license_screen.dart').readAsStringSync();
+      expect(source, contains('talkedAt == null'));
+    });
+  });
+
+  group('the child is never shown a verdict', () {
+    test('the answer screen has no correct/incorrect branch', () {
+      // Echo the verdict back and the exercise becomes a puzzle to
+      // brute-force until the green light appears — persistence, not
+      // judgement. The acknowledgement is one string for every answer.
+      final source = _codeOnly('lib/features/license/child_license_screen.dart');
+      for (final word in ['صح', 'غلط', 'Colors.green', 'Colors.red', 'correct']) {
+        expect(source.contains(word), isFalse, reason: 'branches on: $word');
+      }
+    });
+
+    test('there is no text field anywhere in the licence surface', () {
+      // The whole reason allow_free_text stays false and the topic whitelist
+      // stayed off the critical path.
+      for (final f in [
+        'lib/features/license/child_license_screen.dart',
+        'lib/features/license/parent_license_screen.dart',
+      ]) {
+        final source = _codeOnly(f);
+        expect(source.contains('TextField'), isFalse, reason: f);
+        expect(source.contains('TextFormField'), isFalse, reason: f);
+      }
+    });
+  });
+
+  group('the safety alert lands somewhere', () {
+    test('the deep-link handler knows /license', () {
+      final source =
+          File('lib/features/deeplink/deep_link_handler.dart').readAsStringSync();
+      expect(source, contains("path == '/license'"));
+      expect(source, contains('AppRoutes.parentLicense()'));
+    });
+
+    test('the server sends that link on its own channel', () {
+      final alert =
+          File('../backend/app/services/license_alert.py').readAsStringSync();
+      expect(alert, contains('"link": "/license"'));
+      expect(alert, contains('almorabbi_safety'));
+    });
+  });
 }

@@ -59,11 +59,15 @@ age_bands:
     session_max_minutes: 20
     allowed_surfaces: ["screen_off", "agreement", "mission", "story", "game", "habit"]
 
+  # `license` مضاف هنا، وليس تخفيفًا لرقم: الميزانيتان كما هما، وسقف السطح
+  # عشر دقائق ضمنهما. السبب أن بنك `cyber` يضع ٦٠ وحدة في هذه الفئة مقابل
+  # ٣٠ في الفئتين اللتين كان السطح مقصورًا عليهما مجتمعتين — وهي الفئة التي
+  # يبدأ فيها الاستخدام الفعلي. راجع plans/sprint3-internet-licence-spec.md §٢.١
   "10-12":
     screen_allowed: true
     daily_budget_minutes: 25
     session_max_minutes: 25
-    allowed_surfaces: ["screen_off", "agreement", "mission", "story", "game", "habit", "drill"]
+    allowed_surfaces: ["screen_off", "agreement", "mission", "story", "game", "habit", "drill", "license"]
 
   "13-15":
     screen_allowed: true
