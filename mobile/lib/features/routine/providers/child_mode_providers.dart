@@ -22,6 +22,10 @@ const kChildModeErrorSessionExpired = 'child_mode_session_expired';
 /// The day's time is spent. Not an error — the UI shows a closing screen.
 const kChildModeBudgetSpent = 'child_mode_budget_spent';
 
+/// No signed family agreement yet, so the only surface that opens is the
+/// agreement itself. The child-mode screen renders it rather than an error.
+const kChildModeAgreementRequired = 'child_mode_agreement_required';
+
 /// Two heartbeats in a row failed to reach the server, so the surface closes.
 ///
 /// The budget is enforced server-side, which is only true while the client is
@@ -166,6 +170,9 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
   /// real failure and keeps its message.
   String _classify(Object e) {
     final text = e.toString();
+    if (text.contains('agreement_required')) {
+      return kChildModeAgreementRequired;
+    }
     if (text.contains('age_not_allowed') ||
         text.contains('budget_exhausted')) {
       return kChildModeBudgetSpent;

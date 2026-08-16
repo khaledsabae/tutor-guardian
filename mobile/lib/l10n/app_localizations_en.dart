@@ -1164,6 +1164,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get routineChildMode => 'Hand device to child (Child Mode)';
 
   @override
+  String get parentDayTitle => 'Their day';
+
+  @override
+  String get agreementTitle => 'Family agreement';
+
+  @override
   String get routineTodayPoints => 'Today\'s Points';
 
   @override
@@ -2022,6 +2028,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get storyAnother => 'Another Story';
+
+  @override
+  String get storyRecordInYourVoice => 'Record it in your voice 🎙️';
+
+  @override
+  String get storyListenScreenOff => 'Listen with the screen off 🌙';
 
   @override
   String storyError(Object error) {

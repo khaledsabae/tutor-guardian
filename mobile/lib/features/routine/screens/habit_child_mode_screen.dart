@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../models/habit_models.dart';
+import '../../agreement/child_agreement_screen.dart';
 import '../providers/child_mode_providers.dart';
 
 /// The child-facing self-reporting screen.
@@ -27,6 +28,14 @@ class HabitChildModeScreen extends ConsumerWidget {
     // hung screen or showing a raw HTTP error.
     if (state.error == kChildModeErrorSessionExpired) {
       return _ExpiredGuard(childId: state.childId);
+    }
+
+    // The server refuses every other surface until the family agreement is
+    // signed, and it names the agreement as the way through. Sending the
+    // child straight there is what makes that refusal an instruction rather
+    // than a dead end — the gate is only a gate if its exit is reachable.
+    if (state.error == kChildModeAgreementRequired) {
+      return const ChildAgreementScreen();
     }
 
     return Scaffold(

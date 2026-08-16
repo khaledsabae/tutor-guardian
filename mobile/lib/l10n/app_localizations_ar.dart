@@ -1142,6 +1142,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get routineChildMode => 'تسليم الجهاز للطفل (وضع الطفل)';
 
   @override
+  String get parentDayTitle => 'يوم الطفل';
+
+  @override
+  String get agreementTitle => 'ميثاق الأسرة';
+
+  @override
   String get routineTodayPoints => 'نقاط اليوم';
 
   @override
@@ -1993,6 +1999,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get storyAnother => 'قصة أخرى';
+
+  @override
+  String get storyRecordInYourVoice => 'سجّلها بصوتك 🎙️';
+
+  @override
+  String get storyListenScreenOff => 'اسمعها والشاشة مطفية 🌙';
 
   @override
   String storyError(Object error) {

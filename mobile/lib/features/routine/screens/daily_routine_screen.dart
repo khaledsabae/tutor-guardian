@@ -737,6 +737,22 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
     );
   }
 
+  /// The parent's day, and the agreement behind it.
+  ///
+  /// Reachable from here because this is where a parent already comes to look
+  /// at a child. A screen with a route and no caller is a screen nobody can
+  /// open — which is how the agreement was written, registered, tested, and
+  /// still unreachable, behind a server gate that required it.
+  Future<void> _openParentDay() async {
+    await Navigator.of(context).push(AppRoutes.parentDay());
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _openAgreement(String childName) async {
+    await Navigator.of(context).push(AppRoutes.agreement(childName: childName));
+    if (mounted) setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final childId = ref.watch(activeChildIdProvider);
@@ -816,6 +832,30 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                   },
                   icon: const Icon(Icons.child_care),
                   label: Text(AppLocalizations.of(context).routineChildMode),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: _openParentDay,
+                        icon: const Icon(Icons.insights_outlined),
+                        label: Text(AppLocalizations.of(context).parentDayTitle),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          final profile = ref.read(activeChildProfileProvider);
+                          _openAgreement(profile?.name ??
+                              AppLocalizations.of(context).childFallbackName);
+                        },
+                        icon: const Icon(Icons.handshake_outlined),
+                        label: Text(AppLocalizations.of(context).agreementTitle),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -2246,6 +2246,18 @@ abstract class AppLocalizations {
   /// **'تسليم الجهاز للطفل (وضع الطفل)'**
   String get routineChildMode;
 
+  /// No description provided for @parentDayTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوم الطفل'**
+  String get parentDayTitle;
+
+  /// No description provided for @agreementTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ميثاق الأسرة'**
+  String get agreementTitle;
+
   /// No description provided for @routineTodayPoints.
   ///
   /// In ar, this message translates to:
@@ -3721,6 +3733,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'قصة أخرى'**
   String get storyAnother;
+
+  /// No description provided for @storyRecordInYourVoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّلها بصوتك 🎙️'**
+  String get storyRecordInYourVoice;
+
+  /// No description provided for @storyListenScreenOff.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمعها والشاشة مطفية 🌙'**
+  String get storyListenScreenOff;
 
   /// No description provided for @storyError.
   ///

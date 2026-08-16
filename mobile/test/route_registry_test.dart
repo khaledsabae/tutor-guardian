@@ -170,4 +170,39 @@ void main() {
       }
     });
   });
+
+  group('every route has a way in', () {
+    /// A screen with a route and no caller is a screen nobody can open.
+    ///
+    /// On 2026-08-16 the family agreement was written, registered, tested and
+    /// merged behind a server gate that required it — and nothing in the app
+    /// navigated to it. The route existed, the tests passed, and the feature
+    /// was unreachable. Checking that routes are *registered* is not the same
+    /// as checking they are *reachable*, and only one of those matters to a
+    /// family standing in front of a locked screen.
+    test('no factory is dead code', () {
+      final source = File('lib/core/app_routes.dart').readAsStringSync();
+      final factories = RegExp(r'static Route<[^>]*> (\w+)\(')
+          .allMatches(source)
+          .map((m) => m.group(1)!)
+          .where((n) => !n.startsWith('_'))
+          .toSet();
+
+      final body = Directory('lib')
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((f) =>
+              f.path.endsWith('.dart') && !f.path.endsWith('app_routes.dart'))
+          .map((f) => f.readAsStringSync())
+          .join('\n');
+
+      final orphans = factories
+          .where((name) => !body.contains('AppRoutes.$name'))
+          .toList()
+        ..sort();
+
+      expect(orphans, isEmpty,
+          reason: 'these routes exist but nothing opens them: $orphans');
+    });
+  });
 }

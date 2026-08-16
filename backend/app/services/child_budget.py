@@ -56,6 +56,23 @@ _HEARTBEAT_CHARGE_INTERVALS = 2
 _ROLLING_WINDOW = timedelta(hours=24)
 
 
+def agreement_required() -> bool:
+    """Whether a signed agreement gates the child surface. **Default off.**
+
+    The gate itself is correct and tested. What it cannot survive is arriving
+    before its own exit: the signing screens live in the Flutter app, the app
+    on Play is an older build without them, and a server-side gate applies to
+    every client at once. Turning this on before that release reaches devices
+    locks out every family with no way back in — which is exactly what shipping
+    it on 2026-08-16 would have done, and did not only because the deploy was
+    cancelled with four minutes to spare.
+
+    Flip it to true once the Play build carrying the agreement screens is the
+    minimum version. Not before.
+    """
+    return os.environ.get("AGREEMENT_REQUIRED", "").strip().lower() in {"1", "true", "yes"}
+
+
 def child_surface_enabled() -> bool:
     """The kill switch. Set CHILD_SURFACE_ENABLED=false and restart.
 
@@ -262,7 +279,9 @@ def open_session(device_id: str, child_id: int, surface: str,
         # bank exists for the band: no bank, nothing to agree to, no gate —
         # and writing clauses_10-12.json later turns it on for that band with
         # no code change.
-        gated = bool(family_agreement.load_clause_bank(band_name))
+        gated = agreement_required() and bool(
+            family_agreement.load_clause_bank(band_name)
+        )
         if gated and surface != "agreement" and not family_agreement.has_active_agreement(
             device_id, child_id
         ):

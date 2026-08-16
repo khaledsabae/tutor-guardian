@@ -16,6 +16,8 @@ import '../../widgets/ui/bouncy_button.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 import '../onboarding/providers/onboarding_providers.dart';
+import '../../core/app_routes.dart';
+import '../screen_off/narration_store.dart';
 import 'coins_providers.dart';
 
 const _themes = <(String, String, String)>[
@@ -41,6 +43,17 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
   String? _theme;
   bool _loading = false;
   String? _story;
+  bool _hasNarration = false;
+
+  /// A stable handle for this story so a recording can be found again. The
+  /// theme is enough: one recording per value, which is what a family will
+  /// actually make.
+  String get _storyKey => 'story_${_theme ?? "none"}';
+
+  Future<void> _refreshNarration() async {
+    final found = await NarrationStore.instance.find(_storyKey);
+    if (mounted) setState(() => _hasNarration = found != null);
+  }
 
   // Stories are free. They used to cost 50 coins, which made the reward for
   // engaging with the app more time inside the app — the exact loop the rest
@@ -64,6 +77,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
           );
       unawaited(Analytics.storyGenerated(theme));
       if (mounted) setState(() => _story = story);
+      await _refreshNarration();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -154,6 +168,39 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
                 style: const TextStyle(fontSize: 16, height: 1.9),
               ),
             ),
+            const SizedBox(height: 16),
+            // The bridge, not the substitute: a parent reads it once and the
+            // child hears it in their voice afterwards — including on nights
+            // the parent is not there.
+            OutlinedButton.icon(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  AppRoutes.recordNarration(
+                      storyKey: _storyKey, storyText: _story ?? ''),
+                );
+                await _refreshNarration();
+              },
+              icon: const Icon(Icons.mic),
+              label: Text(AppLocalizations.of(context).storyRecordInYourVoice),
+            ),
+            if (_hasNarration) ...[
+              const SizedBox(height: 8),
+              OutlinedButton.icon(
+                onPressed: () async {
+                  final found = await NarrationStore.instance.find(_storyKey);
+                  if (found == null || !context.mounted) return;
+                  await Navigator.push(
+                    context,
+                    AppRoutes.screenOffPlayer(
+                        title: AppLocalizations.of(context).storyTitle,
+                        source: found.path),
+                  );
+                },
+                icon: const Icon(Icons.nightlight_round),
+                label: Text(AppLocalizations.of(context).storyListenScreenOff),
+              ),
+            ],
             const SizedBox(height: 16),
             BouncyButton(
               label: AppLocalizations.of(context).storyAnother,

@@ -432,7 +432,8 @@ def test_the_qr_web_claim_is_age_gated_like_the_front_door(client):
 
 # ── The agreement is the frame, so it is the entry condition ───────────────
 
-def test_without_an_agreement_only_the_agreement_opens(client):
+def test_without_an_agreement_only_the_agreement_opens(client, monkeypatch):
+    monkeypatch.setenv("AGREEMENT_REQUIRED", "true")
     cid = _child_without_agreement(client)
     refused = _open(client, cid, surface="story")
     assert refused.status_code == 403
@@ -442,7 +443,8 @@ def test_without_an_agreement_only_the_agreement_opens(client):
     assert allowed.status_code == 200
 
 
-def test_signing_it_opens_the_rest(client):
+def test_signing_it_opens_the_rest(client, monkeypatch):
+    monkeypatch.setenv("AGREEMENT_REQUIRED", "true")
     cid = _child_without_agreement(client)
     assert _open(client, cid, surface="story").status_code == 403
     _sign_agreement(client, cid)
@@ -531,7 +533,8 @@ def test_another_devices_agreement_is_not_reachable(client, tmp_db):
     assert client.get(f"/api/children/{foreign}/agreement").status_code == 404
 
 
-def test_a_toddler_is_not_asked_to_sign_anything(client):
+def test_a_toddler_is_not_asked_to_sign_anything(client, monkeypatch):
+    monkeypatch.setenv("AGREEMENT_REQUIRED", "true")
     """A two-year-old cannot read a clause. Their band has no clause bank, so
     the gate does not apply and audio still opens."""
     cid = _child_without_agreement(client, "2-3")
@@ -603,3 +606,22 @@ def test_the_day_summary_needs_to_own_the_child(client, tmp_db):
     finally:
         conn.close()
     assert client.get(f"/api/children/{foreign}/today").status_code == 404
+
+
+def test_the_gate_is_off_by_default(client):
+    """The reason this flag exists: the signing screens live in the app, the
+    app on Play is an older build without them, and a server-side gate reaches
+    every client at once. On by default would lock out every family with no
+    way back in — which is what 2026-08-16 nearly shipped."""
+    cid = _child_without_agreement(client)
+    assert _open(client, cid, surface="story").status_code == 200
+
+
+def test_a_typo_does_not_turn_the_gate_on(client, monkeypatch):
+    from app.services import child_budget as cb
+    for value in ("", "ture", "0", "no", "off"):
+        monkeypatch.setenv("AGREEMENT_REQUIRED", value)
+        assert cb.agreement_required() is False, value
+    for value in ("1", "true", "TRUE", "yes"):
+        monkeypatch.setenv("AGREEMENT_REQUIRED", value)
+        assert cb.agreement_required() is True, value
