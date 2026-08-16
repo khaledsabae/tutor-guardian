@@ -207,6 +207,20 @@ async def main():
     ap.add_argument("--lang", default=SOURCE_LANG, choices=sorted(AUDIO_CLI_LANG))
     ap.add_argument("--limit", type=int, help="cap triggers this run")
     ap.add_argument("--dry-run", action="store_true")
+    # 🚨 Collect what is already paid for, without spending anything.
+    #
+    # Step 1 polls in-flight tasks and step 2 triggers new ones, and until now
+    # there was no way to run the first without the second. That is not a
+    # convenience gap — it is self-defeating. Triggering hits the daily
+    # ceiling, hitting the ceiling KILLS the session (measured 2026-08-16),
+    # and a dead session makes every poll in step 1 return "error". So the run
+    # that was meant to collect 20 finished episodes destroyed its own ability
+    # to collect them, and reported exit 0 while downloading nothing.
+    #
+    # Those 20 are already charged against the quota and sitting completed on
+    # Google's servers. --harvest-only downloads them and stops.
+    ap.add_argument("--harvest-only", action="store_true",
+                    help="download in-flight tasks; trigger nothing")
     args = ap.parse_args()
     lang = args.lang
 
@@ -240,6 +254,13 @@ async def main():
         elif st == "failed":
             state.pop(key, None)
         # "error"/auth-expiry: keep for next run
+
+    if args.harvest_only:
+        STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2),
+                              encoding="utf-8")
+        left = sum(1 for k in state if _split_key(k)[1] == lang)
+        print(f"\n[harvest-only] nothing triggered · {left} still in flight")
+        return
 
     # 2) trigger pending — one rate-limit ends the run; cron resumes
     #
