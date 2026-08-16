@@ -5,6 +5,11 @@ services:
       dockerfile: backend/Dockerfile
     container_name: tg_backend
     restart: unless-stopped
+    # deploy.yml runs `up -d --no-build --remove-orphans backend`, naming this
+    # service alone. Redis has to be a dependency of it or the deploy would
+    # never start the store, and --remove-orphans would reap a hand-started one.
+    depends_on:
+      - redis
     # Resource guardrails on a shared VPS (analytics_nginx runs on same host).
     # Current steady usage ~1.2 GB; 4 GB gives headroom for model warm-up + Chroma
     # spikes while protecting neighbouring services from OOM. Two cores keep
@@ -61,17 +66,31 @@ services:
       retries: 3
       start_period: 90s   # extra time for ONNX warm-up + ChromaDB index load
 
-  # Optional Redis for distributed rate-limiting.
-  # Enable with: docker compose --profile with-redis up -d
+  # The rate-limit store. NOT optional any more: without it the 20/day AI quota
+  # lives in one process's memory and every deploy hands every device a fresh
+  # 20 — the ceiling the product advertises was never a ceiling. It sat behind
+  # `profiles: ["with-redis"]` and was therefore never once started.
+  #
+  # Reachable from the backend as `tg_redis` ONLY. Do not use the bare host
+  # `redis`: tg_backend also sits on analytics-platform_production_network,
+  # where analytics_redis holds the alias `redis` — that name resolves to the
+  # neighbouring product's password-protected store, which would fail AUTH and
+  # drop us silently back to the in-memory fallback.
   redis:
     image: redis:7-alpine
     container_name: tg_redis
     restart: unless-stopped
-    profiles: ["with-redis"]
+    # Quota counters, not a system of record — but appendonly keeps a same-day
+    # restart from zeroing them, which is the entire point of this service.
+    command: ["redis-server", "--appendonly", "yes"]
     networks:
       - internal
     volumes:
       - tg_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      retries: 3
 
 volumes:
   tg_sessions:

@@ -14,6 +14,13 @@ requests>=2.32
 # ── Crypto (E2E sync payloads — crypto_sync.py imports it directly) ──
 cryptography>=42
 
+# ── Rate-limit store ──
+# Without this, rate_limit.py catches the ImportError and falls back to the
+# in-memory store even when REDIS_URL is set — so the daily AI quota resets
+# on every restart while the config claims otherwise. The env var alone is
+# not the fix; the dependency has to be in the image.
+redis>=5.0
+
 # ── AI / Vector DB ──
 # ⚠️ HOLD at <1: the prod tg_chroma volume is 0.6-format. Bumping to 1.x must
 # be its own planned migration (volume backup + reindex verify in candidate
