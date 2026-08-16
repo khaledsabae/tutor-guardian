@@ -383,11 +383,21 @@ void _regressionTests() {
       expect(source, contains('messengerKey'));
     });
 
-    test('an empty clause bank does not ask the parent to pick something', () {
-      // The bank exists for 7-9 only. Every other band saw an empty page and
-      // was told to select at least one clause from it.
+    test('an empty clause bank explains itself on arrival', () {
+      // Three states, one screen, and I got it wrong twice. First it told
+      // parents to pick a clause from an empty page. Then 1.0.43 hid the
+      // signature pad when there were no clauses — correct in isolation, but
+      // the explanation only appeared *after* pressing save, and save was
+      // inside the block that had just been hidden. A title and nothing else.
+      //
+      // The empty state has to render on arrival, without any interaction.
       final source = _codeOnly('lib/features/agreement/agreement_screen.dart');
-      expect(source, contains('_pairs.isEmpty'));
+      expect(source, contains('!_loading && _pairs.isEmpty'),
+          reason: 'the empty state must render before any button is pressed');
+      // And it must not sit behind the save handler.
+      final saveHandler = source.split('_saveAndSign() async')[1].split('\n  }')[0];
+      expect(saveHandler.contains('لسنّ ٧–٩'), isFalse,
+          reason: 'an explanation reachable only by pressing save is unreachable');
     });
   });
 }

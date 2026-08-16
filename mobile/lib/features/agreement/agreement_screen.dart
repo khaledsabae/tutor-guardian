@@ -91,13 +91,11 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
     if (childId == null) return;
     final clauses = _clausesToSend();
     if (clauses.isEmpty) {
-      // Two very different states used to print the same sentence. A clause
-      // bank exists only for 7-9 today, so a parent of any other age saw an
-      // empty page and was told to pick something from it — an instruction
-      // they could not follow, on a screen with nothing to pick.
-      setState(() => _error = _pairs.isEmpty
-          ? 'مافيش بنود جاهزة لسنّ ابنك لسه. الميثاق متاح دلوقتي لسنّ ٧–٩.'
-          : 'اخترت إنك تشيل كل البنود. سيب بند واحد على الأقل.');
+      // Only one state can reach here now: a parent who unticked every pair.
+      // The empty-bank case renders its own explanation on arrival and never
+      // shows this button at all — putting the explanation behind a press was
+      // the bug in 1.0.43.
+      setState(() => _error = 'اخترت إنك تشيل كل البنود. سيب بند واحد على الأقل.');
       return;
     }
     setState(() { _loading = true; _error = null; });
@@ -138,12 +136,38 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
                   Text(_error!, style: const TextStyle(color: Colors.red)),
                   const SizedBox(height: 12),
                 ],
-                const Text(
-                  'كل بند على ابنك يقابله بند عليك. ده اللي بيخلّيه ميثاقًا '
-                  'مش قائمة أوامر — وابنك هيقيسه عليك في أول يوم.',
-                  style: TextStyle(height: 1.7),
-                ),
-                const SizedBox(height: 16),
+                // An empty bank, said at the top rather than after a button.
+                //
+                // 1.0.43 hid the signature pad when there were no clauses,
+                // which was right on its own and wrong in combination: the
+                // explanation only appeared once the save button was pressed,
+                // and the save button was inside the block that had just been
+                // hidden. The result was a screen with a title and nothing
+                // else at all — worse than what it replaced.
+                //
+                // A clause bank exists for 7-9 only; every other band lands
+                // here, and this is the whole content of the screen for them.
+                if (!_loading && _pairs.isEmpty) ...[
+                  const Text('🕊️', style: TextStyle(fontSize: 44)),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'الميثاق متاح دلوقتي لسنّ ٧–٩ بس.\n\n'
+                    'البنود بتتكتب لكل سنّ لوحدها — بند لطفل سبع سنين مش '
+                    'نفس البند لابن اتناشر، وميثاق بكلام مش مناسب لسنّه '
+                    'بيتوقّع ويتنسي.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(height: 1.9),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+                if (_pairs.isNotEmpty) ...[
+                  const Text(
+                    'كل بند على ابنك يقابله بند عليك. ده اللي بيخلّيه ميثاقًا '
+                    'مش قائمة أوامر — وابنك هيقيسه عليك في أول يوم.',
+                    style: TextStyle(height: 1.7),
+                  ),
+                  const SizedBox(height: 16),
+                ],
                 RepaintBoundary(
                   key: _boundaryKey,
                   child: Container(
