@@ -11,6 +11,7 @@ import '../../../theme/app_theme.dart';
 import '../models/reciters.dart';
 import '../models/surah_names.dart';
 import '../providers/quran_providers.dart';
+import '../../screen_off/audio_tag.dart';
 
 /// The daily wird (portion) target — at least this many verses.
 const int kDailyWirdVerses = 10;
@@ -190,7 +191,16 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
     try {
       // Stable streaming source (everyayah CDN). Kept on the non-experimental
       // just_audio API on purpose — correctness/reliability first for Quran.
-      await _player.setUrl(_ayahUrl(_currentChapter, verse));
+      // Tagged because JustAudioBackground.init() is global: without a tag
+      // this throws, which is how enabling background audio for the
+      // screen-off mode silently broke recitation everywhere else.
+      await _player.setAudioSource(AudioSource.uri(
+        Uri.parse(_ayahUrl(_currentChapter, verse)),
+        tag: audioTag(
+          id: _ayahUrl(_currentChapter, verse),
+          title: 'سورة $_currentChapter — آية $verse',
+        ),
+      ));
       if (token != _playToken || !mounted) return; // superseded by a newer tap
       await _player.play();
     } catch (_) {

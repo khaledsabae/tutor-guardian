@@ -14,6 +14,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:record/record.dart';
 
 import 'narration_store.dart';
+import 'audio_tag.dart';
 
 class RecordNarrationScreen extends StatefulWidget {
   const RecordNarrationScreen({
@@ -84,7 +85,10 @@ class _RecordNarrationScreenState extends State<RecordNarrationScreen> {
 
   Future<void> _preview() async {
     if (_path == null) return;
-    await _player.setFilePath(_path!);
+    await _player.setAudioSource(AudioSource.file(
+      _path!,
+      tag: audioTag(id: _path!, title: 'معاينة التسجيل'),
+    ));
     await _player.play();
   }
 

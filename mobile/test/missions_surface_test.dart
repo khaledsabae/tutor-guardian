@@ -207,6 +207,7 @@ void main() {
 
   _licenseTests();
   _regressionTests();
+  _audioTagTests();
 
   group('the off-screen alternatives are real content', () {
     test('every band the age gate can refuse has activities', () {
@@ -416,6 +417,35 @@ void _regressionTests() {
       // was told to select at least one clause from it.
       final source = _codeOnly('lib/features/agreement/agreement_screen.dart');
       expect(source, contains('_pairs.isEmpty'));
+    });
+  });
+}
+
+void _audioTagTests() {
+  group('every audio source carries a tag', () {
+    // JustAudioBackground.init() is global. Once it runs, an AudioSource with
+    // no MediaItem throws — so turning background playback on for the
+    // screen-off mode broke four players that had worked for months: Qur'an
+    // recitation, the podcast, the bedtime ambience and the narration
+    // preview. None of them had ever needed a tag before, and nothing in the
+    // suite noticed.
+    test('no untagged setUrl / setAsset / setFilePath survives anywhere', () {
+      final offenders = <String>[];
+      for (final f in Directory('lib').listSync(recursive: true)) {
+        if (f is! File || !f.path.endsWith('.dart')) continue;
+        final src = f.readAsStringSync();
+        for (final call in ['setUrl(', 'setAsset(', 'setFilePath(']) {
+          if (src.contains('_player.$call') || src.contains('_player!.$call')) {
+            offenders.add('${f.path} → $call');
+          }
+        }
+      }
+      expect(offenders, isEmpty,
+          reason: 'these throw under JustAudioBackground:\n${offenders.join("\n")}');
+    });
+
+    test('background audio is initialised, which is what makes that true', () {
+      expect(_codeOnly('lib/main.dart'), contains('JustAudioBackground.init('));
     });
   });
 }
