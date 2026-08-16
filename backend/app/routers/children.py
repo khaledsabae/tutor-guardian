@@ -36,7 +36,7 @@ from pydantic import BaseModel, Field, field_validator
 from app.config.guardrails_loader import load_child_surface_policy
 from app.core.taxonomy import CANONICAL_AGE_GROUPS, map_profile_age_to_band
 from app.db.init_db import get_conn
-from app.services import child_budget
+from app.services import child_budget, child_missions, family_agreement
 from app.services.coach_service import CHALLENGE_TOPICS
 
 router = APIRouter()
@@ -686,5 +686,204 @@ def delete_child(child_id: int, request: Request):
             "deleted": True,
             "deleted_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
         }
+    finally:
+        conn.close()
+
+
+# ── Family media agreement ─────────────────────────────────────────────────
+
+class AgreementClauseIn(BaseModel):
+    applies_to: str = Field(pattern="^(child|parent|both)$")
+    text_ar: str = Field(min_length=1, max_length=400)
+    clause_key: Optional[str] = None
+    is_custom: bool = False
+    sort_order: int = 0
+
+
+class AgreementDraftIn(BaseModel):
+    clauses: list[AgreementClauseIn] = Field(min_length=1, max_length=40)
+
+
+@router.get(
+    "/children/{child_id}/agreement/clauses/suggested",
+    summary="Suggested clause pairs for the child's age band",
+)
+def suggested_agreement_clauses(child_id: int, request: Request):
+    """Pairs, always. The UI shows the parent's clause next to the child's so
+    the trade is visible while they edit rather than discovered after."""
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        age_group = conn.execute(
+            "SELECT age_group FROM child_profiles WHERE id = ?", (child_id,)
+        ).fetchone()["age_group"]
+    finally:
+        conn.close()
+    band = map_profile_age_to_band(age_group)
+    return {"child_id": child_id, "age_band": band,
+            "pairs": family_agreement.load_clause_bank(band),
+            "clauses": family_agreement.suggested_clauses(band)}
+
+
+@router.get("/children/{child_id}/agreement", summary="The child's agreement")
+def get_agreement(child_id: int, request: Request):
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+    finally:
+        conn.close()
+    return {"child_id": child_id,
+            "agreement": family_agreement.get_current(device_id, child_id)}
+
+
+@router.post("/children/{child_id}/agreement", summary="Create or replace the draft")
+def put_agreement_draft(child_id: int, body: AgreementDraftIn, request: Request):
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+    finally:
+        conn.close()
+
+    result = family_agreement.save_draft(
+        device_id, child_id, [c.model_dump() for c in body.clauses]
+    )
+    if not result["ok"]:
+        # 422 rather than 400: the draft is well-formed JSON that fails a rule
+        # about what an agreement is, and the message names which rule.
+        raise HTTPException(status_code=422, detail={
+            "error": result["reason"],
+            "message_key": f"agreement.{result['reason']}",
+        })
+    return result["agreement"]
+
+
+@router.post("/children/{child_id}/agreement/sign", summary="Parent signs the draft")
+def sign_agreement_as_parent(child_id: int, request: Request):
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+    finally:
+        conn.close()
+
+    result = family_agreement.sign(device_id, child_id, "parent")
+    if not result["ok"]:
+        raise HTTPException(status_code=409, detail={"error": result["reason"]})
+    return result
+
+
+# ── The parent's evening: one card, one button ─────────────────────────────
+
+class MissionConfirmItem(BaseModel):
+    mission_id: int
+    confirmed: bool = True
+    note: Optional[str] = Field(default=None, max_length=280)
+
+
+class MissionConfirmIn(BaseModel):
+    items: list[MissionConfirmItem] = Field(min_length=1, max_length=50)
+
+
+@router.get("/children/missions/pending",
+            summary="Every mission across every child that is waiting on the parent")
+def pending_missions(request: Request):
+    device_id = _require_device_id(request)
+    return {"pending": child_missions.pending_for_device(device_id)}
+
+
+@router.post("/children/missions/confirm",
+             summary="Settle several missions at once")
+def confirm_missions(body: MissionConfirmIn, request: Request):
+    """A parent with three children presses one button, not six.
+
+    Batching is the feature: the evening notification opens onto a list, and
+    a confirmation flow that costs one tap per child is a flow that gets
+    abandoned by the second child.
+    """
+    device_id = _require_device_id(request)
+    result = child_missions.confirm_batch(
+        device_id, [i.model_dump() for i in body.items]
+    )
+    return result
+
+
+@router.get("/children/{child_id}/today",
+            summary="The parent's one-screen view of a child's day")
+def child_day_summary(child_id: int, request: Request,
+                      tz_offset_minutes: int = 0):
+    """Screen, listening, the mission, the agreement — on one card.
+
+    Assembled server-side so the app makes one call rather than four, and so
+    the numbers a parent compares are computed from the same instant.
+
+    Screen and listening stay separate all the way out. Adding them recreates
+    the single "hours today" figure this whole feature exists to argue
+    against: forty minutes of a dark screen and a recitation is not the same
+    thing as forty minutes of a game.
+    """
+    device_id = _require_device_id(request)
+    conn = get_conn()
+    try:
+        _load_owned_child(conn, child_id, device_id)
+        row = conn.execute(
+            "SELECT name, age_group FROM child_profiles WHERE id = ?", (child_id,)
+        ).fetchone()
+    finally:
+        conn.close()
+
+    policy = getattr(request.app.state, "child_surface_policy", None) \
+        or load_child_surface_policy()
+    band_name = map_profile_age_to_band(row["age_group"])
+    band = policy.band(band_name)
+    now = datetime.now(timezone.utc)
+    local_date = child_budget.local_date_for(now, tz_offset_minutes)
+    usage = child_budget.today_usage(child_id, local_date, policy)
+
+    agreement = family_agreement.get_active(device_id, child_id)
+    mission = child_missions.today_mission(device_id, child_id, band_name, local_date)
+
+    month_start = local_date[:8] + "01"
+    leverage = child_missions.leverage(
+        child_id, month_start, screen_seconds=_month_screen_seconds(child_id, month_start)
+    )
+
+    return {
+        "child_id": child_id,
+        "child_name": row["name"],
+        "date": local_date,
+        "band": band_name,
+        "screen": {
+            "counted_seconds": usage["counted_seconds"],
+            "budget_seconds": band.daily_budget_minutes * 60,
+        },
+        "listening": {
+            "counted_seconds": usage["screen_off_seconds"],
+            "budget_seconds": band.screen_off_daily_budget_minutes * 60,
+        },
+        "mission": mission,
+        "agreement": None if agreement is None else {
+            "status": agreement["status"],
+            "next_review_date": agreement["next_review_date"],
+            "review_due": agreement["review_due"],
+            "clauses_on_parent": agreement["clauses_on_parent"],
+            "clauses_on_child": agreement["clauses_on_child"],
+        },
+        "month": leverage,
+    }
+
+
+def _month_screen_seconds(child_id: int, month_start: str) -> int:
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT COALESCE(SUM(counted_seconds), 0) AS s "
+            "FROM child_screen_sessions WHERE child_id = ? AND local_date >= ? "
+            "AND surface NOT IN ('screen_off', 'agreement')",
+            (child_id, month_start),
+        ).fetchone()
+        return int(row["s"])
     finally:
         conn.close()

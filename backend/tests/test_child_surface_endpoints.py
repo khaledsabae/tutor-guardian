@@ -61,10 +61,39 @@ def client(tmp_db):
         yield c
 
 
-def _child(client, age_group="7-9") -> int:
+def _child_without_agreement(client, age_group="7-9") -> int:
     r = client.post("/api/children", json={"name": "أحمد", "age_group": age_group})
     assert r.status_code == 201, r.text
     return r.json()["id"]
+
+
+def _child(client, age_group="7-9") -> int:
+    """A child whose family has signed the media agreement.
+
+    Since Sprint 2 the agreement is an entry condition, so a child without one
+    can open nothing but the agreement itself. Most tests here are about what
+    happens *after* that, so this helper puts them past it; the gate itself is
+    tested with `_child_without_agreement`.
+    """
+    child_id = _child_without_agreement(client, age_group)
+    if age_group in ("prenatal-1", "0-3", "unspecified", "2-3"):
+        return child_id  # the age gate refuses before the agreement matters
+    _sign_agreement(client, child_id)
+    return child_id
+
+
+def _sign_agreement(client, child_id: int) -> None:
+    from app.services import family_agreement
+
+    suggested = client.get(f"/api/children/{child_id}/agreement/clauses/suggested")
+    clauses = suggested.json()["clauses"][:4]
+    draft = client.post(f"/api/children/{child_id}/agreement", json={"clauses": clauses})
+    assert draft.status_code == 200, draft.text
+    for c in draft.json()["clauses"]:
+        if c["applies_to"] in ("child", "both"):
+            family_agreement.acknowledge_clause(DEVICE, child_id, c["id"])
+    client.post(f"/api/children/{child_id}/agreement/sign")
+    family_agreement.sign(DEVICE, child_id, "child")
 
 
 def _open(client, child_id, surface="story", tz=180):
@@ -245,6 +274,20 @@ def _make_child(age_group="7-9") -> int:
         conn.close()
 
 
+def _sign_agreement_directly(child_id: int) -> None:
+    """The service path, for tests that have no HTTP client for the parent."""
+    from app.services import family_agreement
+    band = "7-9"
+    family_agreement.save_draft(DEVICE, child_id,
+                                family_agreement.suggested_clauses(band)[:4])
+    current = family_agreement.get_current(DEVICE, child_id)
+    for c in current["clauses"]:
+        if c["applies_to"] in ("child", "both"):
+            family_agreement.acknowledge_clause(DEVICE, child_id, c["id"])
+    family_agreement.sign(DEVICE, child_id, "parent")
+    family_agreement.sign(DEVICE, child_id, "child")
+
+
 def test_a_valid_token_without_a_live_session_is_refused(guarded_client):
     """The case the TTL clamp alone does not cover: the budget ran out at
     minute ten and the token is good until minute twenty."""
@@ -259,6 +302,7 @@ def test_a_valid_token_without_a_live_session_is_refused(guarded_client):
 
 def test_the_same_token_works_once_a_session_is_open(guarded_client):
     cid = _make_child()
+    _sign_agreement_directly(cid)
     policy = load_child_surface_policy()
     token = child_token.issue_child_token(DEVICE, cid, ttl_seconds=1800)
     opened = child_budget.open_session(DEVICE, cid, "story", 180, policy)
@@ -272,6 +316,7 @@ def test_the_same_token_works_once_a_session_is_open(guarded_client):
 
 def test_closing_the_session_shuts_the_door_again(guarded_client):
     cid = _make_child()
+    _sign_agreement_directly(cid)
     policy = load_child_surface_policy()
     token = child_token.issue_child_token(DEVICE, cid, ttl_seconds=1800)
     opened = child_budget.open_session(DEVICE, cid, "story", 180, policy)
@@ -383,3 +428,178 @@ def test_the_qr_web_claim_is_age_gated_like_the_front_door(client):
     r = client.post("/api/child-web/claim-session", params={"claim": code})
     assert r.status_code == 403
     assert r.json()["detail"]["error"] == "age_not_allowed"
+
+
+# ── The agreement is the frame, so it is the entry condition ───────────────
+
+def test_without_an_agreement_only_the_agreement_opens(client):
+    cid = _child_without_agreement(client)
+    refused = _open(client, cid, surface="story")
+    assert refused.status_code == 403
+    assert refused.json()["detail"]["error"] == "agreement_required"
+
+    allowed = _open(client, cid, surface="agreement")
+    assert allowed.status_code == 200
+
+
+def test_signing_it_opens_the_rest(client):
+    cid = _child_without_agreement(client)
+    assert _open(client, cid, surface="story").status_code == 403
+    _sign_agreement(client, cid)
+    assert _open(client, cid, surface="story").status_code == 200
+
+
+def test_the_age_gate_still_comes_first(client):
+    """An infant with a signed agreement is still an infant. Order matters:
+    age is refused before the agreement is even considered."""
+    infant = _child_without_agreement(client, "prenatal-1")
+    r = _open(client, infant, surface="agreement")
+    assert r.status_code == 403
+    assert r.json()["detail"]["error"] == "age_not_allowed"
+
+
+def test_reading_the_agreement_costs_the_child_nothing(client):
+    cid = _child_without_agreement(client)
+    opened = _open(client, cid, surface="agreement").json()
+    assert opened["remaining_today"] == 20 * 60
+
+
+def test_a_child_cannot_sign_clauses_they_have_not_read(client):
+    cid = _child_without_agreement(client)
+    suggested = client.get(f"/api/children/{cid}/agreement/clauses/suggested").json()
+    client.post(f"/api/children/{cid}/agreement",
+                json={"clauses": suggested["clauses"][:4]})
+    session = _open(client, cid, surface="agreement").json()
+    r = client.post("/api/value-tracking/child-mode/agreement/sign",
+                    headers={"Authorization": f"Child-Bearer {session['token']}"})
+    assert r.status_code == 409
+    assert r.json()["detail"]["error"] == "clauses_not_acknowledged"
+
+
+def test_the_child_reads_and_signs_from_inside_child_mode(client):
+    cid = _child_without_agreement(client)
+    suggested = client.get(f"/api/children/{cid}/agreement/clauses/suggested").json()
+    client.post(f"/api/children/{cid}/agreement",
+                json={"clauses": suggested["clauses"][:4]})
+    client.post(f"/api/children/{cid}/agreement/sign")
+
+    session = _open(client, cid, surface="agreement").json()
+    headers = {"Authorization": f"Child-Bearer {session['token']}"}
+
+    read = client.get("/api/value-tracking/child-mode/agreement", headers=headers)
+    assert read.status_code == 200
+    for c in read.json()["agreement"]["clauses"]:
+        if c["applies_to"] in ("child", "both"):
+            ack = client.post("/api/value-tracking/child-mode/agreement/acknowledge",
+                              params={"clause_id": c["id"]}, headers=headers)
+            assert ack.status_code == 200
+
+    signed = client.post("/api/value-tracking/child-mode/agreement/sign",
+                         headers=headers)
+    assert signed.status_code == 200
+    assert signed.json()["activated"] is True
+
+
+def test_a_one_sided_draft_is_refused_over_http(client):
+    cid = _child_without_agreement(client)
+    r = client.post(f"/api/children/{cid}/agreement", json={"clauses": [
+        {"applies_to": "child", "text_ar": "مافيش جهاز على السفرة"},
+    ]})
+    assert r.status_code == 422
+    assert r.json()["detail"]["error"] == "nothing_on_the_parent"
+
+
+def test_suggested_clauses_come_in_pairs_over_http(client):
+    cid = _child(client)
+    body = client.get(f"/api/children/{cid}/agreement/clauses/suggested").json()
+    assert body["age_band"] == "7-9"
+    for pair in body["pairs"]:
+        assert pair["child"] and pair["parent"]
+
+
+def test_another_devices_agreement_is_not_reachable(client, tmp_db):
+    conn = get_conn()
+    try:
+        cur = conn.execute(
+            "INSERT INTO child_profiles (device_id, name, age_group) VALUES (?, ?, ?)",
+            ("someone-else", "طفل", "7-9"),
+        )
+        conn.commit()
+        foreign = cur.lastrowid
+    finally:
+        conn.close()
+    assert client.get(f"/api/children/{foreign}/agreement").status_code == 404
+
+
+def test_a_toddler_is_not_asked_to_sign_anything(client):
+    """A two-year-old cannot read a clause. Their band has no clause bank, so
+    the gate does not apply and audio still opens."""
+    cid = _child_without_agreement(client, "2-3")
+    assert _open(client, cid, surface="screen_off").status_code == 200
+
+
+# ── The parent's one screen ────────────────────────────────────────────────
+
+def test_the_day_summary_keeps_screen_and_listening_apart(client):
+    """Adding them recreates the single 'hours today' figure the whole
+    feature argues against."""
+    cid = _child(client)
+    policy = load_child_surface_policy()
+
+    watched = _open(client, cid, surface="story").json()
+    child_budget.close_session(watched["session_id"], "completed", policy)
+    listened = _open(client, cid, surface="screen_off").json()
+    child_budget.close_session(listened["session_id"], "completed", policy)
+
+    r = client.get(f"/api/children/{cid}/today", params={"tz_offset_minutes": 180})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["screen"]["budget_seconds"] == 20 * 60
+    assert body["listening"]["budget_seconds"] == 60 * 60
+    assert "counted_seconds" in body["screen"]
+    assert "counted_seconds" in body["listening"]
+    assert body["screen"] is not body["listening"]
+
+
+def test_the_day_summary_carries_the_agreement_state(client):
+    cid = _child(client)
+    body = client.get(f"/api/children/{cid}/today").json()
+    assert body["agreement"]["status"] == "active"
+    assert body["agreement"]["clauses_on_parent"] > 0
+    assert body["agreement"]["review_due"] is False
+
+
+def test_the_day_summary_shows_no_agreement_when_there_is_none(client):
+    cid = _child_without_agreement(client)
+    body = client.get(f"/api/children/{cid}/today").json()
+    assert body["agreement"] is None
+
+
+def test_the_day_summary_includes_todays_mission(client):
+    cid = _child(client)
+    body = client.get(f"/api/children/{cid}/today").json()
+    assert body["mission"] is not None
+    assert body["mission"]["title_ar"]
+    assert body["mission"]["estimated_minutes"] >= 15
+
+
+def test_the_month_ratio_is_absent_until_there_is_screen_time(client):
+    """A ratio printed against zero screen minutes is an infinity next to a
+    number a parent is meant to read."""
+    cid = _child(client)
+    body = client.get(f"/api/children/{cid}/today").json()
+    assert body["month"]["ratio"] is None
+
+
+def test_the_day_summary_needs_to_own_the_child(client, tmp_db):
+    conn = get_conn()
+    try:
+        cur = conn.execute(
+            "INSERT INTO child_profiles (device_id, name, age_group) VALUES (?, ?, ?)",
+            ("someone-else", "طفل", "7-9"),
+        )
+        conn.commit()
+        foreign = cur.lastrowid
+    finally:
+        conn.close()
+    assert client.get(f"/api/children/{foreign}/today").status_code == 404

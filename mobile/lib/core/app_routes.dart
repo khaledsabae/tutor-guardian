@@ -25,6 +25,11 @@ library;
 import 'package:flutter/material.dart';
 
 import '../features/coins/coins_screen.dart';
+import '../features/agreement/agreement_screen.dart';
+import '../features/parent_day/parent_day_screen.dart';
+import '../features/screen_off/record_narration_screen.dart';
+import '../features/screen_off/screen_off_player_screen.dart';
+import '../features/agreement/child_agreement_screen.dart';
 import '../features/coins/covenant_screen.dart';
 import '../features/coins/exclusive_badges_screen.dart';
 import '../features/coins/story_screen.dart';
@@ -138,6 +143,11 @@ abstract final class Screens {
   static const badges = 'badges';
   static const exclusiveBadges = 'exclusive_badges';
   static const covenant = 'covenant';
+  static const agreement = 'agreement';
+  static const childAgreement = 'child_agreement';
+  static const screenOffPlayer = 'screen_off_player';
+  static const recordNarration = 'record_narration';
+  static const parentDay = 'parent_day';
 
   // Account & meta
   static const settings = 'settings';
@@ -388,6 +398,27 @@ abstract final class AppRoutes {
 
   static Route<void> covenant() =>
       _r(Screens.covenant, (_) => const CovenantScreen());
+
+  static Route<void> agreement({String childName = 'ابنك'}) =>
+      _r(Screens.agreement, (_) => AgreementScreen(childName: childName));
+
+  /// The only surface that opens before an agreement is signed.
+  static Route<bool> childAgreement() =>
+      _r(Screens.childAgreement, (_) => const ChildAgreementScreen());
+
+  /// Listening with the display dark — bills the audio ledger, not the screen.
+  static Route<void> screenOffPlayer(
+          {required String title, required String source}) =>
+      _r(Screens.screenOffPlayer,
+          (_) => ScreenOffPlayerScreen(title: title, source: source));
+
+  static Route<void> parentDay() =>
+      _r(Screens.parentDay, (_) => const ParentDayScreen());
+
+  static Route<bool> recordNarration(
+          {required String storyKey, required String storyText}) =>
+      _r(Screens.recordNarration,
+          (_) => RecordNarrationScreen(storyKey: storyKey, storyText: storyText));
 
   // ── Account & meta ──────────────────────────────────────────────────────
   static Route<void> settings() =>

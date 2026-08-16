@@ -58,6 +58,12 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   just_audio: ^0.10.5
+  # Background playback for screen-off listening. The screen is dark and the
+  # phone is face down — without this the OS suspends playback the moment the
+  # app loses focus, which is every time a child puts the phone down, which is
+  # the entire mode. `just_audio_background` rather than `audio_service`: it
+  # is the notification-and-session shim just_audio needs and nothing else.
+  just_audio_background: ^0.0.1-beta.17
   record: ^5.1.2
   path_provider: ^2.1.4
   scrollable_positioned_list: ^0.3.8

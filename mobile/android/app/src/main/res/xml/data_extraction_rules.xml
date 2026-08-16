@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 12+ (android:dataExtractionRules). Replaces backup_rules.xml on
+  these versions, which is why the same exclusions are written twice — a rule
+  present in only one of the two files protects only some of the users.
+
+  Two separate destinations, and both matter:
+    <cloud-backup>   Google Drive. The one the privacy screen is about.
+    <device-transfer> phone-to-phone during setup. Less obvious, equally a
+                      copy of a child's recordings onto new hardware.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="narrations/" />
+        <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="narrations/" />
+        <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
+    </device-transfer>
+</data-extraction-rules>

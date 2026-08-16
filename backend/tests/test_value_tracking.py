@@ -362,7 +362,38 @@ def test_custom_template_requires_auth(tmp_db):
 # ── Child mode tests ─────────────────────────────────────────────────────────
 
 
+def _sign_family_agreement(child_id: int, device_id: str = "test-device-001") -> None:
+    """Since Sprint 2 a signed media agreement is an entry condition for any
+    band that has a clause bank, and child mode issues no token without one.
+    These tests are about habits, so they start past that gate."""
+    from app.core.taxonomy import map_profile_age_to_band
+    from app.services import family_agreement
+
+    band = map_profile_age_to_band(_child_age_group(child_id))
+    clauses = family_agreement.suggested_clauses(band)[:4] \
+        or family_agreement.suggested_clauses("7-9")[:4]
+    family_agreement.save_draft(device_id, child_id, clauses)
+    current = family_agreement.get_current(device_id, child_id)
+    for c in current["clauses"]:
+        if c["applies_to"] in ("child", "both"):
+            family_agreement.acknowledge_clause(device_id, child_id, c["id"])
+    family_agreement.sign(device_id, child_id, "parent")
+    family_agreement.sign(device_id, child_id, "child")
+
+
+def _child_age_group(child_id: int) -> str:
+    from app.db.init_db import get_conn
+    conn = get_conn()
+    try:
+        row = conn.execute("SELECT age_group FROM child_profiles WHERE id = ?",
+                           (child_id,)).fetchone()
+        return row["age_group"] if row else "7-9"
+    finally:
+        conn.close()
+
+
 def _issue_child_token(client, child_id) -> str:
+    _sign_family_agreement(child_id)
     r = client.post(
         "/api/value-tracking/child-sessions",
         params={"child_id": child_id},

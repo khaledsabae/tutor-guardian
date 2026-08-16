@@ -27,7 +27,8 @@ from app.routers.value_tracking import (
     _persist_event,
     _verify_child_ownership,
 )
-from app.services import child_budget
+from app.core.taxonomy import map_profile_age_to_band
+from app.services import child_budget, child_missions, family_agreement
 from app.services import child_token as child_token_service
 
 router = APIRouter(tags=["child-mode"])
@@ -296,3 +297,87 @@ def child_record_event(request: Request, body: ChildHabitEventCreate):
         )
     finally:
         conn.close()
+
+
+# ── The agreement, from the child's side ───────────────────────────────────
+
+@router.get("/value-tracking/child-mode/agreement", response_model=dict)
+def child_read_agreement(request: Request):
+    """What the child is being asked to agree to.
+
+    A separate endpoint under the child prefix rather than opening
+    /api/children to a child token: the parent routes read and write a
+    family's whole profile set, and a child surface has no business there.
+    """
+    child_id = _get_child_id(request)
+    device_id = _require_device_id(request)
+    agreement = family_agreement.get_current(device_id, child_id)
+    if agreement is None:
+        return {"agreement": None}
+    return {"agreement": agreement}
+
+
+@router.post("/value-tracking/child-mode/agreement/acknowledge", response_model=dict)
+def child_acknowledge_clause(request: Request, clause_id: int = Query(..., ge=1)):
+    """The child says they understood one clause. One at a time, on purpose."""
+    child_id = _get_child_id(request)
+    device_id = _require_device_id(request)
+    result = family_agreement.acknowledge_clause(device_id, child_id, clause_id)
+    if not result["ok"]:
+        raise HTTPException(status_code=404, detail={"error": result["reason"]})
+    return result
+
+
+@router.post("/value-tracking/child-mode/agreement/sign", response_model=dict)
+def child_sign_agreement(request: Request):
+    child_id = _get_child_id(request)
+    device_id = _require_device_id(request)
+    result = family_agreement.sign(device_id, child_id, "child")
+    if not result["ok"]:
+        raise HTTPException(status_code=409, detail={
+            "error": result["reason"],
+            "remaining": result.get("remaining"),
+            "message_key": f"agreement.{result['reason']}",
+        })
+    return result
+
+
+# ── The daily mission ──────────────────────────────────────────────────────
+
+@router.get("/value-tracking/child-mode/mission/today", response_model=dict)
+def child_mission_today(request: Request, tz_offset_minutes: int = Query(0)):
+    """One card. The same card all day, however often it is opened."""
+    child_id = _get_child_id(request)
+    device_id = _require_device_id(request)
+
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT age_group FROM child_profiles WHERE id = ? AND device_id = ?",
+            (child_id, device_id),
+        ).fetchone()
+    finally:
+        conn.close()
+    if row is None:
+        raise HTTPException(status_code=404, detail={"error": "child_not_found"})
+
+    band = map_profile_age_to_band(row["age_group"])
+    local_date = child_budget.local_date_for(
+        datetime.now(timezone.utc), tz_offset_minutes
+    )
+    card = child_missions.today_mission(device_id, child_id, band, local_date)
+    return {"mission": card}
+
+
+@router.post("/value-tracking/child-mode/mission/claim", response_model=dict)
+def child_mission_claim(request: Request, mission_id: int = Query(..., ge=1)):
+    """«خلّصتها» — recorded and done. The child does not wait for a parent.
+
+    Deliberately not a request for approval: a child standing at a screen
+    waiting to be confirmed has been given a reason to stay at the screen.
+    """
+    child_id = _get_child_id(request)
+    result = child_missions.claim(child_id, mission_id)
+    if not result["ok"]:
+        raise HTTPException(status_code=409, detail={"error": result["reason"]})
+    return result
