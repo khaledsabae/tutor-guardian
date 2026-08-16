@@ -19,6 +19,7 @@ import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/error_retry_view.dart';
 import '../../coins/coins_providers.dart';
 import '../../routine/providers/child_mode_providers.dart';
+import '../../routine/widgets/quiet_time_bar.dart';
 import 'edu_game_models.dart';
 import 'edu_game_ui.dart';
 
@@ -444,6 +445,15 @@ class _EduGameRunnerState extends ConsumerState<EduGameRunner> {
                       progress: progress,
                       theme: widget.theme,
                     ),
+                    // The session clock, above the game's own progress bar and
+                    // visually quieter than it. A child mid-level otherwise
+                    // gets no warning at all before the cap fires — the timer
+                    // that closes this screen has been reading
+                    // `remainingSeconds` since sprint 1 while nothing showed
+                    // it. No candle glyph here: it would compete with the
+                    // game's artwork, and the bar alone carries it.
+                    const SizedBox(height: 10),
+                    const QuietTimeBar(showCandle: false),
                     const SizedBox(height: 16),
                     Expanded(
                       child: SingleChildScrollView(

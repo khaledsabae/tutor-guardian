@@ -731,9 +731,11 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
       );
   }
 
-  Future<void> _enterChildMode(int childId, String childName) async {
+  Future<void> _enterChildMode(int childId, String childName,
+      {String surface = 'habit'}) async {
     await Navigator.of(context).push(
-      AppRoutes.childModeLock<void>(childId: childId, childName: childName),
+      AppRoutes.childModeLock<void>(
+          childId: childId, childName: childName, surface: surface),
     );
   }
 
@@ -832,6 +834,45 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                   },
                   icon: const Icon(Icons.child_care),
                   label: Text(AppLocalizations.of(context).routineChildMode),
+                ),
+                const SizedBox(height: 8),
+                // Two surfaces, side by side to keep this column's height —
+                // stacking them overflowed the card on a small screen.
+                //
+                // Both are opened directly rather than reached from inside
+                // another screen. The server budgets each surface separately,
+                // so arriving at the mission through the habit screen spends
+                // the habit allowance to get there, and arriving at screen-off
+                // listening that way spends screen budget on the way into the
+                // one mode whose entire point is not spending any.
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          final profile = ref.read(activeChildProfileProvider);
+                          _enterChildMode(
+                            childId,
+                            profile?.name ??
+                                AppLocalizations.of(context).childFallbackName,
+                            surface: 'mission',
+                          );
+                        },
+                        icon: const Icon(Icons.explore_outlined),
+                        label: Text(
+                            AppLocalizations.of(context).missionOpenForChild),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () => Navigator.of(context)
+                            .push(AppRoutes.screenOffPicker()),
+                        icon: const Icon(Icons.nightlight_outlined),
+                        label: Text(AppLocalizations.of(context).screenOffOpen),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 8),
                 Row(

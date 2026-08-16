@@ -23,6 +23,14 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// The key a story's narration is filed under.
+///
+/// Two features write into this index — the bookshelf's fourteen written
+/// stories and the generated-story screen — and they have to agree on the
+/// shape or a recording made by one is invisible to the other. It lives here,
+/// beside the store, rather than in either screen.
+String narrationKeyFor(String storyId) => 'story_$storyId';
+
 class Narration {
   const Narration({
     required this.storyKey,

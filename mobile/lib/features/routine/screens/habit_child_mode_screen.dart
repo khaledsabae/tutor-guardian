@@ -5,7 +5,9 @@ import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../models/habit_models.dart';
 import '../../agreement/child_agreement_screen.dart';
+import '../../missions/child_mission_screen.dart';
 import '../providers/child_mode_providers.dart';
+import '../widgets/quiet_time_bar.dart';
 
 /// The child-facing self-reporting screen.
 /// Very simple, large buttons, confirmation dialogs, no edit/delete.
@@ -16,11 +18,15 @@ class HabitChildModeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(childModeProvider);
 
-    if (!state.active || state.day == null) {
+    if (!state.active) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
+
+    // Precedence, highest first. The two error guards outrank the surface: a
+    // dead session or an unsigned agreement is true whatever the child came
+    // here to do.
 
     // Expired UX Guard: if the child session died and the notifier surfaced
     // an explicit expiry message, take the child back to the lock screen so
@@ -38,6 +44,19 @@ class HabitChildModeScreen extends ConsumerWidget {
       return const ChildAgreementScreen();
     }
 
+    // Surfaces other than `habit` have their own screen and never load the
+    // habit day, so they must be routed before the wait below — otherwise a
+    // mission session sits on a spinner that nothing will ever resolve.
+    if (state.surface == 'mission') {
+      return const ChildMissionScreen();
+    }
+
+    if (state.day == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).habitChildModeTitle),
@@ -51,19 +70,34 @@ class HabitChildModeScreen extends ConsumerWidget {
         ],
       ),
       body: SafeArea(
-        child: ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: state.day!.habits.length,
-          itemBuilder: (context, index) {
-            final item = state.day!.habits[index];
-            return _HabitChildCard(
-              item: HabitItem(
-                category: item.category,
-                habitName: item.habitName,
+        child: Column(
+          children: [
+            // The day's remaining time, as a bar that shortens. `remainingSeconds`
+            // has been written on every heartbeat since sprint 1 and read by
+            // nothing but a timer — a child on this screen had no way at all to
+            // tell how long was left, which makes the end of a session arrive
+            // as an interruption every single time.
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: QuietTimeBar(),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: state.day!.habits.length,
+                itemBuilder: (context, index) {
+                  final item = state.day!.habits[index];
+                  return _HabitChildCard(
+                    item: HabitItem(
+                      category: item.category,
+                      habitName: item.habitName,
+                    ),
+                    submitted: state.isSubmitted(item.habitName),
+                  );
+                },
               ),
-              submitted: state.isSubmitted(item.habitName),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );

@@ -303,3 +303,127 @@ def test_leverage_with_no_screen_time_has_no_ratio(child):
     number a parent is meant to read."""
     cid = child()
     assert cm.leverage(cid, "2026-08-01", screen_seconds=0)["ratio"] is None
+
+
+# ── The evening arrives at different times in different places ─────────────
+#
+# The digest logic was written, tested, and never scheduled: nothing in the
+# app called it, so a parent waiting on a confirmation was never told. Wiring
+# a timer to it raises a question the untimed version never had to answer —
+# *when*. The spec says 9pm on the device, and a quarter of this user base is
+# not in the server's timezone.
+
+def _open_session_with_offset(child_id: int, offset_minutes: int) -> None:
+    """The offset is not stored on its own; it is a column on the session the
+    client opened. These tests write that column directly rather than going
+    through open_session, which would also have to satisfy the age gate."""
+    conn = get_conn()
+    try:
+        conn.execute(
+            "INSERT INTO child_screen_sessions (device_id, child_id, surface, "
+            "local_date, tz_offset_minutes, started_at, last_heartbeat_at) "
+            "VALUES (?, ?, 'mission', '2026-08-16', ?, ?, ?)",
+            (DEVICE, child_id, offset_minutes,
+             datetime.now(_UTC).isoformat(), datetime.now(_UTC).isoformat()),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+@pytest.fixture
+def _push_spy(monkeypatch):
+    sent: list[str] = []
+    monkeypatch.setattr(mission_digest.push_sender, "send_to_device",
+                        lambda device_id, *a, **k: sent.append(device_id)
+                        or {"ok": True, "sent": True})
+    monkeypatch.setattr(mission_digest.push_sender, "recently_pushed_since",
+                        lambda cutoff: set())
+    return sent
+
+
+def _claimed_card(child_id: int) -> None:
+    card = cm.today_mission(DEVICE, child_id, "7-9", "2026-08-16")
+    cm.claim(child_id, card["mission_id"])
+
+
+def test_the_digest_fires_at_nine_pm_on_the_device(child, _push_spy):
+    cid = child()
+    _claimed_card(cid)
+    _open_session_with_offset(cid, 180)  # UTC+3 — Riyadh, Moscow
+
+    # 18:00 UTC is 21:00 there.
+    at_nine = datetime(2026, 8, 16, 18, 30, tzinfo=_UTC)
+    result = mission_digest.run_due_digests(now=at_nine)
+    assert result["sent"] == 1
+    assert _push_spy == [DEVICE]
+
+
+def test_the_digest_stays_silent_at_the_wrong_local_hour(child, _push_spy):
+    """The bug this prevents is not a missing push — it is a push at 1am. A
+    single UTC schedule would have done exactly that to the 38% of users
+    outside Arabic-speaking timezones."""
+    cid = child()
+    _claimed_card(cid)
+    _open_session_with_offset(cid, 180)
+
+    # 21:00 UTC is midnight there. Nobody is confirming a mission at midnight.
+    at_midnight = datetime(2026, 8, 16, 21, 0, tzinfo=_UTC)
+    result = mission_digest.run_due_digests(now=at_midnight)
+    assert result["sent"] == 0
+    assert result["waiting"] == 1
+    assert _push_spy == []
+
+
+def test_a_device_that_never_opened_a_session_falls_back_to_utc(child, _push_spy):
+    """A claimed mission implies a session, so this should not happen. If it
+    does, an hour that is wrong for most of the world still beats never
+    notifying at all."""
+    cid = child()
+    _claimed_card(cid)
+
+    result = mission_digest.run_due_digests(
+        now=datetime(2026, 8, 16, 21, 30, tzinfo=_UTC))
+    assert result["sent"] == 1
+
+
+def test_the_most_recent_offset_wins(child, _push_spy):
+    """A family that travels should be followed, not pinned to wherever they
+    first opened the app."""
+    cid = child()
+    _claimed_card(cid)
+    _open_session_with_offset(cid, 180)
+    _open_session_with_offset(cid, -300)  # moved to UTC-5
+
+    # 02:00 UTC the next day is 21:00 at UTC-5, and 05:00 at the old offset.
+    result = mission_digest.run_due_digests(
+        now=datetime(2026, 8, 17, 2, 15, tzinfo=_UTC))
+    assert result["sent"] == 1
+
+
+def test_repeated_ticks_inside_the_hour_send_once(child, monkeypatch):
+    """The scheduler wakes every 15 minutes and the match window is a whole
+    hour, so a device matches four times a night. The frequency cap is what
+    makes that harmless — this asserts the two are actually wired together."""
+    pushed: list[str] = []
+    monkeypatch.setattr(mission_digest.push_sender, "send_to_device",
+                        lambda device_id, *a, **k: pushed.append(device_id)
+                        or {"ok": True, "sent": True})
+    # The real cap: once a device is in push_sends, it is skipped.
+    monkeypatch.setattr(mission_digest.push_sender, "recently_pushed_since",
+                        lambda cutoff: set(pushed))
+
+    cid = child()
+    _claimed_card(cid)
+    _open_session_with_offset(cid, 180)
+
+    base = datetime(2026, 8, 16, 18, 0, tzinfo=_UTC)
+    for tick in range(4):
+        mission_digest.run_due_digests(now=base + timedelta(minutes=15 * tick))
+    assert pushed == [DEVICE]
+
+
+def test_the_tick_is_shorter_than_the_match_window():
+    """If the scheduler ever ticks slower than an hour, devices fall between
+    ticks and simply never hear from us."""
+    assert mission_digest.DIGEST_TICK_SECONDS < 3600

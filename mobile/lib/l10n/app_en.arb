@@ -549,7 +549,11 @@
   "covenantOverdueTitle": "A reward is still waiting",
   "covenantOverdueBody": "{count} reward(s) redeemed over a week ago still haven't arrived. A promise not kept teaches more than one never made.",
   "@covenantOverdueBody": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "covenantParentWelcome": "Parent Gateway: Add real rewards parents commit to (like trips or gifts), and track your child's redemption requests.",
   "covenantAddNew": "Add New Reward ➕",
@@ -948,7 +952,11 @@
   "gameClosingMission": "Now go do one thing away from the screen, and tell someone about it.",
   "gameClosingLeave": "Okay, I'm going",
   "@gameClosingPraise": {
-    "placeholders": { "score": { "type": "int" } }
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
   },
   "exclusiveBadgesIntro": "These badges unlock through achievement, not purchase. Your coins buy one thing: a real reward from the covenant.",
   "exclusiveBadgeLocked": "Unlocked by achievement",
@@ -994,5 +1002,41 @@
   "errorServerTitle": "The service is not responding",
   "errorServerBody": "This is on our side, not yours. Please try again shortly.",
   "errorUnknownTitle": "Could not load this",
-  "errorUnknownBody": "Try again — if it keeps happening, send us a note."
+  "errorUnknownBody": "Try again — if it keeps happening, send us a note.",
+  "missionTodayLabel": "Today's mission",
+  "missionUnderstoodGoing": "Got it — I'm off",
+  "missionDone": "I did it",
+  "missionAlreadyDone": "You said you did it ✅",
+  "missionClaimedNote": "A parent will see it tonight.",
+  "missionOutdoorsHint": "This one is outdoors.",
+  "missionNoneToday": "No mission today. Good night 🌙",
+  "missionLeave": "Okay, I'm off",
+  "missionOpenForChild": "Today's mission",
+  "missionsPendingTitle": "Waiting on you",
+  "missionsPendingEmpty": "Nothing is waiting on you right now.",
+  "missionMinutesShort": "min",
+  "missionMarkNotYet": "Not yet",
+  "missionMarkDone": "Undo",
+  "missionConfirmAll": "Confirm all",
+  "missionConfirmRest": "Confirm {count}, leave the rest",
+  "@missionConfirmRest": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gamesBudgetSpent": "Play time is done for today. The games will be here tomorrow 🌙",
+  "screenOffPickerTitle": "Listen with the screen off",
+  "screenOffPickerIntro": "The screen stays dark. Audio only, and it does not count against screen time.",
+  "screenOffSectionParentVoice": "In a parent's voice",
+  "screenOffSectionQuran": "Qur'an",
+  "screenOffQuranUnavailable": "The Qur'an could not be loaded right now.",
+  "screenOffOpen": "Listen with the screen off",
+  "storyListenInParentVoice": "Listen in a parent's voice",
+  "storyNarrationSaved": "Recorded. You'll find it in the library marked 🎙️",
+  "offscreenTitle": "Things to do without a screen",
+  "offscreenUnavailable": "The activities could not be loaded.",
+  "offscreenMaterials": "You'll need",
+  "offscreenOpen": "Without a screen"
 }

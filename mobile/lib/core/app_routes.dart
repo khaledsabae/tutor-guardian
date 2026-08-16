@@ -26,6 +26,9 @@ import 'package:flutter/material.dart';
 
 import '../features/coins/coins_screen.dart';
 import '../features/agreement/agreement_screen.dart';
+import '../features/missions/pending_missions_screen.dart';
+import '../features/offscreen/offscreen_activities_screen.dart';
+import '../features/screen_off/screen_off_picker_screen.dart';
 import '../features/parent_day/parent_day_screen.dart';
 import '../features/screen_off/record_narration_screen.dart';
 import '../features/screen_off/screen_off_player_screen.dart';
@@ -144,8 +147,11 @@ abstract final class Screens {
   static const covenant = 'covenant';
   static const agreement = 'agreement';
   static const screenOffPlayer = 'screen_off_player';
+  static const screenOffPicker = 'screen_off_picker';
+  static const offscreenActivities = 'offscreen_activities';
   static const recordNarration = 'record_narration';
   static const parentDay = 'parent_day';
+  static const pendingMissions = 'pending_missions';
 
   // Account & meta
   static const settings = 'settings';
@@ -332,6 +338,7 @@ abstract final class AppRoutes {
     required int childId,
     required String childName,
     bool isExit = false,
+    String surface = 'habit',
   }) =>
       _r<T>(
         Screens.childModeLock,
@@ -339,6 +346,7 @@ abstract final class AppRoutes {
           childId: childId,
           childName: childName,
           isExit: isExit,
+          surface: surface,
         ),
       );
 
@@ -402,12 +410,30 @@ abstract final class AppRoutes {
 
   /// Listening with the display dark — bills the audio ledger, not the screen.
   static Route<void> screenOffPlayer(
-          {required String title, required String source}) =>
-      _r(Screens.screenOffPlayer,
-          (_) => ScreenOffPlayerScreen(title: title, source: source));
+          {required String title,
+          required String source,
+          List<String>? playlist}) =>
+      _r(
+          Screens.screenOffPlayer,
+          (_) => ScreenOffPlayerScreen(
+              title: title, source: source, playlist: playlist));
+
+  /// Choosing what to listen to: a parent's recording, or a reciter.
+  static Route<void> screenOffPicker() =>
+      _r(Screens.screenOffPicker, (_) => const ScreenOffPickerScreen());
+
+  /// Where the age gate sends a parent it just refused.
+  static Route<void> offscreenActivities({String? band}) =>
+      _r(Screens.offscreenActivities,
+          (_) => OffscreenActivitiesScreen(initialBand: band));
 
   static Route<void> parentDay() =>
       _r(Screens.parentDay, (_) => const ParentDayScreen());
+
+  /// Where the evening digest lands: every claimed mission, one confirm.
+  /// Returns true when the parent settled the batch.
+  static Route<bool> pendingMissions() =>
+      _r(Screens.pendingMissions, (_) => const PendingMissionsScreen());
 
   static Route<bool> recordNarration(
           {required String storyKey, required String storyText}) =>

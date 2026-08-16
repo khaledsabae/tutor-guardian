@@ -1418,6 +1418,74 @@ class TgClient {
         .timeout(AppConfig.httpTimeout);
   }
 
+  // ── Missions ─────────────────────────────────────────────────────────────
+  //
+  // The backend for these shipped complete and tested with no screen anywhere
+  // in the app calling them: the child was assigned a mission every day and
+  // never saw one. These four methods are the missing wire.
+
+  /// Today's single card, or null when the child's band has no mission bank.
+  ///
+  /// A band with no bank is the ordinary case for every age except 7-9, so an
+  /// empty result is a state to render, not an error to report.
+  Future<Map<String, dynamic>?> fetchChildMission(String childToken) async {
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/mission/today')
+        .replace(queryParameters: {
+      'tz_offset_minutes': '${DateTime.now().timeZoneOffset.inMinutes}',
+    });
+    final resp = await _http
+        .get(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return body['mission'] as Map<String, dynamic>?;
+  }
+
+  /// The child says they did it. Returns false when the card was already
+  /// settled — which is not worth an error dialog aimed at a seven-year-old.
+  Future<bool> claimChildMission({
+    required String childToken,
+    required int missionId,
+  }) async {
+    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/mission/claim')
+        .replace(queryParameters: {'mission_id': '$missionId'});
+    final resp = await _http
+        .post(uri, headers: _childAuthHeaders(childToken))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode == 409) return false;
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return true;
+  }
+
+  /// Every claimed-but-unconfirmed card across all of this device's children.
+  Future<List<Map<String, dynamic>>> fetchPendingMissions() async {
+    final session = await ensureSession();
+    final uri = Uri.parse('$_baseUrl/api/children/missions/pending');
+    final resp = await _http
+        .get(uri, headers: _authHeaders(session.token))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return (body['pending'] as List<dynamic>? ?? const [])
+        .cast<Map<String, dynamic>>();
+  }
+
+  /// Settle a batch. One call for the whole evening — the asynchronous
+  /// confirmation loop is the point, and a per-card round trip would undo it.
+  Future<int> confirmMissions(List<Map<String, dynamic>> items) async {
+    final session = await ensureSession();
+    final uri = Uri.parse('$_baseUrl/api/children/missions/confirm');
+    final resp = await _http
+        .post(uri,
+            headers: {..._authHeaders(session.token),
+              'Content-Type': 'application/json'},
+            body: jsonEncode({'items': items}))
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) throw _wrap(resp);
+    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return body['settled'] as int? ?? 0;
+  }
+
   Future<Map<String, dynamic>> createChildWebClaim(int childId) async {
     final session = await ensureSession();
     final token = session.token;

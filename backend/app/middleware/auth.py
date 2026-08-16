@@ -20,6 +20,15 @@ logger = logging.getLogger(__name__)
 # Child-mode endpoints are protected by a separate token scheme.
 _CHILD_MODE_PREFIX = "/api/value-tracking/child-mode/"
 
+# The QR web surface mints and carries the same Child-Bearer token, but it was
+# left outside every prefix below — so `_is_protected` returned False for it,
+# the middleware never populated `request.state`, and /me and /refresh answered
+# 401 to every browser no matter how valid its token was. Both prefixes now go
+# through the same branch; the paths that must stay reachable without a token
+# are named in _CHILD_TOKEN_EXEMPT_PATHS rather than left unmatched.
+_CHILD_WEB_PREFIX = "/api/child-web/"
+_CHILD_TOKEN_PREFIXES = (_CHILD_MODE_PREFIX, _CHILD_WEB_PREFIX)
+
 # Endpoints that don't require authentication
 _PUBLIC_PATHS = {
     "/api/health",
@@ -29,6 +38,11 @@ _PUBLIC_PATHS = {
     "/api/docs",
     "/api/openapi.json",
     "/api/redoc",
+    # Redeeming a QR claim code is how a browser *gets* its token; requiring
+    # one here would make the web surface unreachable. The code itself is the
+    # credential: single-use, 120-second lifetime, and it opens the screen
+    # session (and so passes the age gate) before returning anything.
+    "/api/child-web/claim-session",
 }
 
 # Protected prefixes
@@ -44,6 +58,7 @@ _PROTECTED_PREFIXES = (
     "/api/daily-routine",
     "/api/value-tracking",
     "/api/habit-templates",
+    "/api/child-web",
 )
 # Progress PATCH is the only mutating verb under /api/program — we
 # match on the exact path suffix so the read-only GETs remain public.
@@ -74,6 +89,18 @@ def _story_auth_enforced() -> bool:
     """Read at call time, not import time, so the VPS can flip it on restart
     without a redeploy — and so tests can set it per-case."""
     return os.environ.get("STORY_AUTH_ENFORCE", "").strip().lower() in {"1", "true", "yes"}
+
+
+# Child-token paths that authenticate but do not require a live screen session.
+# See the comment at the call site for why each one is here.
+_SESSION_CHECK_EXEMPT = frozenset({
+    "/api/child-web/me",
+    "/api/child-web/refresh",
+})
+
+
+def _skips_session_check(path: str) -> bool:
+    return path.endswith("/session-end") or path in _SESSION_CHECK_EXEMPT
 
 
 def _is_protected(path: str, method: str) -> bool:
@@ -139,14 +166,14 @@ class AuthMiddleware(BaseHTTPMiddleware):
         auth_header = request.headers.get("Authorization", "")
 
         # Child-mode routes use a separate scoped token scheme.
-        if path.startswith(_CHILD_MODE_PREFIX):
+        if path.startswith(_CHILD_TOKEN_PREFIXES):
             if not auth_header.startswith("Child-Bearer "):
                 return JSONResponse(
                     status_code=401,
                     content={"detail": "مطلوب توثيق وضع الطفل."},
                 )
             token = auth_header[13:].strip()
-            payload = child_token_service.verify_child_token(token, allow_web=path.startswith(_CHILD_MODE_PREFIX))
+            payload = child_token_service.verify_child_token(token, allow_web=True)
             if payload is None:
                 return JSONResponse(
                     status_code=401,
@@ -169,7 +196,16 @@ class AuthMiddleware(BaseHTTPMiddleware):
             # switch skips the check entirely — with the surface off, no
             # sessions are being opened, so requiring one would lock every
             # child out rather than restoring the old behaviour.
-            if child_budget.child_surface_enabled() and not path.endswith("/session-end"):
+            #
+            # /child-web/me and /child-web/refresh are exempt for a different
+            # reason: neither hands the child any content. One returns the name
+            # already printed on the QR the parent just showed, the other swaps
+            # a token for an equivalent token bound to the same identity. The
+            # session check belongs on the surfaces that spend the budget, and
+            # those all live under the child-mode prefix. Gating a token
+            # refresh on a live session would also mean the browser can never
+            # recover from an expired token without a new QR.
+            if child_budget.child_surface_enabled() and not _skips_session_check(path):
                 if child_budget.active_session(payload["child_id"]) is None:
                     return JSONResponse(
                         status_code=403,

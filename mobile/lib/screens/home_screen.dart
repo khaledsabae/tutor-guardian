@@ -33,6 +33,7 @@ import '../features/shell/root_tab.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import '../widgets/ui/noor_mascot.dart';
+import '../features/parent_day/child_day_card.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key, required this.onGoToTab, this.focusCardKey});
@@ -112,6 +113,13 @@ class HomeScreen extends ConsumerWidget {
           TodayRitualsRow(ageGroup: ageGroup),
           const SizedBox(height: 16),
           HomeStatsRow(bundle: bundle),
+          const SizedBox(height: 16),
+          // The child's day. Plan item 2.4 puts this in the «اليوم» tab; what
+          // shipped was a button on the routine screen, two taps deeper and
+          // down a path a parent takes only when already intending to look.
+          // The card hides itself when there is nothing to say, so a family
+          // not using the child surface never sees it.
+          const ChildDayCard(),
           const SizedBox(height: 20),
           CoachTipCard(onAsk: () => onGoToTab(RootTab.assistant)),
           const SizedBox(height: 20),

@@ -3276,4 +3276,95 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get errorUnknownBody =>
       'حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة.';
+
+  @override
+  String get missionTodayLabel => 'مهمة النهارده';
+
+  @override
+  String get missionUnderstoodGoing => 'فهمت، أنا رايح';
+
+  @override
+  String get missionDone => 'خلّصتها';
+
+  @override
+  String get missionAlreadyDone => 'قلت إنك خلّصتها ✅';
+
+  @override
+  String get missionClaimedNote => 'بابا هيشوفها بالليل.';
+
+  @override
+  String get missionOutdoorsHint => 'دي محتاجة تطلع بره.';
+
+  @override
+  String get missionNoneToday => 'مفيش مهمة النهارده. تصبح على خير 🌙';
+
+  @override
+  String get missionLeave => 'تمام، أنا خارج';
+
+  @override
+  String get missionOpenForChild => 'مهمة النهارده';
+
+  @override
+  String get missionsPendingTitle => 'مهام مستنية تأكيدك';
+
+  @override
+  String get missionsPendingEmpty => 'مفيش حاجة مستنية منك دلوقتي.';
+
+  @override
+  String get missionMinutesShort => 'دقيقة';
+
+  @override
+  String get missionMarkNotYet => 'لسه';
+
+  @override
+  String get missionMarkDone => 'تراجع';
+
+  @override
+  String get missionConfirmAll => 'أكّد الكل';
+
+  @override
+  String missionConfirmRest(int count) {
+    return 'أكّد $count وسيب الباقي';
+  }
+
+  @override
+  String get gamesBudgetSpent =>
+      'وقت اللعب خلص النهارده. الألعاب مستنياك بكرة 🌙';
+
+  @override
+  String get screenOffPickerTitle => 'استماع والشاشة مطفية';
+
+  @override
+  String get screenOffPickerIntro =>
+      'الشاشة هتفضل سودا. الصوت بس، ومش بيتحسب من وقت الشاشة.';
+
+  @override
+  String get screenOffSectionParentVoice => 'بصوت بابا أو ماما';
+
+  @override
+  String get screenOffSectionQuran => 'قرآن';
+
+  @override
+  String get screenOffQuranUnavailable => 'تعذّر تحميل القرآن دلوقتي.';
+
+  @override
+  String get screenOffOpen => 'استماع والشاشة مطفية';
+
+  @override
+  String get storyListenInParentVoice => 'اسمعها بصوت بابا';
+
+  @override
+  String get storyNarrationSaved => 'اتسجّلت. هتلاقيها في المكتبة بعلامة 🎙️';
+
+  @override
+  String get offscreenTitle => 'بدائل بلا شاشة';
+
+  @override
+  String get offscreenUnavailable => 'تعذّر تحميل الأنشطة.';
+
+  @override
+  String get offscreenMaterials => 'تحتاج';
+
+  @override
+  String get offscreenOpen => 'بدائل بلا شاشة';
 }

@@ -549,7 +549,11 @@
   "covenantOverdueTitle": "مكافأة مستنية التسليم",
   "covenantOverdueBody": "فيه {count} مكافأة اتصرفت من أكتر من أسبوع ولسه ماوصلتش. الوعد اللي ما يتنفّذش بيعلّم أكتر من الوعد اللي ما يتقالش.",
   "@covenantOverdueBody": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "covenantParentWelcome": "بوابة الأهل: أضف مكافآت حقيقية يلتزم بها الأهل بالواقع (مثل رحلات أو هدايا)، وتابع طلبات طفلك لتسليمها.",
   "covenantAddNew": "إضافة مكافأة جديدة ➕",
@@ -948,7 +952,11 @@
   "gameClosingMission": "دلوقتي قوم اعمل حاجة واحدة برّه الشاشة، واحكيها لبابا أو ماما.",
   "gameClosingLeave": "تمام، أنا خارج",
   "@gameClosingPraise": {
-    "placeholders": { "score": { "type": "int" } }
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
   },
   "exclusiveBadgesIntro": "الشارات دي بتتفتح بالإنجاز، مش بالشراء. عملاتك ليها مصرف واحد: مكافأة حقيقية من عهد المكافآت.",
   "exclusiveBadgeLocked": "تُفتح بالإنجاز",
@@ -994,5 +1002,41 @@
   "errorServerTitle": "الخدمة لا تستجيب الآن",
   "errorServerBody": "المشكلة من عندنا لا من عندك. حاول بعد قليل.",
   "errorUnknownTitle": "تعذّر تحميل البيانات",
-  "errorUnknownBody": "حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة."
+  "errorUnknownBody": "حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة.",
+  "missionTodayLabel": "مهمة النهارده",
+  "missionUnderstoodGoing": "فهمت، أنا رايح",
+  "missionDone": "خلّصتها",
+  "missionAlreadyDone": "قلت إنك خلّصتها ✅",
+  "missionClaimedNote": "بابا هيشوفها بالليل.",
+  "missionOutdoorsHint": "دي محتاجة تطلع بره.",
+  "missionNoneToday": "مفيش مهمة النهارده. تصبح على خير 🌙",
+  "missionLeave": "تمام، أنا خارج",
+  "missionOpenForChild": "مهمة النهارده",
+  "missionsPendingTitle": "مهام مستنية تأكيدك",
+  "missionsPendingEmpty": "مفيش حاجة مستنية منك دلوقتي.",
+  "missionMinutesShort": "دقيقة",
+  "missionMarkNotYet": "لسه",
+  "missionMarkDone": "تراجع",
+  "missionConfirmAll": "أكّد الكل",
+  "missionConfirmRest": "أكّد {count} وسيب الباقي",
+  "@missionConfirmRest": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gamesBudgetSpent": "وقت اللعب خلص النهارده. الألعاب مستنياك بكرة 🌙",
+  "screenOffPickerTitle": "استماع والشاشة مطفية",
+  "screenOffPickerIntro": "الشاشة هتفضل سودا. الصوت بس، ومش بيتحسب من وقت الشاشة.",
+  "screenOffSectionParentVoice": "بصوت بابا أو ماما",
+  "screenOffSectionQuran": "قرآن",
+  "screenOffQuranUnavailable": "تعذّر تحميل القرآن دلوقتي.",
+  "screenOffOpen": "استماع والشاشة مطفية",
+  "storyListenInParentVoice": "اسمعها بصوت بابا",
+  "storyNarrationSaved": "اتسجّلت. هتلاقيها في المكتبة بعلامة 🎙️",
+  "offscreenTitle": "بدائل بلا شاشة",
+  "offscreenUnavailable": "تعذّر تحميل الأنشطة.",
+  "offscreenMaterials": "تحتاج",
+  "offscreenOpen": "بدائل بلا شاشة"
 }

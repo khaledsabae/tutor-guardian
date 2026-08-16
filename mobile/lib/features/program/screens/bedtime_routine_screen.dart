@@ -9,6 +9,7 @@ import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../coins/coins_providers.dart';
 import '../data/story_models.dart';
+import '../../screen_off/narration_store.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../widgets/ui/night_sky.dart';
 
@@ -136,6 +137,22 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
     );
   }
 
+  Future<void> _recordNarration(BuildContext context) async {
+    final saved = await Navigator.of(context).push(
+      AppRoutes.recordNarration(
+        storyKey: narrationKeyFor(widget.story.id),
+        storyText: widget.story.pages.map((p) => p.text).join('\n\n'),
+      ),
+    );
+    if (saved == true && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).storyNarrationSaved),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeColor = Color(
@@ -204,7 +221,16 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                         ),
                       ),
                       const Spacer(),
-                      const SizedBox(width: 44),
+                      // Record this story in a parent's own voice.
+                      //
+                      // The recorder shipped in sprint 2 reachable from one
+                      // place only — the generated-story screen — so none of
+                      // the written stories could ever be narrated, and the
+                      // 🎙️ mark on the shelf had nothing to light up.
+                      _RoundButton(
+                        icon: Icons.mic_none,
+                        onTap: () => _recordNarration(context),
+                      ),
                     ],
                   ),
                 ),

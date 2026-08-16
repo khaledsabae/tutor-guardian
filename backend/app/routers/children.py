@@ -864,6 +864,13 @@ def child_day_summary(child_id: int, request: Request,
             "budget_seconds": band.screen_off_daily_budget_minutes * 60,
         },
         "mission": mission,
+        # Rule 6 of the constitution is transparency rather than surveillance,
+        # and the child is already told a parent can see this. Until now
+        # nothing showed the parent anything to see: `today_usage` returned the
+        # session list and only the separate /screen-usage endpoint exposed it,
+        # which no screen called. A visible log is what makes the badge the
+        # child reads («بابا بيشوف») a true statement rather than a deterrent.
+        "sessions": usage["sessions"],
         "agreement": None if agreement is None else {
             "status": agreement["status"],
             "next_review_date": agreement["next_review_date"],

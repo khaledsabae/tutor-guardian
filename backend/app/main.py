@@ -1,6 +1,7 @@
 """
 Tutor Guardian – FastAPI Application
 """
+import asyncio
 import logging
 import os
 import secrets
@@ -24,7 +25,7 @@ from app.routers import (
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
     insights, methodology, seo, tafsir,
 )
-from app.services import child_token
+from app.services import child_token, mission_digest
 from app.services.push_sender import send_to_device
 from app import curriculum_loader as curriculum
 
@@ -38,6 +39,29 @@ FRONTEND_DIR = PROJECT_ROOT / "frontend"
 _origins = os.environ.get(
     "CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
 ).split(",")
+
+
+async def _digest_loop() -> None:
+    """Wake every few minutes and push to the devices whose evening it is.
+
+    Runs the blocking sweep in a worker thread: it opens SQLite connections and
+    calls FCM, and doing that on the event loop would stall every request for
+    the duration of the sweep.
+
+    Every iteration is wrapped, because a loop that dies on one bad night stays
+    dead until the next deploy — and its death is silent, which is how the
+    digest came to be unscheduled in the first place.
+    """
+    while True:
+        try:
+            await asyncio.sleep(mission_digest.DIGEST_TICK_SECONDS)
+            result = await asyncio.to_thread(mission_digest.run_due_digests)
+            if result.get("sent") or result.get("expired"):
+                logger.info("Mission digest: %s", result)
+        except asyncio.CancelledError:
+            raise
+        except Exception as exc:  # noqa: BLE001 — a tick must not kill the loop
+            logger.warning("Mission digest tick failed: %s", exc)
 
 
 @asynccontextmanager
@@ -102,8 +126,23 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             logger.warning("Warm-up (Ollama %s): %s", fast_model, e)
 
+    # ── Evening mission digest ───────────────────────────────────────────
+    # The digest logic shipped written and tested with nothing calling it, so
+    # a parent who was waiting on a confirmation was never told. This is that
+    # caller. It lives in-process rather than in cron because the send has to
+    # be decided per-device local hour, which needs a DB read the crontab
+    # cannot do — see mission_digest.run_due_digests.
+    digest_task = asyncio.create_task(_digest_loop())
+
     yield
-    # Shutdown: nothing to clean up
+
+    # Shutdown: stop the digest loop. Without this the task is cancelled at
+    # interpreter exit and logs a spurious traceback on every restart.
+    digest_task.cancel()
+    try:
+        await digest_task
+    except asyncio.CancelledError:
+        pass
 
 
 app = FastAPI(

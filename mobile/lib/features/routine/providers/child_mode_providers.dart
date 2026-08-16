@@ -45,6 +45,7 @@ class ChildModeState {
     this.day,
     this.submittedHabits = const {},
     this.sessionId,
+    this.surface = 'habit',
     this.remainingSeconds,
     this.exitRitual = false,
   });
@@ -58,6 +59,14 @@ class ChildModeState {
 
   /// The open screen session. Null means no surface is running.
   final int? sessionId;
+
+  /// Which surface this session was opened for.
+  ///
+  /// The server has always taken a surface and budgeted each one separately;
+  /// the app only ever asked for `habit`, so every screen a child could reach
+  /// billed the same line. Carrying it in the state is what lets a screen know
+  /// which surface it is, and lets the router below send the child to it.
+  final String surface;
 
   /// Seconds left on this surface, as the server last reported them.
   ///
@@ -76,6 +85,7 @@ class ChildModeState {
     HabitDay? day,
     Set<String>? submittedHabits,
     int? sessionId,
+    String? surface,
     int? remainingSeconds,
     bool? exitRitual,
   }) =>
@@ -87,6 +97,7 @@ class ChildModeState {
         day: day ?? this.day,
         submittedHabits: submittedHabits ?? this.submittedHabits,
         sessionId: sessionId ?? this.sessionId,
+        surface: surface ?? this.surface,
         remainingSeconds: remainingSeconds ?? this.remainingSeconds,
         exitRitual: exitRitual ?? this.exitRitual,
       );
@@ -147,6 +158,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
         loading: false,
         childId: childId,
         sessionId: session['session_id'] as int?,
+        surface: (session['surface'] as String?) ?? surface,
         remainingSeconds: session['allowed_seconds'] as int?,
         exitRitual: false,
       );
@@ -157,10 +169,65 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
           intervalSeconds: (session['heartbeat_interval_seconds'] as int?) ?? 30,
         );
       }
-      await refresh();
+      // Only the habit surface renders the habit day. Fetching it for the
+      // others costs a round trip a child waits through, and a failure there
+      // would write an error code the mission screen would then have to know
+      // how to ignore.
+      if (state.surface == 'habit') await refresh();
       return true;
     } catch (e) {
       state = state.copyWith(loading: false, error: _classify(e));
+      return false;
+    }
+  }
+
+  /// Move an already-open child session to a different surface.
+  ///
+  /// This exists because the surfaces are budgeted separately and the app was
+  /// spending the wrong one. Screen-off listening is defined by the policy as
+  /// *not* screen time — forty-five minutes of audio against its own ledger —
+  /// but the player opened inside whatever session was already running, which
+  /// was always `habit`. So a story with the display dark was billed as twenty
+  /// minutes of screen, and the one surface the whole design rests on was the
+  /// one being charged wrongly.
+  ///
+  /// No PIN. The parent already proved themselves to open the session this is
+  /// moving; asking again mid-story would put a PIN pad in front of a child
+  /// listening in the dark. The gate that matters is the server's: it checks
+  /// the age band, the surface list, and the ledger for the new surface, and
+  /// refuses on its own terms.
+  ///
+  /// Returns false when the server refuses; [error] then holds the reason and
+  /// the caller should not open the surface.
+  Future<bool> switchSurface(String surface) async {
+    final childId = state.childId;
+    if (childId == null) return false;
+    if (state.surface == surface && state.sessionId != null) return true;
+
+    // Close first. The server supersedes an open session on its own, but doing
+    // it explicitly is what makes the old surface's final seconds land on the
+    // right ledger rather than on a `superseded` close charged to its grace.
+    await endSession(reason: 'completed');
+    try {
+      final session = await _client.createChildSession(childId, surface: surface);
+      state = state.copyWith(
+        active: true,
+        error: null,
+        sessionId: session['session_id'] as int?,
+        surface: (session['surface'] as String?) ?? surface,
+        remainingSeconds: session['allowed_seconds'] as int?,
+        exitRitual: false,
+      );
+      final token = session['token'] as String?;
+      if (token != null) await saveChildToken(token);
+      if (session['session_id'] != null) {
+        _startHeartbeat(
+          intervalSeconds: (session['heartbeat_interval_seconds'] as int?) ?? 30,
+        );
+      }
+      return true;
+    } catch (e) {
+      state = state.copyWith(error: _classify(e));
       return false;
     }
   }
@@ -193,6 +260,15 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       (_) => unawaited(_beat()),
     );
   }
+
+  /// Report now instead of waiting out the interval.
+  ///
+  /// Called when a surface comes back to the foreground. The periodic timer
+  /// keeps running while backgrounded, but a deeply suspended device can still
+  /// miss beats, and the server reaps a session ninety seconds after the last
+  /// one — so the first thing to do on resume is find out whether the session
+  /// we think we have still exists.
+  Future<void> beatNow() => _beat();
 
   Future<void> _beat() async {
     final sessionId = state.sessionId;
@@ -257,6 +333,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
       day: state.day,
       submittedHabits: state.submittedHabits,
       sessionId: null,
+      surface: state.surface,
       remainingSeconds: 0,
       exitRitual: false,
       error: code,

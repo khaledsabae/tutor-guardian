@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 
 import '../routine/providers/child_mode_providers.dart';
 
@@ -40,6 +41,7 @@ class ScreenOffPlayerScreen extends ConsumerStatefulWidget {
     super.key,
     required this.title,
     required this.source,
+    this.playlist,
   });
 
   final String title;
@@ -47,37 +49,114 @@ class ScreenOffPlayerScreen extends ConsumerStatefulWidget {
   /// A file path for a parent's recording, or a URL for a reciter.
   final String source;
 
+  /// Optional ordered sources played back to back.
+  ///
+  /// Recitation is not one file per surah — everyayah serves one file per
+  /// *verse*, so playing al-Mulk means thirty requests in sequence. When this
+  /// is set, [source] is ignored and used only as the first element's identity.
+  final List<String>? playlist;
+
   @override
   ConsumerState<ScreenOffPlayerScreen> createState() =>
       _ScreenOffPlayerScreenState();
 }
 
-class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen> {
+class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
+    with WidgetsBindingObserver {
   final AudioPlayer _player = AudioPlayer();
   Timer? _holdTimer;
   bool _holding = false;
   String? _error;
 
+  /// The surface that was running when we arrived, so leaving can put it back
+  /// rather than ending child mode outright.
+  String? _previousSurface;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // The system bars are part of "not worth looking at".
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     _open();
   }
 
   Future<void> _open() async {
+    // Move the session to `screen_off` before a single second of audio plays.
+    // Listening with the display dark is not screen time by the policy's own
+    // definition and bills a separate forty-five-minute ledger — but the
+    // player used to open inside whatever session was already running, which
+    // was always `habit`. Every story told in the dark was charged to the
+    // screen budget it was designed to avoid.
+    final childMode = ref.read(childModeProvider);
+    if (childMode.active && childMode.sessionId != null) {
+      _previousSurface = childMode.surface;
+      final ok = await ref
+          .read(childModeProvider.notifier)
+          .switchSurface('screen_off');
+      if (!ok) {
+        // The audio ledger is spent, or the band does not allow this surface.
+        // Leave quietly rather than play against a session the server refused.
+        if (mounted) Navigator.of(context).pop();
+        return;
+      }
+    }
+
     try {
-      if (widget.source.startsWith('http')) {
-        await _player.setUrl(widget.source);
+      // The MediaItem tag is what just_audio_background needs to raise a
+      // foreground service and a media notification. Without a tag it throws,
+      // and without the service Android silences playback within seconds of
+      // the screen going off — which is precisely the situation this whole
+      // mode is built for. The package was in pubspec.yaml since sprint 2 and
+      // was never initialised or tagged, so background playback had never
+      // actually worked.
+      final list = widget.playlist;
+      if (list != null && list.isNotEmpty) {
+        await _player.setAudioSources([
+          for (var i = 0; i < list.length; i++)
+            AudioSource.uri(Uri.parse(list[i]), tag: _mediaItemFor(list[i], i)),
+        ]);
       } else {
-        await _player.setFilePath(widget.source);
+        await _player.setAudioSource(
+          widget.source.startsWith('http')
+              ? AudioSource.uri(Uri.parse(widget.source), tag: _mediaItem)
+              : AudioSource.file(widget.source, tag: _mediaItem),
+        );
       }
       await _player.play();
     } catch (e) {
       // A missing recording must not become a red screen in front of a child.
       // The dark surface stays; the parent finds out from the library.
       if (mounted) setState(() => _error = e.toString());
+    }
+  }
+
+  MediaItem get _mediaItem => _mediaItemFor(widget.source, 0);
+
+  MediaItem _mediaItemFor(String id, int index) => MediaItem(
+        // Ids must be distinct across a playlist or the notification and the
+        // queue index disagree about which item is playing.
+        id: '$id#$index',
+        title: widget.title,
+        // Deliberately spare. This text appears on the lock screen, where the
+        // rule about not making the screen worth looking at still applies.
+        artist: 'المربي',
+      );
+
+  /// Coming back from the background is the moment the session is most likely
+  /// to be stale, so report immediately rather than waiting out the rest of
+  /// the interval.
+  ///
+  /// The heartbeat timer keeps running while the app is backgrounded — the
+  /// foreground service above is what keeps the process alive to run it — but
+  /// a device that suspended deeply can still miss beats, and the server reaps
+  /// a session ninety seconds after the last one. Beating on resume closes
+  /// that window; if the session is already gone, the notifier ends the
+  /// surface and the widget below pops.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      unawaited(ref.read(childModeProvider.notifier).beatNow());
     }
   }
 
@@ -95,13 +174,24 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen> {
     _holdTimer?.cancel();
     await _player.stop();
     if (!mounted) return;
-    await ref.read(childModeProvider.notifier).endSession(reason: 'completed');
+    final notifier = ref.read(childModeProvider.notifier);
+    final previous = _previousSurface;
+    if (previous != null && previous != 'screen_off') {
+      // Put the child back on the surface a parent opened for them, on its own
+      // budget. Ending the session outright here would drop them out of child
+      // mode entirely because a story finished — the exit is the long press,
+      // not the end of the audio.
+      await notifier.switchSurface(previous);
+    } else {
+      await notifier.endSession(reason: 'completed');
+    }
     if (mounted) Navigator.of(context).pop();
   }
 
   @override
   void dispose() {
     _holdTimer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     _player.dispose();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     super.dispose();

@@ -87,6 +87,16 @@ class DeepLinkHandler {
       return;
     }
 
+    // Evening mission digest: /missions — the one notification this feature
+    // sends, and it is addressed to the parent. Without this arm the digest
+    // opened the app at home and the parent had to go find the screen, which
+    // is most of the way back to not being told at all.
+    if (path == '/missions') {
+      navigator.popUntil((route) => route.isFirst);
+      navigator.push(AppRoutes.pendingMissions());
+      return;
+    }
+
     // Lesson deep link: /l/{lesson_id}
     final lessonMatch = RegExp(r'^/l/([^/]+)$').firstMatch(path);
     if (lessonMatch != null) {

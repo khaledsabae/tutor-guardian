@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../providers/child_mode_providers.dart';
 import '../services/child_mode_secure_storage.dart';
@@ -12,11 +13,17 @@ class ChildModeLockScreen extends ConsumerStatefulWidget {
     required this.childId,
     required this.childName,
     this.isExit = false,
+    this.surface = 'habit',
   });
 
   final int childId;
   final String childName;
   final bool isExit;
+
+  /// Which surface the parent is opening. The server budgets each one
+  /// separately and refuses any the child's age band does not allow, so it has
+  /// to travel from the entry point rather than be assumed here.
+  final String surface;
 
   @override
   ConsumerState<ChildModeLockScreen> createState() => _ChildModeLockScreenState();
@@ -97,7 +104,8 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
         }
       }
     } else {
-      final ok = await notifier.enter(childId: widget.childId, pin: pin);
+      final ok = await notifier.enter(
+          childId: widget.childId, pin: pin, surface: widget.surface);
       if (mounted) {
         if (ok) {
           Navigator.of(context).pop(true);
@@ -160,6 +168,21 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
                   ),
                   textAlign: TextAlign.center,
                 ),
+                // A refusal has to point somewhere. The age gate and the spent
+                // budget both end here, and until this section existed the
+                // policy file carried three activities inside its own refusal
+                // text as a stopgap — a comment there says so. The product's
+                // claim is that there is something better to do, so the screen
+                // that says "not this" must be able to say "this instead".
+                if (ref.read(childModeProvider).error == kChildModeBudgetSpent)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: TextButton(
+                      onPressed: () => Navigator.of(context)
+                          .push(AppRoutes.offscreenActivities()),
+                      child: Text(AppLocalizations.of(context).offscreenOpen),
+                    ),
+                  ),
               ],
               const SizedBox(height: 32),
               _buildKeypad(),

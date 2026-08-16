@@ -12,6 +12,7 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/skeleton.dart';
 import '../data/story_models.dart';
+import '../../screen_off/narration_store.dart';
 import '../../../widgets/ui/night_sky.dart';
 
 /// A magical bedtime bookshelf: 3D books, twinkling stars, and looping
@@ -96,12 +97,25 @@ class _BookshelfBodyState extends State<_BookshelfBody>
   int _centeredPage = 0;
   final Map<int, VideoPlayerController> _videoControllers = {};
 
+  /// Narration keys with a recording that still exists on disk.
+  ///
+  /// Read once on open rather than per card: `find` touches the filesystem to
+  /// verify each file, and doing that inside a builder would hit the disk on
+  /// every frame of the carousel.
+  Set<String> _narrated = const {};
+
   @override
   void initState() {
     super.initState();
     _controller = PageController(viewportFraction: 0.55);
     _controller.addListener(_onScroll);
     _syncVideoWindow(0);
+    _loadNarrations();
+  }
+
+  Future<void> _loadNarrations() async {
+    final keys = await NarrationStore.instance.available();
+    if (mounted) setState(() => _narrated = keys);
   }
 
   /// Create controllers inside the window around [centered], drop the rest.
@@ -226,6 +240,9 @@ class _BookshelfBodyState extends State<_BookshelfBody>
                           story: story,
                           videoController: videoController,
                           onTap: () => _openStory(story),
+                          hasNarration: _narrated
+                              .contains(narrationKeyFor(story.id)),
+                          onListen: () => _listenInParentVoice(story),
                         ),
                       ),
                     ),
@@ -245,6 +262,20 @@ class _BookshelfBodyState extends State<_BookshelfBody>
   void _openStory(Story story) {
     Navigator.of(context).push(AppRoutes.bedtimeRoutine(story));
   }
+
+  /// Play the parent's own recording of this story, screen dark.
+  ///
+  /// Recording has existed since sprint 2 and was reachable from exactly one
+  /// place — the generated-story screen — so a story recorded once could never
+  /// be found again. The library is where a child looks for a story, so it is
+  /// where the microphone mark belongs.
+  Future<void> _listenInParentVoice(Story story) async {
+    final found = await NarrationStore.instance.find(narrationKeyFor(story.id));
+    if (found == null || !mounted) return;
+    await Navigator.of(context).push(
+      AppRoutes.screenOffPlayer(title: story.title, source: found.path),
+    );
+  }
 }
 
 class _BookCover extends StatelessWidget {
@@ -252,11 +283,17 @@ class _BookCover extends StatelessWidget {
     required this.story,
     this.videoController,
     required this.onTap,
+    this.hasNarration = false,
+    this.onListen,
   });
 
   final Story story;
   final VideoPlayerController? videoController;
   final VoidCallback onTap;
+
+  /// A parent has recorded themselves reading this one.
+  final bool hasNarration;
+  final VoidCallback? onListen;
 
   @override
   Widget build(BuildContext context) {
@@ -424,6 +461,31 @@ class _BookCover extends StatelessWidget {
                     ),
                   ),
                 ),
+                // «🎙️» — a parent recorded this one. Its own tap target, so
+                // listening in the dark is one press from the shelf rather
+                // than a path through the reader; the story text is not what
+                // a child wants when the point is to hear their parent.
+                if (hasNarration)
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Semantics(
+                      button: true,
+                      label: AppLocalizations.of(context).storyListenInParentVoice,
+                      child: GestureDetector(
+                        onTap: onListen,
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.45),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Text('🎙️',
+                              style: TextStyle(fontSize: 16)),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

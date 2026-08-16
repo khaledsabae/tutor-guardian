@@ -5953,6 +5953,180 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة.'**
   String get errorUnknownBody;
+
+  /// No description provided for @missionTodayLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمة النهارده'**
+  String get missionTodayLabel;
+
+  /// No description provided for @missionUnderstoodGoing.
+  ///
+  /// In ar, this message translates to:
+  /// **'فهمت، أنا رايح'**
+  String get missionUnderstoodGoing;
+
+  /// No description provided for @missionDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'خلّصتها'**
+  String get missionDone;
+
+  /// No description provided for @missionAlreadyDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'قلت إنك خلّصتها ✅'**
+  String get missionAlreadyDone;
+
+  /// No description provided for @missionClaimedNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'بابا هيشوفها بالليل.'**
+  String get missionClaimedNote;
+
+  /// No description provided for @missionOutdoorsHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'دي محتاجة تطلع بره.'**
+  String get missionOutdoorsHint;
+
+  /// No description provided for @missionNoneToday.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش مهمة النهارده. تصبح على خير 🌙'**
+  String get missionNoneToday;
+
+  /// No description provided for @missionLeave.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمام، أنا خارج'**
+  String get missionLeave;
+
+  /// No description provided for @missionOpenForChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهمة النهارده'**
+  String get missionOpenForChild;
+
+  /// No description provided for @missionsPendingTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'مهام مستنية تأكيدك'**
+  String get missionsPendingTitle;
+
+  /// No description provided for @missionsPendingEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش حاجة مستنية منك دلوقتي.'**
+  String get missionsPendingEmpty;
+
+  /// No description provided for @missionMinutesShort.
+  ///
+  /// In ar, this message translates to:
+  /// **'دقيقة'**
+  String get missionMinutesShort;
+
+  /// No description provided for @missionMarkNotYet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لسه'**
+  String get missionMarkNotYet;
+
+  /// No description provided for @missionMarkDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تراجع'**
+  String get missionMarkDone;
+
+  /// No description provided for @missionConfirmAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكّد الكل'**
+  String get missionConfirmAll;
+
+  /// No description provided for @missionConfirmRest.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكّد {count} وسيب الباقي'**
+  String missionConfirmRest(int count);
+
+  /// No description provided for @gamesBudgetSpent.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت اللعب خلص النهارده. الألعاب مستنياك بكرة 🌙'**
+  String get gamesBudgetSpent;
+
+  /// No description provided for @screenOffPickerTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'استماع والشاشة مطفية'**
+  String get screenOffPickerTitle;
+
+  /// No description provided for @screenOffPickerIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'الشاشة هتفضل سودا. الصوت بس، ومش بيتحسب من وقت الشاشة.'**
+  String get screenOffPickerIntro;
+
+  /// No description provided for @screenOffSectionParentVoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'بصوت بابا أو ماما'**
+  String get screenOffSectionParentVoice;
+
+  /// No description provided for @screenOffSectionQuran.
+  ///
+  /// In ar, this message translates to:
+  /// **'قرآن'**
+  String get screenOffSectionQuran;
+
+  /// No description provided for @screenOffQuranUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحميل القرآن دلوقتي.'**
+  String get screenOffQuranUnavailable;
+
+  /// No description provided for @screenOffOpen.
+  ///
+  /// In ar, this message translates to:
+  /// **'استماع والشاشة مطفية'**
+  String get screenOffOpen;
+
+  /// No description provided for @storyListenInParentVoice.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمعها بصوت بابا'**
+  String get storyListenInParentVoice;
+
+  /// No description provided for @storyNarrationSaved.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتسجّلت. هتلاقيها في المكتبة بعلامة 🎙️'**
+  String get storyNarrationSaved;
+
+  /// No description provided for @offscreenTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدائل بلا شاشة'**
+  String get offscreenTitle;
+
+  /// No description provided for @offscreenUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحميل الأنشطة.'**
+  String get offscreenUnavailable;
+
+  /// No description provided for @offscreenMaterials.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحتاج'**
+  String get offscreenMaterials;
+
+  /// No description provided for @offscreenOpen.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدائل بلا شاشة'**
+  String get offscreenOpen;
 }
 
 class _AppLocalizationsDelegate

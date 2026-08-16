@@ -71,6 +71,8 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
     final mission = day['mission'] as Map<String, dynamic>?;
     final agreement = day['agreement'] as Map<String, dynamic>?;
     final month = day['month'] as Map<String, dynamic>;
+    final sessions =
+        (day['sessions'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>();
 
     return RefreshIndicator(
       onRefresh: _load,
@@ -112,6 +114,24 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
                 style: const TextStyle(height: 1.7)),
             const SizedBox(height: 8),
             _MissionStatus(status: mission['status'] as String),
+            // The claim is only half a loop. Without a way through to the
+            // confirm list, a parent who opened the app before 9pm could see
+            // "says he did it" and had nowhere to answer it — the digest was
+            // the only door, and the digest was not scheduled.
+            if (mission['status'] == 'claimed') ...[
+              const SizedBox(height: 8),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: TextButton(
+                  onPressed: () async {
+                    final settled = await Navigator.push(
+                        context, AppRoutes.pendingMissions());
+                    if (settled == true) await _load();
+                  },
+                  child: const Text('أكّدها'),
+                ),
+              ),
+            ],
             const Divider(height: 32),
           ],
 
@@ -136,6 +156,29 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
                     ' · ${agreement['clauses_on_parent']} بنود عليك',
               style: const TextStyle(height: 1.7),
             ),
+
+          const Divider(height: 32),
+
+          // What the child actually did, in order. Rule 6: the child is told
+          // «بابا بيشوف» — this is the screen that makes that true. It is a
+          // list of surfaces and minutes, not of content: the point is that a
+          // parent can see the shape of the time, not read over a shoulder.
+          const Text('سجل النهارده',
+              style: TextStyle(fontWeight: FontWeight.w800)),
+          const SizedBox(height: 6),
+          if (sessions.isEmpty)
+            const Text('مافيش جلسات النهارده.', style: TextStyle(height: 1.6))
+          else
+            for (final s in sessions)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '${_surfaceLabel(s['surface'] as String?)} · '
+                  '${((s['counted_seconds'] as int? ?? 0) / 60).round()} دقيقة'
+                  '${s['ended_reason'] == null ? ' · شغّالة دلوقتي' : ''}',
+                  style: const TextStyle(height: 1.7, fontSize: 13),
+                ),
+              ),
 
           const Divider(height: 32),
 
@@ -219,3 +262,18 @@ class _MissionStatus extends StatelessWidget {
     return Text(text, style: const TextStyle(height: 1.6));
   }
 }
+
+/// Surface names as a parent would say them.
+///
+/// Deliberately not the raw policy keys: `screen_off` and `habit` are the
+/// server's vocabulary, and a log a parent cannot read is not transparency.
+String _surfaceLabel(String? surface) => switch (surface) {
+      'screen_off' => 'سماع (الشاشة مطفية)',
+      'mission' => 'مهمة',
+      'story' => 'قصة',
+      'game' => 'لعبة',
+      'habit' => 'ميزان العادات',
+      'drill' => 'تمرين',
+      'agreement' => 'الميثاق',
+      _ => surface ?? 'غير معروف',
+    };

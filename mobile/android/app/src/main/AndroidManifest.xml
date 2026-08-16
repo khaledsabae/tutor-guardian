@@ -22,6 +22,14 @@
     <!-- Voice notes in the in-app feedback screen. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
+    <!-- Screen-off listening. The entire mode is audio that continues while
+         the display is dark, which on Android means a foreground media
+         service — without one, playback is silenced within seconds of the
+         screen going off. mediaPlayback is the narrow type Play requires to be
+         declared from API 34; this app starts no other kind. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+
     <application
         android:label="المربي الذكي"
         android:name="${applicationName}"
@@ -73,6 +81,28 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- just_audio_background. The package has been a dependency since
+             sprint 2 with neither this service nor JustAudioBackground.init()
+             in main() — so the screen-off mode's background playback had
+             never actually been enabled. -->
+        <service
+            android:name="com.ryanheise.audioservice.AudioService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService"/>
+            </intent-filter>
+        </service>
+        <receiver
+            android:name="com.ryanheise.audioservice.MediaButtonReceiver"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
+            </intent-filter>
+        </receiver>
 
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">

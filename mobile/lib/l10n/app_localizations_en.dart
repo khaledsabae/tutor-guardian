@@ -3316,4 +3316,97 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorUnknownBody =>
       'Try again — if it keeps happening, send us a note.';
+
+  @override
+  String get missionTodayLabel => 'Today\'s mission';
+
+  @override
+  String get missionUnderstoodGoing => 'Got it — I\'m off';
+
+  @override
+  String get missionDone => 'I did it';
+
+  @override
+  String get missionAlreadyDone => 'You said you did it ✅';
+
+  @override
+  String get missionClaimedNote => 'A parent will see it tonight.';
+
+  @override
+  String get missionOutdoorsHint => 'This one is outdoors.';
+
+  @override
+  String get missionNoneToday => 'No mission today. Good night 🌙';
+
+  @override
+  String get missionLeave => 'Okay, I\'m off';
+
+  @override
+  String get missionOpenForChild => 'Today\'s mission';
+
+  @override
+  String get missionsPendingTitle => 'Waiting on you';
+
+  @override
+  String get missionsPendingEmpty => 'Nothing is waiting on you right now.';
+
+  @override
+  String get missionMinutesShort => 'min';
+
+  @override
+  String get missionMarkNotYet => 'Not yet';
+
+  @override
+  String get missionMarkDone => 'Undo';
+
+  @override
+  String get missionConfirmAll => 'Confirm all';
+
+  @override
+  String missionConfirmRest(int count) {
+    return 'Confirm $count, leave the rest';
+  }
+
+  @override
+  String get gamesBudgetSpent =>
+      'Play time is done for today. The games will be here tomorrow 🌙';
+
+  @override
+  String get screenOffPickerTitle => 'Listen with the screen off';
+
+  @override
+  String get screenOffPickerIntro =>
+      'The screen stays dark. Audio only, and it does not count against screen time.';
+
+  @override
+  String get screenOffSectionParentVoice => 'In a parent\'s voice';
+
+  @override
+  String get screenOffSectionQuran => 'Qur\'an';
+
+  @override
+  String get screenOffQuranUnavailable =>
+      'The Qur\'an could not be loaded right now.';
+
+  @override
+  String get screenOffOpen => 'Listen with the screen off';
+
+  @override
+  String get storyListenInParentVoice => 'Listen in a parent\'s voice';
+
+  @override
+  String get storyNarrationSaved =>
+      'Recorded. You\'ll find it in the library marked 🎙️';
+
+  @override
+  String get offscreenTitle => 'Things to do without a screen';
+
+  @override
+  String get offscreenUnavailable => 'The activities could not be loaded.';
+
+  @override
+  String get offscreenMaterials => 'You\'ll need';
+
+  @override
+  String get offscreenOpen => 'Without a screen';
 }
