@@ -72,7 +72,22 @@ CLI_BASE = [CLI, "-p", PROFILE]
 # passed it on none.
 NOTEBOOK_ID = "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287"
 MAP_FILE = BASE / "source_to_lesson.json"
-STATE_FILE = BASE / "scratch" / "podcast_tasks.json"
+# 🚨 الحالة تعيش في `ops/data/` المتتبَّع، لا في `scratch/` غير المتتبَّع.
+#
+# هذه الملفات ليست مؤقّتة: كل مفتاح فيها هو **مهمة توليد مدفوعة من الحصّة** تعمل
+# على خوادم جوجل، والملف هو الرابط الوحيد بين المهمة والدرس الذي طلبها. مسحُه لا
+# يُلغي المهمة — يُيتّمها، فتكتمل هناك ولا يعرف أحد لأي درس تنتمي.
+#
+# وقع مرتين في يومين: ١٨ حلقة يوم 2026-08-15 و٢٠ يوم 2026-08-16، والثانية نجت
+# لأنها لوحظت في وقتها. و`scratch/` بالتعريف ما يُمسح أولًا عند أي تنظيف.
+#
+# الترحيل تلقائي: إن وُجد ملف قديم في `scratch/` ولا ملف هنا، يُنقل بدل أن يُهمَل.
+STATE_FILE = BASE / "ops" / "data" / "podcast_tasks.json"
+_LEGACY_STATE = BASE / "scratch" / "podcast_tasks.json"
+if _LEGACY_STATE.exists() and not STATE_FILE.exists():
+    STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    STATE_FILE.write_text(_LEGACY_STATE.read_text(encoding="utf-8"),
+                          encoding="utf-8")
 POLL_BUDGET_SEC = 22 * 60
 ENV = {**os.environ, "HOME": os.environ.get("HOME", "/home/khalednew")}
 

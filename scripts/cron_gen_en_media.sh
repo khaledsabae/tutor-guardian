@@ -64,17 +64,39 @@ say "===== English media run ====="
 # generate, and should say so rather than spend an hour proving it.
 # 🚨 And re-checked before EVERY step, not once at the top.
 #
-# Checking once was worth 124 failed calls on 2026-08-15. The order is video
-# (up to 45 min) → audio (up to 45 min) → infographics, and the first and last
-# both run on tg-video. By the time infographics started, that session was up
-# to 80 minutes past a check it had passed, and every one of its 124 calls came
-# back "Authentication expired" — 344 errors, read as a quota ceiling because
-# a whole medium failing at once looks like one.
+# Checking once was worth 124 failed calls on 2026-08-15 — every infographic
+# call in the run, 344 errors, read at the time as a quota ceiling because a
+# whole medium failing at once looks like one.
 #
-# The two profiles also sit on the same Google account, so separating them
-# stops the cookie rotation that killed the session three times on 08-14, but
-# it does not buy two independent sessions. Freshness is per-step or it is not
-# a property of the run at all.
+# ⚠️ CORRECTION to what e0fabcf's message says. That commit blamed session
+# *age*: video up to 45 min, audio up to 45 more, so tg-video reached the
+# infographic step ~80 minutes past a check it had passed. The fix is right and
+# the reason was wrong, and the difference matters for anyone reasoning about
+# this later.
+#
+# Measured directly on 2026-08-16, audio alone, nothing else running:
+#
+#   · session verified alive by a real read immediately before the run
+#   · 20 generations accepted, then `rate-limited` on the 21st
+#   · seconds later the same session was DEAD — a plain `source list` refused
+#   · a fresh `login` recovered it instantly
+#
+# Recovered by login means killed, not expired. **Hitting the quota ceiling
+# kills the session.** And because tg-video and tg-audio sit on the same Google
+# account, the audio step's refusal takes tg-video down with it — the
+# infographic step then finds a corpse, whatever its age. A run that never hit
+# the ceiling would have been fine at 80 minutes.
+#
+# This also re-reads an older symptom: `no task id` was diagnosed on 08-15 as a
+# dead session. True, but it is the second link in the chain, not the first —
+# ceiling → session killed → every later call returns `no task id`. The two
+# refusals are the same event seen before and after the kill, which is why the
+# same lesson id appears under both wordings in the 08-16 logs.
+#
+# So re-authenticating before each step is not hygiene against drift; it is
+# recovery from a kill that the previous step causes. Separate profiles still
+# prevent the cookie rotation that killed the session three times on 08-14,
+# but they were never going to prevent this: one account, one ceiling.
 ensure_session() {
     local p="$1"
     timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" login --browser-cookies chrome \

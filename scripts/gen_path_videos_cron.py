@@ -61,7 +61,22 @@ PROFILE = os.environ.get("TG_NOTEBOOKLM_PROFILE", "tg-video")
 CLI_BASE = [CLI, "-p", PROFILE]
 VIDEOS_DIR = BASE / "docs" / "path_videos"
 MAP_FILE = BASE / "scratch" / "path_source_mapping_new.json"
-STATE_FILE = BASE / "scratch" / "path_video_tasks.json"
+# 🚨 الحالة تعيش في `ops/data/` المتتبَّع، لا في `scratch/` غير المتتبَّع.
+#
+# هذه الملفات ليست مؤقّتة: كل مفتاح فيها هو **مهمة توليد مدفوعة من الحصّة** تعمل
+# على خوادم جوجل، والملف هو الرابط الوحيد بين المهمة والدرس الذي طلبها. مسحُه لا
+# يُلغي المهمة — يُيتّمها، فتكتمل هناك ولا يعرف أحد لأي درس تنتمي.
+#
+# وقع مرتين في يومين: ١٨ حلقة يوم 2026-08-15 و٢٠ يوم 2026-08-16، والثانية نجت
+# لأنها لوحظت في وقتها. و`scratch/` بالتعريف ما يُمسح أولًا عند أي تنظيف.
+#
+# الترحيل تلقائي: إن وُجد ملف قديم في `scratch/` ولا ملف هنا، يُنقل بدل أن يُهمَل.
+STATE_FILE = BASE / "ops" / "data" / "path_video_tasks.json"
+_LEGACY_STATE = BASE / "scratch" / "path_video_tasks.json"
+if _LEGACY_STATE.exists() and not STATE_FILE.exists():
+    STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    STATE_FILE.write_text(_LEGACY_STATE.read_text(encoding="utf-8"),
+                          encoding="utf-8")
 FAILS_FILE = BASE / "scratch" / "path_video_failures.json"
 MANIFEST_FILE = BASE / "scratch" / "path_video_manifest.json"
 MIN_SIZE = MIN_VIDEO_BYTES
