@@ -73,7 +73,19 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
   /// so the parent's dashboard shows a finished session rather than one that
   /// timed out.
   Future<void> _understood() async {
-    await ref.read(childModeProvider.notifier).endSession(reason: 'completed');
+    // Leave child mode *before* closing, not just the session.
+    //
+    // endSession closes the server session but leaves the on-disk "child mode
+    // is on" flag set. Combined with SystemNavigator.pop() — which is the
+    // point of this button, rule 1 made literal — the next launch restored a
+    // child mode with no session, no surface and no habit day, and sat on a
+    // spinner forever. Every child who finished a mission bricked the app on
+    // their parent's phone.
+    //
+    // restore() now verifies the token too, so this is the second of two
+    // guards rather than the only one; a child mode that ends should end on
+    // disk as well as on the server.
+    await ref.read(childModeProvider.notifier).exitWithoutPin();
     await SystemNavigator.pop();
   }
 
@@ -140,7 +152,15 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
     final card = _mission!;
     final claimed = card['status'] == 'claimed' || card['status'] == 'confirmed';
 
-    return Scaffold(
+    return PopScope(
+      // The system back gesture used to fall through to the root and close
+      // the app, leaving the same broken state as the button did. Here it
+      // means the same thing as "I'm going", and goes through the same exit.
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _understood();
+      },
+      child: Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -213,6 +233,7 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }

@@ -91,7 +91,13 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
     if (childId == null) return;
     final clauses = _clausesToSend();
     if (clauses.isEmpty) {
-      setState(() => _error = 'اختر بندًا واحدًا على الأقل.');
+      // Two very different states used to print the same sentence. A clause
+      // bank exists only for 7-9 today, so a parent of any other age saw an
+      // empty page and was told to pick something from it — an instruction
+      // they could not follow, on a screen with nothing to pick.
+      setState(() => _error = _pairs.isEmpty
+          ? 'مافيش بنود جاهزة لسنّ ابنك لسه. الميثاق متاح دلوقتي لسنّ ٧–٩.'
+          : 'اخترت إنك تشيل كل البنود. سيب بند واحد على الأقل.');
       return;
     }
     setState(() { _loading = true; _error = null; });
@@ -177,7 +183,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                if (!_signed) ...[
+                if (!_signed && _pairs.isNotEmpty) ...[
                   SignaturePad(
                     key: _signatureKey,
                     label: 'وقّع هنا',

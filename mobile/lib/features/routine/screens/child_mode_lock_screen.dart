@@ -108,7 +108,17 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
           childId: widget.childId, pin: pin, surface: widget.surface);
       if (mounted) {
         if (ok) {
-          Navigator.of(context).pop(true);
+          // Unwind to the root, not one step back.
+          //
+          // The child surface is the *root* widget — _AppBootstrapper returns
+          // HabitChildModeScreen whenever childMode.active. Popping one route
+          // returned to DailyRoutineScreen, which sits above that root and
+          // hides it completely. So the parent entered their PIN, the session
+          // opened on the server, and the screen did not change: handing over
+          // the device showed the parent's own routine screen, "today's
+          // mission" opened nothing, and screen-off listening never appeared.
+          // One pop, three symptoms.
+          Navigator.of(context).popUntil((route) => route.isFirst);
         } else {
           setState(() {
             _pin.clear();

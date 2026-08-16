@@ -119,7 +119,13 @@ class _SignaturePainter extends CustomPainter {
     }
   }
 
+  // Always. `strokes` is the same List instance for the pad's whole life —
+  // _start and _extend mutate it in place — so `old.strokes != strokes` was
+  // false on every single comparison and the canvas never repainted. A
+  // signature appeared only for the one frame that clear() forced, by
+  // changing the layout above it. Comparing identity of a mutable field is
+  // the bug; a stroke list this small is not worth a defensive copy to make
+  // the comparison meaningful.
   @override
-  bool shouldRepaint(_SignaturePainter old) =>
-      old.strokes != strokes || old.color != color;
+  bool shouldRepaint(_SignaturePainter old) => true;
 }

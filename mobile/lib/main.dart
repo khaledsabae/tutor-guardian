@@ -103,6 +103,26 @@ void main() async {
     FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(kReleaseMode),
   );
 
+  // A widget that throws during build must not hand the user a page of red
+  // text on black. It happened on the parent dashboard: a hard cast on a
+  // payload key threw, and Flutter's default error box is what a parent saw.
+  // The underlying casts are fixed, but the class of failure is not — so the
+  // fallback is a quiet line instead of a stack trace.
+  ErrorWidget.builder = (details) {
+    FirebaseCrashlytics.instance.recordFlutterError(details, fatal: false);
+    return const Material(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(24),
+          child: Text(
+            'تعذّر عرض الجزء ده. جرّب تاني، ولو اتكرر ابعتلنا ملاحظة.',
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+    );
+  };
+
   FlutterError.onError = (details) {
     // Keep the red screen in debug and the console dump everywhere.
     FlutterError.presentError(details);
@@ -188,6 +208,14 @@ Future<void> _postLaunchGrowthLoop() async {
 // Global navigator key for deep links/pushes that fire before a context exists.
 final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
+/// Global messenger, for the case where a screen has to say something *and*
+/// close itself. Once a route is popped its context is gone, so
+/// ScaffoldMessenger.of(context) has nothing to attach to — the message is
+/// silently dropped, which is how a failing screen-off player closed with no
+/// explanation at all.
+final GlobalKey<ScaffoldMessengerState> messengerKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 // Names every screen visit and classifies how it ended, so we can find where
 // users actually get lost instead of guessing. See core/nav_observer.dart.
 final TgNavObserver tgNavObserver = TgNavObserver();
@@ -219,6 +247,7 @@ class TutorGuardianApp extends ConsumerWidget {
 
     return MaterialApp(
       navigatorKey: appNavigatorKey,
+      scaffoldMessengerKey: messengerKey,
       navigatorObservers: [tgNavObserver, tourRouteObserver],
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,

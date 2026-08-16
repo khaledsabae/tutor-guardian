@@ -65,14 +65,38 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
       ));
     }
 
+    // Every read below is defensive, and that is not belt-and-braces.
+    //
+    // This screen rendered as a black page of large red text on a real device
+    // — the Flutter error box — because a hard cast on a payload key threw
+    // during build. A parent dashboard has no business crashing over a field
+    // the server did not send: it should show what it has and stay quiet
+    // about the rest. `as Map<String, dynamic>` on a key that is absent, or
+    // null, or arrives from an older backend, is a crash; `?? const {}` is a
+    // missing row.
     final day = _day!;
-    final screen = day['screen'] as Map<String, dynamic>;
-    final listening = day['listening'] as Map<String, dynamic>;
-    final mission = day['mission'] as Map<String, dynamic>?;
-    final agreement = day['agreement'] as Map<String, dynamic>?;
-    final month = day['month'] as Map<String, dynamic>;
-    final sessions =
-        (day['sessions'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>();
+    Map<String, dynamic> obj(String key) {
+      final v = day[key];
+      return v is Map<String, dynamic> ? v : const {};
+    }
+
+    int num_(Map<String, dynamic> m, String key) {
+      final v = m[key];
+      return v is num ? v.round() : 0;
+    }
+
+    final screen = obj('screen');
+    final listening = obj('listening');
+    final mission = day['mission'] is Map<String, dynamic>
+        ? day['mission'] as Map<String, dynamic>
+        : null;
+    final agreement = day['agreement'] is Map<String, dynamic>
+        ? day['agreement'] as Map<String, dynamic>
+        : null;
+    final month = obj('month');
+    final sessions = (day['sessions'] as List<dynamic>? ?? const [])
+        .whereType<Map<String, dynamic>>()
+        .toList();
 
     return RefreshIndicator(
       onRefresh: _load,
@@ -86,15 +110,15 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
           _MeterRow(
             icon: '⏱',
             label: 'شاشة',
-            seconds: screen['counted_seconds'] as int,
-            budgetSeconds: screen['budget_seconds'] as int,
+            seconds: num_(screen, 'counted_seconds'),
+            budgetSeconds: num_(screen, 'budget_seconds'),
           ),
           const SizedBox(height: 10),
           _MeterRow(
             icon: '🎧',
             label: 'سماع (الشاشة مطفية)',
-            seconds: listening['counted_seconds'] as int,
-            budgetSeconds: listening['budget_seconds'] as int,
+            seconds: num_(listening, 'counted_seconds'),
+            budgetSeconds: num_(listening, 'budget_seconds'),
             muted: true,
           ),
           const SizedBox(height: 8),
@@ -113,7 +137,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
             Text('${mission['title_ar']} — ${mission['instruction_ar']}',
                 style: const TextStyle(height: 1.7)),
             const SizedBox(height: 8),
-            _MissionStatus(status: mission['status'] as String),
+            _MissionStatus(status: '${mission['status'] ?? ''}'),
             // The claim is only half a loop. Without a way through to the
             // confirm list, a parent who opened the app before 9pm could see
             // "says he did it" and had nowhere to answer it — the digest was
@@ -174,7 +198,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
                 padding: const EdgeInsets.only(bottom: 4),
                 child: Text(
                   '${_surfaceLabel(s['surface'] as String?)} · '
-                  '${((s['counted_seconds'] as int? ?? 0) / 60).round()} دقيقة'
+                  '${(num_(s, 'counted_seconds') / 60).round()} دقيقة'
                   '${s['ended_reason'] == null ? ' · شغّالة دلوقتي' : ''}',
                   style: const TextStyle(height: 1.7, fontSize: 13),
                 ),

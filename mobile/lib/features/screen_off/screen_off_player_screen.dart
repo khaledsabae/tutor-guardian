@@ -31,6 +31,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 
+import '../../main.dart' show messengerKey;
 import '../routine/providers/child_mode_providers.dart';
 
 /// How long a press must be held to leave.
@@ -66,7 +67,6 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
   final AudioPlayer _player = AudioPlayer();
   Timer? _holdTimer;
   bool _holding = false;
-  String? _error;
 
   /// The surface that was running when we arrived, so leaving can put it back
   /// rather than ending child mode outright.
@@ -125,9 +125,36 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
       }
       await _player.play();
     } catch (e) {
-      // A missing recording must not become a red screen in front of a child.
-      // The dark surface stays; the parent finds out from the library.
-      if (mounted) setState(() => _error = e.toString());
+      // Leave, and say why.
+      //
+      // This used to set an error that rendered as a nearly-invisible «…» on
+      // the black surface — the reasoning being that a child should not be
+      // shown a red error. That reasoning is right and the result was wrong:
+      // a missing file, an unreachable reciter and a working player with the
+      // volume down all produced exactly the same screen. A black rectangle
+      // with «بابا بيشوف» at the bottom and no sound, indefinitely, with no
+      // way to tell whether it was broken.
+      //
+      // A surface that cannot play anything is not a listening surface. Close
+      // it, release the session, and let whoever opened it read one line.
+      if (!mounted) return;
+      await _releaseSurface();
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      messengerKey.currentState?.showSnackBar(
+        const SnackBar(content: Text('تعذّر تشغيل الصوت. جرّب مصدرًا تاني.')),
+      );
+    }
+  }
+
+  /// Hand the session back to whatever surface was running before, or end it.
+  Future<void> _releaseSurface() async {
+    final notifier = ref.read(childModeProvider.notifier);
+    final previous = _previousSurface;
+    if (previous != null && previous != 'screen_off') {
+      await notifier.switchSurface(previous);
+    } else if (previous != null) {
+      await notifier.endSession(reason: 'completed');
     }
   }
 
@@ -174,16 +201,14 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
     _holdTimer?.cancel();
     await _player.stop();
     if (!mounted) return;
-    final notifier = ref.read(childModeProvider.notifier);
-    final previous = _previousSurface;
-    if (previous != null && previous != 'screen_off') {
-      // Put the child back on the surface a parent opened for them, on its own
-      // budget. Ending the session outright here would drop them out of child
-      // mode entirely because a story finished — the exit is the long press,
-      // not the end of the audio.
-      await notifier.switchSurface(previous);
+    // Put the child back on the surface a parent opened for them, on its own
+    // budget. Ending the session outright would drop them out of child mode
+    // entirely because a story finished — the exit is the long press, not the
+    // end of the audio.
+    if (_previousSurface == null) {
+      await ref.read(childModeProvider.notifier).endSession(reason: 'completed');
     } else {
-      await notifier.endSession(reason: 'completed');
+      await _releaseSurface();
     }
     if (mounted) Navigator.of(context).pop();
   }
@@ -231,15 +256,6 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
                 ],
               ),
             ),
-            if (_error != null)
-              const Positioned(
-                top: 40,
-                left: 0,
-                right: 0,
-                child: Text('…',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Color(0x22FFFFFF))),
-              ),
           ],
         ),
       ),

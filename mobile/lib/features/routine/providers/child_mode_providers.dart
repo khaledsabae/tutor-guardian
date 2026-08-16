@@ -110,13 +110,50 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
 
   final TgClient _client;
 
+  /// Re-enter child mode after a restart — but only if there is still a
+  /// session to re-enter.
+  ///
+  /// This used to trust the "child mode is on" flag alone. That flag survives
+  /// the process; the session id does not, and neither does the surface. So a
+  /// child surface that closed the app — which the mission card does on
+  /// purpose, `SystemNavigator.pop()` being the whole point of "I'm going" —
+  /// left the flag set and everything else gone. On the next launch the app
+  /// rebuilt as child mode with no session, no surface (so it defaulted to
+  /// `habit`) and no habit day, and HabitChildModeScreen sat on its spinner
+  /// with nothing on the way to resolve it. The app was bricked, on the
+  /// launcher, for every user who finished a mission.
+  ///
+  /// The token is the evidence. If it is gone, or the server no longer
+  /// recognises it, child mode is over and the parent gets their app back.
   Future<void> restore() async {
     final active = await isChildModeActive();
     final childId = await _loadChildId();
-    if (active && childId != null) {
-      state = state.copyWith(active: true, childId: childId);
-      await refresh();
+    if (!active || childId == null) return;
+
+    final token = await getChildToken();
+    if (token == null) {
+      await _leaveChildMode();
+      return;
     }
+
+    state = state.copyWith(active: true, childId: childId);
+    try {
+      final day = await _client.fetchChildTodayHabits(childToken: token);
+      state = state.copyWith(day: HabitDay.fromJson(day), loading: false);
+    } catch (_) {
+      // Expired, closed, or unreachable. Any of the three means there is no
+      // live surface to restore, and none of them is worth trapping a parent
+      // behind a spinner for.
+      await _leaveChildMode();
+    }
+  }
+
+  /// Drop out of child mode entirely and clear what is on disk.
+  Future<void> _leaveChildMode() async {
+    _stopHeartbeat();
+    await clearChildMode();
+    await _clearChildId();
+    state = const ChildModeState();
   }
 
   /// The only way into a child surface.
@@ -344,6 +381,17 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
   void dispose() {
     _stopHeartbeat();
     super.dispose();
+  }
+
+  /// Leave child mode without a PIN.
+  ///
+  /// For surfaces that end by closing the app rather than by handing the
+  /// device back — the mission card's "I'm going". There is nothing to
+  /// protect here: the child is leaving, not gaining access, and requiring a
+  /// parent's PIN to *stop* being in child mode is the wrong way round.
+  Future<void> exitWithoutPin() async {
+    await endSession(reason: 'completed');
+    await _leaveChildMode();
   }
 
   Future<bool> exit(String pin) async {

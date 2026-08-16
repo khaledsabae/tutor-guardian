@@ -206,6 +206,7 @@ void main() {
   });
 
   _licenseTests();
+  _regressionTests();
 
   group('the off-screen alternatives are real content', () {
     test('every band the age gate can refuse has activities', () {
@@ -334,6 +335,87 @@ void _licenseTests() {
           File('../backend/app/services/license_alert.py').readAsStringSync();
       expect(alert, contains('"link": "/license"'));
       expect(alert, contains('almorabbi_safety'));
+    });
+  });
+}
+
+// ── What the widget suite let through ──────────────────────────────────────
+//
+// Seven defects reached production behind a green suite. These are the ones
+// a test could have caught, written against the exact mistake rather than
+// against the feature.
+
+void _regressionTests() {
+  group('defects the first real device found', () {
+    test('the signature repaints when strokes change', () {
+      // shouldRepaint compared `old.strokes != strokes` on a List that is
+      // mutated in place, so it was false on every comparison and the canvas
+      // never repainted. A signature appeared only for the single frame that
+      // clear() forced by changing the layout above it.
+      final source = _codeOnly('lib/features/agreement/signature_pad.dart');
+      expect(source.contains('old.strokes != strokes'), isFalse,
+          reason: 'identity comparison on a mutated list never fires');
+    });
+
+    test('entering a child surface unwinds to the root', () {
+      // The child surface IS the root widget. Popping one route returned to
+      // the screen that sits above it, so the parent entered a PIN and
+      // nothing changed — handover, missions and screen-off all "did
+      // nothing" from one line.
+      final source =
+          _codeOnly('lib/features/routine/screens/child_mode_lock_screen.dart');
+      final enterBranch = source.split('notifier.enter(')[1];
+      expect(enterBranch, contains('popUntil'));
+    });
+
+    test('restore refuses to enter child mode without a token', () {
+      // The "child mode is on" flag survives a restart; the session does not.
+      // A mission that closed the app left the flag set, and the next launch
+      // rebuilt child mode with no session and no habit day — a spinner with
+      // nothing on the way to resolve it. The app was bricked on the launcher.
+      final source =
+          _codeOnly('lib/features/routine/providers/child_mode_providers.dart');
+      final restore = source.split('Future<void> restore()')[1].split('Future<void> _leaveChildMode')[0];
+      expect(restore, contains('getChildToken'));
+      expect(restore, contains('_leaveChildMode'));
+    });
+
+    test('the mission exit clears child mode, not just the session', () {
+      final source =
+          _codeOnly('lib/features/missions/child_mission_screen.dart');
+      expect(source, contains('exitWithoutPin'));
+      expect(source, contains('PopScope'));
+    });
+
+    test('the parent dashboard makes no hard casts on payload keys', () {
+      // A cast on an absent key threw during build, and Flutter's error box
+      // showed a parent a page of red text on black.
+      final source = _codeOnly('lib/features/parent_day/parent_day_screen.dart');
+      expect(source.contains("as Map<String, dynamic>;"), isFalse,
+          reason: 'a hard cast on a server payload is a crash');
+      expect(source.contains("as int,"), isFalse);
+    });
+
+    test('a build failure shows a sentence, not a stack trace', () {
+      final main = _codeOnly('lib/main.dart');
+      expect(main, contains('ErrorWidget.builder'));
+    });
+
+    test('screen-off leaves when it cannot play', () {
+      // A missing file, an unreachable reciter and a working player rendered
+      // identically: a black rectangle with «بابا بيشوف» and no sound.
+      final source = _codeOnly(
+          'lib/features/screen_off/screen_off_player_screen.dart');
+      expect(source.contains("Text('…'"), isFalse,
+          reason: 'an invisible ellipsis is not an error message');
+      expect(source, contains('messengerKey'));
+    });
+
+    test('an empty clause bank does not ask the parent to pick something', () {
+      // The bank exists for 7-9 only. Every other band saw an empty page and
+      // was told to select at least one clause from it.
+      final source = _codeOnly('lib/features/agreement/agreement_screen.dart');
+      expect(source, contains('_pairs.isEmpty'));
     });
   });
 }
