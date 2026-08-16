@@ -61,24 +61,45 @@ def _iso(moment: datetime) -> str:
 
 # ── The bank ───────────────────────────────────────────────────────────────
 
-def load_scenarios(level_key: str) -> list[dict[str, Any]]:
-    """Every published scenario for a level, or [] when the bank is absent.
+def load_scenarios(level_key: str, age_band: str = "10-12") -> list[dict[str, Any]]:
+    """Every published scenario for a level *and* an age band.
 
-    An absent bank is the ordinary case: levels 2-5 have no content yet, and
-    the UI renders that as "not yet", not as an error.
+    The band is not decoration. "A stranger asked for your photo" is a
+    different situation at ten and at fourteen — at fourteen the stranger is
+    usually a friend of a friend, the pressure is social rather than novel,
+    and what stops a teenager telling their parent is embarrassment, not
+    ignorance. A single bank pitched at ten-year-olds shown to a fourteen-
+    year-old is worse than no bank: it teaches them the feature is for
+    children.
+
+    Falls back to the band-less filename so the first bank written (which had
+    no band in its name) keeps working.
+
+    An absent bank is the ordinary case — levels 2-5 have no content for any
+    band — and the UI renders that as "not yet", never as an error.
     """
-    path = BANK_DIR / f"scenarios_{level_key}.json"
+    path = BANK_DIR / f"scenarios_{level_key}_{age_band}.json"
+    if not path.exists():
+        path = BANK_DIR / f"scenarios_{level_key}.json"
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return []
     if not data.get("is_published", True):
         return []
-    return [s for s in data.get("scenarios", []) if isinstance(s, dict)]
+    # A card missing `key`, `situation_ar` or `choices` would 500 every
+    # request for the band rather than degrade — the child sees a broken
+    # screen instead of "nothing to practise today". Drop it here instead.
+    return [
+        s for s in data.get("scenarios", [])
+        if isinstance(s, dict)
+        and s.get("key") and s.get("situation_ar") and s.get("choices")
+    ]
 
 
-def _scenario(level_key: str, scenario_key: str) -> Optional[dict[str, Any]]:
-    for s in load_scenarios(level_key):
+def _scenario(level_key: str, scenario_key: str,
+              age_band: str = "10-12") -> Optional[dict[str, Any]]:
+    for s in load_scenarios(level_key, age_band):
         if s.get("key") == scenario_key:
             return s
     return None
@@ -99,7 +120,10 @@ def _latest_answers(conn, child_id: int, level_key: str) -> dict[str, dict]:
         "SELECT scenario_key, choice_key, outcome, attempt, answered_at "
         "FROM child_scenario_answers "
         "WHERE child_id = ? AND level_key = ? "
-        "ORDER BY answered_at ASC",
+        # attempt breaks the tie: _iso truncates to whole seconds, so a
+        # double-tap produces two rows with identical timestamps and "the
+        # latest" would depend on scan order.
+        "ORDER BY answered_at ASC, attempt ASC",
         (child_id, level_key),
     ).fetchall()
     latest: dict[str, dict] = {}
@@ -109,7 +133,8 @@ def _latest_answers(conn, child_id: int, level_key: str) -> dict[str, dict]:
 
 
 def next_scenario(child_id: int, level_key: str,
-                  now: Optional[datetime] = None) -> Optional[dict[str, Any]]:
+                  now: Optional[datetime] = None,
+                  age_band: str = "10-12") -> Optional[dict[str, Any]]:
     """The scenario to show, or None when the level's practice is complete.
 
     Order is deterministic rather than random, by the same reasoning as the
@@ -121,7 +146,7 @@ def next_scenario(child_id: int, level_key: str,
     who got two wrong today is not made to sit through both again tonight.
     """
     moment = now or _now()
-    bank = load_scenarios(level_key)
+    bank = load_scenarios(level_key, age_band)
     if not bank:
         return None
 
@@ -152,21 +177,49 @@ def next_scenario(child_id: int, level_key: str,
     return None
 
 
-def progress(child_id: int, level_key: str) -> dict[str, Any]:
-    bank = load_scenarios(level_key)
+def progress(child_id: int, level_key: str,
+             age_band: str = "10-12") -> dict[str, Any]:
+    """How far along the level is — **for the parent**.
+
+    `done` counts safe answers, which makes it a verdict. Never send it to the
+    child: reading it before and after an answer tells them whether they got
+    it right, in two requests, which is exactly the signal the whole surface
+    is built to withhold. Use `child_progress` for anything the child sees.
+    """
+    bank = load_scenarios(level_key, age_band)
     conn = get_conn()
     try:
         latest = _latest_answers(conn, child_id, level_key)
     finally:
         conn.close()
-    done = sum(1 for s in bank if latest.get(s["key"], {}).get("outcome") == "safe")
+    done = sum(1 for s in bank
+               if latest.get(s.get("key"), {}).get("outcome") == "safe")
     return {"done": done, "total": len(bank)}
+
+
+def child_progress(child_id: int, level_key: str,
+                   age_band: str = "10-12") -> dict[str, Any]:
+    """The same shape, counting *answered* rather than *correct*.
+
+    A child needs to know how much is left — a screen with no sense of length
+    is its own kind of unkind — but the number must move on every answer,
+    identically, whatever they chose. `answered` does; `done` does not, and
+    the difference between them is a verdict delivered in two HTTP calls.
+    """
+    bank = load_scenarios(level_key, age_band)
+    conn = get_conn()
+    try:
+        latest = _latest_answers(conn, child_id, level_key)
+    finally:
+        conn.close()
+    answered = sum(1 for s in bank if s.get("key") in latest)
+    return {"answered": answered, "total": len(bank)}
 
 
 # ── Answering ──────────────────────────────────────────────────────────────
 
 def answer(device_id: str, child_id: int, level_key: str, scenario_key: str,
-           choice_key: str) -> dict[str, Any]:
+           choice_key: str, age_band: str = "10-12") -> dict[str, Any]:
     """Record an answer.
 
     The returned dict carries no correct/incorrect signal — deliberately, and
@@ -176,7 +229,7 @@ def answer(device_id: str, child_id: int, level_key: str, scenario_key: str,
     answered it perfectly. A child who chose well in a grooming scenario may
     be living through one.
     """
-    scenario = _scenario(level_key, scenario_key)
+    scenario = _scenario(level_key, scenario_key, age_band)
     if scenario is None:
         return {"ok": False, "reason": "scenario_not_found"}
     outcome = _outcome_of(scenario, choice_key)
@@ -187,8 +240,8 @@ def answer(device_id: str, child_id: int, level_key: str, scenario_key: str,
     try:
         row = conn.execute(
             "SELECT MAX(attempt) AS a FROM child_scenario_answers "
-            "WHERE child_id = ? AND scenario_key = ?",
-            (child_id, scenario_key),
+            "WHERE child_id = ? AND scenario_key = ? AND level_key = ?",
+            (child_id, scenario_key, level_key),
         ).fetchone()
         attempt = int((row["a"] or 0)) + 1
         conn.execute(
@@ -211,13 +264,15 @@ def answer(device_id: str, child_id: int, level_key: str, scenario_key: str,
     }
 
 
-def mark_alerted(child_id: int, scenario_key: str, attempt: int) -> None:
+def mark_alerted(child_id: int, scenario_key: str, attempt: int,
+                 level_key: str) -> None:
     conn = get_conn()
     try:
         conn.execute(
             "UPDATE child_scenario_answers SET parent_alerted_at = ? "
-            "WHERE child_id = ? AND scenario_key = ? AND attempt = ?",
-            (_iso(_now()), child_id, scenario_key, attempt),
+            "WHERE child_id = ? AND scenario_key = ? AND level_key = ? "
+            "AND attempt = ?",
+            (_iso(_now()), child_id, scenario_key, level_key, attempt),
         )
         conn.commit()
     finally:
@@ -246,7 +301,13 @@ def ensure_level(device_id: str, child_id: int, level_key: str) -> dict[str, Any
             )
             conn.commit()
             row = _row(conn, child_id, level_key)
-        return dict(row)
+        # Two rapid taps race on the INSERT; the loser's re-read can still
+        # miss under SQLite's default isolation, and `dict(None)` is a 500.
+        return dict(row) if row is not None else {
+            "child_id": child_id, "level_key": level_key,
+            "status": PRACTISING, "granted_at": None, "talked_at": None,
+            "next_review_date": None,
+        }
     finally:
         conn.close()
 
@@ -269,13 +330,14 @@ def current_level(child_id: int) -> str:
     return LEVELS[-1]
 
 
-def refresh_status(device_id: str, child_id: int, level_key: str) -> dict[str, Any]:
+def refresh_status(device_id: str, child_id: int, level_key: str,
+                   age_band: str = "10-12") -> dict[str, Any]:
     """Move `practising → awaiting_talk` once every scenario is answered safely.
 
     Never moves to `granted`: that transition belongs to the parent alone.
     """
     ensure_level(device_id, child_id, level_key)
-    prog = progress(child_id, level_key)
+    prog = progress(child_id, level_key, age_band)
     conn = get_conn()
     try:
         row = _row(conn, child_id, level_key)
@@ -302,10 +364,15 @@ def record_talk(device_id: str, child_id: int, level_key: str) -> dict[str, Any]
     ensure_level(device_id, child_id, level_key)
     conn = get_conn()
     try:
+        # device_id in the WHERE as well as child_id. Every licence endpoint
+        # today takes child_id from a token, so this changes nothing now — it
+        # is here so the first caller that takes it from a query string does
+        # not silently gain write access to another family's row.
         conn.execute(
             "UPDATE child_licences SET talked_at = ? "
-            "WHERE child_id = ? AND level_key = ? AND talked_at IS NULL",
-            (_iso(_now()), child_id, level_key),
+            "WHERE child_id = ? AND level_key = ? AND device_id = ? "
+            "AND talked_at IS NULL",
+            (_iso(_now()), child_id, level_key, device_id),
         )
         conn.commit()
         return dict(_row(conn, child_id, level_key))
@@ -313,19 +380,27 @@ def record_talk(device_id: str, child_id: int, level_key: str) -> dict[str, Any]
         conn.close()
 
 
-def grant(device_id: str, child_id: int, level_key: str) -> dict[str, Any]:
+def grant(device_id: str, child_id: int, level_key: str,
+          age_band: str = "10-12") -> dict[str, Any]:
     """Grant a level. Refused unless the practice is done AND they talked."""
     ensure_level(device_id, child_id, level_key)
-    prog = progress(child_id, level_key)
+    prog = progress(child_id, level_key, age_band)
     conn = get_conn()
     try:
         row = _row(conn, child_id, level_key)
+        if row is None:
+            return {"ok": False, "reason": "level_not_found"}
+        # Already-granted is checked FIRST. The other order meant that adding
+        # a scenario to a bank retroactively un-granted every family who had
+        # already finished it: their `done` no longer matched the new `total`,
+        # so a level they had agreed on last month answered
+        # "practice_incomplete".
+        if row["status"] == GRANTED:
+            return {"ok": True, "already": True, "licence": dict(row)}
         if prog["total"] == 0 or prog["done"] < prog["total"]:
             return {"ok": False, "reason": "practice_incomplete"}
         if not row["talked_at"]:
             return {"ok": False, "reason": "talk_required"}
-        if row["status"] == GRANTED:
-            return {"ok": True, "already": True, "licence": dict(row)}
         review = _now() + timedelta(days=30)
         conn.execute(
             "UPDATE child_licences SET status = ?, granted_at = ?, "
@@ -338,11 +413,12 @@ def grant(device_id: str, child_id: int, level_key: str) -> dict[str, Any]:
         conn.close()
 
 
-def summary(device_id: str, child_id: int) -> dict[str, Any]:
+def summary(device_id: str, child_id: int,
+            age_band: str = "10-12") -> dict[str, Any]:
     """What the parent's screen renders."""
     level_key = current_level(child_id)
-    row = refresh_status(device_id, child_id, level_key)
-    prog = progress(child_id, level_key)
+    row = refresh_status(device_id, child_id, level_key, age_band)
+    prog = progress(child_id, level_key, age_band)
 
     conn = get_conn()
     try:
@@ -362,7 +438,7 @@ def summary(device_id: str, child_id: int) -> dict[str, Any]:
     finally:
         conn.close()
 
-    bank = {s["key"]: s for s in load_scenarios(level_key)}
+    bank = {s["key"]: s for s in load_scenarios(level_key, age_band)}
     return {
         "level_key": level_key,
         "status": row["status"],

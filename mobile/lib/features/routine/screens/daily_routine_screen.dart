@@ -89,7 +89,9 @@ class DailyRoutineScreen extends ConsumerWidget {
 
     if (profile != null && !routineAgeAllowed(profile.ageGroup)) {
       return Scaffold(
-        appBar: AppBar(title: Text(habitScreenTitle(profile.ageGroup, AppLocalizations.of(context)))),
+        appBar: AppBar(
+          title: Text(habitScreenTitle(profile.ageGroup, AppLocalizations.of(context))),
+        ),
         body: _RoutineAgeGate(profile: profile),
       );
     }
@@ -104,10 +106,9 @@ class DailyRoutineScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: childId == null
-          ? const _NoChildState()
-          : const _RoutineBody(),
-      floatingActionButton: childId == null || (profile != null && !routineAgeAllowed(profile.ageGroup))
+      body: childId == null ? const _NoChildState() : const _RoutineBody(),
+      floatingActionButton:
+          childId == null || (profile != null && !routineAgeAllowed(profile.ageGroup))
           ? null
           : FloatingActionButton.extended(
               onPressed: () => _showAddEventDialog(context, childId),
@@ -118,18 +119,14 @@ class DailyRoutineScreen extends ConsumerWidget {
   }
 
   void _showAddEventDialog(BuildContext context, int childId) {
-    final profile = ProviderScope.containerOf(context)
-        .read(activeChildProfileProvider);
+    final profile = ProviderScope.containerOf(context).read(activeChildProfileProvider);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(Dt.rSheet)),
       ),
-      builder: (_) => _AddEventSheet(
-        childId: childId,
-        ageGroup: profile?.ageGroup ?? '0-3',
-      ),
+      builder: (_) => _AddEventSheet(childId: childId, ageGroup: profile?.ageGroup ?? '0-3'),
     );
   }
 }
@@ -152,8 +149,7 @@ class _RoutineAgeGate extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            AppLocalizations.of(context)
-                .routineChildStage(profile.name, profile.ageGroup),
+            AppLocalizations.of(context).routineChildStage(profile.name, profile.ageGroup),
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
@@ -217,9 +213,7 @@ class _RoutineBody extends ConsumerWidget {
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (e, _) => ErrorRetryView(
               error: e,
-              onRetry: childId == null
-                  ? null
-                  : () => ref.invalidate(todayRoutineProvider(childId)),
+              onRetry: childId == null ? null : () => ref.invalidate(todayRoutineProvider(childId)),
             ),
           ),
         ),
@@ -239,27 +233,42 @@ class _SummaryCard extends ConsumerWidget {
 
     return summaryAsync.when(
       data: (s) => Card(
-              margin: const EdgeInsets.all(Dt.pad),
+        margin: const EdgeInsets.all(Dt.pad),
 
-              child: Padding(
-                padding: const EdgeInsets.all(Dt.pad),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(AppLocalizations.of(context).routineSummaryDays(s.days), style: Theme.of(context).textTheme.titleSmall),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _Stat(icon: '🌙', value: '${(s.totalSleepMinutes / 60).floor()}h', label: AppLocalizations.of(context).routineEventSleep),
-                        _Stat(icon: '🍼', value: '${s.totalFeedCount}', label: AppLocalizations.of(context).routineStatFeeds),
-                        _Stat(icon: '👶', value: '${s.diaperCount}', label: AppLocalizations.of(context).routineStatDiapers),
-                      ],
-                    ),
-                  ],
-                ),
+        child: Padding(
+          padding: const EdgeInsets.all(Dt.pad),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppLocalizations.of(context).routineSummaryDays(s.days),
+                style: Theme.of(context).textTheme.titleSmall,
               ),
-            ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _Stat(
+                    icon: '🌙',
+                    value: '${(s.totalSleepMinutes / 60).floor()}h',
+                    label: AppLocalizations.of(context).routineEventSleep,
+                  ),
+                  _Stat(
+                    icon: '🍼',
+                    value: '${s.totalFeedCount}',
+                    label: AppLocalizations.of(context).routineStatFeeds,
+                  ),
+                  _Stat(
+                    icon: '👶',
+                    value: '${s.diaperCount}',
+                    label: AppLocalizations.of(context).routineStatDiapers,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
       loading: () => const SizedBox.shrink(),
       error: (_, _) => const SizedBox.shrink(),
     );
@@ -297,9 +306,15 @@ class _EventsList extends StatelessWidget {
           children: [
             const Text('✍️', style: TextStyle(fontSize: 48)),
             const SizedBox(height: 12),
-            Text(AppLocalizations.of(context).routineNoEvents, style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              AppLocalizations.of(context).routineNoEvents,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             const SizedBox(height: 8),
-            Text(AppLocalizations.of(context).routineTapPlus, style: Theme.of(context).textTheme.bodySmall),
+            Text(
+              AppLocalizations.of(context).routineTapPlus,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ],
         ),
       );
@@ -309,9 +324,7 @@ class _EventsList extends StatelessWidget {
       itemCount: day.events.length,
       itemBuilder: (context, i) {
         final e = day.events[i];
-        return _EventTile(event: e)
-            .animate()
-            .fadeIn(delay: (i * 80).ms, duration: Dt.base);
+        return _EventTile(event: e).animate().fadeIn(delay: (i * 80).ms, duration: Dt.base);
       },
     );
   }
@@ -428,17 +441,21 @@ class _AddEventSheetState extends State<_AddEventSheet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            AppLocalizations.of(context).routineAddEventTitle(_type.label(AppLocalizations.of(context))),
+            AppLocalizations.of(
+              context,
+            ).routineAddEventTitle(_type.label(AppLocalizations.of(context))),
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 12),
           SegmentedButton<RoutineEventType>(
             segments: _allowedTypes
-                .map((t) => ButtonSegment(
-                      value: t,
-                      label: Text('${t.icon} ${t.label(AppLocalizations.of(context))}'),
-                    ))
+                .map(
+                  (t) => ButtonSegment(
+                    value: t,
+                    label: Text('${t.icon} ${t.label(AppLocalizations.of(context))}'),
+                  ),
+                )
                 .toList(),
             selected: {_type},
             onSelectionChanged: (s) => setState(() {
@@ -478,62 +495,60 @@ class _AddEventSheetState extends State<_AddEventSheet> {
     final l10n = AppLocalizations.of(context);
     return switch (_type) {
       RoutineEventType.feed => Column(
-          children: [
+        children: [
+          SegmentedButton<String>(
+            segments: [
+              ButtonSegment(value: 'breast', label: Text(l10n.routineFeedBreast)),
+              ButtonSegment(value: 'bottle', label: Text(l10n.routineFeedBottle)),
+              ButtonSegment(value: 'solid', label: Text(l10n.routineFeedSolid)),
+            ],
+            selected: {_feedType ?? 'breast'},
+            onSelectionChanged: (s) => setState(() => _feedType = s.first),
+          ),
+          const SizedBox(height: 8),
+          if ((_feedType ?? 'breast') == 'breast')
             SegmentedButton<String>(
               segments: [
-                ButtonSegment(value: 'breast', label: Text(l10n.routineFeedBreast)),
-                ButtonSegment(value: 'bottle', label: Text(l10n.routineFeedBottle)),
-                ButtonSegment(value: 'solid', label: Text(l10n.routineFeedSolid)),
+                ButtonSegment(value: 'left', label: Text(l10n.routineSideLeft)),
+                ButtonSegment(value: 'right', label: Text(l10n.routineSideRight)),
+                ButtonSegment(value: 'both', label: Text(l10n.routineBoth)),
               ],
-              selected: {_feedType ?? 'breast'},
-              onSelectionChanged: (s) => setState(() => _feedType = s.first),
+              selected: {_side ?? 'left'},
+              onSelectionChanged: (s) => setState(() => _side = s.first),
             ),
-            const SizedBox(height: 8),
-            if ((_feedType ?? 'breast') == 'breast')
-              SegmentedButton<String>(
-                segments: [
-                  ButtonSegment(value: 'left', label: Text(l10n.routineSideLeft)),
-                  ButtonSegment(value: 'right', label: Text(l10n.routineSideRight)),
-                  ButtonSegment(value: 'both', label: Text(l10n.routineBoth)),
-                ],
-                selected: {_side ?? 'left'},
-                onSelectionChanged: (s) => setState(() => _side = s.first),
-              ),
-            if ((_feedType ?? 'breast') != 'breast')
-              TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: l10n.routineAmountApprox,
-                ),
-                onChanged: (v) => _amountMl = int.tryParse(v),
-              ),
-          ],
-        ),
+          if ((_feedType ?? 'breast') != 'breast')
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: l10n.routineAmountApprox),
+              onChanged: (v) => _amountMl = int.tryParse(v),
+            ),
+        ],
+      ),
       RoutineEventType.diaper => SegmentedButton<String>(
-          segments: [
-            ButtonSegment(value: 'wet', label: Text(l10n.routineDiaperWet)),
-            ButtonSegment(value: 'dirty', label: Text(l10n.routineDiaperDirty)),
-            ButtonSegment(value: 'both', label: Text(l10n.routineBoth)),
-          ],
-          selected: {_diaperType ?? 'wet'},
-          onSelectionChanged: (s) => setState(() => _diaperType = s.first),
-        ),
+        segments: [
+          ButtonSegment(value: 'wet', label: Text(l10n.routineDiaperWet)),
+          ButtonSegment(value: 'dirty', label: Text(l10n.routineDiaperDirty)),
+          ButtonSegment(value: 'both', label: Text(l10n.routineBoth)),
+        ],
+        selected: {_diaperType ?? 'wet'},
+        onSelectionChanged: (s) => setState(() => _diaperType = s.first),
+      ),
       RoutineEventType.sleep => Row(
-          children: [
-            Text(AppLocalizations.of(context).routineEndTime),
-            const SizedBox(width: 8),
-            Expanded(
-              child: TextButton(
-                onPressed: _pickEndTime,
-                child: Text(
-                  _endedAt == null
-                      ? l10n.routinePickWakeTime
-                      : '${_endedAt!.hour.toString().padLeft(2, '0')}:${_endedAt!.minute.toString().padLeft(2, '0')}',
-                ),
+        children: [
+          Text(AppLocalizations.of(context).routineEndTime),
+          const SizedBox(width: 8),
+          Expanded(
+            child: TextButton(
+              onPressed: _pickEndTime,
+              child: Text(
+                _endedAt == null
+                    ? l10n.routinePickWakeTime
+                    : '${_endedAt!.hour.toString().padLeft(2, '0')}:${_endedAt!.minute.toString().padLeft(2, '0')}',
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     };
   }
 
@@ -547,10 +562,7 @@ class _AddEventSheetState extends State<_AddEventSheet> {
 
   Future<void> _pickEndTime() async {
     final now = DateTime.now();
-    final t = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(now),
-    );
+    final t = await showTimePicker(context: context, initialTime: TimeOfDay.fromDateTime(now));
     if (t != null) {
       setState(() {
         _endedAt = DateTime(now.year, now.month, now.day, t.hour, t.minute);
@@ -562,11 +574,9 @@ class _AddEventSheetState extends State<_AddEventSheet> {
     final l10n = AppLocalizations.of(context);
     final notes = _notesController.text.trim();
     if (notes.isNotEmpty && _medicalTerms.hasMatch(notes)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.routineMedicalNoteBlocked),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.routineMedicalNoteBlocked)));
       return;
     }
 
@@ -591,12 +601,13 @@ class _AddEventSheetState extends State<_AddEventSheet> {
     TgClient()
         .createRoutineEvent(widget.childId, body: event.toJson())
         .then((_) {
-      navigator.pop();
-    }).catchError((e) {
-      if (mounted) setState(() => _saving = false);
-      final msg = e is TgApiError ? e.message : l10n.routineError;
-      messenger.showSnackBar(SnackBar(content: Text(msg)));
-    });
+          navigator.pop();
+        })
+        .catchError((e) {
+          if (mounted) setState(() => _saving = false);
+          final msg = e is TgApiError ? e.message : l10n.routineError;
+          messenger.showSnackBar(SnackBar(content: Text(msg)));
+        });
   }
 
   @override
@@ -619,8 +630,7 @@ class _HabitBalanceBody extends ConsumerStatefulWidget {
 
 class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 3, vsync: this);
+  late final TabController _tabController = TabController(length: 3, vsync: this);
   int _selectedTab = 0;
 
   @override
@@ -640,11 +650,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
       context: context,
       barrierDismissible: false,
       builder: (ctx) => const AlertDialog(
-        content: SizedBox(
-          width: 80,
-          height: 80,
-          child: Center(child: CircularProgressIndicator()),
-        ),
+        content: SizedBox(width: 80, height: 80, child: Center(child: CircularProgressIndicator())),
       ),
     );
 
@@ -669,13 +675,13 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
       context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
-          title: Text(AppLocalizations.of(context).routineShareTeenTitle),
-          content: SizedBox(
-            width: double.maxFinite,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+        title: Text(AppLocalizations.of(context).routineShareTeenTitle),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 if (claimUrl.isNotEmpty) ...[
                   Container(
                     padding: const EdgeInsets.all(12),
@@ -707,36 +713,34 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
             ),
           ),
         ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: Text(AppLocalizations.of(context).routineClose),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(AppLocalizations.of(context).routineClose),
+          ),
+          if (claimUrl.isNotEmpty)
+            FilledButton.icon(
+              onPressed: () async {
+                await Clipboard.setData(ClipboardData(text: claimUrl));
+                if (ctx.mounted) Navigator.of(ctx).pop();
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(AppLocalizations.of(context).routineLinkCopied)),
+                  );
+                }
+              },
+              icon: const Icon(Icons.copy),
+              label: Text(AppLocalizations.of(context).routineCopyLink),
             ),
-            if (claimUrl.isNotEmpty)
-              FilledButton.icon(
-                onPressed: () async {
-                  await Clipboard.setData(ClipboardData(text: claimUrl));
-                  if (ctx.mounted) Navigator.of(ctx).pop();
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(AppLocalizations.of(context).routineLinkCopied)),
-                    );
-                  }
-                },
-                icon: const Icon(Icons.copy),
-                label: Text(AppLocalizations.of(context).routineCopyLink),
-              ),
-          ],
-        ),
-      );
+        ],
+      ),
+    );
   }
 
-  Future<void> _enterChildMode(int childId, String childName,
-      {String surface = 'habit'}) async {
-    await Navigator.of(context).push(
-      AppRoutes.childModeLock<void>(
-          childId: childId, childName: childName, surface: surface),
-    );
+  Future<void> _enterChildMode(int childId, String childName, {String surface = 'habit'}) async {
+    await Navigator.of(
+      context,
+    ).push(AppRoutes.childModeLock<void>(childId: childId, childName: childName, surface: surface));
   }
 
   /// The parent's day, and the agreement behind it.
@@ -776,10 +780,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
           child: habitsAsync.when(
             data: (day) => Column(
               children: [
-                _HabitSummaryCard(
-                  points: day.points,
-                  totalHabits: day.habits.length,
-                ),
+                _HabitSummaryCard(points: day.points, totalHabits: day.habits.length),
                 Expanded(
                   child: _HabitCategoryList(
                     category: categories[_selectedTab],
@@ -800,90 +801,77 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
             ),
           ),
         ),
-        SafeArea(
+        // Flexible, not just scrollable.
+        //
+        // A SingleChildScrollView inside an unbounded Column still takes its
+        // intrinsic height, so scrolling alone did not stop the overflow —
+        // 17px on a small screen. Flexible lets this section shrink when the
+        // list above it needs the room, and the scroll view inside means the
+        // buttons stay reachable at any height.
+        Flexible(
+          child: SafeArea(
           top: false,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: Dt.pad, vertical: 8),
-            child: Column(
-              children: [
-                OutlinedButton.icon(
-                  onPressed: () => _openCustomizeScreen(childId),
-                  icon: const Icon(Icons.edit_note_outlined),
-                  label: Text(AppLocalizations.of(context).routineCustomize),
-                ),
-                const SizedBox(height: 8),
-                if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
+            // Scrollable, and this is the third time.
+            //
+            // This is an unbounded Column pinned under a list, and every
+            // button added to it moves it closer to overflowing. It has now
+            // broken daily_routine_qr_dialog_widget_test three separate times
+            // today — once for the mission + screen-off row, once for the
+            // licence row, and once when the licence row widened to 13-15 —
+            // and each time the fix was to narrow a condition, which only
+            // moved the cliff rather than removing it.
+            //
+            // A scroll view removes it: the column can grow, and on a screen
+            // too short for it the parent scrolls instead of the layout
+            // throwing. `shrinkWrap` semantics come free because the child is
+            // a Column with mainAxisSize.min.
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   OutlinedButton.icon(
-                    onPressed: () async {
-                      final profile = ref.read(activeChildProfileProvider);
-                      await _showWebShareDialog(
-                          childId,
-                          profile?.name ??
-                              AppLocalizations.of(context).childFallbackName);
-                    },
-                    icon: const Icon(Icons.qr_code_2),
-                    label: Text(AppLocalizations.of(context).routineShareWeb),
+                    onPressed: () => _openCustomizeScreen(childId),
+                    icon: const Icon(Icons.edit_note_outlined),
+                    label: Text(AppLocalizations.of(context).routineCustomize),
                   ),
-                if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
                   const SizedBox(height: 8),
-                FilledButton.icon(
-                  onPressed: () {
-                    final profile = ref.read(activeChildProfileProvider);
-                    _enterChildMode(childId,
-                        profile?.name ?? AppLocalizations.of(context).childFallbackName);
-                  },
-                  icon: const Icon(Icons.child_care),
-                  label: Text(AppLocalizations.of(context).routineChildMode),
-                ),
-                const SizedBox(height: 8),
-                // Two surfaces, side by side to keep this column's height —
-                // stacking them overflowed the card on a small screen.
-                //
-                // Both are opened directly rather than reached from inside
-                // another screen. The server budgets each surface separately,
-                // so arriving at the mission through the habit screen spends
-                // the habit allowance to get there, and arriving at screen-off
-                // listening that way spends screen budget on the way into the
-                // one mode whose entire point is not spending any.
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          final profile = ref.read(activeChildProfileProvider);
-                          _enterChildMode(
-                            childId,
-                            profile?.name ??
-                                AppLocalizations.of(context).childFallbackName,
-                            surface: 'mission',
-                          );
-                        },
-                        icon: const Icon(Icons.explore_outlined),
-                        label: Text(
-                            AppLocalizations.of(context).missionOpenForChild),
-                      ),
+                  if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
+                    OutlinedButton.icon(
+                      onPressed: () async {
+                        final profile = ref.read(activeChildProfileProvider);
+                        await _showWebShareDialog(
+                          childId,
+                          profile?.name ?? AppLocalizations.of(context).childFallbackName,
+                        );
+                      },
+                      icon: const Icon(Icons.qr_code_2),
+                      label: Text(AppLocalizations.of(context).routineShareWeb),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () => Navigator.of(context)
-                            .push(AppRoutes.screenOffPicker()),
-                        icon: const Icon(Icons.nightlight_outlined),
-                        label: Text(AppLocalizations.of(context).screenOffOpen),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                // The internet licence — 10-12 only in v1.
-                //
-                // Not because the policy stops the others: the surface is open
-                // to 13-15 and 16-18 too. It is that the only scenario bank
-                // written so far is `age_band: "10-12"`, and showing a
-                // fifteen-year-old situations pitched at a ten-year-old is a
-                // worse first impression than not showing the button. Widen
-                // this when scenarios_*.json exists for the older bands.
-                if (widget.ageGroup == '10-12')
+                  if (widget.ageGroup == '13-15' || widget.ageGroup == '16-18')
+                    const SizedBox(height: 8),
+                  FilledButton.icon(
+                    onPressed: () {
+                      final profile = ref.read(activeChildProfileProvider);
+                      _enterChildMode(
+                        childId,
+                        profile?.name ?? AppLocalizations.of(context).childFallbackName,
+                      );
+                    },
+                    icon: const Icon(Icons.child_care),
+                    label: Text(AppLocalizations.of(context).routineChildMode),
+                  ),
+                  const SizedBox(height: 8),
+                  // Two surfaces, side by side to keep this column's height —
+                  // stacking them overflowed the card on a small screen.
+                  //
+                  // Both are opened directly rather than reached from inside
+                  // another screen. The server budgets each surface separately,
+                  // so arriving at the mission through the habit screen spends
+                  // the habit allowance to get there, and arriving at screen-off
+                  // listening that way spends screen budget on the way into the
+                  // one mode whose entire point is not spending any.
                   Row(
                     children: [
                       Expanded(
@@ -892,55 +880,90 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                             final profile = ref.read(activeChildProfileProvider);
                             _enterChildMode(
                               childId,
-                              profile?.name ??
-                                  AppLocalizations.of(context).childFallbackName,
-                              surface: 'license',
+                              profile?.name ?? AppLocalizations.of(context).childFallbackName,
+                              surface: 'mission',
                             );
                           },
-                          icon: const Icon(Icons.shield_outlined),
-                          label: Text(
-                              AppLocalizations.of(context).licenseOpenForChild),
+                          icon: const Icon(Icons.explore_outlined),
+                          label: Text(AppLocalizations.of(context).missionOpenForChild),
                         ),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: OutlinedButton.icon(
-                          onPressed: () => Navigator.of(context)
-                              .push(AppRoutes.parentLicense()),
-                          icon: const Icon(Icons.menu_book_outlined),
-                          label: Text(
-                              AppLocalizations.of(context).licenseOpenForParent),
+                          onPressed: () => Navigator.of(context).push(AppRoutes.screenOffPicker()),
+                          icon: const Icon(Icons.nightlight_outlined),
+                          label: Text(AppLocalizations.of(context).screenOffOpen),
                         ),
                       ),
                     ],
                   ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: _openParentDay,
-                        icon: const Icon(Icons.insights_outlined),
-                        label: Text(AppLocalizations.of(context).parentDayTitle),
-                      ),
+                  const SizedBox(height: 8),
+                  // The internet licence. Shown for the bands that have a
+                  // scenario bank written for them — 10-12 and 13-15 today.
+                  //
+                  // The banks are separate on purpose: "a stranger asked for
+                  // your photo" is a different situation at ten and at fourteen,
+                  // and at fourteen the stranger is usually a friend of a friend.
+                  // 16-18 has the surface in policy but no bank yet, so its
+                  // button stays hidden rather than opening an empty screen.
+                  if (widget.ageGroup == '10-12' || widget.ageGroup == '13-15')
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              final profile = ref.read(activeChildProfileProvider);
+                              _enterChildMode(
+                                childId,
+                                profile?.name ?? AppLocalizations.of(context).childFallbackName,
+                                surface: 'license',
+                              );
+                            },
+                            icon: const Icon(Icons.shield_outlined),
+                            label: Text(AppLocalizations.of(context).licenseOpenForChild),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () => Navigator.of(context).push(AppRoutes.parentLicense()),
+                            icon: const Icon(Icons.menu_book_outlined),
+                            label: Text(AppLocalizations.of(context).licenseOpenForParent),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          final profile = ref.read(activeChildProfileProvider);
-                          _openAgreement(profile?.name ??
-                              AppLocalizations.of(context).childFallbackName);
-                        },
-                        icon: const Icon(Icons.handshake_outlined),
-                        label: Text(AppLocalizations.of(context).agreementTitle),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: _openParentDay,
+                          icon: const Icon(Icons.insights_outlined),
+                          label: Text(AppLocalizations.of(context).parentDayTitle),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () {
+                            final profile = ref.read(activeChildProfileProvider);
+                            _openAgreement(
+                              profile?.name ?? AppLocalizations.of(context).childFallbackName,
+                            );
+                          },
+                          icon: const Icon(Icons.handshake_outlined),
+                          label: Text(AppLocalizations.of(context).agreementTitle),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
+        ),
         ),
       ],
     );
@@ -973,10 +996,9 @@ class _HabitSummaryCard extends StatelessWidget {
             ),
             Text(
               '${points.toStringAsFixed(1)} / ${maxPoints.toStringAsFixed(0)}',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Dt.primary,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Dt.primary),
             ),
           ],
         ),
@@ -1119,9 +1141,7 @@ class _HabitCardState extends State<_HabitCard> {
                     icon: Text(s.icon, style: const TextStyle(fontSize: 24)),
                     tooltip: s.label(AppLocalizations.of(context)),
                     style: isSelected
-                        ? IconButton.styleFrom(
-                            backgroundColor: Dt.primary.withValues(alpha: .15),
-                          )
+                        ? IconButton.styleFrom(backgroundColor: Dt.primary.withValues(alpha: .15))
                         : null,
                     onPressed: () => _record(s),
                   );

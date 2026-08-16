@@ -3533,4 +3533,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String parentDayMissionAssigned(String title) {
     return '🧭  $title';
   }
+
+  @override
+  String get licenseLoading => 'One moment…';
 }

@@ -3490,4 +3490,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String parentDayMissionAssigned(String title) {
     return '🧭  $title';
   }
+
+  @override
+  String get licenseLoading => 'لحظة…';
 }

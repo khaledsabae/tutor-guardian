@@ -384,6 +384,32 @@ def child_mission_claim(request: Request, mission_id: int = Query(..., ge=1)):
     return result
 
 
+def _band_for(device_id: str, child_id: int) -> str:
+    """The child's policy band, or the default when the profile is gone.
+
+    Every licence endpoint needs this: the scenario bank is written per band,
+    and serving a fourteen-year-old situations pitched at a ten-year-old
+    teaches them the feature is for children. Kept as one helper so a new
+    endpoint cannot quietly fall back to the default.
+    """
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT age_group FROM child_profiles WHERE id = ? AND device_id = ?",
+            (child_id, device_id),
+        ).fetchone()
+    finally:
+        conn.close()
+    if row is None:
+        # Not a default. A token whose child no longer belongs to this device
+        # is not a ten-year-old — it is a token that should not be serving
+        # content at all. Falling back quietly meant a fourteen-year-old whose
+        # profile had been deleted got the ten-year-old's bank and had answers
+        # recorded against it.
+        raise HTTPException(status_code=404, detail={"error": "child_not_found"})
+    return map_profile_age_to_band(row["age_group"])
+
+
 # ── Internet licence (Sprint 3, level 1) ───────────────────────────────────
 #
 # The child half is two endpoints and neither of them tells the child whether
@@ -397,10 +423,11 @@ def child_license_today(request: Request):
     """The next situation to think about, or None when this level is done."""
     child_id = _get_child_id(request)
     device_id = _require_device_id(request)
+    band = _band_for(device_id, child_id)
 
     level_key = child_license.current_level(child_id)
     child_license.ensure_level(device_id, child_id, level_key)
-    scenario = child_license.next_scenario(child_id, level_key)
+    scenario = child_license.next_scenario(child_id, level_key, age_band=band)
 
     # The child sees the situation and the choices. `outcome`, `alerts_parent`
     # and `talking_point_ar` are the parent's half and are stripped here — a
@@ -419,7 +446,11 @@ def child_license_today(request: Request):
     return {
         "level_key": level_key,
         "scenario": public,
-        "progress": child_license.progress(child_id, level_key),
+        # `child_progress`, not `progress`: the latter counts *safe* answers,
+        # so reading it before and after an answer tells the child whether
+        # they were right — a verdict delivered in two requests, on a surface
+        # built to withhold exactly that.
+        "progress": child_license.child_progress(child_id, level_key, band),
     }
 
 
@@ -436,10 +467,11 @@ def child_license_answer(request: Request,
     """
     child_id = _get_child_id(request)
     device_id = _require_device_id(request)
+    band = _band_for(device_id, child_id)
     level_key = child_license.current_level(child_id)
 
     result = child_license.answer(
-        device_id, child_id, level_key, scenario_key, choice_key
+        device_id, child_id, level_key, scenario_key, choice_key, age_band=band
     )
     if not result["ok"]:
         raise HTTPException(status_code=404, detail={"error": result["reason"]})
@@ -454,11 +486,12 @@ def child_license_answer(request: Request,
                 critical=result["outcome"] == "critical",
             )
             if sent.get("sent"):
-                child_license.mark_alerted(child_id, scenario_key, result["attempt"])
+                child_license.mark_alerted(
+                    child_id, scenario_key, result["attempt"], level_key)
         except Exception:  # noqa: BLE001 — never surface a push failure here
             pass
 
-    child_license.refresh_status(device_id, child_id, level_key)
+    child_license.refresh_status(device_id, child_id, level_key, band)
 
     # Nothing about right or wrong. A test reads this body to keep it so.
     return {"ok": True, "next": True}

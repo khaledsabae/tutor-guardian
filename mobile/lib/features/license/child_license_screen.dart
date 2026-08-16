@@ -84,7 +84,12 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
   }
 
   Future<void> _leave() async {
-    await ref.read(childModeProvider.notifier).endSession(reason: 'completed');
+    // Same exit as the mission card, for the same reason: a child surface is
+    // the root widget, so `maybePop` on it does nothing at all — the child
+    // presses "I'm done", the session closes, and they stay on a dead screen
+    // whose timer will never move again. Leaving child mode is what actually
+    // changes what is on the display.
+    await ref.read(childModeProvider.notifier).exitWithoutPin();
     if (mounted) Navigator.of(context).maybePop();
   }
 
@@ -165,8 +170,29 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
       );
     }
 
-    final choices =
-        (scenario['choices'] as List<dynamic>).cast<Map<String, dynamic>>();
+    // Defensive: a hard cast here throws *during build*, which paints the
+    // Flutter error box for a child and repaints it on every rebuild.
+    final choices = (scenario['choices'] as List<dynamic>? ?? const [])
+        .whereType<Map<String, dynamic>>()
+        .toList();
+    final scenarioKey = '${scenario['key'] ?? ''}';
+    if (choices.isEmpty || scenarioKey.isEmpty) {
+      // A malformed card is not something to show a child. Treat it as a day
+      // with nothing to practise.
+      return Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: FilledButton(
+                onPressed: _leave,
+                child: Text(l10n.licenseLeave),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -196,8 +222,7 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
                   child: OutlinedButton(
                     onPressed: _sending
                         ? null
-                        : () => _choose(scenario['key'] as String,
-                            choice['key'] as String),
+                        : () => _choose(scenarioKey, '${choice['key'] ?? ''}'),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(60),
                       alignment: AlignmentDirectional.centerStart,

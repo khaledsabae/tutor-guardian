@@ -6337,6 +6337,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'🧭  {title}'**
   String parentDayMissionAssigned(String title);
+
+  /// No description provided for @licenseLoading.
+  ///
+  /// In ar, this message translates to:
+  /// **'لحظة…'**
+  String get licenseLoading;
 }
 
 class _AppLocalizationsDelegate

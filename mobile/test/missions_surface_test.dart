@@ -359,6 +359,20 @@ void _regressionTests() {
       expect(source, contains('PopScope'));
     });
 
+    test('the routine button column cannot overflow again', () {
+      // This exact layout broke daily_routine_qr_dialog_widget_test three
+      // separate times in one day: adding the mission + screen-off row, then
+      // the licence row, then widening that row to 13-15. Each fix narrowed a
+      // condition, which moved the cliff instead of removing it. Flexible +
+      // SingleChildScrollView removes it: the section shrinks when the list
+      // above needs room, and the buttons stay reachable by scrolling.
+      final source =
+          _codeOnly('lib/features/routine/screens/daily_routine_screen.dart');
+      final section = source.split('Flexible(')[1].split('_HabitCategoryTab')[0];
+      expect(section, contains('SingleChildScrollView'));
+      expect(section, contains('MainAxisSize.min'));
+    });
+
     test('the parent dashboard makes no hard casts on payload keys', () {
       // A cast on an absent key threw during build, and Flutter's error box
       // showed a parent a page of red text on black.

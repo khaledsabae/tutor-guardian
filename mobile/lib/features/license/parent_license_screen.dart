@@ -67,10 +67,15 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
     _load();
   }
 
+  /// Set when there is no active child. Rendered in build rather than read
+  /// here: _load runs from initState, and AppLocalizations.of(context) before
+  /// initState completes is a dependOnInheritedWidget error in debug.
+  bool _noChild = false;
+
   Future<void> _load() async {
     final childId = ref.read(activeChildIdProvider);
     if (childId == null) {
-      setState(() => _error = AppLocalizations.of(context).licensePickChildFirst);
+      setState(() => _noChild = true);
       return;
     }
     try {
@@ -124,7 +129,12 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
           ? Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
-                child: Text(_error ?? '...', textAlign: TextAlign.center),
+                child: Text(
+                  _noChild
+                      ? l10n.licensePickChildFirst
+                      : (_error ?? l10n.licenseLoading),
+                  textAlign: TextAlign.center,
+                ),
               ),
             )
           : RefreshIndicator(
@@ -140,9 +150,13 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
                   ),
                   const Divider(height: 28),
                   _LevelCard(
-                    levelKey: data['level_key'] as String,
-                    status: data['status'] as String,
-                    progress: data['progress'] as Map<String, dynamic>,
+                    // Defensive: three hard casts here used to take the whole
+                    // screen down if the server omitted any of them.
+                    levelKey: '${data['level_key'] ?? 'stranger'}',
+                    status: '${data['status'] ?? 'practising'}',
+                    progress: data['progress'] is Map<String, dynamic>
+                        ? data['progress'] as Map<String, dynamic>
+                        : const {},
                     talkedAt: data['talked_at'] as String?,
                     busy: _busy,
                     onTalked: () => _talked(data['level_key'] as String),
@@ -166,7 +180,7 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
                   const SizedBox(height: 12),
                   for (final point in (data['talking_points'] as List<dynamic>? ??
                           const [])
-                      .cast<Map<String, dynamic>>())
+                      .whereType<Map<String, dynamic>>())
                     _TalkingPoint(point: point),
                 ],
               ),

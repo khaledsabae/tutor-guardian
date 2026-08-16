@@ -118,8 +118,12 @@ def test_two_children_can_get_different_cards(child):
 
 
 def test_a_band_with_no_bank_gets_no_card(child):
-    cid = child("طفل", "13-15")
-    assert cm.today_mission(DEVICE, cid, "13-15", "2026-08-16") is None
+    # 16-18, not 13-15: the teen bank was written on 2026-08-16 when the
+    # owner's own thirteen-year-old turned out to be outside every feature
+    # shipped that day. Pick a band that genuinely has no bank, or this test
+    # passes for the wrong reason the moment content is added.
+    cid = child("طفل", "16-18")
+    assert cm.today_mission(DEVICE, cid, "16-18", "2026-08-16") is None
 
 
 # ── Claiming is asynchronous ───────────────────────────────────────────────
@@ -427,3 +431,18 @@ def test_the_tick_is_shorter_than_the_match_window():
     """If the scheduler ever ticks slower than an hour, devices fall between
     ticks and simply never hear from us."""
     assert mission_digest.DIGEST_TICK_SECONDS < 3600
+
+
+def test_the_teen_mission_bank_exists_and_is_not_the_child_one():
+    """The owner's own thirteen-year-old had no missions on the day this
+    shipped, because the only bank was 7-9. A teenager spots a task written
+    for a seven-year-old immediately and stops taking the feature seriously."""
+    child_bank = {m["id"] for m in cm.load_missions("7-9")}
+    teen_bank = {m["id"] for m in cm.load_missions("13-15")}
+    assert child_bank and teen_bank
+    assert child_bank.isdisjoint(teen_bank)
+
+
+def test_the_teen_missions_clear_the_same_leverage_floor():
+    for m in cm.load_missions("13-15"):
+        assert m["estimated_minutes"] >= 15, m["id"]

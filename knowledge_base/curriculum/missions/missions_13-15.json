@@ -1,0 +1,152 @@
+{
+  "age_band": "13-15",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "مهام خارج الشاشة لمراهق ١٣–١٥. ليست ألعابًا: ابن الثالثة عشرة يميّز المهمة المصطنعة في ثانية ويتوقّف عن أخذها بجدّية. كل مهمة هنا عمل حقيقي له أثر يراه غيره — لأن ما يبحث عنه في هذا السنّ هو أن يكون نافعًا لا أن يكون مشغولًا. والحدّ الأدنى للوقت أعلى من فئة ٧–٩ لأن معامل الرافعة نفسه يُحسب على بطاقة بثلاث دقائق.",
+  "missions": [
+    {
+      "id": "mission_13-15_teach_someone",
+      "domain": "development",
+      "title_ar": "علّم حد حاجة بتعرفها",
+      "instruction_ar": "اختار حاجة انت كويس فيها — لعبة، مهارة، مذاكرة — وعلّمها لحد أصغر منك في البيت أو العيلة. ربع ساعة، وانت اللي بتشرح.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "التعليم",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_cook_a_meal",
+      "domain": "development",
+      "title_ar": "اعمل وجبة كاملة",
+      "instruction_ar": "مش ساندويتش — وجبة. اختارها، وجهّزها، وقدّمها. ولو غلطت، الغلط جزء من إنك عملتها لوحدك.",
+      "estimated_minutes": 45,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الاعتماد على النفس",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_call_a_relative",
+      "domain": "tarbiyah",
+      "title_ar": "اتصل بحد كبير في العيلة",
+      "instruction_ar": "مش رسالة — مكالمة. جدّك، خالتك، حد ماتكلمتش معاه من زمان. اسأله عن حاجة حصلت أيام ما كان في سنّك.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "صلة الرحم",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_fix_something",
+      "domain": "development",
+      "title_ar": "صلّح حاجة بايظة",
+      "instruction_ar": "حاجة في البيت مكسورة أو مش شغالة. افتحها، دوّر على العطل، حاول. لو معرفتش، اكتب اللي اتعلمته من المحاولة.",
+      "estimated_minutes": 40,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "حلّ المشكلات",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_walk_and_notice",
+      "domain": "development",
+      "title_ar": "امشي نص ساعة من غير موبايل",
+      "instruction_ar": "سيب الموبايل في البيت وامشي. لما ترجع، احكِ حاجة واحدة لاحظتها ومكنتش هتلاحظها لو كنت شايله.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "الملاحظة",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_help_a_neighbour",
+      "domain": "tarbiyah",
+      "title_ar": "ساعد حد من غير ما يطلب",
+      "instruction_ar": "جار، زميل، حد في البيت. حاجة محتاجة مجهود فعلي، ومن غير ما تقول إنك بتعملها عشان مهمة.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإحسان",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_write_your_case",
+      "domain": "development",
+      "title_ar": "اكتب رأيك في حاجة بتختلف فيها مع أهلك",
+      "instruction_ar": "حاجة انت شايف نفسك محقّ فيها. اكتبها في نص صفحة: رأيك، والحجة، والحاجة اللي ممكن تكون غلط فيها. وبعدين اقعد اقراها معاهم.",
+      "estimated_minutes": 30,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": ["ورقة", "قلم"],
+      "skill": "الحجّة",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_budget_a_week",
+      "domain": "development",
+      "title_ar": "احسب مصروفك أسبوع",
+      "instruction_ar": "اكتب كل قرش دخل وخرج لمدة أسبوع. آخر اليوم السابع، بصّ على الورقة وقول لنفسك حاجة واحدة اتفاجئت بيها.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": ["ورقة", "قلم"],
+      "skill": "المسؤولية",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_early_prayer",
+      "domain": "tarbiyah",
+      "title_ar": "صلّ الفجر في وقته ٣ أيام",
+      "instruction_ar": "تلات أيام ورا بعض. لو فاتك يوم، تبدأ من الأول — مش عقاب، بس عشان التلاتة يبقوا متصلين.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "المواظبة",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_declutter",
+      "domain": "development",
+      "title_ar": "فضّي أوضتك من حاجة مش بتستعملها",
+      "instruction_ar": "دوّر على حاجات مش بتستعملها من سنة، واختار اللي ينفع حد تاني. وودّيها بنفسك.",
+      "estimated_minutes": 45,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "التجرّد",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_read_and_summarise",
+      "domain": "development",
+      "title_ar": "اقرا فصل واحكيه",
+      "instruction_ar": "فصل من كتاب — ورق مش شاشة. بعدها احكيه لحد في البيت في تلات دقايق. اللي متعرفش تحكيه، متعرفوش.",
+      "estimated_minutes": 40,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": ["كتاب"],
+      "skill": "الفهم",
+      "is_published": true
+    },
+    {
+      "id": "mission_13-15_apologise",
+      "domain": "tarbiyah",
+      "title_ar": "اعتذر لحد كنت غلطان معاه",
+      "instruction_ar": "حد فعلًا كنت غلطان معاه، حتى لو من زمان. وجهًا لوجه أو بمكالمة — مش رسالة.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الاعتذار",
+      "is_published": true
+    }
+  ]
+}

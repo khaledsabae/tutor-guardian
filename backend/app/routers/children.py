@@ -916,10 +916,11 @@ def child_license_summary(child_id: int, request: Request):
     device_id = _require_device_id(request)
     conn = get_conn()
     try:
-        _load_owned_child(conn, child_id, device_id)
+        row = _load_owned_child(conn, child_id, device_id)
     finally:
         conn.close()
-    return child_license.summary(device_id, child_id)
+    return child_license.summary(
+        device_id, child_id, map_profile_age_to_band(row["age_group"]))
 
 
 @router.post("/children/{child_id}/license/talked",
@@ -956,7 +957,13 @@ def child_license_grant(child_id: int, request: Request,
         _load_owned_child(conn, child_id, device_id)
     finally:
         conn.close()
-    result = child_license.grant(device_id, child_id, payload.level_key)
+    conn = get_conn()
+    try:
+        band = map_profile_age_to_band(
+            _load_owned_child(conn, child_id, device_id)["age_group"])
+    finally:
+        conn.close()
+    result = child_license.grant(device_id, child_id, payload.level_key, band)
     if not result["ok"]:
         raise HTTPException(status_code=409, detail={"error": result["reason"]})
     return result

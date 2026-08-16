@@ -1294,39 +1294,45 @@ class TgClient {
   // ── Family media agreement ───────────────────────────────────────────────
 
   Future<Map<String, dynamic>> fetchSuggestedClauses(int childId) async {
-    final session = await ensureSession();
-    final uri = Uri.parse(
-        '$_baseUrl/api/children/$childId/agreement/clauses/suggested');
-    final resp = await _http
-        .get(uri, headers: _authHeaders(session.token))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
-    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse(
+          '$_baseUrl/api/children/$childId/agreement/clauses/suggested');
+      final resp = await _http
+          .get(uri, headers: _authHeaders(session.token))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    });
   }
 
   /// The parent's one-screen view of a child's day, assembled server-side so
   /// the numbers being compared come from the same instant.
   Future<Map<String, dynamic>> fetchChildDay(int childId) async {
-    final session = await ensureSession();
-    final offset = DateTime.now().timeZoneOffset.inMinutes;
-    final uri = Uri.parse('$_baseUrl/api/children/$childId/today')
-        .replace(queryParameters: {'tz_offset_minutes': '$offset'});
-    final resp = await _http
-        .get(uri, headers: _authHeaders(session.token))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
-    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return _guard(() async {
+      final session = await ensureSession();
+      final offset = DateTime.now().timeZoneOffset.inMinutes;
+      final uri = Uri.parse('$_baseUrl/api/children/$childId/today')
+          .replace(queryParameters: {'tz_offset_minutes': '$offset'});
+      final resp = await _http
+          .get(uri, headers: _authHeaders(session.token))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    });
   }
 
   Future<Map<String, dynamic>?> fetchAgreement(int childId) async {
-    final session = await ensureSession();
-    final uri = Uri.parse('$_baseUrl/api/children/$childId/agreement');
-    final resp = await _http
-        .get(uri, headers: _authHeaders(session.token))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
-    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-    return body['agreement'] as Map<String, dynamic>?;
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse('$_baseUrl/api/children/$childId/agreement');
+      final resp = await _http
+          .get(uri, headers: _authHeaders(session.token))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      return body['agreement'] as Map<String, dynamic>?;
+    });
   }
 
   Future<Map<String, dynamic>> saveAgreementDraft(
@@ -1353,13 +1359,15 @@ class TgClient {
   }
 
   Future<Map<String, dynamic>?> fetchChildAgreement(String childToken) async {
-    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/agreement');
-    final resp = await _http
-        .get(uri, headers: _childAuthHeaders(childToken))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
-    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-    return body['agreement'] as Map<String, dynamic>?;
+    return _guard(() async {
+      final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/agreement');
+      final resp = await _http
+          .get(uri, headers: _childAuthHeaders(childToken))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      return body['agreement'] as Map<String, dynamic>?;
+    });
   }
 
   Future<void> acknowledgeClause(
@@ -1429,16 +1437,18 @@ class TgClient {
   /// A band with no bank is the ordinary case for every age except 7-9, so an
   /// empty result is a state to render, not an error to report.
   Future<Map<String, dynamic>?> fetchChildMission(String childToken) async {
-    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/mission/today')
-        .replace(queryParameters: {
-      'tz_offset_minutes': '${DateTime.now().timeZoneOffset.inMinutes}',
+    return _guard(() async {
+      final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/mission/today')
+          .replace(queryParameters: {
+        'tz_offset_minutes': '${DateTime.now().timeZoneOffset.inMinutes}',
+      });
+      final resp = await _http
+          .get(uri, headers: _childAuthHeaders(childToken))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      return body['mission'] as Map<String, dynamic>?;
     });
-    final resp = await _http
-        .get(uri, headers: _childAuthHeaders(childToken))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
-    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-    return body['mission'] as Map<String, dynamic>?;
   }
 
   /// The child says they did it. Returns false when the card was already
@@ -1447,43 +1457,49 @@ class TgClient {
     required String childToken,
     required int missionId,
   }) async {
-    final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/mission/claim')
-        .replace(queryParameters: {'mission_id': '$missionId'});
-    final resp = await _http
-        .post(uri, headers: _childAuthHeaders(childToken))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode == 409) return false;
-    if (resp.statusCode != 200) throw _wrap(resp);
-    return true;
+    return _guard(() async {
+      final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/mission/claim')
+          .replace(queryParameters: {'mission_id': '$missionId'});
+      final resp = await _http
+          .post(uri, headers: _childAuthHeaders(childToken))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode == 409) return false;
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return true;
+    });
   }
 
   /// Every claimed-but-unconfirmed card across all of this device's children.
   Future<List<Map<String, dynamic>>> fetchPendingMissions() async {
-    final session = await ensureSession();
-    final uri = Uri.parse('$_baseUrl/api/children/missions/pending');
-    final resp = await _http
-        .get(uri, headers: _authHeaders(session.token))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
-    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-    return (body['pending'] as List<dynamic>? ?? const [])
-        .cast<Map<String, dynamic>>();
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse('$_baseUrl/api/children/missions/pending');
+      final resp = await _http
+          .get(uri, headers: _authHeaders(session.token))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      return (body['pending'] as List<dynamic>? ?? const [])
+          .cast<Map<String, dynamic>>();
+    });
   }
 
   /// Settle a batch. One call for the whole evening — the asynchronous
   /// confirmation loop is the point, and a per-card round trip would undo it.
   Future<int> confirmMissions(List<Map<String, dynamic>> items) async {
-    final session = await ensureSession();
-    final uri = Uri.parse('$_baseUrl/api/children/missions/confirm');
-    final resp = await _http
-        .post(uri,
-            headers: {..._authHeaders(session.token),
-              'Content-Type': 'application/json'},
-            body: jsonEncode({'items': items}))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
-    final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-    return body['settled'] as int? ?? 0;
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse('$_baseUrl/api/children/missions/confirm');
+      final resp = await _http
+          .post(uri,
+              headers: {..._authHeaders(session.token),
+                'Content-Type': 'application/json'},
+              body: jsonEncode({'items': items}))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+      return body['settled'] as int? ?? 0;
+    });
   }
 
   // ── Internet licence ─────────────────────────────────────────────────────
@@ -1492,13 +1508,15 @@ class TgClient {
   /// the server strips them, because a response that includes the answer is an
   /// answer key sitting in the client.
   Future<Map<String, dynamic>> fetchChildLicense(String childToken) async {
-    final uri =
-        Uri.parse('$_baseUrl/api/value-tracking/child-mode/license/today');
-    final resp = await _http
-        .get(uri, headers: _childAuthHeaders(childToken))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
-    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return _guard(() async {
+      final uri =
+          Uri.parse('$_baseUrl/api/value-tracking/child-mode/license/today');
+      final resp = await _http
+          .get(uri, headers: _childAuthHeaders(childToken))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    });
   }
 
   /// Record a choice. Returns nothing about right or wrong, deliberately.
@@ -1507,26 +1525,30 @@ class TgClient {
     required String scenarioKey,
     required String choiceKey,
   }) async {
-    final uri =
-        Uri.parse('$_baseUrl/api/value-tracking/child-mode/license/answer')
-            .replace(queryParameters: {
-      'scenario_key': scenarioKey,
-      'choice_key': choiceKey,
+    return _guard(() async {
+      final uri =
+          Uri.parse('$_baseUrl/api/value-tracking/child-mode/license/answer')
+              .replace(queryParameters: {
+        'scenario_key': scenarioKey,
+        'choice_key': choiceKey,
+      });
+      final resp = await _http
+          .post(uri, headers: _childAuthHeaders(childToken))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
     });
-    final resp = await _http
-        .post(uri, headers: _childAuthHeaders(childToken))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
   }
 
   Future<Map<String, dynamic>> fetchLicenseSummary(int childId) async {
-    final session = await ensureSession();
-    final uri = Uri.parse('$_baseUrl/api/children/$childId/license');
-    final resp = await _http
-        .get(uri, headers: _authHeaders(session.token))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
-    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse('$_baseUrl/api/children/$childId/license');
+      final resp = await _http
+          .get(uri, headers: _authHeaders(session.token))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    });
   }
 
   Future<void> recordLicenseTalk(int childId, String levelKey) async {
@@ -1541,15 +1563,17 @@ class TgClient {
   }
 
   Future<void> _licensePost(int childId, String action, String levelKey) async {
-    final session = await ensureSession();
-    final uri = Uri.parse('$_baseUrl/api/children/$childId/license/$action');
-    final resp = await _http
-        .post(uri,
-            headers: {..._authHeaders(session.token),
-              'Content-Type': 'application/json'},
-            body: jsonEncode({'level_key': levelKey}))
-        .timeout(AppConfig.httpTimeout);
-    if (resp.statusCode != 200) throw _wrap(resp);
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse('$_baseUrl/api/children/$childId/license/$action');
+      final resp = await _http
+          .post(uri,
+              headers: {..._authHeaders(session.token),
+                'Content-Type': 'application/json'},
+              body: jsonEncode({'level_key': levelKey}))
+          .timeout(AppConfig.httpTimeout);
+      if (resp.statusCode != 200) throw _wrap(resp);
+    });
   }
 
   Future<Map<String, dynamic>> createChildWebClaim(int childId) async {
@@ -1628,6 +1652,33 @@ class TgClient {
   }
 
   // ── Internals ────────────────────────────────────────────────────────
+
+  /// Run a request and turn transport failures into TgApiError.
+  ///
+  /// `streamQuery` has done this since it was written; nothing else has. So
+  /// every other method threw raw TimeoutException / SocketException /
+  /// ClientException straight past the `on TgApiError` handlers the screens
+  /// use — and a screen that catches only TgApiError leaves `_loading = true`
+  /// when the wifi drops. Six child-surface screens had that shape, which
+  /// turns "no signal" into a spinner with no way out, on a surface a child
+  /// is holding.
+  ///
+  /// Wrapped at this layer rather than in each screen: there is one place to
+  /// forget, and it is this one.
+  Future<T> _guard<T>(Future<T> Function() send) async {
+    try {
+      return await send();
+    } on TgApiError {
+      rethrow;
+    } on TimeoutException {
+      throw TgApiError(null, AppL10n.current.apiTimeout);
+    } on SocketException catch (e) {
+      throw TgApiError(null, AppL10n.current.apiConnectionFailed(e.message));
+    } on http.ClientException catch (e) {
+      // Thrown when a connection dies mid-response; not a SocketException.
+      throw TgApiError(null, AppL10n.current.apiConnectionFailed(e.message));
+    }
+  }
 
   Map<String, String> _authHeaders(String token) => {
         'Content-Type': 'application/json; charset=utf-8',

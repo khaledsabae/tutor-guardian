@@ -125,6 +125,13 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
   ///
   /// The token is the evidence. If it is gone, or the server no longer
   /// recognises it, child mode is over and the parent gets their app back.
+  ///
+  /// And even when the token is still good, child mode ends here: the session
+  /// id died with the process, so nothing can heartbeat, so nothing is being
+  /// counted. Restoring the *screen* without the ledger behind it would hand
+  /// a child unlimited unmetered time and call it a restored session. The
+  /// fetch is kept only to distinguish "token still valid" from "token dead",
+  /// because the two deserve different silences — neither of them a spinner.
   Future<void> restore() async {
     final active = await isChildModeActive();
     final childId = await _loadChildId();
@@ -140,6 +147,15 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
     try {
       final day = await _client.fetchChildTodayHabits(childToken: token);
       state = state.copyWith(day: HabitDay.fromJson(day), loading: false);
+      // A restored surface with no heartbeat is a surface off the ledger.
+      //
+      // The session id does not survive the process, so there is nothing to
+      // beat against — which means the server reaps the old session after
+      // ninety seconds while the app keeps showing the child a working
+      // screen with no time being counted. The honest answer is that a
+      // restored child mode is not a running session: end it and let the
+      // parent open a new one, rather than serve unlimited unmetered time.
+      await _leaveChildMode();
     } catch (_) {
       // Expired, closed, or unreachable. Any of the three means there is no
       // live surface to restore, and none of them is worth trapping a parent
@@ -187,7 +203,15 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
         await setChildModePin(pin);
       }
       final session = await _client.createChildSession(childId, surface: surface);
-      await saveChildToken(session['token'] as String);
+      // Not a hard cast: this lands inside a catch whose message is rendered
+      // verbatim on the PIN screen, so a missing field would show a parent
+      // "type 'Null' is not a subtype of type 'String'".
+      final token = session['token'] as String?;
+      if (token == null) {
+        state = state.copyWith(loading: false);
+        return false;
+      }
+      await saveChildToken(token);
       await setChildModeActive(true);
       await _saveChildId(childId);
       state = state.copyWith(

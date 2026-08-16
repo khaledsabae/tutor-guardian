@@ -308,3 +308,178 @@ def test_free_text_is_still_closed_everywhere():
     assert policy.defaults.allow_free_text is False
     for name, band in policy.age_bands.items():
         assert not band.allow_free_text, name
+
+
+# ── The bank has to match the child's age ──────────────────────────────────
+#
+# On the day this shipped, the owner tried it with his own thirteen-year-old
+# and got nothing: the agreement bank was 7-9, the mission bank was 7-9, and
+# the licence bank was 10-12. Three features, none of which his family could
+# use, and no screen said why. Not a defect in the code — a gap in the content
+# that the code had no way to notice.
+
+def test_the_teen_bank_is_a_separate_file_not_a_copy(child):
+    """A fourteen-year-old shown a ten-year-old's situations learns that the
+    feature is for children, which is worse than showing them nothing."""
+    ten = cl.load_scenarios("stranger", "10-12")
+    teen = cl.load_scenarios("stranger", "13-15")
+    assert ten and teen
+    assert {s["key"] for s in ten}.isdisjoint({s["key"] for s in teen})
+
+
+def test_a_band_with_no_bank_reads_as_empty_not_as_the_default(child):
+    """The fallback exists for the one bank written before filenames carried
+    a band. It must not turn "no content for 16-18" into "here are the
+    ten-year-old's situations"."""
+    assert cl.load_scenarios("stranger", "16-18") == []
+
+
+def test_the_teen_bank_keeps_the_telling_rule():
+    """Same constraint as every band: refusing in silence is not safe. At
+    this age the reason is sharper — what stops a teenager telling a parent
+    is embarrassment, and a bank that rewards silence deepens it."""
+    for s in cl.load_scenarios("stranger", "13-15"):
+        if not s.get("alerts_parent"):
+            continue
+        for c in s["choices"]:
+            if c["outcome"] == "safe":
+                assert c.get("tells_parent") is True, f"{s['key']}:{c['key']}"
+
+
+def test_every_band_with_a_licence_surface_has_content_or_none_at_all():
+    """The policy allows `license` for 10-12, 13-15 and 16-18. A band with the
+    surface open and no bank shows an empty screen, so either write the bank
+    or keep the entry point closed — this asserts we know which is which."""
+    from app.config.guardrails_loader import load_child_surface_policy
+
+    policy = load_child_surface_policy()
+    with_surface = [
+        name for name, band in policy.age_bands.items()
+        if "license" in band.allowed_surfaces
+    ]
+    assert set(with_surface) == {"10-12", "13-15", "16-18"}
+    # 16-18 is the known gap, and the Flutter entry point is closed for it.
+    assert cl.load_scenarios("stranger", "16-18") == []
+    assert cl.load_scenarios("stranger", "10-12")
+    assert cl.load_scenarios("stranger", "13-15")
+
+
+# ── What an audit found that the tests did not ─────────────────────────────
+
+def test_the_child_is_not_told_how_many_they_got_right(child):
+    """The side channel that defeated the whole design.
+
+    `progress.done` counts *safe* answers. Handed to the child, it is a
+    verdict delivered in two requests: read it, answer, read it again — if it
+    moved, you were right. The response body carried no verdict and the test
+    that checked the body passed, because the leak was in a different field of
+    a different endpoint.
+
+    `child_progress` counts *answered*, which moves identically whatever was
+    chosen.
+    """
+    cid = child()
+    s = cl.next_scenario(cid, "stranger")
+    unsafe = next(c for c in s["choices"] if c["outcome"] != "safe")
+
+    before = cl.child_progress(cid, "stranger")
+    cl.answer(DEVICE, cid, "stranger", s["key"], unsafe["key"])
+    after = cl.child_progress(cid, "stranger")
+
+    # It moved, even though the answer was wrong.
+    assert after["answered"] == before["answered"] + 1
+    # And the child-facing shape has no "correct" count in it at all.
+    assert "done" not in after
+
+
+def test_the_parent_still_sees_how_many_were_right(child):
+    """The other half: `progress` keeps its meaning for the parent screen."""
+    cid = child()
+    s = cl.next_scenario(cid, "stranger")
+    unsafe = next(c for c in s["choices"] if c["outcome"] != "safe")
+    cl.answer(DEVICE, cid, "stranger", s["key"], unsafe["key"])
+    assert cl.progress(cid, "stranger")["done"] == 0
+
+
+def test_the_child_endpoint_sends_answered_not_done():
+    """Read the endpoint, because this is the field that leaked."""
+    import inspect
+    from app.routers import child_mode
+
+    source = inspect.getsource(child_mode.child_license_today)
+    assert "child_progress" in source
+    assert "child_license.progress(" not in source
+
+
+def test_a_malformed_card_is_dropped_not_served(tmp_path, monkeypatch):
+    """A card missing situation_ar used to 500 every request for the band —
+    a broken screen rather than 'nothing to practise today'."""
+    import json as _json
+    bank = {"level_key": "stranger", "age_band": "test", "is_published": True,
+            "scenarios": [
+                {"key": "good", "situation_ar": "x" * 30,
+                 "choices": [{"key": "a", "text_ar": "yy", "outcome": "safe"}],
+                 "talking_point_ar": "z" * 40},
+                {"key": "broken", "choices": []},
+            ]}
+    (tmp_path / "scenarios_stranger_test.json").write_text(
+        _json.dumps(bank), encoding="utf-8")
+    monkeypatch.setattr(cl, "BANK_DIR", tmp_path)
+    keys = [s["key"] for s in cl.load_scenarios("stranger", "test")]
+    assert keys == ["good"]
+
+
+def test_granting_twice_is_idempotent_even_after_the_bank_grows(child):
+    """The check order used to un-grant families retroactively: adding one
+    scenario made `done < total` again, so a level agreed on last month
+    answered 'practice_incomplete'."""
+    cid = child()
+    _answer_all_safely(cid)
+    cl.record_talk(DEVICE, cid, "stranger")
+    assert cl.grant(DEVICE, cid, "stranger")["ok"] is True
+
+    # The bank grows by one.
+    original = cl.load_scenarios
+    monkey = list(original("stranger", "10-12")) + [
+        {"key": "new_one", "situation_ar": "x" * 30,
+         "choices": [{"key": "a", "text_ar": "yy", "outcome": "safe"}],
+         "talking_point_ar": "z" * 40}]
+    cl.load_scenarios = lambda level, band="10-12": monkey
+    try:
+        again = cl.grant(DEVICE, cid, "stranger")
+        assert again["ok"] is True and again.get("already") is True
+    finally:
+        cl.load_scenarios = original
+
+
+def test_the_attempt_counter_is_scoped_to_the_level(child):
+    """Two levels sharing a scenario key used to share an attempt counter."""
+    cid = child()
+    s = cl.next_scenario(cid, "stranger")
+    cl.answer(DEVICE, cid, "stranger", s["key"], s["choices"][0]["key"])
+    conn = get_conn()
+    try:
+        conn.execute(
+            "INSERT INTO child_scenario_answers (device_id, child_id, "
+            "scenario_key, level_key, choice_key, outcome, attempt, answered_at) "
+            "VALUES (?, ?, ?, 'signal', 'x', 'safe', 9, ?)",
+            (DEVICE, cid, s["key"], datetime.now(_UTC).isoformat()),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    result = cl.answer(DEVICE, cid, "stranger", s["key"], s["choices"][0]["key"])
+    # 2, not 10: the other level's attempt 9 is not this level's history.
+    assert result["attempt"] == 2
+
+
+def test_a_token_whose_child_is_gone_is_refused_not_defaulted():
+    """_band_for used to return '10-12' when the profile was missing, so a
+    deleted fourteen-year-old was served the ten-year-old's bank and had
+    answers recorded against it."""
+    import inspect
+    from app.routers import child_mode
+
+    source = inspect.getsource(child_mode._band_for)
+    assert 'return "10-12"' not in source
+    assert "HTTPException" in source
