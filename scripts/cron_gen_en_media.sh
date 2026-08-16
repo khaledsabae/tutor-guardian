@@ -115,6 +115,27 @@ if ! ensure_session tg-video || ! ensure_session tg-audio; then
     exit 1
 fi
 
+# ── Harvest first — before anything can spend, or die ──
+#
+# 🚨 This runs FIRST, always, and it is not an optimisation.
+#
+# In-flight tasks are generations already charged against the quota, finished
+# on Google's servers, waiting to be downloaded. Collecting them costs nothing.
+# But polling shares a session with generating, and generating hits the ceiling,
+# and hitting the ceiling KILLS the session (measured 2026-08-16). So a run that
+# generates before it collects arrives at the download step with a dead session
+# and returns "error" on every poll — losing, for free, work that was already
+# paid for. That is exactly what happened this morning: 20 completed episodes,
+# zero downloaded, exit 0.
+#
+# 18 episodes were lost outright on 2026-08-15 the same way. Order is the fix.
+ensure_session tg-audio || say "WARN: tg-audio unusable before harvest"
+timeout 1800 "$PY" scripts/gen_podcasts_cron.py --lang en --harvest-only \
+    > "$RUN_OUT" 2>&1
+cat "$RUN_OUT" >> "$LOG"
+say "harvest exit $? · $(grep -c '✓ downloaded' "$RUN_OUT") downloaded, \
+$(grep -oE '[0-9]+ still in flight' "$RUN_OUT" | head -1)"
+
 # ── Video ──
 # 🚨 This run's output only, never "$LOG".
 # The log accumulates across runs, so `grep rate.limit "$LOG"` would match the
