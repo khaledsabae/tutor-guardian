@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/app_routes.dart';
+import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 
@@ -69,6 +70,7 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
     }
 
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     return Card(
       elevation: 0,
       child: InkWell(
@@ -82,23 +84,23 @@ class _ChildDayCardState extends ConsumerState<ChildDayCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('النهارده مع ${day['child_name'] ?? ''}',
+              Text(l10n.parentDayWith('${day['child_name'] ?? ''}'),
                   style: theme.textTheme.titleSmall
                       ?.copyWith(fontWeight: FontWeight.w800)),
               const SizedBox(height: 10),
               // Two lines, never one sum — same rule as the panel.
-              Text('⏱  $screenMin دقيقة شاشة من $screenBudget',
+              Text(l10n.parentDayScreenLine(screenMin, screenBudget),
                   style: theme.textTheme.bodyMedium),
               const SizedBox(height: 4),
-              Text('🎧  $audioMin دقيقة سماع (الشاشة مطفية)',
+              Text(l10n.parentDayAudioLine(audioMin),
                   style: theme.textTheme.bodyMedium
                       ?.copyWith(color: theme.colorScheme.outline)),
               if (mission != null) ...[
                 const SizedBox(height: 8),
                 Text(
                   mission['status'] == 'claimed'
-                      ? '✅  ${mission['title_ar']} — بيقول إنه عملها'
-                      : '🧭  ${mission['title_ar']}',
+                      ? l10n.parentDayMissionClaimed('${mission['title_ar']}')
+                      : l10n.parentDayMissionAssigned('${mission['title_ar']}'),
                   style: theme.textTheme.bodyMedium,
                 ),
               ],

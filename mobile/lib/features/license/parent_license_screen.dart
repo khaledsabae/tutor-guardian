@@ -22,25 +22,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../api/tg_client.dart';
+import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 
 /// What each level means as an agreement — never as a permission.
-const _kLevelAgreement = {
-  'stranger': 'نتفرّج ونحن في نفس الأوضة، والشاشة باينة.',
-  'signal': 'يدوّر ويتصفّح، ويحكي لنا عن اللي لقاه.',
-  'contact': 'يراسل ناس إحنا عارفينهم بأسمائهم.',
-  'footprint': 'يدخل جروبات وألعاب جماعية.',
-  'public': 'حساب عام، ومراجعة كل شهر.',
-};
+///
+/// Looked up rather than held in a const map: these strings are read by
+/// parents, 38% of whom are not reading in Arabic.
+String _levelAgreement(AppLocalizations l10n, String key) => switch (key) {
+      'stranger' => l10n.licenseAgreeStranger,
+      'signal' => l10n.licenseAgreeSignal,
+      'contact' => l10n.licenseAgreeContact,
+      'footprint' => l10n.licenseAgreeFootprint,
+      'public' => l10n.licenseAgreePublic,
+      _ => '',
+    };
 
-const _kLevelTitle = {
-  'stranger': 'الغريب',
-  'signal': 'الإعلان والخبر',
-  'contact': 'المراسلة',
-  'footprint': 'الأثر الرقمي',
-  'public': 'العلني',
-};
+String _levelTitle(AppLocalizations l10n, String key) => switch (key) {
+      'stranger' => l10n.licenseLevelStranger,
+      'signal' => l10n.licenseLevelSignal,
+      'contact' => l10n.licenseLevelContact,
+      'footprint' => l10n.licenseLevelFootprint,
+      'public' => l10n.licenseLevelPublic,
+      _ => key,
+    };
 
 class ParentLicenseScreen extends ConsumerStatefulWidget {
   const ParentLicenseScreen({super.key});
@@ -64,7 +70,7 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
   Future<void> _load() async {
     final childId = ref.read(activeChildIdProvider);
     if (childId == null) {
-      setState(() => _error = 'اختر طفلاً أولاً.');
+      setState(() => _error = AppLocalizations.of(context).licensePickChildFirst);
       return;
     }
     try {
@@ -99,8 +105,8 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
       // The server refuses a grant before the practice is done and the talk is
       // recorded. Surface it as the reason rather than as a failure.
       if (mounted) {
-        setState(() => _error =
-            'لسه بدري. لازم المواقف تخلص، وتسجّل إنكم اتكلمتوا.');
+        setState(() =>
+            _error = AppLocalizations.of(context).licenseTooEarly);
       }
     }
     if (mounted) setState(() => _busy = false);
@@ -109,10 +115,11 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final data = _summary;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('رخصة الإنترنت')),
+      appBar: AppBar(title: Text(l10n.licenseTitle)),
       body: data == null
           ? Center(
               child: Padding(
@@ -128,9 +135,7 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
                   // Said once, plainly, at the top. Everything below is an
                   // agreement between a family, not a setting on a device.
                   Text(
-                    'الرخصة دي اتفاق بينكم، مش إعداد على الجهاز. '
-                    'التطبيق مايقدرش يقفل ولا يفتح حاجة على موبايل ابنك — '
-                    'اللي بيتغيّر هو اللي اتفقتوا عليه، وإنتوا اللي بتنفّذوه.',
+                    l10n.licenseNotASetting,
                     style: theme.textTheme.bodySmall?.copyWith(height: 1.7),
                   ),
                   const Divider(height: 28),
@@ -149,12 +154,12 @@ class _ParentLicenseScreenState extends ConsumerState<ParentLicenseScreen> {
                         style: TextStyle(color: theme.colorScheme.error)),
                   ],
                   const Divider(height: 32),
-                  Text('مواقف عدّى عليها',
+                  Text(l10n.licenseMetSituations,
                       style: theme.textTheme.titleSmall
                           ?.copyWith(fontWeight: FontWeight.w800)),
                   const SizedBox(height: 4),
                   Text(
-                    'مش مكتوب هنا إجابته. المكتوب هو إزاي تفتح الكلام.',
+                    l10n.licenseMetSituationsHint,
                     style: theme.textTheme.bodySmall
                         ?.copyWith(color: theme.colorScheme.outline),
                   ),
@@ -192,6 +197,7 @@ class _LevelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final done = progress['done'] as int? ?? 0;
     final total = progress['total'] as int? ?? 0;
     final practiceDone = total > 0 && done >= total;
@@ -203,20 +209,22 @@ class _LevelCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(_kLevelTitle[levelKey] ?? levelKey,
+            Text(_levelTitle(l10n, levelKey),
                 style: theme.textTheme.titleMedium
                     ?.copyWith(fontWeight: FontWeight.w800)),
             const SizedBox(height: 6),
-            Text('اللي هنتفق عليه: ${_kLevelAgreement[levelKey] ?? ''}',
+            Text('${l10n.licenseAgreementPrefix}: '
+                '${_levelAgreement(l10n, levelKey)}',
                 style: theme.textTheme.bodyMedium?.copyWith(height: 1.7)),
             const SizedBox(height: 14),
             if (total == 0)
-              Text('المستوى ده لسه بدري — مافيش مواقف متجهّزة له.',
+              Text(l10n.licenseNotReadyYet,
                   style: theme.textTheme.bodyMedium)
             else ...[
               LinearProgressIndicator(value: total == 0 ? 0 : done / total),
               const SizedBox(height: 8),
-              Text('$done من $total مواقف', style: theme.textTheme.bodySmall),
+              Text(l10n.licenseProgress(done, total),
+                  style: theme.textTheme.bodySmall),
               const SizedBox(height: 14),
               // The talk is a step in the path, not a checkbox next to it.
               // Its button comes first and the grant stays disabled until it
@@ -225,15 +233,15 @@ class _LevelCard extends StatelessWidget {
                 FilledButton.tonal(
                   onPressed: busy || !practiceDone ? null : onTalked,
                   child: Text(practiceDone
-                      ? 'اتكلمنا في المواقف دي'
-                      : 'لسه فيه مواقف ماخلصتش'),
+                      ? l10n.licenseTalkedButton
+                      : l10n.licenseUnfinished),
                 )
               else
                 Row(
                   children: [
                     const Text('✅ '),
                     Expanded(
-                      child: Text('اتكلمتوا فيها.',
+                      child: Text(l10n.licenseTalkedDone,
                           style: theme.textTheme.bodyMedium),
                     ),
                   ],
@@ -243,10 +251,10 @@ class _LevelCard extends StatelessWidget {
                 FilledButton(
                   onPressed:
                       busy || talkedAt == null || !practiceDone ? null : onGrant,
-                  child: const Text('سجّل إننا اتفقنا على المستوى ده'),
+                  child: Text(l10n.licenseGrantButton),
                 )
               else
-                Text('متفقين عليه.',
+                Text(l10n.licenseGranted,
                     style: theme.textTheme.bodyMedium
                         ?.copyWith(fontWeight: FontWeight.w700)),
             ],

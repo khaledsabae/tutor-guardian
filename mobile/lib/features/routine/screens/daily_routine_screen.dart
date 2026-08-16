@@ -898,7 +898,8 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                             );
                           },
                           icon: const Icon(Icons.shield_outlined),
-                          label: const Text('رخصة الإنترنت'),
+                          label: Text(
+                              AppLocalizations.of(context).licenseOpenForChild),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -907,7 +908,8 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                           onPressed: () => Navigator.of(context)
                               .push(AppRoutes.parentLicense()),
                           icon: const Icon(Icons.menu_book_outlined),
-                          label: const Text('نتكلم فيها'),
+                          label: Text(
+                              AppLocalizations.of(context).licenseOpenForParent),
                         ),
                       ),
                     ],

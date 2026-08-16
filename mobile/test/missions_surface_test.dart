@@ -163,6 +163,48 @@ void main() {
     });
   });
 
+
+  group('the notification channels exist on the device', () {
+    // The backend has been setting `channel_id` on every push for a year and
+    // the app created no channels at all, so Android filed every message
+    // under the default one — a parent muting marketing muted the
+    // child-safety alert with it. These tests hold the two ends together.
+
+    test('both ids match the strings the backend sends', () {
+      final dart = File('lib/features/push/notification_channels.dart')
+          .readAsStringSync();
+      final sender = File('../backend/app/services/push_sender.py')
+          .readAsStringSync();
+      final alert = File('../backend/app/services/license_alert.py')
+          .readAsStringSync();
+
+      expect(dart, contains("'almorabbi_reengagement'"));
+      expect(sender, contains('"almorabbi_reengagement"'));
+      expect(dart, contains("'almorabbi_safety'"));
+      expect(alert, contains('"almorabbi_safety"'));
+    });
+
+    test('they are created on a path with no network in it', () {
+      // registerToken() runs after ensureSession(), which returns early when
+      // offline — so channels created only there would never exist on a
+      // device that cold-started without connectivity. main() calls it
+      // directly, alongside the tap listener that was moved for this same
+      // reason.
+      final main = _codeOnly('lib/main.dart');
+      expect(main, contains('ensureNotificationChannels()'));
+      final growthLoop = main.split('_postLaunchGrowthLoop() async')[1];
+      expect(growthLoop.contains('ensureNotificationChannels'), isFalse,
+          reason: 'channel creation must not sit behind ensureSession()');
+    });
+
+    test('the safety channel outranks the default one', () {
+      final dart = File('lib/features/push/notification_channels.dart')
+          .readAsStringSync();
+      final safety = dart.split('kChannelSafety,')[1];
+      expect(safety, contains('Importance.high'));
+    });
+  });
+
   _licenseTests();
 
   group('the off-screen alternatives are real content', () {
@@ -206,13 +248,45 @@ void _licenseTests() {
       // WhatsApp. A screen saying "level 2 unlocked: filtered search" tells a
       // parent something is protected that is not — and a family that relaxes
       // supervision on a protection that does not exist is worse off than
-      // with no feature. This reads the screen source rather than trusting
-      // review.
-      final source = _codeOnly('lib/features/license/parent_license_screen.dart');
-      for (final claim in ['فُتح', 'اتفتح', 'صار متاحًا', 'unlocked']) {
-        expect(source.contains(claim), isFalse, reason: 'claims: $claim');
+      // with no feature.
+      //
+      // Reads the .arb files, not the screen. The strings moved out of the
+      // widget when this was localised, and a test still pointed at the
+      // widget would have kept passing over a file that no longer contains
+      // any user-facing text at all.
+      for (final arb in ['lib/l10n/app_ar.arb', 'lib/l10n/app_en.arb']) {
+        final json = File(arb).readAsStringSync();
+        final licenseKeys = RegExp(r'"license[A-Za-z]*":\s*"([^"]*)"')
+            .allMatches(json)
+            .map((m) => m.group(1)!)
+            .toList();
+        expect(licenseKeys, isNotEmpty, reason: '$arb has no licence strings');
+        for (final value in licenseKeys) {
+          for (final claim in ['فُتح', 'اتفتح', 'صار متاح', 'unlock', 'Unlock']) {
+            expect(value.contains(claim), isFalse,
+                reason: '$arb claims "$claim" in: $value');
+          }
+        }
       }
-      expect(source, contains('اتفاق بينكم'));
+      // And the sentence that says what it *is* must still be there.
+      expect(File('lib/l10n/app_ar.arb').readAsStringSync(),
+          contains('اتفاق بينكم'));
+    });
+
+    test('the licence strings are translated, not Arabic-only', () {
+      // 27% of this user base reads English and 11% French. The screens that
+      // shipped before this one (parent_day, agreement) are Arabic literals
+      // with no l10n at all; that debt is not repeated here.
+      final ar = File('lib/l10n/app_ar.arb').readAsStringSync();
+      final en = File('lib/l10n/app_en.arb').readAsStringSync();
+      final keys = RegExp(r'"(license[A-Za-z]+)":')
+          .allMatches(ar)
+          .map((m) => m.group(1)!)
+          .toSet();
+      expect(keys.length, greaterThanOrEqualTo(20));
+      for (final k in keys) {
+        expect(en, contains('"$k":'), reason: '$k missing from English');
+      }
     });
 
     test('the grant button cannot be reached before the talk is recorded', () {

@@ -1038,5 +1038,88 @@
   "offscreenTitle": "بدائل بلا شاشة",
   "offscreenUnavailable": "تعذّر تحميل الأنشطة.",
   "offscreenMaterials": "تحتاج",
-  "offscreenOpen": "بدائل بلا شاشة"
+  "offscreenOpen": "بدائل بلا شاشة",
+  "licenseAckTitle": "وصلت. دي حاجة تستاهل تتكلموا فيها مع بعض.",
+  "licenseAckNext": "كمّل",
+  "licenseDoneTitle": "خلّصت المواقف. اقعد مع بابا أو ماما واتكلموا فيها.",
+  "licenseLeave": "تمام، أنا خارج",
+  "licenseTitle": "رخصة الإنترنت",
+  "licenseOpenForChild": "رخصة الإنترنت",
+  "licenseOpenForParent": "نتكلم فيها",
+  "licenseNotASetting": "الرخصة دي اتفاق بينكم، مش إعداد على الجهاز. التطبيق مايقدرش يقفل ولا يفتح حاجة على موبايل ابنك — اللي بيتغيّر هو اللي اتفقتوا عليه، وإنتوا اللي بتنفّذوه.",
+  "licenseAgreementPrefix": "اللي هنتفق عليه",
+  "licenseNotReadyYet": "المستوى ده لسه بدري — مافيش مواقف متجهّزة له.",
+  "licenseProgress": "{done} من {total} مواقف",
+  "@licenseProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "licenseTalkedButton": "اتكلمنا في المواقف دي",
+  "licenseUnfinished": "لسه فيه مواقف ماخلصتش",
+  "licenseTalkedDone": "اتكلمتوا فيها.",
+  "licenseGrantButton": "سجّل إننا اتفقنا على المستوى ده",
+  "licenseGranted": "متفقين عليه.",
+  "licenseTooEarly": "لسه بدري. لازم المواقف تخلص، وتسجّل إنكم اتكلمتوا.",
+  "licenseMetSituations": "مواقف عدّى عليها",
+  "licenseMetSituationsHint": "مش مكتوب هنا إجابته. المكتوب هو إزاي تفتح الكلام.",
+  "licensePickChildFirst": "اختر طفلاً أولاً.",
+  "licenseLevelStranger": "الغريب",
+  "licenseLevelSignal": "الإعلان والخبر",
+  "licenseLevelContact": "المراسلة",
+  "licenseLevelFootprint": "الأثر الرقمي",
+  "licenseLevelPublic": "العلني",
+  "licenseAgreeStranger": "نتفرّج ونحن في نفس الأوضة، والشاشة باينة.",
+  "licenseAgreeSignal": "يدوّر ويتصفّح، ويحكي لنا عن اللي لقاه.",
+  "licenseAgreeContact": "يراسل ناس إحنا عارفينهم بأسمائهم.",
+  "licenseAgreeFootprint": "يدخل جروبات وألعاب جماعية.",
+  "licenseAgreePublic": "حساب عام، ومراجعة كل شهر.",
+  "parentDayWith": "النهارده مع {name}",
+  "@parentDayWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "parentDayScreenLine": "⏱  {minutes} دقيقة شاشة من {budget}",
+  "@parentDayScreenLine": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "budget": {
+        "type": "int"
+      }
+    }
+  },
+  "parentDayAudioLine": "🎧  {minutes} دقيقة سماع (الشاشة مطفية)",
+  "@parentDayAudioLine": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "parentDayMissionClaimed": "✅  {title} — بيقول إنه عملها",
+  "@parentDayMissionClaimed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "parentDayMissionAssigned": "🧭  {title}",
+  "@parentDayMissionAssigned": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }

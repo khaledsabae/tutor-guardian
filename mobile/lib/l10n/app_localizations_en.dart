@@ -3409,4 +3409,128 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get offscreenOpen => 'Without a screen';
+
+  @override
+  String get licenseAckTitle => 'Got it. This is worth talking about together.';
+
+  @override
+  String get licenseAckNext => 'Next';
+
+  @override
+  String get licenseDoneTitle =>
+      'You\'ve finished the situations. Sit with a parent and talk them through.';
+
+  @override
+  String get licenseLeave => 'Okay, I\'m off';
+
+  @override
+  String get licenseTitle => 'Internet licence';
+
+  @override
+  String get licenseOpenForChild => 'Internet licence';
+
+  @override
+  String get licenseOpenForParent => 'Talk it through';
+
+  @override
+  String get licenseNotASetting =>
+      'This licence is an agreement between you, not a setting on a device. The app cannot block or unblock anything on your child\'s phone — what changes is what you agreed on, and you are the ones who carry it out.';
+
+  @override
+  String get licenseAgreementPrefix => 'What you\'ll agree on';
+
+  @override
+  String get licenseNotReadyYet =>
+      'This level isn\'t ready yet — no situations written for it.';
+
+  @override
+  String licenseProgress(int done, int total) {
+    return '$done of $total situations';
+  }
+
+  @override
+  String get licenseTalkedButton => 'We talked about these';
+
+  @override
+  String get licenseUnfinished => 'Some situations are still left';
+
+  @override
+  String get licenseTalkedDone => 'You talked about them.';
+
+  @override
+  String get licenseGrantButton => 'Record that we agreed on this level';
+
+  @override
+  String get licenseGranted => 'Agreed.';
+
+  @override
+  String get licenseTooEarly =>
+      'Not yet. The situations must be finished, and you need to record that you talked.';
+
+  @override
+  String get licenseMetSituations => 'Situations they met';
+
+  @override
+  String get licenseMetSituationsHint =>
+      'Their answer isn\'t written here. What\'s written is how to open the conversation.';
+
+  @override
+  String get licensePickChildFirst => 'Pick a child first.';
+
+  @override
+  String get licenseLevelStranger => 'The stranger';
+
+  @override
+  String get licenseLevelSignal => 'Ads and news';
+
+  @override
+  String get licenseLevelContact => 'Messaging';
+
+  @override
+  String get licenseLevelFootprint => 'Digital footprint';
+
+  @override
+  String get licenseLevelPublic => 'Public';
+
+  @override
+  String get licenseAgreeStranger =>
+      'We watch in the same room, with the screen visible.';
+
+  @override
+  String get licenseAgreeSignal =>
+      'They search and browse, and tell us what they found.';
+
+  @override
+  String get licenseAgreeContact => 'They message people we know by name.';
+
+  @override
+  String get licenseAgreeFootprint => 'They join groups and multiplayer games.';
+
+  @override
+  String get licenseAgreePublic => 'A public account, reviewed monthly.';
+
+  @override
+  String parentDayWith(String name) {
+    return 'Today with $name';
+  }
+
+  @override
+  String parentDayScreenLine(int minutes, int budget) {
+    return '⏱  $minutes min of screen out of $budget';
+  }
+
+  @override
+  String parentDayAudioLine(int minutes) {
+    return '🎧  $minutes min of listening (screen off)';
+  }
+
+  @override
+  String parentDayMissionClaimed(String title) {
+    return '✅  $title — they say they did it';
+  }
+
+  @override
+  String parentDayMissionAssigned(String title) {
+    return '🧭  $title';
+  }
 }

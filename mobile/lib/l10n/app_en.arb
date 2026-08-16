@@ -1038,5 +1038,88 @@
   "offscreenTitle": "Things to do without a screen",
   "offscreenUnavailable": "The activities could not be loaded.",
   "offscreenMaterials": "You'll need",
-  "offscreenOpen": "Without a screen"
+  "offscreenOpen": "Without a screen",
+  "licenseAckTitle": "Got it. This is worth talking about together.",
+  "licenseAckNext": "Next",
+  "licenseDoneTitle": "You've finished the situations. Sit with a parent and talk them through.",
+  "licenseLeave": "Okay, I'm off",
+  "licenseTitle": "Internet licence",
+  "licenseOpenForChild": "Internet licence",
+  "licenseOpenForParent": "Talk it through",
+  "licenseNotASetting": "This licence is an agreement between you, not a setting on a device. The app cannot block or unblock anything on your child's phone — what changes is what you agreed on, and you are the ones who carry it out.",
+  "licenseAgreementPrefix": "What you'll agree on",
+  "licenseNotReadyYet": "This level isn't ready yet — no situations written for it.",
+  "licenseProgress": "{done} of {total} situations",
+  "@licenseProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "licenseTalkedButton": "We talked about these",
+  "licenseUnfinished": "Some situations are still left",
+  "licenseTalkedDone": "You talked about them.",
+  "licenseGrantButton": "Record that we agreed on this level",
+  "licenseGranted": "Agreed.",
+  "licenseTooEarly": "Not yet. The situations must be finished, and you need to record that you talked.",
+  "licenseMetSituations": "Situations they met",
+  "licenseMetSituationsHint": "Their answer isn't written here. What's written is how to open the conversation.",
+  "licensePickChildFirst": "Pick a child first.",
+  "licenseLevelStranger": "The stranger",
+  "licenseLevelSignal": "Ads and news",
+  "licenseLevelContact": "Messaging",
+  "licenseLevelFootprint": "Digital footprint",
+  "licenseLevelPublic": "Public",
+  "licenseAgreeStranger": "We watch in the same room, with the screen visible.",
+  "licenseAgreeSignal": "They search and browse, and tell us what they found.",
+  "licenseAgreeContact": "They message people we know by name.",
+  "licenseAgreeFootprint": "They join groups and multiplayer games.",
+  "licenseAgreePublic": "A public account, reviewed monthly.",
+  "parentDayWith": "Today with {name}",
+  "@parentDayWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "parentDayScreenLine": "⏱  {minutes} min of screen out of {budget}",
+  "@parentDayScreenLine": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "budget": {
+        "type": "int"
+      }
+    }
+  },
+  "parentDayAudioLine": "🎧  {minutes} min of listening (screen off)",
+  "@parentDayAudioLine": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "parentDayMissionClaimed": "✅  {title} — they say they did it",
+  "@parentDayMissionClaimed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "parentDayMissionAssigned": "🧭  {title}",
+  "@parentDayMissionAssigned": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }

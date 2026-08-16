@@ -16,6 +16,7 @@ import '../../api/tg_client.dart';
 import '../../core/analytics.dart';
 import '../../firebase_options.dart';
 import '../deeplink/deep_link_handler.dart';
+import 'notification_channels.dart';
 
 /// FCM requires the background handler to be a TOP-LEVEL entry-point
 /// function (it runs in a separate isolate while the app is terminated).
@@ -32,6 +33,12 @@ class PushService {
 
   Future<void> registerToken() async {
     try {
+      // Belt and braces: main() already does this on a path with no network
+      // in it, and a repeat create is a no-op that preserves whatever the
+      // user has configured. Kept here so a future refactor that drops one
+      // call site does not silently take the channels with it.
+      await ensureNotificationChannels();
+
       // Register the top-level background handler BEFORE any other FCM call.
       // This is required for data messages to wake the app while terminated.
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);

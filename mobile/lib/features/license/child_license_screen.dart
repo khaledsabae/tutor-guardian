@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../api/tg_client.dart';
+import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
 import '../routine/providers/child_mode_providers.dart';
 import '../routine/services/child_mode_secure_storage.dart';
@@ -90,6 +91,7 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     if (_loading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -111,7 +113,7 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
                   Text('🤝', style: theme.textTheme.displayMedium),
                   const SizedBox(height: 16),
                   Text(
-                    'وصلت. دي حاجة تستاهل تتكلموا فيها مع بعض.',
+                    l10n.licenseAckTitle,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.titleMedium?.copyWith(height: 1.6),
                   ),
@@ -120,7 +122,7 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
                     onPressed: _next,
                     style: FilledButton.styleFrom(
                         minimumSize: const Size.fromHeight(56)),
-                    child: const Text('كمّل'),
+                    child: Text(l10n.licenseAckNext),
                   ),
                 ],
               ),
@@ -144,7 +146,7 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
                   Text('🌙', style: theme.textTheme.displayMedium),
                   const SizedBox(height: 16),
                   Text(
-                    'خلّصت المواقف. اقعد مع بابا أو ماما واتكلموا فيها.',
+                    l10n.licenseDoneTitle,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.titleMedium?.copyWith(height: 1.6),
                   ),
@@ -153,7 +155,7 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
                     onPressed: _leave,
                     style: FilledButton.styleFrom(
                         minimumSize: const Size.fromHeight(56)),
-                    child: const Text('تمام، أنا خارج'),
+                    child: Text(l10n.licenseLeave),
                   ),
                 ],
               ),

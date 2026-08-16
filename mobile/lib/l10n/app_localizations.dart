@@ -6127,6 +6127,216 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'بدائل بلا شاشة'**
   String get offscreenOpen;
+
+  /// No description provided for @licenseAckTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'وصلت. دي حاجة تستاهل تتكلموا فيها مع بعض.'**
+  String get licenseAckTitle;
+
+  /// No description provided for @licenseAckNext.
+  ///
+  /// In ar, this message translates to:
+  /// **'كمّل'**
+  String get licenseAckNext;
+
+  /// No description provided for @licenseDoneTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'خلّصت المواقف. اقعد مع بابا أو ماما واتكلموا فيها.'**
+  String get licenseDoneTitle;
+
+  /// No description provided for @licenseLeave.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمام، أنا خارج'**
+  String get licenseLeave;
+
+  /// No description provided for @licenseTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'رخصة الإنترنت'**
+  String get licenseTitle;
+
+  /// No description provided for @licenseOpenForChild.
+  ///
+  /// In ar, this message translates to:
+  /// **'رخصة الإنترنت'**
+  String get licenseOpenForChild;
+
+  /// No description provided for @licenseOpenForParent.
+  ///
+  /// In ar, this message translates to:
+  /// **'نتكلم فيها'**
+  String get licenseOpenForParent;
+
+  /// No description provided for @licenseNotASetting.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرخصة دي اتفاق بينكم، مش إعداد على الجهاز. التطبيق مايقدرش يقفل ولا يفتح حاجة على موبايل ابنك — اللي بيتغيّر هو اللي اتفقتوا عليه، وإنتوا اللي بتنفّذوه.'**
+  String get licenseNotASetting;
+
+  /// No description provided for @licenseAgreementPrefix.
+  ///
+  /// In ar, this message translates to:
+  /// **'اللي هنتفق عليه'**
+  String get licenseAgreementPrefix;
+
+  /// No description provided for @licenseNotReadyYet.
+  ///
+  /// In ar, this message translates to:
+  /// **'المستوى ده لسه بدري — مافيش مواقف متجهّزة له.'**
+  String get licenseNotReadyYet;
+
+  /// No description provided for @licenseProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'{done} من {total} مواقف'**
+  String licenseProgress(int done, int total);
+
+  /// No description provided for @licenseTalkedButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتكلمنا في المواقف دي'**
+  String get licenseTalkedButton;
+
+  /// No description provided for @licenseUnfinished.
+  ///
+  /// In ar, this message translates to:
+  /// **'لسه فيه مواقف ماخلصتش'**
+  String get licenseUnfinished;
+
+  /// No description provided for @licenseTalkedDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'اتكلمتوا فيها.'**
+  String get licenseTalkedDone;
+
+  /// No description provided for @licenseGrantButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل إننا اتفقنا على المستوى ده'**
+  String get licenseGrantButton;
+
+  /// No description provided for @licenseGranted.
+  ///
+  /// In ar, this message translates to:
+  /// **'متفقين عليه.'**
+  String get licenseGranted;
+
+  /// No description provided for @licenseTooEarly.
+  ///
+  /// In ar, this message translates to:
+  /// **'لسه بدري. لازم المواقف تخلص، وتسجّل إنكم اتكلمتوا.'**
+  String get licenseTooEarly;
+
+  /// No description provided for @licenseMetSituations.
+  ///
+  /// In ar, this message translates to:
+  /// **'مواقف عدّى عليها'**
+  String get licenseMetSituations;
+
+  /// No description provided for @licenseMetSituationsHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مش مكتوب هنا إجابته. المكتوب هو إزاي تفتح الكلام.'**
+  String get licenseMetSituationsHint;
+
+  /// No description provided for @licensePickChildFirst.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر طفلاً أولاً.'**
+  String get licensePickChildFirst;
+
+  /// No description provided for @licenseLevelStranger.
+  ///
+  /// In ar, this message translates to:
+  /// **'الغريب'**
+  String get licenseLevelStranger;
+
+  /// No description provided for @licenseLevelSignal.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعلان والخبر'**
+  String get licenseLevelSignal;
+
+  /// No description provided for @licenseLevelContact.
+  ///
+  /// In ar, this message translates to:
+  /// **'المراسلة'**
+  String get licenseLevelContact;
+
+  /// No description provided for @licenseLevelFootprint.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأثر الرقمي'**
+  String get licenseLevelFootprint;
+
+  /// No description provided for @licenseLevelPublic.
+  ///
+  /// In ar, this message translates to:
+  /// **'العلني'**
+  String get licenseLevelPublic;
+
+  /// No description provided for @licenseAgreeStranger.
+  ///
+  /// In ar, this message translates to:
+  /// **'نتفرّج ونحن في نفس الأوضة، والشاشة باينة.'**
+  String get licenseAgreeStranger;
+
+  /// No description provided for @licenseAgreeSignal.
+  ///
+  /// In ar, this message translates to:
+  /// **'يدوّر ويتصفّح، ويحكي لنا عن اللي لقاه.'**
+  String get licenseAgreeSignal;
+
+  /// No description provided for @licenseAgreeContact.
+  ///
+  /// In ar, this message translates to:
+  /// **'يراسل ناس إحنا عارفينهم بأسمائهم.'**
+  String get licenseAgreeContact;
+
+  /// No description provided for @licenseAgreeFootprint.
+  ///
+  /// In ar, this message translates to:
+  /// **'يدخل جروبات وألعاب جماعية.'**
+  String get licenseAgreeFootprint;
+
+  /// No description provided for @licenseAgreePublic.
+  ///
+  /// In ar, this message translates to:
+  /// **'حساب عام، ومراجعة كل شهر.'**
+  String get licenseAgreePublic;
+
+  /// No description provided for @parentDayWith.
+  ///
+  /// In ar, this message translates to:
+  /// **'النهارده مع {name}'**
+  String parentDayWith(String name);
+
+  /// No description provided for @parentDayScreenLine.
+  ///
+  /// In ar, this message translates to:
+  /// **'⏱  {minutes} دقيقة شاشة من {budget}'**
+  String parentDayScreenLine(int minutes, int budget);
+
+  /// No description provided for @parentDayAudioLine.
+  ///
+  /// In ar, this message translates to:
+  /// **'🎧  {minutes} دقيقة سماع (الشاشة مطفية)'**
+  String parentDayAudioLine(int minutes);
+
+  /// No description provided for @parentDayMissionClaimed.
+  ///
+  /// In ar, this message translates to:
+  /// **'✅  {title} — بيقول إنه عملها'**
+  String parentDayMissionClaimed(String title);
+
+  /// No description provided for @parentDayMissionAssigned.
+  ///
+  /// In ar, this message translates to:
+  /// **'🧭  {title}'**
+  String parentDayMissionAssigned(String title);
 }
 
 class _AppLocalizationsDelegate

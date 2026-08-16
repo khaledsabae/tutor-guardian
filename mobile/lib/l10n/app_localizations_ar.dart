@@ -3367,4 +3367,127 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get offscreenOpen => 'بدائل بلا شاشة';
+
+  @override
+  String get licenseAckTitle => 'وصلت. دي حاجة تستاهل تتكلموا فيها مع بعض.';
+
+  @override
+  String get licenseAckNext => 'كمّل';
+
+  @override
+  String get licenseDoneTitle =>
+      'خلّصت المواقف. اقعد مع بابا أو ماما واتكلموا فيها.';
+
+  @override
+  String get licenseLeave => 'تمام، أنا خارج';
+
+  @override
+  String get licenseTitle => 'رخصة الإنترنت';
+
+  @override
+  String get licenseOpenForChild => 'رخصة الإنترنت';
+
+  @override
+  String get licenseOpenForParent => 'نتكلم فيها';
+
+  @override
+  String get licenseNotASetting =>
+      'الرخصة دي اتفاق بينكم، مش إعداد على الجهاز. التطبيق مايقدرش يقفل ولا يفتح حاجة على موبايل ابنك — اللي بيتغيّر هو اللي اتفقتوا عليه، وإنتوا اللي بتنفّذوه.';
+
+  @override
+  String get licenseAgreementPrefix => 'اللي هنتفق عليه';
+
+  @override
+  String get licenseNotReadyYet =>
+      'المستوى ده لسه بدري — مافيش مواقف متجهّزة له.';
+
+  @override
+  String licenseProgress(int done, int total) {
+    return '$done من $total مواقف';
+  }
+
+  @override
+  String get licenseTalkedButton => 'اتكلمنا في المواقف دي';
+
+  @override
+  String get licenseUnfinished => 'لسه فيه مواقف ماخلصتش';
+
+  @override
+  String get licenseTalkedDone => 'اتكلمتوا فيها.';
+
+  @override
+  String get licenseGrantButton => 'سجّل إننا اتفقنا على المستوى ده';
+
+  @override
+  String get licenseGranted => 'متفقين عليه.';
+
+  @override
+  String get licenseTooEarly =>
+      'لسه بدري. لازم المواقف تخلص، وتسجّل إنكم اتكلمتوا.';
+
+  @override
+  String get licenseMetSituations => 'مواقف عدّى عليها';
+
+  @override
+  String get licenseMetSituationsHint =>
+      'مش مكتوب هنا إجابته. المكتوب هو إزاي تفتح الكلام.';
+
+  @override
+  String get licensePickChildFirst => 'اختر طفلاً أولاً.';
+
+  @override
+  String get licenseLevelStranger => 'الغريب';
+
+  @override
+  String get licenseLevelSignal => 'الإعلان والخبر';
+
+  @override
+  String get licenseLevelContact => 'المراسلة';
+
+  @override
+  String get licenseLevelFootprint => 'الأثر الرقمي';
+
+  @override
+  String get licenseLevelPublic => 'العلني';
+
+  @override
+  String get licenseAgreeStranger =>
+      'نتفرّج ونحن في نفس الأوضة، والشاشة باينة.';
+
+  @override
+  String get licenseAgreeSignal => 'يدوّر ويتصفّح، ويحكي لنا عن اللي لقاه.';
+
+  @override
+  String get licenseAgreeContact => 'يراسل ناس إحنا عارفينهم بأسمائهم.';
+
+  @override
+  String get licenseAgreeFootprint => 'يدخل جروبات وألعاب جماعية.';
+
+  @override
+  String get licenseAgreePublic => 'حساب عام، ومراجعة كل شهر.';
+
+  @override
+  String parentDayWith(String name) {
+    return 'النهارده مع $name';
+  }
+
+  @override
+  String parentDayScreenLine(int minutes, int budget) {
+    return '⏱  $minutes دقيقة شاشة من $budget';
+  }
+
+  @override
+  String parentDayAudioLine(int minutes) {
+    return '🎧  $minutes دقيقة سماع (الشاشة مطفية)';
+  }
+
+  @override
+  String parentDayMissionClaimed(String title) {
+    return '✅  $title — بيقول إنه عملها';
+  }
+
+  @override
+  String parentDayMissionAssigned(String title) {
+    return '🧭  $title';
+  }
 }

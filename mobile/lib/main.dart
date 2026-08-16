@@ -42,6 +42,7 @@ import 'features/shell/root_scaffold.dart';
 import 'features/tour/tour_overlay.dart';
 import 'theme/app_theme.dart';
 import 'theme/design_tokens.dart';
+import 'features/push/notification_channels.dart';
 
 // FCM background handler lives in features/push/push_service.dart
 // (registered there via FirebaseMessaging.onBackgroundMessage).
@@ -147,6 +148,13 @@ void main() async {
   // here rather than inside _postLaunchGrowthLoop — which returns early when
   // ensureSession() throws, silently dropping the tap that opened the app.
   unawaited(PushService.instance.listenTaps());
+
+  // Channels, for exactly the same reason. They are a local OS call with no
+  // network in it, and putting them behind ensureSession() would mean a
+  // device that cold-started offline never creates the safety channel — so
+  // the next child-safety alert files under the default one, next to the
+  // marketing nudges a parent has already muted.
+  unawaited(ensureNotificationChannels());
 
   // Phase 0.2 + Phase 1 growth loops — fire-and-forget so it never blocks
   // cold start. Order: session → push token → referral → identity.
