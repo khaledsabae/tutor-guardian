@@ -51,9 +51,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  // Icon brightness only.
+  //
+  // `statusBarColor` and `systemNavigationBarColor` map onto
+  // Window.setStatusBarColor / setNavigationBarColor, both deprecated as of
+  // Android 15 and flagged by Play against 1.0.42. Under edge-to-edge — which
+  // the line above requests, and which Android 15 applies to every SDK-35 app
+  // regardless — the system draws its own transparent bars, so setting them to
+  // transparent was already asking for what we were going to get. Dropping
+  // them removes the deprecated call without changing a pixel; the icon
+  // brightness, which is not deprecated, is what actually mattered here.
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    systemNavigationBarColor: Colors.transparent,
     systemNavigationBarIconBrightness: Brightness.dark,
     statusBarIconBrightness: Brightness.dark,
   ));
