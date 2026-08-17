@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'app_palette.dart';
 import 'design_tokens.dart';
 
 /// Theme + colour tokens for المربي الذكي.
@@ -11,30 +12,51 @@ import 'design_tokens.dart';
 /// stable — many screens reference `AppTheme.primary` etc. directly.
 class AppTheme {
   // ── Brand palette ──────────────────────────────────────────────────────
-  static const Color primary = Dt.primary; // vivid teal
-  static const Color primaryDark = Dt.primaryDeep;
-  static const Color accent = Dt.accent; // amber — gamification accent
+  //
+  // Getters over [AppPalette.current] — see app_palette.dart for why these
+  // stopped being `const`. Names are unchanged; 424 references depend on them.
+  static Color get primary => AppPalette.current.primary; // vivid teal
+  static Color get primaryDark => AppPalette.current.primaryDeep;
+  static Color get accent => AppPalette.current.accent; // amber
 
   // Surfaces
-  static const Color background = Dt.background; // warm cream
-  static const Color surface = Dt.surface;
-  static const Color surfaceAlt = Color(0xFFF1EDE5); // assistant bubble
+  static Color get background => AppPalette.current.background;
+  static Color get surface => AppPalette.current.surface;
+  static Color get surfaceAlt => AppPalette.current.surfaceAlt;
 
   // Text
-  static const Color textPrimary = Dt.ink;
-  static const Color textSecondary = Color(0xFF475569);
-  static const Color textMuted = Dt.inkSoft;
+  static Color get textPrimary => AppPalette.current.ink;
+  static Color get textSecondary => AppPalette.current.textSecondary;
+  static Color get textMuted => AppPalette.current.inkSoft;
 
-  // Semantic / safety — must stay semantically yellow/red: the safety
-  // banner and emergency cards depend on these meanings.
-  static const Color success = Dt.success;
-  static const Color warningBg = Color(0xFFFFF3CD);
-  static const Color warningFg = Color(0xFF856404);
-  static const Color dangerBg = Color(0xFFF8D7DA);
-  static const Color dangerFg = Color(0xFF721C24);
+  // Semantic / safety — these keep their MEANING in both palettes: the safety
+  // banner and the emergency cards are where colour is load-bearing, not
+  // decorative. Only lightness flips, so warning stays yellow and danger stays
+  // red on a dark ground too.
+  static Color get success => AppPalette.current.success;
+  static Color get warningBg => AppPalette.current.warningBg;
+  static Color get warningFg => AppPalette.current.warningFg;
+  static Color get dangerBg => AppPalette.current.dangerBg;
+  static Color get dangerFg => AppPalette.current.dangerFg;
 
-  /// Build the Material 3 light theme with Arabic-friendly typography.
-  static ThemeData light() {
+  /// The light theme. Kept as its own entry point — `main.dart` and a number
+  /// of tests call it by name.
+  static ThemeData light() => _build(AppPalette.light);
+
+  /// The dark theme, requested in production feedback (#fb_e7402eaa, 15 Aug
+  /// 2026) and absent until now: `design_tokens.dart` said "light mode only".
+  static ThemeData dark() => _build(AppPalette.dark);
+
+  /// One builder, two palettes. Reading colours from [p] rather than from the
+  /// `AppTheme.*` getters matters: this runs while building a `ThemeData` that
+  /// may not be the one currently live, so the globals would answer for the
+  /// wrong palette.
+  static ThemeData _build(AppPalette p) {
+    final primary = p.primary;
+    final accent = p.accent;
+    final surface = p.surface;
+    final background = p.background;
+    final textPrimary = p.ink;
     // Cairo is a modern, well-hinted Arabic-Latin pair that ships via
     // google_fonts; falls back gracefully when offline.
     final base = GoogleFonts.cairoTextTheme().apply(
@@ -54,7 +76,7 @@ class AppTheme {
 
     final colorScheme = ColorScheme.fromSeed(
       seedColor: primary,
-      brightness: Brightness.light,
+      brightness: p.brightness,
       primary: primary,
       secondary: accent,
       surface: surface,
@@ -62,6 +84,7 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
+      brightness: p.brightness,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: background,
       textTheme: textTheme,
@@ -121,7 +144,7 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: primary,
           minimumSize: const Size(0, 50),
-          side: const BorderSide(color: primary, width: 2),
+          side: BorderSide(color: primary, width: 2),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Dt.rButton),
           ),
@@ -137,7 +160,7 @@ class AppTheme {
           GoogleFonts.cairo(fontSize: 12, fontWeight: FontWeight.w700),
         ),
       ),
-      progressIndicatorTheme: const ProgressIndicatorThemeData(
+      progressIndicatorTheme: ProgressIndicatorThemeData(
         color: primary,
         linearTrackColor: Dt.track,
       ),
@@ -167,7 +190,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(Dt.rButton),
-          borderSide: const BorderSide(color: primary, width: 2),
+          borderSide: BorderSide(color: primary, width: 2),
         ),
       ),
     );

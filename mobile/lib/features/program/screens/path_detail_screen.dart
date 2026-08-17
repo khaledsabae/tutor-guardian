@@ -238,7 +238,7 @@ class _Body extends ConsumerWidget {
           BouncyButton(
             label: AppLocalizations.of(context).pathDetailShare,
             color: Colors.white,
-            icon: const Icon(Icons.share, color: AppTheme.primary),
+            icon: Icon(Icons.share, color: AppTheme.primary),
             onTap: () => _sharePathCompletion(context, detail.path),
           ),
         ],
@@ -566,7 +566,7 @@ class _ReferenceCard extends StatelessWidget {
               children: [
                 Text(
                   _refTypeLabel(context, ref.type),
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppTheme.warningFg,
                     fontWeight: FontWeight.w800,
                   ),
@@ -574,7 +574,7 @@ class _ReferenceCard extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   ref.info,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppTheme.warningFg,
                     height: 1.5,
                   ),
@@ -782,7 +782,7 @@ class _LessonNode extends StatelessWidget {
             children: [
               Text(
                 AppLocalizations.of(context).pathDetailMinutes(lesson.estimatedMinutes),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 11,
                   color: AppTheme.textMuted,
                 ),

@@ -39,7 +39,7 @@ class AvatarPickerSheet extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.emoji_emotions_outlined,
+                Icon(Icons.emoji_emotions_outlined,
                     color: AppTheme.primary),
                 const SizedBox(width: 8),
                 Text(

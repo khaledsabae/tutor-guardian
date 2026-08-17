@@ -117,13 +117,13 @@ class ChildrenListScreen extends ConsumerWidget {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.info_outline,
+                        Icon(Icons.info_outline,
                             size: 18, color: AppTheme.textMuted),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             AppLocalizations.of(context).childrenMaxReached(kMaxChildren),
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: AppTheme.textSecondary,
                               fontSize: 12,
                             ),
@@ -257,7 +257,7 @@ class _ChildCount extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       child: Text(
         AppLocalizations.of(context).childrenCount(count, max),
-        style: const TextStyle(
+        style: TextStyle(
           color: AppTheme.textSecondary,
           fontSize: 12,
           fontWeight: FontWeight.w600,
@@ -333,7 +333,7 @@ class _ChildTile extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       _ageLabel(AppLocalizations.of(context), child.ageGroup),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppTheme.textSecondary,
                       ),
@@ -359,13 +359,13 @@ class _ChildTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 4),
-                const Icon(Icons.check_circle, color: AppTheme.primary, size: 20),
+                Icon(Icons.check_circle, color: AppTheme.primary, size: 20),
               ] else
-                const Icon(Icons.chevron_left,
+                Icon(Icons.chevron_left,
                     color: AppTheme.textMuted, size: 20),
               if (kJourneyEnabled)
                 IconButton(
-                  icon: const Icon(Icons.auto_stories_outlined,
+                  icon: Icon(Icons.auto_stories_outlined,
                       color: AppTheme.primary, size: 20),
                   tooltip: AppLocalizations.of(context).childrenJourney,
                   visualDensity: VisualDensity.compact,
@@ -378,14 +378,14 @@ class _ChildTile extends StatelessWidget {
               // deleted their child to try to re-add it with a name, and the
               // empty list then had no add button either.
               IconButton(
-                icon: const Icon(Icons.edit_outlined,
+                icon: Icon(Icons.edit_outlined,
                     color: AppTheme.textMuted, size: 20),
                 tooltip: AppLocalizations.of(context).settingsEditChild,
                 visualDensity: VisualDensity.compact,
                 onPressed: onEdit,
               ),
               IconButton(
-                icon: const Icon(Icons.delete_outline,
+                icon: Icon(Icons.delete_outline,
                     color: AppTheme.textMuted, size: 20),
                 tooltip: AppLocalizations.of(context).childrenDelete,
                 visualDensity: VisualDensity.compact,
@@ -433,7 +433,7 @@ class _ErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline,
+            Icon(Icons.error_outline,
                 size: 48, color: AppTheme.dangerFg),
             const SizedBox(height: 12),
             Text('${AppLocalizations.of(context).childrenErrorLoading}\n$error',

@@ -229,7 +229,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
                           ),
                         ),
                       ),
-                      const Icon(Icons.chevron_left,
+                      Icon(Icons.chevron_left,
                           color: AppTheme.textMuted),
                     ],
                   ),

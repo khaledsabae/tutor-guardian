@@ -102,15 +102,15 @@ class _IdentityScreenState extends State<IdentityScreen> {
                     Text(
                       AppLocalizations.of(context).settingsBackupDesc,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 15, color: Dt.inkSoft),
+                      style: TextStyle(fontSize: 15, color: Dt.inkSoft),
                     ),
                     const SizedBox(height: 32),
                     if (_linked) ...[
-                      const Icon(Icons.verified_outlined, color: AppTheme.primary, size: 48),
+                      Icon(Icons.verified_outlined, color: AppTheme.primary, size: 48),
                       const SizedBox(height: 12),
                       Text(_name ?? '', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                       if (_email != null && _email!.isNotEmpty)
-                        Text(_email!, style: const TextStyle(fontSize: 14, color: Dt.inkSoft)),
+                        Text(_email!, style: TextStyle(fontSize: 14, color: Dt.inkSoft)),
                       const SizedBox(height: 24),
                       _Button(
                         label: AppLocalizations.of(context).logout,
@@ -127,7 +127,7 @@ class _IdentityScreenState extends State<IdentityScreen> {
                     Text(
                       AppLocalizations.of(context).identityLocalNote,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 12, color: Dt.inkSoft),
+                      style: TextStyle(fontSize: 12, color: Dt.inkSoft),
                     ),
                   ],
                 ),

@@ -140,13 +140,13 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(
+          CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation(Dt.accent),
           ),
           const SizedBox(height: 20),
           Text(
             AppLocalizations.of(context).parentingInsightsLoading,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               color: AppTheme.textSecondary,
               fontWeight: FontWeight.w600,
@@ -215,7 +215,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
               Expanded(
                 child: Text(
                   AppLocalizations.of(context).parentingInsightsWelcome(childName),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     height: 1.5,
                     fontWeight: FontWeight.w600,
@@ -295,7 +295,7 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
               child: Text(
                 AppLocalizations.of(context).parentingInsightsNoData,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppTheme.textSecondary,
                   fontWeight: FontWeight.w500,
                 ),

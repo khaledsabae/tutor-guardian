@@ -10,11 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/app_palette.dart';
 import '../../../theme/app_theme.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
 import '../providers/program_providers.dart';
+
+/// The card mixes its own amber rather than using the tokens, so it needs its
+/// own dark counterpart: on the cream ground the ink is deep brown; on the
+/// dark ground that same brown is invisible.
+Color get _coachInk => AppPalette.current.isDark
+    ? const Color(0xFFF5D89B)
+    : const Color(0xFF8A5A0F);
 
 class CoachTipCard extends ConsumerWidget {
   const CoachTipCard({super.key, this.onAsk});
@@ -92,10 +100,12 @@ class _CoachCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: [Color(0xFFFFE9C7), Color(0xFFFFD89E)],
+              colors: AppPalette.current.isDark
+                  ? [const Color(0xFF4A3A16), const Color(0xFF5C4718)]
+                  : [const Color(0xFFFFE9C7), const Color(0xFFFFD89E)],
             ),
             borderRadius: BorderRadius.circular(14),
           ),
@@ -107,11 +117,11 @@ class _CoachCard extends StatelessWidget {
                 height: 36,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.4),
+                  color: AppPalette.current.surface.withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.lightbulb_outline,
-                    color: Color(0xFF8A5A0F), size: 20),
+                child: Icon(Icons.lightbulb_outline,
+                    color: _coachInk, size: 20),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -120,8 +130,8 @@ class _CoachCard extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context).insightsTitle,
-                      style: const TextStyle(
-                        color: Color(0xFF8A5A0F),
+                      style: TextStyle(
+                        color: _coachInk,
                         fontWeight: FontWeight.w700,
                         fontSize: 12,
                       ),
@@ -129,7 +139,7 @@ class _CoachCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       text,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppTheme.textPrimary,
                         fontSize: 13,
                         height: 1.5,
@@ -144,15 +154,15 @@ class _CoachCard extends StatelessWidget {
                         const Spacer(),
                         Text(
                           AppLocalizations.of(context).coachAskAboutTip,
-                          style: const TextStyle(
-                            color: Color(0xFF8A5A0F),
+                          style: TextStyle(
+                            color: _coachInk,
                             fontWeight: FontWeight.w700,
                             fontSize: 12,
                           ),
                         ),
                         const SizedBox(width: 4),
-                        const Icon(Icons.arrow_back,
-                            color: Color(0xFF8A5A0F), size: 16),
+                        Icon(Icons.arrow_back,
+                            color: _coachInk, size: 16),
                       ],
                     ),
                   ],
@@ -183,19 +193,19 @@ class _ShareButton extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.55),
+            color: AppPalette.current.surface.withValues(alpha: 0.55),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: const Color(0xFF8A5A0F), width: 1),
+            border: Border.all(color: _coachInk, width: 1),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.ios_share, color: Color(0xFF8A5A0F), size: 15),
+              Icon(Icons.ios_share, color: _coachInk, size: 15),
               const SizedBox(width: 5),
               Text(
                 AppLocalizations.of(context).share,
-                style: const TextStyle(
-                  color: Color(0xFF8A5A0F),
+                style: TextStyle(
+                  color: _coachInk,
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
                 ),

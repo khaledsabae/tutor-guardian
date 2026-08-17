@@ -159,13 +159,13 @@ class _ErrorState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.headset_off,
+            Icon(Icons.headset_off,
                 size: 64, color: AppTheme.textSecondary),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.textSecondary,
                 height: 1.6,
                 fontSize: 16,
@@ -217,7 +217,7 @@ class _PlayerView extends StatelessWidget {
                     width: 140,
                     height: 140,
                     alignment: Alignment.center,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppTheme.primary,
                       shape: BoxShape.circle,
                     ),
@@ -238,14 +238,14 @@ class _PlayerView extends StatelessWidget {
                       children: [
                         Text(
                           formatDuration(pos),
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: AppTheme.textSecondary,
                             fontFeatures: [FontFeature.tabularFigures()],
                           ),
                         ),
                         Text(
                           formatDuration(dur),
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: AppTheme.textSecondary,
                             fontFeatures: [FontFeature.tabularFigures()],
                           ),

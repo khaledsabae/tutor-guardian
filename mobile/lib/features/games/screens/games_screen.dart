@@ -70,7 +70,7 @@ class _GameCard extends StatelessWidget {
     return Opacity(
       opacity: locked ? .45 : 1,
       child: Material(
-        color: Colors.white,
+        color: Dt.surface,
         borderRadius: BorderRadius.circular(Dt.rCard),
         child: InkWell(
           borderRadius: BorderRadius.circular(Dt.rCard),

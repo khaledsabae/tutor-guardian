@@ -62,7 +62,7 @@ class QuranScreen extends ConsumerWidget {
                       margin: const EdgeInsets.all(16),
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           colors: [AppTheme.primary, Color(0xFF0369A1)],
                         ),
                         borderRadius: BorderRadius.circular(Dt.rCard),
@@ -124,14 +124,14 @@ class QuranScreen extends ConsumerWidget {
                       leading: Container(
                         width: 40,
                         height: 40,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: AppTheme.surfaceAlt,
                           shape: BoxShape.circle,
                         ),
                         alignment: Alignment.center,
                         child: Text(
                           '$chapterNum',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: AppTheme.primary,
                             fontWeight: FontWeight.bold,
                           ),
@@ -146,7 +146,7 @@ class QuranScreen extends ConsumerWidget {
                       ),
                       subtitle: Text(
                         AppLocalizations.of(context).quranVerseCount(verseCount),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           color: AppTheme.textSecondary,
                         ),

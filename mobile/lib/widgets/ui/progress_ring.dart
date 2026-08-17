@@ -9,8 +9,10 @@ class ProgressRing extends StatelessWidget {
   final double value; // 0..1
   final double size;
   final double strokeWidth;
-  final Color color;
-  final Color trackColor;
+  /// Defaults to the live brand colour when null — a default parameter
+  /// cannot name one any more, since palettes swap at runtime.
+  final Color? color;
+  final Color? trackColor;
   final Widget? center;
 
   const ProgressRing({
@@ -18,8 +20,8 @@ class ProgressRing extends StatelessWidget {
     required this.value,
     this.size = 48,
     this.strokeWidth = 8,
-    this.color = Dt.primary,
-    this.trackColor = Dt.track,
+    this.color,
+    this.trackColor,
     this.center,
   });
 
@@ -40,8 +42,8 @@ class ProgressRing extends StatelessWidget {
                 size: Size.square(size),
                 painter: _RingPainter(
                   value: animated,
-                  color: color,
-                  trackColor: trackColor,
+                  color: color ?? Dt.primary,
+                  trackColor: trackColor ?? Dt.track,
                   strokeWidth: strokeWidth,
                 ),
               ),

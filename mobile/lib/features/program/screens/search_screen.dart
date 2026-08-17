@@ -66,12 +66,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             textInputAction: TextInputAction.search,
             onChanged: _onChanged,
             style:
-                const TextStyle(color: AppTheme.textPrimary, fontSize: 15),
+                TextStyle(color: AppTheme.textPrimary, fontSize: 15),
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context).search,
-              hintStyle: const TextStyle(color: AppTheme.textMuted),
+              hintStyle: TextStyle(color: AppTheme.textMuted),
               prefixIcon:
-                  const Icon(Icons.search, color: AppTheme.textMuted, size: 20),
+                  Icon(Icons.search, color: AppTheme.textMuted, size: 20),
               filled: false,
               border: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -236,7 +236,7 @@ class _ResultTile extends ConsumerWidget {
                 ),
                 child: Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
                     color: AppTheme.primary,
                     fontWeight: FontWeight.w700,
@@ -245,7 +245,7 @@ class _ResultTile extends ConsumerWidget {
               ),
             if (result.ageGroup != null)
               Text(result.ageGroup!,
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 11, color: AppTheme.textMuted)),
           ],
         ),

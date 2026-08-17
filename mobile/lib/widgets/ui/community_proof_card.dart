@@ -40,7 +40,7 @@ class CommunityProofCard extends ConsumerWidget {
           Expanded(
             child: Text(
               AppLocalizations.of(context).communityProof(f),
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.primary,
                 fontWeight: FontWeight.w700,
                 fontSize: 13.5,

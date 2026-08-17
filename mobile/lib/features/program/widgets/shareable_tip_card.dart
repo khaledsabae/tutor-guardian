@@ -74,7 +74,7 @@ class ShareableTipCard extends StatelessWidget {
                       width: 88,
                       height: 88,
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [AppTheme.primary, AppTheme.accent],
@@ -129,7 +129,7 @@ class ShareableTipCard extends StatelessWidget {
                         Container(
                           width: 56,
                           height: 56,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,

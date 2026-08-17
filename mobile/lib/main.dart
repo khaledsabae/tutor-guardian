@@ -39,6 +39,7 @@ import 'features/adhkar/services/notification_service.dart';
 import 'features/journey/data/journey_milestones.dart';
 import 'features/shell/root_scaffold.dart';
 import 'features/tour/tour_overlay.dart';
+import 'theme/app_palette.dart';
 import 'theme/app_theme.dart';
 import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
@@ -231,6 +232,8 @@ class TutorGuardianApp extends ConsumerWidget {
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
+      themeMode: ref.watch(themeModeProvider),
       locale: appLocale ?? defaultLocale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
@@ -244,6 +247,14 @@ class TutorGuardianApp extends ConsumerWidget {
         // TgClient and state notifiers) in sync with the app locale.
         final l10n = AppLocalizations.of(context);
         AppL10n.current = l10n;
+
+        // Same contract as AppL10n above, for the same reason: hundreds of
+        // colour references — and helpers like Dt.softShadow — resolve without
+        // a BuildContext. This is the first point in the frame where the
+        // resolved brightness exists, so it is where the palette is pinned.
+        AppPalette.current = Theme.of(context).brightness == Brightness.dark
+            ? AppPalette.dark
+            : AppPalette.light;
 
         // Force Directionality based on the resolved locale's text direction.
         // We use Directionality here to ensure transitions and widgets inherit it.
@@ -329,7 +340,7 @@ class ForceUpdateScreen extends ConsumerWidget {
               Text(
                 l10n.forceUpdateTitle,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w900,
                   color: AppTheme.textPrimary,
@@ -339,7 +350,7 @@ class ForceUpdateScreen extends ConsumerWidget {
               Text(
                 l10n.forceUpdateMessage,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   color: AppTheme.textSecondary,
                   height: 1.5,
@@ -471,7 +482,7 @@ class _SplashScreen extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               AppLocalizations.of(context).appTitle,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w800,
                 color: AppTheme.primary,
@@ -498,7 +509,7 @@ class _BootErrorScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline,
+              Icon(Icons.error_outline,
                   size: 56, color: AppTheme.dangerFg),
               const SizedBox(height: 12),
               Text(

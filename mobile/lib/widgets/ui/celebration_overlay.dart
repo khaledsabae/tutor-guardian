@@ -133,7 +133,7 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                   Text(
                     widget.title,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
                       color: Dt.ink,
@@ -143,7 +143,7 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
                   Text(
                     widget.message,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       color: Dt.inkSoft,
                       height: 1.5,
@@ -184,7 +184,7 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
             maxBlastForce: 18,
             minBlastForce: 6,
             gravity: .3,
-            colors: const [
+            colors: [
               Dt.primary,
               Dt.accent,
               Color(0xFF8B5CF6),

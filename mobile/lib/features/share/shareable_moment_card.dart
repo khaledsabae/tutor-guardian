@@ -173,7 +173,7 @@ class ShareableMomentCard extends StatelessWidget {
         Container(
           width: 64,
           height: 64,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -216,11 +216,11 @@ class ShareableMomentCard extends StatelessWidget {
             ),
             size: 116,
             gapless: true,
-            eyeStyle: const QrEyeStyle(
+            eyeStyle: QrEyeStyle(
               eyeShape: QrEyeShape.square,
               color: AppTheme.primary,
             ),
-            dataModuleStyle: const QrDataModuleStyle(
+            dataModuleStyle: QrDataModuleStyle(
               dataModuleShape: QrDataModuleShape.square,
               color: AppTheme.primary,
             ),

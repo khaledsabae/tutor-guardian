@@ -55,7 +55,7 @@ class _NextStepSheet extends StatelessWidget {
           children: [
             Text(
               l10n.lessonNextStepTitle,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 19,
                 fontWeight: FontWeight.w800,
                 color: Dt.ink,
@@ -65,7 +65,7 @@ class _NextStepSheet extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               l10n.lessonNextStepIntro,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 color: Dt.inkSoft,
                 height: 1.4,
@@ -87,7 +87,7 @@ class _NextStepSheet extends StatelessWidget {
                   Expanded(
                     child: Text(
                       tryThis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
                         height: 1.6,
                         color: Dt.ink,

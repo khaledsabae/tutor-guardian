@@ -141,7 +141,7 @@ class _FlashcardPagerState extends State<_FlashcardPager> {
               ),
               child: Text(
                 AppLocalizations.of(context).quizShowResults,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Dt.accentDeep,
                   fontWeight: FontWeight.w800,
                 ),
@@ -314,7 +314,7 @@ class _CardFace extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.only(top: 7),
                             child: Icon(Icons.circle,
                                 size: 7, color: AppTheme.primary),

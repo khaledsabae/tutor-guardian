@@ -192,7 +192,7 @@ class _CardState extends ConsumerState<_Card> {
                 const SizedBox(height: 4),
                 Text(
                   widget.tip.text,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppTheme.textPrimary,
                     fontSize: 13,
                     height: 1.5,

@@ -770,9 +770,9 @@ class _OptionButton extends StatelessWidget {
                   ),
                 ),
                 if (state == _OptionState.selectedCorrect || state == _OptionState.correctReveal)
-                  const Icon(Icons.check_circle, color: AppTheme.success)
+                  Icon(Icons.check_circle, color: AppTheme.success)
                 else if (state == _OptionState.selectedWrong)
-                  const Icon(Icons.cancel, color: AppTheme.dangerFg)
+                  Icon(Icons.cancel, color: AppTheme.dangerFg)
               ],
             ),
           ),

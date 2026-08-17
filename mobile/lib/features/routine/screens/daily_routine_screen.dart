@@ -359,7 +359,7 @@ class _EventTile extends StatelessWidget {
           '${_formatTime(event.startedAt)}${_subtitle(l10n).isEmpty ? '' : '\n${_subtitle(l10n)}'}',
         ),
         trailing: IconButton(
-          icon: const Icon(Icons.delete_outline, color: AppTheme.dangerFg),
+          icon: Icon(Icons.delete_outline, color: AppTheme.dangerFg),
           onPressed: () => _delete(context, event.id),
         ),
       ),
@@ -390,7 +390,7 @@ class _EventTile extends StatelessWidget {
                 );
               }
             },
-            child: Text(l10n.delete, style: const TextStyle(color: AppTheme.dangerFg)),
+            child: Text(l10n.delete, style: TextStyle(color: AppTheme.dangerFg)),
           ),
         ],
       ),
@@ -986,7 +986,7 @@ class _HabitSummaryCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: Dt.pad, vertical: 12),
         child: Row(
           children: [
-            const Icon(Icons.emoji_events_outlined, color: Dt.primary),
+            Icon(Icons.emoji_events_outlined, color: Dt.primary),
             const SizedBox(width: 12),
             Expanded(
               child: Text(

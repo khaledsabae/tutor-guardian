@@ -86,7 +86,7 @@ class _HelpSheetBody extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             l10n.helpSubtitle,
-            style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+            style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
           ),
           const SizedBox(height: 16),
           for (final intent in _intents)

@@ -350,7 +350,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
               child: Column(
                 children: [
                   Text('$_score / $total',
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 48,
                           fontWeight: FontWeight.w900,
                           color: AppTheme.primary)),

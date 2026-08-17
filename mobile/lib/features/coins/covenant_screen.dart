@@ -192,7 +192,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
               child: Text(
                 AppLocalizations.of(context).covenantEmpty,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary),
+                style: TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary),
               ),
             ),
           )
@@ -230,7 +230,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
                           const SizedBox(height: 4),
                           Text(
                             AppLocalizations.of(context).covenantCost(cov.cost),
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Dt.accentDeep,
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
@@ -344,7 +344,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
         if (pending.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Text(AppLocalizations.of(context).covenantPendingEmpty, style: const TextStyle(color: AppTheme.textMuted)),
+            child: Text(AppLocalizations.of(context).covenantPendingEmpty, style: TextStyle(color: AppTheme.textMuted)),
           )
         else
           ListView.separated(
@@ -393,7 +393,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
         ),
         const SizedBox(height: 10),
         if (customRewards.isEmpty)
-          Text(AppLocalizations.of(context).covenantManageEmpty, style: const TextStyle(color: AppTheme.textMuted))
+          Text(AppLocalizations.of(context).covenantManageEmpty, style: TextStyle(color: AppTheme.textMuted))
         else
           ListView.separated(
             shrinkWrap: true,
@@ -425,11 +425,11 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
         // Section: Delivered History
         Text(
           AppLocalizations.of(context).covenantHistory,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppTheme.success),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppTheme.success),
         ),
         const SizedBox(height: 10),
         if (delivered.isEmpty)
-          Text(AppLocalizations.of(context).covenantHistoryEmpty, style: const TextStyle(color: AppTheme.textMuted))
+          Text(AppLocalizations.of(context).covenantHistoryEmpty, style: TextStyle(color: AppTheme.textMuted))
         else
           ListView.separated(
             shrinkWrap: true,

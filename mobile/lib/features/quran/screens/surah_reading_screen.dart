@@ -141,7 +141,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
               child: Text(
                 AppLocalizations.of(context).quranChooseReciter,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary,
@@ -158,7 +158,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                   ),
                 ),
                 trailing: r.id == current.id
-                    ? const Icon(Icons.check_circle, color: AppTheme.primary)
+                    ? Icon(Icons.check_circle, color: AppTheme.primary)
                     : null,
                 onTap: () {
                   Navigator.pop(ctx);
@@ -277,13 +277,13 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
           ),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: AppTheme.textPrimary),
+        iconTheme: IconThemeData(color: AppTheme.textPrimary),
         actions: [
           // Choose the reciter (Husary / Minshawy / Maher / Ghamdi).
           IconButton(
             key: const Key('quran_reciter_button'),
             tooltip: AppLocalizations.of(context).quranReciter,
-            icon: const Icon(Icons.record_voice_over, color: AppTheme.primary),
+            icon: Icon(Icons.record_voice_over, color: AppTheme.primary),
             onPressed: _pickReciter,
           ),
           // Listen / pause the whole surah, ayah by ayah.
@@ -410,7 +410,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                               ),
                               TextSpan(
                                 text: ' ﴿${_arabicNum(verseNum)}﴾ ',
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontSize: 20, color: AppTheme.primary),
                               ),
                             ]),
@@ -455,7 +455,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                           ),
                           label: Text(
                             isPlaying ? AppLocalizations.of(context).quranStop : AppLocalizations.of(context).quranListen,
-                            style: const TextStyle(color: AppTheme.primary),
+                            style: TextStyle(color: AppTheme.primary),
                           ),
                         ),
                         TextButton.icon(

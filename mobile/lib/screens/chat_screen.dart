@@ -181,7 +181,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                   ),
                   child: Text(
                     AppLocalizations.of(context).chatTurnsCount(state.turnCount),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppTheme.primary,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -301,7 +301,7 @@ class _SettingsBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppTheme.surface,
         border: Border(
           bottom: BorderSide(color: AppTheme.surfaceAlt, width: 1),
@@ -339,13 +339,13 @@ class _ErrorBanner extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
       child: Row(
         children: [
-          const Icon(Icons.warning_amber_rounded,
+          Icon(Icons.warning_amber_rounded,
               color: AppTheme.dangerFg, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               message,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.dangerFg,
                 fontSize: 13,
               ),
@@ -376,7 +376,7 @@ class _BootSplash extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             AppLocalizations.of(context).chatInit,
-            style: const TextStyle(color: AppTheme.textMuted, fontSize: 13),
+            style: TextStyle(color: AppTheme.textMuted, fontSize: 13),
           ),
         ],
       ),
@@ -395,12 +395,12 @@ class _OfflineBanner extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: [
-          const Icon(Icons.wifi_off, color: AppTheme.warningFg, size: 18),
+          Icon(Icons.wifi_off, color: AppTheme.warningFg, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               AppLocalizations.of(context).chatOfflineBanner,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.warningFg,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -490,7 +490,7 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               AppLocalizations.of(context).chatEmptyWelcome,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
                 color: AppTheme.textPrimary,
@@ -500,7 +500,7 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               AppLocalizations.of(context).chatEmptyHint,
-              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 14),
+              style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -514,7 +514,7 @@ class _EmptyState extends StatelessWidget {
                 for (var i = 0; i < suggestions.length; i++)
                   ActionChip(
                     label: Text(suggestions[i]),
-                    labelStyle: const TextStyle(
+                    labelStyle: TextStyle(
                       color: AppTheme.primary,
                       fontWeight: FontWeight.w700,
                       fontSize: 13,
@@ -575,11 +575,11 @@ class _HistoryDrawer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: ListTile(
-                leading: const Icon(Icons.add_circle_outline,
+                leading: Icon(Icons.add_circle_outline,
                     color: AppTheme.primary),
                 title: Text(
                   AppLocalizations.of(context).chatNewChatBtn,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w700,
                     color: AppTheme.primary,
                   ),
@@ -605,7 +605,7 @@ class _HistoryDrawer extends StatelessWidget {
                         padding: const EdgeInsets.all(24),
                         child: Text(
                           AppLocalizations.of(context).chatNoChatsYet,
-                          style: const TextStyle(color: AppTheme.textMuted),
+                          style: TextStyle(color: AppTheme.textMuted),
                         ),
                       ),
                     );

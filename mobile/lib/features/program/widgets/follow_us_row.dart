@@ -27,7 +27,7 @@ class FollowUsRow extends StatelessWidget {
           padding: const EdgeInsets.only(right: 4, left: 4, bottom: 2),
           child: Text(
             l10n.settingsFollowUs,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: 15,
               color: AppTheme.textPrimary,
@@ -38,7 +38,7 @@ class FollowUsRow extends StatelessWidget {
           padding: const EdgeInsets.only(right: 4, left: 4, bottom: 12),
           child: Text(
             l10n.settingsFollowUsDesc,
-            style: const TextStyle(fontSize: 12.5, color: AppTheme.textSecondary),
+            style: TextStyle(fontSize: 12.5, color: AppTheme.textSecondary),
           ),
         ),
         Wrap(

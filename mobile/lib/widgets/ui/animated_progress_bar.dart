@@ -9,7 +9,7 @@ class AnimatedProgressBar extends StatelessWidget {
   final Gradient? gradient;
   final Color? color;
   final double height;
-  final Color trackColor;
+  final Color? trackColor;
 
   const AnimatedProgressBar({
     super.key,
@@ -17,7 +17,7 @@ class AnimatedProgressBar extends StatelessWidget {
     this.gradient,
     this.color,
     this.height = 14,
-    this.trackColor = Dt.track,
+    this.trackColor,
   });
 
   @override

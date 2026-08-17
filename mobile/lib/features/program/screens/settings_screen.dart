@@ -173,6 +173,34 @@ class SettingsScreen extends ConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 24),
+                // «لدي اقتراح و اتمنى ان تطبقوه ألا و هو الوضع الداكن. فهو
+                // اريح للعين» — #fb_e7402eaa, 15 Aug 2026. Cycles
+                // system → light → dark, defaulting to system so a phone
+                // already in dark mode needs no setting found at all.
+                _SettingsRow(
+                  icon: switch (ref.watch(themeModeProvider)) {
+                    ThemeMode.light => Icons.light_mode_outlined,
+                    ThemeMode.dark => Icons.dark_mode_outlined,
+                    ThemeMode.system => Icons.brightness_auto_outlined,
+                  },
+                  title: l10n.settingsTheme,
+                  subtitle: switch (ref.watch(themeModeProvider)) {
+                    ThemeMode.light => l10n.settingsThemeLight,
+                    ThemeMode.dark => l10n.settingsThemeDark,
+                    ThemeMode.system => l10n.settingsThemeSystem,
+                  },
+                  onTap: () {
+                    const order = [
+                      ThemeMode.system,
+                      ThemeMode.light,
+                      ThemeMode.dark,
+                    ];
+                    final now = ref.read(themeModeProvider);
+                    final next = order[(order.indexOf(now) + 1) % order.length];
+                    ref.read(themeModeProvider.notifier).set(next);
+                  },
+                ),
+                const SizedBox(height: 24),
                 const _AdhkarSettingsRow(),
                 const SizedBox(height: 24),
                 _SettingsRow(
@@ -247,7 +275,7 @@ class SettingsScreen extends ConsumerWidget {
                           : '—';
                       return Text(
                         l10n.settingsVersion(version),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppTheme.textMuted,
                           fontSize: 12,
                         ),
@@ -572,7 +600,7 @@ class _Tag extends StatelessWidget {
           const SizedBox(width: 3),
           Text(
             text,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 11,
               color: AppTheme.textSecondary,
               fontWeight: FontWeight.w600,
@@ -643,7 +671,7 @@ class _SettingsRow extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppTheme.textSecondary,
                       ),
@@ -651,7 +679,7 @@ class _SettingsRow extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_left,
+              Icon(Icons.chevron_left,
                   size: 18, color: AppTheme.textMuted),
             ],
           ),
@@ -674,7 +702,7 @@ class _ErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline,
+            Icon(Icons.error_outline,
                 size: 48, color: AppTheme.dangerFg),
             const SizedBox(height: 12),
             Text(AppLocalizations.of(context).settingsLoadFailed(error),
@@ -736,7 +764,7 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
         ),
         subtitle: Text(
           AppLocalizations.of(context).settingsFamilyAdhkarDesc,
-          style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
+          style: TextStyle(fontSize: 12, color: AppTheme.textSecondary),
         ),
         value: _enabled,
         onChanged: (val) async {

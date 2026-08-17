@@ -236,7 +236,7 @@ class _TourCard extends StatelessWidget {
         child: FractionallySizedBox(
           alignment: AlignmentDirectional.centerStart,
           widthFactor: progress.clamp(0.0, 1.0),
-          child: const DecoratedBox(
+          child: DecoratedBox(
             decoration: BoxDecoration(gradient: Dt.primaryGradient),
           ),
         ),
@@ -258,7 +258,7 @@ class _TourCard extends StatelessWidget {
               if (title != null)
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w800,
                     color: Dt.ink,
@@ -267,7 +267,7 @@ class _TourCard extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 step.caption(l10n),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   height: 1.4,
                   color: Dt.inkSoft,
@@ -291,7 +291,7 @@ class _TourCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
             child: Text(
               l10n.tourSkip,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
                 color: Dt.inkSoft,

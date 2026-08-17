@@ -1,33 +1,40 @@
 import 'package:flutter/material.dart';
 
+import 'app_palette.dart';
+
 /// Design tokens for the playful (Duolingo-style) redesign.
 ///
 /// Everything here is code-only: gradients, radii, shadows and motion
-/// constants. No asset files. Light mode only for now.
+/// constants. No asset files. Colours come from [AppPalette.current].
 abstract final class Dt {
   // ── Core palette ───────────────────────────────────────────────────────
-  static const Color primary = Color(0xFF0D9488); // vivid teal
-  static const Color primaryDeep = Color(0xFF0F766E);
-  static const Color accent = Color(0xFFF59E0B); // amber — gamification
-  static const Color accentDeep = Color(0xFFD97706);
-  static const Color background = Color(0xFFFAF7F2); // warm cream
-  static const Color surface = Colors.white;
-  static const Color ink = Color(0xFF1E293B);
-  static const Color inkSoft = Color(0xFF64748B);
-  static const Color success = Color(0xFF22C55E);
-  static const Color track = Color(0xFFEBE5DA); // progress bar track
+  //
+  // Getters, not constants. These were `static const Color`, which meant every
+  // one of ~512 references resolved at compile time — the single reason dark
+  // mode was estimated at a week. The spelling at each call site is unchanged;
+  // only the definitions moved behind [AppPalette.current].
+  static Color get primary => AppPalette.current.primary;
+  static Color get primaryDeep => AppPalette.current.primaryDeep;
+  static Color get accent => AppPalette.current.accent;
+  static Color get accentDeep => AppPalette.current.accentDeep;
+  static Color get background => AppPalette.current.background;
+  static Color get surface => AppPalette.current.surface;
+  static Color get ink => AppPalette.current.ink;
+  static Color get inkSoft => AppPalette.current.inkSoft;
+  static Color get success => AppPalette.current.success;
+  static Color get track => AppPalette.current.track;
 
-  static const LinearGradient primaryGradient = LinearGradient(
-    begin: AlignmentDirectional.topStart,
-    end: AlignmentDirectional.bottomEnd,
-    colors: [primary, primaryDeep],
-  );
+  static LinearGradient get primaryGradient => LinearGradient(
+        begin: AlignmentDirectional.topStart,
+        end: AlignmentDirectional.bottomEnd,
+        colors: [primary, primaryDeep],
+      );
 
-  static const LinearGradient accentGradient = LinearGradient(
-    begin: AlignmentDirectional.topStart,
-    end: AlignmentDirectional.bottomEnd,
-    colors: [accent, accentDeep],
-  );
+  static LinearGradient get accentGradient => LinearGradient(
+        begin: AlignmentDirectional.topStart,
+        end: AlignmentDirectional.bottomEnd,
+        colors: [accent, accentDeep],
+      );
 
   // ── Radii ──────────────────────────────────────────────────────────────
   static const double rCard = 24;
@@ -83,7 +90,7 @@ class DomainStyle {
       );
 
   /// Very light tint of the domain color for section backgrounds.
-  Color get tint => Color.lerp(base, Colors.white, .9)!;
+  Color get tint => Color.lerp(base, AppPalette.current.surface, .9)!;
 }
 
 const _domainStyles = <String, DomainStyle>{
@@ -96,7 +103,8 @@ const _domainStyles = <String, DomainStyle>{
   'cyber': DomainStyle(Color(0xFF3B82F6), Color(0xFF1D4ED8), '🛡️'),
 };
 
-const _fallbackDomainStyle =
+// Not const: it reads brand colours, which now follow the live palette.
+DomainStyle get _fallbackDomainStyle =>
     DomainStyle(Dt.primary, Dt.primaryDeep, '📚');
 
 DomainStyle styleFor(String? domain) =>

@@ -141,7 +141,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
                     color: AppTheme.surfaceAlt,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.edit_note,
                     size: 18,
                     color: AppTheme.textSecondary,
@@ -157,7 +157,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
                 if (hasNote && !_editing)
                   Text(
                     _formatDate(entry.updatedAt),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppTheme.textMuted,
                       fontSize: 11,
                     ),
@@ -210,7 +210,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
                 ),
                 child: Text(
                   entry.text,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppTheme.textPrimary,
                     height: 1.55,
                   ),
@@ -239,7 +239,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
               // Empty state
               Text(
                 AppLocalizations.of(context).feedbackMessageHint,
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppTheme.textSecondary,
                   fontSize: 13,
                   height: 1.5,

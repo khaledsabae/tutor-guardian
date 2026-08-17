@@ -70,7 +70,7 @@ class _HubTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Material(
-      color: Colors.white,
+      color: Dt.surface,
       borderRadius: BorderRadius.circular(Dt.rCard),
       child: InkWell(
         borderRadius: BorderRadius.circular(Dt.rCard),

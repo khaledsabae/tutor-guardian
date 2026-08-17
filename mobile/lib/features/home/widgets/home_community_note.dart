@@ -45,7 +45,7 @@ class HomeCommunityNote extends ConsumerWidget {
             child: Text(
               AppLocalizations.of(context).communityProof(families),
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.textSecondary,
                 fontSize: 12.5,
                 fontWeight: FontWeight.w500,

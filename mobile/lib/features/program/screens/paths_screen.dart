@@ -191,7 +191,7 @@ class _ReaderBanner extends StatelessWidget {
       child: Text(
         AppLocalizations.of(context).pathsReaderBanner,
         textAlign: TextAlign.start,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 13,
           height: 1.4,
           fontWeight: FontWeight.w600,

@@ -260,7 +260,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           const SizedBox(height: 16),
                           Text(
                             AppLocalizations.of(context).onbPreparing,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: AppTheme.textPrimary,
                             ),
@@ -328,7 +328,7 @@ class _AgeQuestionPage extends StatelessWidget {
               child: Text(
                 '${l10n.onbFreeTitle} — ${l10n.onbFreeDesc}',
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Dt.primaryDeep,
                   fontWeight: FontWeight.w700,
                   height: 1.5,
@@ -469,7 +469,7 @@ class _InstantValuePage extends StatelessWidget {
                     ),
                     child: Text(
                       l10n.onbTipForAge(ageLabel),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Dt.primaryDeep,
                         fontWeight: FontWeight.w700,
                         fontSize: 13,
@@ -587,7 +587,7 @@ class _PreviewRow extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     subText!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppTheme.textSecondary,
                       fontSize: 13,
                       height: 1.5,
@@ -655,7 +655,7 @@ class _LanguageSelectionPage extends StatelessWidget {
                     curve: Curves.easeOutBack,
                   ),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'اختر لغة التطبيق',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -664,7 +664,7 @@ class _LanguageSelectionPage extends StatelessWidget {
                   color: AppTheme.textPrimary,
                 ),
               ).animate(delay: 100.ms).fadeIn(duration: Dt.base),
-              const Text(
+              Text(
                 'Choose App Language',
                 textAlign: TextAlign.center,
                 style: TextStyle(

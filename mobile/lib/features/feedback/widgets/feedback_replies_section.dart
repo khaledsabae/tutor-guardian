@@ -79,7 +79,7 @@ class _ReplyBubble extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Color.lerp(Dt.primary, Colors.white, .9),
+        color: Color.lerp(Dt.primary, Dt.surface, .9),
         borderRadius: BorderRadius.circular(Dt.rCard),
         border: Border.all(
           color: reply.read
@@ -96,7 +96,7 @@ class _ReplyBubble extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context).feedbackReplyFrom,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 13,
                   color: Dt.primary,
@@ -107,7 +107,7 @@ class _ReplyBubble extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             reply.text,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               height: 1.6,
               color: AppTheme.textSecondary,

@@ -14,6 +14,8 @@
 library;
 
 import 'dart:ui';
+
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -128,3 +130,40 @@ final appLocaleProvider =
   return AppLocaleNotifier(prefs);
 });
 
+
+/// Light / dark / follow-the-system, persisted.
+///
+/// «لدي اقتراح و اتمنى ان تطبقوه ألا و هو الوضع الداكن. فهو اريح للعين» —
+/// #fb_e7402eaa, 15 Aug 2026. The app had no `darkTheme` and no `ThemeMode`
+/// at all; `design_tokens.dart` said "light mode only for now" in a comment.
+///
+/// Defaults to [ThemeMode.system], so a parent whose phone is already in dark
+/// mode gets it without finding a setting — which is the point of the request.
+class ThemeModeNotifier extends StateNotifier<ThemeMode> {
+  ThemeModeNotifier(this._prefs) : super(ThemeMode.system) {
+    final stored = _prefs?.getString(_key);
+    if (stored != null) {
+      state = ThemeMode.values.firstWhere(
+        (m) => m.name == stored,
+        orElse: () => ThemeMode.system,
+      );
+    }
+  }
+
+  static const _key = 'tg.theme_mode';
+  final SharedPreferences? _prefs;
+
+  Future<void> set(ThemeMode mode) async {
+    state = mode;
+    await _prefs?.setString(_key, mode.name);
+  }
+}
+
+final themeModeProvider =
+    StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
+  final prefs = ref.watch(sharedPreferencesProvider).maybeWhen(
+        data: (p) => p,
+        orElse: () => null,
+      );
+  return ThemeModeNotifier(prefs);
+});

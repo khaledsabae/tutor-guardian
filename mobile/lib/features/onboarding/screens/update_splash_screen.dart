@@ -177,7 +177,7 @@ class _UpdateSplashScreenState extends ConsumerState<UpdateSplashScreen> {
                             const SizedBox(height: 4),
                             Text(
                               _features(context)[i].$3,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: AppTheme.textSecondary,
                                 fontSize: 13,
                                 height: 1.5,

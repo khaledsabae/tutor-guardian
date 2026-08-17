@@ -103,7 +103,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text('🪙 ${coins.balance}',
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.w800, color: Dt.accentDeep)),
             ),
           ),
@@ -152,7 +152,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
               const SizedBox(height: 8),
               Center(
                 child: Text(AppLocalizations.of(context).storyLoading,
-                    style: const TextStyle(color: AppTheme.textMuted)),
+                    style: TextStyle(color: AppTheme.textMuted)),
               ),
             ],
           ] else ...[

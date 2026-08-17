@@ -229,7 +229,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
                           ),
                         ),
                       ),
-                      const Icon(Icons.chevron_left,
+                      Icon(Icons.chevron_left,
                           color: AppTheme.textMuted),
                     ],
                   ),

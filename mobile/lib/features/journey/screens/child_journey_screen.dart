@@ -345,7 +345,7 @@ class _ChallengeSection extends ConsumerWidget {
             activeKey == null
                 ? AppLocalizations.of(context).journeyChallengeDesc
                 : AppLocalizations.of(context).journeyChallengeActive,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12.5,
               color: AppTheme.textSecondary,
               height: 1.4,
@@ -443,7 +443,7 @@ class _QuranMemoCard extends ConsumerWidget {
                       count == 0
                           ? AppLocalizations.of(context).journeyQuranTrack
                           : AppLocalizations.of(context).journeyQuranCount(count),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12.5,
                         color: AppTheme.textSecondary,
                       ),
@@ -451,7 +451,7 @@ class _QuranMemoCard extends ConsumerWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_left, color: AppTheme.textMuted),
+              Icon(Icons.chevron_left, color: AppTheme.textMuted),
             ],
           ),
         ),
@@ -504,7 +504,7 @@ class _EmptyTimeline extends StatelessWidget {
           Text(
             AppLocalizations.of(context).journeyEmpty,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               color: AppTheme.textSecondary,
               fontSize: 13,
               height: 1.5,
@@ -566,7 +566,7 @@ class _TimelineCard extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   _date(entry.achievedAt),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppTheme.textMuted,
                   ),
@@ -575,7 +575,7 @@ class _TimelineCard extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     entry.note,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       color: AppTheme.textSecondary,
                       height: 1.4,
@@ -586,7 +586,7 @@ class _TimelineCard extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.delete_outline,
+            icon: Icon(Icons.delete_outline,
                 color: AppTheme.textMuted, size: 20),
             tooltip: AppLocalizations.of(context).journeyDeleteMilestone,
             visualDensity: VisualDensity.compact,
@@ -643,7 +643,7 @@ class _SuggestedTile extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       milestone.description,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppTheme.textSecondary,
                       ),
@@ -672,7 +672,7 @@ class _SuggestedTile extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.add_circle_outline,
+              Icon(Icons.add_circle_outline,
                   color: AppTheme.primary, size: 22),
             ],
           ),

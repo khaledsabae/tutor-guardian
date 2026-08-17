@@ -45,7 +45,8 @@ class _BouncyTapState extends State<BouncyTap> {
 class BouncyButton extends StatelessWidget {
   final String label;
   final VoidCallback? onTap;
-  final Color color;
+  /// Null means the live brand colour.
+  final Color? color;
   final Color? edgeColor;
   final Widget? icon;
   final bool expanded;
@@ -54,7 +55,7 @@ class BouncyButton extends StatelessWidget {
     super.key,
     required this.label,
     this.onTap,
-    this.color = Dt.primary,
+    this.color,
     this.edgeColor,
     this.icon,
     this.expanded = true,

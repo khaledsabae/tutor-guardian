@@ -168,7 +168,7 @@ class _QuestionView extends StatelessWidget {
                 children: [
                   Text(
                     AppLocalizations.of(context).quizQuestionOf(index + 1, total),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppTheme.textSecondary,
                       fontWeight: FontWeight.w600,
                     ),
@@ -202,7 +202,7 @@ class _QuestionView extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   question.text!,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppTheme.textSecondary,
                     fontStyle: FontStyle.italic,
                     height: 1.5,
@@ -276,13 +276,13 @@ class _HintCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.lightbulb_outline,
+          Icon(Icons.lightbulb_outline,
               size: 18, color: AppTheme.textSecondary),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.textSecondary,
                 height: 1.5,
               ),
@@ -429,13 +429,13 @@ class _RationaleCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline,
+          Icon(Icons.info_outline,
               size: 18, color: AppTheme.textSecondary),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.textSecondary,
                 height: 1.55,
               ),
@@ -599,7 +599,7 @@ class _SummaryState extends State<_Summary> {
           maxBlastForce: 18,
           minBlastForce: 6,
           gravity: .3,
-          colors: const [
+          colors: [
             Dt.primary,
             Dt.accent,
             Color(0xFF8B5CF6),

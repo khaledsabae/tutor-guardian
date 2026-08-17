@@ -176,7 +176,7 @@ class _SectionHeader extends StatelessWidget {
           ),
           child: Text(
             '$count',
-            style: const TextStyle(
+            style: TextStyle(
               color: AppTheme.primary,
               fontWeight: FontWeight.w700,
               fontSize: 12,
@@ -226,7 +226,7 @@ class _FavoriteLessonCard extends ConsumerWidget {
                     color: AppTheme.primary.withValues(alpha: 0.10),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.menu_book,
+                  child: Icon(Icons.menu_book,
                       color: AppTheme.primary, size: 22),
                 ),
                 const SizedBox(width: 12),
@@ -359,19 +359,19 @@ class _ErrorCard extends StatelessWidget {
       color: AppTheme.dangerBg,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(color: AppTheme.dangerFg),
+        side: BorderSide(color: AppTheme.dangerFg),
       ),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            const Icon(Icons.error_outline, color: AppTheme.dangerFg),
+            Icon(Icons.error_outline, color: AppTheme.dangerFg),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 AppLocalizations.of(context).favoritesErrorLoad,
                 style:
-                    const TextStyle(color: AppTheme.dangerFg, fontSize: 12),
+                    TextStyle(color: AppTheme.dangerFg, fontSize: 12),
               ),
             ),
           ],

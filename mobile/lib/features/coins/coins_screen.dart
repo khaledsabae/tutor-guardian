@@ -92,7 +92,7 @@ class CoinsScreen extends ConsumerWidget {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.check_circle, color: AppTheme.success),
+                  Icon(Icons.check_circle, color: AppTheme.success),
                   const SizedBox(width: 8),
                   Text(AppLocalizations.of(context).coinsDailyDone,
                       style: const TextStyle(fontWeight: FontWeight.w700)),
@@ -240,13 +240,13 @@ class _EarnRow extends StatelessWidget {
                 Text(title,
                     style: const TextStyle(fontWeight: FontWeight.w800)),
                 Text(detail,
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: AppTheme.textSecondary, fontSize: 13)),
               ],
             ),
           ),
           if (onTap != null)
-            const Icon(Icons.chevron_left, color: AppTheme.primary),
+            Icon(Icons.chevron_left, color: AppTheme.primary),
         ],
       ),
     );

@@ -9,7 +9,8 @@ class StatChip extends StatelessWidget {
   final String emoji;
   final Widget value;
   final String label;
-  final Color color;
+  /// Null means the live accent colour.
+  final Color? color;
   final VoidCallback? onTap;
   final bool pulse;
 
@@ -18,7 +19,7 @@ class StatChip extends StatelessWidget {
     required this.emoji,
     required this.value,
     required this.label,
-    this.color = Dt.accent,
+    this.color,
     this.onTap,
     this.pulse = false,
   });
@@ -28,7 +29,7 @@ class StatChip extends StatelessWidget {
     Widget chip = Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: Color.lerp(color, Colors.white, .85),
+        color: Color.lerp(color ?? Dt.accent, Dt.surface, .85),
         borderRadius: BorderRadius.circular(Dt.rChip),
       ),
       child: Row(
@@ -55,7 +56,7 @@ class StatChip extends StatelessWidget {
                   label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 11, color: Dt.inkSoft),
+                  style: TextStyle(fontSize: 11, color: Dt.inkSoft),
                 ),
               ],
             ),

@@ -116,13 +116,13 @@ class MessageBubble extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.error_outline,
+                  Icon(Icons.error_outline,
                       size: 14, color: AppTheme.dangerFg),
                   const SizedBox(width: 4),
                   Flexible(
                     child: Text(
                       message.error!,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppTheme.dangerFg,
                       ),
@@ -156,12 +156,12 @@ class _AssistantBody extends StatelessWidget {
             data: message.content.isEmpty ? '…' : message.content,
             styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
                 .copyWith(
-              p: const TextStyle(
+              p: TextStyle(
                 color: AppTheme.textPrimary,
                 fontSize: 15,
                 height: 1.6,
               ),
-              code: const TextStyle(
+              code: TextStyle(
                 fontFamily: 'monospace',
                 backgroundColor: AppTheme.surfaceAlt,
               ),
@@ -270,7 +270,7 @@ class _MetadataChips extends StatelessWidget {
               ),
               child: Text(
                 c,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 11,
                   color: AppTheme.textSecondary,
                 ),
@@ -301,7 +301,7 @@ class _FeedbackRow extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             AppLocalizations.of(context).feedbackThanks,
-            style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
+            style: TextStyle(fontSize: 12, color: AppTheme.textMuted),
           ),
         ],
       );

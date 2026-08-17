@@ -76,7 +76,7 @@ class _ShortcutTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Dt.surface,
       borderRadius: BorderRadius.circular(Dt.rCard),
       child: InkWell(
         borderRadius: BorderRadius.circular(Dt.rCard),

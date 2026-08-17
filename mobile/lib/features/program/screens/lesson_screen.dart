@@ -497,14 +497,14 @@ class _Section extends StatelessWidget {
     required this.emoji,
     required this.title,
     required this.body,
-    this.accent = AppTheme.textPrimary,
-    this.background = AppTheme.surface,
+    this.accent,
+    this.background,
   });
   final String emoji;
   final String title;
   final String body;
-  final Color accent;
-  final Color background;
+  final Color? accent;
+  final Color? background;
 
   @override
   Widget build(BuildContext context) {
@@ -637,13 +637,13 @@ class _UnitIdsCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.source_outlined,
+          Icon(Icons.source_outlined,
               size: 16, color: AppTheme.textSecondary),
           const SizedBox(width: 6),
           Expanded(
             child: Text(
               AppLocalizations.of(context).lessonUnitRefs(lesson.unitIds.length),
-              style: const TextStyle(color: AppTheme.textSecondary),
+              style: TextStyle(color: AppTheme.textSecondary),
             ),
           ),
         ],
@@ -668,13 +668,13 @@ class _WarningCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.medical_services_outlined,
+          Icon(Icons.medical_services_outlined,
               color: AppTheme.dangerFg, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.dangerFg,
                 height: 1.5,
               ),
@@ -932,7 +932,7 @@ class _InteractiveAssetsSection extends ConsumerWidget {
                 ),
                 child: Text(
                   AppLocalizations.of(context).lessonMediaOtherLanguage,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12.5,
                     height: 1.45,
                     color: AppTheme.warningFg,
@@ -1051,7 +1051,7 @@ class _AssetButton extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(Icons.chevron_left, color: AppTheme.textMuted),
+            Icon(Icons.chevron_left, color: AppTheme.textMuted),
           ],
         ),
       ),

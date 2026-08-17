@@ -189,7 +189,7 @@ class _InviteScreenState extends State<InviteScreen> {
       child: Column(
         children: [
           Text(AppLocalizations.of(context).inviteYourCode,
-              style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
+              style: TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
           const SizedBox(height: 8),
           GestureDetector(
             onTap: () {
@@ -203,7 +203,7 @@ class _InviteScreenState extends State<InviteScreen> {
               children: [
                 Text(
                   info.code,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 4,
@@ -211,7 +211,7 @@ class _InviteScreenState extends State<InviteScreen> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Icon(Icons.copy, size: 18, color: AppTheme.primary),
+                Icon(Icons.copy, size: 18, color: AppTheme.primary),
               ],
             ),
           ),
@@ -219,7 +219,7 @@ class _InviteScreenState extends State<InviteScreen> {
             const SizedBox(height: 12),
             Text(
               AppLocalizations.of(context).inviteCodeUsed(info.invitedCount),
-              style: const TextStyle(
+              style: TextStyle(
                   fontWeight: FontWeight.w600, color: AppTheme.primary),
             ),
           ],
