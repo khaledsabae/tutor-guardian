@@ -83,6 +83,10 @@ MAP_FILE = BASE / "source_to_lesson.json"
 #
 # الترحيل تلقائي: إن وُجد ملف قديم في `scratch/` ولا ملف هنا، يُنقل بدل أن يُهمَل.
 STATE_FILE = BASE / "ops" / "data" / "podcast_tasks.json"
+# Consecutive poll errors per task — see the harvest loop.
+ERRORS_FILE = BASE / "ops" / "data" / "podcast_poll_errors.json"
+# Three strikes: one covers a transient outage, three does not.
+ERROR_BUDGET = 3
 _LEGACY_STATE = BASE / "scratch" / "podcast_tasks.json"
 if _LEGACY_STATE.exists() and not STATE_FILE.exists():
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -236,6 +240,7 @@ async def main():
         return
 
     state = _load(STATE_FILE, {})
+    _errors = _load(ERRORS_FILE, {})
 
     # 1) resolve in-flight tasks — only this language's
     for key, tid in list(state.items()):
@@ -253,11 +258,36 @@ async def main():
             state.pop(key, None)
         elif st == "failed":
             state.pop(key, None)
-        # "error"/auth-expiry: keep for next run
+        else:
+            # 🚨 "error" used to mean "keep for next run", forever. That was
+            # right when the only cause was an expired session — retry later
+            # and it works. It is wrong when the task itself is gone.
+            #
+            # 2026-08-17: the 12 tasks from the day before returned "error" on
+            # a session verified alive by a real read, three runs in a row.
+            # They were not waiting; they had expired. And each poll costs
+            # ~90s of CLI timeout plus retries, so 12 dead tasks turned the
+            # harvest into a stall long enough to swallow the whole driver —
+            # the 06:30 run produced four log lines and died in this loop,
+            # never reaching video, audio or infographics.
+            #
+            # A task that errors ERROR_BUDGET times in a row is dropped. The
+            # count resets on any other outcome, so a genuine session outage
+            # (which errors once and recovers) still keeps its tasks.
+            errs = _errors.get(key, 0) + 1
+            if errs >= ERROR_BUDGET:
+                print(f"  ⛔ {lid}: {errs} consecutive poll errors — task is "
+                      f"gone, dropping it rather than blocking every run")
+                state.pop(key, None)
+                _errors.pop(key, None)
+            else:
+                _errors[key] = errs
 
     if args.harvest_only:
         STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2),
                               encoding="utf-8")
+        ERRORS_FILE.write_text(json.dumps(_errors, ensure_ascii=False, indent=2),
+                               encoding="utf-8")
         left = sum(1 for k in state if _split_key(k)[1] == lang)
         print(f"\n[harvest-only] nothing triggered · {left} still in flight")
         return
@@ -303,6 +333,10 @@ async def main():
 
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
     STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+    # Persisted beside the state, or the budget resets every run and no
+    # task ever reaches three strikes — a counter that never counts.
+    ERRORS_FILE.write_text(json.dumps(_errors, ensure_ascii=False, indent=2),
+                           encoding="utf-8")
 
     # 3) bounded poll of freshly-triggered tasks
     deadline = time.time() + POLL_BUDGET_SEC
@@ -320,6 +354,10 @@ async def main():
             elif st == "failed":
                 state.pop(key, None)
         STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+    # Persisted beside the state, or the budget resets every run and no
+    # task ever reaches three strikes — a counter that never counts.
+    ERRORS_FILE.write_text(json.dumps(_errors, ensure_ascii=False, indent=2),
+                           encoding="utf-8")
 
     if stale:
         print(f"\n🚫 {len(stale)} lesson(s) point at a source that is no longer "
