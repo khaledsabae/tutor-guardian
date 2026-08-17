@@ -665,8 +665,8 @@ def _ensure_lesson_progress_child_key(conn: sqlite3.Connection) -> None:
 
     Production shipped `UNIQUE (device_id, lesson_id)`: one row per device per
     lesson, however many children the family has. The handler wrote `child_id`
-    into that single row, so in a two-child family the second child finishing a
-    lesson did not add a row — it re-pointed the first child's. Reads filter
+    into that single row, so a second child finishing the same lesson did not
+    add a row — it re-pointed the first child's. Reads filter
     `child_id IN (?, 0)` (children.py), so child A's completed lesson vanished
     from A's progress the moment B completed the same one.
 
@@ -684,56 +684,53 @@ def _ensure_lesson_progress_child_key(conn: sqlite3.Connection) -> None:
     `path_id` has no business in the key — a lesson belongs to one path — so
     the target is three columns.
 
-    Idempotent: a table already carrying the target key is left alone.
+    Columns are read from the live table rather than assumed. The first
+    attempt at this migration (2026-08-17, deploy 32022710188) hard-coded the
+    column list from `CREATE TABLE` above and named `score` — which production
+    does not have. `no such column: score` killed startup, and because
+    `executescript` commits before it runs, the half-built
+    `lesson_progress_new` survived and turned every retry into `table
+    lesson_progress_new already exists`. The rollback saved the data; nothing
+    in the test suite caught it, because the fixture was written from the
+    schema in this file instead of copied from production.
+
+    So: drop any debris first, take the intersection of the columns that
+    actually exist, and do the whole swap in one transaction that rolls back
+    as a unit. Idempotent, and safe to re-run after a failure.
     """
     row = conn.execute(
         "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'lesson_progress'"
     ).fetchone()
     if row is None or not row[0]:
         return  # table not created yet; the CREATE above owns the right key
-    sql = " ".join(row[0].split()).lower()
-    if "unique (device_id, child_id, lesson_id)" in sql:
+    if "unique (device_id, child_id, lesson_id)" in " ".join(row[0].split()).lower():
         return
 
-    # SQLite cannot alter a constraint: rebuild, copy, swap.
-    conn.executescript(
-        """
-        CREATE TABLE lesson_progress_new (
-            id             INTEGER PRIMARY KEY AUTOINCREMENT,
-            device_id      TEXT NOT NULL,
-            child_id       INTEGER NOT NULL DEFAULT 0,
-            path_id        TEXT NOT NULL,
-            lesson_id      TEXT NOT NULL,
-            status         TEXT NOT NULL DEFAULT 'not_started',
-            started_at     TEXT,
-            completed_at   TEXT,
-            score          INTEGER,
-            updated_at     TEXT,
-            UNIQUE (device_id, child_id, lesson_id)
-        );
-        """
-    )
-    # Legacy rows carry child_id NULL; SQLite treats NULLs as distinct, which
-    # would let one lesson land twice under the new key. Fold them onto 0, the
-    # "unattributed" id the read path already surfaces for every child.
-    #
-    # The old two-column key guarantees at most one row per (device, lesson),
-    # so nothing can collide coming out of production. A four-column table can
-    # hold rows differing only by path_id, so keep the furthest-along one.
+    target_cols = ("device_id", "child_id", "path_id", "lesson_id", "status",
+                   "started_at", "completed_at", "score", "updated_at")
+    live_cols = {r[1] for r in conn.execute("PRAGMA table_info(lesson_progress)")}
+    copied = [c for c in target_cols if c in live_cols]
+    # Legacy rows carry child_id NULL; SQLite treats NULLs as distinct, so two
+    # unattributed rows for one lesson would slip through the new key. Fold
+    # them onto 0 — the "unattributed" id the read path already surfaces for
+    # every child. A table predating the column at all starts everyone at 0.
+    if "child_id" in copied:
+        picked = ["COALESCE(child_id, 0) AS child_id" if c == "child_id" else c
+                  for c in copied]
+    else:
+        copied = ["child_id", *copied]
+        picked = ["0 AS child_id", *copied[1:]]
+
+    col_list = ", ".join(copied)
     # `MAX()` with bare columns is SQLite's documented idiom for "the row that
-    # won": completed (2) outranks in_progress (1) outranks not_started (0).
-    conn.execute(
-        """
-        INSERT INTO lesson_progress_new
-            (device_id, child_id, path_id, lesson_id, status,
-             started_at, completed_at, score, updated_at)
-        SELECT device_id, child_id, path_id, lesson_id, status,
-               started_at, completed_at, score, updated_at
-          FROM (
-            SELECT device_id,
-                   COALESCE(child_id, 0) AS child_id,
-                   path_id, lesson_id, status, started_at, completed_at,
-                   score, updated_at,
+    # won". The old two-column key means nothing can collide coming out of
+    # production; a four-column table can hold rows differing only by path_id,
+    # so keep the furthest along — completed (2) over in_progress (1) over
+    # not_started (0).
+    copy_sql = f"""
+        INSERT INTO lesson_progress_new ({col_list})
+        SELECT {col_list} FROM (
+            SELECT {", ".join(picked)},
                    MAX(CASE status
                          WHEN 'completed'   THEN 2
                          WHEN 'in_progress' THEN 1
@@ -741,21 +738,51 @@ def _ensure_lesson_progress_child_key(conn: sqlite3.Connection) -> None:
                        END)
               FROM lesson_progress
              GROUP BY device_id, COALESCE(child_id, 0), lesson_id
-          )
-        """
-    )
-    conn.executescript(
-        """
-        DROP TABLE lesson_progress;
-        ALTER TABLE lesson_progress_new RENAME TO lesson_progress;
-        CREATE INDEX IF NOT EXISTS ix_lesson_progress_device
-            ON lesson_progress (device_id);
-        CREATE INDEX IF NOT EXISTS ix_lesson_progress_path_device
-            ON lesson_progress (device_id, path_id);
-        CREATE INDEX IF NOT EXISTS ix_lesson_progress_device_child
-            ON lesson_progress (device_id, child_id, path_id);
-        """
-    )
+        )
+    """
+
+    # `executescript` COMMITs before it runs, which is exactly how the first
+    # attempt left debris behind. Drive the swap with explicit statements in
+    # one transaction instead, so a failure anywhere undoes all of it.
+    previous_isolation = conn.isolation_level
+    conn.isolation_level = None
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        conn.execute("DROP TABLE IF EXISTS lesson_progress_new")
+        conn.execute(
+            """
+            CREATE TABLE lesson_progress_new (
+                id             INTEGER PRIMARY KEY AUTOINCREMENT,
+                device_id      TEXT NOT NULL,
+                child_id       INTEGER NOT NULL DEFAULT 0,
+                path_id        TEXT NOT NULL,
+                lesson_id      TEXT NOT NULL,
+                status         TEXT NOT NULL DEFAULT 'not_started',
+                started_at     TEXT,
+                completed_at   TEXT,
+                score          INTEGER,
+                updated_at     TEXT,
+                UNIQUE (device_id, child_id, lesson_id)
+            )
+            """
+        )
+        conn.execute(copy_sql)
+        conn.execute("DROP TABLE lesson_progress")
+        conn.execute("ALTER TABLE lesson_progress_new RENAME TO lesson_progress")
+        # DROP TABLE takes its indexes with it, so rebuild all three.
+        conn.execute("CREATE INDEX IF NOT EXISTS ix_lesson_progress_device "
+                     "ON lesson_progress (device_id)")
+        conn.execute("CREATE INDEX IF NOT EXISTS ix_lesson_progress_path_device "
+                     "ON lesson_progress (device_id, path_id)")
+        conn.execute("CREATE INDEX IF NOT EXISTS ix_lesson_progress_device_child "
+                     "ON lesson_progress (device_id, child_id, path_id)")
+        conn.execute("COMMIT")
+    except Exception:
+        conn.execute("ROLLBACK")
+        raise
+    finally:
+        conn.isolation_level = previous_isolation
+
 
 
 def _ensure_licence_tables(conn: sqlite3.Connection) -> None:
