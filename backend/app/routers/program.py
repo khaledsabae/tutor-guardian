@@ -585,12 +585,19 @@ def patch_lesson_progress(
         # a lesson. Eight of them on 2026-08-13, right after a migration moved
         # rows onto the correct sibling while clients still sent no child_id.
         #
-        # Matching the real key makes the upsert total: the row is found
-        # whoever it belongs to, and `child_id` below re-points it at the
-        # child the client names.
+        # Matching the real key made the upsert total — the row was always
+        # found — at the cost of the thing it was meant to record. A second
+        # child finishing the same lesson got no row of their own; they took
+        # over their sibling's, and because reads filter `child_id IN (?, 0)`
+        # the first child's completion disappeared. That is «أتمم الدرس ولا
+        # يتم تسجيل التقدم» (#fb_a1325670) for every multi-child family.
+        #
+        # The key is (device_id, child_id, lesson_id) now, so each child owns
+        # their own row: no sibling is invisible here, and none is overwritten.
         existing = conn.execute(
-            "SELECT * FROM lesson_progress WHERE device_id = ? AND lesson_id = ?",
-            (device_id, lesson_id),
+            "SELECT * FROM lesson_progress "
+            "WHERE device_id = ? AND child_id = ? AND lesson_id = ?",
+            (device_id, child_id, lesson_id),
         ).fetchone()
 
         if existing is None:
@@ -625,20 +632,17 @@ def patch_lesson_progress(
             if payload.status == "not_started":
                 started_at = None
                 completed_at = None
-            # Same key as the SELECT, and `child_id` is written rather than
-            # matched on: a client that names its child re-points the row,
-            # while an older client that names none leaves it where it is.
-            # Keying the UPDATE on child_id too meant the statement matched
-            # nothing whenever the row belonged to a sibling — no row changed,
-            # no error raised, and the parent's completion vanished in
-            # silence. That is the same failure the user reported, wearing a
-            # 200 instead of a 500.
+            # Same key as the SELECT. `child_id` is no longer written here:
+            # under the old two-column key it had to be, because one row was
+            # shared by the whole family and each write re-pointed it at
+            # whoever wrote last. That re-pointing IS the bug. Each child now
+            # owns their row, and the row this UPDATE found is already theirs.
             conn.execute(
                 """
                 UPDATE lesson_progress
                    SET path_id = ?, status = ?, started_at = ?, completed_at = ?,
-                       updated_at = ?, child_id = COALESCE(?, child_id)
-                 WHERE device_id = ? AND lesson_id = ?
+                       updated_at = ?
+                 WHERE device_id = ? AND child_id = ? AND lesson_id = ?
                 """,
                 (
                     path_id,
@@ -646,8 +650,8 @@ def patch_lesson_progress(
                     started_at,
                     completed_at,
                     now,
-                    payload.child_id and child_id,
                     device_id,
+                    child_id,
                     lesson_id,
                 ),
             )

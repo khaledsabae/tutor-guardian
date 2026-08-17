@@ -295,7 +295,12 @@ def init_db() -> None:
             completed_at   TEXT,
             score          INTEGER,
             updated_at     TEXT,
-            UNIQUE(device_id, child_id, path_id, lesson_id)
+            -- NOT (device_id, child_id, path_id, lesson_id): path_id in the
+            -- key let one lesson hold two rows, and it never matched what
+            -- production actually had, which was (device_id, lesson_id) —
+            -- one row per device per lesson, so siblings overwrote each
+            -- other. See _ensure_lesson_progress_child_key.
+            UNIQUE(device_id, child_id, lesson_id)
         );
     """
     )
@@ -353,6 +358,7 @@ def init_db() -> None:
     _ensure_child_screen_sessions_table(conn)
     _ensure_family_agreements_tables(conn)
     _ensure_child_missions_table(conn)
+    _ensure_lesson_progress_child_key(conn)
     _ensure_licence_tables(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
@@ -652,6 +658,104 @@ def _ensure_child_missions_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_CHILD_MISSIONS)
+
+
+def _ensure_lesson_progress_child_key(conn: sqlite3.Connection) -> None:
+    """One progress row per (device, child, lesson) — not per (device, lesson).
+
+    Production shipped `UNIQUE (device_id, lesson_id)`: one row per device per
+    lesson, however many children the family has. The handler wrote `child_id`
+    into that single row, so in a two-child family the second child finishing a
+    lesson did not add a row — it re-pointed the first child's. Reads filter
+    `child_id IN (?, 0)` (children.py), so child A's completed lesson vanished
+    from A's progress the moment B completed the same one.
+
+    That is «أتمم الدرس ولا يتم تسجيل التقدم» (#fb_a1325670, v1.0.40+85) for
+    every family with more than one child. The August 2026 fix corrected which
+    child a completion was attributed to; it could not create the second row,
+    because the unique index forbade one. 305 devices have more than one child
+    and 191 of those carry progress rows.
+
+    Two schemas were live at once, which is why this reads the constraint
+    rather than a version number: production had the two-column key above,
+    while `CREATE TABLE` in this file declared a four-column one including
+    `path_id`. Fresh databases (CI, local dev) therefore behaved differently
+    from production on exactly the code path that produced the bug report.
+    `path_id` has no business in the key — a lesson belongs to one path — so
+    the target is three columns.
+
+    Idempotent: a table already carrying the target key is left alone.
+    """
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'lesson_progress'"
+    ).fetchone()
+    if row is None or not row[0]:
+        return  # table not created yet; the CREATE above owns the right key
+    sql = " ".join(row[0].split()).lower()
+    if "unique (device_id, child_id, lesson_id)" in sql:
+        return
+
+    # SQLite cannot alter a constraint: rebuild, copy, swap.
+    conn.executescript(
+        """
+        CREATE TABLE lesson_progress_new (
+            id             INTEGER PRIMARY KEY AUTOINCREMENT,
+            device_id      TEXT NOT NULL,
+            child_id       INTEGER NOT NULL DEFAULT 0,
+            path_id        TEXT NOT NULL,
+            lesson_id      TEXT NOT NULL,
+            status         TEXT NOT NULL DEFAULT 'not_started',
+            started_at     TEXT,
+            completed_at   TEXT,
+            score          INTEGER,
+            updated_at     TEXT,
+            UNIQUE (device_id, child_id, lesson_id)
+        );
+        """
+    )
+    # Legacy rows carry child_id NULL; SQLite treats NULLs as distinct, which
+    # would let one lesson land twice under the new key. Fold them onto 0, the
+    # "unattributed" id the read path already surfaces for every child.
+    #
+    # The old two-column key guarantees at most one row per (device, lesson),
+    # so nothing can collide coming out of production. A four-column table can
+    # hold rows differing only by path_id, so keep the furthest-along one.
+    # `MAX()` with bare columns is SQLite's documented idiom for "the row that
+    # won": completed (2) outranks in_progress (1) outranks not_started (0).
+    conn.execute(
+        """
+        INSERT INTO lesson_progress_new
+            (device_id, child_id, path_id, lesson_id, status,
+             started_at, completed_at, score, updated_at)
+        SELECT device_id, child_id, path_id, lesson_id, status,
+               started_at, completed_at, score, updated_at
+          FROM (
+            SELECT device_id,
+                   COALESCE(child_id, 0) AS child_id,
+                   path_id, lesson_id, status, started_at, completed_at,
+                   score, updated_at,
+                   MAX(CASE status
+                         WHEN 'completed'   THEN 2
+                         WHEN 'in_progress' THEN 1
+                         ELSE 0
+                       END)
+              FROM lesson_progress
+             GROUP BY device_id, COALESCE(child_id, 0), lesson_id
+          )
+        """
+    )
+    conn.executescript(
+        """
+        DROP TABLE lesson_progress;
+        ALTER TABLE lesson_progress_new RENAME TO lesson_progress;
+        CREATE INDEX IF NOT EXISTS ix_lesson_progress_device
+            ON lesson_progress (device_id);
+        CREATE INDEX IF NOT EXISTS ix_lesson_progress_path_device
+            ON lesson_progress (device_id, path_id);
+        CREATE INDEX IF NOT EXISTS ix_lesson_progress_device_child
+            ON lesson_progress (device_id, child_id, path_id);
+        """
+    )
 
 
 def _ensure_licence_tables(conn: sqlite3.Connection) -> None:
