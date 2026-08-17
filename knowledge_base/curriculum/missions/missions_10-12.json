@@ -1,0 +1,166 @@
+{
+  "age_band": "10-12",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "بنك المهام اليومية — كل مهمة تُنفَّذ خارج الشاشة، ووقتها المقدَّر لا يقل عن خمسة أضعاف دقائق البطاقة (البطاقة ثلاث دقائق، فالحد الأدنى خمس عشرة دقيقة).",
+  "missions": [
+    {
+      "id": "mission_10-12_cook_simple",
+      "domain": "development",
+      "title_ar": "طبقي الأول",
+      "instruction_ar": "حضّر طبقًا بسيطًا بإشراف أحد والديك — سلطة أو شطيرة — ونظّف مكانك بعده.",
+      "estimated_minutes": 30,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الاعتماد على النفس",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_budget_walk",
+      "domain": "development",
+      "title_ar": "ميزانية صغيرة",
+      "instruction_ar": "خطّط لشراء ثلاثة أصناف بمبلغ محدَّد: اكتب القائمة، وقارن الأسعار، وتحقّق من الباقي.",
+      "estimated_minutes": 30,
+      "needs_parent": true,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "التخطيط",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_letter_relative",
+      "domain": "development",
+      "title_ar": "رسالة إلى قريب",
+      "instruction_ar": "اكتب رسالة قصيرة لجَدّ أو عمّ أو خالة، وسلّمها أو أرسلها.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "ورق",
+        "قلم"
+      ],
+      "skill": "صلة الرحم",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_room_project",
+      "domain": "development",
+      "title_ar": "مشروع غرفتي",
+      "instruction_ar": "اختر تغييرًا واحدًا في غرفتك ونفّذه من أوله إلى آخره: رتّب الكتب، أو أعد ترتيب المكتب.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإنجاز",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_teach_younger",
+      "domain": "development",
+      "title_ar": "أعلّم أخي",
+      "instruction_ar": "علّم أخًا أصغر أو ابن جيران شيئًا تتقنه — ربط الحذاء، أو مسألة حساب.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "العطاء",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_nature_log",
+      "domain": "development",
+      "title_ar": "دفتر الطبيعة",
+      "instruction_ar": "اخرج ودوّن خمس ملاحظات عمّا رأيت: طقس، طيور، نباتات، ثم ارسم واحدًا منها.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [
+        "دفتر",
+        "قلم"
+      ],
+      "skill": "الملاحظة",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_repair_thing",
+      "domain": "development",
+      "title_ar": "أُصلح لا أرمي",
+      "instruction_ar": "ابحث عن شيء بسيط مكسور في البيت وحاول إصلاحه بإشراف والديك.",
+      "estimated_minutes": 30,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "حلّ المشكلات",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_read_and_tell",
+      "domain": "development",
+      "title_ar": "قرأت فأفدت",
+      "instruction_ar": "اقرأ فصلًا من كتاب ورقي، ثم لخّصه في ثلاث جمل لأحد أهلك.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "كتاب"
+      ],
+      "skill": "الفهم",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_charity_act",
+      "domain": "development",
+      "title_ar": "صدقة بيدي",
+      "instruction_ar": "اجمع ملابس أو ألعابًا لم تعد تستعملها، ورتّبها للتصدّق بها.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإيثار",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_memory_walk",
+      "domain": "development",
+      "title_ar": "خارطة حَيّي",
+      "instruction_ar": "ارسم خارطة بسيطة للطريق من بيتكم إلى أقرب مسجد أو حديقة من ذاكرتك، ثم تحقّق منها.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "ورق",
+        "قلم"
+      ],
+      "skill": "التوجّه المكاني",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_interview_elder",
+      "domain": "development",
+      "title_ar": "حكاية من كبير",
+      "instruction_ar": "اسأل جَدًّا أو جَدّة عن ذكرى من طفولتهم، واستمع دون مقاطعة، ثم اروِها لأهلك.",
+      "estimated_minutes": 25,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإصغاء",
+      "is_published": true
+    },
+    {
+      "id": "mission_10-12_plan_day",
+      "domain": "development",
+      "title_ar": "أخطّط ليومي",
+      "instruction_ar": "اكتب خطة غدك في خمس نقاط، وضع علامة على ما أنجزته في المساء.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "ورق",
+        "قلم"
+      ],
+      "skill": "تنظيم الوقت",
+      "is_published": true
+    }
+  ]
+}

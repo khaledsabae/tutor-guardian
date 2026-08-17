@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../hub/widgets/help_sheet.dart';
 import '../../program/widgets/active_child_chip.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -30,6 +31,16 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           tooltip: l10n.searchTooltip,
           icon: const Icon(Icons.search),
           onPressed: () => Navigator.of(context).push(AppRoutes.search()),
+        ),
+        // Help used to be reachable only from the «المزيد» tab: an unlabelled
+        // icon inside a destination named "more stuff" — two taps and a guess.
+        // The sheet exists to answer «من أين أبدأ؟» and was hidden from
+        // everyone who needed to ask it. One tap from the screen the parent
+        // actually lands on.
+        IconButton(
+          tooltip: l10n.helpTooltip,
+          icon: const Icon(Icons.help_outline),
+          onPressed: () => showHelpSheet(context, Screens.tabToday),
         ),
       ],
     );

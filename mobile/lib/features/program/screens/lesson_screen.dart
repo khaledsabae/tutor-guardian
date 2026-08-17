@@ -915,6 +915,31 @@ class _InteractiveAssetsSection extends ConsumerWidget {
                     color: AppTheme.textMuted,
                   ),
             ),
+            // Asking for English and getting Arabic audio is expected while
+            // English media is still being produced — but silence about it
+            // reads as a defect, and did: «بعض الدروس بالانجليزية رغم اني
+            // نزلت التطبيق بالعربي». The server has always said which
+            // language each medium came back in; nothing displayed it.
+            if (assets != null && assets.servedInAnotherLanguage) ...[
+              const SizedBox(height: 10),
+              Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                decoration: BoxDecoration(
+                  color: AppTheme.warningBg,
+                  borderRadius: BorderRadius.circular(Dt.rButton),
+                ),
+                child: Text(
+                  AppLocalizations.of(context).lessonMediaOtherLanguage,
+                  style: const TextStyle(
+                    fontSize: 12.5,
+                    height: 1.45,
+                    color: AppTheme.warningFg,
+                  ),
+                ),
+              ),
+            ],
             const SizedBox(height: 10),
             ...buttons.map((btn) => Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),

@@ -60,6 +60,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hubInsights => 'رؤى تربوية';
 
   @override
+  String get hubParentDay => 'يوم الطفل ومهامه';
+
+  @override
   String get hubCreateStory => 'اصنع قصة';
 
   @override
@@ -73,6 +76,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get helpWhereGames => 'أين ألعاب طفلي؟';
+
+  @override
+  String get helpWhoAreLessonsFor => 'لمن هذه الدروس — لي أم لطفلي؟';
+
+  @override
+  String get helpWhereToStart => 'من أين أبدأ؟';
 
   @override
   String get helpWhereStories => 'أين قصص ما قبل النوم؟';
@@ -1492,6 +1501,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get lessonInteractiveHint =>
       'استمع، شاهد، والعب — ثم اقرأ الملخص بالأسفل';
+
+  @override
+  String get lessonMediaOtherLanguage =>
+      'ℹ️ نص الدرس بلغتك، وبعض الوسائط (صوت/فيديو) ما زالت بالعربية — نعمل على ترجمتها.';
 
   @override
   String journeyTitle(Object name) {
@@ -3253,32 +3266,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tourTodayTitle => 'اليوم';
 
   @override
-  String get tourTodayBody => 'من هنا يبدأ يومك.';
+  String get tourTodayBody =>
+      'ابدأ من هنا كل يوم: خطوتك التالية، وحال طفلك، ونصيحة قصيرة.';
 
   @override
   String get tourLearnTitle => 'التعلّم';
 
   @override
   String get tourLearnBody =>
-      'دروسك أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.';
+      'دروس تقرؤها أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.';
 
   @override
   String get tourAssistantTitle => 'المساعد';
 
   @override
-  String get tourAssistantBody => 'اسأل في أي وقت، ونحن معك.';
+  String get tourAssistantBody =>
+      'اسأل بكلامك عن موقف حيّرك مع طفلك، وتصلك إجابة مؤصَّلة.';
 
   @override
   String get tourMoreTitle => 'المزيد';
 
   @override
-  String get tourMoreBody => 'كل شيء آخر تجده هنا.';
+  String get tourMoreBody =>
+      'قصص وألعاب وقرآن وإعدادات — ومن هنا زر «مساعدة» لو تُهت.';
 
   @override
   String get tourFocusTitle => 'خطوتك التالية';
 
   @override
-  String get tourFocusBody => 'خطوتك التالية دائمًا هنا.';
+  String get tourFocusBody =>
+      'اضغط هنا وسنفتح لك الدرس المناسب — لا قائمة تختار منها.';
 
   @override
   String get tourReplay => 'الجولة التعريفية';

@@ -1,0 +1,155 @@
+{
+  "age_band": "4-6",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "بنك المهام اليومية — كل مهمة تُنفَّذ خارج الشاشة، ووقتها المقدَّر لا يقل عن خمسة أضعاف دقائق البطاقة (البطاقة ثلاث دقائق، فالحد الأدنى خمس عشرة دقيقة).",
+  "missions": [
+    {
+      "id": "mission_4-6_color_hunt",
+      "domain": "development",
+      "title_ar": "صيّاد الألوان",
+      "instruction_ar": "ابحث في البيت عن ثلاثة أشياء حمراء وثلاثة زرقاء، ثم رتّبها على الطاولة واحكِ لأمك أو أبيك ما وجدت.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "التصنيف",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_tidy_corner",
+      "domain": "development",
+      "title_ar": "ركني مرتَّب",
+      "instruction_ar": "اختر ركنًا واحدًا من غرفتك ورتّبه وحدك: الألعاب في مكانها والكتب في مكانها.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الترتيب",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_water_plant",
+      "domain": "development",
+      "title_ar": "أنا أسقي",
+      "instruction_ar": "اسقِ نبتة في البيت أو في الشرفة، ثم انظر إلى أوراقها وصِفها بثلاث كلمات.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "العناية",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_help_table",
+      "domain": "development",
+      "title_ar": "يد تساعد",
+      "instruction_ar": "ساعد في تجهيز المائدة: ضع الأطباق والملاعق، وعُدّها بصوتٍ مسموع.",
+      "estimated_minutes": 15,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "التعاون",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_draw_family",
+      "domain": "development",
+      "title_ar": "أرسم أسرتي",
+      "instruction_ar": "ارسم أفراد أسرتك على ورقة، ثم أخبر أمك أو أباك من في الرسمة ولماذا رسمته هكذا.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "ورق",
+        "أقلام تلوين"
+      ],
+      "skill": "التعبير",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_sock_pairs",
+      "domain": "development",
+      "title_ar": "توأم الجوارب",
+      "instruction_ar": "رتّب الجوارب النظيفة أزواجًا متطابقة، وعُدّ كم زوجًا صار عندك.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "المطابقة",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_listen_walk",
+      "domain": "development",
+      "title_ar": "مشية الأصوات",
+      "instruction_ar": "امشِ مع أمك أو أبيك خمس عشرة دقيقة، وحاول أن تسمّي خمسة أصوات سمعتها.",
+      "estimated_minutes": 15,
+      "needs_parent": true,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "الإصغاء",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_build_tower",
+      "domain": "development",
+      "title_ar": "برجي العالي",
+      "instruction_ar": "ابنِ برجًا من المكعبات أو العلب الفارغة، وجرّب أن تجعله أعلى مرة بعد مرة.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الصبر",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_kind_word",
+      "domain": "development",
+      "title_ar": "كلمة طيبة",
+      "instruction_ar": "قل كلمة طيبة لثلاثة من أهل بيتك اليوم، ثم أخبر أمك أو أباك كيف كان شعورهم.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الرحمة",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_shapes_hunt",
+      "domain": "development",
+      "title_ar": "أشكال حولي",
+      "instruction_ar": "ابحث عن دائرة ومربع ومثلث في أشياء البيت، وأشِر إليها لأحد أهلك.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الملاحظة",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_fold_clothes",
+      "domain": "development",
+      "title_ar": "أطوي ملابسي",
+      "instruction_ar": "اطوِ ثلاث قطع من ملابسك وضعها في الدرج.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الاستقلال",
+      "is_published": true
+    },
+    {
+      "id": "mission_4-6_story_retell",
+      "domain": "development",
+      "title_ar": "أحكي ما سمعت",
+      "instruction_ar": "اطلب من أمك أو أبيك قصة قصيرة، ثم أعِد حكايتها بكلماتك أنت.",
+      "estimated_minutes": 20,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "التذكّر",
+      "is_published": true
+    }
+  ]
+}

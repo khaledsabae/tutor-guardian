@@ -60,6 +60,7 @@ import '../features/program/screens/flashcards_screen.dart';
 import '../features/program/screens/infographic_screen.dart';
 import '../features/program/screens/lesson_screen.dart';
 import '../features/program/screens/path_detail_screen.dart';
+import '../features/program/screens/paths_screen.dart';
 import '../features/program/screens/podcast_player_screen.dart';
 import '../features/program/screens/quiz_game_screen.dart';
 import '../features/program/screens/quiz_screen.dart';
@@ -196,6 +197,16 @@ abstract final class AppRoutes {
       );
 
   // ── Program / curriculum ────────────────────────────────────────────────
+
+  /// The Learn screen as a pushed route.
+  ///
+  /// It is normally the second nav destination rather than a route. The help
+  /// sheet needs to *answer* «لمن هذه الدروس؟» and «من أين أبدأ؟», and the
+  /// answer is this screen — its first line now reads «هذه الدروس تقرؤها
+  /// أنت». Sending the parent there beats describing it to them.
+  static Route<void> paths() =>
+      _r(Screens.tabLearn, (_) => const PathsScreen());
+
   static Route<void> pathDetail(String pathId, String ageGroup) => _r(
         Screens.pathDetail,
         (_) => PathDetailScreen(pathId: pathId, ageGroup: ageGroup),

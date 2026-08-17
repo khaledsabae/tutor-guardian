@@ -449,7 +449,19 @@ class _SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('🛡️', style: TextStyle(fontSize: 64))
+            // «اللوجو اللي بره مش نفس اللوجو اللي جوة» — #fb_337870fd,
+            // 22 Jun 2026. The launcher/asset mismatch that report named was
+            // fixed the same day (ee770ee), but the boot sequence still ran:
+            // correct crescent on the native splash, then a shield emoji here.
+            // The reporter was describing something real that outlived the fix
+            // they were given.
+            Image.asset(
+              'assets/images/logo.png',
+              width: 96,
+              height: 96,
+              errorBuilder: (_, _, _) =>
+                  const Text('🌙', style: TextStyle(fontSize: 64)),
+            )
                 .animate()
                 .scale(
                   begin: const Offset(.6, .6),

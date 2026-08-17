@@ -200,6 +200,12 @@ abstract class AppLocalizations {
   /// **'رؤى تربوية'**
   String get hubInsights;
 
+  /// No description provided for @hubParentDay.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوم الطفل ومهامه'**
+  String get hubParentDay;
+
   /// No description provided for @hubCreateStory.
   ///
   /// In ar, this message translates to:
@@ -229,6 +235,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أين ألعاب طفلي؟'**
   String get helpWhereGames;
+
+  /// No description provided for @helpWhoAreLessonsFor.
+  ///
+  /// In ar, this message translates to:
+  /// **'لمن هذه الدروس — لي أم لطفلي؟'**
+  String get helpWhoAreLessonsFor;
+
+  /// No description provided for @helpWhereToStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'من أين أبدأ؟'**
+  String get helpWhereToStart;
 
   /// No description provided for @helpWhereStories.
   ///
@@ -2863,6 +2881,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'استمع، شاهد، والعب — ثم اقرأ الملخص بالأسفل'**
   String get lessonInteractiveHint;
+
+  /// No description provided for @lessonMediaOtherLanguage.
+  ///
+  /// In ar, this message translates to:
+  /// **'ℹ️ نص الدرس بلغتك، وبعض الوسائط (صوت/فيديو) ما زالت بالعربية — نعمل على ترجمتها.'**
+  String get lessonMediaOtherLanguage;
 
   /// No description provided for @journeyTitle.
   ///
@@ -5897,7 +5921,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourTodayBody.
   ///
   /// In ar, this message translates to:
-  /// **'من هنا يبدأ يومك.'**
+  /// **'ابدأ من هنا كل يوم: خطوتك التالية، وحال طفلك، ونصيحة قصيرة.'**
   String get tourTodayBody;
 
   /// No description provided for @tourLearnTitle.
@@ -5909,7 +5933,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourLearnBody.
   ///
   /// In ar, this message translates to:
-  /// **'دروسك أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.'**
+  /// **'دروس تقرؤها أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.'**
   String get tourLearnBody;
 
   /// No description provided for @tourAssistantTitle.
@@ -5921,7 +5945,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourAssistantBody.
   ///
   /// In ar, this message translates to:
-  /// **'اسأل في أي وقت، ونحن معك.'**
+  /// **'اسأل بكلامك عن موقف حيّرك مع طفلك، وتصلك إجابة مؤصَّلة.'**
   String get tourAssistantBody;
 
   /// No description provided for @tourMoreTitle.
@@ -5933,7 +5957,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourMoreBody.
   ///
   /// In ar, this message translates to:
-  /// **'كل شيء آخر تجده هنا.'**
+  /// **'قصص وألعاب وقرآن وإعدادات — ومن هنا زر «مساعدة» لو تُهت.'**
   String get tourMoreBody;
 
   /// No description provided for @tourFocusTitle.
@@ -5945,7 +5969,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourFocusBody.
   ///
   /// In ar, this message translates to:
-  /// **'خطوتك التالية دائمًا هنا.'**
+  /// **'اضغط هنا وسنفتح لك الدرس المناسب — لا قائمة تختار منها.'**
   String get tourFocusBody;
 
   /// No description provided for @tourReplay.

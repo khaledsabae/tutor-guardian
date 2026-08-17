@@ -1,0 +1,159 @@
+{
+  "age_band": "16-18",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "بنك المهام اليومية — كل مهمة تُنفَّذ خارج الشاشة، ووقتها المقدَّر لا يقل عن خمسة أضعاف دقائق البطاقة (البطاقة ثلاث دقائق، فالحد الأدنى خمس عشرة دقيقة).",
+  "missions": [
+    {
+      "id": "mission_16-18_teach_skill",
+      "domain": "development",
+      "title_ar": "أُتقن فأُعلّم",
+      "instruction_ar": "اختر مهارة تتقنها وعلّمها لشخص من أسرتك في جلسة واحدة مرتَّبة.",
+      "estimated_minutes": 40,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "نقل المعرفة",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_community_help",
+      "domain": "development",
+      "title_ar": "يد في الحيّ",
+      "instruction_ar": "شارك في عمل نافع خارج البيت: مساعدة جار، أو تنظيف مساحة مشتركة.",
+      "estimated_minutes": 45,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "المسؤولية الاجتماعية",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_deep_read",
+      "domain": "development",
+      "title_ar": "قراءة عميقة",
+      "instruction_ar": "اقرأ فصلًا من كتاب جادّ، واكتب صفحة عمّا وافقته فيه وما خالفته، ولماذا.",
+      "estimated_minutes": 45,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "كتاب",
+        "دفتر"
+      ],
+      "skill": "التفكير النقدي",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_budget_month",
+      "domain": "development",
+      "title_ar": "ميزانية شهر",
+      "instruction_ar": "ضع ميزانية شهرية لمصروفك: دخل، ومصروفات، وادّخار، وناقشها مع أحد والديك.",
+      "estimated_minutes": 40,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإدارة المالية",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_cv_draft",
+      "domain": "development",
+      "title_ar": "أوّل سيرة ذاتية",
+      "instruction_ar": "اكتب مسوّدة سيرتك الذاتية: تعليمك، ومهاراتك، وما تجيده فعلًا.",
+      "estimated_minutes": 40,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "التخطيط للمستقبل",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_family_project",
+      "domain": "development",
+      "title_ar": "مشروع مع الأسرة",
+      "instruction_ar": "اقترح مشروعًا صغيرًا للأسرة ونفّذه: ترتيب مخزن، أو تنظيم مكتبة البيت.",
+      "estimated_minutes": 45,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "المبادرة",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_mentor_younger",
+      "domain": "development",
+      "title_ar": "أخٌ يُرشد",
+      "instruction_ar": "اجلس مع أخ أصغر جلسة مذاكرة أو تخطيط، واسأله أكثر مما تُملي عليه.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإرشاد",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_reflect_write",
+      "domain": "development",
+      "title_ar": "محاسبة النفس",
+      "instruction_ar": "اكتب صفحة عن أسبوعك: ما الذي رضيتَ عنه، وما الذي تودّ تغييره، وخطوة واحدة عملية.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "دفتر"
+      ],
+      "skill": "المحاسبة",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_skill_hour",
+      "domain": "development",
+      "title_ar": "ساعة إتقان",
+      "instruction_ar": "خصّص ساعة متصلة بلا هاتف لمهارة تتعلّمها، ودوّن ما أنجزته فيها.",
+      "estimated_minutes": 60,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "التركيز",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_visit_relative",
+      "domain": "development",
+      "title_ar": "زيارة واصلة",
+      "instruction_ar": "زُر قريبًا لم تره منذ مدة، واسأله عن حاله واستمع طويلًا.",
+      "estimated_minutes": 45,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "صلة الرحم",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_debate_prep",
+      "domain": "development",
+      "title_ar": "رأيان لا رأي",
+      "instruction_ar": "اختر قضية، واكتب أقوى حجّة لرأيك وأقوى حجّة ضدّه، ثم وازِن بينهما.",
+      "estimated_minutes": 35,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "دفتر"
+      ],
+      "skill": "الإنصاف",
+      "is_published": true
+    },
+    {
+      "id": "mission_16-18_fix_home",
+      "domain": "development",
+      "title_ar": "مهارة بيتية",
+      "instruction_ar": "تعلّم مهارة بيتية عملية ونفّذها: تغيير مصباح، أو إصلاح صنبور مُسرِّب، بإشراف والديك.",
+      "estimated_minutes": 40,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الكفاءة العملية",
+      "is_published": true
+    }
+  ]
+}

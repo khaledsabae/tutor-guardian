@@ -84,6 +84,18 @@ final List<HubGroup> kHubGroups = [
         label: (l10n, _) => l10n.hubInsights,
         route: AppRoutes.parentingInsights,
       ),
+      // The child surface shipped complete — screens, routes, tests, an
+      // evening digest — and production has assigned nine missions in total.
+      // A parent could reach it only from the routine screen, two taps and a
+      // scroll deep, or from a push notification; `ParentDayScreen` surfaced
+      // on the home screen only once the child had already claimed something.
+      // A feature nobody can find measures as a feature nobody wants.
+      HubItem(
+        id: 'parent_day',
+        emoji: '🧭',
+        label: (l10n, _) => l10n.hubParentDay,
+        route: AppRoutes.parentDay,
+      ),
     ],
   ),
   // Second, not fourth. Games are the smallest stock in the app and the most

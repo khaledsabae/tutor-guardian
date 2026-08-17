@@ -31,6 +31,13 @@ class _Intent {
 }
 
 final _intents = <_Intent>[
+  // First, because these are the questions people actually asked. The eight
+  // below answer "where is X" for someone who already knows what X is; the
+  // 17 Aug 2026 complaint — «من أين أبدأ ثم الترتيب» and «سمعت المسارات أظن
+  // المقصود بها المربي ليس المتربي» — sits one layer under that, and this
+  // sheet could not answer it at all.
+  _Intent('who_for', '📖', (l) => l.helpWhoAreLessonsFor, AppRoutes.paths),
+  _Intent('where_start', '🧭', (l) => l.helpWhereToStart, AppRoutes.paths),
   _Intent('games', '🎮', (l) => l.helpWhereGames, AppRoutes.games),
   _Intent('stories', '🌙', (l) => l.helpWhereStories,
       AppRoutes.storyBookshelf),

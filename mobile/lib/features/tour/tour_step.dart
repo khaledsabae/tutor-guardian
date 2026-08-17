@@ -19,7 +19,14 @@ import '../../l10n/app_localizations.dart';
 /// re-introducing. Stored as an `int` (not a bool) so a future restructure can
 /// ship a short "what moved" tour to people who already saw version 1 —
 /// exactly how `lastSeenVersion` / `UpdateSplashScreen` work in `main.dart`.
-const kTourVersion = 1;
+///
+/// Bumped to 2 on 2026-08-17. Version 1's five captions were locative
+/// tautologies — «خطوتك التالية دائمًا هنا» under a spotlight already pointing
+/// at the next step. They named the furniture and never said what the house
+/// was: who the lessons are for, or what to do in the first ten minutes. The
+/// people who already saw version 1 are exactly the ones who wrote «مش عارفين
+/// نتعامل مع البرنامج», so they get the rewrite rather than only new installs.
+const kTourVersion = 2;
 
 /// Widget tests build the full app and tap the nav bar; a full-screen veil
 /// would swallow every one of those taps. Same guard as the locale default in

@@ -60,6 +60,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hubInsights => 'Parenting insights';
 
   @override
+  String get hubParentDay => 'Child’s day & missions';
+
+  @override
   String get hubCreateStory => 'Create a story';
 
   @override
@@ -73,6 +76,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpWhereGames => 'Where are my child’s games?';
+
+  @override
+  String get helpWhoAreLessonsFor =>
+      'Who are these lessons for — me or my child?';
+
+  @override
+  String get helpWhereToStart => 'Where do I start?';
 
   @override
   String get helpWhereStories => 'Where are the bedtime stories?';
@@ -1514,6 +1524,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get lessonInteractiveHint =>
       'Listen, watch, and play — then read the summary below';
+
+  @override
+  String get lessonMediaOtherLanguage =>
+      'ℹ️ The lesson text is in your language; some media (audio/video) is still in Arabic — we are working on it.';
 
   @override
   String journeyTitle(Object name) {
@@ -3290,32 +3304,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tourTodayTitle => 'Today';
 
   @override
-  String get tourTodayBody => 'Your day starts here.';
+  String get tourTodayBody =>
+      'Start here each day: your next step, your child’s day, and one short tip.';
 
   @override
   String get tourLearnTitle => 'Learn';
 
   @override
   String get tourLearnBody =>
-      'Your own lessons as a parent — grouped into paths by your child’s age.';
+      'Lessons for you to read as a parent — grouped into paths by your child’s age.';
 
   @override
   String get tourAssistantTitle => 'Assistant';
 
   @override
-  String get tourAssistantBody => 'Ask anything, anytime — we\'re with you.';
+  String get tourAssistantBody =>
+      'Ask in your own words about a situation with your child, and get a grounded answer.';
 
   @override
   String get tourMoreTitle => 'More';
 
   @override
-  String get tourMoreBody => 'Everything else is right here.';
+  String get tourMoreBody =>
+      'Stories, games, Qur’an and settings — and the Help button if you get lost.';
 
   @override
   String get tourFocusTitle => 'Your next step';
 
   @override
-  String get tourFocusBody => 'Your next step is always here.';
+  String get tourFocusBody =>
+      'Tap here and we open the right lesson for you — not a list to pick from.';
 
   @override
   String get tourReplay => 'Guided tour';
