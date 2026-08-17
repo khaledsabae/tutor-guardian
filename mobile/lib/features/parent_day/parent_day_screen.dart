@@ -200,7 +200,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
           const Divider(height: 32),
 
           // What the child actually did, in order. Rule 6: the child is told
-          // «بابا بيشوف» — this is the screen that makes that true. It is a
+          // «بابا يرى» — this is the screen that makes that true. It is a
           // list of surfaces and minutes, not of content: the point is that a
           // parent can see the shape of the time, not read over a shoulder.
           const Text('سجل اليوم',

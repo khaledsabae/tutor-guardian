@@ -19,7 +19,7 @@
 /// or a hand brushing the glass would end a story. Two seconds is deliberate
 /// and a five-year-old can still do it.
 ///
-/// **One faint mark: «بابا بيشوف».** Rule 6 of the constitution — the child
+/// **One faint mark: «بابا يرى».** Rule 6 of the constitution — the child
 /// knows their parent sees this, and is told so rather than surveilled.
 library;
 
@@ -125,7 +125,7 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
       // shown a red error. That reasoning is right and the result was wrong:
       // a missing file, an unreachable reciter and a working player with the
       // volume down all produced exactly the same screen. A black rectangle
-      // with «بابا بيشوف» at the bottom and no sound, indefinitely, with no
+      // with «بابا يرى» at the bottom and no sound, indefinitely, with no
       // way to tell whether it was broken.
       //
       // A surface that cannot play anything is not a listening surface. Close
