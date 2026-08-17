@@ -319,13 +319,19 @@ class _Header extends ConsumerWidget {
                         // The age band belongs to the child; the lessons below
                         // it are addressed to the parent. Say so on the badge
                         // rather than leaving the reader to infer it.
-                        Flexible(
-                          child: _Badge(
-                            text: AppLocalizations.of(context).pathAudienceMeta(
-                              path.ageLabel(AppLocalizations.of(context)),
-                              path.domainLabel(AppLocalizations.of(context)),
-                            ),
-                          ),
+                        //
+                        // Age and domain stay two badges here. Combining them,
+                        // as the list card does, overflowed this header into
+                        // three wrapped lines on a real screen — caught on an
+                        // emulator, invisible to every test.
+                        _Badge(
+                          text: AppLocalizations.of(context)
+                              .pathAudienceAge(path.ageLabel(
+                                  AppLocalizations.of(context))),
+                        ),
+                        const SizedBox(width: 8),
+                        _Badge(
+                          text: path.domainLabel(AppLocalizations.of(context)),
                         ),
                         const Spacer(),
                         if (childId != null)

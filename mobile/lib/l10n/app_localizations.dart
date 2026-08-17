@@ -3779,7 +3779,7 @@ abstract class AppLocalizations {
   /// No description provided for @pathsTitle.
   ///
   /// In ar, this message translates to:
-  /// **'مسارات التعلّم 🛤️'**
+  /// **'التعلّم 🛤️'**
   String get pathsTitle;
 
   /// No description provided for @pathsReaderBanner.
@@ -3793,6 +3793,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'عن طفلك في {age} · {domain}'**
   String pathAudienceMeta(Object age, Object domain);
+
+  /// No description provided for @pathAudienceAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'عن طفلك في {age}'**
+  String pathAudienceAge(Object age);
 
   /// No description provided for @pathsFilterAll.
   ///
@@ -5335,6 +5341,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'منطقة النمو القريبة'**
   String get pathsFrameworkZpd;
+
+  /// No description provided for @pathsFrameworkAqeedahParentLed.
+  ///
+  /// In ar, this message translates to:
+  /// **'العقيدة بقيادة الوالد'**
+  String get pathsFrameworkAqeedahParentLed;
 
   /// No description provided for @lessonNumberBadge.
   ///

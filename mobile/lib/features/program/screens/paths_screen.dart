@@ -425,6 +425,10 @@ class _PathCard extends StatelessWidget {
         return l10n.pathsFrameworkAttachment;
       case 'zpd_scaffolded':
         return l10n.pathsFrameworkZpd;
+      case 'aqeedah_parent_led':
+        // Present in the content banks and absent from this switch, so the
+        // pill rendered the raw wire value «aqeedah_parent_led» to parents.
+        return l10n.pathsFrameworkAqeedahParentLed;
       default:
         return wire;
     }

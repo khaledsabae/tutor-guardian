@@ -134,10 +134,12 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // AppBar title now carries the word the user tapped in the nav bar
-      // («التعلّم»); it used to read «مساراتي», so the word you press and the
-      // word you land on were different.
-      expect(find.textContaining('مسارات التعلّم'), findsWidgets);
+      // AppBar title is the word the user tapped in the nav bar («التعلّم»);
+      // it used to read «مساراتي», so the word you press and the word you land
+      // on were different. It also has to FIT: «مسارات التعلّم 🛤️» rendered as
+      // «مسارات الت...» next to the child chip and three action icons on a
+      // 1080px screen. Caught on an emulator; no test can see an ellipsis.
+      expect(find.textContaining('التعلّم'), findsWidgets);
       // The reader is named before any card is read: the age band on a card is
       // the child's, the prose behind it is addressed to the parent.
       expect(find.textContaining('هذه الدروس تقرؤها أنت'), findsOneWidget);

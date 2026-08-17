@@ -2025,7 +2025,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get pathsTitle => 'مسارات التعلّم 🛤️';
+  String get pathsTitle => 'التعلّم 🛤️';
 
   @override
   String get pathsReaderBanner =>
@@ -2034,6 +2034,11 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String pathAudienceMeta(Object age, Object domain) {
     return 'عن طفلك في $age · $domain';
+  }
+
+  @override
+  String pathAudienceAge(Object age) {
+    return 'عن طفلك في $age';
   }
 
   @override
@@ -2916,6 +2921,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pathsFrameworkZpd => 'منطقة النمو القريبة';
+
+  @override
+  String get pathsFrameworkAqeedahParentLed => 'العقيدة بقيادة الوالد';
 
   @override
   String lessonNumberBadge(Object order) {
