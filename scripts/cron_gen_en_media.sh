@@ -1,36 +1,41 @@
 #!/usr/bin/env bash
-# Daily English media generation — video first, then audio with what is left.
+# Daily English media generation — harvest first, then each medium on its own
+# quota.
 #
 #   scripts/cron_gen_en_media.sh
 #
 # Why one driver and not two agents
 # ---------------------------------
-# 🚨 This comment used to state as measured fact that the quota is ~24/day and
-# shared across audio and video. It was neither. It was inferred from one
-# afternoon (19 video + 5 audio, then RateLimit) and then written down without
-# the inference, so every later decision treated it as a ceiling.
+# 🚨 The quota is PER MEDIUM, not shared. Measured 2026-08-17, one run:
 #
-# 2026-08-15 disproved it: 60 generations were accepted in a single day —
-# 20 video, and 20 audio twice, in separate runs. Whatever meters this, it is
-# not a 24/day pool.
+#     audio        20 accepted, then `rate-limited` on the 21st
+#     infographics 21 accepted, then `Authentication expired` on the 22nd
 #
-# What the numbers actually suggest is a per-RUN ceiling near 20, not a daily
-# one: audio stopped at exactly 20 in both of its runs, and video was accepted
-# for exactly 20 in its own. That is a hypothesis, not a measurement — it is
-# settled by two consecutive audio-only runs on one day, which is why the agent
-# was disabled for 2026-08-16 rather than left to blur the result again.
+# The infographic step ran AFTER audio had exhausted its ceiling completely. If
+# there were one pool it would have returned zero. 41 generations in a single
+# run, and this file previously asserted a shared ~24/day.
+#
+# That claim was inferred from one afternoon (19 video + 5 audio, then a
+# refusal) and written down without the inference, so every later decision
+# treated it as measured. It cost real scheduling: infographics were queued
+# behind audio for days on the belief they competed for the same budget.
+#
+# Practical consequence: audio and infographics both get ~20/day, so they
+# progress in parallel rather than in sequence — roughly halving the remaining
+# calendar.
+#
+# What is still NOT established is whether each medium's ~20 is per-run or
+# per-day. The 08-16 attempt at that failed: the second run ran on the session
+# the first run's ceiling had killed, so it measured nothing. It needs two runs
+# of one medium with a fresh login between them.
 #
 # So the reason for one driver is not a shared pool. It is that two agents on
 # the same Google account rotate each other's cookies out (see below), and one
 # driver makes the order deliberate rather than a race.
 #
-# Video first because it is nearly done: 20 paths remain against 172 lessons,
-# so video clears in about a day and audio then gets the whole budget every
-# day after. Finishing one medium beats half-finishing both.
-#
-# Each generator stops itself on the first RateLimit — that is the design, not
-# a fault. If video hits it, audio is skipped rather than run to burn a second
-# refusal.
+# Each generator stops itself on the first refusal — that is the design, not a
+# fault. Every step re-authenticates first, because the previous step's ceiling
+# kills the session.
 set -u
 umask 022
 REPO="/home/khalednew/projects/tutor-guardian"
@@ -94,9 +99,16 @@ say "===== English media run ====="
 # same lesson id appears under both wordings in the 08-16 logs.
 #
 # So re-authenticating before each step is not hygiene against drift; it is
-# recovery from a kill that the previous step causes. Separate profiles still
-# prevent the cookie rotation that killed the session three times on 08-14,
-# but they were never going to prevent this: one account, one ceiling.
+# recovery from a kill that the previous step causes — and it is what makes the
+# per-medium quotas reachable at all. On 2026-08-17 the infographic step took
+# its full ~20 immediately after audio had exhausted audio's, because the
+# session was rebuilt in between. Without that, a medium with quota to spare
+# spends the whole run talking to a corpse, which is exactly how 124 calls
+# failed on 08-15 and were misread as a ceiling.
+#
+# Separate profiles still prevent the cookie rotation that killed the session
+# three times on 08-14, but they do not help here: the profiles share one
+# Google account, so a refusal on either kills both.
 ensure_session() {
     local p="$1"
     timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" login --browser-cookies chrome \
@@ -115,6 +127,20 @@ if ! ensure_session tg-video || ! ensure_session tg-audio; then
     exit 1
 fi
 
+# 🚨 Defined HERE, before the first step that redirects into it.
+#
+# It used to be created just above the video step, which was fine while video
+# was first. Inserting the harvest ahead of it left `> "$RUN_OUT"` pointing at
+# an unset variable, and this script is `set -u` — so bash exited on that line,
+# silently, before a single generator ran. Two runs died exactly there
+# (2026-08-17 06:30 and 10:01): four log lines, three auth checks, nothing
+# else, and PCC recorded "failed" with no reason because the run never reached
+# the code that writes one.
+#
+# `set -u` did its job; the ordering was mine.
+RUN_OUT=$(mktemp)
+trap 'rm -f "$RUN_OUT"' EXIT
+
 # ── Harvest first — before anything can spend, or die ──
 #
 # 🚨 This runs FIRST, always, and it is not an optimisation.
@@ -132,8 +158,13 @@ fi
 ensure_session tg-audio || say "WARN: tg-audio unusable before harvest"
 timeout 1800 "$PY" scripts/gen_podcasts_cron.py --lang en --harvest-only \
     > "$RUN_OUT" 2>&1
+# Captured immediately. `$?` after the `cat` below reports the *cat*, which
+# succeeds whatever the harvest did — the same class of always-true signal
+# that made `git push … | tail -3; echo $?` report success on two failed
+# pushes (see ~/projects/CLAUDE.md rule 9).
+HARVEST_EXIT=$?
 cat "$RUN_OUT" >> "$LOG"
-say "harvest exit $? · $(grep -c '✓ downloaded' "$RUN_OUT") downloaded, \
+say "harvest exit $HARVEST_EXIT · $(grep -c '✓ downloaded' "$RUN_OUT") downloaded, \
 $(grep -oE '[0-9]+ still in flight' "$RUN_OUT" | head -1)"
 
 # ── Video ──
@@ -143,8 +174,6 @@ $(grep -oE '[0-9]+ still in flight' "$RUN_OUT" | head -1)"
 # every day after, and the stall guard below permanently excused by a refusal
 # that happened weeks ago. Exactly the class of always-true signal this whole
 # pipeline kept tripping over.
-RUN_OUT=$(mktemp)
-trap 'rm -f "$RUN_OUT"' EXIT
 timeout 2700 "$PY" scripts/gen_path_videos_cron.py --lang en > "$RUN_OUT" 2>&1
 VID_EXIT=$?
 cat "$RUN_OUT" >> "$LOG"
