@@ -43,7 +43,7 @@ class CoachTipCard extends ConsumerWidget {
             // not a blank chat. ChatScreen picks this up and auto-sends it.
             ref.read(pendingChatQuestionProvider.notifier).state =
                 'بخصوص نصيحة اليوم: «${tip.text}»\n\n'
-                'ازاي أقدر أطبّقها مع ${profile.name} بشكل عملي؟';
+                'كيف أطبّقها مع ${profile.name} بشكل عملي؟';
             onAsk?.call();
           },
           // Render the tip as a reverent, branded 1080×1080 card and open the

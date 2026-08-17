@@ -94,7 +94,7 @@ void main() async {
         child: Padding(
           padding: EdgeInsets.all(24),
           child: Text(
-            'تعذّر عرض الجزء ده. جرّب تاني، ولو اتكرر ابعتلنا ملاحظة.',
+            'تعذّر عرض هذا الجزء. حاول مرة أخرى، وإن تكرّر أرسل لنا ملاحظة.',
             textAlign: TextAlign.center,
           ),
         ),

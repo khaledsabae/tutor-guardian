@@ -62,12 +62,12 @@ class _InviteScreenState extends State<InviteScreen> {
       final ok = await ShareService.shareMomentCard(
         fileTag: 'invite_${info.code}',
         referralCode: info.code,
-        message: 'جرّب «المربّي» معايا 🤍 — تطبيق تربية إسلامي ذكي، '
+        message: 'جرّب «المربّي» معي 🤍 — تطبيق تربية إسلامي ذكي، '
             'مجاني تمامًا بلا إعلانات. دلالة على الخير صدقة 🌿',
         card: const ShareableMomentCard(
           emoji: '🤍',
           eyebrow: 'دعوة لوجه الله',
-          headline: 'جرّب «المربّي» معايا',
+          headline: 'جرّب «المربّي» معي',
           body: 'تطبيق تربية إسلامي ذكي يجاوبك بثقة — مجاني بلا إعلانات.\n'
               '«الدالُّ على الخير كفاعله»',
           icon: Icons.favorite_outline,
@@ -76,7 +76,7 @@ class _InviteScreenState extends State<InviteScreen> {
       if (!ok && mounted) {
         // Fallback: plain text share if image capture/share sheet fails.
         await ShareService.shareWhatsApp(
-          'جرّب «المربّي» معايا 🤍 — تطبيق تربية إسلامي ذكي، '
+          'جرّب «المربّي» معي 🤍 — تطبيق تربية إسلامي ذكي، '
           'مجاني تمامًا بلا إعلانات. دلالة على الخير صدقة 🌿',
           referralCode: info.code,
         );

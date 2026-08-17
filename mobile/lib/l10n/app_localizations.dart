@@ -1259,7 +1259,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatQ_eating.
   ///
   /// In ar, this message translates to:
-  /// **'طفلي يرفض الأكل — أعمل إيه؟'**
+  /// **'طفلي يرفض الطعام — ماذا أفعل؟'**
   String get chatQ_eating;
 
   /// No description provided for @chatQ_speech.
@@ -1271,7 +1271,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatQ_pray5.
   ///
   /// In ar, this message translates to:
-  /// **'ابني 5 سنين بيرفض الصلاة، أعمل إيه؟'**
+  /// **'ابني في الخامسة يرفض الصلاة، ماذا أفعل؟'**
   String get chatQ_pray5;
 
   /// No description provided for @chatQ_tantrums.
@@ -1325,7 +1325,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatQ_teenDefiant.
   ///
   /// In ar, this message translates to:
-  /// **'ابني المراهق يعاند ولا يسمع الكلام'**
+  /// **'ابني المراهق يعاند ولا يصغي إلينا'**
   String get chatQ_teenDefiant;
 
   /// No description provided for @chatQ_socialMedia.
@@ -2051,7 +2051,7 @@ abstract class AppLocalizations {
   /// No description provided for @routineDiapers.
   ///
   /// In ar, this message translates to:
-  /// **'حاضات'**
+  /// **'حفاظات'**
   String get routineDiapers;
 
   /// No description provided for @routineNoEvents.
@@ -3287,7 +3287,7 @@ abstract class AppLocalizations {
   /// No description provided for @covenantSuccessMsg.
   ///
   /// In ar, this message translates to:
-  /// **'لقد قمت بطلب: \"{title}\" مقابل {cost} عملة. أخبر والديك ليقدماها لك بالواقع!'**
+  /// **'لقد قمت بطلب: \"{title}\" مقابل {cost} عملة. أخبر والديك ليقدّماها لك في الواقع!'**
   String covenantSuccessMsg(Object cost, Object title);
 
   /// No description provided for @covenantDelivered.
@@ -3299,19 +3299,19 @@ abstract class AppLocalizations {
   /// No description provided for @covenantOverdueTitle.
   ///
   /// In ar, this message translates to:
-  /// **'مكافأة مستنية التسليم'**
+  /// **'مكافأة تنتظر التسليم'**
   String get covenantOverdueTitle;
 
   /// No description provided for @covenantOverdueBody.
   ///
   /// In ar, this message translates to:
-  /// **'فيه {count} مكافأة اتصرفت من أكتر من أسبوع ولسه ماوصلتش. الوعد اللي ما يتنفّذش بيعلّم أكتر من الوعد اللي ما يتقالش.'**
+  /// **'هناك {count} مكافأة استُبدلت منذ أكثر من أسبوع ولم تصل بعد. الوعد الذي لا يُنفَّذ يُعلِّم أكثر من الوعد الذي لا يُقال.'**
   String covenantOverdueBody(int count);
 
   /// No description provided for @covenantParentWelcome.
   ///
   /// In ar, this message translates to:
-  /// **'بوابة الأهل: أضف مكافآت حقيقية يلتزم بها الأهل بالواقع (مثل رحلات أو هدايا)، وتابع طلبات طفلك لتسليمها.'**
+  /// **'بوابة الأهل: أضف مكافآت حقيقية يلتزم بها الأهل في الواقع (مثل رحلات أو هدايا)، وتابع طلبات طفلك لتسليمها.'**
   String get covenantParentWelcome;
 
   /// No description provided for @covenantAddNew.
@@ -3323,7 +3323,7 @@ abstract class AppLocalizations {
   /// No description provided for @covenantPending.
   ///
   /// In ar, this message translates to:
-  /// **'طلبات استبدال بانتظار تسليمها بالواقع ⏳'**
+  /// **'طلبات استبدال تنتظر تسليمها في الواقع ⏳'**
   String get covenantPending;
 
   /// No description provided for @covenantPendingEmpty.
@@ -3383,7 +3383,7 @@ abstract class AppLocalizations {
   /// No description provided for @covenantAddNameLabel.
   ///
   /// In ar, this message translates to:
-  /// **'اسم المكافأة بالواقع (مثال: نزهة عائلية 🍦)'**
+  /// **'اسم المكافأة في الواقع (مثال: نزهة عائلية 🍦)'**
   String get covenantAddNameLabel;
 
   /// No description provided for @covenantAddCostLabel.
@@ -4067,7 +4067,7 @@ abstract class AppLocalizations {
   /// No description provided for @updateSplashVersion.
   ///
   /// In ar, this message translates to:
-  /// **'إصدار {version} — إيه الجديد؟'**
+  /// **'إصدار {version} — ما الجديد؟'**
   String updateSplashVersion(Object version);
 
   /// No description provided for @updateSplashStart.
@@ -4085,13 +4085,13 @@ abstract class AppLocalizations {
   /// No description provided for @updateSplashFeature1.
   ///
   /// In ar, this message translates to:
-  /// **'إجابتك ما بقتش تضيع'**
+  /// **'إجابتك لم تعد تضيع'**
   String get updateSplashFeature1;
 
   /// No description provided for @updateSplashFeature1Desc.
   ///
   /// In ar, this message translates to:
-  /// **'لو قفلت الشاشة أو انقطع النت وسط الرد، اللي وصلك بيتحفظ في المحادثة بدل ما يروح ويسيب سؤالك بلا إجابة.'**
+  /// **'إذا أغلقت الشاشة أو انقطع الاتصال أثناء الرد، يُحفظ ما وصلك في المحادثة بدل أن يضيع ويترك سؤالك بلا إجابة.'**
   String get updateSplashFeature1Desc;
 
   /// No description provided for @updateSplashFeature2.
@@ -4103,31 +4103,31 @@ abstract class AppLocalizations {
   /// No description provided for @updateSplashFeature2Desc.
   ///
   /// In ar, this message translates to:
-  /// **'بدّلنا الأسئلة الجاهزة بناءً على اللي بيسأل عنه الآباء فعلًا: الخوف، وغيرة الإخوة، والتغيّرات الجسدية.'**
+  /// **'بدّلنا الأسئلة الجاهزة بناءً على ما يسأل عنه الآباء فعلًا: الخوف، وغيرة الإخوة، والتغيّرات الجسدية.'**
   String get updateSplashFeature2Desc;
 
   /// No description provided for @updateSplashFeature3.
   ///
   /// In ar, this message translates to:
-  /// **'الردود بقت أسرع'**
+  /// **'صارت الردود أسرع'**
   String get updateSplashFeature3;
 
   /// No description provided for @updateSplashFeature3Desc.
   ///
   /// In ar, this message translates to:
-  /// **'كان البحث في قاعدة المعرفة بيتكرر مرتين في كل سؤال بلا داعٍ — بقى مرة واحدة.'**
+  /// **'كان البحث في قاعدة المعرفة يتكرر مرتين في كل سؤال بلا داعٍ — صار مرة واحدة.'**
   String get updateSplashFeature3Desc;
 
   /// No description provided for @updateSplashFeature4.
   ///
   /// In ar, this message translates to:
-  /// **'المحادثة بتفضل مترابطة'**
+  /// **'المحادثة تبقى مترابطة'**
   String get updateSplashFeature4;
 
   /// No description provided for @updateSplashFeature4Desc.
   ///
   /// In ar, this message translates to:
-  /// **'لو رد فشل، مابقاش يدخل في سياق سؤالك اللي بعده ويشوّش الإجابة.'**
+  /// **'إذا فشل ردّ، لم يعد يدخل في سياق سؤالك التالي ويشوّش الإجابة.'**
   String get updateSplashFeature4Desc;
 
   /// No description provided for @quranMemTitle.
@@ -4601,13 +4601,13 @@ abstract class AppLocalizations {
   /// No description provided for @childModeBudgetSpent.
   ///
   /// In ar, this message translates to:
-  /// **'خلصت مدة النهارده. نكمل بكرة إن شاء الله 🌙'**
+  /// **'انتهت مدة اليوم. نكمل غدًا إن شاء الله 🌙'**
   String get childModeBudgetSpent;
 
   /// No description provided for @childModeOffline.
   ///
   /// In ar, this message translates to:
-  /// **'الاتصال اتقطع، فقفلنا الجلسة. نرجع لما النت يرجع 🌙'**
+  /// **'انقطع الاتصال، فأغلقنا الجلسة. نعود حين يعود الاتصال 🌙'**
   String get childModeOffline;
 
   /// No description provided for @childModeEnterFailed.
@@ -5183,7 +5183,7 @@ abstract class AppLocalizations {
   /// No description provided for @eduGameTryAgain.
   ///
   /// In ar, this message translates to:
-  /// **'حاول تاني! كل محاولة بتعلّمك أكتر.'**
+  /// **'حاول مرة أخرى! كل محاولة تعلّمك أكثر.'**
   String get eduGameTryAgain;
 
   /// No description provided for @eduGameNextLevel.
@@ -5339,7 +5339,7 @@ abstract class AppLocalizations {
   /// No description provided for @quizShareMessage.
   ///
   /// In ar, this message translates to:
-  /// **'حصلت على {score} من {total} نقطة في اختبار «المربّي» 🤍\n{praise} — جرّب أنت كمان:'**
+  /// **'حصلت على {score} من {total} نقطة في اختبار «المربّي» 🤍\n{praise} — جرّب أنت أيضًا:'**
   String quizShareMessage(Object praise, Object score, Object total);
 
   /// No description provided for @quizScorePoints.
@@ -5579,7 +5579,7 @@ abstract class AppLocalizations {
   /// No description provided for @coachAskAboutTip.
   ///
   /// In ar, this message translates to:
-  /// **'اسأل المربّي عن ده'**
+  /// **'اسأل المربّي عن هذه'**
   String get coachAskAboutTip;
 
   /// No description provided for @dailyTipShareError.
@@ -5663,31 +5663,31 @@ abstract class AppLocalizations {
   /// No description provided for @gameClosingTitle.
   ///
   /// In ar, this message translates to:
-  /// **'خلاص كده النهارده 🌙'**
+  /// **'انتهى وقتنا اليوم 🌙'**
   String get gameClosingTitle;
 
   /// No description provided for @gameClosingPraise.
   ///
   /// In ar, this message translates to:
-  /// **'شاطر. جمعت {score} نقطة.'**
+  /// **'أحسنت. جمعت {score} نقطة.'**
   String gameClosingPraise(int score);
 
   /// No description provided for @gameClosingMission.
   ///
   /// In ar, this message translates to:
-  /// **'دلوقتي قوم اعمل حاجة واحدة برّه الشاشة، واحكيها لبابا أو ماما.'**
+  /// **'الآن قم واعمل شيئًا واحدًا خارج الشاشة، واحكِه لبابا أو ماما.'**
   String get gameClosingMission;
 
   /// No description provided for @gameClosingLeave.
   ///
   /// In ar, this message translates to:
-  /// **'تمام، أنا خارج'**
+  /// **'حسنًا، سأخرج'**
   String get gameClosingLeave;
 
   /// No description provided for @exclusiveBadgesIntro.
   ///
   /// In ar, this message translates to:
-  /// **'الشارات دي بتتفتح بالإنجاز، مش بالشراء. عملاتك ليها مصرف واحد: مكافأة حقيقية من عهد المكافآت.'**
+  /// **'هذه الشارات تُفتح بالإنجاز، لا بالشراء. لعملاتك مصرف واحد: مكافأة حقيقية من عهد المكافآت.'**
   String get exclusiveBadgesIntro;
 
   /// No description provided for @exclusiveBadgeLocked.
@@ -5837,7 +5837,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourDone.
   ///
   /// In ar, this message translates to:
-  /// **'تمام'**
+  /// **'تم'**
   String get tourDone;
 
   /// No description provided for @tourTodayTitle.
@@ -5885,7 +5885,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourMoreBody.
   ///
   /// In ar, this message translates to:
-  /// **'كل شيء آخر تلاقيه هنا.'**
+  /// **'كل شيء آخر تجده هنا.'**
   String get tourMoreBody;
 
   /// No description provided for @tourFocusTitle.
@@ -5915,7 +5915,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourReplayQueued.
   ///
   /// In ar, this message translates to:
-  /// **'الجولة هتظهر لما ترجع للشاشة الرئيسية.'**
+  /// **'ستظهر الجولة عند عودتك إلى الشاشة الرئيسية.'**
   String get tourReplayQueued;
 
   /// No description provided for @errorOfflineTitle.
@@ -5957,67 +5957,67 @@ abstract class AppLocalizations {
   /// No description provided for @missionTodayLabel.
   ///
   /// In ar, this message translates to:
-  /// **'مهمة النهارده'**
+  /// **'مهمة اليوم'**
   String get missionTodayLabel;
 
   /// No description provided for @missionUnderstoodGoing.
   ///
   /// In ar, this message translates to:
-  /// **'فهمت، أنا رايح'**
+  /// **'فهمت، سأذهب'**
   String get missionUnderstoodGoing;
 
   /// No description provided for @missionDone.
   ///
   /// In ar, this message translates to:
-  /// **'خلّصتها'**
+  /// **'أنجزتها'**
   String get missionDone;
 
   /// No description provided for @missionAlreadyDone.
   ///
   /// In ar, this message translates to:
-  /// **'قلت إنك خلّصتها ✅'**
+  /// **'قلت إنك أنجزتها ✅'**
   String get missionAlreadyDone;
 
   /// No description provided for @missionClaimedNote.
   ///
   /// In ar, this message translates to:
-  /// **'بابا هيشوفها بالليل.'**
+  /// **'بابا سيراها في المساء.'**
   String get missionClaimedNote;
 
   /// No description provided for @missionOutdoorsHint.
   ///
   /// In ar, this message translates to:
-  /// **'دي محتاجة تطلع بره.'**
+  /// **'هذه تحتاج أن تخرج من البيت.'**
   String get missionOutdoorsHint;
 
   /// No description provided for @missionNoneToday.
   ///
   /// In ar, this message translates to:
-  /// **'مفيش مهمة النهارده. تصبح على خير 🌙'**
+  /// **'لا توجد مهمة اليوم. تصبح على خير 🌙'**
   String get missionNoneToday;
 
   /// No description provided for @missionLeave.
   ///
   /// In ar, this message translates to:
-  /// **'تمام، أنا خارج'**
+  /// **'حسنًا، سأخرج'**
   String get missionLeave;
 
   /// No description provided for @missionOpenForChild.
   ///
   /// In ar, this message translates to:
-  /// **'مهمة النهارده'**
+  /// **'مهمة اليوم'**
   String get missionOpenForChild;
 
   /// No description provided for @missionsPendingTitle.
   ///
   /// In ar, this message translates to:
-  /// **'مهام مستنية تأكيدك'**
+  /// **'مهام تنتظر تأكيدك'**
   String get missionsPendingTitle;
 
   /// No description provided for @missionsPendingEmpty.
   ///
   /// In ar, this message translates to:
-  /// **'مفيش حاجة مستنية منك دلوقتي.'**
+  /// **'لا شيء ينتظر تأكيدك الآن.'**
   String get missionsPendingEmpty;
 
   /// No description provided for @missionMinutesShort.
@@ -6029,7 +6029,7 @@ abstract class AppLocalizations {
   /// No description provided for @missionMarkNotYet.
   ///
   /// In ar, this message translates to:
-  /// **'لسه'**
+  /// **'ليس بعد'**
   String get missionMarkNotYet;
 
   /// No description provided for @missionMarkDone.
@@ -6047,13 +6047,13 @@ abstract class AppLocalizations {
   /// No description provided for @missionConfirmRest.
   ///
   /// In ar, this message translates to:
-  /// **'أكّد {count} وسيب الباقي'**
+  /// **'أكّد {count} واترك الباقي'**
   String missionConfirmRest(int count);
 
   /// No description provided for @gamesBudgetSpent.
   ///
   /// In ar, this message translates to:
-  /// **'وقت اللعب خلص النهارده. الألعاب مستنياك بكرة 🌙'**
+  /// **'انتهى وقت اللعب اليوم. الألعاب تنتظرك غدًا 🌙'**
   String get gamesBudgetSpent;
 
   /// No description provided for @screenOffPickerTitle.
@@ -6065,7 +6065,7 @@ abstract class AppLocalizations {
   /// No description provided for @screenOffPickerIntro.
   ///
   /// In ar, this message translates to:
-  /// **'الشاشة هتفضل سودا. الصوت بس، ومش بيتحسب من وقت الشاشة.'**
+  /// **'ستبقى الشاشة سوداء. الصوت فقط، ولا يُحسب من وقت الشاشة.'**
   String get screenOffPickerIntro;
 
   /// No description provided for @screenOffSectionParentVoice.
@@ -6083,7 +6083,7 @@ abstract class AppLocalizations {
   /// No description provided for @screenOffQuranUnavailable.
   ///
   /// In ar, this message translates to:
-  /// **'تعذّر تحميل القرآن دلوقتي.'**
+  /// **'تعذّر تحميل القرآن الآن.'**
   String get screenOffQuranUnavailable;
 
   /// No description provided for @screenOffOpen.
@@ -6101,7 +6101,7 @@ abstract class AppLocalizations {
   /// No description provided for @storyNarrationSaved.
   ///
   /// In ar, this message translates to:
-  /// **'اتسجّلت. هتلاقيها في المكتبة بعلامة 🎙️'**
+  /// **'تم التسجيل. ستجدها في المكتبة بعلامة 🎙️'**
   String get storyNarrationSaved;
 
   /// No description provided for @offscreenTitle.
@@ -6131,25 +6131,25 @@ abstract class AppLocalizations {
   /// No description provided for @licenseAckTitle.
   ///
   /// In ar, this message translates to:
-  /// **'وصلت. دي حاجة تستاهل تتكلموا فيها مع بعض.'**
+  /// **'وصلت. هذا أمر يستحق أن تتحدثوا فيه معًا.'**
   String get licenseAckTitle;
 
   /// No description provided for @licenseAckNext.
   ///
   /// In ar, this message translates to:
-  /// **'كمّل'**
+  /// **'أكمل'**
   String get licenseAckNext;
 
   /// No description provided for @licenseDoneTitle.
   ///
   /// In ar, this message translates to:
-  /// **'خلّصت المواقف. اقعد مع بابا أو ماما واتكلموا فيها.'**
+  /// **'أنهيت المواقف. اجلس مع بابا أو ماما وتحدثوا فيها.'**
   String get licenseDoneTitle;
 
   /// No description provided for @licenseLeave.
   ///
   /// In ar, this message translates to:
-  /// **'تمام، أنا خارج'**
+  /// **'حسنًا، سأخرج'**
   String get licenseLeave;
 
   /// No description provided for @licenseTitle.
@@ -6167,25 +6167,25 @@ abstract class AppLocalizations {
   /// No description provided for @licenseOpenForParent.
   ///
   /// In ar, this message translates to:
-  /// **'نتكلم فيها'**
+  /// **'نتحدث فيها'**
   String get licenseOpenForParent;
 
   /// No description provided for @licenseNotASetting.
   ///
   /// In ar, this message translates to:
-  /// **'الرخصة دي اتفاق بينكم، مش إعداد على الجهاز. التطبيق مايقدرش يقفل ولا يفتح حاجة على موبايل ابنك — اللي بيتغيّر هو اللي اتفقتوا عليه، وإنتوا اللي بتنفّذوه.'**
+  /// **'هذه الرخصة اتفاق بينكم، لا إعداد على الجهاز. لا يستطيع التطبيق أن يغلق أو يفتح شيئًا على هاتف ابنك — الذي يتغيّر هو ما اتفقتم عليه، وأنتم من ينفّذه.'**
   String get licenseNotASetting;
 
   /// No description provided for @licenseAgreementPrefix.
   ///
   /// In ar, this message translates to:
-  /// **'اللي هنتفق عليه'**
+  /// **'ما سنتفق عليه'**
   String get licenseAgreementPrefix;
 
   /// No description provided for @licenseNotReadyYet.
   ///
   /// In ar, this message translates to:
-  /// **'المستوى ده لسه بدري — مافيش مواقف متجهّزة له.'**
+  /// **'هذا المستوى مبكّر بعد — لا توجد مواقف مجهّزة له.'**
   String get licenseNotReadyYet;
 
   /// No description provided for @licenseProgress.
@@ -6197,49 +6197,49 @@ abstract class AppLocalizations {
   /// No description provided for @licenseTalkedButton.
   ///
   /// In ar, this message translates to:
-  /// **'اتكلمنا في المواقف دي'**
+  /// **'تحدثنا في هذه المواقف'**
   String get licenseTalkedButton;
 
   /// No description provided for @licenseUnfinished.
   ///
   /// In ar, this message translates to:
-  /// **'لسه فيه مواقف ماخلصتش'**
+  /// **'ما زالت هناك مواقف لم تنتهِ'**
   String get licenseUnfinished;
 
   /// No description provided for @licenseTalkedDone.
   ///
   /// In ar, this message translates to:
-  /// **'اتكلمتوا فيها.'**
+  /// **'تحدثتم فيها.'**
   String get licenseTalkedDone;
 
   /// No description provided for @licenseGrantButton.
   ///
   /// In ar, this message translates to:
-  /// **'سجّل إننا اتفقنا على المستوى ده'**
+  /// **'سجّل أننا اتفقنا على هذا المستوى'**
   String get licenseGrantButton;
 
   /// No description provided for @licenseGranted.
   ///
   /// In ar, this message translates to:
-  /// **'متفقين عليه.'**
+  /// **'متفقون عليه.'**
   String get licenseGranted;
 
   /// No description provided for @licenseTooEarly.
   ///
   /// In ar, this message translates to:
-  /// **'لسه بدري. لازم المواقف تخلص، وتسجّل إنكم اتكلمتوا.'**
+  /// **'ما زال مبكّرًا. يجب أن تنتهي المواقف، وأن تسجّلوا أنكم تحدثتم.'**
   String get licenseTooEarly;
 
   /// No description provided for @licenseMetSituations.
   ///
   /// In ar, this message translates to:
-  /// **'مواقف عدّى عليها'**
+  /// **'مواقف مرّ بها'**
   String get licenseMetSituations;
 
   /// No description provided for @licenseMetSituationsHint.
   ///
   /// In ar, this message translates to:
-  /// **'مش مكتوب هنا إجابته. المكتوب هو إزاي تفتح الكلام.'**
+  /// **'ليست إجابته مكتوبة هنا. المكتوب هو كيف تفتح الحديث.'**
   String get licenseMetSituationsHint;
 
   /// No description provided for @licensePickChildFirst.
@@ -6281,25 +6281,25 @@ abstract class AppLocalizations {
   /// No description provided for @licenseAgreeStranger.
   ///
   /// In ar, this message translates to:
-  /// **'نتفرّج ونحن في نفس الأوضة، والشاشة باينة.'**
+  /// **'نشاهد ونحن في الغرفة نفسها، والشاشة ظاهرة.'**
   String get licenseAgreeStranger;
 
   /// No description provided for @licenseAgreeSignal.
   ///
   /// In ar, this message translates to:
-  /// **'يدوّر ويتصفّح، ويحكي لنا عن اللي لقاه.'**
+  /// **'يبحث ويتصفّح، ويحكي لنا عمّا وجده.'**
   String get licenseAgreeSignal;
 
   /// No description provided for @licenseAgreeContact.
   ///
   /// In ar, this message translates to:
-  /// **'يراسل ناس إحنا عارفينهم بأسمائهم.'**
+  /// **'يراسل أشخاصًا نعرفهم بأسمائهم.'**
   String get licenseAgreeContact;
 
   /// No description provided for @licenseAgreeFootprint.
   ///
   /// In ar, this message translates to:
-  /// **'يدخل جروبات وألعاب جماعية.'**
+  /// **'يدخل مجموعات وألعابًا جماعية.'**
   String get licenseAgreeFootprint;
 
   /// No description provided for @licenseAgreePublic.
@@ -6311,7 +6311,7 @@ abstract class AppLocalizations {
   /// No description provided for @parentDayWith.
   ///
   /// In ar, this message translates to:
-  /// **'النهارده مع {name}'**
+  /// **'اليوم مع {name}'**
   String parentDayWith(String name);
 
   /// No description provided for @parentDayScreenLine.
@@ -6329,7 +6329,7 @@ abstract class AppLocalizations {
   /// No description provided for @parentDayMissionClaimed.
   ///
   /// In ar, this message translates to:
-  /// **'✅  {title} — بيقول إنه عملها'**
+  /// **'✅  {title} — يقول إنه أنجزها'**
   String parentDayMissionClaimed(String title);
 
   /// No description provided for @parentDayMissionAssigned.

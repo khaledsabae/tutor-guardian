@@ -57,7 +57,7 @@ class _RecordNarrationScreenState extends State<RecordNarrationScreen> {
 
   Future<void> _start() async {
     if (!await _recorder.hasPermission()) {
-      setState(() => _error = 'التسجيل محتاج إذن الميكروفون.');
+      setState(() => _error = 'التسجيل يحتاج إذن الميكروفون.');
       return;
     }
     final path = await NarrationStore.instance.pathFor(widget.storyKey);
@@ -108,8 +108,8 @@ class _RecordNarrationScreenState extends State<RecordNarrationScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           const Text(
-            'اقرا القصة بصوتك مرة واحدة. ابنك هيسمعها بصوتك في أي وقت — '
-            'حتى وإنت مش موجود. التسجيل بيفضل على الجهاز ومابيتبعتش لأي حتة.',
+            'اقرأ القصة بصوتك مرة واحدة. سيسمعها ابنك بصوتك في أي وقت — '
+            'حتى وأنت غير موجود. يبقى التسجيل على الجهاز ولا يُرسَل إلى أي مكان.',
             style: TextStyle(height: 1.8),
           ),
           const SizedBox(height: 16),
@@ -135,7 +135,7 @@ class _RecordNarrationScreenState extends State<RecordNarrationScreen> {
           FilledButton.icon(
             onPressed: _recording ? _stop : _start,
             icon: Icon(_recording ? Icons.stop : Icons.mic),
-            label: Text(_recording ? 'خلّصت' : (_hasTake ? 'سجّل تاني' : 'ابدأ التسجيل')),
+            label: Text(_recording ? 'أنهيت' : (_hasTake ? 'سجّل مرة أخرى' : 'ابدأ التسجيل')),
           ),
           if (_hasTake && !_recording) ...[
             const SizedBox(height: 8),
@@ -157,7 +157,7 @@ class _RecordNarrationScreenState extends State<RecordNarrationScreen> {
           if (_hasTake && !_recording)
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('تمام، خلصنا'),
+              child: const Text('حسنًا، انتهينا'),
             ),
         ],
       ),

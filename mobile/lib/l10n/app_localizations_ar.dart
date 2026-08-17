@@ -597,13 +597,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatQ_stubborn => 'ابني كثير العناد ونوبات الغضب';
 
   @override
-  String get chatQ_eating => 'طفلي يرفض الأكل — أعمل إيه؟';
+  String get chatQ_eating => 'طفلي يرفض الطعام — ماذا أفعل؟';
 
   @override
   String get chatQ_speech => 'طفلي تأخر في الكلام — متى أقلق؟';
 
   @override
-  String get chatQ_pray5 => 'ابني 5 سنين بيرفض الصلاة، أعمل إيه؟';
+  String get chatQ_pray5 => 'ابني في الخامسة يرفض الصلاة، ماذا أفعل؟';
 
   @override
   String get chatQ_tantrums => 'كيف أتعامل مع نوبات الغضب؟';
@@ -630,7 +630,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatQ_homework => 'ابني يماطل في واجباته المدرسية';
 
   @override
-  String get chatQ_teenDefiant => 'ابني المراهق يعاند ولا يسمع الكلام';
+  String get chatQ_teenDefiant => 'ابني المراهق يعاند ولا يصغي إلينا';
 
   @override
   String get chatQ_socialMedia => 'ابنتي مشغولة بالسوشيال ميديا والمقارنات';
@@ -1037,7 +1037,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get routineFeeds => 'رضاعات';
 
   @override
-  String get routineDiapers => 'حاضات';
+  String get routineDiapers => 'حفاظات';
 
   @override
   String get routineNoEvents => 'لا توجد أحداث اليوم';
@@ -1739,29 +1739,29 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String covenantSuccessMsg(Object cost, Object title) {
-    return 'لقد قمت بطلب: \"$title\" مقابل $cost عملة. أخبر والديك ليقدماها لك بالواقع!';
+    return 'لقد قمت بطلب: \"$title\" مقابل $cost عملة. أخبر والديك ليقدّماها لك في الواقع!';
   }
 
   @override
   String get covenantDelivered => 'تم تسجيل تقديم المكافأة بنجاح! ✅';
 
   @override
-  String get covenantOverdueTitle => 'مكافأة مستنية التسليم';
+  String get covenantOverdueTitle => 'مكافأة تنتظر التسليم';
 
   @override
   String covenantOverdueBody(int count) {
-    return 'فيه $count مكافأة اتصرفت من أكتر من أسبوع ولسه ماوصلتش. الوعد اللي ما يتنفّذش بيعلّم أكتر من الوعد اللي ما يتقالش.';
+    return 'هناك $count مكافأة استُبدلت منذ أكثر من أسبوع ولم تصل بعد. الوعد الذي لا يُنفَّذ يُعلِّم أكثر من الوعد الذي لا يُقال.';
   }
 
   @override
   String get covenantParentWelcome =>
-      'بوابة الأهل: أضف مكافآت حقيقية يلتزم بها الأهل بالواقع (مثل رحلات أو هدايا)، وتابع طلبات طفلك لتسليمها.';
+      'بوابة الأهل: أضف مكافآت حقيقية يلتزم بها الأهل في الواقع (مثل رحلات أو هدايا)، وتابع طلبات طفلك لتسليمها.';
 
   @override
   String get covenantAddNew => 'إضافة مكافأة جديدة ➕';
 
   @override
-  String get covenantPending => 'طلبات استبدال بانتظار تسليمها بالواقع ⏳';
+  String get covenantPending => 'طلبات استبدال تنتظر تسليمها في الواقع ⏳';
 
   @override
   String get covenantPendingEmpty => 'لا توجد طلبات معلقة حالياً.';
@@ -1796,7 +1796,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get covenantAddNameLabel =>
-      'اسم المكافأة بالواقع (مثال: نزهة عائلية 🍦)';
+      'اسم المكافأة في الواقع (مثال: نزهة عائلية 🍦)';
 
   @override
   String get covenantAddCostLabel => 'تكلفة العملات 🪙';
@@ -2188,7 +2188,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String updateSplashVersion(Object version) {
-    return 'إصدار $version — إيه الجديد؟';
+    return 'إصدار $version — ما الجديد؟';
   }
 
   @override
@@ -2198,32 +2198,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get updateSplashOnce => 'مرّة واحدة فقط — لن تظهر هذه الشاشة مجدداً.';
 
   @override
-  String get updateSplashFeature1 => 'إجابتك ما بقتش تضيع';
+  String get updateSplashFeature1 => 'إجابتك لم تعد تضيع';
 
   @override
   String get updateSplashFeature1Desc =>
-      'لو قفلت الشاشة أو انقطع النت وسط الرد، اللي وصلك بيتحفظ في المحادثة بدل ما يروح ويسيب سؤالك بلا إجابة.';
+      'إذا أغلقت الشاشة أو انقطع الاتصال أثناء الرد، يُحفظ ما وصلك في المحادثة بدل أن يضيع ويترك سؤالك بلا إجابة.';
 
   @override
   String get updateSplashFeature2 => 'اقتراحات أقرب لأسئلتكم';
 
   @override
   String get updateSplashFeature2Desc =>
-      'بدّلنا الأسئلة الجاهزة بناءً على اللي بيسأل عنه الآباء فعلًا: الخوف، وغيرة الإخوة، والتغيّرات الجسدية.';
+      'بدّلنا الأسئلة الجاهزة بناءً على ما يسأل عنه الآباء فعلًا: الخوف، وغيرة الإخوة، والتغيّرات الجسدية.';
 
   @override
-  String get updateSplashFeature3 => 'الردود بقت أسرع';
+  String get updateSplashFeature3 => 'صارت الردود أسرع';
 
   @override
   String get updateSplashFeature3Desc =>
-      'كان البحث في قاعدة المعرفة بيتكرر مرتين في كل سؤال بلا داعٍ — بقى مرة واحدة.';
+      'كان البحث في قاعدة المعرفة يتكرر مرتين في كل سؤال بلا داعٍ — صار مرة واحدة.';
 
   @override
-  String get updateSplashFeature4 => 'المحادثة بتفضل مترابطة';
+  String get updateSplashFeature4 => 'المحادثة تبقى مترابطة';
 
   @override
   String get updateSplashFeature4Desc =>
-      'لو رد فشل، مابقاش يدخل في سياق سؤالك اللي بعده ويشوّش الإجابة.';
+      'إذا فشل ردّ، لم يعد يدخل في سياق سؤالك التالي ويشوّش الإجابة.';
 
   @override
   String quranMemTitle(Object name) {
@@ -2492,11 +2492,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get childModeBudgetSpent =>
-      'خلصت مدة النهارده. نكمل بكرة إن شاء الله 🌙';
+      'انتهت مدة اليوم. نكمل غدًا إن شاء الله 🌙';
 
   @override
   String get childModeOffline =>
-      'الاتصال اتقطع، فقفلنا الجلسة. نرجع لما النت يرجع 🌙';
+      'انقطع الاتصال، فأغلقنا الجلسة. نعود حين يعود الاتصال 🌙';
 
   @override
   String get childModeEnterFailed => 'فشل الدخول لوضع الطفل.';
@@ -2826,7 +2826,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get eduGameTryAgain => 'حاول تاني! كل محاولة بتعلّمك أكتر.';
+  String get eduGameTryAgain => 'حاول مرة أخرى! كل محاولة تعلّمك أكثر.';
 
   @override
   String get eduGameNextLevel => 'المستوى التالي ▶';
@@ -2921,7 +2921,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String quizShareMessage(Object praise, Object score, Object total) {
-    return 'حصلت على $score من $total نقطة في اختبار «المربّي» 🤍\n$praise — جرّب أنت كمان:';
+    return 'حصلت على $score من $total نقطة في اختبار «المربّي» 🤍\n$praise — جرّب أنت أيضًا:';
   }
 
   @override
@@ -3056,7 +3056,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get activeChildLabel => 'طفل نشط';
 
   @override
-  String get coachAskAboutTip => 'اسأل المربّي عن ده';
+  String get coachAskAboutTip => 'اسأل المربّي عن هذه';
 
   @override
   String dailyTipShareError(Object error) {
@@ -3109,23 +3109,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get exclusiveBadgeOwned => 'مملوكة ✓';
 
   @override
-  String get gameClosingTitle => 'خلاص كده النهارده 🌙';
+  String get gameClosingTitle => 'انتهى وقتنا اليوم 🌙';
 
   @override
   String gameClosingPraise(int score) {
-    return 'شاطر. جمعت $score نقطة.';
+    return 'أحسنت. جمعت $score نقطة.';
   }
 
   @override
   String get gameClosingMission =>
-      'دلوقتي قوم اعمل حاجة واحدة برّه الشاشة، واحكيها لبابا أو ماما.';
+      'الآن قم واعمل شيئًا واحدًا خارج الشاشة، واحكِه لبابا أو ماما.';
 
   @override
-  String get gameClosingLeave => 'تمام، أنا خارج';
+  String get gameClosingLeave => 'حسنًا، سأخرج';
 
   @override
   String get exclusiveBadgesIntro =>
-      'الشارات دي بتتفتح بالإنجاز، مش بالشراء. عملاتك ليها مصرف واحد: مكافأة حقيقية من عهد المكافآت.';
+      'هذه الشارات تُفتح بالإنجاز، لا بالشراء. لعملاتك مصرف واحد: مكافأة حقيقية من عهد المكافآت.';
 
   @override
   String get exclusiveBadgeLocked => 'تُفتح بالإنجاز';
@@ -3217,7 +3217,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tourSkip => 'تخطّي';
 
   @override
-  String get tourDone => 'تمام';
+  String get tourDone => 'تم';
 
   @override
   String get tourTodayTitle => 'اليوم';
@@ -3241,7 +3241,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tourMoreTitle => 'المزيد';
 
   @override
-  String get tourMoreBody => 'كل شيء آخر تلاقيه هنا.';
+  String get tourMoreBody => 'كل شيء آخر تجده هنا.';
 
   @override
   String get tourFocusTitle => 'خطوتك التالية';
@@ -3256,7 +3256,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tourReplayDesc => 'أعِد عرض الجولة عند العودة للشاشة الرئيسية';
 
   @override
-  String get tourReplayQueued => 'الجولة هتظهر لما ترجع للشاشة الرئيسية.';
+  String get tourReplayQueued => 'ستظهر الجولة عند عودتك إلى الشاشة الرئيسية.';
 
   @override
   String get errorOfflineTitle => 'لا يوجد اتصال بالإنترنت';
@@ -3278,43 +3278,43 @@ class AppLocalizationsAr extends AppLocalizations {
       'حاول مرة أخرى، وإن تكرّر الأمر أرسل لنا ملاحظة.';
 
   @override
-  String get missionTodayLabel => 'مهمة النهارده';
+  String get missionTodayLabel => 'مهمة اليوم';
 
   @override
-  String get missionUnderstoodGoing => 'فهمت، أنا رايح';
+  String get missionUnderstoodGoing => 'فهمت، سأذهب';
 
   @override
-  String get missionDone => 'خلّصتها';
+  String get missionDone => 'أنجزتها';
 
   @override
-  String get missionAlreadyDone => 'قلت إنك خلّصتها ✅';
+  String get missionAlreadyDone => 'قلت إنك أنجزتها ✅';
 
   @override
-  String get missionClaimedNote => 'بابا هيشوفها بالليل.';
+  String get missionClaimedNote => 'بابا سيراها في المساء.';
 
   @override
-  String get missionOutdoorsHint => 'دي محتاجة تطلع بره.';
+  String get missionOutdoorsHint => 'هذه تحتاج أن تخرج من البيت.';
 
   @override
-  String get missionNoneToday => 'مفيش مهمة النهارده. تصبح على خير 🌙';
+  String get missionNoneToday => 'لا توجد مهمة اليوم. تصبح على خير 🌙';
 
   @override
-  String get missionLeave => 'تمام، أنا خارج';
+  String get missionLeave => 'حسنًا، سأخرج';
 
   @override
-  String get missionOpenForChild => 'مهمة النهارده';
+  String get missionOpenForChild => 'مهمة اليوم';
 
   @override
-  String get missionsPendingTitle => 'مهام مستنية تأكيدك';
+  String get missionsPendingTitle => 'مهام تنتظر تأكيدك';
 
   @override
-  String get missionsPendingEmpty => 'مفيش حاجة مستنية منك دلوقتي.';
+  String get missionsPendingEmpty => 'لا شيء ينتظر تأكيدك الآن.';
 
   @override
   String get missionMinutesShort => 'دقيقة';
 
   @override
-  String get missionMarkNotYet => 'لسه';
+  String get missionMarkNotYet => 'ليس بعد';
 
   @override
   String get missionMarkDone => 'تراجع';
@@ -3324,19 +3324,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String missionConfirmRest(int count) {
-    return 'أكّد $count وسيب الباقي';
+    return 'أكّد $count واترك الباقي';
   }
 
   @override
   String get gamesBudgetSpent =>
-      'وقت اللعب خلص النهارده. الألعاب مستنياك بكرة 🌙';
+      'انتهى وقت اللعب اليوم. الألعاب تنتظرك غدًا 🌙';
 
   @override
   String get screenOffPickerTitle => 'استماع والشاشة مطفية';
 
   @override
   String get screenOffPickerIntro =>
-      'الشاشة هتفضل سودا. الصوت بس، ومش بيتحسب من وقت الشاشة.';
+      'ستبقى الشاشة سوداء. الصوت فقط، ولا يُحسب من وقت الشاشة.';
 
   @override
   String get screenOffSectionParentVoice => 'بصوت بابا أو ماما';
@@ -3345,7 +3345,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get screenOffSectionQuran => 'قرآن';
 
   @override
-  String get screenOffQuranUnavailable => 'تعذّر تحميل القرآن دلوقتي.';
+  String get screenOffQuranUnavailable => 'تعذّر تحميل القرآن الآن.';
 
   @override
   String get screenOffOpen => 'استماع والشاشة مطفية';
@@ -3354,7 +3354,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get storyListenInParentVoice => 'اسمعها بصوت بابا';
 
   @override
-  String get storyNarrationSaved => 'اتسجّلت. هتلاقيها في المكتبة بعلامة 🎙️';
+  String get storyNarrationSaved => 'تم التسجيل. ستجدها في المكتبة بعلامة 🎙️';
 
   @override
   String get offscreenTitle => 'بدائل بلا شاشة';
@@ -3369,17 +3369,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get offscreenOpen => 'بدائل بلا شاشة';
 
   @override
-  String get licenseAckTitle => 'وصلت. دي حاجة تستاهل تتكلموا فيها مع بعض.';
+  String get licenseAckTitle => 'وصلت. هذا أمر يستحق أن تتحدثوا فيه معًا.';
 
   @override
-  String get licenseAckNext => 'كمّل';
+  String get licenseAckNext => 'أكمل';
 
   @override
   String get licenseDoneTitle =>
-      'خلّصت المواقف. اقعد مع بابا أو ماما واتكلموا فيها.';
+      'أنهيت المواقف. اجلس مع بابا أو ماما وتحدثوا فيها.';
 
   @override
-  String get licenseLeave => 'تمام، أنا خارج';
+  String get licenseLeave => 'حسنًا، سأخرج';
 
   @override
   String get licenseTitle => 'رخصة الإنترنت';
@@ -3388,18 +3388,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get licenseOpenForChild => 'رخصة الإنترنت';
 
   @override
-  String get licenseOpenForParent => 'نتكلم فيها';
+  String get licenseOpenForParent => 'نتحدث فيها';
 
   @override
   String get licenseNotASetting =>
-      'الرخصة دي اتفاق بينكم، مش إعداد على الجهاز. التطبيق مايقدرش يقفل ولا يفتح حاجة على موبايل ابنك — اللي بيتغيّر هو اللي اتفقتوا عليه، وإنتوا اللي بتنفّذوه.';
+      'هذه الرخصة اتفاق بينكم، لا إعداد على الجهاز. لا يستطيع التطبيق أن يغلق أو يفتح شيئًا على هاتف ابنك — الذي يتغيّر هو ما اتفقتم عليه، وأنتم من ينفّذه.';
 
   @override
-  String get licenseAgreementPrefix => 'اللي هنتفق عليه';
+  String get licenseAgreementPrefix => 'ما سنتفق عليه';
 
   @override
   String get licenseNotReadyYet =>
-      'المستوى ده لسه بدري — مافيش مواقف متجهّزة له.';
+      'هذا المستوى مبكّر بعد — لا توجد مواقف مجهّزة له.';
 
   @override
   String licenseProgress(int done, int total) {
@@ -3407,30 +3407,30 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get licenseTalkedButton => 'اتكلمنا في المواقف دي';
+  String get licenseTalkedButton => 'تحدثنا في هذه المواقف';
 
   @override
-  String get licenseUnfinished => 'لسه فيه مواقف ماخلصتش';
+  String get licenseUnfinished => 'ما زالت هناك مواقف لم تنتهِ';
 
   @override
-  String get licenseTalkedDone => 'اتكلمتوا فيها.';
+  String get licenseTalkedDone => 'تحدثتم فيها.';
 
   @override
-  String get licenseGrantButton => 'سجّل إننا اتفقنا على المستوى ده';
+  String get licenseGrantButton => 'سجّل أننا اتفقنا على هذا المستوى';
 
   @override
-  String get licenseGranted => 'متفقين عليه.';
+  String get licenseGranted => 'متفقون عليه.';
 
   @override
   String get licenseTooEarly =>
-      'لسه بدري. لازم المواقف تخلص، وتسجّل إنكم اتكلمتوا.';
+      'ما زال مبكّرًا. يجب أن تنتهي المواقف، وأن تسجّلوا أنكم تحدثتم.';
 
   @override
-  String get licenseMetSituations => 'مواقف عدّى عليها';
+  String get licenseMetSituations => 'مواقف مرّ بها';
 
   @override
   String get licenseMetSituationsHint =>
-      'مش مكتوب هنا إجابته. المكتوب هو إزاي تفتح الكلام.';
+      'ليست إجابته مكتوبة هنا. المكتوب هو كيف تفتح الحديث.';
 
   @override
   String get licensePickChildFirst => 'اختر طفلاً أولاً.';
@@ -3452,23 +3452,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get licenseAgreeStranger =>
-      'نتفرّج ونحن في نفس الأوضة، والشاشة باينة.';
+      'نشاهد ونحن في الغرفة نفسها، والشاشة ظاهرة.';
 
   @override
-  String get licenseAgreeSignal => 'يدوّر ويتصفّح، ويحكي لنا عن اللي لقاه.';
+  String get licenseAgreeSignal => 'يبحث ويتصفّح، ويحكي لنا عمّا وجده.';
 
   @override
-  String get licenseAgreeContact => 'يراسل ناس إحنا عارفينهم بأسمائهم.';
+  String get licenseAgreeContact => 'يراسل أشخاصًا نعرفهم بأسمائهم.';
 
   @override
-  String get licenseAgreeFootprint => 'يدخل جروبات وألعاب جماعية.';
+  String get licenseAgreeFootprint => 'يدخل مجموعات وألعابًا جماعية.';
 
   @override
   String get licenseAgreePublic => 'حساب عام، ومراجعة كل شهر.';
 
   @override
   String parentDayWith(String name) {
-    return 'النهارده مع $name';
+    return 'اليوم مع $name';
   }
 
   @override
@@ -3483,7 +3483,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String parentDayMissionClaimed(String title) {
-    return '✅  $title — بيقول إنه عملها';
+    return '✅  $title — يقول إنه أنجزها';
   }
 
   @override

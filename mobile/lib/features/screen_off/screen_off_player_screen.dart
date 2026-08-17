@@ -135,7 +135,7 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
       if (!mounted) return;
       Navigator.of(context).pop();
       messengerKey.currentState?.showSnackBar(
-        const SnackBar(content: Text('تعذّر تشغيل الصوت. جرّب مصدرًا تاني.')),
+        const SnackBar(content: Text('تعذّر تشغيل الصوت. جرّب مصدرًا آخر.')),
       );
     }
   }
@@ -230,7 +230,7 @@ class _ScreenOffPlayerScreenState extends ConsumerState<ScreenOffPlayerScreen>
                         style: TextStyle(color: Color(0x66FFFFFF), fontSize: 12)),
                   const SizedBox(height: 10),
                   const Text(
-                    'بابا بيشوف',
+                    'بابا يرى',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Color(0x33FFFFFF), fontSize: 10),
                   ),

@@ -58,7 +58,7 @@ class _ChildAgreementScreenState extends ConsumerState<ChildAgreementScreen> {
   Future<void> _load() async {
     final token = await getChildToken();
     if (token == null) {
-      setState(() { _loading = false; _error = 'الجلسة انتهت.'; });
+      setState(() { _loading = false; _error = 'انتهت الجلسة.'; });
       return;
     }
     try {
@@ -123,15 +123,15 @@ class _ChildAgreementScreenState extends ConsumerState<ChildAgreementScreen> {
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
                 const SizedBox(height: 12),
                 const Text(
-                  'الميثاق ده بينك وبين أهلك، ومكتوب على الاتنين مش عليك '
-                  'لوحدك. هتراجعوه مع بعض بعد شهر.',
+                  'هذا الميثاق بينك وبين أهلك، ومكتوب على الاثنين لا عليك '
+                  'وحدك. ستراجعونه معًا بعد شهر.',
                   textAlign: TextAlign.center,
                   style: TextStyle(height: 1.8),
                 ),
                 const SizedBox(height: 24),
                 FilledButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('تمام'),
+                  child: const Text('حسنًا'),
                 ),
               ],
             ),
@@ -145,7 +145,7 @@ class _ChildAgreementScreenState extends ConsumerState<ChildAgreementScreen> {
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              _error ?? 'لسه مافيش ميثاق. اطلب من بابا أو ماما يفتحوه معاك.',
+              _error ?? 'لا يوجد ميثاق بعد. اطلب من بابا أو ماما أن يفتحوه معك.',
               textAlign: TextAlign.center,
               style: const TextStyle(height: 1.8),
             ),
@@ -159,7 +159,7 @@ class _ChildAgreementScreenState extends ConsumerState<ChildAgreementScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Text('اقرا كل بند، ولو فهمته دوس «فهمت».',
+          const Text('اقرأ كل بند، وإذا فهمته اضغط «فهمت».',
               style: TextStyle(height: 1.7, fontWeight: FontWeight.w700)),
           const SizedBox(height: 16),
           for (final c in _mine)
@@ -176,7 +176,7 @@ class _ChildAgreementScreenState extends ConsumerState<ChildAgreementScreen> {
               ),
             ),
           const SizedBox(height: 20),
-          const Text('وده اللي أهلك اتفقوا عليه:',
+          const Text('وهذا ما اتفق عليه أهلك:',
               style: TextStyle(fontWeight: FontWeight.w700)),
           const SizedBox(height: 8),
           for (final c in _theirs)

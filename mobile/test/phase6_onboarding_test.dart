@@ -205,7 +205,7 @@ void main() {
       expect(find.textContaining('حبّب طفلك في الصلاة'), findsOneWidget);
       // Sample mentor question matches the age band.
       expect(
-        find.textContaining('بيرفض الصلاة'),
+        find.textContaining('ابني في الخامسة يرفض الصلاة'),
         findsOneWidget,
       );
       expect(find.text('ابدأ الرحلة'), findsOneWidget);

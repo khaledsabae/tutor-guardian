@@ -95,7 +95,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
       // The empty-bank case renders its own explanation on arrival and never
       // shows this button at all — putting the explanation behind a press was
       // the bug in 1.0.43.
-      setState(() => _error = 'اخترت إنك تشيل كل البنود. سيب بند واحد على الأقل.');
+      setState(() => _error = 'اخترت أن تحذف كل البنود. اترك بندًا واحدًا على الأقل.');
       return;
     }
     setState(() { _loading = true; _error = null; });
@@ -106,7 +106,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
       if (!mounted) return;
       setState(() { _agreement = draft; _loading = false; });
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('وقّعت. فاضل توقيع ابنك من وضع الطفل.'),
+        content: Text('وقّعتَ. بقي توقيع ابنك من وضع الطفل.'),
       ));
     } catch (e) {
       if (mounted) setState(() { _error = e.toString(); _loading = false; });
@@ -151,10 +151,10 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
                   const Text('🕊️', style: TextStyle(fontSize: 44)),
                   const SizedBox(height: 12),
                   const Text(
-                    'الميثاق متاح دلوقتي لسنّ ٧–٩ بس.\n\n'
-                    'البنود بتتكتب لكل سنّ لوحدها — بند لطفل سبع سنين مش '
-                    'نفس البند لابن اتناشر، وميثاق بكلام مش مناسب لسنّه '
-                    'بيتوقّع ويتنسي.',
+                    'الميثاق متاح الآن لسنّ ٧–٩ فقط.\n\n'
+                    'البنود تُكتب لكل سنّ على حدة — بند لطفل في السابعة ليس '
+                    'نفس البند لابن في الثانية عشرة، وميثاق بكلام لا يناسب '
+                    'سنّه يُوقَّع ثم يُنسى.',
                     textAlign: TextAlign.center,
                     style: TextStyle(height: 1.9),
                   ),
@@ -162,8 +162,8 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
                 ],
                 if (_pairs.isNotEmpty) ...[
                   const Text(
-                    'كل بند على ابنك يقابله بند عليك. ده اللي بيخلّيه ميثاقًا '
-                    'مش قائمة أوامر — وابنك هيقيسه عليك في أول يوم.',
+                    'كل بند على ابنك يقابله بند عليك. هذا ما يجعله ميثاقًا '
+                    'لا قائمة أوامر — وابنك سيقيسه عليك في أول يوم.',
                     style: TextStyle(height: 1.7),
                   ),
                   const SizedBox(height: 16),
@@ -220,8 +220,8 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'بعد ما توقّع، افتح وضع الطفل عشان ابنك يقرا البنود ويوقّع. '
-                    'الميثاق مايشتغلش غير بالتوقيعين.',
+                    'بعد أن توقّع، افتح وضع الطفل ليقرأ ابنك البنود ويوقّع. '
+                    'لا يعمل الميثاق إلا بالتوقيعين.',
                     style: TextStyle(fontSize: 12, height: 1.6),
                   ),
                 ],

@@ -49,7 +49,7 @@ Future<void> ensureNotificationChannels() async {
   await android.createNotificationChannel(const AndroidNotificationChannel(
     kChannelReengagement,
     'تذكيرات ومستجدّات',
-    description: 'تذكيرات ومهام مستنية وأخبار التطبيق.',
+    description: 'تذكيرات ومهام تنتظر تأكيدك وأخبار التطبيق.',
     importance: Importance.defaultImportance,
   ));
 
@@ -59,8 +59,8 @@ Future<void> ensureNotificationChannels() async {
     kChannelSafety,
     'تنبيهات سلامة الطفل',
     description:
-        'موقف في رخصة الإنترنت يستاهل تتكلم مع ابنك فيه النهارده. '
-        'نادر جدًا — وده الوحيد اللي يوصلك حتى لو سكّتّ الباقي.',
+        'موقف في رخصة الإنترنت يستحق أن تتحدث مع ابنك فيه اليوم. '
+        'نادر جدًا — وهو الوحيد الذي يصلك حتى لو أسكتّ الباقي.',
     importance: Importance.high,
   ));
 }

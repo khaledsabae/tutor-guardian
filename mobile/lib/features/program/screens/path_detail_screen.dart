@@ -229,7 +229,7 @@ class _Body extends ConsumerWidget {
     Analytics.shareMoment('path');
     ShareService.shareMomentCard(
       fileTag: 'path_${path.id}',
-      message: 'ما شاء الله 🤍 خلّصت مسار «${path.title}» في «المربّي»!\\n'
+      message: 'ما شاء الله 🤍 أتممت مسار «${path.title}» في «المربّي»!\\n'
           'كل خطوة في تربية أولادك صدقة جارية:',
       card: ShareableMomentCard(
         emoji: '🌟',

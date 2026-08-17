@@ -64,7 +64,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
     // the widget in MaterialApp and hands it the Material the real app never
     // did. The tests were testing a tree the user does not get.
     return Scaffold(
-      appBar: AppBar(title: const Text('النهارده مع طفلي')),
+      appBar: AppBar(title: const Text('اليوم مع طفلي')),
       body: _body(context),
     );
   }
@@ -76,7 +76,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
     if (_day == null) {
       return Center(child: Padding(
         padding: const EdgeInsets.all(24),
-        child: Text(_error ?? 'مافيش بيانات النهارده.',
+        child: Text(_error ?? 'لا توجد بيانات اليوم.',
             textAlign: TextAlign.center),
       ));
     }
@@ -119,7 +119,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
       child: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Text('النهارده مع ${day['child_name']}',
+          Text('اليوم مع ${day['child_name']}',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
           const SizedBox(height: 16),
 
@@ -139,15 +139,15 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
           ),
           const SizedBox(height: 8),
           const Text(
-            'الاتنين مش رقم واحد. السماع والشاشة مطفية مش وقت شاشة، '
-            'وعلشان كده ليه عدّاده لوحده.',
+            'الاثنان ليسا رقمًا واحدًا. السماع والشاشة مطفية ليس وقت شاشة، '
+            'ولذلك له عدّاده وحده.',
             style: TextStyle(fontSize: 11, height: 1.6),
           ),
 
           const Divider(height: 32),
 
           if (mission != null) ...[
-            const Text('مهمة النهارده',
+            const Text('مهمة اليوم',
                 style: TextStyle(fontWeight: FontWeight.w800)),
             const SizedBox(height: 6),
             Text('${mission['title_ar']} — ${mission['instruction_ar']}',
@@ -180,7 +180,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
           if (agreement == null)
             Row(
               children: [
-                const Expanded(child: Text('مافيش ميثاق موقّع لسه.',
+                const Expanded(child: Text('لا يوجد ميثاق موقّع بعد.',
                     style: TextStyle(height: 1.6))),
                 TextButton(
                   onPressed: () => Navigator.push(context, AppRoutes.agreement()),
@@ -191,7 +191,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
           else
             Text(
               agreement['review_due'] == true
-                  ? 'نشط — وموعد مراجعته فات. اقعدوا راجعوه مع بعض.'
+                  ? 'نشط — وموعد مراجعته قد فات. اجلسوا وراجعوه معًا.'
                   : 'نشط · المراجعة ${agreement['next_review_date'] ?? ''}'
                     ' · ${agreement['clauses_on_parent']} بنود عليك',
               style: const TextStyle(height: 1.7),
@@ -203,11 +203,11 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
           // «بابا بيشوف» — this is the screen that makes that true. It is a
           // list of surfaces and minutes, not of content: the point is that a
           // parent can see the shape of the time, not read over a shoulder.
-          const Text('سجل النهارده',
+          const Text('سجل اليوم',
               style: TextStyle(fontWeight: FontWeight.w800)),
           const SizedBox(height: 6),
           if (sessions.isEmpty)
-            const Text('مافيش جلسات النهارده.', style: TextStyle(height: 1.6))
+            const Text('لا توجد جلسات اليوم.', style: TextStyle(height: 1.6))
           else
             for (final s in sessions)
               Padding(
@@ -215,7 +215,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
                 child: Text(
                   '${_surfaceLabel(s['surface'] as String?)} · '
                   '${(num_(s, 'counted_seconds') / 60).round()} دقيقة'
-                  '${s['ended_reason'] == null ? ' · شغّالة دلوقتي' : ''}',
+                  '${s['ended_reason'] == null ? ' · جارية الآن' : ''}',
                   style: const TextStyle(height: 1.7, fontSize: 13),
                 ),
               ),
@@ -224,10 +224,10 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
 
           Text(
             month['ratio'] == null
-                ? 'الشهر ده: ${month['confirmed_missions']} مهمة مؤكَّدة.'
-                : 'الشهر ده: ${month['screen_minutes']} دقيقة شاشة '
+                ? 'هذا الشهر: ${month['confirmed_missions']} مهمة مؤكَّدة.'
+                : 'هذا الشهر: ${month['screen_minutes']} دقيقة شاشة '
                   'نتج عنها ${month['off_screen_minutes']} دقيقة نشاط '
-                  'برّه الشاشة.',
+                  'خارج الشاشة.',
             style: const TextStyle(height: 1.8, fontWeight: FontWeight.w600),
           ),
         ],
@@ -293,11 +293,11 @@ class _MissionStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = switch (status) {
-      'claimed' => 'بيقول إنه عملها — مستنية تأكيدك المسا',
-      'confirmed' => 'اتأكدت ✓',
-      'not_done' => 'لسه',
-      'expired' => 'عدّى وقتها',
-      _ => 'لسه ما بدأش',
+      'claimed' => 'يقول إنه أنجزها — تنتظر تأكيدك مساءً',
+      'confirmed' => 'تأكدت ✓',
+      'not_done' => 'ليس بعد',
+      'expired' => 'انقضى وقتها',
+      _ => 'لم تبدأ بعد',
     };
     return Text(text, style: const TextStyle(height: 1.6));
   }
