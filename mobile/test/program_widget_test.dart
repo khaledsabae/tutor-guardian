@@ -134,7 +134,14 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('مساراتي'), findsWidgets); // AppBar title
+      // AppBar title now carries the word the user tapped in the nav bar
+      // («التعلّم»); it used to read «مساراتي», so the word you press and the
+      // word you land on were different.
+      expect(find.textContaining('مسارات التعلّم'), findsWidgets);
+      // The reader is named before any card is read: the age band on a card is
+      // the child's, the prose behind it is addressed to the parent.
+      expect(find.textContaining('هذه الدروس تقرؤها أنت'), findsOneWidget);
+      expect(find.textContaining('عن طفلك في'), findsWidgets);
       expect(find.text('تأسيس الآداب الإسلامية'), findsOneWidget);
       expect(find.text('التربية الإيجابية'), findsOneWidget);
       // Days pill on the path cards (emoji-prefixed in the redesign)

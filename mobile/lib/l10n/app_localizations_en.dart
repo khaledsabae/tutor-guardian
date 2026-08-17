@@ -520,7 +520,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get startFirstPathDesc =>
-      'Choose a short educational journey designed for your child\'s age and start today.';
+      'Short lessons for you to read, chosen for your child’s age. Start today.';
 
   @override
   String get browsePaths => 'Browse Paths';
@@ -533,7 +533,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'A short lesson picked for your child\'s age — it starts here.';
 
   @override
-  String get continueJourney => 'Continue Your Journey';
+  String get continueJourney => 'Continue your path';
 
   @override
   String get lessonsRemaining_one => '🏆 1 lesson remaining!';
@@ -2041,7 +2041,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get pathsTitle => 'My Paths 🛤️';
+  String get pathsTitle => 'Learning Paths 🛤️';
+
+  @override
+  String get pathsReaderBanner =>
+      '📖 These lessons are for you to read — then put into practice with your child.';
+
+  @override
+  String pathAudienceMeta(Object age, Object domain) {
+    return 'About your child aged $age · $domain';
+  }
 
   @override
   String get pathsFilterAll => 'All';
@@ -2892,7 +2901,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String journeyCardCount(Object count) {
-    return '$count milestones in his journey — add more';
+    return '$count milestones in their journey — add more';
   }
 
   @override
@@ -3266,7 +3275,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tourLearnTitle => 'Learn';
 
   @override
-  String get tourLearnBody => 'All the paths and lessons live here.';
+  String get tourLearnBody =>
+      'Your own lessons as a parent — grouped into paths by your child’s age.';
 
   @override
   String get tourAssistantTitle => 'Assistant';

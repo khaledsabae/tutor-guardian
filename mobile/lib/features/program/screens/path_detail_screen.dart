@@ -295,9 +295,17 @@ class _Header extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        _Badge(text: path.ageLabel(AppLocalizations.of(context))),
-                        const SizedBox(width: 8),
-                        _Badge(text: path.domainLabel(AppLocalizations.of(context))),
+                        // The age band belongs to the child; the lessons below
+                        // it are addressed to the parent. Say so on the badge
+                        // rather than leaving the reader to infer it.
+                        Flexible(
+                          child: _Badge(
+                            text: AppLocalizations.of(context).pathAudienceMeta(
+                              path.ageLabel(AppLocalizations.of(context)),
+                              path.domainLabel(AppLocalizations.of(context)),
+                            ),
+                          ),
+                        ),
                         const Spacer(),
                         if (childId != null)
                           StreakChip(streakDays: streak, dark: true),

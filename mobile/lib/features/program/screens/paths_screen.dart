@@ -105,6 +105,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
 
           return Column(
             children: [
+              const _ReaderBanner(),
               if (present.length > 1)
                 _DomainFilterBar(
                   domains: present,
@@ -161,6 +162,41 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
               .fadeIn(duration: Dt.base)
               .slideY(begin: .08, curve: Curves.easeOutCubic);
         },
+      ),
+    );
+  }
+}
+
+/// One line naming the reader, pinned above the list.
+///
+/// «سمعت المسارات أظن المقصود بها المربي ليس المتربي» — a parent on Facebook,
+/// 17 Aug 2026, guessing at the audience of the thing he had already opened.
+/// He guessed right; nothing in the app confirmed it. The card underneath
+/// wears the child's age band, so the reasonable reading is "material for a
+/// seven-year-old", and 2,014 families who registered a child never opened a
+/// lesson at all. This is the cheapest sentence in the app.
+class _ReaderBanner extends StatelessWidget {
+  const _ReaderBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: Dt.primary.withValues(alpha: .08),
+        borderRadius: BorderRadius.circular(Dt.rButton),
+      ),
+      child: Text(
+        AppLocalizations.of(context).pathsReaderBanner,
+        textAlign: TextAlign.start,
+        style: const TextStyle(
+          fontSize: 13,
+          height: 1.4,
+          fontWeight: FontWeight.w600,
+          color: Dt.ink,
+        ),
       ),
     );
   }
@@ -326,8 +362,15 @@ class _PathCard extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 4),
+                            // «٧-٩ سنوات · التربية الإسلامية» read as "content
+                            // for a seven-year-old". The age is the child's,
+                            // the prose inside is addressed to the parent, and
+                            // nothing on the card said so.
                             Text(
-                              '${path.ageLabel(AppLocalizations.of(context))} · ${path.domainLabel(AppLocalizations.of(context))}',
+                              AppLocalizations.of(context).pathAudienceMeta(
+                                path.ageLabel(AppLocalizations.of(context)),
+                                path.domainLabel(AppLocalizations.of(context)),
+                              ),
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.white.withValues(alpha: .85),

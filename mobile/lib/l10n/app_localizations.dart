@@ -1109,7 +1109,7 @@ abstract class AppLocalizations {
   /// No description provided for @startFirstPathDesc.
   ///
   /// In ar, this message translates to:
-  /// **'اختر رحلة تربوية قصيرة مصممة لعمر طفلك وابدأ اليوم.'**
+  /// **'دروس قصيرة تقرؤها أنت، مختارة لعمر طفلك. ابدأ اليوم.'**
   String get startFirstPathDesc;
 
   /// No description provided for @browsePaths.
@@ -1133,7 +1133,7 @@ abstract class AppLocalizations {
   /// No description provided for @continueJourney.
   ///
   /// In ar, this message translates to:
-  /// **'أكمل رحلتك'**
+  /// **'واصل مسارك'**
   String get continueJourney;
 
   /// No description provided for @lessonsRemaining_one.
@@ -3755,8 +3755,20 @@ abstract class AppLocalizations {
   /// No description provided for @pathsTitle.
   ///
   /// In ar, this message translates to:
-  /// **'مساراتي 🛤️'**
+  /// **'مسارات التعلّم 🛤️'**
   String get pathsTitle;
+
+  /// No description provided for @pathsReaderBanner.
+  ///
+  /// In ar, this message translates to:
+  /// **'📖 هذه الدروس تقرؤها أنت — ثم تطبّقها مع طفلك.'**
+  String get pathsReaderBanner;
+
+  /// No description provided for @pathAudienceMeta.
+  ///
+  /// In ar, this message translates to:
+  /// **'عن طفلك في {age} · {domain}'**
+  String pathAudienceMeta(Object age, Object domain);
 
   /// No description provided for @pathsFilterAll.
   ///
@@ -5861,7 +5873,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourLearnBody.
   ///
   /// In ar, this message translates to:
-  /// **'المسارات والدروس كلّها هنا.'**
+  /// **'دروسك أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.'**
   String get tourLearnBody;
 
   /// No description provided for @tourAssistantTitle.

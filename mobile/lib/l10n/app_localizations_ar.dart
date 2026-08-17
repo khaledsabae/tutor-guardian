@@ -519,7 +519,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get startFirstPathDesc =>
-      'اختر رحلة تربوية قصيرة مصممة لعمر طفلك وابدأ اليوم.';
+      'دروس قصيرة تقرؤها أنت، مختارة لعمر طفلك. ابدأ اليوم.';
 
   @override
   String get browsePaths => 'استعرض المسارات';
@@ -531,7 +531,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get startFirstLessonDesc => 'درس قصير مختار لعمر طفلك — يبدأ من هنا.';
 
   @override
-  String get continueJourney => 'أكمل رحلتك';
+  String get continueJourney => 'واصل مسارك';
 
   @override
   String get lessonsRemaining_one => '🏆 درس واحد باقٍ!';
@@ -2012,7 +2012,16 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get pathsTitle => 'مساراتي 🛤️';
+  String get pathsTitle => 'مسارات التعلّم 🛤️';
+
+  @override
+  String get pathsReaderBanner =>
+      '📖 هذه الدروس تقرؤها أنت — ثم تطبّقها مع طفلك.';
+
+  @override
+  String pathAudienceMeta(Object age, Object domain) {
+    return 'عن طفلك في $age · $domain';
+  }
 
   @override
   String get pathsFilterAll => 'الكل';
@@ -3229,7 +3238,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tourLearnTitle => 'التعلّم';
 
   @override
-  String get tourLearnBody => 'المسارات والدروس كلّها هنا.';
+  String get tourLearnBody =>
+      'دروسك أنت كمربٍّ — مرتّبة في مسارات حسب عمر طفلك.';
 
   @override
   String get tourAssistantTitle => 'المساعد';
