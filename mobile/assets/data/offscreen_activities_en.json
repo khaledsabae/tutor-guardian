@@ -18,7 +18,7 @@
           "instruction_ar": "Open a thick-paged picture book with them and let them turn the pages. Don't correct the order and don't rush them — the point is that they handle the paper, not that they follow the story.",
           "minutes": 10,
           "materials": [
-            "كتاب مصوّر"
+            "a picture book"
           ]
         },
         {
@@ -41,8 +41,8 @@
           "instruction_ar": "Two cups and a little water, on top of a towel. Let them pour from one into the other. It will spill, and that's part of the exercise, not a mistake in it.",
           "minutes": 10,
           "materials": [
-            "كوبان",
-            "منشفة"
+            "two cups",
+            "a towel"
           ]
         }
       ]
@@ -63,7 +63,7 @@
           "instruction_ar": "A piece of dough and a table. Let them knead and shape with no mold and no example to copy.",
           "minutes": 15,
           "materials": [
-            "عجين"
+            "play dough"
           ]
         },
         {
@@ -91,9 +91,9 @@
           "instruction_ar": "A cup of soil and a lentil or bean seed. They're the one responsible for watering it every day. The waiting itself is the lesson.",
           "minutes": 15,
           "materials": [
-            "كوب",
-            "تراب",
-            "بذرة"
+            "a cup",
+            "soil",
+            "a seed"
           ]
         },
         {
@@ -135,8 +135,8 @@
           "instruction_ar": "They write a short letter to their grandfather or their aunt and deliver it themselves or mail it. Writing to a real person is not the same as writing in a notebook.",
           "minutes": 20,
           "materials": [
-            "ورقة",
-            "قلم"
+            "paper",
+            "a pen"
           ]
         },
         {
@@ -159,8 +159,8 @@
           "instruction_ar": "They draw a map from the house to the shop or the mosque using the landmarks they know. Then walk it with them and fix it together.",
           "minutes": 20,
           "materials": [
-            "ورقة",
-            "قلم"
+            "paper",
+            "a pen"
           ]
         },
         {

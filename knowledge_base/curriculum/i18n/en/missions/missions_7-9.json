@@ -13,7 +13,7 @@
       "needs_parent": false,
       "needs_outdoors": true,
       "materials": [],
-      "skill": "الملاحظة",
+      "skill": "Observation",
       "is_published": true
     },
     {
@@ -25,7 +25,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "المسؤولية",
+      "skill": "Responsibility",
       "is_published": true
     },
     {
@@ -37,7 +37,7 @@
       "needs_parent": true,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "صلة الرحم",
+      "skill": "Family ties",
       "is_published": true
     },
     {
@@ -49,10 +49,10 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [
-        "نبتة",
-        "مياه"
+        "a plant",
+        "water"
       ],
-      "skill": "المواظبة",
+      "skill": "Consistency",
       "is_published": true
     },
     {
@@ -64,7 +64,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "الإخلاص",
+      "skill": "Sincerity",
       "is_published": true
     },
     {
@@ -76,10 +76,10 @@
       "needs_parent": false,
       "needs_outdoors": true,
       "materials": [
-        "ورق",
-        "ألوان"
+        "paper",
+        "colouring pencils"
       ],
-      "skill": "التأمل",
+      "skill": "Reflection",
       "is_published": true
     },
     {
@@ -91,7 +91,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "النظام",
+      "skill": "Order",
       "is_published": true
     },
     {
@@ -103,7 +103,7 @@
       "needs_parent": true,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "الإنصات",
+      "skill": "Listening",
       "is_published": true
     },
     {
@@ -115,7 +115,7 @@
       "needs_parent": true,
       "needs_outdoors": true,
       "materials": [],
-      "skill": "الحركة",
+      "skill": "Movement",
       "is_published": true
     },
     {
@@ -127,7 +127,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "الاعتذار",
+      "skill": "Apologising",
       "is_published": true
     },
     {
@@ -139,7 +139,7 @@
       "needs_parent": true,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "الحفظ",
+      "skill": "Memorisation",
       "is_published": true
     },
     {
@@ -151,9 +151,9 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [
-        "كراتين أو مكعبات"
+        "boxes or blocks"
       ],
-      "skill": "الصنع",
+      "skill": "Making",
       "is_published": true
     }
   ]

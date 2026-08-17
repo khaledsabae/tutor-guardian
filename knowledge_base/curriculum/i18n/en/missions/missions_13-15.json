@@ -13,7 +13,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "التعليم",
+      "skill": "Teaching",
       "is_published": true
     },
     {
@@ -25,7 +25,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "الاعتماد على النفس",
+      "skill": "Self-reliance",
       "is_published": true
     },
     {
@@ -37,7 +37,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "صلة الرحم",
+      "skill": "Family ties",
       "is_published": true
     },
     {
@@ -49,7 +49,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "حلّ المشكلات",
+      "skill": "Problem-solving",
       "is_published": true
     },
     {
@@ -61,7 +61,7 @@
       "needs_parent": false,
       "needs_outdoors": true,
       "materials": [],
-      "skill": "الملاحظة",
+      "skill": "Observation",
       "is_published": true
     },
     {
@@ -73,7 +73,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "الإحسان",
+      "skill": "Kindness",
       "is_published": true
     },
     {
@@ -85,10 +85,10 @@
       "needs_parent": true,
       "needs_outdoors": false,
       "materials": [
-        "ورقة",
-        "قلم"
+        "paper",
+        "a pen"
       ],
-      "skill": "الحجّة",
+      "skill": "Reasoning",
       "is_published": true
     },
     {
@@ -100,10 +100,10 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [
-        "ورقة",
-        "قلم"
+        "paper",
+        "a pen"
       ],
-      "skill": "المسؤولية",
+      "skill": "Responsibility",
       "is_published": true
     },
     {
@@ -115,7 +115,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "المواظبة",
+      "skill": "Consistency",
       "is_published": true
     },
     {
@@ -127,7 +127,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "التجرّد",
+      "skill": "Detachment",
       "is_published": true
     },
     {
@@ -139,9 +139,9 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [
-        "كتاب"
+        "a book"
       ],
-      "skill": "الفهم",
+      "skill": "Understanding",
       "is_published": true
     },
     {
@@ -153,7 +153,7 @@
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
-      "skill": "الاعتذار",
+      "skill": "Apologising",
       "is_published": true
     }
   ]
