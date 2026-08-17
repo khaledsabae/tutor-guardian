@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-15T08:30:20.951435Z"
+    "updated_at": "2026-08-17T08:05:07.998700Z"
   },
   "lessons": [
     {
@@ -3478,6 +3478,11 @@
             "file": "docs/lesson_7-9_development_03_podcast.mp3",
             "size_bytes": 21809484,
             "language": "ar"
+          },
+          {
+            "file": "docs/lesson_7-9_development_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36446317
           }
         ],
         "videos": [
@@ -3631,6 +3636,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_cyber_screen_foundations_02",
             "language": "ar"
+          },
+          {
+            "id": "c09db7ce-8a1a-4c6f-9d04-9d2c90a64fb4_infographic",
+            "file": "docs/lesson_assets/infographics/c09db7ce-8a1a-4c6f-9d04-9d2c90a64fb4_infographic_lesson_0-3_cyber_screen_foundations_02_en.png",
+            "title": "Five Steps to Reduce Screens",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -3708,6 +3721,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_cyber_screen_foundations_03",
             "language": "ar"
+          },
+          {
+            "id": "5e7105ad-cfa0-4d3f-91d1-5f9021ecd8e4_infographic",
+            "file": "docs/lesson_assets/infographics/5e7105ad-cfa0-4d3f-91d1-5f9021ecd8e4_infographic_lesson_0-3_cyber_screen_foundations_03_en.png",
+            "title": "Child Sleep and Digital Boundaries",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -3785,6 +3806,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_development_early_moments_01",
             "language": "ar"
+          },
+          {
+            "id": "68fbf1bd-4bae-4c62-8223-8849cbc02456_infographic",
+            "file": "docs/lesson_assets/infographics/68fbf1bd-4bae-4c62-8223-8849cbc02456_infographic_lesson_0-3_development_early_moments_01_en.png",
+            "title": "Baby Movement and Senses Map",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -3862,6 +3891,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_development_early_moments_02",
             "language": "ar"
+          },
+          {
+            "id": "393fccc8-73a0-46e5-aced-6128e9a5cf50_infographic",
+            "file": "docs/lesson_assets/infographics/393fccc8-73a0-46e5-aced-6128e9a5cf50_infographic_lesson_0-3_development_early_moments_02_en.png",
+            "title": "Building Baby's Trust",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -5303,6 +5340,11 @@
             "file": "docs/lesson_13-15_development_brain_identity_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_13-15_development_brain_identity_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 31608250
           }
         ],
         "reports": [
@@ -5528,6 +5570,11 @@
             "file": "docs/lesson_16-18_medical_adult_transition_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_medical_adult_transition_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 33229157
           }
         ],
         "reports": [
@@ -5678,6 +5725,11 @@
             "file": "docs/lesson_2-3_cyber_routine_b02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_cyber_routine_b02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35564464
           }
         ],
         "reports": [
@@ -5903,6 +5955,11 @@
             "file": "docs/lesson_2-3_development_growth_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_development_growth_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 33176117
           }
         ],
         "reports": [
@@ -5978,6 +6035,11 @@
             "file": "docs/lesson_2-3_islamic_attachment_b01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_islamic_attachment_b01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34985277
           }
         ],
         "reports": [
@@ -6053,6 +6115,11 @@
             "file": "docs/lesson_2-3_islamic_attachment_b02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_islamic_attachment_b02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 32664910
           }
         ],
         "reports": [
@@ -6438,6 +6505,11 @@
             "file": "docs/lesson_4-6_islamic_parenting_bond_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_islamic_parenting_bond_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34551132
           }
         ],
         "reports": [
@@ -6588,6 +6660,11 @@
             "file": "docs/lesson_7-9_islamic_parenting_worship_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_islamic_parenting_worship_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35500966
           }
         ],
         "reports": [
@@ -6824,6 +6901,11 @@
             "file": "docs/lesson_0-3_islamic_parenting_fitrah_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_fitrah_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 24070835
           }
         ],
         "reports": [
@@ -6914,6 +6996,11 @@
             "file": "docs/lesson_0-3_islamic_parenting_fitrah_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_fitrah_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 29730246
           }
         ],
         "reports": [
@@ -6990,6 +7077,11 @@
             "file": "docs/lesson_0-3_islamic_parenting_fitrah_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_fitrah_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34625836
           }
         ],
         "reports": [
@@ -7066,6 +7158,11 @@
             "file": "docs/lesson_0-3_islamic_parenting_fitrah_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_fitrah_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 31792021
           }
         ],
         "reports": [
@@ -7174,6 +7271,11 @@
             "file": "docs/lesson_10-12_development_pre_teen_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_development_pre_teen_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37585152
           }
         ]
       },
@@ -7218,6 +7320,11 @@
             "file": "docs/lesson_10-12_development_pre_teen_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_development_pre_teen_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36669051
           }
         ],
         "reports": [
@@ -7294,6 +7401,11 @@
             "file": "docs/lesson_10-12_development_pre_teen_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_development_pre_teen_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38482694
           }
         ],
         "reports": [
@@ -7370,6 +7482,11 @@
             "file": "docs/lesson_10-12_development_pre_teen_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_development_pre_teen_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37872131
           }
         ],
         "reports": [
@@ -7446,6 +7563,11 @@
             "file": "docs/lesson_10-12_islamic_parenting_worship_love_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_islamic_parenting_worship_love_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38745020
           }
         ],
         "reports": [
@@ -7522,6 +7644,11 @@
             "file": "docs/lesson_10-12_islamic_parenting_worship_love_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_islamic_parenting_worship_love_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36943961
           }
         ],
         "reports": [
@@ -7598,6 +7725,11 @@
             "file": "docs/lesson_10-12_islamic_parenting_worship_love_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_islamic_parenting_worship_love_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34258924
           }
         ],
         "reports": [
@@ -8282,6 +8414,11 @@
             "file": "docs/lesson_16-18_development_adult_readiness_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_development_adult_readiness_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 28911144
           }
         ],
         "reports": [
@@ -8358,6 +8495,11 @@
             "file": "docs/lesson_16-18_islamic_parenting_adult_faith_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_islamic_parenting_adult_faith_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36882704
           }
         ],
         "reports": [
@@ -8434,6 +8576,11 @@
             "file": "docs/lesson_16-18_islamic_parenting_adult_faith_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_islamic_parenting_adult_faith_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39793463
           }
         ],
         "reports": [
@@ -8586,6 +8733,11 @@
             "file": "docs/lesson_16-18_islamic_parenting_adult_faith_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_islamic_parenting_adult_faith_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36062224
           }
         ],
         "reports": [
@@ -8662,6 +8814,11 @@
             "file": "docs/lesson_2-3_islamic_first_words_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_islamic_first_words_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 31889252
           }
         ],
         "reports": [
@@ -8738,6 +8895,11 @@
             "file": "docs/lesson_2-3_islamic_first_words_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_islamic_first_words_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 33261279
           }
         ],
         "reports": [
