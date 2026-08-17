@@ -39,6 +39,7 @@ import '../data/progress_models.dart';
 import '../models/lesson_assets.dart';
 import '../providers/lesson_assets_provider.dart';
 import '../providers/favorites_provider.dart';
+import '../widgets/next_step_sheet.dart';
 import '../../../config/app_config.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
@@ -80,6 +81,14 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   Future<void> _markComplete() async {
     final childId = _childId;
     if (childId == null) return;
+    // Read before the awaits — reaching for a provider across an async gap on
+    // a widget that may have been disposed is how this screen would crash.
+    final tryThis = ref
+            .read(lessonProvider(widget.lessonId))
+            .valueOrNull
+            ?.tryThis
+            .trim() ??
+        '';
     setState(() => _marking = true);
     try {
       await ref.read(markLessonProgressProvider(widget.lessonId).notifier)
@@ -96,12 +105,23 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           title: AppLocalizations.of(context).lessonCelebrationTitle,
           message: AppLocalizations.of(context).lessonCelebrationMsg,
         );
+        // «كيفية تنفيذ القيمة» — the complaint this answers. The lesson's
+        // `try_this` is a single doable action, and it was buried as section 4
+        // of 7 mid-scroll. Surface it at the moment the parent has just
+        // finished reading and is asking "so what do I do?".
+        var committed = false;
+        if (mounted && tryThis.isNotEmpty) {
+          committed = await showNextStepSheet(context, tryThis: tryThis);
+        }
         // Finishing a lesson is the strongest positive moment in the app, and
         // until now it recorded none: ReviewPrompt was reachable only from the
         // child journey screen, so the store had 4 reviews from 3,252 users.
-        // ReviewPrompt keeps its own gate — twice before it asks, once ever —
-        // so this widens where a good moment is noticed, not how often we ask.
-        if (mounted) await ReviewPrompt.maybeAsk(context);
+        // ReviewPrompt keeps its own gate — twice before it asks, once ever.
+        // Skipped when the parent just committed to a step: interrupting them
+        // between "I'll do it" and doing it spends the moment on the wrong
+        // thing. The threshold stays at 2 — with 4 reviews from 3,252 users,
+        // raising it would cost more than the interruption does.
+        if (mounted && !committed) await ReviewPrompt.maybeAsk(context);
         if (mounted) Navigator.of(context).pop();
       }
     } catch (e) {

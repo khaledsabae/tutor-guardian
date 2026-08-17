@@ -2720,6 +2720,24 @@ abstract class AppLocalizations {
   /// **'تم تسجيل إكمال الدرس'**
   String get lessonCelebrationMsg;
 
+  /// No description provided for @lessonNextStepTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'خطوتك مع طفلك الليلة'**
+  String get lessonNextStepTitle;
+
+  /// No description provided for @lessonNextStepIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'درسٌ لا يُطبَّق يبقى معلومة. هذه خطوة واحدة، صغيرة، تبدأ بها اليوم.'**
+  String get lessonNextStepIntro;
+
+  /// No description provided for @lessonNextStepConfirm.
+  ///
+  /// In ar, this message translates to:
+  /// **'تمام، سأفعلها 🤍'**
+  String get lessonNextStepConfirm;
+
   /// No description provided for @lessonFavAdd.
   ///
   /// In ar, this message translates to:

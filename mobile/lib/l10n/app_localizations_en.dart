@@ -1436,6 +1436,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lessonCelebrationMsg => 'Lesson completion recorded';
 
   @override
+  String get lessonNextStepTitle => 'Your step with your child tonight';
+
+  @override
+  String get lessonNextStepIntro =>
+      'A lesson you never act on stays a fact. Here is one small step to start with today.';
+
+  @override
+  String get lessonNextStepConfirm => 'Got it — I’ll do it 🤍';
+
+  @override
   String get lessonFavAdd => 'Add to favorites';
 
   @override

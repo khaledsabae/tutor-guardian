@@ -1414,6 +1414,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lessonCelebrationMsg => 'تم تسجيل إكمال الدرس';
 
   @override
+  String get lessonNextStepTitle => 'خطوتك مع طفلك الليلة';
+
+  @override
+  String get lessonNextStepIntro =>
+      'درسٌ لا يُطبَّق يبقى معلومة. هذه خطوة واحدة، صغيرة، تبدأ بها اليوم.';
+
+  @override
+  String get lessonNextStepConfirm => 'تمام، سأفعلها 🤍';
+
+  @override
   String get lessonFavAdd => 'إضافة للمفضلة';
 
   @override

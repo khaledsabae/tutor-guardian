@@ -385,6 +385,79 @@ void main() {
       expect(find.text('أتممت هذا الدرس'), findsOneWidget);
     });
 
+    // The lesson used to end on confetti, a store-review ask, and a pop. The
+    // one thing a parent could actually DO — the lesson's `try_this` — sat
+    // mid-scroll as section 4 of 7 and was never carried forward. «كيفية
+    // تنفيذ القيمة» was on the Facebook complaint verbatim.
+    testWidgets('completing a lesson surfaces its concrete next step',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.lessonJson = _lessonJson(
+        id: 'lesson_4-6_islamic_parenting_adab_01',
+        order: 1,
+      );
+      fake.childProgressJson = {'child_id': 1, 'lessons': []};
+
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 1;
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            locale: Locale('ar'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: LessonScreen(
+              lessonId: 'lesson_4-6_islamic_parenting_adab_01',
+              ageGroup: '4-6',
+              childId: 1,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await scrollToFind(tester, 'أتممت');
+      await tester.tap(find.text('أتممت هذا الدرس'));
+      // `pumpAndSettle` never returns here: the celebration rains confetti on
+      // a repeating controller, so the frame queue is never empty.
+      for (var i = 0; i < 6; i++) {
+        await tester.pump(const Duration(milliseconds: 300));
+      }
+
+      // Celebration first — dismiss it.
+      expect(find.text('ما شاء الله!'), findsOneWidget);
+      await tester.tap(find.text('متابعة'));
+      for (var i = 0; i < 6; i++) {
+        await tester.pump(const Duration(milliseconds: 300));
+      }
+
+      // Then the step itself, quoted from the lesson's own try_this. Two
+      // matches, and that is the point: one is the «جرّب هذا» section buried
+      // mid-scroll in the lesson body, the other is the same sentence promoted
+      // to the moment the parent is asking "so what do I do?".
+      expect(find.text('خطوتك مع طفلك الليلة'), findsOneWidget);
+      expect(
+        find.textContaining('اختر وقتاً يومياً واحداً تتحدث فيه مع طفلك'),
+        findsNWidgets(2),
+      );
+      expect(find.text('تمام، سأفعلها 🤍'), findsOneWidget);
+    });
+
     // `test` not `testWidgets`: no widget is pumped, and riverpod's
     // autoDispose scheduler leaves a pending timer that FakeAsync then
     // reports as a failure even after every expectation has passed.
