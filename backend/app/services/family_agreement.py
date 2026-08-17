@@ -145,6 +145,32 @@ def get_current(device_id: str, child_id: int) -> Optional[dict[str, Any]]:
         conn.close()
 
 
+def awaits_child_signature(device_id: str, child_id: int) -> bool:
+    """A parent has signed a draft and the child has not.
+
+    The signing screen is registered, routed and tested — and unreachable in
+    practice, because the only thing that opens it is the server refusing a
+    surface, and that refusal is behind AGREEMENT_REQUIRED, which is off and
+    stays off until the floor build is live. So a parent signs, hands over the
+    device, and the child lands on the habit screen having never seen the
+    agreement they are supposed to agree to.
+
+    This is the other door: not a refusal, just a fact the client can act on.
+    """
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT 1 FROM family_agreements "
+            "WHERE device_id = ? AND child_id = ? AND status = 'draft' "
+            "AND signed_by_parent_at IS NOT NULL "
+            "AND signed_by_child_at IS NULL LIMIT 1",
+            (device_id, child_id),
+        ).fetchone()
+        return row is not None
+    finally:
+        conn.close()
+
+
 def has_active_agreement(device_id: str, child_id: int) -> bool:
     return get_active(device_id, child_id) is not None
 

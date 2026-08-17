@@ -45,6 +45,20 @@ class HabitChildModeScreen extends ConsumerWidget {
       return const ChildAgreementScreen();
     }
 
+    // A parent signed and the child has not. Show them the agreement before
+    // anything else — this is the same destination the server's refusal would
+    // have named, reached without needing the refusal.
+    //
+    // Without this the signing screen is unreachable in practice: it opens
+    // only on `kChildModeAgreementRequired`, which only appears when
+    // AGREEMENT_REQUIRED is on, and that switch stays off until the floor
+    // build is live. A parent signs, hands over the device, and the child
+    // lands on the habit screen having never seen what they are meant to
+    // agree to.
+    if (state.agreementAwaitsChild) {
+      return const ChildAgreementScreen();
+    }
+
     // Surfaces other than `habit` have their own screen and never load the
     // habit day, so they must be routed before the wait below — otherwise a
     // mission session sits on a spinner that nothing will ever resolve.

@@ -54,6 +54,22 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Scaffold, and its absence is why this screen rendered as a page of
+    // enormous red text on black with yellow underlines.
+    //
+    // That is Flutter drawing Text with no Material ancestor. This screen is
+    // pushed as its own route, and MaterialPageRoute does not supply Material
+    // — Scaffold does, and there was none. It shipped that way in sprint 2
+    // and every widget test passed straight through it, because a test wraps
+    // the widget in MaterialApp and hands it the Material the real app never
+    // did. The tests were testing a tree the user does not get.
+    return Scaffold(
+      appBar: AppBar(title: const Text('النهارده مع طفلي')),
+      body: _body(context),
+    );
+  }
+
+  Widget _body(BuildContext context) {
     if (_loading) {
       return const Center(child: CircularProgressIndicator());
     }

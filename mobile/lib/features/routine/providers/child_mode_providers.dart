@@ -48,6 +48,7 @@ class ChildModeState {
     this.surface = 'habit',
     this.remainingSeconds,
     this.exitRitual = false,
+    this.agreementAwaitsChild = false,
   });
 
   final bool active;
@@ -77,6 +78,15 @@ class ChildModeState {
   /// The last minute has started: wind down, do not cut off.
   final bool exitRitual;
 
+  /// A parent has signed a draft agreement and the child has not.
+  ///
+  /// The signing screen was reachable only when the server *refused* a
+  /// surface, and that refusal lives behind AGREEMENT_REQUIRED — off, and
+  /// staying off. So a parent could sign, hand over the device, and the child
+  /// would land on the habit screen having never seen the agreement. This is
+  /// the door that does not need the gate.
+  final bool agreementAwaitsChild;
+
   ChildModeState copyWith({
     bool? active,
     bool? loading,
@@ -88,6 +98,7 @@ class ChildModeState {
     String? surface,
     int? remainingSeconds,
     bool? exitRitual,
+    bool? agreementAwaitsChild,
   }) =>
       ChildModeState(
         active: active ?? this.active,
@@ -100,6 +111,8 @@ class ChildModeState {
         surface: surface ?? this.surface,
         remainingSeconds: remainingSeconds ?? this.remainingSeconds,
         exitRitual: exitRitual ?? this.exitRitual,
+        agreementAwaitsChild:
+            agreementAwaitsChild ?? this.agreementAwaitsChild,
       );
 
   bool isSubmitted(String habitName) => submittedHabits.contains(habitName);
@@ -222,6 +235,8 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
         surface: (session['surface'] as String?) ?? surface,
         remainingSeconds: session['allowed_seconds'] as int?,
         exitRitual: false,
+        agreementAwaitsChild:
+            session['agreement_awaits_child'] as bool? ?? false,
       );
       // No session id means the server has the child surface switched off and
       // handed back a plain token. Nothing to report on, so nothing beats.
@@ -278,6 +293,8 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
         surface: (session['surface'] as String?) ?? surface,
         remainingSeconds: session['allowed_seconds'] as int?,
         exitRitual: false,
+        agreementAwaitsChild:
+            session['agreement_awaits_child'] as bool? ?? false,
       );
       final token = session['token'] as String?;
       if (token != null) await saveChildToken(token);

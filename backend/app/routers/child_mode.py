@@ -187,6 +187,10 @@ def create_child_session(
         "token": token,
         "expires_at": expires_at,
         "child_id": child_id,
+        # Travels with the session so the app needs no second round trip to
+        # know whether to open the agreement instead of the habit screen.
+        "agreement_awaits_child": family_agreement.awaits_child_signature(
+            device_id, child_id),
         "session_id": session["session_id"],
         "surface": session["surface"],
         "allowed_seconds": session["allowed_seconds"],

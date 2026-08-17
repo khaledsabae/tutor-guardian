@@ -359,6 +359,58 @@ void _regressionTests() {
       expect(source, contains('PopScope'));
     });
 
+    test('every routed screen supplies its own Material', () {
+      // ParentDayScreen rendered as a page of enormous red text on black with
+      // yellow underlines — Flutter drawing Text with no Material ancestor.
+      // It is pushed as its own route, and MaterialPageRoute does not supply
+      // Material; Scaffold does, and there was none.
+      //
+      // Every widget test passed straight through this for weeks, because a
+      // test wraps the widget in MaterialApp and hands it the Material the
+      // real app never did. So this checks the source, not a rendered tree:
+      // a test that mounts the widget is the exact thing that cannot see it.
+      final routes = File('lib/core/app_routes.dart').readAsStringSync();
+      final screens = RegExp(r'\(_\) => (?:const )?(\w+Screen)\(')
+          .allMatches(routes)
+          .map((m) => m.group(1)!)
+          .toSet();
+      expect(screens.length, greaterThan(20));
+
+      final offenders = <String>[];
+      for (final f in Directory('lib').listSync(recursive: true)) {
+        if (f is! File || !f.path.endsWith('.dart')) continue;
+        final src = f.readAsStringSync();
+        for (final cls in screens) {
+          if (!RegExp('class $cls\\b').hasMatch(src)) continue;
+          if (src.contains('Scaffold')) continue;
+          // The four game screens delegate to EduGameShell, which has one.
+          if (src.contains('EduGameShell') || src.contains('Game()')) continue;
+          offenders.add('$cls (${f.path})');
+        }
+      }
+      expect(offenders, isEmpty,
+          reason: 'routed with no Material ancestor:\n${offenders.join("\n")}');
+    });
+
+    test('a child whose parent has signed is shown the agreement', () {
+      // The signing screen opened only on kChildModeAgreementRequired, which
+      // appears only when AGREEMENT_REQUIRED is on — and that switch stays
+      // off until the floor build is live. So it was registered, routed,
+      // tested, and unreachable: a parent signs, hands over the device, and
+      // the child lands on the habit screen.
+      final shell = _codeOnly(
+          'lib/features/routine/screens/habit_child_mode_screen.dart');
+      expect(shell, contains('state.agreementAwaitsChild'));
+
+      // And the server has to actually send it.
+      final router =
+          File('../backend/app/routers/child_mode.py').readAsStringSync();
+      expect(router, contains('"agreement_awaits_child"'));
+      final service =
+          File('../backend/app/services/family_agreement.py').readAsStringSync();
+      expect(service, contains('def awaits_child_signature'));
+    });
+
     test('the routine button column cannot overflow again', () {
       // This exact layout broke daily_routine_qr_dialog_widget_test three
       // separate times in one day: adding the mission + screen-off row, then
