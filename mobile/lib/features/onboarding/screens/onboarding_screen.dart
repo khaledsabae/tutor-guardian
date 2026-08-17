@@ -33,6 +33,7 @@ import '../../../widgets/ui/bouncy_button.dart';
 import '../../program/providers/progress_providers.dart';
 import '../data/onboarding_storage.dart';
 import '../providers/onboarding_providers.dart';
+import 'update_splash_screen.dart' show updateSplashVersion;
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -95,6 +96,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         ageGroup: child.ageGroup,
       );
       await ref.read(onboardingStorageProvider).markOnboardingCompleted();
+      // A fresh install is not an update. `lastSeenVersion` defaults to null,
+      // and main.dart gates the what's-new splash on `!= updateSplashVersion`
+      // — so without this line every brand-new user is handed a changelog for
+      // a version they have never run, wedged between onboarding and the home
+      // screen, at the exact moment they most need orientation. 3,297 devices
+      // registered a child; 1,283 ever opened a lesson. This sits on that path.
+      await storage.markUpdateSeen(updateSplashVersion);
       unawaited(Analytics.onboardingDone());
       // Flip the gate LAST: main.dart rebuilds and swaps OnboardingScreen →
       // RootScaffold. Only pop if this screen was actually pushed onto a

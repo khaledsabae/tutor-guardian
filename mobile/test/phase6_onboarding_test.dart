@@ -16,6 +16,8 @@ import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/features/onboarding/screens/avatar_picker_sheet.dart';
 import 'package:almorabbi/features/onboarding/screens/onboarding_screen.dart';
+import 'package:almorabbi/features/onboarding/screens/update_splash_screen.dart'
+    show updateSplashVersion;
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/program/screens/path_detail_screen.dart';
 import 'package:almorabbi/features/program/widgets/daily_tip_card.dart';
@@ -248,6 +250,42 @@ void main() {
       final storage = OnboardingStorage(prefs);
       expect(storage.onboardingCompleted, isTrue);
       expect(storage.activeChildId, 1);
+    });
+
+    // Reported nowhere, found in the code: main.dart gates the what's-new
+    // splash on `lastSeenVersion != updateSplashVersion`, and a fresh install
+    // has `lastSeenVersion == null`. Every brand-new user was therefore shown
+    // a changelog for a version they had never run, wedged between onboarding
+    // and the home screen. A fresh install is not an update.
+    testWidgets('finishing onboarding marks the update splash as seen',
+        (tester) async {
+      final fake = _FakeTgClient();
+      fake.createChildJson = {
+        'id': 1,
+        'name': 'طفلي',
+        'age_group': '4-6',
+        'gender': null,
+        'avatar_emoji': null,
+        'created_at': '2026-06-08T12:00:00',
+        'updated_at': '2026-06-08T12:00:00',
+      };
+      await pumpOnboarding(tester, fake: fake);
+
+      // The trap, asserted explicitly so it cannot silently come back.
+      final prefsBefore = await SharedPreferences.getInstance();
+      expect(OnboardingStorage(prefsBefore).lastSeenVersion, isNull);
+
+      await tester.tap(find.text('العربية'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('4–6 سنوات'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('ابدأ الرحلة'));
+      await tester.pumpAndSettle();
+
+      final storage = OnboardingStorage(await SharedPreferences.getInstance());
+      // The exact expression main.dart evaluates — false means no splash.
+      expect(storage.lastSeenVersion, updateSplashVersion);
+      expect(storage.lastSeenVersion != updateSplashVersion, isFalse);
     });
   });
 
