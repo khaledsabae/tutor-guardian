@@ -43,6 +43,7 @@ import '../widgets/next_step_sheet.dart';
 import '../../../config/app_config.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
+import '../../../theme/app_palette.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({
@@ -214,12 +215,12 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                       ? AppTheme.success
                       : Dt.accent,
                   icon: _marking
-                      ? const SizedBox(
+                      ? SizedBox(
                           width: 18,
                           height: 18,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: Colors.white,
+                            color: Dt.surface,
                           ),
                         )
                       : null,
@@ -315,7 +316,9 @@ class _Body extends ConsumerWidget {
           title: AppLocalizations.of(context).lessonTryThis,
           body: lesson.tryThis,
           accent: Dt.accentDeep,
-          background: const Color(0xFFFFF4E0),
+          background: AppPalette.current.isDark
+              ? const Color(0xFF3A2F16)
+              : const Color(0xFFFFF4E0),
         ),
         if (lesson.reflectionPrompts.isNotEmpty) ...[
           const SizedBox(height: 16),
@@ -559,7 +562,7 @@ class _ReflectionCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3EEFE),
+        color: Dt.surface,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

@@ -136,7 +136,7 @@ class _FlashcardPagerState extends State<_FlashcardPager> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFF4E0),
+                color: Dt.surface,
                 borderRadius: BorderRadius.circular(Dt.rChip),
               ),
               child: Text(
@@ -281,7 +281,7 @@ class _CardFace extends StatelessWidget {
                       card.front,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
+                        color: Dt.surface,
                         fontWeight: FontWeight.w700,
                         height: 1.7,
                       ),

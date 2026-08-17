@@ -65,10 +65,10 @@ class _HabitCustomizeScreenState extends ConsumerState<HabitCustomizeScreen> {
                       FilledButton.icon(
                         onPressed: _saving ? null : () => _addTemplate(childId),
                         icon: _saving
-                            ? const SizedBox(
+                            ? SizedBox(
                                 width: 18,
                                 height: 18,
-                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                                child: CircularProgressIndicator(strokeWidth: 2, color: Dt.surface),
                               )
                             : const Icon(Icons.add),
                         label: Text(AppLocalizations.of(context).add),

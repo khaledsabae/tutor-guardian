@@ -354,10 +354,10 @@ class _PathCard extends StatelessWidget {
                           children: [
                             Text(
                               path.title,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.w800,
-                                color: Colors.white,
+                                color: Dt.surface,
                                 height: 1.3,
                               ),
                             ),
@@ -449,10 +449,10 @@ class _Pill extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 11.5,
           fontWeight: FontWeight.w700,
-          color: Colors.white,
+          color: Dt.surface,
         ),
       ),
     );

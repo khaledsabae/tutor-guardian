@@ -11,6 +11,8 @@ import '../../../theme/app_theme.dart';
 import '../models/reciters.dart';
 import '../models/surah_names.dart';
 import '../providers/quran_providers.dart';
+import '../../../theme/app_palette.dart';
+import '../../../theme/design_tokens.dart';
 
 /// The daily wird (portion) target — at least this many verses.
 const int kDailyWirdVerses = 10;
@@ -129,7 +131,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
     final current = ref.read(reciterProvider);
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: Dt.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -264,9 +266,13 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
     final isPlaying = _player.playing;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: AppPalette.current.isDark
+          ? AppPalette.current.background
+          : const Color(0xFFFDFBF7),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFDFBF7),
+        backgroundColor: AppPalette.current.isDark
+          ? AppPalette.current.background
+          : const Color(0xFFFDFBF7),
         elevation: 0,
         title: Text(
           surahName,
@@ -345,7 +351,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                             child: LinearProgressIndicator(
                               value: wirdProgress,
                               minHeight: 6,
-                              backgroundColor: Colors.white,
+                              backgroundColor: Dt.surface,
                             ),
                           ),
                         ),
@@ -423,8 +429,8 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Dt.surface,
                     boxShadow: [
                       BoxShadow(
                           color: Colors.black12,

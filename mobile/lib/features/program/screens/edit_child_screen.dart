@@ -12,6 +12,7 @@ import '../../../widgets/ui/bouncy_button.dart';
 import '../../onboarding/screens/avatar_picker_sheet.dart';
 import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
+import '../../../theme/design_tokens.dart';
 
 class EditChildScreen extends ConsumerStatefulWidget {
   const EditChildScreen({super.key, required this.child});
@@ -106,11 +107,11 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
           child: BouncyButton(
             label: busy ? AppLocalizations.of(context).editChildSaving : AppLocalizations.of(context).editChildSaveBtn,
             icon: busy
-                ? const SizedBox(
+                ? SizedBox(
                     width: 18,
                     height: 18,
                     child: CircularProgressIndicator(
-                        strokeWidth: 2, color: Colors.white),
+                        strokeWidth: 2, color: Dt.surface),
                   )
                 : const Icon(Icons.check, color: Colors.white),
             onTap: busy ? null : _submit,
@@ -199,7 +200,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
                   decoration: BoxDecoration(
                     color: AppTheme.surface,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFD0D5DD)),
+                    border: Border.all(color: Dt.surface),
                   ),
                   child: Row(
                     children: [

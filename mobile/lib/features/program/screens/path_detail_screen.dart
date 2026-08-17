@@ -237,7 +237,7 @@ class _Body extends ConsumerWidget {
           const SizedBox(height: 12),
           BouncyButton(
             label: AppLocalizations.of(context).pathDetailShare,
-            color: Colors.white,
+            color: Dt.surface,
             icon: Icon(Icons.share, color: AppTheme.primary),
             onTap: () => _sharePathCompletion(context, detail.path),
           ),
@@ -391,7 +391,7 @@ class _Header extends ConsumerWidget {
                           Expanded(
                             child: AnimatedProgressBar(
                               value: progress!.fraction,
-                              color: Colors.white,
+                              color: Dt.surface,
                               trackColor:
                                   Colors.white.withValues(alpha: .25),
                               height: 12,
@@ -718,7 +718,7 @@ class _LessonNode extends StatelessWidget {
           width: _kNodeSize,
           height: _kNodeSize,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Dt.surface,
             shape: BoxShape.circle,
             border: Border.all(color: style.base, width: 4),
             boxShadow: Dt.softShadow(style.base, alpha: .2),
@@ -746,7 +746,7 @@ class _LessonNode extends StatelessWidget {
           width: _kNodeSize,
           height: _kNodeSize,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Dt.surface,
             shape: BoxShape.circle,
             border: Border.all(color: style.base.withValues(alpha: .55), width: 3),
             boxShadow: Dt.softShadow(style.base, alpha: .15),

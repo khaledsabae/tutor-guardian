@@ -479,10 +479,10 @@ class _AddEventSheetState extends State<_AddEventSheet> {
           FilledButton(
             onPressed: _saving ? null : _submit,
             child: _saving
-                ? const SizedBox(
+                ? SizedBox(
                     height: 20,
                     width: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    child: CircularProgressIndicator(strokeWidth: 2, color: Dt.surface),
                   )
                 : Text(AppLocalizations.of(context).save),
           ),
@@ -686,14 +686,14 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Dt.surface,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: QrImageView(
                       data: claimUrl,
                       version: QrVersions.auto,
                       size: 220,
-                      backgroundColor: Colors.white,
+                      backgroundColor: Dt.surface,
                     ),
                   ),
                   const SizedBox(height: 16),

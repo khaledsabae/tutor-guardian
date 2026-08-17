@@ -13,6 +13,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/program_providers.dart';
+import '../../../theme/design_tokens.dart';
 
 class FavoritesScreen extends ConsumerWidget {
   const FavoritesScreen({super.key});
@@ -206,7 +207,7 @@ class _FavoriteLessonCard extends ConsumerWidget {
         color: AppTheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: Color(0xFFE5E7EB)),
+          side: BorderSide(color: Dt.surface),
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
@@ -287,14 +288,14 @@ class _FavoriteTipCard extends ConsumerWidget {
       color: AppTheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(color: Color(0xFFE5E7EB)),
+        side: BorderSide(color: Dt.surface),
       ),
       child: ListTile(
         leading: Container(
           width: 44,
           height: 44,
           decoration: BoxDecoration(
-            color: const Color(0xFFFFE9C7),
+            color: Dt.surface,
             borderRadius: BorderRadius.circular(12),
           ),
           child: const Icon(

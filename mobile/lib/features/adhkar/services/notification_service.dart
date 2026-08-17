@@ -28,6 +28,7 @@ import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../../main.dart';
 import '../data/family_adhkar.dart';
+import '../../../theme/design_tokens.dart';
 
 
 class NotificationService {
@@ -244,7 +245,7 @@ class NotificationService {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF1F5F9),
+                      color: Dt.surface,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(

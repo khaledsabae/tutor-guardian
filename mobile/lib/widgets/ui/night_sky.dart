@@ -10,6 +10,7 @@ library;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import '../../theme/design_tokens.dart';
 
 /// A field of stars fading in and out at staggered intervals.
 class TwinklingStars extends StatefulWidget {
@@ -67,7 +68,7 @@ class _TwinklingStarsState extends State<TwinklingStars>
                   width: s.size,
                   height: s.size,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Dt.surface,
                     borderRadius: BorderRadius.circular(s.size / 2),
                     boxShadow: [
                       BoxShadow(

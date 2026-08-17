@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/design_tokens.dart';
 
 /// Full-screen, zoomable viewer for a lesson infographic image.
 /// Adds a rotate-screen toggle and a download button that stamps the app
@@ -113,11 +114,11 @@ class _InfographicScreenState extends State<InfographicScreen> {
           IconButton(
             tooltip: AppLocalizations.of(context).infographicDownloadTooltip,
             icon: _saving
-                ? const SizedBox(
+                ? SizedBox(
                     width: 18,
                     height: 18,
                     child: CircularProgressIndicator(
-                        strokeWidth: 2, color: Colors.white),
+                        strokeWidth: 2, color: Dt.surface),
                   )
                 : const Icon(Icons.download),
             onPressed: _saving ? null : _download,

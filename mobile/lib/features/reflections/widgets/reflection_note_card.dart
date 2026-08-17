@@ -12,6 +12,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../data/reflection_storage.dart';
 import '../providers/reflections_providers.dart';
+import '../../../theme/design_tokens.dart';
 
 class ReflectionNoteCard extends ConsumerStatefulWidget {
   const ReflectionNoteCard({super.key, required this.lessonId});
@@ -124,7 +125,7 @@ class _ReflectionNoteCardState extends ConsumerState<ReflectionNoteCard> {
       color: AppTheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        side: const BorderSide(color: Color(0xFFE4E7EC)),
+        side: BorderSide(color: Dt.surface),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),

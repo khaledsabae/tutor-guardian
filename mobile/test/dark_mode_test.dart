@@ -9,6 +9,8 @@
 //   2. Both palettes define every colour, so no surface falls back to a light
 //      value on a dark ground.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -115,6 +117,31 @@ void main() {
       }
     });
 
+    test('no colour inside _build reads the global palette', () {
+      // `_build(p)` may be constructing a theme that is not the live one, so
+      // every colour in it must come from `p`. Three did not — `fillColor`,
+      // `linearTrackColor` and a label colour still read `Dt.*` — so
+      // `AppTheme.dark()`, built while the light palette was current, baked
+      // the LIGHT surface into its input fields. On a dark ground the
+      // assistant's behaviour field rendered as a white pill.
+      //
+      // Asserted against the source rather than the built theme because
+      // building a ThemeData needs GoogleFonts, which has no assets here.
+      final src = File('lib/theme/app_theme.dart').readAsStringSync();
+      final start = src.indexOf('static ThemeData _build(AppPalette p) {');
+      expect(start, greaterThan(0), reason: '_build was renamed');
+      final body = src.substring(start);
+      final leaks = RegExp(
+        r'\b(Dt|AppTheme)\.'
+        r'(primary|primaryDeep|primaryDark|accent|accentDeep|background|'
+        r'surface|surfaceAlt|ink|inkSoft|textPrimary|textSecondary|textMuted|'
+        r'success|track|warningBg|warningFg|dangerBg|dangerFg)\b',
+      ).allMatches(body).map((m) => m.group(0)).toSet();
+      expect(leaks, isEmpty,
+          reason: 'these read the live palette instead of the one being '
+              'built: ${leaks.join(", ")}');
+    });
+
     test('each palette reports its own brightness', () {
       expect(AppPalette.light.brightness, Brightness.light);
       expect(AppPalette.dark.brightness, Brightness.dark);
@@ -124,9 +151,18 @@ void main() {
   });
 
   group('themeModeProvider', () {
-    test('defaults to system so a dark phone needs no setting found', () async {
+    test('defaults to light — dark is opt-in until the audit is clean',
+        () async {
+      // 1.0.48+93 shipped defaulting to ThemeMode.system, which put every
+      // dark-phone user into a theme that was only half converted: 161
+      // surfaces across 49 files still hard-code a light colour, so the
+      // Qur'an screen, the lesson sections and the assistant bubble stayed
+      // light with light text on them.
+      //
+      // When `dart run tool/audit_light_surfaces.dart` exits 0, flip this
+      // back to ThemeMode.system and change this expectation with it.
       final prefs = await SharedPreferences.getInstance();
-      expect(ThemeModeNotifier(prefs).state, ThemeMode.system);
+      expect(ThemeModeNotifier(prefs).state, ThemeMode.light);
     });
 
     test('persists the choice across instances', () async {

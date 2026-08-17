@@ -208,12 +208,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                                 ? AppLocalizations.of(context).onbSaving
                                 : AppLocalizations.of(context).onbStartJourney,
                             icon: busy
-                                ? const SizedBox(
+                                ? SizedBox(
                                     width: 18,
                                     height: 18,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: Colors.white,
+                                      color: Dt.surface,
                                     ),
                                   )
                                 : null,

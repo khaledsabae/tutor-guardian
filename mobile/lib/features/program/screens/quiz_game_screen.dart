@@ -20,6 +20,7 @@ import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../theme/design_tokens.dart';
 
 class QuizGameScreen extends ConsumerStatefulWidget {
   const QuizGameScreen({super.key, this.client});
@@ -547,7 +548,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
                             ? Icon(
                                 isCorrect ? Icons.check : (isSelected ? Icons.close : null),
                                 size: 16,
-                                color: Colors.white,
+                                color: Dt.surface,
                               )
                             : Text(
                                 String.fromCharCode(0x0623 + i), // أ ب ت ث
@@ -572,9 +573,9 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFF8E1),
+                color: Dt.surface,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFFFD54F)),
+                border: Border.all(color: Dt.surface),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

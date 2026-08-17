@@ -311,7 +311,7 @@ class _ChallengeSection extends ConsumerWidget {
       decoration: BoxDecoration(
         color: AppTheme.surface,
         borderRadius: BorderRadius.circular(Dt.rCard),
-        border: Border.all(color: const Color(0xFFE4E7EC)),
+        border: Border.all(color: Dt.surface),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -412,7 +412,7 @@ class _QuranMemoCard extends ConsumerWidget {
           decoration: BoxDecoration(
             color: AppTheme.surface,
             borderRadius: BorderRadius.circular(Dt.rCard),
-            border: Border.all(color: const Color(0xFFCDE7CE)),
+            border: Border.all(color: Dt.surface),
           ),
           child: Row(
             children: [
@@ -616,7 +616,7 @@ class _SuggestedTile extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppTheme.surface,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE4E7EC)),
+            border: Border.all(color: Dt.surface),
           ),
           child: Row(
             children: [

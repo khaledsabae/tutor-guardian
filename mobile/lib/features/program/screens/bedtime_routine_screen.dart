@@ -12,6 +12,7 @@ import '../data/story_models.dart';
 import '../../screen_off/narration_store.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../widgets/ui/night_sky.dart';
+import '../../../theme/design_tokens.dart';
 
 class BedtimeRoutineScreen extends ConsumerStatefulWidget {
   final Story story;
@@ -277,7 +278,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFFFDFBF6),
+        color: Dt.surface,
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
@@ -404,7 +405,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: const Color(0xFFFDFBF6),
+        color: Dt.surface,
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(

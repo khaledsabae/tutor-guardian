@@ -178,7 +178,7 @@ class _RedeemRow extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: const Color(0xFFF3EEFE),
+          color: Dt.surface,
           borderRadius: BorderRadius.circular(Dt.rButton),
         ),
         child: Row(

@@ -162,20 +162,20 @@ class AppTheme {
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: primary,
-        linearTrackColor: Dt.track,
+        linearTrackColor: p.track,
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         backgroundColor: textPrimary,
         contentTextStyle:
-            GoogleFonts.cairo(color: Colors.white, fontWeight: FontWeight.w600),
+            GoogleFonts.cairo(color: surface, fontWeight: FontWeight.w600),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: const Color(0xFFF1EDE5),
+        fillColor: surface,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,

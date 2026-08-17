@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/reflections_providers.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/design_tokens.dart';
 
 class ReflectionNoteBadge extends ConsumerWidget {
   const ReflectionNoteBadge({super.key, required this.lessonId});
@@ -22,7 +23,7 @@ class ReflectionNoteBadge extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFE9C7),
+        color: Dt.surface,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Row(

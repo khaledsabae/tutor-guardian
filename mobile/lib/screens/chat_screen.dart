@@ -721,7 +721,7 @@ class _Composer extends StatelessWidget {
                 child: Icon(
                   // Icons.send auto-mirrors under RTL Directionality.
                   isStreaming ? Icons.stop_rounded : Icons.send,
-                  color: Colors.white,
+                  color: Dt.surface,
                   size: 22,
                 ),
               ),

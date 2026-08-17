@@ -100,7 +100,7 @@ class _CelebrationDialogState extends State<_CelebrationDialog> {
       children: [
         Center(
           child: Dialog(
-            backgroundColor: Colors.white,
+            backgroundColor: Dt.surface,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(Dt.rSheet),
             ),

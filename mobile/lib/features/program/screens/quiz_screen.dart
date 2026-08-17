@@ -271,7 +271,7 @@ class _HintCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.surfaceAlt,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: Dt.surface),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

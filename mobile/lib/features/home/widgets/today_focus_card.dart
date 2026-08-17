@@ -206,7 +206,7 @@ class TodayFocusCard extends ConsumerWidget {
               Expanded(
                 child: AnimatedProgressBar(
                   value: fraction,
-                  color: Colors.white,
+                  color: Dt.surface,
                   trackColor: Colors.white.withValues(alpha: .25),
                   height: 12,
                 ),

@@ -198,7 +198,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
           AppLocalizations.of(context).bedtimeStories,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Colors.white,
+                color: Dt.surface,
                 fontWeight: FontWeight.w800,
                 fontSize: 26,
               ),

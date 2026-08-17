@@ -137,10 +137,21 @@ final appLocaleProvider =
 /// #fb_e7402eaa, 15 Aug 2026. The app had no `darkTheme` and no `ThemeMode`
 /// at all; `design_tokens.dart` said "light mode only for now" in a comment.
 ///
-/// Defaults to [ThemeMode.system], so a parent whose phone is already in dark
-/// mode gets it without finding a setting — which is the point of the request.
+/// Defaults to [ThemeMode.light] — dark is opt-in.
+///
+/// It shipped defaulting to [ThemeMode.system] in 1.0.48+93, on the reasoning
+/// that a parent whose phone is already dark should not have to find a
+/// setting. That was right about the intent and wrong about the readiness:
+/// 161 surfaces across 49 files still hard-code a light colour, so every
+/// dark-phone user was dropped into a half-converted theme — the Qur'an
+/// screen, the lesson sections and the assistant bubble all stayed light with
+/// light text on them. Nobody who had not asked for dark mode should absorb
+/// that.
+///
+/// Flip this back to [ThemeMode.system] once the audit in
+/// `tool/audit_light_surfaces.dart` reports zero.
 class ThemeModeNotifier extends StateNotifier<ThemeMode> {
-  ThemeModeNotifier(this._prefs) : super(ThemeMode.system) {
+  ThemeModeNotifier(this._prefs) : super(ThemeMode.light) {
     final stored = _prefs?.getString(_key);
     if (stored != null) {
       state = ThemeMode.values.firstWhere(

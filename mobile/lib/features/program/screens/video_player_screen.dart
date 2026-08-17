@@ -8,6 +8,7 @@ import 'package:video_player/video_player.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
+import '../../../theme/design_tokens.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String? url;
@@ -181,7 +182,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               ],
             ),
       body: !_ready
-          ? const Center(child: CircularProgressIndicator(color: Colors.white))
+          ? Center(child: CircularProgressIndicator(color: Dt.surface))
           : _errorMessage != null
               ? _ErrorState(message: _errorMessage!)
               : GestureDetector(
@@ -216,7 +217,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               aspectRatio: _controller?.value.aspectRatio ?? 16/9,
                               child: _controller != null && _controller!.value.isInitialized
                                   ? VideoPlayer(_controller!)
-                                  : const Center(child: CircularProgressIndicator(color: Colors.white)),
+                                  : Center(child: CircularProgressIndicator(color: Dt.surface)),
                             ),
                           ),
                         ),
@@ -279,7 +280,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                               _controller!.value.isPlaying
                                           ? Icons.pause
                                           : Icons.play_arrow,
-                                      color: Colors.white,
+                                      color: Dt.surface,
                                       size: 56,
                                     ),
                                   ),

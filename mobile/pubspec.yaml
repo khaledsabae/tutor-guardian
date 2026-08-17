@@ -1,7 +1,7 @@
 name: almorabbi
 description: "المربي الذكي — مساعد تربوي إسلامي آمن للأهل (Flutter / Android-first)."
 publish_to: 'none'
-version: 1.0.48+93
+version: 1.0.49+94
 
 environment:
   sdk: ^3.12.1

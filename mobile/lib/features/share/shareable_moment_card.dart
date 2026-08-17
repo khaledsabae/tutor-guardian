@@ -16,6 +16,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import '../../theme/app_theme.dart';
 import '../referral/referral_service.dart';
 import 'share_service.dart';
+import '../../theme/design_tokens.dart';
 
 class ShareableMomentCard extends StatelessWidget {
   const ShareableMomentCard({
@@ -206,7 +207,7 @@ class ShareableMomentCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Dt.surface,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: AppTheme.primary.withValues(alpha: 0.15)),
           ),

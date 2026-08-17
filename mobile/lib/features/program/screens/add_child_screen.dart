@@ -15,6 +15,7 @@ import '../../../theme/app_theme.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../onboarding/screens/avatar_picker_sheet.dart';
 import '../providers/progress_providers.dart';
+import '../../../theme/design_tokens.dart';
 
 class AddChildScreen extends ConsumerStatefulWidget {
   const AddChildScreen({super.key});
@@ -110,11 +111,11 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
           child: BouncyButton(
             label: busy ? AppLocalizations.of(context).addChildAdding : AppLocalizations.of(context).addChildBtn,
             icon: busy
-                ? const SizedBox(
+                ? SizedBox(
                     width: 18,
                     height: 18,
                     child: CircularProgressIndicator(
-                        strokeWidth: 2, color: Colors.white),
+                        strokeWidth: 2, color: Dt.surface),
                   )
                 : const Icon(Icons.person_add, color: Colors.white),
             onTap: busy ? null : _submit,
@@ -199,7 +200,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
                   decoration: BoxDecoration(
                     color: AppTheme.surface,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFD0D5DD)),
+                    border: Border.all(color: Dt.surface),
                   ),
                   child: Row(
                     children: [

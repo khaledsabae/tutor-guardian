@@ -21,6 +21,7 @@ import 'package:just_audio/just_audio.dart';
 import '../../../theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/l10n_global.dart';
+import '../../../theme/design_tokens.dart';
 
 class PodcastPlayerScreen extends StatefulWidget {
   final String? url;
@@ -226,7 +227,7 @@ class _PlayerView extends StatelessWidget {
                           ? Icons.graphic_eq
                           : Icons.headset,
                       size: 70,
-                      color: Colors.white,
+                      color: Dt.surface,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -346,7 +347,7 @@ class _PlayPauseButton extends StatelessWidget {
           child: Icon(
             isPlaying ? Icons.pause : Icons.play_arrow,
             size: 44,
-            color: Colors.white,
+            color: Dt.surface,
           ),
         ),
       ),
