@@ -192,6 +192,142 @@ void main() {
       expect(find.byIcon(Icons.check_rounded), findsOneWidget);
     });
 
+    // The primary CTA used to be wired to `lessons.first` unconditionally, so
+    // a parent who finished lesson 1 and came back pressed the big button and
+    // landed back in the lesson they had just completed — on a CTA already
+    // greyed out. The trail row was the only way forward, and nothing pointed
+    // at it.
+    testWidgets('PathDetailScreen resumes at the first unfinished lesson',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.pathDetailJson = {
+        ..._pathJson(),
+        'lessons': [
+          _lessonJson(id: 'lesson_4-6_islamic_parenting_adab_01', order: 1),
+          _lessonJson(id: 'lesson_4-6_islamic_parenting_adab_02', order: 2),
+        ],
+      };
+      // Lesson 1 done, lesson 2 untouched.
+      fake.childProgressJson = {
+        'child_id': 1,
+        'lessons': [
+          {
+            'lesson_id': 'lesson_4-6_islamic_parenting_adab_01',
+            'path_id': 'path_4-6_islamic_parenting_adab',
+            'status': 'completed',
+            'started_at': '2026-06-08T00:00:00Z',
+            'completed_at': '2026-06-08T00:05:00Z',
+            'updated_at': '2026-06-08T00:05:00Z',
+          },
+        ],
+      };
+
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 1;
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            locale: Locale('ar'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: PathDetailScreen(
+              pathId: 'path_4-6_islamic_parenting_adab',
+              ageGroup: '4-6',
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // The CTA sits below the lesson trail.
+      await tester.scrollUntilVisible(
+        find.text('واصل المسار'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+
+      // With progress on the path the CTA says "continue", not "start".
+      expect(find.text('واصل المسار'), findsOneWidget);
+      expect(find.text('ابدأ المسار'), findsNothing);
+
+      await tester.tap(find.text('واصل المسار'));
+      await tester.pumpAndSettle();
+
+      // The lesson actually fetched is #2 — the unfinished one.
+      expect(fake.lastGetLessonId, 'lesson_4-6_islamic_parenting_adab_02');
+    });
+
+    testWidgets('PathDetailScreen still says "start" with no progress',
+        (WidgetTester tester) async {
+      final fake = _FakeTgClient();
+      fake.pathDetailJson = {
+        ..._pathJson(),
+        'lessons': [
+          _lessonJson(id: 'lesson_4-6_islamic_parenting_adab_01', order: 1),
+          _lessonJson(id: 'lesson_4-6_islamic_parenting_adab_02', order: 2),
+        ],
+      };
+      fake.childProgressJson = {'child_id': 1, 'lessons': []};
+
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 1, name: 'سارة', ageGroup: '4-6');
+      await storage.markOnboardingCompleted();
+
+      final container = ProviderContainer(
+        overrides: [
+          tgClientProvider.overrideWithValue(fake),
+          sharedPreferencesProvider.overrideWith((_) async => prefs),
+        ],
+      );
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 1;
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            locale: Locale('ar'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: PathDetailScreen(
+              pathId: 'path_4-6_islamic_parenting_adab',
+              ageGroup: '4-6',
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.scrollUntilVisible(
+        find.text('ابدأ المسار'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('ابدأ المسار'), findsOneWidget);
+      expect(find.text('واصل المسار'), findsNothing);
+    });
+
     testWidgets('LessonScreen shows mark-complete button + status chip',
         (WidgetTester tester) async {
       final fake = _FakeTgClient();
@@ -345,9 +481,15 @@ class _FakeTgClient extends TgClient {
   }) async =>
       pathDetailJson ?? {..._pathJson(id: pathId), 'lessons': []};
 
+  /// Which lesson the screen actually asked for — the only way to tell a
+  /// resume from a replay.
+  String? lastGetLessonId;
+
   @override
-  Future<Map<String, dynamic>> getLesson(String lessonId) async =>
-      lessonJson ?? _lessonJson(id: lessonId, order: 1);
+  Future<Map<String, dynamic>> getLesson(String lessonId) async {
+    lastGetLessonId = lessonId;
+    return lessonJson ?? _lessonJson(id: lessonId, order: 1);
+  }
 }
 
 // ── JSON fixtures ────────────────────────────────────────────────────────

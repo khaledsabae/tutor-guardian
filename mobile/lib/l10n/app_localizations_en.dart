@@ -1607,6 +1607,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pathDetailStart => 'Start Path';
 
   @override
+  String get pathDetailContinue => 'Continue Path';
+
+  @override
   String get pathDetailShare => 'Share Path Completion 🤍';
 
   @override

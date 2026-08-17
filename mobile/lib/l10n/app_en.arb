@@ -499,6 +499,7 @@
   "pathDetailLessons": "Lessons ({count})",
   "pathDetailEmpty": "No lessons in this path yet",
   "pathDetailStart": "Start Path",
+  "pathDetailContinue": "Continue Path",
   "pathDetailShare": "Share Path Completion 🤍",
   "pathDetailVideoUnit": "🎥 Unit Video: {title}",
   "pathDetailVideoIntro": "🎥 Intro Video",

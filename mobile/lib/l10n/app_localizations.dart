@@ -3014,6 +3014,12 @@ abstract class AppLocalizations {
   /// **'ابدأ المسار'**
   String get pathDetailStart;
 
+  /// No description provided for @pathDetailContinue.
+  ///
+  /// In ar, this message translates to:
+  /// **'واصل المسار'**
+  String get pathDetailContinue;
+
   /// No description provided for @pathDetailShare.
   ///
   /// In ar, this message translates to:

@@ -499,6 +499,7 @@
   "pathDetailLessons": "الدروس ({count})",
   "pathDetailEmpty": "لا توجد دروس في هذا المسار بعد",
   "pathDetailStart": "ابدأ المسار",
+  "pathDetailContinue": "واصل المسار",
   "pathDetailShare": "شارك إتمام المسار 🤍",
   "pathDetailVideoUnit": "🎥 فيديو الوحدة: {title}",
   "pathDetailVideoIntro": "🎥 فيديو تعريفي",

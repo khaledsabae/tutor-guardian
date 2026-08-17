@@ -204,14 +204,35 @@ class _Body extends ConsumerWidget {
               onTap: () => openLesson(detail.lessons[i].id),
             ),
         const SizedBox(height: 16),
-        BouncyButton(
-          label: AppLocalizations.of(context).pathDetailStart,
-          color: style.base,
-          icon: const Icon(Icons.play_arrow, color: Colors.white),
-          onTap: detail.lessons.isEmpty
-              ? null
-              : () => openLesson(detail.lessons.first.id),
-        ),
+        // The primary button was hard-wired to `lessons.first` no matter what
+        // the parent had already done, so finishing lesson 1 and coming back
+        // the next day meant pressing «ابدأ المسار» and being dropped straight
+        // back into the lesson just completed — onto a CTA already greyed out
+        // reading «أتممت هذا الدرس». The only way forward was to spot the right
+        // row in the trail below. Everything needed to do better —
+        // `progressMap`, `statusFor` — was already in scope, ten lines up.
+        Builder(builder: (context) {
+          CurriculumLesson? next;
+          for (final l in detail.lessons) {
+            final s = progressMap?.statusFor(l.id) ?? ProgressStatus.notStarted;
+            if (s != ProgressStatus.completed) {
+              next = l;
+              break;
+            }
+          }
+          // Every lesson done: the button replays the path from the top, which
+          // is a deliberate choice rather than a dead end.
+          next ??= detail.lessons.isEmpty ? null : detail.lessons.first;
+          final resuming = (progressMap?.completedCount ?? 0) > 0;
+          return BouncyButton(
+            label: resuming
+                ? AppLocalizations.of(context).pathDetailContinue
+                : AppLocalizations.of(context).pathDetailStart,
+            color: style.base,
+            icon: const Icon(Icons.play_arrow, color: Colors.white),
+            onTap: next == null ? null : () => openLesson(next!.id),
+          );
+        }),
         if (progressMap != null && progressMap.completedCount == total) ...[
           const SizedBox(height: 12),
           BouncyButton(

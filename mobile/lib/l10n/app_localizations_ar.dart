@@ -1583,6 +1583,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pathDetailStart => 'ابدأ المسار';
 
   @override
+  String get pathDetailContinue => 'واصل المسار';
+
+  @override
   String get pathDetailShare => 'شارك إتمام المسار 🤍';
 
   @override
