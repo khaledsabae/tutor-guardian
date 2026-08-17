@@ -84,7 +84,10 @@
       "estimated_minutes": 30,
       "needs_parent": true,
       "needs_outdoors": false,
-      "materials": ["ورقة", "قلم"],
+      "materials": [
+        "ورقة",
+        "قلم"
+      ],
       "skill": "الحجّة",
       "is_published": true
     },
@@ -96,7 +99,10 @@
       "estimated_minutes": 25,
       "needs_parent": false,
       "needs_outdoors": false,
-      "materials": ["ورقة", "قلم"],
+      "materials": [
+        "ورقة",
+        "قلم"
+      ],
       "skill": "المسؤولية",
       "is_published": true
     },
@@ -105,7 +111,7 @@
       "domain": "tarbiyah",
       "title_ar": "صلّ الفجر في وقته ٣ أيام",
       "instruction_ar": "ثلاثة أيام متتالية. وإن فاتك يوم، تبدأ من الأول — ليس عقابًا، بل ليكون الثلاثة متّصلة.",
-      "estimated_minutes": 20,
+      "estimated_minutes": 60,
       "needs_parent": false,
       "needs_outdoors": false,
       "materials": [],
@@ -132,7 +138,9 @@
       "estimated_minutes": 40,
       "needs_parent": false,
       "needs_outdoors": false,
-      "materials": ["كتاب"],
+      "materials": [
+        "كتاب"
+      ],
       "skill": "الفهم",
       "is_published": true
     },
