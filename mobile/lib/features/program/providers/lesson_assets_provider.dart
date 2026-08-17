@@ -1,8 +1,5 @@
-import 'dart:io' show Platform;
-import 'dart:ui' show PlatformDispatcher;
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/l10n_global.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../models/flashcard_deck.dart';
 import '../models/lesson_assets.dart';
@@ -29,19 +26,13 @@ import 'program_providers.dart';
 /// who just wants the app in English.
 ///
 /// One language. `appLocaleProvider` is the setting; this reads it.
+/// The resolution itself lives in [resolvedContentLanguage] so that
+/// `TgClient.uiLanguage` — which decides the language of curriculum *text* —
+/// cannot drift from the one media reads. It did drift: text stayed Arabic
+/// while media followed the device, so an English phone got English audio over
+/// Arabic lessons.
 final contentLanguageProvider = Provider<String>((ref) {
-  // Mirrors main.dart's locale resolution: an explicit app locale, else the
-  // device's — pinned to Arabic under FLUTTER_TEST exactly as MaterialApp is.
-  final uiCode = ref.watch(appLocaleProvider)?.languageCode ??
-      (Platform.environment.containsKey('FLUTTER_TEST')
-          ? 'ar'
-          : PlatformDispatcher.instance.locale.languageCode);
-  // Resolved against supportedLocales rather than a hard-coded ar/en pair, so
-  // adding a third language does not silently leave its speakers on Arabic
-  // media while their UI switches.
-  final supported =
-      AppLocalizations.supportedLocales.map((l) => l.languageCode).toSet();
-  return supported.contains(uiCode) ? uiCode : 'ar';
+  return resolvedContentLanguage(ref.watch(appLocaleProvider)?.languageCode);
 });
 
 final lessonAssetsProvider = FutureProvider.autoDispose

@@ -197,6 +197,7 @@ async def get_next_lesson(
     request: Request,
     age_group: str = Query(..., description="الفئة العمرية للطفل"),
     child_id: Optional[int] = Query(None, description="لتخطّي ما أُنجز"),
+    lang: Optional[str] = Query(None, description="لغة المحتوى: ar/en"),
 ):
     """The single lesson to put in front of this parent right now.
 
@@ -224,7 +225,12 @@ async def get_next_lesson(
             )
         path_id = candidates[0]["id"]
 
-    lessons = cl.get_lessons_for_path(path_id)
+    # The titles below are what the home screen's primary CTA renders, so they
+    # follow the reader's language. The id-only lookups above stay language-free
+    # — `_translate` preserves ids, so translating just to compare them would
+    # be work with no effect.
+    content_lang = _resolve_lang(lang, request)
+    lessons = cl.get_lessons_for_path(path_id, lang=content_lang)
     if not lessons:
         raise HTTPException(
             status_code=404, detail=f"المسار '{path_id}' بلا دروس منشورة."
@@ -255,7 +261,7 @@ async def get_next_lesson(
     if nxt is None:
         nxt = lessons[-1]
 
-    path = cl.get_path(path_id) or {}
+    path = cl.get_path(path_id, lang=content_lang) or {}
     return NextLessonResponse(
         lesson_id=nxt["id"],
         path_id=path_id,

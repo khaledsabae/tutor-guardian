@@ -18,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../api/tg_client.dart';
+import '../../../l10n/l10n_global.dart';
 import '../data/onboarding_storage.dart';
 
 /// Async-loaded once at app start. All other providers wait on this
@@ -96,9 +97,14 @@ class AppLocaleNotifier extends StateNotifier<Locale?> {
       final code = _prefs.getString('tg.ui_language');
       if (code != null) {
         state = Locale(code);
-        TgClient.uiLanguage = code;
       }
     }
+    // No stored choice does NOT mean Arabic. `state` stays null so MaterialApp
+    // follows the device — but `TgClient.uiLanguage` used to stay null too, so
+    // curriculum TEXT carried no `?lang=` and came back Arabic while media
+    // followed the device and came back English. Both now read the same
+    // resolver, so text and audio can no longer disagree.
+    TgClient.uiLanguage = resolvedContentLanguage(state?.languageCode);
   }
 
   Future<void> setLocale(String languageCode) async {

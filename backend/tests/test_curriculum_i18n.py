@@ -310,3 +310,57 @@ def test_a_missing_english_file_falls_back_to_arabic_not_to_nothing(
     body = client.get(f"/api/program/lesson-assets/{lid}?lang=en").json()
     assert body["podcast_mp3"] is None
     assert body["languages"]["podcast"] is None
+
+
+# ── Endpoints that had the translation and never asked for it ─────────────
+#
+# The two bug reports were filed two days apart pointing opposite ways, which
+# looked like one flaky bug and was actually one split: text and media resolved
+# language from two different places. These three endpoints were the text half
+# — the translations existed on disk and nothing requested them.
+
+
+def _token(client):
+    r = client.post("/api/chat/sessions", json={"device_id": "dev-lang"})
+    assert r.status_code == 201, r.text
+    return {"Authorization": f"Bearer {r.json()['token']}"}
+
+
+def test_next_lesson_serves_the_requested_language(client):
+    """The home screen's primary CTA. It took no `lang` at all, so the first
+    line of curriculum a parent ever saw was Arabic whatever they had set."""
+    hdr = _token(client)
+    ar = client.get("/api/program/next-lesson?age_group=4-6", headers=hdr)
+    en = client.get("/api/program/next-lesson?age_group=4-6&lang=en", headers=hdr)
+    assert ar.status_code == 200 and en.status_code == 200, (ar.text, en.text)
+    ar_body, en_body = ar.json(), en.json()
+
+    # Same lesson — language must not change which lesson is chosen.
+    assert ar_body["lesson_id"] == en_body["lesson_id"]
+    assert ar_body["path_id"] == en_body["path_id"]
+    # ...but the titles it renders differ.
+    assert en_body["title"] != ar_body["title"], "title still Arabic under ?lang=en"
+    assert en_body["path_title"] != ar_body["path_title"], "path_title still Arabic"
+
+
+def test_next_lesson_falls_back_to_arabic_for_an_untranslated_language(client):
+    hdr = _token(client)
+    ar = client.get("/api/program/next-lesson?age_group=4-6", headers=hdr).json()
+    fr = client.get("/api/program/next-lesson?age_group=4-6&lang=fr",
+                    headers=hdr).json()
+    assert fr["title"] == ar["title"]
+    assert fr["path_title"] == ar["path_title"]
+
+
+def test_daily_tip_and_search_accept_a_language(client):
+    """Both already took `lang`; the client never sent it. Pin the server half
+    so the plumbing cannot regress underneath the app fix."""
+    hdr = _token(client)
+    ar = client.get("/api/program/daily-tip?age_group=4-6", headers=hdr)
+    en = client.get("/api/program/daily-tip?age_group=4-6&lang=en", headers=hdr)
+    assert ar.status_code == 200 and en.status_code == 200
+    assert en.json()["id"] == ar.json()["id"], "language changed which tip was picked"
+    assert en.json()["text"] != ar.json()["text"], "tip still Arabic under ?lang=en"
+
+    s = client.get("/api/program/search?q=الصدق&limit=5&lang=en", headers=hdr)
+    assert s.status_code == 200, s.text

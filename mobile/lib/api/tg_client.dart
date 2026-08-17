@@ -654,8 +654,17 @@ class TgClient {
 
   Future<Map<String, dynamic>> searchCurriculum(String query,
       {int limit = 20}) async {
+    final lang = uiLanguage;
     final uri = Uri.parse('$_baseUrl/api/program/search').replace(
-      queryParameters: {'q': query, 'limit': '$limit'},
+      queryParameters: {
+        'q': query,
+        'limit': '$limit',
+        // The backend has accepted `lang` here since 2026-08-13. The client
+        // never sent it, so an English reader's search results came back
+        // Arabic — one of the surfaces behind «أغير الاعدادات الى اللغة
+        // الانجليزية لكن الدروس باللغة العربية».
+        if (lang != null && lang.isNotEmpty) 'lang': lang,
+      },
     );
     final resp = await _http
         .get(uri, headers: const {'Accept': 'application/json'})
@@ -672,6 +681,11 @@ class TgClient {
   }) async {
     final qs = <String, String>{'age_group': ageGroup};
     if (timeOfDay != null && timeOfDay.isNotEmpty) qs['time_of_day'] = timeOfDay;
+    // All 210 daily tips have English translations on disk and none of them
+    // were reachable from the app: this call carried no `lang`. The daily tip
+    // is a quarter of all conversation starts.
+    final lang = uiLanguage;
+    if (lang != null && lang.isNotEmpty) qs['lang'] = lang;
     final uri = Uri.parse(
       '$_baseUrl/api/program/daily-tip',
     ).replace(queryParameters: qs);
@@ -709,10 +723,15 @@ class TgClient {
   }) async {
     final session = await ensureSession();
     final token = session.token;
+    final lang = uiLanguage;
     final uri = Uri.parse('$_baseUrl/api/program/next-lesson').replace(
       queryParameters: {
         'age_group': ageGroup,
         if (childId != null) 'child_id': '$childId',
+        // This feeds the home screen's primary CTA — the lesson title and
+        // path title a parent reads before anything else. It was always
+        // Arabic: the endpoint took no `lang` at all.
+        if (lang != null && lang.isNotEmpty) 'lang': lang,
       },
     );
     final resp = await _http
