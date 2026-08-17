@@ -1,0 +1,176 @@
+{
+  "version": "1.0.0",
+  "description": "Screen-free activities, arranged by age band. The source for the \"screen-free alternatives\" section, and the destination the age-gate message sends a parent to instead of being a dead end. A local asset, not an API endpoint: this is the first screen a parent of an infant sees, and they may open it with no connection.",
+  "bands": {
+    "under-2": {
+      "note": "No screens at all at this age. Everything here happens between you and your child, not between your child and a device.",
+      "activities": [
+        {
+          "id": "name_the_world",
+          "title_ar": "Name What's Around You",
+          "instruction_ar": "Carry them and walk around the house, and name out loud and clearly everything you pass: the door, the window, the cup. The word they hear from you now is the one they'll say months from now.",
+          "minutes": 5,
+          "materials": []
+        },
+        {
+          "id": "picture_book_turn",
+          "title_ar": "A Picture Book They Turn Themselves",
+          "instruction_ar": "Open a thick-paged picture book with them and let them turn the pages. Don't correct the order and don't rush them — the point is that they handle the paper, not that they follow the story.",
+          "minutes": 10,
+          "materials": [
+            "كتاب مصوّر"
+          ]
+        },
+        {
+          "id": "table_setting",
+          "title_ar": "Set the Table Together",
+          "instruction_ar": "Hand them the spoon and the plastic cup and lay the things out together before the meal. Taking part in real work does more good at this age than any educational toy.",
+          "minutes": 5,
+          "materials": []
+        },
+        {
+          "id": "peekaboo",
+          "title_ar": "Peekaboo",
+          "instruction_ar": "Cover your face with your hands, then appear again. Do it over. This game teaches them that what goes away comes back — and that's the first lesson in feeling safe.",
+          "minutes": 5,
+          "materials": []
+        },
+        {
+          "id": "water_pour",
+          "title_ar": "Pouring Water",
+          "instruction_ar": "Two cups and a little water, on top of a towel. Let them pour from one into the other. It will spill, and that's part of the exercise, not a mistake in it.",
+          "minutes": 10,
+          "materials": [
+            "كوبان",
+            "منشفة"
+          ]
+        }
+      ]
+    },
+    "2-3": {
+      "note": "Audio is allowed and the screen stays off. And these activities don't need a device in the first place.",
+      "activities": [
+        {
+          "id": "sorting_colors",
+          "title_ar": "Sorting by Color",
+          "instruction_ar": "Gather the laundry together and sort it by color: whites here and colors here. Real housework, and sorting practice at the same time.",
+          "minutes": 10,
+          "materials": []
+        },
+        {
+          "id": "dough",
+          "title_ar": "Dough in Their Hands",
+          "instruction_ar": "A piece of dough and a table. Let them knead and shape with no mold and no example to copy.",
+          "minutes": 15,
+          "materials": [
+            "عجين"
+          ]
+        },
+        {
+          "id": "listen_and_walk",
+          "title_ar": "Walk and Listen",
+          "instruction_ar": "Walk around the house or down the street, and stop every minute and ask them: what do you hear right now? A bird? A car? Listening is a skill you train.",
+          "minutes": 10,
+          "materials": []
+        },
+        {
+          "id": "big_and_small",
+          "title_ar": "Big and Small",
+          "instruction_ar": "Gather five things from around the house and line them up from smallest to biggest. Then flip the order.",
+          "minutes": 10,
+          "materials": []
+        }
+      ]
+    },
+    "4-6": {
+      "note": "At this age a screen session needs you present. And these activities don't need a device at all.",
+      "activities": [
+        {
+          "id": "plant_a_seed",
+          "title_ar": "Plant a Seed Together",
+          "instruction_ar": "A cup of soil and a lentil or bean seed. They're the one responsible for watering it every day. The waiting itself is the lesson.",
+          "minutes": 15,
+          "materials": [
+            "كوب",
+            "تراب",
+            "بذرة"
+          ]
+        },
+        {
+          "id": "five_greens",
+          "title_ar": "Green Hunter",
+          "instruction_ar": "Go out to the balcony or the yard together and look for five things that are green, then have them tell you about them.",
+          "minutes": 15,
+          "materials": []
+        },
+        {
+          "id": "retell_the_day",
+          "title_ar": "Tell Me Your Day Backwards",
+          "instruction_ar": "Ask them to tell you their day from the end to the beginning. An exercise in memory and sequence, and it shows you what actually stuck with them.",
+          "minutes": 10,
+          "materials": []
+        },
+        {
+          "id": "build_a_tower",
+          "title_ar": "The Tallest Tower",
+          "instruction_ar": "Out of the books or the boxes or the blocks: the tallest tower that stands. And when it falls, build it again and ask them why it fell.",
+          "minutes": 15,
+          "materials": []
+        },
+        {
+          "id": "helping_hand",
+          "title_ar": "A Real Job",
+          "instruction_ar": "Give them one real household job that's theirs alone this week — watering the plants, for instance. Responsibility is given, not explained.",
+          "minutes": 10,
+          "materials": []
+        }
+      ]
+    },
+    "7-9": {
+      "note": "The daily mission inside the app is built on this same bank. These are for anyone who wanted more than one.",
+      "activities": [
+        {
+          "id": "letter_to_someone",
+          "title_ar": "A Handwritten Letter",
+          "instruction_ar": "They write a short letter to their grandfather or their aunt and deliver it themselves or mail it. Writing to a real person is not the same as writing in a notebook.",
+          "minutes": 20,
+          "materials": [
+            "ورقة",
+            "قلم"
+          ]
+        },
+        {
+          "id": "fix_something",
+          "title_ar": "Fix Something Together",
+          "instruction_ar": "Something simple that's broken around the house — a toy, a drawer, a button. Open it up together and try. The result matters less than the attempt.",
+          "minutes": 25,
+          "materials": []
+        },
+        {
+          "id": "cook_one_thing",
+          "title_ar": "A Dish They Make Themselves",
+          "instruction_ar": "Something simple they can manage on their own while you keep an eye: a salad, a sandwich, eggs. Then they serve it to the family.",
+          "minutes": 25,
+          "materials": []
+        },
+        {
+          "id": "map_the_street",
+          "title_ar": "Draw Your Street",
+          "instruction_ar": "They draw a map from the house to the shop or the mosque using the landmarks they know. Then walk it with them and fix it together.",
+          "minutes": 20,
+          "materials": [
+            "ورقة",
+            "قلم"
+          ]
+        },
+        {
+          "id": "quiet_ten",
+          "title_ar": "Ten Minutes of Quiet",
+          "instruction_ar": "Sit for ten minutes with no talking and no device, then each of you says what they noticed. Harder than it sounds, and more useful than it sounds.",
+          "minutes": 10,
+          "materials": []
+        }
+      ]
+    }
+  }
+}

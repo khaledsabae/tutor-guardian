@@ -26,6 +26,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from app.db.init_db import get_conn
+from app.services import content_lang
 
 _UTC = timezone.utc
 
@@ -59,9 +60,10 @@ def _iso(moment: datetime) -> str:
 
 # ── The bank ───────────────────────────────────────────────────────────────
 
-def load_missions(age_band: str) -> list[dict[str, Any]]:
+def load_missions(age_band: str, lang: Optional[str] = None) -> list[dict[str, Any]]:
     """Published missions for a band that clear the leverage floor."""
-    path = MISSIONS_DIR / f"missions_{age_band}.json"
+    path = content_lang.localised(
+        MISSIONS_DIR, f"missions_{age_band}.json", lang)
     if not path.exists():
         return []
     try:
@@ -101,9 +103,9 @@ def _pick(candidates: list[dict[str, Any]], child_id: int,
 # ── Assignment and claiming ────────────────────────────────────────────────
 
 def today_mission(device_id: str, child_id: int, age_band: str,
-                  local_date: str) -> Optional[dict[str, Any]]:
+                  local_date: str, lang: Optional[str] = None) -> Optional[dict[str, Any]]:
     """The child's card for today, assigning one on first ask."""
-    missions = load_missions(age_band)
+    missions = load_missions(age_band, lang)
     if not missions:
         return None
 
@@ -188,7 +190,7 @@ def claim(child_id: int, mission_id: int) -> dict[str, Any]:
 
 # ── The parent's evening ───────────────────────────────────────────────────
 
-def pending_for_device(device_id: str) -> list[dict[str, Any]]:
+def pending_for_device(device_id: str, lang: Optional[str] = None) -> list[dict[str, Any]]:
     """Everything waiting on the parent, across all their children."""
     conn = get_conn()
     try:
@@ -202,7 +204,8 @@ def pending_for_device(device_id: str) -> list[dict[str, Any]]:
         out = []
         for row in rows:
             from app.core.taxonomy import map_profile_age_to_band
-            missions = load_missions(map_profile_age_to_band(row["age_group"]))
+            missions = load_missions(
+                map_profile_age_to_band(row["age_group"]), lang)
             card = _row_to_card(row, missions)
             card["child_id"] = row["child_id"]
             card["child_name"] = row["child_name"]
@@ -282,6 +285,9 @@ def leverage(child_id: int, since_date: str, screen_seconds: int) -> dict[str, A
     # One lookup across every published band: a child's mission may have been
     # assigned under a band they have since grown out of, and the minutes they
     # actually spent do not stop counting because of a birthday.
+    # No `lang`: this sums estimated_minutes, which is identical in every
+    # translation. Passing a language here would imply the leverage figure
+    # changes per locale.
     lookup: dict[str, int] = {}
     for band in ("4-6", "7-9", "10-12", "13-15", "16-18"):
         for m in load_missions(band):

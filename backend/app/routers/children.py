@@ -708,7 +708,8 @@ class AgreementDraftIn(BaseModel):
     "/children/{child_id}/agreement/clauses/suggested",
     summary="Suggested clause pairs for the child's age band",
 )
-def suggested_agreement_clauses(child_id: int, request: Request):
+def suggested_agreement_clauses(child_id: int, request: Request,
+                                lang: str | None = Query(None)):
     """Pairs, always. The UI shows the parent's clause next to the child's so
     the trade is visible while they edit rather than discovered after."""
     device_id = _require_device_id(request)
@@ -722,8 +723,8 @@ def suggested_agreement_clauses(child_id: int, request: Request):
         conn.close()
     band = map_profile_age_to_band(age_group)
     return {"child_id": child_id, "age_band": band,
-            "pairs": family_agreement.load_clause_bank(band),
-            "clauses": family_agreement.suggested_clauses(band)}
+            "pairs": family_agreement.load_clause_bank(band, lang),
+            "clauses": family_agreement.suggested_clauses(band, lang)}
 
 
 @router.get("/children/{child_id}/agreement", summary="The child's agreement")
@@ -798,9 +799,9 @@ class MissionConfirmIn(BaseModel):
 
 @router.get("/children/missions/pending",
             summary="Every mission across every child that is waiting on the parent")
-def pending_missions(request: Request):
+def pending_missions(request: Request, lang: str | None = Query(None)):
     device_id = _require_device_id(request)
-    return {"pending": child_missions.pending_for_device(device_id)}
+    return {"pending": child_missions.pending_for_device(device_id, lang)}
 
 
 @router.post("/children/missions/confirm",
@@ -822,7 +823,8 @@ def confirm_missions(body: MissionConfirmIn, request: Request):
 @router.get("/children/{child_id}/today",
             summary="The parent's one-screen view of a child's day")
 def child_day_summary(child_id: int, request: Request,
-                      tz_offset_minutes: int = 0):
+                      tz_offset_minutes: int = 0,
+                      lang: str | None = Query(None)):
     """Screen, listening, the mission, the agreement — on one card.
 
     Assembled server-side so the app makes one call rather than four, and so
@@ -852,7 +854,8 @@ def child_day_summary(child_id: int, request: Request,
     usage = child_budget.today_usage(child_id, local_date, policy)
 
     agreement = family_agreement.get_active(device_id, child_id)
-    mission = child_missions.today_mission(device_id, child_id, band_name, local_date)
+    mission = child_missions.today_mission(
+        device_id, child_id, band_name, local_date, lang)
 
     month_start = local_date[:8] + "01"
     leverage = child_missions.leverage(
@@ -910,7 +913,8 @@ def _month_screen_seconds(child_id: int, month_start: str) -> int:
 
 @router.get("/children/{child_id}/license",
             summary="Where a child is on the internet licence")
-def child_license_summary(child_id: int, request: Request):
+def child_license_summary(child_id: int, request: Request,
+                          lang: str | None = Query(None)):
     """The level, the progress, and — the point of the whole feature — the
     talking points for the situations the child has actually met."""
     device_id = _require_device_id(request)

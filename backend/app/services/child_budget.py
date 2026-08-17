@@ -279,6 +279,10 @@ def open_session(device_id: str, child_id: int, surface: str,
         # bank exists for the band: no bank, nothing to agree to, no gate —
         # and writing clauses_10-12.json later turns it on for that band with
         # no code change.
+        # No `lang`: this asks whether a bank exists at all, and the loader
+        # falls back to Arabic, so every language gets the same answer. A gate
+        # that opened or closed depending on the phone's locale would be a
+        # different feature for English families.
         gated = agreement_required() and bool(
             family_agreement.load_clause_bank(band_name)
         )

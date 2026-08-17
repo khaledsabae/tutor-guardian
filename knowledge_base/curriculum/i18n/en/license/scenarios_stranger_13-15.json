@@ -1,0 +1,135 @@
+{
+  "level_key": "stranger",
+  "age_band": "13-15",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Level one for a 13-15 year old. Not a scaled-up version of the situations for ten year olds: at this age the stranger rarely looks like a stranger — he starts out as a friend of a friend, or as an account that knows the name of your school, or as someone who agrees with you about something nobody else agrees with you about. And what keeps a teenager from telling their parents is not ignorance but embarrassment, so every talking point here is written to take the embarrassment down, not to explain the danger.",
+  "scenarios": [
+    {
+      "key": "teen_friend_of_friend",
+      "situation_ar": "Someone added you and said he's a friend of one of your friends. You asked your friend, who said \"yeah, I think I know him.\" Two days later he started asking you personal questions.",
+      "source_unit_id": "cyb-3144e18d",
+      "alerts_parent": true,
+      "choices": [
+        {
+          "key": "answer_some",
+          "text_ar": "I answer what isn't too personal and dodge the rest.",
+          "outcome": "critical"
+        },
+        {
+          "key": "block",
+          "text_ar": "I block him and that's the end of it.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "tell",
+          "text_ar": "I stop talking to him and tell them at home.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "\"Yeah, I think I know him\" is not confirmation — that is exactly how one person gets into a whole circle of friends. Make your first question about the other person, not about your kid: \"how did he get to you?\" A teenager this age feels they were fooled, and that feeling is what stops them from talking — so talk about how clever the method was, not about how they missed it."
+    },
+    {
+      "key": "teen_photo_pressure",
+      "situation_ar": "Someone you've been talking to for a while asks for a private picture, and when you hesitate he says: \"What's wrong, don't you trust me? I sent you one first.\"",
+      "source_unit_id": "cyb-e93ba81b",
+      "alerts_parent": true,
+      "choices": [
+        {
+          "key": "send",
+          "text_ar": "I send it, he sent one first, so there's no risk.",
+          "outcome": "critical"
+        },
+        {
+          "key": "refuse_stay",
+          "text_ar": "I say no but keep talking to him like normal.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "tell",
+          "text_ar": "I stop the whole conversation and tell an adult.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "\"I sent you one first\" is the oldest move in blackmail, and the picture he sent is probably not his. The hardest part here is that your kid may have already sent one and is listening to you right now, scared — so say this sentence out loud at least once: \"if you've already sent one, come and tell me, you will not be punished.\" That is the difference between finding out in an hour and finding out in a month."
+    },
+    {
+      "key": "teen_screenshot_shared",
+      "situation_ar": "A classmate posted a screenshot of a private conversation between you and him in a group chat, and everyone laughed. And when you blew up at him he said: \"It's nothing, I'm joking.\"",
+      "source_unit_id": null,
+      "authored": true,
+      "alerts_parent": false,
+      "choices": [
+        {
+          "key": "revenge",
+          "text_ar": "I post something about him too.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "leave_quiet",
+          "text_ar": "I leave the group and don't say anything.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "ask_then_tell",
+          "text_ar": "I ask him to delete it, and I tell them at home if he refuses.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "This isn't grooming — this is the most common kind of harm at this age, and the kind that most often passes with nobody knowing about it. Hitting back turns your kid from the one who was hurt into one of the parties, and leaving quietly lets the screenshot spread. Ask them: \"do you want me to step in, or do you want me to help you handle it yourself?\" — that choice is what gets them to talk next time."
+    },
+    {
+      "key": "teen_voice_chat_questions",
+      "situation_ar": "In a voice chat inside a game, someone older than you has started playing with you every day. And he's begun asking about the house and about your parents and their schedules.",
+      "source_unit_id": "cyb-c3862bd9",
+      "alerts_parent": true,
+      "choices": [
+        {
+          "key": "vague",
+          "text_ar": "I give answers that aren't exact so he doesn't get upset.",
+          "outcome": "critical"
+        },
+        {
+          "key": "mute",
+          "text_ar": "I mute him and keep playing.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "tell",
+          "text_ar": "I leave the game and tell my dad or my mom.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "The questions about the parents' schedules aren't curiosity — they're the one piece of information that makes a difference. And your kid will probably defend him (\"he's been my friend for months\") and that's natural, because he really has been, for months. Don't attack the person; ask about the question itself: \"why did he ask about our schedules?\""
+    },
+    {
+      "key": "teen_secret_account",
+      "situation_ar": "Someone suggested you open a second account \"so the two of you can talk freely without anyone seeing.\"",
+      "source_unit_id": "cyb-04214fb9",
+      "alerts_parent": true,
+      "choices": [
+        {
+          "key": "open_it",
+          "text_ar": "I open it, there's nothing wrong going on between us.",
+          "outcome": "critical"
+        },
+        {
+          "key": "refuse_silent",
+          "text_ar": "I say no and don't tell anyone.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "tell",
+          "text_ar": "I say no and tell them that someone asked me to.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "The second account is the step after which everything becomes invisible. And keep in mind that your kid may have opened one already for completely ordinary reasons, so don't turn the conversation into an interrogation. The sentence that opens the door: \"has anyone ever asked you to hide something from us before?\" — and that is a completely different question from \"do you have another account?\""
+    }
+  ]
+}

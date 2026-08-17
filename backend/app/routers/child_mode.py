@@ -350,7 +350,8 @@ def child_sign_agreement(request: Request):
 # ── The daily mission ──────────────────────────────────────────────────────
 
 @router.get("/value-tracking/child-mode/mission/today", response_model=dict)
-def child_mission_today(request: Request, tz_offset_minutes: int = Query(0)):
+def child_mission_today(request: Request, tz_offset_minutes: int = Query(0),
+                        lang: str | None = Query(None)):
     """One card. The same card all day, however often it is opened."""
     child_id = _get_child_id(request)
     device_id = _require_device_id(request)
@@ -370,7 +371,8 @@ def child_mission_today(request: Request, tz_offset_minutes: int = Query(0)):
     local_date = child_budget.local_date_for(
         datetime.now(timezone.utc), tz_offset_minutes
     )
-    card = child_missions.today_mission(device_id, child_id, band, local_date)
+    card = child_missions.today_mission(
+        device_id, child_id, band, local_date, lang)
     return {"mission": card}
 
 
@@ -423,7 +425,7 @@ def _band_for(device_id: str, child_id: int) -> str:
 
 
 @router.get("/value-tracking/child-mode/license/today", response_model=dict)
-def child_license_today(request: Request):
+def child_license_today(request: Request, lang: str | None = Query(None)):
     """The next situation to think about, or None when this level is done."""
     child_id = _get_child_id(request)
     device_id = _require_device_id(request)
@@ -431,7 +433,8 @@ def child_license_today(request: Request):
 
     level_key = child_license.current_level(child_id)
     child_license.ensure_level(device_id, child_id, level_key)
-    scenario = child_license.next_scenario(child_id, level_key, age_band=band)
+    scenario = child_license.next_scenario(
+        child_id, level_key, age_band=band, lang=lang)
 
     # The child sees the situation and the choices. `outcome`, `alerts_parent`
     # and `talking_point_ar` are the parent's half and are stripped here — a
@@ -461,7 +464,8 @@ def child_license_today(request: Request):
 @router.post("/value-tracking/child-mode/license/answer", response_model=dict)
 def child_license_answer(request: Request,
                          scenario_key: str = Query(..., min_length=2),
-                         choice_key: str = Query(..., min_length=2)):
+                         choice_key: str = Query(..., min_length=2),
+                         lang: str | None = Query(None)):
     """Record the child's choice, and alert the parent when the situation
     warrants it — including when the child answered it well.
 

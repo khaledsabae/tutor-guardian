@@ -1,0 +1,160 @@
+{
+  "age_band": "7-9",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Bank of daily missions — every mission happens off-screen, and its estimated time is never less than five times the card's minutes (the card is three minutes, so the floor is fifteen).",
+  "missions": [
+    {
+      "id": "mission_7-9_green_hunt",
+      "domain": "development",
+      "title_ar": "Green Hunter",
+      "instruction_ar": "Go out to the balcony or the yard and look for five things that are green, then come back and tell your dad or mom.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "الملاحظة",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_table_set",
+      "domain": "islamic_parenting",
+      "title_ar": "The Table Is My Job",
+      "instruction_ar": "Set the table by yourself today, and say «بسم الله» before you all eat.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "المسؤولية",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_call_grandparent",
+      "domain": "islamic_parenting",
+      "title_ar": "Your Voice Makes Them Happy",
+      "instruction_ar": "Call your grandpa or grandma and ask how they're doing, then tell them something that happened to you today.",
+      "estimated_minutes": 20,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "صلة الرحم",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_water_plant",
+      "domain": "development",
+      "title_ar": "Something Alive Is Counting on You",
+      "instruction_ar": "Water a plant at home or at a neighbor's, and check on it every day for a week.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "نبتة",
+        "مياه"
+      ],
+      "skill": "المواظبة",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_secret_good_deed",
+      "domain": "islamic_parenting",
+      "title_ar": "A Good Deed Nobody Knows About",
+      "instruction_ar": "Do something kind for someone at home without telling them and without telling anyone else, and tell only your dad that you did it.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإخلاص",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_draw_the_sky",
+      "domain": "aqeedah",
+      "title_ar": "Look Up",
+      "instruction_ar": "Sit and look at the sky for ten minutes, then draw what you saw and tell your dad about it.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": true,
+      "materials": [
+        "ورق",
+        "ألوان"
+      ],
+      "skill": "التأمل",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_tidy_own_shelf",
+      "domain": "development",
+      "title_ar": "My Shelf, My Job",
+      "instruction_ar": "Tidy your shelf or your drawer by yourself, and take out one thing you don't use anymore and give it to someone.",
+      "estimated_minutes": 20,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "النظام",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_ask_and_listen",
+      "domain": "islamic_parenting",
+      "title_ar": "Ask, Then Listen",
+      "instruction_ar": "Ask your dad or mom: \"What's the hardest thing you ever did when you were little?\" Then listen all the way to the end of the story without interrupting.",
+      "estimated_minutes": 15,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الإنصات",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_walk_and_count",
+      "domain": "medical",
+      "title_ar": "Walk and Count",
+      "instruction_ar": "Go out for a walk with someone from home, and count how many trees the two of you saw along the way.",
+      "estimated_minutes": 25,
+      "needs_parent": true,
+      "needs_outdoors": true,
+      "materials": [],
+      "skill": "الحركة",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_say_sorry",
+      "domain": "islamic_parenting",
+      "title_ar": "The Two Hardest Words",
+      "instruction_ar": "Think of someone you made sad without meaning to, then go and say \"I'm sorry\" while looking them in the eye.",
+      "estimated_minutes": 15,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الاعتذار",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_memorise_one_line",
+      "domain": "aqeedah",
+      "title_ar": "Just One Line",
+      "instruction_ar": "Memorize a short verse of the Qur'an with your dad or mom, and say it back to them before bed without looking.",
+      "estimated_minutes": 15,
+      "needs_parent": true,
+      "needs_outdoors": false,
+      "materials": [],
+      "skill": "الحفظ",
+      "is_published": true
+    },
+    {
+      "id": "mission_7-9_build_something",
+      "domain": "development",
+      "title_ar": "Build Something With Your Own Hands",
+      "instruction_ar": "Build anything out of the cardboard boxes or the blocks you have, then show it to someone at home and explain how you made it.",
+      "estimated_minutes": 30,
+      "needs_parent": false,
+      "needs_outdoors": false,
+      "materials": [
+        "كراتين أو مكعبات"
+      ],
+      "skill": "الصنع",
+      "is_published": true
+    }
+  ]
+}

@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../api/tg_client.dart';
 import '../../l10n/app_localizations.dart';
 
 /// Bands in the order a parent should see them, matching the policy file's
@@ -33,6 +34,21 @@ const _kBandLabels = {
 
 final offscreenActivitiesProvider =
     FutureProvider<Map<String, dynamic>>((ref) async {
+  // Locale-aware, with the Arabic file as the fallback rather than an empty
+  // state. This screen is where the under-2 age gate sends a parent it has
+  // just refused — showing them nothing there would turn a redirect into a
+  // dead end, which is the exact defect the section was built to fix.
+  final lang = TgClient.uiLanguage;
+  if (lang != null && lang.startsWith('en')) {
+    try {
+      final en = await rootBundle
+          .loadString('assets/data/offscreen_activities_en.json');
+      return (jsonDecode(en) as Map<String, dynamic>)['bands']
+          as Map<String, dynamic>;
+    } catch (_) {
+      // Asset missing from the bundle — fall through to Arabic.
+    }
+  }
   final raw = await rootBundle.loadString('assets/data/offscreen_activities.json');
   return (jsonDecode(raw) as Map<String, dynamic>)['bands'] as Map<String, dynamic>;
 });

@@ -26,6 +26,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from app.db.init_db import get_conn
+from app.services import content_lang
 
 _UTC = timezone.utc
 
@@ -47,9 +48,15 @@ def _now_iso() -> str:
 
 # ── The clause bank ────────────────────────────────────────────────────────
 
-def load_clause_bank(age_band: str) -> list[dict[str, Any]]:
-    """Suggested clause pairs for a band, or [] when none are published."""
-    path = CLAUSES_DIR / f"clauses_{age_band}.json"
+def load_clause_bank(age_band: str,
+                     lang: Optional[str] = None) -> list[dict[str, Any]]:
+    """Suggested clause pairs for a band, or [] when none are published.
+
+    `lang` picks the translated bank when one exists and falls back to Arabic
+    when it does not — see content_lang.localised for why the fallback matters
+    more than the translation here.
+    """
+    path = content_lang.localised(CLAUSES_DIR, f"clauses_{age_band}.json", lang)
     if not path.exists():
         return []
     try:
@@ -61,11 +68,12 @@ def load_clause_bank(age_band: str) -> list[dict[str, Any]]:
     return list(data.get("pairs", []))
 
 
-def suggested_clauses(age_band: str) -> list[dict[str, Any]]:
+def suggested_clauses(age_band: str,
+                      lang: Optional[str] = None) -> list[dict[str, Any]]:
     """The bank flattened into rows ready to store — child clause then the
     parent clause that answers it, so the pairing survives into the UI."""
     rows: list[dict[str, Any]] = []
-    for order, pair in enumerate(load_clause_bank(age_band)):
+    for order, pair in enumerate(load_clause_bank(age_band, lang)):
         key = pair.get("key")
         if pair.get("child"):
             rows.append({"applies_to": "child", "clause_key": key,

@@ -1297,7 +1297,8 @@ class TgClient {
     return _guard(() async {
       final session = await ensureSession();
       final uri = Uri.parse(
-          '$_baseUrl/api/children/$childId/agreement/clauses/suggested');
+              '$_baseUrl/api/children/$childId/agreement/clauses/suggested')
+          .replace(queryParameters: _langParam());
       final resp = await _http
           .get(uri, headers: _authHeaders(session.token))
           .timeout(AppConfig.httpTimeout);
@@ -1441,6 +1442,7 @@ class TgClient {
       final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/mission/today')
           .replace(queryParameters: {
         'tz_offset_minutes': '${DateTime.now().timeZoneOffset.inMinutes}',
+        ..._langParam(),
       });
       final resp = await _http
           .get(uri, headers: _childAuthHeaders(childToken))
@@ -1473,7 +1475,8 @@ class TgClient {
   Future<List<Map<String, dynamic>>> fetchPendingMissions() async {
     return _guard(() async {
       final session = await ensureSession();
-      final uri = Uri.parse('$_baseUrl/api/children/missions/pending');
+      final uri = Uri.parse('$_baseUrl/api/children/missions/pending')
+          .replace(queryParameters: _langParam());
       final resp = await _http
           .get(uri, headers: _authHeaders(session.token))
           .timeout(AppConfig.httpTimeout);
@@ -1510,7 +1513,8 @@ class TgClient {
   Future<Map<String, dynamic>> fetchChildLicense(String childToken) async {
     return _guard(() async {
       final uri =
-          Uri.parse('$_baseUrl/api/value-tracking/child-mode/license/today');
+          Uri.parse('$_baseUrl/api/value-tracking/child-mode/license/today')
+              .replace(queryParameters: _langParam());
       final resp = await _http
           .get(uri, headers: _childAuthHeaders(childToken))
           .timeout(AppConfig.httpTimeout);
@@ -1531,6 +1535,7 @@ class TgClient {
               .replace(queryParameters: {
         'scenario_key': scenarioKey,
         'choice_key': choiceKey,
+        ..._langParam(),
       });
       final resp = await _http
           .post(uri, headers: _childAuthHeaders(childToken))
@@ -1542,7 +1547,8 @@ class TgClient {
   Future<Map<String, dynamic>> fetchLicenseSummary(int childId) async {
     return _guard(() async {
       final session = await ensureSession();
-      final uri = Uri.parse('$_baseUrl/api/children/$childId/license');
+      final uri = Uri.parse('$_baseUrl/api/children/$childId/license')
+          .replace(queryParameters: _langParam());
       final resp = await _http
           .get(uri, headers: _authHeaders(session.token))
           .timeout(AppConfig.httpTimeout);
@@ -1652,6 +1658,17 @@ class TgClient {
   }
 
   // ── Internals ────────────────────────────────────────────────────────
+
+  /// `?lang=` for the current UI language, or nothing.
+  ///
+  /// A helper rather than four copies of the same two lines: this exact
+  /// omission is why 170 translated lessons sat on disk unread until
+  /// 2026-08-13 — the files existed, the parameter did not, and English users
+  /// read Arabic for months. Every content read goes through here.
+  Map<String, String> _langParam() {
+    final lang = uiLanguage;
+    return (lang != null && lang.isNotEmpty) ? {'lang': lang} : const {};
+  }
 
   /// Run a request and turn transport failures into TgApiError.
   ///

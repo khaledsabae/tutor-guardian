@@ -31,6 +31,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from app.db.init_db import get_conn
+from app.services import content_lang
 
 _UTC = timezone.utc
 
@@ -61,7 +62,8 @@ def _iso(moment: datetime) -> str:
 
 # ── The bank ───────────────────────────────────────────────────────────────
 
-def load_scenarios(level_key: str, age_band: str = "10-12") -> list[dict[str, Any]]:
+def load_scenarios(level_key: str, age_band: str = "10-12",
+                   lang: Optional[str] = None) -> list[dict[str, Any]]:
     """Every published scenario for a level *and* an age band.
 
     The band is not decoration. "A stranger asked for your photo" is a
@@ -78,9 +80,16 @@ def load_scenarios(level_key: str, age_band: str = "10-12") -> list[dict[str, An
     An absent bank is the ordinary case — levels 2-5 have no content for any
     band — and the UI renders that as "not yet", never as an error.
     """
-    path = BANK_DIR / f"scenarios_{level_key}_{age_band}.json"
-    if not path.exists():
-        path = BANK_DIR / f"scenarios_{level_key}.json"
+    # Band first, then the band-less legacy name, and each tried in the
+    # requested language before Arabic. Four candidates, in the order that
+    # gives the most specific match a chance before the most general.
+    for name in (f"scenarios_{level_key}_{age_band}.json",
+                 f"scenarios_{level_key}.json"):
+        path = content_lang.localised(BANK_DIR, name, lang)
+        if path.exists():
+            break
+    else:
+        return []
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
@@ -97,9 +106,9 @@ def load_scenarios(level_key: str, age_band: str = "10-12") -> list[dict[str, An
     ]
 
 
-def _scenario(level_key: str, scenario_key: str,
-              age_band: str = "10-12") -> Optional[dict[str, Any]]:
-    for s in load_scenarios(level_key, age_band):
+def _scenario(level_key: str, scenario_key: str, age_band: str = "10-12",
+              lang: Optional[str] = None) -> Optional[dict[str, Any]]:
+    for s in load_scenarios(level_key, age_band, lang):
         if s.get("key") == scenario_key:
             return s
     return None
@@ -134,7 +143,8 @@ def _latest_answers(conn, child_id: int, level_key: str) -> dict[str, dict]:
 
 def next_scenario(child_id: int, level_key: str,
                   now: Optional[datetime] = None,
-                  age_band: str = "10-12") -> Optional[dict[str, Any]]:
+                  age_band: str = "10-12",
+                  lang: Optional[str] = None) -> Optional[dict[str, Any]]:
     """The scenario to show, or None when the level's practice is complete.
 
     Order is deterministic rather than random, by the same reasoning as the
@@ -146,7 +156,7 @@ def next_scenario(child_id: int, level_key: str,
     who got two wrong today is not made to sit through both again tonight.
     """
     moment = now or _now()
-    bank = load_scenarios(level_key, age_band)
+    bank = load_scenarios(level_key, age_band, lang)
     if not bank:
         return None
 
@@ -186,6 +196,9 @@ def progress(child_id: int, level_key: str,
     it right, in two requests, which is exactly the signal the whole surface
     is built to withhold. Use `child_progress` for anything the child sees.
     """
+    # No `lang` here, deliberately: this counts by `key`, and keys are not
+    # translated. Threading a language through a function that returns two
+    # integers would suggest the numbers differ per locale. They do not.
     bank = load_scenarios(level_key, age_band)
     conn = get_conn()
     try:
@@ -219,7 +232,8 @@ def child_progress(child_id: int, level_key: str,
 # ── Answering ──────────────────────────────────────────────────────────────
 
 def answer(device_id: str, child_id: int, level_key: str, scenario_key: str,
-           choice_key: str, age_band: str = "10-12") -> dict[str, Any]:
+           choice_key: str, age_band: str = "10-12",
+           lang: Optional[str] = None) -> dict[str, Any]:
     """Record an answer.
 
     The returned dict carries no correct/incorrect signal — deliberately, and
@@ -229,7 +243,7 @@ def answer(device_id: str, child_id: int, level_key: str, scenario_key: str,
     answered it perfectly. A child who chose well in a grooming scenario may
     be living through one.
     """
-    scenario = _scenario(level_key, scenario_key, age_band)
+    scenario = _scenario(level_key, scenario_key, age_band, lang)
     if scenario is None:
         return {"ok": False, "reason": "scenario_not_found"}
     outcome = _outcome_of(scenario, choice_key)
@@ -413,8 +427,8 @@ def grant(device_id: str, child_id: int, level_key: str,
         conn.close()
 
 
-def summary(device_id: str, child_id: int,
-            age_band: str = "10-12") -> dict[str, Any]:
+def summary(device_id: str, child_id: int, age_band: str = "10-12",
+            lang: Optional[str] = None) -> dict[str, Any]:
     """What the parent's screen renders."""
     level_key = current_level(child_id)
     row = refresh_status(device_id, child_id, level_key, age_band)
@@ -438,7 +452,7 @@ def summary(device_id: str, child_id: int,
     finally:
         conn.close()
 
-    bank = {s["key"]: s for s in load_scenarios(level_key, age_band)}
+    bank = {s["key"]: s for s in load_scenarios(level_key, age_band, lang)}
     return {
         "level_key": level_key,
         "status": row["status"],

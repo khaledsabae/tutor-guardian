@@ -1,0 +1,62 @@
+{
+  "age_band": "13-15",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Agreement clauses for a 13-15 year old. Not a scaled-up version of the clauses for seven year olds: at this age the phone is a social life, not a toy, and a rule imposed without a reason anyone understands gets worked around within a week. So every clause here carries its reason, and every clause on the teenager is matched by a heavier one on the parent — because a thirteen year old measures their parents precisely, and stops keeping their side the day they see the parents not keeping theirs.",
+  "pairs": [
+    {
+      "key": "no_device_at_table",
+      "child": "No phones at the table — not even face-down next to my plate.",
+      "parent": "No phones at the table, and I go first. If it rings, I let it ring.",
+      "note": "The clause the whole agreement gets tested on. A teenager doesn't remember what you say; they remember what you do in front of them."
+    },
+    {
+      "key": "device_sleeps_outside",
+      "child": "My phone sleeps outside my room, and the charger stays in the living room.",
+      "parent": "My phone sleeps outside the bedroom too — no exception for me.",
+      "note": "The most important health clause at this age. Sleep is the first thing a teenager loses, and it shows up in their schoolwork before it shows up in their mood."
+    },
+    {
+      "key": "tell_when_uncomfortable",
+      "child": "If someone says something to me that bothers me or scares me, I tell them — even if I was in the wrong about something first.",
+      "parent": "I hear you out without raising my voice, and I don't take your phone away the moment I hear it.",
+      "note": "The most important clause in the whole product. A teenager who expects to lose their phone hides the problem until it grows — and taking the phone on the spot buys silence, not safety."
+    },
+    {
+      "key": "no_meeting_alone",
+      "child": "I don't meet anyone I met online without telling them, and never on my own.",
+      "parent": "If they tell me they want to meet someone, I listen first and help them do it the right way — I don't refuse on the spot.",
+      "note": "A flat refusal makes the meeting happen in secret. This clause is written to be workable, not to be comfortable."
+    },
+    {
+      "key": "passwords_with_parent",
+      "child": "Any new account I open, I tell them about.",
+      "parent": "I don't get into their accounts behind their back. Being open is not being searched.",
+      "note": "Here the pairing is the clause itself: the only teenager who tells you about a new account is the one who knows their parents aren't reading their messages in secret."
+    },
+    {
+      "key": "no_sharing_others",
+      "child": "I don't post anyone's picture or anything they said without their okay — not even in a group chat.",
+      "parent": "I don't put pictures of my kid anywhere without asking them.",
+      "note": "The clause that surprises parents most. A thirteen year old knows exactly how many pictures of them are up without their okay, and will bring it up in the first argument."
+    },
+    {
+      "key": "study_time_device_away",
+      "child": "During study time my phone is in another room, not face-down on the desk.",
+      "parent": "I don't interrupt them while they're studying to show them something on my phone.",
+      "note": "Parents interrupt more than they admit, and having it in the clause is what makes the ask fair."
+    },
+    {
+      "key": "money_and_purchases",
+      "child": "I don't buy anything online without asking — not even when it's free and asks for my information.",
+      "parent": "If they slip up and spend money, we talk about the fix, not about punishment.",
+      "note": "\"Free and asks for my information\" is the more important half of the clause: at this age the scams come from free games, not from stores."
+    },
+    {
+      "key": "monthly_review",
+      "child": "We go over this agreement every month, and I have the right to ask for a clause to change.",
+      "parent": "We actually go over it every month, and if they ask for a change I hear them out and talk it through — I don't put it off.",
+      "note": "An agreement that never gets reviewed turns into an old list of orders. And the right to ask is what makes a teenager a party to it rather than someone it was signed over."
+    }
+  ]
+}

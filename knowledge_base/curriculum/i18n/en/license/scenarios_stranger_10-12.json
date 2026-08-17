@@ -1,0 +1,134 @@
+{
+  "level_key": "stranger",
+  "age_band": "10-12",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Level one: the stranger. Five situations a 10-12 year old actually runs into — in a game, in a comment, in a message. Every situation is described in words and never shown. In grooming situations the safe choice is the one that includes telling a parent: refusing on its own leaves the child facing the next attempt, and the secret they keep from their parents is exactly what a groomer relies on.",
+  "scenarios": [
+    {
+      "key": "stranger_asks_photo",
+      "situation_ar": "While you're playing online, someone you don't know messages you and says: \"Send me a picture of yourself so I can be sure you're not a bot.\" What would you do?",
+      "source_unit_id": "cyb-27921523",
+      "alerts_parent": true,
+      "choices": [
+        {
+          "key": "send",
+          "text_ar": "I send the picture, it's just a normal photo.",
+          "outcome": "critical"
+        },
+        {
+          "key": "refuse_silent",
+          "text_ar": "I say no and just keep playing.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "tell",
+          "text_ar": "I say no, and I tell my dad or my mom that someone asked me for that.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "Start by thanking them for telling you, even if the whole thing happened a while ago. Someone who wants a photo from a child starts with a small request that looks ordinary — and what protects a child is not refusing once, but knowing they can tell you without being blamed. Ask them: \"What exactly did he say?\" and keep your question about the other person, not about your child."
+    },
+    {
+      "key": "stranger_knows_my_name",
+      "situation_ar": "Someone you don't know sends you a message with your name and your school in it, and says: \"I'm a friend of your cousin's, remember me?\" And you don't remember him.",
+      "source_unit_id": "cyb-729d1588",
+      "alerts_parent": true,
+      "choices": [
+        {
+          "key": "answer",
+          "text_ar": "I answer him, because maybe I really do know him.",
+          "outcome": "critical"
+        },
+        {
+          "key": "block_silent",
+          "text_ar": "I block him and don't tell anyone.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "ask_parent",
+          "text_ar": "I don't answer, and I show the message to my dad or my mom and they say what to do.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "What he has (the name and the school) is no proof that he knows your family — those turn up on plenty of accounts. The idea you want your child to walk away with: \"someone knowing my name doesn't mean he knows me.\" And tell them blocking was a good move, but blocking without telling us leaves us not knowing that someone is trying."
+    },
+    {
+      "key": "stranger_offers_gift",
+      "situation_ar": "Someone in the game offers to buy you gear or an expensive character for free, and says: \"But let's keep this between us, don't tell anyone.\"",
+      "source_unit_id": "cyb-c3862bd9",
+      "alerts_parent": true,
+      "choices": [
+        {
+          "key": "accept",
+          "text_ar": "I say yes, it's a gift and nothing more.",
+          "outcome": "critical"
+        },
+        {
+          "key": "decline_silent",
+          "text_ar": "I turn the gift down and leave him alone.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "tell",
+          "text_ar": "I tell my dad or my mom, especially since he said not to tell anyone.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "\"Let's keep this between us\" is the sign, not the gift. The gift may well be a real gift, but anyone who asks a child to hide something from their parents is building something else. Agree on a clear rule together: anyone who asks you to keep a secret from us — that is exactly the moment you come and tell us."
+    },
+    {
+      "key": "stranger_video_call",
+      "situation_ar": "Someone you met in the game a few days ago says to you: \"Come talk for a few minutes, turn your camera on for a bit.\"",
+      "source_unit_id": "cyb-01d555b4",
+      "alerts_parent": true,
+      "choices": [
+        {
+          "key": "open_camera",
+          "text_ar": "I turn it on for a bit, nothing will happen.",
+          "outcome": "critical"
+        },
+        {
+          "key": "voice_only",
+          "text_ar": "I talk with voice only, no camera.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "tell",
+          "text_ar": "I hang up, and I tell my dad or my mom.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "\"For a bit\" is what makes the request sound small. And voice only isn't safety, because the one asking is measuring the reaction, not the picture. The most important thing to say to your child here: nothing has happened that can't be walked back — whenever they tell you, we're still early."
+    },
+    {
+      "key": "stranger_asks_where",
+      "situation_ar": "Someone in the game's group chat asks: \"Where exactly do you live? Maybe we're close by and could meet up.\"",
+      "source_unit_id": "cyb-447c122f",
+      "alerts_parent": true,
+      "choices": [
+        {
+          "key": "tell_area",
+          "text_ar": "I say just the neighborhood, not the address.",
+          "outcome": "critical"
+        },
+        {
+          "key": "lie",
+          "text_ar": "I give him the wrong place and keep talking.",
+          "outcome": "unsafe"
+        },
+        {
+          "key": "tell_parent",
+          "text_ar": "I don't answer the question, and I tell my dad or my mom.",
+          "outcome": "safe",
+          "tells_parent": true
+        }
+      ],
+      "talking_point_ar": "The neighborhood is enough on its own once it comes together with the name of the school and the hours they play. And lying to the person keeps your child in a conversation that is still going — and we want them out of the conversation, not winning it. The rule to agree on together: any question about a place, a time, or meeting up, we answer it together."
+    }
+  ]
+}

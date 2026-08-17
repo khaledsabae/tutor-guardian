@@ -179,6 +179,7 @@ void main() {
   _licenseTests();
   _regressionTests();
   _audioTagTests();
+  _languageTests();
 
   group('the off-screen alternatives are real content', () {
     test('every band the age gate can refuse has activities', () {
@@ -512,6 +513,69 @@ void _audioTagTests() {
       // The quote wraps across lines in the source, so match the halves.
       expect(record, contains('single AudioPlayer'));
       expect(record, contains('audio_service'));
+    });
+  });
+}
+
+void _languageTests() {
+  group('translated content is actually requested', () {
+    // This exact omission has already cost this product once: 170 lessons and
+    // 39 paths had English translations on disk and nothing asked for them, so
+    // English users read Arabic for months and reported it twice from inside
+    // the app. Files existing is not the same as files being served.
+
+    test('every child-surface content read sends ?lang=', () {
+      final client = _codeOnly('lib/api/tg_client.dart');
+      // Each of these serves user-visible text from a content bank.
+      for (final method in [
+        'fetchChildMission',
+        'fetchPendingMissions',
+        'fetchChildLicense',
+        'answerLicenseScenario',
+        'fetchLicenseSummary',
+        'fetchSuggestedClauses',
+      ]) {
+        final start = client.indexOf(method);
+        expect(start, greaterThan(-1), reason: '$method not found');
+        // The body ends at the next `Future<` declaration.
+        var end = client.indexOf('  Future<', start + method.length);
+        if (end < 0) end = client.length;
+        final body = client.substring(start, end);
+        expect(body.contains('_langParam()'), isTrue,
+            reason: '$method does not send the UI language');
+      }
+    });
+
+    test('the loaders fall back to Arabic rather than to nothing', () {
+      // An empty bank is not neutral in this product: the agreement screen
+      // renders "only available for ages 7-9" and the mission card renders
+      // "no mission today". Returning empty for an untranslated band would
+      // tell an English parent the feature does not exist for their child.
+      final helper =
+          File('../backend/app/services/content_lang.py').readAsStringSync();
+      expect(helper, contains('return base_dir / filename'));
+
+      for (final f in [
+        '../backend/app/services/family_agreement.py',
+        '../backend/app/services/child_missions.py',
+        '../backend/app/services/child_license.py',
+      ]) {
+        expect(File(f).readAsStringSync(), contains('content_lang.localised'),
+            reason: '$f loads a bank without language awareness');
+      }
+    });
+
+    test('counting paths deliberately take no language', () {
+      // progress() returns two integers and leverage() sums minutes; both are
+      // identical in every locale. Threading a language through them would
+      // imply otherwise, so the omission is annotated in the source rather
+      // than left to look like an oversight.
+      final licence =
+          File('../backend/app/services/child_license.py').readAsStringSync();
+      expect(licence, contains('keys are not'));
+      final missions =
+          File('../backend/app/services/child_missions.py').readAsStringSync();
+      expect(missions, contains('identical in every'));
     });
   });
 }

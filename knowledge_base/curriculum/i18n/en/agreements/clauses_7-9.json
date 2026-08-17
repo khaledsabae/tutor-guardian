@@ -1,0 +1,50 @@
+{
+  "age_band": "7-9",
+  "version": "1.0.0",
+  "is_published": true,
+  "description": "Bank of family media agreement clauses — every clause on the child is matched by one on the parent. The pairing is mandatory and a test enforces it, because an agreement whose every clause falls on the child is not an agreement.",
+  "pairs": [
+    {
+      "key": "no_device_at_table",
+      "child": "No phones at the table.",
+      "parent": "No phones at the table — me included.",
+      "note": "This is the clause the agreement gets tested on first: your child measures you against it at the very next meal."
+    },
+    {
+      "key": "device_sleeps_outside",
+      "child": "My phone or tablet sleeps outside my bedroom.",
+      "parent": "My phone sleeps outside the bedroom too."
+    },
+    {
+      "key": "tell_when_uncomfortable",
+      "child": "I tell Mom or Dad if someone talks to me and it makes me feel weird.",
+      "parent": "I listen without raising my voice, and I don't take the device away on the spot.",
+      "note": "The most important clause in the whole product. If your child expects to lose the device, they will tell no one — and the clause on the parent is the price that makes the clause on the child possible."
+    },
+    {
+      "key": "ask_before_new",
+      "child": "I don't watch anything new until I tell them first.",
+      "parent": "I sit with them the first time they watch something new — even if it's only two minutes."
+    },
+    {
+      "key": "leave_when_time_ends",
+      "child": "When my time is up, I put the device down — no arguing.",
+      "parent": "I put my phone down when it's time to play with them — no arguing."
+    },
+    {
+      "key": "no_screens_before_sleep",
+      "child": "No screens for the hour before bed.",
+      "parent": "No screens for the hour before bed — mine included, where they can see."
+    },
+    {
+      "key": "no_photos_of_others",
+      "child": "I don't take anyone's picture without asking them.",
+      "parent": "I don't post their pictures without asking them."
+    },
+    {
+      "key": "review_monthly",
+      "child": "We go over the agreement every month, and I get to ask for a change.",
+      "parent": "I go over it with them and listen when they ask for a change, and if I say no I give them the reason."
+    }
+  ]
+}
