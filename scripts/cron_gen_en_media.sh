@@ -109,16 +109,36 @@ say "===== English media run ====="
 # Separate profiles still prevent the cookie rotation that killed the session
 # three times on 08-14, but they do not help here: the profiles share one
 # Google account, so a refusal on either kills both.
+# 🚨 The read is retried, because one transient 502 is not a dead session.
+#
+# 2026-08-18 10:39: tg-video verified, tg-audio did not, the run aborted, and
+# the whole day's quota went unspent — both media, ~40 generations. Nineteen
+# minutes later the identical read returned the notebook fine. The log shows
+# why: `RPC GET_USER_SETTINGS (TransportServerError)`, HTTP 502, the CLI's own
+# backoff kicking in. Google hiccuped for a second and the guard read that as
+# "this session is dead, stop everything".
+#
+# The guard is still right to stop on a genuinely dead session — a run that
+# cannot authenticate should say so rather than spend an hour proving it. But
+# "cannot authenticate" has to mean three failures across a minute, not one
+# unlucky call. Same lesson as the twelve in-flight tasks written off as dead
+# on 08-17 that all downloaded once the harvest was simply run again:
+# persistence was the answer, not the diagnosis.
 ensure_session() {
-    local p="$1"
+    local p="$1" attempt
     timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" login --browser-cookies chrome \
         >> "$LOG" 2>&1
-    if timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" source list \
-            -n "$NOTEBOOK_MAIN" --json 2>/dev/null | grep -q '"sources"'; then
-        say "auth $p verified by read ✓"
-        return 0
-    fi
-    say "auth $p FAILED — login reported success but the API refuses reads"
+    for attempt in 1 2 3; do
+        if timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" source list \
+                -n "$NOTEBOOK_MAIN" --json 2>/dev/null | grep -q '"sources"'; then
+            [ "$attempt" -gt 1 ] && say "auth $p verified by read ✓ (attempt $attempt)"
+            [ "$attempt" -eq 1 ] && say "auth $p verified by read ✓"
+            return 0
+        fi
+        say "auth $p read failed (attempt $attempt/3)"
+        [ "$attempt" -lt 3 ] && sleep $((attempt * 20))
+    done
+    say "auth $p FAILED — three reads refused across a minute, not a hiccup"
     return 1
 }
 
