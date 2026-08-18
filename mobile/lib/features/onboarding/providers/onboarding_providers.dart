@@ -137,21 +137,21 @@ final appLocaleProvider =
 /// #fb_e7402eaa, 15 Aug 2026. The app had no `darkTheme` and no `ThemeMode`
 /// at all; `design_tokens.dart` said "light mode only for now" in a comment.
 ///
-/// Defaults to [ThemeMode.light] — dark is opt-in.
+/// Defaults to [ThemeMode.system], so a parent whose phone is already dark
+/// gets it without having to find a setting — the point of the request.
 ///
-/// It shipped defaulting to [ThemeMode.system] in 1.0.48+93, on the reasoning
-/// that a parent whose phone is already dark should not have to find a
-/// setting. That was right about the intent and wrong about the readiness:
-/// 161 surfaces across 49 files still hard-code a light colour, so every
-/// dark-phone user was dropped into a half-converted theme — the Qur'an
-/// screen, the lesson sections and the assistant bubble all stayed light with
-/// light text on them. Nobody who had not asked for dark mode should absorb
-/// that.
+/// It shipped that way in 1.0.48+93 before the theme was ready: 161 surfaces
+/// across 49 files still hard-coded a light colour, so the Qur'an screen, the
+/// lesson sections and the assistant bubble stayed light with light text on
+/// them. 1.0.49+94 dropped the default to [ThemeMode.light] to stop that
+/// reaching anyone who had not asked for it.
 ///
-/// Flip this back to [ThemeMode.system] once the audit in
-/// `tool/audit_light_surfaces.dart` reports zero.
+/// Restored here because `dart run tool/audit_light_surfaces.dart` now exits
+/// zero — every remaining white is either translucent over a brand colour or
+/// annotated `audit-ok:` with its reason. Do not restore this default again
+/// on the strength of having looked at some screens; the audit is the gate.
 class ThemeModeNotifier extends StateNotifier<ThemeMode> {
-  ThemeModeNotifier(this._prefs) : super(ThemeMode.light) {
+  ThemeModeNotifier(this._prefs) : super(ThemeMode.system) {
     final stored = _prefs?.getString(_key);
     if (stored != null) {
       state = ThemeMode.values.firstWhere(

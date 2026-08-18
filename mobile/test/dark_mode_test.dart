@@ -151,18 +151,12 @@ void main() {
   });
 
   group('themeModeProvider', () {
-    test('defaults to light — dark is opt-in until the audit is clean',
-        () async {
-      // 1.0.48+93 shipped defaulting to ThemeMode.system, which put every
-      // dark-phone user into a theme that was only half converted: 161
-      // surfaces across 49 files still hard-code a light colour, so the
-      // Qur'an screen, the lesson sections and the assistant bubble stayed
-      // light with light text on them.
-      //
-      // When `dart run tool/audit_light_surfaces.dart` exits 0, flip this
-      // back to ThemeMode.system and change this expectation with it.
+    test('defaults to system so a dark phone needs no setting found', () async {
+      // Held at ThemeMode.light through 1.0.49+94 while the theme was only
+      // half converted. Restored once `tool/audit_light_surfaces.dart` exited
+      // zero — that tool, not a walk through some screens, is what earns this.
       final prefs = await SharedPreferences.getInstance();
-      expect(ThemeModeNotifier(prefs).state, ThemeMode.light);
+      expect(ThemeModeNotifier(prefs).state, ThemeMode.system);
     });
 
     test('persists the choice across instances', () async {

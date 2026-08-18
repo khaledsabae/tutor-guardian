@@ -20,9 +20,7 @@ import '../providers/program_providers.dart';
 /// The card mixes its own amber rather than using the tokens, so it needs its
 /// own dark counterpart: on the cream ground the ink is deep brown; on the
 /// dark ground that same brown is invisible.
-Color get _coachInk => AppPalette.current.isDark
-    ? const Color(0xFFF5D89B)
-    : const Color(0xFF8A5A0F);
+Color get _coachInk => AppPalette.current.tipInk;
 
 class CoachTipCard extends ConsumerWidget {
   const CoachTipCard({super.key, this.onAsk});
@@ -103,9 +101,7 @@ class _CoachCard extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: AppPalette.current.isDark
-                  ? [const Color(0xFF4A3A16), const Color(0xFF5C4718)]
-                  : [const Color(0xFFFFE9C7), const Color(0xFFFFD89E)],
+              colors: AppPalette.current.tipGradient,
             ),
             borderRadius: BorderRadius.circular(14),
           ),

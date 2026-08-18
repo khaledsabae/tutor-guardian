@@ -961,7 +961,7 @@ class _PathVideoCard extends StatelessWidget {
                   width: 64,
                   height: 64,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: .94),
+                    color: Colors.white.withValues(alpha: .94), // audit-ok: play button over a video thumbnail — the ground is the frame, not the theme
                     shape: BoxShape.circle,
                     boxShadow: Dt.softShadow(Colors.black, alpha: .15),
                   ),

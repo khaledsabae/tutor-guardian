@@ -41,6 +41,8 @@ class AppPalette {
     required this.warningFg,
     required this.dangerBg,
     required this.dangerFg,
+    required this.tipGradient,
+    required this.tipInk,
   });
 
   final Brightness brightness;
@@ -60,6 +62,14 @@ class AppPalette {
   final Color warningFg;
   final Color dangerBg;
   final Color dangerFg;
+
+  /// The amber "tip" card — the daily tip and the coach tip.
+  ///
+  /// Both mixed this by hand, identically and separately, outside the tokens.
+  /// That is why both stayed fully cream when everything around them went
+  /// dark: there was no token to change. One definition now, read by both.
+  final List<Color> tipGradient;
+  final Color tipInk;
 
   bool get isDark => brightness == Brightness.dark;
 
@@ -82,6 +92,8 @@ class AppPalette {
     warningFg: Color(0xFF856404),
     dangerBg: Color(0xFFF8D7DA),
     dangerFg: Color(0xFF721C24),
+    tipGradient: [Color(0xFFFFE9C7), Color(0xFFFFD89E)],
+    tipInk: Color(0xFF8A5A0F),
   );
 
   /// Not the light palette inverted.
@@ -110,6 +122,8 @@ class AppPalette {
     warningFg: Color(0xFFFDE68A),
     dangerBg: Color(0xFF3B1418),
     dangerFg: Color(0xFFFCA5A5),
+    tipGradient: [Color(0xFF4A3A16), Color(0xFF5C4718)],
+    tipInk: Color(0xFFF5D89B),
   );
 
   /// The palette every `Dt.*` / `AppTheme.*` colour getter reads.

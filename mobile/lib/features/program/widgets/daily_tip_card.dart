@@ -18,6 +18,7 @@ import '../providers/program_providers.dart';
 import '../providers/favorites_provider.dart';
 import '../widgets/shareable_tip_card.dart';
 import '../../share/share_service.dart';
+import '../../../theme/app_palette.dart';
 
 class DailyTipCard extends ConsumerWidget {
   const DailyTipCard({super.key});
@@ -96,10 +97,10 @@ class _CardState extends ConsumerState<_Card> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          colors: [Color(0xFFFFE9C7), Color(0xFFFFD89E)],
+          colors: AppPalette.current.tipGradient,
         ),
         borderRadius: BorderRadius.circular(14),
       ),
@@ -111,11 +112,11 @@ class _CardState extends ConsumerState<_Card> {
             height: 36,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.4),
+              color: AppPalette.current.surface.withValues(alpha: 0.4),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.wb_sunny_outlined,
-                color: Color(0xFF8A5A0F), size: 20),
+            child: Icon(Icons.wb_sunny_outlined,
+                color: AppPalette.current.tipInk, size: 20),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -126,8 +127,8 @@ class _CardState extends ConsumerState<_Card> {
                   children: [
                     Text(
                       AppLocalizations.of(context).insightsTitle,
-                      style: const TextStyle(
-                        color: Color(0xFF8A5A0F),
+                      style: TextStyle(
+                        color: AppPalette.current.tipInk,
                         fontWeight: FontWeight.w700,
                         fontSize: 12,
                       ),
@@ -141,7 +142,7 @@ class _CardState extends ConsumerState<_Card> {
                       },
                       icon: Icon(
                         isFav ? Icons.favorite : Icons.favorite_border,
-                        color: isFav ? Colors.redAccent : const Color(0xFF8A5A0F),
+                        color: isFav ? Colors.redAccent : AppPalette.current.tipInk,
                         size: 20,
                       ),
                       tooltip: isFav ? AppLocalizations.of(context).lessonFavRemove : AppLocalizations.of(context).lessonFavAdd,
@@ -152,17 +153,17 @@ class _CardState extends ConsumerState<_Card> {
                     IconButton(
                       onPressed: _isSharing ? null : _shareTip,
                       icon: _isSharing
-                          ? const SizedBox(
+                          ? SizedBox(
                               width: 20,
                               height: 20,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                color: Color(0xFF8A5A0F),
+                                color: AppPalette.current.tipInk,
                               ),
                             )
-                          : const Icon(
+                          : Icon(
                               Icons.share_outlined,
-                              color: Color(0xFF8A5A0F),
+                              color: AppPalette.current.tipInk,
                               size: 20,
                             ),
                       tooltip: AppLocalizations.of(context).share,
@@ -175,13 +176,13 @@ class _CardState extends ConsumerState<_Card> {
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.4),
+                        color: AppPalette.current.surface.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         widget.tip.timeOfDayLabel(AppLocalizations.of(context)),
-                        style: const TextStyle(
-                          color: Color(0xFF8A5A0F),
+                        style: TextStyle(
+                          color: AppPalette.current.tipInk,
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
                         ),
