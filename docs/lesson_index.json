@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-17T08:05:07.998700Z"
+    "updated_at": "2026-08-18T09:11:30.531657Z"
   },
   "lessons": [
     {
@@ -4053,6 +4053,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_islamic_parenting_attachment_01",
             "language": "ar"
+          },
+          {
+            "id": "cc205972-47ad-4292-9231-62d70d29da70_infographic",
+            "file": "docs/lesson_assets/infographics/cc205972-47ad-4292-9231-62d70d29da70_infographic_lesson_0-3_islamic_parenting_attachment_01_en.png",
+            "title": "Islamic Newborn Rituals Guide",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -4130,6 +4138,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_islamic_parenting_attachment_02",
             "language": "ar"
+          },
+          {
+            "id": "f852904b-a844-4021-bc87-d0c4af4d4a5f_infographic",
+            "file": "docs/lesson_assets/infographics/f852904b-a844-4021-bc87-d0c4af4d4a5f_infographic_lesson_0-3_islamic_parenting_attachment_02_en.png",
+            "title": "Raising Children with Gentleness Guide",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -7806,6 +7822,11 @@
             "file": "docs/lesson_10-12_islamic_parenting_worship_love_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_islamic_parenting_worship_love_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34624342
           }
         ],
         "reports": [
@@ -7882,6 +7903,11 @@
             "file": "docs/lesson_13-15_islamic_parenting_steadfast_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_13-15_islamic_parenting_steadfast_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 32258405
           }
         ],
         "reports": [
@@ -7958,6 +7984,11 @@
             "file": "docs/lesson_13-15_islamic_parenting_steadfast_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_13-15_islamic_parenting_steadfast_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39623138
           }
         ],
         "reports": [
@@ -8034,6 +8065,11 @@
             "file": "docs/lesson_13-15_islamic_parenting_steadfast_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_13-15_islamic_parenting_steadfast_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34442064
           }
         ],
         "reports": [
@@ -8110,6 +8146,11 @@
             "file": "docs/lesson_13-15_islamic_parenting_steadfast_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_13-15_islamic_parenting_steadfast_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 43367077
           }
         ],
         "reports": [
@@ -8186,6 +8227,11 @@
             "file": "docs/lesson_16-18_development_adult_readiness_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_development_adult_readiness_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37850467
           }
         ],
         "reports": [
@@ -8262,6 +8308,11 @@
             "file": "docs/lesson_16-18_development_adult_readiness_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_development_adult_readiness_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34761166
           }
         ],
         "reports": [
@@ -8338,6 +8389,11 @@
             "file": "docs/lesson_16-18_development_adult_readiness_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_development_adult_readiness_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39858515
           }
         ],
         "reports": [
@@ -8976,6 +9032,11 @@
             "file": "docs/lesson_2-3_islamic_first_words_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_islamic_first_words_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38372132
           }
         ],
         "reports": [
@@ -9052,6 +9113,11 @@
             "file": "docs/lesson_2-3_islamic_first_words_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_islamic_first_words_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34030961
           }
         ],
         "reports": [
@@ -9128,6 +9194,11 @@
             "file": "docs/lesson_2-3_medical_early_wellbeing_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_medical_early_wellbeing_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37242893
           }
         ],
         "data_tables": [
@@ -9203,6 +9274,11 @@
             "file": "docs/lesson_2-3_medical_early_wellbeing_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_medical_early_wellbeing_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 33460854
           }
         ],
         "data_tables": [
@@ -9564,6 +9640,11 @@
             "file": "docs/lesson_4-6_cyber_early_screens_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_cyber_early_screens_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 41550447
           }
         ],
         "reports": [
