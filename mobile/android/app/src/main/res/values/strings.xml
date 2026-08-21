@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The launcher label, which android:label used to hold as a literal.
+
+  A literal is a single string for every device on earth, so an English phone
+  showed «المربي الذكي» on its home screen and inside the system's own
+  notification-permission dialog — "Allow المربي الذكي to send you
+  notifications?". 27% of this app's users are on English devices.
+
+  Arabic stays the default: it is the majority and the app's own language.
+-->
+<resources>
+    <string name="app_name">المربي الذكي</string>
+</resources>
