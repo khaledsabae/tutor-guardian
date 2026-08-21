@@ -132,7 +132,7 @@ void main() async {
   // degrades two features (no daily reminder, no milestone suggestions) and
   // leaves the rest of the app usable, which is the better half of a bad day.
   try {
-    await FamilyAdhkar.load();
+    await FamilyAdhkar.load(language: resolvedContentLanguage(null));
     await JourneyMilestones.load();
   } catch (e, stack) {
     FirebaseCrashlytics.instance.recordError(

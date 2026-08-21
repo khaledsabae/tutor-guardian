@@ -82,18 +82,43 @@ class FamilyAdhkar {
 
   static const asset = 'assets/content/adhkar/family_adhkar.ar.json';
 
+  static String assetFor(String language) =>
+      'assets/content/adhkar/family_adhkar.$language.json';
+
   static List<ParentingContent> _items = const [];
   static bool _loaded = false;
 
   static List<ParentingContent> get items => _items;
   static bool get isLoaded => _loaded;
 
-  static Future<List<ParentingContent>> load() async {
+  /// Loads the pack for [language], falling back to Arabic when there is none.
+  ///
+  /// Today there is exactly one pack — `family_adhkar.ar.json` — so every
+  /// caller gets Arabic, which is what shipped and what everyone already
+  /// receives. The lookup exists so that adding `family_adhkar.en.json` to the
+  /// bundle is the whole change: no code, no release logic, no second place to
+  /// remember. Note that a verse or a hadith is Arabic on purpose and stays so;
+  /// what a translated pack would carry is the meaning alongside it, and the
+  /// 124 `tip` items, which are parenting advice and nothing else.
+  static Future<List<ParentingContent>> load({String? language}) async {
     if (_loaded) return _items;
-    final raw = await rootBundle.loadString(asset);
+    final raw = await _loadWithFallback(language);
     _items = parse(raw);
     _loaded = true;
     return _items;
+  }
+
+  static Future<String> _loadWithFallback(String? language) async {
+    if (language != null && language.isNotEmpty && language != 'ar') {
+      try {
+        return await rootBundle.loadString(assetFor(language));
+      } catch (_) {
+        // No pack for this language yet. Arabic is the fallback rather than an
+        // empty list: an empty pack means `scheduleDaily` queues nothing, and a
+        // silent absence of reminders is worse than untranslated ones.
+      }
+    }
+    return rootBundle.loadString(asset);
   }
 
   /// Split out so tests can exercise the parse without an asset bundle.

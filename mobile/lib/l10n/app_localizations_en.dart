@@ -3597,4 +3597,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get licenseLoading => 'One moment…';
+
+  @override
+  String get notifHadithTitle => '🕌 Hadith — Al-Morabbi';
+
+  @override
+  String get notifVerseTitle => '📖 Qur\'an — Al-Morabbi';
+
+  @override
+  String get notifTipTitle => '💡 Tip of the day — Al-Morabbi';
 }

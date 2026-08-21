@@ -3553,4 +3553,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get licenseLoading => 'لحظة…';
+
+  @override
+  String get notifHadithTitle => '🕌 حديث شريف — المربي الذكي';
+
+  @override
+  String get notifVerseTitle => '📖 آية كريمة — المربي الذكي';
+
+  @override
+  String get notifTipTitle => '💡 نصيحة اليوم — المربي الذكي';
 }

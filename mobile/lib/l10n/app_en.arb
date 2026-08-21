@@ -1138,5 +1138,8 @@
       }
     }
   },
-  "licenseLoading": "One moment…"
+  "licenseLoading": "One moment…",
+  "notifHadithTitle": "🕌 Hadith — Al-Morabbi",
+  "notifVerseTitle": "📖 Qur'an — Al-Morabbi",
+  "notifTipTitle": "💡 Tip of the day — Al-Morabbi"
 }

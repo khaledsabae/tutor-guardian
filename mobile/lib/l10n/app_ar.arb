@@ -1138,5 +1138,8 @@
       }
     }
   },
-  "licenseLoading": "لحظة…"
+  "licenseLoading": "لحظة…",
+  "notifHadithTitle": "🕌 حديث شريف — المربي الذكي",
+  "notifVerseTitle": "📖 آية كريمة — المربي الذكي",
+  "notifTipTitle": "💡 نصيحة اليوم — المربي الذكي"
 }

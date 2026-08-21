@@ -26,6 +26,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../core/analytics.dart';
+import '../../../l10n/l10n_global.dart';
 import '../../../core/app_routes.dart';
 import '../../../main.dart';
 import '../data/family_adhkar.dart';
@@ -415,10 +416,16 @@ class NotificationService {
 
   /// The slot no longer says morning or evening, so the title says what the
   /// item *is*. Mirrors the headers used by the in-app dialog.
+  ///
+  /// Localised, because 27% of this app's users are on English devices and 11%
+  /// on French. The body stays Arabic — the pack is `family_adhkar.ar.json` and
+  /// there is no other — but a hard-coded Arabic *title* meant those users could
+  /// not even tell what had arrived on their lock screen. The title is UI; the
+  /// dhikr is content, and only one of the two was ever translatable here.
   String _titleFor(ParentingContent content) => switch (content.kind) {
-        'hadith' => '🕌 حديث شريف — المربي الذكي',
-        'verse' => '📖 آية كريمة — المربي الذكي',
-        _ => '💡 نصيحة اليوم — المربي الذكي',
+        'hadith' => AppL10n.current.notifHadithTitle,
+        'verse' => AppL10n.current.notifVerseTitle,
+        _ => AppL10n.current.notifTipTitle,
       };
 
   Future<void> _scheduleSpecific({

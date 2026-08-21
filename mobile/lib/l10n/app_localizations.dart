@@ -6439,6 +6439,24 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لحظة…'**
   String get licenseLoading;
+
+  /// No description provided for @notifHadithTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'🕌 حديث شريف — المربي الذكي'**
+  String get notifHadithTitle;
+
+  /// No description provided for @notifVerseTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'📖 آية كريمة — المربي الذكي'**
+  String get notifVerseTitle;
+
+  /// No description provided for @notifTipTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'💡 نصيحة اليوم — المربي الذكي'**
+  String get notifTipTitle;
 }
 
 class _AppLocalizationsDelegate
