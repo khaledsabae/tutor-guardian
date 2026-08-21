@@ -260,7 +260,36 @@ def _build_prompt(
     return user_prompt, source_line
 
 
-def _compose_system_prompt(domain: str) -> str:
+# Latin script in the question is not proof of English — French, Spanish and
+# German all land here — so the rule names no language. "The language of the
+# question" is something the model can see and we cannot.
+_NON_ARABIC_DIRECTIVE = (
+    "🔴 LANGUAGE — this overrides the language of every instruction below.\n"
+    "The parent did not write in Arabic. Write your entire answer in the same "
+    "language they used, including the closing sources line. The instructions "
+    "that follow are written in Arabic because that is the language of this "
+    "system, not the language of your answer.\n"
+    "Two exceptions, and they are not negotiable:\n"
+    "  • Qur'an is quoted in Arabic script, as revealed. Any English or French "
+    "wording you give for it is an explanation of the meaning — introduce it "
+    "as such ('the meaning of which is'), never as the Qur'an itself.\n"
+    "  • Hadith wording is quoted in Arabic with its attribution, then "
+    "explained. Do not present a translation as the Prophet's words ﷺ.\n\n"
+)
+
+# Said in Arabic too, because the model reads the whole prompt and an Arabic
+# system prompt that never mentions language is itself an instruction to
+# answer in Arabic — which is how 40% of the assistant's users came to write in
+# English and be answered in Arabic.
+_LANGUAGE_RULE_AR = (
+    "\n\nأجب بلغة الوالد نفسها التي كتب بها سؤاله. إن كتب بالإنجليزية أو "
+    "الفرنسية فأجب بها كاملةً بما في ذلك سطر المصادر. ويبقى القرآن مقتبساً "
+    "بالعربية كما نزل، وما تذكره بغيرها فهو بيان للمعنى تُصدِّره بما يدل على "
+    "ذلك لا على أنه القرآن؛ وكذلك لفظ الحديث يُذكر بالعربية منسوباً ثم يُشرح."
+)
+
+
+def _compose_system_prompt(domain: str, question_text: str = "") -> str:
     base = (
         "أنت مساعد تربوي ذكي للأهل العرب المسلمين. تقدم إجابات عملية وآمنة بدون تشخيص طبي ملزم أو فتوى شخصية.\n\n"
         "خاطب المستخدم (الوالد/الوالدة) مباشرة بصيغة المخاطب (مثل: 'يمكنك أن تفعل...' أو 'ننصحك بـ...')، ولا تتحدث عنه أبداً بصيغة الغائب (مثل: 'يمكن للأب' أو 'بناءً على ما طرحه الوالد').\n\n"
@@ -273,13 +302,27 @@ def _compose_system_prompt(domain: str) -> str:
         "اجعل التربية وجهة كل إجابة مهما كان السؤال."
     )
     if domain in {"fiqh", "islamic_parenting", "aqeedah"}:
-        return (
+        composed = (
             "أنت مساعد تربوي إسلامي. عند أي تعارض بين المصادر الطبية أو النفسية أو التنموية من جهة، "
             "والحكم الشرعي الإسلامي من جهة أخرى — يُقدَّم الحكم الشرعي دون استثناء. "
             "لا تُفتِ في مسائل الحلال والحرام، لكن وضّح دائماً أن الإطار الإسلامي هو المرجع الأول.\n\n"
             + base
         )
-    return base + "\n\nإذا تعارضت أي معلومة مع الثوابت الإسلامية، أشر إلى ذلك بوضوح وقدّم البديل الإسلامي."
+    else:
+        composed = base + (
+            "\n\nإذا تعارضت أي معلومة مع الثوابت الإسلامية، أشر إلى ذلك بوضوح وقدّم البديل الإسلامي."
+        )
+    composed += _LANGUAGE_RULE_AR
+    # Imported here, not at module scope: `retrieval` pulls chromadb in, and
+    # this module is imported by paths that have no business loading a vector
+    # store — including tests that would start failing for an unrelated reason.
+    from app.services.retrieval import detect_query_language
+    # First, not appended: the local 3B follows the top of a prompt far more
+    # reliably than its tail, and this rule has to beat several hundred words
+    # of Arabic that follow it.
+    if detect_query_language(question_text) == "en":
+        composed = _NON_ARABIC_DIRECTIVE + composed
+    return composed
 
 
 async def generate_reply(
@@ -300,7 +343,8 @@ async def generate_reply(
         domain, behavior_type, age_group, severity, retrieved_units,
         question_text, conversation_history, variant=variant,
     )
-    full_prompt = _compose_system_prompt(domain) + "\n\n" + user_prompt
+    full_prompt = (_compose_system_prompt(domain, question_text)
+                   + "\n\n" + user_prompt)
 
     # All LLM calls go through the gateway (retry/backoff + telemetry).
     # tier="cloud_quality" tries the Azure provider first, local as fallback.
@@ -339,4 +383,5 @@ def build_full_prompt(
         domain, behavior_type, age_group, severity, retrieved_units,
         question_text, conversation_history, variant=variant,
     )
-    return _compose_system_prompt(domain) + "\n\n" + user_prompt, source_line
+    return (_compose_system_prompt(domain, question_text)
+            + "\n\n" + user_prompt), source_line
