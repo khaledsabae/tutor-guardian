@@ -31,6 +31,37 @@ class PushService {
 
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
+  /// Ask for POST_NOTIFICATIONS. Returns whether the app may notify.
+  ///
+  /// Split out of [registerToken] because that whole method sits behind
+  /// `ensureSession()`, which returns early when the network is down — so a
+  /// device whose *first* launch was offline was never asked for notification
+  /// permission at all. It has fourteen days of reminders scheduled and no
+  /// permission to show any of them, and nothing asks again on a later launch
+  /// because the ask lived inside the token registration it never reached.
+  ///
+  /// This is the only prompt the app raises: POST_NOTIFICATIONS is one OS
+  /// permission covering push and local reminders alike, and asking twice is
+  /// asking a parent the same question twice.
+  Future<bool> requestNotificationPermission() async {
+    try {
+      final settings = await _messaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+        provisional: false,
+      );
+      final granted =
+          settings.authorizationStatus != AuthorizationStatus.denied;
+      unawaited(Analytics.pushPermission(granted));
+      return granted;
+    } catch (_) {
+      // No Play Services, no Firebase, no answer. The caller falls back to the
+      // plugin's own request rather than treating this as a denial.
+      return false;
+    }
+  }
+
   Future<void> registerToken() async {
     try {
       // Belt and braces: main() already does this on a path with no network
@@ -44,18 +75,10 @@ class PushService {
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
       // Android defaults to authorized; iOS requires explicit permission.
-      // For Android we still call it safely.
-      final settings = await _messaging.requestPermission(
-        alert: true,
-        badge: true,
-        sound: true,
-        provisional: false,
-      );
-      if (settings.authorizationStatus == AuthorizationStatus.denied) {
-        await Analytics.pushPermission(false);
-        return;
-      }
-      await Analytics.pushPermission(true);
+      // Usually a no-op by now — main() asks after the first frame, on a path
+      // that does not need a session — but kept so a token is never registered
+      // for a device that has refused notifications.
+      if (!await requestNotificationPermission()) return;
 
       String? token;
       if (defaultTargetPlatform == TargetPlatform.android) {

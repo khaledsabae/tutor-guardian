@@ -151,6 +151,20 @@ void main() async {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     DeepLinkHandler.instance.init(appNavigatorKey);
     NotificationService.instance.processPendingTap();
+    // The one place the app asks to notify — after the first frame, because a
+    // runtime permission prompt needs an Activity, and outside
+    // `_postLaunchGrowthLoop` because that returns early with no session, so a
+    // first launch without network used to skip the question entirely.
+    //
+    // Firebase first: `flutter_local_notifications` raises its request against
+    // its own `mainActivity`, which is null in this app on every attempt
+    // (verified on an emulator, debug and release alike), so its prompt never
+    // appears. It stays as the fallback for a device with no Play Services,
+    // where the Firebase call is the one that cannot answer.
+    unawaited(() async {
+      if (await PushService.instance.requestNotificationPermission()) return;
+      await NotificationService.instance.ensurePermission();
+    }());
   });
 
   // Notification taps need neither a session nor a token, so they are handled

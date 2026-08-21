@@ -19,6 +19,7 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -87,8 +88,14 @@ class NotificationService {
     await _purgeRetiredSlots(prefs);
     final enabled = prefs.getBool(_kEnabled) ?? true;
     if (enabled) {
-      // Android 13+ shows nothing without the runtime permission.
-      await _requestPermission();
+      // Scheduling first, and the permission separately (see
+      // [ensurePermission]). `init()` runs before `runApp`, and asking for the
+      // runtime permission there threw a NullPointerException inside the
+      // plugin — it needs an Activity, and at that point there is none. The
+      // throw propagated out of `init()` and took `scheduleDaily` with it, so
+      // a fresh install on Android 13+ queued *nothing at all*: verified on an
+      // emulator running 1.0.51, `dumpsys alarm` held zero alarms for this
+      // package and POST_NOTIFICATIONS was still ungranted.
       await scheduleDaily(prefs: prefs);
     }
 
@@ -294,11 +301,69 @@ class NotificationService {
   // The tap handler for payload 'wird' is deliberately still in
   // _handleNotificationTap; see the note there.
 
-  Future<bool> _requestPermission() async {
-    final android = _plugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
-    if (android == null) return true;
-    return await android.requestNotificationsPermission() ?? false;
+  /// Ask for the Android 13+ runtime permission, once an Activity exists.
+  ///
+  /// Call this after the first frame, never from `init()`: the plugin resolves
+  /// the request against the attached Activity, and before `runApp` there is
+  /// none — the call throws
+  /// `NullPointerException: ...Context.checkPermission... on a null object
+  /// reference`, which is what silently disabled every daily reminder.
+  ///
+  /// Returns false rather than throwing. A permission the user has not granted
+  /// is a state; it is not a reason to abort the caller.
+  Future<bool> ensurePermission() async {
+    if (!(await isEnabled())) return false;
+    final granted = await _requestPermission(quiet: true);
+    if (granted || !_lastRequestThrew) return granted;
+    // The plugin's request needs its `mainActivity`, and in this app that
+    // field is null every time — so this path only ever reports. It is not
+    // dead code: it is the fallback for a device where Firebase cannot ask,
+    // and the report is how we would learn that nobody is being asked at all.
+    _reportQuietly(
+      StateError('notification permission request never reached an Activity'),
+      StackTrace.current,
+      'no notification prompt could be raised',
+    );
+    return false;
+  }
+
+  /// Whether the last [_requestPermission] failed rather than answered.
+  ///
+  /// A denial and a crash both come back as false, and the retry above must
+  /// tell them apart: retrying a user's "no" is nagging, retrying a null
+  /// Activity is the whole point.
+  bool _lastRequestThrew = false;
+
+  Future<bool> _requestPermission({bool quiet = false}) async {
+    // The whole body, not just the request: resolving the platform
+    // implementation throws too when no registrant has run. Never let any of
+    // it abort a caller again — one uncaught throw here cost the app every
+    // scheduled reminder.
+    _lastRequestThrew = false;
+    try {
+      final android = _plugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+      if (android == null) return true;
+      return await android.requestNotificationsPermission() ?? false;
+    } catch (e, stack) {
+      _lastRequestThrew = true;
+      if (!quiet) {
+        _reportQuietly(e, stack, 'notification permission request failed');
+      }
+      return false;
+    }
+  }
+
+  /// Crashlytics if it is there, silence if it is not.
+  ///
+  /// `FirebaseCrashlytics.instance` throws when Firebase was never
+  /// initialised — in a host test, for one. A reporting call that can throw
+  /// inside a catch block re-creates the failure the catch exists to stop.
+  void _reportQuietly(Object e, StackTrace stack, String reason) {
+    try {
+      FirebaseCrashlytics.instance
+          .recordError(e, stack, reason: reason, fatal: false);
+    } catch (_) {}
   }
 
   /// Schedule one parenting-content notification a day for the next
@@ -398,6 +463,9 @@ class NotificationService {
     await prefs.setBool(_kEnabled, enabled);
     unawaited(Analytics.notificationPrefChanged('adhkar', enabled));
     if (enabled) {
+      // Order matters the other way round here: this runs from a tap in
+      // settings, so an Activity exists and the prompt can actually appear —
+      // and the schedule still gets queued whatever the user answers.
       await _requestPermission();
       await scheduleDaily(prefs: prefs);
     } else {
