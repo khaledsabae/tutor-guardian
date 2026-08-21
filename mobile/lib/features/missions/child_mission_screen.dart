@@ -34,8 +34,10 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
   bool _loading = true;
   bool _claiming = false;
 
-  /// Set when the bank has nothing for this child's band. Not an error: only
-  /// 7-9 has a mission bank today, and every other band lands here normally.
+  /// Set when the bank has nothing for this child's band. Not an error: the
+  /// youngest supported band (2-3) has no bank by design and lands here, as
+  /// does any band whose bank has not been written yet. 4-6 through 16-18 all
+  /// have one as of 2026-08-21.
   bool _empty = false;
 
   @override

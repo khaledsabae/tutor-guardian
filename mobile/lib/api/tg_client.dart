@@ -1454,8 +1454,10 @@ class TgClient {
 
   /// Today's single card, or null when the child's band has no mission bank.
   ///
-  /// A band with no bank is the ordinary case for every age except 7-9, so an
-  /// empty result is a state to render, not an error to report.
+  /// Every band from 4-6 to 16-18 has a bank as of 2026-08-21 (7-9 was the
+  /// only one when this was written), so an empty result is now the exception
+  /// rather than the rule — but it is still a state to render, not an error to
+  /// report: the youngest band has no bank by design.
   Future<Map<String, dynamic>?> fetchChildMission(String childToken) async {
     return _guard(() async {
       final uri = Uri.parse('$_baseUrl/api/value-tracking/child-mode/mission/today')
