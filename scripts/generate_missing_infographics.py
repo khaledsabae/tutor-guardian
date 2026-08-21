@@ -22,6 +22,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import time
 import uuid
 from datetime import datetime
@@ -236,6 +237,94 @@ def generate_one(lesson: dict, source_id: str) -> dict | None:
     }
 
 
+# ── Committing without touching the shared working tree ─────────────────────
+
+CONTENT_BRANCH = "content/infographics"
+
+
+def _git(cmd: list[str], env: dict | None = None) -> str:
+    full = {**os.environ, **(env or {})}
+    out = subprocess.run(cmd, cwd=BASE_DIR, env=full, check=True,
+                         capture_output=True, text=True)
+    return out.stdout.strip()
+
+
+def _commit_onto_upstream(paths: list[str], message: str,
+                          push: bool) -> str | None:
+    """Record the new index as a commit on top of `origin/main`, on a content
+    branch, without checking anything out.
+
+    Why not `git add` + `git commit` on `main`, which is what this did:
+
+    `--push` is off by default and rightly so — registering an infographic and
+    deciding to release are not the same act, and an unattended 06:30 cron must
+    not deploy production. But the commit then sat on the laptop's `main`, and
+    nothing ever moved that branch forward. By 2026-08-21 it was **48 commits
+    behind origin** while carrying four of its own, so every night's content was
+    being written to a branch nobody would ever push. It took a hand-merge to
+    recover, and the same drift starts again the next night.
+
+    Worse, `git add` and `git commit` run in a working tree several agents
+    share. On 2026-07-30 that pattern swallowed another session's edits into a
+    commit that did not describe them.
+
+    So: no checkout, no index, no HEAD. A temporary index is built from
+    `origin/main`, the changed files are hashed into it, and `commit-tree`
+    writes a commit whose parent is the current upstream. The result is always
+    exactly one commit ahead of `origin/main` and cannot drift, and the shared
+    tree is untouched — it works even while it is dirty.
+
+    Pushing the content branch does not deploy: only `main` does. So the
+    content is safe off this laptop the moment it exists, and releasing it stays
+    a decision someone makes on purpose.
+    """
+    # A temp file, not BASE_DIR/.git/…: inside a worktree `.git` is a *file*,
+    # so that path is not a directory and unlinking it raised NotADirectoryError.
+    fd, index_file = tempfile.mkstemp(prefix="tg-infographics-index-")
+    os.close(fd)
+    os.unlink(index_file)  # git wants to create it itself
+    try:
+        _git(["git", "fetch", "--quiet", "origin", "main"])
+    except subprocess.CalledProcessError as exc:
+        print(f"⚠️ fetch failed ({exc}); committing against the last known "
+              "origin/main")
+
+    upstream = _git(["git", "rev-parse", "origin/main"])
+    env = {"GIT_INDEX_FILE": index_file}
+    try:
+        _git(["git", "read-tree", upstream], env)
+        for rel in paths:
+            blob = _git(["git", "hash-object", "-w", rel])
+            _git(["git", "update-index", "--add", "--cacheinfo",
+                  f"100644,{blob},{rel}"], env)
+        tree = _git(["git", "write-tree"], env)
+        if tree == _git(["git", "rev-parse", f"{upstream}^{{tree}}"]):
+            print("Index is identical to origin/main — nothing to commit.")
+            return None
+        commit = _git(["git", "commit-tree", tree, "-p", upstream, "-m", message])
+        _git(["git", "update-ref", f"refs/heads/{CONTENT_BRANCH}", commit])
+    finally:
+        Path(index_file).unlink(missing_ok=True)
+
+    print(f"✅ Committed {commit[:8]} on {CONTENT_BRANCH} (parent: "
+          f"{upstream[:8]} = origin/main). Shared tree untouched.")
+
+    if push:
+        # Note this pushes the *content branch*, never main, so it does not
+        # deploy. `--push` here means "get it off this laptop", not "release".
+        _git(["git", "push", "--force-with-lease", "origin",
+              f"refs/heads/{CONTENT_BRANCH}:refs/heads/{CONTENT_BRANCH}"])
+        print(f"✅ Pushed origin/{CONTENT_BRANCH} — no deploy (only main "
+              "deploys).")
+        print(f"   Release it with:  git push origin "
+              f"{CONTENT_BRANCH}:main")
+    else:
+        print(f"ℹ️  Local only. `--push` puts it on origin/{CONTENT_BRANCH} "
+              "without deploying.")
+    return commit
+
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=0)
@@ -339,25 +428,12 @@ def main():
         add_paths = ["docs/lesson_index.json"]
         if BLOCKED_PATH.exists():
             add_paths.append("scripts/infographics_blocked.json")
-        subprocess.run(["git", "add", *add_paths], cwd=BASE_DIR, check=True)
         msg = f"chore(infographics): register {generated + recovered} NotebookLM infographics"
         if failed:
             msg += f" (failed: {len(failed)})"
-        subprocess.run(["git", "commit", "-m", msg], cwd=BASE_DIR, check=True)
-        if args.push:
-            # Opt-in only. This used to be unconditional, which made a content
-            # generator a deployment tool: pushing to main triggers the
-            # production deploy, so an unattended 06:30 cron shipped whatever it
-            # had produced — and on 2026-08-15 it did exactly that (5a9562d),
-            # while the deploy pipeline was already red for an unrelated reason.
-            # Registering an infographic and deciding to release are not the
-            # same act, and only one of them should happen while nobody is
-            # watching.
-            subprocess.run(["git", "push", "origin", "main"], cwd=BASE_DIR, check=True)
-            print("✅ Committed and pushed.")
-        else:
-            print("✅ Committed locally. Not pushed — `--push` to deploy, or "
-                  "push by hand after review.")
+        ref = _commit_onto_upstream(add_paths, msg, push=args.push)
+        if ref is None:
+            return
     except subprocess.CalledProcessError as e:
         print(f"⚠️ Git failed: {e}")
 
