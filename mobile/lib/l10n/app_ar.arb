@@ -1154,7 +1154,16 @@
   "tasbeehComplete": "أتممت العدد، تقبّل الله",
   "tasbeehTapHint": "اضغط في أي مكان للعدّ",
   "tasbeehProgress": "{current} من {total}",
-  "@tasbeehProgress": {"placeholders": {"current": {"type": "String"}, "total": {"type": "String"}}},
+  "@tasbeehProgress": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "hijriTitle": "محوّل التاريخ",
   "hijriToHijri": "ميلادي ← هجري",
   "hijriToGregorian": "هجري ← ميلادي",
@@ -1171,6 +1180,23 @@
   "adhkarKindHadith": "أحاديث",
   "adhkarKindTip": "نصائح",
   "adhkarCount": "{count} بندًا",
-  "@adhkarCount": {"placeholders": {"count": {"type": "String"}}},
-  "adhkarNoResults": "لا نتائج مطابقة"
+  "@adhkarCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "adhkarNoResults": "لا نتائج مطابقة",
+  "coachTipAskPrefill": "بخصوص نصيحة اليوم: «{tip}»\n\nكيف أطبّقها مع {child} بشكل عملي؟",
+  "@coachTipAskPrefill": {
+    "placeholders": {
+      "tip": {
+        "type": "String"
+      },
+      "child": {
+        "type": "String"
+      }
+    }
+  }
 }

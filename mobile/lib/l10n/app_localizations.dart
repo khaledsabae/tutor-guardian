@@ -6631,6 +6631,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لا نتائج مطابقة'**
   String get adhkarNoResults;
+
+  /// No description provided for @coachTipAskPrefill.
+  ///
+  /// In ar, this message translates to:
+  /// **'بخصوص نصيحة اليوم: «{tip}»\n\nكيف أطبّقها مع {child} بشكل عملي؟'**
+  String coachTipAskPrefill(String tip, String child);
 }
 
 class _AppLocalizationsDelegate

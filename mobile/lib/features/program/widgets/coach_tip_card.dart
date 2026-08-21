@@ -47,9 +47,14 @@ class CoachTipCard extends ConsumerWidget {
             // Seed the assistant with a concrete question about *this* tip so
             // switching tabs lands the parent in a relevant conversation,
             // not a blank chat. ChatScreen picks this up and auto-sends it.
+            // Localised, and not only for tidiness: this text is *sent to the
+            // assistant*, which since 2026-08-21 answers in the language the
+            // parent wrote in. Arabic scaffolding around an English tip is a
+            // mixed-language question, and it would pull the answer back into
+            // Arabic — undoing the fix one screen away.
             ref.read(pendingChatQuestionProvider.notifier).state =
-                'بخصوص نصيحة اليوم: «${tip.text}»\n\n'
-                'كيف أطبّقها مع ${profile.name} بشكل عملي؟';
+                AppLocalizations.of(context)
+                    .coachTipAskPrefill(tip.text, profile.name);
             onAsk?.call();
           },
           // Render the tip as a reverent, branded 1080×1080 card and open the

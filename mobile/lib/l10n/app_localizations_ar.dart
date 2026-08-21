@@ -3654,4 +3654,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adhkarNoResults => 'لا نتائج مطابقة';
+
+  @override
+  String coachTipAskPrefill(String tip, String child) {
+    return 'بخصوص نصيحة اليوم: «$tip»\n\nكيف أطبّقها مع $child بشكل عملي؟';
+  }
 }

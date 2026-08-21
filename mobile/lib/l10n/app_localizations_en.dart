@@ -3698,4 +3698,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adhkarNoResults => 'Nothing matches';
+
+  @override
+  String coachTipAskPrefill(String tip, String child) {
+    return 'About today\'s tip: “$tip”\n\nHow do I put it into practice with $child?';
+  }
 }

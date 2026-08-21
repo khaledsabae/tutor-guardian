@@ -1170,5 +1170,16 @@
   "adhkarKindHadith": "Hadiths",
   "adhkarKindTip": "Tips",
   "adhkarCount": "{count} items",
-  "adhkarNoResults": "Nothing matches"
+  "adhkarNoResults": "Nothing matches",
+  "coachTipAskPrefill": "About today's tip: “{tip}”\n\nHow do I put it into practice with {child}?",
+  "@coachTipAskPrefill": {
+    "placeholders": {
+      "tip": {
+        "type": "String"
+      },
+      "child": {
+        "type": "String"
+      }
+    }
+  }
 }
