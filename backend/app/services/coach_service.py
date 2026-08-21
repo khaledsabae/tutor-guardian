@@ -350,18 +350,19 @@ def _find_topic_matching_fallback(
     return None
 
 
-def _pick_plain_fallback(age_group: str, child_id: int, used_texts: Optional[set[str]] = None) -> dict:
+def _pick_plain_fallback(age_group: str, child_id: int, used_texts: Optional[set[str]] = None,
+                         lang: Optional[str] = None) -> dict:
     """Return the deterministic daily tip for the age group (DailyTipCard equivalent).
 
     In production the daily tip is per (date, age_group). The child_id argument is
     only exposed for batch sampling scripts so different children in the same age
     group get different plain tips for review.
     """
-    pool = cl.get_daily_tips(age_group)
+    pool = cl.get_daily_tips(age_group, lang=lang)
     if not pool:
         return {
             "id": "fallback_none",
-            "text": "ابدأ اليوم بنصيحة واحدة: خصّص دقائق حقيقية مع طفلك بلا شاشات، واسأله عن يومه.",
+            "text": _EMPTY_POOL_TIP.get(lang or "ar", _EMPTY_POOL_TIP["ar"]),
             "domain": "development",
         }
     today = _today_utc()
@@ -406,16 +407,34 @@ def _ensure_coach_tips_table() -> None:
         conn.close()
 
 
+_EMPTY_POOL_TIP = {
+    "ar": "ابدأ اليوم بنصيحة واحدة: خصّص دقائق حقيقية مع طفلك بلا شاشات، واسأله عن يومه.",
+    "en": "Start today with one thing: give your child a few real minutes with "
+          "no screens, and ask them about their day.",
+}
+
+
 def _load_or_create_tip(
     conn: sqlite3.Connection,
     device_id: str,
     child_id: int,
     date: str,
+    lang: Optional[str] = None,
 ) -> Optional[sqlite3.Row]:
-    return conn.execute(
-        "SELECT * FROM coach_tips WHERE device_id = ? AND child_id = ? AND date = ?",
-        (device_id, child_id, date),
+    """Today's stored tip **in this language**.
+
+    The language is part of the key, not a detail. One row per device/child/day
+    meant the first reader's language won the day: a household reading in
+    English got the Arabic tip its Arabic-reading parent had opened that
+    morning, cached and unchangeable until midnight.
+    """
+    want = lang or "ar"
+    row = conn.execute(
+        "SELECT * FROM coach_tips WHERE device_id = ? AND child_id = ? AND date = ?"
+        " AND COALESCE(lang, 'ar') = ?",
+        (device_id, child_id, date, want),
     ).fetchone()
+    return row
 
 
 def _store_tip(
@@ -426,19 +445,25 @@ def _store_tip(
     domain: Optional[str],
     text: str,
     source: str,
+    lang: Optional[str] = None,
 ) -> int:
+    # Still one row per device/child/day: the unique key is unchanged, and a
+    # reader in the other language simply rewrites it. That is cheap and it is
+    # correct, because the daily-tip pool is chosen by a language-independent
+    # hash — both readers get the same tip, each in their own words.
     cur = conn.execute(
         """
-        INSERT INTO coach_tips (device_id, child_id, date, domain, text, source)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO coach_tips (device_id, child_id, date, domain, text, source, lang)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(device_id, child_id, date) DO UPDATE SET
             domain = excluded.domain,
             text = excluded.text,
             source = excluded.source,
+            lang = excluded.lang,
             shown_at = COALESCE(coach_tips.shown_at, excluded.created_at)
         RETURNING id
         """,
-        (device_id, child_id, date, domain, text, source),
+        (device_id, child_id, date, domain, text, source, lang or "ar"),
     )
     row = cur.fetchone()
     conn.commit()
@@ -459,6 +484,7 @@ async def get_proactive_tip(
     *,
     mark_shown: bool = True,
     used_texts: Optional[set[str]] = None,
+    lang: Optional[str] = None,
 ) -> dict:
     """Return today's tip. If text does not start with child name → plain daily tip."""
     _ensure_coach_tips_table()
@@ -474,7 +500,7 @@ async def get_proactive_tip(
         child_name = child["name"]
         child_gender = child["gender"]
 
-        cached = _load_or_create_tip(conn, device_id, child_id, date)
+        cached = _load_or_create_tip(conn, device_id, child_id, date, lang)
         if cached is not None:
             if mark_shown:
                 _mark_shown_once(conn, cached["id"])
@@ -501,12 +527,24 @@ async def get_proactive_tip(
             signal_is_challenge = False
 
         # No signal → plain deterministic tip.
-        if not recent_topic or not domain:
-            fallback = _pick_plain_fallback(age_group, child_id, used_texts=used_texts)
+        #
+        # A non-Arabic reader takes this path too, whatever signal exists. The
+        # generated tip is validated by `_is_core_ok` and `_pronoun_consistent`,
+        # and both are Arabic-language heuristics — on English text they either
+        # reject everything or, worse, pass it unchecked. So the personalised
+        # tip stays Arabic-only until those gates have an English counterpart,
+        # and an English reader gets the translated daily tip: correct content,
+        # not personalised, rather than personalised content nothing checked.
+        #
+        # Before this, the card simply rendered Arabic on an English phone —
+        # the most prominent content on the Home tab, for 38% of users.
+        if not recent_topic or not domain or (lang or "ar") != "ar":
+            fallback = _pick_plain_fallback(
+                age_group, child_id, used_texts=used_texts, lang=lang)
             text = fallback["text"]
             chosen_domain: str = fallback.get("domain", "development") or "development"
             source = "fallback"
-            tip_id = _store_tip(conn, device_id, child_id, date, chosen_domain, text, source)
+            tip_id = _store_tip(conn, device_id, child_id, date, chosen_domain, text, source, lang)
             if mark_shown:
                 _mark_shown_once(conn, tip_id)
             return {
@@ -563,11 +601,11 @@ async def get_proactive_tip(
 
         # Graceful degradation: if no trustworthy matching core, return plain daily tip.
         if core_text is None:
-            plain = _pick_plain_fallback(age_group, child_id, used_texts=used_texts)
+            plain = _pick_plain_fallback(age_group, child_id, used_texts=used_texts, lang=lang)
             text = plain["text"]
             chosen_domain = plain.get("domain", "development") or "development"
             source = "fallback"
-            tip_id = _store_tip(conn, device_id, child_id, date, chosen_domain, text, source)
+            tip_id = _store_tip(conn, device_id, child_id, date, chosen_domain, text, source, lang)
             if mark_shown:
                 _mark_shown_once(conn, tip_id)
             return {
@@ -584,7 +622,7 @@ async def get_proactive_tip(
             is_challenge=signal_is_challenge,
         )
         chosen_domain = domain if domain else "development"
-        tip_id = _store_tip(conn, device_id, child_id, date, chosen_domain, text, source)
+        tip_id = _store_tip(conn, device_id, child_id, date, chosen_domain, text, source, lang)
         if mark_shown:
             _mark_shown_once(conn, tip_id)
         return {

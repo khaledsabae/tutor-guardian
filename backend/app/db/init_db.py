@@ -194,7 +194,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 25
+SCHEMA_VERSION = 26
 
 
 def db_path() -> Path:
@@ -340,6 +340,12 @@ def init_db() -> None:
     )
 
     _ensure_coach_tips_table(conn)
+    # v26 — the coach tip is cached one row per device/child/day, so the first
+    # reader's language used to win the whole day for the household.
+    _ensure_column(
+        conn, table="coach_tips", column="lang",
+        ddl="ALTER TABLE coach_tips ADD COLUMN lang TEXT",
+    )
     _ensure_child_challenges_table(conn)
     _ensure_referrals_table(conn)
     _ensure_push_tokens_table(conn)

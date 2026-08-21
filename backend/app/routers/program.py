@@ -472,6 +472,7 @@ class CoachTipResponse(BaseModel):
 async def get_coach_tip(
     request: Request,
     child_id: int = Query(..., description="معرّف الطفل النشط"),
+    lang: Optional[str] = Query(None, description="لغة النصيحة: ar/en"),
 ):
     """نصيحة تربوية استباقية مخصّصة للطفل اليوم.
 
@@ -483,7 +484,8 @@ async def get_coach_tip(
     if not device_id:
         raise HTTPException(status_code=401, detail="مطلوب توثيق.")
     try:
-        tip = await coach_service.get_proactive_tip(device_id, child_id)
+        tip = await coach_service.get_proactive_tip(
+            device_id, child_id, lang=_resolve_lang(lang, request))
         return CoachTipResponse(**tip)
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc

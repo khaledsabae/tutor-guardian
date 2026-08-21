@@ -710,8 +710,12 @@ class TgClient {
   Future<Map<String, dynamic>> getCoachTip(int childId) async {
     final session = await ensureSession();
     final token = session.token;
+    // `_langParam()` — the one content read that did not carry it. On an
+    // English phone the Home tab's most prominent card rendered Arabic, which
+    // is the same omission that left 170 translated lessons unread until
+    // 2026-08-13, in the one place that had not been swept.
     final uri = Uri.parse('$_baseUrl/api/program/coach-tip')
-        .replace(queryParameters: {'child_id': '$childId'});
+        .replace(queryParameters: {'child_id': '$childId', ..._langParam()});
     final resp = await _http
         .get(uri, headers: _authHeaders(token))
         .timeout(AppConfig.httpTimeout);
