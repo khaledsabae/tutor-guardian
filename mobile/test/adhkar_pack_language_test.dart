@@ -12,9 +12,11 @@
 library;
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/widgets.dart' show TextDirection;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:almorabbi/features/adhkar/data/family_adhkar.dart';
+import 'package:almorabbi/l10n/content_direction.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -79,4 +81,38 @@ void main() {
           reason: '${item.id} is a ${item.kind} and is no longer Arabic');
     }
   });
+
+  group('an item carries its own direction', () {
+    test('an English tip reads left to right', () async {
+      final items = await FamilyAdhkar.load(language: 'en');
+      final tip = items.firstWhere((i) => i.id == 't_003');
+      expect(ContentDirectionality.resolve(text: tip.text), TextDirection.ltr);
+    });
+
+    test('an ayah reads right to left in either pack', () async {
+      for (final lang in ['ar', 'en']) {
+        final items = await FamilyAdhkar.load(language: lang);
+        final ayah = items.firstWhere((i) => i.kind == 'verse');
+        expect(ContentDirectionality.resolve(text: ayah.text), TextDirection.rtl,
+            reason: 'the $lang pack still carries the ayah in Arabic');
+      }
+    });
+
+    test('a mostly-English tip that quotes a hadith still reads left to right',
+        () async {
+      // t_044 is the hardest of the eight: an English sentence wrapped around a
+      // fully-vowelled ayah. The sentence doing the talking is English.
+      final items = await FamilyAdhkar.load(language: 'en');
+      final mixed = items.firstWhere((i) => i.id == 't_044');
+      expect(ContentDirectionality.resolve(text: mixed.text), TextDirection.ltr);
+    });
+  });
 }
+
+
+// ── Direction follows the item, not the pack ─────────────────────────────
+//
+// `_AdhkarCard` pinned `languageCode: 'ar'`, which was correct while the pack
+// was Arabic and only Arabic. With the tips in English it rendered them
+// right-aligned with the full stop on the wrong side — visible on a Pixel 6 the
+// first time the English pack loaded.

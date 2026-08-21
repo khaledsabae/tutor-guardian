@@ -129,10 +129,17 @@ class _AdhkarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The pack is Arabic today. Tag the direction off the content rather than
-    // the app locale, so an English-locale parent still reads it correctly.
+    // Off the item, not off a hard-coded 'ar'. That was right while the pack
+    // was Arabic and only Arabic; since 2026-08-22 the 124 tips load in English
+    // for an English reader, and pinning the direction rendered them
+    // right-aligned with the full stop on the wrong side of the line.
+    //
+    // The eight tips that quote scripture are mixed: mostly English around an
+    // Arabic ayah or hadith. Character counting gives those to LTR, which is
+    // the direction of the sentence doing the talking, and the quotation keeps
+    // its own direction inside it.
     return ContentDirectionality(
-      languageCode: 'ar',
+      text: item.text,
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(14),
