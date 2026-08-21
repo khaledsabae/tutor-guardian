@@ -13,6 +13,7 @@
 /// `OnboardingStorage.setActiveChild` via this provider.
 library;
 
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart' show ThemeMode;
@@ -20,6 +21,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../api/tg_client.dart';
+import '../../adhkar/data/family_adhkar.dart';
+import '../../adhkar/services/notification_service.dart';
 import '../../../l10n/l10n_global.dart';
 import '../data/onboarding_storage.dart';
 
@@ -116,6 +119,23 @@ class AppLocaleNotifier extends StateNotifier<Locale?> {
     TgClient.uiLanguage = languageCode;
     if (_prefs != null) {
       await _prefs.setString('tg.ui_language', languageCode);
+    }
+    // The reminders are queued fourteen days ahead out of the pack that was
+    // loaded before `runApp`. Switching language without this leaves the parent
+    // with a fortnight of notifications in the language they just left — the
+    // change would look like it had worked everywhere except the one surface
+    // that arrives when the app is closed.
+    unawaited(_reloadRemindersFor(languageCode));
+  }
+
+  Future<void> _reloadRemindersFor(String languageCode) async {
+    try {
+      await FamilyAdhkar.load(language: resolvedContentLanguage(languageCode));
+      await NotificationService.instance.rescheduleForLanguageChange();
+    } catch (_) {
+      // A failed reschedule must not break changing the language. The queued
+      // reminders stay in the previous language until the next launch, which
+      // reloads the pack from the stored choice anyway.
     }
   }
 }

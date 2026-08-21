@@ -34,6 +34,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import adhkar_pack
 from adhkar_pack import load_or_die  # noqa: E402
 
 # «(حديث رقم 51)» / «(نصيحة رقم 12)» / «(رقم ٣)» — padding, never real content
@@ -45,6 +46,50 @@ _HADITH_BOOKS = ("البخاري", "مسلم", "الترمذي", "أبو داو�
 
 def strip_counter(text: str) -> str:
     return _COUNTER.sub("", text).strip()
+
+
+# Arabic quoted inside a translated line is scripture carried through on purpose;
+# Arabic *outside* a quotation is a line nobody translated.
+_QUOTED = re.compile(r"«[^»]*»|\u201c[^\u201d]*\u201d")
+_ARABIC = re.compile(r"[\u0600-\u06ff]")
+
+
+def _check_translation(path, arabic: list) -> list[str]:
+    """A translated pack must be the same pack, in another language.
+
+    Same ids in the same order, because the scheduler picks by index and the
+    notification payload carries the id: a pack that drifts by one sends a
+    parent to a different item than the one they were shown.
+
+    Scripture must be byte-identical to the Arabic. An ayah is not translated —
+    that is the whole rule this repo has a separate guard for — so if a verse or
+    a hadith differs here at all, someone has rendered it, and the fact that it
+    is a *different file* is exactly why nobody would have noticed.
+    """
+    errors: list[str] = []
+    label = path.name
+    translated = adhkar_pack.load_or_die(path)
+
+    if [i.id for i in translated] != [i.id for i in arabic]:
+        errors.append(f"{label}: المعرّفات أو ترتيبها لا يطابق الحزمة العربية")
+        print(f"\n  ✗ {label} — ترتيب المعرّفات مختلف؛ الجدولة تختار بالفهرس")
+        return errors  # everything below compares position by position
+
+    for ar, tr in zip(arabic, translated):
+        if ar.kind != tr.kind:
+            errors.append(f"{label}: {ar.id} نوعه مختلف ({ar.kind} → {tr.kind})")
+        elif ar.kind in {"verse", "hadith"}:
+            if ar.text != tr.text:
+                errors.append(f"{label}: {ar.id} نصّ {ar.kind} مترجَم أو محرَّف")
+                print(f"\n  ✗ {label} — {ar.id}: القرآن والحديث يُنقلان كما هما")
+        else:  # tip
+            if ar.text == tr.text:
+                errors.append(f"{label}: {ar.id} لم يُترجَم")
+            leftover = _ARABIC.search(_QUOTED.sub("", tr.text))
+            if leftover:
+                errors.append(f"{label}: {ar.id} عربية خارج اقتباس")
+                print(f"\n  ✗ {label} — {ar.id}: «{tr.text[:60]}»")
+    return errors
 
 
 def main() -> int:
@@ -92,6 +137,14 @@ def main() -> int:
     if unlocated:
         errors.append(f"{len(unlocated)} حديث بلا رقم/موضع يُراجَع عليه")
         print(f"\n  ✗ إسناد بلا موضع، مثال: «{unlocated[0].source}»")
+
+    # 5 — every translated pack, against the Arabic original
+    #
+    # Added 2026-08-22 with `family_adhkar.en.json`. Until then every guard here
+    # was scoped to the Arabic file, so a translated pack was a second thing on a
+    # parent's lock screen that nothing read.
+    for path in adhkar_pack.translated_packs():
+        errors.extend(_check_translation(path, items))
 
     counts = collections.Counter(i.kind for i in items)
     print(f"\n  العناصر: {len(items)}   ·   " +

@@ -1,6 +1,6 @@
 {
   "schema": "tg.parenting_content/1",
-  "locale": "ar",
+  "locale": "en",
   "items": [
     {
       "id": "v_014_040",
@@ -1709,870 +1709,870 @@
     {
       "id": "t_001",
       "kind": "tip",
-      "text": "ابدأ يومك بتبسّم في وجه أطفالك: الابتسامة صدقة، والبيت يتشكّل من أول لحظة صباح.",
-      "source": "نصيحة تربوية — مستمدة من حديث: «تبسمك في وجه أخيك صدقة»",
-      "topic": "نصيحة"
+      "text": "Start your day by smiling at your children: a smile is charity, and a home takes its shape from the first moment of the morning.",
+      "source": "Parenting guidance — drawn from the hadith «تبسمك في وجه أخيك صدقة»",
+      "topic": "Tip"
     },
     {
       "id": "t_002",
       "kind": "tip",
-      "text": "قبل النقد، امسح على رأس الطفل وخفّض صوتك: الرفق لا يكون في شيء إلا زانه.",
-      "source": "نصيحة تربوية — مستمدة من حديث الرفق",
-      "topic": "نصيحة"
+      "text": "Before you criticise, put your hand on your child's head and lower your voice: «الرفق لا يكون في شيء إلا زانه» — gentleness adorns whatever it touches.",
+      "source": "Parenting guidance — drawn from the hadith on gentleness",
+      "topic": "Tip"
     },
     {
       "id": "t_003",
       "kind": "tip",
-      "text": "خصّص ١٠ دقائق يوميًا تسمع فيها طفلك بلا مقاطعة — يشعره بالأمان والاحترام.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Set aside ten minutes a day to listen to your child without interrupting — it tells them they are safe and respected.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_004",
       "kind": "tip",
-      "text": "لا تقارن أطفالك ببعضهم أو بأبناء الآخرين؛ العدل بينهم يبدأ بإدراك فرديتهم.",
-      "source": "نصيحة تربوية — مستمدة من: «اتقوا الله واعدلوا بين أولادكم»",
-      "topic": "نصيحة"
+      "text": "Do not compare your children to each other or to anyone else's; being fair between them starts with seeing each one as themselves.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_005",
       "kind": "tip",
-      "text": "علّم طفلك دعاء واحد هذا الأسبوع وردّده معه: العلم يسلّك به طريقاً إلى الجنة.",
-      "source": "نصيحة تربوية — مستمدة من حديث العلم",
-      "topic": "نصيحة"
+      "text": "Teach your child one du'a this week and say it together: whoever takes a path in search of knowledge is walking a path to Paradise.",
+      "source": "Parenting guidance — drawn from the hadith on knowledge",
+      "topic": "Tip"
     },
     {
       "id": "t_006",
       "kind": "tip",
-      "text": "احتفل بأصغر إنجاز بكلمة طيبة: الثناء البناء يُنشئ طفلاً واثقاً محباً للخير.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Mark the smallest achievement with a kind word: praise that names the effort builds a confident child who loves doing good.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_007",
       "kind": "tip",
-      "text": "إذا غضبت من طفلك، خُذ نفساً قبل الرد: الصبر عند الصدمة الأولى.",
-      "source": "نصيحة تربوية — مستمدة من حديث الصبر",
-      "topic": "نصيحة"
+      "text": "When your child angers you, take a breath before you answer: «الصبر عند الصدمة الأولى» — patience counts at the first shock.",
+      "source": "Parenting guidance — drawn from the hadith on patience",
+      "topic": "Tip"
     },
     {
       "id": "t_008",
       "kind": "tip",
-      "text": "اقرأ مع طفلك قصة نبي أو صحابي كل يوم قبل النوم: القلب ينبت بالقدوة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Read your child the story of a prophet or a companion each night before sleep: hearts grow around the people they are shown.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_009",
       "kind": "tip",
-      "text": "لا تُلغي العبادة بالبيت؛ صلاة الجماعة مع الأطفال — ولو ركعتين — أقوى من ألف موعظة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Do not let worship disappear from the house; praying in congregation with your children — even two rak'ahs — teaches more than a thousand lectures.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_010",
       "kind": "tip",
-      "text": "سامح نفسك على الأخطاء التربوية، واسأل الله التوفيق: الوالد راعٍ والراعي أحياناً يُخطئ ثم يُصلح.",
-      "source": "نصيحة تربوية — مستمدة من حديث الراعي",
-      "topic": "نصيحة"
+      "text": "Forgive yourself for your parenting mistakes and ask Allah to guide you: a parent is a shepherd, and a shepherd sometimes errs and then puts it right.",
+      "source": "Parenting guidance — drawn from the hadith of the shepherd",
+      "topic": "Tip"
     },
     {
       "id": "t_011",
       "kind": "tip",
-      "text": "استبدل كلمة «لا تفعل» بـ «ما رأيك أن نفعل كذا؟»: التوجيه الإيجابي يبني الاستجابة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Replace “don't do that” with “what if we did this instead?” — pointing somewhere is what earns you a response.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_012",
       "kind": "tip",
-      "text": "عندما يخطئ طفلك، افرق بين ذات الطفل وبين السلوك: أنت حبيبنا ولكن هذا الفعل خاطئ.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When your child does wrong, separate the child from the behaviour: you are dear to us, and this particular thing was wrong.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_013",
       "kind": "tip",
-      "text": "اجعل لطفلك ركناً صغيراً في البيت للقراءة والهدوء — حافز بصري للسكينة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Give your child a small corner of the house for reading and quiet — a visible invitation to settle.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_014",
       "kind": "tip",
-      "text": "اقبل اعتذار طفلك فوراً وعلّمه كيف يصلح ما أفسده بدلاً من العقاب المجرد.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Accept your child's apology at once, and teach them to repair what they broke rather than simply be punished for it.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_015",
       "kind": "tip",
-      "text": "عندما يتحدث طفلك انزل لمستوى عينيه واقطع ما بيدك — هذا قمة الاحترام.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When your child speaks, come down to their eye level and put down whatever is in your hands — there is no higher respect.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_016",
       "kind": "tip",
-      "text": "عود أطفالك على قول «شكراً» و «جزاك الله خيراً» لأي خدمة في البيت.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Get your children used to saying “thank you” and “جزاك الله خيرًا” for any help around the house.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_017",
       "kind": "tip",
-      "text": "اصطحب ابنك للمسجد بلطف وبشاشة وعلّمه الهدوء بالحب لا بالتخويف.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Take your child to the mosque gently and cheerfully, and teach them stillness through love rather than fear.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_018",
       "kind": "tip",
-      "text": "اجعل يوم الجمعة يوماً مميزاً في البيت بالروائح الطيبة وقراءة سورة الكهف معا.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Make Friday feel different at home: good scent, and Surat al-Kahf read together.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_019",
       "kind": "tip",
-      "text": "اشرك أطفالك في تحضير الطعام أو ترتيب السفرة — العمل الجماعي ينمي المسؤولية.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Bring your children into cooking or setting the table — working together is where responsibility grows.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_020",
       "kind": "tip",
-      "text": "عند الشراء، علم طفلك التمييز بين «الحاجة الحقيقية» و «الرغبة المؤقتة».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When you shop, teach your child the difference between a real need and a passing want.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_021",
       "kind": "tip",
-      "text": "خصص حصالة صغيرة في البيت باسم «حصالة الخير» يضع فيها الطفل ما يشاء للفقراء.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Keep a small jar at home called “the good jar”, where your child puts whatever they like for those in need.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_022",
       "kind": "tip",
-      "text": "لا تصرخ في وجه الطفل عندما يبكي، بل قل له: أنا معك وبجانبك، وحين تهدأ نتحدث.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Do not shout at a crying child. Say instead: I am here with you, and when you are calm we will talk.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_023",
       "kind": "tip",
-      "text": "احتضن أطفالك عدة مرات يومياً: العناق يفرز هرمونات الأمان والألفة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Hug your children several times a day: being held is what safety feels like before a child has words for it.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_024",
       "kind": "tip",
-      "text": "استمع لقصص طفلك الصغيرة باهتمام حتى يثق فيك عندما يكبر ويواجه مشكلات كبيرة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Listen to your child's small stories with real attention, so that they trust you with the large ones later.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_025",
       "kind": "tip",
-      "text": "لا تعد طفلك بشيء إلا وأنت قادر على الوفاء به: الصدق أساس الأمان النفسي.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Promise your child nothing you cannot deliver: keeping your word is the ground their sense of safety stands on.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_026",
       "kind": "tip",
-      "text": "علم طفلك كيف يقول «لا» للغرباء أو لأي تصرف يجعله غير مرتاح.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child how to say “no” to a stranger, or to anything that makes them uncomfortable.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_027",
       "kind": "tip",
-      "text": "حدد أوقاتاً للشاشات والموبايل في البيت وكن أنت أول الملتزمين بها.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Set screen and phone hours for the house, and be the first to keep to them.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_028",
       "kind": "tip",
-      "text": "اجعل طاولة الطعام خالية من الهواتف الذكية تماماً: وقت الوجبة وقت للحديث الأسري.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Keep the dinner table completely free of phones: mealtime is the family's talking time.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_029",
       "kind": "tip",
-      "text": "امدح المحاولة والجهد المبذول وليس الذكاء والنتيجة فقط: «أنا فخور باجتهادك».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Praise the attempt and the effort spent, not only the cleverness or the result: “I am proud of how hard you worked.”",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_030",
       "kind": "tip",
-      "text": "علم أطفالك كيف يحلون خلافاتهم البسيطة بالحوار وتداول الأدوار.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your children to settle their small disagreements by talking and taking turns.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_031",
       "kind": "tip",
-      "text": "عندما يغضب الطفل، ساعده في التعبير عن مشاعره: «أرى أنك حزين بسبب هذا الأمر».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When your child is angry, help them put the feeling into words: “I can see that this upset you.”",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_032",
       "kind": "tip",
-      "text": "اقرأ أذكار الصباح والمساء بصوت مسموع في البيت ليتعلمها الأطفال بالتكرار تلقائياً.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Say the morning and evening adhkar out loud at home, so your children learn them simply by hearing them again and again.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_033",
       "kind": "tip",
-      "text": "اجعل في البيت جلسة أسبوعية مدتها ١٥ دقيقة للتحدث في موضوع إيماني أو أخلاقي مبسط.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Hold a fifteen-minute family sitting each week on one simple point of faith or character.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_034",
       "kind": "tip",
-      "text": "شجع أطفالك على ممارسة رياضة نافعة كالسباحة أو الجري لبناء الجسم السليم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Encourage your children into a sport that serves them — swimming or running — so the body is built well.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_035",
       "kind": "tip",
-      "text": "لا تتحدث عن عيوب طفلك أمام الأقارب أو الأصدقاء: كرامته وحياؤه أمانة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Do not discuss your child's faults in front of relatives or friends: their dignity is a trust you are holding.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_036",
       "kind": "tip",
-      "text": "إذا أخطأ طفلك واكتشفت ذلك، ناقشه بينك وبينه في الغرفة دون إحراجه أمام إخوته.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If you find out your child did wrong, take it up with them alone in the room — not in front of their brothers and sisters.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_037",
       "kind": "tip",
-      "text": "علم ابنك أن الاستئذان قبل دخول الغرف أدب قرآني يحمي الخصوصية.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that asking permission before entering a room is an adab the Qur'an taught, and it protects everyone's privacy.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_038",
       "kind": "tip",
-      "text": "درب طفلك على حفظ سر البيت وعدم نقل التفاصيل الداخلية للخارج.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Train your child to keep the household's business inside the house.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_039",
       "kind": "tip",
-      "text": "اجعل طفلك يختار ملابسه بحدود المعقول ليتعلم اتخاذ القرار والاستقلالية.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Let your child choose their own clothes, within reason, so they learn to decide and to stand on their own.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_040",
       "kind": "tip",
-      "text": "علم أطفالك ألا يسخروا من أحد بسبب شكله أو لونه أو لباسه: «إن الله لا ينظر إلى صوركم».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your children never to mock anyone for their looks, their colour or their clothes: «إن الله لا ينظر إلى صوركم» — Allah does not look at your forms.",
+      "source": "Parenting guidance — drawn from the hadith «إن الله لا ينظر إلى صوركم»",
+      "topic": "Tip"
     },
     {
       "id": "t_041",
       "kind": "tip",
-      "text": "اشكر زوجتك أمام الأبناء واشكري زوجك أمامهم: القدوة في احترام الزوجين تنعكس على سلوك الأبناء.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Thank your wife in front of the children, and thank your husband in front of them: how the two of you treat each other is what they copy.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_042",
       "kind": "tip",
-      "text": "عند السفر أو النزهة، اشرك الأطفال في التخطيط واختيار الأنشطة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When you travel or go out, bring the children into the planning and let them choose some of it.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_043",
       "kind": "tip",
-      "text": "علق جدولاً بسيطاً للمهام اليومية واجعل للطفل علامة صح عند إنجاز الواجب أو الصلاة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Put up a simple daily chart and let your child tick off a prayer or a piece of homework once it is done.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_044",
       "kind": "tip",
-      "text": "علم طفلك استغفار ودعاء يونس عند الضيق: «لا إله إلا أنت سبحانك إني كنت من الظالمين».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child istighfar and the du'a of Yunus in distress: «لَا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ». Its meaning: there is no god but You, glory be to You, I have been among the wrongdoers.",
+      "source": "Parenting guidance — the wording is Qur'an, Surat al-Anbiya' 21:87",
+      "topic": "Tip"
     },
     {
       "id": "t_045",
       "kind": "tip",
-      "text": "إذا شفت طفلك بيساعد أيا كان فاشكره فوراً وأثنِ عليه: «ما أجمل يديك وهي تساعد».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When you see your child helping anyone at all, thank them on the spot: “how beautiful your hands are when they help.”",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_046",
       "kind": "tip",
-      "text": "علم ابنك أن الرجولة في الرفق وحماية الضعيف وليست في العنف أو الصراخ.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your son that manhood is in gentleness and in protecting the weak — not in force or in shouting.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_047",
       "kind": "tip",
-      "text": "علمي ابنتك الحياء والاعتزاز بهويتها وأخلاقها الإسلامية النبيلة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your daughter modesty, and pride in who she is and in the character her faith gives her.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_048",
       "kind": "tip",
-      "text": "اشرح لطفلك سبب القرار التربوي ببساطة بدلاً من إلقاء الأوامر الجافة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Explain the reason behind a rule simply, instead of handing down a bare order.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_049",
       "kind": "tip",
-      "text": "اصبر على أسئلة طفلك الكثيرة: الفضول هو محرك الذكاء والتعلم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Be patient with your child's endless questions: curiosity is the engine of every bit of learning they will do.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_050",
       "kind": "tip",
-      "text": "إذا لم تكن تعرف إجابة سؤال طفلك الديني أو العلمي، قل بصدق: «سؤال رائع، تعال نبحث عن الإجابة معاً».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If you do not know the answer to your child's question about faith or science, say so honestly: “good question — let's go and find out together.”",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_051",
       "kind": "tip",
-      "text": "علم طفلك دعاء دخول الخلاء والخروج منه ليرتبط بالآداب في أصغر تفاصيل يومه.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child the du'a for entering and leaving the bathroom, so adab reaches even the smallest corner of their day.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_052",
       "kind": "tip",
-      "text": "علم طفلك دعاء الركوب والبحث عن البركة في الحركة والتنقل.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child the du'a for travelling, and to look for barakah in every journey.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_053",
       "kind": "tip",
-      "text": "اجعل في البيت مكتبة صغيرة تحتوي على قصص الأنبياء المصورة والممتعة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Keep a small library at home with illustrated stories of the prophets.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_054",
       "kind": "tip",
-      "text": "شجع طفلك على القراءة بوضع كتاب بجانب سريره كل ليلة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Encourage your child to read by leaving a book beside their bed every night.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_055",
       "kind": "tip",
-      "text": "عند الوجبات، عود طفلك ألا يعيب طعاماً قط: إن اشتهاه أكله وإلا تركه بأدب.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "At meals, get your child used to never criticising food: if they want it they eat it, and if not they leave it politely.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_056",
       "kind": "tip",
-      "text": "علم طفلك عدم الإسراف في الماء عند الوضوء أو الاستحمام: حفظ النعم شكر لله.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child not to waste water in wudu or in the shower: looking after a blessing is how you thank Allah for it.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_057",
       "kind": "tip",
-      "text": "درب طفلك على إطفاء الأنوار والأجهزة غير المستعملة لتنمية الحس بالمسؤولية.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Train your child to switch off lights and devices nobody is using — a small, daily sense of responsibility.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_058",
       "kind": "tip",
-      "text": "عند زيارة الأقارب، علم أطفالك سلام الحرارة والاستئذان وأدب الجلوس.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When visiting relatives, teach your children a warm greeting, asking permission, and how to sit with people.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_059",
       "kind": "tip",
-      "text": "إذا كان لدى طفلك خوف من شيء، لا تستهزئ بخوفه بل احتضنه ووفّر له الأمان.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If your child is afraid of something, never make light of the fear — hold them and make them feel safe.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_060",
       "kind": "tip",
-      "text": "علم طفلك أداء أمانته: إذا استعار لعبة من صديقه يعيدها كاملة ونظيفة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child to honour a trust: a toy borrowed from a friend goes back whole and clean.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_061",
       "kind": "tip",
-      "text": "عود أطفالك على قول الحق ومواجهة الخطأ بالصدق دون خوف من العقاب.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Get your children used to telling the truth and owning a mistake without fearing what follows.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_062",
       "kind": "tip",
-      "text": "اجعل من وقت النوم لحظة دافئة: مسحة على الرأس، وقراءة المعوذتين، ودعاء بالخير.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Make bedtime a warm moment: a hand on the head, the last two surahs, and a du'a for good.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_063",
       "kind": "tip",
-      "text": "إذا مر طفلك بيوم صعب في المدرسة، استمع له أولاً وكن ملجأه الآمن.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If your child had a hard day at school, listen first and be the safe place they come back to.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_064",
       "kind": "tip",
-      "text": "علم طفلك أن الفشل ليس نهاية العالم، بل فرصة جديدة للتعلم والتجربة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that failing is not the end of the world — it is another go at learning something.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_065",
       "kind": "tip",
-      "text": "دع طفلك يجرب ويكتشف أشياء جديدة تحت إشرافك دون أن تقيد حركته كلياً.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Let your child try things and discover under your eye, without tying their hands entirely.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_066",
       "kind": "tip",
-      "text": "علم أطفالك احترام كبار السن ومساعدتهم في حمل الأشياء الثقيلة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your children to respect the elderly and to help them carry what is heavy.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_067",
       "kind": "tip",
-      "text": "عود أطفالك على الرفق بالحيوان وعدم إيذائه: «في كل كبد رطبة أجر».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Get your children used to kindness towards animals and never harming them: «في كل كبد رطبة أجر» — there is reward in every living creature.",
+      "source": "Parenting guidance — drawn from the hadith «في كل كبد رطبة أجر»",
+      "topic": "Tip"
     },
     {
       "id": "t_068",
       "kind": "tip",
-      "text": "إذا غرس طفلك نباتاً أو شجرة، ذكّره بأن كل من ينتفع بها يكتب له فيها أجر.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When your child plants something, remind them that everyone who benefits from it later is written for them.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_069",
       "kind": "tip",
-      "text": "علم طفلك احترام معلميه والاستماع لهم بأدب وحفظ فضلهم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child to respect their teachers, to listen politely, and to remember what they owe them.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_070",
       "kind": "tip",
-      "text": "اجعل بينك وبين أطفالك شفرة حب أو كلمة سر لطيفة تستخدمونها للتواصل السريع.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Keep a small signal or a password between you and your children — a quick, private way to reach each other.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_071",
       "kind": "tip",
-      "text": "لا تتدخل في كل تفصيلة من لعب الأطفال ما لم يكن هناك خطر: دعهم يتفاوضون.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Do not step into every detail of your children's play unless there is danger: let them negotiate it out.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_072",
       "kind": "tip",
-      "text": "علم طفلك أن الاعتذار قوة وليس ضعفاً، وأن المعين على الاعتذار هو التواضع.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that apologising is strength, not weakness, and that what makes it possible is humility.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_073",
       "kind": "tip",
-      "text": "اجعل بيتك بيتاً يذكر فيه اسم الله كثيراً بالتسبيح والتحميد والدعاء.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Let your home be one where Allah's name is said often — in tasbih, in praise, in du'a.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_074",
       "kind": "tip",
-      "text": "عود طفلك على الوفاء بالعهود والمواعيد: المسلم إذا وعد وفى.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Get your child used to keeping promises and appointments: a Muslim who promises, delivers.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_075",
       "kind": "tip",
-      "text": "علم أطفالك التنافس الشريف في الخير دون غل أو حسد.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your children to compete in doing good, without bitterness or envy.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_076",
       "kind": "tip",
-      "text": "إذا رأيت في طفلك موهبة كالرسم أو الخط أو حفظ القرآن، نمّها وشجّعها بحماس.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If you see a gift in your child — drawing, calligraphy, memorising Qur'an — feed it and cheer it on.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_077",
       "kind": "tip",
-      "text": "اجعل أطفالك يدعون لوالديك (أجدادهم) بالرحمة والصحة لتزرع فيهم البر المستمر.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Have your children make du'a for your parents, their grandparents, for mercy and health — that is how lasting birr is planted.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_078",
       "kind": "tip",
-      "text": "علم طفلك ألا يتجسس أو يختلس النظر في خصوصيات الآخرين.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child never to pry or to steal a look into what belongs to someone else.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_079",
       "kind": "tip",
-      "text": "إذا وُجدت مشكلة بين الأبناء، اسمع من كل طرف وحده بحياد قبل الحكم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When there is trouble between your children, hear each one alone and without taking a side, before you judge.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_080",
       "kind": "tip",
-      "text": "علم طفلك أن الأمانة الرقمية هي مراقبة الله عند استخدام النت والموبايل.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that digital honesty is knowing Allah sees them on the internet and on the phone as everywhere else.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_081",
       "kind": "tip",
-      "text": "وجه طفلك لاختيار المحتوى المفيد والمناسب لسنوات عمره دون إهدار للوقت.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Steer your child towards content that is useful and right for their age, so the hours are not simply spent.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_082",
       "kind": "tip",
-      "text": "اشرح لطفلك أن الألعاب والموبايل وسيلة للترفيه البسيط وليست كل الحياة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Explain to your child that games and phones are a small amusement, not the whole of life.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_083",
       "kind": "tip",
-      "text": "علم أطفالك التزاور مع أبناء عمومتهم وأخوالهم لتقوية أواصر صلة الرحم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your children to visit their cousins on both sides — this is how the ties of kinship are kept strong.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_084",
       "kind": "tip",
-      "text": "دع أطفالك يشاركون في ترتيب هدايا العيد وتغليفها لإشاعة الفرحة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Let your children help choose and wrap the Eid gifts, and spread the joy with you.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_085",
       "kind": "tip",
-      "text": "علم طفلك صلاة الاستخارة عندما يحتار بين أمرين مفيدين.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child salat al-istikhara for when they are torn between two good options.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_086",
       "kind": "tip",
-      "text": "عود أطفالك على الشكر والتسمية عند الشرب وقطعه على ثلاث دفعات.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Get your children used to saying bismillah before drinking, thanking Allah after, and drinking in three breaths.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_087",
       "kind": "tip",
-      "text": "علم طفلك ألا يتكلم وهو يطعم طعامه حماية له وأدباً.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child not to talk with food in their mouth — for their safety as much as for good manners.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_088",
       "kind": "tip",
-      "text": "إذا رأيت طفلك حزيناً، اسأله: «هل تحب أن أسمعك أم تحب أن أحتضنك؟».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "When your child looks sad, ask: “would you like me to listen, or would you like a hug?”",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_089",
       "kind": "tip",
-      "text": "علم طفلك أن جمال الروح والأخلاق يبصم في قلوب الناس أكثر من الملابس الفاخرة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that a beautiful character leaves a deeper mark on people than expensive clothes ever do.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_090",
       "kind": "tip",
-      "text": "عود أطفالك على حفظ الأذكار عند الخروج من المنزل: «بسم الله توكلت على الله».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Get your children used to the dhikr for leaving the house: «بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ» — in the name of Allah, I place my trust in Allah.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_091",
       "kind": "tip",
-      "text": "علم أطفالك التسمية والتحميد عند لبس الثوب الجديد.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your children to say bismillah and to praise Allah when they put on new clothes.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_092",
       "kind": "tip",
-      "text": "اجعل في البيت حاوية لإعادة تدوير الورق أو حفظ النعم المتبقية تنمية لروح المسؤولية.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Keep a box at home for recycling paper or saving leftover food — responsibility learned by doing.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_093",
       "kind": "tip",
-      "text": "علم طفلك كيف ينظم وقت يومه بين الصلاة، والواجب، واللعب، والنوم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child to lay out their day between prayer, schoolwork, play and sleep.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_094",
       "kind": "tip",
-      "text": "اشكر طفلك عندما ينفذ طلبك من أول مرة: الثناء يعزز الاستجابة السريعة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Thank your child when they do what you asked the first time: praise is what makes it happen again.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_095",
       "kind": "tip",
-      "text": "إذا كان لدى طفلك صعوبة في مادة دراسية، ساعده بخطوات صغيرة ومشجعة دون توتر.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If your child is struggling with a subject, help them through it in small encouraging steps and without tension.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_096",
       "kind": "tip",
-      "text": "علم طفلك أن كتم غيظه وسامح صديقه يرفعه الله به درجات.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that swallowing anger and forgiving a friend is something Allah raises them for.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_097",
       "kind": "tip",
-      "text": "عود أطفالك على إفشاء السلام بصوت واضح عند دخول المنزل.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Get your children used to giving salam out loud when they come into the house.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_098",
       "kind": "tip",
-      "text": "علم طفلك أن الله يبصر ويرى في الظلمات كما في النور: مراقبة الله سر الصلاح.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that Allah sees in the dark as He sees in the light: knowing you are seen is where uprightness begins.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_099",
       "kind": "tip",
-      "text": "اجعل طفلك يشعر أن بيته هو المكان الأكثر أماناً ومحبة في العالم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Let your child feel that their home is the safest, most loving place in the world.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_100",
       "kind": "tip",
-      "text": "تذكر دائماً أن الدعاء للأبناء بظهر الغيب يصنع المعجزات: لا تمل من الدعاء لهم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Remember that du'a made for your children when they are not there works wonders: never tire of making it.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_101",
       "kind": "tip",
-      "text": "علم طفلك أن الابتلاء فرصة للصبر والتقرب إلى الله وليس غضباً.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that hardship is an opening for patience and for drawing nearer to Allah — not anger from Him.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_102",
       "kind": "tip",
-      "text": "أكّد لطفلك دائماً أن حبك له غير مشروط بأدائه أو درجاته الدراسية.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Tell your child, again and again, that your love does not depend on their performance or their marks.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_103",
       "kind": "tip",
-      "text": "علم طفلك كيف يدعو لنفسه ولوالديه وللمسلمين بعد كل صلاة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child to make du'a for themselves, for their parents and for the Muslims after every prayer.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_104",
       "kind": "tip",
-      "text": "اصنع مع أطفالك ذكريات جميلة في كل موسم وفي كل عيد.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Build good memories with your children in every season and every Eid.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_105",
       "kind": "tip",
-      "text": "كن السند الذي يلجأ له طفلك دائماً بدلاً من أن يفتش عن السند عند الغرباء.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Be the support your child always turns to, so they never go looking for it among strangers.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_106",
       "kind": "tip",
-      "text": "علم طفلك الاعتزاز بدينه وقيمه وأخلاقه بثقة ومحبة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child to hold to their faith, their values and their character with confidence and love.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_107",
       "kind": "tip",
-      "text": "تذكر أن أطفالك يقرؤون أفعالك وموقفك أكثر بكثير مما يستمعون لنصائحك.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Remember that your children read what you do and where you stand far more closely than they listen to your advice.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_108",
       "kind": "tip",
-      "text": "أخيراً: اسأل الله تبارك وتعالى الهداية والتوفيق والبركة في ذريتك كل يوم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "And last: ask Allah every day for guidance, for tawfiq, and for barakah in your children.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_109",
       "kind": "tip",
-      "text": "اجعل لطفلك جلسة تفكير قبل النوم اسأله فيها: «ما أجمل شيء حدث معك اليوم وما الذي أسعدك؟».",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Give your child a moment to think before sleep, and ask: “what was the best thing that happened today, and what made you happy?”",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_110",
       "kind": "tip",
-      "text": "علم أطفالك احترام الخصوصية وعدم فتح رسائل أو أجهزة الآخرين دون استئذان.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your children to respect privacy and never to open someone else's messages or devices without asking.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_111",
       "kind": "tip",
-      "text": "إذا رأيت طفلك متحفزاً أو غاضباً، اعطه وسادة أو لعبة مطاطية يفرغ فيها شحنته بسلام.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If your child is worked up or angry, give them a cushion or a squeeze toy to let the charge out safely.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_112",
       "kind": "tip",
-      "text": "علم أطفالك الاستعاذة بالله من الشيطان الرجيم عند نزغات الغضب.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your children to seek refuge in Allah from the shaytan when anger stirs.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_113",
       "kind": "tip",
-      "text": "خصص وقتاً عائلياً يومياً بدون أي شاشات أو هواتف لتعزيز الحديث المباشر.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Keep a daily family hour with no screens or phones at all, so people actually talk to each other.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_114",
       "kind": "tip",
-      "text": "إذا وعدت طفلك بمكافأة بعد إنجاز عمله، احرص على الوفاء بالمكافأة فوراً.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If you promised your child a reward for finishing something, give it the moment they finish.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_115",
       "kind": "tip",
-      "text": "درب طفلك على إعداد حقيبته المدرسية وملابسه بنفسه كل مساء قبل النوم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Train your child to pack their own school bag and lay out their clothes each evening before bed.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_116",
       "kind": "tip",
-      "text": "علم طفلك دعاء النوم: «باسمك اللهم أموت وأحيا» وطمْئِنه بأن الله يحفظه وهو نائم.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child the du'a for sleep: «بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا» — in Your name, O Allah, I die and I live — and reassure them that Allah is guarding them while they sleep.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_117",
       "kind": "tip",
-      "text": "اجعل في البيت جدولاً لتوزيع المهام البسيطة بين الأبناء بالتناوب لزرع العدالة والمسؤولية.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Keep a chart at home that rotates the small chores between the children — fairness and responsibility in one place.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_118",
       "kind": "tip",
-      "text": "اشكر طفلك بحرارة وأمام الجميع عندما يقدم على مساعدة صديق أو جيران.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Thank your child warmly, and in front of everyone, when they go and help a friend or a neighbour.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_119",
       "kind": "tip",
-      "text": "إذا أخطأ طفلك في نطق كلمة أو آية، صحح له بهدوء ولطف دون أن تضحك عليه.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If your child mispronounces a word or an ayah, correct it calmly and kindly, and never laugh at them.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_120",
       "kind": "tip",
-      "text": "علم طفلك أن الصدق ينجي دائماً وأن الكذب يقطع حبل الثقة والأمان.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that truth always brings you out, and that lying cuts the rope of trust and safety.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_121",
       "kind": "tip",
-      "text": "درب أطفالك على إطفاء الأجهزة والتجهز للنوم قبل الموعد بساعة لتهدئة العقل.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Train your children to switch the devices off and get ready for bed an hour early, so the mind can settle.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_122",
       "kind": "tip",
-      "text": "إذا كان لدى طفلك مشروع أو واجب صعب، قسمه معه إلى خطوات صغيرة مشجعة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "If your child has a hard project or assignment, break it down with them into small, encouraging steps.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_123",
       "kind": "tip",
-      "text": "علم طفلك احترام خصوصية أجسادهم وعدم السماح لأحد بلمسهم بطريقة غير مريحة.",
-      "source": "نصيحة تربوية",
-      "topic": "نصيحة"
+      "text": "Teach your child that their body is their own, and that nobody may touch them in a way that makes them uncomfortable.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "t_124",
       "kind": "tip",
-      "text": "قبل النوم، خذ بيد طفلك واقرأ معه أذكار النوم والمصادقة على أفعاله الطيبة اليوم.",
-      "source": "نصيحة تربوية عمليّة",
-      "topic": "التربية بالحب والاحتواء"
+      "text": "Before sleep, take your child's hand, read the bedtime adhkar together, and name the good things they did today.",
+      "source": "Parenting guidance",
+      "topic": "Tip"
     },
     {
       "id": "h_001",

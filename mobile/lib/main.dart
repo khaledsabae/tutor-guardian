@@ -132,7 +132,14 @@ void main() async {
   // degrades two features (no daily reminder, no milestone suggestions) and
   // leaves the rest of the app usable, which is the better half of a bad day.
   try {
-    await FamilyAdhkar.load(language: resolvedContentLanguage(null));
+    // The stored choice first, the device second — `resolvedContentLanguage`
+    // already encodes that order, but it needs to be *given* the stored value.
+    // Passing null here meant a parent on an Arabic phone who chose English in
+    // the app still had fourteen days of Arabic reminders queued before their
+    // choice was ever read.
+    final storedLanguage =
+        (await SharedPreferences.getInstance()).getString('tg.ui_language');
+    await FamilyAdhkar.load(language: resolvedContentLanguage(storedLanguage));
     await JourneyMilestones.load();
   } catch (e, stack) {
     FirebaseCrashlytics.instance.recordError(

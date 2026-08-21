@@ -91,20 +91,27 @@ class FamilyAdhkar {
   static List<ParentingContent> get items => _items;
   static bool get isLoaded => _loaded;
 
+  /// The language of the pack currently in memory.
+  static String? _loadedLanguage;
+  static String? get loadedLanguage => _loadedLanguage;
+
   /// Loads the pack for [language], falling back to Arabic when there is none.
   ///
-  /// Today there is exactly one pack — `family_adhkar.ar.json` — so every
-  /// caller gets Arabic, which is what shipped and what everyone already
-  /// receives. The lookup exists so that adding `family_adhkar.en.json` to the
-  /// bundle is the whole change: no code, no release logic, no second place to
-  /// remember. Note that a verse or a hadith is Arabic on purpose and stays so;
-  /// what a translated pack would carry is the meaning alongside it, and the
-  /// 124 `tip` items, which are parenting advice and nothing else.
+  /// `family_adhkar.en.json` exists since 2026-08-22: the 124 `tip` items in
+  /// English, with the 142 verses and 15 hadith carried through in Arabic,
+  /// because scripture is not translated. Every other language still resolves
+  /// to Arabic, and adding a pack is the whole change for the next one.
+  ///
+  /// Re-loading for a *different* language is allowed; re-loading for the same
+  /// one is free. That matters because the pack is read once before `runApp`
+  /// and the parent can change language later, from inside the app.
   static Future<List<ParentingContent>> load({String? language}) async {
-    if (_loaded) return _items;
+    final want = (language == null || language.isEmpty) ? 'ar' : language;
+    if (_loaded && _loadedLanguage == want) return _items;
     final raw = await _loadWithFallback(language);
     _items = parse(raw);
     _loaded = true;
+    _loadedLanguage = want;
     return _items;
   }
 

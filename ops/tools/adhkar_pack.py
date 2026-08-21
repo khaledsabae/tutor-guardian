@@ -21,7 +21,19 @@ from pathlib import Path
 from typing import NamedTuple
 
 ROOT = Path(__file__).resolve().parents[2]
-PACK = ROOT / "mobile/assets/content/adhkar/family_adhkar.ar.json"
+PACK_DIR = ROOT / "mobile/assets/content/adhkar"
+PACK = PACK_DIR / "family_adhkar.ar.json"
+
+
+def translated_packs() -> list[Path]:
+    """Every pack that is not the Arabic original.
+
+    There is one as of 2026-08-22 (`family_adhkar.en.json`, the 124 tips) and
+    the guards were all scoped to `.ar.json` alone — so a second pack would have
+    shipped to a lock screen with nothing checking it at all. Discovered rather
+    than listed, so writing `family_adhkar.fr.json` cannot silently escape.
+    """
+    return sorted(p for p in PACK_DIR.glob("family_adhkar.*.json") if p != PACK)
 SCHEMA = "tg.parenting_content/1"
 KINDS = {"verse", "hadith", "tip"}
 

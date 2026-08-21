@@ -464,6 +464,18 @@ class NotificationService {
     );
   }
 
+  /// Re-queue the next fourteen days out of the pack now in memory.
+  ///
+  /// Called when the parent changes language. `scheduleDaily` cancels the whole
+  /// series before it queues, so this replaces the pending notifications rather
+  /// than layering a second language on top of the first.
+  ///
+  /// A no-op when reminders are switched off — nothing is queued to replace.
+  Future<void> rescheduleForLanguageChange() async {
+    if (!(await isEnabled())) return;
+    await scheduleDaily();
+  }
+
   /// Toggle notifications on/off.
   Future<void> setEnabled(bool enabled) async {
     final prefs = await SharedPreferences.getInstance();
