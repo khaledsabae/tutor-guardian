@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-18T09:11:30.531657Z"
+    "updated_at": "2026-08-21T10:43:55.943324Z"
   },
   "lessons": [
     {
@@ -3976,6 +3976,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_development_early_moments_03",
             "language": "ar"
+          },
+          {
+            "id": "629c5b1d-edcf-4fe5-9dfb-8576b49aa394_infographic",
+            "file": "docs/lesson_assets/infographics/629c5b1d-edcf-4fe5-9dfb-8576b49aa394_infographic_lesson_0-3_development_early_moments_03_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -4223,6 +4231,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_islamic_parenting_attachment_03",
             "language": "ar"
+          },
+          {
+            "id": "6f8b342a-6474-4d8a-9f13-52a7833bda30_infographic",
+            "file": "docs/lesson_assets/infographics/6f8b342a-6474-4d8a-9f13-52a7833bda30_infographic_lesson_0-3_islamic_parenting_attachment_03_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -4300,6 +4316,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_islamic_parenting_attachment_04",
             "language": "ar"
+          },
+          {
+            "id": "84af8013-920a-4698-8a9e-99120b17a043_infographic",
+            "file": "docs/lesson_assets/infographics/84af8013-920a-4698-8a9e-99120b17a043_infographic_lesson_0-3_islamic_parenting_attachment_04_en.png",
+            "title": "Teaching Faith to Your Infant",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -4454,6 +4478,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_medical_early_milestones_02",
             "language": "ar"
+          },
+          {
+            "id": "85db4d9c-30dc-4d23-a856-e0d928371f4a_infographic",
+            "file": "docs/lesson_assets/infographics/85db4d9c-30dc-4d23-a856-e0d928371f4a_infographic_lesson_0-3_medical_early_milestones_02_en.png",
+            "title": "Soothing Baby Sleep Guide",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -8713,6 +8745,11 @@
             "file": "docs/lesson_16-18_islamic_parenting_adult_faith_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_islamic_parenting_adult_faith_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35343972
           }
         ],
         "reports": [
@@ -9354,6 +9391,11 @@
             "file": "docs/lesson_2-3_medical_early_wellbeing_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_medical_early_wellbeing_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35021135
           }
         ],
         "data_tables": [
@@ -9429,6 +9471,11 @@
             "file": "docs/lesson_2-3_medical_early_wellbeing_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_medical_early_wellbeing_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39481832
           }
         ],
         "data_tables": [
@@ -9504,6 +9551,11 @@
             "file": "docs/lesson_4-6_cyber_early_screens_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_cyber_early_screens_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 44260137
           }
         ],
         "reports": [
@@ -9572,6 +9624,11 @@
             "file": "docs/lesson_4-6_cyber_early_screens_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_cyber_early_screens_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34615377
           }
         ],
         "reports": [
@@ -9713,6 +9770,11 @@
             "file": "docs/lesson_4-6_cyber_early_screens_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_cyber_early_screens_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39348859
           }
         ],
         "reports": [
@@ -9781,6 +9843,11 @@
             "file": "docs/lesson_4-6_medical_healthy_growth_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_medical_healthy_growth_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 43790133
           }
         ],
         "reports": [
@@ -9849,6 +9916,11 @@
             "file": "docs/lesson_4-6_medical_healthy_growth_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_medical_healthy_growth_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38703933
           }
         ],
         "reports": [
@@ -9917,6 +9989,11 @@
             "file": "docs/lesson_4-6_medical_healthy_growth_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_medical_healthy_growth_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 40247895
           }
         ],
         "reports": [
@@ -9985,6 +10062,11 @@
             "file": "docs/lesson_4-6_medical_healthy_growth_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_medical_healthy_growth_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34889656
           }
         ],
         "reports": [
@@ -10053,6 +10135,11 @@
             "file": "docs/lesson_7-9_cyber_digital_basics_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_cyber_digital_basics_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34627330
           }
         ],
         "data_tables": [
@@ -10115,6 +10202,11 @@
             "file": "docs/lesson_7-9_cyber_digital_basics_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_cyber_digital_basics_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38008955
           }
         ],
         "data_tables": [
@@ -10177,6 +10269,11 @@
             "file": "docs/lesson_7-9_cyber_digital_basics_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_cyber_digital_basics_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38144169
           }
         ],
         "data_tables": [
@@ -10239,6 +10336,11 @@
             "file": "docs/lesson_7-9_cyber_digital_basics_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_cyber_digital_basics_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36402242
           }
         ],
         "data_tables": [
@@ -10301,6 +10403,11 @@
             "file": "docs/lesson_7-9_islamic_parenting_akhlaq_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_islamic_parenting_akhlaq_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36261683
           }
         ],
         "data_tables": [
@@ -10363,6 +10470,11 @@
             "file": "docs/lesson_7-9_islamic_parenting_akhlaq_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_islamic_parenting_akhlaq_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38242143
           }
         ],
         "data_tables": [
@@ -10425,6 +10537,11 @@
             "file": "docs/lesson_7-9_islamic_parenting_akhlaq_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_islamic_parenting_akhlaq_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35894024
           }
         ],
         "data_tables": [
@@ -10487,6 +10604,11 @@
             "file": "docs/lesson_7-9_islamic_parenting_akhlaq_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_islamic_parenting_akhlaq_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36277371
           }
         ],
         "data_tables": [
@@ -10536,6 +10658,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 32450394
           }
         ],
         "data_tables": [
@@ -10584,6 +10711,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39120896
           }
         ],
         "data_tables": [
@@ -10632,6 +10764,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35488266
           }
         ],
         "data_tables": [
@@ -10680,6 +10817,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37097220
           }
         ],
         "data_tables": [
@@ -10776,6 +10918,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_06_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_06_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 32664910
           }
         ],
         "data_tables": [
@@ -10920,6 +11067,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_09_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_09_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35767774
           }
         ],
         "data_tables": [
@@ -10968,6 +11120,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_10_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_10_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 31907928
           }
         ],
         "data_tables": [
@@ -11030,6 +11187,11 @@
             "file": "docs/lesson_10-12_aqeedah_growth_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_aqeedah_growth_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 32924249
           }
         ],
         "data_tables": [
@@ -11092,6 +11254,11 @@
             "file": "docs/lesson_10-12_aqeedah_growth_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_aqeedah_growth_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 28424706
           }
         ],
         "data_tables": [
@@ -11278,6 +11445,11 @@
             "file": "docs/lesson_16-18_aqeedah_conviction_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_aqeedah_conviction_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35073544
           }
         ],
         "data_tables": [
@@ -11340,6 +11512,11 @@
             "file": "docs/lesson_16-18_aqeedah_conviction_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_aqeedah_conviction_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38003726
           }
         ],
         "data_tables": [
@@ -11436,6 +11613,11 @@
             "file": "docs/lesson_4-6_aqeedah_seeds_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_aqeedah_seeds_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39868283
           }
         ],
         "data_tables": [
@@ -11555,6 +11737,11 @@
             "file": "docs/lesson_4-6_aqeedah_seeds_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_aqeedah_seeds_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34729043
           }
         ],
         "data_tables": [
@@ -11596,6 +11783,11 @@
             "file": "docs/lesson_10-12_islamic_peer_difference_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 38615782
+          },
+          {
+            "file": "docs/lesson_10-12_islamic_peer_difference_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37207035
           }
         ],
         "videos": [
@@ -11678,6 +11870,11 @@
             "file": "docs/lesson_13-15_medical_peer_pressure_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 29703353
+          },
+          {
+            "file": "docs/lesson_13-15_medical_peer_pressure_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38502117
           }
         ],
         "videos": [
@@ -11760,6 +11957,11 @@
             "file": "docs/lesson_16-18_development_driving_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 26053540
+          },
+          {
+            "file": "docs/lesson_16-18_development_driving_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37741399
           }
         ],
         "videos": [
