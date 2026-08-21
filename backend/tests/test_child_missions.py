@@ -118,12 +118,17 @@ def test_two_children_can_get_different_cards(child):
 
 
 def test_a_band_with_no_bank_gets_no_card(child):
-    # 16-18, not 13-15: the teen bank was written on 2026-08-16 when the
-    # owner's own thirteen-year-old turned out to be outside every feature
-    # shipped that day. Pick a band that genuinely has no bank, or this test
-    # passes for the wrong reason the moment content is added.
-    cid = child("طفل", "16-18")
-    assert cm.today_mission(DEVICE, cid, "16-18", "2026-08-16") is None
+    # "2-3", not "16-18": the teen bank was written on 2026-08-16, and on
+    # 2026-08-21 a 16-18 bank landed too — which is exactly what this comment
+    # warned about, and the test failed on the content commit rather than on a
+    # regression. Missions are a go-and-do card; the youngest supported band
+    # (the child surface floors at two years) has no bank by design, so it is
+    # the band that stays empty. If one is ever written for it, move this test
+    # to whatever band is genuinely blank instead of deleting it.
+    assert cm.load_missions("2-3") == [], (
+        "the 2-3 bank is no longer empty; point this test at a blank band")
+    cid = child("طفل", "2-3")
+    assert cm.today_mission(DEVICE, cid, "2-3", "2026-08-16") is None
 
 
 # ── Claiming is asynchronous ───────────────────────────────────────────────

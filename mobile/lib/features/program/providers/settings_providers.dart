@@ -162,34 +162,84 @@ class DeleteChildNotifier extends AutoDisposeAsyncNotifier<bool?> {
   ///
   /// Promoting a sibling is preferred over clearing, because clearing leaves a
   /// parent who still has children looking at an app with no child selected.
-  Future<void> _repointActiveChild(int deletedId) async {
-    final storage = ref.read(onboardingStorageProvider);
-    final wasActive = ref.read(activeChildIdProvider) == deletedId ||
-        storage.activeChildId == deletedId;
-    if (!wasActive) return;
-
-    try {
-      final envelope = await ref.read(childrenListProvider.future);
-      for (final child in envelope.children) {
-        if (child.id == deletedId) continue;
-        // Reuses the full cascade (persist + invalidate progress, tip, paths)
-        // rather than repeating it here.
-        await ref.read(switchActiveChildProvider.notifier)(child);
-        return;
-      }
-    } catch (_) {
-      // The re-fetch failing must not strand the app on a deleted child, so
-      // fall through and clear. Worst case the user picks a child again.
-    }
-
-    await storage.clearActiveChild();
-    ref.read(activeChildIdProvider.notifier).state = null;
-    ref.invalidate(activeChildProfileProvider);
-    ref.invalidate(childProgressProvider);
-    ref.invalidate(dailyTipProvider);
-    ref.invalidate(pathsListProvider);
-  }
+  Future<void> _repointActiveChild(int deletedId) =>
+      repointActiveChildAwayFrom(ref, deletedId);
 }
 
 final deleteChildProvider = AsyncNotifierProvider.autoDispose<
     DeleteChildNotifier, bool?>(DeleteChildNotifier.new);
+
+/// Move the active child off [staleId], promoting a sibling when there is one.
+///
+/// Shared by the delete flow and by [reconcileActiveChildWithServer]; the
+/// caller is responsible for making sure [childrenListProvider] will not answer
+/// from a cache that still contains [staleId].
+Future<void> repointActiveChildAwayFrom(Ref ref, int staleId) async {
+  final storage = ref.read(onboardingStorageProvider);
+  final wasActive = ref.read(activeChildIdProvider) == staleId ||
+      storage.activeChildId == staleId;
+  if (!wasActive) return;
+
+  try {
+    final envelope = await ref.read(childrenListProvider.future);
+    for (final child in envelope.children) {
+      if (child.id == staleId) continue;
+      // Reuses the full cascade (persist + invalidate progress, tip, paths)
+      // rather than repeating it here.
+      await ref.read(switchActiveChildProvider.notifier)(child);
+      return;
+    }
+  } catch (_) {
+    // The re-fetch failing must not strand the app on a deleted child, so
+    // fall through and clear. Worst case the user picks a child again.
+  }
+
+  await storage.clearActiveChild();
+  ref.read(activeChildIdProvider.notifier).state = null;
+  ref.invalidate(activeChildProfileProvider);
+  ref.invalidate(childProgressProvider);
+  ref.invalidate(dailyTipProvider);
+  ref.invalidate(pathsListProvider);
+}
+
+/// Heal an active child id the server no longer has.
+///
+/// `_repointActiveChild` covers deletion *on this device*. It cannot cover a
+/// child removed from a second device on the same identity, a profile deleted
+/// server-side, or a restore that brought the prefs back without the row — and
+/// nothing else ever compared the stored id against the server's list. In
+/// production a device spent days asking for child 847, which no longer
+/// existed: `/api/children/847/progress` and `/api/program/coach-tip` answered
+/// 404 on every launch, so Home's «نصيحة اليوم» card hid itself (it hides on
+/// any error) and progress never loaded. The device could not recover on its
+/// own — only adding or switching a child would have fixed it.
+///
+/// Returns true when the stored child was gone and the app was repointed.
+///
+/// A failed fetch is left alone deliberately: offline is not evidence that the
+/// child is gone, and clearing on a timeout would strand a parent with no
+/// selection every time they opened the app on a bad connection.
+Future<bool> reconcileActiveChildWithServer(Ref ref) async {
+  final storedId = ref.read(onboardingStorageProvider).activeChildId;
+  if (storedId == null) return false;
+  final ChildListEnvelope envelope;
+  try {
+    // refresh, not read: a cache that predates the deletion still lists the
+    // stale child, and would make this check pass on exactly the launch it
+    // exists to catch.
+    envelope = await ref.refresh(childrenListProvider.future);
+  } catch (_) {
+    return false;
+  }
+  if (envelope.children.any((c) => c.id == storedId)) return false;
+  await repointActiveChildAwayFrom(ref, storedId);
+  return true;
+}
+
+/// Runs [reconcileActiveChildWithServer] once per app launch.
+///
+/// Deliberately not autoDispose: the check costs one request and must not
+/// re-run every time a screen that reads it is rebuilt.
+final activeChildReconcileProvider = FutureProvider<bool>((ref) {
+  return reconcileActiveChildWithServer(ref);
+});

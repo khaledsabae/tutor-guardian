@@ -18,6 +18,7 @@ import 'package:almorabbi/features/onboarding/data/onboarding_storage.dart';
 import 'package:almorabbi/features/onboarding/providers/onboarding_providers.dart';
 import 'package:almorabbi/features/program/data/progress_models.dart';
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
+import 'package:almorabbi/features/program/providers/settings_providers.dart';
 import 'package:almorabbi/features/program/screens/children_list_screen.dart';
 import 'package:almorabbi/features/program/widgets/active_child_chip.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
@@ -312,6 +313,127 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('إضافة طفل جديد'), findsOneWidget);
+  });
+
+  // ── Reconciling a stale active child ───────────────────────────────────
+
+  group('reconcileActiveChildWithServer', () {
+    // Production, 2026-08-21: a device kept asking for child 847 on every
+    // launch. The row was gone (3,882 profiles, max id 4,088 — it was one of
+    // the 206 deleted), so /api/children/847/progress and
+    // /api/program/coach-tip?child_id=847 answered 404 while
+    // /api/program/next-lesson answered 200. Home's tip card hides on any
+    // error, so the screen just showed less, forever: deleting on a second
+    // device never touched this one's prefs, and nothing compared the stored
+    // id against the server's list.
+    test('promotes a sibling when the stored child is gone', () async {
+      final fake = _FakeTgClient();
+      fake.listChildrenJson = {
+        'count': 1,
+        'children': [_childJson(id: 9, name: 'أحمد', ageGroup: '7-9')],
+      };
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 847, name: 'سارة', ageGroup: '4-6');
+
+      final container = ProviderContainer(overrides: [
+        tgClientProvider.overrideWithValue(fake),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ]);
+      addTearDown(container.dispose);
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 847;
+
+      final repointed =
+          await container.read(activeChildReconcileProvider.future);
+
+      expect(repointed, isTrue);
+      expect(container.read(activeChildIdProvider), 9);
+      expect(storage.activeChildId, 9);
+      expect(storage.activeChildName, 'أحمد');
+    });
+
+    test('clears the selection when no sibling is left', () async {
+      final fake = _FakeTgClient();
+      fake.listChildrenJson = {'count': 0, 'children': <dynamic>[]};
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 847, name: 'سارة', ageGroup: '4-6');
+
+      final container = ProviderContainer(overrides: [
+        tgClientProvider.overrideWithValue(fake),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ]);
+      addTearDown(container.dispose);
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 847;
+
+      expect(await container.read(activeChildReconcileProvider.future), isTrue);
+      expect(container.read(activeChildIdProvider), isNull);
+      expect(storage.activeChildId, isNull);
+    });
+
+    test('leaves a child the server still has alone', () async {
+      final fake = _FakeTgClient();
+      fake.listChildrenJson = {
+        'count': 2,
+        'children': [
+          _childJson(id: 847, name: 'سارة', ageGroup: '4-6'),
+          _childJson(id: 9, name: 'أحمد', ageGroup: '7-9'),
+        ],
+      };
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 847, name: 'سارة', ageGroup: '4-6');
+
+      final container = ProviderContainer(overrides: [
+        tgClientProvider.overrideWithValue(fake),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ]);
+      addTearDown(container.dispose);
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 847;
+
+      expect(await container.read(activeChildReconcileProvider.future), isFalse);
+      expect(container.read(activeChildIdProvider), 847);
+      expect(storage.activeChildId, 847);
+    });
+
+    // Offline is not evidence that the child is gone. Clearing on a failed
+    // fetch would strand a parent with no selection every time the app opened
+    // on a bad connection — the failure mode this whole check exists to end.
+    test('a failed fetch changes nothing', () async {
+      final fake = _FakeTgClient()..throwOnList = true;
+      final prefs = await SharedPreferences.getInstance();
+      final storage = OnboardingStorage(prefs);
+      await storage.setActiveChild(id: 847, name: 'سارة', ageGroup: '4-6');
+
+      final container = ProviderContainer(overrides: [
+        tgClientProvider.overrideWithValue(fake),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ]);
+      addTearDown(container.dispose);
+      await container.read(sharedPreferencesProvider.future);
+      container.read(activeChildIdProvider.notifier).state = 847;
+
+      expect(await container.read(activeChildReconcileProvider.future), isFalse);
+      expect(container.read(activeChildIdProvider), 847);
+      expect(storage.activeChildId, 847);
+    });
+
+    test('no stored child means no request at all', () async {
+      final fake = _FakeTgClient()..throwOnList = true;
+      final prefs = await SharedPreferences.getInstance();
+
+      final container = ProviderContainer(overrides: [
+        tgClientProvider.overrideWithValue(fake),
+        sharedPreferencesProvider.overrideWith((_) async => prefs),
+      ]);
+      addTearDown(container.dispose);
+      await container.read(sharedPreferencesProvider.future);
+
+      expect(await container.read(activeChildReconcileProvider.future), isFalse);
+    });
   });
 }
 

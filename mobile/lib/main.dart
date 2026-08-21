@@ -27,6 +27,7 @@ import 'features/identity/identity_service.dart';
 import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
 import 'features/onboarding/screens/update_splash_screen.dart';
+import 'features/program/providers/settings_providers.dart';
 import 'features/program/providers/progress_providers.dart';
 import 'features/deeplink/deep_link_handler.dart';
 import 'features/push/push_service.dart';
@@ -404,6 +405,13 @@ class _AppBootstrapper extends ConsumerWidget {
     Future(() async {
       await ref.read(childModeProvider.notifier).restore();
     });
+    // The stored child may no longer exist on the server — deleted from another
+    // device, or removed while this one was offline. Nothing used to notice, so
+    // the app kept asking for a dead id and quietly showed less on every screen
+    // keyed by it. Once per launch, and only when the list actually answers.
+    if (profile != null) {
+      Future(() => ref.read(activeChildReconcileProvider.future));
+    }
     // If the user just updated the app, show the what's-new splash
     // once before entering the main screen.
     ref.watch(updateSplashDismissedProvider);
