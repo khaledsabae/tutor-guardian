@@ -14,6 +14,8 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 
 import 'package:almorabbi/api/tg_client.dart';
+import 'package:almorabbi/features/program/providers/lesson_assets_provider.dart'
+    show contentLanguageProvider;
 import 'package:almorabbi/features/quran/providers/tafsir_providers.dart';
 import 'package:almorabbi/state/chat_notifier.dart' show tgClientProvider;
 
@@ -45,14 +47,18 @@ Map<String, dynamic> _tafsirBody({
 
 /// Builds a container whose `TgClient` answers from [handler].
 ProviderContainer _containerFor(
-  Future<http.Response> Function(http.Request req) handler,
-) {
+  Future<http.Response> Function(http.Request req) handler, {
+  String language = 'ar',
+}) {
   final client = TgClient.forTesting(
     baseUrl: 'http://test',
     httpClient: MockClient(handler),
   );
   final container = ProviderContainer(
-    overrides: [tgClientProvider.overrideWithValue(client)],
+    overrides: [
+      tgClientProvider.overrideWithValue(client),
+      contentLanguageProvider.overrideWithValue(language),
+    ],
   );
   addTearDown(container.dispose);
   return container;
@@ -188,5 +194,108 @@ void main() {
     await container.read(ayahExplanationProvider((18, 10)).future);
     expect(seen, contains('/api/tafsir/18/10'));
     expect(seen, contains('/api/tafsir/18/10/nuzool'));
+  });
+
+  group('language', () {
+    test('an English reader is sent to an English commentary', () async {
+      final urls = <Uri>[];
+      final container = _containerFor(
+        (req) async {
+          urls.add(req.url);
+          if (req.url.path.endsWith('/nuzool')) return _json({}, 404);
+          return _json(_tafsirBody(
+            text: 'Allah is the One Who alone deserves to be worshipped.',
+            attribution: 'Concise Quran Commentary (English)',
+          )..['results'][0]['source'] = 'mukhtasar_en');
+        },
+        language: 'en',
+      );
+
+      final x = await container.read(ayahExplanationProvider((2, 255)).future);
+      expect(
+        urls.firstWhere((u) => !u.path.endsWith('/nuzool')).queryParametersAll['sources'],
+        ['mukhtasar_en'],
+      );
+      expect(x.entries.single.language, 'en');
+    });
+
+    test('an Arabic reader asks for no source and gets the default', () async {
+      final urls = <Uri>[];
+      final container = _containerFor((req) async {
+        urls.add(req.url);
+        if (req.url.path.endsWith('/nuzool')) return _json({}, 404);
+        return _json(_tafsirBody());
+      });
+
+      await container.read(ayahExplanationProvider((2, 255)).future);
+      final tafsirUrl = urls.firstWhere((u) => !u.path.endsWith('/nuzool'));
+      expect(tafsirUrl.queryParametersAll.containsKey('sources'), isFalse);
+    });
+
+    test('an ayah the English commentary misses falls back to Arabic',
+        () async {
+      // `mukhtasar_en` is full-coverage today, but «full» is a claim about a
+      // catalogue, not a guarantee about one ayah. An empty English answer must
+      // not become an empty sheet.
+      var call = 0;
+      final container = _containerFor(
+        (req) async {
+          if (req.url.path.endsWith('/nuzool')) return _json({}, 404);
+          call++;
+          if (call == 1) {
+            return _json({
+              'surah': 2,
+              'ayah': 255,
+              'results': const [],
+              'formatted': '',
+            });
+          }
+          return _json(_tafsirBody());
+        },
+        language: 'en',
+      );
+
+      final x = await container.read(ayahExplanationProvider((2, 255)).future);
+      expect(call, 2, reason: 'the Arabic retry never happened');
+      expect(x.entries, hasLength(1));
+      expect(x.entries.single.language, 'ar');
+    });
+
+    test('an Arabic reader never pays for a second request', () async {
+      var call = 0;
+      final container = _containerFor((req) async {
+        if (req.url.path.endsWith('/nuzool')) return _json({}, 404);
+        call++;
+        return _json({
+          'surah': 2,
+          'ayah': 255,
+          'results': const [],
+          'formatted': 'تعذّر جلب التفسير',
+        });
+      });
+
+      final x = await container.read(ayahExplanationProvider((2, 255)).future);
+      expect(call, 1);
+      expect(x.isEmpty, isTrue);
+      expect(x.formatted, isNotEmpty);
+    });
+
+    test('source slugs map to the language they are written in', () {
+      expect(languageOfSource('mukhtasar_en'), 'en');
+      expect(languageOfSource('jalalayn_en'), 'en');
+      expect(languageOfSource('saadi_ru'), 'ru');
+      expect(languageOfSource('zakaria_bn'), 'bn');
+      expect(languageOfSource('saadi'), 'ar');
+      expect(languageOfSource('tabary'), 'ar');
+      expect(languageOfSource(''), isNull);
+    });
+
+    test('only English has a source list; the rest take the default', () {
+      expect(tafsirSourcesFor('en'), ['mukhtasar_en']);
+      expect(tafsirSourcesFor('ar'), isNull);
+      // No French tafsir exists in the catalogue, so a French UI must not be
+      // sent to a source that cannot answer.
+      expect(tafsirSourcesFor('fr'), isNull);
+    });
   });
 }

@@ -150,7 +150,11 @@ class _Body extends StatelessWidget {
           _ContentBlock(attribution: null, text: explanation.formatted)
         else
           ...explanation.entries.map(
-            (e) => _ContentBlock(attribution: e.attribution, text: e.text),
+            (e) => _ContentBlock(
+              attribution: e.attribution,
+              text: e.text,
+              language: e.language,
+            ),
           ),
         if (explanation.nuzool != null) ...[
           const SizedBox(height: 8),
@@ -166,6 +170,7 @@ class _Body extends StatelessWidget {
           _ContentBlock(
             attribution: explanation.nuzoolAttribution,
             text: explanation.nuzool!,
+            language: 'ar',
           ),
         ],
       ],
@@ -182,12 +187,25 @@ class _ContentBlock extends StatelessWidget {
   final String? attribution;
   final String text;
 
-  const _ContentBlock({required this.attribution, required this.text});
+  /// Language of [text], when the source slug named one. `null` leaves the
+  /// direction to the characters.
+  final String? language;
+
+  const _ContentBlock({
+    required this.attribution,
+    required this.text,
+    this.language,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // Both signals, in the order `ContentDirectionality` prefers them: the
+    // declared language is evidence, counting the script is inference. English
+    // tafsir quotes plenty of Arabic, so first-strong would flip a page that is
+    // English — hence the widget's majority rule rather than a hand-rolled test.
     return ContentDirectionality(
-      languageCode: 'ar',
+      languageCode: language,
+      text: text,
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(14),
