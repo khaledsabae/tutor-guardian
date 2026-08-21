@@ -659,6 +659,46 @@ class TgClient {
     return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
+  /// Tafsir of a single ayah, from `/api/tafsir/{surah}/{ayah}`.
+  ///
+  /// The backend has proxied `mcp.tafsir.net` (with a 30-day SQLite cache)
+  /// since before this client existed; nothing in the app ever called it, so
+  /// every parent who wanted to know what an ayah means got nothing.
+  ///
+  /// Public endpoint — `_PROTECTED_PREFIXES` in the backend auth middleware is
+  /// an allowlist and `/api/tafsir` is not on it. No token is attached.
+  Future<Map<String, dynamic>> getTafsir(int surah, int ayah,
+      {List<String>? sources}) async {
+    final uri = Uri.parse('$_baseUrl/api/tafsir/$surah/$ayah').replace(
+      queryParameters:
+          (sources != null && sources.isNotEmpty) ? {'sources': sources} : null,
+    );
+    final resp = await _http
+        .get(uri, headers: const {'Accept': 'application/json'})
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
+  /// Reason for revelation of an ayah, from `/api/tafsir/{surah}/{ayah}/nuzool`.
+  ///
+  /// Returns `null` on 404. Most ayahs have no documented sabab nuzool, and the
+  /// backend says so with a 404 carrying «لا يتوفر سبب نزول موثّق لهذه الآية» —
+  /// that is an answer, not a failure, and the UI must not show it as one.
+  Future<Map<String, dynamic>?> getNuzool(int surah, int ayah) async {
+    final uri = Uri.parse('$_baseUrl/api/tafsir/$surah/$ayah/nuzool');
+    final resp = await _http
+        .get(uri, headers: const {'Accept': 'application/json'})
+        .timeout(AppConfig.httpTimeout);
+    if (resp.statusCode == 404) return null;
+    if (resp.statusCode != 200) {
+      throw _wrap(resp);
+    }
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+  }
+
   Future<Map<String, dynamic>> searchCurriculum(String query,
       {int limit = 20}) async {
     final lang = uiLanguage;

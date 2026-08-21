@@ -192,6 +192,33 @@ final List<HubGroup> kHubGroups = [
       ),
     ],
   ),
+  // Small, offline, single-purpose worship tools. They sit next to the library
+  // rather than inside it: the library is things to read, these are things to
+  // use, and the adhkar pack had no surface at all before this group existed.
+  HubGroup(
+    id: 'tools',
+    title: (l10n) => l10n.hubGroupTools,
+    items: [
+      HubItem(
+        id: 'adhkar',
+        emoji: '🤲',
+        label: (l10n, _) => l10n.adhkarTitle,
+        route: AppRoutes.adhkar,
+      ),
+      HubItem(
+        id: 'tasbeeh',
+        emoji: '📿',
+        label: (l10n, _) => l10n.tasbeehTitle,
+        route: AppRoutes.tasbeeh,
+      ),
+      HubItem(
+        id: 'hijri_converter',
+        emoji: '🗓️',
+        label: (l10n, _) => l10n.hijriTitle,
+        route: AppRoutes.hijriConverter,
+      ),
+    ],
+  ),
   // The individual games live behind one entry rather than five tiles: the hub
   // is an index, and five near-identical rows here crowded out everything else
   // in it. GamesScreen is the index for the games themselves.

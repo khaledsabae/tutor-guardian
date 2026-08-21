@@ -11,6 +11,7 @@ import '../../../theme/app_theme.dart';
 import '../models/reciters.dart';
 import '../models/surah_names.dart';
 import '../providers/quran_providers.dart';
+import '../widgets/tafsir_sheet.dart';
 import '../../../theme/app_palette.dart';
 import '../../../theme/design_tokens.dart';
 
@@ -368,6 +369,25 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.touch_app_outlined,
+                          size: 14, color: AppTheme.textSecondary),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
+                          AppLocalizations.of(context).tafsirHint,
+                          style: TextStyle(
+                              fontSize: 12, color: AppTheme.textSecondary),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Expanded(
                   child: ScrollablePositionedList.builder(
                     itemScrollController: _itemScroll,
@@ -389,6 +409,15 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                       return GestureDetector(
                         // Tap a verse to start the recitation from it.
                         onTap: () => _playFrom(verseNum),
+                        // Long-press opens its tafsir. Tap stays with the
+                        // recitation because that is the gesture readers
+                        // already have; the hint above the list is what makes
+                        // this one findable.
+                        onLongPress: () => showTafsirSheet(
+                          context,
+                          surah: _currentChapter,
+                          ayah: verseNum,
+                        ),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 250),
                           margin: const EdgeInsets.only(bottom: 6),

@@ -3562,4 +3562,96 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifTipTitle => '💡 نصيحة اليوم — المربي الذكي';
+
+  @override
+  String get tafsirTitle => 'تفسير الآية';
+
+  @override
+  String get tafsirNuzool => 'سبب النزول';
+
+  @override
+  String get tafsirUnavailable => 'التفسير يحتاج اتصالًا بالإنترنت.';
+
+  @override
+  String get tafsirEmpty => 'لا يتوفر تفسير لهذه الآية حاليًا.';
+
+  @override
+  String get tafsirHint => 'اضغط مطوّلًا على الآية لعرض تفسيرها';
+
+  @override
+  String get hubGroupTools => 'أدوات';
+
+  @override
+  String get tasbeehTitle => 'السبحة';
+
+  @override
+  String get tasbeehReset => 'تصفير العدّاد';
+
+  @override
+  String get tasbeehFree => 'بلا هدف';
+
+  @override
+  String get tasbeehComplete => 'أتممت العدد، تقبّل الله';
+
+  @override
+  String get tasbeehTapHint => 'اضغط في أي مكان للعدّ';
+
+  @override
+  String tasbeehProgress(String current, String total) {
+    return '$current من $total';
+  }
+
+  @override
+  String get hijriTitle => 'محوّل التاريخ';
+
+  @override
+  String get hijriToHijri => 'ميلادي ← هجري';
+
+  @override
+  String get hijriToGregorian => 'هجري ← ميلادي';
+
+  @override
+  String get hijriResultHijri => 'التاريخ الهجري';
+
+  @override
+  String get hijriResultGregorian => 'التاريخ الميلادي';
+
+  @override
+  String get hijriDay => 'اليوم';
+
+  @override
+  String get hijriMonth => 'الشهر';
+
+  @override
+  String get hijriYear => 'السنة';
+
+  @override
+  String get hijriApproximate =>
+      'حساب تقويمي (لا رؤية هلال) — قد يختلف يومًا عن تقويم أم القرى أو عن إعلان الرؤية.';
+
+  @override
+  String get adhkarTitle => 'الأذكار والوصايا';
+
+  @override
+  String get adhkarSearchHint => 'ابحث في النص أو المصدر';
+
+  @override
+  String get adhkarKindAll => 'الكل';
+
+  @override
+  String get adhkarKindVerse => 'آيات';
+
+  @override
+  String get adhkarKindHadith => 'أحاديث';
+
+  @override
+  String get adhkarKindTip => 'نصائح';
+
+  @override
+  String adhkarCount(String count) {
+    return '$count بندًا';
+  }
+
+  @override
+  String get adhkarNoResults => 'لا نتائج مطابقة';
 }

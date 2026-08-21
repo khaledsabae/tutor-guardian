@@ -72,6 +72,9 @@ import '../features/program/screens/story_reader_screen.dart';
 import '../features/program/screens/video_player_screen.dart';
 import '../features/quran/screens/quran_screen.dart';
 import '../features/quran/screens/surah_reading_screen.dart';
+import '../features/tools/screens/tasbeeh_screen.dart';
+import '../features/tools/screens/hijri_converter_screen.dart';
+import '../features/adhkar/screens/adhkar_screen.dart';
 import '../features/referral/invite_screen.dart';
 import '../features/routine/screens/child_mode_lock_screen.dart';
 import '../features/routine/screens/daily_routine_screen.dart';
@@ -141,6 +144,11 @@ abstract final class Screens {
   static const quran = 'quran';
   static const surahReading = 'surah_reading';
   static const quranMemorization = 'quran_memorization';
+
+  // Worship tools
+  static const tasbeeh = 'tasbeeh';
+  static const hijriConverter = 'hijri_converter';
+  static const adhkar = 'adhkar';
 
   // Rewards
   static const coins = 'coins';
@@ -382,6 +390,16 @@ abstract final class AppRoutes {
 
   // ── Quran ───────────────────────────────────────────────────────────────
   static Route<void> quran() => _r(Screens.quran, (_) => const QuranScreen());
+
+  // ── Worship tools ───────────────────────────────────────────────────────
+  static Route<void> tasbeeh() =>
+      _r(Screens.tasbeeh, (_) => const TasbeehScreen());
+
+  static Route<void> hijriConverter() =>
+      _r(Screens.hijriConverter, (_) => const HijriConverterScreen());
+
+  static Route<void> adhkar() =>
+      _r(Screens.adhkar, (_) => const AdhkarScreen());
 
   static Route<void> surahReading({
     required int chapterNumber,

@@ -3606,4 +3606,96 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifTipTitle => '💡 Tip of the day — Al-Morabbi';
+
+  @override
+  String get tafsirTitle => 'Tafsir of the ayah';
+
+  @override
+  String get tafsirNuzool => 'Reason for revelation';
+
+  @override
+  String get tafsirUnavailable => 'Tafsir needs an internet connection.';
+
+  @override
+  String get tafsirEmpty => 'No tafsir is available for this ayah right now.';
+
+  @override
+  String get tafsirHint => 'Long-press an ayah to read its tafsir';
+
+  @override
+  String get hubGroupTools => 'Tools';
+
+  @override
+  String get tasbeehTitle => 'Tasbeeh';
+
+  @override
+  String get tasbeehReset => 'Reset the counter';
+
+  @override
+  String get tasbeehFree => 'No target';
+
+  @override
+  String get tasbeehComplete => 'Count complete — may Allah accept it';
+
+  @override
+  String get tasbeehTapHint => 'Tap anywhere to count';
+
+  @override
+  String tasbeehProgress(String current, String total) {
+    return '$current of $total';
+  }
+
+  @override
+  String get hijriTitle => 'Date converter';
+
+  @override
+  String get hijriToHijri => 'Gregorian → Hijri';
+
+  @override
+  String get hijriToGregorian => 'Hijri → Gregorian';
+
+  @override
+  String get hijriResultHijri => 'Hijri date';
+
+  @override
+  String get hijriResultGregorian => 'Gregorian date';
+
+  @override
+  String get hijriDay => 'Day';
+
+  @override
+  String get hijriMonth => 'Month';
+
+  @override
+  String get hijriYear => 'Year';
+
+  @override
+  String get hijriApproximate =>
+      'Calculated, not moon-sighted — this can differ by a day from the Umm al-Qura calendar or from an announced sighting.';
+
+  @override
+  String get adhkarTitle => 'Adhkar & counsels';
+
+  @override
+  String get adhkarSearchHint => 'Search the text or the source';
+
+  @override
+  String get adhkarKindAll => 'All';
+
+  @override
+  String get adhkarKindVerse => 'Ayahs';
+
+  @override
+  String get adhkarKindHadith => 'Hadiths';
+
+  @override
+  String get adhkarKindTip => 'Tips';
+
+  @override
+  String adhkarCount(String count) {
+    return '$count items';
+  }
+
+  @override
+  String get adhkarNoResults => 'Nothing matches';
 }

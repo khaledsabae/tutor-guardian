@@ -6457,6 +6457,180 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'💡 نصيحة اليوم — المربي الذكي'**
   String get notifTipTitle;
+
+  /// No description provided for @tafsirTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفسير الآية'**
+  String get tafsirTitle;
+
+  /// No description provided for @tafsirNuzool.
+  ///
+  /// In ar, this message translates to:
+  /// **'سبب النزول'**
+  String get tafsirNuzool;
+
+  /// No description provided for @tafsirUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'التفسير يحتاج اتصالًا بالإنترنت.'**
+  String get tafsirUnavailable;
+
+  /// No description provided for @tafsirEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يتوفر تفسير لهذه الآية حاليًا.'**
+  String get tafsirEmpty;
+
+  /// No description provided for @tafsirHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط مطوّلًا على الآية لعرض تفسيرها'**
+  String get tafsirHint;
+
+  /// No description provided for @hubGroupTools.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدوات'**
+  String get hubGroupTools;
+
+  /// No description provided for @tasbeehTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'السبحة'**
+  String get tasbeehTitle;
+
+  /// No description provided for @tasbeehReset.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصفير العدّاد'**
+  String get tasbeehReset;
+
+  /// No description provided for @tasbeehFree.
+  ///
+  /// In ar, this message translates to:
+  /// **'بلا هدف'**
+  String get tasbeehFree;
+
+  /// No description provided for @tasbeehComplete.
+  ///
+  /// In ar, this message translates to:
+  /// **'أتممت العدد، تقبّل الله'**
+  String get tasbeehComplete;
+
+  /// No description provided for @tasbeehTapHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط في أي مكان للعدّ'**
+  String get tasbeehTapHint;
+
+  /// No description provided for @tasbeehProgress.
+  ///
+  /// In ar, this message translates to:
+  /// **'{current} من {total}'**
+  String tasbeehProgress(String current, String total);
+
+  /// No description provided for @hijriTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'محوّل التاريخ'**
+  String get hijriTitle;
+
+  /// No description provided for @hijriToHijri.
+  ///
+  /// In ar, this message translates to:
+  /// **'ميلادي ← هجري'**
+  String get hijriToHijri;
+
+  /// No description provided for @hijriToGregorian.
+  ///
+  /// In ar, this message translates to:
+  /// **'هجري ← ميلادي'**
+  String get hijriToGregorian;
+
+  /// No description provided for @hijriResultHijri.
+  ///
+  /// In ar, this message translates to:
+  /// **'التاريخ الهجري'**
+  String get hijriResultHijri;
+
+  /// No description provided for @hijriResultGregorian.
+  ///
+  /// In ar, this message translates to:
+  /// **'التاريخ الميلادي'**
+  String get hijriResultGregorian;
+
+  /// No description provided for @hijriDay.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get hijriDay;
+
+  /// No description provided for @hijriMonth.
+  ///
+  /// In ar, this message translates to:
+  /// **'الشهر'**
+  String get hijriMonth;
+
+  /// No description provided for @hijriYear.
+  ///
+  /// In ar, this message translates to:
+  /// **'السنة'**
+  String get hijriYear;
+
+  /// No description provided for @hijriApproximate.
+  ///
+  /// In ar, this message translates to:
+  /// **'حساب تقويمي (لا رؤية هلال) — قد يختلف يومًا عن تقويم أم القرى أو عن إعلان الرؤية.'**
+  String get hijriApproximate;
+
+  /// No description provided for @adhkarTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأذكار والوصايا'**
+  String get adhkarTitle;
+
+  /// No description provided for @adhkarSearchHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث في النص أو المصدر'**
+  String get adhkarSearchHint;
+
+  /// No description provided for @adhkarKindAll.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكل'**
+  String get adhkarKindAll;
+
+  /// No description provided for @adhkarKindVerse.
+  ///
+  /// In ar, this message translates to:
+  /// **'آيات'**
+  String get adhkarKindVerse;
+
+  /// No description provided for @adhkarKindHadith.
+  ///
+  /// In ar, this message translates to:
+  /// **'أحاديث'**
+  String get adhkarKindHadith;
+
+  /// No description provided for @adhkarKindTip.
+  ///
+  /// In ar, this message translates to:
+  /// **'نصائح'**
+  String get adhkarKindTip;
+
+  /// No description provided for @adhkarCount.
+  ///
+  /// In ar, this message translates to:
+  /// **'{count} بندًا'**
+  String adhkarCount(String count);
+
+  /// No description provided for @adhkarNoResults.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا نتائج مطابقة'**
+  String get adhkarNoResults;
 }
 
 class _AppLocalizationsDelegate
