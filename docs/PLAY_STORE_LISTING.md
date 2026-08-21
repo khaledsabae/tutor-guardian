@@ -385,3 +385,80 @@ Scroll سريع عبر: مسارات تربوية → بودكاست → اخت�
 | **What's new** | [النص في القسم 8 — حدّث مع كل إصدار] |
 | **Data Safety** | لا يجمع بيانات شخصية · لا يشاركها · التشفير أثناء النقل |
 | **Content rating** | عائلي / تعليمي (لا محتوى للبالغين) |
+
+---
+
+## 8) القائمة الإنجليزية (en-US) — منشورة 2026-08-21
+
+٢٧٪ من المستخدمين على أجهزة إنجليزية و١١٪ فرنسية، وكانت صفحة Play بلغة واحدة
+(`ar`) فقط: العنوان والوصف كلاهما عربي لمن لا يقرأ العربية. القائمة الإنجليزية
+نُشرت عبر `androidpublisher` (`edits().listings().update(language='en-US')`)،
+والصور تُورَث من القائمة العربية إذ لا صور إنجليزية بعد.
+
+**لم تُنشر قبل اليوم عن قصد:** المساعد كان يجيب بالعربية على السؤال الإنجليزي
+حتى `0f709b09`. الإعلان بالإنجليزية قبل ذلك كان وعدًا لا يفي به التطبيق.
+
+### العنوان (29/30)
+
+```
+Al-Morabbi: Islamic Parenting
+```
+
+### الوصف القصير (72/80)
+
+```
+100% free: Islamic parenting curriculum + AI guide — pregnancy to age 18
+```
+
+### الوصف الكامل (1842/4000)
+
+```
+Completely free — no ads, no subscriptions, ever. Built as a sadaqah jariyah.
+
+Al-Morabbi is an Islamic parenting companion that walks with you from pregnancy through age 18 — not a tips app, but a curriculum you live alongside your child.
+
+📚 A curriculum for every stage
+28-day guided paths for each age band (pregnancy–1, 2–3, 4–6, 7–9, 10–12, 13–15, 16–18), covering:
+• Islamic upbringing — iman, worship and prophetic character
+• Child development, behaviour and daily habits
+• Digital safety and screen time
+• Habit-building and life skills
+
+💬 An assistant that answers in your language
+Ask about any parenting difficulty and get a practical answer grounded in documented sources — defiance, refusing to pray, screen addiction, fear, sibling jealousy, or whatever today has brought. Write in English and the answer comes back in English.
+
+Qur'an and hadith are always quoted in Arabic, as revealed and as narrated, with the meaning explained alongside. A translation is never presented to you as scripture.
+
+🎧 More than one way to take it in
+Written lessons, audio podcasts, flashcards and quizzes. English audio and visual companions are being produced lesson by lesson; the written curriculum is complete in English today.
+
+🌟 Your child's journey
+Record the milestones that matter — first prayer, first fast, Qur'an memorised — and watch the record grow.
+
+🕌 Qur'an corner
+Recitation, and adhkar and du'a for children, in one place.
+
+—
+💡 Start with a single question: "my son is defiant", "my child won't pray", "tantrums"…
+Al-Morabbi gives you a practical plan in seconds — free.
+
+Note on language: the written curriculum, the paths and the assistant are available in English. The adhkar and du'a texts, the daily reminder, the interactive games and the story library are currently Arabic only — translation is under way, band by band.
+```
+
+### ما لا يجوز ادّعاؤه بالإنجليزية — تحقّق قبل أي تعديل
+
+| البند | الحالة اليوم (2026-08-21) | مقيس بـ |
+|---|---|---|
+| المنهج المكتوب والمسارات | ✅ إنجليزي كامل — ٤٠ مسارًا على الفئات السبع | `GET /api/program/paths?lang=en` |
+| المساعد | ✅ يجيب بلغة السؤال | مسبار حيّ بعد `0f709b09` |
+| البودكاست والإنفوجرافيك | ⚠️ **جزئي** — ٧٨ ملف صوت و١١ إنفوجرافيك | عدّ الملفات على الـVPS |
+| الفلاش كاردز والاختبارات | ✅ موجودة في أصول الدرس الإنجليزية | `GET /api/program/lesson-assets/{id}?lang=en` |
+| الأذكار والإشعار اليومي | ❌ **عربي فقط** — `family_adhkar.ar.json` وحده | ملفات الحزمة |
+| الألعاب والقصص | ❌ **عربي فقط** — وRTL فيها صحيح لا عيب | `[[tutor-guardian-users-are-not-all-arabic]]` |
+
+الصفّان الأخيران مذكوران صراحةً في آخر الوصف. **من يترجم محتوى جديدًا يحدّث هذا
+الجدول والوصف معًا** — وإلا صار الوصف يعِد بما لا يوجد، أو يعتذر عمّا صار موجودًا.
+
+**الفرنسية (١١٪) لم تُنشر:** لا يوجد محتوى فرنسي أصلًا — لا منهج ولا واجهة. قائمة
+فرنسية اليوم تجلب مستخدمًا إلى تطبيق لا يقرؤه. المساعد وحده يجيب بالفرنسية لأن
+القاعدة تقول «بلغة السائل» ولا تسمّي لغة.
