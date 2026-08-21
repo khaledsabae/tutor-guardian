@@ -18,6 +18,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 
@@ -263,5 +265,74 @@ void main() {
     expect(notifier.state.messages[1].content, 'في هذه الحالة.');
     expect(notifier.state.messages[1].reply, isNotNull);
     expect(notifier.state.turnCount, 1);
+  });
+
+  // ── The build census ────────────────────────────────────────────────────
+
+  group('registerPushToken reports the installed build', () {
+    // The version used to be recorded in the session metadata, and a session is
+    // created once per install and never updated — so a device that installed
+    // on 1.0.29 and now runs 1.0.51 still reported 1.0.29. Push registration is
+    // the one request that happens on every launch, which is what makes it a
+    // census. Without it MINIMUM_BUILD_NUMBER cannot be raised on evidence.
+    setUp(() {
+      PackageInfo.setMockInitialValues(
+        appName: 'almorabbi',
+        packageName: 'com.alsaba.almorabbi',
+        version: '1.0.51',
+        buildNumber: '96',
+        buildSignature: '',
+      );
+    });
+
+    test('sends the version and build with the token', () async {
+      final client = _ScriptedClient();
+      client.route((_) => _jsonResponse(201,
+          {'session_id': 's-1', 'token': 'tg_1'}));
+      client.route((_) => _jsonResponse(200, {'ok': true}));
+
+      final tg = TgClient.forTesting(
+        baseUrl: 'http://x',
+        httpClient: client,
+        storage: _MemStorage(),
+      );
+      await tg.registerPushToken('fcm-token');
+
+      final register = client.seen.last;
+      expect(register.url.path, '/api/push/register');
+      final body = jsonDecode(register.body) as Map<String, dynamic>;
+      expect(body['token'], 'fcm-token');
+      expect(body['app_version'], '1.0.51');
+      expect(body['build_number'], 96);
+    });
+
+    test('a device that cannot report its version still registers', () async {
+      // Never lose a push registration over a missing version string: the
+      // notification matters, the census does not.
+      PackageInfo.setMockInitialValues(
+        appName: 'almorabbi',
+        packageName: 'com.alsaba.almorabbi',
+        version: '1.0.51',
+        buildNumber: 'not-a-number',
+        buildSignature: '',
+      );
+      final client = _ScriptedClient();
+      client.route((_) => _jsonResponse(201,
+          {'session_id': 's-1', 'token': 'tg_1'}));
+      client.route((_) => _jsonResponse(200, {'ok': true}));
+
+      final tg = TgClient.forTesting(
+        baseUrl: 'http://x',
+        httpClient: client,
+        storage: _MemStorage(),
+      );
+      await tg.registerPushToken('fcm-token');
+
+      final body = jsonDecode(client.seen.last.body) as Map<String, dynamic>;
+      expect(body['token'], 'fcm-token');
+      expect(body.containsKey('build_number'), isFalse,
+          reason: 'an unparseable build is omitted, not sent as junk');
+      expect(body['app_version'], '1.0.51');
+    });
   });
 }

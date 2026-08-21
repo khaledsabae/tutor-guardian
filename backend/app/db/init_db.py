@@ -194,7 +194,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 24
+SCHEMA_VERSION = 25
 
 
 def db_path() -> Path:
@@ -343,6 +343,23 @@ def init_db() -> None:
     _ensure_child_challenges_table(conn)
     _ensure_referrals_table(conn)
     _ensure_push_tokens_table(conn)
+    # v25 — the build census. `push_tokens` is the only row the app touches on
+    # every launch, which makes it the only place a *current* version can be
+    # recorded. `chat_sessions.metadata` was the previous answer and it cannot
+    # work: a session is created once per install and never updated, so a
+    # device that installed on 1.0.29 and now runs 1.0.51 still reports 1.0.29.
+    # 371 of the last 400 sessions carried no version at all.
+    #
+    # Without this there is no way to decide MINIMUM_BUILD_NUMBER on evidence —
+    # see docs/OPS_RUNBOOK.md §10.1.
+    _ensure_column(
+        conn, table="push_tokens", column="app_version",
+        ddl="ALTER TABLE push_tokens ADD COLUMN app_version TEXT",
+    )
+    _ensure_column(
+        conn, table="push_tokens", column="build_number",
+        ddl="ALTER TABLE push_tokens ADD COLUMN build_number INTEGER",
+    )
     _ensure_push_sends_table(conn)
     _ensure_parent_identities_table(conn)
     _ensure_daily_login_streaks_table(conn)

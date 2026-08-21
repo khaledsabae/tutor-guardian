@@ -19,17 +19,33 @@ def register_push_token(request: Request, payload: dict) -> dict:
     if not token:
         return {"ok": False, "error": "token_required"}
 
+    # The build census rides along with the token, because this is the one
+    # request the app makes on every launch. Both fields are optional: builds
+    # already on Play do not send them, and their rows keep whatever they had
+    # (COALESCE, not overwrite-with-null) so a silent client cannot erase a
+    # version we already knew.
+    app_version = str(payload.get("app_version") or "").strip()[:32] or None
+    try:
+        build_number = int(payload.get("build_number"))
+    except (TypeError, ValueError):
+        build_number = None
+
     conn = get_conn()
     conn.execute(
         """
-        INSERT INTO push_tokens (device_id, token, platform, updated_at)
-        VALUES (?, ?, ?, datetime('now'))
+        INSERT INTO push_tokens (device_id, token, platform, updated_at,
+                                 app_version, build_number)
+        VALUES (?, ?, ?, datetime('now'), ?, ?)
         ON CONFLICT(device_id) DO UPDATE SET
             token = excluded.token,
             platform = excluded.platform,
-            updated_at = excluded.updated_at
+            updated_at = excluded.updated_at,
+            app_version = COALESCE(excluded.app_version, push_tokens.app_version),
+            build_number = COALESCE(excluded.build_number, push_tokens.build_number)
         """,
-        (device_id, token, payload.get("platform", "android").strip().lower() or "android"),
+        (device_id, token,
+         payload.get("platform", "android").strip().lower() or "android",
+         app_version, build_number),
     )
     conn.commit()
     conn.close()

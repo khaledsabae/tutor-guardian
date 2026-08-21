@@ -471,9 +471,16 @@ class TgClient {
   /// "1.0.28+73", or null if the platform channel is unavailable (tests).
   /// Never throws — a missing version must not block a bug report.
   Future<String?> _appVersion() async {
+    final info = await _packageInfo();
+    return info == null ? null : '${info.version}+${info.buildNumber}';
+  }
+
+  /// Null when the platform channel is unavailable (host tests, and any device
+  /// where the plugin fails to answer). Never throws: neither a bug report nor
+  /// a push registration may be lost over a missing version string.
+  Future<PackageInfo?> _packageInfo() async {
     try {
-      final info = await PackageInfo.fromPlatform();
-      return '${info.version}+${info.buildNumber}';
+      return await PackageInfo.fromPlatform();
     } catch (_) {
       return null;
     }
@@ -833,10 +840,23 @@ class TgClient {
   /// `POST /api/push/register` (authed) — store FCM token on the server.
   Future<void> registerPushToken(String token, {String platform = 'android'}) async {
     final session = await ensureSession();
+    // The build census rides along here because this is the one request the
+    // app makes on every launch. The version was previously recorded in the
+    // session metadata, which cannot answer "what is installed today": a
+    // session is created once per install and never updated, so a device that
+    // installed on 1.0.29 and now runs 1.0.51 still reported 1.0.29. Without a
+    // live count, MINIMUM_BUILD_NUMBER cannot be raised on evidence — see
+    // docs/OPS_RUNBOOK.md §10.1.
+    final info = await _packageInfo();
     final resp = await _http
         .post(Uri.parse('$_baseUrl/api/push/register'),
             headers: _authHeaders(session.token),
-            body: jsonEncode({'token': token, 'platform': platform}))
+            body: jsonEncode({
+              'token': token,
+              'platform': platform,
+              'app_version': ?info?.version,
+              'build_number': ?int.tryParse(info?.buildNumber ?? ''),
+            }))
         .timeout(AppConfig.httpTimeout);
     if (resp.statusCode != 200) {
       throw _wrap(resp);
