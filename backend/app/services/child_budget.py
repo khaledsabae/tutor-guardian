@@ -69,8 +69,55 @@ def agreement_required() -> bool:
 
     Flip it to true once the Play build carrying the agreement screens is the
     minimum version. Not before.
+
+    Since 2026-08-21 that condition no longer needs `MINIMUM_BUILD_NUMBER` to be
+    raised — which would force-update thousands of devices to unlock one flag.
+    `device_can_sign()` below answers the same question per device instead, so
+    the gate can be switched on while old builds keep working.
     """
     return os.environ.get("AGREEMENT_REQUIRED", "").strip().lower() in {"1", "true", "yes"}
+
+
+# 1.0.42+87 — the first *released* build carrying the signing screens with a
+# route that reaches them. The screens landed in 07c34a8b and were registered,
+# tested and unreachable until b92e0d40; both are ancestors of the 87 release,
+# and neither is in 86.
+AGREEMENT_MIN_BUILD = 87
+
+
+def device_can_sign(device_id: str) -> bool:
+    """Whether this device's build has the screens the gate sends it to.
+
+    The gate's failure mode is not "someone gets in without signing". It is
+    "a family is locked out with no way through", because the exit is a screen
+    their build does not have. That is why the flag has stayed off since
+    2026-08-16 even though the server side has been finished and tested the
+    whole time.
+
+    A build census now exists (schema v25: `push_tokens.app_version` /
+    `build_number`, written on every launch), so the question can be asked per
+    device instead of being answered for everyone at once by a force-update.
+
+    **Unknown build means no.** A device that has never reported one is either
+    on a build that predates the census or one that never registered for push,
+    and both are older than 87 or unknowable — and the cost of guessing wrong is
+    a lockout. Every device becomes gated as it updates, on its own, with no
+    release and no forced update.
+    """
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT build_number FROM push_tokens WHERE device_id = ?",
+            (device_id,),
+        ).fetchone()
+    except sqlite3.Error:
+        # A database that predates the census column must not lock anyone out.
+        return False
+    finally:
+        conn.close()
+    if row is None or row["build_number"] is None:
+        return False
+    return int(row["build_number"]) >= AGREEMENT_MIN_BUILD
 
 
 def child_surface_enabled() -> bool:
@@ -283,8 +330,14 @@ def open_session(device_id: str, child_id: int, surface: str,
         # falls back to Arabic, so every language gets the same answer. A gate
         # that opened or closed depending on the phone's locale would be a
         # different feature for English families.
-        gated = agreement_required() and bool(
-            family_agreement.load_clause_bank(band_name)
+        # Third condition, added 2026-08-21: the device has to own a build that
+        # can reach the signing screen. Without it, switching the flag on locks
+        # out every family still on an older build — the reason it has never
+        # been switched on at all.
+        gated = (
+            agreement_required()
+            and bool(family_agreement.load_clause_bank(band_name))
+            and device_can_sign(device_id)
         )
         if gated and surface != "agreement" and not family_agreement.has_active_agreement(
             device_id, child_id

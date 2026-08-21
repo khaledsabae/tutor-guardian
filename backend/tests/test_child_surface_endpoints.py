@@ -432,8 +432,26 @@ def test_the_qr_web_claim_is_age_gated_like_the_front_door(client):
 
 # ── The agreement is the frame, so it is the entry condition ───────────────
 
+def _device_reports_build(build: int) -> None:
+    """Since 2026-08-21 the gate also asks whether this device's build can reach
+    the signing screen. A device that has never said is treated as old and left
+    ungated, so a test about the gate has to say."""
+    conn = get_conn()
+    try:
+        conn.execute(
+            "INSERT INTO push_tokens (device_id, token, platform, updated_at, "
+            "build_number) VALUES (?, 't', 'android', datetime('now'), ?) "
+            "ON CONFLICT(device_id) DO UPDATE SET build_number = excluded.build_number",
+            (DEVICE, build),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
 def test_without_an_agreement_only_the_agreement_opens(client, monkeypatch):
     monkeypatch.setenv("AGREEMENT_REQUIRED", "true")
+    _device_reports_build(child_budget.AGREEMENT_MIN_BUILD)
     cid = _child_without_agreement(client)
     refused = _open(client, cid, surface="story")
     assert refused.status_code == 403
@@ -445,9 +463,30 @@ def test_without_an_agreement_only_the_agreement_opens(client, monkeypatch):
 
 def test_signing_it_opens_the_rest(client, monkeypatch):
     monkeypatch.setenv("AGREEMENT_REQUIRED", "true")
+    _device_reports_build(child_budget.AGREEMENT_MIN_BUILD)
     cid = _child_without_agreement(client)
     assert _open(client, cid, surface="story").status_code == 403
     _sign_agreement(client, cid)
+    assert _open(client, cid, surface="story").status_code == 200
+
+
+def test_an_old_build_is_not_locked_out_by_the_gate(client, monkeypatch):
+    """The reason the flag has never been switched on.
+
+    A build without the signing screen has no exit from the gate, so gating it
+    is a lockout, not a policy. It keeps the pre-agreement behaviour instead —
+    and starts being gated on its own the first time it launches an updated
+    build and says so.
+    """
+    monkeypatch.setenv("AGREEMENT_REQUIRED", "true")
+    _device_reports_build(child_budget.AGREEMENT_MIN_BUILD - 1)
+    cid = _child_without_agreement(client)
+    assert _open(client, cid, surface="story").status_code == 200
+
+
+def test_a_device_that_never_reported_a_build_is_not_locked_out(client, monkeypatch):
+    monkeypatch.setenv("AGREEMENT_REQUIRED", "true")
+    cid = _child_without_agreement(client)
     assert _open(client, cid, surface="story").status_code == 200
 
 
