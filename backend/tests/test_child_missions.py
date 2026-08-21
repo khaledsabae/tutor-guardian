@@ -131,6 +131,53 @@ def test_a_band_with_no_bank_gets_no_card(child):
     assert cm.today_mission(DEVICE, cid, "2-3", "2026-08-16") is None
 
 
+# ── Only the child's own surface assigns ───────────────────────────────────
+
+def _assigned_rows(child_id: int) -> int:
+    conn = get_conn()
+    try:
+        return conn.execute(
+            "SELECT COUNT(*) FROM child_missions WHERE child_id = ?",
+            (child_id,),
+        ).fetchone()[0]
+    finally:
+        conn.close()
+
+
+def test_a_read_only_ask_does_not_mint_a_card(child):
+    # The parent's «اليوم» tab calls this on every render. It used to assign,
+    # so a family that had never opened the child surface still had a mission
+    # created every morning that nobody was shown and that expired two days
+    # later: 39 assigned, 47 expired, 0 ever claimed in production.
+    cid = child()
+    assert cm.today_mission(DEVICE, cid, "7-9", "2026-08-16", assign=False) is None
+    assert _assigned_rows(cid) == 0
+
+
+def test_a_read_only_ask_still_reports_a_card_the_child_has(child):
+    cid = child()
+    minted = cm.today_mission(DEVICE, cid, "7-9", "2026-08-16")
+    seen = cm.today_mission(DEVICE, cid, "7-9", "2026-08-16", assign=False)
+    assert seen is not None
+    assert seen["mission_id"] == minted["mission_id"]
+    assert _assigned_rows(cid) == 1
+
+
+def test_reading_without_assigning_does_not_spend_the_no_repeat_window(child):
+    # The window is what keeps a child from seeing the same card twice in
+    # three weeks. Cards minted by a parent's home screen consumed it without
+    # anyone reading them, so the first card the child actually saw was more
+    # likely to be a repeat.
+    cid = child()
+    for i in range(5):
+        day = f"2026-08-{16 + i:02d}"
+        assert cm.today_mission(DEVICE, cid, "7-9", day, assign=False) is None
+    assert _assigned_rows(cid) == 0
+    card = cm.today_mission(DEVICE, cid, "7-9", "2026-08-21")
+    assert card is not None
+    assert _assigned_rows(cid) == 1
+
+
 # ── Claiming is asynchronous ───────────────────────────────────────────────
 
 def test_the_child_claims_without_waiting(child):

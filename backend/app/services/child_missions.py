@@ -103,8 +103,26 @@ def _pick(candidates: list[dict[str, Any]], child_id: int,
 # ── Assignment and claiming ────────────────────────────────────────────────
 
 def today_mission(device_id: str, child_id: int, age_band: str,
-                  local_date: str, lang: Optional[str] = None) -> Optional[dict[str, Any]]:
-    """The child's card for today, assigning one on first ask."""
+                  local_date: str, lang: Optional[str] = None,
+                  assign: bool = True) -> Optional[dict[str, Any]]:
+    """The child's card for today, assigning one on first ask.
+
+    `assign=False` reads without minting: it returns the card if one was
+    already assigned, and None if it was not.
+
+    That distinction exists because the parent's home screen was minting the
+    child's missions. `/api/children/{id}/day` calls this on every render of
+    the «اليوم» tab, so a parent who had never enabled the child surface was
+    assigning their child a mission every morning, which the child never saw
+    and which expired 48 hours later. Production on 2026-08-21: 39 assigned,
+    47 expired, **0 ever claimed** — a 0% rate that read like a broken button
+    and was really a card nobody had been shown. It also spent the 21-day
+    no-repeat window on missions no child ever read, so the first one they did
+    see was likelier to be a repeat.
+
+    The rule: the surface the child is holding assigns; every other caller
+    reports.
+    """
     missions = load_missions(age_band, lang)
     if not missions:
         return None
@@ -118,6 +136,8 @@ def today_mission(device_id: str, child_id: int, age_band: str,
         ).fetchone()
         if existing is not None:
             return _row_to_card(existing, missions)
+        if not assign:
+            return None
 
         cutoff = (date.fromisoformat(local_date)
                   - timedelta(days=NO_REPEAT_DAYS)).isoformat()

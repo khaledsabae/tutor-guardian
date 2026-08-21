@@ -854,8 +854,11 @@ def child_day_summary(child_id: int, request: Request,
     usage = child_budget.today_usage(child_id, local_date, policy)
 
     agreement = family_agreement.get_active(device_id, child_id)
+    # assign=False: this is the parent's summary. Reading it must not mint the
+    # child's card — see today_mission's docstring for the production numbers
+    # that made the difference visible (0 claims against 86 assignments).
     mission = child_missions.today_mission(
-        device_id, child_id, band_name, local_date, lang)
+        device_id, child_id, band_name, local_date, lang, assign=False)
 
     month_start = local_date[:8] + "01"
     leverage = child_missions.leverage(

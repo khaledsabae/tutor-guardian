@@ -578,8 +578,25 @@ def test_the_day_summary_shows_no_agreement_when_there_is_none(client):
     assert body["agreement"] is None
 
 
-def test_the_day_summary_includes_todays_mission(client):
+def test_the_day_summary_reports_a_mission_without_creating_one(client):
+    """The parent's tab reports; the child's surface assigns.
+
+    This used to assert the opposite — that opening the summary produced a
+    card — and the assertion was the bug written down. Every render of the
+    «اليوم» tab minted a mission for a child who had never opened the surface,
+    so production held 39 assigned and 47 expired cards against zero claims.
+    """
     cid = _child(client)
+    body = client.get(f"/api/children/{cid}/today").json()
+    assert body["mission"] is None
+
+    from datetime import datetime, timezone
+
+    from app.services import child_missions
+
+    local_date = child_budget.local_date_for(datetime.now(timezone.utc), 0)
+    child_missions.today_mission(DEVICE, cid, "7-9", local_date)
+
     body = client.get(f"/api/children/{cid}/today").json()
     assert body["mission"] is not None
     assert body["mission"]["title_ar"]
