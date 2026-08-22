@@ -3659,4 +3659,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String coachTipAskPrefill(String tip, String child) {
     return 'بخصوص نصيحة اليوم: «$tip»\n\nكيف أطبّقها مع $child بشكل عملي؟';
   }
+
+  @override
+  String get notifWirdTitle => '📗 وردك من القرآن — المربي الذكي';
+
+  @override
+  String get notifWird0 => 'صفحة واحدة تكفي اليوم. تابع من حيث توقفت.';
+
+  @override
+  String get notifWird1 =>
+      '«خيركم من تعلّم القرآن وعلّمه» — ابدأ بنفسك، وولدك يشوفك.';
+
+  @override
+  String get notifWird2 => 'وردك مستنيك. دقيقتان تفرقان.';
+
+  @override
+  String get notifWird3 =>
+      'اقرأ آية واحدة بصوت مسموع — الطفل يسمع أكثر مما ينصت.';
+
+  @override
+  String get notifWird4 => 'لا تقطع سلسلتك اليوم. افتح المصحف ولو لآيتين.';
+
+  @override
+  String get notifWird5 => '«ورتّل القرآن ترتيلًا» — على مهلك، لا على عجل.';
+
+  @override
+  String get notifWird6 => 'أفضل وقت للورد هو الوقت الذي تجده. وهو الآن.';
+
+  @override
+  String get settingsWird => 'تذكير ورد القرآن';
+
+  @override
+  String get settingsWirdDesc =>
+      'تذكير واحد في اليوم بورد القرآن — يمكن إيقافه';
 }

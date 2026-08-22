@@ -3703,4 +3703,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String coachTipAskPrefill(String tip, String child) {
     return 'About today\'s tip: “$tip”\n\nHow do I put it into practice with $child?';
   }
+
+  @override
+  String get notifWirdTitle => '📗 Your Qur\'an portion — Al-Morabbi';
+
+  @override
+  String get notifWird0 =>
+      'One page is enough today. Carry on from where you stopped.';
+
+  @override
+  String get notifWird1 =>
+      '«The best of you are those who learn the Qur\'an and teach it» — start with yourself; your child is watching.';
+
+  @override
+  String get notifWird2 =>
+      'Your portion is waiting. Two minutes make a difference.';
+
+  @override
+  String get notifWird3 =>
+      'Read one ayah aloud — a child hears more than they listen to.';
+
+  @override
+  String get notifWird4 =>
+      'Don\'t break your streak today. Open the Qur\'an, even for two ayahs.';
+
+  @override
+  String get notifWird5 =>
+      '«And recite the Qur\'an with measured recitation» — unhurried, not rushed.';
+
+  @override
+  String get notifWird6 =>
+      'The best time for your portion is the time you can find. That\'s now.';
+
+  @override
+  String get settingsWird => 'Qur\'an portion reminder';
+
+  @override
+  String get settingsWirdDesc =>
+      'One reminder a day for your Qur\'an portion — can be switched off';
 }

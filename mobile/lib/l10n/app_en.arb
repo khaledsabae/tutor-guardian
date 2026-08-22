@@ -1181,5 +1181,15 @@
         "type": "String"
       }
     }
-  }
+  },
+  "notifWirdTitle": "📗 Your Qur'an portion — Al-Morabbi",
+  "notifWird0": "One page is enough today. Carry on from where you stopped.",
+  "notifWird1": "«The best of you are those who learn the Qur'an and teach it» — start with yourself; your child is watching.",
+  "notifWird2": "Your portion is waiting. Two minutes make a difference.",
+  "notifWird3": "Read one ayah aloud — a child hears more than they listen to.",
+  "notifWird4": "Don't break your streak today. Open the Qur'an, even for two ayahs.",
+  "notifWird5": "«And recite the Qur'an with measured recitation» — unhurried, not rushed.",
+  "notifWird6": "The best time for your portion is the time you can find. That's now.",
+  "settingsWird": "Qur'an portion reminder",
+  "settingsWirdDesc": "One reminder a day for your Qur'an portion — can be switched off"
 }

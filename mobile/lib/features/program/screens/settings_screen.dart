@@ -729,6 +729,7 @@ class _AdhkarSettingsRow extends StatefulWidget {
 
 class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
   bool _enabled = true;
+  bool _wird = true;
 
   @override
   void initState() {
@@ -738,13 +739,53 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
 
   Future<void> _loadState() async {
     final enabled = await NotificationService.instance.isEnabled();
+    final wird = await NotificationService.instance.isWirdEnabled();
     if (mounted) {
-      setState(() => _enabled = enabled);
+      setState(() {
+        _enabled = enabled;
+        _wird = wird;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _row(
+          title: AppLocalizations.of(context).settingsFamilyAdhkar,
+          subtitle: AppLocalizations.of(context).settingsFamilyAdhkarDesc,
+          icon: Icons.notifications_active_outlined,
+          value: _enabled,
+          onChanged: (val) async {
+            setState(() => _enabled = val);
+            await NotificationService.instance.setEnabled(val);
+          },
+        ),
+        // A separate switch, not a sub-setting of the one above. The wird was
+        // retired in v1.0.39 largely because it had no off switch of its own —
+        // giving it back without one would be giving back the same bug.
+        _row(
+          title: AppLocalizations.of(context).settingsWird,
+          subtitle: AppLocalizations.of(context).settingsWirdDesc,
+          icon: Icons.menu_book_outlined,
+          value: _wird,
+          onChanged: (val) async {
+            setState(() => _wird = val);
+            await NotificationService.instance.setWirdEnabled(val);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _row({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required bool value,
+    required Future<void> Function(bool) onChanged,
+  }) {
     // Shadow on the outer box; color on a Material so the
     // SwitchListTile's ink renders correctly (framework assertion).
     return Container(
@@ -759,18 +800,15 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
         clipBehavior: Clip.antiAlias,
         child: SwitchListTile(
         title: Text(
-          AppLocalizations.of(context).settingsFamilyAdhkar,
+          title,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
         ),
         subtitle: Text(
-          AppLocalizations.of(context).settingsFamilyAdhkarDesc,
+          subtitle,
           style: TextStyle(fontSize: 12, color: AppTheme.textSecondary),
         ),
-        value: _enabled,
-        onChanged: (val) async {
-          setState(() => _enabled = val);
-          await NotificationService.instance.setEnabled(val);
-        },
+        value: value,
+        onChanged: (val) => onChanged(val),
         secondary: Container(
           width: 36,
           height: 36,
@@ -779,10 +817,10 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
             color: const Color(0xFFE65100).withValues(alpha: 0.10),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: const Icon(
-            Icons.notifications_active_outlined,
+          child: Icon(
+            icon,
             size: 18,
-            color: Color(0xFFE65100),
+            color: const Color(0xFFE65100),
           ),
         ),
         ),

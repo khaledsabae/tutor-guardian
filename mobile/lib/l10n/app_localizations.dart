@@ -6637,6 +6637,66 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'بخصوص نصيحة اليوم: «{tip}»\n\nكيف أطبّقها مع {child} بشكل عملي؟'**
   String coachTipAskPrefill(String tip, String child);
+
+  /// No description provided for @notifWirdTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'📗 وردك من القرآن — المربي الذكي'**
+  String get notifWirdTitle;
+
+  /// No description provided for @notifWird0.
+  ///
+  /// In ar, this message translates to:
+  /// **'صفحة واحدة تكفي اليوم. تابع من حيث توقفت.'**
+  String get notifWird0;
+
+  /// No description provided for @notifWird1.
+  ///
+  /// In ar, this message translates to:
+  /// **'«خيركم من تعلّم القرآن وعلّمه» — ابدأ بنفسك، وولدك يشوفك.'**
+  String get notifWird1;
+
+  /// No description provided for @notifWird2.
+  ///
+  /// In ar, this message translates to:
+  /// **'وردك مستنيك. دقيقتان تفرقان.'**
+  String get notifWird2;
+
+  /// No description provided for @notifWird3.
+  ///
+  /// In ar, this message translates to:
+  /// **'اقرأ آية واحدة بصوت مسموع — الطفل يسمع أكثر مما ينصت.'**
+  String get notifWird3;
+
+  /// No description provided for @notifWird4.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تقطع سلسلتك اليوم. افتح المصحف ولو لآيتين.'**
+  String get notifWird4;
+
+  /// No description provided for @notifWird5.
+  ///
+  /// In ar, this message translates to:
+  /// **'«ورتّل القرآن ترتيلًا» — على مهلك، لا على عجل.'**
+  String get notifWird5;
+
+  /// No description provided for @notifWird6.
+  ///
+  /// In ar, this message translates to:
+  /// **'أفضل وقت للورد هو الوقت الذي تجده. وهو الآن.'**
+  String get notifWird6;
+
+  /// No description provided for @settingsWird.
+  ///
+  /// In ar, this message translates to:
+  /// **'تذكير ورد القرآن'**
+  String get settingsWird;
+
+  /// No description provided for @settingsWirdDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'تذكير واحد في اليوم بورد القرآن — يمكن إيقافه'**
+  String get settingsWirdDesc;
 }
 
 class _AppLocalizationsDelegate

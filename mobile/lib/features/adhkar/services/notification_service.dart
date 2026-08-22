@@ -23,8 +23,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/timezone.dart' as tz;
 
+import 'local_timezone.dart';
 import '../../../core/analytics.dart';
 import '../../../l10n/l10n_global.dart';
 import '../../../core/app_routes.dart';
@@ -55,6 +57,16 @@ class NotificationService {
   static const _dailyBaseId = 1000;
   static const _daysToSchedule = 14;
 
+  /// The wird reminder, brought back 2026-08-22 — see [scheduleWird] for what
+  /// had to change first. Deliberately **not** 3000: that id is still being
+  /// cancelled by [_purgeRetiredSlots] on installs that have not launched
+  /// since v1.0.39, and reusing it would race the purge into cancelling the
+  /// new series on the very launch that created it.
+  static const _wirdBaseId = 4000;
+  static const _kWirdEnabled = 'tg.wird_notifications_enabled';
+  static const _kWirdHour = 'tg.wird_hour';
+  static const _defaultWirdHour = 17;
+
   /// Cancel-only. Nothing schedules these any more — see [_purgeRetiredSlots].
   static const _retiredEveningBaseId = 2000;
   static const _retiredWirdId = 3000;
@@ -75,6 +87,7 @@ class NotificationService {
     _initialized = true;
 
     tz.initializeTimeZones();
+    await _configureLocalTimezone();
 
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const initSettings = InitializationSettings(android: androidInit);
@@ -98,6 +111,16 @@ class NotificationService {
       // emulator running 1.0.51, `dumpsys alarm` held zero alarms for this
       // package and POST_NOTIFICATIONS was still ungranted.
       await scheduleDaily(prefs: prefs);
+    }
+    // Gated separately, and not nested inside the adhkar branch: the wird is a
+    // second notification a day and the user gets to refuse it on its own.
+    // Nesting is precisely how the old wird ended up unreachable by any off
+    // switch. Permission is handled the same way as above — asked for later,
+    // once an Activity exists; queueing now costs nothing if it is refused.
+    if (prefs.getBool(_kWirdEnabled) ?? true) {
+      await scheduleWird(prefs: prefs);
+    } else {
+      await _cancelWird();
     }
 
     // Check if cold-started from notification
@@ -335,6 +358,36 @@ class NotificationService {
   /// Activity is the whole point.
   bool _lastRequestThrew = false;
 
+  /// Points `tz.local` at the device's zone.
+  ///
+  /// Must run before anything builds a `TZDateTime`. `initializeTimeZones()`
+  /// only loads the database; it leaves the local zone as UTC, so «6 AM» meant
+  /// 6 AM UTC for every user on earth — 9am in Riyadh, 1pm in Jakarta, 2am on
+  /// the US east coast. See `local_timezone.dart`.
+  ///
+  /// Never throws. A reminder at the wrong hour is a bug; an exception here is
+  /// a dead app, because this runs on the path to `runApp`.
+  Future<void> _configureLocalTimezone() async {
+    String? name;
+    try {
+      final zone = await FlutterTimezone.getLocalTimezone();
+      name = zone.identifier;
+    } catch (e, st) {
+      // Platform channel unavailable, or an OEM that answers oddly. The offset
+      // fallback below still lands the notification in the right part of the
+      // user's day, so this is worth recording but not worth failing over.
+      unawaited(FirebaseCrashlytics.instance
+          .recordError(e, st, reason: 'local timezone lookup failed'));
+    }
+    try {
+      tz.setLocalLocation(
+        resolveLocalLocation(name, DateTime.now().timeZoneOffset),
+      );
+    } catch (_) {
+      // Leaves tz.local as it was; scheduling still happens.
+    }
+  }
+
   Future<bool> _requestPermission({bool quiet = false}) async {
     // The whole body, not just the request: resolving the platform
     // implementation throws too when no registrant has run. Never let any of
@@ -414,6 +467,116 @@ class NotificationService {
     }
   }
 
+  /// The Qur'an wird reminder, back — and rebuilt around why it was retired.
+  ///
+  /// It was killed in v1.0.39+84 for three faults, not for being unwanted:
+  ///
+  ///  1. **It could not be switched off.** `setWirdEnabled` had no caller in
+  ///     `lib/`, so the settings toggle cancelled the adhkar ids and never
+  ///     touched the wird. Now [_kWirdEnabled] is read on every launch, has a
+  ///     switch in settings, and [setWirdEnabled] cancels the queue.
+  ///  2. **It never ended.** `matchDateTimeComponents: DateTimeComponents.time`
+  ///     is an unbounded daily repeat, so it outlived any later change of mind.
+  ///     Now it is [_daysToSchedule] discrete alarms, re-queued each launch
+  ///     like the adhkar — an app that stops being opened stops reminding,
+  ///     which is the correct behaviour for a nudge.
+  ///  3. **It was one fixed string, 365×/year.** «حان وقت وردك اليومي» every
+  ///     single day is what turns a notification into wallpaper. The line now
+  ///     rotates over [_kWirdLineCount] phrasings, anchored to the calendar day
+  ///     exactly like the adhkar rotation, so consecutive days never repeat.
+  ///
+  /// The body deliberately does **not** name the surah the reader stopped at.
+  /// This queue runs up to 14 days ahead and the position changes every time
+  /// they read, so a body written today would be a stale claim by Thursday.
+  /// The position is resolved at *tap* time instead, where it is always
+  /// current — see the `wird` branch of [_handleNotificationTap].
+  Future<void> scheduleWird({SharedPreferences? prefs}) async {
+    prefs ??= await SharedPreferences.getInstance();
+    final hour = prefs.getInt(_kWirdHour) ?? _defaultWirdHour;
+
+    await _cancelWird();
+
+    final now = tz.TZDateTime.now(tz.local);
+    var base = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour);
+    if (base.isBefore(now)) base = base.add(const Duration(days: 1));
+
+    // Day-anchored, like the adhkar rotation: the index is a function of the
+    // date, never of a stored counter. A counter read but never written pins
+    // every install to the same phrase forever — that already happened here
+    // once, to _kNextMorningIndex.
+    final epochDay = DateTime(now.year, now.month, now.day)
+        .difference(DateTime.utc(2020, 1, 1))
+        .inDays;
+
+    const androidDetails = AndroidNotificationDetails(
+      'quran_wird_channel',
+      'تذكير الورد',
+      channelDescription: 'تذكير يومي بورد القرآن',
+      importance: Importance.high,
+      priority: Priority.high,
+      styleInformation: BigTextStyleInformation(''),
+    );
+
+    for (int dayOffset = 0; dayOffset < _daysToSchedule; dayOffset++) {
+      await _plugin.zonedSchedule(
+        _wirdBaseId + dayOffset,
+        AppL10n.current.notifWirdTitle,
+        wirdLine((epochDay + dayOffset) % _kWirdLineCount),
+        base.add(Duration(days: dayOffset)),
+        const NotificationDetails(android: androidDetails),
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        payload: _wirdPayload,
+      );
+    }
+  }
+
+  /// How many distinct wird lines exist.
+  ///
+  /// Kept beside [wirdLine] so the two cannot drift: a modulo against a count
+  /// larger than the switch makes the extra indices fall to the default and a
+  /// count smaller than the switch makes the last lines unreachable. The
+  /// second of those is what left 96% of the adhkar pack undeliverable.
+  @visibleForTesting
+  static const wirdLineCount = _kWirdLineCount;
+  static const _kWirdLineCount = 7;
+
+  @visibleForTesting
+  String wirdLine(int i) => switch (i) {
+        0 => AppL10n.current.notifWird0,
+        1 => AppL10n.current.notifWird1,
+        2 => AppL10n.current.notifWird2,
+        3 => AppL10n.current.notifWird3,
+        4 => AppL10n.current.notifWird4,
+        5 => AppL10n.current.notifWird5,
+        _ => AppL10n.current.notifWird6,
+      };
+
+  Future<void> _cancelWird() async {
+    for (int i = 0; i < 30; i++) {
+      await _plugin.cancel(_wirdBaseId + i);
+    }
+  }
+
+  /// Turn the wird reminder on or off — the switch the old one never had.
+  Future<void> setWirdEnabled(bool enabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_kWirdEnabled, enabled);
+    unawaited(Analytics.notificationPrefChanged('wird', enabled));
+    if (enabled) {
+      await _requestPermission();
+      await scheduleWird(prefs: prefs);
+    } else {
+      await _cancelWird();
+    }
+  }
+
+  Future<bool> isWirdEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_kWirdEnabled) ?? true;
+  }
+
   /// The slot no longer says morning or evening, so the title says what the
   /// item *is*. Mirrors the headers used by the in-app dialog.
   ///
@@ -472,8 +635,10 @@ class NotificationService {
   ///
   /// A no-op when reminders are switched off — nothing is queued to replace.
   Future<void> rescheduleForLanguageChange() async {
-    if (!(await isEnabled())) return;
-    await scheduleDaily();
+    if (await isEnabled()) await scheduleDaily();
+    // The wird lines are localised too, so a queue built in Arabic keeps
+    // speaking Arabic for 14 days unless it is rebuilt here as well.
+    if (await isWirdEnabled()) await scheduleWird();
   }
 
   /// Toggle notifications on/off.
