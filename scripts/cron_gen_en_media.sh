@@ -6,28 +6,40 @@
 #
 # Why one driver and not two agents
 # ---------------------------------
-# 🚨 The quota is PER MEDIUM, not shared. Measured 2026-08-17, one run:
+# 🚨 The quota is PER MEDIUM, not shared — but the two media do not share the
+# SAME ceiling, and one of the two numbers below was wrong for five days.
 #
-#     audio        20 accepted, then `rate-limited` on the 21st
-#     infographics 21 accepted, then `Authentication expired` on the 22nd
+# Audio's ceiling is real and repeatedly confirmed: ~20 accepted, then a plain
+# `rate-limited` refusal. Measured cleanly more than once (08-16, 08-17).
 #
-# The infographic step ran AFTER audio had exhausted its ceiling completely. If
-# there were one pool it would have returned zero. 41 generations in a single
-# run, and this file previously asserted a shared ~24/day.
+# Infographics' ceiling was NOT measured the same way. On 08-17 the step
+# stopped after 21 — but the log says `Authentication expired`, not
+# `rate-limited`. That is a dead session, the same failure mode that lost 124
+# calls on 08-15, not a quota ceiling. It was misread as one and written down
+# as "infographics also gets ~20/day", and every schedule estimate after that
+# used it.
 #
-# That claim was inferred from one afternoon (19 video + 5 audio, then a
-# refusal) and written down without the inference, so every later decision
-# treated it as measured. It cost real scheduling: infographics were queued
-# behind audio for days on the belief they competed for the same budget.
+# The two clean `RATE LIMIT` stops actually seen since then:
 #
-# Practical consequence: audio and infographics both get ~20/day, so they
-# progress in parallel rather than in sequence — roughly halving the remaining
-# calendar.
+#     2026-08-21   4 accepted, then RATE LIMIT
+#     2026-08-22   5 accepted, then RATE LIMIT
 #
-# What is still NOT established is whether each medium's ~20 is per-run or
-# per-day. The 08-16 attempt at that failed: the second run ran on the session
-# the first run's ceiling had killed, so it measured nothing. It needs two runs
-# of one medium with a fresh login between them.
+# Not a fluke of file size — infographic PNGs are steady at 4–5 MB across both
+# old and new ones, so it is not "images got heavier". Infographics simply
+# have a much lower ceiling than audio, on the order of 4–6 per run, not ~20.
+# 109 lessons were still missing their English infographic as of 08-22 — at
+# this rate that is ~3–4 weeks, not the ~1 week the old ~20/day figure implied.
+#
+# What generalizes: audio and infographics do NOT draw from one shared pool —
+# proven on 08-17, when infographics still accepted calls right after audio
+# had exhausted its own ceiling completely. A shared pool would have returned
+# zero. So running both regardless is still correct; only the size of
+# infographics' individual ceiling was wrong.
+#
+# Still not established: whether either ceiling is per-run or per-day. The
+# 08-16 attempt at that failed — the second run rode the session the first
+# run's ceiling had killed, so it measured nothing. Needs two runs of one
+# medium with a fresh login between them.
 #
 # So the reason for one driver is not a shared pool. It is that two agents on
 # the same Google account rotate each other's cookies out (see below), and one
@@ -99,12 +111,15 @@ say "===== English media run ====="
 # same lesson id appears under both wordings in the 08-16 logs.
 #
 # So re-authenticating before each step is not hygiene against drift; it is
-# recovery from a kill that the previous step causes — and it is what makes the
-# per-medium quotas reachable at all. On 2026-08-17 the infographic step took
-# its full ~20 immediately after audio had exhausted audio's, because the
-# session was rebuilt in between. Without that, a medium with quota to spare
-# spends the whole run talking to a corpse, which is exactly how 124 calls
-# failed on 08-15 and were misread as a ceiling.
+# recovery from a kill that the previous step causes — and it is what makes
+# each medium's own ceiling reachable at all. On 2026-08-17 the infographic
+# step still accepted calls immediately after audio had exhausted its own
+# ceiling, because the session was rebuilt in between — proof the two do not
+# share one pool, independent of what either individual ceiling turns out to
+# be (see the header: infographics' true ceiling is ~4-6, not ~20). Without
+# the rebuild, a medium with quota to spare spends the whole run talking to a
+# corpse, which is exactly how 124 calls failed on 08-15 and were misread as a
+# ceiling.
 #
 # Separate profiles still prevent the cookie rotation that killed the session
 # three times on 08-14, but they do not help here: the profiles share one
