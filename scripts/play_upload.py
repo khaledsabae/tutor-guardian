@@ -37,6 +37,13 @@ AAB_PATH = REPO_ROOT / "mobile/build/app/outputs/bundle/release/app-release.aab"
 DEFAULT_SA = REPO_ROOT / "scripts/play_service_account.json"
 TRACKS = ("internal", "alpha", "beta", "production")
 
+# Upload in slices rather than one request. Each slice is its own short HTTP
+# call, so a stall costs one slice instead of the whole 94 MB, and the resumable
+# protocol lets the next attempt carry on from the offset the server confirmed.
+CHUNK_BYTES = 8 * 1024 * 1024
+# Per-chunk retries, for a link that drops rather than one that is merely slow.
+CHUNK_RETRIES = 5
+
 
 # ── مساعدات ─────────────────────────────────────────────────────────────────
 def _log(msg: str) -> None:
@@ -57,6 +64,13 @@ def _build_service(sa_path: Path):
     creds = service_account.Credentials.from_service_account_file(
         str(sa_path), scopes=SCOPES
     )
+    # Deliberately the library's own http, not a hand-built one. Passing an
+    # `AuthorizedHttp` over a raw `httplib2.Http` to raise the socket timeout
+    # broke the resumable protocol instead: a resumable upload answers each
+    # chunk with `308 Resume Incomplete`, httplib2 reads 308 as a redirect, and
+    # the upload died on `RedirectMissingLocation` — a worse failure than the
+    # timeout it was meant to cure. CHUNK_BYTES solves the timeout properly, by
+    # making every request small enough to finish.
     return build("androidpublisher", "v3", credentials=creds, cache_discovery=False)
 
 
@@ -115,12 +129,27 @@ def upload(
             str(aab_path),
             mimetype="application/octet-stream",
             resumable=True,
+            chunksize=CHUNK_BYTES,
         )
-        aab_resp = (
-            publisher.bundles()
-            .upload(packageName=PACKAGE_NAME, editId=edit_id, media_body=media)
-            .execute()
+        request = publisher.bundles().upload(
+            packageName=PACKAGE_NAME, editId=edit_id, media_body=media
         )
+        aab_resp = None
+        attempts = 0
+        while aab_resp is None:
+            try:
+                status, aab_resp = request.next_chunk()
+                if status:
+                    _log(f"     … {int(status.progress() * 100)}%")
+                attempts = 0
+            except (TimeoutError, OSError, HttpError) as exc:
+                attempts += 1
+                if attempts > CHUNK_RETRIES:
+                    raise
+                # next_chunk() re-queries the server for the confirmed offset,
+                # so this resumes rather than restarting.
+                _log(f"     ! chunk failed ({type(exc).__name__}), retry {attempts}/{CHUNK_RETRIES}")
+                time.sleep(2 ** attempts)
         version_code = aab_resp["versionCode"]
         _log(f"     ✓ versionCode={version_code}")
 
