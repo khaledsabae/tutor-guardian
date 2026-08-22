@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-21T10:43:55.943324Z"
+    "updated_at": "2026-08-22T07:59:35.479514Z"
   },
   "lessons": [
     {
@@ -3561,6 +3561,11 @@
             "file": "docs/lesson_0-3_cyber_screen_foundations_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_cyber_screen_foundations_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 40140952
           }
         ],
         "videos": [
@@ -3653,6 +3658,11 @@
             "file": "docs/lesson_0-3_cyber_screen_foundations_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_cyber_screen_foundations_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39281732
           }
         ],
         "videos": [
@@ -3738,6 +3748,11 @@
             "file": "docs/lesson_0-3_cyber_screen_foundations_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_cyber_screen_foundations_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34858387
           }
         ],
         "videos": [
@@ -3823,6 +3838,11 @@
             "file": "docs/lesson_0-3_development_early_moments_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_development_early_moments_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38007567
           }
         ],
         "videos": [
@@ -3908,6 +3928,11 @@
             "file": "docs/lesson_0-3_development_early_moments_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_development_early_moments_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 30033766
           }
         ],
         "videos": [
@@ -3993,6 +4018,11 @@
             "file": "docs/lesson_0-3_development_early_moments_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_development_early_moments_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 40225590
           }
         ],
         "videos": [
@@ -4078,6 +4108,11 @@
             "file": "docs/lesson_0-3_islamic_parenting_attachment_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_attachment_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37015899
           }
         ],
         "videos": [
@@ -4163,6 +4198,11 @@
             "file": "docs/lesson_0-3_islamic_parenting_attachment_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_attachment_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 40363045
           }
         ],
         "videos": [
@@ -4401,6 +4441,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_medical_early_milestones_01",
             "language": "ar"
+          },
+          {
+            "id": "2d73dc26-36b8-4fde-b3a1-94c313e1d02a_infographic",
+            "file": "docs/lesson_assets/infographics/2d73dc26-36b8-4fde-b3a1-94c313e1d02a_infographic_lesson_0-3_medical_early_milestones_01_en.png",
+            "title": "Soothing Crying 2-Month-Old Babies",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -4563,6 +4611,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_medical_early_milestones_03",
             "language": "ar"
+          },
+          {
+            "id": "1024eaa6-56c0-41b4-975c-a6e4dbdaf98f_infographic",
+            "file": "docs/lesson_assets/infographics/1024eaa6-56c0-41b4-975c-a6e4dbdaf98f_infographic_lesson_0-3_medical_early_milestones_03_en.png",
+            "title": "Child Speech Delay Identification Guide",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -4640,6 +4696,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_medical_early_milestones_04",
             "language": "ar"
+          },
+          {
+            "id": "14fa1be4-022f-4d9d-bae9-6e0040807039_infographic",
+            "file": "docs/lesson_assets/infographics/14fa1be4-022f-4d9d-bae9-6e0040807039_infographic_lesson_0-3_medical_early_milestones_04_en.png",
+            "title": "Child Early Support Action Plan",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -5037,6 +5101,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_cyber_screen_foundations_b04",
             "language": "ar"
+          },
+          {
+            "id": "174a1137-07a6-466a-ac53-38181c2ee59d_infographic",
+            "file": "docs/lesson_assets/infographics/174a1137-07a6-466a-ac53-38181c2ee59d_infographic_lesson_0-3_cyber_screen_foundations_b04_en.png",
+            "title": "Infant Screen Time Guidelines",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -5117,6 +5189,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_0-3_development_early_moments_b04",
             "language": "ar"
+          },
+          {
+            "id": "42cd37eb-b2b4-4c31-a16b-637bab4e59cc_infographic",
+            "file": "docs/lesson_assets/infographics/42cd37eb-b2b4-4c31-a16b-637bab4e59cc_infographic_lesson_0-3_development_early_moments_b04_en.png",
+            "title": "Investing in Baby's Early Development",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -10870,6 +10950,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_05_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_05_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 40694740
           }
         ],
         "data_tables": [
@@ -10971,6 +11056,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_07_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_07_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37876613
           }
         ],
         "data_tables": [
@@ -11019,6 +11109,11 @@
             "file": "docs/lesson_7-9_aqeedah_fundamentals_08_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_aqeedah_fundamentals_08_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 31211456
           }
         ],
         "data_tables": [
@@ -11321,6 +11416,11 @@
             "file": "docs/lesson_10-12_aqeedah_growth_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_aqeedah_growth_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35149742
           }
         ],
         "data_tables": [
@@ -11383,6 +11483,11 @@
             "file": "docs/lesson_13-15_aqeedah_certainty_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_13-15_aqeedah_certainty_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39700830
           }
         ],
         "data_tables": [
@@ -11565,6 +11670,11 @@
             "file": "docs/lesson_4-6_aqeedah_seeds_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_aqeedah_seeds_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36492634
           }
         ],
         "data_tables": [
@@ -11682,6 +11792,11 @@
             "file": "docs/lesson_4-6_aqeedah_seeds_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_aqeedah_seeds_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 29275931
           }
         ],
         "data_tables": [
@@ -11916,6 +12031,11 @@
             "file": "docs/lesson_16-18_cyber_privacy_college_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 25853965
+          },
+          {
+            "file": "docs/lesson_16-18_cyber_privacy_college_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 41071363
           }
         ],
         "videos": [
@@ -12003,6 +12123,11 @@
             "file": "docs/lesson_16-18_development_major_choice_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 46372079
+          },
+          {
+            "file": "docs/lesson_16-18_development_major_choice_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36391037
           }
         ],
         "videos": [
@@ -12044,6 +12169,11 @@
             "file": "docs/lesson_16-18_islamic_daughter_work_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 19486877
+          },
+          {
+            "file": "docs/lesson_16-18_islamic_daughter_work_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34565325
           }
         ],
         "videos": [
@@ -12085,6 +12215,11 @@
             "file": "docs/lesson_16-18_islamic_independence_boundaries_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 29142095
+          },
+          {
+            "file": "docs/lesson_16-18_islamic_independence_boundaries_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 40789614
           }
         ],
         "videos": [
@@ -12126,6 +12261,11 @@
             "file": "docs/lesson_16-18_medical_nicotine_risk_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 35103425
+          },
+          {
+            "file": "docs/lesson_16-18_medical_nicotine_risk_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 41231345
           }
         ],
         "videos": [
@@ -12167,6 +12307,11 @@
             "file": "docs/lesson_16-18_medical_precollege_wellbeing_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 47038670
+          },
+          {
+            "file": "docs/lesson_16-18_medical_precollege_wellbeing_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 35578658
           }
         ],
         "videos": [
@@ -12208,6 +12353,11 @@
             "file": "docs/lesson_2-3_development_toddler_habits_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 32594689
+          },
+          {
+            "file": "docs/lesson_2-3_development_toddler_habits_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 41048205
           }
         ],
         "videos": [
@@ -12249,6 +12399,11 @@
             "file": "docs/lesson_2-3_medical_separation_anxiety_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 40853228
+          },
+          {
+            "file": "docs/lesson_2-3_medical_separation_anxiety_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39824092
           }
         ],
         "videos": [
@@ -12290,6 +12445,11 @@
             "file": "docs/lesson_4-6_islamic_street_language_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 39527513
+          },
+          {
+            "file": "docs/lesson_4-6_islamic_street_language_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34203643
           }
         ],
         "videos": [
@@ -12331,6 +12491,11 @@
             "file": "docs/lesson_7-9_development_middle_childhood_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 20426252
+          },
+          {
+            "file": "docs/lesson_7-9_development_middle_childhood_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36689221
           }
         ],
         "videos": [
