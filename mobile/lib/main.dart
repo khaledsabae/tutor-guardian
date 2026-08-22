@@ -163,11 +163,16 @@ void main() async {
     // `_postLaunchGrowthLoop` because that returns early with no session, so a
     // first launch without network used to skip the question entirely.
     //
-    // Firebase first: `flutter_local_notifications` raises its request against
-    // its own `mainActivity`, which is null in this app on every attempt
-    // (verified on an emulator, debug and release alike), so its prompt never
-    // appears. It stays as the fallback for a device with no Play Services,
-    // where the Firebase call is the one that cannot answer.
+    // Firebase first, and it now waits for the Activity rather than giving up
+    // on it — see `requestNotificationPermission`. At this exact moment there
+    // is no Activity attached yet (measured: it arrives ~1.4s later), and both
+    // this call and `flutter_local_notifications`' own request fail on that,
+    // the latter with a NullPointerException. The prompt used to appear only
+    // because `registerToken` happens to ask a second time, which is behind
+    // `ensureSession()` — so a first launch with no network asked nobody.
+    //
+    // The plugin request stays as the fallback for a device with no Play
+    // Services, where the Firebase call is the one that cannot answer.
     unawaited(() async {
       if (await PushService.instance.requestNotificationPermission()) return;
       await NotificationService.instance.ensurePermission();

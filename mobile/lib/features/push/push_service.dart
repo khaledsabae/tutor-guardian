@@ -43,22 +43,84 @@ class PushService {
   /// This is the only prompt the app raises: POST_NOTIFICATIONS is one OS
   /// permission covering push and local reminders alike, and asking twice is
   /// asking a parent the same question twice.
-  Future<bool> requestNotificationPermission() async {
-    try {
-      final settings = await _messaging.requestPermission(
-        alert: true,
-        badge: true,
-        sound: true,
-        provisional: false,
-      );
-      final granted =
-          settings.authorizationStatus != AuthorizationStatus.denied;
-      unawaited(Analytics.pushPermission(granted));
-      return granted;
-    } catch (_) {
-      // No Play Services, no Firebase, no answer. The caller falls back to the
-      // plugin's own request rather than treating this as a denial.
-      return false;
+  /// In-flight request, shared by every caller.
+  ///
+  /// Two call sites race on a cold start — the post-frame ask in `main()` and
+  /// [registerToken] — and the platform answers the second one with
+  /// «A request for permissions is already running», which is not a denial but
+  /// was being read as one. One future, awaited by both.
+  Future<bool>? _permissionRequest;
+
+  /// Ask for POST_NOTIFICATIONS, waiting for an Activity if there is not one yet.
+  ///
+  /// The Activity is the whole problem. Measured on an emulator: the ask fires
+  /// from the post-frame callback at t+0.0s and throws «Unable to detect
+  /// current Android Activity»; the plugin fallback throws a NullPointerException
+  /// for the same reason; and the Activity becomes available about 1.4s later.
+  /// The prompt only ever appeared because [registerToken] happens to ask
+  /// again — and that path sits behind `ensureSession()`, so a first launch
+  /// without network asked nobody at all while fourteen days of reminders sat
+  /// queued and unshowable.
+  ///
+  /// So: retry, but only on that one condition. A denial is an answer and must
+  /// never be retried — re-prompting a parent who said no is how an app gets
+  /// its notifications switched off at the OS level.
+  Future<bool> requestNotificationPermission() {
+    return _permissionRequest ??= _requestNotificationPermission()
+      ..whenComplete(() => _permissionRequest = null);
+  }
+
+  /// True when [message] is the platform saying "not yet", not the user saying no.
+  ///
+  /// The distinction is the safety property of this whole change: a denial that
+  /// were misread as transient would re-prompt a parent who already said no.
+  @visibleForTesting
+  static bool isTransientPermissionError(String? message) {
+    if (message == null) return false;
+    return message.contains('Unable to detect current Android Activity') ||
+        message.contains('A request for permissions is already running');
+  }
+
+  /// Backoff between attempts. Totals ~7s, which covers the ~1.4s measured on
+  /// an emulator with a wide margin for a cold start on a slow device, and
+  /// still gives up rather than looping for the life of the process.
+  static const _permissionRetryDelays = <Duration>[
+    Duration(milliseconds: 400),
+    Duration(milliseconds: 800),
+    Duration(seconds: 1),
+    Duration(seconds: 2),
+    Duration(seconds: 3),
+  ];
+
+  Future<bool> _requestNotificationPermission() async {
+    for (var attempt = 0;; attempt++) {
+      try {
+        final settings = await _messaging.requestPermission(
+          alert: true,
+          badge: true,
+          sound: true,
+          provisional: false,
+        );
+        // `notDetermined` is not consent. The previous test was
+        // `!= denied`, which counted "we never got an answer" as a yes and
+        // returned true to `main()` — so the fallback ask never ran either.
+        final granted =
+            settings.authorizationStatus == AuthorizationStatus.authorized ||
+                settings.authorizationStatus == AuthorizationStatus.provisional;
+        unawaited(Analytics.pushPermission(granted));
+        return granted;
+      } on FirebaseException catch (e) {
+        if (isTransientPermissionError(e.message) &&
+            attempt < _permissionRetryDelays.length) {
+          await Future<void>.delayed(_permissionRetryDelays[attempt]);
+          continue;
+        }
+        return false;
+      } catch (_) {
+        // No Play Services, no Firebase, no answer. The caller falls back to
+        // the plugin's own request rather than treating this as a denial.
+        return false;
+      }
     }
   }
 
