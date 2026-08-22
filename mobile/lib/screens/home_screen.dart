@@ -34,6 +34,7 @@ import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import '../widgets/ui/noor_mascot.dart';
 import '../features/parent_day/child_day_card.dart';
+import '../features/whats_new/widgets/whats_new_card.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key, required this.onGoToTab, this.focusCardKey});
@@ -103,6 +104,10 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 16),
+          // Above the focus card only in the sense of being read first; it
+          // renders nothing at all except in the one launch after an update,
+          // so on every other day the focus card is still the top of the page.
+          const WhatsNewCard(),
           TodayFocusCard(
             key: focusCardKey,
             bundle: bundle,

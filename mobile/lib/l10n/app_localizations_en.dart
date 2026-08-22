@@ -3741,4 +3741,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingsWirdDesc =>
       'One reminder a day for your Qur\'an portion — can be switched off';
+
+  @override
+  String get whatsNewTitle => 'New in this update';
+
+  @override
+  String get whatsNew102Tafsir =>
+      'Tafsir: long-press any ayah in the Qur\'an to read its commentary, with its source named.';
+
+  @override
+  String get whatsNew102Adhkar =>
+      'An Adhkar & counsels screen — 281 items with their citations, plus a tasbeeh counter and a Hijri date converter under «More».';
+
+  @override
+  String get whatsNew102Wird =>
+      'The Qur\'an portion reminder is back, with varied wording, and it can be switched off on its own in Settings.';
+
+  @override
+  String get whatsNew102Timing =>
+      'Fixed when the daily reminder arrives — it was firing on GMT rather than on your device\'s time.';
 }

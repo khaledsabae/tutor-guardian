@@ -1191,5 +1191,10 @@
   "notifWird5": "«And recite the Qur'an with measured recitation» — unhurried, not rushed.",
   "notifWird6": "The best time for your portion is the time you can find. That's now.",
   "settingsWird": "Qur'an portion reminder",
-  "settingsWirdDesc": "One reminder a day for your Qur'an portion — can be switched off"
+  "settingsWirdDesc": "One reminder a day for your Qur'an portion — can be switched off",
+  "whatsNewTitle": "New in this update",
+  "whatsNew102Tafsir": "Tafsir: long-press any ayah in the Qur'an to read its commentary, with its source named.",
+  "whatsNew102Adhkar": "An Adhkar & counsels screen — 281 items with their citations, plus a tasbeeh counter and a Hijri date converter under «More».",
+  "whatsNew102Wird": "The Qur'an portion reminder is back, with varied wording, and it can be switched off on its own in Settings.",
+  "whatsNew102Timing": "Fixed when the daily reminder arrives — it was firing on GMT rather than on your device's time."
 }

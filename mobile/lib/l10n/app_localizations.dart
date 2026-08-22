@@ -6697,6 +6697,36 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تذكير واحد في اليوم بورد القرآن — يمكن إيقافه'**
   String get settingsWirdDesc;
+
+  /// No description provided for @whatsNewTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجديد في هذا التحديث'**
+  String get whatsNewTitle;
+
+  /// No description provided for @whatsNew102Tafsir.
+  ///
+  /// In ar, this message translates to:
+  /// **'تفسير الآية: اضغط مطوّلًا على أي آية في المصحف ليظهر تفسيرها ومصدره.'**
+  String get whatsNew102Tafsir;
+
+  /// No description provided for @whatsNew102Adhkar.
+  ///
+  /// In ar, this message translates to:
+  /// **'شاشة الأذكار والوصايا — ٢٨١ بندًا بمصادرها، مع سبحة ومحوّل للتاريخ الهجري في «المزيد».'**
+  String get whatsNew102Adhkar;
+
+  /// No description provided for @whatsNew102Wird.
+  ///
+  /// In ar, this message translates to:
+  /// **'عاد تذكير ورد القرآن، بصيغ متنوّعة، ويمكن إيقافه وحده من الإعدادات.'**
+  String get whatsNew102Wird;
+
+  /// No description provided for @whatsNew102Timing.
+  ///
+  /// In ar, this message translates to:
+  /// **'أُصلح موعد التذكير اليومي — كان يصل بتوقيت غرينتش لا بتوقيت جهازك.'**
+  String get whatsNew102Timing;
 }
 
 class _AppLocalizationsDelegate

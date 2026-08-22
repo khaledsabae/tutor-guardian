@@ -37,6 +37,7 @@ import 'features/routine/providers/child_mode_providers.dart';
 import 'features/routine/screens/habit_child_mode_screen.dart';
 import 'features/adhkar/data/family_adhkar.dart';
 import 'features/adhkar/services/notification_service.dart';
+import 'features/whats_new/data/whats_new.dart';
 import 'features/journey/data/journey_milestones.dart';
 import 'features/shell/root_scaffold.dart';
 import 'features/tour/tour_overlay.dart';
@@ -147,6 +148,18 @@ void main() async {
       reason: 'content pack failed to load at startup',
       fatal: false,
     );
+  }
+
+  // Before onboarding can complete: the only moment a first install is
+  // distinguishable from an upgrade, and therefore the only moment the
+  // «what's new» card can be silenced for someone with no "before".
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final build = int.tryParse((await PackageInfo.fromPlatform()).buildNumber);
+    if (build != null) await seedWhatsNewForFreshInstall(prefs, build);
+  } catch (_) {
+    // Worst case the card shows to a new install once. Not worth a crash on
+    // the path to runApp.
   }
 
   // Initialize daily Adhkar local notifications

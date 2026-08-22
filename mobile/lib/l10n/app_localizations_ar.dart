@@ -3692,4 +3692,23 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get settingsWirdDesc =>
       'تذكير واحد في اليوم بورد القرآن — يمكن إيقافه';
+
+  @override
+  String get whatsNewTitle => 'الجديد في هذا التحديث';
+
+  @override
+  String get whatsNew102Tafsir =>
+      'تفسير الآية: اضغط مطوّلًا على أي آية في المصحف ليظهر تفسيرها ومصدره.';
+
+  @override
+  String get whatsNew102Adhkar =>
+      'شاشة الأذكار والوصايا — ٢٨١ بندًا بمصادرها، مع سبحة ومحوّل للتاريخ الهجري في «المزيد».';
+
+  @override
+  String get whatsNew102Wird =>
+      'عاد تذكير ورد القرآن، بصيغ متنوّعة، ويمكن إيقافه وحده من الإعدادات.';
+
+  @override
+  String get whatsNew102Timing =>
+      'أُصلح موعد التذكير اليومي — كان يصل بتوقيت غرينتش لا بتوقيت جهازك.';
 }
