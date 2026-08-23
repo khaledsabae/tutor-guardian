@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-22T07:59:35.479514Z"
+    "updated_at": "2026-08-23T07:12:05.429962Z"
   },
   "lessons": [
     {
@@ -4288,6 +4288,11 @@
             "file": "docs/lesson_0-3_islamic_parenting_attachment_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_attachment_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 42504122
           }
         ],
         "videos": [
@@ -4373,6 +4378,11 @@
             "file": "docs/lesson_0-3_islamic_parenting_attachment_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_islamic_parenting_attachment_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34925620
           }
         ],
         "videos": [
@@ -4458,6 +4468,11 @@
             "file": "docs/lesson_0-3_medical_early_milestones_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_medical_early_milestones_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34642377
           }
         ],
         "videos": [
@@ -4543,6 +4558,11 @@
             "file": "docs/lesson_0-3_medical_early_milestones_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_medical_early_milestones_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 49609517
           }
         ],
         "videos": [
@@ -4628,6 +4648,11 @@
             "file": "docs/lesson_0-3_medical_early_milestones_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_medical_early_milestones_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 40279376
           }
         ],
         "videos": [
@@ -4713,6 +4738,11 @@
             "file": "docs/lesson_0-3_medical_early_milestones_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_0-3_medical_early_milestones_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34959237
           }
         ],
         "videos": [
@@ -5277,6 +5307,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_10-12_cyber_digital_citizenship_b04",
             "language": "ar"
+          },
+          {
+            "id": "8a9b557a-6cd4-422d-bddb-5b6c385a83e8_infographic",
+            "file": "docs/lesson_assets/infographics/8a9b557a-6cd4-422d-bddb-5b6c385a83e8_infographic_lesson_10-12_cyber_digital_citizenship_b04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -5318,6 +5356,11 @@
             "file": "docs/lesson_10-12_medical_puberty_wellbeing_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_10-12_medical_puberty_wellbeing_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38125599
           }
         ],
         "reports": [
@@ -5352,6 +5395,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_10-12_medical_puberty_wellbeing_b04",
             "language": "ar"
+          },
+          {
+            "id": "fda86a4a-f457-4d72-a361-23b12e1fc8e8_infographic",
+            "file": "docs/lesson_assets/infographics/fda86a4a-f457-4d72-a361-23b12e1fc8e8_infographic_lesson_10-12_medical_puberty_wellbeing_b04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -5393,6 +5444,11 @@
             "file": "docs/lesson_13-15_cyber_digital_maturity_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_13-15_cyber_digital_maturity_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 40223348
           }
         ],
         "reports": [
@@ -5427,6 +5483,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_13-15_cyber_digital_maturity_b04",
             "language": "ar"
+          },
+          {
+            "id": "9963b2c2-8a41-4115-9677-cd8e5dbe0b55_infographic",
+            "file": "docs/lesson_assets/infographics/9963b2c2-8a41-4115-9677-cd8e5dbe0b55_infographic_lesson_13-15_cyber_digital_maturity_b04_en.png",
+            "title": "Teen Digital Addiction Support Guide",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -5548,6 +5612,11 @@
             "file": "docs/lesson_16-18_cyber_digital_professional_b03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_cyber_digital_professional_b03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37394764
           }
         ],
         "reports": [
@@ -5582,6 +5651,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_16-18_cyber_digital_professional_b03",
             "language": "ar"
+          },
+          {
+            "id": "eb28027e-596f-4aa8-9c15-3d5a21270265_infographic",
+            "file": "docs/lesson_assets/infographics/eb28027e-596f-4aa8-9c15-3d5a21270265_infographic_lesson_16-18_cyber_digital_professional_b03_en.png",
+            "title": "Digital Professionalism Consumer to Producer",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -5623,6 +5700,11 @@
             "file": "docs/lesson_16-18_cyber_digital_professional_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_16-18_cyber_digital_professional_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38846723
           }
         ],
         "reports": [
@@ -5778,6 +5860,11 @@
             "file": "docs/lesson_2-3_cyber_routine_b01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_cyber_routine_b01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37314830
           }
         ],
         "reports": [
@@ -5933,6 +6020,11 @@
             "file": "docs/lesson_2-3_cyber_routine_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_cyber_routine_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37044286
           }
         ],
         "reports": [
@@ -6008,6 +6100,11 @@
             "file": "docs/lesson_2-3_development_growth_b03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_development_growth_b03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 42956196
           }
         ],
         "reports": [
@@ -6323,6 +6420,11 @@
             "file": "docs/lesson_2-3_islamic_attachment_b03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_islamic_attachment_b03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 31692771
           }
         ],
         "reports": [
@@ -6558,6 +6660,11 @@
             "file": "docs/lesson_4-6_islamic_parenting_adab_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_4-6_islamic_parenting_adab_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 38832530
           }
         ],
         "reports": [
@@ -6713,6 +6820,11 @@
             "file": "docs/lesson_7-9_development_digital_wellbeing_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_development_digital_wellbeing_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37182489
           }
         ],
         "reports": [
@@ -6868,6 +6980,11 @@
             "file": "docs/lesson_7-9_medical_emotional_health_b03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_medical_emotional_health_b03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39206165
           }
         ],
         "reports": [
@@ -6943,6 +7060,11 @@
             "file": "docs/lesson_7-9_medical_emotional_health_b04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_7-9_medical_emotional_health_b04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 42509351
           }
         ],
         "reports": [
