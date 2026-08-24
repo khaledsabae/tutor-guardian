@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-23T07:12:05.429962Z"
+    "updated_at": "2026-08-24T06:21:13.487627Z"
   },
   "lessons": [
     {
@@ -5571,6 +5571,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_13-15_development_brain_identity_b04",
             "language": "ar"
+          },
+          {
+            "id": "ac7b0bf9-75e3-452d-aa5b-3f1e37c6d223_infographic",
+            "file": "docs/lesson_assets/infographics/ac7b0bf9-75e3-452d-aa5b-3f1e37c6d223_infographic_lesson_13-15_development_brain_identity_b04_en.png",
+            "title": "Teen Brain Chemical Revolution",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -5739,6 +5747,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_16-18_cyber_digital_professional_b04",
             "language": "ar"
+          },
+          {
+            "id": "b3824842-912b-40fa-ade6-21c2bc270a27_infographic",
+            "file": "docs/lesson_assets/infographics/b3824842-912b-40fa-ade6-21c2bc270a27_infographic_lesson_16-18_cyber_digital_professional_b04_en.png",
+            "title": "Islamic Digital Professional Ethics",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -5819,6 +5835,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_16-18_medical_adult_transition_b04",
             "language": "ar"
+          },
+          {
+            "id": "bfd7a438-04a0-4573-bf16-7298317c70c4_infographic",
+            "file": "docs/lesson_assets/infographics/bfd7a438-04a0-4573-bf16-7298317c70c4_infographic_lesson_16-18_medical_adult_transition_b04_en.png",
+            "title": "Adulthood Integrated Wellness Guide",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -5899,6 +5923,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_cyber_routine_b01",
             "language": "ar"
+          },
+          {
+            "id": "ef4391ac-e76b-4d6f-a05c-7b8317040864_infographic",
+            "file": "docs/lesson_assets/infographics/ef4391ac-e76b-4d6f-a05c-7b8317040864_infographic_lesson_2-3_cyber_routine_b01_en.png",
+            "title": "Screen-Free Family Morning Routine",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -5979,6 +6011,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_cyber_routine_b02",
             "language": "ar"
+          },
+          {
+            "id": "75dd6bc3-1bb0-4b6b-8900-aefe7fff1520_infographic",
+            "file": "docs/lesson_assets/infographics/75dd6bc3-1bb0-4b6b-8900-aefe7fff1520_infographic_lesson_2-3_cyber_routine_b02_en.png",
+            "title": "Benefits of Screen-Free Mealtimes",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -6059,6 +6099,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_cyber_routine_b04",
             "language": "ar"
+          },
+          {
+            "id": "bd8d8400-ae17-4f4a-ab12-d77deca79472_infographic",
+            "file": "docs/lesson_assets/infographics/bd8d8400-ae17-4f4a-ab12-d77deca79472_infographic_lesson_2-3_cyber_routine_b04_en.png",
+            "title": "Children's 20-20-20 Rule",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -6139,6 +6187,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_development_growth_b03",
             "language": "ar"
+          },
+          {
+            "id": "8b0f63dd-1329-4274-b5fa-86b0241a97f4_infographic",
+            "file": "docs/lesson_assets/infographics/8b0f63dd-1329-4274-b5fa-86b0241a97f4_infographic_lesson_2-3_development_growth_b03_en.png",
+            "title": "Toddler Physical and Mental Milestones",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -6219,6 +6275,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_development_growth_b04",
             "language": "ar"
+          },
+          {
+            "id": "6ef77d91-f103-4863-98d1-d720cd241fb9_infographic",
+            "file": "docs/lesson_assets/infographics/6ef77d91-f103-4863-98d1-d720cd241fb9_infographic_lesson_2-3_development_growth_b04_en.png",
+            "title": "Fostering Early Child Independence",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
