@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-24T06:21:13.487627Z"
+    "updated_at": "2026-08-27T03:49:56.765187Z"
   },
   "lessons": [
     {
@@ -4820,6 +4820,11 @@
             "file": "docs/lesson_2-3_development_independence_01_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_development_independence_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 41436887
           }
         ],
         "videos": [
@@ -4897,6 +4902,11 @@
             "file": "docs/lesson_2-3_cyber_routine_02_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_cyber_routine_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 37168295
           }
         ],
         "videos": [
@@ -4974,6 +4984,11 @@
             "file": "docs/lesson_2-3_development_language_03_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_development_language_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 32889991
           }
         ],
         "videos": [
@@ -5051,6 +5066,11 @@
             "file": "docs/lesson_2-3_islamic_tantrums_04_podcast.mp3",
             "language": "ar",
             "duration_estimate": "medium"
+          },
+          {
+            "file": "docs/lesson_2-3_islamic_tantrums_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34962972
           }
         ],
         "videos": [
@@ -6523,6 +6543,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_islamic_attachment_b03",
             "language": "ar"
+          },
+          {
+            "id": "a467a121-63e5-4fd5-89d3-67f0b4d3dafa_infographic",
+            "file": "docs/lesson_assets/infographics/a467a121-63e5-4fd5-89d3-67f0b4d3dafa_infographic_lesson_2-3_islamic_attachment_b03_en.png",
+            "title": "Father's Prayer and Parenting Guide",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -6603,6 +6631,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_4-6_development_positive_parenting_b01",
             "language": "ar"
+          },
+          {
+            "id": "7cf7143a-695e-44fb-8248-f88c54d5c546_infographic",
+            "file": "docs/lesson_assets/infographics/7cf7143a-695e-44fb-8248-f88c54d5c546_infographic_lesson_4-6_development_positive_parenting_b01_en.png",
+            "title": "Building Confidence in Young Children",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -6683,6 +6719,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_4-6_development_positive_parenting_b02",
             "language": "ar"
+          },
+          {
+            "id": "9afc7ce6-6d8d-4046-9835-d88c34ea9c19_infographic",
+            "file": "docs/lesson_assets/infographics/9afc7ce6-6d8d-4046-9835-d88c34ea9c19_infographic_lesson_4-6_development_positive_parenting_b02_en.png",
+            "title": "Managing Challenging Child Behavior Guide",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -12138,6 +12182,11 @@
             "file": "docs/lesson_13-15_islamic_mockery_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 35479302
+          },
+          {
+            "file": "docs/lesson_13-15_islamic_mockery_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39842127
           }
         ]
       },
@@ -12751,6 +12800,11 @@
             "file": "docs/lesson_2-3_aqeedah_first_name_01_podcast.mp3",
             "language": "ar",
             "size_bytes": 25691742
+          },
+          {
+            "file": "docs/lesson_2-3_aqeedah_first_name_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 31506643
           }
         ],
         "videos": [
@@ -12820,6 +12874,11 @@
             "file": "docs/lesson_2-3_aqeedah_first_name_02_podcast.mp3",
             "language": "ar",
             "size_bytes": 23028368
+          },
+          {
+            "file": "docs/lesson_2-3_aqeedah_first_name_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 39754723
           }
         ],
         "videos": [
@@ -12889,6 +12948,11 @@
             "file": "docs/lesson_2-3_aqeedah_first_name_03_podcast.mp3",
             "language": "ar",
             "size_bytes": 33001194
+          },
+          {
+            "file": "docs/lesson_2-3_aqeedah_first_name_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 34574396
           }
         ],
         "videos": [
@@ -12958,6 +13022,11 @@
             "file": "docs/lesson_2-3_aqeedah_first_name_04_podcast.mp3",
             "language": "ar",
             "size_bytes": 16950500
+          },
+          {
+            "file": "docs/lesson_2-3_aqeedah_first_name_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 36395625
           }
         ],
         "videos": [
