@@ -202,6 +202,19 @@ cat "$RUN_OUT" >> "$LOG"
 say "harvest exit $HARVEST_EXIT · $(grep -c '✓ downloaded' "$RUN_OUT") downloaded, \
 $(grep -oE '[0-9]+ still in flight' "$RUN_OUT" | head -1)"
 
+# Infographic harvest, same reasoning, same slot — before video or audio can
+# spend and kill the tg-video session this needs. Without this, a day where
+# audio exhausts its ceiling before the infographics step re-authenticates
+# loses BOTH the day's new triggers AND whatever finished server-side from
+# yesterday, which is exactly what 2026-08-20 did. tg-video was just verified
+# alive above (ensure_session tg-video, before tg-audio), so harvest while it
+# is still fresh.
+timeout 600 "$PY" scripts/generate_missing_infographics.py --lang en \
+    --harvest-only > "$RUN_OUT" 2>&1
+INFO_HARVEST_EXIT=$?
+cat "$RUN_OUT" >> "$LOG"
+say "infographic harvest exit $INFO_HARVEST_EXIT · $(grep -c '✓ downloaded' "$RUN_OUT") downloaded"
+
 # ── Video ──
 # 🚨 This run's output only, never "$LOG".
 # The log accumulates across runs, so `grep rate.limit "$LOG"` would match the

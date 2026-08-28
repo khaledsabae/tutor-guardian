@@ -2,19 +2,42 @@
 """
 Generate missing infographic assets for lessons using NotebookLM.
 
+Trigger-then-harvest, like gen_podcasts_cron.py — NOT the old blocking
+`--wait` call. That mattered starting 2026-08-21: a `--wait` generate blocks on
+NotebookLM's own polling internally, and when the polling RPC itself starts
+throwing `RPC LIST_ARTIFACTS (TransportServerError)` — a transient backend
+error, not a refusal — the whole call is scored a failure and the lesson is
+walked past. Measured over six runs (08-21 through 08-28, excluding two
+session-death days): the failure share climbed from ~25% to **89%** as this
+got worse, while the underlying generation may well have succeeded server-side
+and simply never been picked up. The trigger was never the fragile part; the
+wait was.
+
+So, mirroring gen_podcasts_cron.py exactly:
+  1. harvest — poll every in-flight task; download the completed ones
+  2. trigger — for each lesson with no PNG and no in-flight task, fire ONE
+     `generate infographic --no-wait` (near-instant: returns a task id, does
+     not block on completion) and record it
+  3. exit — cron drains the backlog over runs; nothing here loops forever
+
+This also means the daily ceiling is now spent almost entirely on real
+attempts instead of losing capacity to polling errors mid-wait — the same
+"per-medium quota" the audio pipeline already gets, not split against a doomed
+wait.
+
 Per lesson:
   1. resolve source_id from source_to_lesson.json (reverse map)
-  2. ask the source for its title + key axes (grounds the infographic)
-  3. generate an Arabic infographic via NotebookLM, grounded in that content
-  4. wait for the artifact, download the PNG
-  5. record it in docs/lesson_index.json
-Finally: one git commit + push for the whole batch.
+  2. generate an infographic via NotebookLM, grounded in that lesson's source
+  3. next run's harvest downloads it once ready and records it in
+     docs/lesson_index.json
+Finally: one git commit + push for the whole batch, covering whatever the
+harvest of THIS run recovered.
 
 Lessons whose source is missing/empty are skipped and recorded in
 scripts/infographics_blocked.json (same gap that blocks their reports).
 
 Usage:
-  ./notebooklm_env/bin/python scripts/generate_missing_infographics.py [--limit N] [--delay S]
+  ./notebooklm_env/bin/python scripts/generate_missing_infographics.py [--lang en] [--limit N] [--harvest-only]
 """
 import argparse
 import json
@@ -22,9 +45,7 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
 import time
-import uuid
 from datetime import datetime
 from pathlib import Path
 
@@ -66,10 +87,16 @@ CLI_LANG = AUDIO_CLI_LANG[LANG]
 LANG_TAG = "" if LANG == SOURCE_LANG else f"_{LANG}"
 
 sys.path.insert(0, str(BASE_DIR))
-from scripts.infographic_prompts_lib import buildable_targets
+from scripts.infographic_prompts_lib import buildable_targets  # noqa: E402
 
 STARTED_RE = re.compile(r"(?:Started|Task):\s*([0-9a-f-]{36})")
 EMPTY_MARKERS = ("No parseable chunks", "Source not found", "Error:")
+
+# State keyed like podcast_tasks.json: bare lesson_id for Arabic (the
+# original, unlagged state), `<lesson_id>@<lang>` otherwise.
+STATE_FILE = BASE_DIR / "ops" / "data" / "infographic_tasks.json"
+ERRORS_FILE = BASE_DIR / "ops" / "data" / "infographic_poll_errors.json"
+ERROR_BUDGET = 3  # three consecutive poll errors before a task is dropped
 
 
 # 🚨 Its own profile, like the audio and video generators.
@@ -90,6 +117,28 @@ def _run(args: list[str], timeout: int) -> tuple[int, str, str]:
     return p.returncode, p.stdout.strip(), p.stderr.strip()
 
 
+def _state_key(lesson_id: str) -> str:
+    return lesson_id if LANG == SOURCE_LANG else f"{lesson_id}@{LANG}"
+
+
+def _split_key(key: str) -> str:
+    return key.split("@", 1)[0]
+
+
+def _load(p: Path, default):
+    if p.exists():
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            return default
+    return default
+
+
+def _save(p: Path, data) -> None:
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
 def reverse_source_map() -> dict[str, str]:
     """{lesson_id: source_id} from source_to_lesson.json ({src: [age, topic, lesson]})."""
     s2l = json.loads(SRC_MAP_PATH.read_text(encoding="utf-8"))
@@ -100,33 +149,9 @@ def reverse_source_map() -> dict[str, str]:
     return rev
 
 
-
 def missing_infographic_lessons() -> list[dict]:
     lessons, _ = buildable_targets(LANG)
     return lessons
-
-
-def ask_source_axes(source_id: str) -> str | None:
-    """Return short grounding text (title + key axes), or None if source is empty/broken."""
-    rc, out, _ = _run(
-        [
-            "ask", "-n", NOTEBOOK_ID, "-s", source_id,
-            "اذكر عنوان الدرس و4 محاور رئيسية فقط في نقاط قصيرة جداً للأهل، بدون مقدمات.",
-        ],
-        timeout=120,
-    )
-    if rc != 0 or not out or any(m in out for m in EMPTY_MARKERS):
-        return None
-    # strip CLI chrome (Matched:/Answer:/Conversation: lines)
-    lines = []
-    for line in out.splitlines():
-        if line.startswith(("Matched:", "Conversation:", "New conversation:")):
-            continue
-        if line.strip() == "Answer:":
-            continue
-        lines.append(line)
-    text = "\n".join(lines).strip()
-    return text or None
 
 
 def build_description(lesson: dict) -> str:
@@ -162,8 +187,8 @@ def build_description(lesson: dict) -> str:
 def existing_asset(lesson: dict) -> dict | None:
     """If a PNG for this lesson is already on disk, build its index entry (no API call).
 
-    Lets the batch resume after a rate-limit kill without re-generating (and re-burning
-    quota on) infographics that were already produced."""
+    Lets a run resume after a rate-limit or crash without re-generating (and
+    re-burning quota on) infographics that were already produced."""
     lesson_id = lesson["lesson_id"]
     matches = sorted(INFO_DIR.glob(f"*_infographic_{lesson_id}{LANG_TAG}.png"))
     matches = [p for p in matches if p.stat().st_size >= 10_000]
@@ -181,54 +206,60 @@ def existing_asset(lesson: dict) -> dict | None:
     }
 
 
-def generate_one(lesson: dict, source_id: str) -> dict | None:
+def trigger(lesson: dict, source_id: str):
+    """Fire one generation, --no-wait. Returns a task id, 'RATELIMIT', or None."""
     lesson_id = lesson["lesson_id"]
-    # CRITICAL: -s scopes generation to THIS lesson's source only. NotebookLM reads the
-    # source directly, so no separate axes-extraction roundtrip is needed (it was fragile
-    # and would skip valid lessons). Without -s, generation draws from the whole notebook
-    # → duplicate/overlapping infographics (the rejected first attempt).
-    print(f"  → generating, scoped to source {source_id[:8]}...")
     desc = build_description(lesson)
+    print(f"  → triggering, scoped to source {source_id[:8]}...")
     rc, out, err = _run(
         [
             "generate", "infographic", desc, "-n", NOTEBOOK_ID, "-s", source_id,
             "--orientation", "landscape", "--detail", "standard",
-            "--style", "instructional", "--language", CLI_LANG,
-            "--wait", "--timeout", "320", "--retry", "2",
+            "--style", "instructional", "--language", CLI_LANG, "--no-wait",
         ],
-        timeout=420,
+        timeout=90,
     )
-    m = STARTED_RE.search(out)
-    if rc != 0 or "ready" not in out.lower() or not m:
-        blob = (err or "") + (out or "")
-        if "RateLimit" in blob or "rate limit" in blob.lower():
-            print("    ⛔ NotebookLM RATE LIMIT hit — stopping batch to resume later")
-            return "RATELIMIT"
-        print(f"    ❌ generate failed: {(err or out)[:160]}")
+    blob = out + err
+    if "RateLimit" in blob or "rate limit" in blob.lower() or "quota" in blob.lower():
+        print("    ⛔ NotebookLM RATE LIMIT hit — stopping batch to resume later")
+        return "RATELIMIT"
+    m = STARTED_RE.search(blob)
+    if rc != 0 or not m:
+        print(f"    ❌ trigger failed: {(err or out)[:160]}")
         return None
-    artifact_id = m.group(1)
-    print(f"    ✅ generated artifact {artifact_id[:8]}")
+    print(f"    · task {m.group(1)[:8]}… queued")
+    return m.group(1)
 
-    filename = f"{artifact_id}_infographic_{lesson_id}{LANG_TAG}.png"
+
+def poll(task_id: str) -> str:
+    rc, out, err = _run(["artifact", "poll", "-n", NOTEBOOK_ID, task_id, "--json"], timeout=90)
+    if rc != 0:
+        return "error"
+    try:
+        return json.loads(out).get("status", "error")
+    except (json.JSONDecodeError, ValueError):
+        return "error"
+
+
+def download(task_id: str, lesson_id: str) -> dict | None:
+    filename = f"{task_id}_infographic_{lesson_id}{LANG_TAG}.png"
     filepath = INFO_DIR / filename
     rc, out, err = _run(
-        ["download", "infographic", str(filepath), "-n", NOTEBOOK_ID, "--latest"],
+        ["download", "infographic", str(filepath), "-n", NOTEBOOK_ID,
+         "--artifact", task_id, "--force"],
         timeout=120,
     )
     if rc != 0 or not filepath.exists() or filepath.stat().st_size < 10_000:
         print(f"    ❌ download failed: {(err or out)[:160]}")
         return None
     # The CLI writes 0600; the container runs as uid 10001 against a host bind
-    # mount, so 0600 is unreadable in production — the 2026-07-27 outage. The
-    # podcast and video generators already do this; this one did not.
+    # mount, so 0600 is unreadable in production — the 2026-07-27 outage.
     filepath.chmod(0o644)
-
-    # NotebookLM auto-title, e.g. "Artifact: <title> (latest of N)"
     tmatch = re.search(r"Artifact:\s*(.+?)\s*\(latest", out)
-    title = tmatch.group(1).strip() if tmatch else (lesson["title_ar"] or "إنفوجرافيك")
-    print(f"    ✅ saved {filename} ({filepath.stat().st_size // 1024} KB)")
+    title = tmatch.group(1).strip() if tmatch else "إنفوجرافيك"
+    print(f"    ✓ downloaded {filename} ({filepath.stat().st_size // 1024} KB)")
     return {
-        "id": f"{artifact_id}_infographic",
+        "id": f"{task_id}_infographic",
         "file": f"docs/lesson_assets/infographics/{filename}",
         "title": title,
         "item_count": 0,
@@ -237,119 +268,25 @@ def generate_one(lesson: dict, source_id: str) -> dict | None:
     }
 
 
-# ── Committing without touching the shared working tree ─────────────────────
-
-CONTENT_BRANCH = "content/infographics"
-
-
-def _git(cmd: list[str], env: dict | None = None) -> str:
-    full = {**os.environ, **(env or {})}
-    out = subprocess.run(cmd, cwd=BASE_DIR, env=full, check=True,
-                         capture_output=True, text=True)
-    return out.stdout.strip()
-
-
-def _commit_onto_upstream(paths: list[str], message: str,
-                          push: bool) -> str | None:
-    """Record the new index as a commit on top of `origin/main`, on a content
-    branch, without checking anything out.
-
-    Why not `git add` + `git commit` on `main`, which is what this did:
-
-    `--push` is off by default and rightly so — registering an infographic and
-    deciding to release are not the same act, and an unattended 06:30 cron must
-    not deploy production. But the commit then sat on the laptop's `main`, and
-    nothing ever moved that branch forward. By 2026-08-21 it was **48 commits
-    behind origin** while carrying four of its own, so every night's content was
-    being written to a branch nobody would ever push. It took a hand-merge to
-    recover, and the same drift starts again the next night.
-
-    Worse, `git add` and `git commit` run in a working tree several agents
-    share. On 2026-07-30 that pattern swallowed another session's edits into a
-    commit that did not describe them.
-
-    So: no checkout, no index, no HEAD. A temporary index is built from
-    `origin/main`, the changed files are hashed into it, and `commit-tree`
-    writes a commit whose parent is the current upstream. The result is always
-    exactly one commit ahead of `origin/main` and cannot drift, and the shared
-    tree is untouched — it works even while it is dirty.
-
-    Pushing the content branch does not deploy: only `main` does. So the
-    content is safe off this laptop the moment it exists, and releasing it stays
-    a decision someone makes on purpose.
-    """
-    # A temp file, not BASE_DIR/.git/…: inside a worktree `.git` is a *file*,
-    # so that path is not a directory and unlinking it raised NotADirectoryError.
-    fd, index_file = tempfile.mkstemp(prefix="tg-infographics-index-")
-    os.close(fd)
-    os.unlink(index_file)  # git wants to create it itself
-    try:
-        _git(["git", "fetch", "--quiet", "origin", "main"])
-    except subprocess.CalledProcessError as exc:
-        print(f"⚠️ fetch failed ({exc}); committing against the last known "
-              "origin/main")
-
-    upstream = _git(["git", "rev-parse", "origin/main"])
-    env = {"GIT_INDEX_FILE": index_file}
-    try:
-        _git(["git", "read-tree", upstream], env)
-        for rel in paths:
-            blob = _git(["git", "hash-object", "-w", rel])
-            _git(["git", "update-index", "--add", "--cacheinfo",
-                  f"100644,{blob},{rel}"], env)
-        tree = _git(["git", "write-tree"], env)
-        if tree == _git(["git", "rev-parse", f"{upstream}^{{tree}}"]):
-            print("Index is identical to origin/main — nothing to commit.")
-            return None
-        commit = _git(["git", "commit-tree", tree, "-p", upstream, "-m", message])
-        _git(["git", "update-ref", f"refs/heads/{CONTENT_BRANCH}", commit])
-    finally:
-        Path(index_file).unlink(missing_ok=True)
-
-    print(f"✅ Committed {commit[:8]} on {CONTENT_BRANCH} (parent: "
-          f"{upstream[:8]} = origin/main). Shared tree untouched.")
-
-    if push:
-        # Note this pushes the *content branch*, never main, so it does not
-        # deploy. `--push` here means "get it off this laptop", not "release".
-        _git(["git", "push", "--force-with-lease", "origin",
-              f"refs/heads/{CONTENT_BRANCH}:refs/heads/{CONTENT_BRANCH}"])
-        print(f"✅ Pushed origin/{CONTENT_BRANCH} — no deploy (only main "
-              "deploys).")
-        print(f"   Release it with:  git push origin "
-              f"{CONTENT_BRANCH}:main")
-    else:
-        print(f"ℹ️  Local only. `--push` puts it on origin/{CONTENT_BRANCH} "
-              "without deploying.")
-    return commit
-
-
-
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--limit", type=int, default=0)
-    parser.add_argument("--delay", type=float, default=4.0)
-    # Read at import time by _arg_lang() (LANG/CLI_LANG/LANG_TAG are module
-    # constants), but argparse must still know the flag or it rejects the run.
+    parser.add_argument("--limit", type=int, default=0, help="cap triggers this run")
+    parser.add_argument("--delay", type=float, default=1.5)
     parser.add_argument("--lang", default=SOURCE_LANG, choices=sorted(AUDIO_CLI_LANG),
-                        help="output language (default: ar)")
+                        help="output language (default: ar) — read at import "
+                             "time by _arg_lang(); argparse must still know the flag")
+    parser.add_argument("--harvest-only", action="store_true",
+                        help="poll + download in-flight tasks; trigger nothing")
     parser.add_argument("--push", action="store_true",
                         help="push the registration commit to main — this "
                              "deploys production. Off by default.")
     args = parser.parse_args()
 
     INFO_DIR.mkdir(parents=True, exist_ok=True)
-    rev = reverse_source_map()
-    lessons = missing_infographic_lessons()
-    if args.limit:
-        lessons = lessons[: args.limit]
-
+    state = _load(STATE_FILE, {})
+    errors = _load(ERRORS_FILE, {})
     index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
     lookup = {l["lesson_id"]: i for i, l in enumerate(index["lessons"])}
-
-    print(f"Generating infographics for {len(lessons)} lessons. Notebook: {NOTEBOOK_ID}")
-    generated, recovered, failed, blocked = 0, 0, [], []
-    rate_limited = False
 
     def attach(lid: str, asset: dict) -> None:
         pos = lookup.get(lid)
@@ -361,11 +298,67 @@ def main():
         entry["assets"].setdefault("infographics", [])
         entry["assets"]["infographics"].append(asset)
 
+    downloaded = 0
+    # keys for the current language only (mirrors gen_podcasts_cron.py's split)
+    lang_keys = [k for k in state
+                 if (LANG == SOURCE_LANG and "@" not in k)
+                 or (LANG != SOURCE_LANG and k.endswith(f"@{LANG}"))]
+
+    print(f"[harvest] {len(lang_keys)} in-flight task(s)")
+    for key in lang_keys:
+        lid = _split_key(key)
+        task_id = state[key]
+        status = poll(task_id)
+        print(f"[poll] {lid}: {status}")
+        if status == "completed":
+            asset = download(task_id, lid)
+            if asset:
+                attach(lid, asset)
+                downloaded += 1
+                state.pop(key, None)
+                errors.pop(key, None)
+            # a completed task whose download failed stays in state — retried
+            # next run rather than lost, matching the podcast harvest.
+        elif status == "error":
+            n = errors.get(key, 0) + 1
+            if n >= ERROR_BUDGET:
+                print(f"  ⛔ {lid}: {n} consecutive poll errors — dropping")
+                state.pop(key, None)
+                errors.pop(key, None)
+            else:
+                errors[key] = n
+        else:
+            errors.pop(key, None)  # any non-error outcome resets the strike count
+
+    _save(STATE_FILE, state)
+    _save(ERRORS_FILE, errors)
+
+    still_flight = sum(1 for k in state
+                        if (LANG == SOURCE_LANG and "@" not in k)
+                        or (LANG != SOURCE_LANG and k.endswith(f"@{LANG}")))
+
+    if args.harvest_only:
+        _commit(index, generated=0, recovered=downloaded, failed=[], push=args.push)
+        print(f"\n[harvest-only] {downloaded} downloaded · {still_flight} still in flight")
+        return
+
+    # ── trigger new ones ──
+    rev = reverse_source_map()
+    lessons = missing_infographic_lessons()
+    if args.limit:
+        lessons = lessons[: args.limit]
+
+    triggered, recovered, failed, blocked = 0, 0, [], []
+    rate_limited = False
+
+    print(f"\nTriggering infographics for up to {len(lessons)} lessons. Notebook: {NOTEBOOK_ID}")
     for i, lesson in enumerate(lessons, 1):
         lid = lesson["lesson_id"]
+        key = _state_key(lid)
+        if key in state:
+            continue  # already in flight
         print(f"\n[{i}/{len(lessons)}] {lid}")
 
-        # Resume: if a PNG already exists on disk (from a prior killed run), just register it.
         recov = existing_asset(lesson)
         if recov:
             print(f"    ♻️ already on disk → registering {recov['id'][:12]}")
@@ -378,28 +371,43 @@ def main():
             print("  ⚠️ no source mapping — blocked")
             blocked.append(lid)
             continue
+
         try:
-            asset = generate_one(lesson, src)
+            task_id = trigger(lesson, src)
         except subprocess.TimeoutExpired:
             print("    ❌ timeout")
-            asset = None
-        except Exception as e:  # noqa: BLE001
-            print(f"    ❌ exception: {e}")
-            asset = None
+            task_id = None
 
-        if asset == "RATELIMIT":
+        if task_id == "RATELIMIT":
             rate_limited = True
-            failed.append(lid)
             break
-        if asset:
-            attach(lid, asset)
-            generated += 1
+        if task_id:
+            state[key] = task_id
+            triggered += 1
+            _save(STATE_FILE, state)  # persist immediately — a crash mid-batch
+                                       # must not orphan an already-paid task
         else:
             failed.append(lid)
 
         if i < len(lessons):
             time.sleep(args.delay)
 
+    if blocked:
+        _save(BLOCKED_PATH, blocked)
+
+    print(f"\n✓ Downloaded (harvest): {downloaded}")
+    print(f"→ Triggered this run: {triggered} (+{recovered} recovered from disk)")
+    print(f"❌ Failed to trigger: {len(failed)} - {failed}")
+    print(f"⛔ Blocked (no source): {len(blocked)} - {blocked}")
+    if rate_limited:
+        print("⛔ Stopped early on NotebookLM rate limit — re-run later to resume.")
+    print(f"[summary] {LANG}: in-flight now {triggered + still_flight}")
+
+    _commit(index, generated=triggered, recovered=downloaded + recovered,
+            failed=failed, push=args.push)
+
+
+def _commit(index: dict, generated: int, recovered: int, failed: list, push: bool) -> None:
     total = len(index["lessons"])
     index.setdefault("metadata", {}).setdefault("coverage", {})
     index["metadata"]["coverage"]["infographics"] = (
@@ -407,15 +415,6 @@ def main():
     )
     index["metadata"]["updated_at"] = datetime.utcnow().isoformat() + "Z"
     INDEX_PATH.write_text(json.dumps(index, ensure_ascii=False, indent=2), encoding="utf-8")
-
-    if blocked:
-        BLOCKED_PATH.write_text(json.dumps(blocked, ensure_ascii=False, indent=2), encoding="utf-8")
-
-    print(f"\n✅ Generated {generated} infographics (+{recovered} recovered from disk)")
-    print(f"❌ Failed: {len(failed)} - {failed}")
-    print(f"⛔ Blocked (no source): {len(blocked)} - {blocked}")
-    if rate_limited:
-        print("⛔ Stopped early on NotebookLM rate limit — re-run later to resume.")
 
     if generated + recovered == 0:
         print("Nothing new to register — skipping commit.")
@@ -428,12 +427,20 @@ def main():
         add_paths = ["docs/lesson_index.json"]
         if BLOCKED_PATH.exists():
             add_paths.append("scripts/infographics_blocked.json")
+        subprocess.run(["git", "add", *add_paths], cwd=BASE_DIR, check=True)
         msg = f"chore(infographics): register {generated + recovered} NotebookLM infographics"
         if failed:
             msg += f" (failed: {len(failed)})"
-        ref = _commit_onto_upstream(add_paths, msg, push=args.push)
-        if ref is None:
-            return
+        subprocess.run(["git", "commit", "-m", msg], cwd=BASE_DIR, check=True)
+        if push:
+            # Opt-in only — see 2026-08-15's 5a9562d for why an unattended
+            # cron pushing to main is a deployment tool wearing a content
+            # generator's name.
+            subprocess.run(["git", "push", "origin", "main"], cwd=BASE_DIR, check=True)
+            print("✅ Committed and pushed.")
+        else:
+            print("✅ Committed locally. Not pushed — `--push` to deploy, or "
+                  "push by hand after review.")
     except subprocess.CalledProcessError as e:
         print(f"⚠️ Git failed: {e}")
 
