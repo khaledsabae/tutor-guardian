@@ -146,13 +146,14 @@ def main() -> int:
                 index_knowledge_units,
             )
             from app.services.knowledge_loader import load_default_knowledge_units
-
+            loaded_units = load_default_knowledge_units()
             if args.rebuild:
-                index_knowledge_units(load_default_knowledge_units())
+                index_knowledge_units(loaded_units)
 
+            expected_ids = {u.id for u in loaded_units}
             collection = _get_collection()
             indexed_ids = set(collection.get().get("ids", []))
-            missing = disk_ids - indexed_ids
+            missing = expected_ids - indexed_ids
             orphan = indexed_ids - disk_ids
             if missing:
                 errors.append(
