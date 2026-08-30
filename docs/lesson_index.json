@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-29T15:06:54.025839Z"
+    "updated_at": "2026-08-30T03:55:17.622388Z"
   },
   "lessons": [
     {
@@ -6383,6 +6383,22 @@
             "type": "image/png",
             "description": "Infographic for lesson_2-3_islamic_attachment_b01",
             "language": "ar"
+          },
+          {
+            "id": "af13f299-4484-4c26-8f93-45d11730ace7_infographic",
+            "file": "docs/lesson_assets/infographics/af13f299-4484-4c26-8f93-45d11730ace7_infographic_lesson_2-3_islamic_attachment_b01_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
+          },
+          {
+            "id": "af13f299-4484-4c26-8f93-45d11730ace7_infographic",
+            "file": "docs/lesson_assets/infographics/af13f299-4484-4c26-8f93-45d11730ace7_infographic_lesson_2-3_islamic_attachment_b01_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -6815,6 +6831,22 @@
             "type": "image/png",
             "description": "Infographic for lesson_4-6_islamic_parenting_adab_b04",
             "language": "ar"
+          },
+          {
+            "id": "52695a84-7904-47c2-b5f2-0f3e877e3aeb_infographic",
+            "file": "docs/lesson_assets/infographics/52695a84-7904-47c2-b5f2-0f3e877e3aeb_infographic_lesson_4-6_islamic_parenting_adab_b04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
+          },
+          {
+            "id": "52695a84-7904-47c2-b5f2-0f3e877e3aeb_infographic",
+            "file": "docs/lesson_assets/infographics/52695a84-7904-47c2-b5f2-0f3e877e3aeb_infographic_lesson_4-6_islamic_parenting_adab_b04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -6975,6 +7007,22 @@
             "type": "image/png",
             "description": "Infographic for lesson_7-9_development_digital_wellbeing_b04",
             "language": "ar"
+          },
+          {
+            "id": "6edd744c-1202-4f16-aee8-f9c0201d8888_infographic",
+            "file": "docs/lesson_assets/infographics/6edd744c-1202-4f16-aee8-f9c0201d8888_infographic_lesson_7-9_development_digital_wellbeing_b04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
+          },
+          {
+            "id": "6edd744c-1202-4f16-aee8-f9c0201d8888_infographic",
+            "file": "docs/lesson_assets/infographics/6edd744c-1202-4f16-aee8-f9c0201d8888_infographic_lesson_7-9_development_digital_wellbeing_b04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -7055,6 +7103,22 @@
             "type": "image/png",
             "description": "Infographic for lesson_7-9_islamic_parenting_worship_b04",
             "language": "ar"
+          },
+          {
+            "id": "d324b3df-6f8e-4a6b-8b62-7a763a458921_infographic",
+            "file": "docs/lesson_assets/infographics/d324b3df-6f8e-4a6b-8b62-7a763a458921_infographic_lesson_7-9_islamic_parenting_worship_b04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
+          },
+          {
+            "id": "d324b3df-6f8e-4a6b-8b62-7a763a458921_infographic",
+            "file": "docs/lesson_assets/infographics/d324b3df-6f8e-4a6b-8b62-7a763a458921_infographic_lesson_7-9_islamic_parenting_worship_b04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -7135,6 +7199,22 @@
             "type": "image/png",
             "description": "Infographic for lesson_7-9_medical_emotional_health_b03",
             "language": "ar"
+          },
+          {
+            "id": "bf39eea9-6ae8-4382-8b3e-78afafcc015b_infographic",
+            "file": "docs/lesson_assets/infographics/bf39eea9-6ae8-4382-8b3e-78afafcc015b_infographic_lesson_7-9_medical_emotional_health_b03_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
+          },
+          {
+            "id": "bf39eea9-6ae8-4382-8b3e-78afafcc015b_infographic",
+            "file": "docs/lesson_assets/infographics/bf39eea9-6ae8-4382-8b3e-78afafcc015b_infographic_lesson_7-9_medical_emotional_health_b03_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -7677,6 +7757,22 @@
             "item_count": 0,
             "resolution": "2752x1536",
             "language": "ar"
+          },
+          {
+            "id": "9154f6e5-4001-445a-974c-0738874daff9_infographic",
+            "file": "docs/lesson_assets/infographics/9154f6e5-4001-445a-974c-0738874daff9_infographic_lesson_10-12_development_pre_teen_02_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
+          },
+          {
+            "id": "9154f6e5-4001-445a-974c-0738874daff9_infographic",
+            "file": "docs/lesson_assets/infographics/9154f6e5-4001-445a-974c-0738874daff9_infographic_lesson_10-12_development_pre_teen_02_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -7758,6 +7854,22 @@
             "item_count": 0,
             "resolution": "2752x1536",
             "language": "ar"
+          },
+          {
+            "id": "1b01c8d5-1f4b-4a47-bf6e-9b9227d180d4_infographic",
+            "file": "docs/lesson_assets/infographics/1b01c8d5-1f4b-4a47-bf6e-9b9227d180d4_infographic_lesson_10-12_development_pre_teen_03_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
+          },
+          {
+            "id": "1b01c8d5-1f4b-4a47-bf6e-9b9227d180d4_infographic",
+            "file": "docs/lesson_assets/infographics/1b01c8d5-1f4b-4a47-bf6e-9b9227d180d4_infographic_lesson_10-12_development_pre_teen_03_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
