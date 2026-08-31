@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-30T03:55:17.622388Z"
+    "updated_at": "2026-08-31T03:37:35.469191Z"
   },
   "lessons": [
     {
@@ -7433,6 +7433,14 @@
             "item_count": 0,
             "resolution": "2752x1536",
             "language": "ar"
+          },
+          {
+            "id": "d8b6d326-2622-4efa-bee6-f8c32ac87d71_infographic",
+            "file": "docs/lesson_assets/infographics/d8b6d326-2622-4efa-bee6-f8c32ac87d71_infographic_lesson_0-3_islamic_parenting_fitrah_02_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -7595,6 +7603,14 @@
             "item_count": 0,
             "resolution": "2752x1536",
             "language": "ar"
+          },
+          {
+            "id": "cad8ebf8-5c7c-4423-838d-041581e5b370_infographic",
+            "file": "docs/lesson_assets/infographics/cad8ebf8-5c7c-4423-838d-041581e5b370_infographic_lesson_0-3_islamic_parenting_fitrah_04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
@@ -7951,6 +7967,14 @@
             "item_count": 0,
             "resolution": "2752x1536",
             "language": "ar"
+          },
+          {
+            "id": "4569983d-ad91-4688-9798-8f6a1e196e9a_infographic",
+            "file": "docs/lesson_assets/infographics/4569983d-ad91-4688-9798-8f6a1e196e9a_infographic_lesson_10-12_development_pre_teen_04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
