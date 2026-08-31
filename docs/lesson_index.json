@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-31T03:37:35.469191Z"
+    "updated_at": "2026-08-31T03:43:32.972441Z"
   },
   "lessons": [
     {
@@ -7338,6 +7338,22 @@
             "item_count": 0,
             "resolution": "2752x1536",
             "language": "ar"
+          },
+          {
+            "id": "dbefaff6-d520-41a0-b466-60d3626d71ab_infographic",
+            "file": "docs/lesson_assets/infographics/dbefaff6-d520-41a0-b466-60d3626d71ab_infographic_lesson_0-3_islamic_parenting_fitrah_01_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
+          },
+          {
+            "id": "dbefaff6-d520-41a0-b466-60d3626d71ab_infographic",
+            "file": "docs/lesson_assets/infographics/dbefaff6-d520-41a0-b466-60d3626d71ab_infographic_lesson_0-3_islamic_parenting_fitrah_01_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
