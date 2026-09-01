@@ -29,7 +29,7 @@
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-08-31T03:43:32.972441Z"
+    "updated_at": "2026-09-01T03:51:05.126183Z"
   },
   "lessons": [
     {
@@ -7295,6 +7295,14 @@
             "type": "image/png",
             "description": "Infographic for lesson_7-9_medical_emotional_health_b04",
             "language": "ar"
+          },
+          {
+            "id": "2e935753-470b-49a5-9306-c6983fcbdf7c_infographic",
+            "file": "docs/lesson_assets/infographics/2e935753-470b-49a5-9306-c6983fcbdf7c_infographic_lesson_7-9_medical_emotional_health_b04_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "videos": [
@@ -7538,6 +7546,14 @@
             "item_count": 0,
             "resolution": "2752x1536",
             "language": "ar"
+          },
+          {
+            "id": "ee74085b-cb6d-49be-8285-7b99ac0f4305_infographic",
+            "file": "docs/lesson_assets/infographics/ee74085b-cb6d-49be-8285-7b99ac0f4305_infographic_lesson_0-3_islamic_parenting_fitrah_03_en.png",
+            "title": "إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
           }
         ],
         "podcasts": [
