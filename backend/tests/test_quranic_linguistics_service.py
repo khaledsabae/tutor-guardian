@@ -224,10 +224,9 @@ def test_list_root_verses_server_down_returns_error():
 
 # ── Acceptance 4: repeated requests served from cache ───────────────────────
 
-def test_find_root_second_call_served_from_cache():
+def test_find_root_second_call_served_from_cache(tmp_path, monkeypatch):
     """تكرار نفس الطلب → من الكاش (post بيتنادى مرة واحدة بس)."""
     calls = {"n": 0}
-    # جذر فريد — مضمون إنه مش موجود في الـ cache الحقيقي من تشغيلات سابقة
     root = "زبرجد"
 
     async def fake_post(url, json=None, headers=None):
@@ -245,6 +244,9 @@ def test_find_root_second_call_served_from_cache():
         return_value=mock_client,
     ), patch(
         "app.services.quranic_linguistics_service.BAHOUTH_CACHE_ENABLED", True
+    ), patch(
+        "app.services.quranic_linguistics_service._TELEMETRY_DB",
+        tmp_path / "bahouth_cache_test.db",
     ):
         r1 = asyncio.run(find_root(root))
         r2 = asyncio.run(find_root(root))
