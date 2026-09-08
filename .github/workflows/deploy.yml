@@ -51,12 +51,22 @@ jobs:
         run: |
           set -euo pipefail
           CANDIDATE_TAG="tutor-guardian-backend:candidate-${{ github.sha }}"
+          # Persistent layer cache between runs. The build context is the
+          # checked-out workspace (wiped after every run), so without a cache
+          # every deploy rebuilds pip/models from scratch (~69 min) and the
+          # 90-min timeout dies mid-export. buildx with a local cache dir on
+          # the runner reuses layers across runs — the second build is a
+          # fraction of the first.
+          CACHE_DIR="/var/cache/tutor-guardian-buildx"
 
           echo "=== Build candidate image from checked-out workspace ==="
           # Use $GITHUB_WORKSPACE (the commit that triggered this workflow), not
           # /root/tutor-guardian, so tests gate the exact code being deployed.
           cd "$GITHUB_WORKSPACE"
-          docker build -f backend/Dockerfile -t "$CANDIDATE_TAG" .
+          docker buildx build \
+            --cache-from "type=local,src=$CACHE_DIR" \
+            --cache-to "type=local,dest=$CACHE_DIR,mode=max" \
+            -f backend/Dockerfile -t "$CANDIDATE_TAG" .
 
           echo "=== Run backend tests in candidate image ==="
           docker run --rm \
