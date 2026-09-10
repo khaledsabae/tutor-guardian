@@ -167,13 +167,13 @@
       "hook": "بتقول «لأ» كام مرة في اليوم؟",
       "file": "reel_path_4-6_development_positive_parenting_ar_eg.mp4",
       "rendered_at": "2026-08-11T11:41:17.743685+00:00",
-      "status": "failed",
+      "status": "queued",
       "caption": "بتقول «لأ» كام مرة في اليوم؟\n\nالتربية الإيجابية والأمان: بناء ثقة الطفل — 4-6 سنوات\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة",
-      "queued_at": "2026-08-11T11:59:04.648197+00:00",
+      "queued_at": "2026-08-16T03:33:14.087040+00:00",
       "buffer_results": {
-        "6a429fd25ab6d2f10685bb4f": "error: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed.",
-        "6a42ac555ab6d2f1068603eb": "error: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed.",
-        "6a42af1a5ab6d2f106860e11": "error: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+        "6a42af1a5ab6d2f106860e11": "6a812f76211938b6e6478b53",
+        "6a429fd25ab6d2f10685bb4f": "6a812f785afed12f716ae428",
+        "6a42ac555ab6d2f1068603eb": "6a812f791dbfebd7710df4d9"
       }
     },
     {
@@ -207,6 +207,146 @@
         "6a42ac555ab6d2f1068603eb": "error: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed.",
         "6a42af1a5ab6d2f106860e11": "error: Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
       }
+    },
+    {
+      "path_id": "path_4-6_cyber_early_screens",
+      "title": "أسس الشاشة الصحية في سن ما قبل المدرسة",
+      "age": "4-6 سنوات",
+      "hook": "ساعتين شاشة في اليوم... كتير؟",
+      "file": "reel_path_4-6_cyber_early_screens_ar_eg.mp4",
+      "rendered_at": "2026-08-16T03:28:57.307527+00:00",
+      "status": "new",
+      "caption": "ساعتين شاشة في اليوم... كتير؟\n\nأسس الشاشة الصحية في سن ما قبل المدرسة — 4-6 سنوات\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_0-3_medical_early_milestones",
+      "title": "المراحل النمائية الأولى: من الحمل حتى عام",
+      "age": "",
+      "hook": "طفلك متأخر... ولا ده طبيعي؟",
+      "file": "reel_path_0-3_medical_early_milestones_ar_eg.mp4",
+      "rendered_at": "2026-08-16T03:30:55.172238+00:00",
+      "status": "new",
+      "caption": "طفلك متأخر... ولا ده طبيعي؟\n\nالمراحل النمائية الأولى: من الحمل حتى عام\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_7-9_cyber_digital_basics",
+      "title": "أول خطوات الأمان الرقمي",
+      "age": "7-9 سنوات",
+      "hook": "ابنك عارف يعمل إيه لو حد غريب كلّمه؟",
+      "file": "reel_path_7-9_cyber_digital_basics_ar_eg.mp4",
+      "rendered_at": "2026-08-16T03:32:51.772098+00:00",
+      "status": "new",
+      "caption": "ابنك عارف يعمل إيه لو حد غريب كلّمه؟\n\nأول خطوات الأمان الرقمي — 7-9 سنوات\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_13-15_medical_mental_health",
+      "title": "الصحة النفسية للمراهق: من القلق للقوة",
+      "age": "13-15 سنة",
+      "hook": "قلقان... ولا مكتئب؟ فيه فرق",
+      "file": "reel_path_13-15_medical_mental_health_ar_eg.mp4",
+      "rendered_at": "2026-08-16T08:03:59.698178+00:00",
+      "status": "new",
+      "caption": "قلقان... ولا مكتئب؟ فيه فرق\n\nالصحة النفسية للمراهق: من القلق للقوة — 13-15 سنة\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_16-18_development_adult_readiness",
+      "title": "نضجٌ واستقلال: إعداد شابك لحياة الراشدين",
+      "age": "16-18 سنة",
+      "hook": "جاهز يعيش لوحده؟ بجد؟",
+      "file": "reel_path_16-18_development_adult_readiness_ar_eg.mp4",
+      "rendered_at": "2026-08-16T08:08:36.784550+00:00",
+      "status": "new",
+      "caption": "جاهز يعيش لوحده؟ بجد؟\n\nنضجٌ واستقلال: إعداد شابك لحياة الراشدين — 16-18 سنة\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_4-6_aqeedah_seeds",
+      "title": "بذور العقيدة: أول تعريفٍ بالله",
+      "age": "",
+      "hook": "ابنك سألك: ربنا فين؟ ترد إزاي؟",
+      "file": "reel_path_4-6_aqeedah_seeds_ar_eg.mp4",
+      "rendered_at": "2026-08-16T08:12:03.415649+00:00",
+      "status": "new",
+      "caption": "ابنك سألك: ربنا فين؟ ترد إزاي؟\n\nبذور العقيدة: أول تعريفٍ بالله\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_4-6_medical_healthy_growth",
+      "title": "صحة ونمو الطفل في سن ما قبل المدرسة",
+      "age": "4-6 سنوات",
+      "hook": "وزنه أقل من أصحابه — تقلق؟",
+      "file": "reel_path_4-6_medical_healthy_growth_ar_eg.mp4",
+      "rendered_at": "2026-08-17T08:02:03.997080+00:00",
+      "status": "new",
+      "caption": "وزنه أقل من أصحابه — تقلق؟\n\nصحة ونمو الطفل في سن ما قبل المدرسة — 4-6 سنوات\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_2-3_cyber_routine",
+      "title": "الروتين الصحي والشاشات",
+      "age": "2-3 سنوات",
+      "hook": "الشاشة بقت جزء من روتين نومه؟",
+      "file": "reel_path_2-3_cyber_routine_ar_eg.mp4",
+      "rendered_at": "2026-08-17T08:04:02.825185+00:00",
+      "status": "new",
+      "caption": "الشاشة بقت جزء من روتين نومه؟\n\nالروتين الصحي والشاشات — 2-3 سنوات\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_4-6_islamic_parenting_adab",
+      "title": "تأسيس الآداب الإسلامية والضمير الأخلاقي",
+      "age": "4-6 سنوات",
+      "hook": "الأدب بيتعلّم بالكلام ولا بالقدوة؟",
+      "file": "reel_path_4-6_islamic_parenting_adab_ar_eg.mp4",
+      "rendered_at": "2026-08-17T08:06:00.426068+00:00",
+      "status": "new",
+      "caption": "الأدب بيتعلّم بالكلام ولا بالقدوة؟\n\nتأسيس الآداب الإسلامية والضمير الأخلاقي — 4-6 سنوات\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_7-9_islamic_parenting_worship",
+      "title": "بناء علاقة الطفل بالعبادات",
+      "age": "7-9 سنوات",
+      "hook": "بتصحّيه للصلاة بالعافية؟",
+      "file": "reel_path_7-9_islamic_parenting_worship_ar_eg.mp4",
+      "rendered_at": "2026-08-18T08:02:13.489772+00:00",
+      "status": "new",
+      "caption": "بتصحّيه للصلاة بالعافية؟\n\nبناء علاقة الطفل بالعبادات — 7-9 سنوات\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_10-12_islamic_parenting_identity",
+      "title": "بناء الهوية الإسلامية: من الطفولة للبلوغ",
+      "age": "10-12 سنة",
+      "hook": "بيتكسف يقول إنه مسلم؟",
+      "file": "reel_path_10-12_islamic_parenting_identity_ar_eg.mp4",
+      "rendered_at": "2026-08-18T08:04:18.117312+00:00",
+      "status": "new",
+      "caption": "بيتكسف يقول إنه مسلم؟\n\nبناء الهوية الإسلامية: من الطفولة للبلوغ — 10-12 سنة\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_2-3_islamic_attachment",
+      "title": "الرابطة الآمنة والرحمة",
+      "age": "2-3 سنوات",
+      "hook": "بتتعصّب عليه وبعدين تندم؟",
+      "file": "reel_path_2-3_islamic_attachment_ar_eg.mp4",
+      "rendered_at": "2026-08-18T08:06:32.877835+00:00",
+      "status": "new",
+      "caption": "بتتعصّب عليه وبعدين تندم؟\n\nالرابطة الآمنة والرحمة — 2-3 سنوات\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_0-3_islamic_parenting_fitrah",
+      "title": "غرس الفطرة: أول غذاءٍ روحيٍّ لطفلك",
+      "age": "العام الأول",
+      "hook": "إمتى يبدأ طفلك يعرف ربنا؟",
+      "file": "reel_path_0-3_islamic_parenting_fitrah_ar_eg.mp4",
+      "rendered_at": "2026-08-19T08:01:54.904920+00:00",
+      "status": "new",
+      "caption": "إمتى يبدأ طفلك يعرف ربنا؟\n\nغرس الفطرة: أول غذاءٍ روحيٍّ لطفلك — العام الأول\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
+    },
+    {
+      "path_id": "path_0-3_development_early_moments",
+      "title": "لحظات مبكرة مهمة: أسس التطور والنمو للطفل حتى عام",
+      "age": "",
+      "hook": "أول سنة في عمر ابنك... بتتبني فيها إيه؟",
+      "file": "reel_path_0-3_development_early_moments_ar_eg.mp4",
+      "rendered_at": "2026-08-19T08:03:39.525301+00:00",
+      "status": "new",
+      "caption": "أول سنة في عمر ابنك... بتتبني فيها إيه؟\n\nلحظات مبكرة مهمة: أسس التطور والنمو للطفل حتى عام\nمن مسارات «المربّي الذكي»: منهج تربية متدرّج حسب سن طفلك،\nمن الولادة إلى 18 سنة.\n\nحمّله مجانًا — بلا إعلانات ولا اشتراكات:\nhttps://play.google.com/store/apps/details?id=com.alsaba.almorabbi\n\n#تربية_الأبناء #المربي_الذكي #تربية_إسلامية #الأمومة_والطفولة"
     }
   ]
 }

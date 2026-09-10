@@ -61,7 +61,7 @@ cd "$REPO" || exit 1
 PY="$REPO/backend/.venv/bin/python"
 [ -x "$PY" ] || PY="/usr/bin/python3"
 
-say() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" >> "$LOG"; }
+say() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "$LOG"; }
 say "===== English media run ====="
 
 # Each generator authenticates its own profile (tg-video / tg-audio). One
@@ -157,6 +157,30 @@ ensure_session() {
     return 1
 }
 
+# WiFi (Zain_H155-383_DC14_5G) drops before 06:30 some mornings:
+# 2026-08-25 06:19 ssid-not-found, then cron 06:30:02 → exit 1 at 06:31:04
+# 2026-08-29 06:08 same SSID, then cron 06:30:01 → DNS [Errno -2], exit 1 at 06:31:04
+# The laptop is awake so cron fires; PCC catch-up only covers missed-while-asleep,
+# not failed-while-offline. ensure_session then misreads DNS failure as a dead
+# NotebookLM session (three reads across ~63s). Wait for DNS first.
+wait_for_network() {
+    local attempt
+    for attempt in $(seq 1 60); do
+        if getent hosts google.com >/dev/null 2>&1; then
+            [ "$attempt" -gt 1 ] && say "network up after $(( (attempt-1)*30 ))s"
+            [ "$attempt" -eq 1 ] && say "network up"
+            return 0
+        fi
+        say "network down (DNS, attempt $attempt/60) — sleeping 30s"
+        sleep 30
+    done
+    say "FAIL: no DNS after 30 minutes — not a dead NotebookLM session"
+    return 1
+}
+
+if ! wait_for_network; then
+    exit 1
+fi
 if ! ensure_session tg-video || ! ensure_session tg-audio; then
     say "FAIL: no usable session — nothing can be generated"
     exit 1
