@@ -63,7 +63,7 @@ def check_fiqh_guard(text: str) -> tuple[bool, str]:
 
 
 # ── Telemetry: blocked_fiqh_log (FIQH_GUARD.md v3 — point ج) ────────────────
-_LOG_DB = Path(__file__).resolve().parents[2] / "ops" / "sessions.db"
+_LOG_DB = Path(__file__).resolve().parents[3] / "ops" / "sessions.db"
 
 
 def _log_block(text: str, rule_id: str) -> None:
