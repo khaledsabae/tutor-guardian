@@ -32,7 +32,7 @@ from app.services.quranic_linguistics_service import (
     format_verses_for_context,
     FALLBACK_MESSAGE,
     _normalize_arabic,
-    _parse_sse_response,
+    _parse_mcp_response,
     _cache_key,
     BAHOUTH_MAX_LIMIT,
 )
@@ -306,13 +306,13 @@ def test_format_verses_for_context_skips_errors():
 
 # ── SSE parsing (shared transport) ─────────────────────────────────────────
 
-def test_parse_sse_response_extracts_json():
+def test_parse_mcp_response_extracts_json():
     raw = 'event: message\r\ndata: {"jsonrpc":"2.0","id":1,"result":{"ok":true}}\r\n'
-    data = _parse_sse_response(raw)
+    data = _parse_mcp_response(raw)
     assert data is not None
     assert data["result"]["ok"] is True
 
 
-def test_parse_sse_response_no_data_line():
+def test_parse_mcp_response_no_data_line():
     raw = "event: message\r\n\r\n"
-    assert _parse_sse_response(raw) is None
+    assert _parse_mcp_response(raw) is None

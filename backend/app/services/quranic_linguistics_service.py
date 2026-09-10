@@ -201,13 +201,27 @@ def _cache_put(tool: str, arguments: dict, result: dict) -> None:
         logger.debug("bahouth cache write failed: %s", exc)
 
 
-# ── MCP JSON-RPC client (same transport as tafsir_service) ─────────────────
-def _parse_sse_response(raw: str) -> dict | None:
-    """Extract the JSON payload from an SSE 'event: message' response."""
+# ── MCP JSON-RPC client (streamable-HTTP, JSON-first) ───────────────────────
+def _parse_mcp_response(raw: str) -> dict | None:
+    """Parse an MCP tools/call response.
+
+    The upstream (bahouth.tafsir.net) serves plain JSON when the client
+    sends `Accept: application/json`, and SSE 'event: message' framing when
+    event-stream is preferred. Handle both shapes.
+    """
+    raw = raw.strip()
+    if raw.startswith("{"):
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError:
+            return None
     for line in raw.split("\n"):
         line = line.strip()
         if line.startswith("data: "):
-            return json.loads(line[6:])
+            try:
+                return json.loads(line[6:])
+            except json.JSONDecodeError:
+                return None
     return None
 
 
@@ -226,7 +240,7 @@ async def _mcp_call(tool: str, arguments: dict) -> dict | None:
     }
     headers = {
         "Content-Type": "application/json",
-        "Accept": "application/json, text/event-stream",
+        "Accept": "application/json",  # streamable-HTTP upstream serves plain JSON
     }
     try:
         async with httpx.AsyncClient(timeout=BAHOUTH_TIMEOUT) as client:
@@ -239,7 +253,7 @@ async def _mcp_call(tool: str, arguments: dict) -> dict | None:
                     resp.status_code, resp.text[:200],
                 )
                 return None
-            data = _parse_sse_response(resp.text)
+            data = _parse_mcp_response(resp.text)
             if data is None:
                 logger.warning("Bahouth MCP: could not parse SSE response")
                 return None
