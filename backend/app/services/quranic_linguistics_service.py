@@ -271,14 +271,25 @@ async def _mcp_call(tool: str, arguments: dict) -> dict | None:
         return None
 
 
-def _extract_content_text(result: dict) -> str:
-    """Extract the text payload from MCP content[0].text."""
+def _extract_inner_data(result: dict) -> dict | None:
+    """Extract the tool's inner data dict from an MCP result.
+
+    Upstream (streamable-HTTP) returns `structuredContent` with the parsed
+    payload; the SSE shape carried it as a JSON string inside content[0].text.
+    """
     if not isinstance(result, dict):
-        return ""
+        return None
+    sc = result.get("structuredContent")
+    if isinstance(sc, dict):
+        return sc
     content = result.get("content", [])
     if not content or result.get("isError"):
-        return ""
-    return str(content[0].get("text", ""))
+        return None
+    try:
+        parsed = json.loads(str(content[0].get("text", "")))
+        return parsed if isinstance(parsed, dict) else None
+    except (json.JSONDecodeError, TypeError):
+        return None
 
 
 def _parse_inner(raw_text: str) -> dict | list | None:
@@ -326,7 +337,10 @@ async def find_root(root_text: str) -> RootResult:
     if mcp_result is None:
         return RootResult(root_text=root_text, found=False, error="unavailable")
 
-    inner = _parse_inner(_extract_content_text(mcp_result))
+    inner = _extract_inner_data(mcp_result)
+    # Upstream nests payloads (e.g. {"found": .., "root": {..}}) — flatten.
+    if isinstance(inner, dict) and isinstance(inner.get("root"), dict):
+        inner = {**inner, **inner.pop("root")}
     if not isinstance(inner, dict):
         return RootResult(root_text=root_text, found=False, error="mcp_error")
 
@@ -381,7 +395,10 @@ async def list_root_verses(
     if mcp_result is None:
         return VerseListResult(tool="list_root_verses", query_key=root_text, error="unavailable")
 
-    inner = _parse_inner(_extract_content_text(mcp_result))
+    inner = _extract_inner_data(mcp_result)
+    # Upstream nests payloads (e.g. {"found": .., "root": {..}}) — flatten.
+    if isinstance(inner, dict) and isinstance(inner.get("root"), dict):
+        inner = {**inner, **inner.pop("root")}
     if isinstance(inner, dict):
         verses = inner.get("verses", inner.get("result", inner.get("items", [])))
         total = inner.get("total")
@@ -432,7 +449,10 @@ async def list_topic_verses(topic_id: int, limit: int = 50, offset: int = 0) -> 
     if mcp_result is None:
         return VerseListResult(tool="list_topic_verses", query_key=str(topic_id), error="unavailable")
 
-    inner = _parse_inner(_extract_content_text(mcp_result))
+    inner = _extract_inner_data(mcp_result)
+    # Upstream nests payloads (e.g. {"found": .., "root": {..}}) — flatten.
+    if isinstance(inner, dict) and isinstance(inner.get("root"), dict):
+        inner = {**inner, **inner.pop("root")}
     if isinstance(inner, dict):
         verses = inner.get("verses", inner.get("result", inner.get("items", [])))
         total = inner.get("total")
@@ -481,7 +501,10 @@ async def list_verse_qiraat(verse_key: str) -> VerseListResult:
     if mcp_result is None:
         return VerseListResult(tool="list_verse_qiraat", query_key=key, error="unavailable")
 
-    inner = _parse_inner(_extract_content_text(mcp_result))
+    inner = _extract_inner_data(mcp_result)
+    # Upstream nests payloads (e.g. {"found": .., "root": {..}}) — flatten.
+    if isinstance(inner, dict) and isinstance(inner.get("root"), dict):
+        inner = {**inner, **inner.pop("root")}
     if isinstance(inner, dict):
         verses = inner.get("qiraat", inner.get("verses", inner.get("result", inner.get("items", []))))
         total = inner.get("total")
@@ -525,7 +548,10 @@ async def get_verse(verse_key: str) -> dict | None:
     if mcp_result is None:
         return None
 
-    inner = _parse_inner(_extract_content_text(mcp_result))
+    inner = _extract_inner_data(mcp_result)
+    # Upstream nests payloads (e.g. {"found": .., "root": {..}}) — flatten.
+    if isinstance(inner, dict) and isinstance(inner.get("root"), dict):
+        inner = {**inner, **inner.pop("root")}
     if not isinstance(inner, dict):
         return None
 
@@ -548,7 +574,10 @@ async def list_verse_words(verse_key: str) -> list[dict]:
     if mcp_result is None:
         return []
 
-    inner = _parse_inner(_extract_content_text(mcp_result))
+    inner = _extract_inner_data(mcp_result)
+    # Upstream nests payloads (e.g. {"found": .., "root": {..}}) — flatten.
+    if isinstance(inner, dict) and isinstance(inner.get("root"), dict):
+        inner = {**inner, **inner.pop("root")}
     if isinstance(inner, dict):
         words = inner.get("words", inner.get("result", inner.get("items", [])))
     elif isinstance(inner, list):
@@ -578,7 +607,10 @@ async def list_verse_properties(verse_key: str) -> dict | None:
     if mcp_result is None:
         return None
 
-    inner = _parse_inner(_extract_content_text(mcp_result))
+    inner = _extract_inner_data(mcp_result)
+    # Upstream nests payloads (e.g. {"found": .., "root": {..}}) — flatten.
+    if isinstance(inner, dict) and isinstance(inner.get("root"), dict):
+        inner = {**inner, **inner.pop("root")}
     if not isinstance(inner, dict):
         return None
 
@@ -601,7 +633,10 @@ async def list_verse_topics(verse_key: str) -> list[dict]:
     if mcp_result is None:
         return []
 
-    inner = _parse_inner(_extract_content_text(mcp_result))
+    inner = _extract_inner_data(mcp_result)
+    # Upstream nests payloads (e.g. {"found": .., "root": {..}}) — flatten.
+    if isinstance(inner, dict) and isinstance(inner.get("root"), dict):
+        inner = {**inner, **inner.pop("root")}
     if isinstance(inner, dict):
         topics = inner.get("topics", inner.get("result", inner.get("items", [])))
     elif isinstance(inner, list):
@@ -636,7 +671,10 @@ async def list_surah_verses(surah: int, limit: int = 50, offset: int = 0) -> Ver
     if mcp_result is None:
         return VerseListResult(tool="list_surah_verses", query_key=str(surah), error="unavailable")
 
-    inner = _parse_inner(_extract_content_text(mcp_result))
+    inner = _extract_inner_data(mcp_result)
+    # Upstream nests payloads (e.g. {"found": .., "root": {..}}) — flatten.
+    if isinstance(inner, dict) and isinstance(inner.get("root"), dict):
+        inner = {**inner, **inner.pop("root")}
     if isinstance(inner, dict):
         verses = inner.get("verses", inner.get("result", inner.get("items", [])))
         total = inner.get("total")
