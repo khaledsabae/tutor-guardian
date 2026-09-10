@@ -25,6 +25,7 @@ from app.services.llm_service import (
 from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
 from app.services.intent_guard import check_banned_intent, check_emergency_keywords
+from app.services.fiqh_guard import check_fiqh_guard, SAFE_REPLY as FIQH_SAFE_REPLY
 from app.services.domain_classifier import (
     classify_domains, is_uncertain, matched_fast_path,
 )
@@ -166,6 +167,20 @@ async def draft_reply(request: Request, user_message: UserMessage):
         # These two paths return before the classifier ever runs, so without
         # this the question rows that matter most — banned and emergency —
         # would be the ones left unlabelled.
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        return await asyncio.to_thread(_finalize, reply, session_id)
+
+    # ── Step 0c: FIQH guard (hard block — FIQH_GUARD.md v3) ───────────
+    fiqh_blocked, fiqh_rule = check_fiqh_guard(query_input)
+    if fiqh_blocked:
+        logger.warning("FIQH guard block: rule=%s", fiqh_rule)
+        reply = AssistantReply(
+            reply_text=FIQH_SAFE_REPLY,
+            domain="fiqh_aqeedah",
+            severity="عادي",
+            needs_human_review=False,
+            mode="fiqh_guard",
+        )
         await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         return await asyncio.to_thread(_finalize, reply, session_id)
 
@@ -470,6 +485,16 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             reply_text="هذا الموضوع خارج نطاق ما يمكنني مساعدتك فيه. إذا كنت في حالة طارئة، يرجى التواصل مع الجهات المختصة فوراً.",
             domain="medical", severity="طارئ", needs_human_review=True,
             escalation_target="emergency_services", mode="banned",
+        ))
+
+    # ── FIQH guard (hard block — FIQH_GUARD.md v3) ────────────────────
+    fiqh_blocked, fiqh_rule = check_fiqh_guard(query_input)
+    if fiqh_blocked:
+        logger.warning("FIQH guard block (stream): rule=%s", fiqh_rule)
+        return _single(AssistantReply(
+            reply_text=FIQH_SAFE_REPLY,
+            domain="fiqh_aqeedah", severity="عادي", needs_human_review=False,
+            mode="fiqh_guard",
         ))
 
     if check_emergency_keywords(query_input):
