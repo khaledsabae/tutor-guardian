@@ -27,7 +27,14 @@ redis>=5.0
 # image) — never a drive-by change. See OPERATIONS_LOG 2026-07-16.
 chromadb>=0.5,<1
 onnxruntime>=1.18
-sentence-transformers>=3.0
+# ⚠️ Pinned 2026-09-10: the Aug-2026 prod image runs this exact set (transformers 5.16.1 +
+# sentence-transformers 6.0.0 + huggingface_hub 1.29.0 + torch 2.13.0). A later unpinned
+# resolve broke SentenceTransformer model loading in the build (HF format drift). Bump as
+# its own planned change with a candidate-image model-load check — never drive-by.
+sentence-transformers==6.0.0
+transformers==5.16.1
+huggingface_hub==1.29.0
+torch==2.13.0
 
 # ── Document parsing ──
 pdfplumber>=0.11
