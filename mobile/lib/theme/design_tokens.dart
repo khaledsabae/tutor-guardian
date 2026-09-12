@@ -52,12 +52,21 @@ abstract final class Dt {
         ),
       ];
 
-  /// Neutral shadow for white cards on the cream background.
+  /// Neutral shadow for cards on the warm background.
   static List<BoxShadow> get cardShadow => [
         BoxShadow(
-          color: const Color(0xFF8B7E66).withValues(alpha: .12),
-          blurRadius: 14,
+          color: AppPalette.current.isDark
+              ? Colors.black.withValues(alpha: .35)
+              : const Color(0xFF0F766E).withValues(alpha: .06),
+          blurRadius: 16,
           offset: const Offset(0, 4),
+        ),
+        BoxShadow(
+          color: AppPalette.current.isDark
+              ? Colors.black.withValues(alpha: .2)
+              : const Color(0xFF475569).withValues(alpha: .04),
+          blurRadius: 6,
+          offset: const Offset(0, 1),
         ),
       ];
 
@@ -101,6 +110,7 @@ const _domainStyles = <String, DomainStyle>{
   'development': DomainStyle(Color(0xFF8B5CF6), Color(0xFF6D28D9), '🌱'),
   'medical': DomainStyle(Color(0xFFFBBF24), Color(0xFFD97706), '🧩'),
   'cyber': DomainStyle(Color(0xFF3B82F6), Color(0xFF1D4ED8), '🛡️'),
+  'infant_pregnancy': DomainStyle(Color(0xFF0D9488), Color(0xFF065F46), '🍼'),
 };
 
 // Not const: it reads brand colours, which now follow the live palette.

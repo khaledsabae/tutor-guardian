@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/app_routes.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../../theme/app_theme.dart';
 import '../../onboarding/providers/onboarding_providers.dart';
 import '../screens/children_list_screen.dart';
-import '../../../l10n/app_localizations.dart';
 
 class ActiveChildChip extends ConsumerWidget {
   const ActiveChildChip({super.key});
@@ -26,7 +27,13 @@ class ActiveChildChip extends ConsumerWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.18),
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withValues(alpha: 0.12)
+                : AppTheme.primary.withValues(alpha: 0.08),
+            border: Border.all(
+              color: AppTheme.primary.withValues(alpha: 0.25),
+              width: 1,
+            ),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Row(
@@ -42,8 +49,10 @@ class ActiveChildChip extends ConsumerWidget {
                   constraints: const BoxConstraints(maxWidth: 80),
                   child: Text(
                     profile.name,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : AppTheme.primaryDark,
                       fontWeight: FontWeight.w700,
                       fontSize: 13,
                     ),
@@ -51,13 +60,20 @@ class ActiveChildChip extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 2),
-                const Icon(Icons.unfold_more,
-                    size: 14, color: Colors.white),
+                Icon(
+                  Icons.unfold_more,
+                  size: 14,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white70
+                      : AppTheme.primaryDark,
+                ),
               ] else
                 Text(
                   AppLocalizations.of(context).activeChildLabel,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : AppTheme.primaryDark,
                     fontWeight: FontWeight.w700,
                     fontSize: 13,
                   ),

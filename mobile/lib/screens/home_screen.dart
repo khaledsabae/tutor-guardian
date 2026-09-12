@@ -36,6 +36,8 @@ import '../widgets/ui/noor_mascot.dart';
 import '../features/parent_day/child_day_card.dart';
 import '../features/whats_new/widgets/whats_new_card.dart';
 
+import '../core/app_routes.dart';
+
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key, required this.onGoToTab, this.focusCardKey});
 
@@ -103,6 +105,9 @@ class HomeScreen extends ConsumerWidget {
               ),
             ],
           ),
+          const SizedBox(height: 12),
+          // Prominent Child Profile Switcher
+          _ActiveChildBanner(profile: profile),
           const SizedBox(height: 16),
           // Above the focus card only in the sense of being read first; it
           // renders nothing at all except in the one launch after an update,
@@ -114,6 +119,9 @@ class HomeScreen extends ConsumerWidget {
             ageGroup: ageGroup,
             onStartFirstPath: () => onGoToTab(RootTab.learn),
           ),
+          const SizedBox(height: 16),
+          // Featured Games & Interactive Quizzes Quick Launch Strip
+          const _QuickGamesCard(),
           const SizedBox(height: 16),
           TodayRitualsRow(ageGroup: ageGroup),
           const SizedBox(height: 16),
@@ -140,6 +148,211 @@ class HomeScreen extends ConsumerWidget {
           // eye reaches only after the day's work.
           const HomeCommunityNote(),
         ],
+      ),
+    );
+  }
+}
+
+class _ActiveChildBanner extends StatelessWidget {
+  const _ActiveChildBanner({required this.profile});
+
+  final ActiveChildProfile? profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF131F1C) : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.08)
+              : AppTheme.primary.withValues(alpha: 0.12),
+          width: 1,
+        ),
+        boxShadow: Dt.cardShadow,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => Navigator.of(context).push(AppRoutes.childrenList()),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            child: Row(
+              children: [
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: AppTheme.primary.withValues(alpha: 0.12),
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    profile?.avatarEmoji ?? '👶',
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              profile != null
+                                  ? profile!.name
+                                  : l10n.activeChildLabel,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                color: AppTheme.textPrimary,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          if (profile != null) ...[
+                            const SizedBox(width: 6),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: AppTheme.accent.withValues(alpha: 0.15),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                profile!.ageGroup,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppTheme.accent,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        profile != null
+                            ? 'اضغط للتبديل أو إضافة طفل آخر'
+                            : 'اضغط لاختيار أو إضافة طفل لمتابعة مساره',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: AppTheme.textMuted,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.swap_horiz_rounded,
+                  color: AppTheme.primary,
+                  size: 22,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _QuickGamesCard extends StatelessWidget {
+  const _QuickGamesCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDark
+              ? [const Color(0xFF131F1C), const Color(0xFF1C2D29)]
+              : [const Color(0xFF0F766E), const Color(0xFF044E46)],
+          begin: AlignmentDirectional.topStart,
+          end: AlignmentDirectional.bottomEnd,
+        ),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF0F766E).withValues(alpha: 0.22),
+            blurRadius: 14,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: () => Navigator.of(context).push(AppRoutes.games()),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(9),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.16),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Text('🎮', style: TextStyle(fontSize: 22)),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'الألعاب والمسابقات التعليمية',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        'ألعاب تفاعلية ومسابقات قيم وتربية لطفلك',
+                        style: TextStyle(
+                          color: Color(0xFFCCFBF1),
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF59E0B),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Text(
+                    'العب الآن',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

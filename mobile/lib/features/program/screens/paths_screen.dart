@@ -29,6 +29,7 @@ const _domainChipOrder = <String>[
   'islamic_parenting',
   'aqeedah',
   'development',
+  'infant_pregnancy',
   'medical',
   'cyber',
 ];

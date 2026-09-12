@@ -18,6 +18,7 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/analytics.dart';
@@ -109,6 +110,7 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
   }
 
   void _onSelect(int i) {
+    HapticFeedback.selectionClick();
     if (i != _index) _recordSwitch(i);
     setState(() => _index = i);
   }

@@ -73,57 +73,50 @@ class AppPalette {
 
   bool get isDark => brightness == Brightness.dark;
 
-  /// The identity as shipped since the 2026-06 redesign, unchanged.
+  /// The identity: Modern Islamic Luxury (Royal Emerald & Warm Gold).
   static const light = AppPalette(
     brightness: Brightness.light,
-    primary: Color(0xFF0D9488), // vivid teal
-    primaryDeep: Color(0xFF0F766E),
-    accent: Color(0xFFF59E0B), // amber — gamification
-    accentDeep: Color(0xFFD97706),
-    background: Color(0xFFFAF7F2), // warm cream
+    primary: Color(0xFF0F766E), // Royal Islamic Emerald
+    primaryDeep: Color(0xFF044E46), // Deep Emerald
+    accent: Color(0xFFD97706), // Warm Noble Gold
+    accentDeep: Color(0xFFB45309), // Burnished Gold
+    background: Color(0xFFFAF8F5), // Warm Noble Cream
     surface: Colors.white,
-    surfaceAlt: Color(0xFFF1EDE5), // assistant bubble
-    ink: Color(0xFF1E293B),
-    inkSoft: Color(0xFF64748B),
-    textSecondary: Color(0xFF475569),
-    success: Color(0xFF22C55E),
-    track: Color(0xFFEBE5DA),
+    surfaceAlt: Color(0xFFF3EFEA), // Warm Linen surface
+    ink: Color(0xFF111827), // Deep Obsidian Ink
+    inkSoft: Color(0xFF6B7280),
+    textSecondary: Color(0xFF4B5563),
+    success: Color(0xFF10B981), // Pure Emerald
+    track: Color(0xFFE8E2D7),
     warningBg: Color(0xFFFFF3CD),
     warningFg: Color(0xFF856404),
-    dangerBg: Color(0xFFF8D7DA),
-    dangerFg: Color(0xFF721C24),
-    tipGradient: [Color(0xFFFFE9C7), Color(0xFFFFD89E)],
-    tipInk: Color(0xFF8A5A0F),
+    dangerBg: Color(0xFFFEF2F2),
+    dangerFg: Color(0xFFB91C1C),
+    tipGradient: [Color(0xFFFEF3C7), Color(0xFFFDE68A)],
+    tipInk: Color(0xFF92400E),
   );
 
-  /// Not the light palette inverted.
-  ///
-  /// Teal and amber are lightened, because the shipped values are tuned to sit
-  /// on cream and go muddy on a dark ground. The semantic pairs keep their
-  /// *meaning* — warning stays yellow, danger stays red — since the safety
-  /// banner and the emergency cards are the two places in this app where
-  /// colour is load-bearing rather than decorative; only their lightness
-  /// flips, so the foreground stays readable.
+  /// Modern Islamic Luxury — Dark (Deep Obsidian Emerald & Radiant Gold).
   static const dark = AppPalette(
     brightness: Brightness.dark,
-    primary: Color(0xFF2DD4BF),
-    primaryDeep: Color(0xFF14B8A6),
-    accent: Color(0xFFFBBF24),
-    accentDeep: Color(0xFFF59E0B),
-    background: Color(0xFF14181D),
-    surface: Color(0xFF1D232B),
-    surfaceAlt: Color(0xFF272E38),
-    ink: Color(0xFFE9EDF2),
-    inkSoft: Color(0xFF9AA6B4),
-    textSecondary: Color(0xFFB6C0CC),
-    success: Color(0xFF4ADE80),
-    track: Color(0xFF313A45),
-    warningBg: Color(0xFF3A2F0B),
+    primary: Color(0xFF10B981), // Luminous Emerald
+    primaryDeep: Color(0xFF059669),
+    accent: Color(0xFFFBBF24), // Radiant Gold
+    accentDeep: Color(0xFFD97706),
+    background: Color(0xFF0A1210), // Nocturnal Obsidian-Emerald
+    surface: Color(0xFF131F1C), // Deep Emerald Surface
+    surfaceAlt: Color(0xFF1C2D29), // Elevated Emerald Card
+    ink: Color(0xFFF9FAFB),
+    inkSoft: Color(0xFF9CA3AF),
+    textSecondary: Color(0xFFD1D5DB),
+    success: Color(0xFF34D399),
+    track: Color(0xFF20332E),
+    warningBg: Color(0xFF3A2B09),
     warningFg: Color(0xFFFDE68A),
-    dangerBg: Color(0xFF3B1418),
+    dangerBg: Color(0xFF3B1215),
     dangerFg: Color(0xFFFCA5A5),
-    tipGradient: [Color(0xFF4A3A16), Color(0xFF5C4718)],
-    tipInk: Color(0xFFF5D89B),
+    tipGradient: [Color(0xFF3B2E10), Color(0xFF4D3C14)],
+    tipInk: Color(0xFFFDE68A),
   );
 
   /// The palette every `Dt.*` / `AppTheme.*` colour getter reads.

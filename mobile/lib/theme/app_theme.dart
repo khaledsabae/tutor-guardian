@@ -63,15 +63,49 @@ class AppTheme {
       bodyColor: textPrimary,
       displayColor: textPrimary,
     );
-    // Heavier headings give the playful "chunky" feel without new fonts.
+    // Refined Cairo: balanced, dignified weights and comfortable line-heights.
     final textTheme = base.copyWith(
-      headlineMedium:
-          base.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
-      headlineSmall:
-          base.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
-      titleLarge: base.titleLarge?.copyWith(fontWeight: FontWeight.w800),
-      titleMedium: base.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-      labelLarge: base.labelLarge?.copyWith(fontWeight: FontWeight.w700),
+      headlineLarge: base.headlineLarge?.copyWith(
+        fontWeight: FontWeight.w800,
+        height: 1.3,
+        letterSpacing: -0.3,
+      ),
+      headlineMedium: base.headlineMedium?.copyWith(
+        fontWeight: FontWeight.w800,
+        height: 1.35,
+      ),
+      headlineSmall: base.headlineSmall?.copyWith(
+        fontWeight: FontWeight.w700,
+        height: 1.35,
+      ),
+      titleLarge: base.titleLarge?.copyWith(
+        fontWeight: FontWeight.w700,
+        height: 1.4,
+      ),
+      titleMedium: base.titleMedium?.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.4,
+      ),
+      titleSmall: base.titleSmall?.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.4,
+      ),
+      bodyLarge: base.bodyLarge?.copyWith(
+        fontWeight: FontWeight.w500,
+        height: 1.5,
+      ),
+      bodyMedium: base.bodyMedium?.copyWith(
+        fontWeight: FontWeight.w400,
+        height: 1.5,
+      ),
+      labelLarge: base.labelLarge?.copyWith(
+        fontWeight: FontWeight.w700,
+        height: 1.3,
+      ),
+      labelMedium: base.labelMedium?.copyWith(
+        fontWeight: FontWeight.w600,
+        height: 1.3,
+      ),
     );
 
     final colorScheme = ColorScheme.fromSeed(
@@ -113,6 +147,12 @@ class AppTheme {
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Dt.rCard),
+          side: BorderSide(
+            color: p.isDark
+                ? Colors.white.withValues(alpha: 0.08)
+                : const Color(0xFF0F766E).withValues(alpha: 0.06),
+            width: 1,
+          ),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -153,8 +193,13 @@ class AppTheme {
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: surface,
-        height: 72,
-        indicatorColor: primary.withValues(alpha: .14),
+        elevation: 3,
+        shadowColor: Colors.black.withValues(alpha: 0.06),
+        height: 74,
+        indicatorColor: primary.withValues(alpha: .15),
+        indicatorShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
         surfaceTintColor: Colors.transparent,
         labelTextStyle: WidgetStatePropertyAll(
           GoogleFonts.cairo(fontSize: 12, fontWeight: FontWeight.w700),

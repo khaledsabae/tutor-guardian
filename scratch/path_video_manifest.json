@@ -436,5 +436,13 @@
     "size_bytes": 31005503,
     "task_id": "cc2f8196-038c-4481-822c-4d2d4738f842",
     "source_id": "5ac3020d-f6d7-4d7f-9e9e-1894b1b092e0"
+  },
+  "path_2-3_aqeedah_first_name@en": {
+    "completed_at": "2026-09-11T07:00:01Z",
+    "language": "en",
+    "video_path": "/home/khalednew/projects/tutor-guardian/docs/path_videos/path_2-3_aqeedah_first_name_en_us.mp4",
+    "size_bytes": 31923485,
+    "task_id": null,
+    "source_id": "b64e256b-fe09-472d-af70-cfa9bcfb8eaa"
   }
 }

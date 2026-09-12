@@ -95,6 +95,8 @@ class CurriculumPath {
         return l10n.pathDomainDevelopment;
       case 'medical':
         return l10n.pathDomainSkills;
+      case 'infant_pregnancy':
+        return 'الحمل والرضع';
       case 'cyber':
         return l10n.pathDomainCyber;
       default:
