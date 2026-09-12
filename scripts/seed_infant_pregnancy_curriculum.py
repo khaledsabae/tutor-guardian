@@ -2,10 +2,12 @@
 """
 Seed script for Infant & Pregnancy (الحمل والرضع) Curriculum Content
 ====================================================================
+Canonical age_group: prenatal-1
+
 Generates:
-1. path_0-3_infant_pregnancy_foundations.json
-2. 5 Lessons (lesson_0-3_infant_pregnancy_01 to 05)
-3. 7 Daily Tips (tip_0-3_031 to 037)
+1. path_prenatal-1_infant_pregnancy_foundations.json
+2. 5 Lessons (lesson_prenatal-1_infant_pregnancy_01 to 05)
+3. 7 Daily Tips (tip_prenatal-1_001 to 007)
 4. NotebookLM source markdown files in notebooklm_sources/prenatal-1/
 5. Prompt package in docs/prenatal_notebooklm_prompts.md
 """
@@ -28,19 +30,31 @@ def assert_clean(text: str, label: str):
     if match:
         raise ValueError(f"CJK/Cyrillic character '{match.group()}' found in {label}")
 
+# ── Cleanup old 0-3 files if present ──────────────────────────────────────────
+OLD_FILES = [
+    PATHS_DIR / "path_0-3_infant_pregnancy_foundations.json",
+    *(LESSONS_DIR / f"lesson_0-3_infant_pregnancy_{i:02d}.json" for i in range(1, 6)),
+    *(TIPS_DIR / f"tip_0-3_{i:03d}.json" for i in range(31, 38)),
+    *(NLM_DIR / f"lesson_0-3_infant_pregnancy_{i:02d}.md" for i in range(1, 6)),
+]
+for old in OLD_FILES:
+    if old.exists():
+        old.unlink()
+        print(f"Removed legacy file: {old.name}")
+
 # ── 1. Path Data ─────────────────────────────────────────────────────────────
 PATH_DATA = {
-    "id": "path_0-3_infant_pregnancy_foundations",
+    "id": "path_prenatal-1_infant_pregnancy_foundations",
     "title": "الحمل والمولود الجديد: رحلة الرعاية والسكينة",
-    "age_group": "0-3",
+    "age_group": "prenatal-1",
     "domain": "infant_pregnancy",
     "description": "مسار شامل لمدة 14 يوماً يرافق الأمهات والآباء الجدد من أواخر الحمل وحتى الأشهر الأولى للمولود: الدعم النفسي والارتباط المبكر بالجنين وسماعه للقرآن، سنن الاستقبال النبوية، إتقان الرضاعة الطبيعية، فك شفرة البكاء والنوم الآمن، وحظر الشاشات وصحة الوالدين النفسية.",
     "lesson_ids": [
-        "lesson_0-3_infant_pregnancy_01",
-        "lesson_0-3_infant_pregnancy_02",
-        "lesson_0-3_infant_pregnancy_03",
-        "lesson_0-3_infant_pregnancy_04",
-        "lesson_0-3_infant_pregnancy_05"
+        "lesson_prenatal-1_infant_pregnancy_01",
+        "lesson_prenatal-1_infant_pregnancy_02",
+        "lesson_prenatal-1_infant_pregnancy_03",
+        "lesson_prenatal-1_infant_pregnancy_04",
+        "lesson_prenatal-1_infant_pregnancy_05"
     ],
     "estimated_days": 14,
     "pedagogical_framework": "attachment_rahma",
@@ -59,10 +73,10 @@ PATH_DATA = {
 # ── 2. Lessons Data ──────────────────────────────────────────────────────────
 LESSONS_DATA = [
     {
-        "id": "lesson_0-3_infant_pregnancy_01",
-        "path_id": "path_0-3_infant_pregnancy_foundations",
+        "id": "lesson_prenatal-1_infant_pregnancy_01",
+        "path_id": "path_prenatal-1_infant_pregnancy_foundations",
         "title": "سيكولوجية الحمل والرابطة المبكرة مع الجنين",
-        "age_group": "0-3",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "unit_ids": ["70ef8432-d97f-490a-acab-8df9e57f8652"],
         "summary": "تبدأ التربية وبناء الارتباط العاطفي قبل الولادة بأشهر. من الأسبوع الثامن عشر يكتمل جهاز السمع لدى الجنين فيبدأ بتمييز نبضات قلب أمه وأصوات والديه. تلاوة القرآن والحديث الهادئ مع الجنين يمنحانه طمأنينة وراحة فطرية. كما تتطلب هذه المرحلة دعماً نفسياً استثنائياً من الزوج للأم الحامل لمواجهة تقلبات الهرمونات والمخاوف الطبيعية، فالأمان النفسي للأم ينعكس مباشرة على استقرار الجنين العصبي ونموه الصحي.",
@@ -81,10 +95,10 @@ LESSONS_DATA = [
         "approved_by": None
     },
     {
-        "id": "lesson_0-3_infant_pregnancy_02",
-        "path_id": "path_0-3_infant_pregnancy_foundations",
+        "id": "lesson_prenatal-1_infant_pregnancy_02",
+        "path_id": "path_prenatal-1_infant_pregnancy_foundations",
         "title": "سنن الاستقبال النبوية للمولود الجديد",
-        "age_group": "0-3",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "unit_ids": ["med-c7a1bbf6"],
         "summary": "رسم الهدي النبوي معالم استقبال المولود بأدق تفاصيلها الروحية والنفسية. تبدأ اللحظات الأولى بالأذان في أذنه اليمنى ليكون أول ما يقرع سمعه كلمة التوحيد، ثم التحنيك بتمرة ملينة لتدريب فمه. وفي اليوم السابع تُسن العقيقة إشاعةً للفرح وشكراً لله وفكاً لرهان المولود، وحلق شعره والتصدق بوزنه فضة، واختيار اسم حسن يليق به. كما يُحصن الرضيع يومياً بالمعوذات والأدعية النبوية لحفظه وبث السكينة في روحه.",
@@ -103,10 +117,10 @@ LESSONS_DATA = [
         "approved_by": None
     },
     {
-        "id": "lesson_0-3_infant_pregnancy_03",
-        "path_id": "path_0-3_infant_pregnancy_foundations",
+        "id": "lesson_prenatal-1_infant_pregnancy_03",
+        "path_id": "path_prenatal-1_infant_pregnancy_foundations",
         "title": "إتقان الرضاعة الطبيعية والرعاية الجسدية المبكرة",
-        "age_group": "0-3",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "unit_ids": ["6970f436-c954-45ac-ab96-30a798cf523f"],
         "summary": "الرضاعة الطبيعية ليست مجرد تغذية، بل هي الحبل السري العاطفي والمناعي بعد الولادة. قطرات اللبأ الأولى (السرسوب) غنية بالأجسام المضادة وتعد أول تطعيم طبيعي للمولود. نجاح الرضاعة يعتمد على الإلتقام العميق للحلمة والهالة لتجنب الألم والتشققات، والاستجابة لعلامات الجوع المبكرة (حركات الفم، مص اليد) قبل وصول الرضيع لمرحلة البكاء. دور الأب هنا محوري في رعاية الأم وتوفير الراحة والماء والطعام لها لتتفرغ للرضاعة.",
@@ -125,10 +139,10 @@ LESSONS_DATA = [
         "approved_by": None
     },
     {
-        "id": "lesson_0-3_infant_pregnancy_04",
-        "path_id": "path_0-3_infant_pregnancy_foundations",
+        "id": "lesson_prenatal-1_infant_pregnancy_04",
+        "path_id": "path_prenatal-1_infant_pregnancy_foundations",
         "title": "فك شفرة البكاء وهندسة نوم الرضيع",
-        "age_group": "0-3",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "unit_ids": ["c88f868b-4f40-45eb-b357-f8867b2c327d"],
         "summary": "البكاء هو لغة الرضيع الوحيدة للتعبير عن احتياجاته: الجوع، المغص والغازات، البلل، أو فرط الاستثارة والحرارة. لتهدئة الرضيع، نطبق تقنية العناصر الخمسة الشهيرة (5 S's): التقميط الآمن، النوم الجانبي المؤقت أثناء الحمل، الضوضاء البيضاء (محاكاة صوت الرحم)، الهدهدة المنتظمة، والمص. وللنوم الآمن: يجب نوم الرضيع دائماً على ظهره في سرير مستقل بجانب الوالدين دون وسائد أو ألعاب رخوة، للوقاية الصارمة من متلازمة موت الرضع المفاجئ (SIDS).",
@@ -147,10 +161,10 @@ LESSONS_DATA = [
         "approved_by": None
     },
     {
-        "id": "lesson_0-3_infant_pregnancy_05",
-        "path_id": "path_0-3_infant_pregnancy_foundations",
+        "id": "lesson_prenatal-1_infant_pregnancy_05",
+        "path_id": "path_prenatal-1_infant_pregnancy_foundations",
         "title": "الدرع الرقمي المبكر وصحة الوالدين النفسية",
-        "age_group": "0-3",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "unit_ids": ["77e9aa1e-342f-4497-bb5b-a998ac638da2"],
         "summary": "في أول سنتين من العمر، ينمو دماغ الطفل بأسرع وتيرة في حياته عبر التفاعل البشري الحقيقي واللعب الحسي. توصي جميع المنظمات الطبية العالمية بسياسة الصفر شاشات (Zero Screens): منع الشاشات والهواتف وقنوات أغاني الرضع تماماً دون سن العامين، لحماية الطفل من تأخر الكلام وتشتت الانتباه وضعف التواصل البصري. في المقابل، يجب الاهتمام بصحة الأم النفسية: التمييز بين كآبة النفاس العابرة واكتئاب ما بعد الولادة، وتبادل الأدوار بين الزوجين للوقاية من الاحتراق النفسي والإجهاد المزمن.",
@@ -170,11 +184,11 @@ LESSONS_DATA = [
     }
 ]
 
-# ── 3. Daily Tips Data ───────────────────────────────────────────────────────
+# ── 3. Daily Tips Data (tip_prenatal-1_001 to 007) ───────────────────────────
 TIPS_DATA = [
     {
-        "id": "tip_0-3_031",
-        "age_group": "0-3",
+        "id": "tip_prenatal-1_001",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "text": "للحامل: الجنين يسمع صوتك بوضوح من الشهر الخامس. تلاوتك اليومية للقرآن وحديثك معه يبنيان أمانه النفسي الفطري قبل الولادة.",
         "unit_id": None,
@@ -187,8 +201,8 @@ TIPS_DATA = [
         "approved_by": None
     },
     {
-        "id": "tip_0-3_032",
-        "age_group": "0-3",
+        "id": "tip_prenatal-1_002",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "text": "للزوج: الدعم النفسي للمرأة الحامل والرفق بها في تقلبات المزاج عبادة أسرية تخفف توتر الجنين وتدعم صحته العصبية.",
         "unit_id": None,
@@ -201,8 +215,8 @@ TIPS_DATA = [
         "approved_by": None
     },
     {
-        "id": "tip_0-3_033",
-        "age_group": "0-3",
+        "id": "tip_prenatal-1_003",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "text": "في أول ساعات المولود: قطرات لبن السرسوب (اللبأ) هي التطعيم الأول الطبيعي لطفلك، غنية بالمناعة والأجسام المضادة المركزة.",
         "unit_id": None,
@@ -215,8 +229,8 @@ TIPS_DATA = [
         "approved_by": None
     },
     {
-        "id": "tip_0-3_034",
-        "age_group": "0-3",
+        "id": "tip_prenatal-1_004",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "text": "سنة نبوية: الأذان في أذن المولود اليمنى عند ولادته يرسخ نداء التوحيد كأول صوت يدخل سمعه ويبعث السكينة في روحه.",
         "unit_id": None,
@@ -229,8 +243,8 @@ TIPS_DATA = [
         "approved_by": None
     },
     {
-        "id": "tip_0-3_035",
-        "age_group": "0-3",
+        "id": "tip_prenatal-1_005",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "text": "عند بكاء الرضيع: طبق تقنية التقميط والضوضاء البيضاء ومص اللهاية؛ إنها تحاكي بيئة الرحم الآمنة وتهدئ جهازه العصبي سريعاً.",
         "unit_id": None,
@@ -243,8 +257,8 @@ TIPS_DATA = [
         "approved_by": None
     },
     {
-        "id": "tip_0-3_036",
-        "age_group": "0-3",
+        "id": "tip_prenatal-1_006",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "text": "نوم الرضيع الآمن: دائماً على الظهر في سرير مستقل خالٍ من الوسائد والأغطية الفضفاضة، للوقاية الصارمة من متلازمة SIDS.",
         "unit_id": None,
@@ -257,8 +271,8 @@ TIPS_DATA = [
         "approved_by": None
     },
     {
-        "id": "tip_0-3_037",
-        "age_group": "0-3",
+        "id": "tip_prenatal-1_007",
+        "age_group": "prenatal-1",
         "domain": "infant_pregnancy",
         "text": "قاعدة ذهبية: صفر شاشات تحت سن العامين. دماغ طفلك يحتاج وجهك وصوتك ليطور النطق والتواصل، والشاشات تؤخر الكلام.",
         "unit_id": None,
@@ -273,7 +287,7 @@ TIPS_DATA = [
 ]
 
 def main():
-    print("Seeding Infant & Pregnancy curriculum content...")
+    print("Seeding Infant & Pregnancy curriculum content for canonical 'prenatal-1'...")
     
     # 1. Path
     path_file = PATHS_DIR / f"{PATH_DATA['id']}.json"
@@ -337,6 +351,7 @@ def main():
 
 هذا المجلد يضم مصادر الـ 5 دروس الخاصة بمسار:
 **«{PATH_DATA['title']}»** (`{PATH_DATA['id']}`)
+**المرحلة العمرية:** `{PATH_DATA['age_group']}`
 
 ## كيفية الاستخدام مع Gemini Notebook / NotebookLM:
 1. افتح [Google NotebookLM](https://notebooklm.google.com).
@@ -353,13 +368,13 @@ def main():
     # 6. Docs: Prompts guide
     prompts_doc = f"""# برومبتات توليد فيديوهات وإنفوجراف مسار الحمل والرضع في NotebookLM
 
-> **لخالد:** هذه حزمة البرومبتات المهيأة لـ **Google NotebookLM / Gemini Notebook** لتوليد الفيديوهات والإنفوجراف والبودكاست الخاص بمسار **«الحمل والمولود الجديد: رحلة الرعاية والسكينة»**.
+> **لخالد:** هذه حزمة البرومبتات المهيأة لـ **Google NotebookLM / Gemini Notebook** لتوليد الفيديوهات والإنفوجراف والبودكاست الخاص بمسار **«الحمل والمولود الجديد: رحلة الرعاية والسكينة»** (`{PATH_DATA['id']}`).
 > **الإعداد الحاسم:** في إعدادات التوليد داخل NotebookLM، تأكد من اختيار **Output language: العربية**.
 
 ---
 
 ## 1) فيديو الدرس الأول: سيكولوجية الحمل والرابطة المبكرة مع الجنين
-* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_0-3_infant_pregnancy_01.md`
+* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_prenatal-1_infant_pregnancy_01.md`
 * **البرومبت:**
 ```text
 أنشئ فيديو تعليمياً دافئاً ومحفزاً (~4-5 دقائق) باللغة العربية الفصحى الميسرة موجهاً للأمهات الحوامل والآباء الجدد عن سيكولوجية الحمل والرابطة المبكرة مع الجنين. النقاط الجوهرية: متى يكتمل سمع الجنين (الأسبوع 18)؛ استجابة الجنين لنبضات قلب أمه وصوت القرآن الكريم وصوت الأب؛ كيف ينعكس الأمان النفسي للأم وراحة بالها على تكوين الجهاز العصبي للجنين؛ دور الزوج المحوري في تقديم السند والرفق بالمرأة الحامل وتخفيف القلق؛ تمرين عملي: الحديث والقراءة اليومية للجنين قبل النوم. نبرة حانية، مطمئنة، مفعمة بالسكينة والإيمان.
@@ -368,7 +383,7 @@ def main():
 ---
 
 ## 2) فيديو الدرس الثاني: سنن الاستقبال النبوية للمولود الجديد
-* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_0-3_infant_pregnancy_02.md`
+* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_prenatal-1_infant_pregnancy_02.md`
 * **البرومبت:**
 ```text
 أنشئ فيديو تعليمياً وإيمانياً راقياً (~4-5 دقائق) بالعربية الفصحى عن الهدي النبوي في استقبال المولود الجديد. النقاط الجوهرية: الحكمة النفسية والروحية للأذان في الأذن اليمنى ليكون التوحيد أول ما يسمعه؛ التحنيك بتمرة؛ سنن اليوم السابع: اختيار الاسم الحسن، العقيقة كشكر لله وإشاعة للمودة، وحلق الشعر والتصدق بوزنه؛ التحصين اليومي بالمعوذات والأدعية النبوية لحفظ الصغير من العين والفزع. نبرة نورانية تجمع بين روعة السنّة النبوية والارتباط الأسري العميق.
@@ -377,7 +392,7 @@ def main():
 ---
 
 ## 3) فيديو الدرس الثالث: إتقان الرضاعة الطبيعية والرعاية الجسدية المبكرة
-* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_0-3_infant_pregnancy_03.md`
+* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_prenatal-1_infant_pregnancy_03.md`
 * **البرومبت:**
 ```text
 أنشئ فيديو إرشادياً عملياً وطبياً مبسطاً (~4-5 دقائق) بالعربية للأمهات والآباء الجدد عن إتقان الرضاعة الطبيعية. النقاط: المعجزة المناعية للبأ (السرسوب) في الساعات الأولى كأول تطعيم طبيعي؛ الأوضاع الصحيحة للإلتقام لتجنب تشققات وألم الحلمة؛ قراءة علامات الجوع المبكرة قبل مرحلة البكاء؛ أهمية ملامسة الجلد للجلد (Skin-to-Skin)؛ كيف يكون الزوج شريكاً عملياً في راحة الأم بعد الولادة والتجشؤ وتغيير الحفاض. نبرة علمية دقيقة مشجعة للأم وداعمة لثقتها بنفسها.
@@ -386,7 +401,7 @@ def main():
 ---
 
 ## 4) فيديو الدرس الرابع: فك شفرة البكاء وهندسة نوم الرضيع
-* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_0-3_infant_pregnancy_04.md`
+* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_prenatal-1_infant_pregnancy_04.md`
 * **البرومبت:**
 ```text
 أنشئ فيديو توعوياً عملياً (~4-5 دقائق) بالعربية عن فهم بكاء الرضيع وقواعد النوم الآمن. النقاط: البكاء كلغة احتياج (جوع، غازات، فرط استثارة، بلل)؛ تقنية التهدئة الخمسية (5 S's): التقميط الصحي لليدين مع راحة الوركين، وضعية الجنب المؤقتة أثناء الحمل، الضوضاء البيضاء لمحاكاة صوت الرحم، الهدهدة اللطيفة، والمص؛ القواعد الصارمة للنوم الآمن والوقاية من متلازمة موت الرضع المفاجئ (SIDS): النوم دائماً على الظهر، في سرير مستقل بجانب الوالدين، خالي تماماً من الوسائد والأغطية الفضفاضة. نبرة عملية هادئة ومريحة لأعصاب الوالدين.
@@ -395,7 +410,7 @@ def main():
 ---
 
 ## 5) فيديو الدرس الخامس: الدرع الرقمي المبكر وصحة الوالدين النفسية
-* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_0-3_infant_pregnancy_05.md`
+* **الملف المصدر:** `notebooklm_sources/prenatal-1/lesson_prenatal-1_infant_pregnancy_05.md`
 * **البرومبت:**
 ```text
 أنشئ فيديو توعوياً قوياً وملهماً (~4-5 دقائق) بالعربية الفصحى عن حماية الرضيع من الشاشات والعناية بصحة الوالدين النفسية. النقاط: قاعدة الصفر شاشات التامة دون سن العامين وحظر هواتف الأطفال وأغاني الرضع الرقمية حمايةً لنمو الدماغ من تشتت الانتباه وتأخر النطق؛ البدائل الطبيعية عبر التفاعل البشري المباشر وتعبيرات الوجه والكلام؛ مراقبة صحة الأم بعد الولادة والفرق بين كآبة النفاس العابرة واكتئاب ما بعد الولادة؛ الشراكة الزوجية وجدولة ساعات النوم للوقاية من الاحتراق النفسي. رسالة ختامية واثقة وداعمة للأسرة.
@@ -412,7 +427,7 @@ def main():
     assert_clean(prompts_doc, "PROMPTS DOC")
     (DOCS_DIR / "prenatal_notebooklm_prompts.md").write_text(prompts_doc, encoding="utf-8")
     print("Created prompts doc: docs/prenatal_notebooklm_prompts.md")
-    print("All curriculum files created successfully!")
+    print("All curriculum files seeded successfully with canonical prenatal-1!")
 
 if __name__ == "__main__":
     main()

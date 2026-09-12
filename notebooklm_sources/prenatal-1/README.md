@@ -1,7 +1,8 @@
 # مصادر مسار الحمل والرضع — Google NotebookLM / Gemini Notebook
 
 هذا المجلد يضم مصادر الـ 5 دروس الخاصة بمسار:
-**«الحمل والمولود الجديد: رحلة الرعاية والسكينة»** (`path_0-3_infant_pregnancy_foundations`)
+**«الحمل والمولود الجديد: رحلة الرعاية والسكينة»** (`path_prenatal-1_infant_pregnancy_foundations`)
+**المرحلة العمرية:** `prenatal-1`
 
 ## كيفية الاستخدام مع Gemini Notebook / NotebookLM:
 1. افتح [Google NotebookLM](https://notebooklm.google.com).

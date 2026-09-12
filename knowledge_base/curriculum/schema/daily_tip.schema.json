@@ -15,7 +15,7 @@
   "properties": {
     "id": {
       "type": "string",
-      "pattern": "^tip_[0-9-]+_[0-9]{3,4}$",
+      "pattern": "^tip_[a-z0-9_-]+_[0-9]{3,4}$",
       "description": "معرّف النصيحة. النمط: tip_<age_group>_<seq>. مثال: tip_4-6_001. الـ seq يتجدد لكل age_group."
     },
     "age_group": {

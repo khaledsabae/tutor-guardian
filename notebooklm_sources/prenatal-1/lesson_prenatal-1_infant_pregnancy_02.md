@@ -1,7 +1,7 @@
 # مصدر الدرس: الحمل والمولود الجديد: رحلة الرعاية والسكينة / سنن الاستقبال النبوية للمولود الجديد
-**المعرف:** lesson_0-3_infant_pregnancy_02
-**المسار:** path_0-3_infant_pregnancy_foundations
-**الفئة العمرية:** 0-3
+**المعرف:** lesson_prenatal-1_infant_pregnancy_02
+**المسار:** path_prenatal-1_infant_pregnancy_foundations
+**الفئة العمرية:** prenatal-1
 **المجال:** infant_pregnancy
 **الوحدات المرجعية:** med-c7a1bbf6
 

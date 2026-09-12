@@ -1,7 +1,7 @@
 # مصدر الدرس: الحمل والمولود الجديد: رحلة الرعاية والسكينة / إتقان الرضاعة الطبيعية والرعاية الجسدية المبكرة
-**المعرف:** lesson_0-3_infant_pregnancy_03
-**المسار:** path_0-3_infant_pregnancy_foundations
-**الفئة العمرية:** 0-3
+**المعرف:** lesson_prenatal-1_infant_pregnancy_03
+**المسار:** path_prenatal-1_infant_pregnancy_foundations
+**الفئة العمرية:** prenatal-1
 **المجال:** infant_pregnancy
 **الوحدات المرجعية:** 6970f436-c954-45ac-ab96-30a798cf523f
 

@@ -1,7 +1,7 @@
 # مصدر الدرس: الحمل والمولود الجديد: رحلة الرعاية والسكينة / سيكولوجية الحمل والرابطة المبكرة مع الجنين
-**المعرف:** lesson_0-3_infant_pregnancy_01
-**المسار:** path_0-3_infant_pregnancy_foundations
-**الفئة العمرية:** 0-3
+**المعرف:** lesson_prenatal-1_infant_pregnancy_01
+**المسار:** path_prenatal-1_infant_pregnancy_foundations
+**الفئة العمرية:** prenatal-1
 **المجال:** infant_pregnancy
 **الوحدات المرجعية:** 70ef8432-d97f-490a-acab-8df9e57f8652
 

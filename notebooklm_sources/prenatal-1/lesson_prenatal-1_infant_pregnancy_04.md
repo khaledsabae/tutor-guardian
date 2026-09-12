@@ -1,7 +1,7 @@
 # مصدر الدرس: الحمل والمولود الجديد: رحلة الرعاية والسكينة / فك شفرة البكاء وهندسة نوم الرضيع
-**المعرف:** lesson_0-3_infant_pregnancy_04
-**المسار:** path_0-3_infant_pregnancy_foundations
-**الفئة العمرية:** 0-3
+**المعرف:** lesson_prenatal-1_infant_pregnancy_04
+**المسار:** path_prenatal-1_infant_pregnancy_foundations
+**الفئة العمرية:** prenatal-1
 **المجال:** infant_pregnancy
 **الوحدات المرجعية:** c88f868b-4f40-45eb-b357-f8867b2c327d
 

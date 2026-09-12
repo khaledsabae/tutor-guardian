@@ -1,7 +1,7 @@
 # مصدر الدرس: الحمل والمولود الجديد: رحلة الرعاية والسكينة / الدرع الرقمي المبكر وصحة الوالدين النفسية
-**المعرف:** lesson_0-3_infant_pregnancy_05
-**المسار:** path_0-3_infant_pregnancy_foundations
-**الفئة العمرية:** 0-3
+**المعرف:** lesson_prenatal-1_infant_pregnancy_05
+**المسار:** path_prenatal-1_infant_pregnancy_foundations
+**الفئة العمرية:** prenatal-1
 **المجال:** infant_pregnancy
 **الوحدات المرجعية:** 77e9aa1e-342f-4497-bb5b-a998ac638da2
 
