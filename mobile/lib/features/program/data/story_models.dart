@@ -46,6 +46,21 @@ class Story {
   /// Defaults to `ar`: the Arabic files predate the field and carry no tag.
   final String language;
 
+  /// Target developmental stage (e.g. '3-6 سنوات' / 'الروضة').
+  final String? ageGroup;
+
+  /// Core ethical / behavioral category (e.g. 'الصدق والأمانة').
+  final String? category;
+
+  /// Smart questions for parent-child guided dialogue after reading.
+  final List<String> discussionQuestions;
+
+  /// Hadith, Ayah, or prophetic wisdom anchoring the story's moral.
+  final String? islamicValue;
+
+  /// Concrete practical action challenge for the child to apply tomorrow.
+  final String? actionChallenge;
+
   Story({
     required this.id,
     required this.title,
@@ -55,6 +70,11 @@ class Story {
     this.videoFile,
     required this.pages,
     this.language = 'ar',
+    this.ageGroup,
+    this.category,
+    this.discussionQuestions = const [],
+    this.islamicValue,
+    this.actionChallenge,
   });
 
   factory Story.fromJson(Map<String, dynamic> json) {
@@ -71,11 +91,25 @@ class Story {
       videoFile: json['videoFile'] as String?,
       pages: parsedPages,
       language: (json['language'] as String?) ?? 'ar',
+      ageGroup: json['ageGroup'] as String?,
+      category: json['category'] as String?,
+      discussionQuestions: (json['discussionQuestions'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          const [],
+      islamicValue: json['islamicValue'] as String?,
+      actionChallenge: json['actionChallenge'] as String?,
     );
   }
 
   /// Whether the story has a looping ambient video cover.
   bool get hasVideo => videoFile != null && videoFile!.isNotEmpty;
+
+  /// Whether the story includes post-reading guided debriefing.
+  bool get hasDebrief =>
+      discussionQuestions.isNotEmpty ||
+      (islamicValue != null && islamicValue!.isNotEmpty) ||
+      (actionChallenge != null && actionChallenge!.isNotEmpty);
 }
 
 /// Which story library to load, given the locale the user chose (or `null`

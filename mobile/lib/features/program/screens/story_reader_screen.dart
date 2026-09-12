@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:page_flip/page_flip.dart';
 import 'package:video_player/video_player.dart';
@@ -37,6 +38,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   bool _sleepMode = false;
   bool _audioReady = false;
   double _fontSizeMultiplier = 1.0;
+  bool _challengeAccepted = false;
 
   @override
   void initState() {
@@ -296,77 +298,368 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   }
 
   Widget _buildEndCard(Color themeColor) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-      padding: const EdgeInsets.all(28),
-      decoration: BoxDecoration(
-        color: Dt.surface,
-        borderRadius: BorderRadius.circular(28),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            '🌟',
-            style: TextStyle(fontSize: 72),
-          )
-              .animate(onPlay: (c) => c.repeat())
-              .scaleXY(begin: 0.9, end: 1.1, duration: 1200.ms)
-              .then()
-              .scaleXY(begin: 1.1, end: 0.9, duration: 1200.ms),
-          const SizedBox(height: 20),
-          Text(
-            AppLocalizations.of(context).storyWellDone,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: themeColor,
-              fontSize: 24,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            AppLocalizations.of(context).storyRelaxNow,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFF4A4A4A),
-              fontSize: 16,
-              height: 1.6,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 24),
-          FilledButton.icon(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.check),
-            label: Text(AppLocalizations.of(context).storyClose),
-            style: FilledButton.styleFrom(
-              backgroundColor: themeColor,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 28,
-                vertical: 14,
+    if (!widget.story.hasDebrief) {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+        padding: const EdgeInsets.all(28),
+        decoration: BoxDecoration(
+          color: Dt.surface,
+          borderRadius: BorderRadius.circular(28),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              '🌟',
+              style: TextStyle(fontSize: 72),
+            )
+                .animate(onPlay: (c) => c.repeat())
+                .scaleXY(begin: 0.9, end: 1.1, duration: 1200.ms)
+                .then()
+                .scaleXY(begin: 1.1, end: 0.9, duration: 1200.ms),
+            const SizedBox(height: 20),
+            Text(
+              AppLocalizations.of(context).storyWellDone,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: themeColor,
+                fontSize: 24,
+                fontWeight: FontWeight.w800,
               ),
             ),
-          ),
-          const SizedBox(height: 8),
-          // §6.4 — a quiet pride-moment referral ask: the story just ended
-          // well, so this is the one place a «دلّ أسرة أخرى» nudge belongs.
-          TextButton(
-            onPressed: () {
-              unawaited(Analytics.prideInviteTapped('story_end'));
-              Navigator.of(context).push(AppRoutes.invite());
-            },
-            child: Text(
-              AppLocalizations.of(context).prideStoryInvite,
+            const SizedBox(height: 10),
+            Text(
+              AppLocalizations.of(context).storyRelaxNow,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color(0xFF4A4A4A),
-                fontSize: 13,
+                fontSize: 16,
+                height: 1.6,
                 fontWeight: FontWeight.w600,
               ),
             ),
+            const SizedBox(height: 24),
+            FilledButton.icon(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.check),
+              label: Text(AppLocalizations.of(context).storyClose),
+              style: FilledButton.styleFrom(
+                backgroundColor: themeColor,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 28,
+                  vertical: 14,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            TextButton(
+              onPressed: () {
+                unawaited(Analytics.prideInviteTapped('story_end'));
+                Navigator.of(context).push(AppRoutes.invite());
+              },
+              child: Text(
+                AppLocalizations.of(context).prideStoryInvite,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Color(0xFF4A4A4A),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 28),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 22),
+      decoration: BoxDecoration(
+        color: Dt.surface,
+        borderRadius: BorderRadius.circular(28),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Center(
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: themeColor.withValues(alpha: 0.12),
+                  shape: BoxShape.circle,
+                ),
+                child: const Text('🌟', style: TextStyle(fontSize: 40)),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'أحسنت يا بطل! جلسة الحوار التربوي',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: themeColor,
+                fontSize: 19,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              'وقت الحوار والتفكير والتواصل بين الأهل والطفل',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF6B7280),
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // 1. Discussion Questions
+            if (widget.story.discussionQuestions.isNotEmpty) ...[
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: themeColor.withValues(alpha: 0.06),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: themeColor.withValues(alpha: 0.20),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text('💬', style: TextStyle(fontSize: 18)),
+                        const SizedBox(width: 8),
+                        Text(
+                          'حوار المربي مع طفلك (اسأله وناقشه):',
+                          style: TextStyle(
+                            color: themeColor,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    for (int i = 0; i < widget.story.discussionQuestions.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 20,
+                              height: 20,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: themeColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Text(
+                                '${i + 1}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                widget.story.discussionQuestions[i],
+                                style: const TextStyle(
+                                  color: Color(0xFF1F2937),
+                                  fontSize: 13,
+                                  height: 1.5,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+
+            // 2. Islamic Value anchor
+            if (widget.story.islamicValue != null && widget.story.islamicValue!.isNotEmpty) ...[
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFFBEB),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: const Color(0xFFF59E0B).withValues(alpha: 0.35),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Text('🕌', style: TextStyle(fontSize: 18)),
+                        SizedBox(width: 8),
+                        Text(
+                          'المرساة القيمية والأثر النبوي:',
+                          style: TextStyle(
+                            color: Color(0xFF92400E),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      widget.story.islamicValue!,
+                      style: const TextStyle(
+                        color: Color(0xFF78350F),
+                        fontSize: 13,
+                        height: 1.6,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+
+            // 3. Action Challenge
+            if (widget.story.actionChallenge != null && widget.story.actionChallenge!.isNotEmpty) ...[
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0FDF4),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: const Color(0xFF10B981).withValues(alpha: 0.35),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Text('🎯', style: TextStyle(fontSize: 18)),
+                        SizedBox(width: 8),
+                        Text(
+                          'تحدي الغد للطفل البطل:',
+                          style: TextStyle(
+                            color: Color(0xFF065F46),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      widget.story.actionChallenge!,
+                      style: const TextStyle(
+                        color: Color(0xFF047857),
+                        fontSize: 13,
+                        height: 1.5,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    InkWell(
+                      onTap: () {
+                        HapticFeedback.mediumImpact();
+                        setState(() {
+                          _challengeAccepted = !_challengeAccepted;
+                        });
+                      },
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                        decoration: BoxDecoration(
+                          color: _challengeAccepted
+                              ? const Color(0xFF10B981)
+                              : const Color(0xFF10B981).withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: const Color(0xFF10B981),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              _challengeAccepted ? Icons.check_circle : Icons.emoji_events_outlined,
+                              color: _challengeAccepted ? Colors.white : const Color(0xFF065F46),
+                              size: 18,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              _challengeAccepted
+                                  ? '✓ قبلنا التحدي يا بطل! بارك الله فيك'
+                                  : 'قبلنا التحدي معاً! 👏',
+                              style: TextStyle(
+                                color: _challengeAccepted ? Colors.white : const Color(0xFF065F46),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+            ],
+
+            // Action buttons
+            FilledButton.icon(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.done_all),
+              label: const Text('أتممنا قراءة القصة والحوار المبارك ✓'),
+              style: FilledButton.styleFrom(
+                backgroundColor: themeColor,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+              ),
+            ),
+            const SizedBox(height: 6),
+            TextButton(
+              onPressed: () {
+                unawaited(Analytics.prideInviteTapped('story_end'));
+                Navigator.of(context).push(AppRoutes.invite());
+              },
+              child: Text(
+                AppLocalizations.of(context).prideStoryInvite,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Color(0xFF6B7280),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

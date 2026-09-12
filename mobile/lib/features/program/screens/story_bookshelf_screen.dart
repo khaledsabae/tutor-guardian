@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
@@ -118,9 +119,51 @@ class _BookshelfBodyState extends State<_BookshelfBody>
     if (mounted) setState(() => _narrated = keys);
   }
 
+  String _selectedFilter = 'all';
+
+  List<Story> get _visibleStories {
+    if (_selectedFilter == 'kindergarten') {
+      return widget.stories
+          .where((s) =>
+              s.ageGroup != null &&
+              (s.ageGroup!.contains('3') ||
+                  s.ageGroup!.contains('الروضة') ||
+                  s.ageGroup!.contains('4-7')))
+          .toList();
+    } else if (_selectedFilter == 'school') {
+      return widget.stories
+          .where((s) =>
+              s.ageGroup != null &&
+              (s.ageGroup!.contains('5') ||
+                  s.ageGroup!.contains('7') ||
+                  s.ageGroup!.contains('8')))
+          .toList();
+    }
+    return widget.stories;
+  }
+
+  void _setFilter(String filter) {
+    if (_selectedFilter == filter) return;
+    HapticFeedback.selectionClick();
+    for (final vc in _videoControllers.values) {
+      vc.dispose();
+    }
+    _videoControllers.clear();
+    setState(() {
+      _selectedFilter = filter;
+      _currentPage = 0;
+      _centeredPage = 0;
+    });
+    if (_controller.hasClients) {
+      _controller.jumpToPage(0);
+    }
+    _syncVideoWindow(0);
+  }
+
   /// Create controllers inside the window around [centered], drop the rest.
   void _syncVideoWindow(int centered) {
-    final wanted = videoWindowFor(centered: centered, stories: widget.stories);
+    final stories = _visibleStories;
+    final wanted = videoWindowFor(centered: centered, stories: stories);
 
     for (final index in _videoControllers.keys.toList()) {
       if (!wanted.contains(index)) {
@@ -130,7 +173,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
 
     for (final index in wanted) {
       if (_videoControllers.containsKey(index)) continue;
-      final file = widget.stories[index].videoFile!;
+      final file = stories[index].videoFile!;
       final controller = file.startsWith('docs/')
           ? VideoPlayerController.networkUrl(
               Uri.parse('${AppConfig.apiBaseUrl}/$file'),
@@ -193,7 +236,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
         Text(
           AppLocalizations.of(context).bedtimeStories,
           textAlign: TextAlign.center,
@@ -203,27 +246,55 @@ class _BookshelfBodyState extends State<_BookshelfBody>
                 fontSize: 26,
               ),
         ).animate().fadeIn(duration: Dt.slow).slideY(begin: -0.1),
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
         Text(
           AppLocalizations.of(context).bedtimeStoriesDesc,
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Color(0xFFE0D5C1),
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: FontWeight.w600,
           ),
         ).animate(delay: 150.ms).fadeIn(duration: Dt.base),
-        const SizedBox(height: 24),
+        const SizedBox(height: 12),
+        // Age group & category filter pills
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _BookshelfFilterChip(
+                label: 'الكل (${widget.stories.length})',
+                selected: _selectedFilter == 'all',
+                onTap: () => _setFilter('all'),
+              ),
+              const SizedBox(width: 8),
+              _BookshelfFilterChip(
+                label: '🍼 قصص الروضة (٣-٦)',
+                selected: _selectedFilter == 'kindergarten',
+                onTap: () => _setFilter('kindergarten'),
+              ),
+              const SizedBox(width: 8),
+              _BookshelfFilterChip(
+                label: '⭐ ٧ سنوات فأكثر',
+                selected: _selectedFilter == 'school',
+                onTap: () => _setFilter('school'),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
         Expanded(
           child: Stack(
             children: [
               const Positioned.fill(child: TwinklingStars(count: 55)),
               PageView.builder(
                 controller: _controller,
-                itemCount: widget.stories.length,
+                itemCount: _visibleStories.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  final story = widget.stories[index];
+                  final story = _visibleStories[index];
                   final distance = (_currentPage - index).abs();
                   final scale = 1 - (distance * 0.18).clamp(0.0, 0.45);
                   final angle = (index - _currentPage) * 0.18;
@@ -252,9 +323,9 @@ class _BookshelfBodyState extends State<_BookshelfBody>
             ],
           ),
         ),
+        const SizedBox(height: 20),
+        _PageDots(count: _visibleStories.length, page: _currentPage),
         const SizedBox(height: 24),
-        _PageDots(count: widget.stories.length, page: _currentPage),
-        const SizedBox(height: 32),
       ],
     );
   }
@@ -381,20 +452,7 @@ class _BookCover extends StatelessWidget {
                                 height: 130,
                                 fit: BoxFit.cover,
                                 errorBuilder: (_, _, _) => Text(
-                                  story.id == 'hope_sprout' ? '🌱' : 
-                                  story.id == 'kitten_kindness' ? '🐱' :
-                                  story.id == 'layla_star' ? '⭐' :
-                                  story.id == 'saleh_bird' ? '🐦' :
-                                  story.id == 'noor_clean' ? '🌳' :
-                                  story.id == 'maryam_toys' ? '🎁' :
-                                  story.id == 'omar_prayer' ? '🕌' :
-                                  story.id == 'khadija_neighbor' ? '🍲' :
-                                  story.id == 'abdullah_bismillah' ? '🍇' :
-                                  story.id == 'hamza_truth' ? '💬' :
-                                  story.id == 'aisha_permission' ? '🚪' :
-                                  story.id == 'yaseen_creation' ? '🌿' :
-                                  story.id == 'fatima_parents' ? '🌹' :
-                                  story.id == 'bilal_forgiveness' ? '🤝' : '📖',
+                                  _emojiForStory(story.id),
                                   style: const TextStyle(fontSize: 72),
                                 ),
                               )
@@ -404,27 +462,14 @@ class _BookCover extends StatelessWidget {
                                 height: 130,
                                 fit: BoxFit.cover,
                                 errorBuilder: (_, _, _) => Text(
-                                  story.id == 'hope_sprout' ? '🌱' : 
-                                  story.id == 'kitten_kindness' ? '🐱' :
-                                  story.id == 'layla_star' ? '⭐' :
-                                  story.id == 'saleh_bird' ? '🐦' :
-                                  story.id == 'noor_clean' ? '🌳' :
-                                  story.id == 'maryam_toys' ? '🎁' :
-                                  story.id == 'omar_prayer' ? '🕌' :
-                                  story.id == 'khadija_neighbor' ? '🍲' :
-                                  story.id == 'abdullah_bismillah' ? '🍇' :
-                                  story.id == 'hamza_truth' ? '💬' :
-                                  story.id == 'aisha_permission' ? '🚪' :
-                                  story.id == 'yaseen_creation' ? '🌿' :
-                                  story.id == 'fatima_parents' ? '🌹' :
-                                  story.id == 'bilal_forgiveness' ? '🤝' : '📖',
+                                  _emojiForStory(story.id),
                                   style: const TextStyle(fontSize: 72),
                                 ),
                               )).animate(onPlay: (c) => c.repeat()).shimmer(
                               duration: const Duration(seconds: 3),
                               color: Colors.white.withValues(alpha: 0.25),
                             ),
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 14),
                         // Centred, so direction is invisible on one line — but
                         // a wrapped bidi title reorders its runs by the ambient
                         // direction, and the ambient direction here belongs to
@@ -437,12 +482,38 @@ class _BookCover extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 20,
+                              fontSize: 19,
                               fontWeight: FontWeight.w800,
                               height: 1.25,
                             ),
                           ),
                         ),
+                        if (story.category != null || story.ageGroup != null) ...[
+                          const SizedBox(height: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withValues(alpha: 0.35),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.25),
+                              ),
+                            ),
+                            child: Text(
+                              story.category != null
+                                  ? '${story.category} · ${story.ageGroup ?? ""}'
+                                  : story.ageGroup!,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -522,3 +593,92 @@ class _PageDots extends StatelessWidget {
     );
   }
 }
+
+class _BookshelfFilterChip extends StatelessWidget {
+  const _BookshelfFilterChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+        decoration: BoxDecoration(
+          color: selected
+              ? Dt.accent
+              : Colors.white.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: selected
+                ? Dt.accent
+                : Colors.white.withValues(alpha: 0.25),
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: selected ? Colors.black : Colors.white,
+            fontSize: 12,
+            fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+String _emojiForStory(String id) {
+  switch (id) {
+    case 'badr_broken_toy':
+      return '🏎️';
+    case 'sarah_basil_sprout':
+      return '🌱';
+    case 'tamim_anger_volcano':
+      return '🌋';
+    case 'noura_sharing_box':
+      return '🎨';
+    case 'salman_secret_trust':
+      return '⌚';
+    case 'hope_sprout':
+      return '🌱';
+    case 'kitten_kindness':
+      return '🐱';
+    case 'layla_star':
+      return '⭐';
+    case 'saleh_bird':
+      return '🐦';
+    case 'noor_clean':
+      return '🌳';
+    case 'maryam_toys':
+      return '🎁';
+    case 'omar_prayer':
+      return '🕌';
+    case 'khadija_neighbor':
+      return '🍲';
+    case 'abdullah_bismillah':
+      return '🍇';
+    case 'hamza_truth':
+      return '💬';
+    case 'aisha_permission':
+      return '🚪';
+    case 'yaseen_creation':
+      return '🌿';
+    case 'fatima_parents':
+      return '🌹';
+    case 'bilal_forgiveness':
+      return '🤝';
+    default:
+      return '📖';
+  }
+}
+
