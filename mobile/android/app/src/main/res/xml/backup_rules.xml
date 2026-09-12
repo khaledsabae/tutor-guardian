@@ -16,6 +16,8 @@
     <exclude domain="file" path="narrations/" />
     <!-- The child-mode PIN and tokens live in EncryptedSharedPreferences;
          restoring them onto a different device would carry a family's lock
-         to a phone their child might be holding. -->
+         to a phone their child might be holding, and restoring them without
+         the hardware Keystore keys leads to BadPaddingException. -->
     <exclude domain="sharedpref" path="FlutterSecureStorage.xml" />
+    <exclude domain="sharedpref" path="FlutterSecureKeyStorage.xml" />
 </full-backup-content>

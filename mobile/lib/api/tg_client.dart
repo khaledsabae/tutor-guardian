@@ -64,6 +64,19 @@ class TgStreamError extends TgStreamEvent {
   const TgStreamError(this.detail);
 }
 
+/// Default secure storage with resetOnError enabled to self-heal against
+/// Android Keystore desync / BadPaddingException on reinstall or lock change.
+FlutterSecureStorage createDefaultSecureStorage() {
+  return const FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      resetOnError: true,
+    ),
+    iOptions: IOSOptions(
+      accessibility: KeychainAccessibility.first_unlock,
+    ),
+  );
+}
+
 /// Single source of truth for the device id, session id, and bearer token.
 /// Persisted in `flutter_secure_storage` (Android Keystore).
 class _AuthStore {
@@ -82,15 +95,45 @@ class _AuthStore {
   String? _cachedSessionId;
   String? _cachedToken;
 
+  Future<String?> _safeRead(String key) async {
+    try {
+      return await _storage.read(key: key);
+    } catch (_) {
+      // If Keystore key was invalidated or BadPaddingException happens,
+      // wipe the corrupted storage to recover smoothly without crashing.
+      try {
+        await _storage.deleteAll();
+      } catch (_) {}
+      return null;
+    }
+  }
+
+  Future<void> _safeWrite(String key, String value) async {
+    try {
+      await _storage.write(key: key, value: value);
+    } catch (_) {
+      try {
+        await _storage.deleteAll();
+        await _storage.write(key: key, value: value);
+      } catch (_) {}
+    }
+  }
+
+  Future<void> _safeDelete(String key) async {
+    try {
+      await _storage.delete(key: key);
+    } catch (_) {}
+  }
+
   Future<String> getOrCreateDeviceId() async {
     if (_cachedDeviceId != null) return _cachedDeviceId!;
-    final existing = await _storage.read(key: _kDeviceId);
+    final existing = await _safeRead(_kDeviceId);
     if (existing != null && existing.isNotEmpty) {
       _cachedDeviceId = existing;
       return existing;
     }
     final fresh = _uuid.v4();
-    await _storage.write(key: _kDeviceId, value: fresh);
+    await _safeWrite(_kDeviceId, fresh);
     _cachedDeviceId = fresh;
     return fresh;
   }
@@ -98,16 +141,16 @@ class _AuthStore {
   Future<void> setSession({required String sessionId, required String token}) async {
     _cachedSessionId = sessionId;
     _cachedToken = token;
-    await _storage.write(key: _kSessionId, value: sessionId);
-    await _storage.write(key: _kToken, value: token);
+    await _safeWrite(_kSessionId, sessionId);
+    await _safeWrite(_kToken, token);
   }
 
   Future<(String?, String?)> readSession() async {
     if (_cachedSessionId != null && _cachedToken != null) {
       return (_cachedSessionId!, _cachedToken!);
     }
-    final sid = await _storage.read(key: _kSessionId);
-    final tok = await _storage.read(key: _kToken);
+    final sid = await _safeRead(_kSessionId);
+    final tok = await _safeRead(_kToken);
     _cachedSessionId = sid;
     _cachedToken = tok;
     return (sid, tok);
@@ -116,34 +159,34 @@ class _AuthStore {
   Future<void> clearSession() async {
     _cachedSessionId = null;
     _cachedToken = null;
-    await _storage.delete(key: _kSessionId);
-    await _storage.delete(key: _kToken);
+    await _safeDelete(_kSessionId);
+    await _safeDelete(_kToken);
   }
 
   Future<int?> readActiveChildId() async {
-    final raw = await _storage.read(key: _kActiveChildId);
+    final raw = await _safeRead(_kActiveChildId);
     if (raw == null) return null;
     return int.tryParse(raw);
   }
 
   Future<void> writeActiveChildId(int? childId) async {
     if (childId == null) {
-      await _storage.delete(key: _kActiveChildId);
+      await _safeDelete(_kActiveChildId);
     } else {
-      await _storage.write(key: _kActiveChildId, value: childId.toString());
+      await _safeWrite(_kActiveChildId, childId.toString());
     }
   }
 
   Future<String?> readChildToken() async {
-    return await _storage.read(key: _kChildToken);
+    return await _safeRead(_kChildToken);
   }
 
   Future<void> writeChildToken(String token) async {
-    await _storage.write(key: _kChildToken, value: token);
+    await _safeWrite(_kChildToken, token);
   }
 
   Future<void> clearChildToken() async {
-    await _storage.delete(key: _kChildToken);
+    await _safeDelete(_kChildToken);
   }
 }
 
@@ -154,7 +197,7 @@ class TgClient {
     FlutterSecureStorage? storage,
     this.onNeedActiveChildId,
   })  : _http = httpClient ?? http.Client(),
-        _auth = _AuthStore(storage ?? const FlutterSecureStorage()),
+        _auth = _AuthStore(storage ?? createDefaultSecureStorage()),
         _ownsHttpClient = httpClient == null,
         _baseUrlOverride = null;
 
@@ -166,7 +209,7 @@ class TgClient {
     FlutterSecureStorage? storage,
     this.onNeedActiveChildId,
   })  : _http = httpClient ?? http.Client(),
-        _auth = _AuthStore(storage ?? const FlutterSecureStorage()),
+        _auth = _AuthStore(storage ?? createDefaultSecureStorage()),
         _ownsHttpClient = httpClient == null,
         _baseUrlOverride = baseUrl;
 

@@ -8,6 +8,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -145,10 +146,16 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
     _timer?.cancel();
     final correct = _questions[_currentIndex]['answer'] as int?;
     if (correct == null) return;
+    final isCorrect = index == correct;
+    if (isCorrect) {
+      HapticFeedback.mediumImpact();
+    } else {
+      HapticFeedback.lightImpact();
+    }
     setState(() {
       _selectedAnswer = index;
       _answered = true;
-      if (index == correct) _score += 10;
+      if (isCorrect) _score += 10;
     });
   }
 
