@@ -2,17 +2,17 @@
   "metadata": {
     "version": "1.0",
     "generated_at": "2026-06-09",
-    "total_lessons": 174,
+    "total_lessons": 179,
     "notebook_id": "94f191e6-cfbc-4655-a0d7-c8f7ad0f2287",
     "total_source_pdfs": 44,
     "coverage": {
-      "flashcards": "160/174",
-      "quizzes": "160/174",
-      "reports": "160/174",
-      "data_tables": "160/174",
-      "infographics": "160/174",
-      "podcasts": "174/174",
-      "videos": "106/174"
+      "flashcards": "165/179",
+      "quizzes": "165/179",
+      "reports": "160/179",
+      "data_tables": "160/179",
+      "infographics": "165/179",
+      "podcasts": "179/179",
+      "videos": "106/179"
     },
     "lessons_by_age": {
       "0-3": 6,
@@ -22,14 +22,14 @@
       "2-3": 26,
       "4-6": 25,
       "7-9": 31,
-      "prenatal-1": 14
+      "prenatal-1": 19
     },
     "total_videos": 102,
     "video_languages": [
       "ar"
     ],
     "last_updated": "2026-06-17T10:36:45.998689",
-    "updated_at": "2026-09-12T08:05:43.725330Z"
+    "updated_at": "2026-09-12T16:47:31.063997+00:00"
   },
   "lessons": [
     {
@@ -13223,6 +13223,274 @@
         ]
       },
       "source_id": "2c0ab46f-84b6-4e04-95b1-a7351a465201"
+    },
+    {
+      "lesson_id": "lesson_prenatal-1_infant_pregnancy_01",
+      "age_group": "prenatal-1",
+      "topic_path": "infant_pregnancy_foundations",
+      "title_ar": "سيكولوجية الحمل والرابطة المبكرة مع الجنين",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_01_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_prenatal-1_infant_pregnancy_01_fc.json",
+            "title": "سيكولوجية الحمل والرابطة المبكرة مع الجنين — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_01_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_prenatal-1_infant_pregnancy_01_qz.json",
+            "title": "سيكولوجية الحمل والرابطة المبكرة مع الجنين — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [
+          {
+            "id": "6e5d85e8-1913-4002-b8d7-554223f98c94_infographic_lesson_prenatal-1_infant_pregnancy_01",
+            "file": "docs/lesson_assets/infographics/6e5d85e8-1913-4002-b8d7-554223f98c94_infographic_lesson_prenatal-1_infant_pregnancy_01.png",
+            "title": "سيكولوجية الحمل والارتباط المبكر — إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "ar"
+          },
+          {
+            "id": "c16aa8ca-6bdf-44eb-b91a-28ce66303498_infographic_lesson_prenatal-1_infant_pregnancy_01_en",
+            "file": "docs/lesson_assets/infographics/c16aa8ca-6bdf-44eb-b91a-28ce66303498_infographic_lesson_prenatal-1_infant_pregnancy_01_en.png",
+            "title": "Prenatal Bonding Guide — Infographic",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "en"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_01_podcast",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_01_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 533808
+          },
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_01_podcast_en",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_01_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 359712
+          }
+        ],
+        "videos": []
+      },
+      "source_id": "9707a9df-4854-4c11-af58-c92cfe1b872a"
+    },
+    {
+      "lesson_id": "lesson_prenatal-1_infant_pregnancy_02",
+      "age_group": "prenatal-1",
+      "topic_path": "infant_pregnancy_foundations",
+      "title_ar": "سنن الاستقبال النبوية للمولود الجديد",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_02_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_prenatal-1_infant_pregnancy_02_fc.json",
+            "title": "سنن الاستقبال النبوية للمولود الجديد — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_02_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_prenatal-1_infant_pregnancy_02_qz.json",
+            "title": "سنن الاستقبال النبوية للمولود الجديد — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [
+          {
+            "id": "72765aff-6936-4db6-8c72-a28689f60fb0_infographic_lesson_prenatal-1_infant_pregnancy_02",
+            "file": "docs/lesson_assets/infographics/72765aff-6936-4db6-8c72-a28689f60fb0_infographic_lesson_prenatal-1_infant_pregnancy_02.png",
+            "title": "سنن استقبال المولود الجديد — إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "ar"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_02_podcast",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_02_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 519264
+          },
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_02_podcast_en",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_02_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 354960
+          }
+        ],
+        "videos": []
+      },
+      "source_id": "18d37984-5670-493a-980d-b4ad02dc344e"
+    },
+    {
+      "lesson_id": "lesson_prenatal-1_infant_pregnancy_03",
+      "age_group": "prenatal-1",
+      "topic_path": "infant_pregnancy_foundations",
+      "title_ar": "إتقان الرضاعة الطبيعية والرعاية الجسدية المبكرة",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_03_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_prenatal-1_infant_pregnancy_03_fc.json",
+            "title": "إتقان الرضاعة الطبيعية والرعاية الجسدية المبكرة — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_03_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_prenatal-1_infant_pregnancy_03_qz.json",
+            "title": "إتقان الرضاعة الطبيعية والرعاية الجسدية المبكرة — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [
+          {
+            "id": "746ce29b-f649-4471-90d2-91f18e97e821_infographic_lesson_prenatal-1_infant_pregnancy_03",
+            "file": "docs/lesson_assets/infographics/746ce29b-f649-4471-90d2-91f18e97e821_infographic_lesson_prenatal-1_infant_pregnancy_03.png",
+            "title": "إتقان الرضاعة الطبيعية — إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "ar"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_03_podcast",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_03_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 535680
+          },
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_03_podcast_en",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_03_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 382896
+          }
+        ],
+        "videos": []
+      },
+      "source_id": "5fe37935-6f46-406e-be4c-7eccac8ed772"
+    },
+    {
+      "lesson_id": "lesson_prenatal-1_infant_pregnancy_04",
+      "age_group": "prenatal-1",
+      "topic_path": "infant_pregnancy_foundations",
+      "title_ar": "فك شفرة البكاء وهندسة نوم الرضيع",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_04_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_prenatal-1_infant_pregnancy_04_fc.json",
+            "title": "فك شفرة البكاء وهندسة نوم الرضيع — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_04_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_prenatal-1_infant_pregnancy_04_qz.json",
+            "title": "فك شفرة البكاء وهندسة نوم الرضيع — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [
+          {
+            "id": "776373ab-4295-4d83-8d5b-b4e83d092f44_infographic_lesson_prenatal-1_infant_pregnancy_04",
+            "file": "docs/lesson_assets/infographics/776373ab-4295-4d83-8d5b-b4e83d092f44_infographic_lesson_prenatal-1_infant_pregnancy_04.png",
+            "title": "دليل رعاية ونوم الرضيع الآمن — إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "ar"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_04_podcast",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_04_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 533376
+          },
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_04_podcast_en",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_04_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 375264
+          }
+        ],
+        "videos": []
+      },
+      "source_id": "76608436-7abb-4918-8056-4068533699a1"
+    },
+    {
+      "lesson_id": "lesson_prenatal-1_infant_pregnancy_05",
+      "age_group": "prenatal-1",
+      "topic_path": "infant_pregnancy_foundations",
+      "title_ar": "الدرع الرقمي المبكر وصحة الوالدين النفسية",
+      "assets": {
+        "flashcards": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_05_fc",
+            "file": "docs/lesson_assets/flashcards/gen_lesson_prenatal-1_infant_pregnancy_05_fc.json",
+            "title": "الدرع الرقمي المبكر وصحة الوالدين النفسية — بطاقات",
+            "item_count": 5
+          }
+        ],
+        "quizzes": [
+          {
+            "id": "gen_lesson_prenatal-1_infant_pregnancy_05_qz",
+            "file": "docs/lesson_assets/quizzes/gen_lesson_prenatal-1_infant_pregnancy_05_qz.json",
+            "title": "الدرع الرقمي المبكر وصحة الوالدين النفسية — اختبار",
+            "item_count": 3
+          }
+        ],
+        "reports": [],
+        "data_tables": [],
+        "infographics": [
+          {
+            "id": "53a3c822-ab1e-4d9b-abac-11565f3e91bf_infographic_lesson_prenatal-1_infant_pregnancy_05",
+            "file": "docs/lesson_assets/infographics/53a3c822-ab1e-4d9b-abac-11565f3e91bf_infographic_lesson_prenatal-1_infant_pregnancy_05.png",
+            "title": "الدرع الرقمي وصحة الأم — إنفوجرافيك",
+            "item_count": 0,
+            "resolution": "2752x1536",
+            "language": "ar"
+          }
+        ],
+        "podcasts": [
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_05_podcast",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_05_podcast.mp3",
+            "language": "ar",
+            "size_bytes": 588096
+          },
+          {
+            "id": "lesson_prenatal-1_infant_pregnancy_05_podcast_en",
+            "file": "docs/lesson_prenatal-1_infant_pregnancy_05_podcast_en.mp3",
+            "language": "en",
+            "size_bytes": 390528
+          }
+        ],
+        "videos": []
+      },
+      "source_id": "11b92c61-2499-429f-b8ff-445cc2dc8a93"
     }
   ]
 }
