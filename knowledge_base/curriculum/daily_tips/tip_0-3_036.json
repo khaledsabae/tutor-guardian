@@ -1,0 +1,18 @@
+{
+  "id": "tip_0-3_036",
+  "age_group": "0-3",
+  "domain": "infant_pregnancy",
+  "text": "نوم الرضيع الآمن: دائماً على الظهر في سرير مستقل خالٍ من الوسائد والأغطية الفضفاضة، للوقاية الصارمة من متلازمة SIDS.",
+  "unit_id": null,
+  "day_of_week": 5,
+  "time_of_day": "bedtime",
+  "tags": [
+    "نوم_آمن",
+    "SIDS",
+    "صحة_الرضيع"
+  ],
+  "is_published": true,
+  "version": "1.0.0",
+  "created_at": "2026-09-12T19:00:00",
+  "approved_by": null
+}

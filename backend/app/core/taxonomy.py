@@ -24,6 +24,7 @@ CANONICAL_DOMAINS: set[str] = {
     "islamic_parenting",
     "development",
     "aqeedah",
+    "infant_pregnancy",
 }
 
 # ── Input-domain aliases → canonical storage domain ─────────────────────────
@@ -33,6 +34,7 @@ DOMAIN_ALIASES: dict[str, str] = {
     "fiqh": "islamic_parenting",
     "tarbiyah": "islamic_parenting",
     "digital_safety": "cyber",
+    "pregnancy": "infant_pregnancy",
 }
 
 # ── Age groups (kept in sync with age_normalization) ────────────────────────

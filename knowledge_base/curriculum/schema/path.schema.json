@@ -48,7 +48,8 @@
         "cyber",
         "development",
         "islamic_parenting",
-        "medical"
+        "medical",
+        "infant_pregnancy"
       ],
       "description": "المجال الأساسي للمسار (من CANONICAL_DOMAINS في taxonomy.py). مسارات التربية الإسلامية تستند على Prophetic 7-7-7 + Ghazali tazkiyah."
     },
