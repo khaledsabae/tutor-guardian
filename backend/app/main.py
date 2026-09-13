@@ -80,8 +80,11 @@ async def lifespan(app: FastAPI):
     # ── Warm-up: eager-load embeddings + ChromaDB index ──────────────────
     # Eliminates the 30-60s cold load on the first user request.
     try:
-        from app.services.retrieval import _ensure_index
-        from app.services.retrieval import _embedder as _warmup_embedder
+        if os.environ.get("SKIP_WARMUP"):
+            logger.info("⚡ SKIP_WARMUP set: skipping heavy embedding & ChromaDB warm-up for fast dev boot.")
+        else:
+            from app.services.retrieval import _ensure_index
+            from app.services.retrieval import _embedder as _warmup_embedder
 
         logger.info("🔥 Warm-up: loading ONNX embedder...")
         _warmup_embedder()  # trigger eager-load before _ensure_index uses it

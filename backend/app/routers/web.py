@@ -225,6 +225,7 @@ def _page(*, title: str, desc: str, body: str, ref: str | None,
     return HTMLResponse(doc)
 
 
+@router.get("/", response_class=HTMLResponse)
 @router.get("/go", response_class=HTMLResponse)
 def landing(request: Request, ref: str | None = Query(None)) -> HTMLResponse:
     """Share/install landing — where shared cards & referral links arrive."""

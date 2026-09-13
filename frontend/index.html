@@ -10,7 +10,7 @@
 <meta property="og:site_name" content="المربّي">
 <meta property="og:title" content="المربّي — مساعد تربوي ذكي للأهل العرب المسلمين">
 <meta property="og:description" content="تطبيق تربية إسلامي ذكي، مجاني بلا إعلانات.">
-<meta property="og:image" content="https://tg-api.alsaba.cloudassets/banner.png">
+<meta property="og:image" content="/ui/assets/banner.png">
 <meta property="og:url" content="http://tg-api.alsaba.cloud/go">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -24,188 +24,302 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="/ui/style.css?v=10" />
 </head>
 <body>
 <div id="ambient"></div><div id="glow"></div><div id="vignette"></div><div id="grain"></div><div id="progress"></div>
 
 <header id="header">
-  <a class="brand" href="#hero"><span class="wm">المربّي</span></a>
+  <a class="brand" href="#hero-canvas-section"><span class="wm">المربّي</span></a>
   <nav>
-    <a href="#reveal">التجربة</a><a href="#ritual">المميزات</a><a href="#editions">عن التطبيق</a>
+    <a href="#hero-canvas-section">الرئيسية</a>
+    <a href="#trust-carousel">ركائز الثقة</a>
+    <a href="#bento-features">المزايا</a>
+    <a href="#model-3d-section">المجسم 3D</a>
+    <a href="#tutor-journey">التجربة</a>
     <a class="nav-cta" href="#cta">حمّل مجاناً</a>
   </nav>
 </header>
 
 <main>
-  <!-- 1 · HERO -->
-  <section id="hero" data-ambient="#0B3B3B" data-glow="0">
-    <div class="stage fallback-host">
-      <div class="aura" aria-hidden="true"></div>
-      <div class="motes" aria-hidden="true">
-        <span style="left:24%;top:64%;width:7px;height:7px;animation-duration:9s;animation-delay:0s"></span>
-        <span style="left:38%;top:72%;width:5px;height:5px;animation-duration:11s;animation-delay:1.4s"></span>
-        <span style="left:52%;top:60%;width:9px;height:9px;animation-duration:13s;animation-delay:3.1s"></span>
-        <span style="left:63%;top:70%;width:4px;height:4px;animation-duration:10s;animation-delay:.7s"></span>
-        <span style="left:71%;top:64%;width:6px;height:6px;animation-duration:12s;animation-delay:2.3s"></span>
-        <span style="left:45%;top:78%;width:5px;height:5px;animation-duration:14s;animation-delay:4.2s"></span>
-        <span style="left:31%;top:55%;width:4px;height:4px;animation-duration:11s;animation-delay:5.5s"></span>
-        <span style="left:58%;top:80%;width:7px;height:7px;animation-duration:9.5s;animation-delay:6.1s"></span>
-      </div>
-      <div class="hero-inner">
-        <span class="latin">TUTOR GUARDIAN</span>
-        <!-- transparent cutout (background-removed) — NOT a blend trick -->
-        <div class="media-float"><div class="media-tilt">
-          <img class="hero-media" src="assets/product-cut.png" alt="المربّي" loading="eager" />
-          <span class="specular" aria-hidden="true"></span>
-        </div></div>
-        <h1>المربّي الذكي — تربية إسلامية</h1>
-        <div class="sub">ربِّ طفلك بثقة — بالعربي وبالأدلة الشرعية.</div>
-      </div>
-      <div class="scrollcue"><span>اكتشف</span><span class="bar"></span></div>
-    </div>
-  </section>
+  <!-- 1 · CANVAS FRAME-SCRUBBED HERO -->
+  <section id="hero-canvas-section" data-ambient="#041A1A" data-glow="0.2">
+    <div class="canvas-sticky">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-canvas-overlay"></div>
+      <div class="hero-canvas-vignette"></div>
 
-  <!-- 2 · TUTOR JOURNEY -->
-  <section id="tutor-journey" data-ambient="#F5EDE0" data-glow="0">
-    <div id="world"></div>
-  </section>
-
-  <!-- 3 · REVEAL -->
-  <section id="reveal" data-ambient="#F4EFE4" data-glow=".55">
-    <div class="wrap"><div class="grid">
-      <div class="shot fallback-host reveal"><img class="multiply" src="assets/product-hero.jpg" alt="المربّي" loading="lazy" /></div>
-      <div class="copy">
-        <span class="idx reveal">٠١ — المساعد الذكي</span>
-        <h2 class="gold-text reveal">إجابات فورية لكل تحدي</h2>
-        <p class="lead reveal">المربّي ليس مجرد تطبيق، بل مستشار تربوي دائم في جيبك، يقدم حلولاً عملية للحظات الصعبة.</p>
-        <ul class="specs">
-          <li class="reveal"><span class="k">استجابة</span><span class="v">فورية على مدار الساعة</span></li>
-          <li class="reveal"><span class="k">محتوى</span><span class="v">مخصص حسب عمر الطفل</span></li>
-          <li class="reveal"><span class="k">مرجعية</span><span class="v">قرآن وأحاديث نبوية</span></li>
-          <li class="reveal"><span class="k">خصوصية</span><span class="v">آمنة ومحفوظة تماماً</span></li>
-        </ul>
+      <!-- Caption 1: Beginning / The Family Challenge -->
+      <div class="hero-scroll-caption hero-caption-start">
+        <span class="eyebrow" style="color: var(--gold-bright); margin-bottom: 12px;">منظومة الذكاء التربوي الحارس</span>
+        <h1 class="gold-text">المربّي الذكي — تربية إسلامية وأمان رقمي</h1>
+        <p>ربِّ أطفالك بطمأنينة ويقين؛ مستشارك التربوي الذكي يجمع بين الطب النفسي للطفل والتربية الإسلامية النبوية.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#cta">حمّل التطبيق مجاناً</a>
+          <a class="btn btn-ghost" href="#trust-carousel" style="border-color: rgba(255,255,255,0.4); color: #FFF;">اكتشف المزايا</a>
+        </div>
       </div>
-    </div></div>
-  </section>
 
-  <!-- 4 · RITUAL / MOMENT -->
-  <section id="ritual" data-ambient="#F1E7D5" data-glow=".5">
-    <div class="wrap"><div class="frame fallback-host">
-      <!-- if a person appears: full hijab + conservative (see memory/07) -->
-      <img src="assets/ritual.jpg" alt="استخدام تطبيق المربّي" loading="lazy" />
-      <div class="copy reveal">
-        <span class="idx">٠٢ — رحلة متكاملة</span>
-        <h2 class="gold-text">من الحمل حتى الشباب</h2>
-        <p>نرافقك في كل خطوة، بخطط تربوية متكاملة وقصص وأدعية لتنشئة جيل واثق ومعتز بهويته.</p>
+      <!-- Caption 2: Mid Transition / The Transformation -->
+      <div class="hero-scroll-caption hero-caption-mid">
+        <span class="card-badge" style="font-size: 14px; padding: 8px 18px;">رحلة التحول والسكينة</span>
+        <h1 style="color: #FFF;">من حيرة التربية وصعوبات الشاشات... إلى الاطمئنان التام</h1>
+        <p>توجيه فوري لكل لحظة غضب، عناد، أو حيرة، موثق بأحاديث المصطفى ﷺ وتطبيقات علم النفس التربوي المعاصر.</p>
       </div>
-    </div></div>
-  </section>
 
-  <!-- 5 · CTA -->
-  <section id="cta" data-ambient="#F6F1E8" data-glow=".5">
-    <div class="stage fallback-host">
-      <img class="cta-poster multiply" id="ctaPoster" src="assets/product-hero.jpg" alt="" aria-hidden="true" />
-      <video id="ctaVideo" muted playsinline preload="none" aria-hidden="true" poster="assets/product-hero.jpg"></video>
-      <div class="dim" id="ctaDim"></div>
-      <div class="content" id="ctaContent">
-        <span>لوجه الله تعالى</span>
-        <h2 class="gold-text">حمّل المربّي الآن</h2>
-        <p>تطبيق مجاني تماماً، بلا إعلانات ولا اشتراكات.</p>
-        <div class="btns"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.alsaba.almorabbi">تنزيل التطبيق</a><a class="btn btn-ghost" href="#editions">المزيد من المعلومات</a></div>
+      <!-- Caption 3: End Reveal / The Guardian Shield Emerges -->
+      <div class="hero-scroll-caption hero-caption-end">
+        <span class="eyebrow" style="color: var(--gold-bright); margin-bottom: 12px;">حماية شاملة لعائلتك</span>
+        <h1 class="gold-text">درع المربّي — حارس قيم طفلك</h1>
+        <p>درع متكامل يحمي أجهزتهم، يرشد سلوكهم، ويزرع الهدي النبوي في نفوسهم. مجاني تماماً وبلا إعلانات لوجه الله تعالى.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#cta">ابدأ رحلتك الآن</a>
+          <a class="btn btn-ghost" href="#model-3d-section" style="border-color: var(--gold); color: var(--gold-bright);">استكشف الدرع 3D</a>
+        </div>
+      </div>
+
+      <div class="hero-indicator">
+        <div class="mouse-wheel"></div>
+        <span>مرّر للأسفل لاكتشاف الرحلة</span>
       </div>
     </div>
   </section>
 
-  <!-- 6 · EDITIONS -->
-  <section id="editions" data-ambient="#F2ECE0" data-glow=".5">
+  <!-- 2 · INFINITE DUAL-ROW TRUST CAROUSEL -->
+  <section id="trust-carousel" class="trust-carousel-section">
+    <div class="trust-carousel-label">
+      <span>ركائز الثقة والاعتمادية التربوية</span>
+    </div>
+    
+    <div class="marquee-wrapper">
+      <!-- Row 1: Left to Right -->
+      <div class="marquee-track marquee-row-1">
+        <div class="marquee-content">
+          <span class="trust-pill"><i class="icon">📖</i> القرآن الكريم والسنة النبوية</span>
+          <span class="trust-pill"><i class="icon">🧠</i> الطب النفسي للأطفال واليافعين</span>
+          <span class="trust-pill"><i class="icon">🔒</i> خصوصية مشفرة 100% بلا خوادم خارجية</span>
+          <span class="trust-pill"><i class="icon">🛡️</i> درع الحماية الرقمية وإدارة الشاشات</span>
+          <span class="trust-pill"><i class="icon">🌿</i> لوجه الله تعالى — مجاني تماماً</span>
+          <span class="trust-pill"><i class="icon">✨</i> خالٍ من أي إعلانات أو اشتراكات</span>
+        </div>
+        <div class="marquee-content" aria-hidden="true">
+          <span class="trust-pill"><i class="icon">📖</i> القرآن الكريم والسنة النبوية</span>
+          <span class="trust-pill"><i class="icon">🧠</i> الطب النفسي للأطفال واليافعين</span>
+          <span class="trust-pill"><i class="icon">🔒</i> خصوصية مشفرة 100% بلا خوادم خارجية</span>
+          <span class="trust-pill"><i class="icon">🛡️</i> درع الحماية الرقمية وإدارة الشاشات</span>
+          <span class="trust-pill"><i class="icon">🌿</i> لوجه الله تعالى — مجاني تماماً</span>
+          <span class="trust-pill"><i class="icon">✨</i> خالٍ من أي إعلانات أو اشتراكات</span>
+        </div>
+      </div>
+      
+      <!-- Row 2: Right to Left -->
+      <div class="marquee-track marquee-row-2">
+        <div class="marquee-content">
+          <span class="trust-pill"><i class="icon">💡</i> مستشار تربوي ذكي متوفر 24/7</span>
+          <span class="trust-pill"><i class="icon">📈</i> تتبع العادات والمكافآت السلوكية</span>
+          <span class="trust-pill"><i class="icon">🎯</i> مسارات مخصصة لكل مرحلة عمرية</span>
+          <span class="trust-pill"><i class="icon">🤝</i> دعم الوالدين وبناء الرابطة الآمنة</span>
+          <span class="trust-pill"><i class="icon">🕌</i> إشراف ومراجعة شرعية وتربوية موثقة</span>
+          <span class="trust-pill"><i class="icon">📱</i> متوافق مع كافة أجهزة أندرويد وiOS</span>
+        </div>
+        <div class="marquee-content" aria-hidden="true">
+          <span class="trust-pill"><i class="icon">💡</i> مستشار تربوي ذكي متوفر 24/7</span>
+          <span class="trust-pill"><i class="icon">📈</i> تتبع العادات والمكافآت السلوكية</span>
+          <span class="trust-pill"><i class="icon">🎯</i> مسارات مخصصة لكل مرحلة عمرية</span>
+          <span class="trust-pill"><i class="icon">🤝</i> دعم الوالدين وبناء الرابطة الآمنة</span>
+          <span class="trust-pill"><i class="icon">🕌</i> إشراف ومراجعة شرعية وتربوية موثقة</span>
+          <span class="trust-pill"><i class="icon">📱</i> متوافق مع كافة أجهزة أندرويد وiOS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · MODERN BENTO GRID -->
+  <section id="bento-features" class="bento-section" data-ambient="#082828" data-glow="0.3">
     <div class="wrap">
-      <div class="head"><span class="idx reveal">٠٣ — أدوات مخصصة</span><h2 class="gold-text reveal">كل ما تحتاجه للتربية</h2></div>
-      <div class="cards">
-        <article class="ed-card reveal"><div class="pic fallback-host"><img src="assets/edition-1.jpg" alt="متابعة السلوك والتقدم" loading="lazy" /></div><div class="body"><h3>متابعة السلوك والتقدم</h3><p>تتبع إنجازات طفلك اليومية والدروس التربوية والعملية التي يكتمل بناؤها خطوة بخطوة.</p></div></article>
-        <article class="ed-card reveal"><div class="pic fallback-host"><img src="assets/edition-2.jpg" alt="مسارات تربوية منهجية" loading="lazy" /></div><div class="body"><h3>مسارات تربوية منهجية</h3><p>رحلات متكاملة في مواضيع حساسة كالتعامل مع الشاشات، الاستقلالية، وبناء الرابطة الآمنة.</p></div></article>
-        <article class="ed-card reveal"><div class="pic fallback-host"><img src="assets/edition-3.jpg" alt="المستشار التربوي الذكي" loading="lazy" /></div><div class="body"><h3>المستشار التربوي الذكي</h3><p>إجابات فورية مدعومة بالأدلة الشرعية والمنهجية العلمية لكل سؤال أو تحدي يواجهك مع طفلك.</p></div></article>
+      <div class="bento-header">
+        <span class="idx">٠١ — الابتكار في خدمة الأسرة</span>
+        <h2 class="gold-text">منظومة تربوية متكاملة بين يديك</h2>
+        <p class="lead">أدوات استشارية وتطبيقية متطورة صُممت خصيصاً لمساعدة الوالدين على تربية جيل واثق ومعتز بهويته الإسلامية.</p>
+      </div>
+      
+      <div class="bento-grid">
+        <!-- Card 1: Large Spotlight (AI Advisor Chat Preview) -->
+        <div class="bento-card bento-card-large reveal">
+          <div class="bento-card-body">
+            <div class="card-badge">ذكاء اصطناعي موثق ومحلي</div>
+            <h3>المستشار التربوي الفوري (24/7)</h3>
+            <p>حلول عملية للحظات الغضب، العناد، والتحديات اليومية، مدعومة مباشرة بأحاديث المصطفى ﷺ وقواعد علم النفس الإيجابي.</p>
+            <div class="chat-preview-widget">
+              <div class="chat-bubble user-bubble">
+                <span class="speaker">الأب:</span>
+                <p>ابني (8 سنوات) يرفض ترك الآيباد ويصرخ عند موعد النوم، كيف أتعامل معه بحكمة؟</p>
+              </div>
+              <div class="chat-bubble ai-bubble">
+                <span class="speaker">المستشار الذكي (المربّي):</span>
+                <p>نبدأ بقاعدة الرفق النبوي: «إن الرفق لا يكون في شيء إلا زانه». إليك خطة الدقائق الخمس:</p>
+                <ul class="chat-steps">
+                  <li>١. تحذير مسبق قبل ١٠ دقائق (لتفادي صدمة الانفصال المفاجئ).</li>
+                  <li>٢. استبدال الشاشة بنشاط دافئ: قصة هادفة من السيرة أو محادثة عن يومه.</li>
+                </ul>
+                <div class="source-tag">مصدر التوجيه: صحيح مسلم (2594) + الأكاديمية الأمريكية لطب الأطفال (AAP)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Card 2: Islamic Foundations -->
+        <div class="bento-card reveal">
+          <div class="card-badge">أصالة ومرجعية</div>
+          <h3>تأصيل نبوي رصين</h3>
+          <p>لا نظريات غربية متصادمة مع قيمنا؛ كل توجيه مستند إلى نصوص الوحيين ومقاصد الشريعة في حفظ الفطرة والنشء.</p>
+          <div class="bento-mini-visual">
+            <div class="quran-quote">﴿يَا بُنَيَّ أَقِمِ الصَّلَاةَ وَأْمُرْ بِالْمَعْرُوفِ﴾</div>
+          </div>
+        </div>
+        
+        <!-- Card 3: Cyber Guardian -->
+        <div class="bento-card reveal">
+          <div class="card-badge">حماية سيبرانية</div>
+          <h3>درع الأمان الرقمي</h3>
+          <p>إدارة ذكية لوقت الشاشات وتوجيه الأطفال نحو محتوى آمن وبناء بدون صدام أو تجسس منفّر.</p>
+          <div class="screen-stat-bar">
+            <div class="stat-row">
+              <span>وقت الشاشة المنظم اليوم</span>
+              <span class="time-val">١ ساعة و١٥ دقيقة</span>
+            </div>
+            <div class="stat-progress"><div class="stat-fill" style="width: 65%;"></div></div>
+          </div>
+        </div>
+        
+        <!-- Card 4: Age Milestones -->
+        <div class="bento-card reveal">
+          <div class="card-badge">مسارات مخصصة</div>
+          <h3>من المهد حتى الرشد</h3>
+          <p>محتوى يتطور تلقائياً مع نمو طفلك: من بناء الأمان العاطفي للرضيع إلى تعزيز الهوية للفتى والمراهق.</p>
+          <div class="age-pills">
+            <span class="age-tag active">٣-٥ سنوات</span>
+            <span class="age-tag">٦-٩ سنوات</span>
+            <span class="age-tag">١٠-١٣ سنة</span>
+            <span class="age-tag">١٤+ سنة</span>
+          </div>
+        </div>
+        
+        <!-- Card 5: Free Forever -->
+        <div class="bento-card reveal bento-card-green">
+          <div>
+            <div class="card-badge badge-gold">لوجه الله تعالى</div>
+            <h3>مجاني ١٠٠٪ وبلا إعلانات</h3>
+            <p>وقف تقني تربوي مجاني لجميع العائلات المسلمة حول العالم، بدون جمع بيانات تجارية أو اشتراكات مخفية.</p>
+          </div>
+          <div class="trust-pledge-check">
+            <span>✓ أمان البيانات التام</span>
+            <span>✓ بدون بيع معلومات</span>
+            <span>✓ متاح للجميع</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · INTERACTIVE 3D MODEL SECTION -->
+  <section id="model-3d-section" class="model-3d-wrapper" data-ambient="#041A1A" data-glow="0.25">
+    <div class="wrap">
+      <div class="model-3d-header">
+        <span class="idx">٠٢ — مجسم درع الأمان التفاعلي</span>
+        <h2 class="gold-text">استكشف درع «المربّي» ثلاثي الأبعاد</h2>
+        <p class="lead">درع واقٍ يجسد التقاء نور الشريعة بالذكاء التقني الحارس. يمكنك تدوير المجسم 360 درجة، أو عرضه في غرفتك بالواقع المعزز (AR).</p>
+      </div>
+      
+      <div class="model-3d-stage">
+        <model-viewer
+          src="/ui/assets/3d/guardian_shield.glb?v=2"
+          alt="درع المربّي ثلاثي الأبعاد"
+          auto-rotate
+          auto-rotate-delay="800"
+          rotation-per-second="18deg"
+          camera-controls
+          touch-action="pan-y"
+          shadow-intensity="1.5"
+          shadow-softness="0.8"
+          exposure="1.2"
+          ar
+          ar-modes="webxr scene-viewer quick-look"
+          camera-target="0m 0m 0m"
+          camera-orbit="0deg 75deg 4.3m"
+          field-of-view="32deg"
+          min-camera-orbit="auto auto 2.5m"
+          max-camera-orbit="auto auto 6m"
+          loading="eager"
+          poster="/ui/assets/hero_end.jpg"
+        >
+          <button class="hotspot" slot="hotspot-crest" data-position="0 0.9 0.12" data-normal="0 0 1">
+            <div class="hotspot-annotation">أصالة الهدي النبوي</div>
+          </button>
+          <button class="hotspot" slot="hotspot-core" data-position="0 0 0.2" data-normal="0 0 1">
+            <div class="hotspot-annotation">الذكاء التربوي الفوري</div>
+          </button>
+          <button class="hotspot" slot="hotspot-shield" data-position="0 -0.9 0.1" data-normal="0 0 1">
+            <div class="hotspot-annotation">الدرع السيبراني الرقمي</div>
+          </button>
+          
+          <div class="model-controls-hint">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.85.83 6.72 2.24L21 3v6h-6l2.4-2.4A7 7 0 1 0 19 12h2z"/></svg>
+            <span>اسحب للتدوير 360° • قرّب للتفاصيل</span>
+          </div>
+        </model-viewer>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · FINAL CTA -->
+  <section id="cta" class="final-cta-section" data-ambient="#041A1A" data-glow="0.35">
+    <div class="wrap">
+      <div class="cta-card reveal">
+        <span class="card-badge badge-gold">لوجه الله تعالى • بدون إعلانات</span>
+        <h2 class="gold-text">ابدأ رحلتك التربوية المطمئنة اليوم</h2>
+        <p>تطبيق «المربّي» متوفر مجاناً لكافة الأسر المسلمة. استشارات فورية، برامج تربوية معتمدة، وأمان رقمي يحفظ أطفالك وقيمهم.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="#cta">حمّل التطبيق مجاناً</a>
+          <a class="btn btn-ghost" href="#hero-canvas-section" style="border-color: rgba(255,255,255,0.3); color: #FFF;">العودة للأعلى ↑</a>
+        </div>
+        <div class="trust-pledge-check" style="margin-top: 32px; justify-content: center;">
+          <span>✓ متوافق مع أندرويد وiOS</span>
+          <span>✓ خصوصية وأمان محلي</span>
+          <span>✓ وقف تعليمي مجاني</span>
+        </div>
       </div>
     </div>
   </section>
 
   <footer><div class="wrap">
     <div class="wm gold-text">المربّي</div>
-    <nav class="links"><a href="#reveal">التجربة</a><a href="#ritual">المميزات</a><a href="#editions">عن التطبيق</a><a href="#cta">حمّل مجاناً</a></nav>
-    <div class="cr">© 2026 المربّي. جميع الحقوق محفوظة.</div>
+    <nav class="links">
+      <a href="#hero-canvas-section">الرئيسية</a>
+      <a href="#trust-carousel">ركائز الثقة</a>
+      <a href="#bento-features">المزايا</a>
+      <a href="#model-3d-section">المجسم 3D</a>
+      <a href="#cta">حمّل مجاناً</a>
+    </nav>
+    <div class="cr">© 2026 المربّي (Tutor Guardian). جميع الحقوق محفوظة — لوجه الله تعالى.</div>
   </div></footer>
 </main>
 
 <!-- Javascript Scroll-World Engine -->
-<script src="engine.js"></script>
+<script src="/ui/engine.js?v=9"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    mountScrollWorld(document.getElementById('world'), {
-      diveScroll: 1.6, 
-      connScroll: 1.0, 
-      crossfade: 0.28,  
-      nav: true,
-      atmosphere: true,
-      sections: [
-        {
-          id: 'hero',
-          label: 'البداية',
-          clip: 'assets/hero_clip.mp4',
-          accent: '#8B7BB5',
-          linger: 0.4,
-          eyebrow: 'الذكاء التربوي الحارس',
-          title: 'حماية ذكية وتوجيه سليم لأطفالك',
-          body: 'تيوتور جاردين هو مساعد تربوي ذكي يدمج بين الطب النفسي للأطفال والتربية الإسلامية النبوية ليوفر درعاً سيبرانياً ونفسياً متكاملاً لعائلتك.',
-          tags: ['ذكاء اصطناعي تربوي', 'حماية سيبرانية', 'RAG محلي آمن']
-        },
-        {
-          id: 'medical',
-          label: 'التوجيه النفسي',
-          clip: 'assets/medical_clip.mp4',
-          accent: '#76A5AF',
-          linger: 0.45,
-          eyebrow: 'الرعاية النفسية والسلوكية',
-          title: 'افهم سلوك أطفالك بحكمة وعلم',
-          body: 'احصل على إرشادات فورية للتعامل مع نوبات الغضب والاضطرابات السلوكية بناءً على أسس طبية علمية دون إفشاء لخصوصية بياناتكم.',
-          tags: ['تعديل سلوكي', 'دعم نفسي للأهل', 'تحليلات موثوقة']
-        },
-        {
-          id: 'islamic',
-          label: 'التربية النبوية',
-          clip: 'assets/islamic_clip.mp4',
-          accent: '#8FB98A',
-          linger: 0.45,
-          eyebrow: 'القيم والتربية الإسلامية',
-          title: 'بناء أخلاق متجذرة في الهدي النبوي',
-          body: 'تأصيل قيم التربية الإسلامية النبوية في نفوس الأبناء بأسلوب معاصر يرتبط بواقعهم ويقوي صلتهم بعباداتهم ومجتمعهم.',
-          tags: ['أخلاق وقيم', 'سيرة تربوية', 'فقه واقع الأسرة']
-        },
-        {
-          id: 'cyber',
-          label: 'الأمان الرقمي',
-          clip: 'assets/cyber_clip.mp4',
-          accent: '#C88A5A',
-          linger: 0.45,
-          eyebrow: 'الحماية السيبرانية للأطفال',
-          title: 'درع رقمي متكامل يرافق أجهزتهم',
-          body: 'أدوات ذكية لإدارة وقت الشاشة، وفلترة المحتوى الضار، ومراقبة تفاعل طفلك مع الألعاب لحمايته من التنمر ومخاطر الإنترنت.',
-          tags: ['إدارة الأجهزة', 'ألعاب آمنة', 'مراقبة هادئة']
-        },
-        {
-          id: 'finale',
-          label: 'حمل التطبيق',
-          clip: 'assets/finale_clip.mp4',
-          accent: '#B57BA6',
-          linger: 0.5,
-          eyebrow: 'مستقبل تربوي آمن لعائلتك',
-          title: 'ابدأ رحلتك التربوية المطمئنة اليوم',
-          body: 'حمّل تطبيق Tutor Guardian الآن واجعل تربية أطفالك في العصر الرقمي تجربة مليئة بالطمأنينة والأمان والذكاء.',
-          tags: ['تنزيل مجاني للنسخة التجريبية', 'متوافق مع أندرويد وiOS']
-        }
-      ],
-      connectors: []
-    });
+    // Mount Hero Canvas Frame Scrubber (Flow Video 96 Frames)
+    if (typeof mountHeroCanvasScrubber === 'function') {
+      mountHeroCanvasScrubber({
+        canvasId: 'hero-canvas',
+        sectionId: 'hero-canvas-section',
+        totalFrames: 96,
+        framePattern: '/ui/assets/hero_frames/frame_{idx}.jpg'
+      });
+    }
   });
 </script>
 
@@ -256,71 +370,18 @@
   else if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.2});reveals.forEach(el=>io.observe(el));}
   else reveals.forEach(el=>el.classList.add("in"));
 
-  // HERO entrance + 3D pointer parallax + scroll handoff
-  if(hasGSAP&&!reduce){
-    gsap.timeline({defaults:{ease:"power3.out"}})
-      .fromTo("#hero .hero-media",{opacity:0,scale:.82,y:60,rotateZ:-5},{opacity:1,scale:1,y:0,rotateZ:0,duration:1.5},0.15)
-      .fromTo("#hero .latin",{opacity:0,y:14},{opacity:1,y:0,duration:.8},0.55)
-      .fromTo("#hero h1",{opacity:0,y:24,clipPath:"inset(-20% 0 120% 0)"},{opacity:1,y:0,clipPath:"none",duration:1.1},0.7)
-      .fromTo("#hero .sub",{opacity:0,y:12},{opacity:1,y:0,duration:.8},1.05)
-      .fromTo("#hero .scrollcue",{opacity:0},{opacity:1,duration:.8},1.3);
-    gsap.to("#hero .hero-inner",{scrollTrigger:{trigger:"#hero",start:"top top",end:"78% top",scrub:true},y:-50,opacity:0,ease:"none"});
-    gsap.to("#hero .aura",{scrollTrigger:{trigger:"#hero",start:"top top",end:"bottom top",scrub:true},scale:1.5,opacity:0,ease:"none"});
-    const stage=document.querySelector("#hero .stage"),tilt=document.querySelector("#hero .media-tilt"),aura=document.querySelector("#hero .aura"),motes=document.querySelector("#hero .motes");
-    stage.addEventListener("pointermove",e=>{const r=stage.getBoundingClientRect(),nx=(e.clientX-r.left)/r.width-.5,ny=(e.clientY-r.top)/r.height-.5;
-      tilt.style.setProperty("--ty",(nx*12).toFixed(2)+"deg");tilt.style.setProperty("--tx",(-ny*9).toFixed(2)+"deg");
-      aura.style.setProperty("--px",(-nx*46).toFixed(1)+"px");aura.style.setProperty("--py",(-ny*34).toFixed(1)+"px");
-      motes.style.transform="translate3d("+(nx*22).toFixed(1)+"px,"+(ny*16).toFixed(1)+"px,0)";});
-    stage.addEventListener("pointerleave",()=>{tilt.style.setProperty("--ty","0deg");tilt.style.setProperty("--tx","0deg");aura.style.setProperty("--px","0px");aura.style.setProperty("--py","0px");motes.style.transform="translate3d(0,0,0)";});
-  }
-  if(!hasGSAP) document.querySelectorAll("#hero .latin,#hero .hero-media,#hero h1,#hero .sub,#hero .scrollcue,#hero .aura").forEach(e=>{e.style.opacity=e.classList.contains("aura")?.6:1;e.style.clipPath="none";e.style.transform="none";});
-
-  // RITUAL + REVEAL parallax
-  if(hasGSAP&&!reduce){
-    gsap.to("#ritual .frame img",{scrollTrigger:{trigger:"#ritual",start:"top bottom",end:"bottom top",scrub:true},y:"-7%",ease:"none"});
+  // HERO Canvas entrance
+  if (hasGSAP && !reduce) {
+    const startCap = document.querySelector(".hero-caption-start");
+    if (startCap) {
+      gsap.fromTo(startCap.children, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 1.0, stagger: 0.12, ease: "power3.out" });
+    }
   }
 
-  
-
-  // CTA — video alone first, then dim/wash + content reveal. (No `loop` attr → `ended` advances the playlist.)
-  (function initCTA(){
-    const sec=document.getElementById("cta"),video=document.getElementById("ctaVideo"),poster=document.getElementById("ctaPoster"),dim=document.getElementById("ctaDim"),content=document.getElementById("ctaContent");
-    const playlist=["assets/finale_clip.mp4"]; let pi=0,attempts=0;
-    function load(i){pi=((i%playlist.length)+playlist.length)%playlist.length;video.src=playlist[pi];const pr=video.play();if(pr&&pr.catch)pr.catch(()=>{});}
-    video.addEventListener("loadeddata",()=>{attempts=0;poster.style.opacity=0;});
-    video.addEventListener("ended",()=>load(pi+1));
-    video.addEventListener("error",()=>{if(++attempts<playlist.length)load(pi+1);});
-    let started=false; const start=()=>{if(started)return;started=true;load(0);};
-    ["pointerdown","keydown","wheel","touchstart"].forEach(ev=>window.addEventListener(ev,start,{once:true,passive:true}));
-    if(hasGSAP&&!reduce){
-      ScrollTrigger.create({trigger:sec,start:"top center",onEnter:start,onEnterBack:start});
-      ScrollTrigger.create({trigger:sec,start:"top top",end:"bottom bottom",scrub:true,onUpdate:s=>{const p=s.progress;dim.style.opacity=smooth(0.34,0.66,p);content.style.opacity=smooth(0.40,0.72,p);content.style.transform="translateY("+(28*(1-smooth(0.40,0.72,p)))+"px)";}});
-    } else {dim.style.opacity=.94;content.style.opacity=1;content.style.transform="none";}
-  })();
-
-  if(hasGSAP){window.addEventListener("load",()=>ScrollTrigger.refresh());if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>ScrollTrigger.refresh());}
-})();
-</script>
-<script>
-/* Carry the campaign tags from the ad click through to the Play Store.
-   An ad cannot link to Play directly — Meta rejects a play.google.com
-   destination under the Traffic objective ("App Url is only supported by App
-   Installs objective", #1487810) — so the click lands on this page first.
-   Without this the referrer dies on that hop: Play sees a bare link, Firebase
-   records no campaign, and every install reads as (direct) in GA4 alongside
-   the organic traffic it needs to be told apart from. */
-(function () {
-  var incoming = new URLSearchParams(location.search);
-  var tags = new URLSearchParams();
-  ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]
-    .forEach(function (k) { if (incoming.get(k)) tags.set(k, incoming.get(k)); });
-  if (!tags.toString()) return;
-  document.querySelectorAll('a[href*="play.google.com"]').forEach(function (a) {
-    // A referral code already owns the referrer slot — it credits a real
-    // person's invite, which outranks knowing which ad paid for the click.
-    if (a.href.indexOf("referrer=") !== -1) return;
-    a.href += "&referrer=" + encodeURIComponent(tags.toString());
-  });
+  if (hasGSAP) {
+    window.addEventListener("load", () => ScrollTrigger.refresh());
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
+  }
 })();
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"7a8db528beef4fe1be0eadf9d6490d25","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>

@@ -546,6 +546,121 @@ function seedParticles(host, reduce) {
   }
 }
 
+/**
+ * High-performance Canvas Frame Scrubber for Hero Section
+ */
+function mountHeroCanvasScrubber(options) {
+  options = options || {};
+  const canvas = document.getElementById(options.canvasId || 'hero-canvas');
+  if (!canvas) return;
+
+  const section = document.getElementById(options.sectionId || 'hero-canvas-section');
+  if (!section) return;
+
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const totalFrames = options.totalFrames || 96;
+  const framePattern = options.framePattern || '/ui/assets/hero_frames/frame_{idx}.jpg';
+
+  const images = [];
+  let loadedCount = 0;
+  let currentFrame = 0;
+
+  const capStart = document.querySelector('.hero-caption-start');
+  const capMid = document.querySelector('.hero-caption-mid');
+  const capEnd = document.querySelector('.hero-caption-end');
+
+  function resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    renderFrame(currentFrame);
+  }
+
+  function renderFrame(index) {
+    if (!images[index] || !images[index].complete || !images[index].naturalWidth) return;
+    const img = images[index];
+    const cw = canvas.width;
+    const ch = canvas.height;
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
+
+    const hRatio = cw / iw;
+    const vRatio = ch / ih;
+    const ratio = Math.max(hRatio, vRatio);
+    const nw = iw * ratio;
+    const nh = ih * ratio;
+    const cx = (cw - nw) / 2;
+    const cy = (ch - nh) / 2;
+
+    ctx.drawImage(img, cx, cy, nw, nh);
+  }
+
+  // Preload frames
+  for (let i = 1; i <= totalFrames; i++) {
+    const img = new Image();
+    const padIndex = String(i).padStart(3, '0');
+    img.src = framePattern.replace('{idx}', padIndex);
+    img.onload = () => {
+      loadedCount++;
+      if (loadedCount === 1) {
+        resizeCanvas();
+      }
+    };
+    images.push(img);
+  }
+
+  window.addEventListener('resize', resizeCanvas, { passive: true });
+  resizeCanvas();
+
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.35,
+      onUpdate: (self) => {
+        const p = self.progress;
+        const frameIdx = Math.min(Math.floor(p * totalFrames), totalFrames - 1);
+        if (frameIdx !== currentFrame) {
+          currentFrame = frameIdx;
+          renderFrame(currentFrame);
+        }
+
+        if (p < 0.28) {
+          const fade = 1 - p / 0.28;
+          if (capStart) {
+            capStart.style.opacity = Math.max(0, fade);
+            capStart.style.transform = `translate(-50%, calc(-50% - ${p * 50}px))`;
+            capStart.style.pointerEvents = p < 0.2 ? 'auto' : 'none';
+          }
+          if (capMid) capMid.style.opacity = 0;
+          if (capEnd) capEnd.style.opacity = 0;
+        } else if (p >= 0.28 && p < 0.72) {
+          if (capStart) capStart.style.opacity = 0;
+          const midP = (p - 0.28) / 0.44;
+          const midAlpha = midP < 0.5 ? midP * 2 : (1 - midP) * 2;
+          if (capMid) {
+            capMid.style.opacity = Math.max(0, Math.min(1, midAlpha));
+            capMid.style.transform = `translate(-50%, calc(-50% + ${(0.5 - midP) * 35}px))`;
+            capMid.style.pointerEvents = midAlpha > 0.4 ? 'auto' : 'none';
+          }
+          if (capEnd) capEnd.style.opacity = 0;
+        } else {
+          if (capStart) capStart.style.opacity = 0;
+          if (capMid) capMid.style.opacity = 0;
+          const endP = (p - 0.72) / 0.28;
+          if (capEnd) {
+            capEnd.style.opacity = Math.max(0, Math.min(1, endP));
+            capEnd.style.transform = `translate(-50%, calc(-50% + ${(1 - endP) * 35}px))`;
+            capEnd.style.pointerEvents = endP > 0.4 ? 'auto' : 'none';
+          }
+        }
+      }
+    });
+  }
+}
+
 if (typeof window !== 'undefined') {
   window.mountScrollWorld = mountScrollWorld;
+  window.mountHeroCanvasScrubber = mountHeroCanvasScrubber;
 }

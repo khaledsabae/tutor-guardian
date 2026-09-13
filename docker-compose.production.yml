@@ -51,6 +51,8 @@ services:
       - ./ops/tools:/app/ops/tools:ro
       # Mobile marketing assets (logo, icons) for public landing pages.
       - ./mobile/assets:/app/mobile/assets:ro
+      # Frontend assets & cinematic landing page live mount
+      - ./frontend:/app/frontend:ro
       # The app's own suggested questions (chatQ_*). weekly_kb_gap_report.py
       # must exclude them before counting anything — they were the five most
       # frequent "questions" in production, so a report that counts button
