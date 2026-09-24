@@ -38,13 +38,16 @@ Status: ✅ **fixed in this PR** · 📋 **roadmap** (needs an owner decision, p
 | Severity | Found | Fixed here | Roadmap |
 |---|---:|---:|---:|
 | Critical | 3 | 3 | 0 (C3 settings toggle still advised) |
-| High | 9 | 8 | 1 (H5, partly) |
-| Medium | 17 | 11 | 6 |
+| High | 9 | 9 | 0 (flip `SESSION_MINT_ENFORCE` once build ≥ 106 is the floor) |
+| Medium | 17 | 13 | 4 |
 | Low | 12 | 6 | 6 |
 
 *Updated for release v1.0.61 (release-hardening pass): C3, H4, H6, H7 fixed; H5 partly
 fixed (validation, proof and staged enforcement; token hashing and expiry still open);
-M9 and M14 fixed. See [ops/RELEASE_v1.0.61.md](ops/RELEASE_v1.0.61.md) for the deployment runbook.*
+M9 and M14 fixed. See [ops/RELEASE_v1.0.61.md](ops/RELEASE_v1.0.61.md) for the deployment runbook.
+Token pass (schema v28): H5 completed (hashed tokens, sliding expiry, log-safe device ids),
+M12 (one shared `TgClient`, deduped minting, transparent token renewal) and M13 (SSE idle
+timeout, server keep-alives) fixed.*
 
 The three items that matter most:
 1. **C1:** a parent reporting a child's suicidal talk could get a religious-referral reply instead of the emergency escalation.
@@ -157,7 +160,7 @@ Two independent defects:
   - Session minting and feedback are keyed on IP only; minting has its own budget (`RATE_LIMIT_SESSION_PER_MINUTE`, default 30).
   - **Tests:** `test_client_ip.py`, `test_rate_limit_identity.py` (updated plus new cases), and `test_referral_fingerprint.py` (now models the nginx peer, plus a spoofing test).
 
-### H5 — `device_id` is a bearer credential ◐ (partly fixed)
+### H5 — `device_id` is a bearer credential ✅
 - `POST /api/chat/sessions` is public and mints a token for **any** `device_id` in the body. Knowing a device ID is therefore equivalent to owning the account: children, progress, chat history, backups.
 - Device IDs are logged (`sync.py`, `push_sender.py`), partly echoed to Telegram, and sent in unauthenticated feedback bodies.
 - Tokens never expire and are stored in plaintext.
@@ -173,7 +176,14 @@ Two independent defects:
   - Build 106 sends its last token as proof (`TgClient.createSession`, kept across `endSession`).
   - Minting is IP-rate-limited (H4).
   - **Enforcement is staged:** flip it once the forced-update floor is ≥ 106.
-- **Still open 📋:** hash stored tokens, `expires_at` with renewal, and removing raw device IDs from `sync.py`/`push_sender.py` logs.
+- **Fixed (token pass, schema v28):**
+  - `api_tokens` stores `sha256(token)`; v28 hashes existing rows in place (idempotent), so no install is logged out.
+  - Every token expires `TOKEN_TTL_DAYS` (default 180) after it was last renewed; validation slides the expiry forward once less than half is left.
+  - An expired token still proves its device when minting (`conversation_store.token_device`), so an idle install is never locked out once enforcement is on. It is never accepted as an API credential.
+  - The app renews a refused token once and replays the request (`_SessionRecoveringClient`), keeping the conversation's session.
+  - Logs and the Telegram feedback alert carry `device_tag(id)` (a sha256 prefix) instead of the raw id (`chat.py`, `sync.py`, `push_sender.py`, `feedback.py`).
+- **Operational note:** after v28, rolling back the *image* without the data leaves stored hashes the old code cannot match — every install re-mints its session (chat recovers automatically; old builds may show one error elsewhere). Restore the pre-deploy backup that `deploy.yml` step 3d takes if a full rollback is needed.
+- **Still open 📋:** flip `SESSION_MINT_ENFORCE` once the forced-update floor is ≥ 106.
 
 ### H6 — Threadpool starvation under concurrent streams ✅
 - Each SSE stream runs `run_sync_stream` in the **default** executor for its whole duration. On a 2-CPU container that pool has about 6 workers.
@@ -233,8 +243,8 @@ Two independent defects:
 | M9 | The referral `AUTO` claim matches by client-controlled `X-Forwarded-For`/`CF-Connecting-IP` | `routers/referral.py` | ✅ fixed with H4 |
 | M10 | Push `register` returned 500 on non-string `token`/`platform`, and connections leaked on error | `routers/push.py` | ✅ |
 | M11 | `privacy.known_child_names` is cached on the main DB file's mtime, which WAL writes don't change, so the cache goes stale | `services/privacy.py` | 📋 |
-| M12 | Mobile creates `TgClient()` ad hoc in 19 places. Each has its own un-closed `http.Client` and session cache, and concurrent `ensureSession()` calls can mint duplicate sessions | `mobile/lib/**` | 📋 route everything through `tgClientProvider`; dedupe in-flight `ensureSession` |
-| M13 | Mobile SSE has a timeout only on the headers, so a server stall mid-stream hangs the chat indefinitely | `tg_client.dart::streamQuery` | 📋 idle timeout per chunk |
+| M12 | Mobile creates `TgClient()` ad hoc in 19 places. Each has its own un-closed `http.Client` and session cache, and concurrent `ensureSession()` calls can mint duplicate sessions | `mobile/lib/**` | ✅ `TgClient.shared` (services) and `tgClientProvider` (widgets) are one instance; in-flight mints are shared; a refused token is renewed once below every caller |
+| M13 | Mobile SSE has a timeout only on the headers, so a server stall mid-stream hangs the chat indefinitely | `tg_client.dart::streamQuery` | ✅ 45 s idle timeout per chunk → retryable «توقّف الرد» error; the server sends an SSE keep-alive every 15 s while the model is silent |
 | M14 | Each token rebuilds the full chat state and re-parses the whole Markdown, which is O(n²) on long answers | `state/chat_notifier.dart` | ✅ deltas batched every 60 ms and flushed on done, error, stop and pause (UX-2) |
 | M15 | `ops-llm` metrics are open when `OPS_METRICS_TOKEN` is unset, and the token was compared in non-constant time | `routers/stats.py` | ✅ `compare_digest`; 📋 fail closed in production |
 | M16 | Error `detail` strings echo internal exceptions (`f"DB error: {exc}"`, `f"bad audio: {exc}"`) | `routers/feedback.py` | 📋 |
@@ -318,11 +328,7 @@ Tests added:
 ### Phase 1: security hardening (1–2 weeks)
 1. ~~C3~~ ✅ (the settings toggle is still advised).
 2. ~~H4~~ ✅.
-3. **H5 (rest):**
-   - flip `SESSION_MINT_ENFORCE` after the forced-update floor reaches 106;
-   - hash stored tokens;
-   - add `expires_at` with renewal;
-   - stop logging `device_id`.
+3. **H5:** ✅ hashed tokens, sliding expiry, log-safe device ids. Remaining: flip `SESSION_MINT_ENFORCE` after the forced-update floor reaches 106.
 4. ~~M6~~ ✅.
 5. **M4/M5:** ✅ scoped, word-bounded redaction and a name-aware cache. Still open: redact the fiqh block log and add a TTL.
 6. **C2 follow-up:** the fiqh intent classifier (FIQH_GUARD.md step 4), with a golden set from `blocked_fiqh_log`.
@@ -330,9 +336,9 @@ Tests added:
 ### Phase 2: reliability and performance (2–4 weeks)
 1. ~~H6~~ ✅ (stream path, primary breaker and `generate()` deadline).
 2. **M7:** single query embedding per request. Measure p95 before and after with `/api/stats/ops-llm`.
-3. **M13:** mobile SSE idle timeout (M14 batching ✅).
+3. ~~M13~~ ✅ (idle timeout + server keep-alives; M14 batching ✅).
 4. ~~H7~~ ✅.
-5. **M12:** a single `TgClient`, with in-flight session dedupe.
+5. ~~M12~~ ✅ (one shared client, deduped minting, transparent token renewal).
 6. Run `ops/eval/golden_set.jsonl` in CI as a non-blocking report.
 
 ### Phase 3: maintainability (1–2 months)
@@ -350,6 +356,11 @@ Tests added:
 ---
 
 ## 9. Verification performed
+
+**Token pass (H5 rest, M12, M13):**
+- `ruff check backend/ ops/ scripts/`: all checks passed.
+- `pytest`: **1123 passed, 0 failed**, 2 skipped (baseline on `main`: 1109 passed, 2 skipped; 14 new in `test_token_hardening.py` and `test_sse_keepalive.py`).
+- `flutter analyze`: no issues. `flutter test`: **539/539** (baseline 532; 7 new in `tg_client_session_test.dart`). One existing test (`phase4_lifecycle_test`) was updated: a 401 on the stream now renews the token below the chat and keeps the session, instead of rotating to a new empty session.
 
 **Release pass (v1.0.61+106), final gate:**
 - `ruff check backend/ ops/ scripts/`: all checks passed.
