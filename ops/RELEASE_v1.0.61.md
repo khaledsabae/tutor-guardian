@@ -22,6 +22,12 @@ unless stated otherwise. Always pass `-f docker-compose.production.yml` — the 
 
 ## 1. Pre-deploy (backend)
 
+`deploy.yml` now does §1 **automatically** (step 3d): when `tg_backend` is running it
+calls `ops/scripts/backup_user_data.sh` (online backup + integrity_check + gzip →
+`/root/tg-backups/<date>`), then `migrate_schema_v27.sh preflight`, and stops the
+deploy before the container is touched if either fails. The manual commands below
+remain for manual deploys.
+
 ```bash
 cd /root/tutor-guardian
 # Read-only report — expect schema_version=26, legacy key present=True,
@@ -110,6 +116,24 @@ ops/scripts/migrate_schema_v27.sh rollback "$BACKUP"   # stops, restores, restar
   the private Docker network.
 
 ## 6. Android release (v1.0.61+106)
+
+**Automated path — `.github/workflows/release-play.yml`** (Actions → "Release to
+Google Play" → Run workflow, on `main`). It runs on a GitHub-hosted runner, builds
+with the upload key from repository secrets, **refuses a debug-signed bundle**, and
+uploads with `scripts/play_upload.py`. The default track is `internal`. Five secrets
+are needed once (the workflow header lists them):
+`ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`,
+`ANDROID_KEY_PASSWORD`, `PLAY_SERVICE_ACCOUNT_JSON`.
+
+```bash
+# On the machine that holds the keystore, to create the first secret's value:
+base64 -w0 mobile/android/app/almorabbi-upload.jks   # macOS: base64 -i … | tr -d '\n'
+```
+
+Promote internal → production from Play Console, or re-run the workflow with
+`track=production` and a `rollout` fraction (e.g. 0.2).
+
+**Manual path** (from the keystore machine):
 
 ```bash
 cd mobile

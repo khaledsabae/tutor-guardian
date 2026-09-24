@@ -39,7 +39,7 @@ Status: ✅ **fixed in this PR** · 📋 **roadmap** (needs an owner decision, p
 |---|---:|---:|---:|
 | Critical | 3 | 3 | 0 (C3 settings toggle still advised) |
 | High | 9 | 8 | 1 (H5, partly) |
-| Medium | 17 | 8 | 9 |
+| Medium | 17 | 11 | 6 |
 | Low | 12 | 6 | 6 |
 
 *Updated for release v1.0.61 (release-hardening pass): C3, H4, H6, H7 fixed; H5 partly
@@ -189,7 +189,7 @@ Two independent defects:
   - `_pump_stream` stops at the next chunk once the client disconnects and **closes** the generator, which closes the provider's HTTP stream. The gateway logs the aborted call (`route_reason=client_disconnected`).
   - A per-answer deadline (`LLM_STREAM_DEADLINE_S`, default 300).
   - **Tests:** `test_stream_cancellation.py`.
-  - **Still open 📋:** a primary-provider circuit breaker, and an overall deadline for the blocking `generate()` path.
+  - **Also fixed:** `primary_breaker` (2 consecutive failures skip the paid primary for 120 s, in both `generate()` and `stream()`), and an end-to-end `generate()` deadline (`LLM_GENERATE_DEADLINE_S`, default 150). Tests: `test_release_hardening.py`.
 
 ### H7 — Mobile wipes its identity on any secure-storage read error ✅
 `_AuthStore._safeRead` (`mobile/lib/api/tg_client.dart`) calls `_storage.deleteAll()` on *any* exception. A transient keystore error during early boot deletes `tg_device_id`, and every server-side record for the family (children, progress, reflections) is orphaned.
@@ -225,9 +225,9 @@ Two independent defects:
 | M1 | Stream path did SQLite writes (`_single`) and SQLite-backed redaction (`redact_for_cloud`) **on the event loop**, stalling every in-flight stream | `assistant.py` | ✅ moved to `to_thread`; `get_running_loop()` |
 | M2 | The request URL (with the caller's query string) was reflected unescaped into `href=""` on public pages | `routers/web.py` | ✅ escaped (`_page` and the landing template) |
 | M3 | `audio_base64` had no length limit, so a huge string was base64-decoded before the 8 MB check | `routers/feedback.py` | ✅ `max_length` |
-| M4 | `redact_for_cloud` replaces the names of **every family's** children with «طفلي», with no word boundaries. Prophet names (يوسف، محمد، مريم) in fiqh questions, the tier routed to the cloud, get corrupted. It also runs thousands of `re.sub` calls per request as the user base grows | `services/privacy.py` | 📋 scope to the caller's children and add Arabic word boundaries |
-| M5 | The semantic answer cache (cosine ≥0.92) can serve an answer that addresses another family's child by name, because the question text is part of the prompt | `services/answer_cache.py` | 📋 redact names before storing; exact-match only when a name was present |
-| M6 | `message_text` and `conversation_history` are unbounded, so a single request can carry megabytes into the classifier, embedder, BM25 and LLM. Client-supplied history (no `session_id`) can inject fake assistant turns | `models/api.py` | 📋 `max_length` of about 4000; history ≤ 12 turns; ignore client history when a session exists |
+| M4 | `redact_for_cloud` replaces the names of **every family's** children with «طفلي», with no word boundaries. Prophet names (يوسف، محمد، مريم) in fiqh questions, the tier routed to the cloud, get corrupted. It also runs thousands of `re.sub` calls per request as the user base grows | `services/privacy.py` | ✅ `redact_for_cloud(text, device_id)` redacts only the caller's children, with Arabic word boundaries and stacked prefixes (و/ف + ال/ب/ل/ك) |
+| M5 | The semantic answer cache (cosine ≥0.92) can serve an answer that addresses another family's child by name, because the question text is part of the prompt | `services/answer_cache.py` | ✅ questions naming the caller's own child bypass the cache (no lookup, no store) |
+| M6 | `message_text` and `conversation_history` are unbounded, so a single request can carry megabytes into the classifier, embedder, BM25 and LLM. Client-supplied history (no `session_id`) can inject fake assistant turns | `models/api.py` | ✅ `message_text` ≤ 4000, `behavior_type` ≤ 200, client history ≤ 12 turns, each ≤ 4000, roles user/assistant (server history already wins when a session exists) |
 | M7 | Retrieval embeds the same query up to about 18 times per request (per domain × query × leg) | `services/retrieval.py` | 📋 embed once, pass `query_embeddings` |
 | M8 | `/` and `/go` insert a `referral_clicks` row per request, with no rate limit (the routes are outside `/api`) and a spoofable IP | `routers/web.py` | 📋 throttle and trust only the proxy's IP |
 | M9 | The referral `AUTO` claim matches by client-controlled `X-Forwarded-For`/`CF-Connecting-IP` | `routers/referral.py` | ✅ fixed with H4 |
@@ -323,15 +323,12 @@ Tests added:
    - hash stored tokens;
    - add `expires_at` with renewal;
    - stop logging `device_id`.
-4. **M6:** request size limits on `UserMessage`.
-5. **M4/M5:**
-   - scope and word-bound the PII redaction;
-   - make the answer cache name-aware;
-   - redact the fiqh block log and add a TTL.
+4. ~~M6~~ ✅.
+5. **M4/M5:** ✅ scoped, word-bounded redaction and a name-aware cache. Still open: redact the fiqh block log and add a TTL.
 6. **C2 follow-up:** the fiqh intent classifier (FIQH_GUARD.md step 4), with a golden set from `blocked_fiqh_log`.
 
 ### Phase 2: reliability and performance (2–4 weeks)
-1. **H6 (rest):** a primary-provider circuit breaker and a deadline for `generate()` (the stream path is ✅).
+1. ~~H6~~ ✅ (stream path, primary breaker and `generate()` deadline).
 2. **M7:** single query embedding per request. Measure p95 before and after with `/api/stats/ops-llm`.
 3. **M13:** mobile SSE idle timeout (M14 batching ✅).
 4. ~~H7~~ ✅.
