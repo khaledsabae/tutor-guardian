@@ -34,7 +34,7 @@ from app.services.domain_classifier import (
     classify_domains, is_uncertain, matched_fast_path,
 )
 from app.services.tier_router import choose_tier
-from app.services.privacy import redact_for_cloud
+from app.services.privacy import mentions_any, names_for_device, redact_for_cloud
 from app.services import answer_cache
 from app.services import conversation_store as store
 from app.services.tafsir_service import (
@@ -191,6 +191,9 @@ router = APIRouter(prefix="/assistant", tags=["assistant"])
 @router.post("/draft", response_model=AssistantReply)
 async def draft_reply(request: Request, user_message: UserMessage):
     policies = request.app.state.guardrails_config
+    # The caller's own device: cloud redaction and the answer cache are scoped
+    # to THIS family's children (audit M4/M5).
+    caller_device = getattr(request.state, "device_id", None)
 
     # ── Session: validate + persist the incoming user message ────────
     # NB: every sqlite / model-inference call below goes through
@@ -281,7 +284,13 @@ async def draft_reply(request: Request, user_message: UserMessage):
     first_question = not any(
         getattr(t, "role", "") == "assistant" for t in history
     )
-    if first_question and not is_general and not is_uncertain(detected_domains):
+    # A question naming the family's own child gets a personalised answer:
+    # never serve it from, or store it into, the cross-family cache (M5).
+    personal = mentions_any(
+        query_text, await asyncio.to_thread(names_for_device, caller_device)
+    )
+    if (first_question and not personal and not is_general
+            and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
         if not decision["force_fallback"]:
             cached = await asyncio.to_thread(
@@ -394,9 +403,9 @@ async def draft_reply(request: Request, user_message: UserMessage):
             def _redact_blocking():
                 # redact_for_cloud reads child names from sqlite per call.
                 return (
-                    redact_for_cloud(query_text),
+                    redact_for_cloud(query_text, caller_device),
                     [
-                        t.model_copy(update={"content": redact_for_cloud(t.content)})
+                        t.model_copy(update={"content": redact_for_cloud(t.content, caller_device)})
                         for t in history
                     ],
                 )
@@ -520,6 +529,9 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     force-fallback replies are emitted as a single `done` event (not streamed).
     """
     policies = request.app.state.guardrails_config
+    # The caller's own device: cloud redaction and the answer cache are scoped
+    # to THIS family's children (audit M4/M5).
+    caller_device = getattr(request.state, "device_id", None)
     session_id = user_message.session_id
 
     # ── Session: validate + persist incoming user message ────────────
@@ -599,7 +611,11 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     )
 
     # ── Step 3b: Pre-cache check (skipped on a guessed domain — see /draft) ──
-    if first_question and not is_general and not is_uncertain(detected_domains):
+    personal = mentions_any(
+        query_text, await asyncio.to_thread(names_for_device, caller_device)
+    )
+    if (first_question and not personal and not is_general
+            and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
         if not decision["force_fallback"]:
             cached = await asyncio.to_thread(
@@ -721,9 +737,9 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             # redact_for_cloud reads sqlite — off the event loop, as in /draft.
             def _redact_blocking():
                 return (
-                    redact_for_cloud(query_text),
+                    redact_for_cloud(query_text, caller_device),
                     [
-                        t.model_copy(update={"content": redact_for_cloud(t.content)})
+                        t.model_copy(update={"content": redact_for_cloud(t.content, caller_device)})
                         for t in history
                     ],
                 )
@@ -816,6 +832,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                         if (
                             stream_mode == "llm_generated"
                             and first_question
+                            and not personal
                             and tier != "cloud_quality"
                             and not decision["needs_human_review"]
                         ):

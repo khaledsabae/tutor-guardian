@@ -3,6 +3,14 @@ import json
 
 from pydantic import BaseModel, Field, field_validator
 
+# Request-size ceilings (audit M6). Every byte of a question is fed to the
+# classifier, the embedder, BM25 and the LLM; unbounded fields let one request
+# carry megabytes through all of them. The app caps its composer at 2000
+# characters, so these leave generous headroom for every real client.
+MAX_MESSAGE_CHARS = 4000
+MAX_HISTORY_TURNS = 12
+_CLIENT_ROLES = frozenset({"user", "assistant"})
+
 
 class ConversationTurn(BaseModel):
     """Single message in a conversation."""
@@ -14,13 +22,29 @@ class ConversationTurn(BaseModel):
 class UserMessage(BaseModel):
     """Request from the parent describing a child's behaviour concern."""
 
-    age_group: str
-    domain: str | None = None
-    behavior_type: str = ""
-    severity: str
-    message_text: str = ""
-    session_id: str | None = None
-    conversation_history: list[ConversationTurn] = []
+    age_group: str = Field(max_length=32)
+    domain: str | None = Field(None, max_length=64)
+    behavior_type: str = Field("", max_length=200)
+    severity: str = Field(max_length=32)
+    message_text: str = Field("", max_length=MAX_MESSAGE_CHARS)
+    session_id: str | None = Field(None, max_length=64)
+    # Client-supplied history is only used when there is no server session;
+    # it is capped so it cannot smuggle an unbounded transcript into the prompt.
+    conversation_history: list[ConversationTurn] = Field(
+        default_factory=list, max_length=MAX_HISTORY_TURNS
+    )
+
+    @field_validator("conversation_history")
+    @classmethod
+    def _bounded_client_turns(cls, turns: list[ConversationTurn]) -> list[ConversationTurn]:
+        # Checked here, not on ConversationTurn: the server rebuilds turns from
+        # stored answers (conversation_store.get_history), which may be long.
+        for t in turns:
+            if t.role not in _CLIENT_ROLES:
+                raise ValueError("history role must be 'user' or 'assistant'")
+            if len(t.content) > MAX_MESSAGE_CHARS:
+                raise ValueError(f"history turn exceeds {MAX_MESSAGE_CHARS} characters")
+        return turns
 
 
 class AssistantReply(BaseModel):

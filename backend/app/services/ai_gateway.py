@@ -434,6 +434,18 @@ AUX_TIMEOUT_S = int(os.environ.get("AUX_LLM_TIMEOUT_S", "8"))
 # just woke up should be picked up again within minutes, not half an hour.
 aux_breaker = CircuitBreaker("auxiliary LLM", failure_threshold=2, cooldown_seconds=120)
 
+# The paid primary (DeepSeek when LLM_PRIMARY_PROVIDER=deepseek) had no breaker:
+# with the provider down, EVERY chat request paid its full timeout — times
+# LLM.max_retries on the blocking path — before reaching the local chain
+# (audit H6). Same semantics as the auxiliary breaker: two consecutive
+# failures skip the primary for two minutes, one success closes it.
+primary_breaker = CircuitBreaker("primary LLM", failure_threshold=2, cooldown_seconds=120)
+
+# End-to-end ceiling for one blocking generate(): cloud tier + primary
+# retries + the whole fallback chain + safety valve could otherwise add up to
+# well over ten minutes while a request (and its worker) waits.
+GENERATE_DEADLINE_S = float(os.environ.get("LLM_GENERATE_DEADLINE_S", "150"))
+
 # Deliberately the SAME telemetry identity as the gateway primary: auxiliary
 # tokens then count against the same monthly cap and show up in the same bill.
 # The `tier` column is what tells the call sites apart.
@@ -617,6 +629,14 @@ class AIGateway:
         retries = max_retries if max_retries is not None else LLM.max_retries
         opts = self._options(options)
         last_err: Exception | None = None
+        deadline = time.monotonic() + GENERATE_DEADLINE_S
+
+        def _out_of_time(stage: str) -> bool:
+            if time.monotonic() < deadline:
+                return False
+            logger.warning("generate() deadline (%.0fs) reached before %s",
+                           GENERATE_DEADLINE_S, stage)
+            return True
 
         # Cloud quality tier first when routed there; local chain remains
         # the fallback so a cloud failure is invisible to the caller.
@@ -651,7 +671,13 @@ class AIGateway:
         #    below, exactly as if the provider had failed.
         if not self._primary_within_budget():
             retries = 0
+        paid_primary = isinstance(self.provider, OpenAIChatProvider)
+        if paid_primary and primary_breaker.is_open():
+            logger.warning("primary LLM circuit open — going straight to the local chain")
+            retries = 0
         for attempt in range(1, retries + 1):
+            if _out_of_time(f"primary attempt {attempt}"):
+                break
             start = time.monotonic()
             try:
                 data = await asyncio.to_thread(self.provider.generate, prompt, options=opts)
@@ -670,9 +696,13 @@ class AIGateway:
                 _log_call(self.provider.name, result.model, latency,
                           result.prompt_tokens, result.completion_tokens,
                           streamed=False, ok=True)
+                if paid_primary:
+                    primary_breaker.record(True)
                 return result
             except Exception as e:
                 last_err = e
+                if paid_primary:
+                    primary_breaker.record(False)
                 # Recorded, not silently dropped. The monthly cap is a sum over
                 # this table, and a timeout here is the case where the provider
                 # most likely *did* count the tokens — the request reached it and
@@ -689,6 +719,8 @@ class AIGateway:
 
         # 2. Try fallback chain
         for fb in LLM.fallback_chain():
+            if _out_of_time(f"fallback {fb['name']}"):
+                break
             logger.warning("⚠️ trying fallback: %s (%s@%s)", fb["name"], fb["model"], fb["url"])
             result = await self._try_provider(
                 prompt, opts, fb["url"], fb["model"], fb["timeout"], fb["name"]
@@ -697,7 +729,7 @@ class AIGateway:
                 return result
 
         # 3. Cloud safety valve — only when the whole local chain is down.
-        valve = self._safety_valve_provider()
+        valve = None if _out_of_time("safety valve") else self._safety_valve_provider()
         if valve is not None:
             logger.warning("⚠️ local chain exhausted — trying cloud safety valve (%s)", valve.model)
             start = time.monotonic()
@@ -787,7 +819,9 @@ class AIGateway:
         # Primary OpenAI-compatible provider (DeepSeek) streams first; the
         # local Ollama chain above stays behind it as automatic fallback.
         # Dropped from the candidate list once the monthly ceiling is spent.
-        if isinstance(self.provider, OpenAIChatProvider) and self._primary_within_budget():
+        if (isinstance(self.provider, OpenAIChatProvider)
+                and self._primary_within_budget()
+                and not primary_breaker.is_open()):
             candidates.insert(0, (self.provider.name, self.provider))
         if tier == "cloud_quality":
             cloud = self._cloud_provider()
@@ -808,8 +842,12 @@ class AIGateway:
                     if not chunk.done:
                         tokens_sent = True
                     yield chunk
+                if provider is self.provider and isinstance(provider, OpenAIChatProvider):
+                    primary_breaker.record(True)
                 return  # success
             except Exception as e:
+                if provider is self.provider and isinstance(provider, OpenAIChatProvider):
+                    primary_breaker.record(False)
                 _log_call(provider.name, provider.model, 0, None, None,
                           streamed=True, ok=False,
                           tier=tier, route_reason=route_reason)

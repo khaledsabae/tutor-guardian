@@ -15,6 +15,17 @@ def mock_domain_classifier_llm(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
+def _closed_primary_breaker():
+    """The primary-LLM circuit breaker is module state; one test's failures
+    must not open it for the next."""
+    from app.services.ai_gateway import primary_breaker
+
+    primary_breaker.reset()
+    yield
+    primary_breaker.reset()
+
+
+@pytest.fixture(autouse=True)
 def _generous_session_mint_limit(monkeypatch):
     """Every test shares app.main's in-process limiter, and dozens mint a
     session from the same TestClient address. The per-IP minting budget
