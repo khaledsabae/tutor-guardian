@@ -28,6 +28,7 @@ RUN python -c "from sentence_transformers import SentenceTransformer, CrossEncod
 COPY backend/ ./backend/
 COPY knowledge_base/ ./knowledge_base/
 COPY ops/tools/ ./ops/tools/
+COPY ops/scripts/ ./ops/scripts/
 COPY frontend/ ./frontend/
 COPY docs/ ./docs/
 COPY .well-known/ ./.well-known/
