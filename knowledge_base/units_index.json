@@ -1,11 +1,11 @@
 {
-  "total_units": 1735,
-  "generated_at": "2026-08-28T18:31:50.811207+00:00",
+  "total_units": 1737,
+  "generated_at": "2026-09-24T15:23:09.687199+00:00",
   "by_domain": {
-    "medical": 347,
+    "medical": 348,
     "cyber": 277,
     "islamic_parenting": 967,
-    "development": 124,
+    "development": 125,
     "aqeedah": 20
   },
   "units": [
@@ -20434,6 +20434,18 @@
       "size_chars": 473
     },
     {
+      "id": "seed-fear-23",
+      "domain": "medical",
+      "title": "مخاوف الطفل وقلق الانفصال في عمر سنتين إلى ثلاث",
+      "source_file": "curated/AAP - HealthyChildren.org / Toddler Fears",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "الخوف",
+      "needs_ocr": false,
+      "size_chars": 532
+    },
+    {
       "id": "seed-fear-46",
       "domain": "medical",
       "title": "مخاوف الطفل في عمر أربعة إلى ستة",
@@ -20528,6 +20540,18 @@
       "behavior_type": "الغيرة",
       "needs_ocr": false,
       "size_chars": 493
+    },
+    {
+      "id": "seed-jealousy-79",
+      "domain": "development",
+      "title": "الغيرة والمنافسة بين الإخوة في عمر سبعة إلى تسعة",
+      "source_file": "curated/AAP / Sibling Rivalry in School Age",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "الغيرة بين الإخوة",
+      "needs_ocr": false,
+      "size_chars": 482
     },
     {
       "id": "seed-lying-46",

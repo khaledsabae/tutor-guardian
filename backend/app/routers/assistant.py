@@ -28,7 +28,10 @@ from app.services.llm_service import (
 )
 from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
-from app.services.intent_guard import check_banned_intent, check_emergency_keywords
+from app.services.intent_guard import (
+    check_banned_intent, check_emergency_keywords,
+    check_abusive_language, check_conversational_shortcut,
+)
 from app.services.fiqh_guard import check_fiqh_guard, SAFE_REPLY as FIQH_SAFE_REPLY
 from app.services.domain_classifier import (
     classify_domains, is_uncertain, matched_fast_path,
@@ -231,6 +234,35 @@ async def draft_reply(request: Request, user_message: UserMessage):
         # These two paths return before the classifier ever runs, so without
         # this the question rows that matter most — banned and emergency —
         # would be the ones left unlabelled.
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        return await asyncio.to_thread(_finalize, reply, session_id)
+
+    # ── Step 0a: Abusive language refusal (firm, polite boundary, no LLM) ──
+    is_abusive, matched_abusive = check_abusive_language(query_input)
+    if is_abusive:
+        logger.warning("Abusive language detected: %s", matched_abusive)
+        reply = AssistantReply(
+            reply_text="نعتذر، لا نقبل العبارات المسيئة أو غير اللائقة. المساعد مخصص للإرشاد التربوي والأسري فقط.",
+            domain="general",
+            severity="خفيف",
+            needs_human_review=False,
+            escalation_target=None,
+            mode="refusal",
+        )
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        return await asyncio.to_thread(_finalize, reply, session_id)
+
+    # ── Step 0c: Conversational shortcut (thanks/greetings — zero latency, no unprompted activity) ──
+    is_conv, conv_reply = check_conversational_shortcut(query_input)
+    if is_conv:
+        reply = AssistantReply(
+            reply_text=conv_reply,
+            domain="general",
+            severity="خفيف",
+            needs_human_review=False,
+            escalation_target=None,
+            mode="conversational",
+        )
         await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         return await asyncio.to_thread(_finalize, reply, session_id)
 
@@ -577,6 +609,23 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             escalation_target="emergency_services", mode="banned",
         ))
 
+    is_abusive, matched_abusive = check_abusive_language(query_input)
+    if is_abusive:
+        logger.warning("Abusive language detected (stream): %s", matched_abusive)
+        return await _single(AssistantReply(
+            reply_text="نعتذر، لا نقبل العبارات المسيئة أو غير اللائقة. المساعد مخصص للإرشاد التربوي والأسري فقط.",
+            domain="general", severity="خفيف", needs_human_review=False,
+            mode="refusal",
+        ))
+
+    is_conv, conv_reply = check_conversational_shortcut(query_input)
+    if is_conv:
+        return await _single(AssistantReply(
+            reply_text=conv_reply,
+            domain="general", severity="خفيف", needs_human_review=False,
+            mode="conversational",
+        ))
+
     # Emergency before the fiqh guard — same order and reason as /draft.
     if check_emergency_keywords(query_input):
         user_message = user_message.model_copy(update={"severity": "طارئ"})
@@ -722,6 +771,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             draft = _build_fallback_message(
                 primary_domain, user_message.behavior_type or "",
                 user_message.age_group or "unspecified", policies,
+                is_emergency_case=(decision.get("escalate_to") == "emergency_services" or severity == "طارئ"),
             )
             return await _single(AssistantReply(
                 reply_text=draft, domain=primary_domain, severity=severity,

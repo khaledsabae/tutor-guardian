@@ -37,6 +37,11 @@ ops/chroma_data/
 *.sqlite3
 ops/sessions.db
 
+# ── Real user evaluation sets (Strict privacy: never commit parent questions) ──
+*real_set*.jsonl
+data/eval/
+ops/eval/real_set*.jsonl
+
 # ── Old backups & deprecated data ───────────────────────────────────────
 knowledge_base/units_backup/
 knowledge_base/units_backup_*/

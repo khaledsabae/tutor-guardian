@@ -17,16 +17,32 @@ def _build_fallback_message(
     behavior_type: str,
     age_group: str,
     policies: dict,
+    is_emergency_case: bool = False,
 ) -> str:
-    """Return the high-risk fallback message from policies or a safe default."""
+    """Return the high-risk or emergency fallback message from policies or a safe default."""
+    if is_emergency_case:
+        fallback = (
+            policies.get("global", {})
+            .get("emergency_fallback_message", "")
+        )
+        if fallback:
+            return fallback.strip()
+
     fallback = (
         policies.get("global", {})
         .get("high_risk_fallback_message", "")
     )
     if fallback:
-        return fallback
+        return fallback.strip()
 
     # Absolute last-resort fallback
+    if is_emergency_case:
+        return (
+            "هذا المساعد لا يقدّم تشخيصًا طبيًا أو تدخلاً في الأزمات الطارئة. "
+            "يُرجى التوجه فورًا لأقرب قسم طوارئ أو الاتصال بالإسعاف في بلدك "
+            "(مصر: 123 / 16000، السعودية: 997 / 911 / 116111، أو 112)."
+        )
+
     return (
         f"نظرًا لخطورة الحالة ({behavior_type}، {age_group})، "
         f"نوصي بشدة بالتواصل الفوري مع مختص في مجال {domain}. "
@@ -48,6 +64,7 @@ def emergency_reply(user_message: UserMessage, policies: dict) -> AssistantReply
             user_message.behavior_type,
             user_message.age_group,
             policies,
+            is_emergency_case=True,
         ),
         domain=domain,
         severity=user_message.severity,
@@ -123,7 +140,11 @@ def apply_guardrails(
     decision = evaluate_guardrails(domain, severity, policies, intervention_type)
     if decision["force_fallback"]:
         draft_reply = _build_fallback_message(
-            domain, user_message.behavior_type, user_message.age_group, policies
+            domain,
+            user_message.behavior_type,
+            user_message.age_group,
+            policies,
+            is_emergency_case=(decision.get("escalate_to") == EMERGENCY_ESCALATE),
         )
 
     return AssistantReply(

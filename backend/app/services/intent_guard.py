@@ -189,6 +189,114 @@ def check_banned_intent(text: str) -> tuple[bool, str]:
 
 
 # ---------------------------------------------------------------------------
+# Abusive / vulgar language check — blocks explicit insults directed at the assistant
+# ---------------------------------------------------------------------------
+
+_ABUSIVE_KEYWORDS = {
+    "انيك",
+    "منيوك",
+    "متناك",
+    "شرموط",
+    "شرموطة",
+    "شرموطه",
+    "عرص",
+    "خول",
+    "قحبة",
+    "قحبه",
+    "طيز",
+}
+
+_ABUSIVE_KEYWORDS_NORM = {_normalize_word(w) for w in _ABUSIVE_KEYWORDS}
+
+_ABUSIVE_PHRASES = {
+    ("كس", "امك"),
+    ("يلعن", "امك"),
+    ("يلعن", "ابوك"),
+    ("يلعن", "دينك"),
+    ("ابن", "الوسخة"),
+    ("ابن", "الوسخه"),
+    ("ابن", "الكلب"),
+    ("يا", "عرص"),
+    ("يا", "خول"),
+    ("يا", "شرموط"),
+    ("يا", "شرموطة"),
+}
+
+_ABUSIVE_PHRASES_NORM = {
+    tuple(_normalize_word(t) for t in phrase): phrase
+    for phrase in _ABUSIVE_PHRASES
+}
+
+
+def check_abusive_language(text: str) -> tuple[bool, str]:
+    """Check if the text contains vulgar insults or profanity."""
+    normalized = _normalize(text)
+    tokens = normalized.split()
+
+    for token in tokens:
+        if token in _ABUSIVE_KEYWORDS_NORM:
+            return True, token
+
+    for i in range(len(tokens)):
+        if i + 1 < len(tokens):
+            phrase = (tokens[i], tokens[i + 1])
+            if phrase in _ABUSIVE_PHRASES_NORM:
+                return True, " ".join(_ABUSIVE_PHRASES_NORM[phrase])
+        if i + 2 < len(tokens):
+            phrase = (tokens[i], tokens[i + 1], tokens[i + 2])
+            if phrase in _ABUSIVE_PHRASES_NORM:
+                return True, " ".join(_ABUSIVE_PHRASES_NORM[phrase])
+
+    return False, ""
+
+
+# ---------------------------------------------------------------------------
+# Conversational shortcut — immediate, deterministic replies for pleasantries
+# ---------------------------------------------------------------------------
+
+_THANKS_PHRASES = {
+    "شكرا", "شكرا لك", "شكرا جزيلا", "شكرا جزيلا لك", "شكرا كتير", "شكرا يا غالي",
+    "جزاك الله خيرا", "جزاك الله خير", "جزاكم الله خيرا", "جزاكم الله خير",
+    "مشكور", "مشكورين", "تسلم", "تسلم ايدك", "يعطيك العافيه", "يعطيك الف عافيه",
+    "الله يجزيك خير", "بارك الله فيك",
+}
+
+_GREETING_PHRASES = {
+    "السلام عليكم", "السلام عليكم ورحمة الله", "السلام عليكم ورحمة الله وبركاته",
+    "صباح الخير", "مساء الخير", "صباح النور", "مساء النور",
+    "اهلا", "اهلا بك", "اهلا وسهلا", "مرحبا", "مرحبا بك", "هاي", "هلو",
+}
+
+_CLOSING_PHRASES = {
+    "لا شكر على واجب", "العفو", "على الرحب والسعة",
+}
+
+_THANKS_NORM = {_normalize(p) for p in _THANKS_PHRASES}
+_GREETING_NORM = {_normalize(p) for p in _GREETING_PHRASES}
+_CLOSING_NORM = {_normalize(p) for p in _CLOSING_PHRASES}
+
+
+def check_conversational_shortcut(text: str) -> tuple[bool, str]:
+    """If the text is strictly a greeting, thanks, or pleasantry with no actual
+    question, return (True, predefined_response) to bypass LLM and avoid
+    unprompted activity generation."""
+    norm = _normalize(text).strip()
+    if not norm:
+        return False, ""
+
+    if norm in _THANKS_NORM:
+        return True, "عفوًا، وجزاك الله خيرًا! يسعدني دائمًا مساعدتك في كل ما يخص طفلك وتربيته. أتمنى لك ولأسرتك دوام التوفيق والبركة."
+
+    if norm in _GREETING_NORM:
+        return True, "وعليكم السلام ورحمة الله وبركاته، أهلاً بك! كيف يمكنني مساعدتك اليوم في رعاية طفلك وتربيته؟"
+
+    if norm in _CLOSING_NORM:
+        return True, "بارك الله فيك ويسّر أمرك! أنا في خدمتك دائمًا لأي استشارة أو تساؤل تربوي."
+
+    return False, ""
+
+
+# ---------------------------------------------------------------------------
 # Emergency keywords — same normalization, checked as substring presence.
 # ---------------------------------------------------------------------------
 

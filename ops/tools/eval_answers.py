@@ -58,51 +58,54 @@ JUDGE_PROMPT = """أنت محكّم جودة لإجابات مساعد تربو�
 }}"""
 
 
-def _azure_client():
-    from openai import AzureOpenAI
+def _get_judge_config(provider: str) -> tuple[any, str]:
+    """Resolve (OpenAI client, model name) for the selected provider."""
+    from openai import OpenAI
 
-    return AzureOpenAI(
-        api_key=os.environ["AZURE_OPENAI_API_KEY"],
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        api_version=os.environ.get("AZURE_OPENAI_API_VERSION", "2024-12-01-preview"),
-    )
+    if provider == "auto":
+        if os.environ.get("OLLAMA_API_KEY"):
+            provider = "ollama"
+        elif os.environ.get("DEEPSEEK_API_KEY"):
+            provider = "deepseek"
+        elif os.environ.get("AZURE_OPENAI_API_KEY"):
+            provider = "azure"
+        else:
+            provider = "ollama_local"
+
+    if provider == "ollama":
+        key = os.environ.get("OLLAMA_API_KEY")
+        if not key:
+            raise RuntimeError("OLLAMA_API_KEY environment variable is required for provider=ollama")
+        client = OpenAI(api_key=key, base_url="https://ollama.com/v1")
+        model = os.environ.get("JUDGE_OLLAMA_MODEL", "mistral-large-3:675b")
+        return client, model
+
+    if provider == "deepseek":
+        key = os.environ.get("DEEPSEEK_API_KEY")
+        if not key:
+            raise RuntimeError("DEEPSEEK_API_KEY environment variable is required for provider=deepseek")
+        client = OpenAI(api_key=key, base_url="https://api.deepseek.com")
+        model = os.environ.get("JUDGE_DEEPSEEK_MODEL", "deepseek-chat")
+        return client, model
+
+    if provider == "azure":
+        from openai import AzureOpenAI
+        client = AzureOpenAI(
+            api_key=os.environ["AZURE_OPENAI_API_KEY"],
+            azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+            api_version=os.environ.get("AZURE_OPENAI_API_VERSION", "2024-12-01-preview"),
+        )
+        model = os.environ.get("AZURE_OPENAI_DEPLOYMENT", "DeepSeek-V4-Flash")
+        return client, model
+
+    # Fallback to local ollama endpoint
+    base = os.environ.get("OLLAMA_LOCAL_BASE_URL", "http://127.0.0.1:11434/v1")
+    client = OpenAI(api_key="ollama", base_url=base)
+    model = os.environ.get("JUDGE_OLLAMA_MODEL", "qwen2.5:7b")
+    return client, model
 
 
-# Judge backend: "ollama" (default — fully local, nothing leaves the
-# machines) or "azure" (requires AZURE_OPENAI_* env + explicit opt-in).
-# gemma4 variants on the home server return empty output — qwen2.5:7b
-# is the working local judge (chat endpoint; generate works too but
-# chat is safer across templates).
-JUDGE_BACKEND = os.environ.get("JUDGE_BACKEND", "ollama")
-JUDGE_OLLAMA_MODEL = os.environ.get("JUDGE_OLLAMA_MODEL", "qwen2.5:7b")
-
-
-def _judge_ollama(item_prompt: str, retries: int = 3) -> str:
-    import requests
-
-    base = os.environ.get("OLLAMA_LOCAL_BASE_URL", "http://100.109.163.64:11434")
-    for attempt in range(retries):
-        try:
-            r = requests.post(
-                f"{base}/api/chat",
-                json={"model": JUDGE_OLLAMA_MODEL,
-                      "messages": [{"role": "user", "content": item_prompt}],
-                      "stream": False,
-                      "options": {"temperature": 0.0, "num_predict": 400}},
-                timeout=600,
-            )
-            r.raise_for_status()
-            text = r.json().get("message", {}).get("content", "")
-            if text.strip():
-                return text
-            print("  local judge returned empty, retry", file=sys.stderr)
-        except Exception as exc:  # noqa: BLE001
-            print(f"  local judge error ({exc.__class__.__name__}), retry", file=sys.stderr)
-        time.sleep(5 * (attempt + 1))
-    return ""
-
-
-def _judge(client, item: dict, retries: int = 4) -> dict:
+def _judge(client, model: str, item: dict, retries: int = 4) -> dict:
     context = "\n\n".join(
         f"[{i+1}] {c}" for i, c in enumerate(item.get("retrieved_chunks") or [])
     ) or "(لم تُسترجع أي مصادر)"
@@ -114,28 +117,21 @@ def _judge(client, item: dict, retries: int = 4) -> dict:
         answer=item["reply_text"][:4000],
     )
 
-    if JUDGE_BACKEND == "ollama":
-        text = _judge_ollama(prompt)
-        try:
-            start, end = text.find("{"), text.rfind("}")
-            return json.loads(text[start : end + 1])
-        except Exception:  # noqa: BLE001
-            return {"judge_error": True}
-
-    model = os.environ.get("AZURE_OPENAI_DEPLOYMENT", "DeepSeek-V4-Flash")
     for attempt in range(retries):
         try:
             r = client.chat.completions.create(
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
-                max_tokens=400,
+                max_tokens=500,
                 temperature=0.0,
             )
             text = r.choices[0].message.content or ""
             start, end = text.find("{"), text.rfind("}")
-            return json.loads(text[start : end + 1])
+            if start != -1 and end != -1:
+                return json.loads(text[start : end + 1])
+            return json.loads(text)
         except Exception as exc:  # noqa: BLE001
-            wait = 2**attempt * 3
+            wait = 2**attempt * 2
             print(f"  judge error ({exc.__class__.__name__}), retry in {wait}s", file=sys.stderr)
             time.sleep(wait)
     return {"judge_error": True}
@@ -206,16 +202,16 @@ def run_pipeline(items: list[dict], label: str) -> list[dict]:
     return results
 
 
-def judge_all(results: list[dict]) -> None:
-    client = _azure_client() if JUDGE_BACKEND == "azure" else None
+def judge_all(results: list[dict], provider: str = "auto") -> None:
+    client, model = _get_judge_config(provider)
     for i, row in enumerate(results, 1):
         if row.get("error"):
             continue
-        if row["severity"] == "طارئ":
+        if row.get("severity") == "طارئ":
             # Emergency items assert the fallback path, not answer quality.
             row["judge"] = {"emergency_check": row.get("mode") != "llm_generated"}
             continue
-        row["judge"] = _judge(client, row)
+        row["judge"] = _judge(client, model, row)
         print(f"judged [{i}/{len(results)}] {row['id']}")
         time.sleep(0.5)
 
@@ -246,12 +242,12 @@ def summarize(results: list[dict]) -> dict:
         for r in scored:
             groups.setdefault(str(r.get(dim)), []).append(r)
         summary[dim] = {k: block(v) for k, v in sorted(groups.items())}
-    abstain = [r for r in scored if r["category"] == "out_of_kb_abstain"]
+    abstain = [r for r in scored if r.get("category") == "out_of_kb_abstain"]
     if abstain:
         summary["abstention_rate"] = round(
             sum(1 for r in abstain if r["judge"].get("correct_abstention") is True) / len(abstain), 2
         )
-    emergencies = [r for r in results if r["severity"] == "طارئ"]
+    emergencies = [r for r in results if r.get("severity") == "طارئ"]
     if emergencies:
         summary["emergency_fallback_ok"] = all(
             r.get("judge", {}).get("emergency_check") for r in emergencies
@@ -265,7 +261,9 @@ def summarize(results: list[dict]) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--set", default=str(GOLDEN), help="path to input jsonl (golden or real eval set)")
     ap.add_argument("--label", default="run")
+    ap.add_argument("--provider", choices=["auto", "ollama", "deepseek", "azure"], default="auto")
     ap.add_argument("--subset", help="filter by category or expected domain")
     ap.add_argument("--limit", type=int)
     ap.add_argument("--skip-judge", action="store_true")
@@ -277,17 +275,18 @@ def main() -> None:
 
     if args.judge_only:
         path = sorted(globmod.glob(args.judge_only))[-1]
-        results = [json.loads(l) for l in open(path)]
-        judge_all(results)
+        results = [json.loads(l) for l in open(path) if l.strip()]
+        judge_all(results, provider=args.provider)
         out = Path(path)
     else:
-        items = [json.loads(l) for l in GOLDEN.open()]
+        set_path = Path(args.set)
+        items = [json.loads(l) for l in set_path.open() if l.strip()]
         if args.subset:
             items = [g for g in items
-                     if g["category"] == args.subset or args.subset in g["expected_domains"]]
+                     if g.get("category") == args.subset or args.subset in g.get("expected_domains", [])]
         if args.limit:
             items = items[: args.limit]
-        print(f"running {len(items)} golden items (label={args.label})…")
+        print(f"running {len(items)} items from {set_path.name} (label={args.label})…")
         results = run_pipeline(items, args.label)
         out = RUNS_DIR / f"{args.label}_{ts}.jsonl"
         # Crash-safe: persist raw pipeline output BEFORE the judge phase
@@ -296,7 +295,7 @@ def main() -> None:
             for r in results:
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
         if not args.skip_judge:
-            judge_all(results)
+            judge_all(results, provider=args.provider)
 
     with out.open("w") as f:
         for r in results:
