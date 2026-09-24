@@ -256,15 +256,24 @@ class _AuthStore {
 }
 
 /// The Tutor Guardian API client.
+///
+/// Use [TgClient.shared] (or `tgClientProvider`, which returns it) — never a
+/// fresh `TgClient()` per call site (audit M12). Every instance owns its own
+/// `http.Client` and its own in-memory copy of the session: 19 ad-hoc
+/// instances meant 19 unclosed connection pools, sessions minted twice when
+/// two screens raced `ensureSession()`, and one instance holding a token
+/// another had already replaced.
 class TgClient {
   TgClient({
     http.Client? httpClient,
     FlutterSecureStorage? storage,
     this.onNeedActiveChildId,
-  })  : _http = httpClient ?? http.Client(),
+    Duration? streamIdleTimeout,
+  })  : _raw = httpClient ?? http.Client(),
         _auth = _AuthStore(storage ?? createDefaultSecureStorage()),
         _ownsHttpClient = httpClient == null,
-        _baseUrlOverride = null;
+        _baseUrlOverride = null,
+        streamIdleTimeout = streamIdleTimeout ?? AppConfig.streamIdleTimeout;
 
   /// Test-only constructor that bypasses [AppConfig.apiBaseUrl].
   @visibleForTesting
@@ -273,10 +282,22 @@ class TgClient {
     http.Client? httpClient,
     FlutterSecureStorage? storage,
     this.onNeedActiveChildId,
-  })  : _http = httpClient ?? http.Client(),
+    Duration? streamIdleTimeout,
+  })  : _raw = httpClient ?? http.Client(),
         _auth = _AuthStore(storage ?? createDefaultSecureStorage()),
         _ownsHttpClient = httpClient == null,
-        _baseUrlOverride = baseUrl;
+        _baseUrlOverride = baseUrl,
+        streamIdleTimeout = streamIdleTimeout ?? AppConfig.streamIdleTimeout;
+
+  static TgClient? _shared;
+
+  /// The app-wide client. Code without a `WidgetRef` (services, `main`) uses
+  /// this; widgets and providers go through `tgClientProvider`, which returns
+  /// the same instance so tests can still override it.
+  static TgClient get shared => _shared ??= TgClient();
+
+  @visibleForTesting
+  static set shared(TgClient? client) => _shared = client;
 
   /// UI language, sent as `?lang=` on curriculum reads.
   ///
@@ -286,9 +307,27 @@ class TgClient {
   /// the app. Set by the app when the locale changes; `null` keeps Arabic.
   static String? uiLanguage;
 
-  final http.Client _http;
+  /// The transport as injected. Only session minting uses it directly.
+  final http.Client _raw;
+
+  /// Everything else goes through this: it renews an expired session once
+  /// and replays the request (see [_SessionRecoveringClient]).
+  late final http.Client _http = _SessionRecoveringClient(_raw, _recoverSession);
+
   final _AuthStore _auth;
-  final Future<int?> Function()? onNeedActiveChildId;
+
+  /// Settable so `tgClientProvider` can wire the Riverpod active child into
+  /// the shared instance.
+  Future<int?> Function()? onNeedActiveChildId;
+
+  /// A stream that delivers no bytes for this long is treated as dead
+  /// (audit M13). The server sends an SSE comment every 15 s while the
+  /// model is still thinking, so this only fires on a stalled connection.
+  final Duration streamIdleTimeout;
+
+  /// The mint in flight, shared by every caller that needs a session now.
+  Future<SessionResponse>? _minting;
+
   final bool _ownsHttpClient;
   final String? _baseUrlOverride;
   bool _refreshingChildToken = false;
@@ -311,7 +350,7 @@ class TgClient {
     // Prove this is the same device (audit H5): the server refuses a proof
     // that belongs to another device, and — once SESSION_MINT_ENFORCE is on —
     // refuses to mint for a known device without one.
-    Future<http.Response> post(String? proof) => _http
+    Future<http.Response> post(String? proof) => _raw
         .post(
           Uri.parse('$_baseUrl/api/chat/sessions'),
           headers: {
@@ -388,34 +427,51 @@ class TgClient {
     String currentEvent = 'message';
     final dataBuffer = StringBuffer();
 
+    // Idle timeout per chunk (audit M13): the header timeout above only
+    // covered the wait for the response to start, so a connection that went
+    // silent mid-answer (a proxy dropping it, the phone changing networks)
+    // left the chat "typing" forever with Stop as the only way out.
     final lineStream = response.stream
+        .timeout(streamIdleTimeout)
         .transform(utf8.decoder)
         .transform(const LineSplitter());
 
-    await for (final rawLine in lineStream) {
-      // The decoder may leave a trailing \r on each line; trim it.
-      final line = rawLine.endsWith('\r') ? rawLine.substring(0, rawLine.length - 1) : rawLine;
+    try {
+      await for (final rawLine in lineStream) {
+        // The decoder may leave a trailing \r on each line; trim it.
+        final line = rawLine.endsWith('\r') ? rawLine.substring(0, rawLine.length - 1) : rawLine;
 
-      if (line.isEmpty) {
-        // End of one frame — dispatch whatever we accumulated.
-        if (dataBuffer.isNotEmpty) {
-          final ev = _parseFrame(currentEvent, dataBuffer.toString());
-          if (ev != null) yield ev;
+        if (line.isEmpty) {
+          // End of one frame — dispatch whatever we accumulated.
+          if (dataBuffer.isNotEmpty) {
+            final ev = _parseFrame(currentEvent, dataBuffer.toString());
+            if (ev != null) yield ev;
+          }
+          currentEvent = 'message';
+          dataBuffer.clear();
+          continue;
         }
-        currentEvent = 'message';
-        dataBuffer.clear();
-        continue;
-      }
 
-      if (line.startsWith('event:')) {
-        currentEvent = line.substring(6).trim();
-      } else if (line.startsWith('data:')) {
-        if (dataBuffer.isNotEmpty) dataBuffer.write('\n');
-        dataBuffer.write(line.substring(5).trimLeft());
-      } else if (line.startsWith(':')) {
-        // SSE comment / keep-alive; ignore.
+        if (line.startsWith('event:')) {
+          currentEvent = line.substring(6).trim();
+        } else if (line.startsWith('data:')) {
+          if (dataBuffer.isNotEmpty) dataBuffer.write('\n');
+          dataBuffer.write(line.substring(5).trimLeft());
+        } else if (line.startsWith(':')) {
+          // SSE comment / keep-alive; ignore.
+        }
+        // Other lines (id:, retry:) — ignore for v1.
       }
-      // Other lines (id:, retry:) — ignore for v1.
+    } on TimeoutException {
+      yield TgStreamError(AppL10n.current.apiStreamStalled);
+      return;
+    } on SocketException catch (e) {
+      yield TgStreamError(AppL10n.current.apiConnectionFailed(e.message));
+      return;
+    } on http.ClientException catch (e) {
+      // The connection died mid-response.
+      yield TgStreamError(AppL10n.current.apiConnectionFailed(e.message));
+      return;
     }
 
     // If the stream ended without a terminal frame, surface a stream error.
@@ -668,12 +724,46 @@ class TgClient {
   // ── Lifecycle helpers used by the chat notifier ──────────────────────
 
   /// Returns a (sessionId, token) pair, creating a session if none exists.
+  ///
+  /// Concurrent callers share one mint: app start, push registration and the
+  /// first screen all ask at once, and each used to create its own session.
   Future<SessionResponse> ensureSession() async {
     final (sid, tok) = await _auth.readSession();
     if (sid != null && tok != null) {
       return SessionResponse(sessionId: sid, token: tok);
     }
-    return createSession();
+    return _mintOnce();
+  }
+
+  Future<SessionResponse> _mintOnce() =>
+      _minting ??= createSession().whenComplete(() => _minting = null);
+
+  /// Called by [_SessionRecoveringClient] when the server refused
+  /// [rejectedToken] (it expired: tokens now lapse after a long idle, audit
+  /// H5). Returns the token to replay the request with, or null to give up.
+  ///
+  /// The rejected token stays the device proof (readDeviceProof survives
+  /// clearSession), and the server accepts an expired token as proof, so the
+  /// new token belongs to the same device and its data.
+  ///
+  /// Only the token is renewed: the conversation stays in the session it was
+  /// in (the server checks session ownership by device, not by token), so a
+  /// parent mid-conversation keeps it — and its history after a restart.
+  Future<String?> _recoverSession(String rejectedToken) async {
+    try {
+      final (sessionId, current) = await _auth.readSession();
+      if (current != null && current != rejectedToken) {
+        return current; // another request already renewed it
+      }
+      if (_minting == null) await _auth.clearSession();
+      final fresh = await _mintOnce();
+      if (sessionId != null) {
+        await _auth.setSession(sessionId: sessionId, token: fresh.token);
+      }
+      return fresh.token;
+    } catch (_) {
+      return null;
+    }
   }
 
   /// Persist a session after the caller (e.g. UI) creates one explicitly.
@@ -1983,6 +2073,55 @@ class TgClient {
 
   /// Close the underlying HTTP client. Safe to call multiple times.
   void close() {
-    if (_ownsHttpClient) _http.close();
+    if (_ownsHttpClient) _raw.close();
   }
+}
+
+/// Replays a request once with a fresh session when the server answers 401
+/// to a parent `Bearer` token.
+///
+/// Tokens expire after a long idle now (audit H5). Only the chat and a few
+/// providers knew how to recover from a 401 — every other screen would have
+/// shown an error until the app was reinstalled. One place instead: any 401
+/// to a parent Bearer means the token was not accepted (soft-protected routes
+/// drop a stale token and then refuse the anonymous call), so mint and retry.
+///
+/// Not replayed: child-mode (`Child-Bearer`) calls, the mint itself, and
+/// streamed/multipart bodies that cannot be sent twice.
+class _SessionRecoveringClient extends http.BaseClient {
+  _SessionRecoveringClient(this._inner, this._recover);
+
+  final http.Client _inner;
+  final Future<String?> Function(String rejectedToken) _recover;
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final auth = request.headers['Authorization'];
+    final isMint = request.method == 'POST' &&
+        request.url.path.endsWith('/api/chat/sessions');
+    if (auth == null ||
+        !auth.startsWith('Bearer ') ||
+        isMint ||
+        request is! http.Request) {
+      return _inner.send(request);
+    }
+    final replay = http.Request(request.method, request.url)
+      ..headers.addAll(request.headers)
+      ..bodyBytes = request.bodyBytes
+      ..followRedirects = request.followRedirects
+      ..maxRedirects = request.maxRedirects
+      ..persistentConnection = request.persistentConnection;
+
+    final response = await _inner.send(request);
+    if (response.statusCode != 401) return response;
+
+    final fresh = await _recover(auth.substring('Bearer '.length));
+    if (fresh == null) return response;
+    await response.stream.drain<void>();
+    replay.headers['Authorization'] = 'Bearer $fresh';
+    return _inner.send(replay);
+  }
+
+  @override
+  void close() => _inner.close();
 }

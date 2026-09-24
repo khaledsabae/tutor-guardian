@@ -2702,6 +2702,9 @@ class AppLocalizationsAr extends AppLocalizations {
       'انتهى وقت جلسة الطفل الآمنة. يُرجى إعادة الهاتف للمربي.';
 
   @override
+  String get apiStreamStalled => 'توقّف الرد قبل أن يكتمل. حاول مرة أخرى.';
+
+  @override
   String get apiIncompleteResponse => 'استجابة الخادم غير مكتملة.';
 
   @override

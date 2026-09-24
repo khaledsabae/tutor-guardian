@@ -151,16 +151,16 @@ class PushService {
       }
       if (token == null || token.isEmpty) return;
 
-      await TgClient().ensureSession();
-      await TgClient().registerPushToken(token, platform: 'android');
+      await TgClient.shared.ensureSession();
+      await TgClient.shared.registerPushToken(token, platform: 'android');
       await Analytics.pushTokenRegistered();
 
       // Listen to token refreshes and keep the backend in sync.
       _messaging.onTokenRefresh.listen(
         (newToken) async {
           try {
-            await TgClient().ensureSession();
-            await TgClient().registerPushToken(newToken, platform: 'android');
+            await TgClient.shared.ensureSession();
+            await TgClient.shared.registerPushToken(newToken, platform: 'android');
           } catch (e, s) {
             // Not fatal, but not harmless either: the device keeps running with
             // a token the backend no longer knows, so every future reminder

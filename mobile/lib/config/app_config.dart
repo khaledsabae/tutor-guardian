@@ -28,6 +28,11 @@ class AppConfig {
   /// SSE read timeout (must be larger than the LLM's worst-case generation).
   static const Duration streamTimeout = Duration(minutes: 5);
 
+  /// A reply stream that delivers no bytes for this long is dead (audit M13).
+  /// The server sends an SSE keep-alive comment every 15 s while the model is
+  /// still thinking, so 45 s is three missed keep-alives, not a slow answer.
+  static const Duration streamIdleTimeout = Duration(seconds: 45);
+
   /// App version — read dynamically at runtime via:
   ///   final info = await PackageInfo.fromPlatform();
   ///   final version = '${info.version}+${info.buildNumber}';

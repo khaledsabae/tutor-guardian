@@ -226,7 +226,11 @@ void main() {
     expect(await storage.read(key: 'tg_token'), 'tg_fresh');
   });
 
-  test('sendMessage: 401 mid-stream triggers transparent session rotation',
+  // A 401 on the stream means the token was refused (it expired, audit H5).
+  // TgClient renews the token below the notifier and replays the request, so
+  // the parent's conversation carries on in the same session — it used to be
+  // rotated into a new, empty one.
+  test('sendMessage: 401 mid-stream renews the token and keeps the session',
       () async {
     final storage = _MemStorage();
     await storage.write(key: 'tg_session_id', value: 'orig-1');
@@ -242,11 +246,12 @@ void main() {
     client.route(
         (_) => _jsonResponse(401, {'detail': 'Token غير صالح.'}));
 
-    // sendMessage catches 401, clears, creates rot-2.
+    // TgClient renews the token (the mint answers with a new session id,
+    // which is not adopted) …
     client.route((_) => _jsonResponse(201,
         {'session_id': 'rot-2', 'token': 'tg_rot2'}));
 
-    // Second stream attempt: SSE success.
+    // … and replays the stream with it: SSE success.
     client.route((_) => _sseOkResponse());
 
     final tg = TgClient.forTesting(
@@ -259,7 +264,9 @@ void main() {
     await notifier.bootstrap();
     await notifier.sendMessage('ابني يخاف من الظلام');
 
-    expect(notifier.state.sessionId, 'rot-2');
+    expect(notifier.state.sessionId, 'rot-1');
+    expect(await tg.currentSessionId(), 'rot-1');
+    expect(client.seen.last.headers['Authorization'], 'Bearer tg_rot2');
     expect(notifier.state.phase, ChatPhase.idle);
     expect(notifier.state.messages.length, 2);
     expect(notifier.state.messages[1].content, 'في هذه الحالة.');

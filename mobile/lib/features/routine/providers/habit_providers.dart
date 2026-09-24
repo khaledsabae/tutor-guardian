@@ -7,6 +7,7 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/program/providers/progress_providers.dart';
 
 import 'package:almorabbi/features/routine/models/habit_models.dart';
+import 'package:almorabbi/state/chat_notifier.dart' show tgClientProvider;
 
 /// Async stream of today's habits for the active child.
 ///
@@ -16,7 +17,7 @@ import 'package:almorabbi/features/routine/models/habit_models.dart';
 final todayHabitsProvider =
     StreamProvider.autoDispose.family<HabitDay, int>(
   (ref, childId) async* {
-    final client = TgClient();
+    final client = ref.watch(tgClientProvider);
     while (true) {
       try {
         final raw = await client.fetchTodayHabits(childId);
@@ -40,7 +41,7 @@ final todayHabitsProvider =
 final habitSummaryProvider =
     FutureProvider.autoDispose.family<Map<String, dynamic>, int>(
   (ref, childId) async {
-    return TgClient().fetchHabitSummary(childId, days: 7);
+    return ref.watch(tgClientProvider).fetchHabitSummary(childId, days: 7);
   },
 );
 
@@ -53,7 +54,7 @@ final habitActiveChildIdProvider = Provider<int?>((ref) {
 final habitTemplatesProvider =
     FutureProvider.autoDispose.family<List<HabitTemplate>, int>(
   (ref, childId) async {
-    final raw = await TgClient().listHabitTemplates(childId);
+    final raw = await ref.watch(tgClientProvider).listHabitTemplates(childId);
     final list = (raw['templates'] as List?)
             ?.map((t) => HabitTemplate.fromJson(t as Map<String, dynamic>))
             .toList() ??

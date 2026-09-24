@@ -2736,6 +2736,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The child\'s secure session has ended. Please hand the phone back to the parent.';
 
   @override
+  String get apiStreamStalled =>
+      'The reply stopped before it finished. Please try again.';
+
+  @override
   String get apiIncompleteResponse => 'The server response was incomplete.';
 
   @override

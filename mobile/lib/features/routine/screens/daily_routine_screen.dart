@@ -373,6 +373,7 @@ class _EventTile extends StatelessWidget {
     if (eventId == null) return;
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
+    final client = ProviderScope.containerOf(context).read(tgClientProvider);
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -383,7 +384,7 @@ class _EventTile extends StatelessWidget {
             onPressed: () async {
               Navigator.of(ctx).pop();
               try {
-                await TgClient().deleteRoutineEvent(eventId);
+                await client.deleteRoutineEvent(eventId);
               } on TgApiError catch (e) {
                 messenger.showSnackBar(
                   SnackBar(content: Text(l10n.routineDeleteFailed(e.message))),
@@ -598,7 +599,8 @@ class _AddEventSheetState extends State<_AddEventSheet> {
     setState(() => _saving = true);
     final navigator = Navigator.of(context);
     final messenger = ScaffoldMessenger.of(context);
-    TgClient()
+    ProviderScope.containerOf(context)
+        .read(tgClientProvider)
         .createRoutineEvent(widget.childId, body: event.toJson())
         .then((_) {
           navigator.pop();
@@ -1090,7 +1092,7 @@ class _HabitCardState extends State<_HabitCard> {
     if (_saving) return;
     setState(() => _saving = true);
     try {
-      await TgClient().createHabitEvent(
+      await ProviderScope.containerOf(context).read(tgClientProvider).createHabitEvent(
         widget.childId,
         body: {
           'category': widget.category.wireName,
