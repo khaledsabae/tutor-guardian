@@ -23,22 +23,25 @@ import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--base-url", default="http://localhost:8000")
-parser.add_argument("--dry-run", action="store_true")
-parser.add_argument(
-    "--force", action="store_true",
-    help="تجاهل بوابة الساعة — للتجربة خارج نافذة الستين دقيقة اليومية",
-)
-parser.add_argument(
-    "--cap-days", type=int, default=3,
-    help="لا تُرسل لجهاز وصلته دفعة خلال هذا العدد من الأيام",
-)
-args = parser.parse_args()
-BASE_URL = args.base_url.rstrip("/")
-DRY_RUN = args.dry_run
-FORCE = args.force
-CAP_DAYS = args.cap_days
+def _parse_args(argv=None):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--base-url", default="http://localhost:8000")
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--force", action="store_true",
+        help="تجاهل بوابة الساعة — للتجربة خارج نافذة الستين دقيقة اليومية",
+    )
+    parser.add_argument(
+        "--cap-days", type=int, default=3,
+        help="لا تُرسل لجهاز وصلته دفعة خلال هذا العدد من الأيام",
+    )
+    return parser.parse_args(argv)
+
+
+BASE_URL = "http://localhost:8000"
+DRY_RUN = False
+FORCE = False
+CAP_DAYS = 3
 
 # Ensure project root on path for app imports.
 ROOT = Path(__file__).resolve().parents[2]
@@ -223,7 +226,56 @@ def win_back(skip: set | None = None):
         )
 
 
+def first_lesson_activation(skip: set | None = None) -> set:
+    """Reach newly registered parents (registered between 2h and 36h ago)
+    who have registered a child but NEVER opened or completed a lesson.
+    Directly tackles the 55.8% drop-off in the activation funnel."""
+    skip = skip or set()
+    now = datetime.utcnow()
+    min_age = (now - timedelta(hours=2)).isoformat()
+    max_age = (now - timedelta(hours=36)).isoformat()
+    rows = _query(
+        f"""
+        SELECT cp.device_id, cp.name AS child_name, {_LATEST_AGE_GROUP} AS age_group
+        FROM child_profiles cp
+        WHERE cp.device_id IN (
+            SELECT device_id FROM push_tokens WHERE token IS NOT NULL AND token != ''
+        )
+        AND cp.created_at <= ? AND cp.created_at >= ?
+        AND cp.device_id NOT IN (
+            SELECT DISTINCT device_id FROM lesson_progress
+        )
+        GROUP BY cp.device_id
+        """,
+        (min_age, max_age),
+    )
+    sent: set = set()
+    for r in rows:
+        if r["device_id"] in skip:
+            continue
+        child_name = (r["child_name"] or "").strip()
+        body = (
+            f"خصصنا أول درس تطبيقي لـ {child_name} مدته دقيقتان فقط — ابدأ الآن!"
+            if child_name
+            else "خصصنا أول درس تطبيقي لطفلك مدته دقيقتان فقط — ابدأ الآن!"
+        )
+        _send(
+            device_id=r["device_id"],
+            title="خطوتك الأولى مع طفلك 🌟",
+            body=body,
+            data={"type": "first_lesson_activation", "link": _deep_link_for(r["age_group"])},
+        )
+        sent.add(r["device_id"])
+    return sent
+
+
 if __name__ == "__main__":
+    args = _parse_args()
+    BASE_URL = args.base_url.rstrip("/")
+    DRY_RUN = args.dry_run
+    FORCE = args.force
+    CAP_DAYS = args.cap_days
+
     hour = datetime.utcnow().hour
     print(f"[{datetime.utcnow().isoformat()}] cron_push_triggers starting (UTC hour={hour})")
 
@@ -236,9 +288,10 @@ if __name__ == "__main__":
     # hour, which made "did the change work?" unanswerable until tomorrow.
     if FORCE or 17 <= hour < 18:
         skip = _recently_pushed()
-        print(f"  -> streak_at_risk + win_back (deduped, {len(skip)} capped)")
-        nudged = streak_at_risk(skip=skip)
-        win_back(skip=nudged | skip)
+        print(f"  -> first_lesson_activation + streak_at_risk + win_back (deduped, {len(skip)} capped)")
+        act_sent = first_lesson_activation(skip=skip)
+        nudged = streak_at_risk(skip=skip | act_sent)
+        win_back(skip=nudged | act_sent | skip)
     else:
         print("  -> outside the 17 UTC window; nothing to do (use --force to test)")
 
