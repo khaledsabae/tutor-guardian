@@ -143,3 +143,44 @@ def test_deadline_stops_the_chain(gw, monkeypatch):
     with pytest.raises(RuntimeError):
         asyncio.run(gw.generate("س"))
     assert gw.provider.calls == 0
+
+
+# ── M11: the global name cache follows WAL writes ─────────────────────────
+
+def test_known_names_see_a_child_added_after_the_cache_was_filled():
+    from app.db.init_db import get_conn, init_db
+
+    init_db()
+    privacy._known_names_cached.cache_clear()
+    _child("fam-m11", "ريم")
+    assert "ريم" in privacy.known_child_names()        # cache filled
+    # A second write, same second, still in the WAL (no checkpoint).
+    conn = get_conn()
+    conn.execute(
+        "INSERT INTO child_profiles (device_id, name, age_group) VALUES (?, ?, '7-9')",
+        ("fam-m11", "جنى"),
+    )
+    conn.commit()
+    conn.close()
+    assert "جنى" in privacy.known_child_names()
+    assert "جنى" not in privacy.redact_for_cloud("جنى نامت بدري")
+
+
+# ── M16: error responses do not echo internal exception text ──────────────
+
+def test_bad_audio_error_does_not_leak_the_decoder_message(client):
+    r = client.post("/api/feedback/app", json={"message": "x", "audio_base64": "abc"})
+    assert r.status_code == 400
+    assert "padding" not in r.text.lower() and "binascii" not in r.text.lower()
+
+
+def test_database_failure_is_not_echoed_to_the_caller(client, monkeypatch):
+    from app.routers import feedback
+
+    def broken():
+        raise sqlite3.OperationalError("no such table: secret_internal_table")
+
+    monkeypatch.setattr(feedback, "get_conn", broken)
+    r = client.post("/api/feedback/app", json={"message": "x"})
+    assert r.status_code == 500
+    assert "secret_internal_table" not in r.text

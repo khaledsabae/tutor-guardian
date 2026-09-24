@@ -95,7 +95,7 @@ def test_domain_only_leg_does_not_filter_by_age():
     """Guards the one line that matters: no age predicate reaches Chroma."""
     captured = {}
 
-    def fake_query(collection, text, where, top_k):
+    def fake_query(collection, text, where, top_k, embed=None):
         captured["where"] = where
         return []
 

@@ -41,7 +41,7 @@ _PREFIX_CHAIN = r"(?:و|ف)?(?:ال|لل|ب|ل|ك)?"
 
 
 @lru_cache(maxsize=1)
-def _known_names_cached(_epoch: int) -> tuple[str, ...]:
+def _known_names_cached(_epoch: tuple) -> tuple[str, ...]:
     try:
         conn = sqlite3.connect(db_path())
         rows = conn.execute("SELECT name FROM child_profiles").fetchall()
@@ -98,13 +98,28 @@ def _name_pattern(name: str) -> "re.Pattern[str]":
     )
 
 
+def _store_epoch() -> tuple:
+    """A key that changes whenever the store's contents may have (audit M11).
+
+    It used to be the main file's mtime in whole seconds. The database runs in
+    WAL mode, where a write lands in ``<db>-wal`` and the main file is only
+    touched at a checkpoint — so a child added after startup stayed out of the
+    cache, and out of redaction, until the next checkpoint. The WAL's mtime
+    and size move on every commit; nanoseconds catch two writes in a second.
+    """
+    key = []
+    for path in (db_path(), f"{db_path()}-wal"):
+        try:
+            st = os.stat(path)
+            key.append((st.st_mtime_ns, st.st_size))
+        except OSError:
+            key.append(None)
+    return tuple(key)
+
+
 def known_child_names() -> tuple[str, ...]:
-    """Child names from the local store, cached ~per-process."""
-    try:
-        epoch = int(os.path.getmtime(db_path()))
-    except Exception:
-        epoch = 0
-    return _known_names_cached(epoch)
+    """Child names from the local store, re-read whenever the store changes."""
+    return _known_names_cached(_store_epoch())
 
 
 def redact_for_cloud(text: str, device_id: str | None = None) -> str:

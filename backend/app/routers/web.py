@@ -18,6 +18,7 @@ Routes (mounted at root):
 from __future__ import annotations
 
 import html
+import logging
 import re
 
 from fastapi import APIRouter, Query, Request
@@ -26,6 +27,7 @@ from fastapi.responses import HTMLResponse, PlainTextResponse, Response
 from app import curriculum_loader as cl
 from app.db.init_db import get_conn
 
+logger = logging.getLogger(__name__)
 router = APIRouter(tags=["web"])
 
 
@@ -224,6 +226,58 @@ def _page(*, title: str, desc: str, body: str, ref: str | None,
     return HTMLResponse(doc)
 
 
+# Audit M8: `/` and `/go` sit outside /api, so the rate limiter never sees
+# them, and every hit used to insert a row — any code, any number of times.
+_CLICK_REFRESH_WINDOW = "-10 minutes"
+_MAX_CLICKS_PER_IP_PER_HOUR = 20
+_MAX_UA_CHARS = 256
+
+
+def _record_click(ip: str, user_agent: str, code: str) -> None:
+    """Remember that this IP followed this referral code, within bounds.
+
+    * Only codes that exist are recorded — random codes cannot fill the table.
+    * The same IP and code again within 10 minutes refreshes the existing row
+      instead of adding one. The AUTO claim takes the *latest* click for an IP,
+      so refreshing keeps "last link followed wins" without the duplicates.
+    * At most 20 new rows per IP per hour; beyond that the page still renders,
+      the click is just not recorded.
+    """
+    conn = get_conn()
+    try:
+        if not conn.execute(
+            "SELECT 1 FROM referral_codes WHERE code = ?", (code,)
+        ).fetchone():
+            return
+        recent = conn.execute(
+            "SELECT id FROM referral_clicks WHERE ip = ? AND code = ? "
+            "AND clicked_at > datetime('now', ?) ORDER BY id DESC LIMIT 1",
+            (ip, code, _CLICK_REFRESH_WINDOW),
+        ).fetchone()
+        if recent:
+            conn.execute(
+                "UPDATE referral_clicks SET clicked_at = datetime('now') WHERE id = ?",
+                (recent["id"],),
+            )
+        else:
+            (count,) = conn.execute(
+                "SELECT COUNT(*) FROM referral_clicks "
+                "WHERE ip = ? AND clicked_at > datetime('now', '-1 hour')",
+                (ip,),
+            ).fetchone()
+            if count >= _MAX_CLICKS_PER_IP_PER_HOUR:
+                return
+            conn.execute(
+                "INSERT INTO referral_clicks (ip, user_agent, code) VALUES (?, ?, ?)",
+                (ip, user_agent[:_MAX_UA_CHARS], code),
+            )
+        conn.commit()
+    except Exception:  # noqa: BLE001 — a click log must never break the landing page
+        logger.warning("referral click not recorded", exc_info=True)
+    finally:
+        conn.close()
+
+
 @router.get("/", response_class=HTMLResponse)
 @router.get("/go", response_class=HTMLResponse)
 def landing(request: Request, ref: str | None = Query(None)) -> HTMLResponse:
@@ -242,19 +296,9 @@ def landing(request: Request, ref: str | None = Query(None)) -> HTMLResponse:
         
     install_url = _install_url(ref)
     if ref and _CODE_RE.match(ref):
-        ip = _get_client_ip(request)
-        ua = request.headers.get("user-agent", "")
-        conn = get_conn()
-        try:
-            conn.execute(
-                "INSERT INTO referral_clicks (ip, user_agent, code) VALUES (?, ?, ?)",
-                (ip, ua, ref.upper()),
-            )
-            conn.commit()
-        except Exception:  # noqa: BLE001
-            pass
-        finally:
-            conn.close()
+        _record_click(
+            _get_client_ip(request), request.headers.get("user-agent", ""), ref.upper()
+        )
 
     og_image = _abs(str(request.url), "/ui/assets/banner.png")
     canonical = str(request.url)
