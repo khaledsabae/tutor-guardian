@@ -37,10 +37,14 @@ Status: ✅ **fixed in this PR** · 📋 **roadmap** (needs an owner decision, p
 
 | Severity | Found | Fixed here | Roadmap |
 |---|---:|---:|---:|
-| Critical | 3 | 2 | 1 |
-| High | 9 | 5 | 4 |
-| Medium | 17 | 6 | 11 |
+| Critical | 3 | 3 | 0 (C3 settings toggle still advised) |
+| High | 9 | 8 | 1 (H5, partly) |
+| Medium | 17 | 8 | 9 |
 | Low | 12 | 6 | 6 |
+
+*Updated for release v1.0.61 (release-hardening pass): C3, H4, H6, H7 fixed; H5 partly
+fixed (validation, proof and staged enforcement; token hashing and expiry still open);
+M9 and M14 fixed. See [ops/RELEASE_v1.0.61.md](ops/RELEASE_v1.0.61.md) for the deployment runbook.*
 
 The three items that matter most:
 1. **C1:** a parent reporting a child's suicidal talk could get a religious-referral reply instead of the emergency escalation.
@@ -93,13 +97,18 @@ A newborn-health question getting a fiqh reply is a patient-safety problem. The 
 - «هل الله يغفر الذنب» is listed in the spec but no rule covers it.
 - `blocked_fiqh_log` stores raw question text (it can contain child names) with no retention limit. Add redaction and a 90-day TTL.
 
-### C3 — Pull-request CI executes on the production server 📋
+### C3 — Pull-request CI executes on the production server ✅
 - **Where:** `.github/workflows/backend.yml`, `docker.yml` and `flutter.yml`. All are triggered by `pull_request` and run on `runs-on: [self-hosted, production]`. That runner is the VPS: `deploy.yml` uses it to `docker build/run` and it holds `/root/tutor-guardian/.env`.
 - **Risk:** the repository is **public**. Code from a fork PR would execute on the production host. GitHub's "require approval for outside contributors" setting is the only barrier, and it is a settings toggle, not a guarantee.
 - **Recommended:**
   1. Move the `pull_request` jobs to GitHub-hosted runners, or to a separate, unprivileged, ephemeral self-hosted runner with no Docker socket and no secrets.
   2. Keep the `production` label for `deploy.yml` only (push to `main`).
   3. Set *Settings → Actions → Fork pull request workflows → Require approval for all outside collaborators*.
+- **Fixed (release pass):** every job in `backend.yml`, `docker.yml` and `flutter.yml` now carries
+  `if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository`.
+  A fork PR skips all jobs, so it never reaches the production runner. Pushes, manual runs and same-repo branches (which need write access) are unchanged.
+  The workflows also declare `permissions: contents: read`.
+  Point 3 (the settings toggle) is still advised as defence in depth.
 
 ---
 
@@ -129,7 +138,7 @@ Two independent defects:
 
 **Fix:** relative routes plus the protected prefix. The stubbed test now mounts the router like `app.main` does, and new tests run against the real app. (The mobile client does not call sync yet; this makes the endpoint work before it does.)
 
-### H4 — Rate-limit identity does not identify callers 📋
+### H4 — Rate-limit identity does not identify callers ✅
 - **Where:** `middleware/rate_limit.py` and `main.py`.
 - **Proxy order.** `ProxyHeadersMiddleware` is registered first, so it runs *innermost*. `RateLimitMiddleware` therefore sees the nginx container's IP for every request without a token. In production, every anonymous request shares **one** bucket: curriculum GETs (the app sends no token on them), `POST /api/chat/sessions`, feedback (5/min *globally*), and anonymous story generation. `trusted_hosts="*"` also lets any client spoof `X-Forwarded-For` for downstream readers (`referral.py`, `web.py`).
 - **Token rotation.** Unvalidated token hashes are used as bucket keys, so a random `Bearer` value per request gets a fresh per-minute bucket *and* a fresh daily AI quota. That works on public and soft-protected LLM routes (`/api/program/story` while `STORY_AUTH_ENFORCE` is unset).
@@ -140,8 +149,15 @@ Two independent defects:
   2. For the AI scope, validate the token (one SQLite read per LLM call is negligible) and key on the device.
   3. Add `/api/insights` to `_AI_PREFIXES`.
   4. Rate-limit `POST /api/chat/sessions` per real IP.
+- **Fixed (release pass):**
+  - A new pure-ASGI `middleware/client_ip.py` is registered **last**, so it runs first. It trusts `X-Forwarded-For`/`X-Forwarded-Proto` only from loopback, private or Docker ranges, and Cloudflare's published ranges (`TRUSTED_PROXY_IPS`). It walks the chain from the right, so a forged left-hand entry is never used, and falls back to `CF-Connecting-IP`.
+  - The spoofable `ProxyHeadersMiddleware(trusted_hosts="*")` is removed. `referral.py` and `web.py` now read `request.client`.
+  - The AI scope validates the token and keys on the **device**, so random Bearer values no longer buy buckets and a second session doesn't reset the quota.
+  - `/api/insights` is in the AI scope, and its GETs count against the daily quota.
+  - Session minting and feedback are keyed on IP only; minting has its own budget (`RATE_LIMIT_SESSION_PER_MINUTE`, default 30).
+  - **Tests:** `test_client_ip.py`, `test_rate_limit_identity.py` (updated plus new cases), and `test_referral_fingerprint.py` (now models the nginx peer, plus a spoofing test).
 
-### H5 — `device_id` is a bearer credential 📋
+### H5 — `device_id` is a bearer credential ◐ (partly fixed)
 - `POST /api/chat/sessions` is public and mints a token for **any** `device_id` in the body. Knowing a device ID is therefore equivalent to owning the account: children, progress, chat history, backups.
 - Device IDs are logged (`sync.py`, `push_sender.py`), partly echoed to Telegram, and sent in unauthenticated feedback bodies.
 - Tokens never expire and are stored in plaintext.
@@ -150,8 +166,16 @@ Two independent defects:
   2. Store `sha256(token)`.
   3. Add `expires_at` with sliding renewal.
   4. Stop logging raw device IDs.
+- **Fixed (release pass):**
+  - `SessionCreate` bounds `device_id` (≤128 characters, safe charset) and `metadata` (≤4 KB).
+  - A Bearer proof for a *different* device → 403.
+  - For a *known* device without proof: refused with 401 when `SESSION_MINT_ENFORCE` is set; otherwise logged by hash.
+  - Build 106 sends its last token as proof (`TgClient.createSession`, kept across `endSession`).
+  - Minting is IP-rate-limited (H4).
+  - **Enforcement is staged:** flip it once the forced-update floor is ≥ 106.
+- **Still open 📋:** hash stored tokens, `expires_at` with renewal, and removing raw device IDs from `sync.py`/`push_sender.py` logs.
 
-### H6 — Threadpool starvation under concurrent streams 📋
+### H6 — Threadpool starvation under concurrent streams ✅
 - Each SSE stream runs `run_sync_stream` in the **default** executor for its whole duration. On a 2-CPU container that pool has about 6 workers.
 - `worker.cancel()` does not stop the thread (see the comment in `assistant.py`), so an abandoned stream keeps its thread until generation ends.
 - The same pool serves every `asyncio.to_thread` SQLite call, so about 6 concurrent answers stall *all* DB-backed requests.
@@ -160,13 +184,25 @@ Two independent defects:
   - a dedicated bounded executor for LLM streams, or async `httpx` streaming with cooperative cancellation;
   - a total deadline per request;
   - a circuit breaker on the primary provider (the auxiliary tier already has one).
+- **Fixed (release pass):**
+  - SSE workers run on a dedicated bounded pool (`LLM_STREAM_WORKERS`, default 8), so SQLite `to_thread` calls can't be starved.
+  - `_pump_stream` stops at the next chunk once the client disconnects and **closes** the generator, which closes the provider's HTTP stream. The gateway logs the aborted call (`route_reason=client_disconnected`).
+  - A per-answer deadline (`LLM_STREAM_DEADLINE_S`, default 300).
+  - **Tests:** `test_stream_cancellation.py`.
+  - **Still open 📋:** a primary-provider circuit breaker, and an overall deadline for the blocking `generate()` path.
 
-### H7 — Mobile wipes its identity on any secure-storage read error 📋
+### H7 — Mobile wipes its identity on any secure-storage read error ✅
 `_AuthStore._safeRead` (`mobile/lib/api/tg_client.dart`) calls `_storage.deleteAll()` on *any* exception. A transient keystore error during early boot deletes `tg_device_id`, and every server-side record for the family (children, progress, reflections) is orphaned.
 
 `resetOnError: true` already handles the real corruption case (BadPadding).
 
 **Recommended:** delete only on the known corruption exceptions, retry once, and back up `device_id` to `SharedPreferences` as a recovery hint.
+
+**Fixed (release pass):**
+- No `deleteAll()` anywhere. Reads and writes retry once.
+- `device_id` is mirrored to `SharedPreferences` and restored from there.
+- A new ID is never written over an unreadable keystore entry.
+- **Tests:** `auth_store_resilience_test.dart`.
 
 ### H8 — Stored XSS on the teen web surface ✅
 - **Where:** `backend/static/child_mode/index.html`. `habit_name`, which includes parent-typed custom template names with no character validation, was interpolated into `innerHTML`. The page keeps the child token in `localStorage`.
@@ -194,12 +230,12 @@ Two independent defects:
 | M6 | `message_text` and `conversation_history` are unbounded, so a single request can carry megabytes into the classifier, embedder, BM25 and LLM. Client-supplied history (no `session_id`) can inject fake assistant turns | `models/api.py` | 📋 `max_length` of about 4000; history ≤ 12 turns; ignore client history when a session exists |
 | M7 | Retrieval embeds the same query up to about 18 times per request (per domain × query × leg) | `services/retrieval.py` | 📋 embed once, pass `query_embeddings` |
 | M8 | `/` and `/go` insert a `referral_clicks` row per request, with no rate limit (the routes are outside `/api`) and a spoofable IP | `routers/web.py` | 📋 throttle and trust only the proxy's IP |
-| M9 | The referral `AUTO` claim matches by client-controlled `X-Forwarded-For`/`CF-Connecting-IP` | `routers/referral.py` | 📋 fixed together with H4 |
+| M9 | The referral `AUTO` claim matches by client-controlled `X-Forwarded-For`/`CF-Connecting-IP` | `routers/referral.py` | ✅ fixed with H4 |
 | M10 | Push `register` returned 500 on non-string `token`/`platform`, and connections leaked on error | `routers/push.py` | ✅ |
 | M11 | `privacy.known_child_names` is cached on the main DB file's mtime, which WAL writes don't change, so the cache goes stale | `services/privacy.py` | 📋 |
 | M12 | Mobile creates `TgClient()` ad hoc in 19 places. Each has its own un-closed `http.Client` and session cache, and concurrent `ensureSession()` calls can mint duplicate sessions | `mobile/lib/**` | 📋 route everything through `tgClientProvider`; dedupe in-flight `ensureSession` |
 | M13 | Mobile SSE has a timeout only on the headers, so a server stall mid-stream hangs the chat indefinitely | `tg_client.dart::streamQuery` | 📋 idle timeout per chunk |
-| M14 | Each token rebuilds the full chat state and re-parses the whole Markdown, which is O(n²) on long answers | `state/chat_notifier.dart` | 📋 batch tokens at about 60 ms (UX-2) |
+| M14 | Each token rebuilds the full chat state and re-parses the whole Markdown, which is O(n²) on long answers | `state/chat_notifier.dart` | ✅ deltas batched every 60 ms and flushed on done, error, stop and pause (UX-2) |
 | M15 | `ops-llm` metrics are open when `OPS_METRICS_TOKEN` is unset, and the token was compared in non-constant time | `routers/stats.py` | ✅ `compare_digest`; 📋 fail closed in production |
 | M16 | Error `detail` strings echo internal exceptions (`f"DB error: {exc}"`, `f"bad audio: {exc}"`) | `routers/feedback.py` | 📋 |
 | M17 | Monolithic `init_db.py` (1,100 lines of hand-written migrations); two SQLite files, with DDL scattered across `ai_gateway`, `answer_cache`, `retrieval`, `fiqh_guard` and `query_rewriter` | `db/`, services | 📋 see Phase 3 |
@@ -273,17 +309,19 @@ Tests added:
 - backend: `test_fiqh_guard_precision.py`, `test_audit_regressions.py`; `test_sync.py` corrected; the date-dependent daily-tip test fixed;
 - mobile: `design_system_contrast_test.dart`.
 
+### Phase 0b: release hardening, v1.0.61 (done)
+- C3, H4, H6, H7, H5 (partly), M9, M14.
+- UX-1: on-colour and `successText` tokens, WCAG-safe domain gradients, dark-mode-safe insights cards.
+- UX-2: thinking state, token batching, follow-up chips (`follow_ups` field), inline retry, jump-to-latest, 16/1.7 answer type.
+- Schema v27 runbook (`ops/scripts/migrate_schema_v27.sh`) and the release checklist `ops/RELEASE_v1.0.61.md`.
+
 ### Phase 1: security hardening (1–2 weeks)
-1. **C3:** move PR workflows off the production runner. *Owner: repo admin.*
-2. **H4:**
-   - proxy middleware order and trusted CIDR;
-   - AI-scope token validation;
-   - `/api/insights` into the AI quota;
-   - session-mint throttle.
-3. **H5:**
+1. ~~C3~~ ✅ (the settings toggle is still advised).
+2. ~~H4~~ ✅.
+3. **H5 (rest):**
+   - flip `SESSION_MINT_ENFORCE` after the forced-update floor reaches 106;
    - hash stored tokens;
    - add `expires_at` with renewal;
-   - proof-of-possession for re-minting;
    - stop logging `device_id`.
 4. **M6:** request size limits on `UserMessage`.
 5. **M4/M5:**
@@ -293,13 +331,10 @@ Tests added:
 6. **C2 follow-up:** the fiqh intent classifier (FIQH_GUARD.md step 4), with a golden set from `blocked_fiqh_log`.
 
 ### Phase 2: reliability and performance (2–4 weeks)
-1. **H6:**
-   - a dedicated LLM executor or async streaming with cancellation;
-   - a per-request deadline;
-   - a primary-provider circuit breaker.
+1. **H6 (rest):** a primary-provider circuit breaker and a deadline for `generate()` (the stream path is ✅).
 2. **M7:** single query embedding per request. Measure p95 before and after with `/api/stats/ops-llm`.
-3. **M13/M14:** mobile SSE idle timeout and token batching.
-4. **H7:** safe secure-storage recovery on mobile.
+3. **M13:** mobile SSE idle timeout (M14 batching ✅).
+4. ~~H7~~ ✅.
 5. **M12:** a single `TgClient`, with in-flight session dedupe.
 6. Run `ops/eval/golden_set.jsonl` in CI as a non-blocking report.
 
@@ -318,6 +353,16 @@ Tests added:
 ---
 
 ## 9. Verification performed
+
+**Release pass (v1.0.61+106), final gate:**
+- `ruff check backend/ ops/ scripts/`: all checks passed.
+- `pytest`: **1110 passed, 0 failed**, 2 skipped (the first pass had 1088; the release pass adds 22 backend tests).
+- `flutter analyze`: no issues.
+- `flutter test`: **532/532** passed.
+- `flutter build appbundle --release`: `app-release.aab` (94.4 MB), versionCode 106 / versionName 1.0.61. The zip CRCs check out and `jarsigner` verifies it. It is signed with the **debug** key because no upload keystore is present here, so it must be rebuilt where `key.properties` lives (see `ops/RELEASE_v1.0.61.md` §6).
+- `ops/scripts/migrate_schema_v27.sh` exercised end to end against a v26 legacy copy: preflight → verified backup → apply → verify → rollback.
+
+**First pass:**
 **Backend:**
 - `pytest` full suite, before and after:
   - baseline `HEAD`: 1045 passed, **1 failed**, 2 skipped. The failure is `test_get_daily_tip_0_3_has_pool`, which depends on the date since the `prenatal-1` migration (c4aca27); corrected here.
