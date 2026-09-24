@@ -34,6 +34,7 @@ import '../../program/providers/progress_providers.dart';
 import '../data/onboarding_storage.dart';
 import '../providers/onboarding_providers.dart';
 import 'update_splash_screen.dart' show updateSplashVersion;
+import '../../../widgets/ui/error_retry_view.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -128,7 +129,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).onbChildError('$e')),
+            content: Text(AppLocalizations.of(context).onbChildError(describeFailure(AppLocalizations.of(context), e))),
             backgroundColor: AppTheme.dangerFg,
           ),
         );

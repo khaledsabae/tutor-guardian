@@ -16,6 +16,7 @@ import '../../../widgets/ui/bouncy_button.dart';
 import '../../onboarding/screens/avatar_picker_sheet.dart';
 import '../providers/progress_providers.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 
 class AddChildScreen extends ConsumerStatefulWidget {
   const AddChildScreen({super.key});
@@ -75,7 +76,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).addChildError(e.toString())),
+            content: Text(AppLocalizations.of(context).addChildError(describeFailure(AppLocalizations.of(context), e))),
             backgroundColor: AppTheme.dangerFg,
           ),
         );

@@ -145,15 +145,16 @@ class _AssistantBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final r = message.reply;
-    final showContent =
-        message.content.isNotEmpty || message.isStreaming;
+    // While nothing has arrived yet the typing dots below are the whole
+    // signal; a Markdown "…" above them said the same thing twice.
+    final showContent = message.content.isNotEmpty;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (r != null) SafetyBanner(reply: r),
         if (showContent)
           MarkdownBody(
-            data: message.content.isEmpty ? '…' : message.content,
+            data: message.content,
             styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
                 .copyWith(
               p: TextStyle(

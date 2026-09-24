@@ -15,6 +15,7 @@ import '../../journey/providers/journey_providers.dart';
 import '../data/progress_models.dart';
 import '../providers/progress_providers.dart';
 import '../providers/settings_providers.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 
 class ChildrenListScreen extends ConsumerWidget {
   const ChildrenListScreen({super.key});
@@ -175,7 +176,7 @@ class ChildrenListScreen extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).childrenSwitchError(e.toString())),
+            content: Text(AppLocalizations.of(context).childrenSwitchError(describeFailure(AppLocalizations.of(context), e))),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -237,7 +238,7 @@ class ChildrenListScreen extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).childrenDeleteError(e.toString())),
+            content: Text(AppLocalizations.of(context).childrenDeleteError(describeFailure(AppLocalizations.of(context), e))),
             backgroundColor: AppTheme.dangerFg,
           ),
         );
@@ -436,7 +437,7 @@ class _ErrorView extends StatelessWidget {
             Icon(Icons.error_outline,
                 size: 48, color: AppTheme.dangerFg),
             const SizedBox(height: 12),
-            Text('${AppLocalizations.of(context).childrenErrorLoading}\n$error',
+            Text('${AppLocalizations.of(context).childrenErrorLoading}\n${describeFailure(AppLocalizations.of(context), error)}',
                 textAlign: TextAlign.center),
             const SizedBox(height: 16),
             ElevatedButton.icon(

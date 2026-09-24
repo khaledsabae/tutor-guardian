@@ -5024,6 +5024,12 @@ abstract class AppLocalizations {
   /// **'⏹️ تم إيقاف الرد.'**
   String get chatResponseStopped;
 
+  /// No description provided for @chatStop.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف الرد'**
+  String get chatStop;
+
   /// No description provided for @chatRatingSaveFailed.
   ///
   /// In ar, this message translates to:

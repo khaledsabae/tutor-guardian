@@ -2738,6 +2738,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatResponseStopped => '⏹️ تم إيقاف الرد.';
 
   @override
+  String get chatStop => 'إيقاف الرد';
+
+  @override
   String chatRatingSaveFailed(Object error) {
     return 'تعذّر حفظ التقييم: $error';
   }

@@ -14,8 +14,10 @@ abstract final class Dt {
   // mode was estimated at a week. The spelling at each call site is unchanged;
   // only the definitions moved behind [AppPalette.current].
   static Color get primary => AppPalette.current.primary;
+  static Color get onPrimary => AppPalette.current.onPrimary;
   static Color get primaryDeep => AppPalette.current.primaryDeep;
   static Color get accent => AppPalette.current.accent;
+  static Color get onAccent => AppPalette.current.onAccent;
   static Color get accentDeep => AppPalette.current.accentDeep;
   static Color get background => AppPalette.current.background;
   static Color get surface => AppPalette.current.surface;
@@ -78,6 +80,20 @@ abstract final class Dt {
 
   // ── Spacing ──────────────────────────────────────────────────────────────
   static const double pad = 16;
+
+  /// 4-pt spacing scale. New code picks from here instead of a literal; the
+  /// existing literals migrate screen by screen (UX_UI_ROADMAP.md, UX-1).
+  static const double s4 = 4;
+  static const double s8 = 8;
+  static const double s12 = 12;
+  static const double s16 = 16;
+  static const double s24 = 24;
+  static const double s32 = 32;
+
+  /// Minimum interactive target (Material / WCAG 2.5.8). Surfaces a child
+  /// operates use [minTouchChild].
+  static const double minTouch = 48;
+  static const double minTouchChild = 56;
 
   /// Items beyond this index appear without an entrance animation —
   /// they're off-screen anyway and animating them wastes frames.

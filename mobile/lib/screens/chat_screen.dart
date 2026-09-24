@@ -10,11 +10,14 @@
 ///   * New conversation button + retry button (on error).
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/haptics.dart';
 import '../models/api_models.dart';
 import '../models/enums.dart';
 import '../features/onboarding/providers/onboarding_providers.dart';
@@ -75,6 +78,19 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     super.dispose();
   }
 
+  /// Keep the answer in view while it streams — but only if the reader is
+  /// already at (or near) the bottom. Scrolling back up to reread something
+  /// must not be yanked away by the next token.
+  void _followStream() {
+    if (!_scroll.hasClients) return;
+    final pos = _scroll.position;
+    if (pos.maxScrollExtent - pos.pixels > 120) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_scroll.hasClients) return;
+      _scroll.jumpTo(_scroll.position.maxScrollExtent);
+    });
+  }
+
   void _scrollToBottom() {
     if (!_scroll.hasClients) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -91,6 +107,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     final text = _input.text;
     if (text.trim().isEmpty) return;
     _input.clear();
+    unawaited(Haptics.selection());
     await ref.read(chatNotifierProvider.notifier).sendMessage(text);
     _scrollToBottom();
   }
@@ -113,6 +130,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     ref.listen<ChatState>(chatNotifierProvider, (prev, next) {
       if ((prev?.messages.length ?? 0) != next.messages.length) {
         _scrollToBottom();
+      } else if (next.phase == ChatPhase.streaming &&
+          next.messages.isNotEmpty &&
+          prev != null &&
+          prev.messages.isNotEmpty &&
+          prev.messages.last.content.length !=
+              next.messages.last.content.length) {
+        // The count only changes when a turn starts, so tokens growing the
+        // last bubble used to run below the fold unseen.
+        _followStream();
       }
     });
 
@@ -704,25 +730,39 @@ class _Composer extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             // While streaming → red stop button; otherwise → send.
-            GestureDetector(
-              onTap: isStreaming ? onStop : (enabled ? onSend : null),
-              child: Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  gradient: isStreaming ? null : Dt.primaryGradient,
-                  color: isStreaming ? AppTheme.dangerFg : null,
-                  shape: BoxShape.circle,
-                  boxShadow: Dt.softShadow(
-                    isStreaming ? AppTheme.dangerFg : Dt.primary,
-                    alpha: .3,
+            // A bare GestureDetector is unnamed to a screen reader and has no
+            // long-press hint; Semantics + Tooltip give it both.
+            Semantics(
+              button: true,
+              excludeSemantics: true,
+              label: isStreaming
+                  ? AppLocalizations.of(context).chatStop
+                  : AppLocalizations.of(context).send,
+              child: Tooltip(
+                message: isStreaming
+                    ? AppLocalizations.of(context).chatStop
+                    : AppLocalizations.of(context).send,
+                child: GestureDetector(
+                  onTap: isStreaming ? onStop : (enabled ? onSend : null),
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      gradient: isStreaming ? null : Dt.primaryGradient,
+                      color: isStreaming ? AppTheme.dangerFg : null,
+                      shape: BoxShape.circle,
+                      boxShadow: Dt.softShadow(
+                        isStreaming ? AppTheme.dangerFg : Dt.primary,
+                        alpha: .3,
+                      ),
+                    ),
+                    child: Icon(
+                      // Icons.send auto-mirrors under RTL Directionality.
+                      isStreaming ? Icons.stop_rounded : Icons.send,
+                      color: Dt.surface,
+                      size: 22,
+                    ),
                   ),
-                ),
-                child: Icon(
-                  // Icons.send auto-mirrors under RTL Directionality.
-                  isStreaming ? Icons.stop_rounded : Icons.send,
-                  color: Dt.surface,
-                  size: 22,
                 ),
               ),
             ),

@@ -18,6 +18,8 @@ class AppTheme {
   static Color get primary => AppPalette.current.primary; // vivid teal
   static Color get primaryDark => AppPalette.current.primaryDeep;
   static Color get accent => AppPalette.current.accent; // amber
+  static Color get onPrimary => AppPalette.current.onPrimary;
+  static Color get onAccent => AppPalette.current.onAccent;
 
   // Surfaces
   static Color get background => AppPalette.current.background;
@@ -112,9 +114,13 @@ class AppTheme {
       seedColor: primary,
       brightness: p.brightness,
       primary: primary,
+      onPrimary: p.onPrimary,
       secondary: accent,
+      onSecondary: p.onAccent,
       surface: surface,
+      error: p.dangerFg,
     );
+    final inputRadius = BorderRadius.circular(Dt.rButton);
 
     return ThemeData(
       useMaterial3: true,
@@ -158,7 +164,7 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primary,
-          foregroundColor: Colors.white,
+          foregroundColor: p.onPrimary,
           elevation: 0,
           minimumSize: const Size(0, 54),
           shape: RoundedRectangleBorder(
@@ -171,7 +177,7 @@ class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: accent,
-          foregroundColor: Colors.white,
+          foregroundColor: p.onAccent,
           minimumSize: const Size(0, 54),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Dt.rButton),
@@ -191,6 +197,65 @@ class AppTheme {
           textStyle: GoogleFonts.cairo(fontWeight: FontWeight.w700),
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: primary,
+          minimumSize: const Size(Dt.minTouch, Dt.minTouch),
+          textStyle: GoogleFonts.cairo(fontWeight: FontWeight.w700),
+        ),
+      ),
+      // Components below were hand-styled screen by screen (or left on raw
+      // Material defaults); these give every un-styled instance one look.
+      // Explicit per-widget styles still win.
+      chipTheme: ChipThemeData(
+        shape: const StadiumBorder(),
+        side: BorderSide(color: primary.withValues(alpha: .3)),
+        backgroundColor: primary.withValues(alpha: .08),
+        selectedColor: primary,
+        checkmarkColor: p.onPrimary,
+        labelStyle: GoogleFonts.cairo(
+          color: textPrimary,
+          fontWeight: FontWeight.w600,
+          fontSize: 13,
+        ),
+        secondaryLabelStyle: GoogleFonts.cairo(
+          color: p.onPrimary,
+          fontWeight: FontWeight.w700,
+          fontSize: 13,
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: surface,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Dt.rSheet),
+        ),
+        titleTextStyle: GoogleFonts.cairo(
+          fontSize: 19,
+          fontWeight: FontWeight.w800,
+          color: textPrimary,
+        ),
+        contentTextStyle: GoogleFonts.cairo(
+          fontSize: 15,
+          height: 1.6,
+          color: p.textSecondary,
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: surface,
+        surfaceTintColor: Colors.transparent,
+        showDragHandle: true,
+        dragHandleColor: p.track,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(Dt.rSheet)),
+        ),
+      ),
+      listTileTheme: ListTileThemeData(
+        iconColor: p.inkSoft,
+        textColor: textPrimary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      ),
+      dividerTheme: DividerThemeData(color: p.track, thickness: 1, space: 1),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: surface,
         elevation: 3,
@@ -236,6 +301,27 @@ class AppTheme {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(Dt.rButton),
           borderSide: BorderSide(color: primary, width: 2),
+        ),
+        // Without these, an invalid field fell back to `border` — which is
+        // BorderSide.none — so a validation error showed no outline at all,
+        // only small red helper text. Focused-and-invalid showed the green
+        // focus ring, i.e. the opposite signal.
+        errorBorder: OutlineInputBorder(
+          borderRadius: inputRadius,
+          borderSide: BorderSide(color: p.dangerFg, width: 1.5),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: inputRadius,
+          borderSide: BorderSide(color: p.dangerFg, width: 2),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: inputRadius,
+          borderSide: BorderSide(color: p.track),
+        ),
+        errorStyle: GoogleFonts.cairo(
+          color: p.dangerFg,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

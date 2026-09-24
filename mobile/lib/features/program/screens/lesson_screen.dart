@@ -44,6 +44,7 @@ import '../../../config/app_config.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
 import '../../../theme/app_palette.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({
@@ -134,7 +135,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).lessonErrorMarking(e.toString())),
+            content: Text(AppLocalizations.of(context).lessonErrorMarking(describeFailure(AppLocalizations.of(context), e))),
             backgroundColor: AppTheme.dangerFg,
           ),
         );

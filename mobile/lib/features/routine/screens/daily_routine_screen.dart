@@ -661,7 +661,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
       if (!mounted) return;
       Navigator.of(context, rootNavigator: true).pop();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).routineQrFailed(e.toString()))),
+        SnackBar(content: Text(AppLocalizations.of(context).routineQrFailed(describeFailure(AppLocalizations.of(context), e)))),
       );
       return;
     }

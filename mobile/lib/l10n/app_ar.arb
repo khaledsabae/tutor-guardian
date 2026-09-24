@@ -841,6 +841,7 @@
   "chatUnexpectedError": "خطأ غير متوقع: {error}",
   "chatConnectionInterrupted": "انقطع الاتصال قبل اكتمال الرد.",
   "chatResponseStopped": "⏹️ تم إيقاف الرد.",
+  "chatStop": "إيقاف الرد",
   "chatRatingSaveFailed": "تعذّر حفظ التقييم: {error}",
   "chatOpenFailed": "تعذّر فتح المحادثة: {error}",
   "chatFallbackTitle": "محادثة",

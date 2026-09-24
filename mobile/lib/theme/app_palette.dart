@@ -26,8 +26,10 @@ class AppPalette {
   const AppPalette({
     required this.brightness,
     required this.primary,
+    required this.onPrimary,
     required this.primaryDeep,
     required this.accent,
+    required this.onAccent,
     required this.accentDeep,
     required this.background,
     required this.surface,
@@ -47,8 +49,19 @@ class AppPalette {
 
   final Brightness brightness;
   final Color primary;
+
+  /// Text/icons placed ON [primary] (filled buttons, selected chips).
+  ///
+  /// Both button themes used to hard-code `Colors.white`, which is fine on the
+  /// light emerald (5.5:1) and unreadable on the luminous dark-mode one
+  /// (2.5:1, WCAG AA needs 4.5:1). Pinned ≥ 4.5:1 by dark_mode_test.dart.
+  final Color onPrimary;
   final Color primaryDeep;
   final Color accent;
+
+  /// Text/icons placed ON [accent]. White on the gold was 3.2:1 in light and
+  /// 1.7:1 in dark; a deep brown ink reads at 5.7:1 and 10.9:1.
+  final Color onAccent;
   final Color accentDeep;
   final Color background;
   final Color surface;
@@ -77,8 +90,10 @@ class AppPalette {
   static const light = AppPalette(
     brightness: Brightness.light,
     primary: Color(0xFF0F766E), // Royal Islamic Emerald
+    onPrimary: Colors.white, // 5.5:1
     primaryDeep: Color(0xFF044E46), // Deep Emerald
     accent: Color(0xFFD97706), // Warm Noble Gold
+    onAccent: Color(0xFF1F1300), // 5.7:1
     accentDeep: Color(0xFFB45309), // Burnished Gold
     background: Color(0xFFFAF8F5), // Warm Noble Cream
     surface: Colors.white,
@@ -100,8 +115,10 @@ class AppPalette {
   static const dark = AppPalette(
     brightness: Brightness.dark,
     primary: Color(0xFF10B981), // Luminous Emerald
+    onPrimary: Color(0xFF04211B), // 6.7:1 — white here was 2.5:1
     primaryDeep: Color(0xFF059669),
     accent: Color(0xFFFBBF24), // Radiant Gold
+    onAccent: Color(0xFF1F1300), // 10.9:1 — white here was 1.7:1
     accentDeep: Color(0xFFD97706),
     background: Color(0xFF0A1210), // Nocturnal Obsidian-Emerald
     surface: Color(0xFF131F1C), // Deep Emerald Surface

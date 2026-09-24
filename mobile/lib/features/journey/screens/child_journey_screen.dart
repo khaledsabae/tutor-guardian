@@ -25,6 +25,7 @@ import '../data/journey_milestones.dart';
 import '../data/journey_store.dart';
 import '../providers/journey_providers.dart';
 import '../widgets/milestone_icon.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 
 class ChildJourneyScreen extends ConsumerWidget {
   const ChildJourneyScreen({
@@ -51,7 +52,7 @@ class ChildJourneyScreen extends ConsumerWidget {
         error: (e, _) => Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: Text('${AppLocalizations.of(context).journeyLoading}\n$e', textAlign: TextAlign.center),
+            child: Text('${AppLocalizations.of(context).journeyLoading}\n${describeFailure(AppLocalizations.of(context), e)}', textAlign: TextAlign.center),
           ),
         ),
         data: (logged) {

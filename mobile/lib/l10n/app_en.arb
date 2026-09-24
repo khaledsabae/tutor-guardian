@@ -841,6 +841,7 @@
   "chatUnexpectedError": "Unexpected error: {error}",
   "chatConnectionInterrupted": "The connection dropped before the reply finished.",
   "chatResponseStopped": "⏹️ Reply stopped.",
+  "chatStop": "Stop reply",
   "chatRatingSaveFailed": "Could not save the rating: {error}",
   "chatOpenFailed": "Could not open the conversation: {error}",
   "chatFallbackTitle": "Conversation",
