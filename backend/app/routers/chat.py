@@ -4,12 +4,12 @@ Chat session router — إدارة جلسات المحادثة (mobile-ready)
 POST /api/chat/sessions          → create a session, returns session_id + auth token
 GET  /api/chat/sessions/{id}     → full session with message history (requires auth)
 """
-import hashlib
 import logging
 import os
 
 from fastapi import APIRouter, HTTPException, Request, status
 
+from app.core.log_safety import device_tag
 from app.models.api import SessionCreate, SessionCreateResponse, SessionResponse
 from app.services import conversation_store as store
 
@@ -49,21 +49,22 @@ def create_session(request: Request, body: SessionCreate | None = None) -> Sessi
     device_id = body.device_id
 
     header = request.headers.get("Authorization", "")
-    proof = store.validate_token(header[7:].strip()) if header.startswith("Bearer ") else None
-    if proof is not None:
-        if device_id and device_id != proof["device_id"]:
+    # An expired token still proves the device (token_device): tokens now
+    # lapse after TOKEN_TTL_DAYS idle, and the install holding one must be
+    # able to mint its next session once minting is enforced.
+    proof_device = (store.token_device(header[7:].strip())
+                    if header.startswith("Bearer ") else None)
+    if proof_device is not None:
+        if device_id and device_id != proof_device:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                                 detail="الجهاز لا يطابق التوثيق.")
-        device_id = device_id or proof["device_id"]
+        device_id = device_id or proof_device
     elif device_id and store.device_has_tokens(device_id):
         if _session_mint_enforced():
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail="مطلوب توثيق الجهاز لإنشاء جلسة جديدة.")
-        # Hash only — a raw device id is a credential (audit H5).
-        logger.info(
-            "session minted for a known device without proof (dev=%s)",
-            hashlib.sha256(device_id.encode()).hexdigest()[:12],
-        )
+        logger.info("session minted for a known device without proof (%s)",
+                    device_tag(device_id))
 
     sid, token = store.create_session_with_token(
         device_id=device_id,

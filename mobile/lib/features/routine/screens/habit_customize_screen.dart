@@ -12,6 +12,7 @@ import 'package:almorabbi/features/program/providers/progress_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
+import 'package:almorabbi/state/chat_notifier.dart' show tgClientProvider;
 import 'package:almorabbi/theme/design_tokens.dart';
 import '../../../widgets/ui/error_retry_view.dart';
 
@@ -96,7 +97,7 @@ class _HabitCustomizeScreenState extends ConsumerState<HabitCustomizeScreen> {
     }
     setState(() => _saving = true);
     try {
-      await TgClient().createHabitTemplate(
+      await ref.read(tgClientProvider).createHabitTemplate(
         childId,
         body: {
           'category': _selectedCategory.wireName,
@@ -186,7 +187,7 @@ class _TemplateList extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     try {
-      await TgClient().updateHabitTemplate(
+      await ref.read(tgClientProvider).updateHabitTemplate(
         template.id,
         body: {'is_active': !template.isActive},
       );

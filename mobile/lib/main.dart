@@ -214,7 +214,7 @@ void main() async {
 
 Future<void> _postLaunchGrowthLoop() async {
   try {
-    await TgClient().ensureSession();
+    await TgClient.shared.ensureSession();
   } catch (_) {
     return;
   }

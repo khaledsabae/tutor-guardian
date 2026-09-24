@@ -73,7 +73,13 @@ Migration v27: child_challenges drops UNIQUE(device_id, child_id, status) for a
                partial unique index on the ACTIVE row only. The old key allowed
                one 'resolved' row per child ever, so the third challenge change
                (or a clear after one resolve) failed with IntegrityError → 500.
+Migration v28: api_tokens stores sha256(token) instead of the bearer itself,
+               and every token carries an expires_at (sliding, see
+               conversation_store.TOKEN_TTL_DAYS). Existing plaintext rows are
+               hashed in place and given a full TTL, so no install is logged out
+               by the upgrade (audit H5).
 """
+import hashlib
 import os
 import sqlite3
 from pathlib import Path
@@ -200,7 +206,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 27
+SCHEMA_VERSION = 28
 
 
 def db_path() -> Path:
@@ -377,6 +383,7 @@ def init_db() -> None:
     _ensure_parent_identities_table(conn)
     _ensure_daily_login_streaks_table(conn)
     _ensure_api_tokens_columns(conn)
+    _ensure_api_tokens_hashed(conn)
     _ensure_chat_messages_columns(conn)
     _ensure_daily_routines_table(conn)
     _ensure_habits_value_table(conn)
@@ -1111,6 +1118,69 @@ def _ensure_api_tokens_columns(conn: sqlite3.Connection) -> None:
             conn.execute("ALTER TABLE api_tokens ADD COLUMN session_id TEXT NOT NULL DEFAULT ''")
         if "expires_at" not in names:
             conn.execute("ALTER TABLE api_tokens ADD COLUMN expires_at TEXT")
+
+
+def token_ttl_days() -> int:
+    """Sliding lifetime of a bearer token (env ``TOKEN_TTL_DAYS``, default 180)."""
+    try:
+        return max(1, int(os.environ.get("TOKEN_TTL_DAYS", "180")))
+    except ValueError:
+        return 180
+
+
+def _ensure_api_tokens_hashed(conn: sqlite3.Connection) -> None:
+    """v28: hash plaintext bearer tokens in place and give them an expiry.
+
+    A stored row is already hashed when it is 64 lowercase hex characters
+    (sha256). Issued tokens are ``tg_`` + 64 hex, so the two never collide and
+    re-running this is a no-op. Legacy rows keep working: the client still
+    holds the raw token, and validation hashes what it is sent.
+    """
+    try:
+        rows = conn.execute("SELECT token, expires_at FROM api_tokens").fetchall()
+    except sqlite3.Error:
+        return
+    plain = [r for r in rows if not _is_token_hash(r[0])]
+    unexpiring = any(r[1] is None for r in rows)
+    if not plain and not unexpiring:
+        return
+    expiry = f"+{token_ttl_days()} days"
+    if conn.in_transaction:
+        conn.commit()
+    previous_isolation = conn.isolation_level
+    conn.isolation_level = None
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        for r in plain:
+            conn.execute(
+                "UPDATE api_tokens SET token = ? WHERE token = ?",
+                (hash_token(r[0]), r[0]),
+            )
+        conn.execute(
+            "UPDATE api_tokens SET expires_at = datetime('now', ?) "
+            "WHERE expires_at IS NULL",
+            (expiry,),
+        )
+        conn.execute("COMMIT")
+    except Exception:
+        conn.execute("ROLLBACK")
+        raise
+    finally:
+        conn.isolation_level = previous_isolation
+
+
+def hash_token(token: str) -> str:
+    """What api_tokens stores for a bearer token. Tokens are 256-bit random,
+    so an unsalted sha256 is enough: there is nothing to brute-force."""
+    return hashlib.sha256(token.encode()).hexdigest()
+
+
+def _is_token_hash(value: str | None) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(c in "0123456789abcdef" for c in value)
+    )
 
 
 def _ensure_chat_messages_columns(conn: sqlite3.Connection) -> None:

@@ -26,6 +26,7 @@ from fastapi import (
 )
 from pydantic import BaseModel, Field, field_validator
 
+from app.core.log_safety import device_tag
 from app.db.init_db import get_conn
 
 router = APIRouter(prefix="/feedback", tags=["feedback"])
@@ -107,7 +108,7 @@ def notify_new_feedback(
                 "📝 فيدباك جديد في المربّي",
                 f"الإصدار: {app_version or 'غير معروف'}",
                 f"للتواصل: {contact}" if contact else "للتواصل: —",
-                f"الجهاز: {device_id[:8] if device_id else '—'}",
+                f"الجهاز: {device_tag(device_id)}",
                 "",
                 body,
                 "",

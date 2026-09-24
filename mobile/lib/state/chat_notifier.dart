@@ -134,15 +134,21 @@ class ChatState {
   }
 }
 
-/// Provider for the singleton [TgClient]. Tests can override this.
+/// The app-wide [TgClient] ([TgClient.shared]) for widgets and providers.
+/// Tests override this.
+///
+/// It is the same instance services outside Riverpod use, so it is never
+/// closed here: closing it on a container dispose would break every other
+/// caller for the rest of the process (audit M12).
 final tgClientProvider = Provider<TgClient>((ref) {
-  final client = TgClient(
-    onNeedActiveChildId: () async {
-      final id = ref.read(activeChildIdProvider);
-      return id;
-    },
-  );
-  ref.onDispose(client.close);
+  final client = TgClient.shared;
+  Future<int?> activeChild() async => ref.read(activeChildIdProvider);
+  client.onNeedActiveChildId = activeChild;
+  ref.onDispose(() {
+    if (client.onNeedActiveChildId == activeChild) {
+      client.onNeedActiveChildId = null;
+    }
+  });
   return client;
 });
 

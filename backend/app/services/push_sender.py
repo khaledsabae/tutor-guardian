@@ -17,6 +17,7 @@ from typing import Optional
 import firebase_admin
 from firebase_admin import credentials, messaging
 
+from app.core.log_safety import device_tag
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -118,7 +119,7 @@ def _record_send(device_id: str, kind: str) -> None:
         conn.commit()
         conn.close()
     except Exception:  # noqa: BLE001
-        logger.warning("push_sends insert failed for %s/%s", device_id, kind,
+        logger.warning("push_sends insert failed for %s/%s", device_tag(device_id), kind,
                        exc_info=True)
 
 

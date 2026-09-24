@@ -12,11 +12,18 @@ import json
 import secrets
 import uuid
 
-from app.db.init_db import get_conn
+from app.db.init_db import get_conn, hash_token, token_ttl_days
 from app.models.api import ConversationTurn
 
 
 # ── Token Management ─────────────────────────────────────────────────────────
+#
+# Only sha256(token) is stored (audit H5): a copy of the database, a backup or
+# a log of SQL no longer hands out working credentials. Every token expires
+# TOKEN_TTL_DAYS after it was last renewed; validation slides the expiry
+# forward once less than half of it is left, so an app in regular use never
+# sees it, and one that has been idle longer gets a 401 and mints a new
+# session (proving continuity with the expired token, see token_device).
 
 def generate_token() -> str:
     """Generate a cryptographically secure opaque token."""
@@ -29,8 +36,9 @@ def create_token(device_id: str, session_id: str) -> str:
     conn = get_conn()
     try:
         conn.execute(
-            "INSERT INTO api_tokens (token, device_id, session_id) VALUES (?, ?, ?)",
-            (token, device_id, session_id),
+            "INSERT INTO api_tokens (token, device_id, session_id, expires_at) "
+            "VALUES (?, ?, ?, datetime('now', ?))",
+            (hash_token(token), device_id, session_id, _ttl_modifier()),
         )
         conn.commit()
     finally:
@@ -39,19 +47,52 @@ def create_token(device_id: str, session_id: str) -> str:
 
 
 def validate_token(token: str) -> dict | None:
-    """Check a token is valid. Returns {device_id, session_id} or None."""
+    """Check a token is valid. Returns {device_id, session_id} or None.
+
+    Renews the expiry when less than half of the TTL remains.
+    """
+    if not token:
+        return None
+    digest = hash_token(token)
     conn = get_conn()
     try:
         row = conn.execute(
-            """SELECT token, device_id, session_id
+            """SELECT device_id, session_id,
+                      expires_at < datetime('now', ?) AS due_for_renewal
                FROM api_tokens
                WHERE token = ?
                  AND (expires_at IS NULL OR expires_at > datetime('now'))""",
-            (token,),
+            (_half_ttl_modifier(), digest),
         ).fetchone()
-        if row:
-            return {"device_id": row["device_id"], "session_id": row["session_id"]}
+        if not row:
+            return None
+        if row["due_for_renewal"]:
+            conn.execute(
+                "UPDATE api_tokens SET expires_at = datetime('now', ?) WHERE token = ?",
+                (_ttl_modifier(), digest),
+            )
+            conn.commit()
+        return {"device_id": row["device_id"], "session_id": row["session_id"]}
+    finally:
+        conn.close()
+
+
+def token_device(token: str) -> str | None:
+    """The device a token was issued to, whether or not it has expired.
+
+    Only for proving continuity when minting a new session: holding a token
+    this server issued to a device — even a lapsed one — is proof of that
+    device, and an expired token must not lock its own install out once
+    SESSION_MINT_ENFORCE is on. It is never an API credential.
+    """
+    if not token:
         return None
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT device_id FROM api_tokens WHERE token = ?", (hash_token(token),)
+        ).fetchone()
+        return row["device_id"] if row else None
     finally:
         conn.close()
 
@@ -72,6 +113,14 @@ def get_device_id(token: str) -> str | None:
     """Extract device_id from a valid token (for rate-limiting)."""
     info = validate_token(token)
     return info["device_id"] if info else None
+
+
+def _ttl_modifier() -> str:
+    return f"+{token_ttl_days()} days"
+
+
+def _half_ttl_modifier() -> str:
+    return f"+{token_ttl_days() * 12} hours"
 
 
 # ── Session Management ───────────────────────────────────────────────────────

@@ -4970,6 +4970,12 @@ abstract class AppLocalizations {
   /// **'انتهى وقت جلسة الطفل الآمنة. يُرجى إعادة الهاتف للمربي.'**
   String get apiChildSessionExpired;
 
+  /// No description provided for @apiStreamStalled.
+  ///
+  /// In ar, this message translates to:
+  /// **'توقّف الرد قبل أن يكتمل. حاول مرة أخرى.'**
+  String get apiStreamStalled;
+
   /// No description provided for @apiIncompleteResponse.
   ///
   /// In ar, this message translates to:

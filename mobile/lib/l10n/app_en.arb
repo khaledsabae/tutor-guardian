@@ -832,6 +832,7 @@
   "apiSessionExpired": "The session has expired.",
   "apiGoogleLinkFailed": "Failed to link the Google account",
   "apiChildSessionExpired": "The child's secure session has ended. Please hand the phone back to the parent.",
+  "apiStreamStalled": "The reply stopped before it finished. Please try again.",
   "apiIncompleteResponse": "The server response was incomplete.",
   "apiServerError": "A server error occurred.",
   "apiHttpError": "HTTP error {status}",

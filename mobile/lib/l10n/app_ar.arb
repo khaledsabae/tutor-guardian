@@ -832,6 +832,7 @@
   "apiSessionExpired": "انتهت صلاحية الجلسة.",
   "apiGoogleLinkFailed": "فشل ربط حساب Google",
   "apiChildSessionExpired": "انتهى وقت جلسة الطفل الآمنة. يُرجى إعادة الهاتف للمربي.",
+  "apiStreamStalled": "توقّف الرد قبل أن يكتمل. حاول مرة أخرى.",
   "apiIncompleteResponse": "استجابة الخادم غير مكتملة.",
   "apiServerError": "حدث خطأ في الخادم.",
   "apiHttpError": "خطأ HTTP {status}",

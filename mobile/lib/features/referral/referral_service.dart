@@ -36,7 +36,7 @@ class ReferralService {
   ReferralService._();
   static final ReferralService instance = ReferralService._();
 
-  final TgClient _client = TgClient();
+  TgClient get _client => TgClient.shared;
 
   /// This device's referral code once fetched — read by ShareService so
   /// shared cards carry attribution. Null until [refresh] runs.

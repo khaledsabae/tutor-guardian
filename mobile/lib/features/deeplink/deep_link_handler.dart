@@ -66,7 +66,7 @@ class DeepLinkHandler {
     if (path == '/go' || path.startsWith('/go/')) {
       final code = uri.queryParameters['ref'] ?? '';
       if (code.isNotEmpty) {
-        unawaited(TgClient().ensureSession().then((_) async {
+        unawaited(TgClient.shared.ensureSession().then((_) async {
           await ReferralService.instance.claimManual(code);
         }));
       }

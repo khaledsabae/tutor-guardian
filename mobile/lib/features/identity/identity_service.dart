@@ -91,8 +91,8 @@ class IdentityService {
   /// Fetch the server's view of this device identity.
   Future<Map<String, dynamic>> getServerIdentity() async {
     try {
-      await TgClient().ensureSession();
-      return await TgClient().getIdentity();
+      await TgClient.shared.ensureSession();
+      return await TgClient.shared.getIdentity();
     } catch (_) {
       return {'linked': false};
     }
@@ -105,8 +105,8 @@ class IdentityService {
       throw Exception('لم يتم استلام Google ID token. تأكد من ضبط GOOGLE_SERVER_CLIENT_ID.');
     }
 
-    await TgClient().ensureSession();
-    final response = await TgClient().linkGoogleIdentity(idToken: idToken);
+    await TgClient.shared.ensureSession();
+    final response = await TgClient.shared.linkGoogleIdentity(idToken: idToken);
 
     // Backend must confirm the link; otherwise we must not mark as linked.
     if (response['ok'] != true) {
