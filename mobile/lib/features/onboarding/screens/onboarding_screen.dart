@@ -57,11 +57,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   void _goTo(int page) {
-    _pageController.animateToPage(
-      page,
-      duration: Dt.base,
-      curve: Curves.easeOutCubic,
-    );
+    if (_pageController.hasClients) {
+      _pageController.animateToPage(
+        page,
+        duration: Dt.base,
+        curve: Curves.easeOutCubic,
+      );
+    }
+    setState(() => _page = page);
   }
 
   void _pickAge(String wire) {
@@ -142,6 +145,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final createState = ref.watch(createChildProvider);
     final busy = createState.isLoading;
     final isLastPage = _page == _pageCount - 1;
+    final showCta = isLastPage || (_page == 1 && _ageGroup != null);
 
     return PopScope(
       canPop: false, // onboarding is mandatory
@@ -200,9 +204,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             ],
                           ),
                         ),
-                        // The CTA only appears on the value page — page 1's
-                        // only action is the age chips themselves.
-                        if (isLastPage) ...[
+                        // The CTA appears on the value page, or on the age page once an age is picked
+                        if (showCta) ...[
                           const SizedBox(height: 16),
                           BouncyButton(
                             label: busy

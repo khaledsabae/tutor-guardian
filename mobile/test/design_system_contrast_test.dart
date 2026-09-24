@@ -20,6 +20,7 @@ import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/l10n/app_localizations_en.dart';
 import 'package:almorabbi/theme/app_palette.dart';
 import 'package:almorabbi/theme/design_tokens.dart';
+import 'package:almorabbi/widgets/ui/bouncy_button.dart';
 import 'package:almorabbi/widgets/ui/error_retry_view.dart';
 
 double contrast(Color a, Color b) {
@@ -99,5 +100,27 @@ void main() {
       expect(contrast(Colors.white, base), greaterThanOrEqualTo(4.5),
           reason: '$d: ${contrast(Colors.white, base).toStringAsFixed(2)}:1');
     }
+  });
+
+  testWidgets('BouncyButton defaults to visible primary fill when color is null', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: BouncyButton(
+            label: 'ابدأ الرحلة',
+            onTap: () {},
+          ),
+        ),
+      ),
+    );
+    final container = tester.widget<Container>(
+      find.descendant(
+        of: find.byType(BouncyButton),
+        matching: find.byType(Container),
+      ).first,
+    );
+    final decoration = container.decoration as BoxDecoration;
+    expect(decoration.color, isNotNull);
+    expect(decoration.color, Dt.primary);
   });
 }

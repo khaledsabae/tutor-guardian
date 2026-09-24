@@ -217,7 +217,7 @@ def main() -> None:
         type=float,
         default=1.0,
         metavar="0.0-1.0",
-        help="نسبة الطرح للإنتاج (0.1 = 10%، افتراضي: 1.0)",
+        help="نسبة الطرح للإنتاج (0.1 = 10%%، افتراضي: 1.0)",
     )
     parser.add_argument(
         "--aab",

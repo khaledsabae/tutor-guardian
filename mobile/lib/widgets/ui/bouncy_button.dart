@@ -64,10 +64,21 @@ class BouncyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = onTap != null;
-    final fill = enabled ? color : Dt.track;
+    final effectiveColor = color ?? Dt.primary;
+    final fill = enabled ? effectiveColor : Dt.track;
     final edge = enabled
-        ? (edgeColor ?? Color.lerp(color, Colors.black, .25)!)
+        ? (edgeColor ?? Color.lerp(effectiveColor, Colors.black, .25)!)
         : const Color(0xFFD8D0C2);
+    final Color textColor;
+    if (!enabled) {
+      textColor = Dt.inkSoft;
+    } else if (effectiveColor == Dt.accent) {
+      textColor = Dt.onAccent;
+    } else if (effectiveColor == Dt.primary) {
+      textColor = Dt.onPrimary;
+    } else {
+      textColor = effectiveColor.computeLuminance() > 0.5 ? Colors.black87 : Colors.white;
+    }
     final content = Container(
       height: 56,
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -86,7 +97,7 @@ class BouncyButton extends StatelessWidget {
               label,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: enabled ? Colors.white : Dt.inkSoft,
+                color: textColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
               ),
