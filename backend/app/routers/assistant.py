@@ -59,6 +59,12 @@ _STREAM_DEADLINE_S = float(os.environ.get("LLM_STREAM_DEADLINE_S", "300"))
 _STREAM_EXECUTOR = ThreadPoolExecutor(
     max_workers=_STREAM_WORKERS, thread_name_prefix="llm-stream"
 )
+# An SSE comment every few seconds while the model is silent (retrieval, a
+# cold local model, the fallback chain — the first token can take minutes).
+# The app treats a stream with no bytes for 45 s as dead (audit M13); this is
+# what lets it tell "still thinking" from "the connection is gone".
+_STREAM_KEEPALIVE_S = float(os.environ.get("SSE_KEEPALIVE_S", "15"))
+_SSE_KEEPALIVE = ": keep-alive\n\n"
 
 
 def _pump_stream(make_stream, emit, cancel: threading.Event,
@@ -808,7 +814,13 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
 
         try:
             while True:
-                msg_type, val = await q.get()
+                try:
+                    msg_type, val = await asyncio.wait_for(
+                        q.get(), timeout=_STREAM_KEEPALIVE_S
+                    )
+                except asyncio.TimeoutError:
+                    yield _SSE_KEEPALIVE
+                    continue
                 if msg_type == "done":
                     break
                 elif msg_type == "error":

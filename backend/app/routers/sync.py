@@ -8,6 +8,7 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
+from app.core.log_safety import device_tag
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
@@ -58,7 +59,7 @@ def upload_backup(request: Request, payload: BackupUploadRequest):  # sync on pu
         conn.commit()
         return {"ok": True}
     except Exception as exc:
-        logger.error("Failed to upload backup for device %s: %s", device_id, exc)
+        logger.error("Failed to upload backup for device %s: %s", device_tag(device_id), exc)
         raise HTTPException(status_code=500, detail="Database write error")
     finally:
         conn.close()
@@ -104,7 +105,7 @@ def download_backup(request: Request):  # sync on purpose: sqlite work runs in t
     except HTTPException:
         raise
     except Exception as exc:
-        logger.error("Failed to download backup for device %s: %s", device_id, exc)
+        logger.error("Failed to download backup for device %s: %s", device_tag(device_id), exc)
         raise HTTPException(status_code=500, detail="Database read error")
     finally:
         conn.close()
