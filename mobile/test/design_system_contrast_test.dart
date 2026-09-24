@@ -19,6 +19,7 @@ import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/l10n/app_localizations_en.dart';
 import 'package:almorabbi/theme/app_palette.dart';
+import 'package:almorabbi/theme/design_tokens.dart';
 import 'package:almorabbi/widgets/ui/error_retry_view.dart';
 
 double contrast(Color a, Color b) {
@@ -40,6 +41,7 @@ void main() {
         'dangerFg on dangerBg': [p.dangerFg, p.dangerBg],
         'warningFg on warningBg': [p.warningFg, p.warningBg],
         'tipInk on tip': [p.tipInk, p.tipGradient.last],
+        'successText on surface': [p.successText, p.surface],
       };
       pairs.forEach((label, c) {
         test('$name: $label', () {
@@ -89,5 +91,13 @@ void main() {
       expect(out, l10n.errorUnknownBody);
       expect(out, isNot(contains('StateError')));
     });
+  });
+
+  test('white card text reads on every domain gradient (≥ 4.5:1)', () {
+    for (final d in styledDomains) {
+      final base = styleFor(d).base;
+      expect(contrast(Colors.white, base), greaterThanOrEqualTo(4.5),
+          reason: '$d: ${contrast(Colors.white, base).toStringAsFixed(2)}:1');
+    }
   });
 }

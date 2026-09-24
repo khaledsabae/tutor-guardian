@@ -4,6 +4,8 @@
 /// subset) and show streaming/typing states.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
@@ -22,12 +24,24 @@ class MessageBubble extends StatelessWidget {
   final bool isLastInGroup;
   final ValueChanged<String>? onFeedback;
 
+  /// Shown on the inline error of this message (the one error surface for a
+  /// failed turn — the screen no longer repeats it in a top banner).
+  final VoidCallback? onRetry;
+
+  /// Follow-up questions to offer under this (finished) answer; tapping one
+  /// sends it. Only the chat's last answer gets them.
+  final List<String> followUps;
+  final ValueChanged<String>? onFollowUp;
+
   const MessageBubble({
     super.key,
     required this.message,
     this.isFirstInGroup = true,
     this.isLastInGroup = true,
     this.onFeedback,
+    this.onRetry,
+    this.followUps = const [],
+    this.onFollowUp,
   });
 
   @override
@@ -128,9 +142,23 @@ class MessageBubble extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (onRetry != null)
+                    TextButton.icon(
+                      onPressed: onRetry,
+                      icon: const Icon(Icons.refresh, size: 16),
+                      label: Text(AppLocalizations.of(context).chatRetry),
+                      style: TextButton.styleFrom(
+                          foregroundColor: AppTheme.dangerFg),
+                    ),
                 ],
               ),
             ),
+          if (!isUser &&
+              followUps.isNotEmpty &&
+              onFollowUp != null &&
+              !message.isStreaming &&
+              message.error == null)
+            _FollowUps(questions: followUps, onTap: onFollowUp!),
         ],
       ),
     );
@@ -157,10 +185,12 @@ class _AssistantBody extends StatelessWidget {
             data: message.content,
             styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
                 .copyWith(
+              // 16/1.7 for long Arabic guidance: diacritics need the leading
+              // (UX_UI_ROADMAP §1.3 type ramp).
               p: TextStyle(
                 color: AppTheme.textPrimary,
-                fontSize: 15,
-                height: 1.6,
+                fontSize: 16,
+                height: 1.7,
               ),
               code: TextStyle(
                 fontFamily: 'monospace',
@@ -171,9 +201,13 @@ class _AssistantBody extends StatelessWidget {
         else
           const SizedBox.shrink(),
         if (message.isStreaming)
-          const Padding(
-            padding: EdgeInsets.only(top: 6),
-            child: _TypingIndicator(),
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            // Before the first token: dots, then reassurance copy if the
+            // wait runs long. Once text flows, the text is the signal.
+            child: showContent
+                ? const _TypingIndicator()
+                : const _ThinkingIndicator(),
           ),
         if (r != null && !message.isStreaming) ...[
           const SizedBox(height: 6),
@@ -185,6 +219,105 @@ class _AssistantBody extends StatelessWidget {
           ),
         ],
       ],
+    );
+  }
+}
+
+/// "Thinking" state of the response lifecycle (UX_UI_ROADMAP §2.2): the
+/// typing dots, plus one line of reassurance once the first token is more
+/// than [_slowAfter] away — retrieval and a cold model can take that long,
+/// and silent dots past that point read as "stuck".
+class _ThinkingIndicator extends StatefulWidget {
+  const _ThinkingIndicator();
+
+  static const Duration _slowAfter = Duration(seconds: 3);
+
+  @override
+  State<_ThinkingIndicator> createState() => _ThinkingIndicatorState();
+}
+
+class _ThinkingIndicatorState extends State<_ThinkingIndicator> {
+  Timer? _timer;
+  bool _slow = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer(_ThinkingIndicator._slowAfter, () {
+      if (mounted) setState(() => _slow = true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      liveRegion: true,
+      label: _slow ? AppLocalizations.of(context).chatThinkingSlow : null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const _TypingIndicator(),
+          AnimatedSize(
+            duration: Dt.fast,
+            child: _slow
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: Text(
+                      AppLocalizations.of(context).chatThinkingSlow,
+                      style: TextStyle(
+                          fontSize: 13, color: AppTheme.textMuted),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Suggested follow-up questions under the latest answer (UX_UI_ROADMAP §2.3).
+class _FollowUps extends StatelessWidget {
+  const _FollowUps({required this.questions, required this.onTap});
+
+  final List<String> questions;
+  final ValueChanged<String> onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      // Indented to line up with the bubble text, past the avatar column.
+      padding: const EdgeInsetsDirectional.only(start: 54, end: 12, top: 4),
+      child: Semantics(
+        label: AppLocalizations.of(context).chatFollowUpsLabel,
+        container: true,
+        child: Wrap(
+          spacing: Dt.s8,
+          runSpacing: Dt.s8,
+          children: [
+            for (final q in questions)
+              ActionChip(
+                label: Text(q),
+                labelStyle: TextStyle(
+                  color: AppTheme.primary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13,
+                ),
+                backgroundColor: AppTheme.primary.withValues(alpha: .08),
+                side: BorderSide(color: AppTheme.primary.withValues(alpha: .3)),
+                shape: const StadiumBorder(),
+                onPressed: () => onTap(q),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -250,9 +383,10 @@ class _MetadataChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // `mode` (retrieval_only / llm_generated) is pipeline jargon, not
+    // something a parent can act on — dropped from the visible chips.
     final chips = <String>[
       reply.domain.label(l10n),
-      reply.mode.label(l10n),
       reply.severity.label(l10n),
     ];
     return Wrap(

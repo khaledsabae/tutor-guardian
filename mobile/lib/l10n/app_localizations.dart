@@ -5030,6 +5030,42 @@ abstract class AppLocalizations {
   /// **'إيقاف الرد'**
   String get chatStop;
 
+  /// No description provided for @chatThinkingSlow.
+  ///
+  /// In ar, this message translates to:
+  /// **'أراجع المصادر لأعطيك جوابًا موثوقًا…'**
+  String get chatThinkingSlow;
+
+  /// No description provided for @chatFollowExample.
+  ///
+  /// In ar, this message translates to:
+  /// **'أعطني مثالاً عمليًا'**
+  String get chatFollowExample;
+
+  /// No description provided for @chatFollowForAge.
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أطبّق هذا مع طفلي في عمره؟'**
+  String get chatFollowForAge;
+
+  /// No description provided for @chatFollowShort.
+  ///
+  /// In ar, this message translates to:
+  /// **'لخّص لي الجواب في نقاط'**
+  String get chatFollowShort;
+
+  /// No description provided for @chatFollowUpsLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'أسئلة متابعة مقترحة'**
+  String get chatFollowUpsLabel;
+
+  /// No description provided for @chatJumpLatest.
+  ///
+  /// In ar, this message translates to:
+  /// **'أحدث رد'**
+  String get chatJumpLatest;
+
   /// No description provided for @chatRatingSaveFailed.
   ///
   /// In ar, this message translates to:

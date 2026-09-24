@@ -38,6 +38,7 @@ class AppPalette {
     required this.inkSoft,
     required this.textSecondary,
     required this.success,
+    required this.successText,
     required this.track,
     required this.warningBg,
     required this.warningFg,
@@ -70,6 +71,10 @@ class AppPalette {
   final Color inkSoft;
   final Color textSecondary;
   final Color success;
+
+  /// [success] is a fill/icon colour: as text on white it reads 2.5:1.
+  /// Use this one for words (UX_UI_ROADMAP DS7).
+  final Color successText;
   final Color track;
   final Color warningBg;
   final Color warningFg;
@@ -102,6 +107,7 @@ class AppPalette {
     inkSoft: Color(0xFF6B7280),
     textSecondary: Color(0xFF4B5563),
     success: Color(0xFF10B981), // Pure Emerald
+    successText: Color(0xFF047857), // 5.5:1 on white
     track: Color(0xFFE8E2D7),
     warningBg: Color(0xFFFFF3CD),
     warningFg: Color(0xFF856404),
@@ -127,6 +133,7 @@ class AppPalette {
     inkSoft: Color(0xFF9CA3AF),
     textSecondary: Color(0xFFD1D5DB),
     success: Color(0xFF34D399),
+    successText: Color(0xFF34D399), // 8.8:1 on the dark surface
     track: Color(0xFF20332E),
     warningBg: Color(0xFF3A2B09),
     warningFg: Color(0xFFFDE68A),

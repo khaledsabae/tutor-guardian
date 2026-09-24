@@ -165,7 +165,7 @@ class _ActiveChildBanner extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF131F1C) : Colors.white,
+        color: AppTheme.surface, // was a hand-copied #131F1C / white pair
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isDark
@@ -276,9 +276,10 @@ class _QuickGamesCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
+          // Palette tokens — the same four values that were hand-copied here.
           colors: isDark
-              ? [const Color(0xFF131F1C), const Color(0xFF1C2D29)]
-              : [const Color(0xFF0F766E), const Color(0xFF044E46)],
+              ? [AppTheme.surface, AppTheme.surfaceAlt]
+              : [AppTheme.primary, AppTheme.primaryDark],
           begin: AlignmentDirectional.topStart,
           end: AlignmentDirectional.bottomEnd,
         ),

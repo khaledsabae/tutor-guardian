@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/app_palette.dart';
 import '../../../theme/app_theme.dart';
 import '../../journey/providers/journey_providers.dart';
 import '../data/progress_models.dart';
@@ -295,7 +296,7 @@ class _ChildTile extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: isActive ? AppTheme.primary : const Color(0xFFE4E7EC),
+          color: isActive ? AppTheme.primary : AppPalette.current.track,
           width: isActive ? 1.5 : 1,
         ),
       ),

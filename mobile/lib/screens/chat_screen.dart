@@ -50,13 +50,29 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<ChatSessionSummary>>? _historyFuture;
 
+  /// "↓ Latest reply" is offered once the reader has scrolled this far above
+  /// the bottom (UX_UI_ROADMAP C10).
+  static const double _jumpThreshold = 300;
+  final ValueNotifier<bool> _showJump = ValueNotifier(false);
+
+  void _onScroll() {
+    if (!_scroll.hasClients) return;
+    final pos = _scroll.position;
+    _showJump.value = pos.maxScrollExtent - pos.pixels > _jumpThreshold;
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _scroll.addListener(_onScroll);
     // Bootstrap the session once the widget is mounted.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(chatNotifierProvider.notifier).bootstrap();
+      final notifier = ref.read(chatNotifierProvider.notifier);
+      notifier.setOnline(
+        ref.read(connectivityProvider).maybeWhen(data: (v) => v, orElse: () => true),
+      );
+      notifier.bootstrap();
     });
   }
 
@@ -74,7 +90,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     WidgetsBinding.instance.removeObserver(this);
     _input.dispose();
     _inputFocus.dispose();
+    _scroll.removeListener(_onScroll);
     _scroll.dispose();
+    _showJump.dispose();
     super.dispose();
   }
 
@@ -154,15 +172,22 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
       });
     });
 
-    // Push the latest online/offline status into the notifier so its
-    // `sendMessage` can short-circuit with a friendly Arabic message.
-    final connectivity = ref.watch(connectivityProvider);
-    final isOnline = connectivity.maybeWhen(
+    // Push online/offline changes into the notifier so its `sendMessage` can
+    // short-circuit with a friendly message. A listener, not a call in build:
+    // build must not have side effects (the initial value is pushed from
+    // initState's post-frame callback).
+    final isOnline = ref.watch(connectivityProvider).maybeWhen(
       data: (v) => v,
       orElse: () => true,
     );
-    // Update synchronously (the notifier just stores a boolean).
-    notifier.setOnline(isOnline);
+    ref.listen<AsyncValue<bool>>(connectivityProvider, (_, next) {
+      notifier.setOnline(next.maybeWhen(data: (v) => v, orElse: () => true));
+    });
+
+    // One error surface per failure: when the failed turn already shows its
+    // error inline (with Retry), the top banner would repeat the same text.
+    final lastError = state.messages.isEmpty ? null : state.messages.last.error;
+    final showBanner = state.errorBanner != null && state.errorBanner != lastError;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -252,7 +277,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
           // Daily tip moved to the Home tab (اليوم) — chat is now a
           // pure conversation surface.
           _SettingsBar(state: state, notifier: notifier),
-          if (state.errorBanner != null) _ErrorBanner(
+          if (showBanner) _ErrorBanner(
             message: state.errorBanner!,
             onRetry: notifier.retryLastTurn,
           ),
@@ -268,7 +293,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                         // first "wow" answer (no typing, no second tap).
                         onSuggest: (q) => notifier.sendMessage(q),
                       )
-                    : ListView.builder(
+                    : Stack(
+                    children: [
+                    ListView.builder(
                     controller: _scroll,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     itemCount: state.messages.length,
@@ -293,12 +320,56 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                           onFeedback: (rating) {
                             notifier.submitFeedback(m.id, rating);
                           },
+                          onRetry: next == null && m.error != null
+                              ? notifier.retryLastTurn
+                              : null,
+                          followUps: next == null &&
+                                  state.phase == ChatPhase.idle
+                              ? _followUpsFor(m, AppLocalizations.of(context))
+                              : const [],
+                          onFollowUp: (q) {
+                            unawaited(Haptics.selection());
+                            notifier.sendMessage(q);
+                          },
                         )
                             .animate()
                             .fadeIn(duration: 250.ms)
                             .slideY(begin: .06, curve: Curves.easeOutCubic),
                       );
                     },
+                  ),
+                    PositionedDirectional(
+                      bottom: Dt.s12,
+                      start: 0,
+                      end: 0,
+                      child: ValueListenableBuilder<bool>(
+                        valueListenable: _showJump,
+                        builder: (context, show, _) => IgnorePointer(
+                          ignoring: !show,
+                          child: AnimatedOpacity(
+                            opacity: show ? 1 : 0,
+                            duration: Dt.fast,
+                            child: Center(
+                              child: ActionChip(
+                                avatar: Icon(Icons.arrow_downward_rounded,
+                                    size: 16, color: AppTheme.onPrimary),
+                                label: Text(
+                                    AppLocalizations.of(context).chatJumpLatest),
+                                labelStyle: TextStyle(
+                                  color: AppTheme.onPrimary,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                backgroundColor: AppTheme.primary,
+                                side: BorderSide.none,
+                                shape: const StadiumBorder(),
+                                onPressed: _scrollToBottom,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    ],
                   ),
           ),
           _Composer(
@@ -316,6 +387,22 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
       ),
     );
   }
+}
+
+/// Follow-up chips for the latest finished answer (UX_UI_ROADMAP §2.3).
+///
+/// Only on real guidance: never under a safety escalation, a refusal or the
+/// fiqh referral, where "give me an example" would be the wrong next step.
+/// Server-suggested questions win; otherwise three generic, always-valid ones.
+List<String> _followUpsFor(ChatMessageUI m, AppLocalizations l10n) {
+  final r = m.reply;
+  if (m.role != 'assistant' || r == null || m.error != null) return const [];
+  if (r.isEmergency || r.isBanned) return const [];
+  if (r.mode != ReplyMode.llmGenerated && r.mode != ReplyMode.retrievalOnly) {
+    return const [];
+  }
+  if (r.followUps.isNotEmpty) return r.followUps;
+  return [l10n.chatFollowExample, l10n.chatFollowForAge, l10n.chatFollowShort];
 }
 
 class _SettingsBar extends StatelessWidget {

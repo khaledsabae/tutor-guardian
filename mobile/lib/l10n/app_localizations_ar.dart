@@ -2741,6 +2741,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatStop => 'إيقاف الرد';
 
   @override
+  String get chatThinkingSlow => 'أراجع المصادر لأعطيك جوابًا موثوقًا…';
+
+  @override
+  String get chatFollowExample => 'أعطني مثالاً عمليًا';
+
+  @override
+  String get chatFollowForAge => 'كيف أطبّق هذا مع طفلي في عمره؟';
+
+  @override
+  String get chatFollowShort => 'لخّص لي الجواب في نقاط';
+
+  @override
+  String get chatFollowUpsLabel => 'أسئلة متابعة مقترحة';
+
+  @override
+  String get chatJumpLatest => 'أحدث رد';
+
+  @override
   String chatRatingSaveFailed(Object error) {
     return 'تعذّر حفظ التقييم: $error';
   }

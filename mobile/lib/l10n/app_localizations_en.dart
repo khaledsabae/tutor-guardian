@@ -2776,6 +2776,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatStop => 'Stop reply';
 
   @override
+  String get chatThinkingSlow =>
+      'Checking the sources to give you a reliable answer…';
+
+  @override
+  String get chatFollowExample => 'Give me a practical example';
+
+  @override
+  String get chatFollowForAge => 'How do I apply this at my child\'s age?';
+
+  @override
+  String get chatFollowShort => 'Summarise the answer in bullet points';
+
+  @override
+  String get chatFollowUpsLabel => 'Suggested follow-up questions';
+
+  @override
+  String get chatJumpLatest => 'Latest reply';
+
+  @override
   String chatRatingSaveFailed(Object error) {
     return 'Could not save the rating: $error';
   }

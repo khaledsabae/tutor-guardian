@@ -36,6 +36,7 @@ class AppTheme {
   // decorative. Only lightness flips, so warning stays yellow and danger stays
   // red on a dark ground too.
   static Color get success => AppPalette.current.success;
+  static Color get successText => AppPalette.current.successText;
   static Color get warningBg => AppPalette.current.warningBg;
   static Color get warningFg => AppPalette.current.warningFg;
   static Color get dangerBg => AppPalette.current.dangerBg;

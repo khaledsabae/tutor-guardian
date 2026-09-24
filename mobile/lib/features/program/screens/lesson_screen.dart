@@ -350,8 +350,8 @@ class _StatusChip extends StatelessWidget {
       ProgressStatus.completed => (
           Icons.check_circle,
           AppLocalizations.of(context).lessonStatusCompleted,
-          AppTheme.success,
-          const Color(0xFFD4EDDA),
+          AppTheme.successText,
+          AppTheme.success.withValues(alpha: .15),
         ),
       ProgressStatus.inProgress => (
           Icons.play_circle_outline,

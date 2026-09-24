@@ -23,6 +23,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 import '../config/app_config.dart';
@@ -88,6 +89,14 @@ class _AuthStore {
   static const _kActiveChildId = 'tg_active_child_id';
   static const _kChildToken = 'tg_child_session_token';
 
+  /// The last session token, kept across [clearSession] so the next
+  /// `POST /api/chat/sessions` can prove it is this device (audit H5).
+  static const _kDeviceProof = 'tg_device_proof';
+
+  /// A copy of the device id outside the keystore. Only ever read when the
+  /// secure copy is missing or unreadable — see [getOrCreateDeviceId].
+  static const _kDeviceIdBackup = 'tg_device_id_backup';
+
   final FlutterSecureStorage _storage;
   final Uuid _uuid = const Uuid();
 
@@ -95,27 +104,61 @@ class _AuthStore {
   String? _cachedSessionId;
   String? _cachedToken;
 
-  Future<String?> _safeRead(String key) async {
-    try {
-      return await _storage.read(key: key);
-    } catch (_) {
-      // If Keystore key was invalidated or BadPaddingException happens,
-      // wipe the corrupted storage to recover smoothly without crashing.
+  /// Read a key, retrying once. Returns (value, readSucceeded).
+  ///
+  /// This used to call `deleteAll()` on ANY exception. A transient keystore
+  /// error — the device still locked early after boot, a plugin hiccup —
+  /// therefore erased `tg_device_id`, and with it the family's link to every
+  /// server-side record: children, progress, chat history (audit H7). Genuine
+  /// corruption (BadPadding after a restore) is already handled by the
+  /// plugin itself via `resetOnError: true`; this layer must never escalate a
+  /// read failure into a wipe.
+  Future<(String?, bool)> _readChecked(String key) async {
+    for (var attempt = 0; attempt < 2; attempt++) {
       try {
-        await _storage.deleteAll();
-      } catch (_) {}
+        return (await _storage.read(key: key), true);
+      } catch (_) {
+        if (attempt == 0) {
+          await Future<void>.delayed(const Duration(milliseconds: 150));
+        }
+      }
+    }
+    return (null, false);
+  }
+
+  Future<String?> _safeRead(String key) async => (await _readChecked(key)).$1;
+
+  Future<void> _safeWrite(String key, String value) async {
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        await _storage.write(key: key, value: value);
+        return;
+      } catch (_) {
+        if (attempt == 0) {
+          await Future<void>.delayed(const Duration(milliseconds: 150));
+        }
+      }
+    }
+  }
+
+  Future<String?> _readDeviceIdBackup() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final v = prefs.getString(_kDeviceIdBackup);
+      return (v != null && v.isNotEmpty) ? v : null;
+    } catch (_) {
       return null;
     }
   }
 
-  Future<void> _safeWrite(String key, String value) async {
+  Future<void> _writeDeviceIdBackup(String id) async {
     try {
-      await _storage.write(key: key, value: value);
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getString(_kDeviceIdBackup) != id) {
+        await prefs.setString(_kDeviceIdBackup, id);
+      }
     } catch (_) {
-      try {
-        await _storage.deleteAll();
-        await _storage.write(key: key, value: value);
-      } catch (_) {}
+      // Best effort — the keystore copy is still the primary.
     }
   }
 
@@ -127,14 +170,27 @@ class _AuthStore {
 
   Future<String> getOrCreateDeviceId() async {
     if (_cachedDeviceId != null) return _cachedDeviceId!;
-    final existing = await _safeRead(_kDeviceId);
+    final (existing, readOk) = await _readChecked(_kDeviceId);
     if (existing != null && existing.isNotEmpty) {
       _cachedDeviceId = existing;
+      await _writeDeviceIdBackup(existing);
       return existing;
     }
+    // Secure copy missing or unreadable: the backup is the same identity.
+    final backup = await _readDeviceIdBackup();
+    if (backup != null) {
+      _cachedDeviceId = backup;
+      if (readOk) await _safeWrite(_kDeviceId, backup);
+      return backup;
+    }
     final fresh = _uuid.v4();
-    await _safeWrite(_kDeviceId, fresh);
     _cachedDeviceId = fresh;
+    // Only persist into the keystore when we KNOW it was empty. If the read
+    // failed, an id may still be in there; overwriting it would orphan the
+    // family's data just as the old deleteAll() did. The next launch reads
+    // the real one back.
+    if (readOk) await _safeWrite(_kDeviceId, fresh);
+    await _writeDeviceIdBackup(fresh);
     return fresh;
   }
 
@@ -143,7 +199,16 @@ class _AuthStore {
     _cachedToken = token;
     await _safeWrite(_kSessionId, sessionId);
     await _safeWrite(_kToken, token);
+    await _safeWrite(_kDeviceProof, token);
   }
+
+  /// The last token this device held — survives [clearSession]. Builds that
+  /// predate the proof key still hold their live token, which proves the
+  /// same thing.
+  Future<String?> readDeviceProof() async =>
+      await _safeRead(_kDeviceProof) ?? await _safeRead(_kToken);
+
+  Future<void> clearDeviceProof() => _safeDelete(_kDeviceProof);
 
   Future<(String?, String?)> readSession() async {
     if (_cachedSessionId != null && _cachedToken != null) {
@@ -243,13 +308,28 @@ class TgClient {
       'metadata': ?metadata,
     };
 
-    final resp = await _http
+    // Prove this is the same device (audit H5): the server refuses a proof
+    // that belongs to another device, and — once SESSION_MINT_ENFORCE is on —
+    // refuses to mint for a known device without one.
+    Future<http.Response> post(String? proof) => _http
         .post(
           Uri.parse('$_baseUrl/api/chat/sessions'),
-          headers: {'Content-Type': 'application/json; charset=utf-8'},
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            if (proof != null && proof.isNotEmpty) 'Authorization': 'Bearer $proof',
+          },
           body: jsonEncode(body),
         )
         .timeout(AppConfig.httpTimeout);
+
+    final proof = await _auth.readDeviceProof();
+    var resp = await post(proof);
+    if ((resp.statusCode == 401 || resp.statusCode == 403) && proof != null) {
+      // A proof the server no longer accepts (e.g. a restored backup whose
+      // token was never issued for this id). Drop it and try once without.
+      await _auth.clearDeviceProof();
+      resp = await post(null);
+    }
 
     if (resp.statusCode != 201) {
       throw _wrapStreamed(resp.statusCode, const {});
