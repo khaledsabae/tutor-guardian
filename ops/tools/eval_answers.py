@@ -161,11 +161,12 @@ def run_pipeline(items: list[dict], label: str) -> list[dict]:
     init_db()
     results = []
     with TestClient(app) as client:
-        # /api/assistant/* requires a session Bearer token.
-        sess = client.post("/api/chat/sessions", json={"device_id": "eval-harness"})
-        sess.raise_for_status()
-        client.headers["Authorization"] = f"Bearer {sess.json()['token']}"
         for i, g in enumerate(items, 1):
+            # /api/assistant/* requires a session Bearer token.
+            # Use unique device_id per question so evaluation never trips per-device daily rate limits.
+            sess = client.post("/api/chat/sessions", json={"device_id": f"eval-harness-{g['id']}"})
+            sess.raise_for_status()
+            client.headers["Authorization"] = f"Bearer {sess.json()['token']}"
             payload = {
                 "age_group": g["age_group"],
                 "severity": g["severity"],
