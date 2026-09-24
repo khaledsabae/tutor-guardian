@@ -27,20 +27,64 @@ SAFE_REPLY = (
 )
 
 # ── Regex rules (explicit cases only — v3 plan step 3) ──────────────────────
-# Each pattern: (rule_id, compiled regex). Normalized Arabic matching.
-_RULES: list[tuple[str, "re.Pattern[str]"]] = [
-    ("fiqh_malakat_yn", re.compile(r"ملك اليمين|مالك اليمين|ملكه يمين")),
-    ("fiqh_talaq_khalaa", re.compile(r"الطلاق|أطلق زوجته|طلقتني|الخلع|كتابة خلع")),
-    ("aqeedah_sifaat", re.compile(r"صفات الله|صفه الله|الرؤية|رؤية الله|الشفاعة|شفعاء يوم")),
-    ("aqeedah_ghayb", re.compile(r"الغيب|علم الغيب|أرواح الأموات|الأرواح")),
-    ("hadith_tahdith", re.compile(
-        r"(حديث|حديث شريف)[^.]*(ضعيف|صحيح|قوي|منكر|موضوع|هل هو صحيح|هل صحيح)"
+# Matched against `_normalize(text)`, so every pattern is normalized the same
+# way when it is compiled (see _compile). Before that, any alternative written
+# with أ/إ/آ ("أطلق زوجته", "الأرواح", "آلات الموسيقى") could never match: the
+# text had already lost its hamza, the pattern had not.
+#
+# Precision fixes (2026-09 audit). The categories are unchanged; only
+# collisions with *different words* were removed. Each of these was blocked
+# with the fiqh reply before:
+#   «ابني حديث الولادة ووزنه ضعيف»      — newborn (حديث الولادة), a medical question
+#   «كيف أعلم ابني ترك الغيبة»          — backbiting (الغيبة ⊃ الغيب)
+#   «ابني عنده ضعف في الرؤية»          — eyesight (الرؤية)
+#   «أمنع الصور… التحكم الأبوي»          — parental controls (التحكم ⊃ حكم)
+#   «ما موضوع الحديث المناسب مع ابني»   — "topic of conversation"
+#   «ابني ضعيف في القراءة… رواية»        — a weak reader and a novel
+# and «ما حكم الموسيقى» — the plainest fatwa phrasing — was *not* blocked,
+# because the ruling word came before the topic. Regression-tested in
+# backend/tests/test_fiqh_guard_precision.py.
+_AR = r"[\u0621-\u064A]"
+_WORD_START = rf"(?<!{_AR})"
+# «حديث» as a word (optionally الـ/بالـ/و/ف), but not تحديث (update) and not
+# حديث/حديثي الولادة·العهد·السن (newborn, recent, young).
+_HADITH = (
+    rf"{_WORD_START}(?:ال|بال|وال|فال|و|ف|ب)?حديث"
+    rf"(?!ي?\s*(?:ال)?(?:ولاد|عهد|سن(?!{_AR})))"
+)
+# A ruling word as a word of its own: الحكم/بحكم/حكمه yes; التحكم, يتحكم,
+# محكمة, الحكمة (wisdom) and حرامي (thief) no.
+_RULING = rf"{_WORD_START}(?:ال|و|ف|ب)?(?:حرام(?!ي)|حلال|حكم(?!ة))"
+_MUSIC = r"(?:الموسيق|الغناء|الاغاني|المعازف|الات الموسيق)"
+_IMAGES = r"(?:الصور|التصوير|الرسم)"
+_GAP = r"[^.؟?!]"
+
+_RULE_SOURCES: list[tuple[str, str]] = [
+    ("fiqh_malakat_yn", r"ملك اليمين|مالك اليمين|ملكه يمين"),
+    ("fiqh_talaq_khalaa", r"الطلاق|أطلق زوجته|طلقتني|الخلع|كتابة خلع"),
+    ("aqeedah_sifaat", (
+        r"صفات الله|صفه الله|رؤية الله|رؤيه الله|رؤية المؤمنين"
+        r"|الرؤية (?:في|يوم) (?:الآخرة|الاخره|القيامة|القيامه|الجنة|الجنه)"
+        r"|الشفاعة|شفعاء يوم"
     )),
-    ("hadith_tahdith2", re.compile(r"(ضعيف|صحيح|منكر|موضوع)[^.]*(حديث|رواية)")),
-    ("fiqh_madhhab_tahara", re.compile(r"(المذهب|الحنفي|الشافعي|المالكي|الحنبلي)[^.]*(طهارة|صلاة|وضوء)")),
-    ("fiqh_mahram_nikah", re.compile(r"من المحارم|المحارم والمحرمات|حلل لنا|حرم علينا|الزواج من")),
-    ("halaal_haraam_music", re.compile(r"(الموسيق|الموسيقي|الغناء|آلات الموسيقى)[^.]{0,30}(حرام|حلال|حكم)")),
-    ("halaal_haraam_images", re.compile(r"(الصور|التصوير|الرسم)[^.]{0,30}(حرام|حلال|حكم)")),
+    ("aqeedah_ghayb", rf"الغيب(?!{_AR})|علم الغيب|أرواح الأموات|الأرواح"),
+    # «موضوع» (fabricated) only right next to the hadith — anywhere else in
+    # the sentence it is the everyday word for "topic".
+    ("hadith_tahdith", (
+        rf"{_HADITH}(?:\s+شريف)?{_GAP}{{0,30}}?{_WORD_START}(?:ال|وال|و)?(?:ضعيف|صحيح|قوي|منكر)"
+        rf"|{_HADITH}\s+(?:ال)?موضوع"
+    )),
+    ("hadith_tahdith2", rf"{_WORD_START}(?:ال|و)?(?:ضعيف|صحيح|منكر){_GAP}{{0,15}}{_HADITH}"),
+    ("fiqh_madhhab_tahara", (
+        r"(?:المذهب|الحنفي|الشافعي|المالكي|الحنبلي)[^.]{0,40}(?:طهارة|صلاة|وضوء)"
+    )),
+    ("fiqh_mahram_nikah", r"من المحارم|المحارم والمحرمات|حلل لنا|حرم علينا|الزواج من"),
+    ("halaal_haraam_music", (
+        rf"{_MUSIC}{_GAP}{{0,30}}{_RULING}|{_RULING}{_GAP}{{0,20}}{_MUSIC}"
+    )),
+    ("halaal_haraam_images", (
+        rf"{_IMAGES}{_GAP}{{0,30}}{_RULING}|{_RULING}{_GAP}{{0,20}}{_IMAGES}"
+    )),
 ]
 
 
@@ -50,6 +94,17 @@ def _normalize(text: str) -> str:
     for a in ("\u0622", "\u0623", "\u0625"):
         text = text.replace(a, "\u0627")
     return text
+
+
+def _compile(source: str) -> "re.Pattern[str]":
+    # Normalize the pattern exactly as the text is normalized. Escapes such as
+    # \u0621 are still backslash sequences here, so ranges are untouched.
+    return re.compile(_normalize(source))
+
+
+_RULES: list[tuple[str, "re.Pattern[str]"]] = [
+    (rule_id, _compile(src)) for rule_id, src in _RULE_SOURCES
+]
 
 
 def check_fiqh_guard(text: str) -> tuple[bool, str]:

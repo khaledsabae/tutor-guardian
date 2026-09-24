@@ -69,6 +69,10 @@ Migration v24: added child_licences + child_scenario_answers — the internet
                granted, and the middle step is a parent recording that they
                actually talked, which is what makes this a family agreement
                rather than a certificate the app issues to itself.
+Migration v27: child_challenges drops UNIQUE(device_id, child_id, status) for a
+               partial unique index on the ACTIVE row only. The old key allowed
+               one 'resolved' row per child ever, so the third challenge change
+               (or a clear after one resolve) failed with IntegrityError → 500.
 """
 import os
 import sqlite3
@@ -170,11 +174,13 @@ CREATE TABLE IF NOT EXISTS child_challenges (
     status          TEXT NOT NULL DEFAULT 'active',
     note            TEXT,
     started_at      TEXT NOT NULL DEFAULT (datetime('now')),
-    resolved_at     TEXT,
-    UNIQUE(device_id, child_id, status)
+    resolved_at     TEXT
 );
 CREATE INDEX IF NOT EXISTS ix_child_challenges_device_child
     ON child_challenges (device_id, child_id, status);
+-- At most one ACTIVE challenge per child; resolved history is unbounded.
+CREATE UNIQUE INDEX IF NOT EXISTS ux_child_challenges_active
+    ON child_challenges (device_id, child_id) WHERE status = 'active';
 """
 
 _CREATE_REFERRALS: str = """
@@ -194,7 +200,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 26
+SCHEMA_VERSION = 27
 
 
 def db_path() -> Path:
@@ -347,6 +353,7 @@ def init_db() -> None:
         ddl="ALTER TABLE coach_tips ADD COLUMN lang TEXT",
     )
     _ensure_child_challenges_table(conn)
+    _ensure_child_challenges_active_key(conn)
     _ensure_referrals_table(conn)
     _ensure_push_tokens_table(conn)
     # v25 — the build census. `push_tokens` is the only row the app touches on
@@ -939,10 +946,84 @@ def _ensure_child_challenges_table(conn: sqlite3.Connection) -> None:
                 id, device_id, child_id, challenge_key, challenge_key,
                 'islamic_parenting', status, notes, started_at, completed_at
             FROM child_challenges_old
-            WHERE status = 'active' OR resolved_at IS NOT NULL;
+            WHERE status = 'active' OR completed_at IS NOT NULL;
             DROP TABLE child_challenges_old;
             """
         )
+
+
+def _ensure_child_challenges_active_key(conn: sqlite3.Connection) -> None:
+    """v27 — replace UNIQUE(device_id, child_id, status) with an active-only key.
+
+    The table-level constraint meant a child could hold ONE resolved challenge,
+    ever: set A, switch to B (A → resolved), switch to C (B → resolved) and the
+    UPDATE collides with A. PUT/DELETE /challenge answered 500 from the third
+    change on. SQLite cannot drop a table constraint, so the table is rebuilt —
+    in one explicit transaction, the same way as _ensure_lesson_progress_child_key,
+    so a failure leaves the original table untouched. The old key already
+    guaranteed at most one active row per child, so the copy cannot violate the
+    new partial index.
+    """
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'child_challenges'"
+    ).fetchone()
+    if row is None or not row[0]:
+        return
+    if "unique(device_id,child_id,status)" not in "".join(row[0].split()).lower():
+        # Already rebuilt (or created from the current DDL): just make sure
+        # the partial index exists.
+        conn.execute(
+            "CREATE UNIQUE INDEX IF NOT EXISTS ux_child_challenges_active "
+            "ON child_challenges (device_id, child_id) WHERE status = 'active'"
+        )
+        return
+
+    cols = ("id", "device_id", "child_id", "challenge_key", "topic", "domain",
+            "status", "note", "started_at", "resolved_at")
+    live = {r[1] for r in conn.execute("PRAGMA table_info(child_challenges)")}
+    copied = ", ".join(c for c in cols if c in live)
+
+    previous_isolation = conn.isolation_level
+    conn.isolation_level = None
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        conn.execute("DROP TABLE IF EXISTS child_challenges_v27")
+        conn.execute(
+            """
+            CREATE TABLE child_challenges_v27 (
+                id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                device_id       TEXT NOT NULL,
+                child_id        INTEGER NOT NULL,
+                challenge_key   TEXT NOT NULL,
+                topic           TEXT NOT NULL,
+                domain          TEXT NOT NULL,
+                status          TEXT NOT NULL DEFAULT 'active',
+                note            TEXT,
+                started_at      TEXT NOT NULL DEFAULT (datetime('now')),
+                resolved_at     TEXT
+            )
+            """
+        )
+        conn.execute(
+            f"INSERT INTO child_challenges_v27 ({copied}) "
+            f"SELECT {copied} FROM child_challenges"
+        )
+        conn.execute("DROP TABLE child_challenges")
+        conn.execute("ALTER TABLE child_challenges_v27 RENAME TO child_challenges")
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS ix_child_challenges_device_child "
+            "ON child_challenges (device_id, child_id, status)"
+        )
+        conn.execute(
+            "CREATE UNIQUE INDEX IF NOT EXISTS ux_child_challenges_active "
+            "ON child_challenges (device_id, child_id) WHERE status = 'active'"
+        )
+        conn.execute("COMMIT")
+    except Exception:
+        conn.execute("ROLLBACK")
+        raise
+    finally:
+        conn.isolation_level = previous_isolation
 
 
 _CREATE_REFERRAL_CLICKS: str = """

@@ -59,6 +59,11 @@ _PROTECTED_PREFIXES = (
     "/api/value-tracking",
     "/api/habit-templates",
     "/api/child-web",
+    # Zero-knowledge backups. Missing from this list, the middleware never set
+    # request.state.device_id, so upload/download answered 401 to every caller
+    # in production (the tests stub the middleware and could not see it) — and
+    # an anonymous 50 MB body was parsed before that 401.
+    "/api/sync",
 )
 # Progress PATCH is the only mutating verb under /api/program — we
 # match on the exact path suffix so the read-only GETs remain public.

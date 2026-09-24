@@ -202,9 +202,13 @@ def test_get_daily_tip_0_3_has_pool(client):
     r = client.get("/api/program/daily-tip", params={"age_group": "0-3"})
     assert r.status_code == 200
     body = r.json()
-    assert body["age_group"] == "0-3"
+    # Since the infant track moved to the canonical "prenatal-1" band
+    # (c4aca27), "0-3" resolves through age_equivalents() to BOTH pools, and
+    # which one today's pick lands in depends on the date — so this test
+    # failed on some days and passed on others.
+    assert body["age_group"] in {"0-3", "prenatal-1"}
     assert body["text"]
-    assert re.match(r"^tip_0-3_\d{3}$", body["id"])
+    assert re.match(r"^tip_(0-3|prenatal-1)_\d{3}$", body["id"])
 
 
 def test_get_daily_tip_with_time_of_day(client):

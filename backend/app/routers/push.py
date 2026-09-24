@@ -15,7 +15,10 @@ router = APIRouter(tags=["push"])
 @router.post("/push/register")
 def register_push_token(request: Request, payload: dict) -> dict:
     device_id = getattr(request.state, "device_id", "")
-    token = payload.get("token", "").strip()
+    # The body is an untyped dict: a null or numeric field used to raise
+    # AttributeError on .strip() and answer 500.
+    token = str(payload.get("token") or "").strip()[:4096]
+    platform = str(payload.get("platform") or "android").strip().lower()[:16] or "android"
     if not token:
         return {"ok": False, "error": "token_required"}
 
@@ -31,6 +34,14 @@ def register_push_token(request: Request, payload: dict) -> dict:
         build_number = None
 
     conn = get_conn()
+    try:
+        _upsert_push_token(conn, device_id, token, platform, app_version, build_number)
+    finally:
+        conn.close()
+    return {"ok": True}
+
+
+def _upsert_push_token(conn, device_id, token, platform, app_version, build_number) -> None:
     conn.execute(
         """
         INSERT INTO push_tokens (device_id, token, platform, updated_at,
@@ -43,13 +54,9 @@ def register_push_token(request: Request, payload: dict) -> dict:
             app_version = COALESCE(excluded.app_version, push_tokens.app_version),
             build_number = COALESCE(excluded.build_number, push_tokens.build_number)
         """,
-        (device_id, token,
-         payload.get("platform", "android").strip().lower() or "android",
-         app_version, build_number),
+        (device_id, token, platform, app_version, build_number),
     )
     conn.commit()
-    conn.close()
-    return {"ok": True}
 
 
 @router.get("/push/token")
@@ -57,11 +64,13 @@ def get_push_token(request: Request) -> dict:
     """For health/checks — returns whether we have a stored token."""
     device_id = getattr(request.state, "device_id", "")
     conn = get_conn()
-    row = conn.execute(
-        "SELECT token, platform, updated_at FROM push_tokens WHERE device_id = ?",
-        (device_id,),
-    ).fetchone()
-    conn.close()
+    try:
+        row = conn.execute(
+            "SELECT token, platform, updated_at FROM push_tokens WHERE device_id = ?",
+            (device_id,),
+        ).fetchone()
+    finally:
+        conn.close()
     if not row:
         return {"ok": False, "registered": False}
     return {"ok": True, "registered": True, "updated_at": row["updated_at"]}

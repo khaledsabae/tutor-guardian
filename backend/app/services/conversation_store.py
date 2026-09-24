@@ -27,12 +27,14 @@ def create_token(device_id: str, session_id: str) -> str:
     """Store a new auth token for the given device + session."""
     token = generate_token()
     conn = get_conn()
-    conn.execute(
-        "INSERT INTO api_tokens (token, device_id, session_id) VALUES (?, ?, ?)",
-        (token, device_id, session_id),
-    )
-    conn.commit()
-    conn.close()
+    try:
+        conn.execute(
+            "INSERT INTO api_tokens (token, device_id, session_id) VALUES (?, ?, ?)",
+            (token, device_id, session_id),
+        )
+        conn.commit()
+    finally:
+        conn.close()
     return token
 
 
@@ -65,12 +67,14 @@ def get_device_id(token: str) -> str | None:
 def create_session(device_id: str | None = None, metadata: dict | None = None) -> str:
     sid = str(uuid.uuid4())
     conn = get_conn()
-    conn.execute(
-        "INSERT INTO chat_sessions (id, device_id, metadata) VALUES (?, ?, ?)",
-        (sid, device_id, json.dumps(metadata or {}, ensure_ascii=False)),
-    )
-    conn.commit()
-    conn.close()
+    try:
+        conn.execute(
+            "INSERT INTO chat_sessions (id, device_id, metadata) VALUES (?, ?, ?)",
+            (sid, device_id, json.dumps(metadata or {}, ensure_ascii=False)),
+        )
+        conn.commit()
+    finally:
+        conn.close()
     return sid
 
 
@@ -93,6 +97,23 @@ def session_exists(session_id: str) -> bool:
         return row is not None
     finally:
         conn.close()
+
+
+def session_owner(session_id: str) -> tuple[bool, str | None]:
+    """(exists, device_id) for a session — the ownership check's one read.
+
+    device_id is None for a session created without one (legacy rows).
+    """
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT device_id FROM chat_sessions WHERE id = ?", (session_id,)
+        ).fetchone()
+    finally:
+        conn.close()
+    if row is None:
+        return False, None
+    return True, row["device_id"]
 
 
 def add_message(

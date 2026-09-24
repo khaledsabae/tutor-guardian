@@ -143,8 +143,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
     session_id = user_message.session_id
     user_msg_id: int | None = None
     if session_id:
-        if not await asyncio.to_thread(store.session_exists, session_id):
-            raise HTTPException(status_code=404, detail="Session not found")
+        await _require_owned_session(request, session_id)
         user_msg_id = await asyncio.to_thread(
             store.add_message,
             session_id, "user",
@@ -170,8 +169,23 @@ async def draft_reply(request: Request, user_message: UserMessage):
         await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         return await asyncio.to_thread(_finalize, reply, session_id)
 
-    # ── Step 0c: FIQH guard (hard block — FIQH_GUARD.md v3) ───────────
-    fiqh_blocked, fiqh_rule = check_fiqh_guard(query_input)
+    # ── Step 0b: Emergency keyword check ─────────────────────────────
+    if check_emergency_keywords(query_input):
+        logger.info("Emergency keyword detected in message_text")
+        user_message = user_message.model_copy(update={"severity": "طارئ"})
+
+    # ── Step 1: Emergency severity check ─────────────────────────────
+    # Runs BEFORE the fiqh guard: «ابني بيقول عايز ينتحر بعد الطلاق» matches
+    # both, and a parent disclosing a child's suicidal talk must get the
+    # emergency escalation, never the "ask a religious authority" deflection.
+    if is_emergency(user_message):
+        logger.info("Emergency severity — returning fallback immediately")
+        reply = emergency_reply(user_message, policies)
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        return await asyncio.to_thread(_finalize, reply, session_id)
+
+    # ── Step 1b: FIQH guard (hard block — FIQH_GUARD.md v3) ───────────
+    fiqh_blocked, fiqh_rule = await asyncio.to_thread(check_fiqh_guard, query_input)
     if fiqh_blocked:
         logger.warning("FIQH guard block: rule=%s", fiqh_rule)
         reply = AssistantReply(
@@ -181,18 +195,6 @@ async def draft_reply(request: Request, user_message: UserMessage):
             needs_human_review=False,
             mode="fiqh_guard",
         )
-        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
-        return await asyncio.to_thread(_finalize, reply, session_id)
-
-    # ── Step 0b: Emergency keyword check ─────────────────────────────
-    if check_emergency_keywords(query_input):
-        logger.info("Emergency keyword detected in message_text")
-        user_message = user_message.model_copy(update={"severity": "طارئ"})
-
-    # ── Step 1: Emergency severity check ─────────────────────────────
-    if is_emergency(user_message):
-        logger.info("Emergency severity — returning fallback immediately")
-        reply = emergency_reply(user_message, policies)
         await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         return await asyncio.to_thread(_finalize, reply, session_id)
 
@@ -413,6 +415,22 @@ async def draft_reply(request: Request, user_message: UserMessage):
     return await asyncio.to_thread(_finalize, reply, session_id)
 
 
+async def _require_owned_session(request: Request, session_id: str) -> None:
+    """404 unless the session exists AND belongs to the calling device.
+
+    Existence alone used to be the check, so any authenticated device could
+    name another device's session_id: its history was read into the prompt and
+    the new turn was written into it. Same rule as GET /api/chat/sessions/{id}
+    (a session with no recorded owner stays reachable), but answered with 404
+    rather than 403 so a foreign id is indistinguishable from a missing one —
+    and the mobile client already recovers from 404 by opening a new session.
+    """
+    exists, owner = await asyncio.to_thread(store.session_owner, session_id)
+    caller = getattr(request.state, "device_id", None)
+    if not exists or (owner and owner != caller):
+        raise HTTPException(status_code=404, detail="Session not found")
+
+
 def _finalize(reply: AssistantReply, session_id: str | None) -> AssistantReply:
     """Tag the reply with its session and persist it server-side (if any)."""
     reply.session_id = session_id
@@ -454,23 +472,21 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     # including the streams already in flight.
     user_msg_id: int | None = None
     if session_id:
-        if not await asyncio.to_thread(store.session_exists, session_id):
-            raise HTTPException(status_code=404, detail="Session not found")
+        await _require_owned_session(request, session_id)
         user_msg_id = await asyncio.to_thread(
             store.add_message,
             session_id, "user",
             user_message.message_text or user_message.behavior_type or "",
         )
 
-    def _single(reply: AssistantReply) -> StreamingResponse:
+    async def _single(reply: AssistantReply) -> StreamingResponse:
         """Emit a non-streamed reply as one terminal `done` event."""
         # Banned and emergency return through here, before the classifier
         # runs — tag the question from the reply so the rows that matter
-        # most are not the ones left unlabelled.
-        if user_msg_id is not None:
-            store.update_classification(
-                user_msg_id, domain=reply.domain, severity=reply.severity)
-        _finalize(reply, session_id)
+        # most are not the ones left unlabelled. Both writes go through
+        # to_thread: this handler runs on the event loop.
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        await asyncio.to_thread(_finalize, reply, session_id)
 
         def one():
             yield _sse("done", reply.model_dump())
@@ -481,26 +497,27 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     is_banned, matched = check_banned_intent(query_input)
     if is_banned:
         logger.warning("Banned intent detected (stream): %s", matched)
-        return _single(AssistantReply(
+        return await _single(AssistantReply(
             reply_text="هذا الموضوع خارج نطاق ما يمكنني مساعدتك فيه. إذا كنت في حالة طارئة، يرجى التواصل مع الجهات المختصة فوراً.",
             domain="medical", severity="طارئ", needs_human_review=True,
             escalation_target="emergency_services", mode="banned",
         ))
 
+    # Emergency before the fiqh guard — same order and reason as /draft.
+    if check_emergency_keywords(query_input):
+        user_message = user_message.model_copy(update={"severity": "طارئ"})
+    if is_emergency(user_message):
+        return await _single(emergency_reply(user_message, policies))
+
     # ── FIQH guard (hard block — FIQH_GUARD.md v3) ────────────────────
-    fiqh_blocked, fiqh_rule = check_fiqh_guard(query_input)
+    fiqh_blocked, fiqh_rule = await asyncio.to_thread(check_fiqh_guard, query_input)
     if fiqh_blocked:
         logger.warning("FIQH guard block (stream): rule=%s", fiqh_rule)
-        return _single(AssistantReply(
+        return await _single(AssistantReply(
             reply_text=FIQH_SAFE_REPLY,
             domain="fiqh_aqeedah", severity="عادي", needs_human_review=False,
             mode="fiqh_guard",
         ))
-
-    if check_emergency_keywords(query_input):
-        user_message = user_message.model_copy(update={"severity": "طارئ"})
-    if is_emergency(user_message):
-        return _single(emergency_reply(user_message, policies))
 
     # ── Build query + history + retrieve ─────────────────────────────
     query_text = (user_message.message_text or "").strip() or \
@@ -536,7 +553,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             )
             if cached:
                 logger.info("Cache hit in stream! Serving pre-cached answer.")
-                return _single(AssistantReply(
+                return await _single(AssistantReply(
                     reply_text=cached, domain=primary_domain, severity=severity,
                     needs_human_review=decision["needs_human_review"],
                     escalation_target=decision["escalate_to"],
@@ -596,7 +613,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     # No relevant KB and not an off-topic pivot → non-streamed fallback
     if not retrieved_units and not off_topic:
         draft = f"لا توجد معلومات كافية حاليًا حول '{query_text}'. نوصي باستشارة مختص."
-        return _single(apply_guardrails(
+        return await _single(apply_guardrails(
             user_message.model_copy(update={"domain": primary_domain}),
             draft, policies, mode="retrieval_only",
         ))
@@ -628,7 +645,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                 primary_domain, user_message.behavior_type or "",
                 user_message.age_group or "unspecified", policies,
             )
-            return _single(AssistantReply(
+            return await _single(AssistantReply(
                 reply_text=draft, domain=primary_domain, severity=severity,
                 needs_human_review=decision["needs_human_review"],
                 escalation_target=decision["escalate_to"], mode="llm_generated",
@@ -645,11 +662,17 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         )
         stream_question, stream_history = query_text, history
         if tier == "cloud_quality":
-            stream_question = redact_for_cloud(query_text)
-            stream_history = [
-                t.model_copy(update={"content": redact_for_cloud(t.content)})
-                for t in history
-            ]
+            # redact_for_cloud reads sqlite — off the event loop, as in /draft.
+            def _redact_blocking():
+                return (
+                    redact_for_cloud(query_text),
+                    [
+                        t.model_copy(update={"content": redact_for_cloud(t.content)})
+                        for t in history
+                    ],
+                )
+
+            stream_question, stream_history = await asyncio.to_thread(_redact_blocking)
         full_prompt, _source = build_full_prompt(
             domain=primary_domain, behavior_type=user_message.behavior_type or "",
             age_group=user_message.age_group or "unspecified", severity=severity,
@@ -658,7 +681,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         )
 
     async def event_stream():
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         q: asyncio.Queue = asyncio.Queue()
         sent_parts: list[str] = []
         persisted = False
@@ -745,7 +768,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                         delta = _CJK_RE.sub("", chunk.delta)
                         sent_parts.append(delta)
                         yield _sse("token", {"delta": delta})
-        except Exception as e:
+        except Exception:
             logger.exception("Stream generation failed (session=%s)", session_id)
             _persist(
                 "".join(sent_parts).strip() or _STREAM_ERROR_TEXT, "error"

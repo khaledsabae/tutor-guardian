@@ -83,20 +83,25 @@ async def lifespan(app: FastAPI):
         if os.environ.get("SKIP_WARMUP"):
             logger.info("⚡ SKIP_WARMUP set: skipping heavy embedding & ChromaDB warm-up for fast dev boot.")
         else:
+            # Indented under `else` on purpose: this block used to sit one level
+            # out, so with SKIP_WARMUP set it still ran — and died on a
+            # NameError (the imports above it were skipped), logged as a
+            # misleading "Warm-up (embeddings/reranker)" warning on every boot.
             from app.services.retrieval import _ensure_index
             from app.services.retrieval import _embedder as _warmup_embedder
+            from app.services.knowledge_loader import load_default_knowledge_units
 
-        logger.info("🔥 Warm-up: loading ONNX embedder...")
-        _warmup_embedder()  # trigger eager-load before _ensure_index uses it
-        logger.info("🔥 Warm-up: ensuring ChromaDB index...")
-        _ensure_index()
-        logger.info("🔥 Warm-up: ChromaDB index ready (%s units loaded)", 
-                     len(__import__('app.services.knowledge_loader', fromlist=['load_default_knowledge_units']).load_default_knowledge_units()))
-        
-        # Warm-up the Cross-Encoder Reranker
-        from app.services.reranker import eager_load_model as _warmup_reranker
-        logger.info("🔥 Warm-up: loading Cross-Encoder reranker...")
-        _warmup_reranker()
+            logger.info("🔥 Warm-up: loading ONNX embedder...")
+            _warmup_embedder()  # trigger eager-load before _ensure_index uses it
+            logger.info("🔥 Warm-up: ensuring ChromaDB index...")
+            _ensure_index()
+            logger.info("🔥 Warm-up: ChromaDB index ready (%s units loaded)",
+                        len(load_default_knowledge_units()))
+
+            # Warm-up the Cross-Encoder Reranker
+            from app.services.reranker import eager_load_model as _warmup_reranker
+            logger.info("🔥 Warm-up: loading Cross-Encoder reranker...")
+            _warmup_reranker()
     except Exception as e:
         logger.warning("Warm-up (embeddings/reranker): %s", e)
 

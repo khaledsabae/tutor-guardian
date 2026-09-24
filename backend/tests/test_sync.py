@@ -30,7 +30,7 @@ class _AuthStubMiddleware(BaseHTTPMiddleware):
 def app(tmp_db):
     a = FastAPI()
     a.add_middleware(_AuthStubMiddleware)
-    a.include_router(sync_router)
+    a.include_router(sync_router, prefix="/api")  # as app.main mounts it
     return a
 
 @pytest.fixture
