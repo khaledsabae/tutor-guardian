@@ -734,15 +734,25 @@ class AIGateway:
         text_parts: list[str] = []
         prompt_tokens = completion_tokens = None
         ok = False
-        for obj in provider.stream(prompt, options=opts):
-            delta = obj.get("response", "")
-            if delta:
-                text_parts.append(delta)
-                yield StreamChunk(delta=delta, done=False)
-            if obj.get("done"):
-                prompt_tokens = obj.get("prompt_eval_count")
-                completion_tokens = obj.get("eval_count")
-                ok = True
+        try:
+            for obj in provider.stream(prompt, options=opts):
+                delta = obj.get("response", "")
+                if delta:
+                    text_parts.append(delta)
+                    yield StreamChunk(delta=delta, done=False)
+                if obj.get("done"):
+                    prompt_tokens = obj.get("prompt_eval_count")
+                    completion_tokens = obj.get("eval_count")
+                    ok = True
+        except GeneratorExit:
+            # The consumer closed us mid-answer (SSE client disconnected, see
+            # assistant._pump_stream). Record the partial call so llm_calls
+            # still shows the spend, then let the close unwind the provider.
+            _log_call(provider.name, provider.model,
+                      int((time.monotonic() - start) * 1000),
+                      None, None, streamed=True, ok=False,
+                      tier=tier, route_reason="client_disconnected")
+            raise
         latency = int((time.monotonic() - start) * 1000)
         result = LLMResult(
             text="".join(text_parts).strip(),

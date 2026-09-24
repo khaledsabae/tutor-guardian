@@ -206,3 +206,38 @@ def test_feedback_audio_is_bounded_before_decoding(client):
         "message": "x", "audio_base64": "A" * 12_000_001,
     })
     assert r.status_code == 422
+
+
+# ── H5: session minting ───────────────────────────────────────────────────
+
+def test_minting_rejects_malformed_or_oversized_input(client):
+    assert client.post("/api/chat/sessions", json={"device_id": "x" * 200}).status_code == 422
+    assert client.post("/api/chat/sessions", json={"device_id": "<script>"}).status_code == 422
+    assert client.post("/api/chat/sessions",
+                       json={"metadata": {"k": "v" * 5000}}).status_code == 422
+
+
+def test_proof_for_another_device_is_refused(client):
+    proof, _ = _session(client, "device-A")
+    r = client.post("/api/chat/sessions", headers=proof, json={"device_id": "device-B"})
+    assert r.status_code == 403
+
+
+def test_proof_of_the_same_device_mints_a_new_session(client):
+    proof, first = _session(client, "device-A")
+    r = client.post("/api/chat/sessions", headers=proof, json={"device_id": "device-A"})
+    assert r.status_code == 201 and r.json()["session_id"] != first
+
+
+def test_known_device_without_proof_is_refused_when_enforced(client, monkeypatch):
+    _session(client, "device-A")
+    monkeypatch.setenv("SESSION_MINT_ENFORCE", "true")
+    assert client.post("/api/chat/sessions", json={"device_id": "device-A"}).status_code == 401
+    # A brand-new install still gets in.
+    assert client.post("/api/chat/sessions", json={"device_id": "device-new"}).status_code == 201
+
+
+def test_known_device_without_proof_still_works_during_grace(client, monkeypatch):
+    monkeypatch.delenv("SESSION_MINT_ENFORCE", raising=False)
+    _session(client, "device-A")
+    assert client.post("/api/chat/sessions", json={"device_id": "device-A"}).status_code == 201

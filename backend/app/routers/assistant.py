@@ -5,6 +5,10 @@ Flow: banned check → emergency check → classify_domains → multi_retrieval 
 import asyncio
 import json
 import logging
+import os
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
@@ -42,6 +46,58 @@ _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
 # Shown to the parent *and* stored as the turn when generation fails outright,
 # so the conversation keeps a visible answer instead of a question that hangs.
 _STREAM_ERROR_TEXT = "تعذّر توليد الرد، يُرجى المحاولة لاحقاً."
+
+
+# ── LLM stream workers (audit H6) ─────────────────────────────────────────
+# Each SSE answer holds one thread for as long as the model is talking. They
+# used to come from the DEFAULT executor — the same small pool every
+# `asyncio.to_thread` sqlite call uses — so a handful of concurrent answers
+# stalled every DB-backed request in the app. They get their own bounded pool
+# now; beyond it, new streams queue instead of starving everything else.
+_STREAM_WORKERS = max(1, int(os.environ.get("LLM_STREAM_WORKERS", "8")))
+_STREAM_DEADLINE_S = float(os.environ.get("LLM_STREAM_DEADLINE_S", "300"))
+_STREAM_EXECUTOR = ThreadPoolExecutor(
+    max_workers=_STREAM_WORKERS, thread_name_prefix="llm-stream"
+)
+
+
+def _pump_stream(make_stream, emit, cancel: threading.Event,
+                 deadline_s: float = _STREAM_DEADLINE_S) -> None:
+    """Drive a blocking LLM stream on a worker thread until done or cancelled.
+
+    `emit(kind, value)` hands ("chunk", c) / ("done", None) / ("error", e) back
+    to the event loop. When `cancel` is set — the SSE client went away — the
+    loop stops at the next chunk and the generator is CLOSED, which unwinds the
+    provider's `with requests.post(..., stream=True)` and drops the upstream
+    connection. Previously the thread kept reading the whole answer after the
+    parent left, holding its worker until generation finished.
+
+    `deadline_s` bounds a single answer end to end; the gateway's own timeouts
+    are per read, so a slow trickle could otherwise run for many minutes.
+    """
+    started = time.monotonic()
+    gen = None
+    try:
+        gen = make_stream()
+        for chunk in gen:
+            if cancel.is_set():
+                return
+            if time.monotonic() - started > deadline_s:
+                emit("error", TimeoutError(f"stream exceeded {deadline_s:.0f}s"))
+                return
+            emit("chunk", chunk)
+        emit("done", None)
+    except Exception as e:  # noqa: BLE001 — surfaced to the SSE consumer
+        if not cancel.is_set():
+            emit("error", e)
+    finally:
+        if gen is not None:
+            close = getattr(gen, "close", None)
+            if close is not None:
+                try:
+                    close()
+                except Exception:  # noqa: BLE001 — best effort
+                    pass
 
 
 def _sse(event: str, data: dict) -> str:
@@ -686,19 +742,25 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         sent_parts: list[str] = []
         persisted = False
 
-        def run_sync_stream():
-            try:
-                for chunk in get_gateway().stream(
-                    full_prompt, tier=tier, route_reason=route_reason
-                ):
-                    loop.call_soon_threadsafe(q.put_nowait, ("chunk", chunk))
-                loop.call_soon_threadsafe(q.put_nowait, ("done", None))
-            except Exception as e:
-                loop.call_soon_threadsafe(q.put_nowait, ("error", e))
+        cancel = threading.Event()
 
-        # Offload the blocking stream reader loop to a background worker thread.
-        # Keep a reference: a bare create_task() may be garbage-collected.
-        worker = asyncio.create_task(asyncio.to_thread(run_sync_stream))
+        def _emit(kind, value):
+            try:
+                loop.call_soon_threadsafe(q.put_nowait, (kind, value))
+            except RuntimeError:
+                pass  # loop already closed (shutdown) — nobody is listening
+
+        # Blocking stream reader on the dedicated LLM pool (see _pump_stream).
+        # Keep a reference to the future so it is not garbage-collected.
+        worker = loop.run_in_executor(
+            _STREAM_EXECUTOR,
+            _pump_stream,
+            lambda: get_gateway().stream(
+                full_prompt, tier=tier, route_reason=route_reason
+            ),
+            _emit,
+            cancel,
+        )
 
         def _persist(text: str, mode: str) -> None:
             """Record the assistant turn. Synchronous on purpose.
@@ -789,15 +851,12 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                 )
                 if partial:
                     _persist(partial, "interrupted")
-            # Detaches the awaiting task; it does NOT stop run_sync_stream or
-            # the provider connection — asyncio cannot interrupt a running
-            # thread. So generation continues to completion in the background
-            # after the parent leaves. That is pre-existing behaviour, and it
-            # is what made this bug diagnosable at all: the finished call is
-            # still logged to llm_calls, which is how we could prove the
-            # answers were being generated and then dropped. Real cancellation
-            # needs a cooperative cancel()/close() threaded through the
-            # gateway and every provider — a separate change.
+            # Cooperative cancellation (audit H6): asyncio cannot interrupt a
+            # running thread, so the worker checks this flag between chunks,
+            # stops, and closes the stream generator — which closes the
+            # provider connection. The aborted call is still recorded in
+            # llm_calls (route_reason "client_disconnected") by the gateway.
+            cancel.set()
             worker.cancel()
 
     return StreamingResponse(event_stream(), media_type="text/event-stream", headers=_SSE_HEADERS)

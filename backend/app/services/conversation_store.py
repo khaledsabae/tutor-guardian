@@ -56,6 +56,18 @@ def validate_token(token: str) -> dict | None:
         conn.close()
 
 
+def device_has_tokens(device_id: str) -> bool:
+    """True once any token was ever issued for this device id."""
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT 1 FROM api_tokens WHERE device_id = ? LIMIT 1", (device_id,)
+        ).fetchone()
+        return row is not None
+    finally:
+        conn.close()
+
+
 def get_device_id(token: str) -> str | None:
     """Extract device_id from a valid token (for rate-limiting)."""
     info = validate_token(token)

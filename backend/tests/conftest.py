@@ -15,6 +15,16 @@ def mock_domain_classifier_llm(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
+def _generous_session_mint_limit(monkeypatch):
+    """Every test shares app.main's in-process limiter, and dozens mint a
+    session from the same TestClient address. The per-IP minting budget
+    (rate_limit._SESSION_LIMIT) is exercised by its own test, which sets it."""
+    from app.middleware import rate_limit
+
+    monkeypatch.setattr(rate_limit, "_SESSION_LIMIT", 1_000_000)
+
+
+@pytest.fixture(autouse=True)
 def _temp_conversations_db(monkeypatch):
     """Point every test at a throwaway SQLite DB so tests don't touch ops/."""
     fd, path = tempfile.mkstemp(suffix=".db")

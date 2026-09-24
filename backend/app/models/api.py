@@ -1,5 +1,7 @@
 """Pydantic models for Tutor Guardian API request/response."""
-from pydantic import BaseModel
+import json
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class ConversationTurn(BaseModel):
@@ -36,9 +38,22 @@ class AssistantReply(BaseModel):
 
 # ── Auth & session management (mobile-ready) ─────────────────────────────────
 class SessionCreate(BaseModel):
-    """POST /api/chat/sessions — create a new session + auth token."""
-    device_id: str | None = None
+    """POST /api/chat/sessions — create a new session + auth token.
+
+    Both fields were unbounded on a public endpoint. The app sends a UUIDv4
+    device id; the pattern also admits the server's own `device_<hex>` form.
+    """
+    device_id: str | None = Field(
+        None, min_length=1, max_length=128, pattern=r"^[A-Za-z0-9._:-]+$"
+    )
     metadata: dict | None = None
+
+    @field_validator("metadata")
+    @classmethod
+    def _bounded_metadata(cls, v: dict | None) -> dict | None:
+        if v is not None and len(json.dumps(v, ensure_ascii=False)) > 4096:
+            raise ValueError("metadata too large (max 4 KB)")
+        return v
 
 
 class SessionCreateResponse(BaseModel):

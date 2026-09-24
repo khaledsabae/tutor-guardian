@@ -12,7 +12,6 @@ import httpx
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.config.guardrails_loader import load_child_surface_policy, load_guardrails_config
@@ -20,6 +19,7 @@ from app.config.llm_config import LLM, DEFAULT_HOME_OLLAMA_URL
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
+from app.middleware.client_ip import ClientIPMiddleware
 from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
@@ -159,10 +159,6 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan)
 
-# Trust X-Forwarded-Proto from nginx so redirects keep HTTPS
-app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
-
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[o.strip() for o in _origins if o.strip()],
@@ -179,6 +175,13 @@ app.add_middleware(AuthMiddleware)
 # AuthMiddleware's token lookup. It therefore cannot rely on request.state and
 # resolves its own identity from the Authorization header; see rate_limit.py.
 app.add_middleware(RateLimitMiddleware)
+
+# Client IP + scheme from the Cloudflare → nginx chain. Registered LAST so it
+# runs FIRST: the rate limiter above keys anonymous callers on the client IP,
+# and it used to read the nginx container's address because the old
+# ProxyHeadersMiddleware(trusted_hosts="*") was registered first (innermost)
+# and trusted forged X-Forwarded-For entries. See middleware/client_ip.py.
+app.add_middleware(ClientIPMiddleware)
 
 app.include_router(health.router)
 app.include_router(assistant.router, prefix="/api")
