@@ -14,7 +14,7 @@ import shutil
 import threading
 from functools import lru_cache
 from pathlib import Path
-from typing import Sequence, cast
+from typing import Callable, Sequence, cast
 
 import chromadb
 from chromadb import Documents, EmbeddingFunction, Embeddings
@@ -343,12 +343,39 @@ def index_knowledge_units(
         logger.warning("could not purge answer cache after rebuild: %s", exc)
 
 
-def _query(collection, query_text: str, where_filter: dict, top_k: int) -> list[dict]:
+QueryEmbedder = Callable[[str], list[float]]
+
+
+def query_embedder() -> QueryEmbedder:
+    """A per-request memo around `embed_query` (audit M7).
+
+    `retrieve_hybrid` runs up to domains × queries × 2 vector legs, plus each
+    leg's domain-only fallback, and every one of them used to hand Chroma the
+    *text* — so the same question was embedded up to 18 times per answer. One
+    memo per request embeds each distinct text once; it is a callable rather
+    than a precomputed vector so a leg that never runs never loads the model.
+    """
+    vectors: dict[str, list[float]] = {}
+
+    def embed(text: str) -> list[float]:
+        if text not in vectors:
+            vectors[text] = embed_query(text)
+        return vectors[text]
+
+    return embed
+
+
+def _query(collection, query_text: str, where_filter: dict, top_k: int,
+           embed: QueryEmbedder | None = None) -> list[dict]:
     try:
-        # multilingual-e5 needs "query: " prefix at search time
-        prefixed_text = f"query: {query_text}"
+        # multilingual-e5 needs "query: " prefix at search time; embed_query
+        # applies the same prefix, so both paths search the same vector.
+        if embed is not None:
+            search = {"query_embeddings": [embed(query_text)]}
+        else:
+            search = {"query_texts": [f"query: {query_text}"]}
         raw = collection.query(
-            query_texts=[prefixed_text],
+            **search,
             n_results=top_k,
             where=where_filter,
             include=["documents", "metadatas", "distances"],
@@ -388,6 +415,7 @@ def retrieve_relevant_units(
     age_group: str,
     top_k: int = 5,
     behavior_type: str = "",
+    embed: QueryEmbedder | None = None,
 ) -> list[dict]:
     """
     Optimised semantic retrieval — at most 2 ChromaDB queries per call.
@@ -414,12 +442,12 @@ def retrieve_relevant_units(
             {"age_group": {"$in": list(age_candidates)}},
         ]
     }
-    results = _query(collection, query_text, where, top_k)
+    results = _query(collection, query_text, where, top_k, embed)
 
     # ── Query 2: domain only (catch-all) ────────────────────────────────
     if not results:
         where_domain = {"domain": {"$eq": db_domain}}
-        results = _query(collection, query_text, where_domain, top_k)
+        results = _query(collection, query_text, where_domain, top_k, embed)
 
     return results
 
@@ -428,6 +456,7 @@ def retrieve_domain_only(
     query_text: str,
     domain: str,
     top_k: int = 5,
+    embed: QueryEmbedder | None = None,
 ) -> list[dict]:
     """Vector search over a whole domain, ignoring the child's age band.
 
@@ -440,7 +469,7 @@ def retrieve_domain_only(
     """
     collection = with_live_collection(lambda c: c)
     where = {"domain": {"$eq": canonical_domain(domain)}}
-    return _query(collection, query_text, where, top_k)
+    return _query(collection, query_text, where, top_k, embed)
 
 
 # Ensure the index is built on first import
@@ -484,6 +513,7 @@ def retrieve_multi_domain(
     seen_ids: set[str] = set()
     merged: list[dict] = []
 
+    embed = query_embedder()
     for domain in domains:
         domain_results = retrieve_relevant_units(
             query_text=query_text,
@@ -491,6 +521,7 @@ def retrieve_multi_domain(
             age_group=age_group,
             top_k=top_k_per_domain,
             behavior_type="",
+            embed=embed,
         )
         for result in domain_results:
             uid = result.get("unit_id", "")
@@ -752,6 +783,7 @@ def retrieve_hybrid(
     bm25 = get_bm25()
     legs: list[list[dict]] = []
     queries = [q for q in (query_text, rewritten_query) if q]
+    embed = query_embedder()
 
     def within_span(cands: list[dict]) -> list[dict]:
         """Drop candidates written for a childhood this child is not in.
@@ -775,7 +807,7 @@ def retrieve_hybrid(
         for q in queries:
             vec = retrieve_relevant_units(
                 query_text=q, domain=domain, age_group=age_group,
-                top_k=candidates_per_leg,
+                top_k=candidates_per_leg, embed=embed,
             )
             for r in vec:
                 r.setdefault("source_domain", domain)
@@ -786,7 +818,7 @@ def retrieve_hybrid(
             # bought nothing extra and cost ~875ms per answer.
             any_age = within_span(retrieve_domain_only(
                 query_text=q, domain=domain,
-                top_k=max(1, candidates_per_leg // 2),
+                top_k=max(1, candidates_per_leg // 2), embed=embed,
             ))
             for r in any_age:
                 r.setdefault("source_domain", domain)

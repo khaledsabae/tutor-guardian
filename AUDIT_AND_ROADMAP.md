@@ -39,12 +39,13 @@ Status: ✅ **fixed in this PR** · 📋 **roadmap** (needs an owner decision, p
 |---|---:|---:|---:|
 | Critical | 3 | 3 | 0 (C3 settings toggle still advised) |
 | High | 9 | 9 | 0 (flip `SESSION_MINT_ENFORCE` once build ≥ 106 is the floor) |
-| Medium | 17 | 13 | 4 |
+| Medium | 17 | 15 | 2 (M15 partly: fail closed when `OPS_METRICS_TOKEN` is unset; M17 is the Phase 3 migration refactor) |
 | Low | 12 | 6 | 6 |
 
 *Updated for release v1.0.61 (release-hardening pass): C3, H4, H6, H7 fixed; H5 partly
 fixed (validation, proof and staged enforcement; token hashing and expiry still open);
 M9 and M14 fixed. See [ops/RELEASE_v1.0.61.md](ops/RELEASE_v1.0.61.md) for the deployment runbook.
+Quick-fix pass: M7 (single query embedding), M8 (referral click flood), M11 (stale name cache under WAL) and M16 (exception text in error responses) fixed.
 Token pass (schema v28): H5 completed (hashed tokens, sliding expiry, log-safe device ids),
 M12 (one shared `TgClient`, deduped minting, transparent token renewal) and M13 (SSE idle
 timeout, server keep-alives) fixed.*
@@ -238,16 +239,16 @@ Two independent defects:
 | M4 | `redact_for_cloud` replaces the names of **every family's** children with «طفلي», with no word boundaries. Prophet names (يوسف، محمد، مريم) in fiqh questions, the tier routed to the cloud, get corrupted. It also runs thousands of `re.sub` calls per request as the user base grows | `services/privacy.py` | ✅ `redact_for_cloud(text, device_id)` redacts only the caller's children, with Arabic word boundaries and stacked prefixes (و/ف + ال/ب/ل/ك) |
 | M5 | The semantic answer cache (cosine ≥0.92) can serve an answer that addresses another family's child by name, because the question text is part of the prompt | `services/answer_cache.py` | ✅ questions naming the caller's own child bypass the cache (no lookup, no store) |
 | M6 | `message_text` and `conversation_history` are unbounded, so a single request can carry megabytes into the classifier, embedder, BM25 and LLM. Client-supplied history (no `session_id`) can inject fake assistant turns | `models/api.py` | ✅ `message_text` ≤ 4000, `behavior_type` ≤ 200, client history ≤ 12 turns, each ≤ 4000, roles user/assistant (server history already wins when a session exists) |
-| M7 | Retrieval embeds the same query up to about 18 times per request (per domain × query × leg) | `services/retrieval.py` | 📋 embed once, pass `query_embeddings` |
-| M8 | `/` and `/go` insert a `referral_clicks` row per request, with no rate limit (the routes are outside `/api`) and a spoofable IP | `routers/web.py` | 📋 throttle and trust only the proxy's IP |
+| M7 | Retrieval embeds the same query up to about 18 times per request (per domain × query × leg) | `services/retrieval.py` | ✅ `retrieval.query_embedder()` memo: each distinct text is encoded once per request and Chroma is queried with `query_embeddings` (18 encodes → 2 for a two-query, three-domain question) |
+| M8 | `/` and `/go` insert a `referral_clicks` row per request, with no rate limit (the routes are outside `/api`) and a spoofable IP | `routers/web.py` | ✅ only existing codes are recorded; a repeat (IP, code) within 10 min refreshes its row; ≤ 20 new rows per IP per hour; user-agent capped at 256 chars (IP already trusted-proxy only, H4) |
 | M9 | The referral `AUTO` claim matches by client-controlled `X-Forwarded-For`/`CF-Connecting-IP` | `routers/referral.py` | ✅ fixed with H4 |
 | M10 | Push `register` returned 500 on non-string `token`/`platform`, and connections leaked on error | `routers/push.py` | ✅ |
-| M11 | `privacy.known_child_names` is cached on the main DB file's mtime, which WAL writes don't change, so the cache goes stale | `services/privacy.py` | 📋 |
+| M11 | `privacy.known_child_names` is cached on the main DB file's mtime, which WAL writes don't change, so the cache goes stale | `services/privacy.py` | ✅ cache key is the main file **and** `-wal` (mtime_ns, size), so a commit in WAL mode invalidates it |
 | M12 | Mobile creates `TgClient()` ad hoc in 19 places. Each has its own un-closed `http.Client` and session cache, and concurrent `ensureSession()` calls can mint duplicate sessions | `mobile/lib/**` | ✅ `TgClient.shared` (services) and `tgClientProvider` (widgets) are one instance; in-flight mints are shared; a refused token is renewed once below every caller |
 | M13 | Mobile SSE has a timeout only on the headers, so a server stall mid-stream hangs the chat indefinitely | `tg_client.dart::streamQuery` | ✅ 45 s idle timeout per chunk → retryable «توقّف الرد» error; the server sends an SSE keep-alive every 15 s while the model is silent |
 | M14 | Each token rebuilds the full chat state and re-parses the whole Markdown, which is O(n²) on long answers | `state/chat_notifier.dart` | ✅ deltas batched every 60 ms and flushed on done, error, stop and pause (UX-2) |
 | M15 | `ops-llm` metrics are open when `OPS_METRICS_TOKEN` is unset, and the token was compared in non-constant time | `routers/stats.py` | ✅ `compare_digest`; 📋 fail closed in production |
-| M16 | Error `detail` strings echo internal exceptions (`f"DB error: {exc}"`, `f"bad audio: {exc}"`) | `routers/feedback.py` | 📋 |
+| M16 | Error `detail` strings echo internal exceptions (`f"DB error: {exc}"`, `f"bad audio: {exc}"`) | `routers/feedback.py` | ✅ decoder and SQLite messages are logged, callers get a fixed Arabic message |
 | M17 | Monolithic `init_db.py` (1,100 lines of hand-written migrations); two SQLite files, with DDL scattered across `ai_gateway`, `answer_cache`, `retrieval`, `fiqh_guard` and `query_rewriter` | `db/`, services | 📋 see Phase 3 |
 
 ## 5. Low
@@ -335,7 +336,7 @@ Tests added:
 
 ### Phase 2: reliability and performance (2–4 weeks)
 1. ~~H6~~ ✅ (stream path, primary breaker and `generate()` deadline).
-2. **M7:** single query embedding per request. Measure p95 before and after with `/api/stats/ops-llm`.
+2. ~~M7~~ ✅ one encode per distinct query text per request. Still worth measuring p95 before/after with `/api/stats/ops-llm`.
 3. ~~M13~~ ✅ (idle timeout + server keep-alives; M14 batching ✅).
 4. ~~H7~~ ✅.
 5. ~~M12~~ ✅ (one shared client, deduped minting, transparent token renewal).

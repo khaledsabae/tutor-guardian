@@ -115,3 +115,53 @@ def test_spoofed_client_header_from_an_untrusted_peer_is_ignored():
         )
     assert r.status_code == 200
     assert r.json()["ok"] is False  # matched on its real address, not the forged one
+
+
+# ── Audit M8: the landing page cannot be used to flood referral_clicks ──────
+
+def _codes(*codes):
+    conn = get_conn()
+    for i, c in enumerate(codes):
+        conn.execute("INSERT INTO referral_codes (device_id, code) VALUES (?, ?)",
+                     (f"owner-{i}-{c}", c))
+    conn.commit()
+    conn.close()
+
+
+def _clicks():
+    conn = get_conn()
+    rows = conn.execute("SELECT ip, code, user_agent FROM referral_clicks").fetchall()
+    conn.close()
+    return rows
+
+
+def test_unknown_codes_are_not_recorded(client):
+    r = client.get("/go?ref=NOPE99", headers={"cf-connecting-ip": "203.0.113.7"})
+    assert r.status_code == 200          # the page still renders
+    assert _clicks() == []
+
+
+def test_repeat_clicks_refresh_instead_of_piling_up(client):
+    _codes("REF123")
+    for _ in range(5):
+        client.get("/go?ref=REF123", headers={"cf-connecting-ip": "203.0.113.7"})
+    assert len(_clicks()) == 1
+
+
+def test_clicks_per_ip_are_capped(client):
+    codes = [f"C{i:04d}" for i in range(25)]
+    _codes(*codes)
+    for code in codes:
+        assert client.get(f"/go?ref={code}",
+                          headers={"cf-connecting-ip": "203.0.113.7"}).status_code == 200
+    assert len(_clicks()) == 20
+    # Another visitor is unaffected.
+    client.get("/go?ref=C0000", headers={"cf-connecting-ip": "198.51.100.4"})
+    assert len(_clicks()) == 21
+
+
+def test_user_agent_is_truncated(client):
+    _codes("REF123")
+    client.get("/go?ref=REF123", headers={"cf-connecting-ip": "203.0.113.7",
+                                          "user-agent": "x" * 5000})
+    assert len(_clicks()[0]["user_agent"]) == 256

@@ -53,6 +53,8 @@ _TG_CHAT_ID = os.environ.get("FEEDBACK_TELEGRAM_CHAT_ID", "")
 
 logger = logging.getLogger(__name__)
 
+_SAVE_FAILED = "تعذّر حفظ ملاحظتك الآن، حاول مرة أخرى بعد قليل."
+
 
 def _tg_url(method: str) -> str:
     return f"https://api.telegram.org/bot{_TG_BOT_TOKEN}/{method}"
@@ -243,7 +245,9 @@ def submit_app_feedback(body: AppFeedbackIn, background: BackgroundTasks) -> dic
         try:
             raw = base64.b64decode(body.audio_base64)
         except Exception as exc:  # noqa: BLE001
-            raise HTTPException(status_code=400, detail=f"bad audio: {exc}") from exc
+            # The decoder's message is for the log, not the caller (audit M16).
+            logger.info("feedback audio rejected: %s", exc)
+            raise HTTPException(status_code=400, detail="تعذّر قراءة التسجيل الصوتي.") from exc
         if len(raw) > 8 * 1024 * 1024:  # 8 MB cap
             raise HTTPException(status_code=413, detail="audio too large")
         audio_b64 = body.audio_base64
@@ -262,7 +266,9 @@ def submit_app_feedback(body: AppFeedbackIn, background: BackgroundTasks) -> dic
         con.commit()
         con.close()
     except Exception as exc:  # noqa: BLE001
-        raise HTTPException(status_code=500, detail=f"DB error: {exc}") from exc
+        # SQLite errors name tables, columns and paths — log them, never echo them.
+        logger.exception("app feedback not stored")
+        raise HTTPException(status_code=500, detail=_SAVE_FAILED) from exc
 
     background.add_task(
         notify_new_feedback,
@@ -647,6 +653,7 @@ def submit_feedback(body: FeedbackIn, request: Request) -> dict:
         con.commit()
         con.close()
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"DB error: {exc}") from exc
+        logger.exception("answer feedback not stored")
+        raise HTTPException(status_code=500, detail=_SAVE_FAILED) from exc
 
     return {"status": "ok"}
