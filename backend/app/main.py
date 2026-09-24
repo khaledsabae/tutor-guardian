@@ -12,7 +12,6 @@ import httpx
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.config.guardrails_loader import load_child_surface_policy, load_guardrails_config
@@ -20,6 +19,7 @@ from app.config.llm_config import LLM, DEFAULT_HOME_OLLAMA_URL
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
+from app.middleware.client_ip import ClientIPMiddleware
 from app.routers import (
     health, assistant, chat, feedback, privacy, program, children, referral, push, identity,
     web, stats, daily_routine, value_tracking, habit_templates, child_mode, child_mode_web, sync,
@@ -83,20 +83,25 @@ async def lifespan(app: FastAPI):
         if os.environ.get("SKIP_WARMUP"):
             logger.info("⚡ SKIP_WARMUP set: skipping heavy embedding & ChromaDB warm-up for fast dev boot.")
         else:
+            # Indented under `else` on purpose: this block used to sit one level
+            # out, so with SKIP_WARMUP set it still ran — and died on a
+            # NameError (the imports above it were skipped), logged as a
+            # misleading "Warm-up (embeddings/reranker)" warning on every boot.
             from app.services.retrieval import _ensure_index
             from app.services.retrieval import _embedder as _warmup_embedder
+            from app.services.knowledge_loader import load_default_knowledge_units
 
-        logger.info("🔥 Warm-up: loading ONNX embedder...")
-        _warmup_embedder()  # trigger eager-load before _ensure_index uses it
-        logger.info("🔥 Warm-up: ensuring ChromaDB index...")
-        _ensure_index()
-        logger.info("🔥 Warm-up: ChromaDB index ready (%s units loaded)", 
-                     len(__import__('app.services.knowledge_loader', fromlist=['load_default_knowledge_units']).load_default_knowledge_units()))
-        
-        # Warm-up the Cross-Encoder Reranker
-        from app.services.reranker import eager_load_model as _warmup_reranker
-        logger.info("🔥 Warm-up: loading Cross-Encoder reranker...")
-        _warmup_reranker()
+            logger.info("🔥 Warm-up: loading ONNX embedder...")
+            _warmup_embedder()  # trigger eager-load before _ensure_index uses it
+            logger.info("🔥 Warm-up: ensuring ChromaDB index...")
+            _ensure_index()
+            logger.info("🔥 Warm-up: ChromaDB index ready (%s units loaded)",
+                        len(load_default_knowledge_units()))
+
+            # Warm-up the Cross-Encoder Reranker
+            from app.services.reranker import eager_load_model as _warmup_reranker
+            logger.info("🔥 Warm-up: loading Cross-Encoder reranker...")
+            _warmup_reranker()
     except Exception as e:
         logger.warning("Warm-up (embeddings/reranker): %s", e)
 
@@ -154,10 +159,6 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan)
 
-# Trust X-Forwarded-Proto from nginx so redirects keep HTTPS
-app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
-
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[o.strip() for o in _origins if o.strip()],
@@ -174,6 +175,13 @@ app.add_middleware(AuthMiddleware)
 # AuthMiddleware's token lookup. It therefore cannot rely on request.state and
 # resolves its own identity from the Authorization header; see rate_limit.py.
 app.add_middleware(RateLimitMiddleware)
+
+# Client IP + scheme from the Cloudflare → nginx chain. Registered LAST so it
+# runs FIRST: the rate limiter above keys anonymous callers on the client IP,
+# and it used to read the nginx container's address because the old
+# ProxyHeadersMiddleware(trusted_hosts="*") was registered first (innermost)
+# and trusted forged X-Forwarded-For entries. See middleware/client_ip.py.
+app.add_middleware(ClientIPMiddleware)
 
 app.include_router(health.router)
 app.include_router(assistant.router, prefix="/api")

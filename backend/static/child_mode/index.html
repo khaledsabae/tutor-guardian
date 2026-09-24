@@ -61,6 +61,11 @@
     const EXPIRES_KEY = 'tg_child_web_expires';
 
     const $ = id => document.getElementById(id);
+    // Habit names include parent-typed custom templates, so they are data,
+    // never markup — escape before they reach innerHTML.
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
     const api = async (path, opts = {}) => {
       const token = localStorage.getItem(TOKEN_KEY);
       const headers = { 'Content-Type': 'application/json', ...opts.headers };
@@ -136,7 +141,7 @@
             <div class="flex items-center gap-3 mb-3">
               <div class="text-2xl">${categoryIcon(h.category)}</div>
               <div>
-                <h3 class="font-bold text-slate-100">${h.habit_name}</h3>
+                <h3 class="font-bold text-slate-100">${esc(h.habit_name)}</h3>
                 <p class="text-xs text-slate-400">${categoryLabel(h.category)}</p>
               </div>
             </div>

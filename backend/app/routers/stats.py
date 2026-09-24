@@ -14,6 +14,7 @@ token is required (the numbers are aggregate and non-identifying).
 from __future__ import annotations
 
 import os
+import secrets
 import sqlite3
 
 from fastapi import APIRouter, Header, HTTPException
@@ -69,7 +70,7 @@ def ops_llm_metrics(
     dev when the env var is absent.
     """
     expected = os.environ.get("OPS_METRICS_TOKEN", "")
-    if expected and x_ops_token != expected:
+    if expected and not secrets.compare_digest(x_ops_token or "", expected):
         raise HTTPException(status_code=403, detail="forbidden")
     days = max(1, min(days, 30))
 

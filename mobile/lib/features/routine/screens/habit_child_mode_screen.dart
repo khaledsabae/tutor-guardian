@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/app_routes.dart';
+import '../../../core/haptics.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../theme/app_theme.dart';
+import '../../../theme/design_tokens.dart';
 import '../models/habit_models.dart';
 import '../../agreement/child_agreement_screen.dart';
 import '../../license/child_license_screen.dart';
@@ -242,32 +247,43 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
             if (widget.submitted)
               Center(
                 child: Chip(
-                  avatar: const Icon(Icons.check_circle, color: Colors.white),
+                  avatar: Icon(Icons.check_circle, color: AppTheme.onPrimary),
                   label: Text(AppLocalizations.of(context).habitChildModeLogged),
-                  backgroundColor: theme.colorScheme.primary,
-                  labelStyle: const TextStyle(color: Colors.white),
+                  backgroundColor: AppTheme.primary,
+                  labelStyle: TextStyle(color: AppTheme.onPrimary),
                 ),
               )
             else
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // Palette tokens with their paired on-colours instead of
+              // Colors.green/orange/red under white text (2.1–3.5:1, below
+              // WCAG AA), and a Wrap so three labelled buttons reflow instead
+              // of overflowing at large text sizes or with English labels.
+              // "Missed" is neutral rather than red: a child uses this screen,
+              // and a red ✗ reads as a punishment rather than a record.
+              Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                spacing: Dt.s8,
+                runSpacing: Dt.s8,
                 children: [
                   _ActionButton(
                     label: AppLocalizations.of(context).habitChildModeDone,
                     icon: Icons.check,
-                    color: Colors.green,
+                    color: AppTheme.primary,
+                    foreground: AppTheme.onPrimary,
                     onPressed: _busy ? null : () => _submit('completed', AppLocalizations.of(context).habitChildModeDone),
                   ),
                   _ActionButton(
                     label: AppLocalizations.of(context).habitChildModePartial,
                     icon: Icons.remove_circle_outline,
-                    color: Colors.orange,
+                    color: AppTheme.accent,
+                    foreground: AppTheme.onAccent,
                     onPressed: _busy ? null : () => _submit('partially', AppLocalizations.of(context).habitChildModePartial),
                   ),
                   _ActionButton(
                     label: AppLocalizations.of(context).habitChildModeMissed,
                     icon: Icons.close,
-                    color: Colors.red,
+                    color: AppTheme.surfaceAlt,
+                    foreground: AppTheme.textPrimary,
                     onPressed: _busy ? null : () => _submit('missed', AppLocalizations.of(context).habitChildModeMissed),
                   ),
                 ],
@@ -312,6 +328,9 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
         .submit(widget.item, status);
     if (mounted) {
       setState(() => _busy = false);
+      // Success used to be confirmed only by the card silently swapping to
+      // its "logged" chip; a light pulse confirms it to the hand as well.
+      unawaited(ok ? Haptics.success() : Haptics.warning());
       if (!ok) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(AppLocalizations.of(context).habitChildModeFailed)),
@@ -326,23 +345,26 @@ class _ActionButton extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.color,
+    required this.foreground,
     this.onPressed,
   });
 
   final String label;
   final IconData icon;
   final Color color;
+  final Color foreground;
   final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: onPressed,
-      icon: Icon(icon, color: Colors.white),
+      icon: Icon(icon, color: foreground),
       label: Text(label),
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
-        foregroundColor: Colors.white,
+        foregroundColor: foreground,
+        minimumSize: const Size(Dt.minTouchChild, Dt.minTouchChild),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
     );

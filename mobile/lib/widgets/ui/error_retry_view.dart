@@ -10,6 +10,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../../api/tg_client.dart';
 import '../../core/failures.dart';
 import '../../l10n/app_localizations.dart';
 import 'empty_state.dart';
@@ -37,4 +38,27 @@ class ErrorRetryView extends StatelessWidget {
       onAction: onRetry,
     );
   }
+}
+
+/// One sentence a parent can act on, for places too small for [ErrorRetryView]
+/// — a SnackBar, an inline hint.
+///
+/// Eight SnackBars interpolated `e.toString()`, which printed
+/// "TgApiError(500): …" or "SocketException: Failed host lookup" into an
+/// Arabic sentence. A 4xx from our own API carries a server-written message
+/// meant for the reader, so that one is passed through; everything else maps
+/// to the same three explanations [ErrorRetryView] uses.
+String describeFailure(AppLocalizations l10n, Object error) {
+  final kind = classifyFailure(error);
+  if (kind == FailureKind.unknown &&
+      error is TgApiError &&
+      error.statusCode != null &&
+      error.message.trim().isNotEmpty) {
+    return error.message;
+  }
+  return switch (kind) {
+    FailureKind.offline => l10n.errorOfflineBody,
+    FailureKind.server => l10n.errorServerBody,
+    FailureKind.unknown => l10n.errorUnknownBody,
+  };
 }

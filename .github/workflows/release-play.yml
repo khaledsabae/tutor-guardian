@@ -1,0 +1,152 @@
+name: Release to Google Play
+
+# Manual only. Builds a SIGNED Android App Bundle from main and uploads it to
+# Google Play with scripts/play_upload.py.
+#
+# Runs on a GitHub-hosted runner on purpose: it has the Android SDK
+# preinstalled, is free for this public repository, and keeps the upload
+# keystore and the Play service account off the production VPS.
+#
+# One-time setup — Settings → Secrets and variables → Actions → New secret:
+#   ANDROID_KEYSTORE_BASE64    base64 -w0 android/app/almorabbi-upload.jks
+#   ANDROID_KEYSTORE_PASSWORD  storePassword from android/app/key.properties
+#   ANDROID_KEY_ALIAS          keyAlias      from android/app/key.properties
+#   ANDROID_KEY_PASSWORD       keyPassword   from android/app/key.properties
+#   PLAY_SERVICE_ACCOUNT_JSON  contents of the Play Developer API service
+#                              account JSON (scripts/play_service_account.json)
+#
+# The versionCode comes from mobile/pubspec.yaml (1.0.61+106 → 106); Play
+# rejects a code it has already seen, so bump pubspec before re-releasing.
+
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: "Play track"
+        type: choice
+        options: [internal, alpha, beta, production]
+        default: internal
+      notes:
+        description: "Release notes (Arabic)"
+        type: string
+        default: "تحسينات في الأمان والأداء وتجربة المحادثة"
+      rollout:
+        description: "Production rollout fraction (0.01–1.0; ignored for other tracks)"
+        type: string
+        default: "1.0"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-play
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build signed AAB and upload
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: mobile
+    env:
+      ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+    steps:
+      - name: Check signing and Play secrets
+        working-directory: .
+        run: |
+          missing=""
+          for v in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS \
+                   ANDROID_KEY_PASSWORD PLAY_SERVICE_ACCOUNT_JSON; do
+            [ -n "${!v}" ] || missing="$missing $v"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing — see the header of .github/workflows/release-play.yml"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.1'
+          channel: stable
+          cache: true
+
+      - name: Install the upload keystore
+        run: |
+          umask 077
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > android/app/almorabbi-upload.jks
+          {
+            echo "storeFile=almorabbi-upload.jks"
+            echo "storePassword=$ANDROID_KEYSTORE_PASSWORD"
+            echo "keyAlias=$ANDROID_KEY_ALIAS"
+            echo "keyPassword=$ANDROID_KEY_PASSWORD"
+          } > android/app/key.properties
+
+      - name: Test
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
+
+      - name: Build signed App Bundle
+        run: flutter build appbundle --release
+
+      - name: Refuse a debug-signed bundle
+        run: |
+          AAB=build/app/outputs/bundle/release/app-release.aab
+          signer=$(keytool -printcert -jarfile "$AAB" | grep -m1 'Owner:' || true)
+          echo "Signer: $signer"
+          if [ -z "$signer" ] || echo "$signer" | grep -q "Android Debug"; then
+            echo "::error::The bundle is not signed with the upload key — Play would reject it"
+            exit 1
+          fi
+          ls -la "$AAB"
+
+      - name: Upload to Google Play (${{ inputs.track }})
+        working-directory: .
+        # Inputs reach the shell as env vars, never interpolated into the script.
+        env:
+          TRACK: ${{ inputs.track }}
+          NOTES: ${{ inputs.notes }}
+          ROLLOUT: ${{ inputs.rollout }}
+        run: |
+          umask 077
+          SA="$RUNNER_TEMP/play_sa.json"
+          printf '%s' "$PLAY_SERVICE_ACCOUNT_JSON" > "$SA"
+          python3 -m pip install --quiet google-api-python-client google-auth httplib2
+          python3 scripts/play_upload.py \
+            --track "$TRACK" \
+            --notes "$NOTES" \
+            --rollout "$ROLLOUT" \
+            --aab mobile/build/app/outputs/bundle/release/app-release.aab \
+            --sa "$SA"
+
+      - name: Keep the bundle as a workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: mobile/build/app/outputs/bundle/release/app-release.aab
+          retention-days: 7
+
+      - name: Remove key material
+        if: always()
+        working-directory: .
+        run: |
+          shred -u mobile/android/app/almorabbi-upload.jks mobile/android/app/key.properties 2>/dev/null || true
+          shred -u "$RUNNER_TEMP/play_sa.json" 2>/dev/null || true

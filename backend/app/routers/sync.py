@@ -11,6 +11,8 @@ from pydantic import BaseModel, Field
 from app.db.init_db import get_conn
 
 logger = logging.getLogger(__name__)
+# Paths are relative: app.main mounts this router under "/api". They used to be
+# written as "/api/sync/…", which put the live endpoints at /api/api/sync/*.
 router = APIRouter(tags=["sync"])
 
 class BackupUploadRequest(BaseModel):
@@ -20,7 +22,7 @@ class BackupUploadRequest(BaseModel):
     # bounded so a hostile client can't park unbounded blobs in server memory.
     payload: str = Field(..., min_length=1, max_length=50_000_000, description="Base64 encoded encrypted database bytes")
 
-@router.post("/api/sync/upload")
+@router.post("/sync/upload")
 def upload_backup(request: Request, payload: BackupUploadRequest):  # sync on purpose: sqlite work runs in the threadpool
     """
     Upload an encrypted database payload.
@@ -61,7 +63,7 @@ def upload_backup(request: Request, payload: BackupUploadRequest):  # sync on pu
     finally:
         conn.close()
 
-@router.get("/api/sync/download")
+@router.get("/sync/download")
 def download_backup(request: Request):  # sync on purpose: sqlite work runs in the threadpool
     """
     Download the latest encrypted database payload.

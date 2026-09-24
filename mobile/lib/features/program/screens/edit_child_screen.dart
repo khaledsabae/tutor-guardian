@@ -13,6 +13,7 @@ import '../../onboarding/screens/avatar_picker_sheet.dart';
 import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../widgets/ui/error_retry_view.dart';
 
 class EditChildScreen extends ConsumerStatefulWidget {
   const EditChildScreen({super.key, required this.child});
@@ -68,7 +69,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).editChildSaveError(e.toString())),
+            content: Text(AppLocalizations.of(context).editChildSaveError(describeFailure(AppLocalizations.of(context), e))),
             backgroundColor: AppTheme.dangerFg,
           ),
         );

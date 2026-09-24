@@ -158,6 +158,34 @@ class ChatNotifier extends StateNotifier<ChatState> {
   Completer<void>? _streamCompleter;
   String? _streamingAssistantId;
 
+  // Token batching (UX-2). Each token used to copy the whole message list and
+  // re-parse the entire answer's Markdown — quadratic in the answer length,
+  // visible as jank on low-end Android for long replies. Deltas now collect
+  // here and land in state at most every [_flushEvery].
+  static const Duration _flushEvery = Duration(milliseconds: 60);
+  final StringBuffer _pendingDelta = StringBuffer();
+  Timer? _flushTimer;
+
+  @override
+  void dispose() {
+    _flushTimer?.cancel();
+    _sub?.cancel();
+    super.dispose();
+  }
+
+  void _flushPending() {
+    _flushTimer?.cancel();
+    _flushTimer = null;
+    final id = _streamingAssistantId;
+    if (_pendingDelta.isEmpty || id == null) {
+      _pendingDelta.clear();
+      return;
+    }
+    final delta = _pendingDelta.toString();
+    _pendingDelta.clear();
+    _updateAssistant(id, (m) => m.content = m.content + delta);
+  }
+
   static const _kSnapshotKey = 'tg.chat_snapshot';
 
   String _nextId() => 'm${++_localId}';
@@ -372,10 +400,13 @@ class ChatNotifier extends StateNotifier<ChatState> {
       (ev) {
         switch (ev) {
           case TgTokenEvent(:final delta):
-            _updateAssistant(assistantId, (m) {
-              m.content = m.content + delta;
-            });
+            _pendingDelta.write(delta);
+            _flushTimer ??= Timer(_flushEvery, _flushPending);
           case TgDoneEvent(:final reply):
+            // The reply text is authoritative; drop any batched remainder.
+            _flushTimer?.cancel();
+            _flushTimer = null;
+            _pendingDelta.clear();
             _updateAssistant(assistantId, (m) {
               m
                 ..content = reply.replyText
@@ -391,16 +422,19 @@ class ChatNotifier extends StateNotifier<ChatState> {
             unawaited(_persistLocal());
             if (!completer.isCompleted) completer.complete();
           case TgStreamError(:final detail):
+            _flushPending();
             _failLastTurn(detail, assistantId: assistantId);
             _finishStream();
             if (!completer.isCompleted) completer.complete();
         }
       },
       onError: (Object e) {
+        _flushPending();
         _finishStream();
         if (!completer.isCompleted) completer.completeError(e);
       },
       onDone: () {
+        _flushPending();
         // Stream closed without a terminal event → connection drop.
         if (state.phase == ChatPhase.streaming) {
           _failLastTurn(AppL10n.current.chatConnectionInterrupted,
@@ -415,6 +449,9 @@ class ChatNotifier extends StateNotifier<ChatState> {
   }
 
   void _finishStream() {
+    _flushTimer?.cancel();
+    _flushTimer = null;
+    _pendingDelta.clear();
     _sub?.cancel();
     _sub = null;
     _streamCompleter = null;
@@ -423,6 +460,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
 
   /// Stop the current generation, keeping whatever was streamed so far.
   void stopStreaming() {
+    // Keep what the reader already received, including the unflushed tail.
+    _flushPending();
     final id = _streamingAssistantId;
     final completer = _streamCompleter;
     _sub?.cancel();

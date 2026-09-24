@@ -41,6 +41,7 @@ Config via env:
     AI_DAILY_LIMIT          (default 20)   0 disables the per-day AI quota
     REDIS_URL               (optional)     for distributed rate limiting
 """
+import asyncio
 import datetime as _dt
 import hashlib
 import logging
@@ -71,7 +72,18 @@ _PROTECTED_PREFIXES = ("/api/",)
 # Full-LLM-generation endpoints share the tight "ai" budget: the assistant
 # AND story generation (unauthenticated, so otherwise a free 120/min DoS
 # vector against the model server).
-_AI_PREFIXES = ("/api/assistant", "/api/program/story")
+#
+# /api/insights generates on the model on every GET, so it belongs here too —
+# it sat in the general 120/min scope, outside the daily quota (audit H4).
+_AI_PREFIXES = ("/api/assistant", "/api/program/story", "/api/insights")
+# LLM-backed GETs that count against the daily quota like the AI POSTs do.
+# Catalogue GETs under the AI prefixes (/story-themes) stay free.
+_AI_QUOTA_GET_PREFIXES = ("/api/insights",)
+# Anonymous session minting (POST /api/chat/sessions) is public and hands out a
+# fresh token — and with it a fresh per-token bucket — on every call. Keyed on
+# the client IP only, with its own small budget.
+_SESSION_PATH = "/api/chat/sessions"
+_SESSION_LIMIT = int(os.environ.get("RATE_LIMIT_SESSION_PER_MINUTE", "30"))
 # App feedback is unauthenticated (a user whose session is broken must still be
 # able to report it) and accepts an 8MB voice note, so the general 120/min would
 # allow ~1GB/min of DB writes per IP — and, once Telegram alerts are on, 120
@@ -107,6 +119,46 @@ def _token_identity(auth_header: str) -> str | None:
     return None
 
 
+def _ip_identity(request: Request) -> str:
+    return f"ip:{request.client.host if request.client else 'unknown'}"
+
+
+async def _validated_identity(request: Request) -> str:
+    """Identity for the expensive (LLM) scope: a VALIDATED token's device.
+
+    An unvalidated token hash is fine for the cheap scopes, but on the AI scope
+    it let a caller mint a fresh per-minute bucket and a fresh daily quota by
+    sending a random `Bearer` value on every request — the soft-protected
+    /api/program/story accepts anonymous callers, so the forged token never
+    has to survive AuthMiddleware. One sqlite read per LLM call is noise next
+    to the call itself. Keying on the device (not the token) also means
+    minting a second session does not reset the device's daily quota.
+    """
+    header = request.headers.get("Authorization", "")
+    if header.startswith("Bearer "):
+        token = header[7:].strip()
+        if token:
+            from app.services import conversation_store as store
+
+            try:
+                info = await asyncio.to_thread(store.validate_token, token)
+            except Exception as exc:  # noqa: BLE001 — never fail the request here
+                logger.warning("rate-limit token validation failed: %s", exc)
+                info = None
+            if info:
+                return f"dev:{info['device_id']}"
+    elif header.startswith("Child-Bearer "):
+        from app.services import child_token
+
+        try:
+            payload = child_token.verify_child_token(header[13:].strip(), allow_web=True)
+        except Exception:  # noqa: BLE001 — secret missing etc.
+            payload = None
+        if payload:
+            return f"child:{payload.get('child_id')}"
+    return _ip_identity(request)
+
+
 def _client_identity(request: Request) -> str:
     """Resolve the rate-limit identity for a request (prefixed by kind)."""
     device_id = getattr(request.state, "device_id", None)
@@ -115,7 +167,7 @@ def _client_identity(request: Request) -> str:
     token_key = _token_identity(request.headers.get("Authorization", ""))
     if token_key:
         return f"tok:{token_key}"
-    return f"ip:{request.client.host if request.client else 'unknown'}"
+    return _ip_identity(request)
 
 
 def _get_redis_client():
@@ -216,17 +268,30 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         elif path.startswith(_FEEDBACK_PREFIXES) and request.method == "POST":
             # Reads (the admin listing) stay on the general budget.
             scope, limit = "feedback", _FEEDBACK_LIMIT
+        elif path == _SESSION_PATH and request.method == "POST":
+            scope, limit = "session", _SESSION_LIMIT
         else:
             scope, limit = "api", _GENERAL_LIMIT
 
-        # device_id → token hash → IP, resolved without touching the DB.
-        ident = _client_identity(request)
+        if scope == "ai":
+            # Validated device, else IP — see _validated_identity.
+            ident = await _validated_identity(request)
+        elif scope in ("feedback", "session"):
+            # Unauthenticated by design: a Bearer header proves nothing here
+            # and a random one would buy a fresh bucket. The client IP is
+            # trustworthy since ClientIPMiddleware (audit H4).
+            ident = _ip_identity(request)
+        else:
+            # device_id → token hash → IP, resolved without touching the DB.
+            ident = _client_identity(request)
         key = f"rl:{scope}:{ident}"
 
-        # Fair-use daily quota — AI generation POSTs only (GET catalogues like
-        # /story-themes stay free). Checked before the minute window so the
-        # user sees the gentle daily message, not the generic burst one.
-        if scope == "ai" and request.method == "POST" and _AI_DAILY_LIMIT > 0:
+        # Fair-use daily quota — AI generation POSTs (plus LLM-backed GETs such
+        # as /api/insights); GET catalogues like /story-themes stay free.
+        # Checked before the minute window so the user sees the gentle daily
+        # message, not the generic burst one.
+        counts_daily = request.method == "POST" or path.startswith(_AI_QUOTA_GET_PREFIXES)
+        if scope == "ai" and counts_daily and _AI_DAILY_LIMIT > 0:
             if not await self._check_daily(ident):
                 return JSONResponse(
                     status_code=429,

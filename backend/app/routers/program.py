@@ -818,8 +818,12 @@ def monthly_report(child_id: int, request: Request):
         raise HTTPException(status_code=401, detail="مطلوب توثيق.")
 
     now = dt.datetime.now(dt.timezone.utc)
-    month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    month_start_str = month_start.isoformat()
+    # Date-only on purpose. Columns here are stored in two shapes — sqlite's
+    # "YYYY-MM-DD HH:MM:SS" and ISO "YYYY-MM-DDTHH:MM:SSZ" — and against the
+    # old full ISO bound ("…-01T00:00:00+00:00") every space-separated row from
+    # the 1st sorted *before* it (' ' < 'T'), dropping the first day of the
+    # month. A bare date is a prefix of both shapes and sorts before both.
+    month_start_str = now.strftime("%Y-%m-01")
 
     conn = get_conn()
     try:
@@ -859,10 +863,13 @@ def monthly_report(child_id: int, request: Request):
             (device_id, month_start_str),
         ).fetchone()
 
+        # Scoped to THIS child. Across the device, two children opening the app
+        # on the same day produce duplicate dates, and the loop below stops at
+        # the first duplicate — a multi-child family's streak read as 1.
         streak_rows = conn.execute(
-            """SELECT date FROM daily_login_streaks
-               WHERE device_id = ? ORDER BY date DESC LIMIT 30""",
-            (device_id,),
+            """SELECT DISTINCT date FROM daily_login_streaks
+               WHERE device_id = ? AND child_id = ? ORDER BY date DESC LIMIT 30""",
+            (device_id, child_id),
         ).fetchall()
     finally:
         conn.close()
@@ -883,7 +890,9 @@ def monthly_report(child_id: int, request: Request):
                 break
 
     completed_habits = habit_counts.get("completed", 0)
-    partial_habits = habit_counts.get("partial", 0)
+    # The stored status is "partially" (models/value_tracking.STATUSES); the
+    # key "partial" never occurs, so this always reported 0.
+    partial_habits = habit_counts.get("partially", 0)
 
     return {
         "child": {

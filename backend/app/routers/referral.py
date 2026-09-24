@@ -93,12 +93,8 @@ def my_referral(request: Request) -> dict:
 
 
 def _get_client_ip(request: Request) -> str:
-    cf_ip = request.headers.get("cf-connecting-ip")
-    if cf_ip:
-        return cf_ip
-    x_forwarded = request.headers.get("x-forwarded-for")
-    if x_forwarded:
-        return x_forwarded.split(",")[0].strip()
+    # Resolved once, from trusted proxies only, by ClientIPMiddleware. Reading
+    # CF-Connecting-IP / X-Forwarded-For here trusted whatever the caller sent.
     return request.client.host if request.client else "unknown"
 
 

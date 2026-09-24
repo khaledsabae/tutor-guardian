@@ -26,8 +26,10 @@ class AppPalette {
   const AppPalette({
     required this.brightness,
     required this.primary,
+    required this.onPrimary,
     required this.primaryDeep,
     required this.accent,
+    required this.onAccent,
     required this.accentDeep,
     required this.background,
     required this.surface,
@@ -36,6 +38,7 @@ class AppPalette {
     required this.inkSoft,
     required this.textSecondary,
     required this.success,
+    required this.successText,
     required this.track,
     required this.warningBg,
     required this.warningFg,
@@ -47,8 +50,19 @@ class AppPalette {
 
   final Brightness brightness;
   final Color primary;
+
+  /// Text/icons placed ON [primary] (filled buttons, selected chips).
+  ///
+  /// Both button themes used to hard-code `Colors.white`, which is fine on the
+  /// light emerald (5.5:1) and unreadable on the luminous dark-mode one
+  /// (2.5:1, WCAG AA needs 4.5:1). Pinned ≥ 4.5:1 by dark_mode_test.dart.
+  final Color onPrimary;
   final Color primaryDeep;
   final Color accent;
+
+  /// Text/icons placed ON [accent]. White on the gold was 3.2:1 in light and
+  /// 1.7:1 in dark; a deep brown ink reads at 5.7:1 and 10.9:1.
+  final Color onAccent;
   final Color accentDeep;
   final Color background;
   final Color surface;
@@ -57,6 +71,10 @@ class AppPalette {
   final Color inkSoft;
   final Color textSecondary;
   final Color success;
+
+  /// [success] is a fill/icon colour: as text on white it reads 2.5:1.
+  /// Use this one for words (UX_UI_ROADMAP DS7).
+  final Color successText;
   final Color track;
   final Color warningBg;
   final Color warningFg;
@@ -77,8 +95,10 @@ class AppPalette {
   static const light = AppPalette(
     brightness: Brightness.light,
     primary: Color(0xFF0F766E), // Royal Islamic Emerald
+    onPrimary: Colors.white, // 5.5:1
     primaryDeep: Color(0xFF044E46), // Deep Emerald
     accent: Color(0xFFD97706), // Warm Noble Gold
+    onAccent: Color(0xFF1F1300), // 5.7:1
     accentDeep: Color(0xFFB45309), // Burnished Gold
     background: Color(0xFFFAF8F5), // Warm Noble Cream
     surface: Colors.white,
@@ -87,6 +107,7 @@ class AppPalette {
     inkSoft: Color(0xFF6B7280),
     textSecondary: Color(0xFF4B5563),
     success: Color(0xFF10B981), // Pure Emerald
+    successText: Color(0xFF047857), // 5.5:1 on white
     track: Color(0xFFE8E2D7),
     warningBg: Color(0xFFFFF3CD),
     warningFg: Color(0xFF856404),
@@ -100,8 +121,10 @@ class AppPalette {
   static const dark = AppPalette(
     brightness: Brightness.dark,
     primary: Color(0xFF10B981), // Luminous Emerald
+    onPrimary: Color(0xFF04211B), // 6.7:1 — white here was 2.5:1
     primaryDeep: Color(0xFF059669),
     accent: Color(0xFFFBBF24), // Radiant Gold
+    onAccent: Color(0xFF1F1300), // 10.9:1 — white here was 1.7:1
     accentDeep: Color(0xFFD97706),
     background: Color(0xFF0A1210), // Nocturnal Obsidian-Emerald
     surface: Color(0xFF131F1C), // Deep Emerald Surface
@@ -110,6 +133,7 @@ class AppPalette {
     inkSoft: Color(0xFF9CA3AF),
     textSecondary: Color(0xFFD1D5DB),
     success: Color(0xFF34D399),
+    successText: Color(0xFF34D399), // 8.8:1 on the dark surface
     track: Color(0xFF20332E),
     warningBg: Color(0xFF3A2B09),
     warningFg: Color(0xFFFDE68A),

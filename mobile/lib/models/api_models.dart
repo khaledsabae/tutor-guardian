@@ -19,6 +19,10 @@ class AssistantReply {
   final String? sessionId;
   final Map<String, dynamic>? metadata;
 
+  /// Optional server-suggested follow-up questions (≤ 3). Absent from older
+  /// backends — the chat then offers its built-in defaults.
+  final List<String> followUps;
+
   const AssistantReply({
     required this.replyText,
     required this.domain,
@@ -28,6 +32,7 @@ class AssistantReply {
     required this.mode,
     required this.sessionId,
     this.metadata,
+    this.followUps = const [],
   });
 
   factory AssistantReply.fromJson(Map<String, dynamic> json) {
@@ -43,6 +48,12 @@ class AssistantReply {
       metadata: json['metadata'] is Map
           ? Map<String, dynamic>.from(json['metadata'] as Map)
           : null,
+      followUps: json['follow_ups'] is List
+          ? [
+              for (final f in json['follow_ups'] as List)
+                if (f is String && f.trim().isNotEmpty) f.trim(),
+            ].take(3).toList()
+          : const [],
     );
   }
 

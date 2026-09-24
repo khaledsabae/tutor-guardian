@@ -30,12 +30,8 @@ router = APIRouter(tags=["web"])
 
 
 def _get_client_ip(request: Request) -> str:
-    cf_ip = request.headers.get("cf-connecting-ip")
-    if cf_ip:
-        return cf_ip
-    x_forwarded = request.headers.get("x-forwarded-for")
-    if x_forwarded:
-        return x_forwarded.split(",")[0].strip()
+    # Resolved once, from trusted proxies only, by ClientIPMiddleware. Reading
+    # CF-Connecting-IP / X-Forwarded-For here trusted whatever the caller sent.
     return request.client.host if request.client else "unknown"
 
 _PLAY = "https://play.google.com/store/apps/details?id=com.alsaba.almorabbi"
@@ -70,7 +66,10 @@ def _page(*, title: str, desc: str, body: str, ref: str | None,
     """Modern branded RTL landing shell with OG tags + install CTA."""
     t, d = _esc(title), _esc(desc)
     install = _install_url(ref)
-    og_image = _abs(canonical, _OG_IMAGE)
+    # Escaped *after* _abs uses the raw value: request.url carries the
+    # caller's query string verbatim, and it lands inside href="…" below.
+    og_image = html.escape(_abs(canonical, _OG_IMAGE))
+    canonical = html.escape(canonical)
     doc = f"""<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -260,9 +259,11 @@ def landing(request: Request, ref: str | None = Query(None)) -> HTMLResponse:
     og_image = _abs(str(request.url), "/ui/assets/banner.png")
     canonical = str(request.url)
     
-    html_content = html_content.replace("{{DOWNLOAD_URL}}", install_url)
-    html_content = html_content.replace("{{OG_IMAGE}}", og_image)
-    html_content = html_content.replace("{{CANONICAL_URL}}", canonical)
+    # The canonical URL echoes the caller's query string — escape all three
+    # before they are spliced into attribute values in the template.
+    html_content = html_content.replace("{{DOWNLOAD_URL}}", html.escape(install_url))
+    html_content = html_content.replace("{{OG_IMAGE}}", html.escape(og_image))
+    html_content = html_content.replace("{{CANONICAL_URL}}", html.escape(canonical))
     
     return HTMLResponse(content=html_content, status_code=200)
 

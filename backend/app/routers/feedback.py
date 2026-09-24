@@ -221,7 +221,11 @@ class AppFeedbackIn(BaseModel):
     device_id: str | None = Field(None, max_length=120)
     app_version: str | None = Field(None, max_length=40)
     # Optional voice note as a base64 string (no data-url prefix needed).
-    audio_base64: str | None = None
+    # Bounded before decoding: the 8 MB check below runs on the decoded bytes,
+    # so an unbounded string was read and base64-decoded in full first.
+    # 8 MiB of audio is ~11.2M base64 chars; the ceiling leaves slack for
+    # line breaks some encoders insert.
+    audio_base64: str | None = Field(None, max_length=12_000_000)
 
 
 @router.post("/app", status_code=status.HTTP_201_CREATED)

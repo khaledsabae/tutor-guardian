@@ -1,5 +1,15 @@
 """Pydantic models for Tutor Guardian API request/response."""
-from pydantic import BaseModel
+import json
+
+from pydantic import BaseModel, Field, field_validator
+
+# Request-size ceilings (audit M6). Every byte of a question is fed to the
+# classifier, the embedder, BM25 and the LLM; unbounded fields let one request
+# carry megabytes through all of them. The app caps its composer at 2000
+# characters, so these leave generous headroom for every real client.
+MAX_MESSAGE_CHARS = 4000
+MAX_HISTORY_TURNS = 12
+_CLIENT_ROLES = frozenset({"user", "assistant"})
 
 
 class ConversationTurn(BaseModel):
@@ -12,13 +22,29 @@ class ConversationTurn(BaseModel):
 class UserMessage(BaseModel):
     """Request from the parent describing a child's behaviour concern."""
 
-    age_group: str
-    domain: str | None = None
-    behavior_type: str = ""
-    severity: str
-    message_text: str = ""
-    session_id: str | None = None
-    conversation_history: list[ConversationTurn] = []
+    age_group: str = Field(max_length=32)
+    domain: str | None = Field(None, max_length=64)
+    behavior_type: str = Field("", max_length=200)
+    severity: str = Field(max_length=32)
+    message_text: str = Field("", max_length=MAX_MESSAGE_CHARS)
+    session_id: str | None = Field(None, max_length=64)
+    # Client-supplied history is only used when there is no server session;
+    # it is capped so it cannot smuggle an unbounded transcript into the prompt.
+    conversation_history: list[ConversationTurn] = Field(
+        default_factory=list, max_length=MAX_HISTORY_TURNS
+    )
+
+    @field_validator("conversation_history")
+    @classmethod
+    def _bounded_client_turns(cls, turns: list[ConversationTurn]) -> list[ConversationTurn]:
+        # Checked here, not on ConversationTurn: the server rebuilds turns from
+        # stored answers (conversation_store.get_history), which may be long.
+        for t in turns:
+            if t.role not in _CLIENT_ROLES:
+                raise ValueError("history role must be 'user' or 'assistant'")
+            if len(t.content) > MAX_MESSAGE_CHARS:
+                raise ValueError(f"history turn exceeds {MAX_MESSAGE_CHARS} characters")
+        return turns
 
 
 class AssistantReply(BaseModel):
@@ -36,9 +62,22 @@ class AssistantReply(BaseModel):
 
 # ── Auth & session management (mobile-ready) ─────────────────────────────────
 class SessionCreate(BaseModel):
-    """POST /api/chat/sessions — create a new session + auth token."""
-    device_id: str | None = None
+    """POST /api/chat/sessions — create a new session + auth token.
+
+    Both fields were unbounded on a public endpoint. The app sends a UUIDv4
+    device id; the pattern also admits the server's own `device_<hex>` form.
+    """
+    device_id: str | None = Field(
+        None, min_length=1, max_length=128, pattern=r"^[A-Za-z0-9._:-]+$"
+    )
     metadata: dict | None = None
+
+    @field_validator("metadata")
+    @classmethod
+    def _bounded_metadata(cls, v: dict | None) -> dict | None:
+        if v is not None and len(json.dumps(v, ensure_ascii=False)) > 4096:
+            raise ValueError("metadata too large (max 4 KB)")
+        return v
 
 
 class SessionCreateResponse(BaseModel):

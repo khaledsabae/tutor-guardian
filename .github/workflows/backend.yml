@@ -35,10 +35,18 @@ concurrency:
   group: backend-${{ github.ref }}
   cancel-in-progress: true
 
+# Read-only token: none of these jobs writes to the repository.
+permissions:
+  contents: read
+
 jobs:
   # ── 1. Fast unit tests (no docker, no real LLM) ───────────────────────
   pytest:
     name: pytest
+    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
+    # code from a fork PR on it — only pushes, manual runs, and PRs whose
+    # head branch lives in this repository (pushing one needs write access).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, production]
     # 12 was not enough: the first run after re-enabling this workflow was
     # cancelled at 12m12s. Installing backend/requirements.txt (torch, ONNX
@@ -90,6 +98,10 @@ jobs:
   # ── 2. Knowledge-base integrity (catches schema drift) ───────────────
   kb-integrity:
     name: KB integrity
+    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
+    # code from a fork PR on it — only pushes, manual runs, and PRs whose
+    # head branch lives in this repository (pushing one needs write access).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, production]
     timeout-minutes: 4
     steps:
@@ -113,6 +125,10 @@ jobs:
 
   lint:
     name: ruff
+    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
+    # code from a fork PR on it — only pushes, manual runs, and PRs whose
+    # head branch lives in this repository (pushing one needs write access).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, production]
     timeout-minutes: 3
     steps:

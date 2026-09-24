@@ -27,6 +27,10 @@ concurrency:
   group: docker-${{ github.ref }}
   cancel-in-progress: true
 
+# Read-only token: none of these jobs writes to the repository.
+permissions:
+  contents: read
+
 jobs:
   # ── 1. Build the image and confirm the container can start ─────────
   # We don't run the full server (it loads a multi-GB RAG index from
@@ -38,6 +42,10 @@ jobs:
   #   * The uvicorn entrypoint parses its argument set
   build:
     name: docker build
+    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
+    # code from a fork PR on it — only pushes, manual runs, and PRs whose
+    # head branch lives in this repository (pushing one needs write access).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, production]
     timeout-minutes: 20
     steps:
@@ -86,6 +94,10 @@ jobs:
   # the import chain that loads sentence-transformers.
   smoke:
     name: docker smoke
+    # C3 (AUDIT_AND_ROADMAP.md): this runner IS the production VPS. Never run
+    # code from a fork PR on it — only pushes, manual runs, and PRs whose
+    # head branch lives in this repository (pushing one needs write access).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, production]
     timeout-minutes: 10
     needs: build

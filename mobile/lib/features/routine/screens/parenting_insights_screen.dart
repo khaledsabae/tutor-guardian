@@ -249,8 +249,8 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
                         .insightHoursMinutes('$sleepHours', '$sleepMins')
                     : AppLocalizations.of(context).insightMinutes('$sleepMins'),
                 icon: '🌙',
-                color: Colors.indigo.shade50,
-                textColor: Colors.indigo.shade900,
+                color: AppTheme.primary.withValues(alpha: .10),
+                textColor: AppTheme.primary,
               ),
             ),
             const SizedBox(width: 12),
@@ -260,8 +260,8 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
                 value: AppLocalizations.of(context)
                     .insightTimesWithMl('$_feedCount', '$_feedAmount'),
                 icon: '🍼',
-                color: Colors.teal.shade50,
-                textColor: Colors.teal.shade900,
+                color: AppTheme.success.withValues(alpha: .12),
+                textColor: AppTheme.successText,
               ),
             ),
             const SizedBox(width: 12),
@@ -270,8 +270,8 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
                 title: AppLocalizations.of(context).parentingInsightsDiapers,
                 value: AppLocalizations.of(context).insightTimes('$_diaperCount'),
                 icon: '👶',
-                color: Colors.amber.shade50,
-                textColor: Colors.amber.shade900,
+                color: AppTheme.warningBg,
+                textColor: AppTheme.warningFg,
               ),
             ),
           ],
@@ -375,20 +375,22 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
     Color accentColor;
     String badgeText;
 
+    // Semantic tokens, not Material light pastels: those stayed light on the
+    // dark ground and the body text was a fixed near-black (#2E2E2E).
     if (type == 'positive') {
-      cardBg = const Color(0xFFE8F5E9).withValues(alpha: 0.6);
-      borderCol = const Color(0xFFC8E6C9);
-      accentColor = const Color(0xFF2E7D32);
+      cardBg = AppTheme.success.withValues(alpha: 0.10);
+      borderCol = AppTheme.success.withValues(alpha: 0.35);
+      accentColor = AppTheme.successText;
       badgeText = l10n.insightBadgePositive;
     } else if (type == 'warning') {
-      cardBg = const Color(0xFFFFF3E0).withValues(alpha: 0.6);
-      borderCol = const Color(0xFFFFE0B2);
-      accentColor = const Color(0xFFE65100);
+      cardBg = AppTheme.warningBg;
+      borderCol = AppTheme.warningFg.withValues(alpha: 0.35);
+      accentColor = AppTheme.warningFg;
       badgeText = l10n.insightBadgeWarning;
     } else {
-      cardBg = const Color(0xFFE0F2F1).withValues(alpha: 0.6);
-      borderCol = const Color(0xFFB2DFDB);
-      accentColor = const Color(0xFF00796B);
+      cardBg = AppTheme.primary.withValues(alpha: 0.08);
+      borderCol = AppTheme.primary.withValues(alpha: 0.30);
+      accentColor = AppTheme.primary;
       badgeText = l10n.insightBadgeTip;
     }
 
@@ -440,11 +442,11 @@ class _ParentingInsightsScreenState extends ConsumerState<ParentingInsightsScree
             textDirection: TextDirection.rtl,
             child: Text(
               desc,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 height: 1.6,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF2E2E2E),
+                color: AppTheme.textPrimary,
               ),
             ),
           ),

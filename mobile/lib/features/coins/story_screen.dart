@@ -19,6 +19,7 @@ import '../onboarding/providers/onboarding_providers.dart';
 import '../../core/app_routes.dart';
 import '../screen_off/narration_store.dart';
 import 'coins_providers.dart';
+import '../../widgets/ui/error_retry_view.dart';
 
 const _themes = <(String, String, String)>[
   ('honesty', '🤝', 'الصدق والأمانة'),
@@ -82,7 +83,7 @@ class _StoryScreenState extends ConsumerState<StoryScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).storyError(e.toString())),
+            content: Text(AppLocalizations.of(context).storyError(describeFailure(AppLocalizations.of(context), e))),
             backgroundColor: AppTheme.dangerFg,
           ),
         );

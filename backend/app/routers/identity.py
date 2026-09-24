@@ -142,16 +142,18 @@ def _link_identity(device_id: str, google_id: str, email: str, display_name: str
 def get_identity(request: Request) -> dict:
     device_id = getattr(request.state, "device_id", "")
     conn = get_conn()
-    row = conn.execute(
-        """
-        SELECT p.google_id, p.email, p.display_name, l.linked_at
-        FROM identity_links l
-        JOIN parent_identities p ON p.google_id = l.google_id
-        WHERE l.device_id = ?
-        """,
-        (device_id,),
-    ).fetchone()
-    conn.close()
+    try:
+        row = conn.execute(
+            """
+            SELECT p.google_id, p.email, p.display_name, l.linked_at
+            FROM identity_links l
+            JOIN parent_identities p ON p.google_id = l.google_id
+            WHERE l.device_id = ?
+            """,
+            (device_id,),
+        ).fetchone()
+    finally:
+        conn.close()
     if not row:
         return {"ok": True, "linked": False}
     return {

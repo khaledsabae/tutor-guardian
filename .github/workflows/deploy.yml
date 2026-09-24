@@ -192,6 +192,23 @@ jobs:
             find backend/secrets -type f -exec chmod 400 {} + || echo "::warning::chmod failed for backend/secrets"
           fi
 
+          # ── 3d. Verified backup of the user data BEFORE the new image ──
+          # The new image may migrate the schema on startup (v27 rebuilds
+          # child_challenges). _rollback() restores the previous IMAGE, not the
+          # data, so a verified copy has to exist first. Same script as the
+          # nightly cron (online backup API + integrity_check + gzip) — a
+          # failure here stops the deploy before the container is touched.
+          # Skipped only when there is no running container to back up.
+          if docker inspect -f '{{.State.Running}}' tg_backend 2>/dev/null | grep -q true; then
+            echo "→ pre-deploy backup of /app/ops/*.db"
+            BACKUP_ROOT=/root/tg-backups ops/scripts/backup_user_data.sh
+            # Read-only schema preflight: integrity_check and no child with two
+            # active challenges (the v27 partial index would reject that).
+            ops/scripts/migrate_schema_v27.sh preflight
+          else
+            echo "::warning::tg_backend not running — skipping pre-deploy backup"
+          fi
+
           # ── 4. Recreate the container ────────────────────────────────
           echo "→ docker compose up -d --no-build backend"
           docker compose -f docker-compose.production.yml up -d --no-build --remove-orphans backend

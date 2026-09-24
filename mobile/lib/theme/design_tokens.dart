@@ -14,8 +14,10 @@ abstract final class Dt {
   // mode was estimated at a week. The spelling at each call site is unchanged;
   // only the definitions moved behind [AppPalette.current].
   static Color get primary => AppPalette.current.primary;
+  static Color get onPrimary => AppPalette.current.onPrimary;
   static Color get primaryDeep => AppPalette.current.primaryDeep;
   static Color get accent => AppPalette.current.accent;
+  static Color get onAccent => AppPalette.current.onAccent;
   static Color get accentDeep => AppPalette.current.accentDeep;
   static Color get background => AppPalette.current.background;
   static Color get surface => AppPalette.current.surface;
@@ -79,6 +81,20 @@ abstract final class Dt {
   // ── Spacing ──────────────────────────────────────────────────────────────
   static const double pad = 16;
 
+  /// 4-pt spacing scale. New code picks from here instead of a literal; the
+  /// existing literals migrate screen by screen (UX_UI_ROADMAP.md, UX-1).
+  static const double s4 = 4;
+  static const double s8 = 8;
+  static const double s12 = 12;
+  static const double s16 = 16;
+  static const double s24 = 24;
+  static const double s32 = 32;
+
+  /// Minimum interactive target (Material / WCAG 2.5.8). Surfaces a child
+  /// operates use [minTouchChild].
+  static const double minTouch = 48;
+  static const double minTouchChild = 56;
+
   /// Items beyond this index appear without an entrance animation —
   /// they're off-screen anyway and animating them wastes frames.
   static const int maxStaggeredItems = 10;
@@ -102,16 +118,24 @@ class DomainStyle {
   Color get tint => Color.lerp(base, AppPalette.current.surface, .9)!;
 }
 
+// Cards put WHITE text on these gradients (Today card, paths list), so the
+// text-bearing `base` stop must reach 4.5:1 against white. The previous
+// stops read 1.7:1 (medical amber), 2.5:1 (islamic emerald), 3.7:1 (cyber,
+// infant) and 4.2:1 (development) — same hues, one or two steps deeper now.
+// Pinned by design_system_contrast_test.dart.
 const _domainStyles = <String, DomainStyle>{
   'islamic_parenting':
-      DomainStyle(Color(0xFF10B981), Color(0xFF059669), '🕌'),
+      DomainStyle(Color(0xFF047857), Color(0xFF065F46), '🕌'),
   'aqeedah':
       DomainStyle(Color(0xFF01696F), Color(0xFF014F55), '☪️'),
-  'development': DomainStyle(Color(0xFF8B5CF6), Color(0xFF6D28D9), '🌱'),
-  'medical': DomainStyle(Color(0xFFFBBF24), Color(0xFFD97706), '🧩'),
-  'cyber': DomainStyle(Color(0xFF3B82F6), Color(0xFF1D4ED8), '🛡️'),
-  'infant_pregnancy': DomainStyle(Color(0xFF0D9488), Color(0xFF065F46), '🍼'),
+  'development': DomainStyle(Color(0xFF7C3AED), Color(0xFF6D28D9), '🌱'),
+  'medical': DomainStyle(Color(0xFFB45309), Color(0xFF92400E), '🧩'),
+  'cyber': DomainStyle(Color(0xFF2563EB), Color(0xFF1D4ED8), '🛡️'),
+  'infant_pregnancy': DomainStyle(Color(0xFF0F766E), Color(0xFF115E59), '🍼'),
 };
+
+/// Domain keys with a dedicated style — exposed for the contrast test.
+Iterable<String> get styledDomains => _domainStyles.keys;
 
 // Not const: it reads brand colours, which now follow the live palette.
 DomainStyle get _fallbackDomainStyle =>

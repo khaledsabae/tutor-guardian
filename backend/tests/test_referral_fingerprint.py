@@ -6,9 +6,15 @@ from app.db.init_db import db_path, get_conn
 from app.routers.referral import REWARD_COINS
 
 
+# Production traffic arrives Cloudflare → nginx → app, so the TCP peer is the
+# nginx container on the Docker network. ClientIPMiddleware only believes
+# CF-Connecting-IP / X-Forwarded-For from such a trusted peer (audit H4).
+_NGINX_PEER = ("172.18.0.5", 50000)
+
+
 @pytest.fixture
 def client():
-    with TestClient(app) as c:
+    with TestClient(app, client=_NGINX_PEER) as c:
         yield c
 
 
@@ -85,3 +91,27 @@ def test_referral_fingerprint_no_match(client):
     ref = conn.execute("SELECT 1 FROM referrals WHERE referred_device = 'referee_device_no_match'").fetchone()
     assert ref is None
     conn.close()
+
+
+def test_spoofed_client_header_from_an_untrusted_peer_is_ignored():
+    """A caller reaching the app directly cannot pick the IP it is matched on."""
+    conn = get_conn()
+    conn.execute("INSERT INTO referral_codes (device_id, code) VALUES (?, ?)",
+                 ("referrer_device_2", "REF999"))
+    conn.execute("INSERT INTO referral_clicks (ip, user_agent, code) VALUES (?, ?, ?)",
+                 ("203.0.113.77", "ua", "REF999"))
+    conn.commit()
+    conn.close()
+
+    with TestClient(app, client=("198.51.100.9", 4000)) as direct:
+        token = direct.post("/api/chat/sessions",
+                            json={"device_id": "spoofer_device"}).json()["token"]
+        r = direct.post(
+            "/api/referral/claim",
+            json={"code": "AUTO"},
+            headers={"Authorization": f"Bearer {token}",
+                     "cf-connecting-ip": "203.0.113.77",
+                     "x-forwarded-for": "203.0.113.77"},
+        )
+    assert r.status_code == 200
+    assert r.json()["ok"] is False  # matched on its real address, not the forged one

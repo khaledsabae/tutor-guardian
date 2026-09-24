@@ -5,6 +5,10 @@ Flow: banned check → emergency check → classify_domains → multi_retrieval 
 import asyncio
 import json
 import logging
+import os
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
@@ -30,7 +34,7 @@ from app.services.domain_classifier import (
     classify_domains, is_uncertain, matched_fast_path,
 )
 from app.services.tier_router import choose_tier
-from app.services.privacy import redact_for_cloud
+from app.services.privacy import mentions_any, names_for_device, redact_for_cloud
 from app.services import answer_cache
 from app.services import conversation_store as store
 from app.services.tafsir_service import (
@@ -42,6 +46,58 @@ _SSE_HEADERS = {"Cache-Control": "no-cache", "X-Accel-Buffering": "no"}
 # Shown to the parent *and* stored as the turn when generation fails outright,
 # so the conversation keeps a visible answer instead of a question that hangs.
 _STREAM_ERROR_TEXT = "تعذّر توليد الرد، يُرجى المحاولة لاحقاً."
+
+
+# ── LLM stream workers (audit H6) ─────────────────────────────────────────
+# Each SSE answer holds one thread for as long as the model is talking. They
+# used to come from the DEFAULT executor — the same small pool every
+# `asyncio.to_thread` sqlite call uses — so a handful of concurrent answers
+# stalled every DB-backed request in the app. They get their own bounded pool
+# now; beyond it, new streams queue instead of starving everything else.
+_STREAM_WORKERS = max(1, int(os.environ.get("LLM_STREAM_WORKERS", "8")))
+_STREAM_DEADLINE_S = float(os.environ.get("LLM_STREAM_DEADLINE_S", "300"))
+_STREAM_EXECUTOR = ThreadPoolExecutor(
+    max_workers=_STREAM_WORKERS, thread_name_prefix="llm-stream"
+)
+
+
+def _pump_stream(make_stream, emit, cancel: threading.Event,
+                 deadline_s: float = _STREAM_DEADLINE_S) -> None:
+    """Drive a blocking LLM stream on a worker thread until done or cancelled.
+
+    `emit(kind, value)` hands ("chunk", c) / ("done", None) / ("error", e) back
+    to the event loop. When `cancel` is set — the SSE client went away — the
+    loop stops at the next chunk and the generator is CLOSED, which unwinds the
+    provider's `with requests.post(..., stream=True)` and drops the upstream
+    connection. Previously the thread kept reading the whole answer after the
+    parent left, holding its worker until generation finished.
+
+    `deadline_s` bounds a single answer end to end; the gateway's own timeouts
+    are per read, so a slow trickle could otherwise run for many minutes.
+    """
+    started = time.monotonic()
+    gen = None
+    try:
+        gen = make_stream()
+        for chunk in gen:
+            if cancel.is_set():
+                return
+            if time.monotonic() - started > deadline_s:
+                emit("error", TimeoutError(f"stream exceeded {deadline_s:.0f}s"))
+                return
+            emit("chunk", chunk)
+        emit("done", None)
+    except Exception as e:  # noqa: BLE001 — surfaced to the SSE consumer
+        if not cancel.is_set():
+            emit("error", e)
+    finally:
+        if gen is not None:
+            close = getattr(gen, "close", None)
+            if close is not None:
+                try:
+                    close()
+                except Exception:  # noqa: BLE001 — best effort
+                    pass
 
 
 def _sse(event: str, data: dict) -> str:
@@ -135,6 +191,9 @@ router = APIRouter(prefix="/assistant", tags=["assistant"])
 @router.post("/draft", response_model=AssistantReply)
 async def draft_reply(request: Request, user_message: UserMessage):
     policies = request.app.state.guardrails_config
+    # The caller's own device: cloud redaction and the answer cache are scoped
+    # to THIS family's children (audit M4/M5).
+    caller_device = getattr(request.state, "device_id", None)
 
     # ── Session: validate + persist the incoming user message ────────
     # NB: every sqlite / model-inference call below goes through
@@ -143,8 +202,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
     session_id = user_message.session_id
     user_msg_id: int | None = None
     if session_id:
-        if not await asyncio.to_thread(store.session_exists, session_id):
-            raise HTTPException(status_code=404, detail="Session not found")
+        await _require_owned_session(request, session_id)
         user_msg_id = await asyncio.to_thread(
             store.add_message,
             session_id, "user",
@@ -170,8 +228,23 @@ async def draft_reply(request: Request, user_message: UserMessage):
         await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         return await asyncio.to_thread(_finalize, reply, session_id)
 
-    # ── Step 0c: FIQH guard (hard block — FIQH_GUARD.md v3) ───────────
-    fiqh_blocked, fiqh_rule = check_fiqh_guard(query_input)
+    # ── Step 0b: Emergency keyword check ─────────────────────────────
+    if check_emergency_keywords(query_input):
+        logger.info("Emergency keyword detected in message_text")
+        user_message = user_message.model_copy(update={"severity": "طارئ"})
+
+    # ── Step 1: Emergency severity check ─────────────────────────────
+    # Runs BEFORE the fiqh guard: «ابني بيقول عايز ينتحر بعد الطلاق» matches
+    # both, and a parent disclosing a child's suicidal talk must get the
+    # emergency escalation, never the "ask a religious authority" deflection.
+    if is_emergency(user_message):
+        logger.info("Emergency severity — returning fallback immediately")
+        reply = emergency_reply(user_message, policies)
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        return await asyncio.to_thread(_finalize, reply, session_id)
+
+    # ── Step 1b: FIQH guard (hard block — FIQH_GUARD.md v3) ───────────
+    fiqh_blocked, fiqh_rule = await asyncio.to_thread(check_fiqh_guard, query_input)
     if fiqh_blocked:
         logger.warning("FIQH guard block: rule=%s", fiqh_rule)
         reply = AssistantReply(
@@ -181,18 +254,6 @@ async def draft_reply(request: Request, user_message: UserMessage):
             needs_human_review=False,
             mode="fiqh_guard",
         )
-        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
-        return await asyncio.to_thread(_finalize, reply, session_id)
-
-    # ── Step 0b: Emergency keyword check ─────────────────────────────
-    if check_emergency_keywords(query_input):
-        logger.info("Emergency keyword detected in message_text")
-        user_message = user_message.model_copy(update={"severity": "طارئ"})
-
-    # ── Step 1: Emergency severity check ─────────────────────────────
-    if is_emergency(user_message):
-        logger.info("Emergency severity — returning fallback immediately")
-        reply = emergency_reply(user_message, policies)
         await _tag_user_message(user_msg_id, reply.domain, reply.severity)
         return await asyncio.to_thread(_finalize, reply, session_id)
 
@@ -223,7 +284,13 @@ async def draft_reply(request: Request, user_message: UserMessage):
     first_question = not any(
         getattr(t, "role", "") == "assistant" for t in history
     )
-    if first_question and not is_general and not is_uncertain(detected_domains):
+    # A question naming the family's own child gets a personalised answer:
+    # never serve it from, or store it into, the cross-family cache (M5).
+    personal = mentions_any(
+        query_text, await asyncio.to_thread(names_for_device, caller_device)
+    )
+    if (first_question and not personal and not is_general
+            and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
         if not decision["force_fallback"]:
             cached = await asyncio.to_thread(
@@ -336,9 +403,9 @@ async def draft_reply(request: Request, user_message: UserMessage):
             def _redact_blocking():
                 # redact_for_cloud reads child names from sqlite per call.
                 return (
-                    redact_for_cloud(query_text),
+                    redact_for_cloud(query_text, caller_device),
                     [
-                        t.model_copy(update={"content": redact_for_cloud(t.content)})
+                        t.model_copy(update={"content": redact_for_cloud(t.content, caller_device)})
                         for t in history
                     ],
                 )
@@ -413,6 +480,22 @@ async def draft_reply(request: Request, user_message: UserMessage):
     return await asyncio.to_thread(_finalize, reply, session_id)
 
 
+async def _require_owned_session(request: Request, session_id: str) -> None:
+    """404 unless the session exists AND belongs to the calling device.
+
+    Existence alone used to be the check, so any authenticated device could
+    name another device's session_id: its history was read into the prompt and
+    the new turn was written into it. Same rule as GET /api/chat/sessions/{id}
+    (a session with no recorded owner stays reachable), but answered with 404
+    rather than 403 so a foreign id is indistinguishable from a missing one —
+    and the mobile client already recovers from 404 by opening a new session.
+    """
+    exists, owner = await asyncio.to_thread(store.session_owner, session_id)
+    caller = getattr(request.state, "device_id", None)
+    if not exists or (owner and owner != caller):
+        raise HTTPException(status_code=404, detail="Session not found")
+
+
 def _finalize(reply: AssistantReply, session_id: str | None) -> AssistantReply:
     """Tag the reply with its session and persist it server-side (if any)."""
     reply.session_id = session_id
@@ -446,6 +529,9 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     force-fallback replies are emitted as a single `done` event (not streamed).
     """
     policies = request.app.state.guardrails_config
+    # The caller's own device: cloud redaction and the answer cache are scoped
+    # to THIS family's children (audit M4/M5).
+    caller_device = getattr(request.state, "device_id", None)
     session_id = user_message.session_id
 
     # ── Session: validate + persist incoming user message ────────────
@@ -454,23 +540,21 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     # including the streams already in flight.
     user_msg_id: int | None = None
     if session_id:
-        if not await asyncio.to_thread(store.session_exists, session_id):
-            raise HTTPException(status_code=404, detail="Session not found")
+        await _require_owned_session(request, session_id)
         user_msg_id = await asyncio.to_thread(
             store.add_message,
             session_id, "user",
             user_message.message_text or user_message.behavior_type or "",
         )
 
-    def _single(reply: AssistantReply) -> StreamingResponse:
+    async def _single(reply: AssistantReply) -> StreamingResponse:
         """Emit a non-streamed reply as one terminal `done` event."""
         # Banned and emergency return through here, before the classifier
         # runs — tag the question from the reply so the rows that matter
-        # most are not the ones left unlabelled.
-        if user_msg_id is not None:
-            store.update_classification(
-                user_msg_id, domain=reply.domain, severity=reply.severity)
-        _finalize(reply, session_id)
+        # most are not the ones left unlabelled. Both writes go through
+        # to_thread: this handler runs on the event loop.
+        await _tag_user_message(user_msg_id, reply.domain, reply.severity)
+        await asyncio.to_thread(_finalize, reply, session_id)
 
         def one():
             yield _sse("done", reply.model_dump())
@@ -481,26 +565,27 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     is_banned, matched = check_banned_intent(query_input)
     if is_banned:
         logger.warning("Banned intent detected (stream): %s", matched)
-        return _single(AssistantReply(
+        return await _single(AssistantReply(
             reply_text="هذا الموضوع خارج نطاق ما يمكنني مساعدتك فيه. إذا كنت في حالة طارئة، يرجى التواصل مع الجهات المختصة فوراً.",
             domain="medical", severity="طارئ", needs_human_review=True,
             escalation_target="emergency_services", mode="banned",
         ))
 
+    # Emergency before the fiqh guard — same order and reason as /draft.
+    if check_emergency_keywords(query_input):
+        user_message = user_message.model_copy(update={"severity": "طارئ"})
+    if is_emergency(user_message):
+        return await _single(emergency_reply(user_message, policies))
+
     # ── FIQH guard (hard block — FIQH_GUARD.md v3) ────────────────────
-    fiqh_blocked, fiqh_rule = check_fiqh_guard(query_input)
+    fiqh_blocked, fiqh_rule = await asyncio.to_thread(check_fiqh_guard, query_input)
     if fiqh_blocked:
         logger.warning("FIQH guard block (stream): rule=%s", fiqh_rule)
-        return _single(AssistantReply(
+        return await _single(AssistantReply(
             reply_text=FIQH_SAFE_REPLY,
             domain="fiqh_aqeedah", severity="عادي", needs_human_review=False,
             mode="fiqh_guard",
         ))
-
-    if check_emergency_keywords(query_input):
-        user_message = user_message.model_copy(update={"severity": "طارئ"})
-    if is_emergency(user_message):
-        return _single(emergency_reply(user_message, policies))
 
     # ── Build query + history + retrieve ─────────────────────────────
     query_text = (user_message.message_text or "").strip() or \
@@ -526,7 +611,11 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     )
 
     # ── Step 3b: Pre-cache check (skipped on a guessed domain — see /draft) ──
-    if first_question and not is_general and not is_uncertain(detected_domains):
+    personal = mentions_any(
+        query_text, await asyncio.to_thread(names_for_device, caller_device)
+    )
+    if (first_question and not personal and not is_general
+            and not is_uncertain(detected_domains)):
         decision = evaluate_guardrails(primary_domain, severity, policies)
         if not decision["force_fallback"]:
             cached = await asyncio.to_thread(
@@ -536,7 +625,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
             )
             if cached:
                 logger.info("Cache hit in stream! Serving pre-cached answer.")
-                return _single(AssistantReply(
+                return await _single(AssistantReply(
                     reply_text=cached, domain=primary_domain, severity=severity,
                     needs_human_review=decision["needs_human_review"],
                     escalation_target=decision["escalate_to"],
@@ -596,7 +685,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
     # No relevant KB and not an off-topic pivot → non-streamed fallback
     if not retrieved_units and not off_topic:
         draft = f"لا توجد معلومات كافية حاليًا حول '{query_text}'. نوصي باستشارة مختص."
-        return _single(apply_guardrails(
+        return await _single(apply_guardrails(
             user_message.model_copy(update={"domain": primary_domain}),
             draft, policies, mode="retrieval_only",
         ))
@@ -628,7 +717,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                 primary_domain, user_message.behavior_type or "",
                 user_message.age_group or "unspecified", policies,
             )
-            return _single(AssistantReply(
+            return await _single(AssistantReply(
                 reply_text=draft, domain=primary_domain, severity=severity,
                 needs_human_review=decision["needs_human_review"],
                 escalation_target=decision["escalate_to"], mode="llm_generated",
@@ -645,11 +734,17 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         )
         stream_question, stream_history = query_text, history
         if tier == "cloud_quality":
-            stream_question = redact_for_cloud(query_text)
-            stream_history = [
-                t.model_copy(update={"content": redact_for_cloud(t.content)})
-                for t in history
-            ]
+            # redact_for_cloud reads sqlite — off the event loop, as in /draft.
+            def _redact_blocking():
+                return (
+                    redact_for_cloud(query_text, caller_device),
+                    [
+                        t.model_copy(update={"content": redact_for_cloud(t.content, caller_device)})
+                        for t in history
+                    ],
+                )
+
+            stream_question, stream_history = await asyncio.to_thread(_redact_blocking)
         full_prompt, _source = build_full_prompt(
             domain=primary_domain, behavior_type=user_message.behavior_type or "",
             age_group=user_message.age_group or "unspecified", severity=severity,
@@ -658,24 +753,30 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         )
 
     async def event_stream():
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         q: asyncio.Queue = asyncio.Queue()
         sent_parts: list[str] = []
         persisted = False
 
-        def run_sync_stream():
-            try:
-                for chunk in get_gateway().stream(
-                    full_prompt, tier=tier, route_reason=route_reason
-                ):
-                    loop.call_soon_threadsafe(q.put_nowait, ("chunk", chunk))
-                loop.call_soon_threadsafe(q.put_nowait, ("done", None))
-            except Exception as e:
-                loop.call_soon_threadsafe(q.put_nowait, ("error", e))
+        cancel = threading.Event()
 
-        # Offload the blocking stream reader loop to a background worker thread.
-        # Keep a reference: a bare create_task() may be garbage-collected.
-        worker = asyncio.create_task(asyncio.to_thread(run_sync_stream))
+        def _emit(kind, value):
+            try:
+                loop.call_soon_threadsafe(q.put_nowait, (kind, value))
+            except RuntimeError:
+                pass  # loop already closed (shutdown) — nobody is listening
+
+        # Blocking stream reader on the dedicated LLM pool (see _pump_stream).
+        # Keep a reference to the future so it is not garbage-collected.
+        worker = loop.run_in_executor(
+            _STREAM_EXECUTOR,
+            _pump_stream,
+            lambda: get_gateway().stream(
+                full_prompt, tier=tier, route_reason=route_reason
+            ),
+            _emit,
+            cancel,
+        )
 
         def _persist(text: str, mode: str) -> None:
             """Record the assistant turn. Synchronous on purpose.
@@ -731,6 +832,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                         if (
                             stream_mode == "llm_generated"
                             and first_question
+                            and not personal
                             and tier != "cloud_quality"
                             and not decision["needs_human_review"]
                         ):
@@ -745,7 +847,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                         delta = _CJK_RE.sub("", chunk.delta)
                         sent_parts.append(delta)
                         yield _sse("token", {"delta": delta})
-        except Exception as e:
+        except Exception:
             logger.exception("Stream generation failed (session=%s)", session_id)
             _persist(
                 "".join(sent_parts).strip() or _STREAM_ERROR_TEXT, "error"
@@ -766,15 +868,12 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                 )
                 if partial:
                     _persist(partial, "interrupted")
-            # Detaches the awaiting task; it does NOT stop run_sync_stream or
-            # the provider connection — asyncio cannot interrupt a running
-            # thread. So generation continues to completion in the background
-            # after the parent leaves. That is pre-existing behaviour, and it
-            # is what made this bug diagnosable at all: the finished call is
-            # still logged to llm_calls, which is how we could prove the
-            # answers were being generated and then dropped. Real cancellation
-            # needs a cooperative cancel()/close() threaded through the
-            # gateway and every provider — a separate change.
+            # Cooperative cancellation (audit H6): asyncio cannot interrupt a
+            # running thread, so the worker checks this flag between chunks,
+            # stops, and closes the stream generator — which closes the
+            # provider connection. The aborted call is still recorded in
+            # llm_calls (route_reason "client_disconnected") by the gateway.
+            cancel.set()
             worker.cancel()
 
     return StreamingResponse(event_stream(), media_type="text/event-stream", headers=_SSE_HEADERS)
