@@ -166,7 +166,7 @@ def run_pipeline(items: list[dict], label: str) -> list[dict]:
             # Use unique device_id per question so evaluation never trips per-device daily rate limits.
             sess = client.post("/api/chat/sessions", json={"device_id": f"eval-harness-{g['id']}"})
             sess.raise_for_status()
-            client.headers["Authorization"] = f"Bearer {sess.json()['token']}"
+            auth_headers = {"Authorization": f"Bearer {sess.json()['token']}"}
             payload = {
                 "age_group": g["age_group"],
                 "severity": g["severity"],
@@ -175,7 +175,7 @@ def run_pipeline(items: list[dict], label: str) -> list[dict]:
             }
             t0 = time.time()
             try:
-                resp = client.post("/api/assistant/draft", json=payload)
+                resp = client.post("/api/assistant/draft", json=payload, headers=auth_headers)
                 latency = time.time() - t0
                 if resp.status_code != 200:
                     raise RuntimeError(f"HTTP {resp.status_code}: {resp.text[:200]}")
