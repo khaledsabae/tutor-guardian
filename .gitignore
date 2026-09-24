@@ -32,6 +32,8 @@ ops/chroma_data/
 
 # ── Runtime databases (regenerated) ─────────────────────────────────────
 *.db
+*.db-shm
+*.db-wal
 *.sqlite3
 ops/sessions.db
 
