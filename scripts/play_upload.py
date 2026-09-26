@@ -74,6 +74,20 @@ def _build_service(sa_path: Path):
     return build("androidpublisher", "v3", credentials=creds, cache_discovery=False)
 
 
+def _read_version_code() -> int:
+    """يقرأ versionCode الحالي من pubspec.yaml."""
+    pubspec = REPO_ROOT / "mobile/pubspec.yaml"
+    for line in pubspec.read_text().splitlines():
+        if line.startswith("version:"):
+            parts = line.split("+")
+            if len(parts) == 2:
+                try:
+                    return int(parts[1].strip())
+                except ValueError:
+                    break
+    return -1
+
+
 def _bump_version_code() -> int:
     """يقرأ versionCode الحالي من pubspec.yaml ويرجع القيمة الجديدة (+1)."""
     pubspec = REPO_ROOT / "mobile/pubspec.yaml"
@@ -123,35 +137,43 @@ def upload(
     edit_id = edit["id"]
 
     try:
-        # 2. ارفع الـ AAB
-        _log("2/5  رفع AAB … (قد يستغرق دقيقتين)")
-        media = MediaFileUpload(
-            str(aab_path),
-            mimetype="application/octet-stream",
-            resumable=True,
-            chunksize=CHUNK_BYTES,
-        )
-        request = publisher.bundles().upload(
-            packageName=PACKAGE_NAME, editId=edit_id, media_body=media
-        )
-        aab_resp = None
-        attempts = 0
-        while aab_resp is None:
-            try:
-                status, aab_resp = request.next_chunk()
-                if status:
-                    _log(f"     … {int(status.progress() * 100)}%")
-                attempts = 0
-            except (TimeoutError, OSError, HttpError) as exc:
-                attempts += 1
-                if attempts > CHUNK_RETRIES:
-                    raise
-                # next_chunk() re-queries the server for the confirmed offset,
-                # so this resumes rather than restarting.
-                _log(f"     ! chunk failed ({type(exc).__name__}), retry {attempts}/{CHUNK_RETRIES}")
-                time.sleep(2 ** attempts)
-        version_code = aab_resp["versionCode"]
-        _log(f"     ✓ versionCode={version_code}")
+        # 2. ارفع الـ AAB (أو تخطّ إذا كانت الحزمة مرفوعة مسبقاً بنفس رقم الإصدار)
+        local_vc = _read_version_code()
+        existing_bundles = publisher.bundles().list(packageName=PACKAGE_NAME, editId=edit_id).execute().get("bundles", [])
+        existing_vcs = {b.get("versionCode") for b in existing_bundles}
+
+        if local_vc > 0 and local_vc in existing_vcs:
+            _log(f"2/5  الحزمة موجودة مسبقاً في Google Play (versionCode={local_vc}) — تخطي إعادة الرفع.")
+            version_code = local_vc
+        else:
+            _log("2/5  رفع AAB … (قد يستغرق دقيقتين)")
+            media = MediaFileUpload(
+                str(aab_path),
+                mimetype="application/octet-stream",
+                resumable=True,
+                chunksize=CHUNK_BYTES,
+            )
+            request = publisher.bundles().upload(
+                packageName=PACKAGE_NAME, editId=edit_id, media_body=media
+            )
+            aab_resp = None
+            attempts = 0
+            while aab_resp is None:
+                try:
+                    status, aab_resp = request.next_chunk()
+                    if status:
+                        _log(f"     … {int(status.progress() * 100)}%")
+                    attempts = 0
+                except (TimeoutError, OSError, HttpError) as exc:
+                    attempts += 1
+                    if attempts > CHUNK_RETRIES:
+                        raise
+                    # next_chunk() re-queries the server for the confirmed offset,
+                    # so this resumes rather than restarting.
+                    _log(f"     ! chunk failed ({type(exc).__name__}), retry {attempts}/{CHUNK_RETRIES}")
+                    time.sleep(2 ** attempts)
+            version_code = aab_resp["versionCode"]
+            _log(f"     ✓ versionCode={version_code}")
 
         # 3. عيّن الـ track
         _log(f"3/5  إسناد إلى track={track} …")
