@@ -6775,6 +6775,30 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أُصلح موعد التذكير اليومي — كان يصل بتوقيت غرينتش لا بتوقيت جهازك.'**
   String get whatsNew102Timing;
+
+  /// No description provided for @a11yPlay.
+  ///
+  /// In ar, this message translates to:
+  /// **'تشغيل'**
+  String get a11yPlay;
+
+  /// No description provided for @a11yPause.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف مؤقت'**
+  String get a11yPause;
+
+  /// No description provided for @a11yFlipCard.
+  ///
+  /// In ar, this message translates to:
+  /// **'اقلب البطاقة'**
+  String get a11yFlipCard;
+
+  /// No description provided for @a11yCopyCode.
+  ///
+  /// In ar, this message translates to:
+  /// **'انسخ الكود'**
+  String get a11yCopyCode;
 }
 
 class _AppLocalizationsDelegate

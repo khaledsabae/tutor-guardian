@@ -3735,4 +3735,16 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get whatsNew102Timing =>
       'أُصلح موعد التذكير اليومي — كان يصل بتوقيت غرينتش لا بتوقيت جهازك.';
+
+  @override
+  String get a11yPlay => 'تشغيل';
+
+  @override
+  String get a11yPause => 'إيقاف مؤقت';
+
+  @override
+  String get a11yFlipCard => 'اقلب البطاقة';
+
+  @override
+  String get a11yCopyCode => 'انسخ الكود';
 }

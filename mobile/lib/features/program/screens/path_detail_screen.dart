@@ -29,6 +29,7 @@ import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
+import 'package:almorabbi/core/motion.dart';
 
 
 /// Domain → header illustration (solid cream-bg JPGs that blend with the
@@ -725,7 +726,7 @@ class _LessonNode extends StatelessWidget {
           ),
           child: Icon(Icons.play_arrow_rounded, color: style.base, size: 36),
         )
-            .animate(onPlay: (c) => c.repeat(count: 2))
+            .animate(onPlay: loopUnlessReduced(context, count: 2))
             .scale(
               begin: const Offset(1, 1),
               end: const Offset(1.06, 1.06),

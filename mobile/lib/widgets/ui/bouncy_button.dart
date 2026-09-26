@@ -3,11 +3,21 @@ import 'package:flutter/material.dart';
 import '../../theme/design_tokens.dart';
 
 /// Wraps any child with a press-down scale bounce (Duolingo feel).
+///
+/// Announced as a button (UX_UI_ROADMAP DS9): a bare GestureDetector is a
+/// tap target a screen reader can activate but never names as a control.
+/// Pass [semanticLabel] when the child is an icon or emoji with no text.
 class BouncyTap extends StatefulWidget {
   final Widget child;
   final VoidCallback? onTap;
+  final String? semanticLabel;
 
-  const BouncyTap({super.key, required this.child, this.onTap});
+  const BouncyTap({
+    super.key,
+    required this.child,
+    this.onTap,
+    this.semanticLabel,
+  });
 
   @override
   State<BouncyTap> createState() => _BouncyTapState();
@@ -18,6 +28,15 @@ class _BouncyTapState extends State<BouncyTap> {
 
   @override
   Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      enabled: widget.onTap != null,
+      label: widget.semanticLabel,
+      child: _gesture(),
+    );
+  }
+
+  Widget _gesture() {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: widget.onTap == null
@@ -29,7 +48,12 @@ class _BouncyTapState extends State<BouncyTap> {
               setState(() => _pressed = false);
               widget.onTap!();
             },
-      onTapCancel: () => setState(() => _pressed = false),
+      // Null when disabled: any tap callback makes the detector offer a tap
+      // action to screen readers, so a disabled button still said "double tap
+      // to activate".
+      onTapCancel: widget.onTap == null
+          ? null
+          : () => setState(() => _pressed = false),
       child: AnimatedScale(
         scale: _pressed ? 0.95 : 1,
         duration: const Duration(milliseconds: 110),

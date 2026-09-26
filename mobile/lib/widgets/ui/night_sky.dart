@@ -11,6 +11,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import '../../theme/design_tokens.dart';
+import '../../core/motion.dart';
 
 /// A field of stars fading in and out at staggered intervals.
 class TwinklingStars extends StatefulWidget {
@@ -43,6 +44,18 @@ class _TwinklingStarsState extends State<TwinklingStars>
         vsync: this,
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Reduced motion: a still sky (UX_UI_ROADMAP §5). Each star otherwise
+    // starts its own twinkle after a random delay, so the flag has to reach
+    // the ones that have not started yet as well as the ones that have.
+    final still = reduceMotion(context);
+    for (final star in _stars) {
+      star.setStill(still);
+    }
   }
 
   @override
@@ -106,10 +119,27 @@ class _Star {
     Future.delayed(Duration(milliseconds: (delay * 1000).round()), () {
       // The delay can outlive the screen: popping it before the star starts
       // would otherwise call repeat() on a disposed controller.
-      if (!_disposed && !_controller.isAnimating && !_controller.isCompleted) {
+      _delayElapsed = true;
+      if (!_disposed && !_still && !_controller.isAnimating && !_controller.isCompleted) {
         _controller.repeat(reverse: true);
       }
     });
+  }
+
+  bool _still = false;
+  bool _delayElapsed = false;
+
+  /// Hold the star at full brightness (reduced motion), or let it twinkle.
+  void setStill(bool still) {
+    if (_disposed || still == _still) return;
+    _still = still;
+    if (still) {
+      _controller
+        ..stop()
+        ..value = 1;
+    } else if (_delayElapsed) {
+      _controller.repeat(reverse: true);
+    }
   }
 
   final double x;
@@ -151,7 +181,7 @@ class _FloatingFirefliesState extends State<FloatingFireflies>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 40),
-    )..repeat();
+    );
 
     for (var i = 0; i < widget.count; i++) {
       _fireflies.add(
@@ -166,6 +196,12 @@ class _FloatingFirefliesState extends State<FloatingFireflies>
         ),
       );
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    syncLoop(context, _controller); // reduced motion: fireflies hold still
   }
 
   @override

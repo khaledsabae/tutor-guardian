@@ -3786,4 +3786,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get whatsNew102Timing =>
       'Fixed when the daily reminder arrives — it was firing on GMT rather than on your device\'s time.';
+
+  @override
+  String get a11yPlay => 'Play';
+
+  @override
+  String get a11yPause => 'Pause';
+
+  @override
+  String get a11yFlipCard => 'Flip the card';
+
+  @override
+  String get a11yCopyCode => 'Copy the code';
 }

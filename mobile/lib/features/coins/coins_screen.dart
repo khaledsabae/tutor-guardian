@@ -172,7 +172,9 @@ class _RedeemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Semantics(
+      button: true,
+      child: GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(bottom: 8),
@@ -202,6 +204,7 @@ class _RedeemRow extends StatelessWidget {
             const Icon(Icons.chevron_left, color: Color(0xFF6D28D9)),
           ],
         ),
+      ),
       ),
     );
   }
@@ -252,9 +255,9 @@ class _EarnRow extends StatelessWidget {
     );
 
     if (onTap != null) {
-      return GestureDetector(
-        onTap: onTap,
-        child: card,
+      return Semantics(
+        button: true,
+        child: GestureDetector(onTap: onTap, child: card),
       );
     }
     return card;

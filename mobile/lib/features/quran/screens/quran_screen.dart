@@ -47,7 +47,9 @@ class QuranScreen extends ConsumerWidget {
                 data: (lastRead) {
                   if (lastRead == null) return const SizedBox.shrink();
                   final surahName = surahNames[lastRead.chapter - 1];
-                  return GestureDetector(
+                  return Semantics(
+                    button: true,
+                    child: GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -101,6 +103,7 @@ class QuranScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
+                  ),
                   );
                 },
                 loading: () => const SizedBox.shrink(),

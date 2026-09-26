@@ -258,7 +258,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               // Play/Pause Center Button — large, with a
                               // solid circular backdrop so it's clearly visible.
                               Center(
-                                child: GestureDetector(
+                                child: Semantics(
+                                  button: true,
+                                  label: _controller!.value.isPlaying
+                                      ? AppLocalizations.of(context).a11yPause
+                                      : AppLocalizations.of(context).a11yPlay,
+                                  child: GestureDetector(
                                   onTap: _togglePlay,
                                   child: Container(
                                     width: 96,
@@ -284,6 +289,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                       size: 56,
                                     ),
                                   ),
+                                ),
                                 ),
                               ),
 

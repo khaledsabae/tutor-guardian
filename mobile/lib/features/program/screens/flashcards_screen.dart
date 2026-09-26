@@ -220,6 +220,14 @@ class _FlipCardState extends State<FlipCard>
 
   @override
   Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      hint: AppLocalizations.of(context).a11yFlipCard,
+      child: _card(),
+    );
+  }
+
+  Widget _card() {
     return GestureDetector(
       onTap: _flip,
       child: AnimatedBuilder(

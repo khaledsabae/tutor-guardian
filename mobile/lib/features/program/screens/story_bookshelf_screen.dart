@@ -15,6 +15,7 @@ import '../../../widgets/ui/skeleton.dart';
 import '../data/story_models.dart';
 import '../../screen_off/narration_store.dart';
 import '../../../widgets/ui/night_sky.dart';
+import 'package:almorabbi/core/motion.dart';
 
 /// A magical bedtime bookshelf: 3D books, twinkling stars, and looping
 /// ambient cover videos when available. Replaces the old vertical list card.
@@ -374,7 +375,9 @@ class _BookCover extends StatelessWidget {
 
     return Hero(
       tag: 'story-cover-${story.id}',
-      child: GestureDetector(
+      child: Semantics(
+        button: true,
+        child: GestureDetector(
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 350),
@@ -465,7 +468,7 @@ class _BookCover extends StatelessWidget {
                                   _emojiForStory(story.id),
                                   style: const TextStyle(fontSize: 72),
                                 ),
-                              )).animate(onPlay: (c) => c.repeat()).shimmer(
+                              )).animate(onPlay: loopUnlessReduced(context)).shimmer(
                               duration: const Duration(seconds: 3),
                               color: Colors.white.withValues(alpha: 0.25),
                             ),
@@ -562,6 +565,7 @@ class _BookCover extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }

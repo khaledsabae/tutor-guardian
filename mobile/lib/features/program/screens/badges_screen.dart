@@ -113,6 +113,7 @@ class _BadgeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final earned = badge.earned;
     return Semantics(
+      button: earned,
       label: '${badge.title}. ${badge.description}. '
           '${earned ? AppLocalizations.of(context).badgeEarnedTapShare : AppLocalizations.of(context).badgeLockedYet}',
       child: GestureDetector(
