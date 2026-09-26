@@ -341,6 +341,7 @@ Tests added:
 4. ~~H7~~ ✅.
 5. ~~M12~~ ✅ (one shared client, deduped minting, transparent token renewal).
 6. Run `ops/eval/golden_set.jsonl` in CI as a non-blocking report.
+7. ✅ Cold start (Play vitals, 1.0.65: 9.35% slow cold starts). Everything before `runApp` used to run one step at a time. Now SharedPreferences, the content packs and PackageInfo load while Firebase initialises, and notification setup (the time-zone database, plugin init, 14 days of reminders) runs after the first frame as one shared, retryable `init()`. Check the slow-start rate in vitals about 28 days after the build ships. The other vitals items need no code change: edge-to-edge is already on (`enableEdgeToEdge()` in `MainActivity`, `SystemUiMode.edgeToEdge` in `main.dart`). The deprecated `setStatusBarColor`/`setNavigationBarColor` calls come from the Flutter engine and plugins, not from our code, which stopped calling them in 1.0.42. The `BitmapFactory` warning is inside a library.
 
 ### Phase 3: maintainability (1–2 months)
 1. Replace `init_db.py` with versioned migrations (Alembic, or numbered SQL files with a runner). Move all telemetry DDL there and merge `sessions.db` into one migrated store.

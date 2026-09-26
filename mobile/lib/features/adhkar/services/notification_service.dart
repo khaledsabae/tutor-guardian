@@ -78,14 +78,29 @@ class NotificationService {
   /// makes an explicit promise about where it leads.
   static const _wirdPayload = 'wird';
 
-  bool _initialized = false;
+  Future<void>? _init;
   String? pendingPayload;
 
-  /// Call once at app startup.
-  Future<void> init() async {
-    if (_initialized) return;
-    _initialized = true;
+  /// Set up the plugin and queue the reminders. Idempotent and shared: every
+  /// caller awaits the same run, and a failed run is retried by the next call.
+  ///
+  /// Started after the first frame, not before `runApp` (Play vitals: 9.35%
+  /// slow cold starts). Parsing the whole time-zone database and queueing 14
+  /// days of reminders — dozens of platform calls — used to sit between the
+  /// launch and the first pixel. The public methods below await it, so none
+  /// can run against an uninitialised plugin.
+  Future<void> init() => _init ??= _initOnce().catchError((Object e) {
+        _init = null;
+        throw e;
+      });
 
+  /// [init], for the public methods below: they need the plugin set up, but
+  /// a failed setup must not take the caller down with it (a settings toggle,
+  /// the permission prompt). The failure is reported where main starts
+  /// init(), and the next call retries it.
+  Future<void> _ready() => init().catchError((Object _) {});
+
+  Future<void> _initOnce() async {
     tz.initializeTimeZones();
     await _configureLocalTimezone();
 
@@ -103,9 +118,9 @@ class NotificationService {
     final enabled = prefs.getBool(_kEnabled) ?? true;
     if (enabled) {
       // Scheduling first, and the permission separately (see
-      // [ensurePermission]). `init()` runs before `runApp`, and asking for the
-      // runtime permission there threw a NullPointerException inside the
-      // plugin — it needs an Activity, and at that point there is none. The
+      // [ensurePermission]). `init()` used to run before `runApp`, and asking
+      // for the runtime permission there threw a NullPointerException inside
+      // the plugin — it needs an Activity, and at that point there is none. The
       // throw propagated out of `init()` and took `scheduleDaily` with it, so
       // a fresh install on Android 13+ queued *nothing at all*: verified on an
       // emulator running 1.0.51, `dumpsys alarm` held zero alarms for this
@@ -337,6 +352,7 @@ class NotificationService {
   /// is a state; it is not a reason to abort the caller.
   Future<bool> ensurePermission() async {
     if (!(await isEnabled())) return false;
+    await _ready();
     final granted = await _requestPermission(quiet: true);
     if (granted || !_lastRequestThrew) return granted;
     // The plugin's request needs its `mainActivity`, and in this app that
@@ -365,8 +381,8 @@ class NotificationService {
   /// 6 AM UTC for every user on earth — 9am in Riyadh, 1pm in Jakarta, 2am on
   /// the US east coast. See `local_timezone.dart`.
   ///
-  /// Never throws. A reminder at the wrong hour is a bug; an exception here is
-  /// a dead app, because this runs on the path to `runApp`.
+  /// Never throws. A reminder at the wrong hour is a bug; an exception here
+  /// would take every reminder with it, because init() stops at the throw.
   Future<void> _configureLocalTimezone() async {
     String? name;
     try {
@@ -561,6 +577,7 @@ class NotificationService {
 
   /// Turn the wird reminder on or off — the switch the old one never had.
   Future<void> setWirdEnabled(bool enabled) async {
+    await _ready();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_kWirdEnabled, enabled);
     unawaited(Analytics.notificationPrefChanged('wird', enabled));
@@ -635,6 +652,7 @@ class NotificationService {
   ///
   /// A no-op when reminders are switched off — nothing is queued to replace.
   Future<void> rescheduleForLanguageChange() async {
+    await _ready();
     if (await isEnabled()) await scheduleDaily();
     // The wird lines are localised too, so a queue built in Arabic keeps
     // speaking Arabic for 14 days unless it is rebuilt here as well.
@@ -643,6 +661,7 @@ class NotificationService {
 
   /// Toggle notifications on/off.
   Future<void> setEnabled(bool enabled) async {
+    await _ready();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_kEnabled, enabled);
     unawaited(Analytics.notificationPrefChanged('adhkar', enabled));
