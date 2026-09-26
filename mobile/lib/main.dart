@@ -50,6 +50,36 @@ import 'features/push/notification_channels.dart';
 // FCM background handler lives in features/push/push_service.dart
 // (registered there via FirebaseMessaging.onBackgroundMessage).
 
+/// Load the bundled content packs, returning the failure instead of throwing
+/// (see the call site in main for why a failure is reported, not fatal).
+///
+/// The stored language first, the device second — `resolvedContentLanguage`
+/// encodes that order but has to be *given* the stored value: passing null
+/// meant a parent on an Arabic phone who chose English still got fourteen
+/// days of Arabic reminders.
+Future<(Object, StackTrace)?> _loadContentPacks(
+  Future<SharedPreferences> prefs,
+) async {
+  try {
+    final storedLanguage = (await prefs).getString('tg.ui_language');
+    await Future.wait([
+      FamilyAdhkar.load(language: resolvedContentLanguage(storedLanguage)),
+      JourneyMilestones.load(),
+    ]);
+    return null;
+  } catch (e, stack) {
+    return (e, stack);
+  }
+}
+
+Future<int?> _installedBuildNumber() async {
+  try {
+    return int.tryParse((await PackageInfo.fromPlatform()).buildNumber);
+  } catch (_) {
+    return null;
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureBundledFonts();
@@ -74,6 +104,15 @@ void main() async {
   // features/screen_off/audio_tag.dart for the full story: this app has five
   // AudioPlayer instances, and just_audio_background supports exactly one.
   //
+  // Startup work that does not depend on Firebase starts now and runs while
+  // Firebase initialises, instead of one step after another before the first
+  // frame (Play vitals: 9.35% slow cold starts). Each future captures its own
+  // failure, so nothing surfaces as an unhandled error before the handlers
+  // below exist.
+  final prefsFuture = SharedPreferences.getInstance();
+  final contentPacks = _loadContentPacks(prefsFuture);
+  final buildNumber = _installedBuildNumber();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Crashlytics. Everything that lands here is non-fatal by definition — the
@@ -134,19 +173,10 @@ void main() async {
   // a black screen before the first frame. Reporting it and carrying on
   // degrades two features (no daily reminder, no milestone suggestions) and
   // leaves the rest of the app usable, which is the better half of a bad day.
-  try {
-    // The stored choice first, the device second — `resolvedContentLanguage`
-    // already encodes that order, but it needs to be *given* the stored value.
-    // Passing null here meant a parent on an Arabic phone who chose English in
-    // the app still had fourteen days of Arabic reminders queued before their
-    // choice was ever read.
-    final storedLanguage =
-        (await SharedPreferences.getInstance()).getString('tg.ui_language');
-    await FamilyAdhkar.load(language: resolvedContentLanguage(storedLanguage));
-    await JourneyMilestones.load();
-  } catch (e, stack) {
+  final packFailure = await contentPacks;
+  if (packFailure != null) {
     FirebaseCrashlytics.instance.recordError(
-      e, stack,
+      packFailure.$1, packFailure.$2,
       reason: 'content pack failed to load at startup',
       fatal: false,
     );
@@ -156,23 +186,32 @@ void main() async {
   // distinguishable from an upgrade, and therefore the only moment the
   // «what's new» card can be silenced for someone with no "before".
   try {
-    final prefs = await SharedPreferences.getInstance();
-    final build = int.tryParse((await PackageInfo.fromPlatform()).buildNumber);
-    if (build != null) await seedWhatsNewForFreshInstall(prefs, build);
+    final build = await buildNumber;
+    if (build != null) await seedWhatsNewForFreshInstall(await prefsFuture, build);
   } catch (_) {
     // Worst case the card shows to a new install once. Not worth a crash on
     // the path to runApp.
   }
-
-  // Initialize daily Adhkar local notifications
-  await NotificationService.instance.init();
 
   runApp(const ProviderScope(child: TutorGuardianApp()));
 
   // Phase 0/1 deep links.
   WidgetsBinding.instance.addPostFrameCallback((_) {
     DeepLinkHandler.instance.init(appNavigatorKey);
-    NotificationService.instance.processPendingTap();
+    // Reminders are queued after the first frame now, not before it. The
+    // adhkar pack they are built from is already loaded above. A launch from a
+    // tapped notification is read inside init(), so the tap is handled once
+    // it completes.
+    unawaited(NotificationService.instance
+        .init()
+        .then((_) => NotificationService.instance.processPendingTap())
+        .catchError((Object e, StackTrace s) {
+      FirebaseCrashlytics.instance.recordError(
+        e, s,
+        reason: 'notification setup failed after launch',
+        fatal: false,
+      );
+    }));
     // The one place the app asks to notify — after the first frame, because a
     // runtime permission prompt needs an Activity, and outside
     // `_postLaunchGrowthLoop` because that returns early with no session, so a

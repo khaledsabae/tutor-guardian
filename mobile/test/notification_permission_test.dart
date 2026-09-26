@@ -1,10 +1,11 @@
 /// The reminder schedule must survive the permission prompt failing.
 ///
 /// Found by running 1.0.51 on an emulator, not by a test — which is the point
-/// of writing one now. `NotificationService.init()` runs before `runApp()`, and
-/// it used to ask for the Android 13+ runtime permission from there. The plugin
-/// resolves that request against the attached Activity, and before the first
-/// frame there is none, so the platform side threw:
+/// of writing one now. `NotificationService.init()` ran before `runApp()` (it
+/// now starts right after the first frame, still before an Activity is
+/// attached), and it used to ask for the Android 13+ runtime permission from
+/// there. The plugin resolves that request against the attached Activity, and
+/// at that point there is none, so the platform side threw:
 ///
 ///     NullPointerException: Attempt to invoke virtual method
 ///     'int android.content.Context.checkPermission(...)' on a null object
@@ -63,23 +64,23 @@ void main() {
 
   // Source, not behaviour, and deliberately so — the same shape as the test
   // that reads `mission_digest` to keep a second send channel from appearing.
-  // `init()` cannot run on the host: `_plugin.initialize` resolves the Android
-  // implementation, which no registrant has set. So the invariant is pinned
-  // where it is legible instead: whatever else `init()` does, it must not ask
-  // for the permission, because it runs before `runApp` and there is no
-  // Activity to ask through.
+  // Without a registrant `init()` cannot run on the host: `_plugin.initialize`
+  // resolves the Android implementation, which nothing has set. So the
+  // invariant is pinned where it is legible instead: whatever else `init()`
+  // does, it must not ask for the permission, because it runs before an
+  // Activity is attached and there is nothing to ask through.
   test('init does not ask for the permission', () {
     final source = File(
       'lib/features/adhkar/services/notification_service.dart',
     ).readAsStringSync();
     final init = source.substring(
-      source.indexOf('Future<void> init() async {'),
+      source.indexOf('Future<void> _initOnce() async {'),
       source.indexOf('/// Cancels every notification id'),
     );
 
     expect(init.contains('_requestPermission'), isFalse,
-        reason: 'init() runs before runApp; asking there threw inside the '
-            'plugin and took scheduleDaily down with it');
+        reason: 'init() runs before an Activity exists; asking there threw '
+            'inside the plugin and took scheduleDaily down with it');
     expect(init.contains('scheduleDaily'), isTrue,
         reason: 'a fresh install must still queue its reminders');
   });
