@@ -15,6 +15,7 @@ import '../../widgets/ui/bouncy_button.dart';
 import '../../widgets/ui/count_up_text.dart';
 import 'coins_providers.dart';
 import 'coins_service.dart';
+import '../../theme/app_colors.dart';
 
 class CoinsScreen extends ConsumerWidget {
   const CoinsScreen({super.key});
@@ -192,16 +193,16 @@ class _RedeemRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title,
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF6D28D9))),
+                          color: context.violetText)),
                   Text(detail,
-                      style: const TextStyle(
-                          color: Color(0xFF7C6BA8), fontSize: 13)),
+                      style: TextStyle(
+                          color: context.colors.textSecondary, fontSize: 13)),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_left, color: Color(0xFF6D28D9)),
+            Icon(Icons.chevron_left, color: context.violetText),
           ],
         ),
       ),

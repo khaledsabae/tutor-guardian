@@ -45,6 +45,7 @@ import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
 import '../../../theme/app_palette.dart';
 import '../../../widgets/ui/error_retry_view.dart';
+import '../../../theme/app_colors.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({
@@ -558,7 +559,10 @@ class _ReflectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The numbered dots keep the brand violet (white on it is 7:1 in both
+    // modes); words on the surface take the theme-aware one (UX-1 DS5).
     const violet = Color(0xFF6D28D9);
+    final violetText = context.violetText;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -575,8 +579,8 @@ class _ReflectionCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context).lessonReflections,
-                style: const TextStyle(
-                  color: violet,
+                style: TextStyle(
+                  color: violetText,
                   fontWeight: FontWeight.w800,
                 ),
               ),
@@ -610,8 +614,8 @@ class _ReflectionCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       prompts[i],
-                      style: const TextStyle(
-                        color: Color(0xFF44337A),
+                      style: TextStyle(
+                        color: context.colors.ink,
                         height: 1.55,
                       ),
                     ),
