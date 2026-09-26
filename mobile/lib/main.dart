@@ -294,9 +294,9 @@ class TutorGuardianApp extends ConsumerWidget {
         // colour references — and helpers like Dt.softShadow — resolve without
         // a BuildContext. This is the first point in the frame where the
         // resolved brightness exists, so it is where the palette is pinned.
-        AppPalette.current = Theme.of(context).brightness == Brightness.dark
-            ? AppPalette.dark
-            : AppPalette.light;
+        // A real light/dark change also rebuilds every widget once, so none
+        // keeps the old palette (UX_UI_ROADMAP DS5 — see AppPalette.sync).
+        AppPalette.sync(Theme.of(context).brightness);
 
         // Force Directionality based on the resolved locale's text direction.
         // We use Directionality here to ensure transitions and widgets inherit it.

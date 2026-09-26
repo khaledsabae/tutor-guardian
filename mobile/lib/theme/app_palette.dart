@@ -143,11 +143,81 @@ class AppPalette {
     tipInk: Color(0xFFFDE68A),
   );
 
+  /// Blend two palettes — what `AppColors.lerp` hands `AnimatedTheme`, so a
+  /// light/dark switch fades these colours instead of snapping them.
+  static AppPalette lerp(AppPalette a, AppPalette b, double t) {
+    Color c(Color x, Color y) => Color.lerp(x, y, t)!;
+    return AppPalette(
+      brightness: t < .5 ? a.brightness : b.brightness,
+      primary: c(a.primary, b.primary),
+      onPrimary: c(a.onPrimary, b.onPrimary),
+      primaryDeep: c(a.primaryDeep, b.primaryDeep),
+      accent: c(a.accent, b.accent),
+      onAccent: c(a.onAccent, b.onAccent),
+      accentDeep: c(a.accentDeep, b.accentDeep),
+      background: c(a.background, b.background),
+      surface: c(a.surface, b.surface),
+      surfaceAlt: c(a.surfaceAlt, b.surfaceAlt),
+      ink: c(a.ink, b.ink),
+      inkSoft: c(a.inkSoft, b.inkSoft),
+      textSecondary: c(a.textSecondary, b.textSecondary),
+      success: c(a.success, b.success),
+      successText: c(a.successText, b.successText),
+      track: c(a.track, b.track),
+      warningBg: c(a.warningBg, b.warningBg),
+      warningFg: c(a.warningFg, b.warningFg),
+      dangerBg: c(a.dangerBg, b.dangerBg),
+      dangerFg: c(a.dangerFg, b.dangerFg),
+      tipGradient: [
+        for (var i = 0; i < a.tipGradient.length; i++)
+          c(a.tipGradient[i], b.tipGradient[i]),
+      ],
+      tipInk: c(a.tipInk, b.tipInk),
+    );
+  }
+
   /// The palette every `Dt.*` / `AppTheme.*` colour getter reads.
   ///
   /// Mutable and global on purpose: hundreds of call sites — and several
   /// non-widget helpers such as `Dt.softShadow` — read colours without a
-  /// `BuildContext` to hand. Kept in sync from `MaterialApp.builder`, so it is
-  /// always the palette of the frame currently being built.
+  /// `BuildContext` to hand. Kept in sync from `MaterialApp.builder` through
+  /// [sync]. New code should read `context.colors` (theme/app_colors.dart)
+  /// instead, which also rebuilds with the theme on its own.
   static AppPalette current = light;
+
+  static bool _synced = false;
+
+  /// Pin [current] to [brightness] (UX_UI_ROADMAP DS5).
+  ///
+  /// A widget that reads `Dt.surface` without depending on `Theme` is not
+  /// rebuilt when the user switches light/dark, so it kept painting the old
+  /// palette until something else happened to rebuild it — dark cards on a
+  /// light screen, or the reverse. When the palette really changes, every
+  /// element is marked for one rebuild after the frame, the way hot reload
+  /// does it: navigation, scroll positions and text fields keep their state.
+  static void sync(Brightness brightness) {
+    final next = brightness == Brightness.dark ? dark : light;
+    if (identical(next, current)) {
+      _synced = true;
+      return;
+    }
+    current = next;
+    // The first frame builds everything after this call anyway.
+    if (!_synced) {
+      _synced = true;
+      return;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) => rebuildTree());
+  }
+
+  /// Mark every element in the app for one rebuild.
+  @visibleForTesting
+  static void rebuildTree() {
+    void visit(Element element) {
+      element.markNeedsBuild();
+      element.visitChildren(visit);
+    }
+
+    WidgetsBinding.instance.rootElement?.visitChildren(visit);
+  }
 }

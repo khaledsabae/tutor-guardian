@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'app_colors.dart';
 import 'app_palette.dart';
 import 'design_tokens.dart';
 
@@ -126,6 +127,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: p.brightness,
+      extensions: <ThemeExtension<dynamic>>[AppColors(p)],
       colorScheme: colorScheme,
       scaffoldBackgroundColor: background,
       textTheme: textTheme,
