@@ -8,8 +8,11 @@
 #   * a floor chosen without knowing who is below it (docs/OPS_RUNBOOK.md §10.1).
 # The census in push_tokens (schema v25: app_version / build_number, rewritten
 # on every launch) answers the second; this script refuses the first by
-# requiring that recently active devices already run a build at or above the
-# floor — proof that build is really downloadable.
+# requiring that at least PROOF_MIN devices active in the last PROOF_DAYS
+# already run a build at or above the floor — proof that Play really serves it.
+# A handful is not proof: on 2026-09-26 the only devices >= 109 were three
+# internal testers on 111 and one reviewer-era install on 110, while 99.6% of
+# the base was on 105 or older.
 #
 # Usage (on the VPS, from /root/tutor-guardian):
 #   ops/scripts/min_build.sh current            # floor in .env and as served
@@ -31,6 +34,9 @@ ENV_FILE="${ENV_FILE:-.env}"
 COMPOSE=(docker compose -f docker-compose.production.yml)
 # Devices active this recently must already run >= FLOOR for `plan` to pass.
 PROOF_DAYS="${PROOF_DAYS:-7}"
+# …and at least this many of them. Testers and internal-track installs are a
+# few devices; real Play adoption is dozens within a day or two.
+PROOF_MIN="${PROOF_MIN:-20}"
 
 run_py() {  # run a Python snippet against the DB (in-container unless LOCAL=1)
   if [[ "${LOCAL:-0}" == "1" ]]; then
@@ -75,9 +81,9 @@ PY
 
 plan() {
   local floor="${1:?FLOOR required}" days="${2:-30}"
-  run_py "$floor" "$days" "$PROOF_DAYS" "${FORCE:-0}" <<'PY'
+  run_py "$floor" "$days" "$PROOF_DAYS" "$PROOF_MIN" "${FORCE:-0}" <<'PY'
 import os, sqlite3, sys
-floor, days, proof_days, force = map(int, sys.argv[1:5])
+floor, days, proof_days, proof_min, force = map(int, sys.argv[1:6])
 c = sqlite3.connect(f"file:{os.environ['DB_PATH']}?mode=ro", uri=True)
 def count(where, window):
     return c.execute(
@@ -89,17 +95,25 @@ below = count("build_number < ?", days)
 unknown = count("build_number IS NULL", days)
 at_or_above = count("build_number >= ?", days)
 recent_on_floor = count("build_number >= ?", proof_days)
+by_build = c.execute(
+    "SELECT build_number, COUNT(*) FROM push_tokens WHERE updated_at >= datetime('now', ?) "
+    "AND build_number >= ? GROUP BY build_number ORDER BY build_number DESC",
+    (f"-{proof_days} days", floor),
+).fetchall()
 share = (lambda n: f"{n / total:.1%}" if total else "-")
 print(f"floor {floor}, devices active in the last {days} days: {total}")
 print(f"  forced to update: {below + unknown} ({share(below + unknown)})"
       f"  = {below} on a known older build + {unknown} unknown")
 print(f"  unaffected:       {at_or_above} ({share(at_or_above)})")
-print(f"  proof: {recent_on_floor} device(s) active in the last {proof_days} days run >= {floor}")
-if recent_on_floor == 0 and not force:
+breakdown = ", ".join(f"{b}\u00d7{n}" for b, n in by_build) or "none"
+print(f"  proof: {recent_on_floor} device(s) active in the last {proof_days} days run >= {floor}"
+      f" ({breakdown}); need {proof_min}")
+if recent_on_floor < proof_min and not force:
     raise SystemExit(
-        f"REFUSED: no recently active device runs build {floor} or later, so there is "
-        "no evidence Play serves it yet. Everyone below would be locked out with "
-        "nothing to update to. Check Play Console; FORCE=1 overrides.")
+        f"REFUSED: only {recent_on_floor} recently active device(s) run build {floor} or "
+        f"later (need {proof_min}). That is testers, not evidence Play serves it to "
+        "everyone; those below would be locked out with nothing to update to. Wait for "
+        "adoption, check Play Console; FORCE=1 overrides.")
 print("OK")
 PY
 }
