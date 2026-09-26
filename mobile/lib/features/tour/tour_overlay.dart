@@ -173,10 +173,14 @@ class _TourBodyState extends ConsumerState<_TourBody> {
   /// "next" target — the veil is never a dead end.
   Widget _veil(RRect hole) {
     return Positioned.fill(
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: _next,
-        child: CustomPaint(painter: _VeilPainter(hole)),
+      child: Semantics(
+        button: true,
+        label: AppLocalizations.of(context).next,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: _next,
+          child: CustomPaint(painter: _VeilPainter(hole)),
+        ),
       ),
     );
   }

@@ -43,6 +43,7 @@ import 'features/shell/root_scaffold.dart';
 import 'features/tour/tour_overlay.dart';
 import 'theme/app_palette.dart';
 import 'theme/app_theme.dart';
+import 'theme/bundled_fonts.dart';
 import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
 
@@ -51,6 +52,7 @@ import 'features/push/notification_channels.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configureBundledFonts();
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   // Icon brightness only.

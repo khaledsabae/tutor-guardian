@@ -13,6 +13,7 @@ import '../../screen_off/narration_store.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../widgets/ui/night_sky.dart';
 import '../../../theme/design_tokens.dart';
+import 'package:almorabbi/core/motion.dart';
 
 class BedtimeRoutineScreen extends ConsumerStatefulWidget {
   final Story story;
@@ -323,7 +324,10 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
           const SizedBox(height: 32),
 
           // Interactive tap-to-count zone
-          GestureDetector(
+          Semantics(
+            button: true,
+            hint: AppLocalizations.of(context).tasbeehTapHint,
+            child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTapUp: _onTapDhikr,
             child: Container(
@@ -367,6 +371,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                 ],
               ),
             ),
+          ),
           ),
           const SizedBox(height: 24),
 
@@ -422,7 +427,7 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
             '🪙',
             style: TextStyle(fontSize: 72),
           )
-              .animate(onPlay: (c) => c.repeat())
+              .animate(onPlay: loopUnlessReduced(context))
               .scaleXY(begin: 0.9, end: 1.1, duration: 1000.ms)
               .then()
               .scaleXY(begin: 1.1, end: 0.9, duration: 1000.ms),

@@ -191,7 +191,10 @@ class _InviteScreenState extends State<InviteScreen> {
           Text(AppLocalizations.of(context).inviteYourCode,
               style: TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
           const SizedBox(height: 8),
-          GestureDetector(
+          Semantics(
+            button: true,
+            hint: AppLocalizations.of(context).a11yCopyCode,
+            child: GestureDetector(
             onTap: () {
               Clipboard.setData(ClipboardData(text: info.code));
               ScaffoldMessenger.of(context).showSnackBar(
@@ -215,6 +218,7 @@ class _InviteScreenState extends State<InviteScreen> {
               ],
             ),
           ),
+        ),
           if (info.invitedCount > 0) ...[
             const SizedBox(height: 12),
             Text(

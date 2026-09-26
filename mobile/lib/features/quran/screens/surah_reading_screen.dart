@@ -406,7 +406,11 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                             'بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ ', '');
                       }
                       final isActive = verseNum == _playingVerse;
-                      return GestureDetector(
+                      return Semantics(
+                        button: true,
+                        hint: AppLocalizations.of(context).quranListen,
+                        onLongPressHint: AppLocalizations.of(context).tafsirTitle,
+                        child: GestureDetector(
                         // Tap a verse to start the recitation from it.
                         onTap: () => _playFrom(verseNum),
                         // Long-press opens its tafsir. Tap stays with the
@@ -451,6 +455,7 @@ class _SurahReadingScreenState extends ConsumerState<SurahReadingScreen> {
                             ]),
                           ),
                         ),
+                      ),
                       );
                     },
                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../theme/design_tokens.dart';
+import '../../core/motion.dart';
 
 /// Shimmering placeholder box used while content loads.
 class SkeletonBox extends StatelessWidget {
@@ -55,7 +56,7 @@ class SkeletonList extends StatelessWidget {
           ],
         ],
       )
-          .animate(onPlay: (c) => c.repeat())
+          .animate(onPlay: loopUnlessReduced(context))
           .shimmer(duration: 1200.ms, color: Colors.white.withValues(alpha: .6)),
     );
   }

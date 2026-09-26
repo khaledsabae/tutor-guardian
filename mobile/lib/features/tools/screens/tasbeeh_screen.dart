@@ -151,7 +151,10 @@ class _TasbeehScreenState extends ConsumerState<TasbeehScreen> {
 
                 // ── The counter itself ──────────────────────────────────────
                 Expanded(
-                  child: GestureDetector(
+                  child: Semantics(
+                    button: true,
+                    hint: AppLocalizations.of(context).tasbeehTapHint,
+                    child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: _increment,
                     child: Center(
@@ -226,6 +229,7 @@ class _TasbeehScreenState extends ConsumerState<TasbeehScreen> {
                       ),
                     ),
                   ),
+                ),
                 ),
               ],
             ),

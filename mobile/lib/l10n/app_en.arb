@@ -1204,5 +1204,9 @@
   "whatsNew102Tafsir": "Tafsir: long-press any ayah in the Qur'an to read its commentary, with its source named.",
   "whatsNew102Adhkar": "An Adhkar & counsels screen — 281 items with their citations, plus a tasbeeh counter and a Hijri date converter under «More».",
   "whatsNew102Wird": "The Qur'an portion reminder is back, with varied wording, and it can be switched off on its own in Settings.",
-  "whatsNew102Timing": "Fixed when the daily reminder arrives — it was firing on GMT rather than on your device's time."
+  "whatsNew102Timing": "Fixed when the daily reminder arrives — it was firing on GMT rather than on your device's time.",
+  "a11yPlay": "Play",
+  "a11yPause": "Pause",
+  "a11yFlipCard": "Flip the card",
+  "a11yCopyCode": "Copy the code"
 }

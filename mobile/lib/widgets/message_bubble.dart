@@ -17,6 +17,7 @@ import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import 'safety_banner.dart';
 import '../l10n/app_localizations.dart';
+import '../core/motion.dart';
 
 class MessageBubble extends StatelessWidget {
   final ChatMessageUI message;
@@ -339,7 +340,14 @@ class _TypingIndicatorState extends State<_TypingIndicator>
     _ctrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 900),
-    )..repeat();
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Reduced motion: three steady dots instead of a pulse (UX_UI_ROADMAP §5).
+    syncLoop(context, _ctrl, restValue: 0.5);
   }
 
   @override
