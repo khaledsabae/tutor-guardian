@@ -44,6 +44,9 @@ def db(tmp_path):
 
 
 def _run(db, *args, **env):
+    # The fixture is a handful of devices; the real threshold is exercised by
+    # its own test below.
+    env = {"PROOF_MIN": "1", **env}
     return subprocess.run(
         ["bash", str(SCRIPT), *args],
         env={**os.environ, "LOCAL": "1", "DB_PATH": str(db), **env},
@@ -74,6 +77,34 @@ def test_plan_refuses_a_floor_nobody_can_reach_yet(db):
     r = _run(db, "plan", "112")
     assert r.returncode != 0
     assert "REFUSED" in r.stderr + r.stdout
+
+
+def test_a_few_testers_are_not_proof(tmp_path):
+    # The census of 2026-09-26: 3 internal testers on 111 and one install on
+    # 110, while the base sat on 105 and 101. The first version of this check
+    # accepted any one device and printed OK for a floor of 109 that would have
+    # locked out 99.6% of active users.
+    path = tmp_path / "real.db"
+    conn = sqlite3.connect(path)
+    conn.execute(
+        "CREATE TABLE push_tokens (device_id TEXT PRIMARY KEY, token TEXT, "
+        "platform TEXT, updated_at TEXT, app_version TEXT, build_number INTEGER)"
+    )
+    builds = [111] * 3 + [110] + [105] * 38 + [101] * 44
+    for i, build in enumerate(builds):
+        conn.execute(
+            "INSERT INTO push_tokens VALUES (?, 't', 'android', datetime('now', '-1 days'), NULL, ?)",
+            (f"d{i}", build),
+        )
+    conn.commit()
+    conn.close()
+
+    r = _run(path, "plan", "109", PROOF_MIN="20")
+    assert r.returncode != 0
+    assert "REFUSED: only 4 recently active device(s)" in r.stderr
+    assert "(111\u00d73, 110\u00d71); need 20" in r.stdout
+    # A floor the base already runs passes the same threshold.
+    assert _run(path, "plan", "105", PROOF_MIN="20").returncode == 0
 
 
 def test_force_overrides_the_evidence_check(db):
