@@ -97,6 +97,24 @@ jobs:
           rm -rf "$CACHE_DIR"
           mv "${CACHE_DIR}-new" "$CACHE_DIR"
 
+          # Two hard caps, because the swap above bounds the export dir but not
+          # what BuildKit keeps for itself. On 2026-09-27 the export dir was
+          # 4.6 GB after a cold build while the builder's own cache stood at
+          # 27.8 GB — a second copy of the same layers, never pruned.
+          #  * builder cache: capped at 10 GB (keeps the most recent records);
+          #  * export dir: a runaway above 12 GB is dropped — the next build is
+          #    cold (slower), which beats filling the disk that holds the live DB.
+          docker builder prune -f --max-used-space 10gb >/dev/null 2>&1 || true
+          CACHE_MAX_GB=12
+          cache_gb=$(du -s --block-size=1G "$CACHE_DIR" | cut -f1)
+          if [ "$cache_gb" -gt "$CACHE_MAX_GB" ]; then
+            echo "::warning::buildx cache is ${cache_gb} GB (> ${CACHE_MAX_GB}) — dropping it"
+            rm -rf "$CACHE_DIR"
+          fi
+          echo "=== Disk after build ==="
+          df -h / | tail -1
+          du -sh "$CACHE_DIR" 2>/dev/null || true
+
           echo "=== Run backend tests in candidate image ==="
           docker run --rm \
             -e SKIP_API_SMOKE=1 \
