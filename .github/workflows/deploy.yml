@@ -59,14 +59,43 @@ jobs:
           # fraction of the first.
           CACHE_DIR="/var/cache/tutor-guardian-buildx"
 
+          # Disk first. On 2026-09-27 the runner — which is the production
+          # host — ran out of space mid-deploy: the test run died with
+          # "database or disk is full" and the same disk holds the live DB.
+          # Reclaim what is safe to reclaim, then refuse to build on a disk
+          # that cannot take a ~13 GB candidate image.
+          echo "=== Disk before build ==="
+          df -h / | tail -1
+          du -sh "$CACHE_DIR" 2>/dev/null || true
+          free_gb() { df -BG --output=avail / | tail -1 | tr -dc '0-9'; }
+          if [ "$(free_gb)" -lt 25 ]; then
+            echo "::warning::low disk ($(free_gb) GB free) — pruning dangling images and build cache"
+            docker image prune -f >/dev/null 2>&1 || true
+            docker builder prune -f --filter until=72h >/dev/null 2>&1 || true
+            rm -rf "${CACHE_DIR}-new"
+            df -h / | tail -1
+          fi
+          if [ "$(free_gb)" -lt 15 ]; then
+            echo "::error::only $(free_gb) GB free on the production host — not building. Free space (docker system df) and re-run."
+            exit 1
+          fi
+
           echo "=== Build candidate image from checked-out workspace ==="
           # Use $GITHUB_WORKSPACE (the commit that triggered this workflow), not
           # /root/tutor-guardian, so tests gate the exact code being deployed.
           cd "$GITHUB_WORKSPACE"
+          # The local cache exporter never drops old blobs when it writes into
+          # an existing directory, so exporting into $CACHE_DIR itself grew it
+          # by the changed layers on every deploy, forever. Export to a fresh
+          # directory and swap it in: the cache holds exactly this build's
+          # layers, which is all the next build can reuse anyway.
+          rm -rf "${CACHE_DIR}-new"
           docker buildx build \
             --cache-from "type=local,src=$CACHE_DIR" \
-            --cache-to "type=local,dest=$CACHE_DIR,mode=max" \
+            --cache-to "type=local,dest=${CACHE_DIR}-new,mode=max" \
             -f backend/Dockerfile -t "$CANDIDATE_TAG" .
+          rm -rf "$CACHE_DIR"
+          mv "${CACHE_DIR}-new" "$CACHE_DIR"
 
           echo "=== Run backend tests in candidate image ==="
           docker run --rm \
