@@ -14,6 +14,7 @@ import '../../../theme/app_theme.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/program_providers.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../theme/app_colors.dart';
 
 class FavoritesScreen extends ConsumerWidget {
   const FavoritesScreen({super.key});
@@ -298,9 +299,9 @@ class _FavoriteTipCard extends ConsumerWidget {
             color: Dt.surface,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: const Icon(
+          child: Icon(
             Icons.wb_sunny_outlined,
-            color: Color(0xFF8A5A0F),
+            color: context.colors.accentDeep,
             size: 22,
           ),
         ),

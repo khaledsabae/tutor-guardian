@@ -43,12 +43,25 @@ void main() {
         'warningFg on warningBg': [p.warningFg, p.warningBg],
         'tipInk on tip': [p.tipInk, p.tipGradient.last],
         'successText on surface': [p.successText, p.surface],
+        // Roles the UX-1 literal sweep moved text onto (bedtime dhikr card,
+        // milestone concern notes): each was a fixed light-mode colour on a
+        // surface that turns dark.
+        'textSecondary on surface': [p.textSecondary, p.surface],
+        'warningFg on surface': [p.warningFg, p.surface],
       };
       pairs.forEach((label, c) {
         test('$name: $label', () {
           expect(contrast(c[0], c[1]), greaterThanOrEqualTo(4.5),
               reason: '$label is ${contrast(c[0], c[1]).toStringAsFixed(2)}:1');
         });
+      });
+    }
+  });
+
+  group('WCAG non-text contrast for icons (≥ 3:1)', () {
+    for (final p in [AppPalette.light, AppPalette.dark]) {
+      test('${p.isDark ? 'dark' : 'light'}: accentDeep icon on surface', () {
+        expect(contrast(p.accentDeep, p.surface), greaterThanOrEqualTo(3.0));
       });
     }
   });

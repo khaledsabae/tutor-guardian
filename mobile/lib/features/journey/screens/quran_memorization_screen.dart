@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../coins/coins_providers.dart';
 import '../../quran/models/surah_names.dart';
@@ -141,7 +142,7 @@ class QuranMemorizationScreen extends ConsumerWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: done
-                          ? const Color(0xFF2E7D32).withValues(alpha: 0.12)
+                          ? context.colors.success.withValues(alpha: 0.14)
                           : AppTheme.surfaceAlt,
                       borderRadius: BorderRadius.circular(17),
                     ),
@@ -151,7 +152,7 @@ class QuranMemorizationScreen extends ConsumerWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         color: done
-                            ? const Color(0xFF2E7D32)
+                            ? context.colors.successText
                             : AppTheme.textSecondary,
                       ),
                     ),
@@ -165,7 +166,7 @@ class QuranMemorizationScreen extends ConsumerWidget {
                   ),
                   trailing: Icon(
                     done ? Icons.check_circle : Icons.radio_button_unchecked,
-                    color: done ? const Color(0xFF2E7D32) : AppTheme.textMuted,
+                    color: done ? context.colors.successText : AppTheme.textMuted,
                   ),
                 );
               },

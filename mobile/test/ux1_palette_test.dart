@@ -1,6 +1,7 @@
 // DS5: the palette as a ThemeExtension, and a light/dark switch that reaches
 // every widget — including the ones that read Dt.* without depending on Theme.
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -130,5 +131,26 @@ void _violetContrast() {
       expect(_contrast(text, surface), greaterThanOrEqualTo(4.5),
           reason: 'violet text on ${theme.brightness} surface');
     }
+  });
+
+  // UX-1 literal sweep: fixed light-mode colours on surfaces that turn dark.
+  // The worst was the bedtime dhikr — #2D2D2D on a dark card, about 1.3:1 —
+  // the one line on that screen a parent reads aloud to a child.
+  test('swept screens do not reintroduce light-only literals', () {
+    const removed = {
+      'lib/features/program/screens/bedtime_routine_screen.dart': ['0xFF2D2D2D', '0xFF7D7D7D', '0xFF4A4A4A'],
+      'lib/features/program/screens/favorites_screen.dart': ['0xFF8A5A0F'],
+      'lib/features/journey/screens/child_journey_screen.dart': ['0xFFB26A00'],
+      'lib/features/journey/screens/quran_memorization_screen.dart': ['0xFF2E7D32).withValues(alpha: 0.12)', '? const Color(0xFF2E7D32)'],
+      'lib/features/program/screens/quiz_screen.dart': ['0xFFE3DCCE'],
+      'lib/features/program/screens/path_detail_screen.dart': ['0xFFD8D0C2'],
+      'lib/features/onboarding/screens/onboarding_screen.dart': ['0xFFD0D5DD'],
+    };
+    removed.forEach((path, literals) {
+      final src = File(path).readAsStringSync();
+      for (final lit in literals) {
+        expect(src.contains(lit), isFalse, reason: '$path still has $lit');
+      }
+    });
   });
 }
