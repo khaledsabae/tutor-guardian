@@ -36,6 +36,15 @@ def _generous_session_mint_limit(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
+def _skip_startup_warmup(monkeypatch):
+    """Every `TestClient(app)` runs the app's lifespan, and its warm-ups (ONNX
+    embedder, ChromaDB index, reranker, an Ollama ping with a 5 s timeout) cost
+    seconds per boot — on the CI runner, about a minute per smoke test. Tests
+    that need retrieval or a model mock it; nothing here tests the warm-up."""
+    monkeypatch.setenv("SKIP_WARMUP", "1")
+
+
+@pytest.fixture(autouse=True)
 def _temp_conversations_db(monkeypatch):
     """Point every test at a throwaway SQLite DB so tests don't touch ops/."""
     fd, path = tempfile.mkstemp(suffix=".db")
