@@ -78,6 +78,9 @@ Migration v28: api_tokens stores sha256(token) instead of the bearer itself,
                conversation_store.TOKEN_TTL_DAYS). Existing plaintext rows are
                hashed in place and given a full TTL, so no install is logged out
                by the upgrade (audit H5).
+Migration v29: child_web_claims holds the one-time QR claim codes for the teen
+               web surface (sha256 of the code; the token is minted on
+               redemption). Replaces an in-process dict (audit L11). Additive.
 """
 import hashlib
 import os
@@ -206,7 +209,7 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-SCHEMA_VERSION = 28
+SCHEMA_VERSION = 29
 
 
 def db_path() -> Path:
@@ -397,6 +400,7 @@ def init_db() -> None:
     _ensure_child_missions_table(conn)
     _ensure_lesson_progress_child_key(conn)
     _ensure_licence_tables(conn)
+    _ensure_child_web_claims_table(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -1055,6 +1059,29 @@ def _ensure_referral_clicks_table(conn: sqlite3.Connection) -> None:
         names = set()
     if not names:
         conn.executescript(_CREATE_REFERRAL_CLICKS)
+
+
+def _ensure_child_web_claims_table(conn: sqlite3.Connection) -> None:
+    """v29: one-time QR claim codes for the teen web surface.
+
+    Previously an in-process dict (lost on every restart, invisible to a
+    second worker, and redeemable twice under a race). Holds the sha256 of the
+    code and what to mint on redemption — never the code, never a token.
+    """
+    conn.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS child_web_claims (
+            code_hash   TEXT PRIMARY KEY,
+            device_id   TEXT NOT NULL,
+            child_id    INTEGER NOT NULL,
+            ttl_seconds INTEGER NOT NULL,
+            expires_at  REAL NOT NULL,
+            used_at     REAL
+        );
+        CREATE INDEX IF NOT EXISTS ix_child_web_claims_expires
+            ON child_web_claims (expires_at);
+        """
+    )
 
 
 def _ensure_referrals_table(conn: sqlite3.Connection) -> None:

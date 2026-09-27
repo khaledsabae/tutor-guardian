@@ -1,7 +1,8 @@
 """Stateless child-mode session tokens for «ميزان العادات».
 
 Uses HMAC-SHA256 signed tokens so the server can verify child sessions
-without any database table, lock, or query. Tokens are short-lived (30
+without any database table, lock, or query. (The one-time QR claim codes that
+lead to a web token are the exception: they are in `child_web_claims`.) Tokens are short-lived (30
 minutes by default) and carry only: child_id, device_id, scope, iat, exp.
 """
 import base64
@@ -14,14 +15,24 @@ import time
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
+from app.db.init_db import get_conn
+
 _CHILD_SCOPE = "habit_child"
 _WEB_SCOPE = "habit_child_web"
 
 
-# In-memory store for one-time claim codes. Keyed by a short random code.
-# Each code stores the token to deliver to the browser. Codes are single-use
-# and expire quickly (2 minutes) to prevent URL-history leakage and replay.
-_claim_store: dict[str, dict[str, Any]] = {}
+# One-time claim codes live in `child_web_claims` (schema v29). They used to
+# be a module-level dict, which had three faults: a restart (every deploy)
+# lost every code in flight, a second worker would not see the first one's
+# codes, and redemption was check-then-set across threadpool threads, so two
+# simultaneous redeems of one code could both succeed. The table stores the
+# sha256 of the code, never the code, and never a token: the web token is
+# minted at redemption, so a copy of the table holds nothing usable.
+_CLAIM_TTL_SECONDS = 120
+
+
+def _code_hash(code: str) -> str:
+    return hashlib.sha256(code.encode()).hexdigest()
 
 
 def _secret() -> bytes:
@@ -114,18 +125,23 @@ def create_claim_code(device_id: str, child_id: int, ttl_seconds: int = 72000) -
     the corresponding /claim-session/{code} URL, the backend redeems it via
     POST and returns the real token. This prevents the actual token from ever
     appearing in browser history or being reshared as a link.
+
+    `ttl_seconds` is the lifetime of the web token the code redeems for; the
+    code itself is good for two minutes.
     """
-    token = issue_child_token(device_id, child_id, ttl_seconds=ttl_seconds, is_web=True)
     code = secrets.token_urlsafe(24)
     now = time.time()
-    _claim_store[code] = {
-        "token": token,
-        "device_id": device_id,
-        "child_id": child_id,
-        "exp": now + 120,
-        "used": False,
-    }
-    _prune_claim_store()
+    conn = get_conn()
+    try:
+        conn.execute("DELETE FROM child_web_claims WHERE expires_at < ?", (now,))
+        conn.execute(
+            "INSERT INTO child_web_claims (code_hash, device_id, child_id, ttl_seconds, expires_at) "
+            "VALUES (?, ?, ?, ?, ?)",
+            (_code_hash(code), device_id, child_id, ttl_seconds, now + _CLAIM_TTL_SECONDS),
+        )
+        conn.commit()
+    finally:
+        conn.close()
     return code
 
 
@@ -134,30 +150,34 @@ def redeem_claim_code(code: str) -> dict[str, Any] | None:
 
     Returns {"token": <web-token>, "child_id": int, "expires_at": iso}
     on success, or None if the code is missing, expired, or already used.
+
+    The spend is a single conditional UPDATE, so of two concurrent redeems
+    exactly one sees rowcount 1; SQLite serialises the writes.
     """
-    _prune_claim_store()
-    entry = _claim_store.get(code)
-    if entry is None:
-        return None
-    if entry["used"] or entry["exp"] < time.time():
-        del _claim_store[code]
-        return None
-    entry["used"] = True
-    token = entry["token"]
-    expires_at = child_token_expiry_iso(token)
+    h = _code_hash(code)
+    conn = get_conn()
+    try:
+        spent = conn.execute(
+            "UPDATE child_web_claims SET used_at = ? "
+            "WHERE code_hash = ? AND used_at IS NULL AND expires_at >= ?",
+            (time.time(), h, time.time()),
+        ).rowcount
+        conn.commit()
+        if spent != 1:
+            return None
+        row = conn.execute(
+            "SELECT device_id, child_id, ttl_seconds FROM child_web_claims WHERE code_hash = ?",
+            (h,),
+        ).fetchone()
+    finally:
+        conn.close()
+    token = issue_child_token(row["device_id"], row["child_id"],
+                              ttl_seconds=row["ttl_seconds"], is_web=True)
     return {
         "token": token,
-        "child_id": entry["child_id"],
-        "expires_at": expires_at,
+        "child_id": row["child_id"],
+        "expires_at": child_token_expiry_iso(token),
     }
-
-
-def _prune_claim_store() -> None:
-    """Remove expired claim entries periodically."""
-    now = time.time()
-    expired = [code for code, entry in _claim_store.items() if entry["exp"] < now]
-    for code in expired:
-        del _claim_store[code]
 
 
 def web_ttl_seconds() -> int:

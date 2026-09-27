@@ -4,13 +4,16 @@ Per ops/FIQH_GUARD.md v3 (approved 2026-09-10):
 - Hard Block on explicit fiqh/aqeedah categories, regardless of retrieval score.
 - Tarbawi-intent questions (guiding a child) are NOT blocked — they are the product.
 - Every block is logged to blocked_fiqh_log (text, rule, timestamp) for weekly
-  false-positive review and future classifier training.
+  false-positive review and future classifier training — with the family's
+  child names, emails and phone numbers masked, and kept for
+  FIQH_LOG_RETENTION_DAYS (default 90).
 - Regex phase only (v3 plan step 3); the intent classifier comes after a week
   of real samples.
 """
 from __future__ import annotations
 
 import logging
+import os
 import re
 import sqlite3
 import time
@@ -107,12 +110,15 @@ _RULES: list[tuple[str, "re.Pattern[str]"]] = [
 ]
 
 
-def check_fiqh_guard(text: str) -> tuple[bool, str]:
-    """Return (blocked, rule_id) for explicit fiqh/aqeedah ruling questions."""
+def check_fiqh_guard(text: str, device_id: str | None = None) -> tuple[bool, str]:
+    """Return (blocked, rule_id) for explicit fiqh/aqeedah ruling questions.
+
+    `device_id` is used only to mask that family's child names in the log.
+    """
     norm = _normalize(text)
     for rule_id, pattern in _RULES:
         if pattern.search(norm):
-            _log_block(text, rule_id)
+            _log_block(text, rule_id, device_id)
             return True, rule_id
     return False, ""
 
@@ -121,7 +127,36 @@ def check_fiqh_guard(text: str) -> tuple[bool, str]:
 _LOG_DB = Path(__file__).resolve().parents[3] / "ops" / "sessions.db"
 
 
-def _log_block(text: str, rule_id: str) -> None:
+# An email, or a run of 7+ digits allowing spaces/dashes/+ (Arabic-Indic
+# digits included): contact details a parent typed into a question.
+_EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+_PHONE = re.compile(r"\+?[\d\u0660-\u0669](?:[\s-]?[\d\u0660-\u0669]){6,}")
+
+
+def _retention_days() -> int:
+    try:
+        return max(1, int(os.environ.get("FIQH_LOG_RETENTION_DAYS", "90")))
+    except ValueError:
+        return 90
+
+
+def _scrub(text: str, device_id: str | None) -> str:
+    """What the review needs is the phrasing that tripped a rule, not who asked.
+
+    The questions are verbatim parent text and used to be stored as typed,
+    forever: children's names, and whatever contact details came with them.
+    """
+    from app.services.privacy import redact_for_cloud  # lazy: avoids an import cycle
+
+    try:
+        text = redact_for_cloud(text, device_id)
+    except Exception:  # noqa: BLE001 — masking is best effort, the block is not
+        logger.warning("fiqh_guard: name redaction failed", exc_info=True)
+    text = _EMAIL.sub("[email]", text)
+    return _PHONE.sub("[phone]", text)
+
+
+def _log_block(text: str, rule_id: str, device_id: str | None = None) -> None:
     try:
         import sqlite3
         conn = sqlite3.connect(str(_LOG_DB))
@@ -135,7 +170,11 @@ def _log_block(text: str, rule_id: str) -> None:
         )
         conn.execute(
             "INSERT INTO blocked_fiqh_log (question, rule_id) VALUES (?, ?)",
-            (text[:500], rule_id),
+            (_scrub(text, device_id)[:500], rule_id),
+        )
+        conn.execute(
+            "DELETE FROM blocked_fiqh_log WHERE created_at < datetime('now', ?)",
+            (f"-{_retention_days()} days",),
         )
         conn.commit()
         conn.close()

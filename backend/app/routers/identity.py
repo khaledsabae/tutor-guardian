@@ -13,6 +13,7 @@ Security:
 """
 import asyncio
 import logging
+import time
 from typing import Optional
 
 import httpx
@@ -36,7 +37,8 @@ async def _verify_google_id_token(id_token: str) -> Optional[dict]:
     """Verify a Google ID token via Google's tokeninfo endpoint.
 
     Returns the token payload on success, None on failure.
-    Validates issuer, expiry, and audience/authorized party.
+    Validates issuer, expiry and audience. `email` is kept only when Google
+    says it is verified (see [_verified_email]).
     """
     try:
         async with httpx.AsyncClient(timeout=10.0) as client:
@@ -66,17 +68,36 @@ async def _verify_google_id_token(id_token: str) -> Optional[dict]:
         exp = int(payload.get("exp", "0"))
     except (ValueError, TypeError):
         return None
-    if exp == 0:
+    # tokeninfo refuses expired tokens itself; checking here too means a
+    # proxy or cache in between cannot hand us one.
+    if exp <= int(time.time()):
         return None
 
-    # Accept tokens issued for the Web client ID (serverClientId).
+    # The audience must be our Web client ID (the mobile plugin's
+    # serverClientId). `azp` is the party that *requested* the token — on
+    # Android that is the Android client — so it says nothing about who the
+    # token is for, and accepting `azp == ours` alone let a token minted for
+    # another audience through.
     aud = payload.get("aud", "")
-    azp = payload.get("azp", "")
-    if aud != _GOOGLE_WEB_CLIENT_ID and azp != _GOOGLE_WEB_CLIENT_ID:
-        logger.warning("Google token audience not recognised: aud=%s azp=%s", aud, azp)
+    if aud != _GOOGLE_WEB_CLIENT_ID:
+        logger.warning("Google token audience not recognised: aud=%s azp=%s",
+                       aud, payload.get("azp", ""))
         return None
 
     return payload
+
+
+def _verified_email(token_payload: dict) -> str:
+    """The token's email, or "" when Google does not vouch for it.
+
+    Linking is keyed on `sub`, which Google controls. `email` is not: an
+    account can carry an address its owner never proved (Google accounts made
+    with a third-party address). tokeninfo sends `email_verified` as the string
+    "true"; the id_token JWT sends a boolean — accept both.
+    """
+    if str(token_payload.get("email_verified", "")).lower() != "true":
+        return ""
+    return (token_payload.get("email") or "").strip()
 
 
 @router.post("/identity/link-google")
@@ -92,7 +113,7 @@ async def link_google_identity(request: Request, payload: dict) -> dict:
         return {"ok": False, "error": "invalid_google_id_token"}
 
     google_id = token_payload.get("sub", "").strip()
-    email = (token_payload.get("email") or "").strip()
+    email = _verified_email(token_payload)
     display_name = (token_payload.get("name") or "").strip()
 
     if not google_id:

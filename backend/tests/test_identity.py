@@ -53,6 +53,7 @@ _FAKE_TOKENINFO = {
     "iss": "https://accounts.google.com",
     "sub": "google-12345",
     "email": "parent@example.com",
+    "email_verified": "true",
     "name": "Test Parent",
     "aud": _WEB_CLIENT_ID,
     "exp": "9999999999",
@@ -149,3 +150,54 @@ def test_link_google_rejects_wrong_audience(client):
         )
     assert r.json()["ok"] is False
     assert r.json()["error"] == "invalid_google_id_token"
+
+
+def _link_with(client, payload):
+    with patch(
+        "app.routers.identity.httpx.AsyncClient.get",
+        new_callable=AsyncMock,
+        return_value=Response(200, json=payload),
+    ):
+        return client.post("/api/identity/link-google", json={"id_token": "valid.id.token"})
+
+
+def test_link_google_rejects_token_for_another_audience_even_if_we_requested_it(client):
+    # `azp` names who asked for the token, not who it is for. The old check
+    # accepted either field, so aud=someone-else + azp=us got through.
+    payload = dict(_FAKE_TOKENINFO)
+    payload["aud"] = "another-service.apps.googleusercontent.com"
+    payload["azp"] = _WEB_CLIENT_ID
+    r = _link_with(client, payload)
+    assert r.json() == {"ok": False, "error": "invalid_google_id_token"}
+
+
+def test_link_google_rejects_expired_token(client):
+    payload = dict(_FAKE_TOKENINFO)
+    payload["exp"] = "1000000000"          # 2001
+    r = _link_with(client, payload)
+    assert r.json() == {"ok": False, "error": "invalid_google_id_token"}
+
+
+def test_unverified_email_is_not_stored(client):
+    # Identity is the Google `sub`; the email is only what the account claims.
+    # An address Google has not verified must not be recorded as the parent's.
+    payload = dict(_FAKE_TOKENINFO)
+    payload["email"] = "someone-else@example.com"
+    payload["email_verified"] = "false"
+    r = _link_with(client, payload)
+    assert r.json()["ok"] is True
+    assert r.json()["email"] == ""
+    me = client.get("/api/identity/me").json()
+    assert me["linked"] is True and me["email"] is None
+
+
+def test_missing_email_verified_counts_as_unverified(client):
+    payload = dict(_FAKE_TOKENINFO)
+    payload.pop("email_verified")
+    assert _link_with(client, payload).json()["email"] == ""
+
+
+def test_jwt_style_boolean_email_verified_is_accepted(client):
+    payload = dict(_FAKE_TOKENINFO)
+    payload["email_verified"] = True
+    assert _link_with(client, payload).json()["email"] == "parent@example.com"

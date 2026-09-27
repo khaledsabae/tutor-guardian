@@ -282,7 +282,7 @@ async def draft_reply(request: Request, user_message: UserMessage):
         return await asyncio.to_thread(_finalize, reply, session_id)
 
     # ── Step 1b: FIQH guard (hard block — FIQH_GUARD.md v3) ───────────
-    fiqh_blocked, fiqh_rule = await asyncio.to_thread(check_fiqh_guard, query_input)
+    fiqh_blocked, fiqh_rule = await asyncio.to_thread(check_fiqh_guard, query_input, caller_device)
     if fiqh_blocked:
         logger.warning("FIQH guard block: rule=%s", fiqh_rule)
         reply = AssistantReply(
@@ -633,7 +633,7 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
         return await _single(emergency_reply(user_message, policies))
 
     # ── FIQH guard (hard block — FIQH_GUARD.md v3) ────────────────────
-    fiqh_blocked, fiqh_rule = await asyncio.to_thread(check_fiqh_guard, query_input)
+    fiqh_blocked, fiqh_rule = await asyncio.to_thread(check_fiqh_guard, query_input, caller_device)
     if fiqh_blocked:
         logger.warning("FIQH guard block (stream): rule=%s", fiqh_rule)
         return await _single(AssistantReply(

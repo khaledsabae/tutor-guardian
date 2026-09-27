@@ -123,7 +123,7 @@ def test_legacy_plaintext_tokens_are_hashed_and_keep_working(legacy):
     rows = conn.execute("SELECT token, expires_at FROM api_tokens").fetchall()
     version = conn.execute("SELECT version FROM schema_version").fetchone()[0]
     conn.close()
-    assert version == 28
+    assert version >= 28                            # later migrations stack on top
     assert rows == [(hashlib.sha256(b"tg_legacy_plaintext").hexdigest(), rows[0][1])]
     assert rows[0][1] is not None                   # given a full TTL, not NULL
     # The install still holds the raw token: it must not be logged out.
