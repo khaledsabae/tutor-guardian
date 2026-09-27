@@ -51,9 +51,10 @@ jobs:
     # 12 was not enough: the first run after re-enabling this workflow was
     # cancelled at 12m12s. Installing backend/requirements.txt (torch, ONNX
     # Runtime, ChromaDB, sentence-transformers) dominates on a cold pip cache,
-    # and the suite then runs twice on purpose — see the second pytest step.
-    # Free on a public repo, so the ceiling is generous rather than tight.
-    timeout-minutes: 30
+    # 30 then stopped being enough too: the suite used to run twice, and at
+    # ~22 min a pass on this runner (2026-09-27) the second pass was cancelled
+    # at 30m with every test already green. One full pass now; see below.
+    timeout-minutes: 40
     env:
       # Force tests to skip the network-bound RAG smoke test.
       SKIP_API_SMOKE: '1'
@@ -80,20 +81,15 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
 
-      - name: Run pytest (excluding the network smoke test)
-        run: |
-          cd "$GITHUB_WORKSPACE"
-          pytest --ignore=backend/tests/test_api_smoke.py -v
-
-      - name: Run pytest with full suite (skip the smoke test via env)
-        # Keep this as a second pass so a misconfigured `ignore` doesn't
-        # silently mask regressions. The test internally checks
-        # SKIP_API_SMOKE.
+      - name: Run pytest (full suite; the smoke test honours SKIP_API_SMOKE)
+        # One pass over everything. There used to be two: `--ignore` of the
+        # smoke test, then the full suite "so a misconfigured ignore doesn't
+        # mask regressions". The second pass was a strict superset of the
+        # first, so the first bought nothing but doubled the time — and that
+        # pushed the job past its timeout.
         run: |
           cd "$GITHUB_WORKSPACE"
           pytest -v
-        env:
-          SKIP_API_SMOKE: '1'
 
   # ── 2. Knowledge-base integrity (catches schema drift) ───────────────
   kb-integrity:

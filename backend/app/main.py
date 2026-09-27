@@ -112,7 +112,12 @@ async def lifespan(app: FastAPI):
     # primary the local models are a cold fallback, and warming them costs
     # every start — including every rollback — the full timeout below when
     # the host is unreachable, which is exactly when a rollback is urgent.
-    if LLM.primary_provider != "ollama":
+    if os.environ.get("SKIP_WARMUP"):
+        # Same switch as the embedder warm-up above. Without it every test that
+        # enters the app's lifespan waited out the 5 s timeout below against an
+        # unreachable home host — 1,180 tests' worth of boots on the CI runner.
+        logger.info("⚡ SKIP_WARMUP set: skipping Ollama warm-up.")
+    elif LLM.primary_provider != "ollama":
         logger.info("Warm-up: skipping Ollama (primary provider is %s)", LLM.primary_provider)
     else:
         _local_base = os.environ.get("OLLAMA_LOCAL_BASE_URL") or os.environ.get("OLLAMA_BASE_URL", DEFAULT_HOME_OLLAMA_URL)
