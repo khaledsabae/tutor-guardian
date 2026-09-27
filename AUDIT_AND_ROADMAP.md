@@ -262,10 +262,10 @@ Two independent defects:
 | L5 | `datetime.utcnow()` (deprecated in 3.12) in `children.py` and `program.py` | 📋 |
 | L6 | `_unit_languages()` `lru_cache` is never invalidated after a KB rebuild | 📋 |
 | L7 | `MultilingualEmbedding._lazy_load` is not thread-safe (masked by the warm-up) | 📋 |
-| L8 | `identity._verify_google_id_token` does not check `email_verified`; the legacy merge copies child profiles but not their progress | 📋 |
+| L8 | `identity._verify_google_id_token` does not check `email_verified`; the legacy merge copies child profiles but not their progress | ✅ security part: the email is stored only when Google marks it verified; the audience must be our client (a token with a foreign `aud` and our `azp` used to pass); expired tokens are refused. 📋 the progress merge is still open (data completeness, not security) |
 | L9 | `pytest` and `pytest-anyio>=0.0.0` ship in the runtime image; `pytest-anyio` is obsolete because anyio ships its own plugin | 📋 split `requirements-dev.txt` |
 | L10 | Push `registerToken` attaches a new `onTokenRefresh` listener on every call and hard-codes `platform: 'android'` | 📋 |
-| L11 | The `child_web` claim store is in-process memory, so it breaks with more than one worker and codes are lost on restart | 📋 move to Redis |
+| L11 | The `child_web` claim store is in-process memory, so it breaks with more than one worker and codes are lost on restart | ✅ `child_web_claims` table (schema v29): sha256 of the code, the token minted on redemption, and a single conditional UPDATE, so of two concurrent redeems exactly one wins (the old check-then-set could let both win) |
 | L12 | `lint` gate is deliberately narrow; there are pre-existing unused imports (`assistant.py`, `fiqh_guard.py`) | 📋 widen ruff gradually |
 
 ---
@@ -331,7 +331,7 @@ Tests added:
 2. ~~H4~~ ✅.
 3. **H5:** ✅ hashed tokens, sliding expiry, log-safe device ids. Remaining: flip `SESSION_MINT_ENFORCE` after the forced-update floor reaches 106.
 4. ~~M6~~ ✅.
-5. **M4/M5:** ✅ scoped, word-bounded redaction and a name-aware cache. Still open: redact the fiqh block log and add a TTL.
+5. **M4/M5:** ✅ scoped, word-bounded redaction and a name-aware cache. ✅ The fiqh block log masks the family's child names, emails and phone numbers and keeps rows for `FIQH_LOG_RETENTION_DAYS` (90).
 6. **C2 follow-up:** the fiqh intent classifier (FIQH_GUARD.md step 4), with a golden set from `blocked_fiqh_log`.
 
 ### Phase 2: reliability and performance (2–4 weeks)
