@@ -208,6 +208,15 @@ void main() {
       expect(container.read(childModeProvider).day!.streak.days, 3);
     });
 
+    test('a second stage of the same habit is a no-op', () {
+      final n = ChildModeNotifier(_FakeTgClient());
+      const item = HabitItem(category: HabitCategory.worship, habitName: 'x');
+      expect(n.stage(item, 'completed'), isNotNull);
+      expect(n.stage(item, 'completed'), isNull);
+      n.undo('x');
+      n.dispose();
+    });
+
     testWidgets('a staged log is sent when the session ends early',
         (tester) async {
       final fake = _FakeTgClient();
