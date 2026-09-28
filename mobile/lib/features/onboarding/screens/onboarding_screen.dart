@@ -29,6 +29,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../program/providers/progress_providers.dart';
 import '../data/onboarding_storage.dart';
@@ -629,7 +630,7 @@ class _AgeChip extends StatelessWidget {
         fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
       ),
       side: BorderSide(
-        color: selected ? AppTheme.primary : const Color(0xFFD0D5DD),
+        color: selected ? AppTheme.primary : context.colors.track,
       ),
     );
   }

@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/empty_state.dart';
@@ -658,7 +659,7 @@ class _TrailRow extends StatelessWidget {
                     toEnd: alignEnd,
                     color: prevStatus == ProgressStatus.completed
                         ? style.base
-                        : const Color(0xFFD8D0C2),
+                        : context.colors.track,
                     dashed: prevStatus != ProgressStatus.completed,
                     textDirection: Directionality.of(context),
                   ),

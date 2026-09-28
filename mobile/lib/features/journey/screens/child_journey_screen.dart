@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../theme/app_colors.dart';
 import '../../../core/analytics.dart';
 import '../../../core/app_routes.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
@@ -654,15 +655,15 @@ class _SuggestedTile extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(Icons.info_outline,
-                              size: 13, color: Color(0xFFB26A00)),
+                          Icon(Icons.info_outline,
+                              size: 13, color: context.colors.warningFg),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
                               milestone.concernNote!,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 11,
-                                color: Color(0xFFB26A00),
+                                color: context.colors.warningFg,
                                 height: 1.35,
                               ),
                             ),

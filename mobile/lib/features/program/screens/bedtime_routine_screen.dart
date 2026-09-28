@@ -13,6 +13,7 @@ import '../../screen_off/narration_store.dart';
 import '../services/bedtime_audio_service.dart';
 import '../../../widgets/ui/night_sky.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../theme/app_colors.dart';
 import 'package:almorabbi/core/motion.dart';
 
 class BedtimeRoutineScreen extends ConsumerStatefulWidget {
@@ -306,8 +307,8 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
               ),
               Text(
                 dhikr.translation,
-                style: const TextStyle(
-                  color: Color(0xFF7D7D7D),
+                style: TextStyle(
+                  color: context.colors.textSecondary,
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                 ),
@@ -341,11 +342,13 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
                     child: Text(
                       dhikr.text,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      // The card is Dt.surface, which is dark in dark mode;
+                      // a fixed near-black here made the dhikr itself unreadable.
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
                         height: 1.85,
-                        color: Color(0xFF2D2D2D),
+                        color: context.colors.ink,
                       ),
                     ),
                   ),
@@ -445,8 +448,8 @@ class _BedtimeRoutineScreenState extends ConsumerState<BedtimeRoutineScreen> {
           Text(
             AppLocalizations.of(context).bedtimeStoriesDesc,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFF4A4A4A),
+            style: TextStyle(
+              color: context.colors.textSecondary,
               fontSize: 16,
               height: 1.6,
               fontWeight: FontWeight.w600,

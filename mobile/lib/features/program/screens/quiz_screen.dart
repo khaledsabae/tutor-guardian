@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/count_up_text.dart';
 import '../../../widgets/ui/empty_state.dart';
@@ -312,7 +313,7 @@ class _OptionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Duolingo-style option: white pill with a darker bottom edge.
-    Color edgeColor = const Color(0xFFE3DCCE);
+    Color edgeColor = context.colors.track;
     Color bgColor = AppTheme.surface;
     Color letterBg = AppTheme.surfaceAlt;
     Color letterFg = AppTheme.textPrimary;
