@@ -785,7 +785,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatEmptyHint =>
-      'Choose the age group and severity from the bar above, then type your question.';
+      'Type your question. You can add the behaviour type from the context button next to the input.';
 
   @override
   String get onbSelectAge => 'Please select an age group.';
@@ -3798,4 +3798,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get a11yCopyCode => 'Copy the code';
+
+  @override
+  String get chatContextAdd => 'Add context to your question';
+
+  @override
+  String get chatContextTitle => 'Question context';
+
+  @override
+  String get chatContextHint =>
+      'e.g. tantrums, refusing food, jealousy of a sibling';
+
+  @override
+  String get chatContextClear => 'Remove context';
+
+  @override
+  String get chatContextDone => 'Done';
+
+  @override
+  String chatSources(Object count) {
+    return 'Sources ($count)';
+  }
+
+  @override
+  String get chatSourcesHint => 'The references this answer is based on';
 }

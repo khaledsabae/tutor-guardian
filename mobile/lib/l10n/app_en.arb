@@ -247,7 +247,7 @@
   "chatNewChatBtn": "New Chat",
   "chatSessionMessages": "{count} messages",
   "chatEmptyWelcome": "Welcome — ask about any parenting challenge",
-  "chatEmptyHint": "Choose the age group and severity from the bar above, then type your question.",
+  "chatEmptyHint": "Type your question. You can add the behaviour type from the context button next to the input.",
   "onbSelectAge": "Please select an age group.",
   "onbServerSlow": "The server is taking longer than usual. Check your connection and try again.",
   "onbChildError": "Failed to create child profile: {error}",
@@ -1208,5 +1208,12 @@
   "a11yPlay": "Play",
   "a11yPause": "Pause",
   "a11yFlipCard": "Flip the card",
-  "a11yCopyCode": "Copy the code"
+  "a11yCopyCode": "Copy the code",
+  "chatContextAdd": "Add context to your question",
+  "chatContextTitle": "Question context",
+  "chatContextHint": "e.g. tantrums, refusing food, jealousy of a sibling",
+  "chatContextClear": "Remove context",
+  "chatContextDone": "Done",
+  "chatSources": "Sources ({count})",
+  "chatSourcesHint": "The references this answer is based on"
 }

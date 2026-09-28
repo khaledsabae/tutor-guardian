@@ -1589,7 +1589,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatEmptyHint.
   ///
   /// In ar, this message translates to:
-  /// **'اختر الفئة العمرية والشدة من الشريط أعلاه، ثم اكتب سؤالك.'**
+  /// **'اكتب سؤالك، ويمكنك إضافة نوع السلوك من زر السياق بجانب خانة الكتابة.'**
   String get chatEmptyHint;
 
   /// No description provided for @onbSelectAge.
@@ -6799,6 +6799,48 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'انسخ الكود'**
   String get a11yCopyCode;
+
+  /// No description provided for @chatContextAdd.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة سياق للسؤال'**
+  String get chatContextAdd;
+
+  /// No description provided for @chatContextTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سياق السؤال'**
+  String get chatContextTitle;
+
+  /// No description provided for @chatContextHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثلاً: نوبات غضب، رفض الأكل، الغيرة من الأخ'**
+  String get chatContextHint;
+
+  /// No description provided for @chatContextClear.
+  ///
+  /// In ar, this message translates to:
+  /// **'إزالة السياق'**
+  String get chatContextClear;
+
+  /// No description provided for @chatContextDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم'**
+  String get chatContextDone;
+
+  /// No description provided for @chatSources.
+  ///
+  /// In ar, this message translates to:
+  /// **'المصادر ({count})'**
+  String chatSources(Object count);
+
+  /// No description provided for @chatSourcesHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'المراجع التي بُنيت عليها هذه الإجابة'**
+  String get chatSourcesHint;
 }
 
 class _AppLocalizationsDelegate

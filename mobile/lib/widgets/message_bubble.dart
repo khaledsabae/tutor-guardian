@@ -19,6 +19,20 @@ import 'safety_banner.dart';
 import '../l10n/app_localizations.dart';
 import '../core/motion.dart';
 
+/// The answer text without its «📚 المصدر: …» lines.
+///
+/// The model is told to end with that line, and the retrieval-only fallback
+/// puts one under each passage. When the reply carries structured sources the
+/// "Sources (n)" row lists them, so the inline lines would say it twice.
+String stripSourceLines(String text) {
+  final kept = text
+      .split('\n')
+      .where((line) =>
+          !line.replaceFirst(RegExp(r'^[\s>*_-]+'), '').startsWith('📚'))
+      .join('\n');
+  return kept.trimRight();
+}
+
 class MessageBubble extends StatelessWidget {
   final ChatMessageUI message;
   final bool isFirstInGroup;
@@ -174,16 +188,22 @@ class _AssistantBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final r = message.reply;
+    final sources = (r != null && !message.isStreaming)
+        ? r.sources
+        : const <String>[];
+    final content = sources.isEmpty
+        ? message.content
+        : stripSourceLines(message.content);
     // While nothing has arrived yet the typing dots below are the whole
     // signal; a Markdown "…" above them said the same thing twice.
-    final showContent = message.content.isNotEmpty;
+    final showContent = content.isNotEmpty;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (r != null) SafetyBanner(reply: r),
         if (showContent)
           MarkdownBody(
-            data: message.content,
+            data: content,
             styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
                 .copyWith(
               // 16/1.7 for long Arabic guidance: diacritics need the leading
@@ -213,6 +233,7 @@ class _AssistantBody extends StatelessWidget {
         if (r != null && !message.isStreaming) ...[
           const SizedBox(height: 6),
           _MetadataChips(reply: r),
+          if (sources.isNotEmpty) _SourcesDisclosure(sources: sources),
           const SizedBox(height: 4),
           _FeedbackRow(
             current: message.feedback,
@@ -421,6 +442,93 @@ class _MetadataChips extends StatelessWidget {
             ),
           )
           .toList(),
+    );
+  }
+}
+
+/// Collapsed "Sources (n)" row under a grounded answer (UX_UI_ROADMAP §2.2).
+/// Trust for religious and medical guidance without cluttering the answer.
+class _SourcesDisclosure extends StatefulWidget {
+  const _SourcesDisclosure({required this.sources});
+
+  final List<String> sources;
+
+  @override
+  State<_SourcesDisclosure> createState() => _SourcesDisclosureState();
+}
+
+class _SourcesDisclosureState extends State<_SourcesDisclosure> {
+  bool _open = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final muted = AppTheme.textSecondary;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Semantics(
+          button: true,
+          expanded: _open,
+          hint: l10n.chatSourcesHint,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(Dt.rChip),
+            onTap: () => setState(() => _open = !_open),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: Dt.minTouch),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.menu_book_rounded, size: 16, color: muted),
+                  const SizedBox(width: 6),
+                  Text(
+                    l10n.chatSources(widget.sources.length),
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: muted,
+                    ),
+                  ),
+                  Icon(
+                    _open
+                        ? Icons.expand_less_rounded
+                        : Icons.expand_more_rounded,
+                    size: 18,
+                    color: muted,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        AnimatedSize(
+          duration: Dt.fast,
+          alignment: AlignmentDirectional.topStart,
+          child: _open
+              ? Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 22, bottom: 4),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (final s in widget.sources)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text(
+                            '• $s',
+                            style: TextStyle(
+                              fontSize: 13,
+                              height: 1.5,
+                              color: AppTheme.textPrimary,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
     );
   }
 }

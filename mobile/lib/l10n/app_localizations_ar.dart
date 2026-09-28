@@ -772,7 +772,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chatEmptyHint =>
-      'اختر الفئة العمرية والشدة من الشريط أعلاه، ثم اكتب سؤالك.';
+      'اكتب سؤالك، ويمكنك إضافة نوع السلوك من زر السياق بجانب خانة الكتابة.';
 
   @override
   String get onbSelectAge => 'يجب اختيار المرحلة العمرية.';
@@ -3747,4 +3747,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get a11yCopyCode => 'انسخ الكود';
+
+  @override
+  String get chatContextAdd => 'إضافة سياق للسؤال';
+
+  @override
+  String get chatContextTitle => 'سياق السؤال';
+
+  @override
+  String get chatContextHint => 'مثلاً: نوبات غضب، رفض الأكل، الغيرة من الأخ';
+
+  @override
+  String get chatContextClear => 'إزالة السياق';
+
+  @override
+  String get chatContextDone => 'تم';
+
+  @override
+  String chatSources(Object count) {
+    return 'المصادر ($count)';
+  }
+
+  @override
+  String get chatSourcesHint => 'المراجع التي بُنيت عليها هذه الإجابة';
 }

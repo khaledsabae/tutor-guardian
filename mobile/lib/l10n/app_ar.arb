@@ -247,7 +247,7 @@
   "chatNewChatBtn": "محادثة جديدة",
   "chatSessionMessages": "{count} رسالة",
   "chatEmptyWelcome": "مرحباً — اسأل عن أي تحدٍّ تربوي يواجهك",
-  "chatEmptyHint": "اختر الفئة العمرية والشدة من الشريط أعلاه، ثم اكتب سؤالك.",
+  "chatEmptyHint": "اكتب سؤالك، ويمكنك إضافة نوع السلوك من زر السياق بجانب خانة الكتابة.",
   "onbSelectAge": "يجب اختيار المرحلة العمرية.",
   "onbServerSlow": "الخادم يستغرق وقتاً أطول من المعتاد. تأكد من الاتصال وحاول مرة أخرى.",
   "onbChildError": "تعذّر إنشاء ملف الطفل: {error}",
@@ -1225,5 +1225,12 @@
   "a11yPlay": "تشغيل",
   "a11yPause": "إيقاف مؤقت",
   "a11yFlipCard": "اقلب البطاقة",
-  "a11yCopyCode": "انسخ الكود"
+  "a11yCopyCode": "انسخ الكود",
+  "chatContextAdd": "إضافة سياق للسؤال",
+  "chatContextTitle": "سياق السؤال",
+  "chatContextHint": "مثلاً: نوبات غضب، رفض الأكل، الغيرة من الأخ",
+  "chatContextClear": "إزالة السياق",
+  "chatContextDone": "تم",
+  "chatSources": "المصادر ({count})",
+  "chatSourcesHint": "المراجع التي بُنيت عليها هذه الإجابة"
 }

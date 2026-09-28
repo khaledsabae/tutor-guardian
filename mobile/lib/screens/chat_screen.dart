@@ -2,7 +2,8 @@
 ///
 /// Layout:
 ///   * AppBar  : "🛡️  المربي الذكي"  +  badge with turn count.
-///   * Settings bar : age group + severity dropdowns + behavior_type field.
+///   * Context chip : the optional behavior_type, folded into the composer
+///                    (UX_UI_ROADMAP C6) — no permanent bar above the chat.
 ///   * Message list : user bubbles (right) + assistant bubbles (left) +
 ///                    safety banners driven by AssistantReply flags.
 ///   * Composer     : auto-grow textarea + send button (disabled while
@@ -128,6 +129,20 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     unawaited(Haptics.selection());
     await ref.read(chatNotifierProvider.notifier).sendMessage(text);
     _scrollToBottom();
+  }
+
+  /// The optional behaviour type ("context") used to sit in a permanent
+  /// field above the conversation, ~64 dp that mattered most with the
+  /// keyboard up. It is now a sheet opened from the composer (C6).
+  Future<void> _editContext(String current) async {
+    final value = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => _ContextSheet(initial: current),
+    );
+    if (value == null || !mounted) return;
+    ref.read(chatNotifierProvider.notifier).setBehaviorType(value.trim());
   }
 
   @override
@@ -276,7 +291,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
           if (!isOnline) const _OfflineBanner(),
           // Daily tip moved to the Home tab (اليوم) — chat is now a
           // pure conversation surface.
-          _SettingsBar(state: state, notifier: notifier),
           if (showBanner) _ErrorBanner(
             message: state.errorBanner!,
             onRetry: notifier.retryLastTurn,
@@ -382,6 +396,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
             onSend: _onSend,
             onStop: () =>
                 ref.read(chatNotifierProvider.notifier).stopStreaming(),
+            behaviorType: state.behaviorType,
+            onEditContext: () => _editContext(state.behaviorType),
+            onClearContext: () => notifier.setBehaviorType(''),
           ),
         ],
       ),
@@ -405,33 +422,69 @@ List<String> _followUpsFor(ChatMessageUI m, AppLocalizations l10n) {
   return [l10n.chatFollowExample, l10n.chatFollowForAge, l10n.chatFollowShort];
 }
 
-class _SettingsBar extends StatelessWidget {
-  final ChatState state;
-  final ChatNotifier notifier;
-  const _SettingsBar({required this.state, required this.notifier});
+/// Bottom sheet for the optional behaviour type. Pops with the new value
+/// (empty = cleared), or null when dismissed without a change.
+class _ContextSheet extends StatefulWidget {
+  const _ContextSheet({required this.initial});
+
+  final String initial;
+
+  @override
+  State<_ContextSheet> createState() => _ContextSheetState();
+}
+
+class _ContextSheetState extends State<_ContextSheet> {
+  late final TextEditingController _ctrl =
+      TextEditingController(text: widget.initial);
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-      decoration: BoxDecoration(
-        color: AppTheme.surface,
-        border: Border(
-          bottom: BorderSide(color: AppTheme.surfaceAlt, width: 1),
-        ),
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        Dt.s16,
+        0,
+        Dt.s16,
+        Dt.s16 + MediaQuery.viewInsetsOf(context).bottom,
       ),
-      child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: TextFormField(
-              initialValue: state.behaviorType,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context).chatBehaviorOptional,
-                isDense: true,
-              ),
-              textInputAction: TextInputAction.done,
-              onChanged: notifier.setBehaviorType,
+          Text(l10n.chatContextTitle,
+              style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: Dt.s8),
+          TextField(
+            controller: _ctrl,
+            autofocus: true,
+            maxLength: 200, // UserMessage.behavior_type max_length
+            textInputAction: TextInputAction.done,
+            onSubmitted: (v) => Navigator.pop(context, v),
+            decoration: InputDecoration(
+              labelText: l10n.chatBehaviorOptional,
+              hintText: l10n.chatContextHint,
             ),
+          ),
+          const SizedBox(height: Dt.s8),
+          Row(
+            children: [
+              if (widget.initial.isNotEmpty)
+                TextButton(
+                  onPressed: () => Navigator.pop(context, ''),
+                  child: Text(l10n.chatContextClear),
+                ),
+              const Spacer(),
+              FilledButton(
+                onPressed: () => Navigator.pop(context, _ctrl.text),
+                child: Text(l10n.chatContextDone),
+              ),
+            ],
           ),
         ],
       ),
@@ -766,6 +819,9 @@ class _Composer extends StatelessWidget {
   final bool isStreaming;
   final VoidCallback onSend;
   final VoidCallback onStop;
+  final String behaviorType;
+  final VoidCallback onEditContext;
+  final VoidCallback onClearContext;
   const _Composer({
     required this.controller,
     required this.focusNode,
@@ -773,17 +829,52 @@ class _Composer extends StatelessWidget {
     required this.isStreaming,
     required this.onSend,
     required this.onStop,
+    required this.behaviorType,
+    required this.onEditContext,
+    required this.onClearContext,
   });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final hasContext = behaviorType.isNotEmpty;
     return SafeArea(
       top: false,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
-        child: Row(
+        child: Column(
+         mainAxisSize: MainAxisSize.min,
+         crossAxisAlignment: CrossAxisAlignment.start,
+         children: [
+          // Takes space only while a context is set.
+          if (hasContext)
+            Padding(
+              padding: const EdgeInsets.only(bottom: Dt.s8),
+              child: InputChip(
+                avatar: Icon(Icons.tune_rounded,
+                    size: 16, color: AppTheme.primary),
+                label: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.sizeOf(context).width * 0.6,
+                  ),
+                  child: Text(behaviorType,
+                      maxLines: 1, overflow: TextOverflow.ellipsis),
+                ),
+                tooltip: l10n.chatBehaviorOptional,
+                onPressed: onEditContext,
+                onDeleted: onClearContext,
+                deleteButtonTooltipMessage: l10n.chatContextClear,
+              ),
+            ),
+          Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            IconButton(
+              tooltip: l10n.chatContextAdd,
+              onPressed: onEditContext,
+              icon: Icon(Icons.tune_rounded,
+                  color: hasContext ? AppTheme.primary : AppTheme.textMuted),
+            ),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -854,6 +945,8 @@ class _Composer extends StatelessWidget {
               ),
             ),
           ],
+          ),
+         ],
         ),
       ),
     );
