@@ -3902,4 +3902,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String appSavedCopy(Object when) {
     return 'Couldn\'t refresh — showing a saved copy ($when)';
   }
+
+  @override
+  String get loadingSlow => 'The connection is slow… still trying';
+
+  @override
+  String get loadingRetry => 'Try again';
+
+  @override
+  String get loadingCancel => 'Go back';
 }

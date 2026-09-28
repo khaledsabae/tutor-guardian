@@ -6937,6 +6937,24 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تعذّر التحديث — تعرض نسخة محفوظة ({when})'**
   String appSavedCopy(Object when);
+
+  /// No description provided for @loadingSlow.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاتصال بطيء… ما زلنا نحاول'**
+  String get loadingSlow;
+
+  /// No description provided for @loadingRetry.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة المحاولة'**
+  String get loadingRetry;
+
+  /// No description provided for @loadingCancel.
+  ///
+  /// In ar, this message translates to:
+  /// **'رجوع'**
+  String get loadingCancel;
 }
 
 class _AppLocalizationsDelegate

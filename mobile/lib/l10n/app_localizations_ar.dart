@@ -3853,4 +3853,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String appSavedCopy(Object when) {
     return 'تعذّر التحديث — تعرض نسخة محفوظة ($when)';
   }
+
+  @override
+  String get loadingSlow => 'الاتصال بطيء… ما زلنا نحاول';
+
+  @override
+  String get loadingRetry => 'إعادة المحاولة';
+
+  @override
+  String get loadingCancel => 'رجوع';
 }

@@ -19,6 +19,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_routes.dart';
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class ParentDayScreen extends ConsumerStatefulWidget {
   const ParentDayScreen({super.key});
@@ -71,7 +72,7 @@ class _ParentDayScreenState extends ConsumerState<ParentDayScreen> {
 
   Widget _body(BuildContext context) {
     if (_loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const LoadingView(count: 3);
     }
     if (_day == null) {
       return Center(child: Padding(

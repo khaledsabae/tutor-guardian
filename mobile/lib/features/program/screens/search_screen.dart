@@ -8,10 +8,10 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
-import '../../../widgets/ui/skeleton.dart';
 import '../models/search_result.dart';
 import '../providers/program_providers.dart';
 import '../providers/progress_providers.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// Curriculum-wide search results for a query (≥2 chars). Empty for shorter.
 final searchResultsProvider = FutureProvider.autoDispose
@@ -115,7 +115,7 @@ class _Body extends ConsumerWidget {
     return async.when(
       loading: () => const SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
-        child: SkeletonList(count: 5, itemHeight: 80),
+        child: LoadingView(count: 5, itemHeight: 80),
       ),
       error: (e, _) => EmptyState(
         emoji: '📡',

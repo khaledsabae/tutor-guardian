@@ -22,6 +22,7 @@ import '../../routine/providers/child_mode_providers.dart';
 import '../../routine/widgets/quiet_time_bar.dart';
 import 'edu_game_models.dart';
 import 'edu_game_ui.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// Shell that hosts the educational mini-game UI for a single domain.
 ///
@@ -157,7 +158,7 @@ class _EduGameShellState extends ConsumerState<EduGameShell> {
     if (_loading) {
       return Scaffold(
         backgroundColor: widget.theme.backgroundColor,
-        body: const Center(child: CircularProgressIndicator()),
+        body: const LoadingView.spinner(),
       );
     }
 

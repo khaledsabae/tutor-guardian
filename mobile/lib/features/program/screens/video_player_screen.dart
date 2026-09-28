@@ -9,6 +9,7 @@ import 'package:video_player/video_player.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String? url;
@@ -182,7 +183,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               ],
             ),
       body: !_ready
-          ? Center(child: CircularProgressIndicator(color: Dt.surface))
+          ? LoadingView.spinner(spinnerColor: Dt.surface)
           : _errorMessage != null
               ? _ErrorState(message: _errorMessage!)
               : GestureDetector(

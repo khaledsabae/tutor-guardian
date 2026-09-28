@@ -21,9 +21,9 @@ import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/count_up_text.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/progress_ring.dart';
-import '../../../widgets/ui/skeleton.dart';
 import '../models/quiz_deck.dart';
 import '../providers/lesson_assets_provider.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class QuizScreen extends ConsumerWidget {
   final List<String> quizIds;
@@ -39,7 +39,7 @@ class QuizScreen extends ConsumerWidget {
       body: decksAsync.when(
         loading: () => const SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
-          child: SkeletonList(count: 5, itemHeight: 90),
+          child: LoadingView(count: 5, itemHeight: 90),
         ),
         error: (e, _) => EmptyState(
           emoji: '📡',

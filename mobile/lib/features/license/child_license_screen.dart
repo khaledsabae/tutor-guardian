@@ -22,6 +22,7 @@ import '../../state/chat_notifier.dart';
 import '../routine/providers/child_mode_providers.dart';
 import '../routine/services/child_mode_secure_storage.dart';
 import '../routine/widgets/quiet_time_bar.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class ChildLicenseScreen extends ConsumerStatefulWidget {
   const ChildLicenseScreen({super.key});
@@ -99,7 +100,7 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
     final l10n = AppLocalizations.of(context);
 
     if (_loading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(body: SafeArea(child: LoadingView(count: 2, itemHeight: 200)));
     }
 
     final scenario = _payload?['scenario'] as Map<String, dynamic>?;

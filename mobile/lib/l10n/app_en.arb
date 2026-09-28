@@ -1231,5 +1231,8 @@
   "habitRateSemantics": "{name}: {rate}% of days, a change of {change} points from the four weeks before",
   "appOfflineBanner": "You're offline — some features need a connection",
   "appOfflineSavedCopy": "Offline — showing a saved copy ({when})",
-  "appSavedCopy": "Couldn't refresh — showing a saved copy ({when})"
+  "appSavedCopy": "Couldn't refresh — showing a saved copy ({when})",
+  "loadingSlow": "The connection is slow… still trying",
+  "loadingRetry": "Try again",
+  "loadingCancel": "Go back"
 }

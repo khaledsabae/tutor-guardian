@@ -16,6 +16,7 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../models/surah_names.dart';
 import '../providers/tafsir_providers.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// Opens the tafsir sheet for [surah]:[ayah].
 Future<void> showTafsirSheet(
@@ -102,8 +103,7 @@ class _TafsirSheet extends ConsumerWidget {
               const Divider(height: 1),
               Expanded(
                 child: async.when(
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                  loading: () => const LoadingView.spinner(),
                   error: (_, _) => _Message(
                     icon: Icons.wifi_off_rounded,
                     text: l10n.tafsirUnavailable,

@@ -13,6 +13,7 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/noor_mascot.dart';
 import 'identity_service.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class IdentityScreen extends StatefulWidget {
   const IdentityScreen({super.key});
@@ -85,7 +86,7 @@ class _IdentityScreenState extends State<IdentityScreen> {
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: _loading
-              ? const Center(child: CircularProgressIndicator())
+              ? const LoadingView.spinner()
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

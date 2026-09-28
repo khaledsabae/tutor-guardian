@@ -15,6 +15,7 @@ import 'package:almorabbi/l10n/app_localizations.dart';
 import 'package:almorabbi/state/chat_notifier.dart' show tgClientProvider;
 import 'package:almorabbi/theme/design_tokens.dart';
 import '../../../widgets/ui/error_retry_view.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class HabitCustomizeScreen extends ConsumerStatefulWidget {
   const HabitCustomizeScreen({super.key});
@@ -171,7 +172,10 @@ class _TemplateList extends ConsumerWidget {
           },
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => LoadingView(
+        itemHeight: 72,
+        onRetry: () => ref.invalidate(habitTemplatesProvider(childId)),
+      ),
       error: (e, _) => ErrorRetryView(
         error: e,
         onRetry: () => ref.invalidate(habitTemplatesProvider(childId)),

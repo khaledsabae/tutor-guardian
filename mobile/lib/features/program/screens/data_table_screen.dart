@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../l10n/app_localizations.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// Fetches a lesson data-table (CSV) and renders it as a vertical list of
 /// cards (one card per row, "header: value" pairs) — readable on a phone in
@@ -83,7 +84,7 @@ class _DataTableScreenState extends State<DataTableScreen> {
         future: _rows,
         builder: (context, snap) {
           if (snap.connectionState != ConnectionState.done) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingView(count: 6, itemHeight: 56);
           }
           final data = snap.data ?? const [];
           if (snap.hasError || data.length < 2) {

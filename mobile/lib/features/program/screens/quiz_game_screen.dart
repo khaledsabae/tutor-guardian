@@ -22,6 +22,7 @@ import '../../share/shareable_moment_card.dart';
 
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class QuizGameScreen extends ConsumerStatefulWidget {
   const QuizGameScreen({super.key, this.client});
@@ -247,7 +248,7 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
             ),
           SafeArea(
             child: _loading
-                ? const Center(child: CircularProgressIndicator())
+                ? const LoadingView.spinner()
                 : _error != null
                     ? _buildError()
                     : _currentIndex >= _questions.length

@@ -18,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../api/tg_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class PendingMissionsScreen extends ConsumerStatefulWidget {
   const PendingMissionsScreen({super.key});
@@ -87,7 +88,7 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.missionsPendingTitle)),
       body: pending == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingView(count: 3)
           : pending.isEmpty
               ? _Empty(message: _error ?? l10n.missionsPendingEmpty)
               : Column(

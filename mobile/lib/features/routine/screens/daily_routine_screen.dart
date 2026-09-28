@@ -26,6 +26,7 @@ import 'package:almorabbi/features/routine/widgets/habit_week_strip.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/core/app_routes.dart';
 import '../../../widgets/ui/error_retry_view.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 bool routineAgeAllowed(String ageGroup) {
   // Daily routine (sleep/feed/diaper) is for babies/toddlers 0–6 years.
@@ -211,7 +212,10 @@ class _RoutineBody extends ConsumerWidget {
         Expanded(
           child: routineAsync.when(
             data: (day) => _EventsList(day: day),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => LoadingView(
+              itemHeight: 72,
+              onRetry: childId == null ? null : () => ref.invalidate(todayRoutineProvider(childId)),
+            ),
             error: (e, _) => ErrorRetryView(
               error: e,
               onRetry: childId == null ? null : () => ref.invalidate(todayRoutineProvider(childId)),
@@ -846,7 +850,10 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                 ),
               ],
             ),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => LoadingView(
+              itemHeight: 88,
+              onRetry: () => ref.invalidate(todayHabitsProvider(childId)),
+            ),
             error: (e, _) => ErrorRetryView(
               error: e,
               onRetry: () => ref.invalidate(todayHabitsProvider(childId)),

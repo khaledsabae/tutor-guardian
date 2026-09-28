@@ -11,11 +11,11 @@ import '../../../l10n/app_localizations.dart';
 import '../../../l10n/content_direction.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
-import '../../../widgets/ui/skeleton.dart';
 import '../data/story_models.dart';
 import '../../screen_off/narration_store.dart';
 import '../../../widgets/ui/night_sky.dart';
 import 'package:almorabbi/core/motion.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// A magical bedtime bookshelf: 3D books, twinkling stars, and looping
 /// ambient cover videos when available. Replaces the old vertical list card.
@@ -39,7 +39,7 @@ class StoryBookshelfScreen extends ConsumerWidget {
           child: storiesAsync.when(
             loading: () => const SingleChildScrollView(
               physics: NeverScrollableScrollPhysics(),
-              child: SkeletonList(count: 3, itemHeight: 220),
+              child: LoadingView(count: 3, itemHeight: 220),
             ),
             error: (e, _) => EmptyState(
               emoji: '⚠️',

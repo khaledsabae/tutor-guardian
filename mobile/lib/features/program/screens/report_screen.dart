@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:http/http.dart' as http;
 import '../../../l10n/app_localizations.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// Fetches a lesson report (markdown) and renders it.
 class ReportScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _ReportScreenState extends State<ReportScreen> {
         future: _content,
         builder: (context, snap) {
           if (snap.connectionState != ConnectionState.done) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingView(count: 3, itemHeight: 140);
           }
           if (snap.hasError || (snap.data ?? '').trim().isEmpty) {
             return Center(

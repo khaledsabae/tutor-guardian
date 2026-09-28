@@ -16,6 +16,7 @@ import '../providers/child_mode_providers.dart';
 import '../widgets/habit_week_strip.dart';
 import '../widgets/quiet_time_bar.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// The child-facing self-reporting screen.
 /// Very simple, large buttons, one tap with a few seconds to undo, no
@@ -29,7 +30,7 @@ class HabitChildModeScreen extends ConsumerWidget {
 
     if (!state.active) {
       return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+        body: LoadingView.spinner(),
       );
     }
 
@@ -80,7 +81,7 @@ class HabitChildModeScreen extends ConsumerWidget {
 
     if (state.day == null) {
       return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+        body: SafeArea(child: LoadingView(itemHeight: 120)),
       );
     }
 
@@ -210,7 +211,7 @@ class _ExpiredGuardState extends State<_ExpiredGuard> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
+      body: LoadingView.spinner(),
     );
   }
 }

@@ -18,7 +18,6 @@ import '../../../theme/app_colors.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/empty_state.dart';
-import '../../../widgets/ui/skeleton.dart';
 import '../../reflections/widgets/reflection_note_badge.dart';
 import '../data/models.dart';
 import '../data/progress_models.dart';
@@ -31,6 +30,7 @@ import '../../../core/app_routes.dart';
 import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
 import 'package:almorabbi/core/motion.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 
 /// Domain → header illustration (solid cream-bg JPGs that blend with the
@@ -81,7 +81,7 @@ class PathDetailScreen extends ConsumerWidget {
         ),
         loading: () => const SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
-          child: SkeletonList(count: 3, itemHeight: 160),
+          child: LoadingView(count: 3, itemHeight: 160),
         ),
         error: (err, _) => EmptyState(
           emoji: '📡',

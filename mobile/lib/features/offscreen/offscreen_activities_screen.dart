@@ -20,6 +20,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../api/tg_client.dart';
 import '../../l10n/app_localizations.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// Bands in the order a parent should see them, matching the policy file's
 /// own band names so a link from a refusal lands on the right section.
@@ -79,7 +80,7 @@ class _OffscreenActivitiesScreenState
     return Scaffold(
       appBar: AppBar(title: Text(l10n.offscreenTitle)),
       body: async.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const LoadingView(),
         error: (e, _) => Center(
           child: Padding(
             padding: const EdgeInsets.all(24),

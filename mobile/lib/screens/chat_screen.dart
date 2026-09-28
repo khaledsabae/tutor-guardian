@@ -29,6 +29,7 @@ import '../theme/app_theme.dart';
 import '../theme/design_tokens.dart';
 import '../widgets/message_bubble.dart';
 import '../l10n/app_localizations.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 final chatNotifierProvider =
     StateNotifierProvider<ChatNotifier, ChatState>((ref) {
@@ -729,7 +730,7 @@ class _HistoryDrawer extends StatelessWidget {
                 future: future,
                 builder: (context, snap) {
                   if (snap.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const LoadingView(count: 5, itemHeight: 56);
                   }
                   final sessions = snap.data ?? const [];
                   if (sessions.isEmpty) {

@@ -16,6 +16,7 @@ import '../../widgets/ui/community_proof_card.dart';
 import '../share/share_service.dart';
 import '../share/shareable_moment_card.dart';
 import 'referral_service.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class InviteScreen extends StatefulWidget {
   const InviteScreen({super.key});
@@ -114,7 +115,7 @@ class _InviteScreenState extends State<InviteScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context).inviteTitle)),
       body: _loading
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingView(count: 2, itemHeight: 160)
           : SingleChildScrollView(
               padding: const EdgeInsets.all(20),
               child: Column(

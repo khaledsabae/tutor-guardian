@@ -21,6 +21,7 @@ import '../../state/chat_notifier.dart';
 import '../routine/providers/child_mode_providers.dart';
 import '../routine/services/child_mode_secure_storage.dart';
 import '../routine/widgets/quiet_time_bar.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class ChildMissionScreen extends ConsumerStatefulWidget {
   const ChildMissionScreen({super.key});
@@ -119,7 +120,7 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
     final theme = Theme.of(context);
 
     if (_loading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(body: SafeArea(child: LoadingView(count: 2, itemHeight: 200)));
     }
 
     if (_empty || _mission == null) {

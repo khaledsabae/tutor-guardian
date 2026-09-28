@@ -6,11 +6,11 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
-import '../../../widgets/ui/skeleton.dart';
 import '../../share/share_service.dart';
 import '../../share/shareable_moment_card.dart';
 import '../data/badges.dart';
 import '../providers/progress_providers.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// Achievements screen (P1 #4) — shows earned + locked badges derived
 /// from the active child's progress. Calm, non-competitive encouragement.
@@ -31,7 +31,7 @@ class BadgesScreen extends ConsumerWidget {
           : ref.watch(childProgressProvider(childId)).when(
                 loading: () => const SingleChildScrollView(
                   physics: NeverScrollableScrollPhysics(),
-                  child: SkeletonList(count: 3, itemHeight: 150),
+                  child: LoadingView(count: 3, itemHeight: 150),
                 ),
                 // Badges are encouragement — on error just show them all locked.
                 error: (_, _) => _BadgesGrid(badges: computeBadges(null)),

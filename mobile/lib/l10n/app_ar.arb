@@ -1253,5 +1253,8 @@
   "@habitRateSemantics": {"placeholders": {"name": {"type": "String"}, "rate": {"type": "int"}, "change": {"type": "int"}}},
   "appOfflineBanner": "غير متصل بالإنترنت — بعض الميزات تحتاج اتصالًا",
   "appOfflineSavedCopy": "غير متصل — تعرض نسخة محفوظة ({when})",
-  "appSavedCopy": "تعذّر التحديث — تعرض نسخة محفوظة ({when})"
+  "appSavedCopy": "تعذّر التحديث — تعرض نسخة محفوظة ({when})",
+  "loadingSlow": "الاتصال بطيء… ما زلنا نحاول",
+  "loadingRetry": "إعادة المحاولة",
+  "loadingCancel": "رجوع"
 }

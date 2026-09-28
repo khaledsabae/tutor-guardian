@@ -12,6 +12,7 @@ import 'package:almorabbi/features/routine/screens/child_mode_lock_screen.dart';
 import 'package:almorabbi/features/routine/screens/habit_child_mode_screen.dart';
 import 'package:almorabbi/features/routine/services/child_mode_secure_storage.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 void main() {
   const fakeToken =
@@ -87,8 +88,8 @@ void main() {
       );
       await tester.pump();
 
-      // The screen loads while day is null, so a spinner is expected first.
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      // The screen loads while day is null: a skeleton, not a bare spinner (E3).
+      expect(find.byType(LoadingView), findsOneWidget);
 
       // Manually set the day so the list renders.
       container.read(childModeProvider.notifier).state = const ChildModeState(

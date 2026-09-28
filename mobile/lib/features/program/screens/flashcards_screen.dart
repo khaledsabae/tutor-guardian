@@ -9,9 +9,9 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/animated_progress_bar.dart';
 import '../../../widgets/ui/empty_state.dart';
-import '../../../widgets/ui/skeleton.dart';
 import '../models/flashcard_deck.dart';
 import '../providers/lesson_assets_provider.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// Interactive flashcards viewer — replaces the Phase-4 placeholder.
 ///
@@ -31,7 +31,7 @@ class FlashcardsScreen extends ConsumerWidget {
       body: decksAsync.when(
         loading: () => const SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
-          child: SkeletonList(count: 2, itemHeight: 260),
+          child: LoadingView(count: 2, itemHeight: 260),
         ),
         error: (e, _) => EmptyState(
           emoji: '📡',
