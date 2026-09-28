@@ -1256,5 +1256,7 @@
   "appSavedCopy": "تعذّر التحديث — تعرض نسخة محفوظة ({when})",
   "loadingSlow": "الاتصال بطيء… ما زلنا نحاول",
   "loadingRetry": "إعادة المحاولة",
-  "loadingCancel": "رجوع"
+  "loadingCancel": "رجوع",
+  "settingsHaptics": "الاهتزاز عند اللمس",
+  "settingsHapticsDesc": "اهتزاز خفيف عند التسجيل والإنجاز والتنبيه"
 }

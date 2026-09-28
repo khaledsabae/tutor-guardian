@@ -3911,4 +3911,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loadingCancel => 'Go back';
+
+  @override
+  String get settingsHaptics => 'Haptic feedback';
+
+  @override
+  String get settingsHapticsDesc =>
+      'A light vibration when you log, complete or get an alert';
 }

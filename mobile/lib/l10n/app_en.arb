@@ -1234,5 +1234,7 @@
   "appSavedCopy": "Couldn't refresh — showing a saved copy ({when})",
   "loadingSlow": "The connection is slow… still trying",
   "loadingRetry": "Try again",
-  "loadingCancel": "Go back"
+  "loadingCancel": "Go back",
+  "settingsHaptics": "Haptic feedback",
+  "settingsHapticsDesc": "A light vibration when you log, complete or get an alert"
 }

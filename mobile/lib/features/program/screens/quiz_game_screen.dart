@@ -8,7 +8,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +22,7 @@ import '../../share/shareable_moment_card.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 class QuizGameScreen extends ConsumerStatefulWidget {
   const QuizGameScreen({super.key, this.client});
@@ -149,9 +149,9 @@ class _QuizGameScreenState extends ConsumerState<QuizGameScreen> {
     if (correct == null) return;
     final isCorrect = index == correct;
     if (isCorrect) {
-      HapticFeedback.mediumImpact();
+      Haptics.warning();
     } else {
-      HapticFeedback.lightImpact();
+      Haptics.success();
     }
     setState(() {
       _selectedAnswer = index;

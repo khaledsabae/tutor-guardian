@@ -3862,4 +3862,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get loadingCancel => 'رجوع';
+
+  @override
+  String get settingsHaptics => 'الاهتزاز عند اللمس';
+
+  @override
+  String get settingsHapticsDesc => 'اهتزاز خفيف عند التسجيل والإنجاز والتنبيه';
 }

@@ -6955,6 +6955,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'رجوع'**
   String get loadingCancel;
+
+  /// No description provided for @settingsHaptics.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاهتزاز عند اللمس'**
+  String get settingsHaptics;
+
+  /// No description provided for @settingsHapticsDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'اهتزاز خفيف عند التسجيل والإنجاز والتنبيه'**
+  String get settingsHapticsDesc;
 }
 
 class _AppLocalizationsDelegate

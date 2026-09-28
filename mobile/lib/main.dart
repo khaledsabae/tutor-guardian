@@ -47,6 +47,7 @@ import 'theme/app_theme.dart';
 import 'theme/bundled_fonts.dart';
 import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
+import 'core/haptics.dart';
 
 // FCM background handler lives in features/push/push_service.dart
 // (registered there via FirebaseMessaging.onBackgroundMessage).
@@ -66,6 +67,7 @@ Future<(Object, StackTrace)?> _loadContentPacks(
     await Future.wait([
       FamilyAdhkar.load(language: resolvedContentLanguage(storedLanguage)),
       JourneyMilestones.load(),
+      Haptics.load(),
     ]);
     return null;
   } catch (e, stack) {

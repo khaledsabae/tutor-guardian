@@ -11,6 +11,8 @@
 /// A child was assigned a mission every single day and was never shown one.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +24,7 @@ import '../routine/providers/child_mode_providers.dart';
 import '../routine/services/child_mode_secure_storage.dart';
 import '../routine/widgets/quiet_time_bar.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 class ChildMissionScreen extends ConsumerStatefulWidget {
   const ChildMissionScreen({super.key});
@@ -108,6 +111,7 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
       // own afternoon. The card expires quietly after 48h either way.
     }
     if (!mounted) return;
+    unawaited(Haptics.success());
     setState(() {
       _claiming = false;
       _mission = {...card, 'status': 'claimed'};

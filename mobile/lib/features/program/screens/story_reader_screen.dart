@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:page_flip/page_flip.dart';
 import 'package:video_player/video_player.dart';
@@ -17,6 +16,7 @@ import '../../../l10n/content_direction.dart';
 import '../../../widgets/ui/night_sky.dart';
 import '../../../theme/design_tokens.dart';
 import 'package:almorabbi/core/motion.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 /// Immersive bedtime story reader: looping ambient video background,
 /// smooth 3D page-flip navigation, parallax illustration, soft text, and a
@@ -581,7 +581,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                     const SizedBox(height: 10),
                     InkWell(
                       onTap: () {
-                        HapticFeedback.mediumImpact();
+                        Haptics.warning();
                         setState(() {
                           _challengeAccepted = !_challengeAccepted;
                         });
