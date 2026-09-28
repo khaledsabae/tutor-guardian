@@ -1236,5 +1236,6 @@
   "loadingRetry": "Try again",
   "loadingCancel": "Go back",
   "settingsHaptics": "Haptic feedback",
-  "settingsHapticsDesc": "A light vibration when you log, complete or get an alert"
+  "settingsHapticsDesc": "A light vibration when you log, complete or get an alert",
+  "childModeHandoff": "Hi {name}! This is your time 🌟"
 }

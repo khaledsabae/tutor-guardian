@@ -6967,6 +6967,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'اهتزاز خفيف عند التسجيل والإنجاز والتنبيه'**
   String get settingsHapticsDesc;
+
+  /// No description provided for @childModeHandoff.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلًا {name}! هذا وقتك 🌟'**
+  String childModeHandoff(String name);
 }
 
 class _AppLocalizationsDelegate

@@ -21,7 +21,6 @@ import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
 import '../routine/providers/child_mode_providers.dart';
 import '../routine/services/child_mode_secure_storage.dart';
-import '../routine/widgets/quiet_time_bar.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class ChildLicenseScreen extends ConsumerStatefulWidget {
@@ -202,7 +201,6 @@ class _ChildLicenseScreenState extends ConsumerState<ChildLicenseScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const QuietTimeBar(),
               const Spacer(),
               Text('🧭', style: theme.textTheme.displayLarge,
                   textAlign: TextAlign.center),

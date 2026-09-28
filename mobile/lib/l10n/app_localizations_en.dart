@@ -3918,4 +3918,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingsHapticsDesc =>
       'A light vibration when you log, complete or get an alert';
+
+  @override
+  String childModeHandoff(String name) {
+    return 'Hi $name! This is your time 🌟';
+  }
 }

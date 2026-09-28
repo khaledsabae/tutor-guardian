@@ -14,7 +14,6 @@ import '../../license/child_license_screen.dart';
 import '../../missions/child_mission_screen.dart';
 import '../providers/child_mode_providers.dart';
 import '../widgets/habit_week_strip.dart';
-import '../widgets/quiet_time_bar.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 
@@ -86,29 +85,14 @@ class HabitChildModeScreen extends ConsumerWidget {
     }
 
     return Scaffold(
+      // Exit and the time bar live in ChildModeShell, above every surface.
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).habitChildModeTitle),
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: AppLocalizations.of(context).habitChildModeExit,
-            onPressed: () => _askExit(context, ref),
-          ),
-        ],
       ),
       body: SafeArea(
         child: Column(
           children: [
-            // The day's remaining time, as a bar that shortens. `remainingSeconds`
-            // has been written on every heartbeat since sprint 1 and read by
-            // nothing but a timer — a child on this screen had no way at all to
-            // tell how long was left, which makes the end of a session arrive
-            // as an interruption every single time.
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
-              child: QuietTimeBar(),
-            ),
             // Effort, celebrated: shown only once there is a streak, and never
             // as a threat to lose it (§3.3).
             if (state.day!.streak.days > 0)
@@ -137,38 +121,6 @@ class HabitChildModeScreen extends ConsumerWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Future<void> _askExit(BuildContext context, WidgetRef ref) async {
-    final state = ref.read(childModeProvider);
-    final childId = state.childId;
-    if (childId == null) return;
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(AppLocalizations.of(context).habitChildModeExitTitle),
-        content: Text(AppLocalizations.of(context).habitChildModeExitConfirm),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(AppLocalizations.of(context).cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(AppLocalizations.of(context).habitChildModeExit),
-          ),
-        ],
-      ),
-    );
-    if (ok != true && context.mounted) return;
-    if (!context.mounted) return;
-    await Navigator.of(context).push(
-      AppRoutes.childModeLock<void>(
-        childId: childId,
-        childName: AppLocalizations.of(context).childFallbackName,
-        isExit: true,
       ),
     );
   }

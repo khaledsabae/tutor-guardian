@@ -13,6 +13,7 @@ import 'package:almorabbi/features/routine/screens/habit_child_mode_screen.dart'
 import 'package:almorabbi/features/routine/services/child_mode_secure_storage.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/features/routine/widgets/child_mode_shell.dart';
 
 void main() {
   const fakeToken =
@@ -259,11 +260,16 @@ void main() {
             locale: Locale('ar'),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
-            home: HabitChildModeScreen(),
+            // Exit lives in the child-mode frame now (UX-4), above every
+            // child surface rather than in one screen's app bar.
+            home: ChildModeShell(child: HabitChildModeScreen()),
           ),
         ),
       );
+      // Past the hand-over card, which covers the surface while it shows.
+      await tester.pump(ChildModeShell.handoffHold);
       await tester.pumpAndSettle();
+      expect(find.textContaining('وضع الطفل'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.logout));
       await tester.pumpAndSettle();

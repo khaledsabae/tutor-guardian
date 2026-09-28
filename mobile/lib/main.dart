@@ -48,6 +48,7 @@ import 'theme/bundled_fonts.dart';
 import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
 import 'core/haptics.dart';
+import 'features/routine/widgets/child_mode_shell.dart';
 
 // FCM background handler lives in features/push/push_service.dart
 // (registered there via FirebaseMessaging.onBackgroundMessage).
@@ -465,9 +466,22 @@ class ForceUpdateScreen extends ConsumerWidget {
 class _AppBootstrapper extends ConsumerWidget {
   const _AppBootstrapper();
 
+  /// Entering and leaving child mode is a fade-through (UX_UI_ROADMAP §4.3):
+  /// the parent app and the child surface never cut hard into each other.
   Widget _buildNormalApp(WidgetRef ref, dynamic childMode) {
+    final bool active = childMode.active;
+    return AnimatedSwitcher(
+      duration: ChildModeShell.fade,
+      child: KeyedSubtree(
+        key: ValueKey<bool>(active),
+        child: _buildAppFor(ref, childMode),
+      ),
+    );
+  }
+
+  Widget _buildAppFor(WidgetRef ref, dynamic childMode) {
     if (childMode.active) {
-      return const HabitChildModeScreen();
+      return const ChildModeShell(child: HabitChildModeScreen());
     }
     // First, sync the onboardingCompletedProvider from disk.
     final completed = ref.watch(onboardingCompletedProvider);

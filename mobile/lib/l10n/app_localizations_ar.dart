@@ -3868,4 +3868,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsHapticsDesc => 'اهتزاز خفيف عند التسجيل والإنجاز والتنبيه';
+
+  @override
+  String childModeHandoff(String name) {
+    return 'أهلًا $name! هذا وقتك 🌟';
+  }
 }

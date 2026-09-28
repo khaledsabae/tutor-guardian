@@ -1258,5 +1258,7 @@
   "loadingRetry": "إعادة المحاولة",
   "loadingCancel": "رجوع",
   "settingsHaptics": "الاهتزاز عند اللمس",
-  "settingsHapticsDesc": "اهتزاز خفيف عند التسجيل والإنجاز والتنبيه"
+  "settingsHapticsDesc": "اهتزاز خفيف عند التسجيل والإنجاز والتنبيه",
+  "childModeHandoff": "أهلًا {name}! هذا وقتك 🌟",
+  "@childModeHandoff": {"placeholders": {"name": {"type": "String"}}}
 }
