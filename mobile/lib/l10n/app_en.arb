@@ -1224,5 +1224,12 @@
   "habitChildModeUndo": "Undo",
   "habitMilestoneTitle": "{milestone, select, three{Three days in a row!} week{A whole week in a row!} month{A whole month in a row!} other{Wonderful consistency!}}",
   "habitMilestoneMsg": "“The deeds most loved by Allah are the most consistent, even if small.” Keep going — a little, kept up, is a lot.",
-  "habitMilestoneButton": "Alhamdulillah"
+  "habitMilestoneButton": "Alhamdulillah",
+  "habitRatesTitle": "Last 4 weeks",
+  "habitRatesSubtitle": "Share of days each habit was done, most improved first",
+  "habitRatesEmpty": "Not enough records yet. Log habits for a few days and they will show here.",
+  "habitRateSemantics": "{name}: {rate}% of days, a change of {change} points from the four weeks before",
+  "appOfflineBanner": "You're offline — some features need a connection",
+  "appOfflineSavedCopy": "Offline — showing a saved copy ({when})",
+  "appSavedCopy": "Couldn't refresh — showing a saved copy ({when})"
 }

@@ -6895,6 +6895,48 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الحمد لله'**
   String get habitMilestoneButton;
+
+  /// No description provided for @habitRatesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر 4 أسابيع'**
+  String get habitRatesTitle;
+
+  /// No description provided for @habitRatesSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسبة الأيام التي أُنجزت فيها كل عادة، والأكثر تحسنًا أولًا'**
+  String get habitRatesSubtitle;
+
+  /// No description provided for @habitRatesEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد سجلات كافية بعد. سجّلوا العادات لبضعة أيام وستظهر هنا.'**
+  String get habitRatesEmpty;
+
+  /// No description provided for @habitRateSemantics.
+  ///
+  /// In ar, this message translates to:
+  /// **'{name}: {rate}٪ من الأيام، تغيّر {change} نقطة عن الأسابيع الأربعة السابقة'**
+  String habitRateSemantics(String name, int rate, int change);
+
+  /// No description provided for @appOfflineBanner.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متصل بالإنترنت — بعض الميزات تحتاج اتصالًا'**
+  String get appOfflineBanner;
+
+  /// No description provided for @appOfflineSavedCopy.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متصل — تعرض نسخة محفوظة ({when})'**
+  String appOfflineSavedCopy(Object when);
+
+  /// No description provided for @appSavedCopy.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر التحديث — تعرض نسخة محفوظة ({when})'**
+  String appSavedCopy(Object when);
 }
 
 class _AppLocalizationsDelegate

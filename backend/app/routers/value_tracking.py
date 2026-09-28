@@ -19,7 +19,7 @@ from fastapi import APIRouter, HTTPException, Query, Request
 
 from app.core.taxonomy import HABIT_AGE_GROUPS
 from app.db.init_db import get_conn
-from app.services.habit_streak import habit_streak, week_strip
+from app.services.habit_streak import four_week_rates, habit_streak, week_strip
 from app.models.value_tracking import (
     ChildHabitDayOut,
     ChildHabitEventCreate,
@@ -385,6 +385,9 @@ def get_summary(
         return HabitSummaryOut(
             strip_dates=strip_dates,
             strip=strip,
+            rates=four_week_rates(
+                conn, device_id, child_id, date.fromisoformat(_today())
+            ),
             days=days,
             total_completed=total_completed,
             total_partially=total_partially,

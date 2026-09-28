@@ -71,6 +71,33 @@ void main() {
     });
   });
 
+  group('four-week bars', () {
+    final week = HabitWeek.fromSummaryJson({
+      'rates': {
+        'A': {'rate': 0.5, 'prev_rate': 0.5},
+        'B': {'rate': 0.4, 'prev_rate': 0.1},
+        'C': {'rate': 0.9, 'prev_rate': 1.2}, // clamped to 1
+      },
+    });
+
+    test('sorted by improvement, most improved first', () {
+      expect(week.rates.map((r) => r.habitName), ['B', 'A', 'C']);
+      expect(week.rates.last.prevRate, 1.0);
+    });
+
+    testWidgets('render percent and direction; empty has a hint', (t) async {
+      await t.pumpWidget(_host(SingleChildScrollView(
+        child: HabitFourWeekBars(rates: week.rates),
+      )));
+      expect(find.text('40%'), findsOneWidget);
+      expect(find.text('↑30'), findsOneWidget);
+      expect(find.text('↓10'), findsOneWidget);
+
+      await t.pumpWidget(_host(const HabitFourWeekBars(rates: [])));
+      expect(find.textContaining('Not enough records'), findsOneWidget);
+    });
+  });
+
   group('streak badge', () {
     testWidgets('hidden without a streak', (t) async {
       await t.pumpWidget(_host(const HabitStreakBadge(streak: HabitStreak())));

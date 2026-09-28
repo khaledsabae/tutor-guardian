@@ -3872,4 +3872,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get habitMilestoneButton => 'Alhamdulillah';
+
+  @override
+  String get habitRatesTitle => 'Last 4 weeks';
+
+  @override
+  String get habitRatesSubtitle =>
+      'Share of days each habit was done, most improved first';
+
+  @override
+  String get habitRatesEmpty =>
+      'Not enough records yet. Log habits for a few days and they will show here.';
+
+  @override
+  String habitRateSemantics(String name, int rate, int change) {
+    return '$name: $rate% of days, a change of $change points from the four weeks before';
+  }
+
+  @override
+  String get appOfflineBanner =>
+      'You\'re offline — some features need a connection';
+
+  @override
+  String appOfflineSavedCopy(Object when) {
+    return 'Offline — showing a saved copy ($when)';
+  }
+
+  @override
+  String appSavedCopy(Object when) {
+    return 'Couldn\'t refresh — showing a saved copy ($when)';
+  }
 }

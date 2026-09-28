@@ -225,11 +225,31 @@ int? streakMilestoneCrossed(int before, int after) {
 }
 
 /// The last seven days per habit, oldest first (`GET …/summary` strip).
+/// Share of the last 28 days a habit was done (partly = half), and the same
+/// for the 28 days before (`GET …/summary` rates).
+class HabitRate {
+  final String habitName;
+  final double rate;
+  final double prevRate;
+
+  const HabitRate(this.habitName, this.rate, this.prevRate);
+
+  double get change => rate - prevRate;
+}
+
 class HabitWeek {
   final List<String> dates;
   final Map<String, List<HabitStatus?>> byHabit;
 
-  const HabitWeek({this.dates = const [], this.byHabit = const {}});
+  /// Sorted by improvement, most improved first — "which habits are
+  /// sticking" is about direction, not the raw score (§3.2).
+  final List<HabitRate> rates;
+
+  const HabitWeek({
+    this.dates = const [],
+    this.byHabit = const {},
+    this.rates = const [],
+  });
 
   factory HabitWeek.fromSummaryJson(Map<String, dynamic> json) {
     final dates = [
@@ -246,7 +266,23 @@ class HabitWeek {
         ];
       });
     }
-    return HabitWeek(dates: dates, byHabit: byHabit);
+    final rates = <HabitRate>[];
+    final rawRates = json['rates'];
+    if (rawRates is Map) {
+      rawRates.forEach((name, r) {
+        if (r is! Map) return;
+        rates.add(HabitRate(
+          '$name',
+          ((r['rate'] as num?) ?? 0).toDouble().clamp(0, 1),
+          ((r['prev_rate'] as num?) ?? 0).toDouble().clamp(0, 1),
+        ));
+      });
+      rates.sort((a, b) {
+        final byChange = b.change.compareTo(a.change);
+        return byChange != 0 ? byChange : b.rate.compareTo(a.rate);
+      });
+    }
+    return HabitWeek(dates: dates, byHabit: byHabit, rates: rates);
   }
 
   /// Seven cells for [habitName]; the last is replaced by [today] when given,

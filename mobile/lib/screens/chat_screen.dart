@@ -191,10 +191,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     // short-circuit with a friendly message. A listener, not a call in build:
     // build must not have side effects (the initial value is pushed from
     // initState's post-frame callback).
-    final isOnline = ref.watch(connectivityProvider).maybeWhen(
-      data: (v) => v,
-      orElse: () => true,
-    );
     ref.listen<AsyncValue<bool>>(connectivityProvider, (_, next) {
       notifier.setOnline(next.maybeWhen(data: (v) => v, orElse: () => true));
     });
@@ -288,7 +284,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
       ),
       body: Column(
         children: [
-          if (!isOnline) const _OfflineBanner(),
+          // Offline is shown app-wide now (AppStatusBanner, E2).
           // Daily tip moved to the Home tab (اليوم) — chat is now a
           // pure conversation surface.
           if (showBanner) _ErrorBanner(
@@ -543,35 +539,6 @@ class _BootSplash extends StatelessWidget {
           Text(
             AppLocalizations.of(context).chatInit,
             style: TextStyle(color: AppTheme.textMuted, fontSize: 13),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _OfflineBanner extends StatelessWidget {
-  const _OfflineBanner();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: AppTheme.warningBg,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        children: [
-          Icon(Icons.wifi_off, color: AppTheme.warningFg, size: 18),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              AppLocalizations.of(context).chatOfflineBanner,
-              style: TextStyle(
-                color: AppTheme.warningFg,
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
           ),
         ],
       ),

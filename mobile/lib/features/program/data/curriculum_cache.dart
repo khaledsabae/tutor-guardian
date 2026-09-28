@@ -11,6 +11,7 @@ library;
 
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CurriculumCache {
@@ -24,6 +25,12 @@ class CurriculumCache {
   static const staleAfter = Duration(days: 14);
 
   final SharedPreferences? _injected;
+
+  /// When the copy on screen came from here rather than the network: the time
+  /// it was saved, or null once a fresh response arrives. The app-level
+  /// status banner reads it to say «نسخة محفوظة · {time}» (UX_UI_ROADMAP E2)
+  /// — a stale curriculum shown as if it were live is a quiet lie.
+  static final ValueNotifier<DateTime?> servedStaleAt = ValueNotifier(null);
 
   /// Null when the store is unavailable — a full disk, a platform without the
   /// plugin. Every caller treats that as "no cache" rather than an error: this
@@ -59,6 +66,14 @@ class CurriculumCache {
   Future<Map<String, dynamic>?> read(String key) async {
     final entry = await _readEntry(key);
     return entry?.payload;
+  }
+
+  /// The stored copy with the time it was saved, or null.
+  Future<({Map<String, dynamic> payload, DateTime savedAt})?> readWithTime(
+      String key) async {
+    final entry = await _readEntry(key);
+    if (entry == null) return null;
+    return (payload: entry.payload, savedAt: entry.savedAt);
   }
 
   /// The stored copy only if it is younger than [staleAfter].

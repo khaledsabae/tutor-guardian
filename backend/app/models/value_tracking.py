@@ -181,6 +181,8 @@ class HabitSummaryOut(BaseModel):
     # (or null) aligned with them. Independent of `days`.
     strip_dates: list[str] = []
     strip: dict[str, list[str | None]] = {}
+    # Last 28 days vs the 28 before, per habit: {rate, prev_rate} in 0..1.
+    rates: dict[str, dict[str, float]] = {}
 
 
 class HabitDeleteOut(BaseModel):

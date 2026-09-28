@@ -23,6 +23,7 @@ import 'core/nav_observer.dart';
 import 'api/tg_client.dart';
 import 'state/chat_notifier.dart';
 import 'widgets/ui/bouncy_button.dart';
+import 'widgets/app_status_banner.dart';
 import 'features/identity/identity_service.dart';
 import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
@@ -349,7 +350,8 @@ class TutorGuardianApp extends ConsumerWidget {
           child: Listener(
             behavior: HitTestBehavior.translucent,
             onPointerDown: TgNavObserver.recordTap,
-            child: child ?? const SizedBox.shrink(),
+            // Offline and "saved copy" in one place for every route (E2).
+            child: AppStatusBanner(child: child ?? const SizedBox.shrink()),
           ),
         );
       },

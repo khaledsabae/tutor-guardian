@@ -84,3 +84,23 @@ def test_week_strip_aligns_days_and_latest_record_wins():
     assert dates == [f"2026-09-{d}" for d in range(18, 25)]
     assert strip["صلاة الفجر"] == ["partially", None, None, None, None, None, "completed"]
     assert strip["الصدق"] == [None, None, None, None, "completed", None, None]
+
+
+def test_four_week_rates_split_current_and_previous_windows():
+    from app.services.habit_streak import four_week_rates
+
+    c = _conn()
+    rows = [
+        ("الصدق", "completed", "2026-09-24 07:00:00"),   # current window
+        ("الصدق", "partially", "2026-09-20 07:00:00"),   # current window
+        ("الصدق", "missed", "2026-09-20 09:00:00"),      # same day, later → wins
+        ("الصدق", "completed", "2026-08-20 07:00:00"),   # previous window
+        ("الصدق", "completed", "2026-07-01 07:00:00"),   # outside both
+    ]
+    for name, st, ts in rows:
+        c.execute(
+            "INSERT INTO habits_value_events (device_id, child_id, habit_name, status, created_at)"
+            " VALUES ('d', 1, ?, ?, ?)", (name, st, ts),
+        )
+    rates = four_week_rates(c, "d", 1, THU)
+    assert rates == {"الصدق": {"rate": round(1 / 28, 3), "prev_rate": round(1 / 28, 3)}}

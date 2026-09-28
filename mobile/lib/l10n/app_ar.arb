@@ -1245,5 +1245,13 @@
   "habitMilestoneTitle": "{milestone, select, three{ثلاثة أيام من المواظبة!} week{أسبوع كامل من المواظبة!} month{شهر كامل من المواظبة!} other{مواظبة رائعة!}}",
   "@habitMilestoneTitle": {"placeholders": {"milestone": {"type": "String"}}},
   "habitMilestoneMsg": "«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ». استمر، فالقليل الدائم خير كثير.",
-  "habitMilestoneButton": "الحمد لله"
+  "habitMilestoneButton": "الحمد لله",
+  "habitRatesTitle": "آخر 4 أسابيع",
+  "habitRatesSubtitle": "نسبة الأيام التي أُنجزت فيها كل عادة، والأكثر تحسنًا أولًا",
+  "habitRatesEmpty": "لا توجد سجلات كافية بعد. سجّلوا العادات لبضعة أيام وستظهر هنا.",
+  "habitRateSemantics": "{name}: {rate}٪ من الأيام، تغيّر {change} نقطة عن الأسابيع الأربعة السابقة",
+  "@habitRateSemantics": {"placeholders": {"name": {"type": "String"}, "rate": {"type": "int"}, "change": {"type": "int"}}},
+  "appOfflineBanner": "غير متصل بالإنترنت — بعض الميزات تحتاج اتصالًا",
+  "appOfflineSavedCopy": "غير متصل — تعرض نسخة محفوظة ({when})",
+  "appSavedCopy": "تعذّر التحديث — تعرض نسخة محفوظة ({when})"
 }

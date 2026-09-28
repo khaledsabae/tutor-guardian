@@ -148,3 +148,79 @@ class HabitStreakBadge extends StatelessWidget {
     );
   }
 }
+
+/// "Which habits are sticking?" — a horizontal bar per habit for the last
+/// four weeks, most improved first, with the change against the four before.
+class HabitFourWeekBars extends StatelessWidget {
+  const HabitFourWeekBars({super.key, required this.rates});
+
+  final List<HabitRate> rates;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final c = context.colors;
+    final text = Theme.of(context).textTheme;
+    if (rates.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        child: Text(l10n.habitRatesEmpty,
+            textAlign: TextAlign.center, style: text.bodyMedium),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final r in rates)
+          Semantics(
+            label: l10n.habitRateSemantics(
+              habitDisplayName(r.habitName, l10n),
+              (r.rate * 100).round(),
+              (r.change * 100).round(),
+            ),
+            excludeSemantics: true,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(habitDisplayName(r.habitName, l10n),
+                            style: text.bodyMedium),
+                      ),
+                      Text('${(r.rate * 100).round()}%',
+                          style: text.labelLarge
+                              ?.copyWith(fontWeight: FontWeight.w700)),
+                      if ((r.change * 100).round() != 0) ...[
+                        const SizedBox(width: 6),
+                        Text(
+                          '${r.change > 0 ? '↑' : '↓'}${(r.change.abs() * 100).round()}',
+                          style: text.labelMedium?.copyWith(
+                            color: r.change > 0
+                                ? c.successText
+                                : c.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: r.rate,
+                      minHeight: 8,
+                      color: c.primary,
+                      backgroundColor: c.track,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}

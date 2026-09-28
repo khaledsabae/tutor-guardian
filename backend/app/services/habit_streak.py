@@ -103,3 +103,40 @@ def week_strip(
             continue
         strip.setdefault(r["habit_name"], [None] * STRIP_DAYS)[i] = r["status"]
     return [d.isoformat() for d in dates], strip
+
+
+RATE_DAYS = 28
+_VALUE = {"completed": 1.0, "partially": 0.5}
+
+
+def four_week_rates(
+    conn: sqlite3.Connection, device_id: str, child_id: int, today: date
+) -> dict[str, dict[str, float]]:
+    """{habit: {rate, prev_rate}}: share of the last 28 days the habit was done
+    (partly = half), and the same for the 28 days before, for "which habits are
+    sticking". The latest record of a day wins; a day with no record is 0.
+    Only habits with a record in the 56-day window are listed.
+    """
+    start_cur = today - timedelta(days=RATE_DAYS - 1)
+    start_prev = start_cur - timedelta(days=RATE_DAYS)
+    rows = conn.execute(
+        "SELECT habit_name, status, date(created_at) AS d FROM habits_value_events "
+        "WHERE device_id = ? AND child_id = ? AND date(created_at) >= ? "
+        "ORDER BY created_at, id",
+        (device_id, child_id, start_prev.isoformat()),
+    ).fetchall()
+    latest: dict[tuple[str, str], str] = {}
+    for r in rows:
+        latest[(r["habit_name"], r["d"])] = r["status"]
+    cur: dict[str, float] = {}
+    prev: dict[str, float] = {}
+    for (name, d), status in latest.items():
+        bucket = cur if date.fromisoformat(d) >= start_cur else prev
+        bucket[name] = bucket.get(name, 0.0) + _VALUE.get(status, 0.0)
+    return {
+        name: {
+            "rate": round(cur.get(name, 0.0) / RATE_DAYS, 3),
+            "prev_rate": round(prev.get(name, 0.0) / RATE_DAYS, 3),
+        }
+        for name in {n for n, _ in latest}
+    }

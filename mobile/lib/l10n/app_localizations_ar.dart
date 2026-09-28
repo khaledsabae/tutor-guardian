@@ -3823,4 +3823,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get habitMilestoneButton => 'الحمد لله';
+
+  @override
+  String get habitRatesTitle => 'آخر 4 أسابيع';
+
+  @override
+  String get habitRatesSubtitle =>
+      'نسبة الأيام التي أُنجزت فيها كل عادة، والأكثر تحسنًا أولًا';
+
+  @override
+  String get habitRatesEmpty =>
+      'لا توجد سجلات كافية بعد. سجّلوا العادات لبضعة أيام وستظهر هنا.';
+
+  @override
+  String habitRateSemantics(String name, int rate, int change) {
+    return '$name: $rate٪ من الأيام، تغيّر $change نقطة عن الأسابيع الأربعة السابقة';
+  }
+
+  @override
+  String get appOfflineBanner =>
+      'غير متصل بالإنترنت — بعض الميزات تحتاج اتصالًا';
+
+  @override
+  String appOfflineSavedCopy(Object when) {
+    return 'غير متصل — تعرض نسخة محفوظة ($when)';
+  }
+
+  @override
+  String appSavedCopy(Object when) {
+    return 'تعذّر التحديث — تعرض نسخة محفوظة ($when)';
+  }
 }

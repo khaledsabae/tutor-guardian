@@ -757,6 +757,49 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
     if (mounted) setState(() {});
   }
 
+  /// Four-week bars (UX_UI_ROADMAP §3.2) in a sheet, so the habit list keeps
+  /// its height.
+  Future<void> _showRates(int childId) {
+    return showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (ctx) => Consumer(
+        builder: (ctx, ref, _) {
+          final l10n = AppLocalizations.of(ctx);
+          final week = ref.watch(habitWeekProvider(childId));
+          return SafeArea(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(ctx).height * 0.75,
+              ),
+              child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.fromLTRB(Dt.pad, 0, Dt.pad, Dt.pad),
+                children: [
+                  Text(l10n.habitRatesTitle,
+                      style: Theme.of(ctx).textTheme.titleLarge),
+                  const SizedBox(height: 4),
+                  Text(l10n.habitRatesSubtitle,
+                      style: Theme.of(ctx).textTheme.bodySmall),
+                  const SizedBox(height: 16),
+                  week.when(
+                    data: (w) => HabitFourWeekBars(rates: w.rates),
+                    loading: () => const Padding(
+                      padding: EdgeInsets.all(24),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                    error: (_, _) => HabitFourWeekBars(rates: const []),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   Future<void> _openAgreement(String childName) async {
     await Navigator.of(context).push(AppRoutes.agreement(childName: childName));
     if (mounted) setState(() {});
@@ -787,6 +830,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                   points: day.points,
                   totalHabits: day.habits.length,
                   streak: day.streak,
+                  onShowRates: () => _showRates(childId),
                 ),
                 Expanded(
                   child: _HabitCategoryList(
@@ -983,11 +1027,13 @@ class _HabitSummaryCard extends StatelessWidget {
     required this.points,
     required this.totalHabits,
     this.streak = const HabitStreak(),
+    this.onShowRates,
   });
 
   final double points;
   final int totalHabits;
   final HabitStreak streak;
+  final VoidCallback? onShowRates;
 
   @override
   Widget build(BuildContext context) {
@@ -1018,13 +1064,22 @@ class _HabitSummaryCard extends StatelessWidget {
             ),
           ],
         ),
-            if (streak.days > 0) ...[
-              const SizedBox(height: 8),
-              Tooltip(
-                message: AppLocalizations.of(context).habitStreakShieldHint,
-                child: HabitStreakBadge(streak: streak),
-              ),
-            ],
+            Row(
+              children: [
+                if (streak.days > 0)
+                  Tooltip(
+                    message: AppLocalizations.of(context).habitStreakShieldHint,
+                    child: HabitStreakBadge(streak: streak),
+                  ),
+                const Spacer(),
+                if (onShowRates != null)
+                  TextButton.icon(
+                    onPressed: onShowRates,
+                    icon: const Icon(Icons.bar_chart_rounded, size: 18),
+                    label: Text(AppLocalizations.of(context).habitRatesTitle),
+                  ),
+              ],
+            ),
           ],
         ),
       ),
