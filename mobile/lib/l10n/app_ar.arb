@@ -1232,5 +1232,18 @@
   "chatContextClear": "إزالة السياق",
   "chatContextDone": "تم",
   "chatSources": "المصادر ({count})",
-  "chatSourcesHint": "المراجع التي بُنيت عليها هذه الإجابة"
+  "chatSourcesHint": "المراجع التي بُنيت عليها هذه الإجابة",
+  "habitWeekSemantics": "آخر 7 أيام: {done} مكتملة و{part} جزئية",
+  "@habitWeekSemantics": {"placeholders": {"done": {"type": "int"}, "part": {"type": "int"}}},
+  "habitStreakDays": "{days, plural, =0{لا سلسلة بعد} =1{يوم واحد متتالٍ} =2{يومان متتاليان} few{{days} أيام متتالية} many{{days} يومًا متتاليًا} other{{days} يوم متتالٍ}}",
+  "@habitStreakDays": {"placeholders": {"days": {"type": "int"}}},
+  "habitStreakShieldUsed": "استُخدم يوم السماح لهذا الأسبوع",
+  "habitStreakShieldHint": "يوم واحد بلا تسجيل كل أسبوع لا يقطع السلسلة",
+  "habitChildModeLoggedName": "سُجِّل: {name}",
+  "@habitChildModeLoggedName": {"placeholders": {"name": {"type": "String"}}},
+  "habitChildModeUndo": "تراجع",
+  "habitMilestoneTitle": "{milestone, select, three{ثلاثة أيام من المواظبة!} week{أسبوع كامل من المواظبة!} month{شهر كامل من المواظبة!} other{مواظبة رائعة!}}",
+  "@habitMilestoneTitle": {"placeholders": {"milestone": {"type": "String"}}},
+  "habitMilestoneMsg": "«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ». استمر، فالقليل الدائم خير كثير.",
+  "habitMilestoneButton": "الحمد لله"
 }

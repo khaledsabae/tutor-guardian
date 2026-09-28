@@ -6841,6 +6841,60 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'المراجع التي بُنيت عليها هذه الإجابة'**
   String get chatSourcesHint;
+
+  /// No description provided for @habitWeekSemantics.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر 7 أيام: {done} مكتملة و{part} جزئية'**
+  String habitWeekSemantics(int done, int part);
+
+  /// No description provided for @habitStreakDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'{days, plural, =0{لا سلسلة بعد} =1{يوم واحد متتالٍ} =2{يومان متتاليان} few{{days} أيام متتالية} many{{days} يومًا متتاليًا} other{{days} يوم متتالٍ}}'**
+  String habitStreakDays(int days);
+
+  /// No description provided for @habitStreakShieldUsed.
+  ///
+  /// In ar, this message translates to:
+  /// **'استُخدم يوم السماح لهذا الأسبوع'**
+  String get habitStreakShieldUsed;
+
+  /// No description provided for @habitStreakShieldHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوم واحد بلا تسجيل كل أسبوع لا يقطع السلسلة'**
+  String get habitStreakShieldHint;
+
+  /// No description provided for @habitChildModeLoggedName.
+  ///
+  /// In ar, this message translates to:
+  /// **'سُجِّل: {name}'**
+  String habitChildModeLoggedName(String name);
+
+  /// No description provided for @habitChildModeUndo.
+  ///
+  /// In ar, this message translates to:
+  /// **'تراجع'**
+  String get habitChildModeUndo;
+
+  /// No description provided for @habitMilestoneTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'{milestone, select, three{ثلاثة أيام من المواظبة!} week{أسبوع كامل من المواظبة!} month{شهر كامل من المواظبة!} other{مواظبة رائعة!}}'**
+  String habitMilestoneTitle(String milestone);
+
+  /// No description provided for @habitMilestoneMsg.
+  ///
+  /// In ar, this message translates to:
+  /// **'«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ». استمر، فالقليل الدائم خير كثير.'**
+  String get habitMilestoneMsg;
+
+  /// No description provided for @habitMilestoneButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحمد لله'**
+  String get habitMilestoneButton;
 }
 
 class _AppLocalizationsDelegate

@@ -142,6 +142,15 @@ class TodayHabitItem(BaseModel):
     template_id: int | None = None
 
 
+class HabitStreakOut(BaseModel):
+    """Run of days with effort (completed or partially), with one forgiven
+    empty day per week (the "streak shield"). See services/habit_streak."""
+
+    days: int = 0
+    today_active: bool = False
+    shield_used_this_week: bool = False
+
+
 class ChildHabitDayOut(BaseModel):
     """Read-only day view returned to the child-mode self-reporting client."""
 
@@ -149,6 +158,7 @@ class ChildHabitDayOut(BaseModel):
     date: str
     habits: list[TodayHabitItem]
     events: list[HabitEventOut]
+    streak: HabitStreakOut = HabitStreakOut()
 
 
 class HabitDayOut(BaseModel):
@@ -157,6 +167,7 @@ class HabitDayOut(BaseModel):
     events: list[HabitEventOut]
     points: float = 0.0
     habits: list[TodayHabitItem]
+    streak: HabitStreakOut = HabitStreakOut()
 
 
 class HabitSummaryOut(BaseModel):
@@ -166,6 +177,10 @@ class HabitSummaryOut(BaseModel):
     total_missed: int
     by_category: dict[str, dict[str, int]]
     total_points: float = 0.0
+    # The 7-day strip: dates oldest→today, and per habit the day's status
+    # (or null) aligned with them. Independent of `days`.
+    strip_dates: list[str] = []
+    strip: dict[str, list[str | None]] = {}
 
 
 class HabitDeleteOut(BaseModel):

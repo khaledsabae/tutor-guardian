@@ -528,3 +528,53 @@ def test_child_mode_cannot_access_parent_routes(client):
             params={"child_id": cid},
         )
         assert r.status_code == 401
+
+# ── UX-3: streak on the today views, 7-day strip on the summary ───────────────
+
+def test_today_carries_streak_after_effort(client):
+    cid = _create_child(client)
+    r = client.get("/api/value-tracking/today", params={"child_id": cid})
+    assert r.json()["streak"] == {
+        "days": 0, "today_active": False, "shield_used_this_week": False,
+    }
+    client.post(
+        "/api/value-tracking/events", params={"child_id": cid},
+        json={"category": "worship", "habit_name": "صلاة الفجر", "status": "partially"},
+    )
+    streak = client.get("/api/value-tracking/today", params={"child_id": cid}).json()["streak"]
+    assert streak["days"] == 1 and streak["today_active"] is True
+
+
+def test_missed_alone_does_not_start_a_streak(client):
+    cid = _create_child(client)
+    client.post(
+        "/api/value-tracking/events", params={"child_id": cid},
+        json={"category": "worship", "habit_name": "صلاة الفجر", "status": "missed"},
+    )
+    streak = client.get("/api/value-tracking/today", params={"child_id": cid}).json()["streak"]
+    assert streak["days"] == 0
+
+
+def test_child_mode_today_carries_streak(client):
+    cid = _create_child(client, age_group="7-9")
+    token = _issue_child_token(client, cid)
+    body = client.get(
+        "/api/value-tracking/child-mode/today",
+        headers={"Authorization": f"Child-Bearer {token}"},
+    ).json()
+    assert body["streak"]["days"] == 0
+
+
+def test_summary_carries_seven_day_strip(client):
+    cid = _create_child(client)
+    client.post(
+        "/api/value-tracking/events", params={"child_id": cid},
+        json={"category": "worship", "habit_name": "صلاة الفجر", "status": "completed"},
+    )
+    body = client.get(
+        "/api/value-tracking/summary", params={"child_id": cid, "days": 30},
+    ).json()
+    assert len(body["strip_dates"]) == 7
+    assert body["strip_dates"][-1] == client.get(
+        "/api/value-tracking/today", params={"child_id": cid}).json()["date"]
+    assert body["strip"]["صلاة الفجر"] == [None] * 6 + ["completed"]

@@ -176,12 +176,100 @@ class TodayHabitItem {
   }
 }
 
+/// Run of days with effort (completed or partially), where one empty day a
+/// week is forgiven — the "streak shield" (UX_UI_ROADMAP §3.3). Zero from an
+/// older server that does not send it.
+class HabitStreak {
+  final int days;
+  final bool todayActive;
+  final bool shieldUsedThisWeek;
+
+  const HabitStreak({
+    this.days = 0,
+    this.todayActive = false,
+    this.shieldUsedThisWeek = false,
+  });
+
+  factory HabitStreak.fromJson(Object? json) {
+    if (json is! Map) return const HabitStreak();
+    return HabitStreak(
+      days: (json['days'] as num?)?.toInt() ?? 0,
+      todayActive: json['today_active'] == true,
+      shieldUsedThisWeek: json['shield_used_this_week'] == true,
+    );
+  }
+}
+
+extension HabitStreakX on HabitStreak {
+  /// The streak once today gets its first effort — the server's rule, applied
+  /// locally so a milestone shows the moment it is earned. Idempotent.
+  HabitStreak withEffortToday() => todayActive
+      ? this
+      : HabitStreak(
+          days: days + 1,
+          todayActive: true,
+          shieldUsedThisWeek: shieldUsedThisWeek,
+        );
+}
+
+/// Streak lengths worth a celebration. Capped on purpose: more than a few
+/// becomes noise (§3.3).
+const List<int> kStreakMilestones = [3, 7, 30];
+
+/// The milestone crossed going from [before] to [after] days, if any.
+int? streakMilestoneCrossed(int before, int after) {
+  for (final m in kStreakMilestones) {
+    if (before < m && after >= m) return m;
+  }
+  return null;
+}
+
+/// The last seven days per habit, oldest first (`GET …/summary` strip).
+class HabitWeek {
+  final List<String> dates;
+  final Map<String, List<HabitStatus?>> byHabit;
+
+  const HabitWeek({this.dates = const [], this.byHabit = const {}});
+
+  factory HabitWeek.fromSummaryJson(Map<String, dynamic> json) {
+    final dates = [
+      for (final d in (json['strip_dates'] as List? ?? const [])) '$d',
+    ];
+    final raw = json['strip'];
+    final byHabit = <String, List<HabitStatus?>>{};
+    if (raw is Map) {
+      raw.forEach((name, days) {
+        if (days is! List) return;
+        byHabit['$name'] = [
+          for (final d in days)
+            d is String ? HabitStatusX.fromWireName(d) : null,
+        ];
+      });
+    }
+    return HabitWeek(dates: dates, byHabit: byHabit);
+  }
+
+  /// Seven cells for [habitName]; the last is replaced by [today] when given,
+  /// so a record just made shows before the next summary fetch.
+  List<HabitStatus?> cellsFor(String habitName, {HabitStatus? today}) {
+    final cells = List<HabitStatus?>.of(
+      byHabit[habitName] ?? List<HabitStatus?>.filled(7, null),
+    );
+    while (cells.length < 7) {
+      cells.insert(0, null);
+    }
+    if (today != null) cells[cells.length - 1] = today;
+    return cells.sublist(cells.length - 7);
+  }
+}
+
 class HabitDay {
   final int childId;
   final String date;
   final List<HabitEvent> events;
   final double points;
   final List<TodayHabitItem> habits;
+  final HabitStreak streak;
 
   const HabitDay({
     required this.childId,
@@ -189,12 +277,23 @@ class HabitDay {
     required this.events,
     this.points = 0.0,
     this.habits = const [],
+    this.streak = const HabitStreak(),
   });
+
+  HabitDay withStreak(HabitStreak streak) => HabitDay(
+        childId: childId,
+        date: date,
+        events: events,
+        points: points,
+        habits: habits,
+        streak: streak,
+      );
 
   factory HabitDay.fromJson(Map<String, dynamic> json) {
     return HabitDay(
       childId: json['child_id'] as int,
       date: json['date'] as String,
+      streak: HabitStreak.fromJson(json['streak']),
       events: (json['events'] as List?)
               ?.map((e) => HabitEvent.fromJson(e as Map<String, dynamic>))
               .toList() ??

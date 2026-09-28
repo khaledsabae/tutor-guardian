@@ -3822,4 +3822,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatSourcesHint => 'The references this answer is based on';
+
+  @override
+  String habitWeekSemantics(int done, int part) {
+    return 'Last 7 days: $done done, $part partly';
+  }
+
+  @override
+  String habitStreakDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days-day streak',
+      one: '1-day streak',
+      zero: 'No streak yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get habitStreakShieldUsed => 'This week\'s grace day has been used';
+
+  @override
+  String get habitStreakShieldHint =>
+      'One day a week without a log does not break the streak';
+
+  @override
+  String habitChildModeLoggedName(String name) {
+    return 'Logged: $name';
+  }
+
+  @override
+  String get habitChildModeUndo => 'Undo';
+
+  @override
+  String habitMilestoneTitle(String milestone) {
+    String _temp0 = intl.Intl.selectLogic(milestone, {
+      'three': 'Three days in a row!',
+      'week': 'A whole week in a row!',
+      'month': 'A whole month in a row!',
+      'other': 'Wonderful consistency!',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get habitMilestoneMsg =>
+      '“The deeds most loved by Allah are the most consistent, even if small.” Keep going — a little, kept up, is a lot.';
+
+  @override
+  String get habitMilestoneButton => 'Alhamdulillah';
 }

@@ -45,6 +45,19 @@ final habitSummaryProvider =
   },
 );
 
+/// The 7-day strip per habit for the active child (UX_UI_ROADMAP §3.2).
+/// Empty on any failure: the strip is a glance, never a reason for an error.
+final habitWeekProvider =
+    FutureProvider.autoDispose.family<HabitWeek, int>((ref, childId) async {
+  try {
+    final raw =
+        await ref.watch(tgClientProvider).fetchHabitSummary(childId, days: 7);
+    return HabitWeek.fromSummaryJson(raw);
+  } catch (_) {
+    return const HabitWeek();
+  }
+});
+
 /// Convenience provider that watches the active child id.
 final habitActiveChildIdProvider = Provider<int?>((ref) {
   return ref.watch(activeChildIdProvider);

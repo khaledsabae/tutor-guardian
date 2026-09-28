@@ -30,6 +30,7 @@ from app.routers.value_tracking import (
 from app.core.taxonomy import map_profile_age_to_band
 from app.services import child_license, license_alert
 from app.services import child_budget, child_missions, family_agreement
+from app.services.habit_streak import habit_streak
 from app.services import child_token as child_token_service
 
 router = APIRouter(tags=["child-mode"])
@@ -260,6 +261,7 @@ def child_get_today(request: Request):
             "date": today,
             "habits": habits,
             "events": [_event_row_to_model(r) for r in events],
+            "streak": habit_streak(conn, device_id, child_id, date.fromisoformat(today)),
         }
     finally:
         conn.close()

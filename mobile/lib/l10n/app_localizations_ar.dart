@@ -3770,4 +3770,57 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chatSourcesHint => 'المراجع التي بُنيت عليها هذه الإجابة';
+
+  @override
+  String habitWeekSemantics(int done, int part) {
+    return 'آخر 7 أيام: $done مكتملة و$part جزئية';
+  }
+
+  @override
+  String habitStreakDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days يوم متتالٍ',
+      many: '$days يومًا متتاليًا',
+      few: '$days أيام متتالية',
+      two: 'يومان متتاليان',
+      one: 'يوم واحد متتالٍ',
+      zero: 'لا سلسلة بعد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get habitStreakShieldUsed => 'استُخدم يوم السماح لهذا الأسبوع';
+
+  @override
+  String get habitStreakShieldHint =>
+      'يوم واحد بلا تسجيل كل أسبوع لا يقطع السلسلة';
+
+  @override
+  String habitChildModeLoggedName(String name) {
+    return 'سُجِّل: $name';
+  }
+
+  @override
+  String get habitChildModeUndo => 'تراجع';
+
+  @override
+  String habitMilestoneTitle(String milestone) {
+    String _temp0 = intl.Intl.selectLogic(milestone, {
+      'three': 'ثلاثة أيام من المواظبة!',
+      'week': 'أسبوع كامل من المواظبة!',
+      'month': 'شهر كامل من المواظبة!',
+      'other': 'مواظبة رائعة!',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get habitMilestoneMsg =>
+      '«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ». استمر، فالقليل الدائم خير كثير.';
+
+  @override
+  String get habitMilestoneButton => 'الحمد لله';
 }

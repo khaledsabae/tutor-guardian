@@ -22,6 +22,7 @@ import 'package:almorabbi/features/routine/models/routine_models.dart';
 import 'package:almorabbi/features/routine/providers/routine_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
+import 'package:almorabbi/features/routine/widgets/habit_week_strip.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/core/app_routes.dart';
 import '../../../widgets/ui/error_retry_view.dart';
@@ -782,7 +783,11 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
           child: habitsAsync.when(
             data: (day) => Column(
               children: [
-                _HabitSummaryCard(points: day.points, totalHabits: day.habits.length),
+                _HabitSummaryCard(
+                  points: day.points,
+                  totalHabits: day.habits.length,
+                  streak: day.streak,
+                ),
                 Expanded(
                   child: _HabitCategoryList(
                     category: categories[_selectedTab],
@@ -790,6 +795,7 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                     childId: childId,
                     onRefresh: () async {
                       if (!mounted) return;
+                      ref.invalidate(habitWeekProvider(childId));
                       return ref.refresh(todayHabitsProvider(childId));
                     },
                   ),
@@ -973,10 +979,15 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
 }
 
 class _HabitSummaryCard extends StatelessWidget {
-  const _HabitSummaryCard({required this.points, required this.totalHabits});
+  const _HabitSummaryCard({
+    required this.points,
+    required this.totalHabits,
+    this.streak = const HabitStreak(),
+  });
 
   final double points;
   final int totalHabits;
+  final HabitStreak streak;
 
   @override
   Widget build(BuildContext context) {
@@ -986,7 +997,10 @@ class _HabitSummaryCard extends StatelessWidget {
       color: Dt.primary.withValues(alpha: .08),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dt.pad, vertical: 12),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+        Row(
           children: [
             Icon(Icons.emoji_events_outlined, color: Dt.primary),
             const SizedBox(width: 12),
@@ -1002,6 +1016,15 @@ class _HabitSummaryCard extends StatelessWidget {
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Dt.primary),
             ),
+          ],
+        ),
+            if (streak.days > 0) ...[
+              const SizedBox(height: 8),
+              Tooltip(
+                message: AppLocalizations.of(context).habitStreakShieldHint,
+                child: HabitStreakBadge(streak: streak),
+              ),
+            ],
           ],
         ),
       ),
@@ -1025,6 +1048,8 @@ class _HabitCategoryList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final items = day.habits.where((h) => h.category == category).toList();
+    final week =
+        ref.watch(habitWeekProvider(childId)).value ?? const HabitWeek();
     if (items.isEmpty) {
       return Center(
         child: Column(
@@ -1049,6 +1074,7 @@ class _HabitCategoryList extends ConsumerWidget {
           habitName: item.habitName,
           category: category,
           childId: childId,
+          week: week.cellsFor(item.habitName, today: item.status),
           existingEvent: item.status == null
               ? null
               : HabitEvent(
@@ -1073,11 +1099,13 @@ class _HabitCard extends StatefulWidget {
     required this.childId,
     required this.existingEvent,
     required this.onRecorded,
+    this.week = const [],
   });
 
   final String habitName;
   final HabitCategory category;
   final int childId;
+  final List<HabitStatus?> week;
   final HabitEvent? existingEvent;
   final VoidCallback onRecorded;
 
@@ -1123,9 +1151,18 @@ class _HabitCardState extends State<_HabitCard> {
         child: Row(
           children: [
             Expanded(
-              child: Text(
-                habitDisplayName(widget.habitName, AppLocalizations.of(context)),
-                style: Theme.of(context).textTheme.titleSmall,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    habitDisplayName(widget.habitName, AppLocalizations.of(context)),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  if (widget.week.isNotEmpty) ...[
+                    const SizedBox(height: 6),
+                    HabitWeekStrip(cells: widget.week),
+                  ],
+                ],
               ),
             ),
             if (_saving)

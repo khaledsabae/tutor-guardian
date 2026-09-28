@@ -1215,5 +1215,14 @@
   "chatContextClear": "Remove context",
   "chatContextDone": "Done",
   "chatSources": "Sources ({count})",
-  "chatSourcesHint": "The references this answer is based on"
+  "chatSourcesHint": "The references this answer is based on",
+  "habitWeekSemantics": "Last 7 days: {done} done, {part} partly",
+  "habitStreakDays": "{days, plural, =0{No streak yet} =1{1-day streak} other{{days}-day streak}}",
+  "habitStreakShieldUsed": "This week's grace day has been used",
+  "habitStreakShieldHint": "One day a week without a log does not break the streak",
+  "habitChildModeLoggedName": "Logged: {name}",
+  "habitChildModeUndo": "Undo",
+  "habitMilestoneTitle": "{milestone, select, three{Three days in a row!} week{A whole week in a row!} month{A whole month in a row!} other{Wonderful consistency!}}",
+  "habitMilestoneMsg": "“The deeds most loved by Allah are the most consistent, even if small.” Keep going — a little, kept up, is a lot.",
+  "habitMilestoneButton": "Alhamdulillah"
 }

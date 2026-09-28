@@ -112,16 +112,111 @@ void main() {
       expect(find.text('صلاة الفجر'), findsOneWidget);
       expect(find.text('تم'), findsOneWidget);
 
-      // Submit as completed.
+      // Submit as completed: one tap, no confirmation dialog (UX-3, G3).
       await tester.tap(find.text('تم'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('تأكيد'));
+      await tester.pump();
+      expect(find.text('تأكيد'), findsNothing);
+      // Shown as logged at once, but held for the undo window.
+      expect(find.text('تم التسجيل'), findsOneWidget);
+      expect(fake.submitBody, isNull);
+
+      await tester.pump(ChildModeNotifier.undoWindow);
       await tester.pumpAndSettle();
 
       expect(fake.submitBody, isNotNull);
       expect(fake.submitBody!['status'], 'completed');
       expect(fake.submitBody!['habit_name'], 'صلاة الفجر');
       expect(fake.submitBody!['device_timestamp'], isNotEmpty);
+    });
+
+    Future<ProviderContainer> pumpWithHabit(
+      WidgetTester tester,
+      _FakeTgClient fake, {
+      HabitStreak streak = const HabitStreak(),
+    }) async {
+      final container = ProviderContainer(
+        overrides: [tgClientProvider.overrideWithValue(fake)],
+      );
+      addTearDown(container.dispose);
+      await saveChildToken(fakeToken);
+      await setChildModeActive(true);
+      container.read(childModeProvider.notifier).state = ChildModeState(
+        active: true,
+        childId: 7,
+        day: HabitDay(
+          childId: 7,
+          date: '2026-07-07',
+          habits: const [
+            TodayHabitItem(
+              category: HabitCategory.worship,
+              habitName: 'صلاة الفجر',
+              source: 'default',
+            ),
+          ],
+          events: const [],
+          streak: streak,
+        ),
+      );
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            locale: Locale('ar'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: HabitChildModeScreen(),
+          ),
+        ),
+      );
+      await tester.pump();
+      return container;
+    }
+
+    testWidgets('Undo inside the window means nothing is ever sent',
+        (tester) async {
+      final fake = _FakeTgClient();
+      await pumpWithHabit(tester, fake);
+
+      await tester.tap(find.text('تم'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500)); // snackbar in
+      await tester.tap(find.text('تراجع'));
+      await tester.pump();
+
+      expect(find.text('تم التسجيل'), findsNothing,
+          reason: 'the card offers the buttons again');
+      await tester.pump(ChildModeNotifier.undoWindow * 2);
+      await tester.pumpAndSettle();
+      expect(fake.submitBody, isNull);
+    });
+
+    testWidgets('crossing a streak milestone celebrates, once', (tester) async {
+      final fake = _FakeTgClient();
+      final container = await pumpWithHabit(
+        tester,
+        fake,
+        streak: const HabitStreak(days: 2),
+      );
+      expect(find.text('يومان متتاليان'), findsOneWidget);
+
+      await tester.tap(find.text('تم'));
+      await tester.pump(ChildModeNotifier.undoWindow);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+
+      expect(find.text('ثلاثة أيام من المواظبة!'), findsOneWidget);
+      expect(container.read(childModeProvider).day!.streak.days, 3);
+    });
+
+    testWidgets('a staged log is sent when the session ends early',
+        (tester) async {
+      final fake = _FakeTgClient();
+      final container = await pumpWithHabit(tester, fake);
+
+      await tester.tap(find.text('تم'));
+      await tester.pump();
+      await container.read(childModeProvider.notifier).flushStaged();
+      expect(fake.submitBody?['habit_name'], 'صلاة الفجر');
     });
 
     testWidgets('exit button redirects to ChildModeLockScreen',

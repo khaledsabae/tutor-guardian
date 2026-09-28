@@ -13,10 +13,13 @@ import '../../agreement/child_agreement_screen.dart';
 import '../../license/child_license_screen.dart';
 import '../../missions/child_mission_screen.dart';
 import '../providers/child_mode_providers.dart';
+import '../widgets/habit_week_strip.dart';
 import '../widgets/quiet_time_bar.dart';
+import '../../../widgets/ui/celebration_overlay.dart';
 
 /// The child-facing self-reporting screen.
-/// Very simple, large buttons, confirmation dialogs, no edit/delete.
+/// Very simple, large buttons, one tap with a few seconds to undo, no
+/// edit/delete once sent.
 class HabitChildModeScreen extends ConsumerWidget {
   const HabitChildModeScreen({super.key});
 
@@ -105,6 +108,16 @@ class HabitChildModeScreen extends ConsumerWidget {
               padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
               child: QuietTimeBar(),
             ),
+            // Effort, celebrated: shown only once there is a streak, and never
+            // as a threat to lose it (§3.3).
+            if (state.day!.streak.days > 0)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: HabitStreakBadge(streak: state.day!.streak, large: true),
+                ),
+              ),
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(16),
@@ -213,7 +226,6 @@ class _HabitChildCard extends ConsumerStatefulWidget {
 }
 
 class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
-  bool _busy = false;
 
   @override
   Widget build(BuildContext context) {
@@ -270,21 +282,21 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
                     icon: Icons.check,
                     color: AppTheme.primary,
                     foreground: AppTheme.onPrimary,
-                    onPressed: _busy ? null : () => _submit('completed', AppLocalizations.of(context).habitChildModeDone),
+                    onPressed: () => _submit('completed'),
                   ),
                   _ActionButton(
                     label: AppLocalizations.of(context).habitChildModePartial,
                     icon: Icons.remove_circle_outline,
                     color: AppTheme.accent,
                     foreground: AppTheme.onAccent,
-                    onPressed: _busy ? null : () => _submit('partially', AppLocalizations.of(context).habitChildModePartial),
+                    onPressed: () => _submit('partially'),
                   ),
                   _ActionButton(
                     label: AppLocalizations.of(context).habitChildModeMissed,
                     icon: Icons.close,
                     color: AppTheme.surfaceAlt,
                     foreground: AppTheme.textPrimary,
-                    onPressed: _busy ? null : () => _submit('missed', AppLocalizations.of(context).habitChildModeMissed),
+                    onPressed: () => _submit('missed'),
                   ),
                 ],
               ),
@@ -300,42 +312,51 @@ class _HabitChildCardState extends ConsumerState<_HabitChildCard> {
     HabitCategory.study => Icons.menu_book,
   };
 
-  Future<void> _submit(String status, String label) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(AppLocalizations.of(context).habitChildModeConfirmTitle),
-        content: Text(
-          AppLocalizations.of(context).habitChildModeConfirmMsg(
-              habitDisplayName(widget.item.habitName, AppLocalizations.of(context)), label),
+  /// One tap logs it (UX_UI_ROADMAP G3). The card flips to "logged" at once,
+  /// and a snackbar offers Undo for a few seconds before anything is sent —
+  /// a confirmation dialog on every check-in doubled the taps for the rare
+  /// mistake it guarded against.
+  Future<void> _submit(String status) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    final notifier = ref.read(childModeProvider.notifier);
+    final name = widget.item.habitName;
+
+    final result = notifier.stage(widget.item, status);
+    if (result == null) return;
+    unawaited(Haptics.success());
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+        content: Text(l10n.habitChildModeLoggedName(habitDisplayName(name, l10n))),
+        duration: ChildModeNotifier.undoWindow,
+        persist: false,
+        action: SnackBarAction(
+          label: l10n.habitChildModeUndo,
+          onPressed: () => notifier.undo(name),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(AppLocalizations.of(context).cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(AppLocalizations.of(context).confirm),
-          ),
-        ],
-      ),
-    );
-    if (confirmed != true || !mounted) return;
-    setState(() => _busy = true);
-    final ok = await ref
-        .read(childModeProvider.notifier)
-        .submit(widget.item, status);
-    if (mounted) {
-      setState(() => _busy = false);
-      // Success used to be confirmed only by the card silently swapping to
-      // its "logged" chip; a light pulse confirms it to the hand as well.
-      unawaited(ok ? Haptics.success() : Haptics.warning());
-      if (!ok) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context).habitChildModeFailed)),
-        );
-      }
+      ));
+
+    // The card may have scrolled away by the time this resolves; the
+    // messenger and navigator outlive it.
+    final r = await result;
+    if (r.outcome == StageOutcome.failed) {
+      unawaited(Haptics.warning());
+      messenger.showSnackBar(SnackBar(content: Text(l10n.habitChildModeFailed)));
+    } else if (r.milestone != null && navigator.mounted) {
+      await showCelebration(
+        navigator.context,
+        emoji: '🔥',
+        title: l10n.habitMilestoneTitle(switch (r.milestone) {
+          3 => 'three',
+          7 => 'week',
+          30 => 'month',
+          _ => 'other',
+        }),
+        message: l10n.habitMilestoneMsg,
+        buttonLabel: l10n.habitMilestoneButton,
+      );
     }
   }
 }

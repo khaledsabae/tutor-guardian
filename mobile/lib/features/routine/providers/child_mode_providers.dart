@@ -118,10 +118,107 @@ class ChildModeState {
   bool isSubmitted(String habitName) => submittedHabits.contains(habitName);
 }
 
+enum StageOutcome { committed, undone, failed }
+
+/// What became of a staged log, and the streak milestone it crossed if any.
+class StageResult {
+  const StageResult(this.outcome, {this.milestone});
+
+  final StageOutcome outcome;
+  final int? milestone;
+}
+
+class _Staged {
+  _Staged(this.item, this.status);
+
+  final HabitItem item;
+  final String status;
+  final Completer<StageResult> done = Completer<StageResult>();
+  Timer? timer;
+}
+
 class ChildModeNotifier extends StateNotifier<ChildModeState> {
   ChildModeNotifier(this._client) : super(const ChildModeState());
 
   final TgClient _client;
+
+  /// How long a child's tap stays undoable before it is sent (UX_UI_ROADMAP
+  /// G3). The server is submit-only for children, so undo cannot be a delete:
+  /// the log waits here, and Undo means it is never sent.
+  static const undoWindow = Duration(seconds: 5);
+
+  final Map<String, _Staged> _staged = {};
+
+  /// Show [item] as logged now; send it once [undoWindow] passes.
+  ///
+  /// Replaces a confirmation dialog on every check-in: one tap instead of
+  /// two, and a mistaken tap is still recoverable.
+  ///
+  /// Null when the habit is already logged or waiting — a second tap before
+  /// the card redrew. Nothing happened, so there is nothing to report.
+  Future<StageResult>? stage(HabitItem item, String status) {
+    final name = item.habitName;
+    if (state.isSubmitted(name) || _staged.containsKey(name)) return null;
+    final staged = _Staged(item, status);
+    staged.timer = Timer(undoWindow, () => _commit(name));
+    _staged[name] = staged;
+    state = state.copyWith(
+      error: state.error,
+      submittedHabits: {...state.submittedHabits, name},
+    );
+    return staged.done.future;
+  }
+
+  /// Take back a staged log. False once it has already been sent.
+  bool undo(String habitName) {
+    final staged = _staged.remove(habitName);
+    if (staged == null) return false;
+    staged.timer?.cancel();
+    state = state.copyWith(
+      error: state.error,
+      submittedHabits: {...state.submittedHabits}..remove(habitName),
+    );
+    staged.done.complete(const StageResult(StageOutcome.undone));
+    return true;
+  }
+
+  /// Send every staged log now — before a session closes, so a tap made in
+  /// the last five seconds is not lost with the child token.
+  Future<void> flushStaged() async {
+    for (final name in _staged.keys.toList()) {
+      _staged[name]?.timer?.cancel();
+      await _commit(name);
+    }
+  }
+
+  Future<void> _commit(String name) async {
+    final staged = _staged.remove(name);
+    if (staged == null) return;
+    final before = state.day?.streak ?? const HabitStreak();
+    final ok = await _send(staged.item, staged.status);
+    if (!mounted) {
+      staged.done.complete(StageResult(
+          ok ? StageOutcome.committed : StageOutcome.failed));
+      return;
+    }
+    if (!ok) {
+      state = state.copyWith(
+        error: state.error,
+        submittedHabits: {...state.submittedHabits}..remove(name),
+      );
+      staged.done.complete(const StageResult(StageOutcome.failed));
+      return;
+    }
+    int? milestone;
+    final day = state.day;
+    if (day != null && staged.status != HabitStatus.missed.wireName) {
+      final after = before.withEffortToday();
+      milestone = streakMilestoneCrossed(before.days, after.days);
+      state = state.copyWith(error: state.error, day: day.withStreak(after));
+    }
+    staged.done.complete(
+        StageResult(StageOutcome.committed, milestone: milestone));
+  }
 
   /// Re-enter child mode after a restart — but only if there is still a
   /// session to re-enter.
@@ -388,6 +485,7 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
   /// closing screen, never an error dialog.
   Future<void> endSession({String reason = 'completed', String? code}) async {
     _stopHeartbeat();
+    await flushStaged();
     final sessionId = state.sessionId;
     final token = await getChildToken();
     if (sessionId != null && token != null) {
@@ -421,6 +519,9 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
   @override
   void dispose() {
     _stopHeartbeat();
+    for (final staged in _staged.values) {
+      staged.timer?.cancel();
+    }
     super.dispose();
   }
 
@@ -462,6 +563,8 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
         submittedHabits: {
           for (final e in day.events)
             if (e.status != HabitStatus.missed) e.habitName,
+          // Still inside their undo window: not on the server yet.
+          ..._staged.keys,
         },
       );
     } on TgApiError catch (e) {
@@ -478,8 +581,13 @@ class ChildModeNotifier extends StateNotifier<ChildModeState> {
   }
 
   Future<bool> submit(HabitItem item, String status) async {
+    if (state.isSubmitted(item.habitName)) return false;
+    return _send(item, status);
+  }
+
+  Future<bool> _send(HabitItem item, String status) async {
     final token = await getChildToken();
-    if (token == null || state.isSubmitted(item.habitName)) return false;
+    if (token == null) return false;
     try {
       await _client.createChildHabitEvent(
         childToken: token,
