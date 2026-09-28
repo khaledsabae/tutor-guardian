@@ -57,6 +57,18 @@ class AssistantReply {
     );
   }
 
+  /// Citations behind a grounded answer (`metadata.sources`, ≤ 4), shown as
+  /// a collapsed "Sources (n)" row. Empty from older backends, and for
+  /// answers that cite nothing — the row is then simply absent.
+  List<String> get sources {
+    final raw = metadata?['sources'];
+    if (raw is! List) return const [];
+    return [
+      for (final s in raw)
+        if (s is String && s.trim().isNotEmpty) s.trim(),
+    ].take(4).toList();
+  }
+
   /// True when the server signalled an out-of-scope / banned request.
   bool get isBanned => mode == ReplyMode.banned;
 

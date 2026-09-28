@@ -100,9 +100,14 @@ Response `200` — **AssistantReply**:
   "needs_human_review": true,
   "escalation_target": "pediatrician",
   "mode": "llm_generated",
-  "session_id": "uuid"
+  "session_id": "uuid",
+  "metadata": { "sources": ["UNICEF", "Centers for Disease Control and Prevention (CDC)"] }
 }
 ```
+`metadata` is additive and may carry other keys. `metadata.sources` (≤ 4, in
+retrieval order) lists the citations behind a grounded answer
+(`llm_generated` / `retrieval_only`); it is empty or absent otherwise (other
+modes, cached answers, older servers). The same `metadata` rides the `done` frame of `/stream`.
 
 ### 3.5 `POST /api/assistant/stream` — streaming answer (preferred for chat UI)
 Same request body as `/query`. Response is **`text/event-stream`**.

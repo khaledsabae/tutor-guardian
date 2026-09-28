@@ -69,6 +69,24 @@ def usable_reference(ref: str | None) -> str | None:
     return cleaned
 
 
+MAX_REPLY_SOURCES = 4
+
+
+def reply_sources(units: list[dict]) -> list[str]:
+    """The citations behind an answer: usable, de-duplicated, in retrieval order.
+
+    One list feeds both the «📚 المصدر» line the model is told to write and the
+    structured `metadata.sources` the app shows as a "Sources (n)" disclosure,
+    so the two can never disagree.
+    """
+    sources: list[str] = []
+    for unit in units:
+        ref = usable_reference(unit.get("metadata", {}).get("reference_info"))
+        if ref and ref not in sources:
+            sources.append(ref)
+    return sources[:MAX_REPLY_SOURCES]
+
+
 # Latin letters glued directly to an Arabic letter (no space), e.g. "بness".
 # Conservative: only strips Latin runs touching Arabic, so standalone source
 # names like "CDC" or "AAP" (which are space-separated) are preserved.
@@ -176,7 +194,6 @@ def _build_prompt(
     """Construct the generation prompt. Returns (user_prompt, source_line)."""
 
     parts: list[str] = []
-    sources: list[str] = []
     for n, unit in enumerate(retrieved_units, 1):
         doc = unit.get("document", "") or unit.get("metadata", {}).get("text_simplified", "")
         doc = doc.removeprefix("passage: ")
@@ -187,11 +204,9 @@ def _build_prompt(
         # model invents an attribution for a passage it can see has none.
         ref_line = ref or "غير موثّق — لا تنسب هذه الفقرة إلى أي مصدر"
         parts.append(f"【{n}】 ({domain_label}) {doc}\nالمرجع: {ref_line}")
-        if ref and ref not in sources:
-            sources.append(ref)
 
     joined = "\n---\n".join(parts)
-    source_line = " · ".join(sources[:4]) if sources else "مصدر غير مذكور"
+    source_line = " · ".join(reply_sources(retrieved_units)) or "مصدر غير مذكور"
     question_display = (question_text.strip() if question_text else "") or \
         (behavior_type.strip() if behavior_type else "") or "سؤال تربوي"
     length_rule = _LENGTH_BY_SEVERITY.get(severity, _LENGTH_BY_SEVERITY["خفيف"])

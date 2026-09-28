@@ -4,12 +4,14 @@ The app drops a stream that sends nothing for 45 s. A slow first token
 (retrieval, a cold local model, the fallback chain) must therefore still put
 bytes on the wire — an SSE comment, which every client ignores.
 """
+import json
 import time
 
 from fastapi.testclient import TestClient
 
 from app.routers import assistant
 from app.services import ai_gateway
+from app.services.llm_service import usable_reference
 
 
 def test_silent_model_gets_keepalive_comments(monkeypatch):
@@ -47,5 +49,11 @@ def test_silent_model_gets_keepalive_comments(monkeypatch):
         events = [line for line in body.split("\n") if line.startswith("event: ")]
         assert events[-1] == "event: done"
         assert all(e in ("event: token", "event: done") for e in events)
+        # The done frame carries the citations for the app's Sources row
+        # (UX-2, C8): a list, only real citations, never a bare domain name.
+        done = json.loads(body.split("event: done\ndata: ", 1)[1].split("\n", 1)[0])
+        sources = done["metadata"]["sources"]
+        assert isinstance(sources, list)
+        assert all(usable_reference(s) == s for s in sources)
     finally:
         ai_gateway._gateway = None

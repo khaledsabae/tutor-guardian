@@ -24,7 +24,7 @@ from app.services.reranker import RERANK_MIN_SCORE
 from app.services.query_rewriter import rewrite_query
 from app.services.llm_service import (
     generate_reply, build_full_prompt, generate_general_pivot, build_pivot_prompt,
-    strip_pivot_citation, clean_model_output, _CJK_RE,
+    strip_pivot_citation, clean_model_output, reply_sources, usable_reference, _CJK_RE,
 )
 from app.services.ai_gateway import get_gateway
 from app.services.session_logger import log_session
@@ -500,6 +500,10 @@ async def draft_reply(request: Request, user_message: UserMessage):
         **(reply.metadata or {}),
         "top_rerank": round(top_rerank, 2) if top_rerank is not None else None,
         "off_topic": off_topic,
+        # The app's "Sources (n)" disclosure. Grounded answers only: a pivot
+        # answer is told not to cite, and an empty retrieval has nothing to cite.
+        "sources": reply_sources(retrieved_units)
+        if mode in ("llm_generated", "retrieval_only") else [],
     }
 
     await asyncio.to_thread(
@@ -887,6 +891,10 @@ async def stream_reply(request: Request, user_message: UserMessage) -> Streaming
                             needs_human_review=decision["needs_human_review"],
                             escalation_target=decision["escalate_to"],
                             mode=stream_mode, session_id=session_id,
+                            metadata={
+                                "sources": reply_sources(retrieved_units)
+                                if stream_mode == "llm_generated" else [],
+                            },
                         )
                         await asyncio.to_thread(_persist, final_text, stream_mode)
                         # Feed the answer cache: grounded, local, review-free,
@@ -959,8 +967,10 @@ def _merge_retrieved(
     parts = []
     for u in units:
         doc = u.get("document", "")
-        ref = u.get("metadata", {}).get("reference_info", "مصدر غير مذكور")
-        parts.append(f"{doc.strip()}\n📚 المصدر: {ref}")
+        # Same filter as the generated path: a bare "medical" or a placeholder
+        # is not a citation, so such a passage carries no source line at all.
+        ref = usable_reference(u.get("metadata", {}).get("reference_info"))
+        parts.append(f"{doc.strip()}\n📚 المصدر: {ref}" if ref else doc.strip())
     body = "\n\n".join(parts)
     footer = "\n\nملاحظة: يُنصح باستشارة مختص للحالات المستعصية."
     return header + body + footer

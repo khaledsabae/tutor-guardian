@@ -64,3 +64,37 @@ def test_all_bogus_falls_back_to_the_honest_default():
         retrieved_units=[_unit("medical"), _unit("")],
     )
     assert source_line == "مصدر غير مذكور"
+
+
+# ── Structured sources for the app's "Sources (n)" disclosure (UX-2, C8) ──────
+from app.routers.assistant import _merge_retrieved  # noqa: E402
+from app.models.api import UserMessage  # noqa: E402
+from app.services.llm_service import MAX_REPLY_SOURCES, reply_sources  # noqa: E402
+
+
+def test_reply_sources_filters_dedupes_and_keeps_order():
+    units = [_unit("UNICEF"), _unit("medical"), _unit("CDC"), _unit("UNICEF"), _unit("")]
+    assert reply_sources(units) == ["UNICEF", "CDC"]
+
+
+def test_reply_sources_is_capped():
+    units = [_unit(f"Source {i}") for i in range(MAX_REPLY_SOURCES + 3)]
+    assert len(reply_sources(units)) == MAX_REPLY_SOURCES
+
+
+def test_source_line_and_structured_sources_agree():
+    units = [_unit("medical"), _unit("UNICEF"), _unit("CDC")]
+    _, source_line = build_full_prompt(
+        domain="medical", behavior_type="", age_group="4-6", severity="خفيف",
+        retrieved_units=units,
+    )
+    assert source_line == " · ".join(reply_sources(units))
+
+
+def test_merged_fallback_does_not_cite_a_non_source():
+    msg = UserMessage(age_group="4-6", severity="خفيف", message_text="سؤال")
+    text = _merge_retrieved(msg, [_unit("medical", "فقرة أولى"), _unit("UNICEF", "فقرة ثانية")])
+    assert "فقرة أولى" in text and "فقرة ثانية" in text
+    assert "📚 المصدر: medical" not in text
+    assert "📚 المصدر: UNICEF" in text
+    assert "مصدر غير مذكور" not in text
