@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/design_tokens.dart';
 import 'bouncy_button.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 /// Full-screen celebration: confetti burst + scale-in dialog with a big
 /// emoji. The reward moment for completing a lesson / acing a quiz.
@@ -21,6 +22,9 @@ Future<void> showCelebration(
   Future<void> Function()? onShare,
   String? shareLabel,
 }) {
+  // Milestone = success + confetti, once (UX_UI_ROADMAP §4.2). Covers lesson
+  // completion, journey milestones and habit streaks in one place.
+  Haptics.success();
   return showGeneralDialog<void>(
     context: context,
     barrierColor: Colors.black54,

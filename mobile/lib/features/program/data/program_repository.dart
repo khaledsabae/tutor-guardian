@@ -46,13 +46,16 @@ class ProgramRepository {
       final json = await fetch();
       final value = parse(json);
       await _cache.write(key, json);
+      CurriculumCache.servedStaleAt.value = null;
       return value;
     } catch (networkError, networkStack) {
       if (!staleDataBeatsError(networkError)) rethrow;
-      final cached = await _cache.read(key);
+      final cached = await _cache.readWithTime(key);
       if (cached == null) rethrow;
       try {
-        return parse(cached);
+        final value = parse(cached.payload);
+        CurriculumCache.servedStaleAt.value = cached.savedAt;
+        return value;
       } catch (_) {
         // Written by a version that shaped the response differently. The
         // caller asked the network a question and the network is what failed —

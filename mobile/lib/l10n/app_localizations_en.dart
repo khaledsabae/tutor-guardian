@@ -3822,4 +3822,105 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatSourcesHint => 'The references this answer is based on';
+
+  @override
+  String habitWeekSemantics(int done, int part) {
+    return 'Last 7 days: $done done, $part partly';
+  }
+
+  @override
+  String habitStreakDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days-day streak',
+      one: '1-day streak',
+      zero: 'No streak yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get habitStreakShieldUsed => 'This week\'s grace day has been used';
+
+  @override
+  String get habitStreakShieldHint =>
+      'One day a week without a log does not break the streak';
+
+  @override
+  String habitChildModeLoggedName(String name) {
+    return 'Logged: $name';
+  }
+
+  @override
+  String get habitChildModeUndo => 'Undo';
+
+  @override
+  String habitMilestoneTitle(String milestone) {
+    String _temp0 = intl.Intl.selectLogic(milestone, {
+      'three': 'Three days in a row!',
+      'week': 'A whole week in a row!',
+      'month': 'A whole month in a row!',
+      'other': 'Wonderful consistency!',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get habitMilestoneMsg =>
+      '“The deeds most loved by Allah are the most consistent, even if small.” Keep going — a little, kept up, is a lot.';
+
+  @override
+  String get habitMilestoneButton => 'Alhamdulillah';
+
+  @override
+  String get habitRatesTitle => 'Last 4 weeks';
+
+  @override
+  String get habitRatesSubtitle =>
+      'Share of days each habit was done, most improved first';
+
+  @override
+  String get habitRatesEmpty =>
+      'Not enough records yet. Log habits for a few days and they will show here.';
+
+  @override
+  String habitRateSemantics(String name, int rate, int change) {
+    return '$name: $rate% of days, a change of $change points from the four weeks before';
+  }
+
+  @override
+  String get appOfflineBanner =>
+      'You\'re offline — some features need a connection';
+
+  @override
+  String appOfflineSavedCopy(Object when) {
+    return 'Offline — showing a saved copy ($when)';
+  }
+
+  @override
+  String appSavedCopy(Object when) {
+    return 'Couldn\'t refresh — showing a saved copy ($when)';
+  }
+
+  @override
+  String get loadingSlow => 'The connection is slow… still trying';
+
+  @override
+  String get loadingRetry => 'Try again';
+
+  @override
+  String get loadingCancel => 'Go back';
+
+  @override
+  String get settingsHaptics => 'Haptic feedback';
+
+  @override
+  String get settingsHapticsDesc =>
+      'A light vibration when you log, complete or get an alert';
+
+  @override
+  String childModeHandoff(String name) {
+    return 'Hi $name! This is your time 🌟';
+  }
 }

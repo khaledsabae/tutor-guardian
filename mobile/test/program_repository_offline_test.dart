@@ -69,6 +69,23 @@ void main() {
     expect(client.calls, 2, reason: 'the network is still tried first');
   });
 
+  test('serving the saved copy is announced, and a fresh answer clears it '
+      '(E2)', () async {
+    CurriculumCache.servedStaleAt.value = null;
+    final client = _FlakyClient(payload: _pathsPayload('بناء الرابطة'));
+    final repo = ProgramRepository(client, cache: cache);
+    await repo.listPaths(ageGroup: '4-6');
+    expect(CurriculumCache.servedStaleAt.value, isNull);
+
+    client.failure = const SocketException('offline');
+    await repo.listPaths(ageGroup: '4-6');
+    expect(CurriculumCache.servedStaleAt.value, isNotNull);
+
+    client.failure = null;
+    await repo.listPaths(ageGroup: '4-6');
+    expect(CurriculumCache.servedStaleAt.value, isNull);
+  });
+
   test('a 5xx also falls back — the server being unwell says nothing about '
       'the content', () async {
     final client = _FlakyClient(payload: _pathsPayload('الأدب'));

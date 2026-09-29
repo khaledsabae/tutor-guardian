@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
@@ -11,11 +10,12 @@ import '../../../l10n/app_localizations.dart';
 import '../../../l10n/content_direction.dart';
 import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/empty_state.dart';
-import '../../../widgets/ui/skeleton.dart';
 import '../data/story_models.dart';
 import '../../screen_off/narration_store.dart';
 import '../../../widgets/ui/night_sky.dart';
 import 'package:almorabbi/core/motion.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 /// A magical bedtime bookshelf: 3D books, twinkling stars, and looping
 /// ambient cover videos when available. Replaces the old vertical list card.
@@ -39,7 +39,7 @@ class StoryBookshelfScreen extends ConsumerWidget {
           child: storiesAsync.when(
             loading: () => const SingleChildScrollView(
               physics: NeverScrollableScrollPhysics(),
-              child: SkeletonList(count: 3, itemHeight: 220),
+              child: LoadingView(count: 3, itemHeight: 220),
             ),
             error: (e, _) => EmptyState(
               emoji: '⚠️',
@@ -145,7 +145,7 @@ class _BookshelfBodyState extends State<_BookshelfBody>
 
   void _setFilter(String filter) {
     if (_selectedFilter == filter) return;
-    HapticFeedback.selectionClick();
+    Haptics.selection();
     for (final vc in _videoControllers.values) {
       vc.dispose();
     }

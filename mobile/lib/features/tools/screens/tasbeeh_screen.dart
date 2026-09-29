@@ -6,7 +6,6 @@
 library;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +15,7 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../data/hijri_date.dart' show arabicDigits;
 import '../data/tasbeeh_store.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 /// The dhikr phrases offered above the counter. Arabic content, rendered with
 /// the content's own direction rather than the chrome's.
@@ -65,9 +65,9 @@ class _TasbeehScreenState extends ConsumerState<TasbeehScreen> {
     // Haptics carry the count when the screen is not being watched: a light
     // tick per bead, a heavier one the moment the target is reached.
     if (!wasComplete && _state.isComplete) {
-      HapticFeedback.heavyImpact();
+      Haptics.strong();
     } else {
-      HapticFeedback.selectionClick();
+      Haptics.selection();
     }
     _persist();
   }

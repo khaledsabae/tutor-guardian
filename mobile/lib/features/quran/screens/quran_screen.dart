@@ -8,6 +8,7 @@ import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import '../models/surah_names.dart';
 import '../providers/quran_providers.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class QuranScreen extends ConsumerWidget {
   const QuranScreen({super.key});
@@ -171,7 +172,7 @@ class QuranScreen extends ConsumerWidget {
             ],
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const LoadingView(count: 8, itemHeight: 64),
         error: (err, _) => Center(
           child: Text(AppLocalizations.of(context).quranLoadError(err)),
         ),

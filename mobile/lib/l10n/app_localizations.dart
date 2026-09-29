@@ -6841,6 +6841,138 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'المراجع التي بُنيت عليها هذه الإجابة'**
   String get chatSourcesHint;
+
+  /// No description provided for @habitWeekSemantics.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر 7 أيام: {done} مكتملة و{part} جزئية'**
+  String habitWeekSemantics(int done, int part);
+
+  /// No description provided for @habitStreakDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'{days, plural, =0{لا سلسلة بعد} =1{يوم واحد متتالٍ} =2{يومان متتاليان} few{{days} أيام متتالية} many{{days} يومًا متتاليًا} other{{days} يوم متتالٍ}}'**
+  String habitStreakDays(int days);
+
+  /// No description provided for @habitStreakShieldUsed.
+  ///
+  /// In ar, this message translates to:
+  /// **'استُخدم يوم السماح لهذا الأسبوع'**
+  String get habitStreakShieldUsed;
+
+  /// No description provided for @habitStreakShieldHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'يوم واحد بلا تسجيل كل أسبوع لا يقطع السلسلة'**
+  String get habitStreakShieldHint;
+
+  /// No description provided for @habitChildModeLoggedName.
+  ///
+  /// In ar, this message translates to:
+  /// **'سُجِّل: {name}'**
+  String habitChildModeLoggedName(String name);
+
+  /// No description provided for @habitChildModeUndo.
+  ///
+  /// In ar, this message translates to:
+  /// **'تراجع'**
+  String get habitChildModeUndo;
+
+  /// No description provided for @habitMilestoneTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'{milestone, select, three{ثلاثة أيام من المواظبة!} week{أسبوع كامل من المواظبة!} month{شهر كامل من المواظبة!} other{مواظبة رائعة!}}'**
+  String habitMilestoneTitle(String milestone);
+
+  /// No description provided for @habitMilestoneMsg.
+  ///
+  /// In ar, this message translates to:
+  /// **'«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ». استمر، فالقليل الدائم خير كثير.'**
+  String get habitMilestoneMsg;
+
+  /// No description provided for @habitMilestoneButton.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحمد لله'**
+  String get habitMilestoneButton;
+
+  /// No description provided for @habitRatesTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر 4 أسابيع'**
+  String get habitRatesTitle;
+
+  /// No description provided for @habitRatesSubtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'نسبة الأيام التي أُنجزت فيها كل عادة، والأكثر تحسنًا أولًا'**
+  String get habitRatesSubtitle;
+
+  /// No description provided for @habitRatesEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد سجلات كافية بعد. سجّلوا العادات لبضعة أيام وستظهر هنا.'**
+  String get habitRatesEmpty;
+
+  /// No description provided for @habitRateSemantics.
+  ///
+  /// In ar, this message translates to:
+  /// **'{name}: {rate}٪ من الأيام، تغيّر {change} نقطة عن الأسابيع الأربعة السابقة'**
+  String habitRateSemantics(String name, int rate, int change);
+
+  /// No description provided for @appOfflineBanner.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متصل بالإنترنت — بعض الميزات تحتاج اتصالًا'**
+  String get appOfflineBanner;
+
+  /// No description provided for @appOfflineSavedCopy.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متصل — تعرض نسخة محفوظة ({when})'**
+  String appOfflineSavedCopy(Object when);
+
+  /// No description provided for @appSavedCopy.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر التحديث — تعرض نسخة محفوظة ({when})'**
+  String appSavedCopy(Object when);
+
+  /// No description provided for @loadingSlow.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاتصال بطيء… ما زلنا نحاول'**
+  String get loadingSlow;
+
+  /// No description provided for @loadingRetry.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة المحاولة'**
+  String get loadingRetry;
+
+  /// No description provided for @loadingCancel.
+  ///
+  /// In ar, this message translates to:
+  /// **'رجوع'**
+  String get loadingCancel;
+
+  /// No description provided for @settingsHaptics.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاهتزاز عند اللمس'**
+  String get settingsHaptics;
+
+  /// No description provided for @settingsHapticsDesc.
+  ///
+  /// In ar, this message translates to:
+  /// **'اهتزاز خفيف عند التسجيل والإنجاز والتنبيه'**
+  String get settingsHapticsDesc;
+
+  /// No description provided for @childModeHandoff.
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلًا {name}! هذا وقتك 🌟'**
+  String childModeHandoff(String name);
 }
 
 class _AppLocalizationsDelegate

@@ -23,6 +23,7 @@ import 'core/nav_observer.dart';
 import 'api/tg_client.dart';
 import 'state/chat_notifier.dart';
 import 'widgets/ui/bouncy_button.dart';
+import 'widgets/app_status_banner.dart';
 import 'features/identity/identity_service.dart';
 import 'features/onboarding/providers/onboarding_providers.dart';
 import 'features/onboarding/screens/onboarding_screen.dart';
@@ -46,6 +47,8 @@ import 'theme/app_theme.dart';
 import 'theme/bundled_fonts.dart';
 import 'theme/design_tokens.dart';
 import 'features/push/notification_channels.dart';
+import 'core/haptics.dart';
+import 'features/routine/widgets/child_mode_shell.dart';
 
 // FCM background handler lives in features/push/push_service.dart
 // (registered there via FirebaseMessaging.onBackgroundMessage).
@@ -65,6 +68,7 @@ Future<(Object, StackTrace)?> _loadContentPacks(
     await Future.wait([
       FamilyAdhkar.load(language: resolvedContentLanguage(storedLanguage)),
       JourneyMilestones.load(),
+      Haptics.load(),
     ]);
     return null;
   } catch (e, stack) {
@@ -349,7 +353,8 @@ class TutorGuardianApp extends ConsumerWidget {
           child: Listener(
             behavior: HitTestBehavior.translucent,
             onPointerDown: TgNavObserver.recordTap,
-            child: child ?? const SizedBox.shrink(),
+            // Offline and "saved copy" in one place for every route (E2).
+            child: AppStatusBanner(child: child ?? const SizedBox.shrink()),
           ),
         );
       },
@@ -461,9 +466,22 @@ class ForceUpdateScreen extends ConsumerWidget {
 class _AppBootstrapper extends ConsumerWidget {
   const _AppBootstrapper();
 
+  /// Entering and leaving child mode is a fade-through (UX_UI_ROADMAP §4.3):
+  /// the parent app and the child surface never cut hard into each other.
   Widget _buildNormalApp(WidgetRef ref, dynamic childMode) {
+    final bool active = childMode.active;
+    return AnimatedSwitcher(
+      duration: ChildModeShell.fade,
+      child: KeyedSubtree(
+        key: ValueKey<bool>(active),
+        child: _buildAppFor(ref, childMode),
+      ),
+    );
+  }
+
+  Widget _buildAppFor(WidgetRef ref, dynamic childMode) {
     if (childMode.active) {
-      return const HabitChildModeScreen();
+      return const ChildModeShell(child: HabitChildModeScreen());
     }
     // First, sync the onboardingCompletedProvider from disk.
     final completed = ref.watch(onboardingCompletedProvider);

@@ -22,9 +22,11 @@ import 'package:almorabbi/features/routine/models/routine_models.dart';
 import 'package:almorabbi/features/routine/providers/routine_providers.dart';
 import 'package:almorabbi/features/routine/models/habit_models.dart';
 import 'package:almorabbi/features/routine/providers/habit_providers.dart';
+import 'package:almorabbi/features/routine/widgets/habit_week_strip.dart';
 import 'package:almorabbi/state/chat_notifier.dart';
 import 'package:almorabbi/core/app_routes.dart';
 import '../../../widgets/ui/error_retry_view.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 bool routineAgeAllowed(String ageGroup) {
   // Daily routine (sleep/feed/diaper) is for babies/toddlers 0–6 years.
@@ -210,7 +212,10 @@ class _RoutineBody extends ConsumerWidget {
         Expanded(
           child: routineAsync.when(
             data: (day) => _EventsList(day: day),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => LoadingView(
+              itemHeight: 72,
+              onRetry: childId == null ? null : () => ref.invalidate(todayRoutineProvider(childId)),
+            ),
             error: (e, _) => ErrorRetryView(
               error: e,
               onRetry: childId == null ? null : () => ref.invalidate(todayRoutineProvider(childId)),
@@ -756,6 +761,49 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
     if (mounted) setState(() {});
   }
 
+  /// Four-week bars (UX_UI_ROADMAP §3.2) in a sheet, so the habit list keeps
+  /// its height.
+  Future<void> _showRates(int childId) {
+    return showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (ctx) => Consumer(
+        builder: (ctx, ref, _) {
+          final l10n = AppLocalizations.of(ctx);
+          final week = ref.watch(habitWeekProvider(childId));
+          return SafeArea(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(ctx).height * 0.75,
+              ),
+              child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.fromLTRB(Dt.pad, 0, Dt.pad, Dt.pad),
+                children: [
+                  Text(l10n.habitRatesTitle,
+                      style: Theme.of(ctx).textTheme.titleLarge),
+                  const SizedBox(height: 4),
+                  Text(l10n.habitRatesSubtitle,
+                      style: Theme.of(ctx).textTheme.bodySmall),
+                  const SizedBox(height: 16),
+                  week.when(
+                    data: (w) => HabitFourWeekBars(rates: w.rates),
+                    loading: () => const Padding(
+                      padding: EdgeInsets.all(24),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                    error: (_, _) => HabitFourWeekBars(rates: const []),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   Future<void> _openAgreement(String childName) async {
     await Navigator.of(context).push(AppRoutes.agreement(childName: childName));
     if (mounted) setState(() {});
@@ -782,7 +830,12 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
           child: habitsAsync.when(
             data: (day) => Column(
               children: [
-                _HabitSummaryCard(points: day.points, totalHabits: day.habits.length),
+                _HabitSummaryCard(
+                  points: day.points,
+                  totalHabits: day.habits.length,
+                  streak: day.streak,
+                  onShowRates: () => _showRates(childId),
+                ),
                 Expanded(
                   child: _HabitCategoryList(
                     category: categories[_selectedTab],
@@ -790,13 +843,17 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
                     childId: childId,
                     onRefresh: () async {
                       if (!mounted) return;
+                      ref.invalidate(habitWeekProvider(childId));
                       return ref.refresh(todayHabitsProvider(childId));
                     },
                   ),
                 ),
               ],
             ),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => LoadingView(
+              itemHeight: 88,
+              onRetry: () => ref.invalidate(todayHabitsProvider(childId)),
+            ),
             error: (e, _) => ErrorRetryView(
               error: e,
               onRetry: () => ref.invalidate(todayHabitsProvider(childId)),
@@ -973,10 +1030,17 @@ class _HabitBalanceBodyState extends ConsumerState<_HabitBalanceBody>
 }
 
 class _HabitSummaryCard extends StatelessWidget {
-  const _HabitSummaryCard({required this.points, required this.totalHabits});
+  const _HabitSummaryCard({
+    required this.points,
+    required this.totalHabits,
+    this.streak = const HabitStreak(),
+    this.onShowRates,
+  });
 
   final double points;
   final int totalHabits;
+  final HabitStreak streak;
+  final VoidCallback? onShowRates;
 
   @override
   Widget build(BuildContext context) {
@@ -986,7 +1050,10 @@ class _HabitSummaryCard extends StatelessWidget {
       color: Dt.primary.withValues(alpha: .08),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dt.pad, vertical: 12),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+        Row(
           children: [
             Icon(Icons.emoji_events_outlined, color: Dt.primary),
             const SizedBox(width: 12),
@@ -1001,6 +1068,24 @@ class _HabitSummaryCard extends StatelessWidget {
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Dt.primary),
+            ),
+          ],
+        ),
+            Row(
+              children: [
+                if (streak.days > 0)
+                  Tooltip(
+                    message: AppLocalizations.of(context).habitStreakShieldHint,
+                    child: HabitStreakBadge(streak: streak),
+                  ),
+                const Spacer(),
+                if (onShowRates != null)
+                  TextButton.icon(
+                    onPressed: onShowRates,
+                    icon: const Icon(Icons.bar_chart_rounded, size: 18),
+                    label: Text(AppLocalizations.of(context).habitRatesTitle),
+                  ),
+              ],
             ),
           ],
         ),
@@ -1025,6 +1110,8 @@ class _HabitCategoryList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final items = day.habits.where((h) => h.category == category).toList();
+    final week =
+        ref.watch(habitWeekProvider(childId)).value ?? const HabitWeek();
     if (items.isEmpty) {
       return Center(
         child: Column(
@@ -1049,6 +1136,7 @@ class _HabitCategoryList extends ConsumerWidget {
           habitName: item.habitName,
           category: category,
           childId: childId,
+          week: week.cellsFor(item.habitName, today: item.status),
           existingEvent: item.status == null
               ? null
               : HabitEvent(
@@ -1073,11 +1161,13 @@ class _HabitCard extends StatefulWidget {
     required this.childId,
     required this.existingEvent,
     required this.onRecorded,
+    this.week = const [],
   });
 
   final String habitName;
   final HabitCategory category;
   final int childId;
+  final List<HabitStatus?> week;
   final HabitEvent? existingEvent;
   final VoidCallback onRecorded;
 
@@ -1123,9 +1213,18 @@ class _HabitCardState extends State<_HabitCard> {
         child: Row(
           children: [
             Expanded(
-              child: Text(
-                habitDisplayName(widget.habitName, AppLocalizations.of(context)),
-                style: Theme.of(context).textTheme.titleSmall,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    habitDisplayName(widget.habitName, AppLocalizations.of(context)),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  if (widget.week.isNotEmpty) ...[
+                    const SizedBox(height: 6),
+                    HabitWeekStrip(cells: widget.week),
+                  ],
+                ],
               ),
             ),
             if (_saving)

@@ -3770,4 +3770,107 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chatSourcesHint => 'المراجع التي بُنيت عليها هذه الإجابة';
+
+  @override
+  String habitWeekSemantics(int done, int part) {
+    return 'آخر 7 أيام: $done مكتملة و$part جزئية';
+  }
+
+  @override
+  String habitStreakDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days يوم متتالٍ',
+      many: '$days يومًا متتاليًا',
+      few: '$days أيام متتالية',
+      two: 'يومان متتاليان',
+      one: 'يوم واحد متتالٍ',
+      zero: 'لا سلسلة بعد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get habitStreakShieldUsed => 'استُخدم يوم السماح لهذا الأسبوع';
+
+  @override
+  String get habitStreakShieldHint =>
+      'يوم واحد بلا تسجيل كل أسبوع لا يقطع السلسلة';
+
+  @override
+  String habitChildModeLoggedName(String name) {
+    return 'سُجِّل: $name';
+  }
+
+  @override
+  String get habitChildModeUndo => 'تراجع';
+
+  @override
+  String habitMilestoneTitle(String milestone) {
+    String _temp0 = intl.Intl.selectLogic(milestone, {
+      'three': 'ثلاثة أيام من المواظبة!',
+      'week': 'أسبوع كامل من المواظبة!',
+      'month': 'شهر كامل من المواظبة!',
+      'other': 'مواظبة رائعة!',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get habitMilestoneMsg =>
+      '«أحبُّ الأعمالِ إلى اللهِ أدومُها وإن قلَّ». استمر، فالقليل الدائم خير كثير.';
+
+  @override
+  String get habitMilestoneButton => 'الحمد لله';
+
+  @override
+  String get habitRatesTitle => 'آخر 4 أسابيع';
+
+  @override
+  String get habitRatesSubtitle =>
+      'نسبة الأيام التي أُنجزت فيها كل عادة، والأكثر تحسنًا أولًا';
+
+  @override
+  String get habitRatesEmpty =>
+      'لا توجد سجلات كافية بعد. سجّلوا العادات لبضعة أيام وستظهر هنا.';
+
+  @override
+  String habitRateSemantics(String name, int rate, int change) {
+    return '$name: $rate٪ من الأيام، تغيّر $change نقطة عن الأسابيع الأربعة السابقة';
+  }
+
+  @override
+  String get appOfflineBanner =>
+      'غير متصل بالإنترنت — بعض الميزات تحتاج اتصالًا';
+
+  @override
+  String appOfflineSavedCopy(Object when) {
+    return 'غير متصل — تعرض نسخة محفوظة ($when)';
+  }
+
+  @override
+  String appSavedCopy(Object when) {
+    return 'تعذّر التحديث — تعرض نسخة محفوظة ($when)';
+  }
+
+  @override
+  String get loadingSlow => 'الاتصال بطيء… ما زلنا نحاول';
+
+  @override
+  String get loadingRetry => 'إعادة المحاولة';
+
+  @override
+  String get loadingCancel => 'رجوع';
+
+  @override
+  String get settingsHaptics => 'الاهتزاز عند اللمس';
+
+  @override
+  String get settingsHapticsDesc => 'اهتزاز خفيف عند التسجيل والإنجاز والتنبيه';
+
+  @override
+  String childModeHandoff(String name) {
+    return 'أهلًا $name! هذا وقتك 🌟';
+  }
 }

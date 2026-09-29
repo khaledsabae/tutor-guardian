@@ -27,6 +27,7 @@ import '../data/journey_store.dart';
 import '../providers/journey_providers.dart';
 import '../widgets/milestone_icon.dart';
 import '../../../widgets/ui/error_retry_view.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class ChildJourneyScreen extends ConsumerWidget {
   const ChildJourneyScreen({
@@ -49,7 +50,7 @@ class ChildJourneyScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context).journeyTitle(childName))),
       body: asyncLogged.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const LoadingView(),
         error: (e, _) => Center(
           child: Padding(
             padding: const EdgeInsets.all(24),

@@ -11,6 +11,8 @@
 /// A child was assigned a mission every single day and was never shown one.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +22,8 @@ import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
 import '../routine/providers/child_mode_providers.dart';
 import '../routine/services/child_mode_secure_storage.dart';
-import '../routine/widgets/quiet_time_bar.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 class ChildMissionScreen extends ConsumerStatefulWidget {
   const ChildMissionScreen({super.key});
@@ -107,6 +110,7 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
       // own afternoon. The card expires quietly after 48h either way.
     }
     if (!mounted) return;
+    unawaited(Haptics.success());
     setState(() {
       _claiming = false;
       _mission = {...card, 'status': 'claimed'};
@@ -119,7 +123,7 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
     final theme = Theme.of(context);
 
     if (_loading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(body: SafeArea(child: LoadingView(count: 2, itemHeight: 200)));
     }
 
     if (_empty || _mission == null) {
@@ -169,9 +173,6 @@ class _ChildMissionScreenState extends ConsumerState<ChildMissionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // The candle, not a countdown. This surface is budgeted at three
-              // minutes; the child should feel it shortening, not read it.
-              const QuietTimeBar(),
               const Spacer(),
               Text('🧭', style: theme.textTheme.displayLarge,
                   textAlign: TextAlign.center),

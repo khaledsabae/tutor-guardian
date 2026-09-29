@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -5,6 +7,7 @@ import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../providers/child_mode_providers.dart';
 import '../services/child_mode_secure_storage.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 /// Lock screen used to enter/exit child mode. PIN is verified locally.
 class ChildModeLockScreen extends ConsumerStatefulWidget {
@@ -79,6 +82,7 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
           _confirmPin = '';
           setState(() {
             _pin.clear();
+            unawaited(Haptics.warning());
             _error = AppLocalizations.of(context).childModePinMismatch;
           });
         }
@@ -97,6 +101,7 @@ class _ChildModeLockScreenState extends ConsumerState<ChildModeLockScreen> {
         if (ok) {
           Navigator.of(context).pop(true);
         } else {
+          unawaited(Haptics.warning());
           setState(() {
             _pin.clear();
             _error = l10n.childModePinIncorrect;

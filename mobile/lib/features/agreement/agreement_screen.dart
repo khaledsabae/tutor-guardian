@@ -17,6 +17,7 @@ import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../program/providers/progress_providers.dart' show activeChildIdProvider;
 import 'agreement_export.dart';
 import 'signature_pad.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class AgreementScreen extends ConsumerStatefulWidget {
   const AgreementScreen({super.key, this.childName = 'ابنك'});
@@ -128,7 +129,7 @@ class _AgreementScreenState extends ConsumerState<AgreementScreen> {
         ],
       ),
       body: _loading
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingView(count: 3)
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [

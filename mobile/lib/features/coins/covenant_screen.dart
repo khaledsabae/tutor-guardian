@@ -9,6 +9,7 @@ import '../../widgets/ui/bouncy_button.dart';
 import '../program/providers/progress_providers.dart';
 import 'coins_providers.dart';
 import 'covenant_service.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class CovenantScreen extends ConsumerStatefulWidget {
   const CovenantScreen({super.key});
@@ -124,7 +125,7 @@ class _CovenantScreenState extends ConsumerState<CovenantScreen> with SingleTick
         ),
       ),
       body: _loading
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingView(count: 3)
           : TabBarView(
               controller: _tabController,
               children: [

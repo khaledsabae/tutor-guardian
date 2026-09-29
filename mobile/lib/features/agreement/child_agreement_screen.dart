@@ -18,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../state/chat_notifier.dart' show tgClientProvider;
 import '../routine/services/child_mode_secure_storage.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class ChildAgreementScreen extends ConsumerStatefulWidget {
   const ChildAgreementScreen({super.key});
@@ -107,7 +108,7 @@ class _ChildAgreementScreenState extends ConsumerState<ChildAgreementScreen> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(body: SafeArea(child: LoadingView(count: 3)));
     }
     if (_done) {
       return Scaffold(

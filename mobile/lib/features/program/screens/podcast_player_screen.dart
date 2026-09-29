@@ -22,6 +22,7 @@ import '../../../theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/l10n_global.dart';
 import '../../../theme/design_tokens.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class PodcastPlayerScreen extends StatefulWidget {
   final String? url;
@@ -133,7 +134,7 @@ class _PodcastPlayerScreenState extends State<PodcastPlayerScreen> {
         ),
       ),
       body: !_ready
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingView.spinner()
           : _errorMessage != null
               ? _ErrorState(message: _errorMessage!)
               : _PlayerView(

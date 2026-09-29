@@ -51,6 +51,60 @@ class AppTheme {
   /// 2026) and absent until now: `design_tokens.dart` said "light mode only".
   static ThemeData dark() => _build(AppPalette.dark);
 
+  /// The child surface (UX_UI_ROADMAP §4.3): the same brand hues, type +2 sp,
+  /// 56 dp targets ([Dt.minTouchChild]) and rounder cards, so a handed-over
+  /// device looks and feels unlike the parent's app at a glance.
+  static ThemeData child(Brightness brightness) {
+    final base = _build(
+        brightness == Brightness.dark ? AppPalette.dark : AppPalette.light);
+    TextStyle? up(TextStyle? s) =>
+        s?.copyWith(fontSize: (s.fontSize ?? 14) + 2);
+    // The theme's text styles carry no sizes: Theme.of fills them from the
+    // typography geometry at read time. Merge that geometry in first, so +2
+    // is added to the real size rather than to a missing one.
+    final t = Typography.material2021().englishLike.merge(base.textTheme);
+    final text = t.copyWith(
+      displayLarge: up(t.displayLarge),
+      displayMedium: up(t.displayMedium),
+      displaySmall: up(t.displaySmall),
+      headlineLarge: up(t.headlineLarge),
+      headlineMedium: up(t.headlineMedium),
+      headlineSmall: up(t.headlineSmall),
+      titleLarge: up(t.titleLarge),
+      titleMedium: up(t.titleMedium),
+      titleSmall: up(t.titleSmall),
+      bodyLarge: up(t.bodyLarge),
+      bodyMedium: up(t.bodyMedium),
+      bodySmall: up(t.bodySmall),
+      labelLarge: up(t.labelLarge),
+      labelMedium: up(t.labelMedium),
+      labelSmall: up(t.labelSmall),
+    );
+    const tall = WidgetStatePropertyAll(Size(Dt.minTouchChild, Dt.minTouchChild));
+    final cardShape = base.cardTheme.shape;
+    return base.copyWith(
+      textTheme: text,
+      materialTapTargetSize: MaterialTapTargetSize.padded,
+      cardTheme: base.cardTheme.copyWith(
+        shape: cardShape is RoundedRectangleBorder
+            ? cardShape.copyWith(
+                borderRadius: BorderRadius.circular(Dt.rCard + 8))
+            : cardShape,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: base.elevatedButtonTheme.style?.copyWith(minimumSize: tall)),
+      filledButtonTheme: FilledButtonThemeData(
+          style: base.filledButtonTheme.style?.copyWith(minimumSize: tall)),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+          style: base.outlinedButtonTheme.style?.copyWith(minimumSize: tall)),
+      textButtonTheme: TextButtonThemeData(
+          style: base.textButtonTheme.style?.copyWith(minimumSize: tall)),
+      iconButtonTheme: IconButtonThemeData(
+          style: IconButton.styleFrom(
+              minimumSize: const Size(Dt.minTouchChild, Dt.minTouchChild))),
+    );
+  }
+
   /// One builder, two palettes. Reading colours from [p] rather than from the
   /// `AppTheme.*` getters matters: this runs while building a `ThemeData` that
   /// may not be the one currently live, so the globals would answer for the

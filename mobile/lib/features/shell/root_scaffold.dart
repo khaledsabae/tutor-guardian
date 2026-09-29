@@ -18,7 +18,6 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/analytics.dart';
@@ -33,6 +32,7 @@ import '../tour/tour_controller.dart';
 import '../tour/tour_overlay.dart';
 import '../tour/tour_step.dart';
 import 'root_tab.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 /// How many switches inside [_thrashWindow] read as hunting rather than
 /// deliberate navigation.
@@ -110,7 +110,7 @@ class _RootScaffoldState extends ConsumerState<RootScaffold> with RouteAware {
   }
 
   void _onSelect(int i) {
-    HapticFeedback.selectionClick();
+    Haptics.selection();
     if (i != _index) _recordSwitch(i);
     setState(() => _index = i);
   }

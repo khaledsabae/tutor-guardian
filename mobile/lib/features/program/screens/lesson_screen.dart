@@ -31,7 +31,6 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/celebration_overlay.dart';
 import '../../../widgets/ui/empty_state.dart';
-import '../../../widgets/ui/skeleton.dart';
 import '../../reflections/widgets/reflection_note_card.dart';
 import '../data/review_prompt.dart';
 import '../data/models.dart';
@@ -46,6 +45,7 @@ import '../providers/progress_providers.dart';
 import '../../../theme/app_palette.dart';
 import '../../../widgets/ui/error_retry_view.dart';
 import '../../../theme/app_colors.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({
@@ -266,7 +266,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         },
         loading: () => const SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
-          child: SkeletonList(count: 4, itemHeight: 130),
+          child: LoadingView(count: 4, itemHeight: 130),
         ),
         error: (err, _) => EmptyState(
           emoji: '📡',

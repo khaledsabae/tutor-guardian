@@ -33,6 +33,8 @@ import '../providers/backup_provider.dart';
 import 'children_list_screen.dart';
 import '../../adhkar/services/notification_service.dart';
 import '../widgets/follow_us_row.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -63,7 +65,11 @@ class SettingsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: SafeArea(
         child: asyncList.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => LoadingView(
+            count: 3,
+            itemHeight: 88,
+            onRetry: () => ref.invalidate(childrenListProvider),
+          ),
           error: (e, _) => _ErrorView(
             error: '$e',
             onRetry: () => ref.invalidate(childrenListProvider),
@@ -730,6 +736,7 @@ class _AdhkarSettingsRow extends StatefulWidget {
 class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
   bool _enabled = true;
   bool _wird = true;
+  bool _haptics = Haptics.enabled;
 
   @override
   void initState() {
@@ -773,6 +780,18 @@ class _AdhkarSettingsRowState extends State<_AdhkarSettingsRow> {
           onChanged: (val) async {
             setState(() => _wird = val);
             await NotificationService.instance.setWirdEnabled(val);
+          },
+        ),
+        // One switch for every vibration in the app (UX_UI_ROADMAP E5).
+        _row(
+          title: AppLocalizations.of(context).settingsHaptics,
+          subtitle: AppLocalizations.of(context).settingsHapticsDesc,
+          icon: Icons.vibration,
+          value: _haptics,
+          onChanged: (val) async {
+            setState(() => _haptics = val);
+            await Haptics.setEnabled(val);
+            if (val) await Haptics.selection();
           },
         ),
       ],

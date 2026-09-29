@@ -5,7 +5,6 @@ library;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,6 +12,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../theme/design_tokens.dart';
 import 'edu_game_models.dart';
+import 'package:almorabbi/core/haptics.dart';
 
 /// Generic level selection / game lobby for any EduGameTheme.
 class EduLevelSelectionScreen extends StatelessWidget {
@@ -535,9 +535,9 @@ Future<void> showEduResultDialog({
 }
 
 /// Short haptic feedback helper.
-void lightHaptic() => HapticFeedback.lightImpact();
-void mediumHaptic() => HapticFeedback.mediumImpact();
-void errorHaptic() => HapticFeedback.heavyImpact();
+void lightHaptic() => Haptics.success();
+void mediumHaptic() => Haptics.warning();
+void errorHaptic() => Haptics.strong();
 
 /// The exit ritual: what a child sees when the surface is over.
 ///

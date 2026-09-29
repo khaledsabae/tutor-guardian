@@ -17,6 +17,7 @@ import '../data/progress_models.dart';
 import '../providers/progress_providers.dart';
 import '../providers/settings_providers.dart';
 import '../../../widgets/ui/error_retry_view.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class ChildrenListScreen extends ConsumerWidget {
   const ChildrenListScreen({super.key});
@@ -34,7 +35,11 @@ class ChildrenListScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(AppLocalizations.of(context).childrenTitle)),
       body: SafeArea(
         child: asyncList.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => LoadingView(
+            count: 3,
+            itemHeight: 88,
+            onRetry: () => ref.invalidate(childrenListProvider),
+          ),
           error: (e, _) => _ErrorView(
             error: '$e',
             onRetry: () => ref.invalidate(childrenListProvider),

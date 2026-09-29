@@ -6,30 +6,48 @@
   <title>ميزان العادات - وضع المراهق</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700;900&display=swap');
-    body { font-family: 'Noto Sans Arabic', system-ui, sans-serif; }
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+    /* The app's dark palette (mobile/lib/theme/app_palette.dart, AppPalette.dark)
+       and its font, so the teen page reads as the same product (UX_UI_ROADMAP §4.3). */
+    :root {
+      --tg-bg: #0A1210; --tg-surface: #131F1C; --tg-track: #20332E;
+      --tg-primary: #10B981; --tg-on-primary: #04211B;
+      --tg-accent: #FBBF24; --tg-on-accent: #1F1300;
+      --tg-ink: #F9FAFB; --tg-text-secondary: #D1D5DB;
+    }
+    body { font-family: 'Cairo', system-ui, sans-serif; background: var(--tg-bg); color: var(--tg-ink); }
+    .tg-muted { color: var(--tg-text-secondary); }
+    .tg-title { color: var(--tg-primary); }
+    .tg-card { background: var(--tg-surface); border: 1px solid var(--tg-track); }
+    .tg-halo { background: color-mix(in srgb, var(--tg-primary) 20%, transparent); color: var(--tg-primary); }
+    .tg-btn-primary { background: var(--tg-primary); color: var(--tg-on-primary); }
+    /* 48px targets. "Missed" is neutral, never red: a record, not a verdict. */
+    .status-btn { min-height: 48px; border: 1px solid var(--tg-track); }
+    .btn-done { background: var(--tg-primary); color: var(--tg-on-primary); border-color: var(--tg-primary); }
+    .btn-partial { background: var(--tg-accent); color: var(--tg-on-accent); border-color: var(--tg-accent); }
+    .btn-missed { background: var(--tg-track); color: var(--tg-ink); }
     .card-enter { animation: cardEnter .35s ease-out both; }
     @keyframes cardEnter { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
-<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 min-h-screen text-slate-100">
+<body class="min-h-screen">
   <div id="app" class="max-w-md mx-auto min-h-screen p-4 flex flex-col">
     <!-- Header -->
     <header class="flex items-center justify-between mb-6 pt-2">
       <div>
-        <h1 class="text-2xl font-bold text-emerald-300">ميزان العادات</h1>
-        <p id="subtitle" class="text-sm text-slate-400">جارٍ التحقق من الجلسة...</p>
+        <h1 class="text-2xl font-bold tg-title">ميزان العادات</h1>
+        <p id="subtitle" class="text-sm tg-muted">جارٍ التحقق من الجلسة...</p>
       </div>
-      <div id="expiry" class="text-xs text-slate-500"></div>
+      <div id="expiry" class="text-xs tg-muted"></div>
     </header>
 
     <!-- Loading / claim state -->
     <div id="claim-panel" class="hidden flex-1 flex flex-col items-center justify-center text-center space-y-4">
-      <div class="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center">
-        <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      <div class="w-20 h-20 rounded-full tg-halo flex items-center justify-center">
+        <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
       </div>
       <p class="text-lg font-medium">امسح رمز QR من تطبيق المربي</p>
-      <p class="text-sm text-slate-400">أو افتح الرابط الذي تلقيته عبره.</p>
+      <p class="text-sm tg-muted">أو افتح الرابط الذي تلقيته عبره.</p>
     </div>
 
     <!-- Habits list -->
@@ -39,20 +57,20 @@
     <div id="empty" class="hidden flex-1 flex flex-col items-center justify-center text-center space-y-3">
       <div class="text-5xl">🌟</div>
       <p class="text-lg font-medium">تم تسجيل كل عادات اليوم</p>
-      <p class="text-sm text-slate-400">أحسنت! غداً نبدأ صفحة جديدة.</p>
+      <p class="text-sm tg-muted">أحسنت! غداً نبدأ صفحة جديدة.</p>
     </div>
 
     <!-- Error state -->
     <div id="error" class="hidden flex-1 flex flex-col items-center justify-center text-center space-y-4">
       <div class="text-5xl">🔒</div>
       <p id="error-title" class="text-lg font-medium">انتهت الجلسة</p>
-      <p id="error-body" class="text-sm text-slate-400">يُرجى العودة للمربي لإعادة مسح رمز QR.</p>
-      <button id="scan-again" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium transition">
+      <p id="error-body" class="text-sm tg-muted">يُرجى العودة للمربي لإعادة مسح رمز QR.</p>
+      <button id="scan-again" class="px-5 py-3 rounded-lg tg-btn-primary font-bold transition">
         إعادة المسح
       </button>
     </div>
 
-    <footer class="text-center text-xs text-slate-600 py-4">تطبيق المربي الذكي</footer>
+    <footer class="text-center text-xs tg-muted py-4">تطبيق المربي الذكي</footer>
   </div>
 
   <script>
@@ -135,20 +153,21 @@
         container.innerHTML = '';
         habits.forEach((h, i) => {
           const el = document.createElement('div');
-          el.className = 'card-enter bg-slate-800/80 border border-slate-700 rounded-xl p-4 shadow-lg';
+          el.className = 'card-enter tg-card rounded-2xl p-4 shadow-lg';
           el.style.animationDelay = `${i * 60}ms`;
           el.innerHTML = `
             <div class="flex items-center gap-3 mb-3">
-              <div class="text-2xl">${categoryIcon(h.category)}</div>
+              <div class="text-2xl">${esc(categoryIcon(h.category))}</div>
               <div>
-                <h3 class="font-bold text-slate-100">${esc(h.habit_name)}</h3>
-                <p class="text-xs text-slate-400">${categoryLabel(h.category)}</p>
+                <h3 class="font-bold">${esc(h.habit_name)}</h3>
+                <p class="text-xs tg-muted">${esc(categoryLabel(h.category))}</p>
               </div>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button data-status="completed" class="status-btn py-2 rounded-lg bg-emerald-600/20 text-emerald-300 border border-emerald-600/40 hover:bg-emerald-600/30 font-medium text-sm transition">تم</button>
-              <button data-status="partial" class="status-btn py-2 rounded-lg bg-amber-600/20 text-amber-300 border border-amber-600/40 hover:bg-amber-600/30 font-medium text-sm transition">جزئي</button>
-              <button data-status="missed" class="status-btn py-2 rounded-lg bg-rose-600/20 text-rose-300 border border-rose-600/40 hover:bg-rose-600/30 font-medium text-sm transition">لم يتم</button>
+              <button data-status="completed" class="status-btn btn-done rounded-lg font-bold text-sm transition">تم</button>
+              <!-- The API's status is "partially"; "partial" was rejected on every tap. -->
+              <button data-status="partially" class="status-btn btn-partial rounded-lg font-bold text-sm transition">جزئي</button>
+              <button data-status="missed" class="status-btn btn-missed rounded-lg font-bold text-sm transition">لم يتم</button>
             </div>
           `;
           el.querySelectorAll('.status-btn').forEach(btn => {
@@ -181,12 +200,13 @@
     }
 
     function categoryIcon(cat) {
-      const map = { worship: '🕌', conduct: '🤝', learning: '📚', health: '💪', responsibility: '🏠', creativity: '🎨' };
+      // The server's categories (HabitCategory in the app): worship, self_building, study.
+      const map = { worship: '🕌', self_building: '🌱', study: '📚' };
       return map[cat] || '✨';
     }
     function categoryLabel(cat) {
-      const map = { worship: 'العبادة', conduct: 'الأخلاق', learning: 'التعلم', health: 'الصحة', responsibility: 'المسؤولية', creativity: 'الإبداع' };
-      return map[cat] || cat;
+      const map = { worship: 'العبادات', self_building: 'بناء الذات', study: 'المذاكرة' };
+      return map[cat] || '';
     }
 
     async function init() {

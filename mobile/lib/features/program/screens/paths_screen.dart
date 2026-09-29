@@ -18,10 +18,10 @@ import '../../../theme/design_tokens.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../../widgets/ui/empty_state.dart';
 import '../../../widgets/ui/emoji_hero.dart';
-import '../../../widgets/ui/skeleton.dart';
 import '../data/models.dart';
 import '../providers/program_providers.dart';
 import '../widgets/active_child_chip.dart';
+import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 /// Canonical display order for the domain filter chips. Any domain not
 /// listed here is appended after these, in first-seen order.
@@ -121,7 +121,7 @@ class _PathsScreenState extends ConsumerState<PathsScreen> {
         },
         loading: () => const SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
-          child: SkeletonList(count: 4, itemHeight: 170),
+          child: LoadingView(count: 4, itemHeight: 170),
         ),
         error: (err, _) => EmptyState(
           emoji: '📡',
