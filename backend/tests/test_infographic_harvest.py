@@ -15,6 +15,14 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[2]
+
+# These test repo-level scripts/ (the NotebookLM pipeline). The deploy gate runs
+# pytest inside the backend image, which does not ship scripts/ — skip there.
+pytestmark = pytest.mark.skipif(
+    not (REPO / "scripts" / "cron_gen_en_media.sh").exists(),
+    reason="scripts/ not present (backend-only image)",
+)
+
 SCRIPT = REPO / "scripts" / "generate_missing_infographics.py"
 
 
