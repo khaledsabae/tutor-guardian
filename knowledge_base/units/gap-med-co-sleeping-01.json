@@ -1,0 +1,36 @@
+{
+ "id": "gap-med-co-sleeping-01",
+ "domain": "medical",
+ "source_file": "gap_fill_2026-09.json",
+ "source_url": "",
+ "title": "الانتقال من الحضن إلى السرير — 4 خطوات آمنة",
+ "language": "ar",
+ "age_group": "prenatal-1",
+ "behavior_type": "طفل سنة ينام في الحضن/السرير مع الأهل — الانتقال الآمن",
+ "intervention_type": "إرشادي",
+ "severity": "خفيف",
+ "reference_type": "كتاب_تربوي",
+ "reference_info": "WHO Infant Sleep Guidance · AAP Safe Sleep · HealthyChildren.org",
+ "text_original": "",
+ "text_simplified": "النوم في حضن الأهل أو سريرهم **ليس ضررًا نفسيًا** — وإن كان AAP يوصي بسرير مستقل آمن في نفس الغرفة أول 6-12 شهرًا لتقليل مخاطر النوم (SIDS). للانتقال تدريجيًا: (1) ضع سرير الطفل **بجانب سريرك** أسبوعين (touch reachable) ثم أبعده تدريجيًا. (2) طقس نوم ثابت 4 خطوات: حمّام → ملابس → أغنية/قراءة → سرير وهو نعسان **وليس نائمًا** (ليتعلم النوم وحده). (3) **لا تُخرجه من السرير في كل بكاء** — تعرّف على «بكاء الفتور» (يتنفس، يتململ) ودعه يعيد ترتيبه بنفسه 2-3 دقائق أولًا. (4) ممنوع الارتباط بـ«شرب الرضاعة لينام» — هو ما يوقظه لاحقًا. الصبر 10-14 ليلة متسقة يعدّل النمط في أغلب الأطفال.",
+ "labels": [
+  "النوم في الحضن",
+  "السرير",
+  "النوم المستقل"
+ ],
+ "keywords": [
+  "النوم في الحضن",
+  "السرير",
+  "النوم المستقل"
+ ],
+ "created_at": "2026-09-02T08:06:36",
+ "updated_at": "2026-09-02T08:06:36",
+ "version": "1.0",
+ "needs_ocr": false,
+ "source_meta": {
+  "source_title": "Gap-fill knowledge batch 2026-09",
+  "source_author": "Tutor Guardian content team (pending Khaled review)",
+  "source_year": 2026,
+  "source_url": ""
+ }
+}

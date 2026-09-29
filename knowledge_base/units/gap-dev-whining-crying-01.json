@@ -1,0 +1,36 @@
+{
+ "id": "gap-dev-whining-crying-01",
+ "domain": "development",
+ "source_file": "gap_fill_2026-09.json",
+ "source_url": "",
+ "title": "البكاء الشامل عند الصغير — فهمه وتعامله",
+ "language": "ar",
+ "age_group": "2-3",
+ "behavior_type": "طفل يبكي على أي شيء — لغة البكاء وما وراءها",
+ "intervention_type": "إرشادي",
+ "severity": "خفيف",
+ "reference_type": "كتاب_تربوي",
+ "reference_info": "WHO Positive Parenting · HealthyChildren AAP Crying",
+ "text_original": "",
+ "text_simplified": "البكاء المتكرر في 2-4 سنوات لغةٌ قبل الكلام. **أربعة أسباب رئيسية:** (1) حاجة جسدية (جوع/نوم/ألم) — افحصها أولًا. (2) إحباط تواصل: يعرف ما يريد ولا يجد كلمة. (3) تحقيق حدٍّ عبر الدموع («بكيت فأخذت»). (4) إرهاق حسّي (زحام/ضوضاء). **البروتوكول:** (أ) احتضن أو اجلس بمستواه وقل: «أنا معك» — دون تنازل. (ب) سمِّ الشعور: «تعبان/حزين/تحب العصير». (ج) علّم بديلًا: «قل: أبغى» — وامنحه الكلمة فوراً عند أول محاولة. (د) بعد الهدوء، لا تُكرم الطلب الذي جاء بالبكاء — وإلا علّمته المعادلة. (هـ) متى قلق: بكاء يومي يفوق ساعة بلا سبب واضح، أو تراجع مهارات، أو صفات ذهانية — طبيب أطفال.",
+ "labels": [
+  "البكاء",
+  "العصبية",
+  "الانفعال"
+ ],
+ "keywords": [
+  "البكاء",
+  "العصبية",
+  "الانفعال"
+ ],
+ "created_at": "2026-09-02T08:06:36",
+ "updated_at": "2026-09-02T08:06:36",
+ "version": "1.0",
+ "needs_ocr": false,
+ "source_meta": {
+  "source_title": "Gap-fill knowledge batch 2026-09",
+  "source_author": "Tutor Guardian content team (pending Khaled review)",
+  "source_year": 2026,
+  "source_url": ""
+ }
+}

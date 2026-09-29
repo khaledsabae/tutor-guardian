@@ -1,0 +1,36 @@
+{
+ "id": "gap-med-itching-treatment-01",
+ "domain": "medical",
+ "source_file": "gap_fill_2026-09.json",
+ "source_url": "",
+ "title": "حكة طفل متكررة — المنزلي الآمن ومتى الطبيب",
+ "language": "ar",
+ "age_group": "4-6",
+ "behavior_type": "حكة/أكزيما عند الطفل — ما يُفعل منزليًا ومتى الطبيب",
+ "intervention_type": "إحالة_لطبيب",
+ "severity": "متوسط",
+ "reference_type": "تقرير_طبي",
+ "reference_info": "WHO Dermatology Basics · AAP Eczema (Atopic Dermatitis)",
+ "text_original": "",
+ "text_simplified": "الحكة المتكررة غالبًا **إكزيما جفاف** (شائعة جدًا). المنزلية: (1) حمّام قصير فاتر (لا ساخن) بمُنظّف لطيف. (2) ترطيب فوري خلال 3 دقائق من الماء — كريم سميك (لا لوشن خفيف) مرتين يوميًا. (3) قطن واسع، قصّ الأظافر، تجنب الصوف والصابون المعطّر. (4) كمّادات باردة وقت النوبة. (5) إن نصح الطبيب بمرهم كورتيزوني خفيف — استخدامه الموضعي الموجّه آمن وموصى به في فترات قصيرة. **راجع الطبيب لو:** انتشر، صديد/قروح (احتمال عدوى)، يمنع النوم، أو استمر بعد ترطيب أسبوعين. **ملاحظة:** «الرياضة» ليست علاجًا للإكزيما — الحكة سبب جلدي/تحسسي.",
+ "labels": [
+  "الحكة",
+  "الإكزيما",
+  "الترطيب"
+ ],
+ "keywords": [
+  "الحكة",
+  "الإكزيما",
+  "الترطيب"
+ ],
+ "created_at": "2026-09-02T08:06:36",
+ "updated_at": "2026-09-02T08:06:36",
+ "version": "1.0",
+ "needs_ocr": false,
+ "source_meta": {
+  "source_title": "Gap-fill knowledge batch 2026-09",
+  "source_author": "Tutor Guardian content team (pending Khaled review)",
+  "source_year": 2026,
+  "source_url": ""
+ }
+}
