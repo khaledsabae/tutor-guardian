@@ -1,10 +1,10 @@
 {
-  "total_units": 1775,
-  "generated_at": "2026-09-29T07:50:19.794753+00:00",
+  "total_units": 1776,
+  "generated_at": "2026-09-29T07:50:23.828596+00:00",
   "by_domain": {
     "medical": 361,
     "cyber": 281,
-    "islamic_parenting": 977,
+    "islamic_parenting": 978,
     "development": 135,
     "aqeedah": 21
   },
@@ -6641,6 +6641,18 @@
       "language": "ar",
       "original_age_group": "7-9",
       "normalized_age_group": "7-9",
+      "behavior_type": "طفل يسرق نقودًا — خطوة بخطوة بلا وصمة",
+      "needs_ocr": false,
+      "size_chars": 0
+    },
+    {
+      "id": "gap-dev-stealing-01-al2",
+      "domain": "islamic_parenting",
+      "title": "ابني يسرق النقود — خطوات عملية بلا فضيحة",
+      "source_file": "gap_fill_2026-09_aliases.json",
+      "language": "ar",
+      "original_age_group": "10-12",
+      "normalized_age_group": "10-12",
       "behavior_type": "طفل يسرق نقودًا — خطوة بخطوة بلا وصمة",
       "needs_ocr": false,
       "size_chars": 0
