@@ -141,6 +141,23 @@ say "===== English media run ====="
 # persistence was the answer, not the diagnosis.
 ensure_session() {
     local p="$1" attempt
+    # 2026-09-29: try the EXISTING state file first — the unconditional
+    # `login --browser-cookies chrome` used to run before any read, and when
+    # Chrome itself is signed out it extracts 206 stale cookies and OVERWRITES
+    # a still-valid stored session with a dead one (measured this morning:
+    # valid 45-cookie file restored by hand, then login smeared 206 stale
+    # cookies over it and three reads refused → whole run aborted).
+    for attempt in 1 2 3; do
+        if timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" source list \
+                -n "$NOTEBOOK_MAIN" --json 2>/dev/null | grep -q '"sources"'; then
+            [ "$attempt" -gt 1 ] && say "auth $p verified by existing state ✓ (attempt $attempt)"
+            [ "$attempt" -eq 1 ] && say "auth $p verified by existing state ✓"
+            return 0
+        fi
+        [ "$attempt" -lt 3 ] && sleep 15
+    done
+    # Only now re-extract from Chrome — the stored session is genuinely dead.
+    say "auth $p: existing state refused 3x — extracting fresh chrome cookies"
     timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" login --browser-cookies chrome \
         >> "$LOG" 2>&1
     for attempt in 1 2 3; do
