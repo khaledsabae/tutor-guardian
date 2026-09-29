@@ -1,0 +1,36 @@
+{
+ "id": "gap-med-irritability-01",
+ "domain": "medical",
+ "source_file": "gap_fill_2026-09.json",
+ "source_url": "",
+ "title": "عصبية متكررة عند الأطفال — خريطة الأسباب العملية",
+ "language": "ar",
+ "age_group": "7-9",
+ "behavior_type": "أولادي عصبيان بسهولة — خريطة الأسباب الشائعة",
+ "intervention_type": "إرشادي",
+ "severity": "خفيف",
+ "reference_type": "كتاب_تربوي",
+ "reference_info": "WHO Child Mental Health Basics · HealthyChildren AAP",
+ "text_original": "",
+ "text_simplified": "العصبية المتكررة عند الأطفال سببها في 80% من الحالات: **نوم ناقص** (الطفل يحتاج 9-11 ساعة — فحص أولًا) · **شاشات قبل النوم** (قاطعة للميلاتونين) · **سكر مصلّح** (عصائر) · **ضغط مدرسي/اجتماعي** · **تقليد مناخ الأسرة** (الصراع بين الوالدين يُقلَّد). **خطوات:** سجّل 3 أيام: متى الانفجار؟ قبل وجبة؟ بعد شاشة؟ — النمط يظهر. ثم عدّل عاملًا واحدًا أسبوعًا (لا كلها دفعة). **الاستثناء الطبي:** لو العصبية حادة مع أرق، أو فقدان وزن، أو انسحاب — طبيب أطفال نفسي.",
+ "labels": [
+  "العصبية",
+  "الغضب",
+  "الحالة المزاجية"
+ ],
+ "keywords": [
+  "العصبية",
+  "الغضب",
+  "الحالة المزاجية"
+ ],
+ "created_at": "2026-09-02T08:06:36",
+ "updated_at": "2026-09-02T08:06:36",
+ "version": "1.0",
+ "needs_ocr": false,
+ "source_meta": {
+  "source_title": "Gap-fill knowledge batch 2026-09",
+  "source_author": "Tutor Guardian content team (pending Khaled review)",
+  "source_year": 2026,
+  "source_url": ""
+ }
+}

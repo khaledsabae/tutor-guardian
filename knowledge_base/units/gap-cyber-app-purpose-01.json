@@ -1,0 +1,36 @@
+{
+ "id": "gap-cyber-app-purpose-01",
+ "domain": "cyber",
+ "source_file": "gap_fill_2026-09.json",
+ "source_url": "",
+ "title": "التطبيق كمصدر دراسي — كيف تستخدمه إرشاديًا",
+ "language": "ar",
+ "age_group": "unspecified",
+ "behavior_type": "هل هذا التطبيق يفيد دارس الإرشاد الأسري؟ (سؤال حول استخدام المنصة نفسها)",
+ "intervention_type": "إرشادي",
+ "severity": "خفيف",
+ "reference_type": "كتاب_تربوي",
+ "reference_info": "مواصفات المنهج: knowledge_base/curriculum/schema.md · docs/research/01_content_pedagogy",
+ "text_original": "",
+ "text_simplified": "نعم — والاستخدام العلمي موصى به بهذه الطريقة: (1) **الطبقة الخام** (`knowledge_base/units/`) تصلح مرجعًا لورقة/بحث: كل unit تحمل `reference_info` (مصدرها الأصلي: WHO/CDC/كتب علمية/مصادر شرعية موثقة). (2) **طبقة Lessons** تناسب التطبيق العملي: كل درس 3-15 دقيقة مع «جرّب بنفسك» وتأمل. (3) **الطبقة التربوية** (paths) رحلات ≤30 يومًا بترتيب عمري. **حدود يجب معرفتها:** المحتوى إرشاد تربوي عام، ليس بديلًا عن علاج نفسي/طبي، والفتاوى الحساسة تُحال لأهل العلم. للدراسة الأكاديمية: ابدأ من مصادر الوحدات المرجعية المذكورة في كل unit.",
+ "labels": [
+  "استخدام التطبيق",
+  "الدراسة",
+  "الإرشاد الأسري"
+ ],
+ "keywords": [
+  "استخدام التطبيق",
+  "الدراسة",
+  "الإرشاد الأسري"
+ ],
+ "created_at": "2026-09-02T08:06:36",
+ "updated_at": "2026-09-02T08:06:36",
+ "version": "1.0",
+ "needs_ocr": false,
+ "source_meta": {
+  "source_title": "Gap-fill knowledge batch 2026-09",
+  "source_author": "Tutor Guardian content team (pending Khaled review)",
+  "source_year": 2026,
+  "source_url": ""
+ }
+}

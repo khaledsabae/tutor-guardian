@@ -1,0 +1,36 @@
+{
+ "id": "gap-dev-lie-consequence-01",
+ "domain": "development",
+ "source_file": "gap_fill_2026-09.json",
+ "source_url": "",
+ "title": "ضربت طفلي وحزن منه — التصحيح يبدأ مني",
+ "language": "ar",
+ "age_group": "7-9",
+ "behavior_type": "ضربت ابني فبكى لأنه كذب عليّ — تصحيح الوضع",
+ "intervention_type": "إرشادي",
+ "severity": "خفيف",
+ "reference_type": "كتاب_تربوي",
+ "reference_info": "WHO Positive Parenting · AAP Healthy Communication",
+ "text_original": "",
+ "text_simplified": "الخلاصة: **الضرب علّم الطفل أن العدوان يعاقب الخطأ** — وهو العكس. التصحيح: (1) اعتذر بلغة مباشرة مناسبة لعمره: «أنا أخطأت، ضربك كان خطأ — الغضب حق، لكن اليد على الوجه ممنوعة». اعتذارك لا يُنزلك — يعلّمه. (2) **افهم الكذب:** الأطفال يكذبون لتجنّب العقاب، لا لأنهم «فاسدون» — قلّل رهبة العقاب يقل الكذب. (3) **امنح قناة الصراحة:** «لو قلت لي الحقيقة أولًا، كانت العقوبة أخف» — والتزم بها فعلًا. (4) **العواقب المنطقية** بدل الضرب: ترتيب، اعتذار، إصلاح ضرر. (5) لا تفتح الموضوع عند أول انفعال — الحوار بعد الهدوء 20 دقيقة.",
+ "labels": [
+  "الكذب",
+  "الضرب",
+  "الاعتذار"
+ ],
+ "keywords": [
+  "الكذب",
+  "الضرب",
+  "الاعتذار"
+ ],
+ "created_at": "2026-09-02T08:06:36",
+ "updated_at": "2026-09-02T08:06:36",
+ "version": "1.0",
+ "needs_ocr": false,
+ "source_meta": {
+  "source_title": "Gap-fill knowledge batch 2026-09",
+  "source_author": "Tutor Guardian content team (pending Khaled review)",
+  "source_year": 2026,
+  "source_url": ""
+ }
+}

@@ -151,3 +151,7 @@ scratch/en_media_progress.json
 .worktrees/
 .security-key
 logs/security/
+
+# Infographic harvest bookkeeping (runtime state, like its ops/data siblings)
+ops/data/infographic_task_meta.json
+ops/data/.*.tmp.*

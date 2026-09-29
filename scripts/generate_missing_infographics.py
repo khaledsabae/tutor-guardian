@@ -97,6 +97,12 @@ EMPTY_MARKERS = ("No parseable chunks", "Source not found", "Error:")
 STATE_FILE = BASE_DIR / "ops" / "data" / "infographic_tasks.json"
 ERRORS_FILE = BASE_DIR / "ops" / "data" / "infographic_poll_errors.json"
 ERROR_BUDGET = 3  # three consecutive poll errors before a task is dropped
+# {state_key: {"first_seen": epoch, "last_polled": epoch}} — kept beside the
+# state rather than inside it, so infographic_tasks.json keeps its plain
+# {key: task_id} shape. A key first seen by this code is aged from that moment.
+META_FILE = BASE_DIR / "ops" / "data" / "infographic_task_meta.json"
+DEFAULT_BUDGET_SECONDS = 480
+DEFAULT_MAX_AGE_DAYS = 7
 
 
 # 🚨 Its own profile, like the audio and video generators.
@@ -135,8 +141,121 @@ def _load(p: Path, default):
 
 
 def _save(p: Path, data) -> None:
+    """Atomic: write a sibling temp file, then os.replace() it over the target.
+
+    A `timeout` kill mid-write must leave either the old file or the new one,
+    never a truncated state file that _load() would read as empty.
+    """
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    tmp = p.with_name(f".{p.name}.tmp.{os.getpid()}")
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(tmp, p)
+
+
+def _is_lang_key(key: str) -> bool:
+    """State keys belonging to the language this run was started for."""
+    if LANG == SOURCE_LANG:
+        return "@" not in key
+    return key.endswith(f"@{LANG}")
+
+
+def _persist(state: dict, errors: dict, meta: dict) -> None:
+    """Save all harvest bookkeeping. Called after EVERY poll, not once at the end.
+
+    🚨 It used to run once, after the whole loop. ~35 dead tasks at ~33 s a
+    poll outran the cron's `timeout 600`, so the loop was killed every day
+    (exit 124 since 2026-09-02) before this line: every "3 poll errors —
+    dropping" decision it printed was thrown away, the strike counts sat at 2
+    forever, and the same dead tasks came back the next morning.
+    """
+    for k in [k for k in errors if k not in state]:
+        errors.pop(k, None)
+    for k in [k for k in meta if k not in state]:
+        meta.pop(k, None)
+    _save(STATE_FILE, state)
+    _save(ERRORS_FILE, errors)
+    _save(META_FILE, meta)
+
+
+def harvest(state: dict, errors: dict, meta: dict, attach, *,
+            budget_seconds: float = DEFAULT_BUDGET_SECONDS,
+            max_age_days: float = DEFAULT_MAX_AGE_DAYS,
+            clock=None, wall=None) -> tuple[int, int]:
+    """Poll this language's in-flight tasks; download the completed ones.
+
+    Returns (downloaded, left_unpolled). Bookkeeping is persisted after every
+    task, and the loop stops cleanly once `budget_seconds` is spent (0 = no
+    budget) so it finishes inside the cron's hard timeout instead of being
+    killed by it. Least-recently-polled tasks go first, so a budget cut
+    rotates through the list across runs instead of re-polling the same head.
+
+    A task is dropped when it:
+      · errors ERROR_BUDGET polls in a row (the task is gone), or
+      · reports `failed`, or
+      · is still not downloadable `max_age_days` after it was first seen —
+        polled one last time first, so a finished-but-uncollected generation
+        is still downloaded rather than written off.
+    """
+    clock = clock or time.monotonic
+    wall = wall or time.time
+    start = clock()
+    now = wall()
+    keys = [k for k in state if _is_lang_key(k)]
+    for k in keys:
+        meta.setdefault(k, {}).setdefault("first_seen", now)
+    keys.sort(key=lambda k: meta[k].get("last_polled", 0))
+    _persist(state, errors, meta)
+
+    print(f"[harvest] {len(keys)} in-flight task(s)"
+          + (f" · budget {budget_seconds:g}s" if budget_seconds else ""))
+    downloaded = 0
+    for n, key in enumerate(keys):
+        if budget_seconds and clock() - start >= budget_seconds:
+            left = len(keys) - n
+            print(f"[harvest] ⏱ budget of {budget_seconds:g}s spent — {left} "
+                  f"task(s) left unpolled for the next run; state saved")
+            return downloaded, left
+        lid = _split_key(key)
+        task_id = state[key]
+        status = poll(task_id)
+        print(f"[poll] {lid}: {status}")
+        if status == "completed":
+            asset = download(task_id, lid)
+            if asset:
+                attach(lid, asset)
+                downloaded += 1
+                state.pop(key, None)
+                errors.pop(key, None)
+            # a completed task whose download failed stays in state — retried
+            # next run rather than lost, matching the podcast harvest.
+        elif status == "error":
+            strikes = errors.get(key, 0) + 1
+            if strikes >= ERROR_BUDGET:
+                print(f"  ⛔ {lid}: {strikes} consecutive poll errors — dropping")
+                state.pop(key, None)
+                errors.pop(key, None)
+            else:
+                errors[key] = strikes
+        elif status == "failed":
+            # Same as the podcast harvest: a failed generation never becomes
+            # downloadable. It used to fall through to "keep", forever.
+            print(f"  ⛔ {lid}: generation failed server-side — dropping")
+            state.pop(key, None)
+            errors.pop(key, None)
+        else:
+            errors.pop(key, None)  # any non-error outcome resets the strike count
+
+        if key in state:
+            meta[key]["last_polled"] = wall()
+            age_days = (wall() - meta[key]["first_seen"]) / 86400
+            # a `completed` task whose download failed is kept whatever its age
+            if status != "completed" and max_age_days and age_days >= max_age_days:
+                print(f"  ⛔ {lid}: in flight {age_days:.1f} days (> {max_age_days:g}) "
+                      f"— dropping")
+                state.pop(key, None)
+                errors.pop(key, None)
+        _persist(state, errors, meta)
+    return downloaded, 0
 
 
 def reverse_source_map() -> dict[str, str]:
@@ -277,6 +396,13 @@ def main():
                              "time by _arg_lang(); argparse must still know the flag")
     parser.add_argument("--harvest-only", action="store_true",
                         help="poll + download in-flight tasks; trigger nothing")
+    parser.add_argument("--budget-seconds", type=float, default=DEFAULT_BUDGET_SECONDS,
+                        help="stop polling after this many seconds, save, and "
+                             "carry on (0 = no budget). Keep it well inside any "
+                             "outer `timeout`: one poll + download can take ~210s.")
+    parser.add_argument("--max-age-days", type=float, default=DEFAULT_MAX_AGE_DAYS,
+                        help="drop an in-flight task this many days after it "
+                             "was first seen (0 = never)")
     parser.add_argument("--push", action="store_true",
                         help="push the registration commit to main — this "
                              "deploys production. Off by default.")
@@ -298,48 +424,17 @@ def main():
         entry["assets"].setdefault("infographics", [])
         entry["assets"]["infographics"].append(asset)
 
-    downloaded = 0
-    # keys for the current language only (mirrors gen_podcasts_cron.py's split)
-    lang_keys = [k for k in state
-                 if (LANG == SOURCE_LANG and "@" not in k)
-                 or (LANG != SOURCE_LANG and k.endswith(f"@{LANG}"))]
+    meta = _load(META_FILE, {})
+    downloaded, left = harvest(state, errors, meta, attach,
+                               budget_seconds=args.budget_seconds,
+                               max_age_days=args.max_age_days)
 
-    print(f"[harvest] {len(lang_keys)} in-flight task(s)")
-    for key in lang_keys:
-        lid = _split_key(key)
-        task_id = state[key]
-        status = poll(task_id)
-        print(f"[poll] {lid}: {status}")
-        if status == "completed":
-            asset = download(task_id, lid)
-            if asset:
-                attach(lid, asset)
-                downloaded += 1
-                state.pop(key, None)
-                errors.pop(key, None)
-            # a completed task whose download failed stays in state — retried
-            # next run rather than lost, matching the podcast harvest.
-        elif status == "error":
-            n = errors.get(key, 0) + 1
-            if n >= ERROR_BUDGET:
-                print(f"  ⛔ {lid}: {n} consecutive poll errors — dropping")
-                state.pop(key, None)
-                errors.pop(key, None)
-            else:
-                errors[key] = n
-        else:
-            errors.pop(key, None)  # any non-error outcome resets the strike count
-
-    _save(STATE_FILE, state)
-    _save(ERRORS_FILE, errors)
-
-    still_flight = sum(1 for k in state
-                        if (LANG == SOURCE_LANG and "@" not in k)
-                        or (LANG != SOURCE_LANG and k.endswith(f"@{LANG}")))
+    still_flight = sum(1 for k in state if _is_lang_key(k))
 
     if args.harvest_only:
         _commit(index, generated=0, recovered=downloaded, failed=[], push=args.push)
-        print(f"\n[harvest-only] {downloaded} downloaded · {still_flight} still in flight")
+        print(f"\n[harvest-only] {downloaded} downloaded · {still_flight} still in flight"
+              + (f" · {left} not polled this run (budget)" if left else ""))
         return
 
     # ── trigger new ones ──
@@ -383,9 +478,11 @@ def main():
             break
         if task_id:
             state[key] = task_id
+            meta[key] = {"first_seen": time.time()}
             triggered += 1
-            _save(STATE_FILE, state)  # persist immediately — a crash mid-batch
-                                       # must not orphan an already-paid task
+            # persist immediately — a crash mid-batch must not orphan an
+            # already-paid task
+            _persist(state, errors, meta)
         else:
             failed.append(lid)
 

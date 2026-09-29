@@ -1,0 +1,36 @@
+{
+ "id": "gap-isl-haram-halal-q-01",
+ "domain": "islamic_parenting",
+ "source_file": "gap_fill_2026-09.json",
+ "source_url": "",
+ "title": "منهج التطبيق في الفقه التفصيلي — إحالة لا إفتاء",
+ "language": "ar",
+ "age_group": "unspecified",
+ "behavior_type": "قاعدة التعامل مع الأسئلة الفقهية التفصيلية (منهج التطبيق)",
+ "intervention_type": "إحالة_لطبيب",
+ "severity": "خفيف",
+ "reference_type": "كتاب_تربوي",
+ "reference_info": "منهج التطبيق المعتمد: الإحالة لأهل العلم في الفروع المتشعبة — dar-alifta.com / islamweb.net",
+ "text_original": "",
+ "text_simplified": "سياسة التطبيق في الفقه التفصيلي (موسيقى، صور، مظاهر فقهية مذهبية): **نُحيل ولا نُفتي** — لأن الفتوى الفرعية تحتاج عرض مسألة بأدق تفاصيلها وسياق أسرة، وما تختصره تطبيقاتٌ في ردٍّ آلي قد يُخلّ بقرار أسري. **الإحالات المعتمدة:** دار الإفتاء المصرية (رقم موحد) · إسلام‌ويب (لجنة دائمة) · عالم موثوق تعرفه شخصيًا. **دور التطبيق:** يعلّم المنهج (كيف تفكر، كيف تحقق، كيف ترتب السؤال) ولا يفتي في الجزئيات الخلافية. هذا الموقف مقصود وليس تحفظًا.",
+ "labels": [
+  "الفقه التفصيلي",
+  "الإفتاء",
+  "الإحالة"
+ ],
+ "keywords": [
+  "الفقه التفصيلي",
+  "الإفتاء",
+  "الإحالة"
+ ],
+ "created_at": "2026-09-02T08:06:36",
+ "updated_at": "2026-09-02T08:06:36",
+ "version": "1.0",
+ "needs_ocr": false,
+ "source_meta": {
+  "source_title": "Gap-fill knowledge batch 2026-09",
+  "source_author": "Tutor Guardian content team (pending Khaled review)",
+  "source_year": 2026,
+  "source_url": ""
+ }
+}

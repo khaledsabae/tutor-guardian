@@ -1,0 +1,38 @@
+{
+  "id": "gap-med-feeding-refusal-01-al",
+  "domain": "development",
+  "source_file": "gap_fill_2026-09_aliases.json",
+  "source_url": "",
+  "title": "بنتي لا تشرب إلا من الرضاعة — خطة الكوب والطعام",
+  "language": "ar",
+  "age_group": "2-3",
+  "behavior_type": "طفلة لا تشرب إلا من الرضاعة — خطة الانتقال للكوب",
+  "intervention_type": "إرشادي",
+  "severity": "خفيف",
+  "reference_type": "كتاب_تربوي",
+  "reference_info": "WHO Feeding Guidance 6-24m · HealthyChildren AAP Weaning",
+  "text_original": "",
+  "text_simplified": "رفض الطعام والاحتكار للرضاعة **شائع بين 12-24 شهرًا**، وله حلول لا عقاب: (1) **التدرج:** اعرضي الحليب في كوب مفتوح أو بشرشفة قبل كل رضاعة بـ30 دقيقة — جسم جائع يقبل الكوب قبل الاعتياد. (2) **مذاق حليب الأم صعب المستكى** — امزجي كوبًا فيه 20% حليب معتمد + 80% رضاعة، وارفعي النسبة تدريجيًا أسبوعيًا. (3) **لا تجعلي الطعام معركة:** العرض المتكرر (10-15 مرة للطعام الجديد قبل القبول) طبيعي. (4) **الرضاعة ليست «شرًّا»** — منظمة الصحة تسمح بالرضاعة الطبيعية حتى سنتين؛ ما نريد هو **ألا يكون وحده** مصدر التغذية. (5) لو فقدت الوزن (منحنى النمو نزل) أو قلّ إدرار البول → طبيب أطفال.",
+  "labels": [
+    "الرضاعة",
+    "رفض الطعام",
+    "كوب",
+    "حليب"
+  ],
+  "keywords": [
+    "الرضاعة",
+    "رفض الطعام",
+    "كوب",
+    "حليب"
+  ],
+  "created_at": "2026-09-02T08:06:36",
+  "updated_at": "2026-09-02T08:06:36",
+  "version": "1.0",
+  "needs_ocr": false,
+  "source_meta": {
+    "source_title": "Gap-fill knowledge batch 2026-09",
+    "source_author": "Tutor Guardian content team (pending Khaled review)",
+    "source_year": 2026,
+    "source_url": ""
+  }
+}

@@ -1,0 +1,36 @@
+{
+ "id": "gap-cyber-phone-boundary-01",
+ "domain": "cyber",
+ "source_file": "gap_fill_2026-09.json",
+ "source_url": "",
+ "title": "«كل أصحابه عندهم» — إدارة طلب أول هاتف",
+ "language": "ar",
+ "age_group": "10-12",
+ "behavior_type": "ابنتي/ابني لا يملك هاتفًا — كيف أدير ضغط الأقران؟",
+ "intervention_type": "إرشادي",
+ "severity": "خفيف",
+ "reference_type": "كتاب_تربوي",
+ "reference_info": "WHO Screen Time Guidance · Internet Matters (UK) · AAP Family Media Plan",
+ "text_original": "",
+ "text_simplified": "عدم امتلاك الهاتف في 10-12 **قرار تربوي محترم** وليس تأخيرًا: الأدلة (AAP/WHO) ترشح أن أول هاتف يُؤجَّل حتى تكون الحاجة حقيقية (مدرسة بعيدة/توصيل). **ما يخفف الضغط:** (1) **لغة الموقف:** «عندنا قرار عائلي — الساعة ليست مفتاح النضج». (2) **بديل التواصل:** ساعة GPS بساعة اتصال محدودة (يمكنك الرد على أمك/أبوك فقط) تلبي الحاجة بلا فتح العالم. (3) **مقابلة جماعية مع أهل الأصدقاء:** دع صاحبه يلعب في حضورك — الشاشة تُشبع مع حماية. (4) **قاعدة «أول جهاز»:** عقد مكتوب بـ3 قواعد يوقعه الابن — التطبيق مع أهل الأصدقاء على هاتفهم معك حاضرًا. (5) عند 13+: هاتف «محدود» (لا تطبيقات اجتماعية أول سنة) — أقوى بقرار عائلي مكتوب لا عشوائي.",
+ "labels": [
+  "أول هاتف",
+  "ضغط الأقران",
+  "الهاتف"
+ ],
+ "keywords": [
+  "أول هاتف",
+  "ضغط الأقران",
+  "الهاتف"
+ ],
+ "created_at": "2026-09-02T08:06:36",
+ "updated_at": "2026-09-02T08:06:36",
+ "version": "1.0",
+ "needs_ocr": false,
+ "source_meta": {
+  "source_title": "Gap-fill knowledge batch 2026-09",
+  "source_author": "Tutor Guardian content team (pending Khaled review)",
+  "source_year": 2026,
+  "source_url": ""
+ }
+}

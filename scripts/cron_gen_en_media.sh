@@ -139,23 +139,13 @@ say "===== English media run ====="
 # unlucky call. Same lesson as the twelve in-flight tasks written off as dead
 # on 08-17 that all downloaded once the harvest was simply run again:
 # persistence was the answer, not the diagnosis.
-ensure_session() {
-    local p="$1" attempt
-    timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" login --browser-cookies chrome \
-        >> "$LOG" 2>&1
-    for attempt in 1 2 3; do
-        if timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" source list \
-                -n "$NOTEBOOK_MAIN" --json 2>/dev/null | grep -q '"sources"'; then
-            [ "$attempt" -gt 1 ] && say "auth $p verified by read ✓ (attempt $attempt)"
-            [ "$attempt" -eq 1 ] && say "auth $p verified by read ✓"
-            return 0
-        fi
-        say "auth $p read failed (attempt $attempt/3)"
-        [ "$attempt" -lt 3 ] && sleep $((attempt * 20))
-    done
-    say "auth $p FAILED — three reads refused across a minute, not a hiccup"
-    return 1
-}
+# The session logic lives in scripts/lib/nblm_session.sh so it can be tested
+# against a stub CLI and a throwaway HOME. 🚨 2026-09-29: the Chrome fallback
+# there extracts into a CANDIDATE profile and only a candidate proven by a real
+# read ever replaces the live file (with a timestamped backup and a .lastgood
+# copy) — a dead extraction overwrote the only good session twice that day.
+# shellcheck source=scripts/lib/nblm_session.sh
+. "$REPO/scripts/lib/nblm_session.sh"
 
 # WiFi (Zain_H155-383_DC14_5G) drops before 06:30 some mornings:
 # 2026-08-25 06:19 ssid-not-found, then cron 06:30:02 → exit 1 at 06:31:04
@@ -233,8 +223,16 @@ $(grep -oE '[0-9]+ still in flight' "$RUN_OUT" | head -1)"
 # yesterday, which is exactly what 2026-08-20 did. tg-video was just verified
 # alive above (ensure_session tg-video, before tg-audio), so harvest while it
 # is still fresh.
+#
+# 🚨 --budget-seconds, and it is smaller than the timeout on purpose. Until
+# 2026-09-29 this step was killed by `timeout 600` every day since 09-02 (exit
+# 124): ~35 dead tasks at ~33 s a poll, and the task list was only saved after
+# the LAST poll, so no "drop after 3 errors" decision ever survived and the same
+# dead tasks came back every morning. The script now saves after every poll and
+# stops itself cleanly once the budget is spent; the budget is checked between
+# tasks and one poll + download can take ~210 s, so 360 + 210 stays under 600.
 timeout 600 "$PY" scripts/generate_missing_infographics.py --lang en \
-    --harvest-only > "$RUN_OUT" 2>&1
+    --harvest-only --budget-seconds 360 > "$RUN_OUT" 2>&1
 INFO_HARVEST_EXIT=$?
 cat "$RUN_OUT" >> "$LOG"
 say "infographic harvest exit $INFO_HARVEST_EXIT · $(grep -c '✓ downloaded' "$RUN_OUT") downloaded"
@@ -379,6 +377,13 @@ say "remaining: ${REMAIN:-?} (total audio video infographic)"
 # So: a run that generated nothing is fine when the quota refused it — that is
 # the design. A run that generated nothing for three consecutive runs with no
 # refusal to explain it is broken, and PCC should say so.
+#
+# 🚨 Only a real DECREASE resets the counter. Until 2026-09-29 it reset on any
+# change (`remaining != last`) and on any rate limit: a count that went UP
+# (new lessons, a deleted file), a coverage query that failed (empty TOTAL),
+# or a refusal on a run that delivered nothing all wiped the evidence of a
+# stall. A rate-limited run with no delivery now HOLDS the count — the refusal
+# explains that run, but it does not erase the ones before it.
 TOTAL="${REMAIN%% *}"
 STALL_FILE="$REPO/scratch/en_media_progress.json"
 "$PY" - "$TOTAL" "$RATELIMITED" "$STALL_FILE" <<'PYEOF'
@@ -390,9 +395,24 @@ if os.path.exists(path):
         state = json.load(open(path))
     except Exception:
         state = {}
-same = 0 if (state.get("remaining") != total or ratelimited) else state.get("stalled", 0) + 1
-json.dump({"remaining": total, "stalled": same}, open(path, "w"))
-sys.exit(1 if same >= 3 else 0)
+def as_int(v):
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return None
+prev, cur = as_int(state.get("remaining")), as_int(total)
+stalled = as_int(state.get("stalled")) or 0
+if prev is None and cur is not None:
+    stalled = 0                      # first measurement: a baseline, not a stall
+elif cur is not None and cur < prev:
+    stalled = 0                      # real delivery
+elif not ratelimited:
+    stalled += 1                     # no delivery, and nothing to explain it
+tmp = f"{path}.tmp.{os.getpid()}"
+with open(tmp, "w") as fh:
+    json.dump({"remaining": cur if cur is not None else prev, "stalled": stalled}, fh)
+os.replace(tmp, path)
+sys.exit(1 if stalled >= 3 else 0)
 PYEOF
 STALLED=$?
 if [ "$STALLED" -ne 0 ]; then

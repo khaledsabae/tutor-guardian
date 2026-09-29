@@ -1,0 +1,36 @@
+{
+ "id": "gap-dev-sibling-hits-01",
+ "domain": "development",
+ "source_file": "gap_fill_2026-09.json",
+ "source_url": "",
+ "title": "عدوان الأخ الأكبر على الصغر — خطة ثلاثية",
+ "language": "ar",
+ "age_group": "4-6",
+ "behavior_type": "ابني يضرب أخوه الصغر — خطة ثلاثية (لا عقاب فقط)",
+ "intervention_type": "إرشادي",
+ "severity": "خفيف",
+ "reference_type": "كتاب_تربوي",
+ "reference_info": "WHO Positive Parenting · AAP Sibling Aggression",
+ "text_original": "",
+ "text_simplified": "المعادلة: الغيرة تُنال لا تُمنع. (1) **افصل بهدوء فوري:** «لا نضرب. الغرفة أنت، وهو هنا» — 10 دقائق. (2) **امنح الأخ الأكبر رصيدًا:** 15 دقيقة خاصتين يوميًا (كرة/لعب) تقلل الضغط الذي ينزل على الصغير. (3) **علّمه الجملة البديلة:** «أنا معصب لأنه خذ لعبتي» بدل اليد. (4) **لا جعل الصغير «ضحية مقدسة»** دائمًا — إن بدأ هو الضرب، العدل نفسه. (5) العواقب المنطقية المعلنة أفضل من الصرخة: «اللعب مع أخيك يُوقف 10 دقائق لو ضربت». **ممنوع:** مقارنة «أنت الأكبر!» — ظلم مزدوج. تحسّن ملموس بعد أسبوعين متسقين.",
+ "labels": [
+  "ضرب الأخ",
+  "الغيرة",
+  "العدوان"
+ ],
+ "keywords": [
+  "ضرب الأخ",
+  "الغيرة",
+  "العدوان"
+ ],
+ "created_at": "2026-09-02T08:06:36",
+ "updated_at": "2026-09-02T08:06:36",
+ "version": "1.0",
+ "needs_ocr": false,
+ "source_meta": {
+  "source_title": "Gap-fill knowledge batch 2026-09",
+  "source_author": "Tutor Guardian content team (pending Khaled review)",
+  "source_year": 2026,
+  "source_url": ""
+ }
+}
