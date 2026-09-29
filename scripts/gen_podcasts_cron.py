@@ -130,6 +130,37 @@ def _load(p: Path, default):
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else default
 
 
+# 🚨 trigger() answers with a task id OR one of these words. They are outcomes,
+# never task ids — yet until 2026-09-29 the trigger loop tested `if tid:` BEFORE
+# `elif tid == "STALE_SOURCE"`, so the sentinel (truthy) won, was printed as
+# "task STALE_SOURCE" and stored as one. The lesson then counted as "in flight"
+# and was never re-triggered, the harvest polled a task id that does not exist,
+# and the real cause (a stale source → ops/tools/refresh_source_map.py) was
+# never reported.
+SENTINELS = frozenset({"RATELIMIT", "STALE_SOURCE"})
+_TASK_ID_RE = re.compile(r"^[a-fA-F0-9-]{8,}$")
+
+
+def _is_task_id(value) -> bool:
+    return (isinstance(value, str) and value not in SENTINELS
+            and bool(_TASK_ID_RE.match(value)))
+
+
+def _load_state() -> dict:
+    """The in-flight map, minus anything that is not a task id.
+
+    Self-heals files written by the old ordering bug: a sentinel stored as a
+    task id is dropped on load, so its lesson is simply triggered again (and a
+    stale source is reported as one) instead of being polled forever.
+    """
+    state = _load(STATE_FILE, {})
+    bad = [k for k, v in state.items() if not _is_task_id(v)]
+    for k in bad:
+        print(f"[state] dropping {k}: {state[k]!r} is not a task id")
+        state.pop(k)
+    return state
+
+
 def _targets() -> list[tuple[str, str, str]]:
     """Every source-mapped lesson as (lesson_id, source_id, notebook_id).
 
@@ -239,8 +270,8 @@ async def main():
             print(f"  [dry-run] {lid} → {podcast_rel(lid, lang)}  (source {sid})")
         return
 
-    state = _load(STATE_FILE, {})
-    _errors = _load(ERRORS_FILE, {})
+    state = _load_state()
+    _errors = {k: v for k, v in _load(ERRORS_FILE, {}).items() if k in state}
 
     # 1) resolve in-flight tasks — only this language's
     for key, tid in list(state.items()):
@@ -309,14 +340,12 @@ async def main():
             continue
         attempted += 1
         tid = await trigger(sid, lang, notebook)
+        # Sentinels first — both are truthy strings, so a plain `if tid:` ahead
+        # of them stores the sentinel as a task id (see SENTINELS above).
         if tid == "RATELIMIT":
             print(f"[trigger] {lid}: rate-limited — retry next run")
             break
-        if tid:
-            print(f"[trigger] {lid}: task {tid}")
-            state[key] = tid
-            await asyncio.sleep(5)
-        elif tid == "STALE_SOURCE":
+        if tid == "STALE_SOURCE":
             # 🚨 Not an audio outage. NotebookLM answers "Audio generation is
             # unavailable" when -s names a source that no longer exists on the
             # notebook: it accepts CREATE_ARTIFACT, returns 200 with a null
@@ -328,6 +357,10 @@ async def main():
             stale.append(lid)
             print(f"[trigger] {lid}: STALE SOURCE {sid[:8]} — not on the "
                   f"notebook. Run ops/tools/refresh_source_map.py")
+        elif _is_task_id(tid):
+            print(f"[trigger] {lid}: task {tid}")
+            state[key] = tid
+            await asyncio.sleep(5)
         else:
             print(f"[trigger] {lid}: no task id")
 
