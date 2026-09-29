@@ -139,40 +139,13 @@ say "===== English media run ====="
 # unlucky call. Same lesson as the twelve in-flight tasks written off as dead
 # on 08-17 that all downloaded once the harvest was simply run again:
 # persistence was the answer, not the diagnosis.
-ensure_session() {
-    local p="$1" attempt
-    # 2026-09-29: try the EXISTING state file first — the unconditional
-    # `login --browser-cookies chrome` used to run before any read, and when
-    # Chrome itself is signed out it extracts 206 stale cookies and OVERWRITES
-    # a still-valid stored session with a dead one (measured this morning:
-    # valid 45-cookie file restored by hand, then login smeared 206 stale
-    # cookies over it and three reads refused → whole run aborted).
-    for attempt in 1 2 3; do
-        if timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" source list \
-                -n "$NOTEBOOK_MAIN" --json 2>/dev/null | grep -q '"sources"'; then
-            [ "$attempt" -gt 1 ] && say "auth $p verified by existing state ✓ (attempt $attempt)"
-            [ "$attempt" -eq 1 ] && say "auth $p verified by existing state ✓"
-            return 0
-        fi
-        [ "$attempt" -lt 3 ] && sleep 15
-    done
-    # Only now re-extract from Chrome — the stored session is genuinely dead.
-    say "auth $p: existing state refused 3x — extracting fresh chrome cookies"
-    timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" login --browser-cookies chrome \
-        >> "$LOG" 2>&1
-    for attempt in 1 2 3; do
-        if timeout 90 ./notebooklm_env/bin/notebooklm -p "$p" source list \
-                -n "$NOTEBOOK_MAIN" --json 2>/dev/null | grep -q '"sources"'; then
-            [ "$attempt" -gt 1 ] && say "auth $p verified by read ✓ (attempt $attempt)"
-            [ "$attempt" -eq 1 ] && say "auth $p verified by read ✓"
-            return 0
-        fi
-        say "auth $p read failed (attempt $attempt/3)"
-        [ "$attempt" -lt 3 ] && sleep $((attempt * 20))
-    done
-    say "auth $p FAILED — three reads refused across a minute, not a hiccup"
-    return 1
-}
+# The session logic lives in scripts/lib/nblm_session.sh so it can be tested
+# against a stub CLI and a throwaway HOME. 🚨 2026-09-29: the Chrome fallback
+# there extracts into a CANDIDATE profile and only a candidate proven by a real
+# read ever replaces the live file (with a timestamped backup and a .lastgood
+# copy) — a dead extraction overwrote the only good session twice that day.
+# shellcheck source=scripts/lib/nblm_session.sh
+. "$REPO/scripts/lib/nblm_session.sh"
 
 # WiFi (Zain_H155-383_DC14_5G) drops before 06:30 some mornings:
 # 2026-08-25 06:19 ssid-not-found, then cron 06:30:02 → exit 1 at 06:31:04
