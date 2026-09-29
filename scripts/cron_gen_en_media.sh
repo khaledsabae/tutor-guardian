@@ -377,6 +377,13 @@ say "remaining: ${REMAIN:-?} (total audio video infographic)"
 # So: a run that generated nothing is fine when the quota refused it — that is
 # the design. A run that generated nothing for three consecutive runs with no
 # refusal to explain it is broken, and PCC should say so.
+#
+# 🚨 Only a real DECREASE resets the counter. Until 2026-09-29 it reset on any
+# change (`remaining != last`) and on any rate limit: a count that went UP
+# (new lessons, a deleted file), a coverage query that failed (empty TOTAL),
+# or a refusal on a run that delivered nothing all wiped the evidence of a
+# stall. A rate-limited run with no delivery now HOLDS the count — the refusal
+# explains that run, but it does not erase the ones before it.
 TOTAL="${REMAIN%% *}"
 STALL_FILE="$REPO/scratch/en_media_progress.json"
 "$PY" - "$TOTAL" "$RATELIMITED" "$STALL_FILE" <<'PYEOF'
@@ -388,9 +395,24 @@ if os.path.exists(path):
         state = json.load(open(path))
     except Exception:
         state = {}
-same = 0 if (state.get("remaining") != total or ratelimited) else state.get("stalled", 0) + 1
-json.dump({"remaining": total, "stalled": same}, open(path, "w"))
-sys.exit(1 if same >= 3 else 0)
+def as_int(v):
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return None
+prev, cur = as_int(state.get("remaining")), as_int(total)
+stalled = as_int(state.get("stalled")) or 0
+if prev is None and cur is not None:
+    stalled = 0                      # first measurement: a baseline, not a stall
+elif cur is not None and cur < prev:
+    stalled = 0                      # real delivery
+elif not ratelimited:
+    stalled += 1                     # no delivery, and nothing to explain it
+tmp = f"{path}.tmp.{os.getpid()}"
+with open(tmp, "w") as fh:
+    json.dump({"remaining": cur if cur is not None else prev, "stalled": stalled}, fh)
+os.replace(tmp, path)
+sys.exit(1 if stalled >= 3 else 0)
 PYEOF
 STALLED=$?
 if [ "$STALLED" -ne 0 ]; then
