@@ -1,11 +1,11 @@
 {
-  "total_units": 1770,
-  "generated_at": "2026-09-29T07:49:07.789896+00:00",
+  "total_units": 1775,
+  "generated_at": "2026-09-29T07:50:19.794753+00:00",
   "by_domain": {
-    "medical": 360,
-    "cyber": 280,
-    "islamic_parenting": 975,
-    "development": 134,
+    "medical": 361,
+    "cyber": 281,
+    "islamic_parenting": 977,
+    "development": 135,
     "aqeedah": 21
   },
   "units": [
@@ -6562,6 +6562,18 @@
       "size_chars": 0
     },
     {
+      "id": "gap-dev-focus-01-al",
+      "domain": "medical",
+      "title": "تركيز الطفل: الحدود الطبيعية وخطة العمل",
+      "source_file": "gap_fill_2026-09_aliases.json",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "تركيز صفر عند طفل ٧ سنوات — روتين عملي قبل القلق",
+      "needs_ocr": false,
+      "size_chars": 0
+    },
+    {
       "id": "gap-dev-focus-01",
       "domain": "development",
       "title": "تركيز الطفل: الحدود الطبيعية وخطة العمل",
@@ -6586,6 +6598,18 @@
       "size_chars": 0
     },
     {
+      "id": "gap-dev-sexual-worries-01-al",
+      "domain": "cyber",
+      "title": "الميول الشاذة ومشاهدة المحتوى الإباحي عند المراهق — التربية ",
+      "source_file": "gap_fill_2026-09_aliases.json",
+      "language": "ar",
+      "original_age_group": "13-15",
+      "normalized_age_group": "13-15",
+      "behavior_type": "قلق الأب من «ميل شاذ» عند ابنه — أول خطوة تصحيحية",
+      "needs_ocr": false,
+      "size_chars": 0
+    },
+    {
       "id": "gap-dev-sexual-worries-01",
       "domain": "development",
       "title": "الميول الشاذة ومشاهدة المحتوى الإباحي عند المراهق — التربية ",
@@ -6606,6 +6630,18 @@
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "ابني يضرب أخوه الصغر — خطة ثلاثية (لا عقاب فقط)",
+      "needs_ocr": false,
+      "size_chars": 0
+    },
+    {
+      "id": "gap-dev-stealing-01-al",
+      "domain": "islamic_parenting",
+      "title": "ابني يسرق النقود — خطوات عملية بلا فضيحة",
+      "source_file": "gap_fill_2026-09_aliases.json",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "طفل يسرق نقودًا — خطوة بخطوة بلا وصمة",
       "needs_ocr": false,
       "size_chars": 0
     },
@@ -6790,6 +6826,18 @@
       "size_chars": 0
     },
     {
+      "id": "gap-med-enuresis-01-al",
+      "domain": "islamic_parenting",
+      "title": "التبول الليلي (الفيض) — ينام في المرحاض ويبلل السرير",
+      "source_file": "gap_fill_2026-09_aliases.json",
+      "language": "ar",
+      "original_age_group": "7-9",
+      "normalized_age_group": "7-9",
+      "behavior_type": "التبول الليلي (الفيض) — الطبيعي والمطلوب منك",
+      "needs_ocr": false,
+      "size_chars": 0
+    },
+    {
       "id": "gap-med-enuresis-01",
       "domain": "medical",
       "title": "التبول الليلي (الفيض) — ينام في المرحاض ويبلل السرير",
@@ -6798,6 +6846,18 @@
       "original_age_group": "4-6",
       "normalized_age_group": "4-6",
       "behavior_type": "التبول الليلي (الفيض) — الطبيعي والمطلوب منك",
+      "needs_ocr": false,
+      "size_chars": 0
+    },
+    {
+      "id": "gap-med-feeding-refusal-01-al",
+      "domain": "development",
+      "title": "بنتي لا تشرب إلا من الرضاعة — خطة الكوب والطعام",
+      "source_file": "gap_fill_2026-09_aliases.json",
+      "language": "ar",
+      "original_age_group": "2-3",
+      "normalized_age_group": "2-3",
+      "behavior_type": "طفلة لا تشرب إلا من الرضاعة — خطة الانتقال للكوب",
       "needs_ocr": false,
       "size_chars": 0
     },
