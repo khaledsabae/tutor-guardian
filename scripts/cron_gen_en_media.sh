@@ -223,8 +223,16 @@ $(grep -oE '[0-9]+ still in flight' "$RUN_OUT" | head -1)"
 # yesterday, which is exactly what 2026-08-20 did. tg-video was just verified
 # alive above (ensure_session tg-video, before tg-audio), so harvest while it
 # is still fresh.
+#
+# 🚨 --budget-seconds, and it is smaller than the timeout on purpose. Until
+# 2026-09-29 this step was killed by `timeout 600` every day since 09-02 (exit
+# 124): ~35 dead tasks at ~33 s a poll, and the task list was only saved after
+# the LAST poll, so no "drop after 3 errors" decision ever survived and the same
+# dead tasks came back every morning. The script now saves after every poll and
+# stops itself cleanly once the budget is spent; the budget is checked between
+# tasks and one poll + download can take ~210 s, so 360 + 210 stays under 600.
 timeout 600 "$PY" scripts/generate_missing_infographics.py --lang en \
-    --harvest-only > "$RUN_OUT" 2>&1
+    --harvest-only --budget-seconds 360 > "$RUN_OUT" 2>&1
 INFO_HARVEST_EXIT=$?
 cat "$RUN_OUT" >> "$LOG"
 say "infographic harvest exit $INFO_HARVEST_EXIT · $(grep -c '✓ downloaded' "$RUN_OUT") downloaded"
