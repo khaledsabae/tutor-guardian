@@ -54,8 +54,10 @@ name: Mobile E2E (emulator)
 # `mark_child` and the job summary says so.
 #
 # ── Signing ──────────────────────────────────────────────────────────────
-# No secrets. One throwaway debug keystore per run signs both APKs, so the
-# upgrade's `install -r` sees the same signer. Never uploaded anywhere but here.
+# No secrets. One throwaway debug-style keystore per run (password "android")
+# signs both APKs through android/app/key.properties written in CI, so the
+# upgrade's `install -r` sees one signer. It lives one day as an artifact of
+# this run and signs nothing that ships.
 #
 # Artifacts: e2e-screenshots (checkpoint PNGs), e2e-logcat (+ gate verdict),
 # e2e-maestro-report (JUnit, Maestro output, failure screenshots, summary).
@@ -146,15 +148,22 @@ jobs:
           name: e2e-debug-keystore
           path: ${{ runner.temp }}/keystore
 
-      - name: Use it as the debug keystore
+      - name: Sign with it
+        # android/app/key.properties is the project's own signing switch
+        # (build.gradle.kts). Pointing it at the run's keystore is explicit;
+        # relying on AGP's default debug keystore was not — on the runner AGP
+        # signed with a key of its own, which would break `install -r`.
         run: |
-          mkdir -p ~/.android
-          cp "$RUNNER_TEMP/keystore/debug.keystore" ~/.android/debug.keystore
+          {
+            echo "storeFile=$RUNNER_TEMP/keystore/debug.keystore"
+            echo "storePassword=android"
+            echo "keyAlias=androiddebugkey"
+            echo "keyPassword=android"
+          } > android/app/key.properties
 
       - name: Build the release APK (x86_64, as the emulator runs it)
-        # No key.properties here, so build.gradle.kts signs the release build
-        # with the debug keystore above. R8 full mode + shrinkResources run
-        # exactly as for Play; only the ABI is narrowed to the emulator's.
+        # R8 full mode + shrinkResources run exactly as for Play; only the ABI
+        # is narrowed to the emulator's.
         run: flutter build apk --release --target-platform android-x64
 
       - name: Check the signer is the run's keystore
@@ -162,7 +171,7 @@ jobs:
           APK=build/app/outputs/flutter-apk/app-release.apk
           APKSIGNER=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/apksigner
           got=$("$APKSIGNER" verify --print-certs "$APK" | grep -m1 'certificate SHA-256 digest' | awk '{print $NF}')
-          want=$(keytool -list -v -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey \
+          want=$(keytool -list -v -keystore "$RUNNER_TEMP/keystore/debug.keystore" -storepass android -alias androiddebugkey \
                  | grep -m1 'SHA256:' | awk '{print $2}' | tr -d ':' | tr 'A-F' 'a-f')
           echo "signer $got"
           [ -n "$got" ] && [ "$got" = "$want" ] || { echo "::error::APK signer $got is not the run keystore $want"; exit 1; }
