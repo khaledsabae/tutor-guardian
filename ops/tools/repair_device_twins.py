@@ -11,10 +11,18 @@ mint (backend/app/services/device_twins.py); this script does the same for the
 backlog in one pass — including twins whose token was renewed since, which the
 request-time rule deliberately does not trust.
 
-The evidence is the runtime rule's, minus the request credential (there is no
-request here — an operator runs this): `device_twins.family_of` — the twin has
-no child, shares its FCM token with exactly one device that has a child, and
-both were born within TWIN_WINDOW_SECONDS. Nothing else is ever folded.
+The rule is the runtime one (backend/app/services/device_twins.py, module
+doc), minus the request credential — there is no request here; an operator
+runs this — and re-decided under the write lock for every pair (`fold_pair`):
+the cohort (both born from 2026-09-12, the twin before TWIN_FOLD_BORN_BEFORE),
+a childless twin sharing its FCM token with exactly one device that has a
+child, born within a minute of it, and then either the family identity went
+quiet after its first session while the twin is in use (the app came back as
+the twin) or the twin went quiet (a phantom). Two halves both in use are never
+folded. Tokens: only the twin's birth-window ones move, unless
+--include-later-twin-tokens. Colliding unique-key rows stay with the twin;
+every moved or deleted row is logged in device_fold_log (revert_fold undoes a
+fold).
 
 DEFAULT IS A DRY RUN. It opens the database read-only (`mode=ro`) and prints
 aggregates only — no device ids, no names, no tokens.
@@ -57,19 +65,12 @@ TIME_ONLY_WINDOW_SECONDS = 2
 RELAUNCH_SECONDS = 60
 
 
-def _when(value):
-    try:
-        return datetime.fromisoformat(value) if value else None
-    except ValueError:
-        return None
-
-
 def survey(conn: sqlite3.Connection, twins) -> dict:
     """Classify every device pair the split could have produced. Read-only."""
     q = conn.execute
-    born = {d: _when(t) for d, t in q("SELECT device_id, MIN(created_at) FROM api_tokens GROUP BY device_id")}
+    born = {d: twins.first_seen(conn, d) for (d,) in q("SELECT DISTINCT device_id FROM api_tokens")}
     kids = dict(q("SELECT device_id, COUNT(*) FROM child_profiles GROUP BY device_id").fetchall())
-    push = {d: (tok, _when(upd), build) for d, tok, upd, build in
+    push = {d: (tok, twins._when(upd), build) for d, tok, upd, build in
             q("SELECT device_id, token, updated_at, build_number FROM push_tokens")}
     holders = collections.defaultdict(list)
     for d, (tok, _, _) in push.items():
@@ -80,7 +81,7 @@ def survey(conn: sqlite3.Connection, twins) -> dict:
     e2e = {d for (d,) in q("SELECT DISTINCT device_id FROM child_profiles WHERE name LIKE 'E2E-Maestro%'")}
 
     out = collections.Counter()
-    pairs = []          # (twin, family, state) — what --apply folds
+    pairs = []          # (twin, family, kind, has_later_tokens) — what --apply folds
     for device, (tok, updated, _build) in push.items():
         if kids.get(device):
             continue
@@ -94,21 +95,25 @@ def survey(conn: sqlite3.Connection, twins) -> dict:
         if len(with_children) > 1:
             out["ambiguous_several_families_on_one_token"] += 1
             continue
-        family = twins.family_of(conn, device)
-        if family is None:
+        if twins.family_of(conn, device, within_cohort=False) is None:
             out["same_token_born_apart_not_folded"] += 1     # identity resets, not the race
             continue
-        f_updated = push[family][1]
-        if updated and f_updated and updated > f_updated + _secs(RELAUNCH_SECONDS):
-            state = "app_runs_as_twin"        # the family sees no child: affected
-        elif updated and f_updated and f_updated > updated + _secs(RELAUNCH_SECONDS):
-            state = "app_runs_as_family"      # phantom twin: duplicate pushes, counts
-        else:
-            state = "never_relaunched_or_unknown"
-        out[f"twin:{state}"] += 1
-        if family in e2e:
-            out[f"twin:{state}:of_which_e2e_test_devices"] += 1
-        pairs.append((device, family, state))
+        family = twins.family_of(conn, device)
+        if family is None:
+            out["twin_outside_cohort_not_folded"] += 1
+            continue
+        kind = twins.repairable(conn, device, family)
+        tag = " (e2e)" if family in e2e else ""
+        if kind is None:
+            out[f"twin:both_halves_in_use_not_folded{tag}"] += 1
+            continue
+        family_born = twins.first_seen(conn, family)
+        later = any(not twins._within_window(twins._when(c), family_born) for (c,) in
+                    q("SELECT created_at FROM api_tokens WHERE device_id = ?", (device,)))
+        out[f"twin:{kind}{tag}"] += 1
+        if later:
+            out[f"twin:{kind}{tag}:twin_has_later_tokens"] += 1
+        pairs.append((device, family, kind, later))
 
     # Both halves with children: the parent re-onboarded on the twin. Same
     # install (shared token, same seconds) but two children now — reported,
@@ -141,8 +146,8 @@ def survey(conn: sqlite3.Connection, twins) -> dict:
             time_only += 1
             last = max(filter(None, [
                 push.get(o, (None, None, None))[1],
-                _when(q("SELECT MAX(created_at) FROM api_tokens WHERE device_id = ?", (o,)).fetchone()[0]),
-                _when(q("SELECT MAX(m.created_at) FROM chat_messages m JOIN chat_sessions s "
+                twins._when(q("SELECT MAX(created_at) FROM api_tokens WHERE device_id = ?", (o,)).fetchone()[0]),
+                twins._when(q("SELECT MAX(m.created_at) FROM chat_messages m JOIN chat_sessions s "
                         "ON s.id = m.session_id WHERE s.device_id = ?", (o,)).fetchone()[0]),
             ]), default=None)
             if last and last > t + _secs(RELAUNCH_SECONDS):
@@ -181,6 +186,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--db", type=Path, help="database (default: CONVERSATIONS_DB / the app's)")
     ap.add_argument("--backup-dir", type=Path, default=ROOT / "ops" / "backups")
     ap.add_argument("--limit", type=int, default=0, help="--apply at most N pairs (0 = all)")
+    ap.add_argument("--include-later-twin-tokens", action="store_true",
+                    help="with --apply, also move twin tokens minted after the birth minute. "
+                         "Reaches families whose app renewed its token, at the price that ANY "
+                         "token ever minted for that twin id then opens the family")
     ap.add_argument("--bundle", action="store_true",
                     help="print this script with the service module inlined, for piping a "
                          "dry run into a container that does not have the module yet")
@@ -202,7 +211,11 @@ def main(argv: list[str] | None = None) -> int:
     for key in sorted(counts):
         print(f"  {key:48s} {counts[key]}")
     pairs = report["pairs"]
+    later = sum(1 for *_, has_later in pairs if has_later)
     print(f"  {'=> foldable twins (what --apply would fold)':48s} {len(pairs)}")
+    print(f"  {'   of which the twin has later tokens':48s} {later}")
+    print("     (their app holds a token minted after the birth minute: --apply moves it")
+    print("      only with --include-later-twin-tokens — see the module doc)")
 
     if not args.apply:
         print("dry run: nothing written")
@@ -222,16 +235,16 @@ def main(argv: list[str] | None = None) -> int:
     from app.core.log_safety import device_tag
     conn = _open(path, readonly=False)
     done = 0
-    for twin, family, state in pairs[: args.limit or None]:
-        # Re-check under the write: the app may have folded it meanwhile.
-        if twins.family_of(conn, twin) != family:
-            print(f"  skip {device_tag(twin)}: no longer a twin")
+    for twin, family, kind, _later in pairs[: args.limit or None]:
+        # Re-decided under the write lock: the app may have folded it meanwhile.
+        folded, moved = twins.fold_pair(conn, twin, family, all_tokens=args.include_later_twin_tokens)
+        if folded is None:
+            print(f"  skip {device_tag(twin)}: no longer a foldable twin")
             continue
-        moved = twins.merge_device(conn, twin, family)
         done += 1
-        print(f"  folded {device_tag(twin)} -> {device_tag(family)} [{state}] "
+        print(f"  folded {device_tag(twin)} -> {device_tag(family)} [{folded}] "
               + ", ".join(f"{k}={v}" for k, v in sorted(moved.items())))
-    print(f"folded {done} of {len(pairs)}")
+    print(f"folded {done} of {len(pairs)}  (undo one: device_twins.revert_fold(conn, twin))")
     return 0
 
 

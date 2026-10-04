@@ -48,6 +48,14 @@ def register_push_token(request: Request, payload: dict) -> dict:
     # ignore the extra fields; new ones adopt the device id.
     canonical = device_twins.recover(device_id, credential=getattr(request.state, "token", None))
     if canonical:
+        # This request's census belongs to the family device now — the token
+        # that sent it opens it. (The twin's own row was removed by the fold,
+        # logged; the family's row is only touched here, by the live request.)
+        conn = get_conn()
+        try:
+            _upsert_push_token(conn, canonical, token, platform, app_version, build_number)
+        finally:
+            conn.close()
         return {"ok": True, "device_id": canonical, "identity_recovered": True}
     return {"ok": True}
 

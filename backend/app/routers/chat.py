@@ -37,9 +37,10 @@ def create_session(request: Request, body: SessionCreate | None = None) -> Sessi
     to anyone for any `device_id` — knowing a device id was owning the family's
     data (audit H5). Now:
 
-      * a caller that presents a valid Bearer token (the app sends its last
-        one, see TgClient.createSession) may only mint for THAT device — a
-        mismatch is refused;
+      * a caller that presents a Bearer token (the app sends its last one,
+        see TgClient.createSession) mints for THAT device — the proof decides.
+        A different claimed id is ignored, not refused (review of PR #29: a
+        403 only made the app drop its proof and mint the claimed id bare);
       * a caller claiming a device id that already has tokens, without such
         proof, is refused once SESSION_MINT_ENFORCE is set. Until then it is
         allowed and logged: builds already on Play mint without proof, and
@@ -49,13 +50,12 @@ def create_session(request: Request, body: SessionCreate | None = None) -> Sessi
       * new device ids need no proof (that is how an install begins), and the
         per-IP minting budget in rate_limit.py bounds how many a caller gets.
 
-    One exception to "a mismatch is refused", and one addition, both for
-    installs that 1.0.58-1.0.67 split into two device ids (services/
-    device_twins.py has the evidence rule): when the claimed device and the
-    proven one are the two halves of one install, or the proven device is a
-    childless twin of the family's device, the session is minted for the
-    family's device and the twin is folded into it. The response names the
-    device minted for; the app adopts it when it differs from what it asked.
+    Installs that 1.0.58-1.0.67 split into two device ids (services/
+    device_twins.py has the evidence rule): a claimed id that was folded stands
+    for its family device; a twin presenting its own live birth-minute token,
+    whose family identity went quiet, is folded and the session is the
+    family's; a proven device on an id the API now refuses moves to the app's
+    new valid id. The response names the device minted for; the app adopts it.
     """
     body = body or SessionCreate()
     # A device id folded into its family's device (services/device_twins.py)
@@ -70,9 +70,6 @@ def create_session(request: Request, body: SessionCreate | None = None) -> Sessi
     proof_device = store.token_device(proof) if proof else None
     if proof_device is not None:
         device_id = device_twins.resolve_mint(device_id, proof_device, proof=proof)
-        if device_id is None:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
-                                detail="الجهاز لا يطابق التوثيق.")
     elif device_id and store.device_has_tokens(device_id):
         if _session_mint_enforced():
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,

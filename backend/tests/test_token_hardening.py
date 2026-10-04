@@ -169,8 +169,11 @@ def test_an_expired_token_still_proves_its_device_when_minting(client, monkeypat
     r = _mint(client, "dev-1", token)
     assert r.status_code == 201
     assert store.validate_token(r.json()["token"])["device_id"] == "dev-1"
-    # …but only for its own device.
-    assert _mint(client, "dev-2", token).status_code == 403
+    # …but only for its own device: claiming another one still mints dev-1
+    # (the proof decides, PR #29 review), never dev-2.
+    other = _mint(client, "dev-2", token)
+    assert other.status_code == 201
+    assert store.validate_token(other.json()["token"])["device_id"] == "dev-1"
 
 
 # ── device ids stay out of logs ───────────────────────────────────────────
