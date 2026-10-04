@@ -16,6 +16,7 @@
 library;
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -24,6 +25,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:almorabbi/api/device_id_claim.dart';
 import 'package:almorabbi/api/tg_client.dart';
 import 'package:almorabbi/features/child_memory/data/memory_models.dart';
 import 'package:almorabbi/features/child_memory/data/memory_repository.dart';
@@ -459,6 +461,31 @@ void main() {
       expect(c.storage.store.containsKey('tg_session_id'), isFalse);
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getString('tg_device_id_backup'), fresh);
+    });
+
+    test('the device-twin claim follows the fresh id, never the erased one',
+        () async {
+      // PR #29's claim file is consulted when the keystore and the backup are
+      // both empty — it must not hand the deleted account's id back.
+      final dir = await Directory.systemTemp.createTemp('wt-memui-claim');
+      addTearDown(() => dir.delete(recursive: true));
+      final claimFile = File('${dir.path}/tg_device_id.claim');
+      await claimFile.writeAsString('dev-old');
+      final storage = _MemStorage()
+        ..store['tg_device_id'] = 'dev-old'
+        ..store['tg_session_id'] = 's1'
+        ..store['tg_token'] = 'tok1';
+      final client = TgClient.forTesting(
+        baseUrl: 'http://api.test',
+        storage: storage,
+        deviceIdClaim: DeviceIdClaim(() async => dir),
+        httpClient: MockClient((req) async =>
+            _json({'devices': 1, 'signed_in': false, 'deleted': {}})),
+      );
+      await client.deleteAccount();
+      final fresh = storage.store['tg_device_id'];
+      expect(fresh, isNot('dev-old'));
+      expect(await claimFile.readAsString(), fresh);
     });
 
     test('a failed deletion keeps the identity (nothing was deleted)',

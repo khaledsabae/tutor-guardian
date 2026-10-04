@@ -362,10 +362,11 @@ class _AuthStore {
   /// After the account was deleted (MOBILE_API §10): forget the session and
   /// every secret this install held, and become a brand-new device.
   ///
-  /// The fresh id is written to the keystore and to the backup straight
-  /// away, rather than left for [getOrCreateDeviceId] to make on demand, so
-  /// that no later read — this process or the next launch — can fall back to
-  /// the erased id from a copy that survived.
+  /// The fresh id goes everywhere the id lives — the keystore, the backup
+  /// and the cross-isolate claim (DeviceIdClaim) — straight away, rather
+  /// than left for [getOrCreateDeviceId] to make on demand: the claim in
+  /// particular would otherwise hand the erased id back to a launch that
+  /// found the keystore and the backup empty.
   Future<void> startOverAsNewDevice() async {
     _cachedSessionId = null;
     _cachedToken = null;
@@ -381,8 +382,10 @@ class _AuthStore {
     }
     final fresh = _uuid.v4();
     _cachedDeviceId = fresh;
+    _deviceIdLoad = Future.value(fresh);
     await _safeWrite(_kDeviceId, fresh);
     await _writeDeviceIdBackup(fresh);
+    await _claim.replace(fresh);
   }
 }
 
