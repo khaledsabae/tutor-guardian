@@ -10,6 +10,10 @@ Collects:
   - DB metrics (chat sessions, lessons completed, active children)
   - D1/D7 retention estimates from daily_login_streaks
 
+Every device count leaves out eval-harness and remote-E2E test devices
+(backend/app/core/real_traffic.py). The ops-llm numbers come from the API's
+call log, which carries no device.
+
 Requires: TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID in environment
 (or passed via --token / --chat-id flags).
 """
@@ -28,6 +32,10 @@ from pathlib import Path
 # Add backend root to path
 _backend_root = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_backend_root))
+# app.core.* — the backend container already has backend/ on PYTHONPATH.
+sys.path.insert(1, str(_backend_root / "backend"))
+
+from app.core.real_traffic import real_device_sql  # noqa: E402
 
 # All product tables queried below (chat_sessions, lesson_progress,
 # child_profiles, daily_login_streaks) live in conversations.db — same
@@ -48,6 +56,12 @@ def _query_db(sql: str, params: tuple = ()) -> list[dict]:
         return [dict(r) for r in rows]
     finally:
         conn.close()
+
+
+def _real(column: str = "device_id") -> str:
+    """SQL predicate: a real family's device, not eval or E2E test traffic."""
+    tables = {r["name"] for r in _query_db("SELECT name FROM sqlite_master WHERE type='table'")}
+    return real_device_sql(column, tables)
 
 
 def _fetch_ops_metrics() -> dict:
@@ -73,13 +87,15 @@ def _compute_retention() -> dict:
     d1_date = (today - timedelta(days=1)).isoformat()
     d7_date = (today - timedelta(days=7)).isoformat()
 
+    real = _real()
+
     # D1: users who logged in yesterday and also the day before
     d1_rows = _query_db(
-        "SELECT DISTINCT device_id FROM daily_login_streaks WHERE date = ?",
+        f"SELECT DISTINCT device_id FROM daily_login_streaks WHERE date = ? AND {real}",
         (d1_date,),
     )
     d1_prev_rows = _query_db(
-        "SELECT DISTINCT device_id FROM daily_login_streaks WHERE date = ?",
+        f"SELECT DISTINCT device_id FROM daily_login_streaks WHERE date = ? AND {real}",
         ((today - timedelta(days=2)).isoformat(),),
     )
     d1_users = {r["device_id"] for r in d1_rows}
@@ -89,13 +105,14 @@ def _compute_retention() -> dict:
 
     # D7: users active in last 7 days who were also active 7-14 days ago
     d7_active = _query_db(
-        "SELECT DISTINCT device_id FROM daily_login_streaks WHERE date >= ?",
+        f"SELECT DISTINCT device_id FROM daily_login_streaks WHERE date >= ? AND {real}",
         (d7_date,),
     )
     d7_prev_start = (today - timedelta(days=14)).isoformat()
     d7_prev_end = (today - timedelta(days=8)).isoformat()
     d7_prev_active = _query_db(
-        "SELECT DISTINCT device_id FROM daily_login_streaks WHERE date >= ? AND date <= ?",
+        "SELECT DISTINCT device_id FROM daily_login_streaks "
+        f"WHERE date >= ? AND date <= ? AND {real}",
         (d7_prev_start, d7_prev_end),
     )
     d7_users = {r["device_id"] for r in d7_active}
@@ -115,15 +132,16 @@ def _compute_retention() -> dict:
 def _db_stats() -> dict:
     """Key database statistics."""
     stats = {}
+    real = _real()
 
     # Total chat sessions
-    rows = _query_db("SELECT COUNT(*) as cnt FROM chat_sessions")
+    rows = _query_db(f"SELECT COUNT(*) as cnt FROM chat_sessions WHERE {real}")
     stats["total_sessions"] = rows[0]["cnt"] if rows else 0
 
     # Sessions in last 7 days
     week_ago = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
     rows = _query_db(
-        "SELECT COUNT(*) as cnt FROM chat_sessions WHERE created_at >= ?",
+        f"SELECT COUNT(*) as cnt FROM chat_sessions WHERE created_at >= ? AND {real}",
         (week_ago,),
     )
     stats["sessions_7d"] = rows[0]["cnt"] if rows else 0
@@ -131,7 +149,7 @@ def _db_stats() -> dict:
     # Unique active children (7d)
     rows = _query_db(
         "SELECT COUNT(DISTINCT device_id || '-' || child_id) as cnt "
-        "FROM lesson_progress WHERE updated_at >= ?",
+        f"FROM lesson_progress WHERE updated_at >= ? AND {real}",
         (week_ago,),
     )
     stats["active_children_7d"] = rows[0]["cnt"] if rows else 0
@@ -139,19 +157,20 @@ def _db_stats() -> dict:
     # Lessons completed (7d)
     rows = _query_db(
         "SELECT COUNT(*) as cnt FROM lesson_progress "
-        "WHERE status = 'completed' AND updated_at >= ?",
+        f"WHERE status = 'completed' AND updated_at >= ? AND {real}",
         (week_ago,),
     )
     stats["lessons_completed_7d"] = rows[0]["cnt"] if rows else 0
 
     # Total children registered
-    rows = _query_db("SELECT COUNT(*) as cnt FROM child_profiles")
+    rows = _query_db(f"SELECT COUNT(*) as cnt FROM child_profiles WHERE {real}")
     stats["total_children"] = rows[0]["cnt"] if rows else 0
 
     # Daily logins today
     today = datetime.now(timezone.utc).date().isoformat()
     rows = _query_db(
-        "SELECT COUNT(DISTINCT device_id) as cnt FROM daily_login_streaks WHERE date = ?",
+        "SELECT COUNT(DISTINCT device_id) as cnt FROM daily_login_streaks "
+        f"WHERE date = ? AND {real}",
         (today,),
     )
     stats["logins_today"] = rows[0]["cnt"] if rows else 0

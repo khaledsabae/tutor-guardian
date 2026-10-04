@@ -9,6 +9,11 @@ Guarantees:
   1. Privacy: Aggregates only. Zero raw parent question text leaves the server.
   2. Safety: Opens SQLite in read-only mode (?mode=ro).
   3. Real data: Excludes canned suggestions (chatQ_*) and noise (<12 chars).
+  4. Real families: eval-harness devices and the remote E2E gate's test devices
+     (with their twins) are left out of every device, question and feedback
+     number (backend/app/core/real_traffic.py). The assistant's stream-outcome
+     flags (sessions.db) carry no device, so those alone cannot be filtered —
+     an E2E run asks one question.
 
 What each headline number measures (2026-10-04 rework):
   • North Star — weekly active families: distinct devices with at least one
@@ -40,6 +45,10 @@ from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_ROOT))
+# app.core.* — the backend container already has backend/ on PYTHONPATH.
+sys.path.insert(1, str(_ROOT / "backend"))
+
+from app.core.real_traffic import real_device_sql, real_session_sql, table_names  # noqa: E402
 
 _DB = Path(os.environ.get(
     "CONVERSATIONS_DB", str(_ROOT / "ops" / "conversations.db"),
@@ -79,6 +88,25 @@ def _has_table(db_path: Path, table_name: str) -> bool:
 def _columns(db_path: Path, table_name: str) -> set[str]:
     """Live column names — production schema can differ from init_db."""
     return {r["name"] for r in _query(db_path, f"PRAGMA table_info({table_name})")}
+
+
+def _tables(db_path: Path) -> set[str]:
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        return table_names(conn)
+    finally:
+        conn.close()
+
+
+def _real(db_path: Path, column: str) -> str:
+    """SQL predicate: `column` is a real family's device, not eval or E2E
+    test traffic (backend/app/core/real_traffic.py)."""
+    return real_device_sql(column, _tables(db_path))
+
+
+def _real_session(db_path: Path, column: str) -> str:
+    """The same for rows keyed by a chat session id."""
+    return real_session_sql(column, _tables(db_path))
 
 
 def _utcnow() -> datetime:
@@ -125,14 +153,16 @@ def get_action_events(db_path: Path, since: datetime) -> list[tuple[str, datetim
     """
     cutoff = since.strftime("%Y-%m-%d %H:%M:%S")
     events: list[tuple[str, datetime]] = []
+    real = _real(db_path, "device_id")
+    real_chat = _real(db_path, "cs.device_id")
 
     if _has_table(db_path, "chat_messages") and _has_table(db_path, "chat_sessions"):
         for r in _query(
             db_path,
-            """SELECT cs.device_id AS device_id, datetime(cm.created_at) AS ts
+            f"""SELECT cs.device_id AS device_id, datetime(cm.created_at) AS ts
                FROM chat_messages cm JOIN chat_sessions cs ON cs.id = cm.session_id
                WHERE cm.role = 'user' AND cs.device_id IS NOT NULL
-                 AND datetime(cm.created_at) >= ?""",
+                 AND datetime(cm.created_at) >= ? AND {real_chat}""",
             (cutoff,),
         ):
             ts = _parse_ts(r["ts"])
@@ -148,7 +178,7 @@ def get_action_events(db_path: Path, since: datetime) -> list[tuple[str, datetim
         for r in _query(
             db_path,
             f"""SELECT device_id, datetime({col}) AS ts FROM {table}
-                WHERE {col} IS NOT NULL AND datetime({col}) >= ? {extra}""",
+                WHERE {col} IS NOT NULL AND datetime({col}) >= ? AND {real} {extra}""",
             (cutoff,),
         ):
             ts = _parse_ts(r["ts"])
@@ -191,7 +221,8 @@ def get_openers(db_path: Path, weeks: int = 5, now: datetime | None = None) -> l
         first = last - timedelta(days=6)
         row = _query(
             db_path,
-            "SELECT COUNT(DISTINCT device_id) AS n FROM coach_tips WHERE date BETWEEN ? AND ?",
+            "SELECT COUNT(DISTINCT device_id) AS n FROM coach_tips "
+            f"WHERE date BETWEEN ? AND ? AND {_real(db_path, 'device_id')}",
             (first.isoformat(), last.isoformat()),
         )
         out.append({"start": first.isoformat(), "end": last.isoformat(),
@@ -211,7 +242,8 @@ def _open_days(db_path: Path, since: date, action_events) -> dict[str, set[date]
             continue
         for r in _query(
             db_path,
-            f"SELECT DISTINCT device_id, date FROM {table} WHERE date >= ?",
+            f"SELECT DISTINCT device_id, date FROM {table} "
+            f"WHERE date >= ? AND {_real(db_path, 'device_id')}",
             (since.isoformat(),),
         ):
             try:
@@ -251,8 +283,8 @@ def get_cohort_retention(db_path: Path, cohorts: int = 6,
         return []
     firsts = _query(
         db_path,
-        """SELECT device_id, MIN(datetime(created_at)) AS first_created
-           FROM child_profiles GROUP BY device_id
+        f"""SELECT device_id, MIN(datetime(created_at)) AS first_created
+           FROM child_profiles WHERE {_real(db_path, 'device_id')} GROUP BY device_id
            HAVING MIN(datetime(created_at)) >= ? AND MIN(datetime(created_at)) < ?""",
         (oldest_monday.isoformat(), this_monday.isoformat()),
     )
@@ -322,9 +354,10 @@ def get_funnel_metrics(db_path: Path, days: int, suggested: set[str]) -> dict:
     # Cohort: devices whose first child profile was created in this window
     cohort_rows = _query(
         db_path,
-        """WITH cohort AS (
+        f"""WITH cohort AS (
              SELECT device_id, MIN(created_at) AS first_created
              FROM child_profiles
+             WHERE {_real(db_path, 'device_id')}
              GROUP BY device_id
              HAVING first_created >= datetime('now', ?)
            )
@@ -419,13 +452,14 @@ def get_questions_and_quality(db_path: Path, days: int, suggested: set[str],
                               sessions_db: Path | None = None) -> dict:
     """Analyze real parent questions, domains, and unanswered rate."""
     window = f"-{days} days"
+    real = _real_session(db_path, "session_id")
 
     # All user messages in window
     raw_msgs = _query(
         db_path,
-        """SELECT id, session_id, content, domain, created_at
+        f"""SELECT id, session_id, content, domain, created_at
            FROM chat_messages
-           WHERE role = 'user' AND created_at >= datetime('now', ?)
+           WHERE role = 'user' AND created_at >= datetime('now', ?) AND {real}
            ORDER BY id""",
         (window,),
     )
@@ -452,16 +486,16 @@ def get_questions_and_quality(db_path: Path, days: int, suggested: set[str],
     # Unanswered stats (orphans + degraded)
     orphans = count_orphans(_query(
         db_path,
-        """SELECT session_id, role FROM chat_messages
-           WHERE created_at >= datetime('now', ?)
+        f"""SELECT session_id, role FROM chat_messages
+           WHERE created_at >= datetime('now', ?) AND {real}
            ORDER BY session_id, id""",
         (window,),
     ))
 
     modes = _query(
         db_path,
-        """SELECT mode, COUNT(*) n FROM chat_messages
-           WHERE role = 'assistant' AND created_at >= datetime('now', ?)
+        f"""SELECT mode, COUNT(*) n FROM chat_messages
+           WHERE role = 'assistant' AND created_at >= datetime('now', ?) AND {real}
            GROUP BY mode""",
         (window,),
     )
@@ -472,10 +506,10 @@ def get_questions_and_quality(db_path: Path, days: int, suggested: set[str],
     # — and counts with the unfinished ones, not as an answer.
     stale_pending = _query(
         db_path,
-        """SELECT COUNT(*) n FROM chat_messages
+        f"""SELECT COUNT(*) n FROM chat_messages
            WHERE role = 'assistant' AND mode = 'pending'
              AND created_at >= datetime('now', ?)
-             AND created_at < datetime('now', '-15 minutes')""",
+             AND created_at < datetime('now', '-15 minutes') AND {real}""",
         (window,),
     )[0]["n"]
     # Three different failures, reported apart because they have different
@@ -557,11 +591,11 @@ def get_coach_tips_metrics(db_path: Path, days: int) -> dict:
     window = f"-{days} days"
     rows = _query(
         db_path,
-        """SELECT COUNT(*) AS total,
+        f"""SELECT COUNT(*) AS total,
                   COUNT(shown_at) AS shown,
                   COUNT(tapped_at) AS tapped
            FROM coach_tips
-           WHERE created_at >= datetime('now', ?)""",
+           WHERE created_at >= datetime('now', ?) AND {_real(db_path, 'device_id')}""",
         (window,),
     )
     r = rows[0] if rows else {"total": 0, "shown": 0, "tapped": 0}
@@ -585,9 +619,10 @@ def get_feedback_metrics(db_path: Path, days: int) -> dict:
     if _has_table(db_path, "user_feedback"):
         uf_rows = _query(
             db_path,
-            """SELECT rating, COUNT(*) n
+            f"""SELECT rating, COUNT(*) n
                FROM user_feedback
                WHERE datetime(created_at) >= datetime('now', ?)
+                 AND {_real_session(db_path, 'session_id')}
                GROUP BY rating""",
             (window,),
         )
@@ -598,10 +633,11 @@ def get_feedback_metrics(db_path: Path, days: int) -> dict:
     if _has_table(db_path, "app_feedback"):
         af_rows = _query(
             db_path,
-            """SELECT COUNT(*) total,
+            f"""SELECT COUNT(*) total,
                       COUNT(audio_file) AS voice_notes
                FROM app_feedback
-               WHERE datetime(created_at) >= datetime('now', ?)""",
+               WHERE datetime(created_at) >= datetime('now', ?)
+                 AND {_real(db_path, 'device_id')}""",
             (window,),
         )
         if af_rows:
