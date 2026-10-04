@@ -38,6 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: "[measurement — temporary] CPU baseline"
+        run: |
+          echo "CPU0=$(awk '/^cpu /{print $2+$3+$4}' /proc/stat)" >> "$GITHUB_ENV"
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -59,6 +63,11 @@ jobs:
         # noise doesn't accumulate.
         run: flutter analyze --fatal-infos --fatal-warnings
 
+      - name: "[measurement — temporary] job CPU"
+        if: always()
+        run: |
+          awk -v c0="$CPU0" '/^cpu /{printf "JOB-CPU: %.0f s user+nice+sys since the first step\n", ($2+$3+$4-c0)/100}' /proc/stat
+
   # ── 2. Unit + widget tests ────────────────────────────────────────────
   test:
     name: flutter test
@@ -69,6 +78,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - name: "[measurement — temporary] CPU baseline"
+        run: |
+          echo "CPU0=$(awk '/^cpu /{print $2+$3+$4}' /proc/stat)" >> "$GITHUB_ENV"
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -88,3 +101,8 @@ jobs:
         # --reporter expanded gives a clear pass/fail per test
         # --coverage enables coverage output for the report job
         run: flutter test --reporter expanded --coverage
+
+      - name: "[measurement — temporary] job CPU"
+        if: always()
+        run: |
+          awk -v c0="$CPU0" '/^cpu /{printf "JOB-CPU: %.0f s user+nice+sys since the first step\n", ($2+$3+$4-c0)/100}' /proc/stat

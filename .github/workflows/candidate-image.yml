@@ -49,6 +49,12 @@ jobs:
       - name: In-image smoke — the deploy's own invocation
         run: ops/tools/candidate_smoke.sh tg-candidate:pr
 
+      - name: "[measurement — temporary] the old in-image gate: full pytest, uncapped"
+        continue-on-error: true
+        run: |
+          docker run --rm -e SKIP_API_SMOKE=1 -e PYTHONPATH=/app/backend tg-candidate:pr \
+            python -c "import resource, subprocess, sys, time; t = time.monotonic(); rc = subprocess.run([sys.executable, '-m', 'pytest', '-q', '-p', 'no:cacheprovider']).returncode; r = resource.getrusage(resource.RUSAGE_CHILDREN); print(f'OLD-GATE full pytest: rc={rc} wall={time.monotonic() - t:.0f}s cpu={r.ru_utime + r.ru_stime:.0f}s maxrss={r.ru_maxrss / 1024:.0f}MB')"
+
       - name: The smoke rejects broken images
         run: |
           set -uo pipefail
