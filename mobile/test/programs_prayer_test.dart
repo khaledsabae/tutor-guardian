@@ -177,6 +177,17 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
+    testWidgets("a token refused as not this child's (401) takes the card away", (tester) async {
+      final client = FakeProgramsClient()..claimError = const TgApiError(401, 'x');
+      await pumpPrograms(tester, const Scaffold(body: SingleChildScrollView(child: ChildPrayerCard())),
+          client: client, overrides: [childPrayerTokenProvider.overrideWithValue(() async => 'child-tok')]);
+      await settle(tester);
+      await tester.tap(find.byKey(const ValueKey('child_prayer_claim_prayer_s1_pray_beside')));
+      await settle(tester);
+      expect(find.byKey(const ValueKey('child_prayer_card')), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('not on the journey (or the preparation track): nothing at all', (tester) async {
       final client = FakeProgramsClient()..childPrayer = childPrayerJson(enrolled: false);
       await pumpPrograms(tester, const Scaffold(body: ChildPrayerCard()),

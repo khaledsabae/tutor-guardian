@@ -2456,9 +2456,24 @@ class TgClient {
           j['detail'] is Map &&
           (j['detail'] as Map)['error'] is String) {
         // `{"detail": {"error": "<code>", ...}}` — the programs contract.
+        // Screens map these codes to their own words (§11.6).
         details = Map<String, dynamic>.from(j['detail'] as Map);
         code = details['error'] as String;
         message = AppL10n.current.apiHttpError('$status');
+      } else if (j is Map &&
+          j['detail'] is Map &&
+          (j['detail'] as Map)['code'] is String) {
+        // `{"detail": {"code": "<code>", "message": "<Arabic to show>",
+        // "message_en": ...}}` — §9's branchable errors, e.g. a child deletion
+        // refused with `device_proof_required` / `device_proof_cooldown`. The
+        // server writes these for the parent; show them rather than "HTTP 403".
+        details = Map<String, dynamic>.from(j['detail'] as Map);
+        code = details['code'] as String;
+        final text = (uiLanguage == 'en' ? details['message_en'] : null) ??
+            details['message'];
+        message = text is String && text.trim().isNotEmpty
+            ? text
+            : AppL10n.current.apiHttpError('$status');
       } else {
         message = AppL10n.current.apiHttpError('$status');
       }

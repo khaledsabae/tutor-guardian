@@ -122,6 +122,37 @@ void main() {
     });
   });
 
+  group("§9's branchable errors (a refused child deletion)", () {
+    http.Response proofRequired() => http.Response.bytes(
+        utf8.encode(jsonEncode({
+          'detail': {
+            'code': 'device_proof_required',
+            'message': 'أكّد أن الهاتف معك أولًا.',
+            'message_en': 'Confirm this phone first.',
+            'support_email': 'support@alsaba.cloud',
+          },
+        })),
+        403,
+        headers: {'content-type': 'application/json; charset=utf-8'});
+
+    test('keep the code and show the server-written message, in Arabic by default', () async {
+      final client = clientAnswering((_) => proofRequired());
+      final error = await client.deleteChild(12).then<Object?>((_) => null, onError: (Object e) => e);
+      final e = error as TgApiError;
+      expect(e.statusCode, 403);
+      expect(e.code, 'device_proof_required');
+      expect(e.message, 'أكّد أن الهاتف معك أولًا.');
+      expect(e.details?['support_email'], 'support@alsaba.cloud');
+    });
+
+    test('…and in English for an English interface', () async {
+      TgClient.uiLanguage = 'en';
+      final client = clientAnswering((_) => proofRequired());
+      final error = await client.deleteChild(12).then<Object?>((_) => null, onError: (Object e) => e);
+      expect((error as TgApiError).message, 'Confirm this phone first.');
+    });
+  });
+
   group('old-server compatibility', () {
     test("FastAPI's 404 (no route) means the programs are not offered", () async {
       final client = clientAnswering((_) => http.Response(jsonEncode({'detail': 'Not Found'}), 404));

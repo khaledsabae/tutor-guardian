@@ -55,6 +55,12 @@ class _ChildPrayerCardState extends ConsumerState<ChildPrayerCard> {
           .read(tgClientProvider)
           .fetchChildPrayerToday(token);
       if (mounted) setState(() => _today = ChildPrayerToday.fromJson(json));
+    } on TgApiError catch (e) {
+      // A token the server no longer accepts for this child (since #32: a
+      // child token from another family is refused at verification, 401)
+      // can record nothing — take the card away rather than keep a button
+      // that fails. Anything else leaves the card as it was.
+      if (e.statusCode == 401 && mounted) setState(() => _today = null);
     } catch (_) {
       // A child does not get an error card. No card is a state they know.
     }
@@ -101,6 +107,11 @@ class _ChildPrayerCardState extends ConsumerState<ChildPrayerCard> {
         ),
       );
     } on TgApiError catch (e) {
+      if (e.statusCode == 401) {
+        // Not this child's token (MOBILE_API §11: refused at verification).
+        if (mounted) setState(() => _today = null);
+        return;
+      }
       switch (e.code) {
         case 'day_complete':
         case 'week_complete':
