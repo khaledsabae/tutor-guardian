@@ -46,6 +46,72 @@ SHOULD_KEEP = [
 ]
 
 
+# F5 (PR #26 review, round 2): a name that is also a word is the child only on
+# positive evidence of a person. The reviewer's probe rows first, then more.
+EVIDENCE_OF_A_PERSON = [
+    ("آية", "آية الكبيرة بتغير من أختها"),          # age adjective after
+    ("إسلام", "إسلام عنده ٧ سنين ومش بيصلي"),        # opens the clause + predicate
+    ("نور", "بنتي نور بتخاف من الظلام"),             # kinship before
+    ("علي", "علي بيضرب أخته"),                       # opens the clause + verb
+    ("محمد علي", "اتكلمت مع علي عن الصلاة"),         # «مع» before
+    ("دعاء", "يا دعاء تعالي هنا"),                   # vocative
+    ("أمل", "لما أمل بتزعل بتكسر حاجات"),            # «لما» opens the clause
+    ("إيمان", "إيمان بقت عنيدة جدًا"),
+    ("فجر", "ابني فجر مبيسمعش الكلام"),
+    ("رمضان", "ابني رمضان عنده ٤ سنين"),
+    ("علي", "علي ما بيسمعش الكلام"),                 # negation, then the verb
+    ("علي", "اشتريت لعلي لعبة"),                     # «ل»+«على» is not a word
+    ("هدى", "هدى بتكذب كتير"),
+    ("سلام", "أخوها سلام بيضربها"),
+    ("جنى", "جنى عمرها ٣ سنين"),
+    ("دعاء", "دعاء، عمرها ٦ سنين"),
+]
+
+NO_EVIDENCE_OF_A_PERSON = [
+    ("فجر", "ازاي اصحيه لصلاة فجر كل يوم"),
+    ("دعاء", "ما هو دعاء قبل النوم للأطفال"),
+    ("دعاء", "كيف أعلمه دعاء دخول الخلاء"),
+    ("دعاء", "اريد دعاء لابني بالهداية"),
+    ("رمضان", "كيف أجهز ابني نفسيا استعدادا لرمضان"),
+    ("أمل", "عندي أمل إن ابني يتحسن"),
+    ("إيمان", "كيف أقوي إيمان ابني بالله"),
+    ("علي", "ازاي اعوده علي الصلاة"),                # Egyptian spelling of «على»
+    ("آية", "كيف أحفّظ ابني آية الكرسي"),            # kinship, but a construct wins
+    ("دعاء", "دعاء يحفظ الطفل من العين"),            # a masculine verb: not a girl
+    ("علي", "علي طول بيعيط"),
+    ("مني", "بنتي بتخاف مني"),
+    ("سلام", "سلام عليكم عندي سؤال"),
+    ("أمل", "أمل كبير إنه يتغير"),
+    ("نور", "نور القرآن في البيت"),
+    ("جمعة", "يوم جمعة سعيد"),
+    ("علي", "قال لي علي فكرة"),
+    ("فرح", "فرح كبير لما نجح"),
+]
+
+
+@pytest.mark.parametrize("name,text", EVIDENCE_OF_A_PERSON)
+def test_a_word_name_is_redacted_on_evidence_of_a_person(name, text):
+    out = _one(name, text)
+    assert "طفلي" in out and out != text
+
+
+@pytest.mark.parametrize("name,text", NO_EVIDENCE_OF_A_PERSON)
+def test_a_word_name_without_evidence_of_a_person_is_left_alone(name, text):
+    assert _one(name, text) == text
+    assert family_mentions(text, Family(((1, name),))) == []
+
+
+def test_only_the_mention_with_evidence_is_redacted():
+    # The child «مني» and the word «مني» (from me) in one sentence.
+    assert _one("مني", "بنتي مني بتخاف مني") == "بنتي طفلي بتخاف مني"
+    assert _one("علي", "علي بيعيط علي طول") == "طفلي بيعيط علي طول"
+    # Siblings stay distinct, and the age adjective marks the subject child.
+    fam = Family(((1, "آية"), (2, "سارة")))
+    assert redact_family("آية الكبيرة بتغير من أختها", fam, subject_id=1) == \
+        "طفلي الكبيرة بتغير من أختها"
+    assert redact_family("آية الكبيرة بتغير من سارة", fam) == "الطفل أ الكبيرة بتغير من الطفل ب"
+
+
 @pytest.mark.parametrize("name,text", SHOULD_REDACT)
 def test_every_spelling_of_the_childs_name_is_replaced(name, text):
     out = _one(name, text)

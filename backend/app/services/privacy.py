@@ -19,9 +19,14 @@ child is «طفلي» and the others keep their letters. Redaction with no famil
 * A name is *not* found where it is an ordinary word: never with «ال»/«لل»
   attached (أركان الإسلام، لصلاة الفجر، سورة النور), not inside a religious
   reference (النبي محمد ﷺ، سورة يوسف — the title is anchored at a word start,
-  so «جنبي يوسف» is not «نبي يوسف»), and — for names that are also common
-  nouns — not in a construct or a «without»/season phrase (آية الكرسي، دعاء
-  النوم، من غير نور، يصوم رمضان).
+  so «جنبي يوسف» is not «نبي يوسف»).
+* A name that is also a word — دعاء، فجر، رمضان، أمل، إيمان، آية، نور… or,
+  once ى/ة are folded, a function word (علي، مني، منه) — is the child only on
+  positive evidence that a person is meant (_names_a_person): a kinship word
+  before it, a vocative, an age adjective after it, «مع» before it, or a
+  clause it opens with a verb or a person predicate. A construct, a «without»
+  phrase or a season phrase means the word whatever else is around (آية
+  الكرسي، دعاء النوم، من غير نور، يصوم رمضان).
 
 Best-effort and fail-open on a database error: returning the text unchanged is
 the failure mode of an optional enrichment; every caller sits in a path that
@@ -128,9 +133,9 @@ _LATIN_VARIANTS: dict[str, tuple[str, ...]] = {
 }
 _ARABIC_FOR_LATIN = {v: ar for ar, vs in _LATIN_VARIANTS.items() for v in vs}
 
-# Names that are also everyday or religious words. For these only, a
-# construct («آية الكرسي»، «دعاء النوم»), a «without» phrase («من غير نور»)
-# or a season phrase («يصوم رمضان») means the word, not the child.
+# Names that are also everyday or religious words. A construct («آية الكرسي»،
+# «دعاء النوم»), a «without» phrase («من غير نور») or a season phrase («يصوم
+# رمضان») means the word; anything else still needs evidence of a person.
 COMMON_NOUN_NAMES = frozenset(normalize_ar(n) for n in (
     "إسلام", "إيمان", "آية", "نور", "هدى", "دعاء", "جنة", "رحمة", "أمل", "حياة",
     "تقوى", "يقين", "سلام", "فرح", "هبة", "ضحى", "بشرى", "صلاح", "وعد", "منى",
@@ -143,14 +148,135 @@ _SEASON_BEFORE = re.compile(
     r"(?<![ء-ي])(?:[وف]?(?:شهر|صيام|صوم|يصوم|تصوم|نصوم|يصومون|يصوموا|"
     r"في|قبل|بعد|خلال|طوال|اول|اخر|نهار|ليالي|ليله|يوم|صلاه|صلاة))\s*$"
 )
-_CONSTRUCT_AFTER = re.compile(r"^\s+ال")
 
 
 # Everyday words that a name becomes once ى/ي and ة/ه are folded: «على»
 # (علي), «منه» (منة), «مني» (منى), «جني» (جنى)… They count as the child only
-# when spelled exactly as the name is.
+# when spelled exactly as the name is — and, like the words above, only on
+# evidence of a person: Egyptian writes the preposition «علي» too.
 _FUNCTION_WORDS = frozenset({"علي", "مني", "الي", "حتي", "متي", "لدي", "عني",
                              "اني", "منه", "جني"})
+
+_AMBIGUOUS_NAMES = COMMON_NOUN_NAMES | _FUNCTION_WORDS
+
+
+# ── Evidence of a person (PR #26 review F5) ───────────────────────────────
+
+def _norm_set(*words: str) -> frozenset:
+    return frozenset(normalize_ar(w) for w in words)
+
+
+# Right before the name: «بنتي نور»، «ابني علي»، «أخوها إسلام».
+_KINSHIP_BEFORE = _norm_set(
+    "ابني", "ابنتي", "بنتي", "ولدي", "طفلي", "طفلتي", "بنوتي", "ابننا", "بنتنا",
+    "أخوه", "أخوها", "أخته", "أختها", "أخويا", "أختي", "أخي", "أخوي", "حفيدي",
+    "حفيدتي", "ابنه", "ابنها", "بنته", "بنتها", "الطفل", "الطفلة", "البنت", "الولد",
+    "الابن", "الابنة",
+)
+_VOCATIVE_BEFORE = _norm_set("يا")
+_WITH_BEFORE = _norm_set("مع", "ويا")
+# Right after the name: «آية الكبيرة»، «علي الصغير» — an «ال» word that is not a
+# construct.
+_PERSON_ADJECTIVE_AFTER = _norm_set(
+    "الكبير", "الكبيرة", "الصغير", "الصغيرة", "الصغنن", "الصغننة", "الوسطاني",
+    "الوسطانية", "الوسطى", "الأوسط", "الكبرى", "الصغرى", "الأكبر", "الأصغر", "الأولى",
+    "الأول", "الثاني", "الثانية", "التاني", "التانية", "التوأم",
+)
+# A clause opens here: the start, punctuation, or one of these words.
+_CLAUSE_OPENERS = _norm_set(
+    "و", "ف", "لما", "لمّا", "عندما", "حين", "حينما", "لكن", "بس", "إن", "أن", "لأن",
+    "عشان", "علشان", "إذا", "لو", "هل", "ثم", "كمان", "يعني", "أصل", "طيب", "وكمان",
+)
+_CLAUSE_END = re.compile(r"[.!?؟،,:;…\n\-–—\"«»()]\s*$")
+# What a child does or is, right after its name: a present-tense verb (MSA or
+# Egyptian: يضرب، بيضرب، بتخاف، هيروح، مبيسمعش، سيذهب), or one of these
+# predicates. The gender is the predicate's when it shows one ('m'/'f').
+_VERB_RE = re.compile(r"^(?:س|م?ب|[هح])?([يت])[ء-ي]{2,}$")
+_NOT_VERBS = _norm_set(
+    "يوم", "يوميا", "يومين", "تحت", "تقريبا", "تماما", "تاني", "تانية", "تالت",
+    "تربية", "تعليم", "توبة", "تفسير", "تلاوة", "تسبيح", "تكبير", "تهليل", "تقوى",
+    "تاريخ", "ترتيب", "توقيت", "تمام", "يقين",
+)
+_PREDICATES: dict[str, Optional[str]] = {
+    **{w: "m" for w in _norm_set(
+        "عنده", "عمره", "كان", "صار", "أصبح", "بقى", "قال", "راح", "رجع", "ضرب",
+        "رفض", "بدأ", "بطل", "خاف", "نام", "وقع", "اتعلم", "اتخانق", "عايز", "عاوز",
+        "عنيد", "خايف", "خائف", "زعلان", "نايم", "نائم", "شاطر", "هادي", "هادئ",
+        "عصبي", "قاعد", "رافض", "غيور", "حساس", "كسول", "شقي", "مريض", "تعبان")},
+    **{w: "f" for w in _norm_set(
+        "عندها", "عمرها", "كانت", "صارت", "أصبحت", "بقت", "قالت", "راحت", "رجعت",
+        "ضربت", "رفضت", "بدأت", "بطلت", "خافت", "نامت", "وقعت", "اتعلمت", "اتخانقت",
+        "عايزة", "عاوزة", "عنيدة", "خايفة", "خائفة", "زعلانة", "نايمة", "نائمة",
+        "شاطرة", "هادية", "هادئة", "عصبية", "قاعدة", "رافضة", "غيورة", "حساسة",
+        "كسولة", "شقية", "مريضة", "تعبانة")},
+    **{w: None for w in _norm_set(
+        "مش", "مو", "لسه", "لسا", "مازال", "لازال", "دايما", "دائما", "أحيانا")},
+}
+_NEGATIONS = _norm_set("ما", "لا", "لم", "لن")
+_AR_WORD = re.compile(r"[ء-يٮ-ۓً-ْٰـ]+")
+
+
+def _visibly_feminine(original: Optional[str]) -> bool:
+    """A first name spelled with a feminine ending (ة، اء، ى). Only these may
+    turn a masculine verb into a counter-sign: نور، أمل، إيمان could be anyone."""
+    return bool(original) and original.endswith(("ة", "اء", "ى"))
+
+
+def _next_words(text: str, end: int, n: int = 2) -> list[str]:
+    """The next `n` Arabic words after `end`, normalised — stopping at the
+    clause's end (punctuation). One comma right after the name is read
+    through: «دعاء، عمرها ٦ سنين» introduces a child."""
+    out: list[str] = []
+    rest = text[end:end + 80]
+    pos = 0
+    while len(out) < n:
+        m = re.match(r"\s*[،,]?\s*" if not out else r"\s*", rest[pos:])
+        pos += m.end()
+        w = _AR_WORD.match(rest[pos:])
+        if w is None:
+            break
+        out.append(normalize_ar(w.group(0)))
+        pos += w.end()
+    return out
+
+
+def _previous_word(before: str) -> Optional[str]:
+    """The Arabic word right before, normalised; None at a clause end."""
+    stripped = before.rstrip()
+    if not stripped or _CLAUSE_END.search(stripped):
+        return None
+    words = _AR_WORD.findall(stripped[-40:])
+    return normalize_ar(words[-1]) if words else None
+
+
+def _is_predicate(word: str, feminine_name: bool) -> bool:
+    gender = _PREDICATES.get(word, "absent")
+    if gender != "absent":
+        return not (feminine_name and gender == "m")
+    m = _VERB_RE.match(word)
+    if m is None or word in _NOT_VERBS:
+        return False
+    return not (feminine_name and m.group(1) == "ي")
+
+
+def _names_a_person(text: str, start: int, end: int, prefix: str,
+                    variant: str, original: Optional[str]) -> bool:
+    """Is there positive evidence that this ambiguous name is a person here?"""
+    after = _next_words(text, end)
+    if after and after[0] in _PERSON_ADJECTIVE_AFTER:
+        return True                                        # «آية الكبيرة»
+    prev = _previous_word(text[:start])
+    if prev in _KINSHIP_BEFORE or prev in _VOCATIVE_BEFORE or prev in _WITH_BEFORE:
+        return True                                        # «بنتي نور»، «يا علي»، «مع علي»
+    if variant in _FUNCTION_WORDS and any(c in prefix for c in "بلك"):
+        return True                                        # «لعلي»: «ل»+«على» is not a word
+    opens_clause = (prefix in ("و", "ف") or prev is None or prev in _CLAUSE_OPENERS)
+    if not opens_clause or not after:
+        return False
+    feminine = _visibly_feminine(original)
+    if after[0] in _NEGATIONS:                             # «علي ما بيسمعش»
+        return len(after) > 1 and _is_predicate(after[1], feminine)
+    return _is_predicate(after[0], feminine)
 
 
 def _strip_tashkeel(text: str) -> str:
@@ -179,10 +305,14 @@ def _is_religious_reference(text: str, start: int, end: int) -> bool:
 
 
 def _is_common_word_use(norm_name: str, text: str, start: int, end: int) -> bool:
+    """A counter-sign: the word, not the child — a construct («آية الكرسي»), a
+    «without» phrase, or a season phrase. Checked before any evidence."""
     if norm_name not in COMMON_NOUN_NAMES:
         return False
     before = normalize_ar(text[max(0, start - 20):start])
-    if _CONSTRUCT_AFTER.match(text[end:end + 4]):
+    after = _next_words(text, end, 1)
+    if after and after[0].startswith("ال") and after[0] not in _PERSON_ADJECTIVE_AFTER \
+            and re.match(r"\s+ال", normalize_ar(text[end:end + 4])):
         return True
     if _WITHOUT_BEFORE.search(before):
         return True
@@ -261,8 +391,12 @@ def _child_matches(text: str, name: str):
                 continue
             if arabic and _is_common_word_use(variant, text, name_start, e):
                 continue
+            prefix = (m.group("prefix") if arabic else "") or ""
+            if arabic and variant in _AMBIGUOUS_NAMES and not _names_a_person(
+                    text, s, e, prefix, variant, original):
+                continue                                   # «دعاء قبل النوم»، «عندي أمل»
             seen.append((s, e))
-            yield s, e, (m.group("prefix") if arabic else "") or ""
+            yield s, e, prefix
 
 
 def _with_prefix(prefix: str, placeholder: str) -> str:
