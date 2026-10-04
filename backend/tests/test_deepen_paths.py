@@ -289,3 +289,125 @@ def test_both_families_busy_ends_in_an_error_not_a_verdict(dp, ollama):
     with pytest.raises(RuntimeError, match="both reviewers unavailable"):
         dp.review("system", {"lesson": "x"})
     assert fake.calls == [dp.REVIEW_MODEL, dp.REVIEW_FALLBACK]
+
+
+# ── writing: ids fixed by spec position, only the cleared prefix ───────────
+
+_SUMMARY = "قراءةٌ قصيرة للوالدين عن الصلاة في يوم الطفل. " * 12
+
+
+class _Shelf:
+    """A throw-away curriculum with one existing two-lesson path, a four-lesson
+    spec for it, drafts for all four, and a switch for which ones are cleared."""
+
+    def __init__(self, dp, tmp, monkeypatch):
+        self.dp, self.tmp = dp, tmp
+        cur = tmp / "knowledge_base" / "curriculum"
+        for sub in ("paths", "lessons", "i18n/en/paths", "i18n/en/lessons"):
+            (cur / sub).mkdir(parents=True)
+        self.cur, self.pid = cur, "path_7-9_test_worship"
+        base = [{"id": f"lesson_7-9_test_worship_0{i}", "path_id": self.pid,
+                 "title": f"درسٌ قديم {i}", "order": i} for i in (1, 2)]
+        for b in base:
+            self._put(cur / "lessons" / f"{b['id']}.json", b)
+        path = {"id": self.pid, "title": "مسار", "age_group": "7-9", "domain": "islamic_parenting",
+                "description": "وصف", "lesson_ids": [b["id"] for b in base], "estimated_days": 2}
+        self._put(cur / "paths" / f"{self.pid}.json", path)
+        self._put(cur / "i18n" / "en" / "paths" / f"{self.pid}.json",
+                  dict(path, title="Path", description="Description"))
+        self.spec_path = tmp / "ops" / "data" / "deepen_paths" / "t.json"
+        self.spec_path.parent.mkdir(parents=True)
+        self.briefs = [f"درسٌ جديد {i}" for i in range(1, 5)]
+        self.work = dp.Work(tmp / "work" / "t")
+        self._put(self.work.root / f"{self.pid}.drafts.json", {
+            f"s{i:02d}": {
+                "ar": {"title": b, "summary": _SUMMARY, "try_this": "اليوم: صلِّ مع طفلك.",
+                       "reflection_prompts": ["كيف كان؟"], "unit_ids": [], "warning_flags": [],
+                       "needs_professional_followup": False},
+                "en": {"title": f"New lesson {i}", "summary": "A short read. " * 30,
+                       "try_this": "Today: pray with your child.",
+                       "reflection_prompts": ["How was it?"], "warning_flags": []}}
+            for i, b in enumerate(self.briefs, 1)})
+        self.cleared = set()
+        monkeypatch.setattr(dp, "ROOT", tmp)
+        monkeypatch.setattr(dp, "CURRICULUM", cur)
+        monkeypatch.setattr(dp, "LESSON_INDEX", tmp / "docs" / "lesson_index.json")
+        monkeypatch.setattr(dp, "lesson_state", self._state)
+
+    @staticmethod
+    def _put(f, doc):
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+
+    def _state(self, job, draft, work, grams):
+        ok = job["key"] in self.cleared
+        rec = {"reviewer": "deepseek-v4-pro", "at": "t", "defects": [],
+               "contains_religious_text": False}
+        return {"key": job["key"], "brief": job["brief"], "accepted": ok,
+                "blockers": [] if ok else ["not reviewed"], "ar_review": rec, "en_review": rec}
+
+    def write(self, briefs=None):
+        spec = {"paths": [{"path_id": self.pid, "unit_bands": ["7-9"], "lessons": [
+            {"title": b, "focus": "", "keywords": []} for b in (briefs or self.briefs)]}]}
+        self._put(self.spec_path, spec)
+        return self.dp.write_outputs(spec, self.spec_path, self.work, {}, set())
+
+    def path(self):
+        return json.loads((self.cur / "paths" / f"{self.pid}.json").read_text(encoding="utf-8"))
+
+    def served(self):
+        out = {}
+        for lid in self.path()["lesson_ids"]:
+            doc = json.loads((self.cur / "lessons" / f"{lid}.json").read_text(encoding="utf-8"))
+            out[doc["title"]] = (lid, doc["order"])
+        return out
+
+
+@pytest.fixture
+def shelf(dp, tmp_path, monkeypatch):
+    return _Shelf(dp, tmp_path, monkeypatch)
+
+
+def test_writing_later_lessons_never_renumbers_the_ones_already_served(shelf):
+    shelf.cleared = {"s01", "s02"}
+    shelf.write()
+    first = shelf.served()
+    assert first["درسٌ جديد 1"] == ("lesson_7-9_test_worship_03", 3)
+    assert first["درسٌ جديد 2"] == ("lesson_7-9_test_worship_04", 4)
+    # The media index now links the first new lesson's id — a fresh allocation would
+    # have moved it to the `d` fallback. A served id is reused, never re-allocated.
+    shelf._put(shelf.tmp / "docs" / "lesson_index.json",
+               {"lessons": [{"lesson_id": "lesson_7-9_test_worship_03"}]})
+    shelf.cleared = {"s01", "s02", "s03", "s04"}
+    shelf.write()
+    later = shelf.served()
+    for title, served in first.items():
+        assert later[title] == served, title
+    assert later["درسٌ جديد 4"] == ("lesson_7-9_test_worship_06", 6)
+    assert shelf.path()["estimated_days"] == len(shelf.path()["lesson_ids"]) == 6
+
+
+def test_only_the_contiguous_prefix_of_cleared_lessons_is_written(shelf):
+    shelf.cleared = {"s01", "s03", "s04"}
+    report = shelf.write()
+    assert [t for t in shelf.served() if t.startswith("درسٌ جديد")] == ["درسٌ جديد 1"]
+    held = {e["key"]: e.get("held_behind") for e in report["lessons"]}
+    assert held == {"s01": None, "s02": None, "s03": "s02", "s04": "s02"}
+    assert shelf.path()["estimated_days"] == 3
+    orders = sorted(order for _, order in shelf.served().values())
+    assert orders == list(range(1, 4))
+
+
+def test_a_rewrite_never_withdraws_a_served_lesson(shelf):
+    shelf.cleared = {"s01", "s02"}
+    shelf.write()
+    shelf.cleared = {"s01"}     # s02's text changed after it was served, not re-reviewed
+    with pytest.raises(ValueError, match="never withdraws a served lesson"):
+        shelf.write()
+
+
+def test_inserting_a_lesson_before_a_served_one_is_refused(shelf):
+    shelf.cleared = {"s01", "s02"}
+    shelf.write()
+    with pytest.raises(ValueError, match="never inserted or reordered"):
+        shelf.write(briefs=["درسٌ أُدرج قبل غيره"] + shelf.briefs)

@@ -9,7 +9,8 @@
   … --check            بوابات حتمية على المسوّدات (عربي + إنجليزي) — بلا شبكة.
   … --review           طعنٌ آلي لكل مسوّدة تغيّر نصّها منذ آخر طعن (متتابع، نداء واحد في كل مرة).
   … --status           حالة كل درس: البوابات، آخر طعن لنصّه الحالي، وما ينقصه ليُقبل.
-  … --write            يكتب المقبول فقط إلى المنهج + سجلّ الطعن بجانب المواصفة.
+  … --write            يكتب لكل مسار البادئة المتصلة من المقبول (لا ثقب، ولا إعادة ترقيم لما
+                       نُشر) إلى المنهج + سجلّ الطعن بجانب المواصفة.
 
 المسوّدات: `<work-dir>/<topic>/<path_id>.drafts.json` — مفتاح كل درس `s01`, `s02`… بترتيب
 المواصفة، وفيه `ar` و`en` (الحقول: title, summary, try_this, reflection_prompts, unit_ids,
@@ -577,7 +578,8 @@ def _asset_ids() -> set:
 def expand_jobs(spec: dict) -> list:
     """كل درس في المواصفة → مهمة بمفتاح ثابت (ترتيبه في المواصفة).
 
-    المعرّف والترتيب النهائيان يُحسبان عند الكتابة: درسٌ أُسقط لا يترك ثقبًا.
+    موضع الدرس في المواصفة يحدّد ترتيبه ومعرّفه عند الكتابة، فقائمة الدروس تُلحَق ولا يُدرَج
+    في وسطها بعد أن يُنشر منها شيء (`write_outputs` يرفض ما يعيد ترقيم درسٍ منشور).
     """
     jobs = []
     for ps in spec["paths"]:
@@ -779,9 +781,22 @@ def minutes_for(ar: dict) -> int:
 
 
 def write_outputs(spec: dict, spec_path: Path, work: Work, bank: dict, grams: set) -> dict:
+    """يكتب لكل مسار **البادئة المتصلة** من الدروس المقبولة (الأول… حتى أول درسٍ لم يُقبل).
+
+    الترتيب = بداية المسار + موضع الدرس في المواصفة، فلا ثقب في التسلسل، ودرسٌ يُكتب
+    لاحقًا لا يغيّر ترتيب ما قبله ولا معرّفه. والسجلّ السابق (`<spec>.review.json`) يحفظ
+    معرّف كل درسٍ نُشر: يُعاد استعماله كما هو، وكتابةٌ تعيد ترقيمه أو تسحبه تُرفض.
+    """
     jobs = expand_jobs(spec)
     asset_ids = _asset_ids()
     now = _now()
+    report_path = spec_path.with_suffix(".review.json")
+    # (مسار، مفتاح) → (المعرّف، الترتيب) لكل درسٍ نشرته كتابةٌ سابقة.
+    served = {}
+    if report_path.exists():
+        for e in _load(report_path).get("lessons", []):
+            if e.get("written_as") and e.get("path_id"):
+                served[(e["path_id"], e["key"])] = (e["written_as"], e["order"], e["brief"])
     report = {"spec": str(spec_path.relative_to(ROOT)), "author": AUTHOR,
               "reviewers": [REVIEW_MODEL, REVIEW_FALLBACK], "written_at": now,
               "lessons": []}
@@ -792,12 +807,12 @@ def write_outputs(spec: dict, spec_path: Path, work: Work, bank: dict, grams: se
         pfile = CURRICULUM / "paths" / f"{pid}.json"
         en_pfile = CURRICULUM / "i18n" / "en" / "paths" / f"{pid}.json"
         drafts = work.drafts(pid)
-        accepted = []
-        for job in [j for j in jobs if j["path_id"] == pid]:
+        accepted, gap = [], None
+        for pos, job in enumerate([j for j in jobs if j["path_id"] == pid]):
             d = drafts.get(job["key"]) or {}
             st = lesson_state(job, d, work, grams)
-            entry = {"key": job["key"], "brief": job["brief"], "accepted": st["accepted"],
-                     "blockers": st["blockers"]}
+            entry = {"path_id": pid, "key": job["key"], "brief": job["brief"],
+                     "accepted": st["accepted"], "blockers": st["blockers"]}
             for lang in ("ar", "en"):
                 rec = st.get(f"{lang}_review")
                 if rec:
@@ -809,28 +824,49 @@ def write_outputs(spec: dict, spec_path: Path, work: Work, bank: dict, grams: se
             entry["dispositions"] = [x for x in d.get("dispositions") or []
                                      if x.get("hash") in (st.get("ar_hash"), st.get("en_hash"))]
             report["lessons"].append(entry)
+            if gap is None and st["accepted"]:
+                accepted.append((pos, job, d, st, entry))
+                continue
+            # أول درسٍ لم يُقبل يوقف المسار عنده: ما بعده ينتظر ولو قُبل، فلا ثقب في التسلسل.
+            gap = gap or job["key"]
             if st["accepted"]:
-                accepted.append((job, d, st, entry))
+                entry["held_behind"] = gap
+            if (pid, job["key"]) in served:
+                raise ValueError(
+                    f"{pid}/{job['key']} is served as {served[(pid, job['key'])][0]} but is no "
+                    f"longer in the cleared prefix (stopped at {gap}): re-review it — a rewrite "
+                    f"never withdraws a served lesson")
         if not accepted:
+            continue
+        if "create" in ps and gap is not None:
+            # مسارٌ جديد وصفه يَعِد بدروسه كلّها: يُنشر كاملًا أو لا يُنشر.
+            report["lessons"].append({"path_id": pid, "key": "path", "accepted": False,
+                                      "blockers": [f"new path ships complete only (stopped "
+                                                   f"at {gap})"]})
             continue
         if "create" in ps:
             _, prec = path_en_state(ps, work)
             if prec is None or any(x.get("severity") == "high"
                                    for x in prec.get("defects") or []):
-                report["lessons"].append({"key": "path", "accepted": False,
+                report["lessons"].append({"path_id": pid, "key": "path", "accepted": False,
                                           "blockers": ["path EN not reviewed clean"]})
+                if any(k[0] == pid for k in served):
+                    raise ValueError(f"{pid}: served lessons, but the path's English is not "
+                                     f"reviewed clean any more")
                 continue
             ps["create"]["en"].update(reviewer_model=prec["reviewer"],
                                       review_verdict="clean" if not prec.get("defects")
                                       else "defects")
 
+        # الأساس قبل الحذف: `_generated` يعرف الدرس المولَّد من ملفّه الإنجليزي، فبعد حذفه
+        # يبدو أصليًّا ويُقرأ ملفٌّ لم يعد موجودًا — كانت الكتابة الثانية لأي مسار تسقط هنا.
+        base = _original_lessons(pid)
         # إعادة الكتابة نظيفة: احذف ما كتبته تشغيلة سابقة لهذا المسار.
         if pfile.exists():
             for lid in _load(pfile)["lesson_ids"]:
                 if _generated(lid):
                     (CURRICULUM / "lessons" / f"{lid}.json").unlink()
                     (CURRICULUM / "i18n" / "en" / "lessons" / f"{lid}.json").unlink()
-        base = _original_lessons(pid)
         if pfile.exists():
             path = _load(pfile)
         else:
@@ -844,16 +880,26 @@ def write_outputs(spec: dict, spec_path: Path, work: Work, bank: dict, grams: se
                     "created_at": now, "updated_at": now, "approved_by": None}
         start = max([b.get("order", 0) for b in base] + [0]) + 1
         new_ids = []
-        for i, (job, d, st, entry) in enumerate(accepted):
-            order = start + i
-            # المعرّف الطبيعي قد يكون محجوزًا: `lesson_13-15_islamic_parenting_steadfast_03`
-            # ملفٌّ قائم نُقل إلى مسارٍ آخر، وفهرس الوسائط يربط به بودكاست — درسٌ جديد
-            # بهذا المعرّف كان سيرث وسائط درسٍ آخر بصمت. فالبديل بادئة `d` (deepened).
-            for lid in (f"lesson_{slug}_{order:02d}", f"lesson_{slug}_d{order:02d}"):
-                if lid not in asset_ids and not (CURRICULUM / "lessons" / f"{lid}.json").exists():
-                    break
+        for pos, job, d, st, entry in accepted:
+            order = start + pos
+            if (pid, job["key"]) in served:
+                # منشورٌ من قبل: معرّفه هو هو، حتى لو صار فهرس الوسائط يربط به شيئًا الآن.
+                lid, was, brief = served[(pid, job["key"])]
+                if (was, brief) != (order, job["brief"]):
+                    raise ValueError(
+                        f"{pid}/{job['key']} is served as {lid} («{brief}», order {was}); the "
+                        f"spec now puts «{job['brief']}» at order {order} there — lessons are "
+                        f"appended to a spec, never inserted or reordered")
             else:
-                raise ValueError(f"no free lesson id for {slug} order {order}")
+                # المعرّف الطبيعي قد يكون محجوزًا: `lesson_13-15_islamic_parenting_steadfast_03`
+                # ملفٌّ قائم نُقل إلى مسارٍ آخر، وفهرس الوسائط يربط به بودكاست — درسٌ جديد
+                # بهذا المعرّف كان سيرث وسائط درسٍ آخر بصمت. فالبديل بادئة `d` (deepened).
+                for lid in (f"lesson_{slug}_{order:02d}", f"lesson_{slug}_d{order:02d}"):
+                    if lid not in asset_ids and \
+                            not (CURRICULUM / "lessons" / f"{lid}.json").exists():
+                        break
+                else:
+                    raise ValueError(f"no free lesson id for {slug} order {order}")
             ar, en = d["ar"], d["en"]
             lesson = {
                 "id": lid, "path_id": pid, "title": ar["title"],
@@ -892,18 +938,21 @@ def write_outputs(spec: dict, spec_path: Path, work: Work, bank: dict, grams: se
             })
             _dump(CURRICULUM / "i18n" / "en" / "lessons" / f"{lid}.json", en_lesson)
             new_ids.append(lid)
-            entry.update(written_as=lid, title=ar["title"])
+            entry.update(written_as=lid, order=order, title=ar["title"])
 
         path["lesson_ids"] = [b["id"] for b in base] + new_ids
         path["estimated_days"] = len(path["lesson_ids"])
         path["updated_at"] = now
-        for a, b in ps.get("description_replace_ar", []):
-            path["description"] = path["description"].replace(a, b)
+        # الوصف الجديد يَعِد بموضوعات المسار كلّه، فلا يُكتب إلا حين يُنشر المسار كلّه.
+        complete = len(accepted) == len([j for j in jobs if j["path_id"] == pid])
+        if complete:
+            for a, b in ps.get("description_replace_ar", []):
+                path["description"] = path["description"].replace(a, b)
         _dump(pfile, path)
 
         if en_pfile.exists():
             en_path = _load(en_pfile)
-            for a, b in ps.get("description_replace_en", []):
+            for a, b in ps.get("description_replace_en", []) if complete else []:
                 en_path["description"] = en_path["description"].replace(a, b)
         else:
             tr = ps["create"]["en"]
