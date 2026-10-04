@@ -84,8 +84,8 @@ class SessionResponse {
   final String token;
 
   /// The device the server minted for. Absent from older servers; differs
-  /// from the requested id only when the server re-attached a split-off twin
-  /// to the family's device.
+  /// from the requested id when the device proof named another device (the
+  /// proof decides) or the server re-attached a split-off twin to its family.
   final String? deviceId;
 
   const SessionResponse({

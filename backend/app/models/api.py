@@ -91,8 +91,9 @@ class SessionCreateResponse(BaseModel):
     session_id: str
     token: str
     # The device the session was minted for (additive, 2026-10). Differs from
-    # the requested id only when a split-off twin was folded into the family's
-    # device (services/device_twins.py); the app then adopts it.
+    # the requested id when the proof named another device (the proof decides)
+    # or a split-off twin was folded into its family (services/device_twins.py);
+    # the app adopts it when it is a valid id.
     device_id: str | None = None
 
 
