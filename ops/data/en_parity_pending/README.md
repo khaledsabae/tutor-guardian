@@ -28,20 +28,31 @@ git mv ops/data/en_parity_pending/daily_tips/tip_prenatal-1_006.json knowledge_b
 python3 ops/tools/review_en_parity.py run --all --unstamped --workers 1 --max-concurrent 2
 ```
 
-## Queued for a non-Anthropic review (unstamped, live as before)
+Commit only what `run` stamped. New English cannot be queued, and English cannot be
+added to a unit that is not stamped, so any story or tip left unresolved goes back
+into this folder until it passes.
 
-The Ollama key hit its weekly cap on 2026-10-04 and also serves a live system,
-so it is not called again this week. These units carry English that Claude
-wrote (fixing reviewer-located defects) or that #27 rewrote, so Claude does not
-stamp them; they wait for deepseek-v4-pro + glm-5.2. Also parked above: 5 new
-stories and tip_prenatal-1_006.
+Authorship is recorded so the family rule holds after they move: the 5 new stories and
+the tip carry `translator_model: claude-opus-5.5`; the 9 updated stories carry
+`english_authors: [mistral-large-3:675b, claude-opus-5.5]` (mistral's text, Claude's new
+fields). Claude cannot stamp any of them; deepseek-v4-pro + glm-5.2 can.
+
+## Queued live English — `ops/data/en_parity_queue.json`
+
+The authoritative list is the queue file, not this README. It names every published
+English unit that is live without a stamp, bound to the sha of its current text, with
+a reason and a category (`check` — and CI — fail on anything unstamped that is not
+there, or that changed after it was queued):
+
+- `awaiting-review` (46): English Claude wrote or rewrote (fixing reviewer-located
+  defects, or with PR #27's Arabic), the 9 stories waiting on the fields above, and
+  `lesson_7-9_islamic_parenting_worship_01` (owned by #31). `run` stamps them and
+  removes their entries.
+- `source-unverified` (130): Alukah units whose Arabic summary was never shown to
+  match its reversed-PDF source. `run`, `stamp-reviewed` and `sign` refuse them until
+  the hold is released (`unqueue`) after re-extraction.
 
 ```bash
+python3 ops/tools/review_en_parity.py inventory     # queued / src-hold columns
 python3 ops/tools/review_en_parity.py run --all --unstamped --workers 1 --max-concurrent 2
 ```
-
-- **adhkar** (1): `adhkar:family_adhkar`
-- **daily_tips** (4): `tip_0-3_018`, `tip_13-15_020`, `tip_7-9_024`, `tip_7-9_030`
-- **kb_units** (14): `0bd76d3c-548a-46ed-b17b-78874741662a__en`, `968f42b5-5184-4f4a-97d9-b854f507dbe6__en`, `cd81035d-4fdb-4274-bcf2-55074ee7a1de__en`, `isl-27372b44__en`, `isl-624104ea__en`, `isl-73905b43__en`, `isl-8bf4e7a3__en`, `isl-9933c64e__en`, `isl-b1e6de34__en`, `isl-c4b3fccc__en`, `isl-f6c0c64a__en`, `isl-fd937511__en`, `med-6de3365b__en`, `med-ccf5e011__en`
-- **lessons** (14): `lesson_13-15_cyber_digital_maturity_02`, `lesson_13-15_cyber_digital_maturity_03`, `lesson_13-15_islamic_mockery_01`, `lesson_13-15_islamic_parenting_steadfast_04`, `lesson_16-18_cyber_digital_professional_02`, `lesson_4-6_aqeedah_seeds_02`, `lesson_4-6_aqeedah_seeds_03`, `lesson_4-6_development_positive_parenting_02`, `lesson_4-6_islamic_parenting_adab_02`, `lesson_7-9_aqeedah_fundamentals_01`, `lesson_7-9_aqeedah_fundamentals_04`, `lesson_prenatal-1_infant_pregnancy_03`, `lesson_prenatal-1_infant_pregnancy_04`, `lesson_prenatal-1_infant_pregnancy_05`
-- **stories** (9): `story:abdullah_bismillah`, `story:bilal_forgiveness`, `story:fatima_parents`, `story:hamza_truth`, `story:hope_sprout`, `story:khadija_neighbor`, `story:maryam_toys`, `story:omar_prayer`, `story:yaseen_creation`
