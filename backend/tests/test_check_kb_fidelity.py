@@ -170,22 +170,50 @@ def test_quarantine_record_is_ordered_by_production_retrieval():
     assert all(e["reason"] and e["category"] in {"unfaithful", "meta_note"} for e in rec)
 
 
-def test_programs_do_not_cite_withdrawn_units():
-    """Family programmes ground each note on knowledge units; none may rest on a withdrawn one."""
+def _cited_ids(node):
+    if isinstance(node, dict):
+        for k, v in node.items():
+            if k == "unit_ids" and isinstance(v, list):
+                yield from v
+            elif k in ("unit_id", "source_unit_id") and isinstance(v, str):
+                yield v
+            else:
+                yield from _cited_ids(v)
+    elif isinstance(node, list):
+        for v in node:
+            yield from _cited_ids(v)
+
+
+def test_no_surface_cites_a_withdrawn_unit():
+    """Programmes, lessons, tips (AR and EN) and the eval set ground on knowledge units;
+    none may rest on a withdrawn one — a dangling reference is a claim with no basis."""
     withdrawn = {e["id"] for e in _record()}
+    for f in sorted((ROOT / "knowledge_base" / "curriculum").rglob("*.json")):
+        if "schema" in f.parts:
+            continue
+        cited = set(_cited_ids(json.loads(f.read_text(encoding="utf-8"))))
+        assert not cited & withdrawn, f"{f.relative_to(ROOT)} cites withdrawn units {sorted(cited & withdrawn)}"
+    for line in (ROOT / "ops" / "eval" / "golden_set.jsonl").read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            item = json.loads(line)
+            assert not set(item.get("expected_unit_ids") or []) & withdrawn, item["id"]
 
-    def unit_ids(node):
-        if isinstance(node, dict):
-            for k, v in node.items():
-                if k == "unit_ids":
-                    yield from v
-                else:
-                    yield from unit_ids(v)
-        elif isinstance(node, list):
-            for v in node:
-                yield from unit_ids(v)
 
-    for base in ("knowledge_base/curriculum/programs", "knowledge_base/curriculum/i18n/en/programs"):
-        for f in sorted((ROOT / base).glob("*.json")):
-            cited = set(unit_ids(json.loads(f.read_text(encoding="utf-8"))))
-            assert not cited & withdrawn, f"{f.name} cites withdrawn units {sorted(cited & withdrawn)}"
+# Rewritten on purpose in PR #27 (70f2df67, 3ab8dae1, 2224ade1) and reviewed there:
+# the app's own guidance, not summaries of their PDF chunks. The discipline guard
+# hands everything it does not claim to the model, which must be able to retrieve
+# the app's stated position on hitting and the 7/10 narration — so these stay served.
+AUTHORED = ("isl-c4d83813", "isl-af807518", "isl-602bfb05", "isl-901bde3f", "isl-24dda124")
+
+
+@pytest.mark.parametrize("uid", AUTHORED)
+def test_trust_content_rewrites_stay_served_with_honest_provenance(uid):
+    path = ROOT / "knowledge_base" / "units" / f"{uid}.json"
+    assert path.exists(), f"{uid} must stay served"
+    assert uid not in {e["id"] for e in _record()}
+    unit = json.loads(path.read_text(encoding="utf-8"))
+    assert unit.get("source_kind") == "authored_guidance"
+    assert unit.get("authored_references") and unit.get("source_note")
+    assert "الألوكة" not in unit.get("reference_info", "") and "كيف تربي ولدك" != unit.get("reference_info")
+    ledger = json.loads((ROOT / "ops/data/kb_fidelity/judged_faithful.json").read_text(encoding="utf-8"))["units"]
+    assert ledger[uid]["fingerprint"] == fid.unit_fingerprint(unit)

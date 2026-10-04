@@ -12,7 +12,7 @@
 | **Order** | 4 |
 | **Path Id** | path_13-15_islamic_parenting_teen_identity |
 | **Reflection Prompts** | `ما القضية التي اختارها؟ ولماذا؟`, `ما المهارة التي طورها في التخطيط/التنفيذ؟` |
-| **Unit Ids** | `isl-946dd770`, `isl-a60d7af9`, `isl-cc4ee988`, `isl-c1f0ce4d` |
+| **Unit Ids** | `isl-a60d7af9`, `isl-cc4ee988`, `isl-c1f0ce4d` |
 | **Version** | 1.0.0 |
 | **Warning Flags** |  |
 
@@ -37,7 +37,6 @@
   "age_group": "13-15",
   "domain": "islamic_parenting",
   "unit_ids": [
-    "isl-946dd770",
     "isl-a60d7af9",
     "isl-cc4ee988",
     "isl-c1f0ce4d"
