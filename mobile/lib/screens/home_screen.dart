@@ -14,7 +14,9 @@
 ///      the bands that have no mission bank.
 ///
 /// The weekly-plan and follow-up cards go between ① and ② (see the comment
-/// there). Nothing that used to be here was removed from the app: the rest sits
+/// there). The family-programs card (Ramadan, the Prayer Journey, milestones)
+/// goes right under ③ — a card, not a fourth stop, and absent unless the
+/// server serves the programs. Nothing that used to be here was removed from the app: the rest sits
 /// below the divider, and every destination in it is also in «المزيد». The
 /// games banner was the only card dropped from this screen — it duplicated the
 /// games tile two rows below it and the games group in the hub.
@@ -44,6 +46,7 @@ import '../features/onboarding/providers/onboarding_providers.dart';
 import '../features/program/data/badges.dart';
 import '../features/program/providers/program_providers.dart';
 import '../features/program/providers/progress_providers.dart';
+import '../features/programs/widgets/programs_home_card.dart';
 import '../features/referral/pride_invite_card.dart';
 import '../features/journey/widgets/child_journey_card.dart';
 import '../features/coins/coins_providers.dart';
@@ -166,6 +169,13 @@ class HomeScreen extends ConsumerWidget {
           // ③ مهمة الطفل
           TodayChildBlock(profile: profile),
           const SizedBox(height: 28),
+
+          // «برامج الأسرة» (plan phase 2: Ramadan, the Prayer Journey,
+          // milestones) — below the three blocks, never between them. A card,
+          // not a fourth numbered stop, so it has no section header. It renders
+          // nothing while loading, on any failure, and on a server without the
+          // programs (`GET /api/programs` → 404).
+          const ProgramsHomeCard(),
 
           // ── Everything else. Every destination below is also in «المزيد». ──
           TodayMoreDivider(label: l10n.todayMoreTitle),

@@ -430,6 +430,7 @@ class _FakeTgClient extends TgClient {
     required String ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
   }) async {
     lastCreateChildBody = {
       'name': name,

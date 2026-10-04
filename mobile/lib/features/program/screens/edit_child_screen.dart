@@ -10,6 +10,8 @@ import '../../../models/enums.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/ui/bouncy_button.dart';
 import '../../onboarding/screens/avatar_picker_sheet.dart';
+import '../../programs/providers/programs_providers.dart';
+import '../../programs/widgets/birth_month_field.dart';
 import '../data/progress_models.dart';
 import '../providers/settings_providers.dart';
 import '../../../theme/design_tokens.dart';
@@ -30,6 +32,7 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
   late String _ageGroup = widget.child.ageGroup;
   late String? _gender = widget.child.gender;
   late String? _avatarEmoji = widget.child.avatarEmoji;
+  late String? _birthMonth = widget.child.birthMonth;
 
   @override
   void dispose() {
@@ -51,14 +54,23 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
+    final container = programsContainerOf(context);
     try {
+      // Sent only when it changed: an explicit null removes it, an absent key
+      // leaves it alone.
+      final monthChanged = _offerBirthMonth && _birthMonth != widget.child.birthMonth;
       await ref.read(updateChildProvider.notifier).call(
             childId: widget.child.id,
             name: _nameController.text.trim(),
             ageGroup: _ageGroup,
             gender: _gender,
             avatarEmoji: _avatarEmoji,
+            birthMonth: monthChanged ? _birthMonth : null,
+            clearBirthMonth: monthChanged && _birthMonth == null,
           );
+      // The milestones and the journey are timed by the birth month and the
+      // age group; the programs summary must not keep the old answer.
+      refreshProgramsSummary(container);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(AppLocalizations.of(context).editChildSaved)),
@@ -77,10 +89,17 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
     }
   }
 
+  /// A server that sent the key knows the field; otherwise the programs API
+  /// answering is the sign it can store it.
+  bool get _offerBirthMonth =>
+      widget.child.serverKnowsBirthMonth || ref.read(programsAvailableProvider);
+
   @override
   Widget build(BuildContext context) {
     final updateState = ref.watch(updateChildProvider);
     final busy = updateState.isLoading;
+    final offerBirthMonth =
+        widget.child.serverKnowsBirthMonth || ref.watch(programsAvailableProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -183,6 +202,18 @@ class _EditChildScreenState extends ConsumerState<EditChildScreen> {
                     .toList(),
               ),
               const SizedBox(height: 24),
+
+              // ── Birth month (optional) ──
+              if (offerBirthMonth) ...[
+                BirthMonthField(
+                  value: _birthMonth,
+                  childName: _nameController.text,
+                  ageGroup: _ageGroup,
+                  onChanged: (v) => setState(() => _birthMonth = v),
+                  onUseBand: (band) => setState(() => _ageGroup = band),
+                ),
+                const SizedBox(height: 24),
+              ],
 
               // ── Avatar ──
               Text(

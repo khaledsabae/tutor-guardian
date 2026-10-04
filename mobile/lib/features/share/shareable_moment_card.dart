@@ -47,6 +47,68 @@ class ShareableMomentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ShareCardFrame(
+      // Deterministic, flex-free layout. ScreenshotController's
+      // captureFromWidget renders in a detached tree that mishandles
+      // Expanded/Flexible/Spacer/SingleChildScrollView (per its own
+      // docs), which previously starved/clipped the [body]. Plain
+      // Text with a maxLines guard renders reliably; [ShareService]
+      // pins the canvas to 1080×1080 so this always fits.
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(emoji, style: const TextStyle(fontSize: 116)),
+          const SizedBox(height: 22),
+          ShareCardEyebrow(eyebrow),
+          const SizedBox(height: 28),
+          Text(
+            headline,
+            textAlign: TextAlign.center,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.cairo(
+              fontSize: 44,
+              fontWeight: FontWeight.w800,
+              color: AppTheme.textPrimary,
+              height: 1.3,
+            ),
+          ),
+          if (body != null && body!.trim().isNotEmpty) ...[
+            const SizedBox(height: 26),
+            Text(
+              body!,
+              textAlign: TextAlign.center,
+              maxLines: 6,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.cairo(
+                fontSize: 30,
+                fontWeight: FontWeight.w600,
+                color: AppTheme.textPrimary,
+                height: 1.55,
+              ),
+            ),
+          ],
+          const SizedBox(height: 40),
+          ShareCardBrandFooter(icon: icon),
+        ],
+      ),
+    );
+  }
+}
+
+/// The 1080×1080 branded ground every shared card sits on: the generated
+/// background art, a soft overlay so text stays readable, 64px of padding.
+///
+/// Shared so a new kind of card (the «رمضان عائلتنا» recap) carries exactly
+/// the same frame and QR as every other moment, rather than a near-copy.
+class ShareCardFrame extends StatelessWidget {
+  const ShareCardFrame({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    const size = ShareableMomentCard.size;
     return SizedBox(
       width: size.width,
       height: size.height,
@@ -101,65 +163,7 @@ class ShareableMomentCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(64),
-                // Deterministic, flex-free layout. ScreenshotController's
-                // captureFromWidget renders in a detached tree that mishandles
-                // Expanded/Flexible/Spacer/SingleChildScrollView (per its own
-                // docs), which previously starved/clipped the [body]. Plain
-                // Text with a maxLines guard renders reliably; [ShareService]
-                // pins the canvas to 1080×1080 so this always fits.
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(emoji, style: const TextStyle(fontSize: 116)),
-                    const SizedBox(height: 22),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: AppTheme.primary.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: Text(
-                        eyebrow,
-                        style: GoogleFonts.cairo(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          color: AppTheme.primary,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 28),
-                    Text(
-                      headline,
-                      textAlign: TextAlign.center,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.cairo(
-                        fontSize: 44,
-                        fontWeight: FontWeight.w800,
-                        color: AppTheme.textPrimary,
-                        height: 1.3,
-                      ),
-                    ),
-                    if (body != null && body!.trim().isNotEmpty) ...[
-                      const SizedBox(height: 26),
-                      Text(
-                        body!,
-                        textAlign: TextAlign.center,
-                        maxLines: 6,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.cairo(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.textPrimary,
-                          height: 1.55,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 40),
-                    _brandFooter(),
-                  ],
-                ),
+                child: child,
               ),
             ],
           ),
@@ -167,8 +171,44 @@ class ShareableMomentCard extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _brandFooter() {
+/// The small label above a card's headline.
+class ShareCardEyebrow extends StatelessWidget {
+  const ShareCardEyebrow(this.text, {super.key});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppTheme.primary.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Text(
+        text,
+        style: GoogleFonts.cairo(
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          color: AppTheme.primary,
+        ),
+      ),
+    );
+  }
+}
+
+/// Brand line, install CTA and the QR — the attributed install driver every
+/// shared card carries.
+class ShareCardBrandFooter extends StatelessWidget {
+  const ShareCardBrandFooter({super.key, this.icon = Icons.auto_awesome, this.qrSize = 116});
+
+  final IconData icon;
+  final double qrSize;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
@@ -215,7 +255,7 @@ class ShareableMomentCard extends StatelessWidget {
             data: ShareService.installUrlFor(
               referralCode: ReferralService.cachedCode,
             ),
-            size: 116,
+            size: qrSize,
             gapless: true,
             eyeStyle: QrEyeStyle(
               eyeShape: QrEyeShape.square,

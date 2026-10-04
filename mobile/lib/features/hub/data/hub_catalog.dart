@@ -21,6 +21,15 @@ import '../../../core/app_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../routine/screens/daily_routine_screen.dart' show habitTabLabel;
 
+/// A server capability a tile depends on. The hub shows such a tile only once
+/// the server has been seen to offer it — an older server answers 404, and a
+/// tile that opens onto "not available" is the dead end this hub exists to
+/// remove.
+enum HubRequirement {
+  /// `GET /api/programs` (backend schema v34).
+  programs,
+}
+
 /// One destination tile.
 class HubItem {
   const HubItem({
@@ -28,7 +37,11 @@ class HubItem {
     required this.emoji,
     required this.label,
     required this.route,
+    this.requires,
   });
+
+  /// Null for tiles every server supports.
+  final HubRequirement? requires;
 
   /// Stable analytics id — reported via `hub_item_tapped`. Never translated.
   final String id;
@@ -62,6 +75,15 @@ final List<HubGroup> kHubGroups = [
         emoji: '👨‍👩‍👧',
         label: (l10n, _) => l10n.hubMyChildren,
         route: AppRoutes.childrenList,
+      ),
+      // Ramadan, the Prayer Journey and the milestones, per child. Hidden
+      // until the server answers `GET /api/programs`.
+      HubItem(
+        id: 'programs',
+        emoji: '✨',
+        label: (l10n, _) => l10n.programsTitle,
+        route: AppRoutes.programs,
+        requires: HubRequirement.programs,
       ),
       HubItem(
         id: 'daily_routine',

@@ -39,8 +39,9 @@ void main() {
         'coins.earned_today': CoinsService.dailyEarnCap,
         'coins.earned_today_date': _day(DateTime.now().subtract(const Duration(days: 1))),
       });
-      final balance = await CoinsService.instance.earn(10);
-      expect(balance, CoinsService.dailyEarnCap + 10);
+      final granted = await CoinsService.instance.earn(10);
+      expect(granted, 10);
+      expect((await CoinsService.instance.read()).balance, CoinsService.dailyEarnCap + 10);
     });
 
     test('badges credit through the same capped path', () async {

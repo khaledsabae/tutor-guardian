@@ -283,6 +283,8 @@ class _FakeTgClient extends TgClient {
     String? ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
+    bool clearBirthMonth = false,
   }) async {
     return updateChildJson ?? _childJson(id: childId, name: name ?? '?');
   }

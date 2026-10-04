@@ -15,9 +15,11 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../api/tg_client.dart';
 import '../../l10n/app_localizations.dart';
 import '../../state/chat_notifier.dart';
+import '../coins/coins_providers.dart';
+import '../../widgets/ui/error_retry_view.dart';
+import 'mission_confirmations.dart';
 import 'package:almorabbi/widgets/ui/loading_view.dart';
 
 class PendingMissionsScreen extends ConsumerStatefulWidget {
@@ -44,11 +46,45 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
   }
 
   Future<void> _load() async {
+    // Read before the first await: this screen can be gone by the time any
+    // answer comes back, and paying must not depend on it. (Called from
+    // initState, so nothing that reads an inherited widget is taken here.)
+    final client = ref.read(tgClientProvider);
+    final coins = ref.read(coinsProvider.notifier);
+
+    // A batch whose answer was lost is resent beside tonight's list, not
+    // before it: on a flaky network the resend can take the whole request
+    // timeout, and the list must not wait behind it. The resend is the only
+    // way left to pay cards the server applied but never answered for.
+    final flushing = MissionConfirmations.flush(client)
+        .then<MissionConfirmResult?>((r) => r, onError: (Object _) => null);
+
     try {
-      final items = await ref.read(tgClientProvider).fetchPendingMissions();
+      final items = await client.fetchPendingMissions();
       if (mounted) setState(() { _pending = items; _error = null; });
-    } on TgApiError catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _pending = const []; });
+    } catch (e) {
+      if (mounted) {
+        final message = describeFailure(AppLocalizations.of(context), e);
+        setState(() { _error = message; _pending = const []; });
+      }
+    }
+
+    final flushed = await flushing;
+    if (flushed == null) return;
+    if (flushed.coins > 0) {
+      await coins.refresh();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                AppLocalizations.of(context).missionCoinsEarned(flushed.coins))));
+      }
+    }
+    // The resend may have settled cards the list fetched beside it still shows.
+    if (flushed.settled > 0 && mounted && !_sending) {
+      try {
+        final items = await client.fetchPendingMissions();
+        if (mounted && !_sending) setState(() => _pending = items);
+      } catch (_) {}
     }
   }
 
@@ -56,6 +92,10 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     final pending = _pending;
     if (pending == null || pending.isEmpty || _sending) return;
     setState(() => _sending = true);
+    final client = ref.read(tgClientProvider);
+    final coins = ref.read(coinsProvider.notifier);
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context);
 
     // Every card is settled in one call, including the excluded ones — a card
     // marked "not yet" is answered `confirmed: false`, not left pending. If it
@@ -70,12 +110,23 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     ];
 
     try {
-      await ref.read(tgClientProvider).confirmMissions(items);
+      // Prayer Journey cards come back with what they earned (MOBILE_API
+      // §11.4.7); the device pays them, each mission once. Outbox, sending and
+      // paying all live outside this screen, so leaving it mid-request no
+      // longer loses the coins.
+      final result = await MissionConfirmations.send(client, items);
+      if (result.coins > 0) {
+        await coins.refresh(); // the wallet outlives this screen
+        messenger.showSnackBar(
+            SnackBar(content: Text(l10n.missionCoinsEarned(result.coins))));
+      }
       if (!mounted) return;
       Navigator.of(context).pop(true);
-    } on TgApiError catch (e) {
+    } catch (e) {
+      // Any failure, not just an HTTP one: a spinner with no way out is the
+      // worst answer. The batch stays in the outbox for the next try.
       if (!mounted) return;
-      setState(() { _sending = false; _error = e.toString(); });
+      setState(() { _sending = false; _error = describeFailure(l10n, e); });
     }
   }
 
@@ -111,7 +162,9 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
                               title: Text(card['title_ar'] as String? ?? ''),
                               subtitle: Text(
                                 '${card['child_name'] ?? ''} · '
-                                '${card['estimated_minutes'] ?? 0} ${l10n.missionMinutesShort}',
+                                '${card['estimated_minutes'] ?? 0} ${l10n.missionMinutesShort}'
+                                // A Prayer Journey card says what it earns.
+                                '${_coinsOf(card) > 0 ? ' · 🪙 ${l10n.programsCoins(_coinsOf(card))}' : ''}',
                               ),
                               trailing: TextButton(
                                 onPressed: () => setState(() {
@@ -156,6 +209,9 @@ class _PendingMissionsScreenState extends ConsumerState<PendingMissionsScreen> {
     );
   }
 }
+
+/// Coins a pending card carries — only Prayer Journey cards have any.
+int _coinsOf(Map<String, dynamic> card) => (card['coins'] as num?)?.toInt() ?? 0;
 
 class _Empty extends StatelessWidget {
   const _Empty({required this.message});

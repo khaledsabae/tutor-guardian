@@ -18,6 +18,16 @@ class ChildProfile {
   final String? createdAt;
   final String? updatedAt;
 
+  /// "YYYY-MM", optional (backend schema v34). Times the milestone reminders
+  /// and the Prayer Journey; a month, never a day.
+  final String? birthMonth;
+
+  /// Whether the server that sent this profile knows the field at all. A
+  /// server older than v34 omits the key — and silently drops it on a write —
+  /// so the edit screen offers the field only when this is true (or the
+  /// programs API answers).
+  final bool serverKnowsBirthMonth;
+
   const ChildProfile({
     required this.id,
     required this.name,
@@ -26,6 +36,8 @@ class ChildProfile {
     this.avatarEmoji,
     this.createdAt,
     this.updatedAt,
+    this.birthMonth,
+    this.serverKnowsBirthMonth = false,
   });
 
   factory ChildProfile.fromJson(Map<String, dynamic> json) {
@@ -37,6 +49,8 @@ class ChildProfile {
       avatarEmoji: json['avatar_emoji'] as String?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
+      birthMonth: json['birth_month'] is String ? json['birth_month'] as String : null,
+      serverKnowsBirthMonth: json.containsKey('birth_month'),
     );
   }
 }

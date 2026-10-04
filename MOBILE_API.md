@@ -1110,8 +1110,12 @@ Additive fields on the confirm response:
   that is confirmed — including ones an earlier attempt already confirmed. So a retried request
   (the first response was lost) reports the same entries again, and `settled` counts only rows
   changed by *this* request. **The client credits each `mission_id` exactly once**: keep the set of
-  credited `mission_id`s on the device and skip an entry already in it. Credit to that child's
-  coins (`CoinsService`, daily cap 60 — the content keeps a stage's day under it).
+  credited `mission_id`s on the device and skip an entry already in it. Credit them to the
+  family's coins on the device (`CoinsService` — one wallet for the family). Parent-confirmed
+  program coins are **exempt from the app's daily earning cap** (60, which exists so games cannot
+  mint coins): the content and the server already bound them per child per day. Show the family
+  the coins actually credited. Persist the batch before sending it, and resend it on the next
+  open if its answer never arrived — the retry reports the same `coins`.
 * A card confirmed `false` ("not yet") earns nothing (never, also on retry), costs nothing, and
   frees its slot. Unanswered cards expire quietly after 48 h.
 * `deferred` (new): prayer cards the server would not settle because the program file cannot be

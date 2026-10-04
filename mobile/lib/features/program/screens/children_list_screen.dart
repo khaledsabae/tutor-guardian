@@ -13,6 +13,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_palette.dart';
 import '../../../theme/app_theme.dart';
 import '../../journey/providers/journey_providers.dart';
+import '../../programs/providers/programs_providers.dart';
 import '../data/progress_models.dart';
 import '../providers/progress_providers.dart';
 import '../providers/settings_providers.dart';
@@ -201,9 +202,11 @@ class ChildrenListScreen extends ConsumerWidget {
   }
 
   Future<void> _addChild(BuildContext context, WidgetRef ref) async {
+    final container = programsContainerOf(context);
     final added = await Navigator.of(context).push(AppRoutes.addChild());
     if (added == true) {
-      ref.invalidate(childrenListProvider);
+      container.invalidate(childrenListProvider);
+      refreshProgramsSummary(container);
     }
   }
 
@@ -212,6 +215,8 @@ class ChildrenListScreen extends ConsumerWidget {
     WidgetRef ref,
     ChildProfile child,
   ) async {
+    // Captured before any await (the dialog included).
+    final container = programsContainerOf(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -235,6 +240,11 @@ class ChildrenListScreen extends ConsumerWidget {
     if (confirmed != true) return;
     try {
       await ref.read(deleteChildProvider.notifier).call(child.id);
+      // The programs summarise every child; a removed one must not linger on
+      // Today's card or in the programs list — whether the server removed
+      // all of the child's rows (a proven session) or the profile only
+      // (MOBILE_API §11.7), the child is gone from the summary either way.
+      refreshProgramsSummary(container);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(AppLocalizations.of(context).childrenDeleted(child.name))),

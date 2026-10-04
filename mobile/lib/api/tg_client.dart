@@ -37,7 +37,19 @@ class TgApiError implements Exception {
   final String message;
   final Duration? retryAfter;
 
-  const TgApiError(this.statusCode, this.message, {this.retryAfter});
+  /// The machine-readable reason, when the server sent one.
+  ///
+  /// The family-programs endpoints (MOBILE_API §11.6) answer
+  /// `{"detail": {"error": "<code>", ...extra}}`. Before this field existed the
+  /// whole object was thrown away and every refusal read as "HTTP 409", so a
+  /// screen could not tell "already recorded" (show ✓) from a real failure.
+  final String? code;
+
+  /// The rest of that object (`next_stage`, `available_on`, `markable_up_to`…).
+  final Map<String, dynamic>? details;
+
+  const TgApiError(this.statusCode, this.message,
+      {this.retryAfter, this.code, this.details});
 
   @override
   String toString() => 'TgApiError(${statusCode ?? '?'}): $message';
@@ -79,6 +91,11 @@ class TgTurnEvent extends TgStreamEvent {
   final int messageId;
   const TgTurnEvent(this.messageId);
 }
+
+/// SharedPreferences key holding the child a child-mode surface was opened
+/// for (written by `ChildModeNotifier` on entry, removed on exit). The child
+/// token is renewed for this child.
+const kChildModeChildIdKey = 'child_mode_child_id';
 
 /// Default secure storage with resetOnError enabled to self-heal against
 /// Android Keystore desync / BadPaddingException on reinstall or lock change.
@@ -394,7 +411,9 @@ class TgClient {
 
   final bool _ownsHttpClient;
   final String? _baseUrlOverride;
-  bool _refreshingChildToken = false;
+  /// The child-token renewal in flight, shared by every caller that hit a 401
+  /// meanwhile — a second caller used to get null and hide its card.
+  Future<String?>? _childTokenRenewal;
 
   String get _baseUrl => _baseUrlOverride ?? AppConfig.apiBaseUrl;
 
@@ -1347,6 +1366,7 @@ class TgClient {
     required String ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
   }) async {
     final session = await ensureSession();
     final token = session.token;
@@ -1355,6 +1375,10 @@ class TgClient {
       'age_group': ageGroup,
       'gender': ?gender,
       'avatar_emoji': ?avatarEmoji,
+      // "YYYY-MM", optional (MOBILE_API §11.1). A server older than schema v34
+      // ignores the key, which is why the field is only offered when the
+      // programs API answers (see `programsAvailableProvider`).
+      'birth_month': ?birthMonth,
     };
     final resp = await _http
         .post(
@@ -1443,6 +1467,8 @@ class TgClient {
     String? ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
+    bool clearBirthMonth = false,
   }) async {
     final session = await ensureSession();
     final token = session.token;
@@ -1451,6 +1477,14 @@ class TgClient {
     if (ageGroup != null) body['age_group'] = ageGroup;
     if (gender != null) body['gender'] = gender;
     if (avatarEmoji != null) body['avatar_emoji'] = avatarEmoji;
+    // An explicit `null` clears the birth month; leaving the key out leaves it
+    // alone (MOBILE_API §11.1). Two arguments rather than a nullable one,
+    // because "not given" and "remove it" are different requests.
+    if (clearBirthMonth) {
+      body['birth_month'] = null;
+    } else if (birthMonth != null) {
+      body['birth_month'] = birthMonth;
+    }
     final resp = await _http
         .patch(
           Uri.parse('$_baseUrl/api/children/$childId'),
@@ -1942,7 +1976,17 @@ class TgClient {
 
   /// Settle a batch. One call for the whole evening — the asynchronous
   /// confirmation loop is the point, and a per-card round trip would undo it.
-  Future<int> confirmMissions(List<Map<String, dynamic>> items) async {
+  Future<int> confirmMissions(List<Map<String, dynamic>> items) async =>
+      (await settleMissions(items)).settled;
+
+  /// [confirmMissions], plus what the confirmed cards earned.
+  ///
+  /// Prayer Journey cards ride the same evening loop (MOBILE_API §11.4.7) and
+  /// the server keeps no coin ledger: `coins` lists each confirmed program card
+  /// with its value, for the app to credit on the device. Older servers do not
+  /// send the key, and bank missions never carry coins.
+  Future<({int settled, List<Map<String, dynamic>> coins})> settleMissions(
+      List<Map<String, dynamic>> items) async {
     return _guard(() async {
       final session = await ensureSession();
       final uri = Uri.parse('$_baseUrl/api/children/missions/confirm');
@@ -1954,8 +1998,228 @@ class TgClient {
           .timeout(AppConfig.httpTimeout);
       if (resp.statusCode != 200) throw _wrap(resp);
       final body = jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
-      return body['settled'] as int? ?? 0;
+      final coins = (body['coins'] as List<dynamic>? ?? const [])
+          .whereType<Map<String, dynamic>>()
+          .toList();
+      return (settled: body['settled'] as int? ?? 0, coins: coins);
     });
+  }
+
+  // ── Family programs (MOBILE_API §11, backend schema v34) ────────────────
+  //
+  // Ramadan, the Prayer Journey and the proactive milestones. Every call sends
+  // the family's UTC offset — it decides their date (the Ramadan day turns at
+  // *their* midnight) and the server remembers it for the milestone push, which
+  // is never sent to a device that never reported one — and the UI language.
+  // A server older than v34 answers 404 to all of it; the screens treat that
+  // as "not offered" and hide their entry points.
+
+  /// `tz_offset_minutes` + `lang` — the query every programs call carries.
+  Map<String, String> _programsQuery([Map<String, String>? extra]) => {
+        'tz_offset_minutes': '${DateTime.now().timeZoneOffset.inMinutes}',
+        ..._langParam(),
+        ...?extra,
+      };
+
+  Future<Map<String, dynamic>> _programsCall(
+    String method,
+    String path, {
+    Map<String, dynamic>? body,
+    Map<String, String>? query,
+  }) {
+    return _guard(() async {
+      final session = await ensureSession();
+      final uri = Uri.parse('$_baseUrl$path')
+          .replace(queryParameters: _programsQuery(query));
+      final headers = _authHeaders(session.token);
+      final encoded = body == null ? null : jsonEncode(body);
+      final http.Response resp;
+      switch (method) {
+        case 'GET':
+          resp = await _http.get(uri, headers: headers).timeout(AppConfig.httpTimeout);
+        case 'POST':
+          resp = await _http
+              .post(uri, headers: headers, body: encoded ?? '{}')
+              .timeout(AppConfig.httpTimeout);
+        case 'PUT':
+          resp = await _http
+              .put(uri, headers: headers, body: encoded ?? '{}')
+              .timeout(AppConfig.httpTimeout);
+        case 'DELETE':
+          resp = await _http.delete(uri, headers: headers).timeout(AppConfig.httpTimeout);
+        default:
+          throw ArgumentError.value(method, 'method');
+      }
+      if (resp.statusCode != 200) throw _wrap(resp);
+      return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
+    });
+  }
+
+  /// `GET /api/programs` — what applies to each child today. 404 on a server
+  /// that has no programs; callers read that as "hide the entry points".
+  Future<Map<String, dynamic>> fetchPrograms() =>
+      _programsCall('GET', '/api/programs');
+
+  /// `GET /api/children/{id}/ramadan/today`. No `features` is sent: this build
+  /// has no weekly-plan screen, so the after-Ramadan week that promises one
+  /// must come back with its fallback text (MOBILE_API §11.3.2).
+  Future<Map<String, dynamic>> fetchRamadanToday(int childId) =>
+      _programsCall('GET', '/api/children/$childId/ramadan/today');
+
+  /// `GET /api/children/{id}/ramadan/days/{day}` — any day 1–30.
+  Future<Map<String, dynamic>> fetchRamadanDay(int childId, int day) =>
+      _programsCall('GET', '/api/children/$childId/ramadan/days/$day');
+
+  /// `POST /api/programs/ramadan/marks` — tick or untick a family «تمّ».
+  Future<Map<String, dynamic>> setRamadanMark({
+    required String mark,
+    int? day,
+    bool done = true,
+    int? choiceIndex,
+  }) =>
+      _programsCall('POST', '/api/programs/ramadan/marks', body: {
+        'mark': mark,
+        'day': ?day,
+        'done': done,
+        'choice_index': ?choiceIndex,
+      });
+
+  /// `GET /api/children/{id}/ramadan/fasting` — the ladder and its guidance.
+  Future<Map<String, dynamic>> fetchFastingLadder(int childId) =>
+      _programsCall('GET', '/api/children/$childId/ramadan/fasting');
+
+  /// `PUT /api/children/{id}/ramadan/fasting` — a step and/or puberty.
+  Future<Map<String, dynamic>> updateFasting(
+    int childId, {
+    String? stepKey,
+    bool? reachedPuberty,
+  }) =>
+      _programsCall('PUT', '/api/children/$childId/ramadan/fasting', body: {
+        'step_key': ?stepKey,
+        'reached_puberty': ?reachedPuberty,
+      });
+
+  /// `POST /api/children/{id}/ramadan/fasting/practice` — "practised their
+  /// step today". `done: false` takes it back; a day not practised is simply
+  /// not recorded.
+  Future<Map<String, dynamic>> recordFastingPractice(
+    int childId, {
+    int? day,
+    bool done = true,
+  }) =>
+      _programsCall('POST', '/api/children/$childId/ramadan/fasting/practice',
+          body: {'day': ?day, 'done': done});
+
+  /// `PUT /api/programs/ramadan/settings` — the family's own moon sighting.
+  /// [resetMonthDays] sends `month_days: null` (back to the server's length).
+  Future<Map<String, dynamic>> updateRamadanSettings({
+    int? startShiftDays,
+    int? monthDays,
+    bool resetMonthDays = false,
+  }) {
+    final body = <String, dynamic>{'start_shift_days': ?startShiftDays};
+    if (resetMonthDays) {
+      body['month_days'] = null;
+    } else if (monthDays != null) {
+      body['month_days'] = monthDays;
+    }
+    return _programsCall('PUT', '/api/programs/ramadan/settings', body: body);
+  }
+
+  /// `GET /api/programs/ramadan/recap` — «رمضان عائلتنا».
+  Future<Map<String, dynamic>> fetchRamadanRecap({int? hijriYear}) =>
+      _programsCall('GET', '/api/programs/ramadan/recap',
+          query: {if (hijriYear != null) 'hijri_year': '$hijriYear'});
+
+  /// `GET /api/children/{id}/prayer-journey`.
+  Future<Map<String, dynamic>> fetchPrayerJourney(int childId) =>
+      _programsCall('GET', '/api/children/$childId/prayer-journey');
+
+  /// `POST /api/children/{id}/prayer-journey/enrol`.
+  Future<Map<String, dynamic>> enrolPrayerJourney(
+    int childId, {
+    String? track,
+    int? startStage,
+    bool restart = false,
+  }) =>
+      _programsCall('POST', '/api/children/$childId/prayer-journey/enrol',
+          body: {
+            'track': ?track,
+            'start_stage': ?startStage,
+            if (restart) 'restart': true,
+          });
+
+  /// `PUT /api/children/{id}/prayer-journey/stage` — forward one, back any.
+  Future<Map<String, dynamic>> setPrayerJourneyStage(int childId, int stage) =>
+      _programsCall('PUT', '/api/children/$childId/prayer-journey/stage',
+          body: {'stage': stage});
+
+  /// `POST /api/children/{id}/prayer-journey/graduate`.
+  Future<Map<String, dynamic>> graduatePrayerJourney(int childId) =>
+      _programsCall('POST', '/api/children/$childId/prayer-journey/graduate');
+
+  /// `DELETE /api/children/{id}/prayer-journey` — stop it.
+  Future<Map<String, dynamic>> stopPrayerJourney(int childId) =>
+      _programsCall('DELETE', '/api/children/$childId/prayer-journey');
+
+  /// `GET /api/children/{id}/milestones`.
+  Future<Map<String, dynamic>> fetchMilestones(int childId) =>
+      _programsCall('GET', '/api/children/$childId/milestones');
+
+  /// `GET /api/children/{id}/milestones/{key}` — the push's deep link.
+  Future<Map<String, dynamic>> fetchMilestone(int childId, String key) =>
+      _programsCall('GET',
+          '/api/children/$childId/milestones/${Uri.encodeComponent(key)}');
+
+  /// Child mode: today's prayer tasks (Child-Bearer, live screen session).
+  Future<Map<String, dynamic>> fetchChildPrayerToday(String childToken) {
+    return _guard(() => _childPrayerCall(
+          childToken,
+          (token) => _http
+              .get(
+                Uri.parse('$_baseUrl/api/value-tracking/child-mode/prayer/today')
+                    .replace(queryParameters: _programsQuery()),
+                headers: _childAuthHeaders(token),
+              )
+              .timeout(AppConfig.httpTimeout),
+        ));
+  }
+
+  /// Child mode: «صلّيتها». Recorded at once; the parent confirms tonight.
+  Future<Map<String, dynamic>> claimChildPrayer({
+    required String childToken,
+    required String taskId,
+  }) {
+    return _guard(() => _childPrayerCall(
+          childToken,
+          (token) => _http
+              .post(
+                Uri.parse('$_baseUrl/api/value-tracking/child-mode/prayer/claim')
+                    .replace(queryParameters: _programsQuery({'task_id': taskId})),
+                headers: _childAuthHeaders(token),
+              )
+              .timeout(AppConfig.httpTimeout),
+        ));
+  }
+
+  /// One child-mode programs request, with the habit surface's recovery: a
+  /// 401 first renews the child token from the parent's session (as
+  /// [fetchChildTodayHabits] does) and replays once. Only when that fails is
+  /// the 401 reported — [childSessionExpired] — and the caller hides the card.
+  /// A 401 is never a recorded claim, so replaying a claim cannot double it.
+  Future<Map<String, dynamic>> _childPrayerCall(
+    String childToken,
+    Future<http.Response> Function(String token) send,
+  ) async {
+    var resp = await send(childToken);
+    if (resp.statusCode == 401) {
+      final refreshed = await _refreshChildTokenOrFail();
+      if (refreshed == null) throw childSessionExpired;
+      resp = await send(refreshed);
+      if (resp.statusCode == 401) throw childSessionExpired;
+    }
+    if (resp.statusCode != 200) throw _wrap(resp);
+    return jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>;
   }
 
   // ── Internet licence ─────────────────────────────────────────────────────
@@ -2088,26 +2352,44 @@ class TgClient {
 
   /// Tries to silently refresh the child token using the stored parent token.
   /// Returns the new child token, or null if the parent session is also gone.
-  Future<String?> _refreshChildTokenOrFail() async {
-    if (_refreshingChildToken) return null;
-    _refreshingChildToken = true;
+  ///
+  /// Renews for the child **holding the phone** — the one child mode was
+  /// entered for — not the parent's active child: the Prayer Journey hands
+  /// the phone to the journey's child without making them the active child,
+  /// and renewing for the active one replayed the claim on the other child's
+  /// journey and switched the whole child surface to them.
+  Future<String?> _refreshChildTokenOrFail() =>
+      _childTokenRenewal ??= _renewChildToken()
+          .whenComplete(() => _childTokenRenewal = null);
+
+  Future<String?> _renewChildToken() async {
     try {
-      final activeChildId = await (onNeedActiveChildId?.call() ?? _auth.readActiveChildId());
-      if (activeChildId == null) return null;
-      try {
-        final session = await _auth.readSession();
-        if (session.$1 == null) return null;
-        final newSession = await createChildSession(activeChildId);
-        final token = newSession['token'] as String?;
-        if (token == null) return null;
-        await _auth.writeChildToken(token);
-        return token;
-      } catch (_) {
-        return null;
-      }
-    } finally {
-      _refreshingChildToken = false;
+      final childId = await _childModeChildId();
+      if (childId == null) return null;
+      final session = await _auth.readSession();
+      if (session.$1 == null) return null;
+      final newSession = await createChildSession(childId);
+      final token = newSession['token'] as String?;
+      if (token == null) return null;
+      await _auth.writeChildToken(token);
+      return token;
+    } catch (_) {
+      return null;
     }
+  }
+
+  /// The child whose surface is open, as child mode stored it on entry
+  /// ([kChildModeChildIdKey]). Falls back to the active child only when none is
+  /// stored — the habit surface's behaviour before this existed.
+  Future<int?> _childModeChildId() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final stored = prefs.getInt(kChildModeChildIdKey);
+      if (stored != null) return stored;
+    } catch (_) {
+      // No preferences: fall back below.
+    }
+    return onNeedActiveChildId?.call() ?? _auth.readActiveChildId();
   }
 
   // ── Internals ────────────────────────────────────────────────────────
@@ -2209,10 +2491,34 @@ class TgClient {
 
   TgApiError _wrapStatus(int status, String body, Map<String, String> headers) {
     String message;
+    String? code;
+    Map<String, dynamic>? details;
     try {
       final j = jsonDecode(body);
       if (j is Map && j['detail'] is String) {
         message = j['detail'] as String;
+      } else if (j is Map &&
+          j['detail'] is Map &&
+          (j['detail'] as Map)['error'] is String) {
+        // `{"detail": {"error": "<code>", ...}}` — the programs contract.
+        // Screens map these codes to their own words (§11.6).
+        details = Map<String, dynamic>.from(j['detail'] as Map);
+        code = details['error'] as String;
+        message = AppL10n.current.apiHttpError('$status');
+      } else if (j is Map &&
+          j['detail'] is Map &&
+          (j['detail'] as Map)['code'] is String) {
+        // `{"detail": {"code": "<code>", "message": "<Arabic to show>",
+        // "message_en": ...}}` — §9's branchable errors, e.g. a child deletion
+        // refused with `device_proof_required` / `device_proof_cooldown`. The
+        // server writes these for the parent; show them rather than "HTTP 403".
+        details = Map<String, dynamic>.from(j['detail'] as Map);
+        code = details['code'] as String;
+        final text = (uiLanguage == 'en' ? details['message_en'] : null) ??
+            details['message'];
+        message = text is String && text.trim().isNotEmpty
+            ? text
+            : AppL10n.current.apiHttpError('$status');
       } else {
         message = AppL10n.current.apiHttpError('$status');
       }
@@ -2227,7 +2533,8 @@ class TgClient {
       if (secs != null) retryAfter = Duration(seconds: secs);
     }
 
-    return TgApiError(status, message, retryAfter: retryAfter);
+    return TgApiError(status, message,
+        retryAfter: retryAfter, code: code, details: details);
   }
 
   /// Close the underlying HTTP client. Safe to call multiple times.

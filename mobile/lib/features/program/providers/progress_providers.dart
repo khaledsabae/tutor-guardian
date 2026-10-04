@@ -184,6 +184,7 @@ class CreateChildNotifier
     required String ageGroup,
     String? gender,
     String? avatarEmoji,
+    String? birthMonth,
   }) async {
     state = const AsyncValue.loading();
     try {
@@ -193,6 +194,7 @@ class CreateChildNotifier
         ageGroup: ageGroup,
         gender: gender,
         avatarEmoji: avatarEmoji,
+        birthMonth: birthMonth,
       );
       // Wire up the new child as active on both runtime + disk.
       await _setActiveAndPersist(ref, child);

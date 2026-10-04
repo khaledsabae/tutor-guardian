@@ -70,6 +70,13 @@ import '../features/program/screens/settings_screen.dart';
 import '../features/program/screens/story_bookshelf_screen.dart';
 import '../features/program/screens/story_reader_screen.dart';
 import '../features/program/screens/video_player_screen.dart';
+import '../features/programs/screens/fasting_ladder_screen.dart';
+import '../features/programs/screens/milestones_screen.dart';
+import '../features/programs/screens/prayer_journey_screen.dart';
+import '../features/programs/screens/programs_screen.dart';
+import '../features/programs/screens/ramadan_day_screen.dart';
+import '../features/programs/screens/ramadan_recap_screen.dart';
+import '../features/programs/screens/ramadan_screen.dart';
 import '../features/quran/screens/quran_screen.dart';
 import '../features/quran/screens/surah_reading_screen.dart';
 import '../features/tools/screens/tasbeeh_screen.dart';
@@ -164,6 +171,16 @@ abstract final class Screens {
   static const parentDay = 'parent_day';
   static const pendingMissions = 'pending_missions';
   static const parentLicense = 'parent_license';
+
+  // Family programs (MOBILE_API §11)
+  static const programs = 'programs';
+  static const ramadan = 'ramadan';
+  static const ramadanDay = 'ramadan_day';
+  static const fastingLadder = 'fasting_ladder';
+  static const ramadanRecap = 'ramadan_recap';
+  static const prayerJourney = 'prayer_journey';
+  static const milestones = 'milestones';
+  static const milestoneDetail = 'milestone_detail';
 
   // Account & meta
   static const settings = 'settings';
@@ -477,6 +494,40 @@ abstract final class AppRoutes {
           {required String storyKey, required String storyText}) =>
       _r(Screens.recordNarration,
           (_) => RecordNarrationScreen(storyKey: storyKey, storyText: storyText));
+
+  // ── Family programs ─────────────────────────────────────────────────────
+  /// Every program, per child. Reached from Home and «المزيد» — both shown
+  /// only when the server answers `GET /api/programs`.
+  static Route<void> programs() =>
+      _r(Screens.programs, (_) => const ProgramsScreen());
+
+  /// «رمضان العائلة» for one child: the family's day plus that child's part.
+  static Route<void> ramadan(int childId) =>
+      _r(Screens.ramadan, (_) => RamadanScreen(childId: childId));
+
+  /// Any day 1–30: a preview, or a past day to tick.
+  static Route<void> ramadanDay(int childId, int day) =>
+      _r(Screens.ramadanDay, (_) => RamadanDayScreen(childId: childId, day: day));
+
+  static Route<void> fastingLadder(int childId) =>
+      _r(Screens.fastingLadder, (_) => FastingLadderScreen(childId: childId));
+
+  /// «رمضان عائلتنا» — the family's card and its in-app counters.
+  static Route<void> ramadanRecap() =>
+      _r(Screens.ramadanRecap, (_) => const RamadanRecapScreen());
+
+  static Route<void> prayerJourney(int childId) =>
+      _r(Screens.prayerJourney, (_) => PrayerJourneyScreen(childId: childId));
+
+  static Route<void> milestones(int childId) =>
+      _r(Screens.milestones, (_) => MilestonesScreen(childId: childId));
+
+  /// One milestone — also where the milestone push lands
+  /// (`/milestones/{child_id}/{key}`); falls back to the list on a 404.
+  static Route<void> milestoneDetail(int childId, String milestoneKey) => _r(
+        Screens.milestoneDetail,
+        (_) => MilestoneDetailScreen(childId: childId, milestoneKey: milestoneKey),
+      );
 
   // ── Account & meta ──────────────────────────────────────────────────────
   static Route<void> settings() =>

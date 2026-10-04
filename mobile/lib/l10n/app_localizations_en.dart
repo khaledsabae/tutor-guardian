@@ -4128,4 +4128,844 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get birthMonthLabel => 'Birth month (optional)';
+
+  @override
+  String get birthMonthWhy =>
+      'The birth month lets Al-Murabbi remind you before important stages, at the right time — like starting to teach prayer at seven. The month and year are enough; we never ask for the day.';
+
+  @override
+  String get birthMonthNotSet => 'Not set';
+
+  @override
+  String get birthMonthChoose => 'Choose';
+
+  @override
+  String get birthMonthChange => 'Change';
+
+  @override
+  String get birthMonthClear => 'Remove';
+
+  @override
+  String get birthMonthPickerTitle => 'Birth month';
+
+  @override
+  String get birthMonthYear => 'Year';
+
+  @override
+  String birthMonthBandHint(String name, String band) {
+    return 'By the birth month, $name is in the $band group.';
+  }
+
+  @override
+  String get birthMonthUseBand => 'Use it';
+
+  @override
+  String get childPrayerTitle => 'My prayer today';
+
+  @override
+  String get childPrayerClaim => 'I did it';
+
+  @override
+  String get childPrayerDoneToday => 'Done for today ✓';
+
+  @override
+  String get childPrayerRecorded =>
+      'Recorded ✓ Mum or Dad will see it this evening.';
+
+  @override
+  String get fastingUrgentTitle => 'Urgent signs';
+
+  @override
+  String get fastingUrgentWhatToDo => 'What to do straight away';
+
+  @override
+  String get fastingStopTitle => 'When to break the fast straight away';
+
+  @override
+  String get fastingDoctorFirst =>
+      'See a doctor before starting if your child has';
+
+  @override
+  String fastingSteps(String name) {
+    return '$name\'s steps';
+  }
+
+  @override
+  String get fastingCurrent => 'Current step';
+
+  @override
+  String get fastingSetStep => 'Make this the step';
+
+  @override
+  String fastingFromAge(int age) {
+    return 'From age $age';
+  }
+
+  @override
+  String fastingHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: 'About $hours hours',
+      one: 'About 1 hour',
+      zero: 'No fasting hours',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String fastingMaxDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'At most $days days a week',
+      one: 'At most 1 day a week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get fastingAdvanceWhen => 'When to move up';
+
+  @override
+  String get fastingNotYetForAge => 'Not for their age yet';
+
+  @override
+  String fastingPuberty(String name) {
+    return '$name has reached puberty';
+  }
+
+  @override
+  String get fastingPubertyHint =>
+      'Puberty, not age, makes fasting obligatory. Turning this on moves your child to the 13–15 step, and the practice-day limit no longer applies. Ask people of knowledge about the rulings.';
+
+  @override
+  String get fastingClimbed => 'Moved up a step — well done!';
+
+  @override
+  String get fastingStepSaved => 'Step saved';
+
+  @override
+  String get fastingPrinciples => 'Principles';
+
+  @override
+  String get fastingTips => 'Tips';
+
+  @override
+  String get fastingErrorNotForAge => 'This step is for an older age.';
+
+  @override
+  String get fastingErrorNoStep => 'Choose their step first.';
+
+  @override
+  String milestonesTitle(String name) {
+    return '$name\'s stages';
+  }
+
+  @override
+  String get milestonesDue => 'Due now';
+
+  @override
+  String get milestonesUpcoming => 'Coming up';
+
+  @override
+  String milestonesLibrary(String name) {
+    return 'For $name\'s age';
+  }
+
+  @override
+  String get milestonesPast => 'Earlier';
+
+  @override
+  String milestonesDueOn(String date) {
+    return 'Due: $date';
+  }
+
+  @override
+  String milestonesNeedsBirthMonth(String name) {
+    return 'Add $name\'s birth month so we know when each stage comes and can remind you a month before. Until then, the cards follow their age group.';
+  }
+
+  @override
+  String milestonesNeedsGender(String name) {
+    return 'Set $name\'s gender to see the right guide to getting ready for puberty.';
+  }
+
+  @override
+  String get milestonesCompleteProfile => 'Complete the profile';
+
+  @override
+  String get milestonesEmpty => 'No stages to show right now.';
+
+  @override
+  String get milestonesRedFlags => 'When to see a professional';
+
+  @override
+  String get milestonesMedicalNote =>
+      'General information — not a substitute for a doctor.';
+
+  @override
+  String get milestonesLinks => 'Go deeper';
+
+  @override
+  String missionCoinsEarned(int coins) {
+    String _temp0 = intl.Intl.pluralLogic(
+      coins,
+      locale: localeName,
+      other: '$coins coins added',
+      one: '1 coin added',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get prayerAdvanceTitle => 'This stage\'s weeks are done';
+
+  @override
+  String prayerAdvanceBody(int next, String name) {
+    return 'Move on to stage $next when you feel $name is ready — it\'s your call.';
+  }
+
+  @override
+  String prayerAdvanceButton(int next) {
+    return 'Go to stage $next';
+  }
+
+  @override
+  String get prayerBackToStage => 'Go back to an earlier stage';
+
+  @override
+  String get prayerBackHint =>
+      'Going back is invisible to your child — they only see the day\'s tasks.';
+
+  @override
+  String get prayerBasis => 'What the journey is based on';
+
+  @override
+  String get prayerPrinciples => 'The journey\'s principles';
+
+  @override
+  String get prayerChooseStage => 'Which stage shall we start from?';
+
+  @override
+  String get prayerConfirmNow => 'Confirm now';
+
+  @override
+  String get prayerCovenantTitle => 'The covenant';
+
+  @override
+  String prayerCovenantProgress(int coins, int target) {
+    return '$coins coins this stage — the covenant is at $target.';
+  }
+
+  @override
+  String get prayerCovenantExamples => 'Covenant ideas';
+
+  @override
+  String get prayerSetCovenant => 'Agree on the covenant';
+
+  @override
+  String get prayerErrorAlreadyEnrolled => 'The journey has already started.';
+
+  @override
+  String get prayerErrorGraduationNotYet =>
+      'Graduation opens once the last stage\'s weeks are complete.';
+
+  @override
+  String get prayerErrorNotForAge => 'This track isn\'t for their age.';
+
+  @override
+  String get prayerErrorOneStage => 'You move on one stage at a time.';
+
+  @override
+  String get prayerGraduateButton => 'Celebrate the graduation';
+
+  @override
+  String prayerGraduatedOn(String date) {
+    return 'Completed the journey on $date';
+  }
+
+  @override
+  String get prayerGraduatedTitle => 'Prayer Journey complete!';
+
+  @override
+  String prayerHandOver(String name) {
+    return 'Hand the phone to $name to record their task';
+  }
+
+  @override
+  String get prayerHowToConfirm => 'How to confirm';
+
+  @override
+  String get prayerIfStruggling => 'If it\'s hard going';
+
+  @override
+  String get prayerJourneyInstead =>
+      'Not praying regularly yet? Start the journey from the right stage';
+
+  @override
+  String get prayerLessons => 'Lessons for this stage';
+
+  @override
+  String prayerNotForChild(String name) {
+    return 'The Prayer Journey isn\'t for $name\'s age right now.';
+  }
+
+  @override
+  String prayerRecordInJourney(String name) {
+    return 'Record this moment in $name\'s journey';
+  }
+
+  @override
+  String prayerSayToChild(String name) {
+    return 'Say to $name';
+  }
+
+  @override
+  String prayerStageN(int stage) {
+    return 'Stage $stage';
+  }
+
+  @override
+  String prayerStageOf(int stage, int total) {
+    return 'Stage $stage of $total';
+  }
+
+  @override
+  String prayerStageWeeks(int first, int last) {
+    return 'Weeks $first–$last';
+  }
+
+  @override
+  String get prayerStagesTitle => 'The stages';
+
+  @override
+  String prayerStartTrack(String title) {
+    return 'Start: $title';
+  }
+
+  @override
+  String get prayerStop => 'Stop the journey';
+
+  @override
+  String prayerStopConfirm(String name) {
+    return 'Stop the Prayer Journey with $name? You can start again whenever you like.';
+  }
+
+  @override
+  String prayerTaskGoal(int count) {
+    return 'Suggested: $count a week';
+  }
+
+  @override
+  String prayerTaskThisWeek(int count) {
+    return 'This week: $count';
+  }
+
+  @override
+  String prayerTaskToday(int count) {
+    return 'Today: $count';
+  }
+
+  @override
+  String prayerTasksTitle(String name) {
+    return '$name\'s tasks';
+  }
+
+  @override
+  String get prayerTrackJourney => 'The Prayer Journey';
+
+  @override
+  String get prayerTrackOwnership => 'My prayer, my responsibility';
+
+  @override
+  String get prayerTrackPreparation => 'Getting ready';
+
+  @override
+  String prayerWeekN(int week) {
+    return 'Week $week';
+  }
+
+  @override
+  String get prayerYourPart => 'Your part this stage';
+
+  @override
+  String get programsTitle => 'Family programs';
+
+  @override
+  String get programsIntro =>
+      'Short programs that walk with you step by step: Family Ramadan, the Prayer Journey, and the important stages of each child\'s life.';
+
+  @override
+  String get programsHomeIntro =>
+      'Family Ramadan, the Prayer Journey, and the important stages of your child\'s life.';
+
+  @override
+  String programsCoins(int coins) {
+    String _temp0 = intl.Intl.pluralLogic(
+      coins,
+      locale: localeName,
+      other: '$coins coins',
+      one: '1 coin',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get programsErrorNotInSeason =>
+      'This can be set before and during Ramadan.';
+
+  @override
+  String get programsEvidenceTitle => 'The evidence';
+
+  @override
+  String get programsVerses => 'Verses';
+
+  @override
+  String get programsLessonFallback => 'Lesson';
+
+  @override
+  String get programsPathFallback => 'Path';
+
+  @override
+  String get programsMeaningLabel => 'Meaning';
+
+  @override
+  String programsMilestonesAddBirthMonth(String name) {
+    return 'Add $name\'s birth month for reminders at the right time';
+  }
+
+  @override
+  String get programsMilestonesBrowse => 'What each age brings';
+
+  @override
+  String programsMilestonesDue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count stages are due now',
+      one: '1 stage is due now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String programsMilestonesDueFor(int count, String name) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count stages in $name\'s life are due now',
+      one: 'A stage in $name\'s life is due now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get programsMilestonesTitle => 'Important stages';
+
+  @override
+  String get programsNoChildren => 'Add your child to see their programs here.';
+
+  @override
+  String get programsOpenInQuran => 'Open in the Quran';
+
+  @override
+  String get programsOpenRamadan => 'Open the program';
+
+  @override
+  String get programsPrayerAdvance => 'Ready for the next stage when you are';
+
+  @override
+  String get programsPrayerCanGraduate => 'Ready to graduate';
+
+  @override
+  String programsPrayerNotStarted(String track) {
+    return 'Not started yet: $track';
+  }
+
+  @override
+  String programsPrayerPending(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tasks waiting for you to confirm',
+      one: '1 task waiting for you to confirm',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String programsPrayerStartWith(String name) {
+    return 'The Prayer Journey: start it with $name';
+  }
+
+  @override
+  String get programsPrayerTitle => 'The Prayer Journey';
+
+  @override
+  String get programsQuranArabicNote =>
+      'The Quran is shown in its Arabic text.';
+
+  @override
+  String programsRamadanAfterWeek(int week) {
+    return 'After Ramadan: week $week of keeping it going';
+  }
+
+  @override
+  String get programsRamadanEid =>
+      'Eid Mubarak — your «Our Family\'s Ramadan» card is ready';
+
+  @override
+  String get programsRamadanOffSeason =>
+      'The Ramadan program returns next season, God willing.';
+
+  @override
+  String programsRamadanRole(String name) {
+    return '$name\'s part in Ramadan';
+  }
+
+  @override
+  String get programsRamadanTitle => 'Family Ramadan';
+
+  @override
+  String get programsSaved => 'Saved';
+
+  @override
+  String programsSurahRange(String surah, String range) {
+    return 'Surah $surah ($range)';
+  }
+
+  @override
+  String get programsUnavailable =>
+      'These programs aren\'t available right now. Please try again later.';
+
+  @override
+  String get ramadanAfterHabits => 'Habits to keep';
+
+  @override
+  String get ramadanAfterLinks => 'Carry on from here';
+
+  @override
+  String get ramadanAfterThisWeek => 'This week';
+
+  @override
+  String get ramadanAfterWeeks => 'The weeks after';
+
+  @override
+  String get ramadanAtHome => 'At home';
+
+  @override
+  String ramadanChildPart(String name) {
+    return '$name\'s part';
+  }
+
+  @override
+  String get ramadanChooseStep => 'Choose their step';
+
+  @override
+  String get ramadanCostFree => 'Free';
+
+  @override
+  String get ramadanCostLow => 'Low cost';
+
+  @override
+  String ramadanCountdown(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days until Ramadan',
+      one: '1 day until Ramadan',
+      zero: 'Ramadan starts today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ramadanDayN(int day) {
+    return 'Day $day';
+  }
+
+  @override
+  String ramadanDayOf(int day, int total) {
+    return 'Day $day of $total of Ramadan';
+  }
+
+  @override
+  String get ramadanDayPreviewNote =>
+      'This day hasn\'t come yet — you can tick it on the day.';
+
+  @override
+  String get ramadanDays29 => '29 days';
+
+  @override
+  String get ramadanDays30 => '30 days';
+
+  @override
+  String get ramadanDaysAuto => 'Follow the official announcement';
+
+  @override
+  String get ramadanEidTomorrowTitle => 'Is tomorrow Eid?';
+
+  @override
+  String get ramadanEidTomorrowBody =>
+      'If Eid was announced for tomorrow where you live, set the month to 29 days so the program reaches Eid with you on time.';
+
+  @override
+  String get ramadanErrorDayNotMarkable =>
+      'This day can be ticked once it comes.';
+
+  @override
+  String get ramadanFamilyChallenge => 'The family challenge';
+
+  @override
+  String get ramadanFamilyWordHint =>
+      'Pick one word for your Ramadan — it will appear on your «Our Family\'s Ramadan» card.';
+
+  @override
+  String get ramadanFamilyWordTitle => 'Our Ramadan word';
+
+  @override
+  String ramadanFastingNoStep(String name) {
+    return '$name\'s step isn\'t chosen yet.';
+  }
+
+  @override
+  String ramadanFastingStep(String name, String step) {
+    return '$name\'s step: $step';
+  }
+
+  @override
+  String get ramadanFastingTitle => 'The fasting ladder';
+
+  @override
+  String get ramadanMarkChallenge => 'The challenge';
+
+  @override
+  String get ramadanMarkJuz => 'The khatma juz';
+
+  @override
+  String get ramadanMarkNight => 'We gathered tonight';
+
+  @override
+  String get ramadanMarkStory => 'The story';
+
+  @override
+  String get ramadanMarkWird => 'The Quran portion';
+
+  @override
+  String get ramadanMarksNote =>
+      'Tick only what you did — anything else simply isn\'t recorded.';
+
+  @override
+  String get ramadanMarksTitle => 'What we did';
+
+  @override
+  String get ramadanMaterials => 'You\'ll need';
+
+  @override
+  String get ramadanMayNotOccur =>
+      'This day may not come if the month has 29 days.';
+
+  @override
+  String ramadanMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes min',
+      one: '1 min',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get ramadanNoFastingBeforeSeven =>
+      'No fasting before seven in this program — your child shares the spirit of Ramadan with you.';
+
+  @override
+  String get ramadanOddNight =>
+      'Tonight is one of the odd nights of the last ten.';
+
+  @override
+  String get ramadanOffSeasonBody =>
+      'This Ramadan season is over. See you next Ramadan, God willing.';
+
+  @override
+  String get ramadanOpenLadder => 'Open the fasting ladder';
+
+  @override
+  String get ramadanOtherDays => 'Days of the month';
+
+  @override
+  String ramadanParentJuz(int juz) {
+    return 'Parents\' khatma: juz $juz';
+  }
+
+  @override
+  String get ramadanParentNote => 'For you';
+
+  @override
+  String get ramadanPhaseFirstTen => 'The first ten days';
+
+  @override
+  String get ramadanPhaseMiddleTen => 'The middle ten days';
+
+  @override
+  String get ramadanPhaseLastTen => 'The last ten days';
+
+  @override
+  String ramadanPractisedThisWeek(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count times this week',
+      one: 'Once this week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ramadanPractisedToday(String name) {
+    return '$name practised their step today';
+  }
+
+  @override
+  String get ramadanReadStory => 'Read it together';
+
+  @override
+  String ramadanReadWithChild(String name) {
+    return 'This part speaks to $name — read it together.';
+  }
+
+  @override
+  String get ramadanRecapOpen => 'Open «Our Family\'s Ramadan»';
+
+  @override
+  String get ramadanRestSuggested =>
+      'That\'s enough for this week — let tomorrow be a rest day.';
+
+  @override
+  String ramadanSettingsCurrent(String date, int days) {
+    return 'Now: starts on $date, $days days';
+  }
+
+  @override
+  String get ramadanSettingsIntro =>
+      'Ramadan begins with the moon sighting, and the day can differ between countries. Set it to what was announced where you live.';
+
+  @override
+  String get ramadanSettingsLength => 'Days in the month';
+
+  @override
+  String get ramadanSettingsStart => 'The first day of Ramadan';
+
+  @override
+  String get ramadanSettingsTitle => 'Your moon sighting';
+
+  @override
+  String get ramadanShiftEarlier => 'A day earlier';
+
+  @override
+  String get ramadanShiftLater => 'A day later';
+
+  @override
+  String get ramadanShiftNone => 'On the announced day';
+
+  @override
+  String get ramadanSoFar => 'Our Ramadan so far';
+
+  @override
+  String ramadanStartsOn(String date) {
+    return 'Starts on $date';
+  }
+
+  @override
+  String ramadanStartsOnEstimate(String date) {
+    return 'Expected to start on $date — confirmed by the moon sighting';
+  }
+
+  @override
+  String ramadanStoryTonight(String title) {
+    return 'Tonight\'s story: $title';
+  }
+
+  @override
+  String get ramadanWhenAfterIftar => 'After iftar';
+
+  @override
+  String get ramadanWhenAnytime => 'Any time';
+
+  @override
+  String get ramadanWhenAtIftar => 'At iftar';
+
+  @override
+  String get ramadanWhenBeforeIftar => 'Before iftar';
+
+  @override
+  String get ramadanWhenNight => 'At night';
+
+  @override
+  String get ramadanWhenSuhoor => 'At suhoor';
+
+  @override
+  String get ramadanWhoSeesWhat => 'Who sees what';
+
+  @override
+  String get ramadanWirdTheme => 'Today\'s verses';
+
+  @override
+  String get ramadanWirdTitle => 'The family\'s Quran portion';
+
+  @override
+  String get ramadanWirdTogether => 'We read it together';
+
+  @override
+  String get recapEmpty =>
+      'No counts yet. Tick what you did under «What we did» on each day\'s card, and the counts will show up here.';
+
+  @override
+  String get recapFamilyOnly => 'For your family only';
+
+  @override
+  String get recapFamilyOnlyNote =>
+      'This never appears on the card or in the share — the children\'s fasting is the family\'s own business.';
+
+  @override
+  String get recapNoSeason => 'No Ramadan season is known yet.';
+
+  @override
+  String recapNotYet(String date) {
+    return 'The card will be ready on Eid ($date).';
+  }
+
+  @override
+  String get recapNotYetNoDate => 'The card will be ready on Eid.';
+
+  @override
+  String get recapPreview => 'This is what will be shared';
+
+  @override
+  String get recapShare => 'Share the card';
+
+  @override
+  String get recapShareFailed => 'Sharing didn\'t work. Please try again.';
+
+  @override
+  String get recapTitle => 'Our Family\'s Ramadan';
+
+  @override
+  String prayerHandOverNeedsBand(String name) {
+    return 'For $name to record tasks in child mode, update their age group in their profile to match their age.';
+  }
+
+  @override
+  String get ramadanRecapLastSeason =>
+      'Last Ramadan\'s «Our Family\'s Ramadan» card';
+
+  @override
+  String ramadanDayToday(int day) {
+    return 'Day $day, today';
+  }
 }

@@ -13,16 +13,30 @@ import '../../../widgets/ui/two_column_rows.dart';
 import '../data/hub_catalog.dart';
 
 class HubGroupCard extends StatelessWidget {
-  const HubGroupCard({super.key, required this.group, required this.ageGroup});
+  const HubGroupCard({
+    super.key,
+    required this.group,
+    required this.ageGroup,
+    this.available = const {},
+  });
 
   final HubGroup group;
 
   /// The active child's age group — only the routine/habit tile reads it.
   final String ageGroup;
 
+  /// Server capabilities seen so far; a tile that needs one not in here is
+  /// left out (see [HubRequirement]).
+  final Set<HubRequirement> available;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final items = [
+      for (final item in group.items)
+        if (item.requires == null || available.contains(item.requires)) item,
+    ];
+    if (items.isEmpty) return const SizedBox.shrink();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,7 +58,7 @@ class HubGroupCard extends StatelessWidget {
         TwoColumnRows(
           spacing: 10,
           children: [
-            for (final item in group.items)
+            for (final item in items)
               _HubTile(item: item, groupId: group.id, ageGroup: ageGroup),
           ],
         ),

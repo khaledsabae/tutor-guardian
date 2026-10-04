@@ -215,7 +215,8 @@ class CoinsService {
     if (fresh.isEmpty) return p.getInt(_kBalance) ?? 0;
     credited.addAll(fresh);
     await p.setStringList(_kCreditedBadges, credited.toList());
-    return earn(badgeReward * fresh.length);
+    await earn(badgeReward * fresh.length);
+    return p.getInt(_kBalance) ?? 0;
   }
 
   /// The one sink. Deducts [amount] for a covenant the parent has agreed to
@@ -240,21 +241,68 @@ class CoinsService {
     return (p.getStringList(_kOwnedBadges) ?? const <String>[]).toSet();
   }
 
-  /// Add coins, up to the daily ceiling. Returns the new balance.
+  /// Add coins, up to the daily ceiling. Returns the coins actually granted —
+  /// less than [amount] once the day's ceiling is reached, so a caller that
+  /// tells the family what was earned tells them the truth.
   ///
-  /// Everything that credits coins goes through here — including the games,
-  /// which used to write the balance key directly and so were outside every
-  /// limit this class imposes.
+  /// Everything an activity in the app earns goes through here — including the
+  /// games, which used to write the balance key directly and so were outside
+  /// every limit this class imposes. Coins a parent confirmed for a family
+  /// program go through [creditConfirmedMissions] instead.
   Future<int> earn(int amount) async {
     final p = await SharedPreferences.getInstance();
-    if (amount <= 0) return p.getInt(_kBalance) ?? 0;
+    if (amount <= 0) return 0;
     final earned = await _earnedToday(p);
     final room = (dailyEarnCap - earned).clamp(0, dailyEarnCap);
     final granted = amount < room ? amount : room;
-    if (granted <= 0) return p.getInt(_kBalance) ?? 0;
+    if (granted <= 0) return 0;
     await p.setInt(_kEarnedToday, earned + granted);
-    final balance = (p.getInt(_kBalance) ?? 0) + granted;
-    await p.setInt(_kBalance, balance);
-    return balance;
+    await p.setInt(_kBalance, (p.getInt(_kBalance) ?? 0) + granted);
+    return granted;
+  }
+
+  static const _kCreditedMissions = 'programs.credited_prayer_missions';
+
+  /// Recent mission ids kept as paid. An unanswered card expires after 48 h,
+  /// so a retry cannot reach further back than this; the cap keeps it small.
+  static const creditedMissionsKept = 500;
+
+  /// Pays the coins a parent confirmed in the evening (MOBILE_API §11.4.7):
+  /// [entries] is the confirm answer's `coins` list. Returns what was paid.
+  ///
+  /// * **Once per mission.** The server's list is idempotent — a retried batch
+  ///   (its first answer lost) reports the same missions again — so the ids
+  ///   paid are kept and skipped, as are duplicates within one answer.
+  /// * **Ids first, then the balance — and only if the ids were stored.** A
+  ///   crash between the two writes then loses a coin instead of paying the
+  ///   same mission twice when the batch is resent. Each read-modify-write
+  ///   runs without an await between the read and the (synchronous, cached)
+  ///   set, so a concurrent call already sees these ids and this balance.
+  ///   Nothing here depends on a screen: one popped mid-request used to leave
+  ///   the ids recorded and the coins unpaid, for good.
+  /// * **Outside [dailyEarnCap].** That ceiling stops a game from minting
+  ///   coins; these were confirmed by a parent and are bounded by the server
+  ///   per child per day. Clipping them paid a child less than the screen said.
+  ///   Still one family wallet.
+  Future<int> creditConfirmedMissions(List<Map<String, dynamic>> entries) async {
+    final p = await SharedPreferences.getInstance();
+    final paid = [...?p.getStringList(_kCreditedMissions)];
+    final known = paid.toSet();
+    var total = 0;
+    for (final entry in entries) {
+      final id = entry['mission_id'];
+      final coins = (entry['coins'] as num?)?.toInt() ?? 0;
+      if (id == null || coins <= 0) continue;
+      if (!known.add('$id')) continue; // paid before, or twice in this answer
+      paid.add('$id');
+      total += coins;
+    }
+    if (total <= 0) return 0;
+    if (paid.length > creditedMissionsKept) {
+      paid.removeRange(0, paid.length - creditedMissionsKept);
+    }
+    await p.setStringList(_kCreditedMissions, paid);
+    await p.setInt(_kBalance, (p.getInt(_kBalance) ?? 0) + total);
+    return total;
   }
 }
