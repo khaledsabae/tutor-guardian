@@ -333,9 +333,11 @@ def collect_units() -> list[Item]:
         if not ar_f.exists():
             continue
         ar, en = _load(ar_f), _load(en_f)
+        # is_published=false على المصدر العربي = محجوزة (حجر أمانة المصدر): لا تُعرض فلا تُختم.
         items.append(Item(kind="kb_units", key=en.get("id", en_f.stem), en_file=en_f,
                           ar_file=ar_f, fields=_field_pairs(ar, en, UNIT_FIELDS),
-                          age_band=str(ar.get("age_group", ""))))
+                          age_band=str(ar.get("age_group", "")),
+                          published=ar.get("is_published", True) is not False))
     return items
 
 

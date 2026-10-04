@@ -651,3 +651,14 @@ def test_unknown_authorship_cannot_be_vouched_for_by_one_reviewer(rp, tree):
     f.write_text(json.dumps(doc, ensure_ascii=False))
     assert rp.cmd_stamp_reviewed([_lesson(rp)], "claude-opus", None) == 1
     assert "no recorded author" in rp.family_conflict(_lesson(rp), ["claude-opus"])
+
+
+def test_a_quarantined_unit_needs_no_stamp(rp, tree):
+    units = tree / "knowledge_base" / "units"
+    ar = {"id": "isl-q", "title": "عنوان", "text_simplified": "نص", "is_published": False}
+    en = {"id": "isl-q__en", "title": "Title", "text_simplified": "Text",
+          "translation": {"approved_by": None}}
+    (units / "isl-q.json").write_text(json.dumps(ar, ensure_ascii=False))
+    (units / "isl-q__en.json").write_text(json.dumps(en, ensure_ascii=False))
+    (item,) = rp.collect_units()
+    assert item.published is False and rp.check_item(item) is None
