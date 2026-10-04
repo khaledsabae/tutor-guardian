@@ -839,6 +839,7 @@
   "chatOfflineRetry": "You are offline. Check your connection and try again.",
   "chatUnexpectedError": "Unexpected error: {error}",
   "chatConnectionInterrupted": "The connection dropped before the reply finished.",
+  "chatAnswerStillComing": "The reply is still being written — it will appear here shortly.",
   "chatResponseStopped": "⏹️ Reply stopped.",
   "chatStop": "Stop reply",
   "chatThinkingSlow": "Checking the sources to give you a reliable answer…",

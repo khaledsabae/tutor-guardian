@@ -174,16 +174,15 @@ def unanswered_stats(days: int) -> dict:
         path left behind, and what still shows up for anything the new
         persistence misses.
     """
-    orphans = _query(
-        """WITH m AS (
-             SELECT id, session_id, role, created_at,
-                    LEAD(role) OVER (PARTITION BY session_id ORDER BY id) AS nr
-             FROM chat_messages
-             WHERE created_at >= datetime('now', ?))
-           SELECT COUNT(*) n FROM m
-           WHERE role='user' AND (nr IS NULL OR nr='user')""",
+    # Same pairing rule as the weekly funnel report: a question re-asked
+    # before the first answer was saved (Q1, Q2, A1, A2) is not an orphan.
+    from ops.scripts.weekly_funnel_report import count_orphans
+
+    orphans = count_orphans(_query(
+        "SELECT session_id, role FROM chat_messages "
+        "WHERE created_at >= datetime('now', ?) ORDER BY session_id, id",
         (f"-{days} days",),
-    )[0]["n"]
+    ))
     total = _query(
         "SELECT COUNT(*) n FROM chat_messages WHERE role='user' "
         "AND created_at >= datetime('now', ?)", (f"-{days} days",),

@@ -80,10 +80,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Leaving the app mid-answer must not lose the partial reply.
+    final notifier = ref.read(chatNotifierProvider.notifier);
+    // Leaving the app saves the conversation but no longer stops a streaming
+    // answer (see ChatNotifier.onAppPaused); coming back recovers one whose
+    // connection the OS cut meanwhile.
     if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive) {
-      ref.read(chatNotifierProvider.notifier).onAppPaused();
+      notifier.onAppPaused();
+    } else if (state == AppLifecycleState.resumed) {
+      notifier.onAppResumed();
     }
   }
 
@@ -392,7 +397,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
             isStreaming: state.phase == ChatPhase.streaming,
             onSend: _onSend,
             onStop: () =>
-                ref.read(chatNotifierProvider.notifier).stopStreaming(),
+                ref.read(chatNotifierProvider.notifier).stopStreaming(notifyServer: true),
             behaviorType: state.behaviorType,
             onEditContext: () => _editContext(state.behaviorType),
             onClearContext: () => notifier.setBehaviorType(''),

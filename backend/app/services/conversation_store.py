@@ -251,6 +251,34 @@ def update_classification(
         conn.close()
 
 
+def update_reply(message_id: int, *, content: str, mode: str) -> None:
+    """Fill in an assistant row reserved earlier (see assistant.event_stream:
+    the row is inserted when the reader leaves, so it keeps its place before
+    any later question, and completed here when the answer is)."""
+    conn = get_conn()
+    try:
+        conn.execute(
+            "UPDATE chat_messages SET content = ?, mode = ? WHERE id = ? AND role = 'assistant'",
+            (content, mode, message_id),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def discard_reply(message_id: int) -> None:
+    """Remove an empty reservation that never received any text."""
+    conn = get_conn()
+    try:
+        conn.execute(
+            "DELETE FROM chat_messages WHERE id = ? AND role = 'assistant' AND content = ''",
+            (message_id,),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
 def get_history(session_id: str, limit: int = 20) -> list[ConversationTurn]:
     """Return the last `limit` turns (chronological) as ConversationTurn objects."""
     conn = get_conn()
@@ -260,10 +288,11 @@ def get_history(session_id: str, limit: int = 20) -> list[ConversationTurn]:
         # silent — but feeding one back as prior assistant context would put
         # the apology into the next prompt. mode='interrupted' rows DO stay:
         # that text is a real partial answer the parent actually read.
+        # An empty row is a reservation still waiting for its answer.
         rows = conn.execute(
             """SELECT role, content FROM chat_messages
                WHERE session_id = ?
-                 AND (mode IS NULL OR mode != 'error')
+                 AND (mode IS NULL OR mode != 'error') AND content != ''
                ORDER BY id DESC LIMIT ?""",
             (session_id, limit),
         ).fetchall()
@@ -284,9 +313,14 @@ def get_session(session_id: str) -> dict | None:
         ).fetchone()
         if s is None:
             return None
+        # `id` lets the app match a reply to the question it asked (the
+        # server echoes the question's id as the first SSE event); an empty
+        # assistant row is a reservation still waiting for its answer.
         msgs = conn.execute(
-            """SELECT role, content, domain, severity, mode, needs_human_review, created_at
-               FROM chat_messages WHERE session_id = ? ORDER BY id ASC""",
+            """SELECT id, role, content, domain, severity, mode, needs_human_review, created_at
+               FROM chat_messages
+               WHERE session_id = ? AND NOT (role = 'assistant' AND content = '')
+               ORDER BY id ASC""",
             (session_id,),
         ).fetchall()
     finally:
@@ -299,6 +333,7 @@ def get_session(session_id: str) -> dict | None:
         "metadata": json.loads(s["metadata"] or "{}"),
         "messages": [
             {
+                "id": m["id"],
                 "role": m["role"],
                 "content": m["content"],
                 "domain": m["domain"],

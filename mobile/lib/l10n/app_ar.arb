@@ -839,6 +839,7 @@
   "chatOfflineRetry": "غير متصل بالإنترنت. تحقّق من الاتصال وأعد المحاولة.",
   "chatUnexpectedError": "خطأ غير متوقع: {error}",
   "chatConnectionInterrupted": "انقطع الاتصال قبل اكتمال الرد.",
+  "chatAnswerStillComing": "ما زال الرد يُكتب، وسيظهر هنا خلال لحظات.",
   "chatResponseStopped": "⏹️ تم إيقاف الرد.",
   "chatStop": "إيقاف الرد",
   "chatThinkingSlow": "أراجع المصادر لأعطيك جوابًا موثوقًا…",

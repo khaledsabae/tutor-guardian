@@ -6,7 +6,7 @@ the heavy RAG stack is never imported. The auth middleware is stubbed
 via a tiny middleware that sets `request.state.device_id`.
 """
 import sqlite3
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 import pytest
 from fastapi import FastAPI, Request
@@ -307,3 +307,35 @@ def test_progress_endpoint_streak_ignores_path_filter(client, tmp_db):
     body = r.json()
     assert body["streak_days"] == 2
     assert body["daily_login_streak"] == 1  # today from this GET
+
+
+def test_progress_endpoint_persists_todays_login_row(client, tmp_db):
+    """The login row must outlive the request. It was inserted but never
+    committed, so conn.close() rolled it back: the streak read 1 forever and
+    production held zero rows (2026-10-04). Read through a fresh connection."""
+    import sqlite3
+
+    child_id = _create_child(client)
+    # UTC on both sides, like the endpoint: a local date here made the test
+    # fail between 00:00 and 03:00 in Cairo/Riyadh.
+    today_utc = datetime.now(timezone.utc).date()
+    _seed_login_dates(client, "test-device-001", child_id,
+                      [today_utc - timedelta(days=1)])
+    r = client.get(f"/api/children/{child_id}/progress")
+    assert r.status_code == 200
+
+    conn = sqlite3.connect(tmp_db)
+    try:
+        rows = conn.execute(
+            "SELECT date FROM daily_login_streaks WHERE device_id = ? AND child_id = ?",
+            ("test-device-001", child_id),
+        ).fetchall()
+    finally:
+        conn.close()
+    assert sorted(r[0] for r in rows) == [
+        (today_utc - timedelta(days=1)).isoformat(),
+        today_utc.isoformat(),
+    ]
+    # Second visit on the same day: idempotent, and yesterday + today = 2.
+    r2 = client.get(f"/api/children/{child_id}/progress")
+    assert r2.json()["daily_login_streak"] == 2

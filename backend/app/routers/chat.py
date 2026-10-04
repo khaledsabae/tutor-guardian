@@ -3,11 +3,14 @@ Chat session router — إدارة جلسات المحادثة (mobile-ready)
 ==========================================================
 POST /api/chat/sessions          → create a session, returns session_id + auth token
 GET  /api/chat/sessions/{id}     → full session with message history (requires auth)
+POST /api/chat/sessions/{id}/stop → stop the answer being generated (requires auth)
 """
+import asyncio
 import logging
 import os
 
 from fastapi import APIRouter, HTTPException, Request, status
+from pydantic import BaseModel
 
 from app.core.log_safety import device_tag
 from app.models.api import SessionCreate, SessionCreateResponse, SessionResponse
@@ -96,3 +99,35 @@ def get_session(session_id: str, request: Request) -> SessionResponse:
     if data.get("device_id") and data["device_id"] != auth_device:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
     return SessionResponse(**data)
+
+
+class StopRequest(BaseModel):
+    message_id: int | None = None
+
+
+@router.post("/sessions/{session_id}/stop")
+async def stop_answer(session_id: str, request: Request,
+                      body: StopRequest | None = None) -> dict:
+    """Stop the answer this session is generating — the parent pressed Stop.
+
+    Additive (2026-10). Without it a Stop looked exactly like the app going to
+    the background, and the server finished the rejected answer anyway: paid
+    tokens, a worker held for minutes, and an answer the parent dismissed
+    written into the conversation. App builds that never call this keep the
+    old behaviour: a closed stream is finished in the background.
+
+    Lives under /api/chat, not /api/assistant: stopping must not count against
+    the daily AI question quota. `message_id` names the question being
+    stopped; a stop that arrives after a newer question started is a no-op.
+    """
+    exists, owner = await asyncio.to_thread(store.session_owner, session_id)
+    caller = getattr(request.state, "device_id", None)
+    if not exists or (owner and owner != caller):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Session not found")
+    from app.routers.assistant import cut_pending_turn  # lazy: avoid an import cycle
+
+    stopped = await cut_pending_turn(
+        session_id, "stopped_by_parent",
+        only_message_id=body.message_id if body else None,
+    )
+    return {"stopped": stopped}

@@ -97,6 +97,7 @@ class SessionResponse(BaseModel):
 
 
 class ChatMessageOut(BaseModel):
+    id: int | None = None
     role: str
     content: str
     domain: str | None = None

@@ -11,7 +11,13 @@ from app.models.api import ConversationTurn
 logger = logging.getLogger(__name__)
 
 # Matches a trailing citation line (📚 …) or a bare "المصدر/المصادر: …" line.
-_PIVOT_CITATION_RE = re.compile(r"\n*\s*(?:📚|المصدر[\s:：]|المصادر[\s:：]).*$", re.S)
+_PIVOT_CITATION_RE = re.compile(
+    r"\n*\s*(?:📚|المصدر[\s:：]|المصادر[\s:：]).*$"
+    # English/French source lines too — only at the start of a line, so the
+    # word "source" inside a sentence is left alone.
+    r"|(?:^|\n)[ \t>*_-]*(?:sources?|references?|références?)[ \t*_]*[:：].*$",
+    re.S | re.I,
+)
 
 # CJK / Japanese / Korean / fullwidth ranges. The local qwen model occasionally
 # leaks Chinese tokens mid-answer ("首先要认识到，…"); strip them deterministically.
@@ -137,24 +143,44 @@ def build_pivot_prompt(question_text: str, age_group: str) -> str:
     """Full prompt for a general/off-topic question (e.g. a recipe): answer
     briefly from general knowledge, then pivot it into a parenting activity.
     No retrieved sources, no citations — keeps the app on its parenting
-    mission without refusing the user."""
+    mission without refusing the user.
+
+    Rules added from the 👎 triage (2026-10-04) — each one a rated failure:
+    the model invented a question to answer when there was none («سلام» →
+    «نعم، النشاط البدني مهم…»), invented app menus («رواية ورش» → a settings
+    path that does not exist), and answered an English question in Arabic
+    (this prompt never carried the language rule the grounded prompt has).
+    """
     age = age_group or "unspecified"
     q = (question_text or "").strip() or "سؤال عام"
-    return (
+    prompt = (
         "أنت مساعد تربوي ذكي للأهل العرب المسلمين، ودود ومختصر.\n\n"
-        f"[سؤال عام من الوالد/الوالدة — ليس له علاقة مباشرة بالتربية]\n{q}\n"
+        f"[رسالة من الوالد/الوالدة لم تُصنَّف ضمن مجالات التربية]\n{q}\n"
         f"الفئة العمرية للطفل: {age}\n\n"
         "تعليمات الرد (التزم بها):\n"
-        "1. إذا كان كلام المستخدم مجرد تحية أو شكر أو عبارة مجاملة (مثل: شكراً، مرحباً): "
+        "1. إذا كان كلام المستخدم مجرد تحية أو شكر أو عبارة مجاملة (مثل: شكراً، مرحباً، سلام، كيف الحال): "
         "رد بود واقتضاب فقط، ولا تقترح أي نشاط تربوي على الإطلاق.\n"
-        "2. إذا كان السؤال عن التطبيق أو طريقة استخدامه الفنية (مثل: كيف أضيف طفل): "
-        "اشرح الخطوات بوضوح دون ربطها بنشاط تربوي.\n"
-        "3. للأسئلة العامة الأخرى: أجب عن السؤال بإيجاز شديد (سطر أو سطرين) من معرفتك العامة، "
+        "2. إذا لم يكن في الرسالة سؤال واضح (مثل: «عندي سؤال»، أو كلمة واحدة، أو حروف غير مفهومة): "
+        "اطلب منه بلطف أن يكتب سؤاله كاملاً. لا تخترع سؤالاً ولا جواباً لم يُطلب.\n"
+        "3. إذا كان السؤال عن التطبيق أو طريقة استخدامه الفنية (إعداداته أو أزراره أو ميزاته): "
+        "لا تخترع خطوات ولا أسماء قوائم لا تعرفها يقيناً. قل باختصار إنك المساعد التربوي ولا ترى "
+        "إعدادات التطبيق، وادعُه إلى إرسال سؤاله من «شاركنا رأيك» في التطبيق ليصله الرد، دون نشاط تربوي.\n"
+        "4. إذا كانت الرسالة سؤالاً تربوياً أو أسرياً حقيقياً: أجب عنه إجابة عملية موجزة تناسب عمر الطفل، "
+        "بلا نشاط مُقحم، وبلا فتوى أو تشخيص طبي.\n"
+        "5. للأسئلة العامة الأخرى: أجب عن السؤال بإيجاز شديد (سطر أو سطرين) من معرفتك العامة، "
         "ثم اربطه بنشاط ممتع يمكن للوالد أن يفعله مع طفله، ووضّح باختصار "
         "ما الذي ينمّيه فيه (مهارة أو قيمة أو رابطة عاطفية).\n"
-        "4. لا تذكر أي مصادر أو اقتباسات أو أرقام مراجع، ولا تقل «بناءً على النص المرجعي».\n"
-        "5. بالعربية الفصحى الميسّرة، وبنبرة دافئة مشجّعة، وتجنب تماماً ترك أي قوالب غير مكتملة أو نصوص ناقصة.\n"
+        "6. لا تذكر أي مصادر أو اقتباسات أو أرقام مراجع، ولا تقل «بناءً على النص المرجعي».\n"
+        "7. بلغة الوالد نفسها (بالعربية الفصحى الميسّرة إن كتب بالعربية)، وبنبرة دافئة مشجّعة، "
+        "وتجنب تماماً ترك أي قوالب غير مكتملة أو نصوص بين أقواس تنتظر الملء.\n"
     )
+    # Same first-line rule as the grounded prompt (_compose_system_prompt):
+    # an all-Arabic prompt is itself an instruction to answer in Arabic. The
+    # pivot's variant does not mention a sources line — rule 6 forbids one.
+    from app.services.retrieval import detect_query_language
+    if detect_query_language(question_text or "") == "en":
+        prompt = _NON_ARABIC_DIRECTIVE_PIVOT + prompt
+    return prompt
 
 
 def strip_pivot_citation(text: str) -> str:
@@ -295,6 +321,13 @@ _NON_ARABIC_DIRECTIVE = (
     "explained. Do not present a translation as the Prophet's words ﷺ.\n\n"
 )
 
+# The off-topic pivot cites nothing (its rule 6), so its copy of the
+# directive must not ask for "the closing sources line" either.
+_NON_ARABIC_DIRECTIVE_PIVOT = _NON_ARABIC_DIRECTIVE.replace(
+    ", including the closing sources line", "",
+)
+assert _NON_ARABIC_DIRECTIVE_PIVOT != _NON_ARABIC_DIRECTIVE
+
 # Said in Arabic too, because the model reads the whole prompt and an Arabic
 # system prompt that never mentions language is itself an instruction to
 # answer in Arabic — which is how 40% of the assistant's users came to write in
@@ -319,7 +352,7 @@ def _compose_system_prompt(domain: str, question_text: str = "") -> str:
         "المستخدم إلى نشاط ممتع مع ابنه أو ابنته، ووضّح ما الذي ينمّيه فيه (مهارة، قيمة، أو رابطة عاطفية).\n\n"
         "استثناءات هامة لهذه القاعدة:\n"
         "- إذا كان كلام المستخدم مجرد تحية أو شكر أو تعبير لطيف (مثل: 'شكراً'، 'جزاك الله خيراً'، 'السلام عليكم'): رد بلطف واقتضاب وتمنَّ له ولطفله التوفيق، دون اختلاق أي نشاط ودون فرض أي مهمة تربوية.\n"
-        "- إذا كان السؤال عن التطبيق نفسه أو استخدامه التقني (مثل: كيفية إضافة طفل، تعديل البيانات): اشرح الخطوات بوضوح وبساطة، دون ربط ذلك بنشاط تربوي.\n"
+        "- إذا كان السؤال عن التطبيق نفسه أو استخدامه التقني (مثل: كيفية إضافة طفل، تعديل البيانات): لا تخترع خطوات ولا أسماء قوائم لا تعرفها يقيناً؛ إن لم تكن الخطوات أمامك في المصادر فقل ذلك باختصار وادعُه إلى إرسال سؤاله من «شاركنا رأيك» في التطبيق، دون ربط ذلك بنشاط تربوي.\n"
         "- إذا تضمن السؤال عبارات مسيئة أو بذيئة: ضع حداً مهذباً وموجزاً باحترام، دون أي نشاط.\n"
         "- إذا كان السؤال استفساراً عن كيفية تطبيق نصيحة أو نشاط (مثل: 'بخصوص نصيحة اليوم: ... إزاي أطبقها؟'): قدّم خطوات تطبيقية متسلسلة ومحددة ومناسبة لعمر الطفل، مع أمثلة عملية من الحياة اليومية دون اختصار مخل."
     )

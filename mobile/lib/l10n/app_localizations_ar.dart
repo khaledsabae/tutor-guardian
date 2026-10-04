@@ -2730,6 +2730,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatConnectionInterrupted => 'انقطع الاتصال قبل اكتمال الرد.';
 
   @override
+  String get chatAnswerStillComing =>
+      'ما زال الرد يُكتب، وسيظهر هنا خلال لحظات.';
+
+  @override
   String get chatResponseStopped => '⏹️ تم إيقاف الرد.';
 
   @override
