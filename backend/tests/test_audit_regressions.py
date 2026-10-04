@@ -9,6 +9,7 @@ import datetime as dt
 import pytest
 from fastapi.testclient import TestClient
 
+from app.services import conversation_store as store
 from app.services import fiqh_guard
 
 
@@ -217,10 +218,15 @@ def test_minting_rejects_malformed_or_oversized_input(client):
                        json={"metadata": {"k": "v" * 5000}}).status_code == 422
 
 
-def test_proof_for_another_device_is_refused(client):
+def test_proof_for_another_device_mints_only_for_the_proven_device(client):
+    # H5 still holds — a proof never yields a session for another device — but
+    # since the PR #29 review the mismatch is not refused: the proof decides
+    # (a 403 only made the app drop its proof and mint the claimed id bare).
     proof, _ = _session(client, "device-A")
     r = client.post("/api/chat/sessions", headers=proof, json={"device_id": "device-B"})
-    assert r.status_code == 403
+    assert r.status_code == 201
+    assert r.json()["device_id"] == "device-A"
+    assert store.validate_token(r.json()["token"])["device_id"] == "device-A"
 
 
 def test_proof_of_the_same_device_mints_a_new_session(client):

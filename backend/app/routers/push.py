@@ -8,6 +8,7 @@ AuthMiddleware guarantees the device_id in request.state.device_id.
 from fastapi import APIRouter, Request
 
 from app.db.init_db import get_conn
+from app.services import device_twins
 
 router = APIRouter(tags=["push"])
 
@@ -38,6 +39,24 @@ def register_push_token(request: Request, payload: dict) -> dict:
         _upsert_push_token(conn, device_id, token, platform, app_version, build_number)
     finally:
         conn.close()
+
+    # The one request every launch makes, so it is where an install that
+    # 1.0.58-1.0.67 split into two device ids gets put back together: if this
+    # device is a childless twin of the family's device (same FCM token, born
+    # in the same seconds — services/device_twins.py), it is folded into it
+    # and the token the app holds now opens the family's data. Old builds
+    # ignore the extra fields; new ones adopt the device id.
+    canonical = device_twins.recover(device_id, credential=getattr(request.state, "token", None))
+    if canonical:
+        # This request's census belongs to the family device now — the token
+        # that sent it opens it. (The twin's own row was removed by the fold,
+        # logged; the family's row is only touched here, by the live request.)
+        conn = get_conn()
+        try:
+            _upsert_push_token(conn, canonical, token, platform, app_version, build_number)
+        finally:
+            conn.close()
+        return {"ok": True, "device_id": canonical, "identity_recovered": True}
     return {"ok": True}
 
 

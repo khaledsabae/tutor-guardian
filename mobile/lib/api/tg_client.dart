@@ -28,6 +28,7 @@ import 'package:uuid/uuid.dart';
 
 import '../config/app_config.dart';
 import '../models/api_models.dart';
+import 'device_id_claim.dart';
 import 'package:almorabbi/l10n/l10n_global.dart';
 
 /// Raised for any non-recoverable HTTP failure the UI should display.
@@ -95,7 +96,7 @@ FlutterSecureStorage createDefaultSecureStorage() {
 /// Single source of truth for the device id, session id, and bearer token.
 /// Persisted in `flutter_secure_storage` (Android Keystore).
 class _AuthStore {
-  _AuthStore(this._storage);
+  _AuthStore(this._storage, this._claim);
 
   static const _kDeviceId = 'tg_device_id';
   static const _kSessionId = 'tg_session_id';
@@ -112,11 +113,15 @@ class _AuthStore {
   static const _kDeviceIdBackup = 'tg_device_id_backup';
 
   final FlutterSecureStorage _storage;
+  final DeviceIdClaim _claim;
   final Uuid _uuid = const Uuid();
 
   String? _cachedDeviceId;
   String? _cachedSessionId;
   String? _cachedToken;
+
+  /// The device-id resolution in flight, shared by every concurrent caller.
+  Future<String>? _deviceIdLoad;
 
   /// Read a key, retrying once. Returns (value, readSucceeded).
   ///
@@ -166,6 +171,7 @@ class _AuthStore {
   }
 
   Future<void> _writeDeviceIdBackup(String id) async {
+    if (!isValidDeviceId(id)) return; // never let garbage replace a good copy
     try {
       final prefs = await SharedPreferences.getInstance();
       if (prefs.getString(_kDeviceIdBackup) != id) {
@@ -182,30 +188,70 @@ class _AuthStore {
     } catch (_) {}
   }
 
-  Future<String> getOrCreateDeviceId() async {
-    if (_cachedDeviceId != null) return _cachedDeviceId!;
+  /// The install's device id: read back, or created exactly once.
+  ///
+  /// Single-flight. This used to check the cache, then await the keystore —
+  /// so two callers arriving together (session mint, push registration,
+  /// feedback, a screen's own `createSession`) both found it empty and each
+  /// minted its own id: one install, two families on the server, and the
+  /// next launch came back as whichever was written last. Now every caller
+  /// awaits the same resolution, which persists the id before anyone gets it.
+  ///
+  /// A fresh id additionally goes through [DeviceIdClaim], because the same
+  /// race also ran between isolates — see that class.
+  Future<String> getOrCreateDeviceId() {
+    final cached = _cachedDeviceId;
+    if (cached != null) return Future.value(cached);
+    return _deviceIdLoad ??= _resolveDeviceId().then(
+      // `??=`: an id the server handed over meanwhile (adoptDeviceId) wins.
+      (id) => _cachedDeviceId ??= id,
+      onError: (Object e, StackTrace s) {
+        _deviceIdLoad = null; // the next caller retries
+        Error.throwWithStackTrace(e, s);
+      },
+    );
+  }
+
+  Future<String> _resolveDeviceId() async {
     final (existing, readOk) = await _readChecked(_kDeviceId);
-    if (existing != null && existing.isNotEmpty) {
-      _cachedDeviceId = existing;
-      await _writeDeviceIdBackup(existing);
+    if (isValidDeviceId(existing)) {
+      await _writeDeviceIdBackup(existing!);
       return existing;
     }
-    // Secure copy missing or unreadable: the backup is the same identity.
+    // Secure copy missing, unreadable, or garbage the server would refuse
+    // with 422 on every mint (a keystore decrypting with the wrong key): the
+    // backup is the same identity, if it is a valid one.
     final backup = await _readDeviceIdBackup();
-    if (backup != null) {
-      _cachedDeviceId = backup;
-      if (readOk) await _safeWrite(_kDeviceId, backup);
-      return backup;
+    if (isValidDeviceId(backup)) {
+      if (readOk) await _safeWrite(_kDeviceId, backup!);
+      return backup!;
     }
-    final fresh = _uuid.v4();
-    _cachedDeviceId = fresh;
+    // Nothing usable persisted. Claim a fresh id — or get the one another
+    // isolate claimed a moment ago, or an earlier run left in the claim file.
+    // The family is not lost with the old id: the next mint still carries the
+    // device proof, and the server moves the proven device to this id.
+    final candidate = _uuid.v4();
+    final claimed = await _claim.claim(candidate);
+    final id = isValidDeviceId(claimed) ? claimed! : candidate;
     // Only persist into the keystore when we KNOW it was empty. If the read
     // failed, an id may still be in there; overwriting it would orphan the
     // family's data just as the old deleteAll() did. The next launch reads
     // the real one back.
-    if (readOk) await _safeWrite(_kDeviceId, fresh);
-    await _writeDeviceIdBackup(fresh);
-    return fresh;
+    if (readOk) await _safeWrite(_kDeviceId, id);
+    await _writeDeviceIdBackup(id);
+    return id;
+  }
+
+  /// Become [id]: the server re-attached this install to the device that
+  /// holds the family's data (a split-off twin, see the backend's
+  /// `device_twins`). Written everywhere the id lives, so the next launch
+  /// starts as that device instead of asking the server to map it again.
+  Future<void> adoptDeviceId(String id) async {
+    if (!isValidDeviceId(id) || id == _cachedDeviceId) return;
+    _cachedDeviceId = id;
+    await _safeWrite(_kDeviceId, id);
+    await _writeDeviceIdBackup(id);
+    await _claim.replace(id);
   }
 
   Future<void> setSession({required String sessionId, required String token}) async {
@@ -281,10 +327,12 @@ class TgClient {
   TgClient({
     http.Client? httpClient,
     FlutterSecureStorage? storage,
+    DeviceIdClaim? deviceIdClaim,
     this.onNeedActiveChildId,
     Duration? streamIdleTimeout,
   })  : _raw = httpClient ?? http.Client(),
-        _auth = _AuthStore(storage ?? createDefaultSecureStorage()),
+        _auth = _AuthStore(storage ?? createDefaultSecureStorage(),
+            deviceIdClaim ?? DeviceIdClaim.inAppCache()),
         _ownsHttpClient = httpClient == null,
         _baseUrlOverride = null,
         streamIdleTimeout = streamIdleTimeout ?? AppConfig.streamIdleTimeout;
@@ -295,10 +343,12 @@ class TgClient {
     required String baseUrl,
     http.Client? httpClient,
     FlutterSecureStorage? storage,
+    DeviceIdClaim? deviceIdClaim,
     this.onNeedActiveChildId,
     Duration? streamIdleTimeout,
   })  : _raw = httpClient ?? http.Client(),
-        _auth = _AuthStore(storage ?? createDefaultSecureStorage()),
+        _auth = _AuthStore(storage ?? createDefaultSecureStorage(),
+            deviceIdClaim ?? DeviceIdClaim.inAppCache()),
         _ownsHttpClient = httpClient == null,
         _baseUrlOverride = baseUrl,
         streamIdleTimeout = streamIdleTimeout ?? AppConfig.streamIdleTimeout;
@@ -391,6 +441,13 @@ class TgClient {
     final parsed =
         SessionResponse.fromJson(jsonDecode(utf8.decode(resp.bodyBytes)) as Map<String, dynamic>);
     await _auth.setSession(sessionId: parsed.sessionId, token: parsed.token);
+    // The server minted for a different device than we asked for: this
+    // install had split into twins and the server re-attached it to the one
+    // holding the family's data. Become that device for good.
+    final minted = parsed.deviceId;
+    if (minted != null && minted.isNotEmpty && minted != deviceId) {
+      await _auth.adoptDeviceId(minted);
+    }
     return parsed;
   }
 
@@ -1197,6 +1254,18 @@ class TgClient {
         .timeout(AppConfig.httpTimeout);
     if (resp.statusCode != 200) {
       throw _wrap(resp);
+    }
+    // Registering is where the server recognises a split-off twin (same FCM
+    // token as the family's device, born in the same seconds, no child) and
+    // re-attaches it; it then names the device this install now is.
+    try {
+      final data = jsonDecode(utf8.decode(resp.bodyBytes));
+      final canonical = data is Map ? data['device_id'] : null;
+      if (canonical is String && canonical.isNotEmpty) {
+        await _auth.adoptDeviceId(canonical);
+      }
+    } on FormatException {
+      // An older server answers without a body worth reading.
     }
   }
 

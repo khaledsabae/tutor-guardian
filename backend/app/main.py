@@ -10,12 +10,15 @@ from pathlib import Path
 
 import httpx
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.exception_handlers import request_validation_exception_handler
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.config.guardrails_loader import load_child_surface_policy, load_guardrails_config
 from app.config.llm_config import LLM, DEFAULT_HOME_OLLAMA_URL
+from app.core.log_safety import describe_rejected_id
 from app.db.init_db import init_db
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.middleware.auth import AuthMiddleware
@@ -163,6 +166,21 @@ app = FastAPI(
     description="مساعد تربوي ذكي للأهل – واجهة API لنظام RAG مع Guardrails",
     version="0.1.0",
     lifespan=lifespan)
+
+
+@app.exception_handler(RequestValidationError)
+async def _count_rejected_device_ids(request: Request, exc: RequestValidationError):
+    """Same 422 as FastAPI's own, plus one countable line when a session mint
+    is refused for its device id — an install whose keystore hands back
+    garbage is refused on every mint, forever, and nothing else records it.
+    The id itself never reaches the log (log_safety.describe_rejected_id)."""
+    if request.method == "POST" and request.url.path == "/api/chat/sessions":
+        for err in exc.errors():
+            loc = err.get("loc") or ()
+            if loc and loc[-1] == "device_id":
+                logger.warning("session mint rejected device_id (%s): %s",
+                               err.get("type", "?"), describe_rejected_id(err.get("input")))
+    return await request_validation_exception_handler(request, exc)
 
 app.add_middleware(
     CORSMiddleware,

@@ -28,6 +28,7 @@ from pydantic import BaseModel, Field, field_validator
 
 from app.core.log_safety import device_tag
 from app.db.init_db import get_conn
+from app.services.device_twins import canonical_of
 
 router = APIRouter(prefix="/feedback", tags=["feedback"])
 
@@ -238,6 +239,10 @@ def submit_app_feedback(body: AppFeedbackIn, background: BackgroundTasks) -> dic
         raise HTTPException(status_code=400, detail="empty feedback")
 
     fid = uuid.uuid4().hex
+    # An old build whose twin id was folded into its family still sends the
+    # twin's id here (this endpoint takes it from the body, not a token):
+    # file the feedback where the family's replies will be read.
+    device_id = canonical_of(body.device_id) or body.device_id
     audio_b64 = None
     if body.audio_base64:
         # Validate it decodes and isn't oversized; store the base64 in the DB
@@ -260,7 +265,7 @@ def submit_app_feedback(body: AppFeedbackIn, background: BackgroundTasks) -> dic
             "device_id, app_version, created_at, audio_b64) "
             "VALUES (?,?,?,?,?,?,?,?)",
             (fid, body.message.strip(), body.contact, None,
-             body.device_id, body.app_version,
+             device_id, body.app_version,
              datetime.now(timezone.utc).isoformat(), audio_b64),
         )
         con.commit()
@@ -277,7 +282,7 @@ def submit_app_feedback(body: AppFeedbackIn, background: BackgroundTasks) -> dic
         audio_b64,
         body.app_version,
         body.contact,
-        body.device_id,
+        device_id,
     )
     return {"status": "ok", "id": fid}
 
@@ -392,6 +397,9 @@ def _deliver_reply(feedback_id: str, device_id: str | None, text: str) -> None:
     GET /api/feedback/replies on launch, so delivery does not depend on FCM.
     """
     rid = uuid.uuid4().hex
+    # Feedback filed before its device was folded names the twin; the reply
+    # goes to the family device, which is who the app is now.
+    device_id = canonical_of(device_id) or device_id
     try:
         con = get_conn()
         con.execute(

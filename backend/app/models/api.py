@@ -61,6 +61,12 @@ class AssistantReply(BaseModel):
 
 
 # ── Auth & session management (mobile-ready) ─────────────────────────────────
+# The device-id rule, shared with services/device_twins.py and mirrored by the
+# app (mobile/lib/api/device_id_claim.dart, isValidDeviceId).
+DEVICE_ID_PATTERN = r"^[A-Za-z0-9._:-]+$"
+DEVICE_ID_MAX_LENGTH = 128
+
+
 class SessionCreate(BaseModel):
     """POST /api/chat/sessions — create a new session + auth token.
 
@@ -68,7 +74,7 @@ class SessionCreate(BaseModel):
     device id; the pattern also admits the server's own `device_<hex>` form.
     """
     device_id: str | None = Field(
-        None, min_length=1, max_length=128, pattern=r"^[A-Za-z0-9._:-]+$"
+        None, min_length=1, max_length=DEVICE_ID_MAX_LENGTH, pattern=DEVICE_ID_PATTERN
     )
     metadata: dict | None = None
 
@@ -84,6 +90,11 @@ class SessionCreateResponse(BaseModel):
     """Response to session creation — includes auth token."""
     session_id: str
     token: str
+    # The device the session was minted for (additive, 2026-10). Differs from
+    # the requested id when the proof named another device (the proof decides)
+    # or a split-off twin was folded into its family (services/device_twins.py);
+    # the app adopts it when it is a valid id.
+    device_id: str | None = None
 
 
 class SessionResponse(BaseModel):

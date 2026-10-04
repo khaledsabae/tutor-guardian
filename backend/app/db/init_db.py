@@ -87,6 +87,15 @@ Migration v32: install attribution. referrals.via records how a claim was made
                click counts once raw clicks (IP, user agent) pass their
                seven-day retention; ix_referral_clicks_time serves both. Additive,
                ensured unconditionally (v30 and v31 belong to other branches).
+Migration v33: device twins (services/device_twins.py). device_aliases maps a
+               device id folded away to the family device that absorbed it —
+               an app in the field keeps the twin's id on disk and sends it at
+               its next session mint; without the row that mint would hand it a
+               fresh, childless identity again. device_fold_log records every
+               row a fold moved or deleted (table, rowid, from, to, and the
+               deleted row itself), in the fold's own transaction, so a fold can
+               be audited and reverted. Column names carry "device" so the
+               account-deletion discovery covers both. Additive.
 """
 import hashlib
 import os
@@ -215,10 +224,11 @@ CREATE INDEX IF NOT EXISTS ix_referrals_referrer
     ON referrals (referrer_device);
 """
 
-# 30 = child memory, 31 = «ادعم المربّي» ledger, 32 = attribution provenance.
+# 30 = child memory, 31 = «ادعم المربّي» ledger, 32 = attribution provenance,
+# 33 = device twins (aliases + fold log).
 # Every _ensure_* step runs unconditionally and the stamp only ever moves up,
 # so branches can land in any order: keep the highest number.
-SCHEMA_VERSION = 32
+SCHEMA_VERSION = 33
 
 
 def db_path() -> Path:
@@ -412,6 +422,7 @@ def init_db() -> None:
     _ensure_child_web_claims_table(conn)
     _ensure_donations_table(conn)
     _ensure_attribution_v32(conn)
+    ensure_device_twin_tables(conn)
 
     row = conn.execute("SELECT version FROM schema_version LIMIT 1").fetchone()
     if row is None:
@@ -1174,6 +1185,41 @@ def _ensure_attribution_v32(conn: sqlite3.Connection) -> None:
             ON referral_clicks (clicked_at);
         """
     )
+
+
+# Plain statements, not executescript: device_twins runs this inside the
+# transaction that folds a twin, and executescript would COMMIT it half-done.
+_CREATE_DEVICE_TWIN_TABLES = (
+    """
+    CREATE TABLE IF NOT EXISTS device_aliases (
+        device_id        TEXT PRIMARY KEY,   -- the folded-away twin
+        canonical_device TEXT NOT NULL,      -- the family device that absorbed it
+        folded_at        TEXT NOT NULL DEFAULT (datetime('now'))
+    )
+    """,
+    "CREATE INDEX IF NOT EXISTS ix_device_aliases_canonical ON device_aliases (canonical_device)",
+    """
+    CREATE TABLE IF NOT EXISTS device_fold_log (
+        id          INTEGER PRIMARY KEY AUTOINCREMENT,
+        folded_at   TEXT NOT NULL DEFAULT (datetime('now')),
+        table_name  TEXT NOT NULL,
+        row_id      INTEGER NOT NULL,
+        column_name TEXT NOT NULL,
+        from_device TEXT NOT NULL,
+        to_device   TEXT NOT NULL,
+        action      TEXT NOT NULL,           -- moved | deleted
+        row_json    TEXT                     -- a deleted row, so it can be put back
+    )
+    """,
+    "CREATE INDEX IF NOT EXISTS ix_device_fold_log_from ON device_fold_log (from_device)",
+    "CREATE INDEX IF NOT EXISTS ix_device_fold_log_to ON device_fold_log (to_device)",
+)
+
+
+def ensure_device_twin_tables(conn: sqlite3.Connection) -> None:
+    """v33: device_aliases + device_fold_log (see the migration note)."""
+    for statement in _CREATE_DEVICE_TWIN_TABLES:
+        conn.execute(statement)
 
 
 def _ensure_referrals_table(conn: sqlite3.Connection) -> None:
