@@ -421,3 +421,34 @@ def test_a_fabricated_unit_leaves_with_its_source_and_the_index_stays_true(rp, t
     assert idx["total_units"] == 1 and idx["by_domain"]["islamic_parenting"] == 1
     assert [u["id"] for u in idx["units"]] == ["keep"]
     assert not index.read_text().endswith("\n")          # format kept as found
+
+
+def test_cache_only_judges_what_was_reviewed_and_calls_nobody(rp, tree, monkeypatch):
+    # After the weekly cap (2026-10-04) the gate can still stamp what both models
+    # actually reviewed — but must never fill a gap by asking, or by assuming.
+    (chunk,) = rp.chunks_of(_lesson(rp), 7000)
+    monkeypatch.setattr(rp, "_cache", {rp._cache_key("glm-5.2", chunk.sha): []})
+    monkeypatch.setattr(rp, "CACHE_ONLY", True)
+    monkeypatch.setattr(rp, "post", lambda *a, **k: (_ for _ in ()).throw(AssertionError("called")))
+    assert rp.review_batch("glm-5.2", [chunk]) == {chunk.cid: []}
+    assert rp.review_batch("deepseek-v4-pro", [chunk]) == {}     # not reviewed → no verdict
+
+
+# ── the commit-time rule: no regression, nothing new unreviewed, no frozen backlog ──
+
+def test_staged_rule_blocks_new_and_stale_but_lets_the_backlog_be_corrected(rp, tree, monkeypatch):
+    item = _lesson(rp)                                  # unstamped, translated
+    head_new = None
+    head_stamped = {"translation": {"approved_by": "auto-review:a+b:2026-10-04"},
+                    "summary": "old"}
+    head_legacy = {"translation": {"approved_by": None}, "title": "Truthfulness",
+                   "summary": "Make truthfulness safe.", "try_this": "Praise his honesty.",
+                   "reflection_prompts": ["When does he lie?"]}
+    for head, blocked in ((head_new, True), (head_stamped, True), (head_legacy, False)):
+        monkeypatch.setattr(rp, "_head_en", lambda _it, h=head: h)
+        assert (rp.staged_check_item(item) is not None) is blocked, head
+
+    # …but a legacy unit may not gain English it never had without review.
+    legacy_without_prompts = {k: v for k, v in head_legacy.items() if k != "reflection_prompts"}
+    monkeypatch.setattr(rp, "_head_en", lambda _it: legacy_without_prompts)
+    assert "adds English" in rp.staged_check_item(item)

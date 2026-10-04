@@ -69,6 +69,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import http.client
 import importlib.util
 import json
 import os
@@ -598,6 +599,9 @@ def deterministic_defects(item: Item) -> list[dict]:
 # ═════════════════════════════════════════════════════════════════════════
 
 _KEY: str | None = None
+# حين يُغلق سقف الحساب الأسبوعي: احكم بما راجعه النموذجان فعلًا (مخزَّنًا ببصمة النص
+# ونسخة التعليمات) ولا تطلب جديدًا. وحدةٌ ينقصها حكم أحدهما لا تُختم.
+CACHE_ONLY = False
 
 
 def _api_key() -> str:
@@ -696,7 +700,10 @@ def post(model: str, system: str, user: str, timeout: int = 600) -> tuple[str, d
                     raise UsageCapError(detail[:200]) from e
                 _cooldown(min(300, 30 * 2 ** min(attempt, 3)))
                 continue
-        except (urllib.error.URLError, TimeoutError, OSError, ValueError, KeyError) as e:
+        except (urllib.error.URLError, TimeoutError, OSError, ValueError, KeyError,
+                http.client.HTTPException) as e:
+            # IncompleteRead (جسم مقطوع في منتصف الرد) ليس OSError — أسقط تشغيلةً
+            # من ٢٢٨ وحدة بعد ساعة كاملة على 2026-10-04. عابرٌ مثل غيره: أعد المحاولة.
             last = e
         time.sleep(min(90, 5 * 2 ** attempt))
     raise RuntimeError(f"{model}: فشل بعد ٨ محاولات: {last}")
@@ -974,8 +981,8 @@ def review_batch(model: str, batch: list[Chunk], depth: int = 0) -> dict[str, li
                              for d in hit]
         else:
             todo.append(c)
-    if not todo:
-        return result
+    if not todo or CACHE_ONLY:
+        return result   # CACHE_ONLY: ما لم يُراجَع يبقى «غير مراجَع» — لا يُختم ولا يُستدعى نموذج
     user = review_message(todo)
     try:
         raw, _usage = post(model, REVIEW_SYSTEM, user)
@@ -1064,7 +1071,15 @@ def review_items(items: list[Item], reviewers: tuple[str, str], workers: int,
         lock = threading.Lock()
 
         def one(b):
-            r = review_batch(model, b)
+            # دفعة تسقط بعطل غير متوقَّع تُترك «غير مراجَعة» ولا تُسقط التشغيلة كلها؛
+            # سقف الحساب وحده يُوقفها (UsageCapError ليس Exception عاديًّا هنا).
+            try:
+                r = review_batch(model, b)
+            except UsageCapError:
+                raise
+            except Exception as e:  # noqa: BLE001
+                print(f"   ⚠️ {model}: batch dropped ({type(e).__name__}: {e})", flush=True)
+                r = {}
             with lock:
                 merged.update(r)
                 done[0] += 1
@@ -1381,6 +1396,50 @@ def _self_test() -> bool:
     return ok
 
 
+def _head_en(item: Item) -> dict | None:
+    """نسخة الترجمة في HEAD (للقصص: القصة بعينها)، أو None إن كانت جديدة."""
+    import subprocess
+    rel = str(item.en_file.relative_to(ROOT))
+    try:
+        out = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=ROOT,
+                             capture_output=True, text=True, check=True).stdout
+        doc = json.loads(out)
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError):
+        return None
+    if item.kind == "stories":
+        return next((s for s in doc if s.get("id") == item.selector), None)
+    return doc
+
+
+def staged_check_item(item: Item) -> str | None:
+    """البوابة على الـcommit: لا تراجُع، لا جديد بلا مراجعة — ولا تجميد للمتراكم.
+
+    · ترجمة جديدة (غير موجودة في HEAD) تحتاج ختمًا صالحًا.
+    · وحدة كانت مختومة في HEAD لا تُترك بختم بائت أو مفقود.
+    · وحدة قديمة لم تُختم بعد (المتراكم قبل البوابة) يجوز تصحيح نصّها — عربيًّا أو
+      إنجليزيًّا — دون ختم، **ما لم يُضف إليها إنجليزيٌّ جديد**: إصلاح تلفٍ طبي في
+      المصدر لا ينتظر حصّة نموذج، لكن نصًّا إنجليزيًّا جديدًا لا يدخل بلا مراجعة.
+      تبقى هذه الوحدات في `check` و`inventory` حتى تُختم.
+
+    (وُضعت بعد أن أغلق السقف الأسبوعي لـ Ollama Cloud المراجعة يوم 2026-10-04 وفي
+    الشجرة إصلاحات سلامة طبية — «احفظ الطعام بين 5 و60» — كانت البوابة ستحبسها.)
+    """
+    bad = check_item(item)
+    if bad is None:
+        return None
+    head = _head_en(item)
+    if head is None:
+        return bad
+    if (head.get("translation") or {}).get("approved_by"):
+        return bad
+    added = [p for p, v in item.fields.items()
+             if get_leaf(head, p) in (None, "", []) and v["en"] not in (None, "", [])]
+    if added:
+        return ("adds English to a unit that has not passed review yet ("
+                + ", ".join(added[:3]) + ") — run the review first")
+    return None
+
+
 def staged_paths() -> set[str] | None:
     """الملفات المرحَّلة للـcommit (نسبية للجذر)، أو None خارج git."""
     import subprocess
@@ -1413,7 +1472,8 @@ def cmd_check(kinds: list[str], staged: bool = False) -> int:
         if paths is not None:
             items = [it for it in items if touched_by(it, paths)]
             print(f"  (staged) وحدات يمسّها هذا الـcommit: {len(items)}")
-    bad = [(it, why) for it in items if (why := check_item(it))]
+    judge = staged_check_item if staged else check_item
+    bad = [(it, why) for it in items if (why := judge(it))]
     if STORIES_EN.exists() and STORIES_EN_MIRROR.exists() \
             and (not staged or any(it.kind == "stories" for it in items)) \
             and STORIES_EN.read_bytes() != STORIES_EN_MIRROR.read_bytes():
@@ -1616,6 +1676,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--reviewer-a", default=REVIEWER_A)
     ap.add_argument("--reviewer-b", default=REVIEWER_B)
     ap.add_argument("--no-fix", action="store_true")
+    ap.add_argument("--cache-only", action="store_true",
+                    help="احكم بالمراجعات المخزَّنة فقط (لا نداء مراجعة جديد) — لما بعد سقف الحساب")
     ap.add_argument("--apply-arabic", action="store_true",
                     help="اكتب إصلاحات المصدر العربي (بعد فحصها في تقرير سابق)")
     ap.add_argument("--dry-run", action="store_true")
@@ -1659,6 +1721,10 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     set_concurrency(args.max_concurrent)
+    global CACHE_ONLY
+    CACHE_ONLY = args.cache_only
+    if CACHE_ONLY:
+        args.no_fix = True
     t0 = time.time()
     report = run(items, args)
     print("\n" + "═" * 62)
